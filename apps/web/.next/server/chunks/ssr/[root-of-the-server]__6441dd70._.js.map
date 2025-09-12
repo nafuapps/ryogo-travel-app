@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 19, "column": 0}, "map": {"version":3,"sources":["file:///Users/fung/Developer/ryogo-travel-app/apps/web/src/app/%5Blocale%5D/page.tsx"],"sourcesContent":["//Landing page\nimport {useTranslations} from 'next-intl';\n \nexport default function HomePage() {\n  const t = useTranslations('Landing');\n  return <h1>{t('title')}</h1>;\n}\n"],"names":[],"mappings":"AAAA,cAAc;;;;;;AACd;;;AAEe,SAAS;IACtB,MAAM,IAAI,IAAA,iQAAe,EAAC;IAC1B,qBAAO,8OAAC;kBAAI,EAAE;;;;;;AAChB","debugId":null}}]
+}

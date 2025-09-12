@@ -1,16 +1,29 @@
 {
   "name": "ryogo-travel-app",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "version": "1.0.0",
-  "description": "",
+  "description": "RyoGo Travel B2B App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "dev:web": "turbo dev --filter=web",
+    "dev:driver": "turbo dev --filter=driver-app",
+    "dev:agency": "turbo dev --filter=agency-app",
+    "lint": "turbo lint"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "turbo": "^2.5.6"
-  }
+    "turbo": "^2.5.6",
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "npm@8.5.0"
 }

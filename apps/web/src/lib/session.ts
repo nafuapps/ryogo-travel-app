@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { db } from "@/db";
+import { db } from "@ryogo-travel-app/db";
 import { jwtVerify, SignJWT } from "jose";
 import { sessions } from "@/db/schema";
 import { eq } from "drizzle-orm";

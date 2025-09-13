@@ -6,7 +6,9 @@
   "types": "./src/index.tsx",
   "scripts": {},
   "dependencies": {
-    "zod": "^4.1.8"
+    "zod": "^4.1.8",
+    "drizzle-orm": "^0.44.5",
+    "@ryogo-travel-app/db": "*"
   },
   "devDependencies": {
     "@types/node": "^20.19.13",

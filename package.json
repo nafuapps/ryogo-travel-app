@@ -15,7 +15,10 @@
     "dev:agency": "turbo run dev --filter=@ryogo-travel-app/agency-app",
     "build": "turbo run build",
     "test": "turbo run test",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "install:web": "npm install --workspace=@ryogo-travel-app/web-app",
+    "install:driver": "npm install --workspace=@ryogo-travel-app/driver-app",
+    "install:agency": "npm install --workspace=@ryogo-travel-app/agency-app"
   },
   "private": true,
   "devDependencies": {

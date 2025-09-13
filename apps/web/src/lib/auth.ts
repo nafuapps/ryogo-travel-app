@@ -1,5 +1,5 @@
-import { db } from "@/db";
-import { users } from "@/db/schema";
+import { db } from "@ryogo-travel-app/db";
+import { users } from "@ryogo-travel-app/db/schema";
 import { eq, and } from "drizzle-orm";
 import {
   createSession,

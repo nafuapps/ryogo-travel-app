@@ -789,6 +789,7 @@ export const transactions = pgTable(
     type: transactionTypes().notNull(),
     mode: transactionModes().notNull().default("cash"),
     remarks: text("remarks"),
+    photosUrl: text("photos_url").array(), //multiple docs
     isApproved: boolean("is_approved").notNull().default(false),
     ...timestamps,
   },

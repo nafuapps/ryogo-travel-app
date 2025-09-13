@@ -12,5 +12,15 @@
   "devDependencies": {
     "typescript": "^5.2.2",
     "drizzle-kit": "^0.31.4"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { db } from "@ryogo-travel-app/db";
 import { jwtVerify, SignJWT } from "jose";
-import { sessions } from "@/db/schema";
+import { sessions } from "@ryogo-travel-app/db/schema";
 import { eq } from "drizzle-orm";
 
 const secretKey = process.env.AUTH_SECRET;

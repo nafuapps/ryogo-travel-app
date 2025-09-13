@@ -4,5 +4,15 @@
   "description": "Shared Utils for RyoGo Travel App",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
-  "scripts": {}
+  "scripts": {},
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  }
 }

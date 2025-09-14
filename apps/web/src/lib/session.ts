@@ -1,8 +1,6 @@
 import { cookies } from "next/headers";
-import { db } from "@ryogo-travel-app/db";
 import { jwtVerify, SignJWT } from "jose";
-import { sessions } from "@ryogo-travel-app/db/schema";
-import { eq } from "drizzle-orm";
+import { sessionServices } from "@ryogo-travel-app/api/services/sessionServices";
 
 const secretKey = process.env.AUTH_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
@@ -35,22 +33,21 @@ export async function decrypt(session: string | undefined = "") {
 }
 
 //Create session both in cookie and database
-export async function createSession(userId: string) {
+export async function createWebSession(userId: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   // 1. Create a session in the database
-  const data = await db
-    .insert(sessions)
-    .values({
-      userId: userId,
-      expiresAt,
-    })
-    // Return the session ID
-    .returning({ sessionId: sessions.id, userId: sessions.userId });
+  const sessionData = await sessionServices.createSession({
+    userId,
+    expiresAt,
+  });
 
-  const sessionId = data[0];
   // 2. Encrypt the session ID
-  const session = await encrypt({ ...sessionId, expiresAt });
+  const session = await encrypt({
+    sessionId: sessionData[0].id,
+    userId: sessionData[0].userId,
+    expiresAt,
+  });
 
   // 3. Store the session in cookies for optimistic auth checks
   const cookieStore = await cookies();
@@ -64,7 +61,7 @@ export async function createSession(userId: string) {
 }
 
 //Update session expiry both in cookie and database
-export async function updateSession() {
+export async function updateWebSession() {
   const session = (await cookies()).get("session")?.value;
   const payload = (await decrypt(session)) as SessionPayload | undefined;
 
@@ -75,10 +72,7 @@ export async function updateSession() {
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   //Update session expiry in database
-  await db
-    .update(sessions)
-    .set({ expiresAt: expires })
-    .where(eq(sessions.id, payload.sessionId));
+  await sessionServices.updateSessionExpiringTime(payload.sessionId, expires);
 
   const cookieStore = await cookies();
   cookieStore.set("session", session, {
@@ -91,7 +85,7 @@ export async function updateSession() {
 }
 
 //Delete session both from cookie and database
-export async function deleteSession() {
+export async function deleteWebSession() {
   const session = (await cookies()).get("session")?.value;
   const payload = (await decrypt(session)) as SessionPayload | undefined;
 
@@ -99,7 +93,7 @@ export async function deleteSession() {
     return null;
   }
 
-  await db.delete(sessions).where(eq(sessions.id, payload.sessionId));
+  sessionServices.deleteSession(payload.sessionId);
 
   const cookieStore = await cookies();
   cookieStore.delete("session");

@@ -33,17 +33,27 @@ const sequenceValues = {
   increment: 1,
 };
 
-//Agencies table
+export enum AgencyStatusEnum {
+  NEW = "new",
+  ACTIVE = "active",
+  EXPIRED = "expired",
+  SUSPENDED = "suspended",
+}
 export const agencyStatus = pgEnum("agency_status", [
-  "new",
-  "active",
-  "expired",
-  "suspended",
+  AgencyStatusEnum.NEW,
+  AgencyStatusEnum.ACTIVE,
+  AgencyStatusEnum.EXPIRED,
+  AgencyStatusEnum.SUSPENDED,
 ]);
+export enum SubscriptionPlanEnum {
+  TRIAL = "trial",
+  PREMIUM = "premium",
+}
 export const subscriptionPlan = pgEnum("subscription_plan", [
-  "trial",
-  "premium",
+  SubscriptionPlanEnum.TRIAL,
+  SubscriptionPlanEnum.PREMIUM,
 ]);
+//Agencies table
 export const agencyIdSequence = pgSequence("agency_id_seq", {
   ...sequenceValues,
 });
@@ -60,9 +70,11 @@ export const agencies = pgTable(
     businessEmail: varchar("business_email", { length: 60 }).notNull(),
     businessAddress: text("business_address").notNull(),
     logoUrl: text("logo_url"),
-    subscriptionPlan: subscriptionPlan().notNull().default("trial"),
+    subscriptionPlan: subscriptionPlan()
+      .notNull()
+      .default(SubscriptionPlanEnum.TRIAL),
     subscriptionExpiresOn: timestamp("subscription_expires_on").notNull(),
-    status: agencyStatus().notNull().default("new"),
+    status: agencyStatus().notNull().default(AgencyStatusEnum.NEW),
     defaultCommissionRate: integer("default_commission_rate")
       .notNull()
       .default(15), // percentage
@@ -98,19 +110,31 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   tripLogs: many(tripLogs),
 }));
 
-//Users table
+export enum UserRolesEnum {
+  AGENT = "agent",
+  OWNER = "owner",
+  ADMIN = "admin",
+  DRIVER = "driver",
+}
 export const userRoles = pgEnum("user_roles", [
-  "agent",
-  "owner",
-  "admin",
-  "driver",
+  UserRolesEnum.AGENT,
+  UserRolesEnum.OWNER,
+  UserRolesEnum.ADMIN,
+  UserRolesEnum.DRIVER,
 ]);
+export enum UserStatusEnum {
+  NEW = "new",
+  ACTIVE = "active",
+  EXPIRED = "expired",
+  SUSPENDED = "suspended",
+}
 export const userStatus = pgEnum("user_status", [
-  "new",
-  "inactive",
-  "active",
-  "suspended",
+  UserStatusEnum.NEW,
+  UserStatusEnum.ACTIVE,
+  UserStatusEnum.EXPIRED,
+  UserStatusEnum.SUSPENDED,
 ]);
+//Users table
 export const userIdSequence = pgSequence("user_id_seq", {
   ...sequenceValues,
 });
@@ -130,8 +154,8 @@ export const users = pgTable(
     email: varchar("email", { length: 60 }).notNull(),
     password: text("password").notNull(),
     photoUrl: text("photo_url"),
-    userRole: userRoles().notNull().default("agent"),
-    status: agencyStatus().notNull().default("new"),
+    userRole: userRoles().notNull().default(UserRolesEnum.AGENT),
+    status: userStatus().notNull().default(UserStatusEnum.NEW),
     lastLogin: timestamp("last_login"),
     lastLogout: timestamp("last_logout"),
     ...timestamps,
@@ -201,20 +225,33 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   }),
 }));
 
-//Vehicles table
+export enum VehicleTypesEnum {
+  CAR = "car",
+  BIKE = "bike",
+  BUS = "bus",
+  TRUCK = "truck",
+  OTHER = "other",
+}
 export const vehicleTypes = pgEnum("vehicle_types", [
-  "car",
-  "bike",
-  "bus",
-  "other",
-  "truck",
+  VehicleTypesEnum.CAR,
+  VehicleTypesEnum.BIKE,
+  VehicleTypesEnum.BUS,
+  VehicleTypesEnum.OTHER,
+  VehicleTypesEnum.TRUCK,
 ]);
+export enum VehicleStatusEnum {
+  AVAILABLE = "available",
+  ON_TRIP = "on_trip",
+  INACTIVE = "inactive",
+  SUSPENDED = "suspended",
+}
 export const vehicleStatus = pgEnum("vehicle_status", [
-  "available",
-  "on_trip",
-  "inactive",
-  "suspended",
+  VehicleStatusEnum.AVAILABLE,
+  VehicleStatusEnum.ON_TRIP,
+  VehicleStatusEnum.INACTIVE,
+  VehicleStatusEnum.SUSPENDED,
 ]);
+//Vehicles table
 export const vehicleIdSequence = pgSequence("vehicle_id_seq", {
   ...sequenceValues,
 });
@@ -238,8 +275,8 @@ export const vehicles = pgTable(
     odometerReading: integer("odometer_reading").notNull(), // in kilometers
     capacity: integer("capacity").notNull().default(4), //number of seats
     hasAC: boolean("has_ac").notNull(),
-    type: vehicleTypes().notNull().default("car"),
-    status: vehicleStatus().notNull().default("available"),
+    type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
+    status: vehicleStatus().notNull().default(VehicleStatusEnum.AVAILABLE),
     docUrl: text("doc_url").array(), //multiple docs
     defaultRatePerKm: integer("default_rate_per_km").notNull().default(18), // in currency units
     extraAcChargePerDay: integer("extra_ac_charge_per_day")
@@ -283,13 +320,19 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
   tripLogs: many(tripLogs),
 }));
 
-//Drivers table
+export enum DriverStatusEnum {
+  AVAILABLE = "available",
+  ON_TRIP = "on_trip",
+  INACTIVE = "inactive",
+  SUSPENDED = "suspended",
+}
 export const driverStatus = pgEnum("driver_status", [
-  "available",
-  "on_trip",
-  "inactive",
-  "suspended",
+  DriverStatusEnum.AVAILABLE,
+  DriverStatusEnum.ON_TRIP,
+  DriverStatusEnum.INACTIVE,
+  DriverStatusEnum.SUSPENDED,
 ]);
+//Drivers table
 export const driverIdSequence = pgSequence("driver_id_seq", {
   ...sequenceValues,
 });
@@ -313,8 +356,11 @@ export const drivers = pgTable(
     address: text("address").notNull(),
     licenseNumber: varchar("license_number", { length: 20 }).notNull(),
     licenseExpiresOn: timestamp("license_expires_on").notNull(),
-    status: driverStatus().notNull().default("available"),
-    canDriveVehicleTypes: vehicleTypes().array().notNull().default(["car"]),
+    status: driverStatus().notNull().default(DriverStatusEnum.AVAILABLE),
+    canDriveVehicleTypes: vehicleTypes()
+      .array()
+      .notNull()
+      .default([VehicleTypesEnum.CAR]),
     defaultAllowancePerDay: integer("default_allowance_per_day")
       .notNull()
       .default(500), // in currency units
@@ -403,12 +449,17 @@ export const routeRelations = relations(routes, ({ one, many }) => ({
   bookings: many(bookings),
 }));
 
-//Customers table
+export enum CustomerStatusEnum {
+  ACTIVE = "active",
+  INACTIVE = "inactive",
+  SUSPENDED = "suspended",
+}
 export const customerStatus = pgEnum("customer_status", [
-  "active",
-  "inactive",
-  "suspended",
+  CustomerStatusEnum.ACTIVE,
+  CustomerStatusEnum.INACTIVE,
+  CustomerStatusEnum.SUSPENDED,
 ]);
+//Customers table
 export const customerIdSequence = pgSequence("customer_id_seq", {
   ...sequenceValues,
 });
@@ -433,7 +484,7 @@ export const customers = pgTable(
     locationId: text("location_id")
       .references(() => locations.id, { onDelete: "set null" })
       .notNull(),
-    status: customerStatus().notNull().default("active"),
+    status: customerStatus().notNull().default(CustomerStatusEnum.ACTIVE),
     ...timestamps,
   },
   (t) => [
@@ -462,20 +513,33 @@ export const customerRelations = relations(customers, ({ one, many }) => ({
   bookings: many(bookings),
 }));
 
-//Bookings table
+export enum BookingStatusEnum {
+  QUOTE = "quote",
+  CONFIRMED = "confirmed",
+  IN_PROGRESS = "in_progress",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+  RECONCILED = "reconciled",
+}
 export const bookingStatus = pgEnum("booking_status", [
-  "quote",
-  "confirmed",
-  "in_progress",
-  "completed",
-  "cancelled",
-  "reconciled",
+  BookingStatusEnum.QUOTE,
+  BookingStatusEnum.CONFIRMED,
+  BookingStatusEnum.IN_PROGRESS,
+  BookingStatusEnum.COMPLETED,
+  BookingStatusEnum.CANCELLED,
+  BookingStatusEnum.RECONCILED,
 ]);
+export enum BookingTypeEnum {
+  OneWay = "oneWay",
+  Round = "round",
+  MultiDay = "multiDay",
+}
 export const bookingType = pgEnum("booking_type", [
-  "OneWay",
-  "Round",
-  "MultiDay",
+  BookingTypeEnum.OneWay,
+  BookingTypeEnum.Round,
+  BookingTypeEnum.MultiDay,
 ]);
+//Bookings table
 export const bookingIdSequence = pgSequence("booking_id_seq", {
   ...sequenceValues,
 });
@@ -519,7 +583,7 @@ export const bookings = pgTable(
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),
     startTime: time("start_time"),
-    type: bookingType().notNull().default("OneWay"),
+    type: bookingType().notNull().default(BookingTypeEnum.OneWay),
     passengers: integer("passengers").notNull().default(1),
     needsAc: boolean("needs_ac").notNull().default(true),
     remarks: text("remarks"),
@@ -528,7 +592,7 @@ export const bookings = pgTable(
     commissionRate: integer("commission_rate").notNull(), // in percentage
     totalAmount: integer("total_amount").notNull(), // in currency units
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
-    status: bookingStatus().notNull().default("quote"),
+    status: bookingStatus().notNull().default(BookingStatusEnum.QUOTE),
     ...timestamps,
   },
   (t) => [
@@ -618,16 +682,25 @@ export const bookingRelations = relations(bookings, ({ one, many }) => ({
   transactions: many(transactions),
 }));
 
-//Expenses table
+export enum ExpenseTypeEnum {
+  FUEL = "fuel",
+  TOLL = "toll",
+  PARKING = "parking",
+  MAINTENANCE = "maintenance",
+  AC = "ac",
+  FOOD = "food",
+  OTHER = "other",
+}
 export const expenseTypes = pgEnum("expense_types", [
-  "fuel",
-  "toll",
-  "parking",
-  "maintenance",
-  "ac",
-  "food",
-  "other",
+  ExpenseTypeEnum.FUEL,
+  ExpenseTypeEnum.TOLL,
+  ExpenseTypeEnum.PARKING,
+  ExpenseTypeEnum.MAINTENANCE,
+  ExpenseTypeEnum.AC,
+  ExpenseTypeEnum.FOOD,
+  ExpenseTypeEnum.OTHER,
 ]);
+//Expenses table
 export const expenseIdSequence = pgSequence("expense_id_seq", {
   ...sequenceValues,
 });
@@ -648,7 +721,7 @@ export const expenses = pgTable(
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "set null" })
       .notNull(),
-    type: expenseTypes().notNull(),
+    type: expenseTypes().notNull().default(ExpenseTypeEnum.OTHER),
     amount: integer("amount").notNull(), // in currency units
     remarks: text("remarks"),
     photoUrl: text("photo_url"), //multiple docs
@@ -681,14 +754,21 @@ export const expenseRelations = relations(expenses, ({ one }) => ({
   }),
 }));
 
-//Trip Logs table
+export enum TripLogTypesEnum {
+  START_TRIP = "start_trip",
+  END_TRIP = "end_trip",
+  ARRIVED = "arrived",
+  PICKUP = "pickup",
+  DROP = "drop",
+}
 export const tripLogTypes = pgEnum("trip_log_types", [
-  "start_trip",
-  "end_trip",
-  "arrived",
-  "pickup",
-  "drop",
+  TripLogTypesEnum.START_TRIP,
+  TripLogTypesEnum.END_TRIP,
+  TripLogTypesEnum.ARRIVED,
+  TripLogTypesEnum.PICKUP,
+  TripLogTypesEnum.DROP,
 ]);
+//Trip Logs table
 export const tripLogIdSequence = pgSequence("trip_log_id_seq", {
   ...sequenceValues,
 });
@@ -749,21 +829,37 @@ export const tripLogsRelations = relations(tripLogs, ({ one }) => ({
   }),
 }));
 
-//Transactions table
+export enum TrasactionTypesEnum {
+  DEBIT = "debit",
+  CREDIT = "credit",
+}
 export const transactionTypes = pgEnum("transaction_types", [
-  "debit",
-  "credit",
+  TrasactionTypesEnum.DEBIT,
+  TrasactionTypesEnum.CREDIT,
 ]);
+export enum TransactionsPartiesEnum {
+  DRIVER = "driver",
+  CUSTOMER = "customer",
+}
 export const transactionParties = pgEnum("transaction_parties", [
-  "driver",
-  "customer",
+  TransactionsPartiesEnum.DRIVER,
+  TransactionsPartiesEnum.CUSTOMER,
 ]);
+export enum TransactionModesEnum {
+  CASH = "cash",
+  CARD = "card",
+  NET_BANKING = "net_banking",
+  UPI = "upi",
+  OTHER = "other",
+}
 export const transactionModes = pgEnum("transaction_modes", [
-  "cash",
-  "card",
-  "upi",
-  "other",
+  TransactionModesEnum.CASH,
+  TransactionModesEnum.CARD,
+  TransactionModesEnum.NET_BANKING,
+  TransactionModesEnum.UPI,
+  TransactionModesEnum.OTHER,
 ]);
+//Transactions table
 export const transactionIdSequence = pgSequence("transaction_id_seq", {
   ...sequenceValues,
 });
@@ -785,9 +881,11 @@ export const transactions = pgTable(
       onDelete: "set null",
     }),
     amount: integer("amount").notNull(), // in currency units
-    otherParty: transactionParties().notNull().default("customer"),
-    type: transactionTypes().notNull(),
-    mode: transactionModes().notNull().default("cash"),
+    otherParty: transactionParties()
+      .notNull()
+      .default(TransactionsPartiesEnum.CUSTOMER),
+    type: transactionTypes().notNull().default(TrasactionTypesEnum.CREDIT),
+    mode: transactionModes().notNull().default(TransactionModesEnum.CASH),
     remarks: text("remarks"),
     photosUrl: text("photos_url").array(), //multiple docs
     isApproved: boolean("is_approved").notNull().default(false),
@@ -963,44 +1061,44 @@ export const driverLeaveRelations = relations(driverLeaves, ({ one }) => ({
 }));
 
 //Export types
-export type SelectAgency = typeof agencies.$inferSelect;
-export type InsertAgency = typeof agencies.$inferInsert;
+export type SelectAgencyType = typeof agencies.$inferSelect;
+export type InsertAgencyType = typeof agencies.$inferInsert;
 
-export type SelectUser = typeof users.$inferSelect;
-export type InsertUser = typeof users.$inferInsert;
+export type SelectUserType = typeof users.$inferSelect;
+export type InsertUserType = typeof users.$inferInsert;
 
-export type SelectSession = typeof sessions.$inferSelect;
-export type InsertSession = typeof sessions.$inferInsert;
+export type SelectSessionType = typeof sessions.$inferSelect;
+export type InsertSessionType = typeof sessions.$inferInsert;
 
-export type SelectVehicle = typeof vehicles.$inferSelect;
-export type InsertVehicle = typeof vehicles.$inferInsert;
+export type SelectVehicleType = typeof vehicles.$inferSelect;
+export type InsertVehicleType = typeof vehicles.$inferInsert;
 
-export type SelectDriver = typeof drivers.$inferSelect;
-export type InsertDriver = typeof drivers.$inferInsert;
+export type SelectDriverType = typeof drivers.$inferSelect;
+export type InsertDriverType = typeof drivers.$inferInsert;
 
-export type SelectRoute = typeof routes.$inferSelect;
-export type InsertRoute = typeof routes.$inferInsert;
+export type SelectRouteType = typeof routes.$inferSelect;
+export type InsertRouteType = typeof routes.$inferInsert;
 
-export type SelectCustomer = typeof customers.$inferSelect;
-export type InsertCustomer = typeof customers.$inferInsert;
+export type SelectCustomerType = typeof customers.$inferSelect;
+export type InsertCustomerType = typeof customers.$inferInsert;
 
-export type SelectBooking = typeof bookings.$inferSelect;
-export type InsertBooking = typeof bookings.$inferInsert;
+export type SelectBookingType = typeof bookings.$inferSelect;
+export type InsertBookingType = typeof bookings.$inferInsert;
 
-export type SelectExpense = typeof expenses.$inferSelect;
-export type InsertExpense = typeof expenses.$inferInsert;
+export type SelectExpenseType = typeof expenses.$inferSelect;
+export type InsertExpenseType = typeof expenses.$inferInsert;
 
-export type SelectTripLog = typeof tripLogs.$inferSelect;
-export type InsertTripLog = typeof tripLogs.$inferInsert;
+export type SelectTripLogType = typeof tripLogs.$inferSelect;
+export type InsertTripLogType = typeof tripLogs.$inferInsert;
 
-export type SelectTransaction = typeof transactions.$inferSelect;
-export type InsertTransaction = typeof transactions.$inferInsert;
+export type SelectTransactionType = typeof transactions.$inferSelect;
+export type InsertTransactionType = typeof transactions.$inferInsert;
 
-export type SelectLocation = typeof locations.$inferSelect;
-export type InsertLocation = typeof locations.$inferInsert;
+export type SelectLocationType = typeof locations.$inferSelect;
+export type InsertLocationType = typeof locations.$inferInsert;
 
-export type SelectVehicleService = typeof vehicleServices.$inferSelect;
-export type InsertVehicleService = typeof vehicleServices.$inferInsert;
+export type SelectVehicleServiceType = typeof vehicleServices.$inferSelect;
+export type InsertVehicleServiceType = typeof vehicleServices.$inferInsert;
 
-export type SelectDriverLeave = typeof driverLeaves.$inferSelect;
-export type InsertDriverLeave = typeof driverLeaves.$inferInsert;
+export type SelectDriverLeaveType = typeof driverLeaves.$inferSelect;
+export type InsertDriverLeaveType = typeof driverLeaves.$inferInsert;

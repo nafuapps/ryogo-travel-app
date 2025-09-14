@@ -9,7 +9,7 @@
   "description": "RyoGo Travel App Monorepo",
   "main": "index.js",
   "scripts": {
-    "dev:": "turbo run dev",
+    "dev": "turbo run dev",
     "dev:web": "turbo run dev --filter=@ryogo-travel-app/web-app",
     "dev:driver": "turbo run dev --filter=@ryogo-travel-app/driver-app",
     "dev:agency": "turbo run dev --filter=@ryogo-travel-app/agency-app",

@@ -1,17 +1,16 @@
 {
-  "name": "@ryogo-travel-app/db",
+  "name": "@ryogo-travel-app/i18n",
   "version": "1.0.0",
-  "description": "DB shared package for RyoGo Travel App",
-  "main": "/src/index.ts",
-  "types": "/src/index.ts",
+  "description": "18n package for RyoGo Travel App",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {},
   "dependencies": {
-    "drizzle-orm": "^0.44.5",
-    "postgres": "^3.4.7"
+    "i18next": "^23.11.5",
+    "react-i18next": "^14.1.2"
   },
   "devDependencies": {
-    "typescript": "^5.9.2",
-    "drizzle-kit": "^0.31.4"
+    "typescript": "^5.9.2"
   },
   "exports": {
     ".": {

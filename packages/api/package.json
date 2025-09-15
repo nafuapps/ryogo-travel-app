@@ -2,26 +2,19 @@
   "name": "@ryogo-travel-app/api",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.tsx",
-  "types": "./src/index.tsx",
   "scripts": {},
   "dependencies": {
-    "zod": "^4.1.8",
+    "@ryogo-travel-app/db": "*",
+    "bcryptjs": "^3.0.2",
     "drizzle-orm": "^0.44.5",
-    "@ryogo-travel-app/db": "*"
+    "zod": "^4.1.8"
   },
   "devDependencies": {
     "@types/node": "^20.19.13",
     "typescript": "^5.9.2"
   },
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
-    },
-    "./*": {
-      "types": "./src/*.ts",
-      "default": "./dist/*.js"
-    }
+    ".": "./src/index.ts",
+    "./services/*": "./src/services/*.ts"
   }
 }

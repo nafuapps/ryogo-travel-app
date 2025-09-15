@@ -2,24 +2,23 @@
   "name": "@ryogo-travel-app/i18n",
   "version": "1.0.0",
   "description": "18n package for RyoGo Travel App",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
   "dependencies": {
     "i18next": "^23.11.5",
     "react-i18next": "^14.1.2"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
   },
   "devDependencies": {
     "typescript": "^5.9.2"
   },
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
-    },
-    "./*": {
-      "types": "./src/*.ts",
-      "default": "./dist/*.js"
-    }
+    ".": "./src/index.ts",
+    "./mobile": "./src/mobile.ts",
+    "./locales/*": "./src/locales/*.json"
   }
 }

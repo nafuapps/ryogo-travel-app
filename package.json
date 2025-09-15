@@ -14,15 +14,14 @@
     "dev:driver": "turbo run dev --filter=@ryogo-travel-app/driver-app",
     "dev:agency": "turbo run dev --filter=@ryogo-travel-app/agency-app",
     "build": "turbo run build",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
     "install:web": "npm install --workspace=@ryogo-travel-app/web-app",
     "install:driver": "npm install --workspace=@ryogo-travel-app/driver-app",
-    "install:agency": "npm install --workspace=@ryogo-travel-app/agency-app"
+    "install:agency": "npm install --workspace=@ryogo-travel-app/agency-app",
+    "lint": "turbo run lint"
   },
   "private": true,
   "devDependencies": {
-    "turbo": "^2.5.6",
-    "typescript": "^5.9.2"
+    "turbo": "latest",
+    "typescript": "5.9.2"
   }
 }

@@ -44,8 +44,8 @@ export async function createWebSession(userId: string) {
 
   // 2. Encrypt the session ID
   const session = await encrypt({
-    sessionId: sessionData[0].id,
-    userId: sessionData[0].userId,
+    sessionId: sessionData[0]!.id,
+    userId: sessionData[0]!.userId,
     expiresAt,
   });
 

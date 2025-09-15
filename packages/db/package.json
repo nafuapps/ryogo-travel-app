@@ -2,8 +2,6 @@
   "name": "@ryogo-travel-app/db",
   "version": "1.0.0",
   "description": "DB shared package for RyoGo Travel App",
-  "main": "/src/index.ts",
-  "types": "/src/index.ts",
   "scripts": {},
   "dependencies": {
     "drizzle-orm": "^0.44.5",
@@ -14,13 +12,7 @@
     "drizzle-kit": "^0.31.4"
   },
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
-    },
-    "./*": {
-      "types": "./src/*.ts",
-      "default": "./dist/*.js"
-    }
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
   }
 }

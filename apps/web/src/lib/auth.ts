@@ -31,7 +31,7 @@ export async function login(phone: string, password: string) {
   );
 
   //2. create session
-  createWebSession(userData[0].id);
+  createWebSession(userData[0]!.id);
 }
 
 // Logout user - Delete session and log last logout time

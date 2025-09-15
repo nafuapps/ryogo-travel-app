@@ -1,0 +1,10 @@
+{
+  "name": "@ryogo-travel-app/ts-tooling",
+  "private": true,
+  "files": [
+    "*.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

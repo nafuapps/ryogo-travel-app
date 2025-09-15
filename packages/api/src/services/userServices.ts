@@ -136,7 +136,7 @@ export const userServices = {
     const newAgencyData = await agencyServices.createAgency(data.agency);
     const ownerData = {
       ...data.owner,
-      agencyId: newAgencyData[0].id,
+      agencyId: newAgencyData[0]!.id,
       userRole: UserRolesEnum.OWNER,
       status: UserStatusEnum.ACTIVE,
     };
@@ -195,13 +195,13 @@ export const userServices = {
       throw new Error("No user found with this phone number");
     }
 
-    const valid = await bcrypt.compare(password, userFound[0].password);
+    const valid = await bcrypt.compare(password, userFound[0]!.password);
 
     if (!valid) {
       throw new Error("Password does not match");
     }
 
-    return await this.logUserLastLogin(userFound[0].id);
+    return await this.logUserLastLogin(userFound[0]!.id);
   },
 
   //Reset password

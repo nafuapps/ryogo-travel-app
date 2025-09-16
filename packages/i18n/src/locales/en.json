@@ -1,5 +1,69 @@
 {
-  "Landing": {
-    "title": "Hello"
+  "Auth": {
+    "LoginPage": {
+      "Step1": {
+        "PageTitle": "Login",
+        "Input": {
+          "Title": "Enter phone number",
+          "Placeholder": "9876543210",
+          "Description": "Provide your phone number to proceed"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "Error1": "Phone number must be 10 digits",
+        "Error2": "Phone number must be numeric",
+        "APIError": "Phone number not found"
+      },
+      "Step2": {
+        "PageTitle": "Login with Password",
+        "Input": {
+          "Title": "Enter password",
+          "Placeholder": "********",
+          "Description": "Provide your password to safely login"
+        },
+        "PrimaryCTA": "Login",
+        "Loading": "Loading",
+        "ForgotCTA": "Forgot Password?",
+        "Error1": "Password must be at least 8 characters",
+        "APIError": "Password does not match"
+      }
+    },
+    "SignupPage": {},
+    "ForgotPasswordPage": {
+      "Step1": {
+        "PageTitle": "Forgot Password?",
+        "Info": "Don't worry.. we will get you a new password.",
+        "Input": {
+          "Title": "Enter phone number",
+          "Placeholder": "9876543210",
+          "Description": "Confirm your phone number to proceed"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "Error1": "Phone number must be 10 digits",
+        "Error2": "Phone number must be numeric",
+        "APIError": "Phone number not found"
+      },
+      "Step2": {
+        "PageTitle": "Email Verification",
+        "Info": "Let's get you a new password!",
+        "Input": {
+          "Title": "Enter email address",
+          "Placeholder": "abcd@gmail.com",
+          "Description": "Confirm your registered email address"
+        },
+        "PrimaryCTA": "Reset Password",
+        "Loading": "Loading",
+        "Back": "Back",
+        "Error1": "Not a valid email",
+        "APIError": "Email address does not match our records"
+      },
+      "Step3": {
+        "PageTitle": "Password reset complete",
+        "Info": "Check your inbox.. We just sent a new password to your email!",
+        "PrimaryCTA": "Go to Login",
+        "Loading": "Loading"
+      }
+    }
   }
 }

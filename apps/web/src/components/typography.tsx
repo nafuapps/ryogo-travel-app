@@ -30,9 +30,33 @@ export function H4({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function H5({ children }: { children: React.ReactNode }) {
+  return (
+    <h4 className="text-lg font-medium mb-1 sm:text-xl">
+      {children}
+    </h4>
+  );
+}
+
+export function H5Grey({ children }: { children: React.ReactNode }) {
+  return (
+    <h4 className="text-lg font-medium mb-1 sm:text-xl text-slate-600">
+      {children}
+    </h4>
+  );
+}
+
 export function P({ children }: { children: React.ReactNode }) {
   return (
     <p className="text-base sm:text-lg">
+      {children}
+    </p>
+  );
+}
+
+export function PGrey({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-base sm:text-lg text-slate-500">
       {children}
     </p>
   );

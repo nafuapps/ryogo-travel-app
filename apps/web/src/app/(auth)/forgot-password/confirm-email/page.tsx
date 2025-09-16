@@ -1,4 +1,4 @@
-//Login  page
+//Confirm Email page
 'use client'
 
 import z from 'zod';
@@ -9,25 +9,35 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { H2, H5 } from "@/components/typography";
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { redirect, RedirectType } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 
-export default function LoginPage() {
+const phoneRegex = z.string().length(10).regex(/^[0-9]+$/);
 
-  const t = useTranslations('Auth.LoginPage.Step1');
+export default function ConfirmEmailPage() {
+  const searchParams = useSearchParams();
+  const phoneNumber = searchParams.get('phone');
+
+
+  if (phoneNumber == null || phoneRegex.parse(phoneNumber) != phoneNumber) {
+    redirect('/forgot-password', RedirectType.replace);
+  }
+
+  const t = useTranslations('Auth.ForgotPasswordPage.Step2');
   const formSchema = z.object({
-    phoneNumber: z.string().length(10, t('Error1')).regex(/^[0-9]+$/, t('Error2'))
+    email: z.email(t('Error1'))
   })
 
   type FormFields = z.infer<typeof formSchema>
 
-  const router = useRouter();
-
+  // For managing form data and validation
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phoneNumber: "",
+      email: "",
     },
   },
   )
@@ -35,29 +45,30 @@ export default function LoginPage() {
   //Submit actions
   const onSubmit = (data: FormFields) => {
     console.log({ data });
-    // TODO: Find phone number in DB
-    if (data.phoneNumber == "1234567890") {
-      // If found, go to password page
-      router.push("/login/password?phone=" + data.phoneNumber)
-
+    // TODO: Match phone and email in the DB
+    if (data.email == "ryogo@gmail.com" && phoneNumber == "1234567890") {
+      //Reset password 
+      console.log("Reset success:", data);
+      //Redirect to login
+      redirect("/forgot-password/success", RedirectType.replace)
     } else {
-      // else, Show error
-      methods.setError("phoneNumber", { type: "manual", message: t("APIError") });
+      // Show error
+      methods.setError("email", { type: "manual", message: t("APIError") });
     }
   };
 
-  return <div id="LoginPage" className="gap-4 w-full h-full">
+  return <div id="ConfirmEmailPage" className="gap-4 w-full h-full">
     <Form {...methods}>
-      <form id="LoginForm" onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col justify-between  h-full">
+      <form id="ConfirmEmailForm" onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col justify-between  h-full">
         <H2>{t("PageTitle")}</H2>
         <FormField
           control={methods.control}
-          name={"phoneNumber"}
+          name={"email"}
           render={({ field }) => (
             <FormItem>
               <FormLabel><H5>{t("Input.Title")}</H5></FormLabel>
               <FormControl>
-                <Input type='tel' placeholder={t("Input.Placeholder")} {...field} />
+                <Input type='email' placeholder={t("Input.Placeholder")} {...field} />
               </FormControl>
               <FormDescription>
                 {t("Input.Description")}
@@ -71,6 +82,7 @@ export default function LoginPage() {
             {methods.formState.isSubmitting && <Loader2Icon className='animate-spin' />}
             {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </Button>
+          <Button variant={'secondary'}> <Link href="/forgot-password">{t("Back")} </Link></Button>
         </div>
       </form>
     </Form>

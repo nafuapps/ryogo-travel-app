@@ -1,5 +1,68 @@
 {
-  "Landing": {
-    "title": "नमस्ते"
+  "Auth": {
+    "LoginPage": {
+      "Step1": {
+        "PageTitle": "Login",
+        "Input": {
+          "Title": "Phone Number",
+          "Placeholder": "9876543210",
+          "Description": "Enter your phone number to proceed"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "Error1": "Phone number must be 10 digits",
+        "Error2": "Phone number must be numeric",
+        "APIError": "Phone number not found"
+      },
+      "Step2": {
+        "PageTitle": "Login with Password",
+        "Input": {
+          "Title": "Password",
+          "Placeholder": "********",
+          "Description": "Enter your password to login"
+        },
+        "PrimaryCTA": "Login",
+        "Loading": "Loading",
+        "ForgotCTA": "Forgot Password?",
+        "Error1": "Password must be at least 8 characters",
+        "APIError": "Password does not match"
+      }
+    },
+    "SignupPage": {},
+    "ForgotPasswordPage": {
+      "Step1": {
+        "PageTitle": "Forgot Password",
+        "Input": {
+          "Title": "Phone Number",
+          "Placeholder": "9876543210",
+          "Description": "Enter your phone number to proceed"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "Error1": "Phone number must be 10 digits",
+        "Error2": "Phone number must be numeric",
+        "APIError": "Phone number not found"
+      },
+      "Step2": {
+        "PageTitle": "Email Verification",
+        "Info": "Confirm your email address and we will send a new password to you!",
+        "Input": {
+          "Title": "Email",
+          "Placeholder": "abcd@gmail.com",
+          "Description": "Enter your email address"
+        },
+        "PrimaryCTA": "Reset Password",
+        "Loading": "Loading",
+        "Back": "Back",
+        "Error1": "Not a valid email",
+        "APIError": "Email address does not match"
+      },
+      "Step3": {
+        "PageTitle": "Password reset successful",
+        "Info": "Check your inbox.. We have sent you a new password to your email!",
+        "PrimaryCTA": "Go to Login",
+        "Loading": "Loading"
+      }
+    }
   }
 }

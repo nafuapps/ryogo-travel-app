@@ -19,5 +19,8 @@
     "titleBar.inactiveForeground": "#15202b99"
   },
   "peacock.color": "#42b883",
-  "postman.settings.dotenv-detection-notification-visibility": false
+  "postman.settings.dotenv-detection-notification-visibility": false,
+
+  "i18n-ally.localesPaths": ["./packages/i18n/src/locales"], // E.g. "./messages"
+  "i18n-ally.keystyle": "nested"
 }

@@ -1,7 +1,7 @@
 {
   "name": "ryogo-travel-app",
   "version": "1.0.0",
-  "packageManager": "npm@11.5.1",
+  "packageManager": "npm@11.6.0",
   "workspaces": [
     "apps/*",
     "packages/*"

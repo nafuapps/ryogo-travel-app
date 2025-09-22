@@ -11,7 +11,7 @@ const csvData = fs.readFileSync(csvPath, "utf-8");
 
 // Define the type for a location row in CSV
 type LocationRow = {
-  City: string;
+  Location: string;
   State: string;
   Latitude: string;
   Longitude: string;
@@ -31,7 +31,7 @@ export async function seedLocations() {
       `ST_SetSRID(ST_MakePoint(${row.Longitude}, ${row.Latitude}), 4326)`
     );
     await db.insert(locations).values({
-      city: row.City,
+      city: row.Location,
       state: row.State,
       latLong: `${row.Latitude},${row.Longitude}`,
       location: geometry,

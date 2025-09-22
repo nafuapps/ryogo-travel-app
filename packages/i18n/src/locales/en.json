@@ -28,7 +28,30 @@
         "APIError": "Password does not match"
       }
     },
-    "SignupPage": {},
+    "SignupPage": {
+      "Step1": {
+        "PageTitle": "Signup",
+        "Info": "You have decided to sign up with RyoGo.. Great choice!",
+        "Input": {
+          "Title": "Enter phone number",
+          "Placeholder": "9876543210",
+          "Description": "Provide your phone number to proceed"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "Error1": "Phone number must be 10 digits",
+        "Error2": "Phone number must be numeric"
+      },
+      "Step2": {
+        "PageTitle": "Signup",
+        "Info1": "You already have an account with us",
+        "InfoMany": "You already have a few accounts with us",
+        "PrimaryCTA": "Go to Login",
+        "SecondaryCTA1": "Create another account",
+        "SecondaryCTAMany": "Contact support",
+        "Description": "To create more accounts, you will need to contact our support team."
+      }
+    },
     "ForgotPasswordPage": {
       "Step1": {
         "PageTitle": "Forgot Password?",
@@ -63,6 +86,529 @@
         "Info": "Check your inbox.. We just sent a new password to your email!",
         "PrimaryCTA": "Go to Login",
         "Loading": "Loading"
+      }
+    }
+  },
+  "Onboarding": {
+    "HomePage": {
+      "Header": {
+        "Title": "Welcome!",
+        "Description": "Let's get you onboard in 4 easy steps.. and in less than 10 minutes"
+      },
+      "BodySteps": {
+        "Title": "Onboarding steps",
+        "Description": "This is what we will be doing next:",
+        "Step1": "1. Create an account for your agency",
+        "Step2": "2. Add a vehicle",
+        "Step3": "3. Add a driver",
+        "Step4": "4. Add an agent (optional)"
+      },
+      "BodyChecklist": {
+        "Title": "Onboarding checklist",
+        "Description": "Keep these ready for uploading:",
+        "Item1": "Your business logo (optional)",
+        "Item2": "Photo of the vehicle (where you can see number plate)",
+        "Item3": "Document photos of vehicle RC, Insurance policy and PUC certificate",
+        "Item4": "Driver's license photocopy"
+      },
+      "Footer": {
+        "PrimaryCTA": "Get Started"
+      }
+    },
+    "CreateAccountPage": {
+      "Title": "Create Account",
+      "Description": "Step {step} of {total}",
+      "Step1": {
+        "Field1": {
+          "Title": "Enter agency name",
+          "Placeholder": "Raj Tour & Travels",
+          "Description": "Provide your agency's business name",
+          "Error1": "Name must be atleast 5 characters",
+          "Error2": "Name must be less than 30 characters"
+        },
+        "Field2": {
+          "Title": "Enter your name",
+          "Placeholder": "Raj Sharma",
+          "Description": "Provide owner's name",
+          "Error1": "Name must be atleast 5 characters",
+          "Error2": "Name must be less than 30 characters"
+        },
+        "Field3": {
+          "Title": "Enter your phone number",
+          "Placeholder": "9840774089",
+          "Description": "Provide owner's phone number (to be used for login)",
+          "Error1": "Phone number must be 10 digits"
+        },
+        "Field4": {
+          "Title": "Enter your email",
+          "Placeholder": "raj.sharma@gmail.com",
+          "Description": "Provide owner's email address",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "APIError": "Owner account with this phone and email already exists"
+      },
+      "Step2": {
+        "Field1": {
+          "Title": "Enter agency phone number",
+          "Placeholder": "9876543210",
+          "Description": "Provide agency's business phone number",
+          "Checkbox": "Same as owner's phone number",
+          "Error1": "Phone number must be 10 digits"
+        },
+        "Field2": {
+          "Title": "Enter agency email",
+          "Placeholder": "rtourtravels@gmail.com",
+          "Description": "Business email to be used for communication",
+          "Checkbox": "Same as owner's email address",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters"
+        },
+        "Field3": {
+          "Title": "Enter agency address",
+          "Placeholder": "Address Line 1, Street, City, State, Pincode",
+          "Error1": "Address must be atleast 20 characters",
+          "Error2": "Address must be less than 300 characters"
+        },
+        "Field4": {
+          "Title": "Owner photo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload the owner's photo",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "APIError": "Agency with this phone and email already exists"
+      },
+      "Step3": {
+        "Field1": {
+          "Title": "Agency logo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload a logo associated with your business",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "Field2": {
+          "Title": "Commission rate (in %)",
+          "Placeholder": "15",
+          "Description": "The extra commission that will be added to every booking quote. (Don't worry, you can leave it blank and change it later. Default 15% will be set)",
+          "Error1": "Rate must be a number",
+          "Error2": "Rate must be atleast 1%",
+          "Error3": "Rate must be less than 100%",
+          "Error4": "Rate cannot be in decimals",
+          "Error5": "Rate must be a positive number"
+        },
+        "Field3": {
+          "Title": "Select state",
+          "Error1": "Providing state is mandatory"
+        },
+        "Field4": {
+          "Title": "Select city",
+          "Error1": "Providing city is mandatory"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Step4": {
+        "Field1": {
+          "Title": "Set password",
+          "Placeholder": "12345678",
+          "Description": "Set a new password for your account",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field2": {
+          "Title": "Confirm password",
+          "Placeholder": "12345678",
+          "Description": "Type the same password again",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Both passwords do not match",
+          "Error3": "Password should not contain spaces"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Confirm": {
+        "Title": "Confirm details to create your account:",
+        "AgencyName": "Agency Name",
+        "OwnerName": "Owner Name",
+        "OwnerPhone": "Owner Phone",
+        "OwnerEmail": "Owner Email",
+        "AgencyPhone": "Business Phone",
+        "AgencyEmail": "Business Email",
+        "AgencyAddress": "Business Address",
+        "Location": "Location",
+        "CommissionRate": "Commission Rate (%)",
+        "PrimaryCTA": "Confirm and Submit",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Finish": {
+        "Title": "Congratulations!",
+        "Subtitle": "Your account has been created successfully",
+        "Description1": "Next, let's add a vehicle to your account.",
+        "Description2": "(For now, we will add just 1 vehicle. You can add more later.)",
+        "PrimaryCTA": "Add Vehicle"
+      }
+    },
+    "AddVehiclePage": {
+      "Title": "Add Vehicle",
+      "Description": "Step {step} of {total}",
+      "Step1": {
+        "Field1": {
+          "Title": "Enter vehicle number",
+          "Placeholder": "KA01AB1234",
+          "Description": "Provide registration number of the vehicle (without space or dash)",
+          "Error1": "Vehicle number must be atleast 7 characters",
+          "Error2": "Vehicle number must be less than 15 characters"
+        },
+        "Field2": {
+          "Title": "Select vehicle type",
+          "Error1": "Providing vehicle type is mandatory"
+        },
+        "Field3": {
+          "Title": "Vehicle brand",
+          "Placeholder": "Honda",
+          "Description": "Provide vehicle manufacturer brand",
+          "Error1": "Brand name must be atleast 3 characters",
+          "Error2": "Brand name must be less than 15 characters"
+        },
+        "Field4": {
+          "Title": "Vehicle color",
+          "Placeholder": "Black",
+          "Description": "Provide vehicle color",
+          "Error1": "Vehicle color must be atleast 3 characters",
+          "Error2": "Vehicle color must be less than 15 characters"
+        },
+        "Field5": {
+          "Title": "Vehicle model",
+          "Placeholder": "City 2017",
+          "Description": "Provide vehicle model and variant",
+          "Error1": "Vehicle model must be atleast 5 characters",
+          "Error2": "Vehicle model must be less than 30 characters"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "APIError": "Vehicle number is already added to this agency"
+      },
+      "Step2": {
+        "Field1": {
+          "Title": "Enter passenger capacity",
+          "Placeholder": "4",
+          "Description": "How many passengers can travel in this vehicle (excluding driver)?",
+          "Error1": "Vehicle passenger capacity is required",
+          "Error2": "Capacity must be atleast 1",
+          "Error3": "Capacity must be less than 100",
+          "Error4": "Capacity cannot be in decimals",
+          "Error5": "Capacity must be a positive number"
+        },
+        "Field2": {
+          "Title": "Enter odometer reading (Km)",
+          "Placeholder": "10000",
+          "Description": "Check your odometer and enter the current reading",
+          "Error1": "Odometer reading is required",
+          "Error2": "Odometer must be atleast 1Km",
+          "Error3": "Odometer must be less than 1000000Km",
+          "Error4": "Odometer cannot be in decimals (round it up)",
+          "Error5": "Odometer must be a positive number"
+        },
+        "Field3": {
+          "Title": "RC Photo",
+          "Placeholder": "UPLOAD RC",
+          "Description": "Upload photo of vehicle registration certificate",
+          "Error1": "RC photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field4": {
+          "Title": "Vehicle photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload photos of the vehicle (atleast 1 photo with number plate visible)",
+          "Error1": "Vehicle photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Step3": {
+        "Field1": {
+          "Title": "Insurance expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide vehicle insurance policy expiry date",
+          "Error1": "Providing insurance expiry date is mandatory",
+          "Error2": "Insurance should not be expired"
+        },
+        "Field2": {
+          "Title": "Insurance policy photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload insurance policy photo",
+          "Error1": "Insurance policy photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field3": {
+          "Title": "PUC expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide PUC certificate expiry date",
+          "Error1": "Providing PUC certifacte date is mandatory",
+          "Error2": "PUC should not be expired"
+        },
+        "Field4": {
+          "Title": "PUC certificate photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload Pollution Under Control Certificate photo",
+          "Error1": "PUC certificate photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Step4": {
+        "Field1": {
+          "Title": "Vehicle charge per Km (in Rs.)",
+          "Placeholder": "18",
+          "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer. You can always change it later.",
+          "Error1": "Vehicle Charge must be a number",
+          "Error2": "Vehicle Charge must be atleast 1Rs.",
+          "Error3": "Vehicle Charge must be less than 50Rs",
+          "Error4": "Vehicle Charge cannot be in decimals",
+          "Error5": "Vehicle Charge must be a positive number"
+        },
+        "Field2": {
+          "Title": "Vehicle has AC?"
+        },
+        "Field3": {
+          "Title": "AC charge per day (in Rs.)",
+          "Placeholder": "18",
+          "Description": "Based on customer's AC preference, this per day charge will be added to the booking quote.",
+          "Error1": "AC Charge must be a number",
+          "Error2": "AC Charge must be atleast 1Rs.",
+          "Error3": "AC Charge must be less than 10000Rs",
+          "Error4": "AC Charge cannot be in decimals",
+          "Error5": "AC Charge must be a positive number"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Confirm": {
+        "Title": "Confirm details to add your vehicle:",
+        "VehicleNumber": "Vehicle Number",
+        "Type": "Type",
+        "Brand": "Brand",
+        "Model": "Model",
+        "Color": "Color",
+        "Capacity": "Capacity",
+        "OdometerReading": "Odometer Reading",
+        "InsuranceExpiresOn": "Insurance Expiry Date",
+        "PUCExpiresOn": "PUC Expiry Date",
+        "RatePerKm": "Vehicle Charge Per Km",
+        "HasAC": "Has AC?",
+        "ACChagePerDay": "AC Charge Per Day",
+        "PrimaryCTA": "Confirm and Submit",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Finish": {
+        "Title": "Congratulations!",
+        "Subtitle": "Your vehicle has been added to the agency account",
+        "Description1": "Next, let's add a driver to your account.",
+        "Description2": "(For now, we will add just 1 driver. You can add more later.)",
+        "PrimaryCTA": "Add Driver"
+      }
+    },
+    "AddDriverPage": {
+      "Title": "Add Driver",
+      "Description": "Step {step} of {total}",
+      "Step1": {
+        "Field1": {
+          "Title": "Driver name",
+          "Placeholder": "Surender Kumar",
+          "Description": "Enter the driver's name",
+          "Error1": "Name must be atleast 5 characters",
+          "Error2": "Name must be less than 30 characters"
+        },
+        "Field2": {
+          "Title": "Driver phone number",
+          "Placeholder": "9876543210",
+          "Description": "Enter the driver's phone number (to be used for login). You can provide owner's phone number for now and change this later.",
+          "Error1": "Phone number must be 10 digits"
+        },
+        "Field3": {
+          "Title": "Driver email",
+          "Placeholder": "surender.kumar@gmail.com",
+          "Description": "Enter the driver's email address (login password will be sent here). You can enter owner's email for now and change this later.",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters"
+        },
+        "Field4": {
+          "Title": "Driver photo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload the driver's photo",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "APIError1": "Driver with this phone already exists in this agency",
+        "APIError2": "Driver with this phone and email is already added to another agency.. try adding with a different phone or email"
+      },
+      "Step2": {
+        "Field1": {
+          "Title": "Driver license number",
+          "Placeholder": "GJ1220190000001",
+          "Description": "Provide license number of the driver (without space or dash)",
+          "Error1": "License number must be atleast 12 characters",
+          "Error2": "License number must be less than 20 characters"
+        },
+        "Field2": {
+          "Title": "License expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide driver license expiry date",
+          "Error1": "Providing driver license expiry date is mandatory",
+          "Error2": "License should not be expired"
+        },
+        "Field3": {
+          "Title": "Driver License photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload driver license photo",
+          "Error1": "License photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Step3": {
+        "Field1": {
+          "Title": "Driver address",
+          "Placeholder": "Address Line 1, Street, City, State, Pincode",
+          "Error1": "Address must be atleast 20 characters",
+          "Error2": "Address must be less than 300 characters"
+        },
+        "Field2": {
+          "Title": "Select all the vehicles that driver can drive",
+          "Error1": "Providing atleast 1 vehicle type is mandatory"
+        },
+        "Field3": {
+          "Title": "Driver allowance per day (in Rs.)",
+          "Placeholder": "500",
+          "Description": "How much do you pay driver per day? This will be used to calculate the booking quote for the customer. You can always change it later.",
+          "Error1": "Driver allowance must be a number",
+          "Error2": "Driver allowance must be atleast 1 Rs.",
+          "Error3": "Driver allowance must be less than 10000 Rs",
+          "Error4": "Driver allowance cannot be in decimals",
+          "Error5": "Driver allowance must be a positive number"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Confirm": {
+        "Title": "Confirm details to add driver:",
+        "DriverName": "Driver Name",
+        "DriverPhone": "Driver Phone",
+        "DriverEmail": "Driver Email",
+        "LicenseNumber": "License Number",
+        "LicenseExpiresOn": "License Expiry Date",
+        "DriverAddress": "Address",
+        "CanDriveVehicleTypes": "Can Drive",
+        "DefaultAllowancePerDay": "Allowance Per Day",
+        "PrimaryCTA": "Confirm and Submit",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Finish": {
+        "Title": "Congratulations!",
+        "Subtitle": "Driver added to your account! You can add more later.",
+        "Email": "Also, an email has been sent with the login and password details to {email}",
+        "Description1": "Finally, we can also add an agent to your account. This step is optional",
+        "Description2": "An agent runs your day-to-day operations like taking bookings from customers, assigning drivers, vehicles, etc.",
+        "PrimaryCTA": "Add Agent",
+        "SecondaryCTA": "I will do this later"
+      }
+    },
+    "AddAgentPage": {
+      "Title": "Add Agent",
+      "Description": "Step {step} of {total}",
+      "Step1": {
+        "Field1": {
+          "Title": "Agent name",
+          "Placeholder": "Vikram Sharma",
+          "Description": "Enter the agent's name",
+          "Error1": "Name must be atleast 5 characters",
+          "Error2": "Name must be less than 30 characters"
+        },
+        "Field2": {
+          "Title": "Agent phone number",
+          "Placeholder": "9988776655",
+          "Description": "Enter the agent's phone number (to be used for login). Must be different from owner's phone number.",
+          "Error1": "Phone number must be 10 digits"
+        },
+        "Field3": {
+          "Title": "Agent email",
+          "Placeholder": "surender.kumar@gmail.com",
+          "Description": "Enter the agent's email address (login password will be sent here). You can enter owner's email for now and change this later.",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters"
+        },
+        "Field4": {
+          "Title": "Agent photo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload the agent's photo",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "APIError1": "Agent/Owner with this phone already exists in this agency",
+        "APIError2": "Agent with this phone and email is already added to another agency.. try adding with a different phone or email"
+      },
+      "Confirm": {
+        "Title": "Confirm details to add agent:",
+        "AgentName": "Agent Name",
+        "AgentPhone": "Agent Phone Number",
+        "AgentEmail": "Agent Email Address",
+        "PrimaryCTA": "Confirm and Submit",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Finish": {
+        "Title": "Congratulations!",
+        "Subtitle": "Agent added to your account! You can add more later.",
+        "Email": "Also, an email has been sent with the login details to {email}",
+        "PrimaryCTA": "Go to Dashboard"
+      }
+    },
+    "SuccessPage": {},
+    "Sidebar": {
+      "Heading": "Setting up your account",
+      "Step1": {
+        "Title": "Create Account",
+        "Description": "Create an owner account for you"
+      },
+      "Step2": {
+        "Title": "Add Vehicle",
+        "Description": "Add a vehicle to your agency"
+      },
+      "Step3": {
+        "Title": "Add Driver",
+        "Description": "Add a driver to your agency"
+      },
+      "Step4": {
+        "Title": "Add Agent",
+        "Description": "Add an agent to run day-to-day operations (optional)"
       }
     }
   }

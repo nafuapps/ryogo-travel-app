@@ -72,7 +72,7 @@ export default function ForgotPasswordPage() {
             )}
           />
         </div>
-        <div id="LoginActions" className='flex flex-col gap-4 w-full'>
+        <div id="ForgotPasswordActions" className='flex flex-col gap-4 w-full'>
           <Button variant={"default"} size={"lg"} disabled={methods.formState.isSubmitting}>
             {methods.formState.isSubmitting && <Loader2Icon className='animate-spin' />}
             {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}

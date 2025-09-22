@@ -1,10 +1,6 @@
-import { JSX, useState } from "react";
+import { useState } from "react";
 
-interface MultiStepFormProps {
-  steps: JSX.Element[];
-}
-
-export function useMultiStepForm({ steps }: MultiStepFormProps) {
+export function useMultiStepForm(steps: React.ReactNode[]) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   function nextStep() {

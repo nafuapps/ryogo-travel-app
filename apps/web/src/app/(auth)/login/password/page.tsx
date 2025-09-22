@@ -8,12 +8,17 @@ import { useTranslations } from "next-intl";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { H2, H5 } from "@/components/typography";
+import { H2, H5, P } from "@/components/typography";
 import Link from 'next/link';
 import { redirect, RedirectType } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
+// TODO: Add a feature to show the user had recently reset password
+// TODO: Add a feature to show user's basic details (Name, Role, Agency)
+/* 
+    TODO: If multiple accounts found, show them and allow user to chooose one and enter password
+*/
 
 const phoneRegex = z.string().length(10).regex(/^[0-9]+$/);
 
@@ -52,7 +57,7 @@ export default function LoginPasswordPage() {
       //Redirect to dashboard
       redirect("/home", RedirectType.replace)
     } else {
-      // Send data to backend for login
+      // Show error
       methods.setError("password", { type: "manual", message: t("APIError") });
     }
 
@@ -62,6 +67,7 @@ export default function LoginPasswordPage() {
     <Form {...methods}>
       <form id="LoginPasswordForm" onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col justify-between  h-full">
         <H2>{t("PageTitle")}</H2>
+        <P>{phoneNumber}</P>
         <FormField
           control={methods.control}
           name={"password"}
@@ -78,7 +84,7 @@ export default function LoginPasswordPage() {
             </FormItem>
           )}
         />
-        <div id="LoginActions" className='flex flex-col gap-4 w-full'>
+        <div id="LoginPasswordActions" className='flex flex-col gap-4 w-full'>
           <Button variant={"default"} size={"lg"} disabled={methods.formState.isSubmitting}>
             {methods.formState.isSubmitting && <Loader2Icon className='animate-spin' />}
             {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}

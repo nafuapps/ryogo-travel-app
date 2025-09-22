@@ -68,7 +68,7 @@ export const agencies = pgTable(
     businessName: varchar("business_name", { length: 30 }).notNull(),
     businessPhone: varchar("business_phone", { length: 10 }).notNull(),
     businessEmail: varchar("business_email", { length: 60 }).notNull(),
-    businessAddress: text("business_address").notNull(),
+    businessAddress: varchar("business_address", { length: 300 }).notNull(),
     logoUrl: text("logo_url"),
     subscriptionPlan: subscriptionPlan()
       .notNull()
@@ -84,9 +84,14 @@ export const agencies = pgTable(
     ...timestamps,
   },
   (t) => [
+    unique().on(t.businessPhone, t.businessEmail), //Same agency can be added again but with different phone+email
     check(
       "commission_rate >= 0 AND commission_rate <= 100",
       sql`${t.defaultCommissionRate} >= 0 AND ${t.defaultCommissionRate} <= 100`
+    ),
+    uniqueIndex("agencies_phone_email_idx").on(
+      t.businessPhone,
+      t.businessEmail
     ),
     index("agencies_subscription_expiry_idx").on(t.subscriptionExpiresOn), // to quickly find agencies with expired subscriptions
     index("agencies_status_idx").on(t.status), // to quickly filter agencies by status
@@ -162,6 +167,7 @@ export const users = pgTable(
   },
   (t) => [
     unique().on(t.agencyId, t.phone, t.userRole), //Owner or Agent can also be a driver
+    unique().on(t.phone, t.email, t.userRole), //same user can be added to multiple agencies but with different email or role
     check("last login <= now", sql`${t.lastLogin} <= now()`),
     check("last logout <= now", sql`${t.lastLogout} <= now()`),
     uniqueIndex("users_agency_role_phone_idx").on(
@@ -169,6 +175,7 @@ export const users = pgTable(
       t.phone,
       t.userRole
     ), // to quickly find unique user with phone number & role in an agency
+    uniqueIndex("users_phone_email_role_idx").on(t.phone, t.email, t.userRole),
     index("users_agency_idx").on(t.agencyId), // to quickly filter all users in an agency
     index("users_agency_phone_idx").on(t.phone, t.agencyId), // to quickly filter users by phone number in an agency
     index("users_agency_role_idx").on(t.userRole, t.agencyId), // to quickly filter users by role in an agency
@@ -267,9 +274,9 @@ export const vehicles = pgTable(
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
     vehicleNumber: varchar("vehicle_number", { length: 15 }).notNull(),
-    brand: varchar("brand", { length: 30 }).notNull(),
+    brand: varchar("brand", { length: 15 }).notNull(),
     model: varchar("model", { length: 30 }).notNull(),
-    color: varchar("color", { length: 20 }).notNull(),
+    color: varchar("color", { length: 15 }).notNull(),
     insuranceExpiresOn: timestamp("insurance_expires_on"),
     pucExpiresOn: timestamp("puc_expires_on"),
     odometerReading: integer("odometer_reading").notNull(), // in kilometers
@@ -353,10 +360,11 @@ export const drivers = pgTable(
       .unique(),
     name: varchar("name", { length: 30 }).notNull(),
     phone: varchar("phone", { length: 10 }).notNull(),
-    address: text("address").notNull(),
+    address: varchar("address", { length: 300 }).notNull(),
     licenseNumber: varchar("license_number", { length: 20 }).notNull(),
     licenseExpiresOn: timestamp("license_expires_on").notNull(),
     status: driverStatus().notNull().default(DriverStatusEnum.AVAILABLE),
+    licenseUrl: text("license_url"),
     canDriveVehicleTypes: vehicleTypes()
       .array()
       .notNull()
@@ -477,7 +485,7 @@ export const customers = pgTable(
     name: varchar("name", { length: 30 }).notNull(),
     phone: varchar("phone", { length: 10 }).notNull(),
     email: varchar("email", { length: 60 }),
-    address: text("address"),
+    address: varchar("address", { length: 300 }),
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "set null" })
       .notNull(),

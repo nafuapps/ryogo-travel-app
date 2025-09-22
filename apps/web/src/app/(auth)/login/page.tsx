@@ -48,7 +48,7 @@ export default function LoginPage() {
 
   return <div id="LoginPage" className="gap-4 w-full h-full">
     <Form {...methods}>
-      <form id="LoginForm" onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col justify-between  h-full">
+      <form id="LoginForm" onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col justify-between w-full h-full">
         <H2>{t("PageTitle")}</H2>
         <FormField
           control={methods.control}

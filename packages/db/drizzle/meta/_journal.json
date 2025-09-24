@@ -29,6 +29,13 @@
       "when": 1757827754600,
       "tag": "0003_classy_blockbuster",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1758724115091,
+      "tag": "0004_next_jack_power",
+      "breakpoints": true
     }
   ]
 }

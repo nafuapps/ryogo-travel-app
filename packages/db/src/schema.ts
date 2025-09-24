@@ -110,7 +110,7 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   bookings: many(bookings),
   expenses: many(expenses),
   transactions: many(transactions),
-  vehicleServices: many(vehicleServices),
+  vehicleRepairs: many(vehicleRepairs),
   driverLeaves: many(driverLeaves),
   tripLogs: many(tripLogs),
 }));
@@ -196,7 +196,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   }),
   expensesAdded: many(expenses),
   transactionsAdded: many(transactions),
-  vehicleServicesAdded: many(vehicleServices),
+  vehicleRepairsAdded: many(vehicleRepairs),
   driverLeavesAdded: many(driverLeaves),
   customersAdded: many(customers),
   sessions: many(sessions),
@@ -214,6 +214,7 @@ export const sessions = pgTable(
       .$defaultFn(() => {
         return sql`'S' || nextval(${"session_id_seq"})`;
       }),
+    token: text("token").notNull().unique(),
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
@@ -284,7 +285,10 @@ export const vehicles = pgTable(
     hasAC: boolean("has_ac").notNull(),
     type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
     status: vehicleStatus().notNull().default(VehicleStatusEnum.AVAILABLE),
-    docUrl: text("doc_url").array(), //multiple docs
+    insurancePhotoUrl: text("insurance_photo_url"),
+    pucPhotoUrl: text("puc_photo_url"),
+    rcPhotoUrl: text("rc_photo_url"),
+    vehiclePhotoUrl: text("vehicle_photo_url"),
     defaultRatePerKm: integer("default_rate_per_km").notNull().default(18), // in currency units
     extraAcChargePerDay: integer("extra_ac_charge_per_day")
       .notNull()
@@ -323,7 +327,7 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
     references: [agencies.id],
   }),
   assignedBookings: many(bookings),
-  vehicleServices: many(vehicleServices),
+  vehicleRepairs: many(vehicleRepairs),
   tripLogs: many(tripLogs),
 }));
 
@@ -364,7 +368,7 @@ export const drivers = pgTable(
     licenseNumber: varchar("license_number", { length: 20 }).notNull(),
     licenseExpiresOn: timestamp("license_expires_on").notNull(),
     status: driverStatus().notNull().default(DriverStatusEnum.AVAILABLE),
-    licenseUrl: text("license_url"),
+    licensePhotoUrl: text("license_photo_url"),
     canDriveVehicleTypes: vehicleTypes()
       .array()
       .notNull()
@@ -732,7 +736,7 @@ export const expenses = pgTable(
     type: expenseTypes().notNull().default(ExpenseTypeEnum.OTHER),
     amount: integer("amount").notNull(), // in currency units
     remarks: text("remarks"),
-    photoUrl: text("photo_url"), //multiple docs
+    expensePhotoUrl: text("expense_photo_url"), //multiple docs
     isApproved: boolean("is_approved").notNull().default(false),
     ...timestamps,
   },
@@ -803,7 +807,7 @@ export const tripLogs = pgTable(
     odometerReading: integer("odometer_reading").notNull(), // in kilometers
     type: tripLogTypes().notNull(),
     remarks: text("remarks"),
-    photoUrl: text("photo_url"),
+    tripLogPhotoUrl: text("trip_log_photo_url"),
     latLong: varchar("lat_long", { length: 50 }), // "lat,long"
     ...timestamps,
   },
@@ -837,13 +841,13 @@ export const tripLogsRelations = relations(tripLogs, ({ one }) => ({
   }),
 }));
 
-export enum TrasactionTypesEnum {
+export enum TransactionTypesEnum {
   DEBIT = "debit",
   CREDIT = "credit",
 }
 export const transactionTypes = pgEnum("transaction_types", [
-  TrasactionTypesEnum.DEBIT,
-  TrasactionTypesEnum.CREDIT,
+  TransactionTypesEnum.DEBIT,
+  TransactionTypesEnum.CREDIT,
 ]);
 export enum TransactionsPartiesEnum {
   DRIVER = "driver",
@@ -892,10 +896,10 @@ export const transactions = pgTable(
     otherParty: transactionParties()
       .notNull()
       .default(TransactionsPartiesEnum.CUSTOMER),
-    type: transactionTypes().notNull().default(TrasactionTypesEnum.CREDIT),
+    type: transactionTypes().notNull().default(TransactionTypesEnum.CREDIT),
     mode: transactionModes().notNull().default(TransactionModesEnum.CASH),
     remarks: text("remarks"),
-    photosUrl: text("photos_url").array(), //multiple docs
+    transactionPhotoUrl: text("transaction_photo_url"),
     isApproved: boolean("is_approved").notNull().default(false),
     ...timestamps,
   },
@@ -967,17 +971,17 @@ export const locationRelations = relations(locations, ({ many }) => ({
   routeDestinations: many(routes, { relationName: "route_destination_fkey" }),
 }));
 
-//Vehicle Services table
-export const vehicleServiceIdSequence = pgSequence("vehicle_service_id_seq", {
+//Vehicle Repairs table
+export const vehicleRepairsIdSequence = pgSequence("vehicle_repair_id_seq", {
   ...sequenceValues,
 });
-export const vehicleServices = pgTable(
-  "vehicle_services",
+export const vehicleRepairs = pgTable(
+  "vehicle_repairs",
   {
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'VS' || nextval(${"vehicle_service_id_seq"})`;
+        return sql`'VR' || nextval(${"vehicle_repair_id_seq"})`;
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -995,29 +999,26 @@ export const vehicleServices = pgTable(
   },
   (t) => [
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
-    index("vehicle_services_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter vehicle services by vehicle in an agency
-    index("vehicle_services_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter vehicle services added by a user in an agency
-    index("vehicle_services_agency_start_date_idx").on(t.startDate, t.agencyId), // to quickly filter vehicle services by start date in an agency
-    index("vehicle_services_agency_end_date_idx").on(t.endDate, t.agencyId), // to quickly filter vehicle services by end date in an agency
+    index("vehicle_repairs_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter vehicle repairs by vehicle in an agency
+    index("vehicle_repairs_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter vehicle repairs added by a user in an agency
+    index("vehicle_repairs_agency_start_date_idx").on(t.startDate, t.agencyId), // to quickly filter vehicle repairs by start date in an agency
+    index("vehicle_repairs_agency_end_date_idx").on(t.endDate, t.agencyId), // to quickly filter vehicle repairs by end date in an agency
   ]
 );
-export const vehicleServiceRelations = relations(
-  vehicleServices,
-  ({ one }) => ({
-    agency: one(agencies, {
-      fields: [vehicleServices.agencyId],
-      references: [agencies.id],
-    }),
-    vehicle: one(vehicles, {
-      fields: [vehicleServices.vehicleId],
-      references: [vehicles.id],
-    }),
-    addedByUser: one(users, {
-      fields: [vehicleServices.addedByUserId],
-      references: [users.id],
-    }),
-  })
-);
+export const vehicleRepairsRelations = relations(vehicleRepairs, ({ one }) => ({
+  agency: one(agencies, {
+    fields: [vehicleRepairs.agencyId],
+    references: [agencies.id],
+  }),
+  vehicle: one(vehicles, {
+    fields: [vehicleRepairs.vehicleId],
+    references: [vehicles.id],
+  }),
+  addedByUser: one(users, {
+    fields: [vehicleRepairs.addedByUserId],
+    references: [users.id],
+  }),
+}));
 
 //Driver Leaves table
 export const driverLeaveIdSequence = pgSequence("driverLeave_id_seq", {
@@ -1105,8 +1106,8 @@ export type InsertTransactionType = typeof transactions.$inferInsert;
 export type SelectLocationType = typeof locations.$inferSelect;
 export type InsertLocationType = typeof locations.$inferInsert;
 
-export type SelectVehicleServiceType = typeof vehicleServices.$inferSelect;
-export type InsertVehicleServiceType = typeof vehicleServices.$inferInsert;
+export type SelectVehicleRepairType = typeof vehicleRepairs.$inferSelect;
+export type InsertVehicleRepairType = typeof vehicleRepairs.$inferInsert;
 
 export type SelectDriverLeaveType = typeof driverLeaves.$inferSelect;
 export type InsertDriverLeaveType = typeof driverLeaves.$inferInsert;

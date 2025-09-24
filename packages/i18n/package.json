@@ -6,8 +6,8 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "i18next": "^23.11.5",
-    "react-i18next": "^14.1.2"
+    "i18next": "^25.5.2",
+    "react-i18next": "^15.7.3"
   },
   "peerDependencies": {
     "react": ">=19",

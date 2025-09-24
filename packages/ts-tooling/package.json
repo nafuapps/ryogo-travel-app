@@ -1,5 +1,6 @@
 {
   "name": "@ryogo-travel-app/ts-tooling",
+  "version": "1.0.0",
   "private": true,
   "files": [
     "*.json"

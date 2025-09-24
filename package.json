@@ -6,6 +6,11 @@
     "apps/*",
     "packages/*"
   ],
+  "author": {
+    "name": "kakashiorion",
+    "email": "nitin.kool.1808@gmail.com",
+    "url": "https://github.com/kakashiorion"
+  },
   "description": "RyoGo Travel App Monorepo",
   "main": "index.js",
   "scripts": {
@@ -22,6 +27,6 @@
   "private": true,
   "devDependencies": {
     "turbo": "latest",
-    "typescript": "5.9.2"
+    "typescript": "^5.9.2"
   }
 }

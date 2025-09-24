@@ -4,17 +4,19 @@
   "description": "",
   "scripts": {},
   "dependencies": {
-    "@ryogo-travel-app/db": "*",
+    "@ryogo-travel-app/db": "1.0.0",
     "bcryptjs": "^3.0.2",
     "drizzle-orm": "^0.44.5",
-    "zod": "^4.1.8"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@types/node": "^20.19.13",
+    "@types/node": "^24.5.2",
     "typescript": "^5.9.2"
   },
   "exports": {
     ".": "./src/index.ts",
-    "./services/*": "./src/services/*.ts"
+    "./services/*": "./src/services/*.ts",
+    "./repositories/*": "./src/repositories/*.ts",
+    "./types/*": "./src/types/*.ts"
   }
 }

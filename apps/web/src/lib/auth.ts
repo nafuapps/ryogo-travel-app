@@ -7,7 +7,6 @@ import {
 } from "./session";
 import { cookies } from "next/headers";
 import { userServices } from "@ryogo-travel-app/api/services/user.services";
-import { sessionRepository } from "@ryogo-travel-app/api/repositories/session.repo";
 
 // Get current user from session
 export async function getCurrentUser() {
@@ -19,34 +18,23 @@ export async function getCurrentUser() {
   const payload = (await decrypt(session)) as SessionPayload | undefined;
   if (!payload) return null;
 
-  // S3: Get the user whose id matches the session's userId
-  const sessionRecord = await sessionRepository.getSessionById(
-    payload.sessionId
-  );
-
-  return sessionRecord[0]! || null;
+  // S3: Return payload as current user data
+  return payload;
 }
 
 // Login user - Create session and log login time in DB
-export async function login(
-  phone: string,
-  password: string,
-  role: string,
-  agencyId: string
-) {
+export async function login(userId: string, password: string) {
   //1. Try login
-  const userData = await userServices.checkLoginInDB(
-    phone,
-    password,
-    agencyId,
-    role
-  );
+  const userData = await userServices.checkLoginInDB(userId, password);
   if (!userData) {
     throw new Error("Login failed");
   }
 
   //2. create session
-  createWebSession(userData.id);
+  const token = await createWebSession(userData);
+  if (!token) return false;
+
+  //3. Return login success if token created
   return true;
 }
 

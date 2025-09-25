@@ -15,7 +15,12 @@
         "APIError": "Phone number not found"
       },
       "Step2": {
-        "PageTitle": "Login with Password",
+        "PageTitle": "Login",
+        "Info": "Select an account for login:",
+        "SecondaryCTA": "Back"
+      },
+      "Step3": {
+        "PageTitle": "Login",
         "Input": {
           "Title": "Enter password",
           "Placeholder": "********",
@@ -23,6 +28,7 @@
         },
         "PrimaryCTA": "Login",
         "Loading": "Loading",
+        "Back": "Back",
         "ForgotCTA": "Forgot Password?",
         "Error1": "Password must be at least 8 characters",
         "APIError": "Password does not match"
@@ -44,11 +50,10 @@
       },
       "Step2": {
         "PageTitle": "Signup",
-        "Info1": "You already have an account with us",
-        "InfoMany": "You already have a few accounts with us",
-        "PrimaryCTA": "Go to Login",
-        "SecondaryCTA1": "Create another account",
-        "SecondaryCTAMany": "Contact support",
+        "InfoYes": "You already have an owner account with us:",
+        "InfoNo": "You already have some accounts with us:",
+        "SecondaryCTANo": "Create another account",
+        "SecondaryCTAYes": "Contact support",
         "Description": "To create more accounts, you will need to contact our support team."
       }
     },
@@ -68,12 +73,12 @@
         "APIError": "Phone number not found"
       },
       "Step2": {
-        "PageTitle": "Email Verification",
-        "Info": "Let's get you a new password!",
+        "PageTitle": "Forgot password?",
+        "Info": "Don't worry..  We will get you a new password!",
         "Input": {
           "Title": "Enter email address",
           "Placeholder": "abcd@gmail.com",
-          "Description": "Confirm your registered email address"
+          "Description": "Provide your registered email address to confirm your identity and get a new password"
         },
         "PrimaryCTA": "Reset Password",
         "Loading": "Loading",

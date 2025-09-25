@@ -115,28 +115,36 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   tripLogs: many(tripLogs),
 }));
 
+export enum UserLangEnum {
+  ENGLISH = "en",
+  HINDI = "hi",
+  ASSAMESE = "as",
+}
+export const userLangs = pgEnum("user_langs", [
+  UserLangEnum.ENGLISH,
+  UserLangEnum.HINDI,
+  UserLangEnum.ASSAMESE,
+]);
 export enum UserRolesEnum {
   AGENT = "agent",
   OWNER = "owner",
-  ADMIN = "admin",
   DRIVER = "driver",
 }
 export const userRoles = pgEnum("user_roles", [
   UserRolesEnum.AGENT,
   UserRolesEnum.OWNER,
-  UserRolesEnum.ADMIN,
   UserRolesEnum.DRIVER,
 ]);
 export enum UserStatusEnum {
   NEW = "new",
   ACTIVE = "active",
-  EXPIRED = "expired",
+  INACTIVE = "inactive",
   SUSPENDED = "suspended",
 }
 export const userStatus = pgEnum("user_status", [
   UserStatusEnum.NEW,
   UserStatusEnum.ACTIVE,
-  UserStatusEnum.EXPIRED,
+  UserStatusEnum.INACTIVE,
   UserStatusEnum.SUSPENDED,
 ]);
 //Users table
@@ -159,6 +167,9 @@ export const users = pgTable(
     email: varchar("email", { length: 60 }).notNull(),
     password: text("password").notNull(),
     photoUrl: text("photo_url"),
+    isAdmin: boolean().default(false),
+    prefersDarkTheme: boolean().default(false),
+    languagePref: userLangs().notNull().default(UserLangEnum.ENGLISH),
     userRole: userRoles().notNull().default(UserRolesEnum.AGENT),
     status: userStatus().notNull().default(UserStatusEnum.NEW),
     lastLogin: timestamp("last_login"),

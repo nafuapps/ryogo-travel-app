@@ -1,18 +1,23 @@
 import { cookies } from "next/headers";
 import { jwtVerify, SignJWT } from "jose";
-import { randomBytes } from "crypto";
 import { sessionRepository } from "@ryogo-travel-app/api/repositories/session.repo";
+import { SelectUserType } from "@ryogo-travel-app/db/schema";
 
 const secretKey = process.env.AUTH_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export const SESSION_COOKIE_NAME = "session";
+export const LOCALE_COOKIE_NAME = "locale";
 export const SESSION_COOKIE_EXPIRATION = 7 * 24 * 60 * 60 * 1000;
 
 export type SessionPayload = {
   sessionId: string;
   userId: string;
   token: string;
+  agencyId: string;
+  userRole: string;
+  isAdmin: boolean;
+  status: string;
   expiresAt: Date;
 };
 
@@ -56,13 +61,14 @@ export async function getWebSession() {
 }
 
 //Create session both in cookie and database
-export async function createWebSession(userId: string) {
+export async function createWebSession(user: SelectUserType) {
   const expiresAt = new Date(Date.now() + SESSION_COOKIE_EXPIRATION);
-  const token = randomBytes(32).toString("hex");
+  // const token = randomBytes(32).toString("hex");
+  const token = crypto.randomUUID();
 
   // 1. Create a session in the database
   const sessionData = await sessionRepository.createSession({
-    userId,
+    userId: user.id,
     token,
     expiresAt,
   });
@@ -72,6 +78,10 @@ export async function createWebSession(userId: string) {
     sessionId: sessionData[0]!.id,
     token: sessionData[0]!.token,
     userId: sessionData[0]!.userId,
+    agencyId: user.agencyId,
+    isAdmin: user.isAdmin ?? false,
+    userRole: user.userRole.toString().toLowerCase(),
+    status: user.status.toString().toLowerCase(),
     expiresAt,
   });
 
@@ -83,6 +93,14 @@ export async function createWebSession(userId: string) {
     expires: expiresAt,
     sameSite: "lax",
     path: "/",
+  });
+
+  //4. Also set locale cookie
+  cookieStore.set(LOCALE_COOKIE_NAME, user.languagePref, {
+    maxAge: 31536000, // 1 year
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
   });
   return token;
 }

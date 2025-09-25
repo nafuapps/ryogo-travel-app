@@ -3,6 +3,7 @@ import {
   users,
   UserRolesEnum,
   InsertUserType,
+  UserStatusEnum,
 } from "@ryogo-travel-app/db/schema";
 import { eq, and, inArray } from "drizzle-orm";
 
@@ -80,10 +81,8 @@ export const userRepository = {
   },
 
   //Get users with agency data by roles and phone number
-  async getUserWithAgencyDataByRolesPhone(
-    phone: string,
-    userRoles: UserRolesEnum[]
-  ) {
+  async getUserAccountsByPhone(phone: string) {
+    console.log({ phone });
     return await db.query.users.findMany({
       columns: {
         id: true,
@@ -92,10 +91,20 @@ export const userRepository = {
         userRole: true,
         agencyId: true,
       },
-      where: and(eq(users.phone, phone), inArray(users.userRole, userRoles)),
+      where: eq(users.phone, phone),
       with: {
-        agency: { columns: { id: true, businessName: true } },
+        agency: { columns: { businessName: true } },
       },
+    });
+  },
+
+  //Get users with agency data by roles and phone number
+  async getUsersWithPhone(phone: string) {
+    return await db.query.users.findMany({
+      columns: {
+        id: true,
+      },
+      where: eq(users.phone, phone),
     });
   },
 

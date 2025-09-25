@@ -141,15 +141,18 @@ export const userServices = {
     ]);
   },
 
-  //Get users by phone number (Login flow step1)
-  async getUsersByPhoneNumber(phone: string) {
-    const users = await userRepository.getUserWithAgencyDataByRolesPhone(
-      phone,
-      [UserRolesEnum.AGENT, UserRolesEnum.OWNER, UserRolesEnum.DRIVER]
-    );
+  //Find login users by phone
+  async findUsersByPhone(phone: string) {
+    const users = await userRepository.getUsersWithPhone(phone);
     if (users.length < 1) {
       throw new Error("No user found with this phone number");
     }
+    return users;
+  },
+
+  //Find user accounts by phone
+  async findUserAccountsByPhone(phone: string) {
+    const users = await userRepository.getUserAccountsByPhone(phone);
     return users;
   },
 
@@ -310,27 +313,16 @@ export const userServices = {
   },
 
   //Validate user login with phone number, role and agencyId (Login flow last step)
-  async checkLoginInDB(
-    phone: string,
-    password: string,
-    agencyId: string,
-    userRole: string
-  ) {
-    //Step1: Find user with phone, agencyID and userRole
-    const userFound = await userRepository.getUserByPhoneRolesAgencyId(
-      phone,
-      [userRole as UserRolesEnum],
-      agencyId
-    );
+  async checkLoginInDB(userId: string, password: string) {
+    //Step1: Find user with userID
+    const userFound = await userRepository.getUserById(userId);
     // If no user found, cannot login
     if (!userFound) {
-      throw new Error("No user found with this phone number");
+      throw new Error("No user found with this id");
     }
     if (userFound.length > 1) {
       // !This is a major issue - multiple users with same phone and role in an agency
-      throw new Error(
-        "Multiple users found with this phone and role in this agency"
-      );
+      throw new Error("Multiple users found with this id in this agency");
     }
 
     //Step2: Check password
@@ -347,6 +339,39 @@ export const userServices = {
   //Logout in DB
   async checkLogoutInDB(userId: string) {
     await userRepository.updateLastLogout(userId, new Date());
+  },
+
+  //Reset password in DB
+  async matchEmail(userId: string, email: string) {
+    //Step1: Find user with userID
+    const emailFound = await userRepository.getUserById(userId);
+    // If no user found, cannot login
+    if (!emailFound) {
+      throw new Error("No user found with this id");
+    }
+    if (emailFound.length > 1) {
+      // !This is a major issue - multiple users with same phone and role in an agency
+      throw new Error("Multiple users found with this id in this agency");
+    }
+    //Step2: Match email
+    const valid = email == emailFound[0]!.email;
+    if (!valid) {
+      throw new Error("Email does not match");
+    }
+
+    //Step3: Generate a new password
+    const newPassword = generateNewPassword();
+    // TODO: Step4: send pwd in email
+
+    const passwordHash = await generatePasswordHash(newPassword);
+    const newUserData = await userRepository.updatePassword(
+      userId,
+      passwordHash
+    );
+    if (!newUserData) {
+      throw new Error("Could not reset password");
+    }
+    return newUserData[0]?.id;
   },
 
   //Update user photo url

@@ -1,0 +1,1 @@
+ALTER TABLE "vehicles" ALTER COLUMN "odometer_reading" SET DEFAULT 0;

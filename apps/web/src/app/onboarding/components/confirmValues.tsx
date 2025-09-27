@@ -7,9 +7,11 @@ interface ConfirmValuesProps {
 
 export default function ConfirmValues({ name, value }: ConfirmValuesProps) {
   return (
-    <div className="flex flex-row justify-between w-full items-start gap-5 lg:gap-6 last:text-right">
+    <div className="flex flex-row justify-between w-full items-start gap-5 lg:gap-6">
       <PBold>{name}</PBold>
-      <P>{value}</P>
+      <div className="text-right">
+        <P>{value}</P>
+      </div>
     </div>
   );
 }

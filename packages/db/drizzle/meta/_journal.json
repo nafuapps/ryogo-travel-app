@@ -50,6 +50,13 @@
       "when": 1758902115079,
       "tag": "0006_slow_night_nurse",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1758978501271,
+      "tag": "0007_lovely_cannonball",
+      "breakpoints": true
     }
   ]
 }

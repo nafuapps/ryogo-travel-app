@@ -34,21 +34,14 @@ export const vehicleRepository = {
     return await db.insert(vehicles).values(vehicle).returning();
   },
 
-  //Update vehicle Doc Urls
-  async updateVehicleDocsUrl(
+  //Update vehicle Docs Urls
+  async updateDocUrls(
     vehicleId: string,
-    rcPhotoUrl: string,
-    pucPhotoUrl: string,
-    insurancePhotoUrl: string,
-    vehiclePhotoUrl: string
+    rcPhotoUrl?: string,
+    pucPhotoUrl?: string,
+    insurancePhotoUrl?: string,
+    vehiclePhotoUrl?: string
   ) {
-    console.log({
-      vehicleId,
-      rcPhotoUrl,
-      pucPhotoUrl,
-      insurancePhotoUrl,
-      vehiclePhotoUrl,
-    });
     return await db
       .update(vehicles)
       .set({
@@ -56,6 +49,48 @@ export const vehicleRepository = {
         pucPhotoUrl: pucPhotoUrl,
         insurancePhotoUrl: insurancePhotoUrl,
         vehiclePhotoUrl: vehiclePhotoUrl,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({ id: vehicles.id });
+  },
+
+  //Update vehicle PUC Url
+  async updatePUCUrl(vehicleId: string, pucPhotoUrl: string) {
+    return await db
+      .update(vehicles)
+      .set({
+        pucPhotoUrl: pucPhotoUrl,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({ id: vehicles.id });
+  },
+
+  //Update vehicle RC Url
+  async updateRCUrl(vehicleId: string, rcPhotoUrl: string) {
+    return await db
+      .update(vehicles)
+      .set({
+        rcPhotoUrl: rcPhotoUrl,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({ id: vehicles.id });
+  },
+  //Update vehicle photo Url
+  async updateVehiclePhotoUrl(vehicleId: string, vehiclePhotoUrl: string) {
+    return await db
+      .update(vehicles)
+      .set({
+        vehiclePhotoUrl: vehiclePhotoUrl,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({ id: vehicles.id });
+  },
+  //Update vehicle Insurance Url
+  async updateInsuranceUrl(vehicleId: string, insurancePhotoUrl: string) {
+    return await db
+      .update(vehicles)
+      .set({
+        insurancePhotoUrl: insurancePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
       .returning({ id: vehicles.id });

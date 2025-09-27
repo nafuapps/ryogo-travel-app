@@ -54,25 +54,66 @@ export const vehicleServices = {
     return newVehicle[0];
   },
 
-  //Upload and update vehicle document by document type
-  async updateVehicleDocURLs(
+  //Update Vehicle doc URL
+  async renewVehicleDocURLs(
     vehicleId: string,
-    rcPhoto: string,
-    pucPhoto: string,
-    insurancePhoto: string,
-    vehiclePhoto: string
+    rcUrl?: string,
+    pucUrl?: string,
+    insuranceURL?: string,
+    vehiclePhotoUrl?: string
   ) {
-    const updatedVehicle = await vehicleRepository.updateVehicleDocsUrl(
+    const updatedVehicle = await vehicleRepository.updateDocUrls(
       vehicleId,
-      rcPhoto,
-      pucPhoto,
-      insurancePhoto,
-      vehiclePhoto
+      rcUrl,
+      pucUrl,
+      insuranceURL,
+      vehiclePhotoUrl
     );
-    console.log({ updatedVehicle });
+    if (!updatedVehicle) {
+      throw new Error("Failed to update rc url for this vehicle in DB");
+    }
+    return updatedVehicle[0];
+  },
+
+  //Update RC URL
+  async renewRcURL(vehicleId: string, url: string) {
+    const updatedVehicle = await vehicleRepository.updateRCUrl(vehicleId, url);
+    if (!updatedVehicle) {
+      throw new Error("Failed to update rc url for this vehicle in DB");
+    }
+    return updatedVehicle[0];
+  },
+
+  //Update PUC URL
+  async renewPucURL(vehicleId: string, url: string) {
+    const updatedVehicle = await vehicleRepository.updatePUCUrl(vehicleId, url);
+    if (!updatedVehicle) {
+      throw new Error("Failed to update puc url for this vehicle in DB");
+    }
+    return updatedVehicle[0];
+  },
+
+  //Update Insurance URL
+  async renewInsuranceURL(vehicleId: string, url: string) {
+    const updatedVehicle = await vehicleRepository.updateInsuranceUrl(
+      vehicleId,
+      url
+    );
+    if (!updatedVehicle) {
+      throw new Error("Failed to update insurance url for this vehicle in DB");
+    }
+    return updatedVehicle[0];
+  },
+
+  //Update Vehicle photo URL
+  async renewVehiclePhotoURL(vehicleId: string, url: string) {
+    const updatedVehicle = await vehicleRepository.updateVehiclePhotoUrl(
+      vehicleId,
+      url
+    );
     if (!updatedVehicle) {
       throw new Error(
-        "Failed to update any document url for this vehicle in DB"
+        "Failed to update vehicle photo url for this vehicle in DB"
       );
     }
     return updatedVehicle[0];

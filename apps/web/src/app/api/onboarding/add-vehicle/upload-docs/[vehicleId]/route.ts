@@ -36,6 +36,7 @@ export async function POST(
         `${vehicleId}/rc/${Date.now()}-${rc.name}`
       );
       rcUrl = data?.fullPath;
+      // await vehicleServices.renewRcURL(vehicleId, rcUrl);
     }
     if (puc) {
       const data = await uploadFile(
@@ -43,6 +44,7 @@ export async function POST(
         `${vehicleId}/puc/${Date.now()}-${puc.name}`
       );
       pucUrl = data?.fullPath;
+      // await vehicleServices.renewPucURL(vehicleId, pucUrl);
     }
     if (insurance) {
       const data = await uploadFile(
@@ -50,6 +52,7 @@ export async function POST(
         `${vehicleId}/insurance/${Date.now()}-${insurance.name}`
       );
       insuranceUrl = data?.fullPath;
+      // await vehicleServices.renewInsuranceURL(vehicleId, insuranceUrl);
     }
     if (vehiclePhoto) {
       const data = await uploadFile(
@@ -57,18 +60,17 @@ export async function POST(
         `${vehicleId}/vehiclePhoto/${Date.now()}-${vehiclePhoto.name}`
       );
       vehiclePhotoUrl = data?.fullPath;
+      // await vehicleServices.renewVehiclePhotoURL(vehicleId, vehiclePhotoUrl);
     }
 
-    //Update doc URLs in DB
-    const updatedId = await vehicleServices.updateVehicleDocURLs(
+    await vehicleServices.renewVehicleDocURLs(
       vehicleId,
       rcUrl,
       pucUrl,
       insuranceUrl,
       vehiclePhotoUrl
     );
-
-    return NextResponse.json({ id: updatedId }, { status: 201 });
+    return NextResponse.json({ id: vehicleId }, { status: 201 });
   } catch (err) {
     const errorMessage =
       typeof err === "object" && err !== null && "message" in err

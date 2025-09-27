@@ -25,7 +25,7 @@ export const agencyRepository = {
   //Get agency by phone and email
   async getAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
     return await db
-      .select()
+      .select({ id: agencies.id })
       .from(agencies)
       .where(
         and(

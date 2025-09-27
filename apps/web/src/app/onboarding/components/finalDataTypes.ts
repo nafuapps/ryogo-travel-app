@@ -8,7 +8,7 @@ export interface CreateAccountFinalDataType {
   agencyAddress: string;
   ownerPhoto: FileList | undefined;
   agencyLogo: FileList | undefined;
-  commissionRate: number;
+  commissionRate: number | undefined;
   agencyState: string;
   agencyCity: string;
   password: string;
@@ -16,6 +16,7 @@ export interface CreateAccountFinalDataType {
 }
 
 export interface AddVehicleFinalDataType {
+  agencyId: string;
   vehicleNumber: string;
   type: string;
   brand: string;
@@ -35,12 +36,13 @@ export interface AddVehicleFinalDataType {
 }
 
 export interface AddDriverFinalDataType {
+  agencyId: string;
   name: string;
   phone: string;
   email: string;
   driverPhotos: FileList | undefined;
   licenseNumber: string;
-  licenseExpiresOn: Date | undefined;
+  licenseExpiresOn: Date;
   licensePhotos: FileList | undefined;
   address: string;
   canDriveVehicleTypes: string[];
@@ -48,6 +50,7 @@ export interface AddDriverFinalDataType {
 }
 
 export interface AddAgentFinalDataType {
+  agencyId: string;
   name: string;
   phone: string;
   email: string;

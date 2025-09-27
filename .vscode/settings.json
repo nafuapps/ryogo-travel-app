@@ -22,5 +22,6 @@
   "postman.settings.dotenv-detection-notification-visibility": false,
 
   "i18n-ally.localesPaths": ["./packages/i18n/src/locales"], // E.g. "./messages"
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

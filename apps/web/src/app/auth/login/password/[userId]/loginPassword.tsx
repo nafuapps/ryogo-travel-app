@@ -1,4 +1,4 @@
-//Confirm Email page
+//Login password page
 "use client";
 
 import z from "zod";
@@ -16,87 +16,86 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { H2, H5, PGrey } from "@/components/typography";
+import { H2, H5 } from "@/components/typography";
+import Link from "next/link";
 import { redirect, RedirectType, useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
-import { ResetPasswordResponseAPIType } from "@ryogo-travel-app/api/types/user.types";
+import { LoginPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
-const userRegex = z.string().length(8).startsWith("U");
-const phoneRegex = z
-  .string()
-  .length(10)
-  .regex(/^[0-9]+$/);
+// TODO: Add a feature to show the user had recently reset password
 
-export default function ConfirmEmailPage() {
-  const searchParams = useSearchParams();
-  const phoneNumber = searchParams.get("phone");
-  const userId = searchParams.get("user");
+interface LoginComponentProps {
+  userId: string;
+}
+export default function LoginPasswordComponent(props: LoginComponentProps) {
+  const userId = props.userId;
 
-  if (
-    !phoneRegex.safeParse(phoneNumber).success ||
-    !userRegex.safeParse(userId).success
-  ) {
-    redirect("/auth/login", RedirectType.replace);
-  }
-
-  const t = useTranslations("Auth.ForgotPasswordPage.Step2");
+  const t = useTranslations("Auth.LoginPage.Step3");
   const formSchema = z.object({
-    email: z.email(t("Error1")),
+    password: z.string().min(8, t("Error1")),
   });
 
   type FormFields = z.infer<typeof formSchema>;
 
   const router = useRouter();
+
   // For managing form data and validation
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      password: "",
     },
   });
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    // Try Reset password
-    const resetSuccess = await apiClient<ResetPasswordResponseAPIType>(
-      "/api/auth/reset",
+    const loginResponse = await apiClient<LoginPasswordAPIResponseType>(
+      "/api/auth/login/password",
       {
         method: "POST",
-        body: JSON.stringify({ userId: userId, email: data.email }),
+        body: JSON.stringify({ userId: userId, password: data.password }),
       }
     );
-    if (resetSuccess.id) {
-      //Redirect to success page
-      router.replace("/auth/forgot-password/success");
+    if (loginResponse == null) {
+      // Show password match error
+      methods.setError("password", { type: "manual", message: t("APIError1") });
+    } else if (loginResponse.id == undefined) {
+      // Show user not found error
+      methods.setError("password", { type: "manual", message: t("APIError2") });
     } else {
-      // Show error
-      methods.setError("email", { type: "manual", message: t("APIError") });
+      //Login user
+      if (loginResponse.userRole === "driver") {
+        //Redirect to Rider page
+        redirect("/rider", RedirectType.replace);
+      } else {
+        console.log({ loginResponse });
+        //Redirect to Dashboard
+        redirect("/dashboard", RedirectType.replace);
+      }
     }
   };
 
   return (
-    <div id="ConfirmEmailPage" className="gap-4 w-full h-full">
+    <div id="LoginPasswordPage" className="gap-4 w-full h-full">
       <Form {...methods}>
         <form
-          id="ConfirmEmailForm"
+          id="LoginPasswordForm"
           onSubmit={methods.handleSubmit(onSubmit)}
           className="flex flex-col justify-between  h-full"
         >
           <H2>{t("PageTitle")}</H2>
           <FormField
             control={methods.control}
-            name={"email"}
+            name={"password"}
             render={({ field }) => (
               <FormItem>
-                <PGrey>{t("Info")}</PGrey>
                 <FormLabel>
                   <H5>{t("Input.Title")}</H5>
                 </FormLabel>
                 <FormControl>
                   <Input
-                    type="email"
+                    type="password"
                     placeholder={t("Input.Placeholder")}
                     {...field}
                   />
@@ -106,7 +105,7 @@ export default function ConfirmEmailPage() {
               </FormItem>
             )}
           />
-          <div id="ConfirmEmailActions" className="flex flex-col gap-4 w-full">
+          <div id="LoginPasswordActions" className="flex flex-col gap-4 w-full">
             <Button
               variant={"default"}
               size={"lg"}
@@ -125,6 +124,11 @@ export default function ConfirmEmailPage() {
               }}
             >
               {t("Back")}
+            </Button>
+            <Button variant={"link"}>
+              <Link href={`/auth/forgot-password/confirm-email/${userId}`}>
+                {t("ForgotCTA")}
+              </Link>
             </Button>
           </div>
         </form>

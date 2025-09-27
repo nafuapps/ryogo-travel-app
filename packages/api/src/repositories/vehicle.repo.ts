@@ -19,7 +19,7 @@ export const vehicleRepository = {
   //Get vehicle by number in an agency
   async getVehicleByNumberInAgency(agencyId: string, vehicleNumber: string) {
     return await db
-      .select()
+      .select({ id: vehicles.id })
       .from(vehicles)
       .where(
         and(
@@ -37,11 +37,18 @@ export const vehicleRepository = {
   //Update vehicle Doc Urls
   async updateVehicleDocsUrl(
     vehicleId: string,
-    rcPhotoUrl?: string,
-    pucPhotoUrl?: string,
-    insurancePhotoUrl?: string,
-    vehiclePhotoUrl?: string
+    rcPhotoUrl: string,
+    pucPhotoUrl: string,
+    insurancePhotoUrl: string,
+    vehiclePhotoUrl: string
   ) {
+    console.log({
+      vehicleId,
+      rcPhotoUrl,
+      pucPhotoUrl,
+      insurancePhotoUrl,
+      vehiclePhotoUrl,
+    });
     return await db
       .update(vehicles)
       .set({
@@ -51,31 +58,6 @@ export const vehicleRepository = {
         vehiclePhotoUrl: vehiclePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
-      .returning();
+      .returning({ id: vehicles.id });
   },
-
-  // //Update insurance Url
-  // async updateInsurancePhotoUrl(vehicleId: string, insurancePhotoUrl: string) {
-  //   return await db
-  //     .update(vehicles)
-  //     .set({ insurancePhotoUrl: insurancePhotoUrl })
-  //     .where(eq(vehicles.id, vehicleId))
-  //     .returning();
-  // },
-  // //Update puc Url
-  // async updatePucPhotoUrl(vehicleId: string, pucPhotoUrl: string) {
-  //   return await db
-  //     .update(vehicles)
-  //     .set({ pucPhotoUrl: pucPhotoUrl })
-  //     .where(eq(vehicles.id, vehicleId))
-  //     .returning();
-  // },
-  // //Update vehicle insurance Url
-  // async updateVehiclePhotoUrl(vehicleId: string, vehiclePhotoUrl: string) {
-  //   return await db
-  //     .update(vehicles)
-  //     .set({ vehiclePhotoUrl: vehiclePhotoUrl })
-  //     .where(eq(vehicles.id, vehicleId))
-  //     .returning();
-  // },
 };

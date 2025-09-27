@@ -33,6 +33,7 @@ export default function OnboardingSidebar({
       id="OnboardingSidebarSection"
       className="w-full md:flex md:w-1/2 px-8 py-10 md:p-12 lg:p-16 md:h-full md:flex-col gap-8 lg:gap-10 bg-slate-50 hidden"
     >
+      {/* TODO: Add Logo */}
       <Skeleton className="w-72 h-14 lg:w-80 lg:h-16 bg-slate-200" />
       <H3Grey>{t("Heading")}</H3Grey>
       <div

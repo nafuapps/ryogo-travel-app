@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { agencyServices } from "@ryogo-travel-app/api/services/agencyServices";
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services";
 
 export async function GET() {
   try {
-    const allAgencies = await agencyServices.getAllAgencies();
+    const allAgencies = await agencyServices.getActiveAgencies();
     return NextResponse.json(allAgencies);
   } catch (error) {
     return NextResponse.json({

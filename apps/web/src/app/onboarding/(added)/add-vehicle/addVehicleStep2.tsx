@@ -35,10 +35,10 @@ export function AddVehicleStep2(props: {
       .positive(t("Field1.Error5")),
     odometerReading: z.coerce
       .number<number>(t("Field2.Error1"))
-      .min(1, t("Field2.Error2"))
+      .min(0, t("Field2.Error2"))
       .max(1000000, t("Field2.Error3"))
       .multipleOf(1, t("Field2.Error4"))
-      .positive(t("Field2.Error5")),
+      .nonnegative(t("Field2.Error5")),
     rcPhotos: z
       .instanceof(FileList)
       .refine((file) => {

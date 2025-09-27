@@ -28,17 +28,19 @@ export function AddVehicleStep4(props: {
   const step4Schema = z.object({
     defaultRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(1, t("Field1.Error2"))
+      .min(0, t("Field1.Error2"))
       .max(50, t("Field1.Error3"))
-      .positive(t("Field1.Error4"))
-      .multipleOf(1, t("Field1.Error5")),
+      .nonnegative(t("Field1.Error4"))
+      .multipleOf(1, t("Field1.Error5"))
+      .optional(),
     hasAC: z.boolean(),
     extraAcChargePerDay: z.coerce
-      .number<number>(t("Field3.Error1"))
-      .min(1, t("Field3.Error2"))
+      .number<number>()
+      .min(0, t("Field3.Error2"))
       .max(10000, t("Field3.Error3"))
-      .positive(t("Field3.Error4"))
-      .multipleOf(1, t("Field3.Error5")),
+      .nonnegative(t("Field3.Error4"))
+      .multipleOf(1, t("Field3.Error5"))
+      .optional(),
   });
   type Step4Type = z.infer<typeof step4Schema>;
   const formData = useForm<Step4Type>({

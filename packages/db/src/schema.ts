@@ -289,9 +289,9 @@ export const vehicles = pgTable(
     brand: varchar("brand", { length: 15 }).notNull(),
     model: varchar("model", { length: 30 }).notNull(),
     color: varchar("color", { length: 15 }).notNull(),
-    insuranceExpiresOn: timestamp("insurance_expires_on"),
-    pucExpiresOn: timestamp("puc_expires_on"),
-    odometerReading: integer("odometer_reading").notNull(), // in kilometers
+    insuranceExpiresOn: date("insurance_expires_on", { mode: "string" }),
+    pucExpiresOn: date("puc_expires_on", { mode: "string" }),
+    odometerReading: integer("odometer_reading").notNull().default(0), // in kilometers
     capacity: integer("capacity").notNull().default(4), //number of seats
     hasAC: boolean("has_ac").notNull(),
     type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
@@ -377,7 +377,7 @@ export const drivers = pgTable(
     phone: varchar("phone", { length: 10 }).notNull(),
     address: varchar("address", { length: 300 }).notNull(),
     licenseNumber: varchar("license_number", { length: 20 }).notNull(),
-    licenseExpiresOn: timestamp("license_expires_on").notNull(),
+    licenseExpiresOn: date("license_expires_on").notNull(),
     status: driverStatus().notNull().default(DriverStatusEnum.AVAILABLE),
     licensePhotoUrl: text("license_photo_url"),
     canDriveVehicleTypes: vehicleTypes()

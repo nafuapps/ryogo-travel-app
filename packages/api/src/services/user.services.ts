@@ -4,26 +4,7 @@ import { userRepository } from "../repositories/user.repo";
 import { agencyServices } from "./agency.services";
 import { uploadFile } from "@ryogo-travel-app/db/storage";
 import { driverServices } from "./driver.services";
-
-export type OnboardingAccountCreationType = {
-  agency: {
-    businessName: string;
-    businessPhone: string;
-    businessEmail: string;
-    businessAddress: string;
-    businessLogo?: FileList | undefined;
-    commissionRate?: number;
-    agencyState: string;
-    agencyCity: string;
-  };
-  owner: {
-    name: string;
-    phone: string;
-    email: string;
-    photo?: FileList | undefined;
-    password: string;
-  };
-};
+import { OnboardingCreateAccountAPIRequestType } from "../types/user.types";
 
 export type OnboardingAddAgentType = {
   name: string;
@@ -141,10 +122,26 @@ export const userServices = {
     ]);
   },
 
+  // ? Onboarding flow
+  //Find owner by phone and email
+  async findOwnerByPhoneEmail(phone: string, email: string) {
+    const owners = await userRepository.getUserByPhoneRoleEmail(
+      phone,
+      [UserRolesEnum.OWNER],
+      email
+    );
+    if (owners.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple owners found with same phone and email");
+    }
+    return owners;
+  },
+
+  // ? Login flow Step1
   //Find login users by phone
   async findUsersByPhone(phone: string) {
     const users = await userRepository.getUsersWithPhone(phone);
-    if (users.length < 1) {
+    if (!users || users.length < 1) {
       throw new Error("No user found with this phone number");
     }
     return users;
@@ -153,24 +150,28 @@ export const userServices = {
   //Find user accounts by phone
   async findUserAccountsByPhone(phone: string) {
     const users = await userRepository.getUserAccountsByPhone(phone);
+    if (!users) {
+      return [];
+    }
     return users;
   },
 
-  //Create Agency and Owner (Onboarding flow)
-  async addAgencyAndOwnerAccount(data: OnboardingAccountCreationType) {
-    //Step1: Check if user already exists with this phone, email and role
-    const existingUsers = await userRepository.getUserByPhoneRoleEmail(
-      data.owner.phone,
-      [UserRolesEnum.OWNER],
-      data.owner.email
-    );
-    if (existingUsers.length > 0) {
-      throw new Error(
-        "Owner with same phone, already exists.. try a different phone or email"
-      );
-    }
+  // ? Onboarding flow - Create Account
+  //Create Agency and Owner Account
+  async addAgencyAndOwnerAccount(data: OnboardingCreateAccountAPIRequestType) {
+    // //Step1: Check if user already exists with this phone, email and role
+    // const existingUsers = await userRepository.getUserByPhoneRoleEmail(
+    //   data.owner.phone,
+    //   [UserRolesEnum.OWNER],
+    //   data.owner.email
+    // );
+    // if (existingUsers.length > 0) {
+    //   throw new Error(
+    //     "Owner with same phone, already exists.. try a different phone or email"
+    //   );
+    // }
 
-    //Step2: Create agency
+    //Step2: Try to Create agency
     const newAgency = await agencyServices.createAgency(data.agency);
 
     //Step3: Prepare owner data
@@ -187,18 +188,17 @@ export const userServices = {
 
     //Step4: Create the owner
     const owner = await userRepository.createUser(ownerData);
-    if (owner.length < 1) {
+    if (!owner || owner.length < 1) {
       throw new Error("Failed to create owner for this agency");
-    }
-
-    //Step5: Upload owner photo on Storage and update photo url in user
-    if (data.owner.photo) {
-      userServices.updateUserPhoto(owner[0]!.id, data.owner.photo);
     }
 
     // TODO Step6: Send welcome mail to the owner
 
-    return { agency: newAgency, owner: owner[0] };
+    return {
+      agencyId: newAgency!.id,
+      userId: owner[0]!.id,
+      password: data.owner.password,
+    };
   },
 
   //Create Agent (Onboarding flow)
@@ -312,13 +312,14 @@ export const userServices = {
     return newDriver;
   },
 
-  //Validate user login with phone number, role and agencyId (Login flow last step)
+  // ?(Login flow step3)
+  //Validate user login with userId and password
   async checkLoginInDB(userId: string, password: string) {
     //Step1: Find user with userID
     const userFound = await userRepository.getUserById(userId);
     // If no user found, cannot login
-    if (!userFound) {
-      throw new Error("No user found with this id");
+    if (!userFound || userFound.length < 1) {
+      return userFound;
     }
     if (userFound.length > 1) {
       // !This is a major issue - multiple users with same phone and role in an agency
@@ -328,12 +329,13 @@ export const userServices = {
     //Step2: Check password
     const valid = await bcrypt.compare(password, userFound[0]!.password);
     if (!valid) {
-      throw new Error("Password does not match");
+      return null;
     }
     //Step3: Update last login
     await userRepository.updateLastLogin(userFound[0]!.id, new Date());
+
     //Step4: Return user details
-    return userFound[0];
+    return userFound;
   },
 
   //Logout in DB
@@ -341,55 +343,50 @@ export const userServices = {
     await userRepository.updateLastLogout(userId, new Date());
   },
 
-  //Reset password in DB
-  async matchEmail(userId: string, email: string) {
+  // ? (Reset password API flow)
+  async resetPassword(userId: string, email: string) {
     //Step1: Find user with userID
     const emailFound = await userRepository.getUserById(userId);
-    // If no user found, cannot login
-    if (!emailFound) {
+    // If no user found, cannot reset password
+    if (!emailFound || emailFound.length < 1) {
       throw new Error("No user found with this id");
     }
     if (emailFound.length > 1) {
-      // !This is a major issue - multiple users with same phone and role in an agency
+      // !This is a major issue - multiple users with same userId in an agency
       throw new Error("Multiple users found with this id in this agency");
     }
+
     //Step2: Match email
     const valid = email == emailFound[0]!.email;
     if (!valid) {
-      throw new Error("Email does not match");
+      throw new Error("Provided email does not match our records");
     }
 
     //Step3: Generate a new password
     const newPassword = generateNewPassword();
+
     // TODO: Step4: send pwd in email
 
+    //Step5: Store new password in DB
     const passwordHash = await generatePasswordHash(newPassword);
     const newUserData = await userRepository.updatePassword(
       userId,
       passwordHash
     );
     if (!newUserData) {
-      throw new Error("Could not reset password");
+      throw new Error("Could not reset password in DB");
     }
-    return newUserData[0]?.id;
+
+    //Return userId as reset confirmation
+    return newUserData[0]!.id;
   },
 
   //Update user photo url
-  async updateUserPhoto(userId: string, photo: FileList) {
-    const getUser = await userRepository.getUserById(userId);
-    if (!getUser) {
-      throw new Error("User not found");
-    }
-    // Upload photo on SB storage
-    const filePath = `${getUser}/photo}`;
-    const uploadResult = await uploadFile(photo[0]!, filePath);
-    const updatedUser = await userRepository.updatePhotoUrl(
-      userId,
-      uploadResult.fullPath
-    );
+  async updateUserPhoto(userId: string, url: string) {
+    const updatedUser = await userRepository.updatePhotoUrl(userId, url);
     if (!updatedUser) {
       throw new Error("Failed to update photo url for this user");
     }
-    return updatedUser[0];
+    return updatedUser[0]?.id;
   },
 };

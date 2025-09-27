@@ -11,7 +11,7 @@ interface AccountCardProps {
 }
 export const AccountCard = (props: AccountCardProps) => {
   return (
-    <Link href={`/login/password?user=${props.userId}&phone=${props.phone}`}>
+    <Link href={`/auth/login/password/${props.userId}`}>
       <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between shadow rounded-md p-4 lg:p-5">
         <div className="flex flex-col justify-between gap-2 lg:gap-3 items-start">
           <H5>{props.name}</H5>

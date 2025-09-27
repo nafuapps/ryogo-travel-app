@@ -53,7 +53,8 @@ export function CreateAccountStep3(props: {
       .min(1, t("Field2.Error2"))
       .max(100, t("Field2.Error3"))
       .positive(t("Field2.Error4"))
-      .multipleOf(1, t("Field2.Error5")),
+      .multipleOf(1, t("Field2.Error5"))
+      .optional(),
     agencyState: z.string().min(1, t("Field3.Error1")),
     agencyCity: z.string().min(1, t("Field4.Error1")),
   });
@@ -71,7 +72,6 @@ export function CreateAccountStep3(props: {
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    console.log({ data });
     props.updateFinalData({
       ...props.finalData,
       agencyLogo: data.agencyLogo,

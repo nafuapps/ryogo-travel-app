@@ -19,6 +19,8 @@ import {
 } from "../components/onboardingSteps";
 import { CreateAccountFinalDataType } from "../components/finalDataTypes";
 import { Form } from "@/components/ui/form";
+import { apiClient } from "@/lib/apiClient";
+import { OnboardingExistingAgencyAPIResponseType } from "@ryogo-travel-app/api/types/agency.types";
 
 export function CreateAccountStep2(props: {
   onNext: () => void;
@@ -100,14 +102,27 @@ export function CreateAccountStep2(props: {
   }, [emailCopySelection, emailSourceValue, setValue]);
 
   //Submit actions
-  const onSubmit = (data: Step2Type) => {
-    props.updateFinalData({
-      ...props.finalData,
-      agencyPhone: data.agencyPhone,
-      agencyEmail: data.agencyEmail,
-      agencyAddress: data.agencyAddress,
-    });
-    props.onNext();
+  const onSubmit = async (data: Step2Type) => {
+    const existingAgeny =
+      await apiClient<OnboardingExistingAgencyAPIResponseType>(
+        `/api/onboarding/create-account/existing-agency?phone=${data.agencyPhone}&email=${data.agencyEmail}`,
+        { method: "GET" }
+      );
+    if (existingAgeny.length > 0) {
+      formData.setError("agencyPhone", {
+        type: "manual",
+        message: t("APIError"),
+      });
+    } else {
+      props.updateFinalData({
+        ...props.finalData,
+        agencyPhone: data.agencyPhone,
+        agencyEmail: data.agencyEmail,
+        agencyAddress: data.agencyAddress,
+        ownerPhoto: data.ownerPhoto,
+      });
+      props.onNext();
+    }
   };
 
   return (

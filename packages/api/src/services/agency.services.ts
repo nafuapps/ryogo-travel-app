@@ -20,22 +20,37 @@ export const agencyServices = {
     return await agencyRepository.getAgenciesByStatus(AgencyStatusEnum.ACTIVE);
   },
 
+  // ? Onboarding flow
+  //Find agency by phone and email
+  async findAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
+    const agencies = await agencyRepository.getAgencyByPhoneEmail(
+      businessPhone,
+      businessEmail
+    );
+    if (agencies.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple agencies found");
+    }
+    return agencies;
+  },
+
+  // ? Onboarding flow
   //Create agency
   async createAgency(data: CreateAgencyType) {
-    //Step1: Check if another agency exists with same phone and email
-    const existingAgencies = await agencyRepository.getAgencyByPhoneEmail(
-      data.businessPhone,
-      data.businessEmail
-    );
-    if (existingAgencies.length > 1) {
-      // !This is a major issue
-      throw new Error(
-        "Multiple agencies with same phone and email already exists"
-      );
-    }
-    if (existingAgencies.length > 0) {
-      throw new Error("An agency with same phone and email already exists");
-    }
+    // //Step1: Check if another agency exists with same phone and email
+    // const existingAgencies = await agencyRepository.getAgencyByPhoneEmail(
+    //   data.businessPhone,
+    //   data.businessEmail
+    // );
+    // if (existingAgencies.length > 1) {
+    //   // !This is a major issue
+    //   throw new Error(
+    //     "Multiple agencies with same phone and email already exists"
+    //   );
+    // }
+    // if (existingAgencies.length > 0) {
+    //   throw new Error("An agency with same phone and email already exists");
+    // }
 
     //Step2: Get location id from city, state
     const location = await locationRepository.getLocationByCityState(
@@ -50,7 +65,7 @@ export const agencyServices = {
       throw new Error("Multiple locations found");
     }
 
-    //Step3: Prepare agency data (Trial, 30 day expiry, New)
+    //Step3: Prepare agency data (Trial subscription with 30 day expiry, Status New)
     const createAgencyData = {
       businessEmail: data.businessEmail,
       businessPhone: data.businessPhone,
@@ -63,14 +78,10 @@ export const agencyServices = {
 
     //Step4: create a new agency
     const newAgency = await agencyRepository.createAgency(createAgencyData);
-    if (newAgency.length < 1) {
+    if (!newAgency || newAgency.length < 1) {
       throw new Error("Failed to create new agency");
     }
 
-    //Step5: Upload agency logo on Storage and update logo url in agency
-    if (data.businessLogo) {
-      agencyServices.updateAgencyLogo(newAgency[0]!.id, data.businessLogo);
-    }
     return newAgency[0];
   },
 
@@ -82,22 +93,15 @@ export const agencyServices = {
     );
   },
 
-  async updateAgencyLogo(agencyId: string, logoFile: FileList) {
-    const getAgency = await agencyRepository.getAgencyById(agencyId);
-    if (!getAgency) {
-      throw new Error("Agency not found");
-    }
-    // Upload logo on SB storage
-    const filePath = `${agencyId}/logo}`;
-    const uploadResult = await uploadFile(logoFile[0]!, filePath);
+  async updateAgencyLogo(agencyId: string, url: string) {
     const updatedAgency = await agencyRepository.updateAgencyLogoUrl(
       agencyId,
-      uploadResult.fullPath
+      url
     );
     if (!updatedAgency) {
       throw new Error("Failed to update logo url for this agency");
     }
-    return updatedAgency[0];
+    return updatedAgency[0]?.id;
   },
 
   //Increase subscription of an agency by N days

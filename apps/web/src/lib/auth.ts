@@ -7,6 +7,7 @@ import {
 } from "./session";
 import { cookies } from "next/headers";
 import { userServices } from "@ryogo-travel-app/api/services/user.services";
+import { redirect, RedirectType } from "next/navigation";
 
 // Get current user from session
 export async function getCurrentUser() {
@@ -22,20 +23,31 @@ export async function getCurrentUser() {
   return payload;
 }
 
-// Login user - Create session and log login time in DB
+// Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {
-  //1. Try login
-  const userData = await userServices.checkLoginInDB(userId, password);
-  if (!userData) {
-    throw new Error("Login failed");
+  try {
+    //1. Try login
+    const userData = await userServices.checkLoginInDB(userId, password);
+    if (userData == null) {
+      return null;
+    }
+    if (userData.length < 1) {
+      return {};
+    }
+    //2. create session
+    const token = await createWebSession(userData[0]!);
+    if (!token) return null;
+
+    //3. Return login success if token created
+    return {
+      id: userData[0]!.id,
+      userRole: userData[0]!.userRole.toString().toLowerCase(),
+    };
+  } catch (error) {
+    console.log(error);
+    //No user found with this id.. redirect to login page
+    redirect("/auth/login", RedirectType.replace);
   }
-
-  //2. create session
-  const token = await createWebSession(userData);
-  if (!token) return false;
-
-  //3. Return login success if token created
-  return true;
 }
 
 // Logout user - Delete session and log last logout time in DB

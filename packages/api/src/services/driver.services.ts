@@ -67,19 +67,15 @@ export const driverServices = {
   },
 
   //Upload driver license photo
-  async updateDriverLicensePhoto(driverId: string, licensePhoto: FileList) {
-    const getDriver = await driverRepository.getDriverById(driverId);
-    if (!getDriver) {
-      throw new Error("Driver not found");
-    }
-    // Upload license photo on SB storage
-    const filePath = `${driverId}/license}`;
-    const uploadResult = await uploadFile(licensePhoto[0]!, filePath);
+  async updateDriverLicensePhoto(
+    driverId: string,
+    licenseUrl?: string | undefined
+  ) {
     const updatedDriver = await driverRepository.updateDriverLicenseUrl(
       driverId,
-      uploadResult.fullPath
+      licenseUrl
     );
-    if (!updatedDriver) {
+    if (!updatedDriver || updatedDriver.length < 1) {
       throw new Error("Failed to update license url for this driver");
     }
     return updatedDriver[0];

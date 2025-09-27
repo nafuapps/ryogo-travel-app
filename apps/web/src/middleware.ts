@@ -7,7 +7,7 @@ const protectedRoutes = [
   "/onboarding/add-driver",
   "/onboarding/add-vehicle",
 ];
-const publicRoutes = ["/onboarding/create-account"];
+const publicRoutes = ["/onboarding/create-account", "/onboarding", "/"];
 
 export default async function middleware(req: NextRequest) {
   // 2. Check if the current route is protected or public
@@ -41,7 +41,14 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-next-pathname", path);
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 // Routes Middleware should not run on

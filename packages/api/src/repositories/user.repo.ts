@@ -43,7 +43,7 @@ export const userRepository = {
     email: string
   ) {
     return await db
-      .select()
+      .select({ id: users.id })
       .from(users)
       .where(
         and(
@@ -82,7 +82,6 @@ export const userRepository = {
 
   //Get users with agency data by roles and phone number
   async getUserAccountsByPhone(phone: string) {
-    console.log({ phone });
     return await db.query.users.findMany({
       columns: {
         id: true,
@@ -137,7 +136,7 @@ export const userRepository = {
       .update(users)
       .set({ password: password })
       .where(eq(users.id, userId))
-      .returning();
+      .returning({ id: users.id });
   },
 
   //Update password

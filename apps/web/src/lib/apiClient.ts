@@ -12,3 +12,14 @@ export async function apiClient<T>(
 
   return res.json() as Promise<T>;
 }
+
+export async function apiClientWithoutHeaders<T>(
+  url: string,
+  options?: RequestInit
+): Promise<T> {
+  const res = await fetch(url, {
+    ...options,
+  });
+
+  return res.json() as Promise<T>;
+}

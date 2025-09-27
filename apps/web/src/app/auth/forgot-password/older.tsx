@@ -45,13 +45,10 @@ export default function ForgotPasswordPage() {
 
   //Submit actions
   const onSubmit = (data: FormFields) => {
-    console.log({ data });
     // TODO: Find phone number in DB
     if (data.phoneNumber == "1234567890") {
       // If found, go to password page
-      router.push(
-        `/auth/forgot-password/confirm-email?phone=${data.phoneNumber}`
-      );
+      router.push(`/auth/forgot-password/confirm-email/${data.phoneNumber}`);
     } else {
       // else, Show error
       methods.setError("phoneNumber", {

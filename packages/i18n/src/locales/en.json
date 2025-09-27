@@ -1,5 +1,11 @@
 {
   "Auth": {
+    "Sidebar": {
+      "TitleLogin": "Don't have an account yet? Join now!",
+      "TitleSignup": "Already have an account?",
+      "CTALogin": "Sign up",
+      "CTASignup": "Go to Login"
+    },
     "LoginPage": {
       "Step1": {
         "PageTitle": "Login",
@@ -31,7 +37,8 @@
         "Back": "Back",
         "ForgotCTA": "Forgot Password?",
         "Error1": "Password must be at least 8 characters",
-        "APIError": "Password does not match"
+        "APIError1": "Password does not match",
+        "APIError2": "User does not exist.. Try logging in with a different phone number"
       }
     },
     "SignupPage": {
@@ -153,7 +160,7 @@
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
-        "APIError": "Owner account with this phone and email already exists"
+        "APIError": "An owner account with this phone and email already exists"
       },
       "Step2": {
         "Field1": {
@@ -252,7 +259,8 @@
         "CommissionRate": "Commission Rate (%)",
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
-        "Loading": "Loading"
+        "Loading": "Loading",
+        "APIError": "Account could not be created.. Please try again"
       },
       "Finish": {
         "Title": "Congratulations!",
@@ -295,7 +303,7 @@
           "Title": "Vehicle model",
           "Placeholder": "City 2017",
           "Description": "Provide vehicle model and variant",
-          "Error1": "Vehicle model must be atleast 5 characters",
+          "Error1": "Vehicle model must be atleast 3 characters",
           "Error2": "Vehicle model must be less than 30 characters"
         },
         "PrimaryCTA": "Continue",
@@ -318,7 +326,7 @@
           "Placeholder": "10000",
           "Description": "Check your odometer and enter the current reading",
           "Error1": "Odometer reading is required",
-          "Error2": "Odometer must be atleast 1Km",
+          "Error2": "Odometer must be atleast 0Km",
           "Error3": "Odometer must be less than 1000000Km",
           "Error4": "Odometer cannot be in decimals (round it up)",
           "Error5": "Odometer must be a positive number"
@@ -384,7 +392,7 @@
           "Placeholder": "18",
           "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer. You can always change it later.",
           "Error1": "Vehicle Charge must be a number",
-          "Error2": "Vehicle Charge must be atleast 1Rs.",
+          "Error2": "Vehicle Charge must be atleast 0.",
           "Error3": "Vehicle Charge must be less than 50Rs",
           "Error4": "Vehicle Charge cannot be in decimals",
           "Error5": "Vehicle Charge must be a positive number"
@@ -394,10 +402,10 @@
         },
         "Field3": {
           "Title": "AC charge per day (in Rs.)",
-          "Placeholder": "18",
+          "Placeholder": "1000",
           "Description": "Based on customer's AC preference, this per day charge will be added to the booking quote.",
           "Error1": "AC Charge must be a number",
-          "Error2": "AC Charge must be atleast 1Rs.",
+          "Error2": "AC Charge must be atleast 0",
           "Error3": "AC Charge must be less than 10000Rs",
           "Error4": "AC Charge cannot be in decimals",
           "Error5": "AC Charge must be a positive number"
@@ -422,7 +430,8 @@
         "ACChagePerDay": "AC Charge Per Day",
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
-        "Loading": "Loading"
+        "Loading": "Loading",
+        "APIError": "Vehicle could not be added.. Please try again later"
       },
       "Finish": {
         "Title": "Congratulations!",
@@ -618,6 +627,6 @@
     }
   },
   "Landing": {
-    "title": ""
+    "title": "Hello!"
   }
 }

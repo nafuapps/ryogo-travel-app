@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Password Reset Success Page",
+  title: "Password Reset Success Page | RyoGo",
   description: "Password Reset Success page for RyoGo Travel App",
 };
 

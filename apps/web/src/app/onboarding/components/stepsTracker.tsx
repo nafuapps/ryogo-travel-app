@@ -1,7 +1,7 @@
-interface StepsTrackerProps {
+type StepsTrackerProps = {
   total: number;
   current: number;
-}
+};
 export default function StepsTracker({ total, current }: StepsTrackerProps) {
   return (
     <div className="flex flex-row items-center gap-2 w-full">

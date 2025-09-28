@@ -2,13 +2,13 @@ import { Caption, H5, SmallGrey } from "@/components/typography";
 import { LucideChevronRight } from "lucide-react";
 import Link from "next/link";
 
-interface AccountCardProps {
+type AccountCardProps = {
   phone: string;
   userId: string;
   name: string;
   userRole: string;
   agencyName: string;
-}
+};
 export const AccountCard = (props: AccountCardProps) => {
   return (
     <Link href={`/auth/login/password/${props.userId}`}>

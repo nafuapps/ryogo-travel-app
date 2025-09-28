@@ -42,7 +42,7 @@ export async function decrypt(session: string | undefined = "") {
   }
 }
 
-//Get session from DB
+//Get session from DB by token
 export async function getWebSession() {
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   const payload = (await decrypt(session)) as SessionPayload | undefined;
@@ -127,6 +127,35 @@ export async function updateWebSession() {
     httpOnly: true,
     secure: true,
     expires: expires,
+    sameSite: "lax",
+    path: "/",
+  });
+}
+
+//Update user status in session
+export async function updateSessionUserStatus(newStatus: string) {
+  // 1. Get session from cookie
+  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  const payload = (await decrypt(session)) as SessionPayload | undefined;
+
+  if (!session || !payload) {
+    return null;
+  }
+
+  // 2. Update user status in payload
+  const newSession = await encrypt({
+    ...payload,
+    status: newStatus,
+  });
+
+  console.log({ payload });
+  console.log({ newSession });
+  // 4. Update session expiry in cookie
+  const cookieStore = await cookies();
+  cookieStore.set(SESSION_COOKIE_NAME, newSession, {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(Date.now() + SESSION_COOKIE_EXPIRATION),
     sameSite: "lax",
     path: "/",
   });

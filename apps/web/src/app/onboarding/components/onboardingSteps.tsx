@@ -9,15 +9,14 @@ import {
   buttonClassName,
   iconContainerClassName,
   lucideIconClassName,
-  sameLineClassName,
 } from "./commonClassNames";
 import { Button } from "@/components/ui/button";
 import { LucideCheck } from "lucide-react";
 
-export interface OnboardingStepPageProps {
+export type OnboardingStepPageProps = {
   pageId: string;
   children: React.ReactNode;
-}
+};
 
 export function OnboardingStepPage(props: OnboardingStepPageProps) {
   return (
@@ -27,10 +26,10 @@ export function OnboardingStepPage(props: OnboardingStepPageProps) {
   );
 }
 
-export interface OnboardingStepHeaderProps {
+export type OnboardingStepHeaderProps = {
   headerId: string;
   children: React.ReactNode;
-}
+};
 
 export function OnboardingStepHeader(props: OnboardingStepHeaderProps) {
   return (
@@ -40,11 +39,11 @@ export function OnboardingStepHeader(props: OnboardingStepHeaderProps) {
   );
 }
 
-export interface OnboardingStepFormProps {
+export type OnboardingStepFormProps = {
   formId: string;
   submit: FormEventHandler<HTMLFormElement> | undefined;
   children: React.ReactNode;
-}
+};
 
 export function OnboardingStepForm(props: OnboardingStepFormProps) {
   return (
@@ -54,10 +53,10 @@ export function OnboardingStepForm(props: OnboardingStepFormProps) {
   );
 }
 
-export interface OnboardingStepFinishProps {
+export type OnboardingStepFinishProps = {
   formId: string;
   children: React.ReactNode;
-}
+};
 
 export function OnboardingStepFinishForm(props: OnboardingStepFinishProps) {
   return (
@@ -67,10 +66,10 @@ export function OnboardingStepFinishForm(props: OnboardingStepFinishProps) {
   );
 }
 
-export interface OnboardingStepContentProps {
+export type OnboardingStepContentProps = {
   contentId: string;
   children: React.ReactNode;
-}
+};
 export function OnboardingStepContent(props: OnboardingStepContentProps) {
   return (
     <div id={props.contentId} className={contentClassName}>
@@ -87,10 +86,10 @@ export function OnboardingStepFinishContent(props: OnboardingStepContentProps) {
   );
 }
 
-export interface OnboardingStepActionsProps {
+export type OnboardingStepActionsProps = {
   actionsId: string;
   children: React.ReactNode;
-}
+};
 export function OnboardingStepActions(props: OnboardingStepActionsProps) {
   return (
     <div id={props.actionsId} className={actionsClassName}>
@@ -99,10 +98,10 @@ export function OnboardingStepActions(props: OnboardingStepActionsProps) {
   );
 }
 
-export interface OnboardingStepPrimaryActionProps {
+export type OnboardingStepPrimaryActionProps = {
   children: React.ReactNode;
   disabled: boolean;
-}
+};
 export function OnboardingStepPrimaryAction(
   props: OnboardingStepPrimaryActionProps
 ) {
@@ -119,11 +118,11 @@ export function OnboardingStepPrimaryAction(
   );
 }
 
-export interface OnboardingStepSecondaryActionProps {
+export type OnboardingStepSecondaryActionProps = {
   children: React.ReactNode;
   disabled: boolean;
   onClick: () => void;
-}
+};
 export function OnboardingStepSecondaryAction(
   props: OnboardingStepSecondaryActionProps
 ) {
@@ -140,9 +139,9 @@ export function OnboardingStepSecondaryAction(
   );
 }
 
-export interface OnboardingSuccessIconProps {
+export type OnboardingSuccessIconProps = {
   iconId: string;
-}
+};
 export function OnboardingSuccessIcon(props: OnboardingSuccessIconProps) {
   return (
     <div id={props.iconId} className={iconContainerClassName}>
@@ -150,13 +149,3 @@ export function OnboardingSuccessIcon(props: OnboardingSuccessIconProps) {
     </div>
   );
 }
-
-// export interface OnboardingSameLineProps {
-//   lineId: string
-//   children: React.ReactNode
-// }
-// export function OnboardingStepSameLine(props: OnboardingSameLineProps) {
-//   return <div id={props.lineId} className={sameLineClassName}>
-//     {props.children}
-//   </div>
-// }

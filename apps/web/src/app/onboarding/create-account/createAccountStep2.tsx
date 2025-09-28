@@ -17,7 +17,7 @@ import {
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
 } from "../components/onboardingSteps";
-import { CreateAccountFinalDataType } from "../components/finalDataTypes";
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
 import { apiClient } from "@/lib/apiClient";
 import { OnboardingExistingAgencyAPIResponseType } from "@ryogo-travel-app/api/types/agency.types";
@@ -25,8 +25,8 @@ import { OnboardingExistingAgencyAPIResponseType } from "@ryogo-travel-app/api/t
 export function CreateAccountStep2(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: CreateAccountFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFinalDataType>>;
+  finalData: CreateAccountFormDataType;
+  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>;
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step2");
 

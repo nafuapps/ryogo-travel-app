@@ -7,7 +7,13 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const phone = searchParams.get("phone");
     const email = searchParams.get("email");
-    const users = await userServices.findOwnerByPhoneEmail(phone!, email!);
+    if (!phone || !email) {
+      return NextResponse.json(
+        { error: "Phone/Email not provided" },
+        { status: 400 }
+      );
+    }
+    const users = await userServices.findOwnerByPhoneEmail(phone, email);
 
     return NextResponse.json(users, { status: 200 });
   } catch (err: unknown) {

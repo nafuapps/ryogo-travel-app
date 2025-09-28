@@ -14,13 +14,18 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
 } from "../../components/onboardingSteps";
-import { AddAgentFinalDataType } from "../../components/finalDataTypes";
+import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
+import { AgentCheckedType } from "./addAgent";
+import { apiClient } from "@/lib/apiClient";
+import { OnboardingExistingAgentAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
 export function AddAgentStep1(props: {
   onNext: () => void;
-  finalData: AddAgentFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<AddAgentFinalDataType>>;
+  finalData: AddAgentFormDataType;
+  updateFinalData: Dispatch<SetStateAction<AddAgentFormDataType>>;
+  checkedAgents: AgentCheckedType;
+  setCheckedAgents: Dispatch<SetStateAction<AgentCheckedType>>;
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Step1");
   const step1Schema = z.object({
@@ -63,16 +68,57 @@ export function AddAgentStep1(props: {
   });
 
   //Submit actions
-  const onSubmit = (data: Step1Type) => {
-    // TODO: Check if an agent/owner with same phone already exists
-    props.updateFinalData({
-      ...props.finalData,
-      name: data.agentName,
-      phone: data.agentPhone,
-      email: data.agentEmail,
-      agentPhotos: data.agentPhotos,
-    });
-    props.onNext();
+  const onSubmit = async (data: Step1Type) => {
+    //Dictonary to store if the agent was already checked in the DB (to save API calls)
+    const alreadyChecked = Object.keys(props.checkedAgents).includes(
+      data.agentPhone + data.agentEmail
+    );
+    if (!alreadyChecked) {
+      //If (phone+email) not checked in DB already, make an API call
+      const existingAgent =
+        await apiClient<OnboardingExistingAgentAPIResponseType>(
+          `/api/onboarding/add-agent/existing-agent?phone=${data.agentPhone}&email=${data.agentEmail}`,
+          { method: "GET" }
+        );
+      if (existingAgent.length > 0) {
+        //If agent exists in system, show error
+        formData.setError("agentPhone", {
+          type: "manual",
+          message: t("APIError"),
+        });
+        //Store in dictionary
+        props.setCheckedAgents({
+          ...props.checkedAgents,
+          [data.agentPhone + data.agentEmail]: true,
+        });
+      } else {
+        //If agent does not exist in DB, store in dictionaty and move to next step
+        props.setCheckedAgents({
+          ...props.checkedAgents,
+          [data.agentPhone + data.agentEmail]: false,
+        });
+      }
+    } else {
+      // If Agent was searched for already, take result from dictionary
+      if (props.checkedAgents[data.agentPhone + data.agentEmail]) {
+        //If Agent exists in search dictionary and was in DB, show error
+        formData.setError("agentPhone", {
+          type: "manual",
+          message: t("APIError"),
+        });
+      }
+    }
+    if (!formData.formState.errors.agentPhone) {
+      //If no errors, move ahead
+      props.updateFinalData({
+        ...props.finalData,
+        name: data.agentName,
+        phone: data.agentPhone,
+        email: data.agentEmail,
+        agentPhotos: data.agentPhotos,
+      });
+      props.onNext();
+    }
   };
 
   return (

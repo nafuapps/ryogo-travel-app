@@ -14,15 +14,21 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
 } from "../../components/onboardingSteps";
-import { AddDriverFinalDataType } from "../../components/finalDataTypes";
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
+import { DriverCheckedType } from "./addDriver";
+import { OnboardingExistingDriverAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
+import { apiClient } from "@/lib/apiClient";
 
 export function AddDriverStep1(props: {
   onNext: () => void;
-  finalData: AddDriverFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<AddDriverFinalDataType>>;
+  finalData: AddDriverFormDataType;
+  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>;
+  checkedDrivers: DriverCheckedType;
+  setCheckedDrivers: Dispatch<SetStateAction<DriverCheckedType>>;
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Step1");
+
   const step1Schema = z.object({
     driverName: z
       .string()
@@ -51,7 +57,9 @@ export function AddDriverStep1(props: {
       }, t("Field4.Error2"))
       .optional(),
   });
+
   type Step1Type = z.infer<typeof step1Schema>;
+
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -63,16 +71,56 @@ export function AddDriverStep1(props: {
   });
 
   //Submit actions
-  const onSubmit = (data: Step1Type) => {
-    // TODO: Check if a driver with same phone already exists
-    props.updateFinalData({
-      ...props.finalData,
-      name: data.driverName,
-      phone: data.driverPhone,
-      email: data.driverEmail,
-      driverPhotos: data.driverPhotos,
-    });
-    props.onNext();
+  const onSubmit = async (data: Step1Type) => {
+    //Dictonary to store if the driver was already checked in the DB (to save API calls)
+    const alreadyChecked = Object.keys(props.checkedDrivers).includes(
+      data.driverPhone + data.driverEmail
+    );
+    if (!alreadyChecked) {
+      //If (phone+email) not checked in DB already, make an API call
+      const existingDriver =
+        await apiClient<OnboardingExistingDriverAPIResponseType>(
+          `/api/onboarding/add-driver/existing-driver?phone=${data.driverPhone}&email=${data.driverEmail}`,
+          { method: "GET" }
+        );
+      if (existingDriver.length > 0) {
+        //If driver exists in system, show error
+        formData.setError("driverPhone", {
+          type: "manual",
+          message: t("APIError"),
+        });
+        //Store in dictionary
+        props.setCheckedDrivers({
+          ...props.checkedDrivers,
+          [data.driverPhone + data.driverEmail]: true,
+        });
+      } else {
+        //If driver does not exist in DB, store in dictionaty and move to next step
+        props.setCheckedDrivers({
+          ...props.checkedDrivers,
+          [data.driverPhone + data.driverEmail]: false,
+        });
+      }
+    } else {
+      // If Driver was searched for already, take result from dictionary
+      if (props.checkedDrivers[data.driverPhone + data.driverEmail]) {
+        //If Driver exists in search dictionary and was in DB, show error
+        formData.setError("driverPhone", {
+          type: "manual",
+          message: t("APIError"),
+        });
+      }
+    }
+    if (!formData.formState.errors.driverPhone) {
+      props.updateFinalData({
+        ...props.finalData,
+        name: data.driverName,
+        phone: data.driverPhone,
+        email: data.driverEmail,
+        driverPhotos: data.driverPhotos,
+      });
+      props.onNext();
+    }
   };
 
   return (

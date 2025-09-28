@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { CreateAccountFinalDataType } from "../components/finalDataTypes";
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { OnboardingInput } from "../components/onboardingFields";
 import {
   OnboardingStepForm,
@@ -18,8 +18,8 @@ import { Form } from "@/components/ui/form";
 export function CreateAccountStep4(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: CreateAccountFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFinalDataType>>;
+  finalData: CreateAccountFormDataType;
+  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>;
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step4");
   const step4Schema = z

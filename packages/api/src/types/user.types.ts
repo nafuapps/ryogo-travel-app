@@ -1,4 +1,4 @@
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema";
+import { SelectDriverType, UserRolesEnum } from "@ryogo-travel-app/db/schema";
 
 // /api/auth/login (POST)
 export type LoginAPIRequestType = {
@@ -68,7 +68,7 @@ export type SignupExistingAPIResponseType = {
   };
 }[];
 
-// /api/onboarding/create-account/existing-owner (GET)
+// /api/onboarding/create-account/existing-owner?phone=[phone]&email=[email] (GET)
 export type OnboardingExistingOwnerAPIRequestType = {};
 export type OnboardingExistingOwnerAPIResponseType = {
   id: string;
@@ -96,4 +96,60 @@ export type OnboardingCreateAccountAPIResponseType = {
   agencyId: string;
   userId: string;
   password: string;
+};
+
+// /api/onboarding/add-driver/existing-driver?phone=[phone]&email=[email] (GET)
+export type OnboardingExistingDriverAPIRequestType = {};
+export type OnboardingExistingDriverAPIResponseType = {
+  id: string;
+}[];
+
+// /api/onboarding/add-driver (POST)
+export type OnboardingAddDriverAPIRequestType = {
+  agencyId: string;
+  data: {
+    name: string;
+    phone: string;
+    email: string;
+    licenseNumber: string;
+    licenseExpiresOn: string;
+    address: string;
+    canDriveVehicleTypes: string[];
+    defaultAllowancePerDay?: number | undefined;
+  };
+};
+export type OnboardingAddDriverAPIResponseType = {
+  id: string;
+  userId: string;
+};
+
+// /api/onboarding/add-agent/existing-agent?phone=[phone]&email=[email] (GET)
+export type OnboardingExistingAgentAPIRequestType = {};
+export type OnboardingExistingAgentAPIResponseType = {
+  id: string;
+}[];
+
+// /api/onboarding/add-agent/check-agent-agency/[agencyId] (GET)
+export type OnboardingCheckAgentAgencyAPIRequestType = {};
+export type OnboardingCheckAgentAgencyAPIResponseType = {
+  id: string;
+}[];
+
+// /api/onboarding/add-agent (POST)
+export type OnboardingAddAgentAPIRequestType = {
+  agencyId: string;
+  data: {
+    name: string;
+    phone: string;
+    email: string;
+  };
+};
+export type OnboardingAddAgentAPIResponseType = {
+  id: string;
+};
+
+// /api/onboarding/set-active/[userId] (POST)
+export type OnboardingSetActiveAPIRequestType = {};
+export type OnboardingSetActiveAPIResponseType = {
+  agencyId: string;
 };

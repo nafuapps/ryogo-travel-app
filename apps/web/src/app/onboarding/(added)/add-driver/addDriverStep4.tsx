@@ -1,7 +1,7 @@
 import { Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { AddDriverFinalDataType } from "../../components/finalDataTypes";
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -12,19 +12,94 @@ import {
 import { Form } from "@/components/ui/form";
 import { H3Grey } from "@/components/typography";
 import ConfirmValues from "../../components/confirmValues";
+import {
+  OnboardingAddDriverAPIRequestType,
+  OnboardingAddDriverAPIResponseType,
+  OnboardingSetActiveAPIResponseType,
+} from "@ryogo-travel-app/api/types/user.types";
+import { apiClient, apiClientWithoutHeaders } from "@/lib/apiClient";
+import { redirect, RedirectType } from "next/navigation";
+import { toast } from "sonner";
+import { fetchVehiclesInAgency } from "../add-vehicle/addVehicle";
 
 export function AddDriverConfirm(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: AddDriverFinalDataType;
+  finalData: AddDriverFormDataType;
+  ownerId: string;
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Confirm");
-  const formData = useForm<AddDriverFinalDataType>();
+  const formData = useForm<AddDriverFormDataType>();
   //Submit actions
-  const onSubmit = (data: AddDriverFinalDataType) => {
-    console.log({ data });
-    // TODO: Add driver to Agency
-    props.onNext();
+  const onSubmit = async () => {
+    console.log(props.finalData);
+    // Add driver
+    const newDriverData: OnboardingAddDriverAPIRequestType = {
+      agencyId: props.finalData.agencyId,
+      data: {
+        name: props.finalData.name,
+        email: props.finalData.email,
+        phone: props.finalData.phone,
+        address: props.finalData.address,
+        canDriveVehicleTypes: props.finalData.canDriveVehicleTypes,
+        defaultAllowancePerDay: props.finalData.defaultAllowancePerDay,
+        licenseNumber: props.finalData.licenseNumber,
+        licenseExpiresOn: props.finalData.licenseExpiresOn!.toDateString(),
+      },
+    };
+    const addedDriver = await apiClient<OnboardingAddDriverAPIResponseType>(
+      "/api/onboarding/add-driver",
+      { method: "POST", body: JSON.stringify(newDriverData) }
+    );
+    console.log(addedDriver);
+    if (addedDriver.id) {
+      //If success, Try to upload license photo and driver user photo
+      if (props.finalData.licensePhotos) {
+        const formData = new FormData();
+        formData.append("license", props.finalData.licensePhotos[0]!);
+        await apiClientWithoutHeaders(
+          `/api/onboarding/add-driver/upload-license/${addedDriver.id}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+      }
+      if (props.finalData.driverPhotos) {
+        const formData = new FormData();
+        formData.append("file", props.finalData.driverPhotos[0]!);
+        await apiClientWithoutHeaders(
+          `/api/onboarding/upload-user-photo/${addedDriver.userId}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+      }
+      // Change agency and owner status to active if vehicle also added
+      const vehicleAlreadyAdded = await fetchVehiclesInAgency(
+        props.finalData.agencyId
+      );
+      if (!vehicleAlreadyAdded) {
+        //Take back to vehicle onboarding page
+        toast.success(t("Success"));
+        redirect("/onboarding/add-vehicle", RedirectType.replace);
+      } else {
+        //Set owner and agency status as ACTIVE
+        await apiClient<OnboardingSetActiveAPIResponseType>(
+          `/api/onboarding/set-active/${props.ownerId}`,
+          {
+            method: "POST",
+          }
+        );
+      }
+      //Move to next step
+      props.onNext();
+    } else {
+      //Take back to driver onboarding page and show error
+      toast.error(t("APIError"));
+      redirect("/onboarding/add-driver", RedirectType.replace);
+    }
   };
   return (
     <Form {...formData}>
@@ -59,10 +134,12 @@ export function AddDriverConfirm(props: {
             name={t("CanDriveVehicleTypes")}
             value={props.finalData.canDriveVehicleTypes.join(", ")}
           />
-          <ConfirmValues
-            name={t("DefaultAllowancePerDay")}
-            value={`${props.finalData.defaultAllowancePerDay}`}
-          />
+          {props.finalData.defaultAllowancePerDay && (
+            <ConfirmValues
+              name={t("DefaultAllowancePerDay")}
+              value={`${props.finalData.defaultAllowancePerDay}`}
+            />
+          )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step4Actions">
           <OnboardingStepPrimaryAction

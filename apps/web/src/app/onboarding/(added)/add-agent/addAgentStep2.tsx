@@ -1,7 +1,7 @@
 import { Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { AddAgentFinalDataType } from "../../components/finalDataTypes";
+import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -12,19 +12,57 @@ import {
 import { Form } from "@/components/ui/form";
 import { H3Grey } from "@/components/typography";
 import ConfirmValues from "../../components/confirmValues";
+import {
+  OnboardingAddAgentAPIRequestType,
+  OnboardingAddAgentAPIResponseType,
+} from "@ryogo-travel-app/api/types/user.types";
+import { apiClient, apiClientWithoutHeaders } from "@/lib/apiClient";
+import { toast } from "sonner";
+import { redirect, RedirectType } from "next/navigation";
 
 export function AddAgentConfirm(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: AddAgentFinalDataType;
+  finalData: AddAgentFormDataType;
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm");
-  const formData = useForm<AddAgentFinalDataType>();
+  const formData = useForm<AddAgentFormDataType>();
   //Submit actions
-  const onSubmit = (data: AddAgentFinalDataType) => {
-    console.log({ data });
-    // TODO: Add Agent to Agency
-    props.onNext();
+  const onSubmit = async () => {
+    console.log(props.finalData);
+    // Add agent
+    const newAgentData: OnboardingAddAgentAPIRequestType = {
+      agencyId: props.finalData.agencyId,
+      data: {
+        name: props.finalData.name,
+        email: props.finalData.email,
+        phone: props.finalData.phone,
+      },
+    };
+    const addedAgent = await apiClient<OnboardingAddAgentAPIResponseType>(
+      "/api/onboarding/add-agent",
+      { method: "POST", body: JSON.stringify(newAgentData) }
+    );
+    console.log(addedAgent);
+    if (addedAgent.id) {
+      //If success, Try to upload user photo and driver user photo
+      if (props.finalData.agentPhotos) {
+        const formData = new FormData();
+        formData.append("file", props.finalData.agentPhotos[0]!);
+        await apiClientWithoutHeaders(
+          `/api/onboarding/upload-user-photo/${addedAgent.id}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+      }
+      props.onNext();
+    } else {
+      //Take back to driver onboarding page and show error
+      toast.error(t("APIError"));
+      redirect("/dashboard", RedirectType.replace);
+    }
   };
   return (
     <Form {...formData}>

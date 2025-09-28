@@ -474,8 +474,7 @@
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
-        "APIError1": "Driver with this phone already exists in this agency",
-        "APIError2": "Driver with this phone and email is already added to another agency.. try adding with a different phone or email"
+        "APIError": "Driver with this phone and email is already added to another agency.. try adding with a different phone or email"
       },
       "Step2": {
         "Field1": {
@@ -541,7 +540,9 @@
         "DefaultAllowancePerDay": "Allowance Per Day",
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
-        "Loading": "Loading"
+        "Loading": "Loading",
+        "APIError": "Driver could not be added.. please try again later",
+        "Success": "Driver added successfully.. Let's try to add a vehicle now!"
       },
       "Finish": {
         "Title": "Congratulations!",
@@ -586,8 +587,7 @@
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
-        "APIError1": "Agent/Owner with this phone already exists in this agency",
-        "APIError2": "Agent with this phone and email is already added to another agency.. try adding with a different phone or email"
+        "APIError": "Agent with this phone and email is already added to another agency.. try adding with a different phone or email"
       },
       "Confirm": {
         "Title": "Confirm details to add agent:",
@@ -596,7 +596,8 @@
         "AgentEmail": "Agent Email Address",
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
-        "Loading": "Loading"
+        "Loading": "Loading",
+        "APIError": "Agent could not be added.. please try later"
       },
       "Finish": {
         "Title": "Congratulations!",

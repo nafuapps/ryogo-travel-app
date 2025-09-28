@@ -6,7 +6,7 @@ import { UserRegex } from "../../../components/regex";
 import { redirect, RedirectType } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Login Password Page",
+  title: "Login Password Page | RyoGo",
   description: "Login Password page for RyoGo Travel App",
 };
 export default async function LoginPasswordPage({

@@ -1,6 +1,6 @@
-// /api/onboarding/add-vehicle/existing-vehicle (GET)
-export type OnboardingExistingVehicleAPIRequestType = {};
-export type OnboardingExistingVehicleAPIResponseType = {
+// /api/onboarding/add-vehicle/check-vehicle-agency/[agencyId] (GET)
+export type OnboardingCheckVehicleAgencyAPIRequestType = {};
+export type OnboardingCheckVehicleAgencyAPIResponseType = {
   id: string;
 }[];
 

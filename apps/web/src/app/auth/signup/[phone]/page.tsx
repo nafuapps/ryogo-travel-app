@@ -5,7 +5,7 @@ import { redirect, RedirectType } from "next/navigation";
 import SignupExistingComponent from "./signupExisting";
 
 export const metadata: Metadata = {
-  title: "Signup Existing Accounts Page",
+  title: "Signup Existing Accounts Page | RyoGo",
   description: "Signup Existing Accounts page for RyoGo Travel App",
 };
 

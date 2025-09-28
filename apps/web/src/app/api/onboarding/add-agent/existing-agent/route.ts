@@ -1,18 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services";
+import { userServices } from "@ryogo-travel-app/api/services/user.services";
 
 export async function GET(req: NextRequest) {
-  // Fetch existing owner account info
+  // Fetch existing agents
   try {
     const searchParams = req.nextUrl.searchParams;
-    const vehicleNumber = searchParams.get("vehicleNumber");
-    const agencyId = searchParams.get("agencyId");
-    const vehicles = await vehicleServices.findVehicleByNumberInAgency(
-      vehicleNumber!,
-      agencyId!
-    );
+    const phone = searchParams.get("phone");
+    const email = searchParams.get("email");
+    if (!phone || !email) {
+      return NextResponse.json(
+        { error: "Phone/Email not provided" },
+        { status: 400 }
+      );
+    }
+    const users = await userServices.findAgentByPhoneEmail(phone, email);
 
-    return NextResponse.json(vehicles, { status: 200 });
+    return NextResponse.json(users, { status: 200 });
   } catch (err: unknown) {
     const errorMessage =
       typeof err === "object" && err !== null && "message" in err

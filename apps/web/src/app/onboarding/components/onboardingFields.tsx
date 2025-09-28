@@ -31,14 +31,14 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Switch } from "@/components/ui/switch";
 
-interface OnboardingInputProps {
+type OnboardingInputProps = {
   name: string;
   label: string;
   placeholder: string;
   description: string;
   type: React.HTMLInputTypeAttribute | undefined;
   disabled?: boolean;
-}
+};
 
 export function OnboardingInput(props: OnboardingInputProps) {
   return (
@@ -67,13 +67,13 @@ export function OnboardingInput(props: OnboardingInputProps) {
   );
 }
 
-interface OnboardingFileInputProps {
+type OnboardingFileInputProps = {
   name: string;
   label: string;
   placeholder: string;
   description: string;
   register: UseFormRegisterReturn<string>;
-}
+};
 export function OnboardingFileInput(props: OnboardingFileInputProps) {
   return (
     <FormField
@@ -100,11 +100,11 @@ export function OnboardingFileInput(props: OnboardingFileInputProps) {
   );
 }
 
-interface OnboardingTextareaProps {
+type OnboardingTextareaProps = {
   name: string;
   label: string;
   placeholder: string;
-}
+};
 
 export function OnboardingTextarea(props: OnboardingTextareaProps) {
   return (
@@ -125,13 +125,13 @@ export function OnboardingTextarea(props: OnboardingTextareaProps) {
   );
 }
 
-interface OnboardingSelectProps {
+type OnboardingSelectProps = {
   name: string;
   title: string;
   array: string[] | undefined;
   placeholder: string;
   register: UseFormRegisterReturn<string>;
-}
+};
 export function OnboardingSelect(props: OnboardingSelectProps) {
   return (
     <FormField
@@ -166,11 +166,11 @@ export function OnboardingSelect(props: OnboardingSelectProps) {
   );
 }
 
-interface OnboardingCheckboxProps {
+type OnboardingCheckboxProps = {
   name: string;
   label: string;
   register: UseFormRegisterReturn<string>;
-}
+};
 export function OnboardingCheckbox(props: OnboardingCheckboxProps) {
   return (
     <FormField
@@ -194,12 +194,12 @@ export function OnboardingCheckbox(props: OnboardingCheckboxProps) {
   );
 }
 
-interface OnboardingMultipleCheckboxProps {
+type OnboardingMultipleCheckboxProps = {
   name: string;
   label: string;
   array: string[] | undefined;
   register: UseFormRegisterReturn<string>;
-}
+};
 export function OnboardingMultipleCheckbox(
   props: OnboardingMultipleCheckboxProps
 ) {
@@ -250,12 +250,12 @@ export function OnboardingMultipleCheckbox(
   );
 }
 
-interface OnboardingDatePickerProps {
+type OnboardingDatePickerProps = {
   name: string;
   label: string;
   placeholder: string;
   description: string;
-}
+};
 export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
   return (
     <FormField
@@ -304,10 +304,10 @@ export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
   );
 }
 
-interface OnboardingSwitchProps {
+type OnboardingSwitchProps = {
   name: string;
   label: string;
-}
+};
 export function OnboardingSwitch(props: OnboardingSwitchProps) {
   return (
     <FormField

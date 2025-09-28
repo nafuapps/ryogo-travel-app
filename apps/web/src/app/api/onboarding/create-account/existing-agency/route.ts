@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services";
 
 export async function GET(req: NextRequest) {
-  // Example: Fetch existing owner account info
+  // Fetch existing agency info
   try {
     const searchParams = req.nextUrl.searchParams;
     const phone = searchParams.get("phone");

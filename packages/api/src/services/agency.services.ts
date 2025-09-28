@@ -1,18 +1,7 @@
 import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema";
 import { agencyRepository } from "../repositories/agency.repo";
-import { uploadFile } from "@ryogo-travel-app/db/storage";
 import { locationRepository } from "../repositories/location.repo";
-
-export type CreateAgencyType = {
-  businessName: string;
-  businessPhone: string;
-  businessEmail: string;
-  businessAddress: string;
-  businessLogo?: FileList | undefined;
-  commissionRate?: number;
-  agencyState: string;
-  agencyCity: string;
-};
+import { CreateAgencyType } from "../types/agency.types";
 
 export const agencyServices = {
   //Get active agencies (admin)
@@ -37,20 +26,20 @@ export const agencyServices = {
   // ? Onboarding flow
   //Create agency
   async createAgency(data: CreateAgencyType) {
-    // //Step1: Check if another agency exists with same phone and email
-    // const existingAgencies = await agencyRepository.getAgencyByPhoneEmail(
-    //   data.businessPhone,
-    //   data.businessEmail
-    // );
-    // if (existingAgencies.length > 1) {
-    //   // !This is a major issue
-    //   throw new Error(
-    //     "Multiple agencies with same phone and email already exists"
-    //   );
-    // }
-    // if (existingAgencies.length > 0) {
-    //   throw new Error("An agency with same phone and email already exists");
-    // }
+    //Step1: Check if another agency exists with same phone and email
+    const existingAgencies = await agencyRepository.getAgencyByPhoneEmail(
+      data.businessPhone,
+      data.businessEmail
+    );
+    if (existingAgencies.length > 1) {
+      // !This is a major issue
+      throw new Error(
+        "Multiple agencies with same phone and email already exists"
+      );
+    }
+    if (existingAgencies.length > 0) {
+      throw new Error("An agency with same phone and email already exists");
+    }
 
     //Step2: Get location id from city, state
     const location = await locationRepository.getLocationByCityState(
@@ -87,10 +76,19 @@ export const agencyServices = {
 
   //Activate an agency
   async activateAgency(id: string) {
-    return await agencyRepository.updateAgencyStatus(
+    const agency = await agencyRepository.updateAgencyStatus(
       id,
       AgencyStatusEnum.ACTIVE
     );
+
+    if (!agency) {
+      throw new Error("Failed to update status for this agency");
+    }
+    if (agency.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple agencies found with this id");
+    }
+    return agency[0]!;
   },
 
   async updateAgencyLogo(agencyId: string, url: string) {

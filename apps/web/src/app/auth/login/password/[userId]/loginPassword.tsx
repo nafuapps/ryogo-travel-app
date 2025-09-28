@@ -25,9 +25,9 @@ import { LoginPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.t
 
 // TODO: Add a feature to show the user had recently reset password
 
-interface LoginComponentProps {
+type LoginComponentProps = {
   userId: string;
-}
+};
 export default function LoginPasswordComponent(props: LoginComponentProps) {
   const userId = props.userId;
 

@@ -3,7 +3,7 @@ import { Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import ConfirmValues from "../../components/confirmValues";
-import { AddVehicleFinalDataType } from "../../components/finalDataTypes";
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -23,10 +23,10 @@ import { redirect, RedirectType } from "next/navigation";
 export function AddVehicleConfirm(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: AddVehicleFinalDataType;
+  finalData: AddVehicleFormDataType;
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Confirm");
-  const formData = useForm<AddVehicleFinalDataType>();
+  const formData = useForm<AddVehicleFormDataType>();
 
   //Submit actions
   const onSubmit = async () => {
@@ -77,6 +77,7 @@ export function AddVehicleConfirm(props: {
       );
       props.onNext();
     } else {
+      //Take forward to driver onboarding page and show error
       toast.error(t("APIError"));
       redirect("/onboarding/add-driver", RedirectType.replace);
     }

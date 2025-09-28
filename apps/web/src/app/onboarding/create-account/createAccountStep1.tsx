@@ -11,15 +11,15 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
 } from "../components/onboardingSteps";
-import { CreateAccountFinalDataType } from "../components/finalDataTypes";
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
 import { apiClient } from "@/lib/apiClient";
 import { OnboardingExistingOwnerAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
 export function CreateAccountStep1(props: {
   onNext: () => void;
-  finalData: CreateAccountFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFinalDataType>>;
+  finalData: CreateAccountFormDataType;
+  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>;
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step1");
   const step1Schema = z.object({

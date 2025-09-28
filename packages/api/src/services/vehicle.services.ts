@@ -1,4 +1,3 @@
-import { uploadFile } from "@ryogo-travel-app/db/storage";
 import { vehicleRepository } from "../repositories/vehicle.repo";
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema";
 import { OnboardingAddVehicleAPIRequestType } from "../types/vehicle.types";
@@ -10,6 +9,11 @@ export const vehicleServices = {
       agencyId,
       vehicleNumber
     );
+  },
+
+  //Find all vehicles in an agency
+  async getVehiclesInAgency(agencyId: string) {
+    return await vehicleRepository.getVehiclesByAgencyId(agencyId);
   },
 
   //Add vehicle to agency

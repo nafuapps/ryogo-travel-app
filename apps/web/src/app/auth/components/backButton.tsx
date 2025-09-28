@@ -2,9 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-interface BackButtonProps {
+type BackButtonProps = {
   label: string;
-}
+};
 export function BackButton(props: BackButtonProps) {
   const router = useRouter();
   return (

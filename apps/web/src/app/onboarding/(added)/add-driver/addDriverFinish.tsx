@@ -6,12 +6,15 @@ import {
   OnboardingStepFinishForm,
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
+  OnboardingStepSecondaryAction,
 } from "../../components/onboardingSteps";
 import Link from "next/link";
-import { AddDriverFinalDataType } from "../../components/finalDataTypes";
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { useRouter } from "next/navigation";
 
-export function AddDriverFinish(props: { finalData: AddDriverFinalDataType }) {
+export function AddDriverFinish(props: { finalData: AddDriverFormDataType }) {
   const t = useTranslations("Onboarding.AddDriverPage.Finish");
+  const router = useRouter();
 
   return (
     <OnboardingStepFinishForm formId="Step6Form">
@@ -25,8 +28,16 @@ export function AddDriverFinish(props: { finalData: AddDriverFinalDataType }) {
         <P>{t("Description1")}</P>
         <CaptionGrey>{t("Description2")}</CaptionGrey>
         <OnboardingStepPrimaryAction disabled={false}>
-          <Link href="/onboarding/add-driver">{t("PrimaryCTA")}</Link>
+          <Link href="/onboarding/add-agent">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>
+        <OnboardingStepSecondaryAction
+          onClick={() => {
+            router.replace("/dashboard");
+          }}
+          disabled={false}
+        >
+          {t("SecondaryCTA")}
+        </OnboardingStepSecondaryAction>
       </OnboardingStepActions>
     </OnboardingStepFinishForm>
   );

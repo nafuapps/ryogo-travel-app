@@ -32,9 +32,9 @@ export async function fetchAccounts(phone: string) {
   }
 }
 
-interface SignupExistingComponentProps {
+type SignupExistingComponentProps = {
   phone: string;
-}
+};
 export default function SignupExistingComponent(
   props: SignupExistingComponentProps
 ) {

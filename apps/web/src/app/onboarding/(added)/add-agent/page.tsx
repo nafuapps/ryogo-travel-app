@@ -1,76 +1,36 @@
 //(Onboarding) Add agent page
-"use client";
 
-import { useTranslations } from "next-intl";
-import OnboardingSidebar from "../../components/onboardingSidebar";
-import { useMultiStepForm } from "@/hooks/useMultiStepForm";
-import { CaptionGrey, H2 } from "@/components/typography";
-import StepsTracker from "../../components/stepsTracker";
-import { useState } from "react";
-import {
-  OnboardingStepHeader,
-  OnboardingStepPage,
-} from "../../components/onboardingSteps";
-import { AddAgentFinalDataType } from "../../components/finalDataTypes";
-import { AddAgentStep1 } from "./addAgentStep1";
-import { AddAgentFinish } from "./addAgentFinish";
-import { AddAgentConfirm } from "./addAgentStep2";
+import { Metadata } from "next";
+import AddAgentComponent from "./addAgent";
+import { getCurrentUser } from "@/lib/auth";
+import { redirect, RedirectType } from "next/navigation";
 
-const TotalSteps = 2;
+export const metadata: Metadata = {
+  title: "Add Agent Page | RyoGo",
+  description: "Add Agent page for RyoGo Travel App",
+};
 
-export default function AddAgentPage() {
-  const t = useTranslations("Onboarding.AddAgentPage");
+export default async function AddAgentPage() {
+  const currentUser = await getCurrentUser();
+  //If no user logged in, go to login page
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace);
+  }
+  //If new user
+  if (currentUser.status == "new") {
+    if (currentUser.userRole !== "owner") {
+      //If not owner, go to change password page
+      redirect("/onboarding/change-password", RedirectType.replace);
+    } else {
+      //If owner, go to onboarding vehicle
+      redirect("/onboarding/add-driver", RedirectType.replace);
+    }
+  }
 
-  const [finalData, setFinalData] = useState<AddAgentFinalDataType>({
-    name: "",
-    phone: "",
-    email: "",
-    agentPhotos: undefined,
-  });
+  //If not owner, go to dashboard page
+  if (currentUser.userRole !== "owner") {
+    redirect("/dashboard", RedirectType.replace);
+  }
 
-  const nextStepHandler = () => {
-    nextStep();
-  };
-
-  const prevStepHandler = () => {
-    prevStep();
-  };
-
-  const { currentStepIndex, isLastStep, nextStep, prevStep, steps } =
-    useMultiStepForm([
-      <AddAgentStep1
-        key={0}
-        onNext={nextStepHandler}
-        finalData={finalData}
-        updateFinalData={setFinalData}
-      />,
-      <AddAgentConfirm
-        key={1}
-        onNext={nextStepHandler}
-        onPrev={prevStepHandler}
-        finalData={finalData}
-      />,
-      <AddAgentFinish key={2} finalData={finalData} />,
-    ]);
-
-  return (
-    <>
-      <OnboardingStepPage pageId="AddAgentPage">
-        {currentStepIndex < TotalSteps && (
-          <OnboardingStepHeader headerId="AddAgentHeader">
-            <H2>{t("Title")}</H2>
-            <StepsTracker total={TotalSteps} current={currentStepIndex} />
-            <CaptionGrey>
-              {t("Description", {
-                step: currentStepIndex + 1,
-                total: TotalSteps,
-              })}
-            </CaptionGrey>
-          </OnboardingStepHeader>
-        )}
-        {steps[currentStepIndex]}
-      </OnboardingStepPage>
-      <OnboardingSidebar currentProcess={isLastStep ? 4 : 3} />
-    </>
-  );
+  return <AddAgentComponent agencyId={currentUser.agencyId} />;
 }

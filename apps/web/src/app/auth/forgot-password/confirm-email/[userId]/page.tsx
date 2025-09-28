@@ -6,7 +6,7 @@ import ConfirmEmailComponent from "./confirmEmail";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Confirm Email Page",
+  title: "Confirm Email Page | RyoGo",
   description: "Comfirm Email page for RyoGo Travel App",
 };
 

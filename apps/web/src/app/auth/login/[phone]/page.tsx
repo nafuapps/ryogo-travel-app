@@ -5,7 +5,7 @@ import { PhoneRegex } from "../../components/regex";
 import { redirect, RedirectType } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Login Accounts Page",
+  title: "Login Accounts Page | RyoGo",
   description: "Login Accounts page for RyoGo Travel App",
 };
 

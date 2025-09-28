@@ -148,6 +148,15 @@ export const userRepository = {
       .returning();
   },
 
+  //Update user status
+  async updateUserStatus(userId: string, status: UserStatusEnum) {
+    return await db
+      .update(users)
+      .set({ status: status })
+      .where(eq(users.id, userId))
+      .returning();
+  },
+
   //Delete user
   async deleteUser(userId: string) {
     return await db.delete(users).where(eq(users.id, userId)).returning();

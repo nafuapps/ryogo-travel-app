@@ -1,36 +1,16 @@
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema";
 import { driverRepository } from "../repositories/driver.repo";
-import { uploadFile } from "@ryogo-travel-app/db/storage";
-
-type CreateDriverType = {
-  agencyId: string;
-  userId: string;
-  name: string;
-  phone: string;
-  address: string;
-  licenseNumber: string;
-  licenseExpiresOn: Date;
-  licensePhotos: FileList;
-  canDriveVehicleTypes: string[];
-  defaultAllowancePerDay?: number;
-};
+import { CreateDriverType } from "../types/driver.types";
 
 export const driverServices = {
+  //Find all drivers in an agency
+  async getDriversInAgency(agencyId: string) {
+    return await driverRepository.getDriversByAgencyId(agencyId);
+  },
+
   //Create driver
   async addDriver(data: CreateDriverType) {
-    //Step1: Check if a driver (phone) already exists in this agency
-    const existingDriverInAgency =
-      await driverRepository.getDriverByPhoneInAgency(
-        data.agencyId,
-        data.phone
-      );
-    if (existingDriverInAgency.length > 0) {
-      throw new Error(
-        "Driver with same phone number already exists in this agency"
-      );
-    }
-
-    //Step2: Check if driver (userId) already exists in the system
+    //Step1: Check if driver (userId) already exists in the system
     const existingDriverUser = await driverRepository.getDriverByUserId(
       data.userId
     );
@@ -38,9 +18,14 @@ export const driverServices = {
       throw new Error("Driver with same userId already exists ");
     }
 
+    //Step2: Prepare vehicle types
+    const input = data.canDriveVehicleTypes.map((x) => {
+      return x.toLowerCase();
+    });
     const canDrive = Object.values(VehicleTypesEnum).filter((x) =>
-      data.canDriveVehicleTypes.includes(x as string)
+      input.includes(x.toString().toLowerCase() as string)
     );
+
     //Step3: Prepare driver data
     const newDriverData = {
       agencyId: data.agencyId,
@@ -57,20 +42,11 @@ export const driverServices = {
     if (newDriver.length < 1) {
       throw new Error("Failed to create driver");
     }
-
-    //Step4: Upload license photo in storage and update driver
-    await driverServices.updateDriverLicensePhoto(
-      newDriver[0]!.id,
-      data.licensePhotos
-    );
     return newDriver[0];
   },
 
   //Upload driver license photo
-  async updateDriverLicensePhoto(
-    driverId: string,
-    licenseUrl?: string | undefined
-  ) {
+  async updateDriverLicensePhoto(driverId: string, licenseUrl?: string) {
     const updatedDriver = await driverRepository.updateDriverLicenseUrl(
       driverId,
       licenseUrl

@@ -2,29 +2,15 @@ import { UserStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema";
 import bcrypt from "bcryptjs";
 import { userRepository } from "../repositories/user.repo";
 import { agencyServices } from "./agency.services";
-import { uploadFile } from "@ryogo-travel-app/db/storage";
 import { driverServices } from "./driver.services";
-import { OnboardingCreateAccountAPIRequestType } from "../types/user.types";
-
-export type OnboardingAddAgentType = {
-  name: string;
-  phone: string;
-  email: string;
-  photo?: FileList | undefined;
-};
-
-export type OnboardingAddDriverType = {
-  name: string;
-  phone: string;
-  email: string;
-  photo?: FileList | undefined;
-  licenseNumber: string;
-  licenseExpiresOn: Date;
-  licensePhotos: FileList;
-  address: string;
-  canDriveVehicleTypes: string[];
-  defaultAllowancePerDay?: number;
-};
+import {
+  OnboardingAddAgentAPIRequestType,
+  OnboardingAddAgentAPIResponseType,
+  OnboardingAddDriverAPIRequestType,
+  OnboardingAddDriverAPIResponseType,
+  OnboardingCreateAccountAPIRequestType,
+  OnboardingCreateAccountAPIResponseType,
+} from "../types/user.types";
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10);
@@ -137,6 +123,57 @@ export const userServices = {
     return owners;
   },
 
+  //Find driver by phone and email
+  async findDriverByPhoneEmail(phone: string, email: string) {
+    const drivers = await userRepository.getUserByPhoneRoleEmail(
+      phone,
+      [UserRolesEnum.DRIVER],
+      email
+    );
+    if (drivers.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple drivers found with same phone and email");
+    }
+    return drivers;
+  },
+
+  //Find driver by phone and email
+  async findAgentByPhoneEmail(phone: string, email: string) {
+    const agents = await userRepository.getUserByPhoneRoleEmail(
+      phone,
+      [UserRolesEnum.AGENT],
+      email
+    );
+    if (agents.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple drivers found with same phone and email");
+    }
+    return agents;
+  },
+
+  //Get all agents in an agency
+  async getAgentsInAgency(agencyId: string) {
+    return await userRepository.getUserByRolesAgencyId(agencyId, [
+      UserRolesEnum.AGENT,
+    ]);
+  },
+
+  //Activate user
+  async activateUser(userId: string) {
+    const user = await userRepository.updateUserStatus(
+      userId,
+      UserStatusEnum.ACTIVE
+    );
+    if (!user) {
+      throw new Error("Failed to activate user");
+    }
+    if (user.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple users found with this userId");
+    }
+    return user[0]!;
+  },
+
   // ? Login flow Step1
   //Find login users by phone
   async findUsersByPhone(phone: string) {
@@ -158,18 +195,20 @@ export const userServices = {
 
   // ? Onboarding flow - Create Account
   //Create Agency and Owner Account
-  async addAgencyAndOwnerAccount(data: OnboardingCreateAccountAPIRequestType) {
-    // //Step1: Check if user already exists with this phone, email and role
-    // const existingUsers = await userRepository.getUserByPhoneRoleEmail(
-    //   data.owner.phone,
-    //   [UserRolesEnum.OWNER],
-    //   data.owner.email
-    // );
-    // if (existingUsers.length > 0) {
-    //   throw new Error(
-    //     "Owner with same phone, already exists.. try a different phone or email"
-    //   );
-    // }
+  async addAgencyAndOwnerAccount(
+    data: OnboardingCreateAccountAPIRequestType
+  ): Promise<OnboardingCreateAccountAPIResponseType> {
+    //Step1: Check if user already exists with this phone, email and role
+    const existingUsers = await userRepository.getUserByPhoneRoleEmail(
+      data.owner.phone,
+      [UserRolesEnum.OWNER],
+      data.owner.email
+    );
+    if (existingUsers.length > 0) {
+      throw new Error(
+        "Owner with same phone, already exists.. try a different phone or email"
+      );
+    }
 
     //Step2: Try to Create agency
     const newAgency = await agencyServices.createAgency(data.agency);
@@ -202,7 +241,10 @@ export const userServices = {
   },
 
   //Create Agent (Onboarding flow)
-  async addAgentUser(data: OnboardingAddAgentType, agencyId: string) {
+  async addAgentUser({
+    agencyId,
+    data,
+  }: OnboardingAddAgentAPIRequestType): Promise<OnboardingAddAgentAPIResponseType> {
     //Step1: Check if agent or owner (phone) already exists in this agency
     const existingUserInAgency =
       await userRepository.getUserByPhoneRolesAgencyId(
@@ -230,6 +272,7 @@ export const userServices = {
 
     //Step3: Generate a new password
     const newPassword = generateNewPassword();
+    console.log(newPassword);
     // TODO: send pwd in email
 
     const passwordHash = await generatePasswordHash(newPassword);
@@ -244,14 +287,17 @@ export const userServices = {
       agencyId: agencyId,
       password: passwordHash,
     });
-    if (newUser.length < 1) {
+    if (!newUser) {
       throw new Error("Failed to create agent for this agency");
     }
-    return newUser[0];
+    return { id: newUser[0]!.id };
   },
 
   //Create Driver (Onboarding flow)
-  async addDriverUser(data: OnboardingAddDriverType, agencyId: string) {
+  async addDriverUser({
+    agencyId,
+    data,
+  }: OnboardingAddDriverAPIRequestType): Promise<OnboardingAddDriverAPIResponseType> {
     //Step1: Check if driver user (phone) already exists in this agency
     const existingUserInAgency =
       await userRepository.getUserByPhoneRolesAgencyId(
@@ -279,6 +325,7 @@ export const userServices = {
 
     //Step3: generate a new password
     const newPassword = generateNewPassword(); //Generate a random 8 character password
+    console.log(newPassword);
     // TODO: send pwd in email
 
     const passwordHash = await generatePasswordHash(newPassword);
@@ -306,10 +353,14 @@ export const userServices = {
       address: data.address,
       licenseNumber: data.licenseNumber,
       licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
       canDriveVehicleTypes: data.canDriveVehicleTypes,
     });
-    return newDriver;
+    if (!newDriver) {
+      throw new Error("Failed to create driver");
+    }
+
+    //Return driver Id
+    return { id: newDriver.id, userId: newDriver.userId };
   },
 
   // ?(Login flow step3)

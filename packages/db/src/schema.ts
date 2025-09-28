@@ -377,7 +377,7 @@ export const drivers = pgTable(
     phone: varchar("phone", { length: 10 }).notNull(),
     address: varchar("address", { length: 300 }).notNull(),
     licenseNumber: varchar("license_number", { length: 20 }).notNull(),
-    licenseExpiresOn: date("license_expires_on").notNull(),
+    licenseExpiresOn: date("license_expires_on", { mode: "string" }),
     status: driverStatus().notNull().default(DriverStatusEnum.AVAILABLE),
     licensePhotoUrl: text("license_photo_url"),
     canDriveVehicleTypes: vehicleTypes()

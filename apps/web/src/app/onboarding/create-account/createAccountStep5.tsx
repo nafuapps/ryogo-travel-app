@@ -3,7 +3,7 @@ import { Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import ConfirmValues from "../components/confirmValues";
-import { CreateAccountFinalDataType } from "../components/finalDataTypes";
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -24,10 +24,10 @@ import { toast } from "sonner";
 export function CreateAccountConfirm(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: CreateAccountFinalDataType;
+  finalData: CreateAccountFormDataType;
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Confirm");
-  const formData = useForm<CreateAccountFinalDataType>();
+  const formData = useForm<CreateAccountFormDataType>();
   //Submit actions
   const onSubmit = async () => {
     console.log(props.finalData);
@@ -56,7 +56,7 @@ export function CreateAccountConfirm(props: {
       );
     console.log(createdOwnerAccount);
     if (createdOwnerAccount.agencyId && createdOwnerAccount.userId) {
-      //Try to upload business logo and owner photo
+      //If success, Try to upload business logo and owner photo
       if (props.finalData.agencyLogo) {
         const formData = new FormData();
         formData.append("file", props.finalData.agencyLogo[0]!);
@@ -72,7 +72,7 @@ export function CreateAccountConfirm(props: {
         const formData = new FormData();
         formData.append("file", props.finalData.ownerPhoto[0]!);
         await apiClientWithoutHeaders(
-          `/api/onboarding/create-account/upload-owner-photo/${createdOwnerAccount.userId}`,
+          `/api/onboarding/upload-user-photo/${createdOwnerAccount.userId}`,
           {
             method: "POST",
             body: formData,
@@ -94,8 +94,7 @@ export function CreateAccountConfirm(props: {
       //Move to next step
       props.onNext();
     } else {
-      console.log(createdOwnerAccount);
-      //Take to onboarding page and show error
+      //If failed, Take to onboarding page and show error
       toast.error(t("APIError"));
       redirect("/onboarding", RedirectType.replace);
     }

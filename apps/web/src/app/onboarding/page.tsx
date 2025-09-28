@@ -9,7 +9,7 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Onboarding Page",
+  title: "Onboarding Page | RyoGo",
   description: "Onboarding page for RyoGo Travel App",
 };
 

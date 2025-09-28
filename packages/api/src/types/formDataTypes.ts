@@ -1,4 +1,4 @@
-export interface CreateAccountFinalDataType {
+export type CreateAccountFormDataType = {
   agencyName: string;
   ownerName: string;
   ownerPhone: string;
@@ -13,9 +13,9 @@ export interface CreateAccountFinalDataType {
   agencyCity: string;
   password: string;
   confirmPassword: string;
-}
+};
 
-export interface AddVehicleFinalDataType {
+export type AddVehicleFormDataType = {
   agencyId: string;
   vehicleNumber: string;
   type: string;
@@ -33,26 +33,26 @@ export interface AddVehicleFinalDataType {
   hasAC: boolean;
   defaultRatePerKm: number | undefined;
   extraAcChargePerDay: number | undefined;
-}
+};
 
-export interface AddDriverFinalDataType {
+export type AddDriverFormDataType = {
   agencyId: string;
   name: string;
   phone: string;
   email: string;
   driverPhotos: FileList | undefined;
   licenseNumber: string;
-  licenseExpiresOn: Date;
+  licenseExpiresOn: Date | undefined;
   licensePhotos: FileList | undefined;
   address: string;
   canDriveVehicleTypes: string[];
   defaultAllowancePerDay: number | undefined;
-}
+};
 
-export interface AddAgentFinalDataType {
+export type AddAgentFormDataType = {
   agencyId: string;
   name: string;
   phone: string;
   email: string;
   agentPhotos: FileList | undefined;
-}
+};

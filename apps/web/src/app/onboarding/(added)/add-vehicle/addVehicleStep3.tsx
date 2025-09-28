@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { AddVehicleFinalDataType } from "../../components/finalDataTypes";
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingDatePicker,
   OnboardingFileInput,
@@ -21,8 +21,8 @@ import { Form } from "@/components/ui/form";
 export function AddVehicleStep3(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: AddVehicleFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFinalDataType>>;
+  finalData: AddVehicleFormDataType;
+  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>;
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Step3");
   const step3Schema = z.object({

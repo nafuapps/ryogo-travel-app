@@ -8,6 +8,14 @@ export const driverRepository = {
     return await db.select().from(drivers).where(eq(drivers.id, id));
   },
 
+  //Get all drivers of an agency
+  async getDriversByAgencyId(agencyId: string) {
+    return await db
+      .select({ id: drivers.id })
+      .from(drivers)
+      .where(eq(drivers.agencyId, agencyId));
+  },
+
   //Get driver by phone in agency
   async getDriverByPhoneInAgency(agencyId: string, phone: string) {
     return await db

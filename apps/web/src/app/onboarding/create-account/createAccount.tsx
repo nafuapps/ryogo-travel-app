@@ -6,7 +6,7 @@ import OnboardingSidebar from "../components/onboardingSidebar";
 import { useMultiStepForm } from "@/hooks/useMultiStepForm";
 import { CaptionGrey, H2 } from "@/components/typography";
 import StepsTracker from "../components/stepsTracker";
-import { CreateAccountFinalDataType } from "../components/finalDataTypes";
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { CreateAccountFinish } from "./createAccountFinish";
 import { CreateAccountStep1 } from "./createAccountStep1";
 import { CreateAccountStep2 } from "./createAccountStep2";
@@ -24,7 +24,7 @@ const TotalSteps = 5;
 export default function CreateAccountComponent() {
   const t = useTranslations("Onboarding.CreateAccountPage");
 
-  const [finalData, setFinalData] = useState<CreateAccountFinalDataType>({
+  const [finalData, setFinalData] = useState<CreateAccountFormDataType>({
     agencyName: "",
     ownerName: "",
     ownerPhone: "",

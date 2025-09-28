@@ -1,9 +1,9 @@
 import { P, PBold } from "@/components/typography";
 
-interface ConfirmValuesProps {
+type ConfirmValuesProps = {
   name: string;
   value: string;
-}
+};
 
 export default function ConfirmValues({ name, value }: ConfirmValuesProps) {
   return (

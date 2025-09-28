@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { AddDriverFinalDataType } from "../../components/finalDataTypes";
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingInput,
   OnboardingMultipleCheckbox,
@@ -22,8 +22,8 @@ import { Form } from "@/components/ui/form";
 export function AddDriverStep3(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: AddDriverFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<AddDriverFinalDataType>>;
+  finalData: AddDriverFormDataType;
+  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>;
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Step3");
   const step3Schema = z.object({

@@ -7,7 +7,7 @@ import {
   OnboardingInput,
   OnboardingSelect,
 } from "../../components/onboardingFields";
-import { AddVehicleFinalDataType } from "../../components/finalDataTypes";
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingStepActions,
   OnboardingStepContent,
@@ -15,17 +15,12 @@ import {
   OnboardingStepPrimaryAction,
 } from "../../components/onboardingSteps";
 import { Form } from "@/components/ui/form";
-import { apiClient } from "@/lib/apiClient";
-import { OnboardingExistingVehicleAPIResponseType } from "@ryogo-travel-app/api/types/vehicle.types";
 import { useTranslations } from "next-intl";
-import { VehicleCheckedType } from "./addVehicle";
 
 export function AddVehicleStep1(props: {
   onNext: () => void;
-  finalData: AddVehicleFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFinalDataType>>;
-  setCheckedVehicles: Dispatch<SetStateAction<VehicleCheckedType>>;
-  checkedVehicles: VehicleCheckedType;
+  finalData: AddVehicleFormDataType;
+  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>;
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Step1");
   const step1Schema = z.object({
@@ -54,54 +49,15 @@ export function AddVehicleStep1(props: {
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    const alreadyChecked = Object.keys(props.checkedVehicles).includes(
-      data.vehicleNumber
-    );
-    if (!alreadyChecked) {
-      //If not checked in DB already, make an API call
-      const existingVehicle =
-        await apiClient<OnboardingExistingVehicleAPIResponseType>(
-          `/api/onboarding/add-vehicle/existing-vehicle?vehicleNumber=${data.vehicleNumber}&agencyId=${props.finalData.agencyId}`,
-          { method: "GET" }
-        );
-      if (existingVehicle.length > 0) {
-        //If vehicle exists in DB, show error
-        formData.setError("vehicleNumber", {
-          type: "manual",
-          message: t("APIError"),
-        });
-        props.setCheckedVehicles({
-          ...props.checkedVehicles,
-          [data.vehicleNumber]: true,
-        });
-      } else {
-        //If vehicle does not exist in DB, move to next step
-        props.setCheckedVehicles({
-          ...props.checkedVehicles,
-          [data.vehicleNumber]: false,
-        });
-      }
-    } else {
-      //Vehicle was searched for already
-      if (props.checkedVehicles[data.vehicleNumber]) {
-        //If vehicle exists in search dictionary and was in DB, show error
-        formData.setError("vehicleNumber", {
-          type: "manual",
-          message: t("APIError"),
-        });
-      }
-    }
-    if (!formData.formState.errors.vehicleNumber) {
-      props.updateFinalData({
-        ...props.finalData,
-        vehicleNumber: data.vehicleNumber,
-        type: data.type,
-        brand: data.brand,
-        color: data.color,
-        model: data.model,
-      });
-      props.onNext();
-    }
+    props.updateFinalData({
+      ...props.finalData,
+      vehicleNumber: data.vehicleNumber,
+      type: data.type,
+      brand: data.brand,
+      color: data.color,
+      model: data.model,
+    });
+    props.onNext();
   };
 
   return (

@@ -12,7 +12,6 @@ export const actionsClassName =
   "flex flex-col gap-3 lg:gap-4 w-full mt-auto justify-end items-start";
 export const buttonClassName =
   "flex flex-row justify-center items-center gap-4 w-full";
-export const sameLineClassName = "grid grid-cols-2 gap-3 lg:gap-4 w-full";
 
 // Success
 export const successContentClassName =

@@ -24,9 +24,9 @@ export async function fetchAccounts(phone: string) {
   }
 }
 
-interface LoginAccountsComponentProps {
+type LoginAccountsComponentProps = {
   phone: string;
-}
+};
 export default function LoginAccountsComponent(
   props: LoginAccountsComponentProps
 ) {

@@ -8,9 +8,9 @@ import {
   OnboardingStepPrimaryAction,
 } from "../../components/onboardingSteps";
 import Link from "next/link";
-import { AddAgentFinalDataType } from "../../components/finalDataTypes";
+import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 
-export function AddAgentFinish(props: { finalData: AddAgentFinalDataType }) {
+export function AddAgentFinish(props: { finalData: AddAgentFormDataType }) {
   const t = useTranslations("Onboarding.AddAgentPage.Finish");
 
   return (
@@ -23,7 +23,7 @@ export function AddAgentFinish(props: { finalData: AddAgentFinalDataType }) {
       </OnboardingStepFinishContent>
       <OnboardingStepActions actionsId="Step6Actions">
         <OnboardingStepPrimaryAction disabled={false}>
-          <Link href="/home">{t("PrimaryCTA")}</Link>
+          <Link href="/dashboard">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>
       </OnboardingStepActions>
     </OnboardingStepFinishForm>

@@ -15,14 +15,14 @@ import {
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
 } from "../../components/onboardingSteps";
-import { AddVehicleFinalDataType } from "../../components/finalDataTypes";
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
 
 export function AddVehicleStep2(props: {
   onNext: () => void;
   onPrev: () => void;
-  finalData: AddVehicleFinalDataType;
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFinalDataType>>;
+  finalData: AddVehicleFormDataType;
+  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>;
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Step2");
 

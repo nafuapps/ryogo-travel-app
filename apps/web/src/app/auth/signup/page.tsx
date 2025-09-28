@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import SignupComponent from "./signup";
 
 export const metadata: Metadata = {
-  title: "Signup Page",
+  title: "Signup Page | RyoGo",
   description: "Signup page for RyoGo Travel App",
 };
 export default function SignupPage() {

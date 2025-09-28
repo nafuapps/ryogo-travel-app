@@ -1,0 +1,1 @@
+ALTER TABLE "drivers" ALTER COLUMN "license_expires_on" DROP NOT NULL;

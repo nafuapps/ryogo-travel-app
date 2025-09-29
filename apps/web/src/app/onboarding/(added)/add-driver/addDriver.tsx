@@ -17,20 +17,7 @@ import { AddDriverFinish } from "./addDriverFinish";
 import { AddDriverStep2 } from "./addDriverStep2";
 import { AddDriverStep3 } from "./addDriverStep3";
 import { AddDriverConfirm } from "./addDriverStep4";
-import { apiClient } from "@/lib/apiClient";
-import { OnboardingCheckDriverAgencyAPIResponseType } from "@ryogo-travel-app/api/types/driver.types";
-import { redirect, RedirectType } from "next/navigation";
-
-export async function fetchDriversInAgency(agencyId: string) {
-  const fetchedDrivers =
-    await apiClient<OnboardingCheckDriverAgencyAPIResponseType>(
-      `/api/onboarding/add-driver/check-driver-agency/${agencyId}`,
-      {
-        method: "GET",
-      }
-    );
-  return fetchedDrivers.length > 0;
-}
+import { fetchAgenyData } from "../../components/fetchAgenyData";
 
 const TotalSteps = 4;
 
@@ -43,25 +30,10 @@ type AddDriverComponentProps = {
   userStatus: string;
 };
 export default function AddDriverComponent(props: AddDriverComponentProps) {
-  const [driverExists, setDriverExists] = useState(false);
-
-  //Get driver list from DB
   useEffect(() => {
-    fetchDriversInAgency(props.agencyId).then((data) => {
-      setDriverExists(data);
-    });
+    //Redirect if needed
+    fetchAgenyData(props.agencyId, "add-driver");
   }, [props.agencyId]);
-
-  //If driver already added
-  if (driverExists) {
-    if (props.userStatus == "new") {
-      //If user is still new, take to vehicle onboarding
-      redirect("/onboarding/add-vehicle", RedirectType.replace);
-    } else {
-      //If user is not new, take to add agent
-      redirect("/onboarding/add-agent", RedirectType.replace);
-    }
-  }
 
   const t = useTranslations("Onboarding.AddDriverPage");
 

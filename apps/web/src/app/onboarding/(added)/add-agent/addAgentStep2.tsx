@@ -15,6 +15,7 @@ import ConfirmValues from "../../components/confirmValues";
 import {
   OnboardingAddAgentAPIRequestType,
   OnboardingAddAgentAPIResponseType,
+  OnboardingSetActiveAPIResponseType,
 } from "@ryogo-travel-app/api/types/user.types";
 import { apiClient, apiClientWithoutHeaders } from "@/lib/apiClient";
 import { toast } from "sonner";
@@ -24,6 +25,8 @@ export function AddAgentConfirm(props: {
   onNext: () => void;
   onPrev: () => void;
   finalData: AddAgentFormDataType;
+  status: string;
+  ownerId: string;
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm");
   const formData = useForm<AddAgentFormDataType>();
@@ -57,9 +60,18 @@ export function AddAgentConfirm(props: {
           }
         );
       }
+      if (props.status == "new") {
+        //If the owner is still new somehow, change to active
+        await apiClientWithoutHeaders<OnboardingSetActiveAPIResponseType>(
+          `/api/onboarding/set-active/${props.ownerId}`,
+          {
+            method: "POST",
+          }
+        );
+      }
       props.onNext();
     } else {
-      //Take back to driver onboarding page and show error
+      //Take back to agent onboarding page and show error
       toast.error(t("APIError"));
       redirect("/dashboard", RedirectType.replace);
     }

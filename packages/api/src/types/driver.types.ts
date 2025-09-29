@@ -9,9 +9,3 @@ export type CreateDriverType = {
   canDriveVehicleTypes: string[];
   defaultAllowancePerDay?: number;
 };
-
-// /api/onboarding/add-driver/check-driver-agency/[agencyId] (GET)
-export type OnboardingCheckDriverAgencyAPIRequestType = {};
-export type OnboardingCheckDriverAgencyAPIResponseType = {
-  id: string;
-}[];

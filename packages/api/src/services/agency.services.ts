@@ -1,14 +1,12 @@
-import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema";
+import { AgencyStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema";
 import { agencyRepository } from "../repositories/agency.repo";
 import { locationRepository } from "../repositories/location.repo";
 import { CreateAgencyType } from "../types/agency.types";
+import { vehicleRepository } from "../repositories/vehicle.repo";
+import { driverRepository } from "../repositories/driver.repo";
+import { userRepository } from "../repositories/user.repo";
 
 export const agencyServices = {
-  //Get active agencies (admin)
-  async getActiveAgencies() {
-    return await agencyRepository.getAgenciesByStatus(AgencyStatusEnum.ACTIVE);
-  },
-
   // ? Onboarding flow
   //Find agency by phone and email
   async findAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
@@ -21,6 +19,21 @@ export const agencyServices = {
       throw new Error("Multiple agencies found");
     }
     return agencies;
+  },
+
+  //Get agency data (vehicles, drivers, agents)
+  async getAgencyData(agencyId: string) {
+    const vehicles = await vehicleRepository.getVehiclesByAgencyId(agencyId);
+    const drivers = await driverRepository.getDriversByAgencyId(agencyId);
+    const agents = await userRepository.getUserByRolesAgencyId(agencyId, [
+      UserRolesEnum.AGENT,
+    ]);
+
+    return {
+      vehicles,
+      drivers,
+      agents,
+    };
   },
 
   // ? Onboarding flow

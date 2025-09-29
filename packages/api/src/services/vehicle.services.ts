@@ -3,19 +3,6 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema";
 import { OnboardingAddVehicleAPIRequestType } from "../types/vehicle.types";
 
 export const vehicleServices = {
-  //Find vehicle by vehicle number in an agency (Onboarding flow)
-  async findVehicleByNumberInAgency(agencyId: string, vehicleNumber: string) {
-    return await vehicleRepository.getVehicleByNumberInAgency(
-      agencyId,
-      vehicleNumber
-    );
-  },
-
-  //Find all vehicles in an agency
-  async getVehiclesInAgency(agencyId: string) {
-    return await vehicleRepository.getVehiclesByAgencyId(agencyId);
-  },
-
   //Add vehicle to agency
   async addVehicle({ data, agencyId }: OnboardingAddVehicleAPIRequestType) {
     //Step1: Check if the vehicle already exists in this agency

@@ -8,11 +8,6 @@ import {
 import { eq, and, inArray } from "drizzle-orm";
 
 export const userRepository = {
-  //Get all users of an agency
-  async getUsersByAgencyId(agencyId: string) {
-    return await db.select().from(users).where(eq(users.agencyId, agencyId));
-  },
-
   //Get unique user by id
   async getUserById(id: string) {
     return await db.select().from(users).where(eq(users.id, id));
@@ -54,18 +49,10 @@ export const userRepository = {
       );
   },
 
-  //Get all users by phone number (could be multiple)
-  async getUsersByPhoneNumber(phone: string) {
-    return await db
-      .select()
-      .from(users)
-      .where(and(eq(users.phone, phone)));
-  },
-
   //Get user by roles in an agency
   async getUserByRolesAgencyId(agencyId: string, userRoles: UserRolesEnum[]) {
     return await db
-      .select()
+      .select({ id: users.id })
       .from(users)
       .where(
         and(eq(users.agencyId, agencyId), inArray(users.userRole, userRoles))

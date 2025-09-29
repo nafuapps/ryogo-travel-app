@@ -1,9 +1,3 @@
-// /api/onboarding/add-vehicle/check-vehicle-agency/[agencyId] (GET)
-export type OnboardingCheckVehicleAgencyAPIRequestType = {};
-export type OnboardingCheckVehicleAgencyAPIResponseType = {
-  id: string;
-}[];
-
 // /api/onboarding/add-vehicle (POST)
 export type OnboardingAddVehicleAPIRequestType = {
   agencyId: string;

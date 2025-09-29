@@ -16,15 +16,29 @@ export default async function AddDriverPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace);
   }
-  //If user already onboarded, go to dashboard
-  if (currentUser.status !== "new") {
+
+  //Not owner
+  if (currentUser.userRole !== "owner") {
+    if (currentUser.status == "new") {
+      //If new, go to change password
+      redirect("/onboarding/change-password", RedirectType.replace);
+    }
+    //Not new users
+    if (currentUser.userRole == "driver") {
+      //If driver, go to rider page
+      redirect("/rider", RedirectType.replace);
+    }
+    //Else, go to dashboard
     redirect("/dashboard", RedirectType.replace);
   }
-  //If not owner, go to change password page
-  if (currentUser.userRole !== "owner") {
-    redirect("/onboarding/change-password", RedirectType.replace);
+
+  //Owner
+  if (currentUser.status !== "new") {
+    //If not new, go to dashboard
+    redirect("/dashboard", RedirectType.replace);
   }
 
+  //Only new owners can add driver
   return (
     <AddDriverComponent
       agencyId={currentUser.agencyId}

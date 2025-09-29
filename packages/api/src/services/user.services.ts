@@ -23,92 +23,7 @@ export function generateNewPassword() {
 }
 
 export const userServices = {
-  //Get unique owner of an agency
-  async getOwnerOfAgency(agencyId: string) {
-    const owner = await userRepository.getUserByRolesAgencyId(agencyId, [
-      UserRolesEnum.OWNER,
-    ]);
-    if (!owner) {
-      // !This is a major issue - no owner of an agency
-      throw new Error("No owner found for this agency");
-    }
-    if (owner.length > 1) {
-      // !This is a major issue - multiple owners of an agency
-      throw new Error("Multiple owners found for this agency");
-    }
-    return owner[0];
-  },
-
-  //Get all drivers of an agency
-  async getDriversOfAgency(agencyId: string) {
-    return await userRepository.getUserByRolesAgencyId(agencyId, [
-      UserRolesEnum.DRIVER,
-    ]);
-  },
-
-  //Get agents & owner of an agency
-  async getOwnerOrAgentsOfAgency(agencyId: string) {
-    const ownerOrAgents = await userRepository.getUserByRolesAgencyId(
-      agencyId,
-      [UserRolesEnum.OWNER, UserRolesEnum.AGENT]
-    );
-
-    if (ownerOrAgents.length < 1) {
-      // !This is a major issue - no owner or agents of an agency
-      throw new Error("No owner or agents found for this agency");
-    }
-    return ownerOrAgents;
-  },
-
-  // * Admin use case *
-  //Get drivers by phone number
-  async getDriversByPhoneNumber(phone: string) {
-    return userRepository.getUserByRolesPhone(phone, [UserRolesEnum.DRIVER]);
-  },
-
-  //Get driver in an agency by phone number
-  async getDriverByPhoneInAgency(agencyId: string, phone: string) {
-    const drivers = await userRepository.getUserByPhoneRolesAgencyId(
-      phone,
-      [UserRolesEnum.DRIVER],
-      agencyId
-    );
-    if (drivers.length < 1) {
-      throw new Error("No driver found with this phone number");
-    }
-    if (drivers.length > 1) {
-      // !This is a major issue - multiple drivers with same phone number in an agency
-      throw new Error("Multiple drivers found with this phone number");
-    }
-    return drivers[0];
-  },
-
-  //Get unique agent or owner in an agency by phone number
-  async getOwnerOrAgentsByPhoneInAgency(agencyId: string, phone: string) {
-    const users = await userRepository.getUserByPhoneRolesAgencyId(
-      phone,
-      [UserRolesEnum.OWNER, UserRolesEnum.AGENT],
-      agencyId
-    );
-    if (users.length < 1) {
-      throw new Error("No agent or owner found with this phone number");
-    }
-    if (users.length > 1) {
-      // !This is a major issue - multiple agents or owners with same phone number in an agency
-      throw new Error("Multiple agents or owners found with this phone number");
-    }
-    return users[0];
-  },
-
-  //Get owner/agents by phone number (Login flow)
-  async getOwnerOrAgentsByPhoneNumber(phone: string) {
-    return userRepository.getUserByRolesPhone(phone, [
-      UserRolesEnum.AGENT,
-      UserRolesEnum.OWNER,
-    ]);
-  },
-
-  // ? Onboarding flow
+  // ? Onboarding flow - Read
   //Find owner by phone and email
   async findOwnerByPhoneEmail(phone: string, email: string) {
     const owners = await userRepository.getUserByPhoneRoleEmail(
@@ -151,13 +66,6 @@ export const userServices = {
     return agents;
   },
 
-  //Get all agents in an agency
-  async getAgentsInAgency(agencyId: string) {
-    return await userRepository.getUserByRolesAgencyId(agencyId, [
-      UserRolesEnum.AGENT,
-    ]);
-  },
-
   //Activate user
   async activateUser(userId: string) {
     const user = await userRepository.updateUserStatus(
@@ -174,7 +82,7 @@ export const userServices = {
     return user[0]!;
   },
 
-  // ? Login flow Step1
+  // ? Login flow - Read
   //Find login users by phone
   async findUsersByPhone(phone: string) {
     const users = await userRepository.getUsersWithPhone(phone);
@@ -193,7 +101,7 @@ export const userServices = {
     return users;
   },
 
-  // ? Onboarding flow - Create Account
+  // ? Onboarding flow - Create
   //Create Agency and Owner Account
   async addAgencyAndOwnerAccount(
     data: OnboardingCreateAccountAPIRequestType
@@ -363,7 +271,7 @@ export const userServices = {
     return { id: newDriver.id, userId: newDriver.userId };
   },
 
-  // ?(Login flow step3)
+  // ?Login flow Create
   //Validate user login with userId and password
   async checkLoginInDB(userId: string, password: string) {
     //Step1: Find user with userID
@@ -394,7 +302,7 @@ export const userServices = {
     await userRepository.updateLastLogout(userId, new Date());
   },
 
-  // ? (Reset password API flow)
+  // ? Reset password - Update
   async resetPassword(userId: string, email: string) {
     //Step1: Find user with userID
     const emailFound = await userRepository.getUserById(userId);

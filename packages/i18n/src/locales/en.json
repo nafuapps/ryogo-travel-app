@@ -431,7 +431,7 @@
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
-        "APIError": "Vehicle could not be added.. Please try again later"
+        "APIError": "Vehicle could not be added.. Please try again"
       },
       "Finish": {
         "Title": "Congratulations!",
@@ -541,7 +541,7 @@
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
-        "APIError": "Driver could not be added.. please try again later",
+        "APIError": "Driver could not be added.. please try again",
         "Success": "Driver added successfully.. Let's try to add a vehicle now!"
       },
       "Finish": {
@@ -597,7 +597,7 @@
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
-        "APIError": "Agent could not be added.. please try later"
+        "APIError": "Agent could not be added.. try again later"
       },
       "Finish": {
         "Title": "Congratulations!",

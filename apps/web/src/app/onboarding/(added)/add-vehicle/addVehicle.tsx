@@ -18,20 +18,7 @@ import { AddVehicleStep2 } from "./addVehicleStep2";
 import { AddVehicleStep3 } from "./addVehicleStep3";
 import { AddVehicleStep4 } from "./addVehicleStep4";
 import { AddVehicleConfirm } from "./addVehicleStep5";
-import { apiClient } from "@/lib/apiClient";
-import { OnboardingCheckVehicleAgencyAPIResponseType } from "@ryogo-travel-app/api/types/vehicle.types";
-import { redirect, RedirectType } from "next/navigation";
-
-export async function fetchVehiclesInAgency(agencyId: string) {
-  const fetchedVehicles =
-    await apiClient<OnboardingCheckVehicleAgencyAPIResponseType>(
-      `/api/onboarding/add-vehicle/check-vehicle-agency/${agencyId}`,
-      {
-        method: "GET",
-      }
-    );
-  return fetchedVehicles.length > 0;
-}
+import { fetchAgenyData } from "../../components/fetchAgenyData";
 
 const TotalSteps = 5;
 
@@ -40,23 +27,10 @@ type AddVehicleComponentProps = {
   status: string;
 };
 export default function AddVehicleComponent(props: AddVehicleComponentProps) {
-  const [vehicleExists, setVehicleExists] = useState(false);
-
-  //Get vehicle list from DB
   useEffect(() => {
-    fetchVehiclesInAgency(props.agencyId).then((data) => {
-      setVehicleExists(data);
-    });
+    //Redirect if needed
+    fetchAgenyData(props.agencyId, "add-vehicle");
   }, [props.agencyId]);
-
-  //If vehicle already added, skip to driver onboarding
-  if (vehicleExists) {
-    if (props.status == "new") {
-      redirect("/onboarding/add-driver", RedirectType.replace);
-    } else {
-      redirect("/onboarding/add-agent", RedirectType.replace);
-    }
-  }
 
   const t = useTranslations("Onboarding.AddVehiclePage");
   const [finalData, setFinalData] = useState<AddVehicleFormDataType>({

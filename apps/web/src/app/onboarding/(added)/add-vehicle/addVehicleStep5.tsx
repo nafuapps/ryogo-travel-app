@@ -77,9 +77,9 @@ export function AddVehicleConfirm(props: {
       );
       props.onNext();
     } else {
-      //Take forward to driver onboarding page and show error
+      //If failed, Take back to vehicle onboarding page and show error
       toast.error(t("APIError"));
-      redirect("/onboarding/add-driver", RedirectType.replace);
+      redirect("/onboarding/add-vehicle", RedirectType.replace);
     }
   };
 

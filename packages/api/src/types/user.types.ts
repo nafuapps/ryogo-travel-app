@@ -129,12 +129,6 @@ export type OnboardingExistingAgentAPIResponseType = {
   id: string;
 }[];
 
-// /api/onboarding/add-agent/check-agent-agency/[agencyId] (GET)
-export type OnboardingCheckAgentAgencyAPIRequestType = {};
-export type OnboardingCheckAgentAgencyAPIResponseType = {
-  id: string;
-}[];
-
 // /api/onboarding/add-agent (POST)
 export type OnboardingAddAgentAPIRequestType = {
   agencyId: string;

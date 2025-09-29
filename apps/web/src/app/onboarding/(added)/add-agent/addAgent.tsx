@@ -15,20 +15,7 @@ import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { AddAgentStep1 } from "./addAgentStep1";
 import { AddAgentFinish } from "./addAgentFinish";
 import { AddAgentConfirm } from "./addAgentStep2";
-import { apiClient } from "@/lib/apiClient";
-import { OnboardingCheckAgentAgencyAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
-import { redirect, RedirectType } from "next/navigation";
-
-export async function fetchAgentsInAgency(agencyId: string) {
-  const fetchedAgents =
-    await apiClient<OnboardingCheckAgentAgencyAPIResponseType>(
-      `/api/onboarding/add-agent/check-agent-agency/${agencyId}`,
-      {
-        method: "GET",
-      }
-    );
-  return fetchedAgents.length > 0;
-}
+import { fetchAgenyData } from "../../components/fetchAgenyData";
 
 const TotalSteps = 2;
 
@@ -38,21 +25,14 @@ export type AgentCheckedType = {
 
 type AddAgentComponentProps = {
   agencyId: string;
+  ownerId: string;
+  status: string;
 };
 export default function AddAgentComponent(props: AddAgentComponentProps) {
-  const [agentExists, setAgentExists] = useState(false);
-
-  //Get agent list from DB
   useEffect(() => {
-    fetchAgentsInAgency(props.agencyId).then((data) => {
-      setAgentExists(data);
-    });
+    //Redirect if needed
+    fetchAgenyData(props.agencyId, "add-agent");
   }, [props.agencyId]);
-
-  //If agent already added, skip to dashboard
-  if (agentExists) {
-    redirect("/dashboard", RedirectType.replace);
-  }
 
   const t = useTranslations("Onboarding.AddAgentPage");
   const [checkedAgents, setCheckedAgents] = useState<AgentCheckedType>({});
@@ -88,6 +68,8 @@ export default function AddAgentComponent(props: AddAgentComponentProps) {
         onNext={nextStepHandler}
         onPrev={prevStepHandler}
         finalData={finalData}
+        status={props.status}
+        ownerId={props.ownerId}
       />,
       <AddAgentFinish key={2} finalData={finalData} />,
     ]);

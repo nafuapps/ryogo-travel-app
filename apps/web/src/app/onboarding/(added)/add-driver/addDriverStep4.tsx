@@ -20,7 +20,6 @@ import {
 import { apiClient, apiClientWithoutHeaders } from "@/lib/apiClient";
 import { redirect, RedirectType } from "next/navigation";
 import { toast } from "sonner";
-import { fetchVehiclesInAgency } from "../add-vehicle/addVehicle";
 
 export function AddDriverConfirm(props: {
   onNext: () => void;
@@ -76,27 +75,17 @@ export function AddDriverConfirm(props: {
           }
         );
       }
-      // Change agency and owner status to active if vehicle also added
-      const vehicleAlreadyAdded = await fetchVehiclesInAgency(
-        props.finalData.agencyId
+      //Set owner and agency status as ACTIVE
+      await apiClient<OnboardingSetActiveAPIResponseType>(
+        `/api/onboarding/set-active/${props.ownerId}`,
+        {
+          method: "POST",
+        }
       );
-      if (!vehicleAlreadyAdded) {
-        //Take back to vehicle onboarding page
-        toast.success(t("Success"));
-        redirect("/onboarding/add-vehicle", RedirectType.replace);
-      } else {
-        //Set owner and agency status as ACTIVE
-        await apiClient<OnboardingSetActiveAPIResponseType>(
-          `/api/onboarding/set-active/${props.ownerId}`,
-          {
-            method: "POST",
-          }
-        );
-      }
       //Move to next step
       props.onNext();
     } else {
-      //Take back to driver onboarding page and show error
+      //If failed, Take back to driver onboarding page and show error
       toast.error(t("APIError"));
       redirect("/onboarding/add-driver", RedirectType.replace);
     }

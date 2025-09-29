@@ -340,6 +340,43 @@ export const userServices = {
     return newUserData[0]!.id;
   },
 
+  // ? Reset password - Update
+  async changePassword(
+    userId: string,
+    oldPassword: string,
+    newPassword: string
+  ) {
+    //Step1: Find user with userID
+    const userFound = await userRepository.getUserById(userId);
+    // If no user found, cannot change password
+    if (!userFound || userFound.length < 1) {
+      throw new Error("No user found with this id");
+    }
+    if (userFound.length > 1) {
+      // !This is a major issue - multiple users with same userId in an agency
+      throw new Error("Multiple users found with this id in this agency");
+    }
+
+    //Step2: Match old password
+    const valid = await bcrypt.compare(oldPassword, userFound[0]!.password);
+    if (!valid) {
+      throw new Error("Provided old password does not match our records");
+    }
+
+    //Step3: Set a new password
+    const passwordHash = await generatePasswordHash(newPassword);
+    const newUserData = await userRepository.activateUserWithNewPassword(
+      userId,
+      passwordHash
+    );
+    if (!newUserData) {
+      throw new Error("Could not change password in DB");
+    }
+
+    //Return userId as reset confirmation
+    return { id: newUserData[0]!.id };
+  },
+
   //Update user photo url
   async updateUserPhoto(userId: string, url: string) {
     const updatedUser = await userRepository.updatePhotoUrl(userId, url);

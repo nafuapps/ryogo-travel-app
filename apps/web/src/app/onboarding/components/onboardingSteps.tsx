@@ -9,9 +9,11 @@ import {
   buttonClassName,
   iconContainerClassName,
   lucideIconClassName,
+  headerTopLineClassName,
 } from "./commonClassNames";
 import { Button } from "@/components/ui/button";
 import { LucideCheck } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export type OnboardingStepPageProps = {
   pageId: string;
@@ -35,6 +37,20 @@ export function OnboardingStepHeader(props: OnboardingStepHeaderProps) {
   return (
     <div id={props.headerId} className={headerClassName}>
       {props.children}
+    </div>
+  );
+}
+
+export type OnboardingStepHeaderTopLineProps = {
+  children: React.ReactNode;
+};
+export function OnboardingStepHeaderTopLine(
+  props: OnboardingStepHeaderTopLineProps
+) {
+  return (
+    <div className={headerTopLineClassName}>
+      {props.children}
+      <SidebarTrigger className="md:hidden" />
     </div>
   );
 }

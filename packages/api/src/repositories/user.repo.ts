@@ -127,6 +127,15 @@ export const userRepository = {
   },
 
   //Update password
+  async activateUserWithNewPassword(userId: string, password: string) {
+    return await db
+      .update(users)
+      .set({ password: password, status: UserStatusEnum.ACTIVE })
+      .where(eq(users.id, userId))
+      .returning({ id: users.id });
+  },
+
+  //Update user photo url
   async updatePhotoUrl(userId: string, photoUrl: string) {
     return await db
       .update(users)

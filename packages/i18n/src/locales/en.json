@@ -606,7 +606,38 @@
         "PrimaryCTA": "Go to Dashboard"
       }
     },
-    "SuccessPage": {},
+    "ChangePasswordPage": {
+      "Title": "Welcome!",
+      "Subtitle": "It seems like you are logging in for the first time! Please set a new password to secure your account.",
+      "Step1": {
+        "Field1": {
+          "Title": "Current Password",
+          "Placeholder": "********",
+          "Description": "Enter the password that was sent in your email. You can check with the agency owner if you are not sure.",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field2": {
+          "Title": "New Password",
+          "Placeholder": "********",
+          "Description": "Choose a new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field3": {
+          "Title": "Confirm New Password",
+          "Placeholder": "********",
+          "Description": "Re-enter your new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces",
+          "Error3": "Both passwords do not match"
+        },
+        "PrimaryCTA": "Update password",
+        "Loading": "Loading",
+        "Success": "Password updated successfully",
+        "APIError": "Password does not match.. please check your email again"
+      }
+    },
     "Sidebar": {
       "Heading": "Setting up your account",
       "Step1": {

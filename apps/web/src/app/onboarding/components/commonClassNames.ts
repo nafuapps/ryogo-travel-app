@@ -2,6 +2,8 @@
 export const pageClassName =
   "flex flex-col justify-start items-start gap-4 lg:gap-5 w-full h-full overflow-y-scroll no-scrollbar md:w-1/2 px-8 py-10 md:px-10 md:pt-12 lg:pt-16 lg:pb-12 lg:px-12";
 export const headerClassName = "flex flex-col gap-1.5 lg:gap-2 w-full";
+export const headerTopLineClassName =
+  "flex flex-row gap-3 justify-between items-center";
 
 // Steps
 export const formClassName =

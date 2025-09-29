@@ -147,3 +147,12 @@ export type OnboardingSetActiveAPIRequestType = {};
 export type OnboardingSetActiveAPIResponseType = {
   agencyId: string;
 };
+
+// /api/onboarding/change-password/[userId] (POST)
+export type OnboardingChangePasswordAPIRequestType = {
+  oldPassword: string;
+  newPassword: string;
+};
+export type OnboardingChangePasswordAPIResponseType = {
+  id: string;
+};

@@ -11,20 +11,20 @@ const nextConfig: NextConfig = {
   experimental: {
     externalDir: true,
   },
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      react: path.resolve(__dirname, "../../node_modules/react"),
-      "react-dom": path.resolve(__dirname, "../../node_modules/react-dom"),
-      "react/jsx-runtime": path.resolve(
-        __dirname,
-        "../../node_modules/react/jsx-runtime.js"
-      ),
-    };
-    //Support importing from the packages directory
-    // config.resolve.modules = [...config.resolve.modules, "../../packages"];
-    return config;
-  },
+  // webpack: (config) => {
+  //   config.resolve.alias = {
+  //     ...config.resolve.alias,
+  //     react: path.resolve(__dirname, "../../node_modules/react"),
+  //     "react-dom": path.resolve(__dirname, "../../node_modules/react-dom"),
+  //     "react/jsx-runtime": path.resolve(
+  //       __dirname,
+  //       "../../node_modules/react/jsx-runtime.js"
+  //     ),
+  //   };
+  //   //Support importing from the packages directory
+  //   // config.resolve.modules = [...config.resolve.modules, "../../packages"];
+  //   return config;
+  // },
 };
 
 export default withNextIntl(nextConfig);

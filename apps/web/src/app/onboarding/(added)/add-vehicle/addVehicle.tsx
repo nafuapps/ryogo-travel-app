@@ -9,6 +9,7 @@ import StepsTracker from "../../components/stepsTracker";
 import { useEffect, useState } from "react";
 import {
   OnboardingStepHeader,
+  OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "../../components/onboardingSteps";
 import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
@@ -104,7 +105,9 @@ export default function AddVehicleComponent(props: AddVehicleComponentProps) {
       <OnboardingStepPage pageId="AddVehiclePage">
         {currentStepIndex < TotalSteps && (
           <OnboardingStepHeader headerId="AddVehicleHeader">
-            <H2>{t("Title")}</H2>
+            <OnboardingStepHeaderTopLine>
+              <H2>{t("Title")}</H2>
+            </OnboardingStepHeaderTopLine>
             <StepsTracker total={TotalSteps} current={currentStepIndex} />
             <CaptionGrey>
               {t("Description", {

@@ -18,19 +18,24 @@ export default async function ChangePasswordPage() {
       redirect("/onboarding/add-vehicle", RedirectType.replace);
     }
     //Else, go to dashboard
-    redirect("/dashboard", RedirectType.replace);
+    // redirect("/dashboard", RedirectType.replace);
   }
 
   //Not owner, old user
-  if (currentUser.status !== "new") {
-    if (currentUser.userRole == "driver") {
-      //If driver, go to rider
-      redirect("/rider", RedirectType.replace);
-    } else {
-      //If driver, go to dashboard
-      redirect("/dashboard", RedirectType.replace);
-    }
-  }
+  // if (currentUser.status !== "new") {
+  //   if (currentUser.userRole == "driver") {
+  //     //If driver, go to rider
+  //     redirect("/rider", RedirectType.replace);
+  //   } else {
+  //     //If driver, go to dashboard
+  //     redirect("/dashboard", RedirectType.replace);
+  //   }
+  // }
 
-  return <ChangePasswordComponent userId={currentUser.userId} />;
+  return (
+    <ChangePasswordComponent
+      userId={currentUser.userId}
+      role={currentUser.userRole}
+    />
+  );
 }

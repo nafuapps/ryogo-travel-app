@@ -16,6 +16,7 @@ import { CreateAccountConfirm } from "./createAccountStep5";
 import { useState } from "react";
 import {
   OnboardingStepHeader,
+  OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "../components/onboardingSteps";
 
@@ -92,7 +93,9 @@ export default function CreateAccountComponent() {
       <OnboardingStepPage pageId="CreateAccountPage">
         {currentStepIndex < TotalSteps && (
           <OnboardingStepHeader headerId="CreateAccountHeader">
-            <H2>{t("Title")}</H2>
+            <OnboardingStepHeaderTopLine>
+              <H2>{t("Title")}</H2>
+            </OnboardingStepHeaderTopLine>
             <StepsTracker total={TotalSteps} current={currentStepIndex} />
             <CaptionGrey>
               {t("Description", {

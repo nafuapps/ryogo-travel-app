@@ -1,9 +1,9 @@
 //Layout for dashboard pages
 
-export default function AuthLayout({
+export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return <section>{children}</section>
+  return <section>{children}</section>;
 }

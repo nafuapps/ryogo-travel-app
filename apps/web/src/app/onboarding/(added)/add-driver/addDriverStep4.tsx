@@ -17,7 +17,10 @@ import {
   OnboardingAddDriverAPIResponseType,
   OnboardingSetActiveAPIResponseType,
 } from "@ryogo-travel-app/api/types/user.types";
-import { apiClient, apiClientWithoutHeaders } from "@/lib/apiClient";
+import {
+  apiClient,
+  apiClientWithoutHeaders,
+} from "@ryogo-travel-app/api/client/apiClient";
 import { redirect, RedirectType } from "next/navigation";
 import { toast } from "sonner";
 

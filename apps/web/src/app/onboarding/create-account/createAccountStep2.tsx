@@ -19,7 +19,7 @@ import {
 } from "../components/onboardingSteps";
 import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { OnboardingExistingAgencyAPIResponseType } from "@ryogo-travel-app/api/types/agency.types";
 
 export function CreateAccountStep2(props: {

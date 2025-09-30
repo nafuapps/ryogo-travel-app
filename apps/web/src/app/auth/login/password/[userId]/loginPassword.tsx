@@ -20,7 +20,7 @@ import { H2, H5 } from "@/components/typography";
 import Link from "next/link";
 import { redirect, RedirectType, useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { LoginPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
 // TODO: Add a feature to show the user had recently reset password

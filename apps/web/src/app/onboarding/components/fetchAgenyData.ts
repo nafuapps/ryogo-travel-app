@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { OnboardingCheckAgencyDataAPIResponseType } from "@ryogo-travel-app/api/types/agency.types";
 import { redirect, RedirectType } from "next/navigation";
 

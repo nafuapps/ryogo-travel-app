@@ -658,6 +658,30 @@
       }
     }
   },
+  "Dashboard": {
+    "Sidebar": {
+      "Title": "RyoGo",
+      "Subtitle": "Your Travel Agency App",
+      "Home": "Home",
+      "Bookings": "Bookings",
+      "Vehicles": "Vehicles",
+      "Drivers": "Drivers",
+      "Customers": "Customers",
+      "Users": "Users",
+      "Analytics": "Analytics",
+      "Account": "Account"
+    }
+  },
+  "Rider": {
+    "Sidebar": {
+      "Title": "RyoGo",
+      "Subtitle": "Your Travel Agency App",
+      "Home": "Home",
+      "Bookings": "Bookings",
+      "Vehicle": "Vehicle",
+      "Profile": "Profile"
+    }
+  },
   "Landing": {
     "title": "Hello!"
   }

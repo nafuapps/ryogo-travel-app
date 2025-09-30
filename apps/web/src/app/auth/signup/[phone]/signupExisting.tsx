@@ -6,7 +6,7 @@ import { CaptionGrey, H2, P } from "@/components/typography";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { AccountCard } from "../../components/accountCard";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { SignupExistingAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 import { redirect, RedirectType } from "next/navigation";
 import { useEffect, useState } from "react";

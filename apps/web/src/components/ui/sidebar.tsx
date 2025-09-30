@@ -27,9 +27,9 @@ import {
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "50vw";
-const SIDEBAR_WIDTH_MOBILE = "max(300px,70vw)";
-const SIDEBAR_WIDTH_ICON = "3rem";
+const SIDEBAR_WIDTH = "321px";
+const SIDEBAR_WIDTH_MOBILE = "321px";
+const SIDEBAR_WIDTH_ICON = "48px";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContextProps = {
@@ -135,6 +135,7 @@ function SidebarProvider({
             {
               "--sidebar-width": SIDEBAR_WIDTH,
               "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+              "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
               ...style,
             } as React.CSSProperties
           }

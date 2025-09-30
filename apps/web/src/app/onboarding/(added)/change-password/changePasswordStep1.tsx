@@ -11,7 +11,7 @@ import {
   OnboardingStepPrimaryAction,
 } from "../../components/onboardingSteps";
 import { Form } from "@/components/ui/form";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { OnboardingChangePasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 import { redirect, RedirectType } from "next/navigation";
 import { toast } from "sonner";

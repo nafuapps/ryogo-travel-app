@@ -18,7 +18,7 @@ import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes
 import { Form } from "@/components/ui/form";
 import { DriverCheckedType } from "./addDriver";
 import { OnboardingExistingDriverAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 
 export function AddDriverStep1(props: {
   onNext: () => void;

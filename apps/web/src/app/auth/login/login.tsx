@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { H2, H5 } from "@/components/typography";
 import { useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { LoginAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
 /*

@@ -17,7 +17,7 @@ import {
 import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
 import { AgentCheckedType } from "./addAgent";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { OnboardingExistingAgentAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
 export function AddAgentStep1(props: {

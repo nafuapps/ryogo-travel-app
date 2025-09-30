@@ -5,7 +5,7 @@ import { AccountCard } from "../../components/accountCard";
 import { BackButton } from "../../components/backButton";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { LoginAccountsAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 import { redirect, RedirectType } from "next/navigation";
 

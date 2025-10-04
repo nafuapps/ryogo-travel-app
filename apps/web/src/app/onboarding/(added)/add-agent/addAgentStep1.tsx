@@ -7,13 +7,13 @@ import z from "zod";
 import {
   OnboardingFileInput,
   OnboardingInput,
-} from "../../components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
 import { AgentCheckedType } from "./addAgent";

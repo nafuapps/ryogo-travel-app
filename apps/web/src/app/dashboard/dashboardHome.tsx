@@ -54,7 +54,7 @@ export default async function DashboardHomeComponent() {
     <div id="DashboardPage" className={pageClassName}>
       <div
         id="DashboardMetrics"
-        className="grid gap-2 lg:gap-3 grid-cols-1 grid-rows-4 sm:grid-cols-2 sm:grid-rows-2 md:grid-cols-1 md:grid-rows-4 lg:grid-cols-2 lg:grid-rows-2"
+        className="grid gap-2 lg:gap-3 grid-cols-1 grid-rows-4 sm:grid-cols-2 sm:grid-rows-2 md:grid-cols-1 md:grid-rows-4 lg:grid-cols-2 lg:grid-rows-2 2xl:grid-cols-4 2xl:grid-rows-1"
       >
         <DashboardBookingMetricsComponent />
         <DashboardRevenueMetricsComponent />

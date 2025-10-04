@@ -2,7 +2,7 @@
 
 import { Metadata } from "next";
 import LoginPasswordComponent from "./loginPassword";
-import { UserRegex } from "../../../components/regex";
+import { UserRegex } from "@/lib/regex";
 import { redirect, RedirectType } from "next/navigation";
 
 export const metadata: Metadata = {

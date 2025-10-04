@@ -2,7 +2,7 @@ import { H3Grey } from "@/components/typography";
 import { Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import ConfirmValues from "../../components/confirmValues";
+import ConfirmValues from "@/app/onboarding/components/confirmValues";
 import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import {
   OnboardingStepForm,
@@ -10,7 +10,7 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { Form } from "@/components/ui/form";
 import {
   OnboardingAddVehicleAPIRequestType,

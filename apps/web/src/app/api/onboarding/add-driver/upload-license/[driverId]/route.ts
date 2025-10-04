@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { uploadFile } from "@ryogo-travel-app/db/storage";
-import { DriverRegex } from "@/app/auth/components/regex";
+import { DriverRegex } from "@/lib/regex";
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services";
 
 export async function POST(

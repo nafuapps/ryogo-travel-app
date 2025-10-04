@@ -1,6 +1,6 @@
 //Existing Account page
 import { Metadata } from "next";
-import { PhoneRegex } from "../../components/regex";
+import { PhoneRegex } from "@/lib/regex";
 import { redirect, RedirectType } from "next/navigation";
 import SignupExistingComponent from "./signupExisting";
 

@@ -67,22 +67,22 @@ export default async function DashboardRevenueMetricsComponent() {
   return (
     <div
       id="dashboardRevenueMetrics"
-      className="bg-white rounded-lg grid grid-cols-3 p-4 lg:p-5 gap-2 lg:gap-3"
+      className="bg-white rounded-lg grid grid-cols-5 p-4 lg:p-5 gap-2 lg:gap-3"
     >
       <div
         id="dashboardRevenueMetricsFirstCol"
-        className="flex flex-col justify-start col-span-1 items-center gap-4 lg:gap-5"
+        className="flex flex-col justify-start col-span-2 items-center gap-4 lg:gap-5"
       >
         <div
           id="dashboardRevenueMetricsHeader"
           className="flex flex-row gap-2 items-center self-start"
         >
-          <LucideBadgeIndianRupee className="text-slate-500 size-4 lg:size-5" />
+          <LucideBadgeIndianRupee className="text-slate-500 stroke-1 size-4 lg:size-5" />
           <PGrey>{t("Title")}</PGrey>
         </div>
         <div
           id="dashboardRevenueMetricsConfirmed"
-          className="flex flex-col flex-1 gap-3 lg:gap-4 items-center justify-end"
+          className="flex flex-col flex-1 gap-3 lg:gap-4 items-center justify-center"
         >
           <H3>
             {revenue24HrsAmount.toLocaleString("en-IN", {
@@ -91,7 +91,7 @@ export default async function DashboardRevenueMetricsComponent() {
               minimumFractionDigits: 0,
             })}
           </H3>
-          <div className="flex flex-col lg:gap-0.5 items-center">
+          <div className="flex flex-col lg:gap-0.5 items-center text-center">
             <div className="flex flex-row gap-1 item-center">
               {icon}
               <CaptionGrey>
@@ -108,7 +108,7 @@ export default async function DashboardRevenueMetricsComponent() {
       </div>
       <div
         id="dashboardRevenueMetricsSecondCol"
-        className="grid grid-rows-2 grid-cols-2 col-span-2"
+        className="grid grid-rows-2 grid-cols-2 col-span-3"
       >
         <div
           id="dashboardRevenueMetricsLeads"

@@ -7,7 +7,7 @@ import {
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import Link from "next/link";
 import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { useRouter } from "next/navigation";

@@ -2,16 +2,16 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import OnboardingSidebar from "../../components/onboardingSidebar";
+import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar";
 import { useMultiStepForm } from "@/hooks/useMultiStepForm";
 import { CaptionGrey, H2 } from "@/components/typography";
-import StepsTracker from "../../components/stepsTracker";
+import StepsTracker from "@/app/onboarding/components/stepsTracker";
 import { useEffect, useState } from "react";
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { AddVehicleStep1 } from "./addVehicleStep1";
 import { AddVehicleFinish } from "./addVehicleFinish";
@@ -19,7 +19,7 @@ import { AddVehicleStep2 } from "./addVehicleStep2";
 import { AddVehicleStep3 } from "./addVehicleStep3";
 import { AddVehicleStep4 } from "./addVehicleStep4";
 import { AddVehicleConfirm } from "./addVehicleStep5";
-import { fetchAgenyData } from "../../components/fetchAgenyData";
+import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData";
 
 const TotalSteps = 5;
 

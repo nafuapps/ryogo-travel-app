@@ -33,24 +33,34 @@ export default async function DashboardVehicleMetricsComponent() {
   return (
     <div
       id="dashboardVehicleMetrics"
-      className="bg-white rounded-lg grid grid-cols-3 p-4 lg:p-5 gap-1 lg:gap-2"
+      className="bg-white rounded-lg grid grid-cols-5 p-4 lg:p-5 gap-1 lg:gap-2"
     >
       <div
         id="dashboardVehicleMetricsFirstCol"
-        className="flex flex-col justify-start items-center gap-4 lg:gap-5"
+        className="flex flex-col justify-start items-center col-span-2 gap-4 lg:gap-5"
       >
         <div
           id="dashboardVehicleMetricsHeader"
           className="flex flex-row gap-2 items-center self-start"
         >
-          <LucideCar className="text-slate-500 size-4 lg:size-5" />
+          <LucideCar className="text-slate-500 stroke-1 size-4 lg:size-5" />
           <PGrey>{t("Title")}</PGrey>
         </div>
-        <H1>{totalVehicles}</H1>
+        <div className="flex flex-col text-center flex-1 gap-3 lg:gap-4 items-center justify-center">
+          <H1>{totalVehicles}</H1>
+          <CaptionGrey>
+            {(availableVehicles / totalVehicles).toLocaleString("en-IN", {
+              style: "percent",
+              maximumFractionDigits: 1,
+            }) +
+              " " +
+              t("Rate")}
+          </CaptionGrey>
+        </div>
       </div>
       <div
         id="dashboardVehicleMetricsSecondCol"
-        className="grid grid-cols-2 grid-row-2 col-span-2"
+        className="grid grid-cols-2 grid-row-2 col-span-3"
       >
         <div
           id="dashboardVehicleMetricsAvailable"

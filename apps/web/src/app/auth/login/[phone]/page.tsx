@@ -1,7 +1,7 @@
 //Login Accounts page
 import { Metadata } from "next";
 import LoginAccountsComponent from "./loginAccounts";
-import { PhoneRegex } from "../../components/regex";
+import { PhoneRegex } from "@/lib/regex";
 import { redirect, RedirectType } from "next/navigation";
 
 export const metadata: Metadata = {

@@ -7,14 +7,14 @@ import z from "zod";
 import {
   OnboardingInput,
   OnboardingFileInput,
-} from "../../components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
 import { Form } from "@/components/ui/form";
 

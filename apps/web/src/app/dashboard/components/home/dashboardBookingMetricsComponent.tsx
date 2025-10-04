@@ -15,6 +15,7 @@ import {
   LucideTrendingDown,
   LucideShoppingBag,
   LucideShoppingCart,
+  LucideTickets,
 } from "lucide-react";
 
 export default async function DashboardBookingMetricsComponent() {
@@ -81,25 +82,25 @@ export default async function DashboardBookingMetricsComponent() {
   return (
     <div
       id="dashboardBookingMetrics"
-      className="bg-white rounded-lg grid grid-cols-3 p-4 lg:p-5 gap-1 lg:gap-2"
+      className="bg-white rounded-lg grid grid-cols-5 p-4 lg:p-5 gap-1 lg:gap-2"
     >
       <div
         id="dashboardBookingMetricsFirstCol"
-        className="flex flex-col justify-start items-center gap-4 lg:gap-5"
+        className="flex flex-col justify-start items-center col-span-2 gap-4 lg:gap-5"
       >
         <div
           id="dashboardBookingMetricsHeader"
           className="flex flex-row gap-2 items-center self-start"
         >
-          <LucideShoppingCart className="text-slate-500 size-4 lg:size-5" />
+          <LucideTickets className="text-slate-500 stroke-1 size-4 lg:size-5" />
           <PGrey>{t("Title")}</PGrey>
         </div>
         <div
           id="dashboardBookingMetricsConfirmed"
-          className="flex flex-col flex-1 gap-3 lg:gap-4 items-center justify-end"
+          className="flex flex-col flex-1 gap-3 lg:gap-4 items-center justify-center"
         >
           <H1>{confirmed24HrsCount}</H1>
-          <div className="flex flex-col lg:gap-0.5 items-center">
+          <div className="flex flex-col lg:gap-0.5 items-center text-center">
             <div className="flex flex-row gap-1 item-center">
               {icon}
               <CaptionGrey>
@@ -116,7 +117,7 @@ export default async function DashboardBookingMetricsComponent() {
       </div>
       <div
         id="dashboardBookingMetricsSecondCol"
-        className="grid grid-rows-2 grid-cols-2 col-span-2"
+        className="grid grid-rows-2 grid-cols-2 col-span-3"
       >
         <div
           id="dashboardBookingMetricsLeads"

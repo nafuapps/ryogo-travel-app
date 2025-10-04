@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/sidebar";
 import { useTranslations } from "next-intl";
 import { House, Tickets, Car, UserRoundPen } from "lucide-react";
-import { MenuButton } from "../../components/sidebar/sidebarMenuButton";
-import { SidebarHeaderItem } from "../../components/sidebar/sidebarHeaderItem";
-import { MenuItemType } from "../../components/sidebar/sidebarCommon";
+import { MenuButton } from "@/components/sidebar/sidebarMenuButton";
+import { SidebarHeaderItem } from "@/components/sidebar/sidebarHeaderItem";
+import { MenuItemType } from "@/components/sidebar/sidebarCommon";
 import { usePathname } from "next/navigation";
 
 export default function RiderSidebar() {

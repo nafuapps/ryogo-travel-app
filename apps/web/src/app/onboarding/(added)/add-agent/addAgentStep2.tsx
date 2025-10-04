@@ -8,10 +8,10 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { Form } from "@/components/ui/form";
 import { H3Grey } from "@/components/typography";
-import ConfirmValues from "../../components/confirmValues";
+import ConfirmValues from "@/app/onboarding/components/confirmValues";
 import {
   OnboardingAddAgentAPIRequestType,
   OnboardingAddAgentAPIResponseType,

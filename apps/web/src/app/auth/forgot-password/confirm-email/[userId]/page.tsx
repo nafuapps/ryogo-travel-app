@@ -1,7 +1,7 @@
 //Confirm Email page
 
 import { redirect, RedirectType } from "next/navigation";
-import { UserRegex } from "../../../components/regex";
+import { UserRegex } from "@/lib/regex";
 import ConfirmEmailComponent from "./confirmEmail";
 import { Metadata } from "next";
 

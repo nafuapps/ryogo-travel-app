@@ -8,14 +8,14 @@ import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataType
 import {
   OnboardingDatePicker,
   OnboardingFileInput,
-} from "../../components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { Form } from "@/components/ui/form";
 
 export function AddVehicleStep3(props: {

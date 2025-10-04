@@ -1,8 +1,8 @@
 "use client";
 
 import { H2, P } from "@/components/typography";
-import { AccountCard } from "../../components/accountCard";
-import { BackButton } from "../../components/backButton";
+import { AccountCard } from "@/app/auth/components/accountCard";
+import { BackButton } from "@/app/auth/components/backButton";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";

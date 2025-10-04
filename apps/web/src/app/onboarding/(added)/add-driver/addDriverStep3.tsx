@@ -9,14 +9,14 @@ import {
   OnboardingInput,
   OnboardingMultipleCheckbox,
   OnboardingTextarea,
-} from "../../components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { Form } from "@/components/ui/form";
 
 export function AddDriverStep3(props: {

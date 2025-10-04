@@ -3,13 +3,13 @@ import { Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { OnboardingInput } from "../../components/onboardingFields";
+import { OnboardingInput } from "@/app/onboarding/components/onboardingFields";
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { Form } from "@/components/ui/form";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { OnboardingChangePasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";

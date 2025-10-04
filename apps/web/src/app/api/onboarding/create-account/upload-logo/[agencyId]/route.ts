@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { uploadFile } from "@ryogo-travel-app/db/storage";
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services";
-import { AgencyRegex } from "@/app/auth/components/regex";
+import { AgencyRegex } from "@/lib/regex";
 
 export async function POST(
   req: Request,

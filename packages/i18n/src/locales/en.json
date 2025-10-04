@@ -738,14 +738,16 @@
         "Available": "Available",
         "InTrip": "In Trip",
         "Leave": "Leave",
-        "Inactive": "Inactive"
+        "Inactive": "Inactive",
+        "Rate": "utilization rate"
       },
       "VehicleMetrics": {
         "Title": "VEHICLES",
         "Available": "Available",
         "InTrip": "In Trip",
         "Repair": "Repair",
-        "Inactive": "Inactive"
+        "Inactive": "Inactive",
+        "Rate": "utilization rate"
       },
       "RevenueMetrics": {
         "Title": "REVENUE",

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { userServices } from "@ryogo-travel-app/api/services/user.services";
-import { PhoneRegex } from "@/app/auth/components/regex";
+import { PhoneRegex } from "@/lib/regex";
 
 export async function GET(
   req: NextRequest,

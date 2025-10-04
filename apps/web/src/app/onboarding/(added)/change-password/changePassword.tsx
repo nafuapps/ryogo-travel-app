@@ -6,7 +6,7 @@ import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "../../components/onboardingSteps";
+} from "@/app/onboarding/components/onboardingSteps";
 import { ChangePasswordStep1 } from "./changePasswordStep1";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar";

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services";
-import { AgencyRegex } from "@/app/auth/components/regex";
+import { AgencyRegex } from "@/lib/regex";
 
 export async function GET(
   req: NextRequest,

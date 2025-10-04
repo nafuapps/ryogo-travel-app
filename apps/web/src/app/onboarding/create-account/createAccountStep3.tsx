@@ -17,7 +17,7 @@ import {
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
 } from "../components/onboardingSteps";
-import stateCityData from "../../../lib/states_cities.json";
+import stateCityData from "@/lib/states_cities.json";
 import { Form } from "@/components/ui/form";
 
 export function CreateAccountStep3(props: {

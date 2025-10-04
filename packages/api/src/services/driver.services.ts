@@ -3,6 +3,17 @@ import { driverRepository } from "../repositories/driver.repo";
 import { CreateDriverType } from "../types/driver.types";
 
 export const driverServices = {
+  //Get all drivers in an agency
+  async getAllDrivers(agencyId: string) {
+    const drivers = await driverRepository.getDriversByAgencyId(agencyId);
+    return drivers.map((driver) => {
+      return {
+        id: driver.id,
+        status: driver.status,
+      };
+    });
+  },
+
   //Create driver
   async addDriver(data: CreateDriverType) {
     //Step1: Check if driver (userId) already exists in the system

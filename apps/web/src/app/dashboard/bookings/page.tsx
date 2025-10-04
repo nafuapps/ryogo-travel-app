@@ -1,8 +1,7 @@
 //All Bookings page
 
-import {useTranslations} from 'next-intl';
- 
+import AllBookingsComponent from "./alllBookings";
+
 export default function AllBookingsPage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+  return <AllBookingsComponent />;
 }

@@ -19,11 +19,12 @@ export default async function AddAgentPage() {
 
   //Not owner
   if (currentUser.userRole !== "owner") {
+    //New users
     if (currentUser.status == "new") {
-      //If new, go to change password
+      //Go to change password
       redirect("/onboarding/change-password", RedirectType.replace);
     }
-    //Not new users
+    //Old users
     if (currentUser.userRole == "driver") {
       //If driver, go to rider page
       redirect("/rider", RedirectType.replace);

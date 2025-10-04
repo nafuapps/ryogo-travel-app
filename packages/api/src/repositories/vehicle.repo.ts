@@ -11,7 +11,7 @@ export const vehicleRepository = {
   //Get all vehicles of an agency
   async getVehiclesByAgencyId(agencyId: string) {
     return await db
-      .select({ id: vehicles.id })
+      .select()
       .from(vehicles)
       .where(eq(vehicles.agencyId, agencyId));
   },

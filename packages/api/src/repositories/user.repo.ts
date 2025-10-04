@@ -52,7 +52,7 @@ export const userRepository = {
   //Get user by roles in an agency
   async getUserByRolesAgencyId(agencyId: string, userRoles: UserRolesEnum[]) {
     return await db
-      .select({ id: users.id })
+      .select()
       .from(users)
       .where(
         and(eq(users.agencyId, agencyId), inArray(users.userRole, userRoles))

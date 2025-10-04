@@ -2,8 +2,10 @@
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
-import DashboardSidebar from "./dashboardSidebar";
+import DashboardSidebar from "./components/extra/dashboardSidebar";
 import { getCurrentUser } from "@/lib/auth";
+import DashboardHeader from "./components/extra/dashboardHeader";
+import { redirect, RedirectType } from "next/navigation";
 
 export default async function DashboardLayout({
   children,
@@ -14,23 +16,45 @@ export default async function DashboardLayout({
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   const currentUser = await getCurrentUser();
 
+  //New user
+  if (currentUser?.status == "new") {
+    if (currentUser?.userRole == "owner") {
+      //If owner, go to vehicle onboarding
+      redirect("/onboarding/add-vehicle", RedirectType.replace);
+    }
+    //Else, go to change-password
+    redirect("/onboarding/change-password", RedirectType.replace);
+  }
+
+  //Old user
+  if (currentUser?.userRole == "driver") {
+    //If old driver, go to rider page
+    redirect("/rider", RedirectType.replace);
+  }
+
+  //Only old owner/agent can come to dashboard
   return (
     <SidebarProvider
       defaultOpen={defaultOpen}
       style={
         {
-          "--sidebar-width": "241px",
-          "--sidebar-width-mobile": "241px",
+          "--sidebar-width": "261px",
+          "--sidebar-width-mobile": "261px",
           "--sidebar-width-icon": "65px",
         } as React.CSSProperties
       }
     >
-      <main
-        id="DashboardMainLayout"
-        className="flex flex-row w-screen h-screen"
-      >
+      <main id="DashboardLayout" className="flex flex-row w-screen h-screen">
         <DashboardSidebar isOwner={currentUser?.userRole === "owner"} />
-        <section>{children}</section>;
+        <section
+          id="DashboardMainSection"
+          className="flex flex-row w-full h-screen"
+        >
+          <div className="flex flex-col w-full h-screen bg-slate-100 p-4 lg:p-5">
+            <DashboardHeader />
+            {children}
+          </div>
+        </section>
       </main>
     </SidebarProvider>
   );

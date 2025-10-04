@@ -1,6 +1,8 @@
 import { PBold, CaptionGrey } from "@/components/typography";
 import { Skeleton } from "@/components/ui/skeleton";
-import { menuButtonClassName } from "./sidebarMenuButton";
+
+export const headerButtonClassName =
+  "flex flex-row gap-3 items-center justify-start rounded bg-slate-50 text-slate-600 w-full p-1";
 
 export function SidebarHeaderItem(props: {
   open: boolean;
@@ -8,8 +10,8 @@ export function SidebarHeaderItem(props: {
   subtitle: string;
 }) {
   return (
-    <div className={menuButtonClassName}>
-      <Skeleton className="size-8 aspect-square rounded bg-slate-400" />
+    <div className={headerButtonClassName}>
+      <Skeleton className="size-10 aspect-square rounded bg-slate-400" />
       {props.open && (
         <div className="flex flex-col gap-0.5 items-start justify-center">
           <PBold>{props.title}</PBold>

@@ -670,6 +670,101 @@
       "Users": "Users",
       "Analytics": "Analytics",
       "Account": "Account"
+    },
+    "Header": {
+      "NewBooking": "New Booking",
+      "ActionCenter": "Action Center",
+      "Title": {
+        "/dashboard": "Home",
+        "/dashboard/account": "Account",
+        "/dashboard/account/agency": "Agency Details",
+        "/dashboard/account/agency/modify": "Modify Agency",
+        "/dashboard/account/help": "Help",
+        "/dashboard/account/modify": "Modify Account",
+        "/dashboard/account/settings": "Settings",
+        "/dashboard/action-center": "Action Center",
+        "/dashboard/analytics": "Analytics",
+        "/dashboard/bookings": "Bookings",
+        "/dashboard/bookings/new": "New Booking",
+        "/dashboard/bookings/{id}": "Booking Details",
+        "/dashboard/bookings/confirm": "Confirm Booking",
+        "/dashboard/bookings/expenses": "Booking Expenses",
+        "/dashboard/bookings/expenses/modify": "Modify Expenses",
+        "/dashboard/bookings/expenses/new": "New Expense",
+        "/dashboard/bookings/modify": "Modify Booking",
+        "/dashboard/bookings/reconcile": "Reconcile Booking",
+        "/dashboard/bookings/transactions": "Booking Transactions",
+        "/dashboard/bookings/transactions/modify": "Modify Transactions",
+        "/dashboard/bookings/transactions/new": "New Transaction",
+        "/dashboard/bookings/trip-logs": "Trip Logs",
+        "/dashboard/customers": "Customers",
+        "/dashboard/customers/new": "New Customer",
+        "/dashboard/customers/{id}": "Customer Details",
+        "/dashboard/customers/modify": "Modify Customer",
+        "/dashboard/drivers": "Drivers",
+        "/dashboard/drivers/new": "New Driver",
+        "/dashboard/drivers/{id}": "Driver Details",
+        "/dashboard/drivers/modify": "Modify Driver",
+        "/dashboard/drivers/leaves": "Driver Leaves",
+        "/dashboard/drivers/leaves/new": "New Leave",
+        "/dashboard/drivers/leaves/modify": "Modify Leaves",
+        "/dashboard/users": "Users",
+        "/dashboard/users/new": "New User",
+        "/dashboard/users/{id}": "User Details",
+        "/dashboard/users/modify": "Modify User",
+        "/dashboard/vehicles": "Vehicles",
+        "/dashboard/vehicles/new": "New Vehicle",
+        "/dashboard/vehicles/{id}": "Vehicle Details",
+        "/dashboard/vehicles/modify": "Modify Vehicle",
+        "/dashboard/vehicles/repairs": "Vehicle Repairs",
+        "/dashboard/vehicles/repairs/new": "New Repair",
+        "/dashboard/vehicles/repairs/modify": "Modify Repairs"
+      }
+    },
+    "Home": {
+      "BookingMetrics": {
+        "Title": "BOOKINGS",
+        "More": "more",
+        "Less": "less",
+        "ThanAvg": "than weekly avg",
+        "Leads": "Open Leads",
+        "InProgress": "In Progress",
+        "Confirmed": "Confirmed",
+        "Completed": "Completed",
+        "Cancelled": "Cancelled"
+      },
+      "DriverMetrics": {
+        "Title": "DRIVERS",
+        "Available": "Available",
+        "InTrip": "In Trip",
+        "Leave": "Leave",
+        "Inactive": "Inactive"
+      },
+      "VehicleMetrics": {
+        "Title": "VEHICLES",
+        "Available": "Available",
+        "InTrip": "In Trip",
+        "Repair": "Repair",
+        "Inactive": "Inactive"
+      },
+      "RevenueMetrics": {
+        "Title": "REVENUE",
+        "More": "more",
+        "Less": "less",
+        "ThanAvg": "than weekly avg",
+        "In": "Credit",
+        "Out": "Debit",
+        "Commission": "Avg commission rate"
+      },
+      "OngoingTrips": "ONGOING TRIPS"
+    },
+    "Bookings": {
+      "Switches": {
+        "Ongoing": "Ongoing",
+        "Upcoming": "Upcoming",
+        "Completed": "Completed",
+        "Open": "Leads"
+      }
     }
   },
   "Rider": {
@@ -680,6 +775,17 @@
       "Bookings": "Bookings",
       "Vehicle": "Vehicle",
       "Profile": "Profile"
+    },
+    "Header": {
+      "ActionCenter": "Action Center",
+      "Title": {
+        "/rider": "Home",
+        "/rider/myActions": "Action Center",
+        "/rider/myBookings": "Bookings",
+        "/rider/myBookings/{id}": "Booking Details",
+        "/rider/myProfile": "Profile",
+        "/rider/myVehicle": "Vehicle"
+      }
     }
   },
   "Landing": {

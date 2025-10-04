@@ -11,31 +11,32 @@ export default async function ChangePasswordPage() {
     redirect("/auth/login", RedirectType.replace);
   }
 
-  //Owner
+  // Owner
   if (currentUser.userRole === "owner") {
     if (currentUser.status == "new") {
       //If new owner, go to vehicle onboarding
       redirect("/onboarding/add-vehicle", RedirectType.replace);
     }
-    //Else, go to dashboard
-    // redirect("/dashboard", RedirectType.replace);
+    // Old owner, go to dashboard
+    redirect("/dashboard", RedirectType.replace);
   }
 
-  //Not owner, old user
-  // if (currentUser.status !== "new") {
-  //   if (currentUser.userRole == "driver") {
-  //     //If driver, go to rider
-  //     redirect("/rider", RedirectType.replace);
-  //   } else {
-  //     //If driver, go to dashboard
-  //     redirect("/dashboard", RedirectType.replace);
-  //   }
-  // }
+  // Old user
+  if (currentUser.status !== "new") {
+    if (currentUser.userRole == "driver") {
+      //If driver, go to rider
+      redirect("/rider", RedirectType.replace);
+    } else {
+      //If not driver, go to dashboard
+      redirect("/dashboard", RedirectType.replace);
+    }
+  }
 
+  //Only new non owners can come to change password page
   return (
     <ChangePasswordComponent
-      userId={currentUser.userId}
-      role={currentUser.userRole}
+      userId={currentUser!.userId}
+      role={currentUser!.userRole}
     />
   );
 }

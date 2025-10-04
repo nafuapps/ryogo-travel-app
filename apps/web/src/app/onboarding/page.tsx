@@ -34,7 +34,7 @@ export default async function OnboardingHomePage() {
       >
         <div
           id="OnboardingHomeSteps"
-          className="border-slate-200 border rounded-xl p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
+          className="border-slate-200 border rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
         >
           <div className="flex flex-row gap-3 md:gap-4 justify-start items-center">
             <div className="bg-slate-100 rounded-full w-10 h-10 md:w-12 md:h-12 flex justify-center items-center">
@@ -60,7 +60,7 @@ export default async function OnboardingHomePage() {
         </div>
         <div
           id="OnboardingHomeChecklist"
-          className="border-slate-200 border rounded-xl p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
+          className="border-slate-200 border rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
         >
           <div className="flex flex-row gap-3 md:gap-4 justify-start items-center">
             <div className="bg-slate-100 rounded-full w-10 h-10 md:w-12 md:h-12 flex justify-center items-center">

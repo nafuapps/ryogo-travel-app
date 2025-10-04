@@ -6,6 +6,7 @@ const protectedRoutes = [
   "/onboarding/add-agent",
   "/onboarding/add-driver",
   "/onboarding/add-vehicle",
+  "/onboarding/change-password",
 ];
 const publicRoutes = ["/onboarding/create-account", "/onboarding", "/"];
 
@@ -24,21 +25,17 @@ export default async function middleware(req: NextRequest) {
   // 3. Get Current User from cookie
   const user = await getCurrentUser();
 
-  // 4. Redirect to /login if the user is not authenticated
+  // 4. Redirect to /auth/login if the user is not authenticated
   if (isProtectedRoute && !user?.userId) {
     return NextResponse.redirect(new URL("/auth/login", req.nextUrl));
   }
 
-  // 5. Redirect to applicable private routes if the user is authenticated
+  // 5. Redirect public to private routes if the user is authenticated
   if (isPublicRoute && user?.userId) {
-    if (user.userRole == "driver")
-      // TODO: If new driver, initiate password change
+    if (user.userRole == "driver") {
       return NextResponse.redirect(new URL("/rider", req.nextUrl));
-    if (user.userRole == "owner" || user.userRole == "agent") {
-      // TODO: If new owner, continue onboarding
-      // TODO: If new agent, initiate password change
-      return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
     }
+    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
   }
 
   const requestHeaders = new Headers(req.headers);

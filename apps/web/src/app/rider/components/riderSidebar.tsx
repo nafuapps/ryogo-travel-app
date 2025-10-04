@@ -12,10 +12,12 @@ import { House, Tickets, Car, UserRoundPen } from "lucide-react";
 import { MenuButton } from "../../components/sidebar/sidebarMenuButton";
 import { SidebarHeaderItem } from "../../components/sidebar/sidebarHeaderItem";
 import { MenuItemType } from "../../components/sidebar/sidebarCommon";
+import { usePathname } from "next/navigation";
 
 export default function RiderSidebar() {
   const { isMobile, open, openMobile } = useSidebar();
   const t = useTranslations("Rider.Sidebar");
+  const pathname = usePathname();
 
   const sidebarOpen = open || openMobile;
 
@@ -62,12 +64,22 @@ export default function RiderSidebar() {
       </SidebarHeader>
       <SidebarContent className="px-2 my-4">
         {contentItems.map((item) => (
-          <MenuButton key={item.title} {...item} open={sidebarOpen} />
+          <MenuButton
+            key={item.title}
+            {...item}
+            open={sidebarOpen}
+            active={pathname == item.url}
+          />
         ))}
       </SidebarContent>
       <SidebarFooter className="my-4">
         {footerItems.map((item) => (
-          <MenuButton key={item.title} {...item} open={sidebarOpen} />
+          <MenuButton
+            key={item.title}
+            {...item}
+            open={sidebarOpen}
+            active={pathname == item.url}
+          />
         ))}
       </SidebarFooter>
     </Sidebar>

@@ -261,12 +261,14 @@ export const vehicleTypes = pgEnum("vehicle_types", [
 export enum VehicleStatusEnum {
   AVAILABLE = "available",
   ON_TRIP = "on_trip",
+  REPAIR = "repair",
   INACTIVE = "inactive",
   SUSPENDED = "suspended",
 }
 export const vehicleStatus = pgEnum("vehicle_status", [
   VehicleStatusEnum.AVAILABLE,
   VehicleStatusEnum.ON_TRIP,
+  VehicleStatusEnum.REPAIR,
   VehicleStatusEnum.INACTIVE,
   VehicleStatusEnum.SUSPENDED,
 ]);
@@ -345,12 +347,14 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
 export enum DriverStatusEnum {
   AVAILABLE = "available",
   ON_TRIP = "on_trip",
+  LEAVE = "leave",
   INACTIVE = "inactive",
   SUSPENDED = "suspended",
 }
 export const driverStatus = pgEnum("driver_status", [
   DriverStatusEnum.AVAILABLE,
   DriverStatusEnum.ON_TRIP,
+  DriverStatusEnum.LEAVE,
   DriverStatusEnum.INACTIVE,
   DriverStatusEnum.SUSPENDED,
 ]);
@@ -507,6 +511,7 @@ export const customers = pgTable(
     locationId: text("location_id")
       .references(() => locations.id, { onDelete: "set null" })
       .notNull(),
+    remarks: text("remarks"),
     status: customerStatus().notNull().default(CustomerStatusEnum.ACTIVE),
     ...timestamps,
   },
@@ -537,7 +542,7 @@ export const customerRelations = relations(customers, ({ one, many }) => ({
 }));
 
 export enum BookingStatusEnum {
-  QUOTE = "quote",
+  LEAD = "lead",
   CONFIRMED = "confirmed",
   IN_PROGRESS = "in_progress",
   COMPLETED = "completed",
@@ -545,7 +550,7 @@ export enum BookingStatusEnum {
   RECONCILED = "reconciled",
 }
 export const bookingStatus = pgEnum("booking_status", [
-  BookingStatusEnum.QUOTE,
+  BookingStatusEnum.LEAD,
   BookingStatusEnum.CONFIRMED,
   BookingStatusEnum.IN_PROGRESS,
   BookingStatusEnum.COMPLETED,
@@ -615,7 +620,8 @@ export const bookings = pgTable(
     commissionRate: integer("commission_rate").notNull(), // in percentage
     totalAmount: integer("total_amount").notNull(), // in currency units
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
-    status: bookingStatus().notNull().default(BookingStatusEnum.QUOTE),
+    ratingByCustomer: integer("rating_by_customer"), // 1 to 5
+    status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
     ...timestamps,
   },
   (t) => [
@@ -641,8 +647,12 @@ export const bookings = pgTable(
       sql`${t.totalAmount} > 0 AND ${t.totalAmount} < 1000000`
     ),
     check(
-      "rating >=1 and rating <=5",
+      "driver rating >=1 and rating <=5",
       sql`${t.ratingByDriver} >=1 AND ${t.ratingByDriver} <=5`
+    ),
+    check(
+      "customer rating >=1 and rating <=5",
+      sql`${t.ratingByCustomer} >=1 AND ${t.ratingByCustomer} <=5`
     ),
     index("bookings_agency_idx").on(t.agencyId), // to quickly filter all bookings in an agency
     index("bookings_agency_status_idx").on(t.status, t.agencyId), // to quickly filter bookings by status in an agency
@@ -1005,11 +1015,16 @@ export const vehicleRepairs = pgTable(
       .notNull(),
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),
+    cost: integer("cost"),
     remarks: text("remarks"),
     ...timestamps,
   },
   (t) => [
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
+    check(
+      "cost >= 0 and < 1000000",
+      sql`${t.cost} > 0 AND ${t.cost} < 1000000`
+    ),
     index("vehicle_repairs_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter vehicle repairs by vehicle in an agency
     index("vehicle_repairs_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter vehicle repairs added by a user in an agency
     index("vehicle_repairs_agency_start_date_idx").on(t.startDate, t.agencyId), // to quickly filter vehicle repairs by start date in an agency

@@ -30,9 +30,15 @@ export const agencyServices = {
     ]);
 
     return {
-      vehicles,
-      drivers,
-      agents,
+      vehicles: vehicles.map((vehicle) => {
+        return { id: vehicle.id };
+      }),
+      drivers: drivers.map((driver) => {
+        return { id: driver.id };
+      }),
+      agents: agents.map((agent) => {
+        return { id: agent.id };
+      }),
     };
   },
 

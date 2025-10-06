@@ -1,7 +1,7 @@
 //Rider home page
 
-import RiderHomeComponent from "./riderHome";
+import RiderHomePageComponent from "./riderHome";
 
 export default async function RiderHomePage() {
-  return <RiderHomeComponent />;
+  return <RiderHomePageComponent />;
 }

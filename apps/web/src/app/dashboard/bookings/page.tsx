@@ -1,7 +1,7 @@
 //All Bookings page
 
-import AllBookingsComponent from "./alllBookings";
+import BookingsPageComponent from "./bookings";
 
-export default function AllBookingsPage() {
-  return <AllBookingsComponent />;
+export default function BookingsPage() {
+  return <BookingsPageComponent />;
 }

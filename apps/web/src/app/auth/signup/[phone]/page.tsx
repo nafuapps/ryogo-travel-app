@@ -2,7 +2,7 @@
 import { Metadata } from "next";
 import { PhoneRegex } from "@/lib/regex";
 import { redirect, RedirectType } from "next/navigation";
-import SignupExistingComponent from "./signupExisting";
+import SignupExistingPageComponent from "./signupExisting";
 
 export const metadata: Metadata = {
   title: "Signup Existing Accounts Page | RyoGo",
@@ -21,5 +21,5 @@ export default async function SignupExistingPage({
     redirect("/auth/signup", RedirectType.replace);
   }
 
-  return <SignupExistingComponent phone={phone} />;
+  return <SignupExistingPageComponent phone={phone} />;
 }

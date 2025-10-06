@@ -727,8 +727,8 @@
         "More": "more",
         "Less": "less",
         "ThanAvg": "than weekly avg",
-        "Leads": "Open Leads",
-        "InProgress": "In Progress",
+        "Leads": "Leads",
+        "Ongoing": "Ongoing",
         "Confirmed": "Confirmed",
         "Completed": "Completed",
         "Cancelled": "Cancelled"
@@ -758,14 +758,32 @@
         "Out": "Debit",
         "Commission": "Avg commission rate"
       },
-      "OngoingTrips": "ONGOING TRIPS"
+      "OngoingTrips": {
+        "Title": "ONGOING TRIPS"
+      }
     },
     "Bookings": {
-      "Switches": {
-        "Ongoing": "Ongoing",
-        "Upcoming": "Upcoming",
-        "Completed": "Completed",
-        "Open": "Leads"
+      "Ongoing": {
+        "Title": "Ongoing"
+      },
+      "Upcoming": {
+        "Title": "Upcoming",
+        "24Hrs": "Next 24 Hours",
+        "7Days": "Next 7 Days"
+      },
+      "Completed": {
+        "Title": "Completed",
+        "24Hrs": "Last 24 Hours",
+        "7Days": "Last 7 Days"
+      },
+      "Schedule": {
+        "Title": "Booking Schedule"
+      },
+      "Leads": {
+        "Title": "Leads",
+        "24Hrs": "Last 24 Hours",
+        "7Days": "Last 7 Days",
+        "Passengers": "pax"
       }
     }
   },

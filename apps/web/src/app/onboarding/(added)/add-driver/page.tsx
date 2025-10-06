@@ -2,7 +2,7 @@
 
 import { getCurrentUser } from "@/lib/auth";
 import { redirect, RedirectType } from "next/navigation";
-import AddDriverComponent from "./addDriver";
+import AddDriverPageComponent from "./addDriver";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default async function AddDriverPage() {
 
   //Only new owners can add driver
   return (
-    <AddDriverComponent
+    <AddDriverPageComponent
       agencyId={currentUser.agencyId}
       userId={currentUser.userId}
       userStatus={currentUser.status}

@@ -2,16 +2,28 @@ import { NextRequest, NextResponse } from "next/server";
 import { userServices } from "@ryogo-travel-app/api/services/user.services";
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services";
 import { updateSessionUserStatus } from "@/lib/session";
+import { getCurrentUser } from "@/lib/auth";
+import { UserRegex } from "@/lib/regex";
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
+    //Check user auth
+    const user = await getCurrentUser();
+    if (!user || user.userRole !== "owner") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    //Get userId from params
     const { userId } = await params;
-    const user = await userServices.activateUser(userId);
+    if (!UserRegex.safeParse(userId).success) {
+      return NextResponse.json({ error: "Invalid userId" }, { status: 400 });
+    }
 
-    const agency = await agencyServices.activateAgency(user.agencyId);
+    const resultUser = await userServices.activateUser(userId);
+
+    const agency = await agencyServices.activateAgency(resultUser.agencyId);
 
     console.log("DB update successful");
 

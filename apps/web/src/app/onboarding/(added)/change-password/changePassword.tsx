@@ -11,12 +11,12 @@ import { ChangePasswordStep1 } from "./changePasswordStep1";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar";
 
-type ChangePasswordComponentProps = {
+type ChangePasswordPageComponentProps = {
   userId: string;
   role: string;
 };
-export default function ChangePasswordComponent(
-  props: ChangePasswordComponentProps
+export default function ChangePasswordPageComponent(
+  props: ChangePasswordPageComponentProps
 ) {
   const t = useTranslations("Onboarding.ChangePasswordPage");
   const { isMobile } = useSidebar();

@@ -24,12 +24,14 @@ export type AgentCheckedType = {
   [key: string]: boolean; // Keys are [phone+email] , values are boolean
 };
 
-type AddAgentComponentProps = {
+type AddAgentPageComponentProps = {
   agencyId: string;
   ownerId: string;
   status: string;
 };
-export default function AddAgentComponent(props: AddAgentComponentProps) {
+export default function AddAgentPageComponent(
+  props: AddAgentPageComponentProps
+) {
   useEffect(() => {
     //Redirect if needed
     fetchAgenyData(props.agencyId, "add-agent");

@@ -22,7 +22,7 @@ import {
 
 const TotalSteps = 5;
 
-export default function CreateAccountComponent() {
+export default function CreateAccountPageComponent() {
   const t = useTranslations("Onboarding.CreateAccountPage");
 
   const [finalData, setFinalData] = useState<CreateAccountFormDataType>({

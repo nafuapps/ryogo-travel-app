@@ -260,7 +260,7 @@ export const vehicleTypes = pgEnum("vehicle_types", [
 ]);
 export enum VehicleStatusEnum {
   AVAILABLE = "available",
-  ON_TRIP = "on_trip",
+  ON_TRIP = "on trip",
   REPAIR = "repair",
   INACTIVE = "inactive",
   SUSPENDED = "suspended",
@@ -346,7 +346,7 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
 
 export enum DriverStatusEnum {
   AVAILABLE = "available",
-  ON_TRIP = "on_trip",
+  ON_TRIP = "on trip",
   LEAVE = "leave",
   INACTIVE = "inactive",
   SUSPENDED = "suspended",
@@ -544,7 +544,7 @@ export const customerRelations = relations(customers, ({ one, many }) => ({
 export enum BookingStatusEnum {
   LEAD = "lead",
   CONFIRMED = "confirmed",
-  IN_PROGRESS = "in_progress",
+  IN_PROGRESS = "in progress",
   COMPLETED = "completed",
   CANCELLED = "cancelled",
   RECONCILED = "reconciled",
@@ -558,9 +558,9 @@ export const bookingStatus = pgEnum("booking_status", [
   BookingStatusEnum.RECONCILED,
 ]);
 export enum BookingTypeEnum {
-  OneWay = "oneWay",
-  Round = "round",
-  MultiDay = "multiDay",
+  OneWay = "one way",
+  Round = "round trip",
+  MultiDay = "multi day",
 }
 export const bookingType = pgEnum("booking_type", [
   BookingTypeEnum.OneWay,
@@ -788,11 +788,11 @@ export const expenseRelations = relations(expenses, ({ one }) => ({
 }));
 
 export enum TripLogTypesEnum {
-  START_TRIP = "start_trip",
-  END_TRIP = "end_trip",
+  START_TRIP = "trip started",
+  END_TRIP = "trip ended",
   ARRIVED = "arrived",
-  PICKUP = "pickup",
-  DROP = "drop",
+  PICKUP = "picked up",
+  DROP = "dropped",
 }
 export const tripLogTypes = pgEnum("trip_log_types", [
   TripLogTypesEnum.START_TRIP,
@@ -881,7 +881,7 @@ export const transactionParties = pgEnum("transaction_parties", [
 export enum TransactionModesEnum {
   CASH = "cash",
   CARD = "card",
-  NET_BANKING = "net_banking",
+  NET_BANKING = "net banking",
   UPI = "upi",
   OTHER = "other",
 }

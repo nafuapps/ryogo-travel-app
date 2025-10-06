@@ -1,7 +1,7 @@
 //Login password page
 
 import { Metadata } from "next";
-import LoginPasswordComponent from "./loginPassword";
+import LoginPasswordPageComponent from "./loginPassword";
 import { UserRegex } from "@/lib/regex";
 import { redirect, RedirectType } from "next/navigation";
 
@@ -19,5 +19,5 @@ export default async function LoginPasswordPage({
   if (!UserRegex.safeParse(userId).success) {
     redirect("/auth/login", RedirectType.replace);
   }
-  return <LoginPasswordComponent userId={userId} />;
+  return <LoginPasswordPageComponent userId={userId} />;
 }

@@ -32,11 +32,11 @@ export async function fetchAccounts(phone: string) {
   }
 }
 
-type SignupExistingComponentProps = {
+type SignupExistingPageComponentProps = {
   phone: string;
 };
-export default function SignupExistingComponent(
-  props: SignupExistingComponentProps
+export default function SignupExistingPageComponent(
+  props: SignupExistingPageComponentProps
 ) {
   const phone = props.phone;
   const [accounts, setAccounts] = useState<SignupExistingAPIResponseType>([]);

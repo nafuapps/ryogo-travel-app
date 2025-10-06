@@ -8,6 +8,18 @@ import {
   LucideBadgeIndianRupee,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import {
+  boldIconClassName,
+  iconClassName,
+  metricFirstColClassName,
+  metricHeaderClassName,
+  metricItem1ClassName,
+  metricItem2ClassName,
+  metricItem3ClassName,
+  metricMainClassName,
+  metricsClassName,
+  metricSecondColClassName,
+} from "./dashboardMetricsCommons";
 
 export default async function DashboardRevenueMetricsComponent() {
   const t = await getTranslations("Dashboard.Home.RevenueMetrics");
@@ -40,9 +52,9 @@ export default async function DashboardRevenueMetricsComponent() {
     : (revenueWeeklyAvg - revenue24HrsAmount) / revenueWeeklyAvg;
 
   const icon = more ? (
-    <LucideTrendingUp className="text-slate-500 size-4 lg:size-5" />
+    <LucideTrendingUp className={boldIconClassName} />
   ) : (
-    <LucideTrendingDown className="text-slate-500 size-4 lg:size-5" />
+    <LucideTrendingDown className={boldIconClassName} />
   );
 
   // const avgCommisionRateThisWeek = revenueBookingsThisWeek.reduce((total, booking) => {
@@ -65,24 +77,21 @@ export default async function DashboardRevenueMetricsComponent() {
   const transactionsOutAmount = 14982;
 
   return (
-    <div
-      id="dashboardRevenueMetrics"
-      className="bg-white rounded-lg grid grid-cols-5 p-4 lg:p-5 gap-2 lg:gap-3"
-    >
+    <div id="dashboardRevenueMetrics" className={metricsClassName}>
       <div
         id="dashboardRevenueMetricsFirstCol"
-        className="flex flex-col justify-start col-span-2 items-center gap-4 lg:gap-5"
+        className={metricFirstColClassName}
       >
         <div
           id="dashboardRevenueMetricsHeader"
-          className="flex flex-row gap-2 items-center self-start"
+          className={metricHeaderClassName}
         >
-          <LucideBadgeIndianRupee className="text-slate-500 stroke-1 size-4 lg:size-5" />
+          <LucideBadgeIndianRupee className={iconClassName} />
           <PGrey>{t("Title")}</PGrey>
         </div>
         <div
           id="dashboardRevenueMetricsConfirmed"
-          className="flex flex-col flex-1 gap-3 lg:gap-4 items-center justify-center"
+          className={metricMainClassName}
         >
           <H3>
             {revenue24HrsAmount.toLocaleString("en-IN", {
@@ -108,12 +117,9 @@ export default async function DashboardRevenueMetricsComponent() {
       </div>
       <div
         id="dashboardRevenueMetricsSecondCol"
-        className="grid grid-rows-2 grid-cols-2 col-span-3"
+        className={metricSecondColClassName}
       >
-        <div
-          id="dashboardRevenueMetricsLeads"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-r border-slate-100"
-        >
+        <div id="dashboardRevenueMetricsLeads" className={metricItem1ClassName}>
           <H5>
             {transactionsInAmount.toLocaleString("en-IN", {
               style: "currency",
@@ -125,7 +131,7 @@ export default async function DashboardRevenueMetricsComponent() {
         </div>
         <div
           id="dashboardRevenueMetricsInProgress"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center"
+          className={metricItem2ClassName}
         >
           <H5>
             {transactionsOutAmount.toLocaleString("en-IN", {
@@ -138,7 +144,7 @@ export default async function DashboardRevenueMetricsComponent() {
         </div>
         <div
           id="dashboardRevenueMetricsInProgress"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-t border-slate-100 col-span-2"
+          className={metricItem3ClassName + " col-span-2"}
         >
           <H4>
             {avgCommisionRateThisWeek.toLocaleString("en-IN", {

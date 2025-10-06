@@ -7,9 +7,9 @@ type DashboardOngoingTripComponentProps = {
   customerName: string;
   route: string;
   type: string;
-  vehicle: string;
-  driver: string;
-  status: string;
+  vehicle?: string;
+  driver?: string;
+  status?: string;
 };
 export default function DashboardOngoingTripComponent(
   props: DashboardOngoingTripComponentProps
@@ -33,7 +33,7 @@ export default function DashboardOngoingTripComponent(
             <CaptionBold>{props.bookingId}</CaptionBold>
           </div>
           <div className="flex rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-            <CaptionBold>{props.status.toUpperCase()}</CaptionBold>
+            <CaptionBold>{props.status?.toUpperCase()}</CaptionBold>
           </div>
         </div>
       </div>

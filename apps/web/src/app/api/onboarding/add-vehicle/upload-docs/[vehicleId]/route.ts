@@ -2,12 +2,19 @@ import { NextResponse } from "next/server";
 import { uploadFile } from "@ryogo-travel-app/db/storage";
 import { VehicleRegex } from "@/lib/regex";
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services";
+import { getCurrentUser } from "@/lib/auth";
 
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ vehicleId: string }> }
 ) {
   try {
+    //Check user auth
+    const user = await getCurrentUser();
+    if (!user || user.userRole !== "owner") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     //Get vehicleId
     const { vehicleId } = await params;
     if (!VehicleRegex.safeParse(vehicleId).success) {

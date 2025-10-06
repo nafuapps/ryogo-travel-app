@@ -1,7 +1,7 @@
 //(Onboarding) Add vehicle page
 
 import { Metadata } from "next";
-import AddVehicleComponent from "./addVehicle";
+import AddVehiclePageComponent from "./addVehicle";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect, RedirectType } from "next/navigation";
 
@@ -40,7 +40,7 @@ export default async function AddVehiclePage() {
 
   //Only new owner can add vehicle
   return (
-    <AddVehicleComponent
+    <AddVehiclePageComponent
       agencyId={currentUser.agencyId}
       status={currentUser.status}
     />

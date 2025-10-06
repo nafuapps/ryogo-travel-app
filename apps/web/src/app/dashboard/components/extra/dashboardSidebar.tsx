@@ -19,7 +19,7 @@ import {
   UserRoundPen,
 } from "lucide-react";
 import { MenuButton } from "@/components/sidebar/sidebarMenuButton";
-import { SidebarHeaderItem } from "@/components/sidebar/sidebarHeaderItem";
+import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem";
 import { MenuItemType } from "@/components/sidebar/sidebarCommon";
 import { usePathname } from "next/navigation";
 
@@ -94,7 +94,7 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       className="h-full"
     >
       <SidebarHeader className="my-4">
-        <SidebarHeaderItem
+        <SidebarLogoItem
           open={sidebarOpen}
           title={t("Title")}
           subtitle={t("Subtitle")}

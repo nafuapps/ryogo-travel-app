@@ -2,12 +2,19 @@ import { NextResponse } from "next/server";
 import { uploadFile } from "@ryogo-travel-app/db/storage";
 import { DriverRegex } from "@/lib/regex";
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services";
+import { getCurrentUser } from "@/lib/auth";
 
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ driverId: string }> }
 ) {
   try {
+    //Check user auth
+    const user = await getCurrentUser();
+    if (!user || user.userRole !== "owner") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     //Get userId
     const { driverId } = await params;
     if (!DriverRegex.safeParse(driverId).success) {

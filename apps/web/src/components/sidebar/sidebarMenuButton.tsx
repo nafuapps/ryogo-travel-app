@@ -20,15 +20,14 @@ type MenuButtonProps = {
   active?: boolean;
 };
 
-export const menuButtonClassName =
-  "flex flex-row gap-3 items-center justify-start rounded-lg bg-slate-50 hover:bg-slate-200 text-slate-600 w-full px-2 py-2";
+const menuButtonClassName =
+  "flex flex-row gap-3 items-center justify-start rounded-lg hover:bg-slate-200 text-slate-600 w-full px-2 py-2";
 
-export const activeMenuButtonClassName =
+const activeMenuButtonClassName =
   "flex flex-row gap-3 items-center justify-start rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-100 w-full px-2 py-2";
 
-export const iconClassName = "size-8 stroke-1 aspect-square text-slate-500";
-export const activeIconClassName =
-  "size-8 aspect-square text-slate-100 stroke-1";
+const iconClassName = "size-8 stroke-1 aspect-square text-slate-500";
+const activeIconClassName = "size-8 aspect-square text-slate-100 stroke-1";
 
 export function MenuButton(props: MenuButtonProps) {
   return (

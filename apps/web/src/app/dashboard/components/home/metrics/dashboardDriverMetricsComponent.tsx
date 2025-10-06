@@ -3,6 +3,18 @@ import { getCurrentUser } from "@/lib/auth";
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services";
 import { LucideLifeBuoy } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import {
+  metricFirstColClassName,
+  metricHeaderClassName,
+  metricItem1ClassName,
+  metricItem2ClassName,
+  metricItem3ClassName,
+  metricItem4ClassName,
+  metricMainClassName,
+  metricsClassName,
+  metricSecondColClassName,
+  iconClassName,
+} from "./dashboardMetricsCommons";
 
 export default async function DashboardDriverMetricsComponent() {
   const t = await getTranslations("Dashboard.Home.DriverMetrics");
@@ -31,22 +43,19 @@ export default async function DashboardDriverMetricsComponent() {
   const inactiveDrivers = 1;
 
   return (
-    <div
-      id="dashboardDriverMetrics"
-      className="bg-white rounded-lg grid grid-cols-5 p-4 lg:p-5 gap-1 lg:gap-2"
-    >
+    <div id="dashboardDriverMetrics" className={metricsClassName}>
       <div
         id="dashboardDriverMetricsFirstCol"
-        className="flex flex-col justify-start items-center col-span-2 gap-4 lg:gap-5"
+        className={metricFirstColClassName}
       >
         <div
           id="dashboardVehicleMetricsHeader"
-          className="flex flex-row gap-2 items-center self-start"
+          className={metricHeaderClassName}
         >
-          <LucideLifeBuoy className="text-slate-500 stroke-1 size-4 lg:size-5" />
+          <LucideLifeBuoy className={iconClassName} />
           <PGrey>{t("Title")}</PGrey>
         </div>
-        <div className="flex flex-col text-center flex-1 gap-3 lg:gap-4 items-center justify-center">
+        <div className={metricMainClassName}>
           <H1>{totalDrivers}</H1>
           <CaptionGrey>
             {(availableDrivers / totalDrivers).toLocaleString("en-IN", {
@@ -60,32 +69,29 @@ export default async function DashboardDriverMetricsComponent() {
       </div>
       <div
         id="dashboardDriverMetricsSecondCol"
-        className="grid grid-rows-2 grid-cols-2 col-span-3"
+        className={metricSecondColClassName}
       >
         <div
           id="dashboardDriverMetricsAvailable"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-r border-slate-100"
+          className={metricItem1ClassName}
         >
           <H4>{availableDrivers}</H4>
           <CaptionGrey>{t("Available")}</CaptionGrey>
         </div>
-        <div
-          id="dashboardDriverMetricsInTrip"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center"
-        >
+        <div id="dashboardDriverMetricsInTrip" className={metricItem2ClassName}>
           <H4>{onTripDrivers}</H4>
           <CaptionGrey>{t("InTrip")}</CaptionGrey>
         </div>
         <div
           id="dashboardDriverMetricsCancelled"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-t border-r border-slate-100"
+          className={metricItem3ClassName}
         >
           <H4>{inactiveDrivers}</H4>
           <CaptionGrey>{t("Inactive")}</CaptionGrey>
         </div>
         <div
           id="dashboardDriverMetricsCompleted"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-t border-slate-100"
+          className={metricItem4ClassName}
         >
           <H4>{leaveDrivers}</H4>
           <CaptionGrey>{t("Leave")}</CaptionGrey>

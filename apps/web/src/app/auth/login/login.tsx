@@ -28,7 +28,7 @@ import { LoginAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 3. If multiple users found, go to select account page
 */
 
-export default function LoginComponent() {
+export default function LoginPageComponent() {
   const t = useTranslations("Auth.LoginPage.Step1");
   const formSchema = z.object({
     phoneNumber: z

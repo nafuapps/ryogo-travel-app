@@ -25,12 +25,14 @@ const TotalSteps = 4;
 export type DriverCheckedType = {
   [key: string]: boolean; // Keys are [phone+email] , values are boolean
 };
-type AddDriverComponentProps = {
+type AddDriverPageComponentProps = {
   agencyId: string;
   userId: string;
   userStatus: string;
 };
-export default function AddDriverComponent(props: AddDriverComponentProps) {
+export default function AddDriverPageComponent(
+  props: AddDriverPageComponentProps
+) {
   useEffect(() => {
     //Redirect if needed
     fetchAgenyData(props.agencyId, "add-driver");

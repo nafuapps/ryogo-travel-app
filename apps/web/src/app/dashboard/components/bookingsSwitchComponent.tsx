@@ -2,7 +2,6 @@ import { H5, Small } from "@/components/typography";
 
 type BookingsSwitchComponentProps = {
   title: string;
-  number: number;
   isActive?: boolean;
   setActiveTab: (title: string) => void;
 };
@@ -21,9 +20,9 @@ export default function BookingsSwitchComponent(
       }}
     >
       <Small>{props.title}</Small>
-      <div className="flex rounded bg-slate-200 px-2 py-1 lg:px-3 lg:py-2">
+      {/* <div className="flex rounded bg-slate-200 px-2 py-1 lg:px-3 lg:py-2">
         <H5>{props.number}</H5>
-      </div>
+      </div> */}
     </div>
   );
 }

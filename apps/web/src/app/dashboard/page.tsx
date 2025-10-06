@@ -1,7 +1,7 @@
 //Dashboard home page
 
-import DashboardHomeComponent from "./dashboardHome";
+import DashboardHomePageComponent from "./dashboardHome";
 
 export default async function DashboardHomePage() {
-  return <DashboardHomeComponent />;
+  return <DashboardHomePageComponent />;
 }

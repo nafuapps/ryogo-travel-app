@@ -1,6 +1,6 @@
 //Login Accounts page
 import { Metadata } from "next";
-import LoginAccountsComponent from "./loginAccounts";
+import LoginAccountsPageComponent from "./loginAccounts";
 import { PhoneRegex } from "@/lib/regex";
 import { redirect, RedirectType } from "next/navigation";
 
@@ -19,5 +19,5 @@ export default async function LoginAccountsPage({
     redirect("/auth/login", RedirectType.replace);
   }
 
-  return <LoginAccountsComponent phone={phone} />;
+  return <LoginAccountsPageComponent phone={phone} />;
 }

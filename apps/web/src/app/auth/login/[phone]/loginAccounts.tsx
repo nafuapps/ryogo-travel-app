@@ -24,11 +24,11 @@ export async function fetchAccounts(phone: string) {
   }
 }
 
-type LoginAccountsComponentProps = {
+type LoginAccountsPageComponentProps = {
   phone: string;
 };
-export default function LoginAccountsComponent(
-  props: LoginAccountsComponentProps
+export default function LoginAccountsPageComponent(
+  props: LoginAccountsPageComponentProps
 ) {
   const phone = props.phone;
   const [accounts, setAccounts] = useState<LoginAccountsAPIResponseType>([]);

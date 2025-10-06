@@ -20,6 +20,9 @@
   },
   "peacock.color": "#42b883",
   "postman.settings.dotenv-detection-notification-visibility": false,
+  "editor.fontFamily": "Fira Mono, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
 
   "i18n-ally.localesPaths": ["./packages/i18n/src/locales"], // E.g. "./messages"
   "i18n-ally.keystyle": "nested",

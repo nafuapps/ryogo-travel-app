@@ -1,22 +1,25 @@
 import { getCurrentUser } from "@/lib/auth";
 import { getTranslations } from "next-intl/server";
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services";
-import {
-  CaptionGrey,
-  H4,
-  H1,
-  H5,
-  H5Grey,
-  PBold,
-  PGrey,
-} from "@/components/typography";
+import { CaptionGrey, H4, H1, PGrey } from "@/components/typography";
 import {
   LucideTrendingUp,
   LucideTrendingDown,
-  LucideShoppingBag,
-  LucideShoppingCart,
   LucideTickets,
 } from "lucide-react";
+import {
+  metricsClassName,
+  metricFirstColClassName,
+  metricHeaderClassName,
+  metricMainClassName,
+  metricItem1ClassName,
+  metricSecondColClassName,
+  metricItem2ClassName,
+  metricItem3ClassName,
+  metricItem4ClassName,
+  iconClassName,
+  boldIconClassName,
+} from "./dashboardMetricsCommons";
 
 export default async function DashboardBookingMetricsComponent() {
   const t = await getTranslations("Dashboard.Home.BookingMetrics");
@@ -74,30 +77,27 @@ export default async function DashboardBookingMetricsComponent() {
   // ).length;
 
   const icon = more ? (
-    <LucideTrendingUp className="text-slate-500 size-4 lg:size-5" />
+    <LucideTrendingUp className={boldIconClassName} />
   ) : (
-    <LucideTrendingDown className="text-slate-500 size-4 lg:size-5" />
+    <LucideTrendingDown className={boldIconClassName} />
   );
 
   return (
-    <div
-      id="dashboardBookingMetrics"
-      className="bg-white rounded-lg grid grid-cols-5 p-4 lg:p-5 gap-1 lg:gap-2"
-    >
+    <div id="dashboardBookingMetrics" className={metricsClassName}>
       <div
         id="dashboardBookingMetricsFirstCol"
-        className="flex flex-col justify-start items-center col-span-2 gap-4 lg:gap-5"
+        className={metricFirstColClassName}
       >
         <div
           id="dashboardBookingMetricsHeader"
-          className="flex flex-row gap-2 items-center self-start"
+          className={metricHeaderClassName}
         >
-          <LucideTickets className="text-slate-500 stroke-1 size-4 lg:size-5" />
+          <LucideTickets className={iconClassName} />
           <PGrey>{t("Title")}</PGrey>
         </div>
         <div
           id="dashboardBookingMetricsConfirmed"
-          className="flex flex-col flex-1 gap-3 lg:gap-4 items-center justify-center"
+          className={metricMainClassName}
         >
           <H1>{confirmed24HrsCount}</H1>
           <div className="flex flex-col lg:gap-0.5 items-center text-center">
@@ -117,32 +117,29 @@ export default async function DashboardBookingMetricsComponent() {
       </div>
       <div
         id="dashboardBookingMetricsSecondCol"
-        className="grid grid-rows-2 grid-cols-2 col-span-3"
+        className={metricSecondColClassName}
       >
-        <div
-          id="dashboardBookingMetricsLeads"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-r border-slate-100"
-        >
+        <div id="dashboardBookingMetricsLeads" className={metricItem1ClassName}>
           <H4>{leadCount}</H4>
           <CaptionGrey>{t("Leads")}</CaptionGrey>
         </div>
         <div
           id="dashboardBookingMetricsInProgress"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center"
+          className={metricItem2ClassName}
         >
           <H4>{inProgressCount}</H4>
-          <CaptionGrey>{t("InProgress")}</CaptionGrey>
+          <CaptionGrey>{t("Ongoing")}</CaptionGrey>
         </div>
         <div
           id="dashboardBookingMetricsCancelled"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-t border-r border-slate-100"
+          className={metricItem3ClassName}
         >
           <H4>{cancelledCount}</H4>
           <CaptionGrey>{t("Cancelled")}</CaptionGrey>
         </div>
         <div
           id="dashboardBookingMetricsCompleted"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-t border-slate-100"
+          className={metricItem4ClassName}
         >
           <H4>{completedCount}</H4>
           <CaptionGrey>{t("Completed")}</CaptionGrey>

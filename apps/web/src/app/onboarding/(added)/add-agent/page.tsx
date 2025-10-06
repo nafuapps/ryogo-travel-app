@@ -1,7 +1,7 @@
 //(Onboarding) Add agent page
 
 import { Metadata } from "next";
-import AddAgentComponent from "./addAgent";
+import AddAgentPageComponent from "./addAgent";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect, RedirectType } from "next/navigation";
 
@@ -35,7 +35,7 @@ export default async function AddAgentPage() {
 
   //Only owner can add agent
   return (
-    <AddAgentComponent
+    <AddAgentPageComponent
       agencyId={currentUser.agencyId}
       ownerId={currentUser.userId}
       status={currentUser.status}

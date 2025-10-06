@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function RiderHomeComponent() {
+export default function RiderHomePageComponent() {
   return (
     <div
       id="RiderPage"

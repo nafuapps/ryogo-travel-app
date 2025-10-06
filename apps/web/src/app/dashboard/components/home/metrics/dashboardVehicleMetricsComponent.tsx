@@ -3,6 +3,18 @@ import { getCurrentUser } from "@/lib/auth";
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services";
 import { LucideCar } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import {
+  metricsClassName,
+  metricFirstColClassName,
+  metricMainClassName,
+  metricHeaderClassName,
+  metricItem1ClassName,
+  metricSecondColClassName,
+  metricItem4ClassName,
+  metricItem3ClassName,
+  metricItem2ClassName,
+  iconClassName,
+} from "./dashboardMetricsCommons";
 
 export default async function DashboardVehicleMetricsComponent() {
   const t = await getTranslations("Dashboard.Home.VehicleMetrics");
@@ -31,22 +43,19 @@ export default async function DashboardVehicleMetricsComponent() {
   const inactiveVehicles = 1;
 
   return (
-    <div
-      id="dashboardVehicleMetrics"
-      className="bg-white rounded-lg grid grid-cols-5 p-4 lg:p-5 gap-1 lg:gap-2"
-    >
+    <div id="dashboardVehicleMetrics" className={metricsClassName}>
       <div
         id="dashboardVehicleMetricsFirstCol"
-        className="flex flex-col justify-start items-center col-span-2 gap-4 lg:gap-5"
+        className={metricFirstColClassName}
       >
         <div
           id="dashboardVehicleMetricsHeader"
-          className="flex flex-row gap-2 items-center self-start"
+          className={metricHeaderClassName}
         >
-          <LucideCar className="text-slate-500 stroke-1 size-4 lg:size-5" />
+          <LucideCar className={iconClassName} />
           <PGrey>{t("Title")}</PGrey>
         </div>
-        <div className="flex flex-col text-center flex-1 gap-3 lg:gap-4 items-center justify-center">
+        <div className={metricMainClassName}>
           <H1>{totalVehicles}</H1>
           <CaptionGrey>
             {(availableVehicles / totalVehicles).toLocaleString("en-IN", {
@@ -60,32 +69,32 @@ export default async function DashboardVehicleMetricsComponent() {
       </div>
       <div
         id="dashboardVehicleMetricsSecondCol"
-        className="grid grid-cols-2 grid-row-2 col-span-3"
+        className={metricSecondColClassName}
       >
         <div
           id="dashboardVehicleMetricsAvailable"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-r border-slate-100"
+          className={metricItem1ClassName}
         >
           <H4>{availableVehicles}</H4>
           <CaptionGrey>{t("Available")}</CaptionGrey>
         </div>
         <div
           id="dashboardVehicleMetricsInTrip"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center"
+          className={metricItem2ClassName}
         >
           <H4>{onTripVehicles}</H4>
           <CaptionGrey>{t("InTrip")}</CaptionGrey>
         </div>
         <div
           id="dashboardVehicleMetricsCancelled"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-t border-r border-slate-100"
+          className={metricItem3ClassName}
         >
           <H4>{inactiveVehicles}</H4>
           <CaptionGrey>{t("Inactive")}</CaptionGrey>
         </div>
         <div
           id="dashboardVehicleMetricsCompleted"
-          className="flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-t border-slate-100"
+          className={metricItem4ClassName}
         >
           <H4>{repairVehicles}</H4>
           <CaptionGrey>{t("Repair")}</CaptionGrey>

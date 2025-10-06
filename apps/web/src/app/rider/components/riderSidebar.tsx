@@ -10,7 +10,7 @@ import {
 import { useTranslations } from "next-intl";
 import { House, Tickets, Car, UserRoundPen } from "lucide-react";
 import { MenuButton } from "@/components/sidebar/sidebarMenuButton";
-import { SidebarHeaderItem } from "@/components/sidebar/sidebarHeaderItem";
+import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem";
 import { MenuItemType } from "@/components/sidebar/sidebarCommon";
 import { usePathname } from "next/navigation";
 
@@ -56,7 +56,7 @@ export default function RiderSidebar() {
       className="h-full"
     >
       <SidebarHeader className="my-4">
-        <SidebarHeaderItem
+        <SidebarLogoItem
           open={sidebarOpen}
           title={t("Title")}
           subtitle={t("Subtitle")}

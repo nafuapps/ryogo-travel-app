@@ -22,11 +22,11 @@ import { Loader2Icon } from "lucide-react";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { ResetPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
-type ConfirmEmailComponentProps = {
+type ConfirmEmailPageComponentProps = {
   userId: string;
 };
-export default function ConfirmEmailComponent(
-  props: ConfirmEmailComponentProps
+export default function ConfirmEmailPageComponent(
+  props: ConfirmEmailPageComponentProps
 ) {
   const userId = props.userId;
 

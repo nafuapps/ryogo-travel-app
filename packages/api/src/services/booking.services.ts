@@ -84,4 +84,95 @@ export const bookingServices = {
       };
     });
   },
+
+  async findOngoingTrips(agencyId: string) {
+    const bookings = await bookingRepository.getOngoingBookingsData(agencyId);
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        status: booking.tripLogs[0]?.type.toString(),
+      };
+    });
+  },
+
+  async findCompletedBookingsPreviousDays(agencyId: string, days: number = 1) {
+    //Day N days ago
+    const startDate = new Date(
+      new Date().getTime() - days * 24 * 60 * 60 * 1000
+    );
+    //Day today
+    const endDate = new Date();
+    const bookings = await bookingRepository.getCompletedBookingsData(
+      agencyId,
+      startDate,
+      endDate
+    );
+    return bookings.map((booking) => {
+      return {
+        status: booking.status.toString(),
+        updatedAt: booking.updatedAt,
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        createdAt: booking.tripLogs[0]?.createdAt,
+      };
+    });
+  },
+
+  async findUpcomingBookingsPreviousDays(agencyId: string, days: number = 1) {
+    //Day today
+    const startDate = new Date();
+    //Day N days later
+    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000);
+    const bookings = await bookingRepository.getUpcomingBookingsData(
+      agencyId,
+      startDate,
+      endDate
+    );
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        date: booking.startDate,
+        time: booking.startTime,
+      };
+    });
+  },
+
+  async findLeadBookingsPreviousDays(agencyId: string, days: number = 1) {
+    const startDate = new Date(
+      new Date().getTime() - days * 24 * 60 * 60 * 1000
+    );
+    //Day today
+    const endDate = new Date();
+    const bookings = await bookingRepository.getLeadBookingsData(
+      agencyId,
+      startDate,
+      endDate
+    );
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        createdAt: booking.createdAt,
+        assignedUser: booking.assignedUser.name,
+        passengers: booking.passengers,
+        amount: booking.totalAmount,
+      };
+    });
+  },
 };

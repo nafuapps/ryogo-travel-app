@@ -1,7 +1,7 @@
 //New agent loggin in for the first time or existing user resetting password
 
 import { getCurrentUser } from "@/lib/auth";
-import ChangePasswordComponent from "./changePassword";
+import ChangePasswordPageComponent from "./changePassword";
 import { redirect, RedirectType } from "next/navigation";
 
 export default async function ChangePasswordPage() {
@@ -34,7 +34,7 @@ export default async function ChangePasswordPage() {
 
   //Only new non owners can come to change password page
   return (
-    <ChangePasswordComponent
+    <ChangePasswordPageComponent
       userId={currentUser!.userId}
       role={currentUser!.userRole}
     />

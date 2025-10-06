@@ -2,7 +2,7 @@
 
 import { redirect, RedirectType } from "next/navigation";
 import { UserRegex } from "@/lib/regex";
-import ConfirmEmailComponent from "./confirmEmail";
+import ConfirmEmailPageComponent from "./confirmEmail";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -21,5 +21,5 @@ export default async function ConfirmEmailPage({
     redirect("/auth/login", RedirectType.replace);
   }
 
-  return <ConfirmEmailComponent userId={userId} />;
+  return <ConfirmEmailPageComponent userId={userId} />;
 }

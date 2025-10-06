@@ -22,7 +22,7 @@ import { Loader2Icon } from "lucide-react";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { SignupAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
-export default function SignupComponent() {
+export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1");
   const formSchema = z.object({
     phoneNumber: z

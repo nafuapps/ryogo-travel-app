@@ -1,12 +1,12 @@
 "use client";
 
 import {
-  buttonClassName,
+  headerButtonClassName,
   headerClassName,
   headerIconClassName,
   headerLeftClassName,
   headerRightClassName,
-  tooltipClassName,
+  headerTooltipClassName,
 } from "@/components/header/headerCommon";
 import { H4, SmallGrey } from "@/components/typography";
 import { Button } from "@/components/ui/button";
@@ -40,13 +40,13 @@ export default function RiderHeader() {
           <Tooltip disableHoverableContent>
             <TooltipTrigger asChild>
               <Button variant="outline" size={"lg"}>
-                <span className={buttonClassName}>
+                <span className={headerButtonClassName}>
                   <SmallGrey>{t("ActionCenter")}</SmallGrey>
                 </span>
                 <LucideTarget className={headerIconClassName} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className={tooltipClassName}>
+            <TooltipContent className={headerTooltipClassName}>
               {t("ActionCenter")}
             </TooltipContent>
           </Tooltip>

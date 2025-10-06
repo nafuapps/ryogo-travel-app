@@ -23,11 +23,13 @@ import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData";
 
 const TotalSteps = 5;
 
-type AddVehicleComponentProps = {
+type AddVehiclePageComponentProps = {
   agencyId: string;
   status: string;
 };
-export default function AddVehicleComponent(props: AddVehicleComponentProps) {
+export default function AddVehiclePageComponent(
+  props: AddVehiclePageComponentProps
+) {
   useEffect(() => {
     //Redirect if needed
     fetchAgenyData(props.agencyId, "add-vehicle");

@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services";
 import { AgencyRegex } from "@/lib/regex";
+import { getCurrentUser } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ agencyId: string }> }
 ) {
-  // Fetch existing vehicles in agency
+  // Fetch agency data (vehicles, drivers, agents)
   try {
+    //Check user auth
+    const user = await getCurrentUser();
+    if (!user || user.userRole !== "owner") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { agencyId } = await params;
     if (!AgencyRegex.safeParse(agencyId).success) {
       return NextResponse.json({ error: "Invalid agencyId" }, { status: 400 });

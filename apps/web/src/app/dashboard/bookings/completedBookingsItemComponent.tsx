@@ -140,7 +140,9 @@ function CompletedComponent(props: CompletedBookingType) {
           <PBold>{props.driver}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <Caption>{format(props.createdAt!, "PP")}</Caption>
+          <Caption>
+            {format(props.createdAt ? props.createdAt : props.updatedAt, "PP")}
+          </Caption>
           <PBold>{moment(props.createdAt).fromNow()}</PBold>
         </div>
       </div>

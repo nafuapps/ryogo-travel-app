@@ -36,36 +36,40 @@ export default function DashboardHeader() {
         <H4>{t(titleKey)}</H4>
       </div>
       <div id="HeaderRight" className={headerRightClassName}>
-        <Link href="/dashboard/bookings/new">
-          <Tooltip disableHoverableContent>
-            <TooltipTrigger asChild>
-              <Button variant="outline" size={"lg"}>
-                <LucidePlus className={headerIconClassName} />
-                <span className={headerButtonClassName}>
-                  <SmallGrey>{t("NewBooking")}</SmallGrey>
-                </span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent className={headerTooltipClassName}>
-              {t("NewBooking")}
-            </TooltipContent>
-          </Tooltip>
-        </Link>
-        <Link href="/dashboard/action-center">
-          <Tooltip disableHoverableContent>
-            <TooltipTrigger asChild>
-              <Button variant="outline" size={"lg"}>
-                <span className={headerButtonClassName}>
-                  <SmallGrey>{t("ActionCenter")}</SmallGrey>
-                </span>
-                <LucideTarget className={headerIconClassName} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent className={headerTooltipClassName}>
-              {t("ActionCenter")}
-            </TooltipContent>
-          </Tooltip>
-        </Link>
+        {pathname !== "/dashboard/bookings/new" && (
+          <Link href="/dashboard/bookings/new">
+            <Tooltip disableHoverableContent>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size={"lg"}>
+                  <LucidePlus className={headerIconClassName} />
+                  <span className={headerButtonClassName}>
+                    <SmallGrey>{t("NewBooking")}</SmallGrey>
+                  </span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className={headerTooltipClassName}>
+                {t("NewBooking")}
+              </TooltipContent>
+            </Tooltip>
+          </Link>
+        )}
+        {pathname !== "/dashboard/action-center" && (
+          <Link href="/dashboard/action-center">
+            <Tooltip disableHoverableContent>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size={"lg"}>
+                  <span className={headerButtonClassName}>
+                    <SmallGrey>{t("ActionCenter")}</SmallGrey>
+                  </span>
+                  <LucideTarget className={headerIconClassName} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className={headerTooltipClassName}>
+                {t("ActionCenter")}
+              </TooltipContent>
+            </Tooltip>
+          </Link>
+        )}
       </div>
     </div>
   );

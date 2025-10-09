@@ -3,14 +3,16 @@ import OngoingBookingsComponent from "./ongoingBookingsComponent";
 import CompletedBookingsComponent from "./completedBookingsComponent";
 import UpcomingBookingsComponent from "./upcomingBookingsComponent";
 import LeadBookingsComponent from "./leadBookingsComponent";
+import BookingScheduleComponent from "./bookingScheduleComponent";
 
 /*
  * Ongoing Bookings
- * Bookings schedule
  * Upcoming Bookings
  * Completed Bookings
  * Open leads
- * Actions
+ * Bookings schedule
+  TODO:Actions
+  TODO:Daily trips (last 14 days)
  */
 
 export default function BookingsPageComponent() {
@@ -20,8 +22,8 @@ export default function BookingsPageComponent() {
       <CompletedBookingsComponent />
       <UpcomingBookingsComponent />
       <LeadBookingsComponent />
-      {/* <BookingsScheduleComponent/>
-      <BookingActionsComponent/> */}
+      <BookingScheduleComponent />
+      {/*<BookingActionsComponent/> */}
     </div>
   );
 }

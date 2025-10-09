@@ -13,7 +13,7 @@ export type OnboardingAddVehicleAPIRequestType = {
     pucExpiresOn: string;
     hasAC: boolean;
     defaultRatePerKm?: number | undefined;
-    extraAcChargePerDay?: number | undefined;
+    defaultAcChargePerDay?: number | undefined;
   };
 };
 

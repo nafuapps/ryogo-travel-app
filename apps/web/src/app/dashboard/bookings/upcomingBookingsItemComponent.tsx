@@ -30,8 +30,8 @@ type UpcomingBookingType = {
   driver: string | undefined;
   customerName: string;
   bookingId: string;
-  date: string;
-  time: string | null;
+  startDate: string;
+  startTime: string | null;
 };
 
 type UpcomingBookingsItemComponentProps = {
@@ -51,8 +51,10 @@ export default function UpcomingBookingsItemComponent(
       type: "One way",
       vehicle: "MH46AL9803",
       driver: "Surender K",
-      date: new Date(new Date().getTime() + 10 * 60 * 60 * 1000).toDateString(),
-      time: "07:05 PM",
+      startDate: new Date(
+        new Date().getTime() + 10 * 60 * 60 * 1000
+      ).toDateString(),
+      startTime: "07:05 PM",
     },
     {
       bookingId: "B1234252",
@@ -61,8 +63,10 @@ export default function UpcomingBookingsItemComponent(
       type: "One way",
       vehicle: "MH46AL9803",
       driver: "Surender K",
-      date: new Date(new Date().getTime() + 74 * 60 * 60 * 1000).toDateString(),
-      time: "07:05 PM",
+      startDate: new Date(
+        new Date().getTime() + 74 * 60 * 60 * 1000
+      ).toDateString(),
+      startTime: "07:05 PM",
     },
     {
       bookingId: "B1234255",
@@ -71,8 +75,10 @@ export default function UpcomingBookingsItemComponent(
       type: "One way",
       vehicle: "MH46AL9803",
       driver: "Surender K",
-      date: new Date(new Date().getTime() + 5 * 60 * 60 * 1000).toDateString(),
-      time: "08:05 PM",
+      startDate: new Date(
+        new Date().getTime() + 5 * 60 * 60 * 1000
+      ).toDateString(),
+      startTime: "08:05 PM",
     },
   ];
 
@@ -81,7 +87,8 @@ export default function UpcomingBookingsItemComponent(
 
   const upcomingBookings24Hrs = upcomingBookings7Days.filter(
     (b) =>
-      new Date(b.date) < new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+      new Date(b.startDate) <
+      new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
   );
 
   const trips =
@@ -137,8 +144,10 @@ function UpcomingComponent(props: UpcomingBookingType) {
           <PBold>{props.driver}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <Caption>{format(props.date, "PP")}</Caption>
-          <PBold>{moment(props.date + " " + props.time).fromNow()}</PBold>
+          <Caption>{format(props.startDate, "PP")}</Caption>
+          <PBold>
+            {moment(props.startDate + " " + props.startTime).fromNow()}
+          </PBold>
         </div>
       </div>
     </Link>

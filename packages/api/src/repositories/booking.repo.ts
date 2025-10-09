@@ -171,6 +171,7 @@ export const bookingRepository = {
       columns: {
         startDate: true,
         startTime: true,
+        endDate: true,
         updatedAt: true,
         type: true,
         id: true,

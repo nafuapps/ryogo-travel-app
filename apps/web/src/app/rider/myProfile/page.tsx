@@ -3,6 +3,6 @@
 import { getTranslations } from "next-intl/server";
 
 export default async function MyProfilePage() {
-  const t = await getTranslations("Landing");
-  return <h1>{t("title")}</h1>;
+  const t = await getTranslations("Rider.MyProfile");
+  return <h1>{t("Title")}</h1>;
 }

@@ -34,7 +34,7 @@ export function AddVehicleStep4(props: {
       .multipleOf(1, t("Field1.Error5"))
       .optional(),
     hasAC: z.boolean(),
-    extraAcChargePerDay: z.coerce
+    defaultAcChargePerDay: z.coerce
       .number<number>()
       .min(0, t("Field3.Error2"))
       .max(10000, t("Field3.Error3"))
@@ -48,7 +48,7 @@ export function AddVehicleStep4(props: {
     defaultValues: {
       defaultRatePerKm: props.finalData.defaultRatePerKm,
       hasAC: props.finalData.hasAC,
-      extraAcChargePerDay: props.finalData.extraAcChargePerDay,
+      defaultAcChargePerDay: props.finalData.defaultAcChargePerDay,
     },
   });
 
@@ -58,7 +58,7 @@ export function AddVehicleStep4(props: {
       ...props.finalData,
       defaultRatePerKm: data.defaultRatePerKm,
       hasAC: data.hasAC,
-      extraAcChargePerDay: data.extraAcChargePerDay,
+      defaultAcChargePerDay: data.defaultAcChargePerDay,
     });
     props.onNext();
   };
@@ -78,7 +78,7 @@ export function AddVehicleStep4(props: {
           />
           <OnboardingSwitch name={"hasAC"} label={t("Field2.Title")} />
           <OnboardingInput
-            name={"extraAcChargePerDay"}
+            name={"defaultAcChargePerDay"}
             type="tel"
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}

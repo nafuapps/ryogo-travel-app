@@ -32,7 +32,7 @@ export type AddVehicleFormDataType = {
   pucPhotos: FileList | undefined;
   hasAC: boolean;
   defaultRatePerKm: number | undefined;
-  extraAcChargePerDay: number | undefined;
+  defaultAcChargePerDay: number | undefined;
 };
 
 export type AddDriverFormDataType = {

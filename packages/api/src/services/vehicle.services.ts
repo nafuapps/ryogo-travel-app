@@ -45,7 +45,7 @@ export const vehicleServices = {
       pucExpiresOn: data.pucExpiresOn,
       hasAC: data.hasAC,
       defaultRatePerKm: data.defaultRatePerKm,
-      extraAcChargePerDay: data.extraAcChargePerDay,
+      defaultAcChargePerDay: data.defaultAcChargePerDay,
     };
     //Step3: Create vehicle in DB
     const newVehicle = await vehicleRepository.createVehicle(newVehicleData);

@@ -53,7 +53,7 @@ export default function AddVehiclePageComponent(
     pucPhotos: undefined,
     hasAC: true,
     defaultRatePerKm: undefined,
-    extraAcChargePerDay: undefined,
+    defaultAcChargePerDay: undefined,
   });
 
   const nextStepHandler = () => {

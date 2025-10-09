@@ -64,6 +64,12 @@ export function Small({ children }: { children: React.ReactNode }) {
   return <small className="text-sm lg:text-base">{children}</small>;
 }
 
+export function SmallRed({ children }: { children: React.ReactNode }) {
+  return (
+    <small className="text-sm text-red-400 lg:text-base">{children}</small>
+  );
+}
+
 export function SmallGrey({ children }: { children: React.ReactNode }) {
   return (
     <small className="text-sm lg:text-base text-slate-500">{children}</small>
@@ -80,6 +86,10 @@ export function CaptionBold({ children }: { children: React.ReactNode }) {
 
 export function Caption({ children }: { children: React.ReactNode }) {
   return <span className="text-xs lg:text-sm text-slate-700">{children}</span>;
+}
+
+export function CaptionRed({ children }: { children: React.ReactNode }) {
+  return <span className="text-xs lg:text-sm text-red-400">{children}</span>;
 }
 
 export function CaptionGrey({ children }: { children: React.ReactNode }) {

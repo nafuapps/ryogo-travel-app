@@ -692,6 +692,9 @@
         "/dashboard/bookings/expenses/modify": "Modify Expenses",
         "/dashboard/bookings/expenses/new": "New Expense",
         "/dashboard/bookings/modify": "Modify Booking",
+        "/dashboard/bookings/assign-driver": "Assign Driver",
+        "/dashboard/bookings/assign-user": "Assign User",
+        "/dashboard/bookings/assign-vehicle": "Assign Vehicle",
         "/dashboard/bookings/reconcile": "Reconcile Booking",
         "/dashboard/bookings/transactions": "Booking Transactions",
         "/dashboard/bookings/transactions/modify": "Modify Transactions",
@@ -723,7 +726,7 @@
     },
     "Home": {
       "BookingMetrics": {
-        "Title": "BOOKINGS",
+        "Title": "BOOKINGS (24H)",
         "More": "more",
         "Less": "less",
         "ThanAvg": "than weekly avg",
@@ -750,7 +753,7 @@
         "Rate": "utilization rate"
       },
       "RevenueMetrics": {
-        "Title": "REVENUE",
+        "Title": "REVENUE (24H)",
         "More": "more",
         "Less": "less",
         "ThanAvg": "than weekly avg",
@@ -777,13 +780,40 @@
         "7Days": "Last 7 Days"
       },
       "Schedule": {
-        "Title": "Booking Schedule"
+        "Title": "Schedule",
+        "7Days": "Next 7 Days",
+        "14Days": "Next 14 Days",
+        "NotAssigned": "Not Assigned",
+        "ViewDetails": "View Details",
+        "Assign": "Assign"
       },
       "Leads": {
         "Title": "Leads",
         "24Hrs": "Last 24 Hours",
         "7Days": "Last 7 Days",
         "Passengers": "pax"
+      }
+    },
+    "NewBooking": {
+      "Title": "New Booking",
+      "Form": {
+        "Step1": {
+          "Title": "Customer info"
+        },
+        "Step2": {
+          "Title": "Trip info"
+        },
+        "Step3": {
+          "Title": "Assignment info"
+        },
+        "Step4": {
+          "Title": "Cost info"
+        },
+        "Final": {
+          "Title": "Final info"
+        },
+        "PrimaryCTA": "Go to Confirmation",
+        "SecondaryCTA": "Save Lead"
       }
     }
   },
@@ -806,6 +836,24 @@
         "/rider/myProfile": "Profile",
         "/rider/myVehicle": "Vehicle"
       }
+    },
+    "Home": {
+      "Title": "Home"
+    },
+    "MyBookings": {
+      "Title": "Bookings"
+    },
+    "BookingDetails": {
+      "Title": "Booking Details"
+    },
+    "MyActions": {
+      "Title": "Actions"
+    },
+    "MyVehicle": {
+      "Title": "Vehicle"
+    },
+    "MyProfile": {
+      "Title": "Profile"
     }
   },
   "Landing": {

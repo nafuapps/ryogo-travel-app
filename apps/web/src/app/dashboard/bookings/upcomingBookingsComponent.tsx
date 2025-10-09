@@ -6,8 +6,10 @@ import UpcomingBookingsItemComponent from "./upcomingBookingsItemComponent";
 export default async function UpcomingBookingsComponent() {
   const user = await getCurrentUser();
 
-  const upcomingBookings7Days =
-    bookingServices.findUpcomingBookingsPreviousDays(user!.agencyId, 7);
+  const upcomingBookings7Days = bookingServices.findUpcomingBookingsNextDays(
+    user!.agencyId,
+    7
+  );
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

@@ -48,7 +48,7 @@ export function AddVehicleConfirm(props: {
         pucExpiresOn: props.finalData.pucExpiresOn!.toDateString(),
         hasAC: props.finalData.hasAC,
         defaultRatePerKm: props.finalData.defaultRatePerKm,
-        extraAcChargePerDay: props.finalData.extraAcChargePerDay,
+        defaultAcChargePerDay: props.finalData.defaultAcChargePerDay,
       },
     };
     const addedVehicle = await apiClient<OnboardingAddVehicleAPIResponseType>(
@@ -132,10 +132,10 @@ export function AddVehicleConfirm(props: {
             name={t("HasAC")}
             value={props.finalData.hasAC ? "Yes" : "No"}
           />
-          {props.finalData.hasAC && props.finalData.extraAcChargePerDay && (
+          {props.finalData.hasAC && props.finalData.defaultAcChargePerDay && (
             <ConfirmValues
               name={t("ACChagePerDay")}
-              value={`${props.finalData.extraAcChargePerDay}`}
+              value={`${props.finalData.defaultAcChargePerDay}`}
             />
           )}
         </OnboardingStepContent>

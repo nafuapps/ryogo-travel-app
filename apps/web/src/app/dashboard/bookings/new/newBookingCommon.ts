@@ -1,0 +1,21 @@
+export type NewBookingFormDataType = {
+  customerPhone: string;
+  customerId?: string;
+  customerName?: string;
+  customerLocationId?: string;
+  tripSourceLocationId?: string;
+  tripDestinationLocationId?: string;
+  tripType?: string;
+  tripStartDate?: Date;
+  tripEndDate?: Date;
+  tripPassengers?: number;
+  tripNeedsAC: boolean;
+  tripRemarks?: string;
+  assignedVehicleId?: string;
+  assignedDriverId?: string;
+  selectedRatePerKm?: number;
+  selectedAcChargePerDay?: number;
+  selectedAllowancePerDay?: number;
+  selectedCommissionRate?: number;
+  finalAmount?: number;
+};

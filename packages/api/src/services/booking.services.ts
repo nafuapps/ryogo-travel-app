@@ -127,7 +127,7 @@ export const bookingServices = {
     });
   },
 
-  async findUpcomingBookingsPreviousDays(agencyId: string, days: number = 1) {
+  async findUpcomingBookingsNextDays(agencyId: string, days: number = 1) {
     //Day today
     const startDate = new Date();
     //Day N days later
@@ -145,8 +145,9 @@ export const bookingServices = {
         driver: booking.assignedDriver?.name,
         customerName: booking.customer?.name,
         bookingId: booking.id,
-        date: booking.startDate,
-        time: booking.startTime,
+        startDate: booking.startDate,
+        startTime: booking.startTime,
+        endDate: booking.endDate,
       };
     });
   },

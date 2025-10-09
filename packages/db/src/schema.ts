@@ -79,7 +79,7 @@ export const agencies = pgTable(
       .notNull()
       .default(15), // percentage
     locationId: text("location_id")
-      .references(() => locations.id, { onDelete: "set null" })
+      .references(() => locations.id, { onDelete: "no action" })
       .notNull(),
     ...timestamps,
   },
@@ -303,7 +303,7 @@ export const vehicles = pgTable(
     rcPhotoUrl: text("rc_photo_url"),
     vehiclePhotoUrl: text("vehicle_photo_url"),
     defaultRatePerKm: integer("default_rate_per_km").notNull().default(18), // in currency units
-    extraAcChargePerDay: integer("extra_ac_charge_per_day")
+    defaultAcChargePerDay: integer("extra_ac_charge_per_day")
       .notNull()
       .default(0), // in currency units
     ...timestamps,
@@ -322,7 +322,7 @@ export const vehicles = pgTable(
       "rate per km > 0 and < 50",
       sql`${t.defaultRatePerKm} > 0 AND ${t.defaultRatePerKm} < 50`
     ),
-    check("ac charge < 10000", sql`${t.extraAcChargePerDay} < 10000`),
+    check("ac charge < 10000", sql`${t.defaultAcChargePerDay} < 10000`),
     uniqueIndex("vehicles_agency_vehicle_number_idx").on(
       t.vehicleNumber,
       t.agencyId
@@ -506,10 +506,10 @@ export const customers = pgTable(
     email: varchar("email", { length: 60 }),
     address: varchar("address", { length: 300 }),
     addedByUserId: text("added_by_user_id")
-      .references(() => users.id, { onDelete: "set null" })
+      .references(() => users.id, { onDelete: "no action" })
       .notNull(),
     locationId: text("location_id")
-      .references(() => locations.id, { onDelete: "set null" })
+      .references(() => locations.id, { onDelete: "no action" })
       .notNull(),
     remarks: text("remarks"),
     status: customerStatus().notNull().default(CustomerStatusEnum.ACTIVE),
@@ -583,7 +583,7 @@ export const bookings = pgTable(
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
     customerId: text("customer_id")
-      .references(() => customers.id, { onDelete: "cascade" })
+      .references(() => customers.id, { onDelete: "no action" })
       .notNull(),
     assignedVehicleId: text("assigned_vehicle_id").references(
       () => vehicles.id,
@@ -593,21 +593,21 @@ export const bookings = pgTable(
       onDelete: "set null",
     }),
     bookedByUserId: text("booked_by_user_id")
-      .references(() => users.id, { onDelete: "set null" })
+      .references(() => users.id, { onDelete: "no action" })
       .notNull(),
     assignedUserId: text("assigned_user_id")
-      .references(() => users.id, { onDelete: "set null" })
+      .references(() => users.id, { onDelete: "no action" })
       .notNull(),
     sourceId: text("source_id")
-      .references(() => locations.id, { onDelete: "set null" })
+      .references(() => locations.id, { onDelete: "no action" })
       .notNull(),
     destinationId: text("destination_id")
-      .references(() => locations.id, { onDelete: "set null" })
+      .references(() => locations.id, { onDelete: "no action" })
       .notNull(),
     routeId: text("route_id").references(() => routes.id, {
       onDelete: "set null",
     }),
-    totalDistance: integer("total_distance"), // in kilometers
+    totalDistance: integer("total_distance").notNull(), // in kilometers
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),
     startTime: time("start_time"),
@@ -615,8 +615,9 @@ export const bookings = pgTable(
     passengers: integer("passengers").notNull().default(1),
     needsAc: boolean("needs_ac").notNull().default(true),
     remarks: text("remarks"),
-    ratePerKm: integer("rate_per_km").notNull(), // in currency units
-    allowancePerDay: integer("allowance_per_day").notNull(), // in currency units
+    acChargePerDay: integer("ac_charge_per_day").notNull().default(0), // in currency units
+    ratePerKm: integer("rate_per_km").notNull().default(18), // in currency units
+    allowancePerDay: integer("allowance_per_day").notNull().default(500), // in currency units
     commissionRate: integer("commission_rate").notNull(), // in percentage
     totalAmount: integer("total_amount").notNull(), // in currency units
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
@@ -633,6 +634,7 @@ export const bookings = pgTable(
       "passengers > 0 and < 100",
       sql`${t.passengers} > 0 AND ${t.passengers} < 100`
     ),
+    check("ac charge per day  < 10000", sql`${t.acChargePerDay} < 10000`),
     check(
       "rate per km > 0 and < 50",
       sql`${t.ratePerKm} > 0 AND ${t.ratePerKm} < 50`
@@ -752,7 +754,7 @@ export const expenses = pgTable(
       onDelete: "cascade",
     }),
     addedByUserId: text("added_by_user_id")
-      .references(() => users.id, { onDelete: "set null" })
+      .references(() => users.id, { onDelete: "no action" })
       .notNull(),
     type: expenseTypes().notNull().default(ExpenseTypeEnum.OTHER),
     amount: integer("amount").notNull(), // in currency units
@@ -820,10 +822,10 @@ export const tripLogs = pgTable(
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
     vehicleId: text("vehicle_id")
-      .references(() => vehicles.id, { onDelete: "set null" })
+      .references(() => vehicles.id, { onDelete: "no action" })
       .notNull(),
     driverId: text("driver_id")
-      .references(() => drivers.id, { onDelete: "set null" })
+      .references(() => drivers.id, { onDelete: "no action" })
       .notNull(),
     odometerReading: integer("odometer_reading").notNull(), // in kilometers
     type: tripLogTypes().notNull(),
@@ -907,12 +909,16 @@ export const transactions = pgTable(
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
-    bookingId: text("booking_id").references(() => bookings.id, {
-      onDelete: "cascade",
-    }),
-    addedByUserId: text("added_by_user_id").references(() => users.id, {
-      onDelete: "set null",
-    }),
+    bookingId: text("booking_id")
+      .notNull()
+      .references(() => bookings.id, {
+        onDelete: "cascade",
+      }),
+    addedByUserId: text("added_by_user_id")
+      .notNull()
+      .references(() => users.id, {
+        onDelete: "no action",
+      }),
     amount: integer("amount").notNull(), // in currency units
     otherParty: transactionParties()
       .notNull()
@@ -1011,7 +1017,7 @@ export const vehicleRepairs = pgTable(
       .references(() => vehicles.id, { onDelete: "cascade" })
       .notNull(),
     addedByUserId: text("added_by_user_id")
-      .references(() => users.id, { onDelete: "set null" })
+      .references(() => users.id, { onDelete: "no action" })
       .notNull(),
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),
@@ -1065,7 +1071,7 @@ export const driverLeaves = pgTable(
       .references(() => drivers.id, { onDelete: "cascade" })
       .notNull(),
     addedByUserId: text("added_by_user_id")
-      .references(() => users.id, { onDelete: "set null" })
+      .references(() => users.id, { onDelete: "no action" })
       .notNull(),
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),

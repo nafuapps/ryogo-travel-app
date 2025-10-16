@@ -35,7 +35,7 @@ type DashboardInputProps = {
   name: string;
   label: string;
   placeholder: string;
-  description: string;
+  description?: string;
   type: React.HTMLInputTypeAttribute | undefined;
   disabled?: boolean;
 };
@@ -57,9 +57,11 @@ export function DashboardInput(props: DashboardInputProps) {
               disabled={props.disabled ?? false}
             />
           </FormControl>
-          <FormDescription>
-            <CaptionGrey>{props.description}</CaptionGrey>
-          </FormDescription>
+          {props.description && (
+            <FormDescription>
+              <CaptionGrey>{props.description}</CaptionGrey>
+            </FormDescription>
+          )}
           <FormMessage />
         </FormItem>
       )}
@@ -127,7 +129,7 @@ export function DashboardTextarea(props: DashboardTextareaProps) {
 
 type DashboardSelectProps = {
   name: string;
-  title: string;
+  title?: string;
   array: string[] | undefined;
   placeholder: string;
   register: UseFormRegisterReturn<string>;
@@ -254,7 +256,8 @@ type DashboardDatePickerProps = {
   name: string;
   label: string;
   placeholder: string;
-  description: string;
+  description?: string;
+  disabled?: boolean;
 };
 export function DashboardDatePicker(props: DashboardDatePickerProps) {
   return (
@@ -266,12 +269,12 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
             <PBold>{props.label}</PBold>
           </FormLabel>
           <Popover>
-            <PopoverTrigger asChild>
+            <PopoverTrigger asChild disabled={props.disabled}>
               <FormControl>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-[240px] pl-3 text-left font-normal",
+                    "w-full pl-3 text-left font-normal",
                     !field.value && "text-muted-foreground"
                   )}
                 >

@@ -48,13 +48,13 @@ export default async function RiderLayout({
         } as React.CSSProperties
       }
     >
-      <main id="DashboardLayout" className="flex flex-row w-screen h-screen">
+      <main id="RiderLayout" className="flex flex-row w-screen h-screen">
         <RiderSidebar />
         <section
-          id="DashboardMainSection"
+          id="RiderMainSection"
           className="flex flex-row w-full h-screen"
         >
-          <div className="flex flex-col w-full h-screen bg-slate-100 p-4 lg:p-5">
+          <div className="flex flex-col w-full h-screen bg-slate-50 p-4 lg:p-5">
             <RiderHeader />
             {children}
           </div>

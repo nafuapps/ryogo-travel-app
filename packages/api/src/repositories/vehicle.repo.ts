@@ -1,6 +1,12 @@
 import { db } from "@ryogo-travel-app/db";
-import { InsertVehicleType, vehicles } from "@ryogo-travel-app/db/schema";
-import { eq, and } from "drizzle-orm";
+import {
+  BookingStatusEnum,
+  InsertVehicleType,
+  vehicleRepairs,
+  vehicles,
+  VehicleStatusEnum,
+} from "@ryogo-travel-app/db/schema";
+import { eq, and, notInArray, inArray } from "drizzle-orm";
 
 export const vehicleRepository = {
   //Get vehicle by id
@@ -14,6 +20,56 @@ export const vehicleRepository = {
       .select()
       .from(vehicles)
       .where(eq(vehicles.agencyId, agencyId));
+  },
+
+  //Get all vehicles data for a new booking in an agency
+  async getAllVehiclesDataByAgencyId(agencyId: string) {
+    return await db.query.vehicles.findMany({
+      columns: {
+        id: true,
+        status: true,
+        brand: true,
+        model: true,
+        color: true,
+        vehicleNumber: true,
+        type: true,
+        capacity: true,
+        insuranceExpiresOn: true,
+        odometerReading: true,
+        pucExpiresOn: true,
+        defaultAcChargePerDay: true,
+        defaultRatePerKm: true,
+        hasAC: true,
+      },
+      where: and(
+        eq(vehicles.agencyId, agencyId),
+        notInArray(vehicles.status, [VehicleStatusEnum.SUSPENDED])
+      ),
+      with: {
+        assignedBookings: {
+          columns: {
+            id: true,
+            status: true,
+            startDate: true,
+            endDate: true,
+          },
+          where: (assignedBookings, { inArray }) =>
+            inArray(assignedBookings.status, [
+              BookingStatusEnum.CONFIRMED,
+              BookingStatusEnum.IN_PROGRESS,
+            ]),
+        },
+        vehicleRepairs: {
+          columns: {
+            id: true,
+            startDate: true,
+            endDate: true,
+          },
+          where: (vehicleRepairs, { eq }) =>
+            eq(vehicleRepairs.isCompleted, false),
+        },
+      },
+    });
   },
 
   //Get vehicle by number in an agency

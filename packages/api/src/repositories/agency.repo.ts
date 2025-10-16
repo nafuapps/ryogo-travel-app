@@ -19,7 +19,14 @@ export const agencyRepository = {
 
   //Get agency by id
   async getAgencyById(id: string) {
-    return await db.select().from(agencies).where(eq(agencies.id, id));
+    return await db.query.agencies.findFirst({
+      where: eq(agencies.id, id),
+      with: {
+        locations: {
+          columns: { id: true, city: true, state: true },
+        },
+      },
+    });
   },
 
   //Get agency by phone and email

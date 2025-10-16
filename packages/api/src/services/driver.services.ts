@@ -4,14 +4,11 @@ import { CreateDriverType } from "../types/driver.types";
 
 export const driverServices = {
   //Get all drivers in an agency
-  async getAllDrivers(agencyId: string) {
-    const drivers = await driverRepository.getDriversByAgencyId(agencyId);
-    return drivers.map((driver) => {
-      return {
-        id: driver.id,
-        status: driver.status,
-      };
-    });
+  async findDriversByAgency(agencyId: string) {
+    const drivers = await driverRepository.getAllDriversDataByAgencyId(
+      agencyId
+    );
+    return drivers;
   },
 
   //Create driver

@@ -78,6 +78,13 @@
       "when": 1759756601173,
       "tag": "0010_kind_mole_man",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1760528356195,
+      "tag": "0011_majestic_sue_storm",
+      "breakpoints": true
     }
   ]
 }

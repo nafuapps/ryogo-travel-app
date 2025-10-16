@@ -1,6 +1,11 @@
 import { db } from "@ryogo-travel-app/db";
-import { drivers, InsertDriverType } from "@ryogo-travel-app/db/schema";
-import { eq, and } from "drizzle-orm";
+import {
+  BookingStatusEnum,
+  drivers,
+  DriverStatusEnum,
+  InsertDriverType,
+} from "@ryogo-travel-app/db/schema";
+import { eq, and, notInArray } from "drizzle-orm";
 
 export const driverRepository = {
   //Get driver by id
@@ -14,6 +19,48 @@ export const driverRepository = {
       .select()
       .from(drivers)
       .where(eq(drivers.agencyId, agencyId));
+  },
+
+  //Get all drivers data for a new booking in an agency
+  async getAllDriversDataByAgencyId(agencyId: string) {
+    return await db.query.drivers.findMany({
+      columns: {
+        id: true,
+        status: true,
+        name: true,
+        licenseExpiresOn: true,
+        phone: true,
+        canDriveVehicleTypes: true,
+        defaultAllowancePerDay: true,
+      },
+      where: and(
+        eq(drivers.agencyId, agencyId),
+        notInArray(drivers.status, [DriverStatusEnum.SUSPENDED])
+      ),
+      with: {
+        assignedBookings: {
+          columns: {
+            id: true,
+            status: true,
+            startDate: true,
+            endDate: true,
+          },
+          where: (assignedBookings, { inArray }) =>
+            inArray(assignedBookings.status, [
+              BookingStatusEnum.CONFIRMED,
+              BookingStatusEnum.IN_PROGRESS,
+            ]),
+        },
+        driverLeaves: {
+          columns: {
+            id: true,
+            startDate: true,
+            endDate: true,
+          },
+          where: (driverLeaves, { eq }) => eq(driverLeaves.isCompleted, false),
+        },
+      },
+    });
   },
 
   //Get driver by phone in agency

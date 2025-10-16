@@ -20,7 +20,7 @@
   },
   "peacock.color": "#42b883",
   "postman.settings.dotenv-detection-notification-visibility": false,
-  "editor.fontFamily": "Fira Mono, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontSize": 14,
   "editor.fontLigatures": true,
 

@@ -7,6 +7,24 @@ import { driverRepository } from "../repositories/driver.repo";
 import { userRepository } from "../repositories/user.repo";
 
 export const agencyServices = {
+  //Find agency by id
+  async findAgencyById(id: string) {
+    const agency = await agencyRepository.getAgencyById(id);
+    if (!agency) {
+      throw new Error("Agency not found");
+    }
+    return {
+      id: agency.id,
+      status: agency.status,
+      location: agency.locations,
+      name: agency.businessName,
+      businessPhone: agency.businessPhone,
+      businessEmail: agency.businessEmail,
+      defaultCommissionRate: agency.defaultCommissionRate,
+      subscriptionExpiresOn: agency.subscriptionExpiresOn,
+    };
+  },
+
   // ? Onboarding flow
   //Find agency by phone and email
   async findAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {

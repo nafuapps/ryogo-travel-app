@@ -4,14 +4,11 @@ import { OnboardingAddVehicleAPIRequestType } from "../types/vehicle.types";
 
 export const vehicleServices = {
   //Get all vehicles of an agency
-  async getAllVehicles(agencyId: string) {
-    const vehicles = await vehicleRepository.getVehiclesByAgencyId(agencyId);
-    return vehicles.map((vehicle) => {
-      return {
-        id: vehicle.id,
-        status: vehicle.status,
-      };
-    });
+  async findVehiclesByAgency(agencyId: string) {
+    const vehicles = await vehicleRepository.getAllVehiclesDataByAgencyId(
+      agencyId
+    );
+    return vehicles;
   },
 
   //Add vehicle to agency

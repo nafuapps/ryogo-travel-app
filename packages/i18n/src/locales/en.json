@@ -798,16 +798,123 @@
       "Title": "New Booking",
       "Form": {
         "Step1": {
-          "Title": "Customer info"
+          "Title": "Customer information",
+          "Subtitle": "Step 1 of 4",
+          "Description": "Find existing customer by phone number or create a new one",
+          "Field1": {
+            "Title": "Enter customer phone number",
+            "Placeholder": "9876543210",
+            "Error1": "Invalid phone number"
+          },
+          "Field2": {
+            "Title": "New customer name",
+            "Placeholder": "Raj Sharma",
+            "Error1": "Customer name must be atleast 5 characters"
+          },
+          "Field3": {
+            "Title": "Select State",
+            "Error1": "State is required to proceed"
+          },
+          "Field4": {
+            "Title": "Select City",
+            "Error1": "City is required to proceed"
+          },
+          "Loading": "Loading",
+          "FindCTA": "Find Customer",
+          "PrimaryCTA": "Next",
+          "CustomerNotFound": "Not an existing customer.. Adding a new one"
         },
         "Step2": {
-          "Title": "Trip info"
+          "Title": "Trip details",
+          "Subtitle": "Step 2 of 4",
+          "Description": "Capture information provided by the customer",
+          "Field1": {
+            "Title": "From ",
+            "Placeholder": "Select starting state",
+            "Error1": "Source state is required"
+          },
+          "Field2": {
+            "Placeholder": "Select starting city",
+            "Error1": "Source city is required"
+          },
+          "Field3": {
+            "Title": "To",
+            "Placeholder": "Select destination state",
+            "Error1": "Destination state is required"
+          },
+          "Field4": {
+            "Placeholder": "Select destination city",
+            "Error1": "Destination city is required",
+            "Error2": "Source and Destination city must be different"
+          },
+          "Field5": {
+            "Title": "Start Date",
+            "Placeholder": "Select start date",
+            "Error1": "Start date is required"
+          },
+          "Field6": {
+            "Title": "End Date",
+            "Placeholder": "Select end date",
+            "Error1": "End date is required",
+            "Error2": "Please select end date greater than start date"
+          },
+          "Field7": {
+            "Title": "Number of passengers",
+            "Placeholder": "4",
+            "Error1": "Number of passengers is required",
+            "Error2": "Passengers must be atleast 1",
+            "Error3": "Passengers must be less than 100",
+            "Error4": "Passengers cannot be in decimals",
+            "Error5": "Number of passengers must be a positive number"
+          },
+          "Field8": {
+            "Title": "Trip type",
+            "OneWay": "One Way",
+            "OneWayDesc": "Drop from source to destination",
+            "RoundTrip": "Round Trip",
+            "RoundTripDesc": "Travel to a destination and return back",
+            "MultiDay": "Multi Day",
+            "MultiDayDesc": "Touring a destination for multiple days"
+          },
+          "Field9": {
+            "Title": "Need AC?"
+          },
+          "Field10": {
+            "Title": "Customer remarks",
+            "Placeholder": "Enter any request or preference from the customer (optional)"
+          },
+          "Loading": "Loading..",
+          "PrimaryCTA": "Next",
+          "Back": "Back"
         },
         "Step3": {
-          "Title": "Assignment info"
+          "Title": "Assignment options",
+          "Subtitle": "Step 3 of 4",
+          "Description": "Assign vehicle and driver for the trip",
+          "Vehicle": {
+            "Title": "Assign vehicle",
+            "Score": "Score",
+            "Seats": " {count, plural, =1 {seat} other {seats}}",
+            "AC": "AC",
+            "Booked": "Booked",
+            "RepairScheduled": "In Service",
+            "Available": "Available"
+          },
+          "Driver": {
+            "Title": "Assign driver",
+            "Score": "Score",
+            "Booked": "Booked",
+            "Leave": "On Leave",
+            "Available": "Available"
+          },
+          "Loading": "Loading..",
+          "PrimaryCTA": "Next",
+          "Back": "Back"
         },
         "Step4": {
-          "Title": "Cost info"
+          "Title": "Cost info",
+          "Subtitle": "Step 4 of 4",
+          "Description": "Provide cost details of the trip"
         },
         "Final": {
           "Title": "Final info"

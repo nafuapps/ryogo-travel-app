@@ -6,15 +6,15 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "i18next": "^25.5.2",
-    "react-i18next": "^15.7.3"
+    "i18next": "^25.6.0",
+    "react-i18next": "^16.0.1"
   },
   "peerDependencies": {
     "react": ">=19",
     "react-dom": ">=19"
   },
   "devDependencies": {
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "exports": {
     ".": "./src/index.ts",

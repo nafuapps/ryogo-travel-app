@@ -2,6 +2,7 @@ import { db } from "@ryogo-travel-app/db";
 import {
   bookings,
   BookingStatusEnum,
+  InsertBookingType,
   tripLogs,
   TripLogTypesEnum,
 } from "@ryogo-travel-app/db/schema";
@@ -244,5 +245,9 @@ export const bookingRepository = {
         },
       },
     });
+  },
+
+  async createBooking(data: InsertBookingType) {
+    return await db.insert(bookings).values(data).returning();
   },
 };

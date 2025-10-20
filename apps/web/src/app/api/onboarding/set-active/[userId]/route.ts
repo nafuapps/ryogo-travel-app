@@ -25,8 +25,6 @@ export async function POST(
 
     const agency = await agencyServices.activateAgency(resultUser.agencyId);
 
-    console.log("DB update successful");
-
     //Update status in session cookie
     await updateSessionUserStatus("active");
 

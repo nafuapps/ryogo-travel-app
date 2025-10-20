@@ -1,4 +1,4 @@
-import { PBold, CaptionGrey, Caption } from "@/components/typography";
+import { PBold, CaptionGrey, Caption, PGrey } from "@/components/typography";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   FormControl,
@@ -47,7 +47,11 @@ export function DashboardInput(props: DashboardInputProps) {
       render={({ field }) => (
         <FormItem className="w-full">
           <FormLabel>
-            <PBold>{props.label}</PBold>
+            {props.disabled ? (
+              <PGrey>{props.label}</PGrey>
+            ) : (
+              <PBold>{props.label}</PBold>
+            )}
           </FormLabel>
           <FormControl>
             <Input
@@ -266,7 +270,11 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
-            <PBold>{props.label}</PBold>
+            {props.disabled ? (
+              <PGrey>{props.label}</PGrey>
+            ) : (
+              <PBold>{props.label}</PBold>
+            )}
           </FormLabel>
           <Popover>
             <PopoverTrigger asChild disabled={props.disabled}>

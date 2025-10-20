@@ -33,7 +33,6 @@ export function AddVehicleConfirm(props: {
 
   //Submit actions
   const onSubmit = async () => {
-    console.log(props.finalData);
     const newVehicleData: OnboardingAddVehicleAPIRequestType = {
       agencyId: props.finalData.agencyId,
       data: {
@@ -55,7 +54,6 @@ export function AddVehicleConfirm(props: {
       "/api/onboarding/add-vehicle",
       { method: "POST", body: JSON.stringify(newVehicleData) }
     );
-    console.log(addedVehicle);
     if (addedVehicle.id) {
       //Try to upload vehicle docs
       const formData = new FormData();

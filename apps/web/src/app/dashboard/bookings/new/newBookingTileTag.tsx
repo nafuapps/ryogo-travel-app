@@ -1,22 +1,15 @@
-import { Caption } from "@/components/typography";
-import {
-  LucideBus,
-  LucideCar,
-  LucideMotorbike,
-  LucideProps,
-  LucideTruck,
-} from "lucide-react";
+import { Caption, Small } from "@/components/typography";
+import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
-import { tileIconClassName } from "./newBookingCommon";
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema";
+import { bigTileIconClassName, tileIconClassName } from "./newBookingCommon";
 
-type VehicleTileTagProps = {
+type IconTextTagProps = {
   icon: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >;
   text: string;
 };
-export function VehicleTileTag(props: VehicleTileTagProps) {
+export function IconTextTag(props: IconTextTagProps) {
   return (
     <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
       <props.icon className={tileIconClassName} />
@@ -25,30 +18,24 @@ export function VehicleTileTag(props: VehicleTileTagProps) {
   );
 }
 
-type DriverTileTagProps = {
-  vehicles: VehicleTypesEnum[];
-};
-export function DriverTileTag(props: DriverTileTagProps) {
-  const icons: ForwardRefExoticComponent<
+export function BigIconTextTag(props: IconTextTagProps) {
+  return (
+    <div className="flex flex-row gap-2 lg:gap-3 items-center">
+      <props.icon className={bigTileIconClassName} />
+      <Small>{props.text}</Small>
+    </div>
+  );
+}
+
+type IconsTagProps = {
+  icons: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >[] = [];
-
-  if (props.vehicles.includes(VehicleTypesEnum.BIKE)) {
-    icons.push(LucideMotorbike);
-  }
-  if (props.vehicles.includes(VehicleTypesEnum.CAR)) {
-    icons.push(LucideCar);
-  }
-  if (props.vehicles.includes(VehicleTypesEnum.BUS)) {
-    icons.push(LucideBus);
-  }
-  if (props.vehicles.includes(VehicleTypesEnum.TRUCK)) {
-    icons.push(LucideTruck);
-  }
-
+  >[];
+};
+export function IconsTag(props: IconsTagProps) {
   return (
     <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
-      {icons.map((Icon, index) => {
+      {props.icons.map((Icon, index) => {
         return <Icon key={index} className={tileIconClassName} />;
       })}
     </div>

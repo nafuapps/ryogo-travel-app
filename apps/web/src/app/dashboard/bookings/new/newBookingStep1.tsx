@@ -1,10 +1,17 @@
-import { CaptionGrey, H4, H5, Small, SmallGrey } from "@/components/typography";
+import { CaptionGrey, H4, Small, SmallGrey } from "@/components/typography";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { NewBookingFormDataType } from "./newBookingCommon";
+import {
+  newBookingFormClassName,
+  NewBookingFormDataType,
+  newBookingHeaderClassName,
+  newBookingHeaderLineClassName,
+  newBookingSectionClassName,
+  NewBookingTotalSteps,
+} from "./newBookingCommon";
 import NewBookingStepsTracker from "./newBookingStepsTracker";
 import {
   DashboardInput,
@@ -16,9 +23,10 @@ import { Spinner } from "@/components/ui/spinner";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { NewBookingFindCustomerAPIResponseType } from "@ryogo-travel-app/api/types/customer.types";
 import stateCityData from "@/lib/states_cities.json";
-import { LucideInfo, LucideUserCheck } from "lucide-react";
+import { LucideInfo } from "lucide-react";
 import { PhoneRegex } from "@/lib/regex";
 import { Alert } from "@/components/ui/alert";
+import ExistingCutomerCard from "./newBookingExistingCustomer";
 
 type NewBookingStep1Props = {
   onNext: () => void;
@@ -31,9 +39,11 @@ type NewBookingStep1Props = {
 export default function NewBookingStep1(props: NewBookingStep1Props) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step1");
   const [existingCustomer, setExistingCustomer] =
-    useState<NewBookingFindCustomerAPIResponseType>(null);
-  const [customerNotFound, setCustomerNotFound] = useState<string | null>(
-    props.newBookingFormData.customerName ? "" : null
+    useState<NewBookingFindCustomerAPIResponseType>(
+      props.newBookingFormData.existingCustomer
+    );
+  const [customerNotFound, setCustomerNotFound] = useState<string | undefined>(
+    props.newBookingFormData.newCustomerName
   );
 
   const step1Schema = z.object({
@@ -66,9 +76,9 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     resolver: zodResolver(step1Schema),
     defaultValues: {
       customerPhone: props.newBookingFormData.customerPhone,
-      newCustomerName: props.newBookingFormData.customerName,
-      newCustomerState: props.newBookingFormData.customerLocationState,
-      newCustomerCity: props.newBookingFormData.customerLocationCity,
+      newCustomerName: props.newBookingFormData.newCustomerName,
+      newCustomerState: props.newBookingFormData.newCustomerLocationState,
+      newCustomerCity: props.newBookingFormData.newCustomerLocationCity,
     },
   });
 
@@ -77,10 +87,10 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     props.setNewBookingFormData({
       ...props.newBookingFormData,
       customerPhone: values.customerPhone,
-      customerId: existingCustomer?.id,
-      customerName: values.newCustomerName,
-      customerLocationState: values.newCustomerState,
-      customerLocationCity: values.newCustomerCity,
+      existingCustomer: existingCustomer,
+      newCustomerName: values.newCustomerName,
+      newCustomerLocationState: values.newCustomerState,
+      newCustomerLocationCity: values.newCustomerCity,
     });
     props.onNext();
   }
@@ -94,18 +104,17 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       });
       return;
     }
-    const existingCustomer =
-      await apiClient<NewBookingFindCustomerAPIResponseType>(
-        `/api/new-booking/find-customer?phone=${form.getValues(
-          "customerPhone"
-        )}&agencyId=${props.agencyId}`,
-        { method: "GET" }
-      );
-    setExistingCustomer(existingCustomer);
-    if (!existingCustomer) {
+    const customer = await apiClient<NewBookingFindCustomerAPIResponseType>(
+      `/api/new-booking/find-customer?phone=${form.getValues(
+        "customerPhone"
+      )}&agencyId=${props.agencyId}`,
+      { method: "GET" }
+    );
+    setExistingCustomer(customer);
+    if (!customer) {
       setCustomerNotFound(t("CustomerNotFound"));
     } else {
-      setCustomerNotFound(null);
+      setCustomerNotFound(undefined);
     }
   };
 
@@ -126,20 +135,20 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
   }, [selectedState, setValue]);
 
   return (
-    <div id="CustomerSection" className="flex flex-col gap-5 lg:gap-6">
-      <div id="CustomerHeader" className="flex flex-col gap-2 lg:gap-3">
-        <div className="flex flex-row justify-between items-end gap-2 lg:gap-3">
+    <div id="CustomerSection" className={newBookingSectionClassName}>
+      <div id="CustomerHeader" className={newBookingHeaderClassName}>
+        <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={4} current={0} />
+        <NewBookingStepsTracker total={NewBookingTotalSteps} current={0} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
         <form
           id="Step1Form"
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-5 "
+          className={newBookingFormClassName}
         >
           <div id="FindCustomer" className="flex flex-col gap-3 lg:gap-4">
             <DashboardInput
@@ -149,9 +158,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
               type="tel"
             />
             <Button
-              variant={
-                existingCustomer || customerNotFound ? "outline" : "default"
-              }
+              variant={"outline"}
               size={"lg"}
               type="button"
               onClick={findCustomer}
@@ -160,19 +167,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
               {t("FindCTA")}
             </Button>
             {existingCustomer && (
-              <div
-                id="ExistingCustomer"
-                className="flex flex-row gap-3 lg:gap-4 bg-white border border-slate-100 rounded-lg p-3 lg:p-4"
-              >
-                <div className="flex rounded-full size-10 lg:size-12 bg-slate-100 justify-center items-center">
-                  <LucideUserCheck className="text-slate-500 stroke-1 size-6 lg:size-7" />
-                </div>
-                <div className="flex flex-col gap-0.5 lg:gap-1 items-start">
-                  <H5>{existingCustomer.name}</H5>
-                  <SmallGrey>{existingCustomer.remarks}</SmallGrey>
-                  <CaptionGrey>{existingCustomer.location}</CaptionGrey>
-                </div>
-              </div>
+              <ExistingCutomerCard existingCustomer={existingCustomer} />
             )}
           </div>
           {customerNotFound && (

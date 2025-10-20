@@ -74,7 +74,7 @@ export async function createWebSession(user: SelectUserType) {
   });
 
   // 2. Encrypt the session data
-  const session = await encrypt({
+  const newPayload: SessionPayload = {
     sessionId: sessionData[0]!.id,
     token: sessionData[0]!.token,
     userId: sessionData[0]!.userId,
@@ -83,7 +83,8 @@ export async function createWebSession(user: SelectUserType) {
     userRole: user.userRole.toString().toLowerCase(),
     status: user.status.toString().toLowerCase(),
     expiresAt,
-  });
+  };
+  const session = await encrypt(newPayload);
 
   // 3. Store the session data in cookies for optimistic auth checks
   const cookieStore = await cookies();
@@ -148,8 +149,6 @@ export async function updateSessionUserStatus(newStatus: string) {
     status: newStatus,
   });
 
-  console.log({ payload });
-  console.log({ newSession });
   // 4. Update session expiry in cookie
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {

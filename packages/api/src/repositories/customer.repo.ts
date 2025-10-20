@@ -1,5 +1,5 @@
 import { db } from "@ryogo-travel-app/db";
-import { customers } from "@ryogo-travel-app/db/schema";
+import { customers, InsertCustomerType } from "@ryogo-travel-app/db/schema";
 import { eq, and } from "drizzle-orm";
 
 export const customerRepository = {
@@ -20,5 +20,9 @@ export const customerRepository = {
         },
       },
     });
+  },
+
+  async createCustomer(data: InsertCustomerType) {
+    return await db.insert(customers).values(data).returning();
   },
 };

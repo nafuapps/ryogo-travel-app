@@ -94,7 +94,6 @@ export function AddVehicleStep3(props: {
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    console.log({ data });
     props.updateFinalData({
       ...props.finalData,
       insuranceExpiresOn: data.insuranceExpiresOn,

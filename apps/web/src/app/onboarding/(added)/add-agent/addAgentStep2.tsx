@@ -35,7 +35,6 @@ export function AddAgentConfirm(props: {
   const formData = useForm<AddAgentFormDataType>();
   //Submit actions
   const onSubmit = async () => {
-    console.log(props.finalData);
     // Add agent
     const newAgentData: OnboardingAddAgentAPIRequestType = {
       agencyId: props.finalData.agencyId,
@@ -49,7 +48,6 @@ export function AddAgentConfirm(props: {
       "/api/onboarding/add-agent",
       { method: "POST", body: JSON.stringify(newAgentData) }
     );
-    console.log(addedAgent);
     if (addedAgent.id) {
       //If success, Try to upload user photo and driver user photo
       if (props.finalData.agentPhotos) {

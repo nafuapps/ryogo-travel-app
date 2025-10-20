@@ -316,10 +316,10 @@
           "Placeholder": "4",
           "Description": "How many passengers can travel in this vehicle (excluding driver)?",
           "Error1": "Vehicle passenger capacity is required",
-          "Error2": "Capacity must be atleast 1",
+          "Error2": "Capacity must be atleast 0",
           "Error3": "Capacity must be less than 100",
           "Error4": "Capacity cannot be in decimals",
-          "Error5": "Capacity must be a positive number"
+          "Error5": "Capacity must be a non-negative number"
         },
         "Field2": {
           "Title": "Enter odometer reading (Km)",
@@ -797,9 +797,11 @@
     "NewBooking": {
       "Title": "New Booking",
       "Form": {
+        "Km": " Km",
+        "Days": " {count, plural, =1 {day} other {days}}",
         "Step1": {
           "Title": "Customer information",
-          "Subtitle": "Step 1 of 4",
+          "Subtitle": "Step 1 of 5",
           "Description": "Find existing customer by phone number or create a new one",
           "Field1": {
             "Title": "Enter customer phone number",
@@ -812,21 +814,21 @@
             "Error1": "Customer name must be atleast 5 characters"
           },
           "Field3": {
-            "Title": "Select State",
+            "Title": "Customer State",
             "Error1": "State is required to proceed"
           },
           "Field4": {
-            "Title": "Select City",
+            "Title": "Customer City",
             "Error1": "City is required to proceed"
           },
           "Loading": "Loading",
           "FindCTA": "Find Customer",
           "PrimaryCTA": "Next",
-          "CustomerNotFound": "Not an existing customer.. Adding a new one"
+          "CustomerNotFound": "No customer found.. Adding a new one"
         },
         "Step2": {
           "Title": "Trip details",
-          "Subtitle": "Step 2 of 4",
+          "Subtitle": "Step 2 of 5",
           "Description": "Capture information provided by the customer",
           "Field1": {
             "Title": "From ",
@@ -856,16 +858,17 @@
             "Title": "End Date",
             "Placeholder": "Select end date",
             "Error1": "End date is required",
-            "Error2": "Please select end date greater than start date"
+            "Error2": "Start date cannot be after end date",
+            "Error3": "For Multi day tour, end date must be greater than start date. If returning on same day, select Round trip instead"
           },
           "Field7": {
             "Title": "Number of passengers",
             "Placeholder": "4",
             "Error1": "Number of passengers is required",
-            "Error2": "Passengers must be atleast 1",
+            "Error2": "Passengers must be atleast 0",
             "Error3": "Passengers must be less than 100",
             "Error4": "Passengers cannot be in decimals",
-            "Error5": "Number of passengers must be a positive number"
+            "Error5": "Number of passengers must be a non-negative number"
           },
           "Field8": {
             "Title": "Trip type",
@@ -884,43 +887,112 @@
             "Placeholder": "Enter any request or preference from the customer (optional)"
           },
           "Loading": "Loading..",
-          "PrimaryCTA": "Next",
+          "PrimaryCTA": "Continue",
           "Back": "Back"
         },
         "Step3": {
           "Title": "Assignment options",
-          "Subtitle": "Step 3 of 4",
+          "Subtitle": "Step 3 of 5",
           "Description": "Assign vehicle and driver for the trip",
           "Vehicle": {
-            "Title": "Assign vehicle",
-            "Score": "Score",
+            "Title": "Choose vehicle",
+            "Score": "RyoGo Score",
             "Seats": " {count, plural, =1 {seat} other {seats}}",
             "AC": "AC",
             "Booked": "Booked",
             "RepairScheduled": "In Service",
-            "Available": "Available"
+            "Available": "Available",
+            "PerKm": "/Km"
           },
           "Driver": {
-            "Title": "Assign driver",
-            "Score": "Score",
+            "Title": "Choose driver",
+            "Score": "RyoGo Score",
             "Booked": "Booked",
             "Leave": "On Leave",
-            "Available": "Available"
+            "Available": "Available",
+            "PerDay": "/day"
           },
           "Loading": "Loading..",
-          "PrimaryCTA": "Next",
+          "PrimaryCTA": "Continue",
           "Back": "Back"
         },
         "Step4": {
           "Title": "Cost info",
-          "Subtitle": "Step 4 of 4",
-          "Description": "Provide cost details of the trip"
+          "Subtitle": "Step 4 of 5",
+          "Description": "Provide cost details for final price calculation",
+          "Field1": {
+            "Title": "Vehicle charge (per Km)",
+            "Placeholder": "₹18",
+            "Description": "How much is the vehicle rental charge per Km (in ₹)?",
+            "Error1": "Vehicle Charge must be a number",
+            "Error2": "Vehicle Charge must be atleast ₹1",
+            "Error3": "Vehicle Charge must be less than ₹50",
+            "Error4": "Vehicle Charge cannot be in decimals",
+            "Error5": "Vehicle Charge must be a positive number"
+          },
+          "Field2": {
+            "Title": "Driver allowance (per day)",
+            "Placeholder": "₹500",
+            "Description": "How much do you pay the driver per day (in ₹)?",
+            "Error1": "Allowance must be a number",
+            "Error2": "Allowance must be atleast ₹0.",
+            "Error3": "Allowance must be less than ₹10000",
+            "Error4": "Allowance cannot be in decimals",
+            "Error5": "Allowance must be a non-negative number"
+          },
+          "Field3": {
+            "Title": "AC charge (per day)",
+            "Placeholder": "₹500",
+            "Description": "How much is the vehicle AC charge per day (in ₹)?",
+            "Error1": "AC charge must be a number",
+            "Error2": "AC charge must be atleast ₹0.",
+            "Error3": "AC charge must be less than ₹10000",
+            "Error4": "AC charge cannot be in decimals",
+            "Error5": "AC charge must be a non-negative number"
+          },
+          "Field4": {
+            "Title": "Commission rate (in %)",
+            "Placeholder": "15%",
+            "Description": "How much is the agency's commission for this trip? (Too high and you might lose customer.. Too low and your profits might be less)",
+            "Error1": "Commission rate must be a number",
+            "Error2": "Commission rate must be atleast 0%",
+            "Error3": "Commission rate must be less than 100%",
+            "Error4": "Commission rate cannot be in decimals",
+            "Error5": "Commission rate must be a non-negative number"
+          },
+          "Field5": {
+            "Title": "Distance (in Km)",
+            "Placeholder": "200 Km",
+            "Description": "What is the distance between these 2 cities?",
+            "Error1": "Distance must be a number",
+            "Error2": "Distance must be atleast 1",
+            "Error3": "Distance must be less than 3000",
+            "Error4": "Distance cannot be in decimals",
+            "Error5": "Distance must be a positive number"
+          },
+          "Loading": "Loading..",
+          "PrimaryCTA": "Calculate Final Price",
+          "Back": "Back"
         },
         "Final": {
-          "Title": "Final info"
-        },
-        "PrimaryCTA": "Go to Confirmation",
-        "SecondaryCTA": "Save Lead"
+          "Title": "Final summary",
+          "Subtitle": "Step 5 of 5",
+          "Description": "Review booking with total cost estimate",
+          "DriverAllowance": "Driver Allowance",
+          "DriverSubtitle": "(₹{allowance} for {days} day)",
+          "VehicleCharge": "Vehicle Charge",
+          "VehicleSubtitle": "(₹{charge} for {distance} Km)",
+          "ACCharge": "AC Charge",
+          "ACSubtitle": "(₹{ac} for {days} day)",
+          "Commission": "Commission",
+          "TotalAmount": "Total Amount",
+          "CreateInfo": "This will create new booking as a lead. You can confirm it on the next page",
+          "Loading": "Loading..",
+          "PrimaryCTA": "Create Booking",
+          "Back": "Back to edit details",
+          "Success": "Created a new booking successfully!",
+          "Error": "Failed to create new booking.. Try again later!"
+        }
       }
     }
   },

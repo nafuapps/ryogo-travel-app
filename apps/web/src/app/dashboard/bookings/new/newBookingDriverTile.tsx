@@ -9,20 +9,28 @@ import {
   NoOverlapScore,
   tileFooterClassName,
   tileGreenIconClassName,
-  tileHeaderClassName,
+  tileHeaderLeftClassName,
   tileLeftClassName,
   tileRedIconClassName,
   tileRightClassName,
   tileStatusClassName,
-  BadTotalScore,
-  BestTotalScore,
-  GoodTotalScore,
-  MediumTotalScore,
   getExpiryScore,
+  getAllowanceScore,
+  getCanDriveScore,
+  getRyogoScoreClassName,
+  getTileClassName,
+  getDriverTotalScore,
+  getCanDriveIcons,
 } from "./newBookingCommon";
-import { PBold, H3, Caption, Small } from "@/components/typography";
-import { DriverTileTag } from "./newBookingTileTag";
-import { LucideTicketX, LucideCalendarX, LucideCheck } from "lucide-react";
+import { PBold, H2, Caption, Small } from "@/components/typography";
+import { IconsTag, IconTextTag } from "./newBookingTileTag";
+import {
+  LucideTicketX,
+  LucideCalendarX,
+  LucideCheck,
+  LucideBadgeIndianRupee,
+  LucidePhone,
+} from "lucide-react";
 
 type DriverTileProps = {
   driverData: NewBookingFindDriversType[number];
@@ -79,51 +87,53 @@ export default function DriverTile({
 
   const licenseScore = getExpiryScore(
     newBookingFormData.tripEndDate,
-    new Date(driverData.licenseExpiresOn!)
+    driverData.licenseExpiresOn
   );
 
-  //Score weightage: 40% booking, 30% leave, 20% status, 10 % license expiry
-  const totalScore =
-    bookingScore * 0.4 +
-    leaveScore * 0.3 +
-    statusScore * 0.2 +
-    licenseScore * 0.1;
+  const allowanceScore = getAllowanceScore(driverData.defaultAllowancePerDay);
+
+  const canDriveScore = getCanDriveScore(
+    driverData.canDriveVehicleTypes,
+    newBookingFormData.tripPassengers
+  );
+
+  const totalScore = getDriverTotalScore({
+    bookingScore,
+    leaveScore,
+    statusScore,
+    licenseScore,
+    allowanceScore,
+    canDriveScore,
+  });
 
   return (
     <div
-      className={`flex flex-row justify-between items-start gap-2 lg:gap-3 rounded-lg p-3 lg:p-4 border ${
-        assignedDriverIdWatch == driverData.id
-          ? "border-slate-200 bg-slate-200"
-          : "border-slate-100 hover:bg-slate-100"
-      }`}
-      onClick={() => setValue("assignedDriverId", driverData.id)}
+      className={getTileClassName(assignedDriverIdWatch == driverData.id)}
+      onClick={() =>
+        setValue(
+          "assignedDriverId",
+          assignedDriverIdWatch == driverData.id ? undefined : driverData.id
+        )
+      }
     >
       <div id="left" className={tileLeftClassName}>
-        <div id="header" className={tileHeaderClassName}>
+        <div id="header" className={tileHeaderLeftClassName}>
           <PBold>{driverData.name}</PBold>
-          <Small>{driverData.phone}</Small>
+          <Small>{driverData.address}</Small>
+          <IconTextTag icon={LucidePhone} text={driverData.phone} />
         </div>
         <div id="footer" className={tileFooterClassName}>
-          <DriverTileTag vehicles={driverData.canDriveVehicleTypes} />
+          <IconTextTag
+            icon={LucideBadgeIndianRupee}
+            text={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
+          />
+          <IconsTag icons={getCanDriveIcons(driverData.canDriveVehicleTypes)} />
         </div>
       </div>
       <div id="right" className={tileRightClassName}>
-        <div
-          id="score"
-          className={`flex flex-col rounded-lg items-center justify-center gap-1 lg:gap-1.5 py-3 px-4 lg:py-4 lg:px-5 ${
-            totalScore < BadTotalScore
-              ? "bg-red-200"
-              : totalScore < MediumTotalScore
-              ? "bg-orange-200"
-              : totalScore < GoodTotalScore
-              ? "bg-yellow-200"
-              : totalScore < BestTotalScore
-              ? "bg-green-200"
-              : "bg-cyan-300"
-          }`}
-        >
+        <div id="score" className={getRyogoScoreClassName(totalScore)}>
           <Caption>{t("Score")}</Caption>
-          <H3>{totalScore.toFixed(0)}</H3>
+          <H2>{totalScore.toFixed(0)}</H2>
         </div>
         <div id="status" className={tileStatusClassName}>
           {isBooked ? (

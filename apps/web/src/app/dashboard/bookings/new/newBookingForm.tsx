@@ -20,13 +20,16 @@ type NewBookingFormProps = {
   agencyLocation: NewBookingAgencyLocationType;
   vehicles: NewBookingFindVehiclesType;
   drivers: NewBookingFindDriversType;
+  commissionRate: number;
+  userId: string;
 };
 export default function NewBookingForm(props: NewBookingFormProps) {
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingFormDataType>({
       customerPhone: "",
-      customerLocationState: props.agencyLocation.state,
-      customerLocationCity: props.agencyLocation.city,
+      existingCustomer: null,
+      newCustomerLocationState: props.agencyLocation.state,
+      newCustomerLocationCity: props.agencyLocation.city,
       tripStartDate: new Date(),
       tripEndDate: new Date(),
       tripSourceLocationState: props.agencyLocation.state,
@@ -35,10 +38,11 @@ export default function NewBookingForm(props: NewBookingFormProps) {
       tripNeedsAC: true,
       tripPassengers: 1,
       tripType: BookingTypeEnum.OneWay,
-      selectedAcChargePerDay: 0,
-      selectedAllowancePerDay: 0,
-      selectedCommissionRate: 0,
-      selectedRatePerKm: 0,
+      selectedCommissionRate: props.commissionRate,
+      selectedDistance: undefined,
+      selectedRatePerKm: undefined,
+      selectedAllowancePerDay: undefined,
+      selectedAcChargePerDay: undefined,
     });
 
   const nextStepHandler = () => {
@@ -84,6 +88,8 @@ export default function NewBookingForm(props: NewBookingFormProps) {
       key={4}
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
+      userId={props.userId}
+      agencyId={props.agencyId}
     />,
   ]);
 

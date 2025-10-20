@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AgencyRegex, PhoneRegex } from "@/lib/regex";
-import { customerServices } from "@ryogo-travel-app/api/services/customer.services";
+import { routeServices } from "@ryogo-travel-app/api/services/route.services";
 import { getCurrentUser } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
-  // Example: Find existing cusomer info
+  // Find route info
   try {
     //Check user auth
     const user = await getCurrentUser();
@@ -12,27 +11,26 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const searchParams = req.nextUrl.searchParams;
-    const phone = searchParams.get("phone");
-    const agencyId = searchParams.get("agencyId");
-    if (!phone || !agencyId) {
+    const sourceCity = searchParams.get("sourceCity");
+    const sourceState = searchParams.get("sourceState");
+    const destinationCity = searchParams.get("destinationCity");
+    const destinationState = searchParams.get("destinationState");
+
+    if (!sourceCity || !sourceState || !destinationCity || !destinationState) {
       return NextResponse.json(
-        { error: "Phone/AgencyId not provided" },
+        { error: "Source/destination not provided" },
         { status: 400 }
       );
     }
-    if (!AgencyRegex.safeParse(agencyId).success) {
-      return NextResponse.json({ error: "Invalid agencyId" }, { status: 400 });
-    }
-    if (!PhoneRegex.safeParse(phone).success) {
-      return NextResponse.json({ error: "Invalid phone" }, { status: 400 });
-    }
 
-    const customer = await customerServices.findCustomerByPhoneInAgency(
-      phone,
-      agencyId
+    const route = await routeServices.findOrCreateRouteByLocations(
+      sourceCity,
+      sourceState,
+      destinationCity,
+      destinationState
     );
 
-    return NextResponse.json(customer, { status: 200 });
+    return NextResponse.json(route ?? null, { status: 200 });
   } catch (err: unknown) {
     const errorMessage =
       typeof err === "object" && err !== null && "message" in err

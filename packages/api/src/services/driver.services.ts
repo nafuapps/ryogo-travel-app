@@ -60,3 +60,6 @@ export const driverServices = {
     return updatedDriver[0];
   },
 };
+
+export type FindDriversByAgencyType =
+  (typeof driverServices)["findDriversByAgency"];

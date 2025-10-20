@@ -86,10 +86,6 @@ export const agencyServices = {
     if (!location) {
       throw new Error("Location not found");
     }
-    if (location.length > 1) {
-      // !This is a major issue
-      throw new Error("Multiple locations found");
-    }
 
     //Step3: Prepare agency data (Trial subscription with 30 day expiry, Status New)
     const createAgencyData = {
@@ -97,7 +93,7 @@ export const agencyServices = {
       businessPhone: data.businessPhone,
       businessName: data.businessName,
       businessAddress: data.businessAddress,
-      locationId: location[0]!.id,
+      locationId: location.id,
       subscriptionExpiresOn: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       defaultCommissionRate: data.commissionRate,
     };

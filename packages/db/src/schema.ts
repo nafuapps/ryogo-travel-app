@@ -612,7 +612,7 @@ export const bookings = pgTable(
     endDate: date("end_date").notNull(),
     startTime: time("start_time"),
     type: bookingType().notNull().default(BookingTypeEnum.OneWay),
-    passengers: integer("passengers").notNull().default(1),
+    passengers: integer("passengers").notNull().default(1), //0 means its a non-passenger (truck) trip
     needsAc: boolean("needs_ac").notNull().default(true),
     remarks: text("remarks"),
     acChargePerDay: integer("ac_charge_per_day").notNull().default(0), // in currency units
@@ -631,8 +631,8 @@ export const bookings = pgTable(
       sql`${t.commissionRate} >= 0 AND ${t.commissionRate} <= 100`
     ),
     check(
-      "passengers > 0 and < 100",
-      sql`${t.passengers} > 0 AND ${t.passengers} < 100`
+      "passengers >= 0 and < 100",
+      sql`${t.passengers} >= 0 AND ${t.passengers} < 100`
     ),
     check("ac charge per day  < 10000", sql`${t.acChargePerDay} < 10000`),
     check(

@@ -51,7 +51,6 @@ export function AddDriverStep3(props: {
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    console.log({ data });
     props.updateFinalData({
       ...props.finalData,
       address: data.driverAddress,

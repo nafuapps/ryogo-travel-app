@@ -71,7 +71,6 @@ export default function LoginPasswordPageComponent(
         //Redirect to Rider page
         redirect("/rider", RedirectType.replace);
       } else {
-        console.log({ loginResponse });
         //Redirect to Dashboard
         redirect("/dashboard", RedirectType.replace);
       }

@@ -21,15 +21,15 @@ export default async function NewBookingPageComponent() {
     currentUser!.agencyId
   );
 
-  //Get distance (from existing routes or Google Maps API?)
-
   return (
     <div id="NewBookingPage" className={pageClassName}>
       <NewBookingForm
         agencyId={currentUser!.agencyId}
         agencyLocation={agency.location}
+        commissionRate={agency.defaultCommissionRate}
         vehicles={vehicles}
         drivers={drivers}
+        userId={currentUser!.userId}
       />
     </div>
   );

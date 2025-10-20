@@ -33,7 +33,6 @@ export function CreateAccountConfirm(props: {
   const formData = useForm<CreateAccountFormDataType>();
   //Submit actions
   const onSubmit = async () => {
-    console.log(props.finalData);
     // Create Agency and Owner Account
     const newAccountData: OnboardingCreateAccountAPIRequestType = {
       agency: {
@@ -57,7 +56,6 @@ export function CreateAccountConfirm(props: {
         "/api/onboarding/create-account",
         { method: "POST", body: JSON.stringify(newAccountData) }
       );
-    console.log(createdOwnerAccount);
     if (createdOwnerAccount.agencyId && createdOwnerAccount.userId) {
       //If success, Try to upload business logo and owner photo
       if (props.finalData.agencyLogo) {

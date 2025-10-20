@@ -69,7 +69,7 @@ export const vehicleServices = {
       vehiclePhotoUrl
     );
     if (!updatedVehicle) {
-      throw new Error("Failed to update rc url for this vehicle in DB");
+      throw new Error("Failed to update document url for this vehicle in DB");
     }
     return updatedVehicle[0];
   },
@@ -118,3 +118,6 @@ export const vehicleServices = {
     return updatedVehicle[0];
   },
 };
+
+export type FindVehiclesByAgencyType =
+  (typeof vehicleServices)["findVehiclesByAgency"];

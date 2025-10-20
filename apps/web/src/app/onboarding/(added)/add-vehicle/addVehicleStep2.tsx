@@ -29,10 +29,10 @@ export function AddVehicleStep2(props: {
   const step2Schema = z.object({
     capacity: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(1, t("Field1.Error2"))
+      .min(0, t("Field1.Error2"))
       .max(100, t("Field1.Error3"))
       .multipleOf(1, t("Field1.Error4"))
-      .positive(t("Field1.Error5")),
+      .nonnegative(t("Field1.Error5")),
     odometerReading: z.coerce
       .number<number>(t("Field2.Error1"))
       .min(0, t("Field2.Error2"))

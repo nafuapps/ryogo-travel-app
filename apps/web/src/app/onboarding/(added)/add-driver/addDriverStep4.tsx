@@ -34,7 +34,6 @@ export function AddDriverConfirm(props: {
   const formData = useForm<AddDriverFormDataType>();
   //Submit actions
   const onSubmit = async () => {
-    console.log(props.finalData);
     // Add driver
     const newDriverData: OnboardingAddDriverAPIRequestType = {
       agencyId: props.finalData.agencyId,
@@ -53,7 +52,6 @@ export function AddDriverConfirm(props: {
       "/api/onboarding/add-driver",
       { method: "POST", body: JSON.stringify(newDriverData) }
     );
-    console.log(addedDriver);
     if (addedDriver.id) {
       //If success, Try to upload license photo and driver user photo
       if (props.finalData.licensePhotos) {

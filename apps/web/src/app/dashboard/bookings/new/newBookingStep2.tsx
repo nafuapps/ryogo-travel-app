@@ -10,7 +10,15 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { NewBookingFormDataType } from "./newBookingCommon";
+import {
+  getTripTypeClassName,
+  newBookingFormClassName,
+  NewBookingFormDataType,
+  newBookingHeaderClassName,
+  newBookingHeaderLineClassName,
+  newBookingSectionClassName,
+  NewBookingTotalSteps,
+} from "./newBookingCommon";
 import stateCityData from "@/lib/states_cities.json";
 import NewBookingStepsTracker from "./newBookingStepsTracker";
 import { Form } from "@/components/ui/form";
@@ -60,10 +68,10 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
       tripEndDate: z.date(t("Field6.Error1")),
       tripPassengers: z.coerce
         .number<number>(t("Field7.Error1"))
-        .min(1, t("Field7.Error2"))
+        .min(0, t("Field7.Error2"))
         .max(100, t("Field7.Error3"))
         .multipleOf(1, t("Field7.Error4"))
-        .positive(t("Field7.Error5")),
+        .nonnegative(t("Field7.Error5")),
       tripNeedsAC: z.boolean(),
       tripRemarks: z.string().optional(),
     })
@@ -73,6 +81,17 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
         ctx.addIssue({
           code: "custom",
           message: t("Field6.Error2"),
+          path: ["tripEndDate"],
+        });
+      }
+      //For Multi day trip, end date must be after start date
+      if (
+        selectedTripType == BookingTypeEnum.MultiDay &&
+        data.tripEndDate <= data.tripStartDate
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          message: t("Field6.Error3"),
           path: ["tripEndDate"],
         });
       }
@@ -159,20 +178,20 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
   }, [selectedSourceState, setValue]);
 
   return (
-    <div id="TripSection" className="flex flex-col gap-5 lg:gap-6">
-      <div id="TripHeader" className="flex flex-col gap-2 lg:gap-3">
-        <div className="flex flex-row justify-between items-end gap-2 lg:gap-3">
+    <div id="TripSection" className={newBookingSectionClassName}>
+      <div id="TripHeader" className={newBookingHeaderClassName}>
+        <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={4} current={1} />
+        <NewBookingStepsTracker total={NewBookingTotalSteps} current={1} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
         <form
           id="Step2Form"
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-5 "
+          className={newBookingFormClassName}
         >
           <div
             id="routeSelection"
@@ -220,12 +239,13 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
             <div className="flex flex-row gap-2 lg:gap-3">
               <div
                 id={BookingTypeEnum.OneWay}
-                onClick={() => setSelectedTripType(BookingTypeEnum.OneWay)}
-                className={`flex border rounded-lg border-slate-200  flex-col justify-center items-start p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
-                  selectedTripType === BookingTypeEnum.OneWay
-                    ? "bg-slate-200 shadow-xs"
-                    : ""
-                }`}
+                onClick={() => {
+                  setSelectedTripType(BookingTypeEnum.OneWay);
+                  form.setValue("tripEndDate", form.getValues("tripStartDate"));
+                }}
+                className={getTripTypeClassName(
+                  selectedTripType == BookingTypeEnum.OneWay
+                )}
               >
                 <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
                 <SmallBold>{t("Field8.OneWay")}</SmallBold>
@@ -234,11 +254,9 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               <div
                 id={BookingTypeEnum.Round}
                 onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
-                className={`flex border rounded-lg border-slate-200  flex-col justify-center items-start p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
-                  selectedTripType === BookingTypeEnum.Round
-                    ? "bg-slate-200 shadow-xs"
-                    : ""
-                }`}
+                className={getTripTypeClassName(
+                  selectedTripType == BookingTypeEnum.Round
+                )}
               >
                 <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
                 <SmallBold>{t("Field8.RoundTrip")}</SmallBold>
@@ -247,11 +265,9 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               <div
                 id={BookingTypeEnum.MultiDay}
                 onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
-                className={`flex border rounded-lg border-slate-200  flex-col justify-center items-start p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
-                  selectedTripType === BookingTypeEnum.MultiDay
-                    ? "bg-slate-200 shadow-xs"
-                    : ""
-                }`}
+                className={getTripTypeClassName(
+                  selectedTripType == BookingTypeEnum.MultiDay
+                )}
               >
                 <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
                 <SmallBold>{t("Field8.MultiDay")}</SmallBold>

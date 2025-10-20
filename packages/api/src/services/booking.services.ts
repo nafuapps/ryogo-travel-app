@@ -1,5 +1,13 @@
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema";
+import {
+  BookingStatusEnum,
+  InsertBookingType,
+} from "@ryogo-travel-app/db/schema";
 import { bookingRepository } from "../repositories/booking.repo";
+import { CreateNewBookingAPIRequestType } from "../types/booking.types";
+import { locationRepository } from "../repositories/location.repo";
+import { routeRepository } from "../repositories/route.repo";
+import { customerServices } from "./customer.services";
+import { routeServices } from "./route.services";
 
 export const bookingServices = {
   async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
@@ -175,5 +183,97 @@ export const bookingServices = {
         amount: booking.totalAmount,
       };
     });
+  },
+
+  //Create a new Booking
+  async addNewBooking(data: CreateNewBookingAPIRequestType) {
+    //Step1: If no existing customer, create a new customer
+    let customerId = data.existingCustomerId;
+    if (!customerId) {
+      const newCustomer = await customerServices.addNewCustomer(
+        data.newCustomerName!,
+        data.customerPhone,
+        data.newCustomerLocationCity!,
+        data.newCustomerLocationState!,
+        data.agencyId,
+        data.userId
+      );
+      customerId = newCustomer.id;
+    }
+    if (!customerId) {
+      throw new Error("Invalid customerId");
+    }
+
+    //Step2: Get trip sourceId and destinationId from city & state
+    let sourceId = data.sourceId;
+    if (!sourceId) {
+      const source = await locationRepository.getLocationByCityState(
+        data.tripSourceLocationCity,
+        data.tripSourceLocationState
+      );
+      sourceId = source?.id;
+    }
+    let destinationId = data.destinationId;
+    if (!destinationId) {
+      const destination = await locationRepository.getLocationByCityState(
+        data.tripDestinationLocationCity,
+        data.tripDestinationLocationState
+      );
+      destinationId = destination?.id;
+    }
+    if (!sourceId || !destinationId) {
+      throw new Error("Invalid Locations");
+    }
+
+    //Step3: Check if a route exists.. if not create a new one
+    let routeId = data.routeId;
+    let distance = data.selectedDistance;
+    if (!routeId) {
+      const newRoute = await routeServices.addNewRouteWithDistance(
+        sourceId,
+        destinationId,
+        distance
+      );
+      if (!newRoute) {
+        throw new Error("Failed to create route");
+      }
+      routeId = newRoute.id;
+    }
+    if (!routeId) {
+      throw new Error("Invalid routeId");
+    }
+
+    //Step4: Prepare data
+    const newBookingData: InsertBookingType = {
+      agencyId: data.agencyId,
+      customerId: customerId,
+      bookedByUserId: data.userId,
+      assignedUserId: data.userId,
+      sourceId: sourceId,
+      destinationId: destinationId,
+      routeId: routeId,
+      totalDistance: distance,
+      startDate: data.tripStartDate,
+      endDate: data.tripEndDate,
+      commissionRate: data.selectedCommissionRate,
+      totalAmount: data.finalAmount,
+      type: data.tripType,
+      status: BookingStatusEnum.LEAD,
+      remarks: data.tripRemarks,
+      assignedVehicleId: data.assignedVehicleId,
+      assignedDriverId: data.assignedDriverId,
+      passengers: data.tripPassengers,
+      needsAc: data.tripNeedsAC,
+      acChargePerDay: data.selectedAcChargePerDay ?? 0,
+      ratePerKm: data.selectedRatePerKm,
+      allowancePerDay: data.selectedAllowancePerDay,
+    };
+
+    //Step5: Create a new booking
+    const newBooking = await bookingRepository.createBooking(newBookingData);
+    if (!newBooking || newBooking.length < 1) {
+      throw new Error("Error creating booking");
+    }
+    return newBooking[0];
   },
 };

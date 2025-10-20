@@ -1,21 +1,38 @@
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services";
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services";
+import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services";
+import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services";
+import { NewBookingFindCustomerAPIResponseType } from "@ryogo-travel-app/api/types/customer.types";
 import {
   DriverStatusEnum,
   VehicleStatusEnum,
   BookingTypeEnum,
+  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema";
+import {
+  LucideArrowRightFromLine,
+  LucideArrowRightLeft,
+  LucideBus,
+  LucideCar,
+  LucideMotorbike,
+  LucideProps,
+  LucideTractor,
+  LucideTruck,
+  LucideWaypoints,
+} from "lucide-react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 export type NewBookingFormDataType = {
-  customerPhone: string;
-  customerId?: string;
-  customerName?: string;
-  customerLocationState?: string;
-  customerLocationCity?: string;
+  customerPhone?: string;
+  existingCustomer: NewBookingFindCustomerAPIResponseType;
+  newCustomerName?: string;
+  newCustomerLocationState?: string;
+  newCustomerLocationCity?: string;
   tripSourceLocationState: string;
   tripSourceLocationCity: string;
   tripDestinationLocationState: string;
   tripDestinationLocationCity?: string;
+  routeId?: string;
+  sourceId?: string;
+  destinationId?: string;
   tripType: BookingTypeEnum;
   tripStartDate: Date;
   tripEndDate: Date;
@@ -24,19 +41,19 @@ export type NewBookingFormDataType = {
   tripRemarks?: string;
   assignedVehicleId?: string;
   assignedDriverId?: string;
-  selectedRatePerKm: number;
-  selectedAcChargePerDay: number;
-  selectedAllowancePerDay: number;
-  selectedCommissionRate: number;
-  finalAmount?: number;
+  selectedRatePerKm?: number;
+  selectedDistance?: number;
+  selectedAcChargePerDay?: number;
+  selectedAllowancePerDay?: number;
+  selectedCommissionRate?: number;
 };
 
 export type NewBookingFindVehiclesType = Awaited<
-  ReturnType<typeof vehicleServices.findVehiclesByAgency>
+  ReturnType<FindVehiclesByAgencyType>
 >;
 
 export type NewBookingFindDriversType = Awaited<
-  ReturnType<typeof driverServices.findDriversByAgency>
+  ReturnType<FindDriversByAgencyType>
 >;
 
 export type NewBookingAgencyLocationType = {
@@ -49,7 +66,6 @@ export const FullOverlapScore = 10;
 export const PartialOverlapScore = 25;
 export const TouchingOverlapScore = 75;
 export const NoOverlapScore = 100;
-
 export function getOverlapScore(
   otherStart: Date,
   otherEnd: Date,
@@ -80,7 +96,6 @@ export const LowCapacityScore = 30;
 export const TooMuchOverCapacityScore = 50;
 export const OverCapacityScore = 75;
 export const PerfectCapacityScore = 100;
-
 export function getCapacityScore(capacity: number, passengers: number): number {
   if (capacity < passengers) {
     //Very low capacity
@@ -106,7 +121,6 @@ export const InactiveScore = 10;
 export const RepairScore = 50;
 export const OnTripScore = 75;
 export const AvailableScore = 100;
-
 export function getVehicleStatusScore(status: VehicleStatusEnum): number {
   if (status == VehicleStatusEnum.INACTIVE) {
     return InactiveScore;
@@ -120,25 +134,32 @@ export function getVehicleStatusScore(status: VehicleStatusEnum): number {
   return AvailableScore;
 }
 
+export const NoExpiryDateScore = 10;
 export const ExpiredScore = 10;
 export const SoonExpiringScore = 50;
-export const NoExpiryScore = 100;
-export function getExpiryScore(newBookingEndDate: Date, expiryDate: Date) {
-  //Expiry now
+export const OKExpiryScore = 100;
+export function getExpiryScore(newBookingEndDate: Date, date?: string | null) {
+  if (!date) {
+    return NoExpiryDateScore;
+  }
+  const expiryDate = new Date(date);
+  //Expired already or null
   if (expiryDate < new Date()) {
     return ExpiredScore;
   }
   if (expiryDate <= newBookingEndDate) {
+    //Expiring soon
     return SoonExpiringScore;
   }
-  return NoExpiryScore;
+  //OK
+  return OKExpiryScore;
 }
 
 export const VeryOldVehicleScore = 10;
 export const OldVehicleScore = 50;
 export const MediumOldVehicleScore = 75;
 export const GoodVehicleScore = 100;
-export const BrandNewVehicleScore = 75;
+export const BrandNewVehicleScore = 75; //Brand new vehicle is not the best
 export function getOdometerScore(odoMeter: number): number {
   if (odoMeter > 100000) {
     return VeryOldVehicleScore;
@@ -155,6 +176,40 @@ export function getOdometerScore(odoMeter: number): number {
   return GoodVehicleScore;
 }
 
+export const LowRateScore = 10;
+export const MediumRateScore = 50;
+export const HighRateScore = 100;
+export const VeryHighRateScore = 75; //Too high rate is not the best
+export function getRatePerKmScore(rate: number): number {
+  if (rate < 10) {
+    return LowRateScore;
+  }
+  if (rate < 20) {
+    return MediumRateScore;
+  }
+  if (rate < 30) {
+    return HighRateScore;
+  }
+  return VeryHighRateScore;
+}
+
+export const LowAllowanceScore = 75;
+export const MediumAllowanceScore = 100;
+export const HighAllowanceScore = 50;
+export const VeryHighAllowanceScore = 10;
+export function getAllowanceScore(rate: number): number {
+  if (rate < 500) {
+    return LowAllowanceScore;
+  }
+  if (rate < 1000) {
+    return MediumAllowanceScore;
+  }
+  if (rate < 2000) {
+    return HighAllowanceScore;
+  }
+  return VeryHighAllowanceScore;
+}
+
 export const LeaveScore = 50;
 export function getDriverStatusScore(status: DriverStatusEnum): number {
   if (status == DriverStatusEnum.INACTIVE) {
@@ -169,24 +224,266 @@ export function getDriverStatusScore(status: DriverStatusEnum): number {
   return AvailableScore;
 }
 
-export const BestTotalScore = 100;
-export const GoodTotalScore = 75;
-export const MediumTotalScore = 50;
-export const BadTotalScore = 10;
+export const HighCanDriveScore = 100;
+export const MediumCanDriveScore = 50;
+export const LowCanDriveScore = 10;
+export function getCanDriveScore(
+  canDrive: VehicleTypesEnum[],
+  passengers: number
+): number {
+  if (passengers < 1) {
+    if (canDrive.includes(VehicleTypesEnum.TRUCK)) {
+      return HighCanDriveScore;
+    } else {
+      return LowCanDriveScore;
+    }
+  }
+  if (passengers < 2) {
+    if (canDrive.includes(VehicleTypesEnum.BIKE)) {
+      return HighCanDriveScore;
+    } else {
+      return LowCanDriveScore;
+    }
+  }
+  if (passengers < 7) {
+    if (canDrive.includes(VehicleTypesEnum.CAR)) {
+      return HighCanDriveScore;
+    } else {
+      return LowCanDriveScore;
+    }
+  }
+  if (canDrive.includes(VehicleTypesEnum.BUS)) {
+    return HighCanDriveScore;
+  }
+  return MediumCanDriveScore;
+}
 
-export type Step3Type = {
-  assignedDriverId: string;
-  assignedVehicleId: string;
+// Vehicle Score weightage: 25% booking, 15% repair, 25% capacity, 10% status, 5% ac, 5% insurance expiry, 5% puc expiry, 5% odometer, 5% rate/km
+export const VehicleWeightage_Booking = 0.25;
+export const VehicleWeightage_Repair = 0.15;
+export const VehicleWeightage_Capacity = 0.25;
+export const VehicleWeightage_Status = 0.1;
+export const VehicleWeightage_AC = 0.05;
+export const VehicleWeightage_Insurance = 0.05;
+export const VehicleWeightage_PUC = 0.05;
+export const VehicleWeightage_Odometer = 0.05;
+export const VehicleWeightage_Rate = 0.05;
+
+type GetVehicleTotalScoreType = {
+  bookingScore: number;
+  repairScore: number;
+  capacityScore: number;
+  statusScore: number;
+  acScore: number;
+  insuranceScore: number;
+  pucScore: number;
+  odometerScore: number;
+  ratePerKmScore: number;
+};
+export const getVehicleTotalScore = (data: GetVehicleTotalScoreType) => {
+  return (
+    data.bookingScore * VehicleWeightage_Booking +
+    data.repairScore * VehicleWeightage_Repair +
+    data.capacityScore * VehicleWeightage_Capacity +
+    data.statusScore * VehicleWeightage_Status +
+    data.acScore * VehicleWeightage_AC +
+    data.insuranceScore * VehicleWeightage_Insurance +
+    data.pucScore * VehicleWeightage_PUC +
+    data.odometerScore * VehicleWeightage_Odometer +
+    data.ratePerKmScore * VehicleWeightage_Rate
+  );
 };
 
+// Driver Score weightage: 35% booking, 20% leave, 15% status, 10% license expiry, 10% allowance, 10% can drive
+export const DriverWeightage_Booking = 0.35;
+export const DriverWeightage_Leave = 0.2;
+export const DriverWeightage_Status = 0.15;
+export const DriverWeightage_License = 0.1;
+export const DriverWeightage_Allowance = 0.1;
+export const DriverWeightage_CanDrive = 0.1;
+
+type GetDriverTotalScoreType = {
+  bookingScore: number;
+  leaveScore: number;
+  statusScore: number;
+  licenseScore: number;
+  allowanceScore: number;
+  canDriveScore: number;
+};
+export const getDriverTotalScore = (data: GetDriverTotalScoreType) => {
+  return (
+    data.bookingScore * DriverWeightage_Booking +
+    data.leaveScore * DriverWeightage_Leave +
+    data.statusScore * DriverWeightage_Status +
+    data.licenseScore * DriverWeightage_License +
+    data.allowanceScore * DriverWeightage_Allowance +
+    data.canDriveScore * DriverWeightage_CanDrive
+  );
+};
+
+export const BestTotalScore = 100;
+export const GoodTotalScore = 80;
+export const MediumTotalScore = 60;
+export const BadTotalScore = 30;
+
+export type Step3Type = {
+  assignedDriverId?: string | undefined;
+  assignedVehicleId?: string | undefined;
+};
+
+export const NewBookingTotalSteps = 5;
+
+export const getVehicleTypeIcon = (vehicleType: VehicleTypesEnum) => {
+  if (vehicleType == VehicleTypesEnum.TRUCK) {
+    return LucideTruck;
+  }
+  if (vehicleType == VehicleTypesEnum.BUS) {
+    return LucideBus;
+  }
+  if (vehicleType == VehicleTypesEnum.CAR) {
+    return LucideCar;
+  }
+  if (vehicleType == VehicleTypesEnum.BIKE) {
+    return LucideMotorbike;
+  }
+  return LucideTractor;
+};
+
+export const getTripDuration = (startDate: Date, endDate: Date) => {
+  return Math.ceil((endDate.getTime() - startDate.getTime()) / 86400000) + 1;
+};
+
+export const MultiPerDayDistance = 50;
+export const getFinalPrice = (data: NewBookingFormDataType) => {
+  const days = getTripDuration(data.tripStartDate, data.tripEndDate);
+
+  let totalDistance = data.selectedDistance!;
+  let totalAllowanceDays = 1;
+
+  if (data.tripType == BookingTypeEnum.Round) {
+    //For round trip, double the vehicle rental
+    totalDistance *= 2;
+    if (days > 1) {
+      //For round trip, double the driver allowance if not returning same day
+      totalAllowanceDays *= 2;
+    }
+  } else if (data.tripType == BookingTypeEnum.MultiDay) {
+    //For multi day trip, include intermediate tour days @ X(50) km
+    totalDistance = totalDistance * 2 + (days - 2) * MultiPerDayDistance;
+    //For multi day trip, driver allowance is for each day
+    totalAllowanceDays *= days;
+  }
+
+  const acPrice = data.tripNeedsAC ? data.selectedAcChargePerDay! * days : 0;
+
+  const commission = data.selectedCommissionRate!;
+
+  const vehiclePrice = totalDistance * data.selectedRatePerKm!;
+  const driverAllowance = totalAllowanceDays * data.selectedAllowancePerDay!;
+
+  const totalPrice = Math.round(
+    ((vehiclePrice + driverAllowance + acPrice) * (100 + commission)) / 100
+  );
+
+  return {
+    vehiclePrice,
+    totalDistance,
+    driverAllowance,
+    totalAllowanceDays,
+    acPrice,
+    totalPrice,
+    days,
+  };
+};
+
+export const getCanDriveIcons = (canDrive: VehicleTypesEnum[]) => {
+  const icons: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >[] = [];
+
+  if (canDrive.includes(VehicleTypesEnum.BIKE)) {
+    icons.push(LucideMotorbike);
+  }
+  if (canDrive.includes(VehicleTypesEnum.CAR)) {
+    icons.push(LucideCar);
+  }
+  if (canDrive.includes(VehicleTypesEnum.BUS)) {
+    icons.push(LucideBus);
+  }
+  if (canDrive.includes(VehicleTypesEnum.TRUCK)) {
+    icons.push(LucideTruck);
+  }
+  return icons;
+};
+
+export const getTripTypeIcon = (tripType: BookingTypeEnum) => {
+  if (tripType == BookingTypeEnum.OneWay) {
+    return LucideArrowRightFromLine;
+  }
+  if (tripType == BookingTypeEnum.Round) {
+    return LucideArrowRightLeft;
+  }
+  return LucideWaypoints;
+};
+
+export const getRyogoScoreClassName = (totalScore: number): string => {
+  return `flex flex-col rounded-lg items-center justify-center text-center gap-1 lg:gap-1.5 p-3 lg:p-4 ${
+    totalScore < BadTotalScore
+      ? "bg-red-300"
+      : totalScore < MediumTotalScore
+      ? "bg-orange-300"
+      : totalScore < GoodTotalScore
+      ? "bg-yellow-300"
+      : totalScore < BestTotalScore
+      ? "bg-green-300"
+      : "bg-cyan-300"
+  }`;
+};
+
+export const getTileClassName = (selected: boolean) => {
+  return `flex flex-row justify-between items-start gap-2 lg:gap-3 rounded-lg p-3 lg:p-4 border ${
+    selected
+      ? "border-slate-400 bg-slate-200"
+      : "border-slate-100 hover:bg-slate-100"
+  }`;
+};
+
+export const getTripTypeClassName = (selected: boolean) => {
+  return `flex border rounded-lg flex-col justify-center items-start p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
+    selected ? "bg-slate-200 border-slate-400" : "border-slate-200"
+  }`;
+};
+
+export const newBookingSectionClassName = "flex flex-col gap-5 lg:gap-6";
+export const newBookingHeaderClassName = "flex flex-col gap-2 lg:gap-3";
+export const newBookingHeaderLineClassName =
+  "flex flex-row justify-between items-end gap-2 lg:gap-3";
+export const newBookingFormClassName = "flex flex-col gap-4 lg:gap-5";
+
+export const newBookingFinalItemClassName =
+  "flex flex-row justify-between items-center gap-2 lg:gap-3 p-2 lg:p-3 border border-slate-200 rounded-lg";
+export const newBookingLineItemClassName =
+  "flex flex-row justify-between items-start gap-2 lg:gap-3";
+export const newBookingLineSubtitleClassName =
+  "flex flex-col items-end gap-0.5 lg:gap-1";
+
+export const newBookingTripInfoTagClassName =
+  "flex items-center justify-center px-2 py-1.5 lg:px-3 lg:py-2 border border-slate-200 rounded-lg";
+
 export const tileLeftClassName =
-  "flex flex-col gap-2 lg:gap-3 justify-between items-start h-full";
-export const tileHeaderClassName = "flex flex-col gap-1 lg:gap-1.5";
+  "flex flex-col gap-3 lg:gap-4 justify-between items-start h-full overflow-hidden";
+export const tileHeaderLeftClassName =
+  "flex flex-col gap-1 lg:gap-1.5 items-start";
+export const tileHeaderRightClassName =
+  "flex flex-col gap-1 lg:gap-1.5 items-end text-end";
 export const tileIconClassName = "size-5 lg:size-6 stroke-1 text-slate-500";
-export const tileFooterClassName = "flex flex-row flex-wrap gap-2 lg:gap-3";
+export const bigTileIconClassName = "size-6 lg:size-7 stroke-1 text-slate-700";
+export const tileFooterClassName = "flex flex-row flex-wrap gap-3 lg:gap-4";
 export const tileRightClassName =
-  "flex flex-col items-end justify-between gap-2 lg:gap-3 h-full";
+  "flex flex-col items-end justify-between gap-3 lg:gap-4 h-full";
 export const tileStatusClassName =
-  "flex flex-row gap-1 lg:gap-1.5 items-center justify-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-full border border-slate-200";
+  "flex flex-row gap-1 lg:gap-1.5 items-center justify-center text-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-full border border-slate-200";
 export const tileRedIconClassName = "size-5 lg:size-6 text-red-500";
 export const tileGreenIconClassName = "size-5 lg:size-6 text-green-500";
+export const tileHeaderMidClassName =
+  "flex flex-col gap-1 lg:gap-1.5 items-center";

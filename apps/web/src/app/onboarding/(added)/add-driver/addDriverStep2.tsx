@@ -72,7 +72,6 @@ export function AddDriverStep2(props: {
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
-    console.log({ data });
     props.updateFinalData({
       ...props.finalData,
       licenseNumber: data.licenseNumber,

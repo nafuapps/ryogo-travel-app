@@ -7,7 +7,13 @@ import z from "zod";
 import {
   NewBookingFindDriversType,
   NewBookingFindVehiclesType,
+  newBookingFormClassName,
   NewBookingFormDataType,
+  newBookingHeaderClassName,
+  newBookingHeaderLineClassName,
+  newBookingSectionClassName,
+  Step3Type,
+  NewBookingTotalSteps,
 } from "./newBookingCommon";
 import NewBookingStepsTracker from "./newBookingStepsTracker";
 import { Form } from "@/components/ui/form";
@@ -31,11 +37,11 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
 
   const step3Schema = z.object({
     //Assignment
-    assignedDriverId: DriverRegex,
-    assignedVehicleId: VehicleRegex,
+    assignedDriverId: DriverRegex.optional(),
+    assignedVehicleId: VehicleRegex.optional(),
   });
 
-  type Step3Type = z.infer<typeof step3Schema>;
+  // type Step3Type = z.infer<typeof step3Schema>;
 
   //Form init
   const form = useForm<Step3Type>({
@@ -52,25 +58,34 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
       ...props.newBookingFormData,
       assignedDriverId: values.assignedDriverId,
       assignedVehicleId: values.assignedVehicleId,
+      selectedAcChargePerDay: props.vehicles.find(
+        (vehicle) => vehicle.id === values.assignedVehicleId
+      )?.defaultAcChargePerDay,
+      selectedRatePerKm: props.vehicles.find(
+        (vehicle) => vehicle.id === values.assignedVehicleId
+      )?.defaultRatePerKm,
+      selectedAllowancePerDay: props.drivers.find(
+        (driver) => driver.id === values.assignedDriverId
+      )?.defaultAllowancePerDay,
     });
     props.onNext();
   }
 
   return (
-    <div id="AssignmentSection" className="flex flex-col gap-5 lg:gap-6">
-      <div id="AssignmentHeader" className="flex flex-col gap-2 lg:gap-3">
-        <div className="flex flex-row justify-between items-end gap-2 lg:gap-3">
+    <div id="AssignmentSection" className={newBookingSectionClassName}>
+      <div id="AssignmentHeader" className={newBookingHeaderClassName}>
+        <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
           <Caption>{t("Subtitle")}</Caption>
         </div>
-        <NewBookingStepsTracker total={4} current={2} />
+        <NewBookingStepsTracker total={NewBookingTotalSteps} current={2} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
         <form
           id="Step3Form"
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-5 "
+          className={newBookingFormClassName}
         >
           <PBold>{t("Vehicle.Title")}</PBold>
           <div

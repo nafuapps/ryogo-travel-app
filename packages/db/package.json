@@ -1,19 +1,19 @@
 {
   "name": "@ryogo-travel-app/db",
-  "version": "1.0.0",
   "description": "DB shared package for RyoGo Travel App",
-  "scripts": {},
+  "version": "1.0.0",
   "dependencies": {
-    "@supabase/supabase-js": "^2.75.0",
+    "@supabase/supabase-js": "^2.76.1",
     "drizzle-orm": "^0.44.6",
     "postgres": "^3.4.7"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.31.4",
+    "drizzle-kit": "^0.31.5",
     "typescript": "^5.9.3"
   },
   "exports": {
     ".": "./src/index.ts",
     "./*": "./src/*.ts"
-  }
+  },
+  "scripts": {}
 }

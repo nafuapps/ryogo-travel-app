@@ -50,10 +50,12 @@ export default function LoginPageComponent() {
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    const users = await apiClient<LoginAPIResponseType>("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ phone: data.phoneNumber }),
-    });
+    const users = await apiClient<LoginAPIResponseType>(
+      `/api/auth/login?phone=${data.phoneNumber}`,
+      {
+        method: "GET",
+      }
+    );
     if (users.length > 0) {
       // If atleast 1 user found, go to accounts page
       router.push(`/auth/login/${data.phoneNumber}`);

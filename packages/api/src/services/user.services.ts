@@ -281,7 +281,7 @@ export const userServices = {
       return userFound;
     }
     if (userFound.length > 1) {
-      // !This is a major issue - multiple users with same phone and role in an agency
+      // !This is a major issue - multiple users with same id
       throw new Error("Multiple users found with this id in this agency");
     }
 

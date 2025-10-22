@@ -18,7 +18,7 @@
         "Loading": "Loading",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric",
-        "APIError": "Phone number not found"
+        "APIError": "Phone number not registered"
       },
       "Step2": {
         "PageTitle": "Login",

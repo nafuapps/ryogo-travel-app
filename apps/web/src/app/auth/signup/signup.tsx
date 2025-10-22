@@ -44,10 +44,12 @@ export default function SignupPageComponent() {
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    const users = await apiClient<SignupAPIResponseType>("/api/auth/signup", {
-      method: "POST",
-      body: JSON.stringify({ phone: data.phoneNumber }),
-    });
+    const users = await apiClient<SignupAPIResponseType>(
+      `/api/auth/signup?phone=${data.phoneNumber}`,
+      {
+        method: "GET",
+      }
+    );
     if (users.length > 0) {
       // If found, go to existing account page
       router.push(`/auth/signup/${data.phoneNumber}`);

@@ -1,7 +1,14 @@
 //All Bookings page
 
-import BookingsPageComponent from "./bookings";
+import { mainClassName } from "@/components/page/pageCommons";
+import BookingsPageComponent from "./(all)/bookings";
+import DashboardHeader from "../components/extra/dashboardHeader";
 
 export default function BookingsPage() {
-  return <BookingsPageComponent />;
+  return (
+    <div className={mainClassName}>
+      <DashboardHeader pathName={"/dashboard/bookings"} />
+      <BookingsPageComponent />;
+    </div>
+  );
 }

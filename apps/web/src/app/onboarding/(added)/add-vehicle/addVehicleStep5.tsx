@@ -1,5 +1,5 @@
 import { H3Grey } from "@/components/typography";
-import { Loader2Icon } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import ConfirmValues from "@/app/onboarding/components/confirmValues";
@@ -141,9 +141,7 @@ export function AddVehicleConfirm(props: {
           <OnboardingStepPrimaryAction
             disabled={formData.formState.isSubmitting}
           >
-            {formData.formState.isSubmitting && (
-              <Loader2Icon className="animate-spin" />
-            )}
+            {formData.formState.isSubmitting && <Spinner />}
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction

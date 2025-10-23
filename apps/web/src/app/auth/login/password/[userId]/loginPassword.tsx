@@ -19,9 +19,9 @@ import { Button } from "@/components/ui/button";
 import { H2, H5 } from "@/components/typography";
 import Link from "next/link";
 import { redirect, RedirectType, useRouter } from "next/navigation";
-import { Loader2Icon } from "lucide-react";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { LoginPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
+import { Spinner } from "@/components/ui/spinner";
 
 // TODO: Add a feature to show the user had recently reset password
 
@@ -112,9 +112,7 @@ export default function LoginPasswordPageComponent(
               size={"lg"}
               disabled={methods.formState.isSubmitting}
             >
-              {methods.formState.isSubmitting && (
-                <Loader2Icon className="animate-spin" />
-              )}
+              {methods.formState.isSubmitting && <Spinner />}
               {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             </Button>
             <Button

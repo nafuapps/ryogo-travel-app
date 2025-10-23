@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { H2, H5 } from "@/components/typography";
 import { useRouter } from "next/navigation";
-import { Loader2Icon } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { SignupAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
 
@@ -94,9 +94,7 @@ export default function SignupPageComponent() {
               size={"lg"}
               disabled={methods.formState.isSubmitting}
             >
-              {methods.formState.isSubmitting && (
-                <Loader2Icon className="animate-spin" />
-              )}
+              {methods.formState.isSubmitting && <Spinner />}
               {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             </Button>
           </div>

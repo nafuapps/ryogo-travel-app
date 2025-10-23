@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { H2, H5, H5Grey } from "@/components/typography";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Loader2Icon } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ForgotPasswordPage() {
   const searchParams = useSearchParams();
@@ -99,9 +99,7 @@ export default function ForgotPasswordPage() {
               size={"lg"}
               disabled={methods.formState.isSubmitting}
             >
-              {methods.formState.isSubmitting && (
-                <Loader2Icon className="animate-spin" />
-              )}
+              {methods.formState.isSubmitting && <Spinner />}
               {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             </Button>
           </div>

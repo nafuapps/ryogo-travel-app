@@ -4,7 +4,6 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 import DashboardSidebar from "./components/extra/dashboardSidebar";
 import { getCurrentUser } from "@/lib/auth";
-import DashboardHeader from "./components/extra/dashboardHeader";
 import { redirect, RedirectType } from "next/navigation";
 
 export default async function DashboardLayout({
@@ -50,10 +49,7 @@ export default async function DashboardLayout({
           id="DashboardMainSection"
           className="flex flex-row w-full h-screen"
         >
-          <div className="flex flex-col w-full h-screen bg-slate-100 p-4 lg:p-5">
-            <DashboardHeader />
-            {children}
-          </div>
+          {children}
         </section>
       </main>
     </SidebarProvider>

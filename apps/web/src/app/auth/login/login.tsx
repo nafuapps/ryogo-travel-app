@@ -18,9 +18,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { H2, H5 } from "@/components/typography";
 import { useRouter } from "next/navigation";
-import { Loader2Icon } from "lucide-react";
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
 import { LoginAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
+import { Spinner } from "@/components/ui/spinner";
 
 /*
 1. Find user by phone number
@@ -103,9 +103,7 @@ export default function LoginPageComponent() {
               size={"lg"}
               disabled={methods.formState.isSubmitting}
             >
-              {methods.formState.isSubmitting && (
-                <Loader2Icon className="animate-spin" />
-              )}
+              {methods.formState.isSubmitting && <Spinner />}
               {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             </Button>
           </div>

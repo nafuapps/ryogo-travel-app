@@ -10,6 +10,7 @@ import { customerServices } from "./customer.services";
 import { routeServices } from "./route.services";
 
 export const bookingServices = {
+  //Bookings dashboard
   async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
@@ -185,6 +186,11 @@ export const bookingServices = {
     });
   },
 
+  //Booking id
+  async findBookingById(bookingId: string) {
+    const booking = await bookingRepository.getBookingById(bookingId);
+    return booking;
+  },
   //Create a new Booking
   async addNewBooking(data: CreateNewBookingAPIRequestType) {
     //Step1: If no existing customer, create a new customer
@@ -277,3 +283,7 @@ export const bookingServices = {
     return newBooking[0];
   },
 };
+
+export type FindBookingByIdType = Awaited<
+  ReturnType<typeof bookingServices.findBookingById>
+>;

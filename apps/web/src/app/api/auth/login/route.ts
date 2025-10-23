@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
 
     const users = await userServices.findUsersByPhone(phone);
 
-    return NextResponse.json(users, { status: 201 });
+    return NextResponse.json(users, { status: 200 });
   } catch (err) {
     const errorMessage =
       typeof err === "object" && err !== null && "message" in err

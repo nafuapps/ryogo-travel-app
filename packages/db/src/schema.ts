@@ -611,6 +611,8 @@ export const bookings = pgTable(
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),
     startTime: time("start_time"),
+    pickupAddress: varchar("pickup_address", { length: 300 }),
+    dropAddress: varchar("drop_address", { length: 300 }),
     type: bookingType().notNull().default(BookingTypeEnum.OneWay),
     passengers: integer("passengers").notNull().default(1), //0 means its a non-passenger (truck) trip
     needsAc: boolean("needs_ac").notNull().default(true),

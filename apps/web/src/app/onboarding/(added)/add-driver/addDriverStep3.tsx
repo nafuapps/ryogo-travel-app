@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2Icon } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
@@ -92,9 +92,7 @@ export function AddDriverStep3(props: {
           <OnboardingStepPrimaryAction
             disabled={formData.formState.isSubmitting}
           >
-            {formData.formState.isSubmitting && (
-              <Loader2Icon className="animate-spin" />
-            )}
+            {formData.formState.isSubmitting && <Spinner />}
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction

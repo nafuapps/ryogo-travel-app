@@ -1,4 +1,4 @@
-//Bookings/id/modify page
+//Bookings/id/assign-user page (only for owner)
 
 import { useTranslations } from "next-intl";
 

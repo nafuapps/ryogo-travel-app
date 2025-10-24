@@ -1,15 +1,14 @@
 //bookings/id/confirm page (for lead booking)
 
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services";
-import ConfirmBookingComponent from "./confirmBookingComponent";
+import ConfirmBookingPageComponent from "./confirmBooking";
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema";
 import { redirect, RedirectType } from "next/navigation";
 import { BookingRegex } from "@/lib/regex";
-import { toast } from "sonner";
-import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/auth";
 import { mainClassName } from "@/components/page/pageCommons";
 import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader";
+import { cancelBookingAction } from "./cancelBookingAction";
 
 export default async function ConfirmBookingPage({
   params,
@@ -18,18 +17,15 @@ export default async function ConfirmBookingPage({
 }) {
   const { id } = await params;
   const user = await getCurrentUser();
-  const t = await getTranslations("Dashboard.ConfirmBooking");
 
   //Invalid booking id regex
   if (!BookingRegex.safeParse(id).success) {
-    toast.warning(t("IdError"));
     redirect("/dashboard/bookings", RedirectType.replace);
   }
 
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingById(id);
   if (!booking || booking.agency.id !== user?.agencyId) {
-    toast.error(t("NotFoundError"));
     redirect("/dashboard/bookings", RedirectType.replace);
   }
 
@@ -38,10 +34,19 @@ export default async function ConfirmBookingPage({
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace);
   }
 
+  //If the lead is old, cancel it automatically
+  if (new Date(booking.startDate) < new Date()) {
+    cancelBookingAction(booking.id);
+    redirect(`/dashboard/bookings/${id}`, RedirectType.replace);
+  }
+
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/confirm"} />
-      <ConfirmBookingComponent booking={booking} />
+      <ConfirmBookingPageComponent
+        booking={booking}
+        isOwner={user.userRole === "owner"}
+      />
     </div>
   );
 }

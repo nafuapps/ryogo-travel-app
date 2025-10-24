@@ -19,8 +19,10 @@ import {
 
 //Common timestamps
 const timestamps = {
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at")
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
     .notNull()
     .$onUpdate(() => new Date()),
 };
@@ -73,7 +75,9 @@ export const agencies = pgTable(
     subscriptionPlan: subscriptionPlan()
       .notNull()
       .default(SubscriptionPlanEnum.TRIAL),
-    subscriptionExpiresOn: timestamp("subscription_expires_on").notNull(),
+    subscriptionExpiresOn: timestamp("subscription_expires_on", {
+      withTimezone: true,
+    }).notNull(),
     status: agencyStatus().notNull().default(AgencyStatusEnum.NEW),
     defaultCommissionRate: integer("default_commission_rate")
       .notNull()
@@ -172,8 +176,8 @@ export const users = pgTable(
     languagePref: userLangs().notNull().default(UserLangEnum.ENGLISH),
     userRole: userRoles().notNull().default(UserRolesEnum.AGENT),
     status: userStatus().notNull().default(UserStatusEnum.NEW),
-    lastLogin: timestamp("last_login"),
-    lastLogout: timestamp("last_logout"),
+    lastLogin: timestamp("last_login", { withTimezone: true }),
+    lastLogout: timestamp("last_logout", { withTimezone: true }),
     ...timestamps,
   },
   (t) => [
@@ -229,11 +233,10 @@ export const sessions = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    expiresAt: timestamp("expires_at").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
     ...timestamps,
   },
   (t) => [
-    check("expires_at > now", sql`${t.expiresAt} > now()`),
     index("sessions_user_idx").on(t.userId), // to quickly filter sessions by user
   ]
 );
@@ -505,6 +508,7 @@ export const customers = pgTable(
     phone: varchar("phone", { length: 10 }).notNull(),
     email: varchar("email", { length: 60 }),
     address: varchar("address", { length: 300 }),
+    photoUrl: text("photo_url"),
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "no action" })
       .notNull(),
@@ -607,21 +611,28 @@ export const bookings = pgTable(
     routeId: text("route_id").references(() => routes.id, {
       onDelete: "set null",
     }),
-    totalDistance: integer("total_distance").notNull(), // in kilometers
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),
-    startTime: time("start_time"),
+    startTime: time("start_time", { withTimezone: true }),
     pickupAddress: varchar("pickup_address", { length: 300 }),
     dropAddress: varchar("drop_address", { length: 300 }),
     type: bookingType().notNull().default(BookingTypeEnum.OneWay),
     passengers: integer("passengers").notNull().default(1), //0 means its a non-passenger (truck) trip
     needsAc: boolean("needs_ac").notNull().default(true),
     remarks: text("remarks"),
-    acChargePerDay: integer("ac_charge_per_day").notNull().default(0), // in currency units
-    ratePerKm: integer("rate_per_km").notNull().default(18), // in currency units
-    allowancePerDay: integer("allowance_per_day").notNull().default(500), // in currency units
-    commissionRate: integer("commission_rate").notNull(), // in percentage
-    totalAmount: integer("total_amount").notNull(), // in currency units
+    citydistance: integer("city_distance").notNull().default(0), // in kilometers (distance between cities)
+    totalDistance: integer("total_distance").notNull().default(0), // in kilometers (total distance of the trip)
+    acChargePerDay: integer("ac_charge_per_day").notNull().default(0), // in currency
+    totalAcCharge: integer("total_ac_charge").notNull().default(0), // in currency
+    ratePerKm: integer("rate_per_km").notNull().default(18), // in currency
+    totalVehicleRate: integer("total_vehicle_rate").notNull().default(0), // in currency
+    allowancePerDay: integer("allowance_per_day").notNull().default(500), // in currency
+    totalDriverAllowance: integer("total_driver_allowance")
+      .notNull()
+      .default(0), // in currency
+    commissionRate: integer("commission_rate").notNull().default(15), // in percentage
+    totalCommission: integer("total_commission").notNull().default(0), // in currency
+    totalAmount: integer("total_amount").notNull().default(0), // in currency
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
@@ -761,7 +772,7 @@ export const expenses = pgTable(
     type: expenseTypes().notNull().default(ExpenseTypeEnum.OTHER),
     amount: integer("amount").notNull(), // in currency units
     remarks: text("remarks"),
-    expensePhotoUrl: text("expense_photo_url"), //multiple docs
+    expensePhotoUrl: text("expense_photo_url"),
     isApproved: boolean("is_approved").notNull().default(false),
     ...timestamps,
   },

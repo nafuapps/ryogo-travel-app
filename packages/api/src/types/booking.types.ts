@@ -26,11 +26,16 @@ export type CreateNewBookingAPIRequestType = {
   tripRemarks?: string;
   assignedVehicleId?: string;
   assignedDriverId?: string;
-  selectedRatePerKm: number;
   selectedDistance: number;
-  selectedAcChargePerDay?: number;
+  totalDistance: number;
+  selectedRatePerKm: number;
+  totalVehicleRate: number;
+  selectedAcChargePerDay: number;
+  totalAcCharge: number;
   selectedAllowancePerDay: number;
+  totalDriverAllowance: number;
   selectedCommissionRate: number;
+  totalCommission: number;
   finalAmount: number;
 };
 

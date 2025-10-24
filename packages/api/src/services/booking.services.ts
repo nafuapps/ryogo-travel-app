@@ -8,6 +8,8 @@ import { locationRepository } from "../repositories/location.repo";
 import { routeRepository } from "../repositories/route.repo";
 import { customerServices } from "./customer.services";
 import { routeServices } from "./route.services";
+import { vehicleRepository } from "../repositories/vehicle.repo";
+import { customerRepository } from "../repositories/customer.repo";
 
 export const bookingServices = {
   //Bookings dashboard
@@ -191,6 +193,7 @@ export const bookingServices = {
     const booking = await bookingRepository.getBookingById(bookingId);
     return booking;
   },
+
   //Create a new Booking
   async addNewBooking(data: CreateNewBookingAPIRequestType) {
     //Step1: If no existing customer, create a new customer
@@ -258,11 +261,8 @@ export const bookingServices = {
       sourceId: sourceId,
       destinationId: destinationId,
       routeId: routeId,
-      totalDistance: distance,
       startDate: data.tripStartDate,
       endDate: data.tripEndDate,
-      commissionRate: data.selectedCommissionRate,
-      totalAmount: data.finalAmount,
       type: data.tripType,
       status: BookingStatusEnum.LEAD,
       remarks: data.tripRemarks,
@@ -270,9 +270,17 @@ export const bookingServices = {
       assignedDriverId: data.assignedDriverId,
       passengers: data.tripPassengers,
       needsAc: data.tripNeedsAC,
-      acChargePerDay: data.selectedAcChargePerDay ?? 0,
+      citydistance: data.selectedDistance,
+      totalDistance: data.totalDistance,
+      acChargePerDay: data.selectedAcChargePerDay,
+      totalAcCharge: data.totalAcCharge,
       ratePerKm: data.selectedRatePerKm,
+      totalVehicleRate: data.totalVehicleRate,
       allowancePerDay: data.selectedAllowancePerDay,
+      totalDriverAllowance: data.totalDriverAllowance,
+      commissionRate: data.selectedCommissionRate,
+      totalCommission: data.totalCommission,
+      totalAmount: data.finalAmount,
     };
 
     //Step5: Create a new booking
@@ -281,6 +289,38 @@ export const bookingServices = {
       throw new Error("Error creating booking");
     }
     return newBooking[0];
+  },
+
+  //Confirm a booking lead
+  async confirmBooking(
+    bookingId: string,
+    startTime?: string,
+    pickupAddress?: string,
+    dropAddress?: string,
+    updateCustomerAddress?: boolean,
+    customerId?: string
+  ) {
+    if (updateCustomerAddress && pickupAddress && customerId) {
+      await customerRepository.updateCustomerAddress(customerId, pickupAddress);
+    }
+    const updatedBooking = await bookingRepository.updateBookingToConfirm(
+      bookingId,
+      startTime,
+      pickupAddress,
+      dropAddress
+    );
+    return updatedBooking;
+  },
+
+  //Cancel a booking
+  async cancelBooking(id: string) {
+    const updatedBooking = await bookingRepository.updateBookingToCancel(id);
+    return updatedBooking;
+  },
+
+  // TODO: Send booking quote to customer over whatsapp
+  async sendQuote(id: string) {
+    return true;
   },
 };
 

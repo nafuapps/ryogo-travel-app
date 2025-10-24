@@ -2,7 +2,7 @@
 
 import { FindBookingByIdType } from "@ryogo-travel-app/api/services/booking.services";
 
-export default function ConfirmBookingComponent({
+export default function BookingDetailsPageComponent({
   booking,
 }: {
   booking: FindBookingByIdType;

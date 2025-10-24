@@ -1,9 +1,9 @@
 import { pageClassName } from "@/components/page/pageCommons";
-import OngoingBookingsComponent from "./ongoingBookingsComponent";
-import CompletedBookingsComponent from "./completedBookingsComponent";
-import UpcomingBookingsComponent from "./upcomingBookingsComponent";
-import LeadBookingsComponent from "./leadBookingsComponent";
-import BookingScheduleComponent from "./bookingScheduleComponent";
+import OngoingBookingsComponent from "./(all)/ongoingBookingsComponent";
+import CompletedBookingsComponent from "./(all)/completedBookingsComponent";
+import UpcomingBookingsComponent from "./(all)/upcomingBookingsComponent";
+import LeadBookingsComponent from "./(all)/leadBookingsComponent";
+import BookingScheduleComponent from "./(all)/bookingScheduleComponent";
 
 /*
  * Ongoing Bookings

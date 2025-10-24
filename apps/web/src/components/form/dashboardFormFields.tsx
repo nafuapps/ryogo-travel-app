@@ -1,4 +1,9 @@
-import { PBold, CaptionGrey, Caption, PGrey } from "@/components/typography";
+import {
+  SmallBold,
+  CaptionGrey,
+  Caption,
+  SmallGrey,
+} from "@/components/typography";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   FormControl,
@@ -48,9 +53,9 @@ export function DashboardInput(props: DashboardInputProps) {
         <FormItem className="w-full">
           <FormLabel>
             {props.disabled ? (
-              <PGrey>{props.label}</PGrey>
+              <SmallGrey>{props.label}</SmallGrey>
             ) : (
-              <PBold>{props.label}</PBold>
+              <SmallBold>{props.label}</SmallBold>
             )}
           </FormLabel>
           <FormControl>
@@ -77,7 +82,7 @@ type DashboardFileInputProps = {
   name: string;
   label: string;
   placeholder: string;
-  description: string;
+  description?: string;
   register: UseFormRegisterReturn<string>;
 };
 export function DashboardFileInput(props: DashboardFileInputProps) {
@@ -87,7 +92,7 @@ export function DashboardFileInput(props: DashboardFileInputProps) {
       render={() => (
         <FormItem className="w-full">
           <FormLabel>
-            <PBold>{props.label}</PBold>
+            <SmallBold>{props.label}</SmallBold>
           </FormLabel>
           <FormControl>
             <Input
@@ -96,9 +101,11 @@ export function DashboardFileInput(props: DashboardFileInputProps) {
               placeholder={props.placeholder}
             />
           </FormControl>
-          <FormDescription>
-            <CaptionGrey>{props.description}</CaptionGrey>
-          </FormDescription>
+          {props.description && (
+            <FormDescription>
+              <CaptionGrey>{props.description}</CaptionGrey>
+            </FormDescription>
+          )}
           <FormMessage />
         </FormItem>
       )}
@@ -119,7 +126,7 @@ export function DashboardTextarea(props: DashboardTextareaProps) {
       render={({ field }) => (
         <FormItem className="w-full">
           <FormLabel>
-            <PBold>{props.label}</PBold>
+            <SmallBold>{props.label}</SmallBold>
           </FormLabel>
           <FormControl>
             <Textarea placeholder={props.placeholder} {...field} />
@@ -145,7 +152,7 @@ export function DashboardSelect(props: DashboardSelectProps) {
       render={({ field }) => (
         <FormItem className="w-full">
           <FormLabel>
-            <PBold>{props.title}</PBold>
+            <SmallBold>{props.title}</SmallBold>
           </FormLabel>
           <Select
             {...props.register}
@@ -215,7 +222,7 @@ export function DashboardMultipleCheckbox(
       render={() => (
         <FormItem className="flex flex-col gap-2 lg:gap-3 w-full">
           <FormLabel className="text-base">
-            <PBold>{props.label}</PBold>
+            <SmallBold>{props.label}</SmallBold>
           </FormLabel>
           {props.array!.map((item) => (
             <FormField
@@ -271,9 +278,9 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
             {props.disabled ? (
-              <PGrey>{props.label}</PGrey>
+              <SmallGrey>{props.label}</SmallGrey>
             ) : (
-              <PBold>{props.label}</PBold>
+              <SmallBold>{props.label}</SmallBold>
             )}
           </FormLabel>
           <Popover>
@@ -305,9 +312,11 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
               />
             </PopoverContent>
           </Popover>
-          <FormDescription>
-            <Caption>{props.description}</Caption>
-          </FormDescription>
+          {props.description && (
+            <FormDescription>
+              <Caption>{props.description}</Caption>
+            </FormDescription>
+          )}
           <FormMessage />
         </FormItem>
       )}
@@ -326,11 +335,46 @@ export function DashboardSwitch(props: DashboardSwitchProps) {
       render={({ field }) => (
         <FormItem className="flex flex-row items-center justify-between gap-2 lg:gap-3 w-full py-1.5 lg:py-2">
           <FormLabel>
-            <PBold>{props.label}</PBold>
+            <SmallBold>{props.label}</SmallBold>
           </FormLabel>
           <FormControl>
             <Switch checked={field.value} onCheckedChange={field.onChange} />
           </FormControl>
+        </FormItem>
+      )}
+    />
+  );
+}
+
+type DashboardTimePickerProps = {
+  name: string;
+  label: string;
+  description?: string;
+  disabled?: boolean;
+};
+export function DashboardTimePicker(props: DashboardTimePickerProps) {
+  return (
+    <FormField
+      name={props.name}
+      render={({ field }) => (
+        <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
+          <FormLabel>
+            {props.disabled ? (
+              <SmallGrey>{props.label}</SmallGrey>
+            ) : (
+              <SmallBold>{props.label}</SmallBold>
+            )}
+          </FormLabel>
+          <Input
+            type="time"
+            step="60"
+            {...field}
+            className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+          />
+          <FormDescription>
+            <Caption>{props.description}</Caption>
+          </FormDescription>
+          <FormMessage />
         </FormItem>
       )}
     />

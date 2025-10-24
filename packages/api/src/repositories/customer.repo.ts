@@ -25,4 +25,12 @@ export const customerRepository = {
   async createCustomer(data: InsertCustomerType) {
     return await db.insert(customers).values(data).returning();
   },
+
+  async updateCustomerAddress(customerId: string, address: string) {
+    return await db
+      .update(customers)
+      .set({ address: address })
+      .where(eq(customers.id, customerId))
+      .returning();
+  },
 };

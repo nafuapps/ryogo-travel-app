@@ -1,7 +1,7 @@
 //All Bookings page
 
 import { mainClassName } from "@/components/page/pageCommons";
-import BookingsPageComponent from "./(all)/bookings";
+import BookingsPageComponent from "./bookings";
 import DashboardHeader from "../components/extra/dashboardHeader";
 
 export default function BookingsPage() {

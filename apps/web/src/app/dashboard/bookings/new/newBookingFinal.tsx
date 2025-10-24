@@ -90,7 +90,12 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
       selectedAllowancePerDay:
         props.newBookingFormData.selectedAllowancePerDay!,
       selectedCommissionRate: props.newBookingFormData.selectedCommissionRate!,
-      finalAmount: finalAmount.totalPrice,
+      finalAmount: finalAmount.totalAmount,
+      totalDistance: finalAmount.totalDistance,
+      totalVehicleRate: finalAmount.totalVehiclePrice,
+      totalAcCharge: finalAmount.totalAcPrice,
+      totalDriverAllowance: finalAmount.totalDriverAllowance,
+      totalCommission: finalAmount.totalCommission,
     };
     const createdBooking = await apiClient<CreateNewBookingAPIResponseType>(
       "/api/new-booking",
@@ -125,7 +130,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <div id="finalRate" className={newBookingLineItemClassName}>
             <BigIconTextTag icon={LucideCar} text={t("VehicleCharge")} />
             <div className={newBookingLineSubtitleClassName}>
-              <SmallBold>{"₹" + finalAmount.vehiclePrice}</SmallBold>
+              <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
               <CaptionGrey>
                 {t("VehicleSubtitle", {
                   charge: props.newBookingFormData.selectedRatePerKm!,
@@ -138,7 +143,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             <div id="finalAC" className={newBookingLineItemClassName}>
               <BigIconTextTag icon={LucideAirVent} text={t("ACCharge")} />
               <div className={newBookingLineSubtitleClassName}>
-                <SmallBold>{"₹" + finalAmount.acPrice}</SmallBold>
+                <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
                 <CaptionGrey>
                   {t("ACSubtitle", {
                     ac: props.newBookingFormData.selectedAcChargePerDay!,
@@ -151,7 +156,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <div id="finalAllowance" className={newBookingLineItemClassName}>
             <BigIconTextTag icon={LucideIdCard} text={t("DriverAllowance")} />
             <div className={newBookingLineSubtitleClassName}>
-              <SmallBold>{"₹" + finalAmount.driverAllowance}</SmallBold>
+              <SmallBold>{"₹" + finalAmount.totalDriverAllowance}</SmallBold>
               <CaptionGrey>
                 {t("DriverSubtitle", {
                   allowance: props.newBookingFormData.selectedAllowancePerDay!,
@@ -162,14 +167,17 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           </div>
           <div id="finalCommission" className={newBookingLineItemClassName}>
             <BigIconTextTag icon={LucideCirclePercent} text={t("Commission")} />
-            <SmallBold>
-              {props.newBookingFormData.selectedCommissionRate + "%"}
-            </SmallBold>
+            <div className={newBookingLineSubtitleClassName}>
+              <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
+              <CaptionGrey>
+                {props.newBookingFormData.selectedCommissionRate + "%"}
+              </CaptionGrey>
+            </div>
           </div>
           <div className="w-full bg-slate-200 h-0.5" />
           <div id="finalPrice" className={newBookingLineItemClassName}>
             <H5>{t("TotalAmount")}</H5>
-            <H4>{"₹" + finalAmount.totalPrice}</H4>
+            <H4>{"₹" + finalAmount.totalAmount}</H4>
           </div>
           <div className="w-full bg-slate-200 h-0.5" />
 

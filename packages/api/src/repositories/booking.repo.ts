@@ -297,8 +297,17 @@ export const bookingRepository = {
           columns: {
             id: true,
             name: true,
+            remarks: true,
+            phone: true,
+            address: true,
           },
           with: {
+            location: {
+              columns: {
+                city: true,
+                state: true,
+              },
+            },
             bookings: {
               columns: {
                 id: true,
@@ -319,5 +328,35 @@ export const bookingRepository = {
 
   async createBooking(data: InsertBookingType) {
     return await db.insert(bookings).values(data).returning();
+  },
+
+  async updateBookingToConfirm(
+    id: string,
+    startTime?: string,
+    pickupAddress?: string,
+    dropAddress?: string
+  ) {
+    return await db
+      .update(bookings)
+      .set({
+        status: BookingStatusEnum.CONFIRMED,
+        startTime: startTime,
+        pickupAddress: pickupAddress,
+        dropAddress: dropAddress,
+      })
+      .where(eq(bookings.id, id))
+      .returning({ id: bookings.id });
+  },
+
+  async updateBookingToCancel(id: string) {
+    return await db
+      .update(bookings)
+      .set({
+        status: BookingStatusEnum.CANCELLED,
+        assignedDriverId: null,
+        assignedVehicleId: null,
+      })
+      .where(eq(bookings.id, id))
+      .returning();
   },
 };

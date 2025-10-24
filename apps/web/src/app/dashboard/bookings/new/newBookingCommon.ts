@@ -356,6 +356,7 @@ export const getTripDuration = (startDate: Date, endDate: Date) => {
 export const MultiPerDayDistance = 50;
 export const getFinalPrice = (data: NewBookingFormDataType) => {
   const days = getTripDuration(data.tripStartDate, data.tripEndDate);
+  const commissionRate = data.selectedCommissionRate!;
 
   let totalDistance = data.selectedDistance!;
   let totalAllowanceDays = 1;
@@ -366,6 +367,8 @@ export const getFinalPrice = (data: NewBookingFormDataType) => {
     if (days > 1) {
       //For round trip, double the driver allowance if not returning same day
       totalAllowanceDays *= 2;
+    } else {
+      totalAllowanceDays = 1.5;
     }
   } else if (data.tripType == BookingTypeEnum.MultiDay) {
     //For multi day trip, include intermediate tour days @ X(50) km
@@ -374,24 +377,29 @@ export const getFinalPrice = (data: NewBookingFormDataType) => {
     totalAllowanceDays *= days;
   }
 
-  const acPrice = data.tripNeedsAC ? data.selectedAcChargePerDay! * days : 0;
+  const totalAcPrice = data.tripNeedsAC
+    ? Math.round(data.selectedAcChargePerDay! * totalAllowanceDays)
+    : 0;
 
-  const commission = data.selectedCommissionRate!;
-
-  const vehiclePrice = totalDistance * data.selectedRatePerKm!;
-  const driverAllowance = totalAllowanceDays * data.selectedAllowancePerDay!;
-
-  const totalPrice = Math.round(
-    ((vehiclePrice + driverAllowance + acPrice) * (100 + commission)) / 100
+  const totalVehiclePrice = Math.round(totalDistance * data.selectedRatePerKm!);
+  const totalDriverAllowance = Math.round(
+    totalAllowanceDays * data.selectedAllowancePerDay!
   );
 
+  const netPrice = totalVehiclePrice + totalDriverAllowance + totalAcPrice;
+
+  const totalCommission = Math.round((netPrice * commissionRate) / 100);
+
+  const totalAmount = netPrice + totalCommission;
+
   return {
-    vehiclePrice,
+    totalVehiclePrice,
     totalDistance,
-    driverAllowance,
+    totalDriverAllowance,
+    totalAcPrice,
+    totalCommission,
+    totalAmount,
     totalAllowanceDays,
-    acPrice,
-    totalPrice,
     days,
   };
 };

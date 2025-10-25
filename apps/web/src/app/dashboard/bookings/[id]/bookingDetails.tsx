@@ -1,11 +1,16 @@
 "use client";
 
-import { FindBookingByIdType } from "@ryogo-travel-app/api/services/booking.services";
+import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services";
+import { useTranslations } from "next-intl";
 
 export default function BookingDetailsPageComponent({
   booking,
+  isOwner,
 }: {
-  booking: FindBookingByIdType;
+  booking: FindBookingDetailsByIdType;
+  isOwner?: boolean;
 }) {
+  const t = useTranslations("Dashboard.BookingDetails");
+
   return <div></div>;
 }

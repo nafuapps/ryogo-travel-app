@@ -326,6 +326,85 @@ export const bookingRepository = {
     });
   },
 
+  async getBookingDetailsById(id: string) {
+    return await db.query.bookings.findFirst({
+      where: eq(bookings.id, id),
+      with: {
+        agency: {
+          columns: {
+            id: true,
+          },
+        },
+        assignedUser: {
+          columns: {
+            id: true,
+            userRole: true,
+            name: true,
+          },
+        },
+        assignedDriver: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            id: true,
+            vehicleNumber: true,
+          },
+        },
+        bookedByUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+            state: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+            state: true,
+          },
+        },
+        customer: {
+          columns: {
+            id: true,
+            name: true,
+            remarks: true,
+            phone: true,
+            address: true,
+          },
+          with: {
+            location: {
+              columns: {
+                city: true,
+                state: true,
+              },
+            },
+            bookings: {
+              columns: {
+                id: true,
+                status: true,
+              },
+            },
+          },
+        },
+        route: {
+          columns: {
+            id: true,
+            distance: true,
+          },
+        },
+      },
+    });
+  },
+
   async createBooking(data: InsertBookingType) {
     return await db.insert(bookings).values(data).returning();
   },

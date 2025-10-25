@@ -1046,17 +1046,38 @@
       "PickupTime": "Pickup Time",
       "PickupTimeError": "Pickup Time is required",
       "Loading": "Loading..",
-      "PrimaryCTA": "Confirm Booking",
       "ConfirmSuccess": "Booking confirmed!",
       "ConfirmError": "Cannot confirm booking.. Try again later!",
-      "SendCTA": "Send quote to Customer",
+      "Confirm": {
+        "Label": "Confirm Booking",
+        "Title": "Are you sure you want to confirm this booking?",
+        "Desc": "Once confirmed, this booking will be visible to the assigned driver and liable for billing.",
+        "NoCTA": "No",
+        "YesCTA": "Yes, Confirm"
+      },
       "QuoteSent": "Quote Sent!",
       "SendSuccess": "Booking quote sent to the customer!",
       "SendError": "Cannot send booking quote.. Try again later!",
-      "CancelCTA": "Cancel booking",
+      "Send": {
+        "Label": "Send quote to Customer",
+        "Title": "Are you sure you want to send quote to customer?",
+        "Desc": "If you have sent a quote already, refrain from sending it again.. It might look like spam to the customer",
+        "NoCTA": "No",
+        "YesCTA": "Yes, Send"
+      },
       "CancelSuccess": "Booking cancelled!",
-      "CancelError": "Cannot cancel booking.. Try again later!"
-    }
+      "CancelSuccess2": "This old lead is being cancelled.. Create a new booking",
+      "CancelError": "Cannot cancel booking.. Try again later!",
+      "CancelError2": "This is an old lead.. Create a new booking!",
+      "Cancel": {
+        "Label": "Cancel Booking",
+        "Title": "Are you sure you want to cancel this booking?",
+        "Desc": "When cancelled, this booking cannot be confirmed or modified later.",
+        "NoCTA": "No",
+        "YesCTA": "Yes, Cancel"
+      }
+    },
+    "BookingDetails": {}
   },
   "Rider": {
     "Sidebar": {

@@ -24,7 +24,7 @@ export default async function ConfirmBookingPage({
   }
 
   //No booking found or agency mismatch
-  const booking = await bookingServices.findBookingById(id);
+  const booking = await bookingServices.findLeadBookingById(id);
   if (!booking || booking.agency.id !== user?.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace);
   }
@@ -35,9 +35,12 @@ export default async function ConfirmBookingPage({
   }
 
   //If the lead is old, cancel it automatically
-  if (new Date(booking.startDate) < new Date()) {
-    cancelBookingAction(booking.id);
-    redirect(`/dashboard/bookings/${id}`, RedirectType.replace);
+  if (new Date(booking.endDate) < new Date()) {
+    if (await cancelBookingAction(booking.id)) {
+      redirect(`/dashboard/bookings/${id}`, RedirectType.replace);
+    } else {
+      redirect(`/dashboard/bookings`, RedirectType.replace);
+    }
   }
 
   return (

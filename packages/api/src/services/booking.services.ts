@@ -188,9 +188,15 @@ export const bookingServices = {
     });
   },
 
-  //Booking id
-  async findBookingById(bookingId: string) {
+  //Get (lead) booking by id
+  async findLeadBookingById(bookingId: string) {
     const booking = await bookingRepository.getBookingById(bookingId);
+    return booking;
+  },
+
+  //Get booking details by id
+  async findBookingDetailsById(bookingId: string) {
+    const booking = await bookingRepository.getBookingDetailsById(bookingId);
     return booking;
   },
 
@@ -324,6 +330,10 @@ export const bookingServices = {
   },
 };
 
-export type FindBookingByIdType = Awaited<
-  ReturnType<typeof bookingServices.findBookingById>
+export type FindLeadBookingByIdType = Awaited<
+  ReturnType<typeof bookingServices.findLeadBookingById>
+>;
+
+export type FindBookingDetailsByIdType = Awaited<
+  ReturnType<typeof bookingServices.findBookingDetailsById>
 >;

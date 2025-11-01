@@ -1,12 +1,24 @@
 //Layout for auth pages
 
+import { getCurrentUser } from "@/lib/auth";
 import AuthMarketing from "./components/authMarketing";
+import { redirect, RedirectType } from "next/navigation";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await getCurrentUser();
+
+  // Redirect to private route if the user is authenticated
+  if (user?.userId) {
+    if (user.userRole == "driver") {
+      redirect("/rider", RedirectType.replace);
+    }
+    redirect("/dashboard", RedirectType.replace);
+  }
+
   return (
     <section id="AuthLayout" className="flex flex-row w-screen h-screen">
       <AuthMarketing />

@@ -1,14 +1,15 @@
+'use client';
+
 import { PGrey } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getTranslations } from "next-intl/server";
-import { headers } from "next/headers";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default async function AuthMarketing() {
-  const t = await getTranslations("Auth.Sidebar");
-  const headersList = await headers();
-  const pathname = headersList.get("x-next-pathname") as string;
+export default function AuthMarketing() {
+  const t = useTranslations("Auth.Sidebar");
+  const pathname = usePathname();
 
   const isSignup = pathname.startsWith("/auth/signup");
 

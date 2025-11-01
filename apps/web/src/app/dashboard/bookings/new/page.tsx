@@ -8,7 +8,7 @@ export default function NewBookingPage() {
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/bookings/new"} />
-      <NewBookingPageComponent />;
+      <NewBookingPageComponent />
     </div>
   );
 }

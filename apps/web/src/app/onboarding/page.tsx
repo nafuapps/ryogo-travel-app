@@ -3,10 +3,12 @@
 import { H2, H4, P, PGrey, Small } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { getCurrentUser } from "@/lib/auth";
 import { LucideFootprints, LucideListCheck } from "lucide-react";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import { redirect, RedirectType } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Onboarding Page | RyoGo",
@@ -14,6 +16,15 @@ export const metadata: Metadata = {
 };
 
 export default async function OnboardingHomePage() {
+  const user = await getCurrentUser();
+
+  // Redirect to private route if the user is authenticated
+  if (user?.userId) {
+    if (user.userRole == "driver") {
+      redirect("/rider", RedirectType.replace);
+    }
+    redirect("/dashboard", RedirectType.replace);
+  }
   const t = await getTranslations("Onboarding.HomePage");
   return (
     <div

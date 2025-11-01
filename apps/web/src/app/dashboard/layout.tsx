@@ -15,6 +15,11 @@ export default async function DashboardLayout({
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   const currentUser = await getCurrentUser();
 
+  // Redirect to auth if the user is not authenticated
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace);
+  }
+  
   //New user
   if (currentUser?.status == "new") {
     if (currentUser?.userRole == "owner") {

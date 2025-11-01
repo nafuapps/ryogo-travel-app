@@ -10,7 +10,7 @@ const notoSans = Noto_Sans({
 
 export const metadata: Metadata = {
   title: "RyoGo Travel Agency App",
-  description: "RyoGo is a travel agency app",
+  description: "RyoGo is an app for travel agencies to manage their operations",
 };
 
 export default async function RootLayout({

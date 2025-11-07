@@ -10,6 +10,9 @@ import { customerServices } from "./customer.services";
 import { routeServices } from "./route.services";
 import { vehicleRepository } from "../repositories/vehicle.repo";
 import { customerRepository } from "../repositories/customer.repo";
+import { expenseRepository } from "../repositories/expense.repo"
+import { tripLogRepository } from "../repositories/tripLog.repo"
+import { transactionRepository } from "../repositories/transaction.repo"
 
 export const bookingServices = {
   //Bookings dashboard
@@ -194,10 +197,36 @@ export const bookingServices = {
     return booking;
   },
 
+  //Get booking status by id
+  async findBookingStatusById(bookingId: string) {
+    const booking=
+      await bookingRepository.getBookingStatusById(bookingId);
+    return booking;
+  },
+
   //Get booking details by id
   async findBookingDetailsById(bookingId: string) {
     const booking = await bookingRepository.getBookingDetailsById(bookingId);
     return booking;
+  },
+
+  //Get transactions by booking id
+  async findBookingTransactionsById(bookingId: string) {
+    const bookingTransactions =
+      await transactionRepository.getTransactionsByBookingId(bookingId);
+    return bookingTransactions;
+  },
+  
+  //Get booking expenses by id
+  async findBookingExpensesById(bookingId: string) {
+    const bookingExpenses = await expenseRepository.getExpensesByBookingId(bookingId);
+    return bookingExpenses;
+  },
+
+  //Get booking trip logs by id
+  async findBookingTripLogsById(bookingId: string) {
+    const bookingTripLogs = await tripLogRepository.getTripLogsByBookingId(bookingId);
+    return bookingTripLogs;
   },
 
   //Create a new Booking
@@ -334,6 +363,22 @@ export type FindLeadBookingByIdType = Awaited<
   ReturnType<typeof bookingServices.findLeadBookingById>
 >;
 
+export type FindBookingStatusByIdType = Awaited<
+  ReturnType<typeof bookingServices.findBookingStatusById>
+>;
+
 export type FindBookingDetailsByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingDetailsById>
+>;
+
+export type FindBookingTransactionsByIdType = Awaited<
+  ReturnType<typeof bookingServices.findBookingTransactionsById>
+>;
+
+export type FindBookingExpensesByIdType = Awaited<
+  ReturnType<typeof bookingServices.findBookingExpensesById>
+>;
+
+export type FindBookingTripLogsByIdType = Awaited<
+  ReturnType<typeof bookingServices.findBookingTripLogsById>
 >;

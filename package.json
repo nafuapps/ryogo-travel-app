@@ -17,12 +17,6 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "dev:agency": "turbo run dev --filter=@ryogo-travel-app/agency-app",
-    "dev:driver": "turbo run dev --filter=@ryogo-travel-app/driver-app",
-    "dev:web": "turbo run dev --filter=@ryogo-travel-app/web-app",
-    "install:agency": "npm install --workspace=@ryogo-travel-app/agency-app",
-    "install:driver": "npm install --workspace=@ryogo-travel-app/driver-app",
-    "install:web": "npm install --workspace=@ryogo-travel-app/web-app",
     "lint": "turbo run lint"
   },
   "workspaces": [

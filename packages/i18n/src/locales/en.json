@@ -1077,7 +1077,47 @@
         "YesCTA": "Yes, Cancel"
       }
     },
-    "BookingDetails": {}
+    "BookingDetails": {
+      "BookingInfo": "Booking Info",
+      "BookingId":"Booking ID",
+      "Status":"Status",
+      "Created":"Created On",
+      "BookedBy":"Booked By",
+      "AssignedTo":"Assigned Agent",
+      "AssignAgent":"Change Agent",
+      "CustomerInfo":"Customer Info",
+      "CustomerName":"Name",
+      "CustomerPhone":"Phone",
+      "CustomerLocation":"Location",
+      "CustomerAddress":"Address",
+      "CustomerRemarks":"Remarks",
+      "TripInfo":"Trip Info",
+      "From":"From",
+      "To":"To",
+      "Distance":"Distance",
+      "StartDate":"Start Date",
+      "EndDate":"End Date",
+      "StartTime":"Start Time",
+      "PickupAddress":"Pickup Address",
+      "DropAddress":"Drop Address",
+      "Type":"Trip Type",
+      "Passengers":"Passengers",
+      "NeedsAC":"Needs AC",
+      "Yes":"Yes",
+      "No":"No",
+      "Km":" Km"
+
+
+    },
+    "BookingTransactions": {},
+    "BookingExpenses": {},
+    "BookingTripLogs": {},
+    "BookingDetailsHeaderTabs": {
+      "Details": "Details",
+      "Expenses": "Expenses",
+      "Transactions": "Transactions",
+      "TripLogs": "Trip Logs"
+    }
   },
   "Rider": {
     "Sidebar": {

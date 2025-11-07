@@ -613,7 +613,7 @@ export const bookings = pgTable(
     }),
     startDate: date("start_date").notNull(),
     endDate: date("end_date").notNull(),
-    startTime: time("start_time", { withTimezone: true }),
+    startTime: time("start_time", { withTimezone: false }),
     pickupAddress: varchar("pickup_address", { length: 300 }),
     dropAddress: varchar("drop_address", { length: 300 }),
     type: bookingType().notNull().default(BookingTypeEnum.OneWay),

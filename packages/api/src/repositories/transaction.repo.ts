@@ -20,4 +20,11 @@ export const transactionRepository = {
         )
       );
   },
+
+  //Get transactions by booking id
+  async getTransactionsByBookingId(bookingId: string) {
+    return db.query.transactions.findMany({
+      where: eq(transactions.bookingId, bookingId),
+    })
+  },
 };

@@ -326,6 +326,18 @@ export const bookingRepository = {
     });
   },
 
+  async getBookingStatusById(id: string) {
+    const booking = await db.query.bookings.findFirst({
+      where: eq(bookings.id, id),
+      columns: {
+        id: true,
+        status: true,
+        agencyId: true,
+      },
+    });
+    return booking;
+  },
+  
   async getBookingDetailsById(id: string) {
     return await db.query.bookings.findFirst({
       where: eq(bookings.id, id),

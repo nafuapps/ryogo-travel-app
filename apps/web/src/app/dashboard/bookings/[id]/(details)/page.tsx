@@ -28,7 +28,10 @@ export default async function BookingDetailsPage({
         bookingId={id}
         bookingDetails={bookingDetails}
         isOwner={user?.userRole === "owner"}
-      />
+        isAssignedUser={bookingDetails.assignedUser.id === user?.userId}
+      >
+        <BookingDetailHeaderTabs id={id} selectedTab="Details" />
+      </BookingDetailsPageComponent>
     </div>
   )
 }

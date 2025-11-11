@@ -357,6 +357,11 @@ export const bookingServices = {
   async sendQuote(id: string) {
     return true;
   },
+
+  // TODO: Send booking invoice to customer over whatsapp
+  async sendInvoice(id: string) {
+    return true;
+  },
 };
 
 export type FindLeadBookingByIdType = Awaited<

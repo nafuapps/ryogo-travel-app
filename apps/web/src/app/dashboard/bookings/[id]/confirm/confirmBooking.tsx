@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import { pageClassName } from "@/components/page/pageCommons";
-import { PBold, PGrey, CaptionGrey, Caption } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services";
-import { useTranslations } from "next-intl";
-import z from "zod";
-import { confirmBookingAction } from "./confirmBookingAction";
-import { JSX, useEffect, useState, useTransition } from "react";
-import { Spinner } from "@/components/ui/spinner";
+import { pageClassName } from "@/components/page/pageCommons"
+import { PBold, PGrey, CaptionGrey, Caption } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { useTranslations } from "next-intl"
+import z from "zod"
+import { confirmBookingAction } from "../../../components/actions/confirmBookingAction"
+import { JSX, useEffect, useState, useTransition } from "react"
+import { Spinner } from "@/components/ui/spinner"
 import {
   DashboardCheckbox,
   DashboardTextarea,
   DashboardTimePicker,
-} from "@/components/form/dashboardFormFields";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
-import Link from "next/link";
-import { cancelBookingAction } from "./cancelBookingAction";
-import { toast } from "sonner";
-import { redirect, RedirectType } from "next/navigation";
-import moment from "moment";
-import { sendQuoteAction } from "./sendQuoteAction";
-import { format } from "date-fns";
+} from "@/components/form/dashboardFormFields"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Form } from "@/components/ui/form"
+import Link from "next/link"
+import { cancelBookingAction } from "../../../components/actions/cancelBookingAction"
+import { toast } from "sonner"
+import { redirect, RedirectType } from "next/navigation"
+import moment from "moment"
+import { sendQuoteAction } from "../../../components/actions/sendQuoteAction"
+import { format } from "date-fns"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,21 +35,24 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog"
 
 export default function ConfirmBookingPageComponent({
   booking,
   isOwner,
+  isAssignedUser,
 }: {
-  booking: NonNullable<FindLeadBookingByIdType>;
-  isOwner?: boolean;
+  booking: NonNullable<FindLeadBookingByIdType>
+  isOwner: boolean
+  isAssignedUser: boolean
 }) {
-  const t = useTranslations("Dashboard.ConfirmBooking");
-  const [isConfirmPending, startConfirmTransition] = useTransition();
-  const [isCancelPending, startCancelTransition] = useTransition();
-  const [isSendPending, startSendTransition] = useTransition();
+  const t = useTranslations("Dashboard.ConfirmBooking")
 
-  const [quoteSent, setQuoteSent] = useState(false);
+  const [isConfirmPending, startConfirmTransition] = useTransition()
+  const [isCancelPending, startCancelTransition] = useTransition()
+  const [isSendPending, startSendTransition] = useTransition()
+
+  const [quoteSent, setQuoteSent] = useState(false)
 
   const confirmBookingSchema = z.object({
     pickupAddress: z
@@ -62,8 +65,8 @@ export default function ConfirmBookingPageComponent({
       .min(10, t("AddressError1"))
       .max(300, t("AddressError2")),
     startTime: z.iso.time(t("PickupTimeError")).nonempty(t("PickupTimeError")),
-  });
-  type ConfirmBookingType = z.infer<typeof confirmBookingSchema>;
+  })
+  type ConfirmBookingType = z.infer<typeof confirmBookingSchema>
 
   const form = useForm<ConfirmBookingType>({
     resolver: zodResolver(confirmBookingSchema),
@@ -72,13 +75,13 @@ export default function ConfirmBookingPageComponent({
       sameAsCustomerAddress: false,
       dropAddress: "",
     },
-  });
+  })
 
   //Confirm booking
   async function confirm(values: ConfirmBookingType) {
     //If booking in the past, cancel it
     if (new Date(booking.endDate) < new Date()) {
-      await cancel(true);
+      await cancel(true)
     } else {
       //Else go ahead for confirmation
       startConfirmTransition(async () => {
@@ -92,12 +95,12 @@ export default function ConfirmBookingPageComponent({
             booking.customer.id
           )
         ) {
-          toast.success(t("ConfirmSuccess"));
-          redirect(`/dashboard/bookings/${booking.id}`, RedirectType.replace);
+          toast.success(t("ConfirmSuccess"))
+          redirect(`/dashboard/bookings/${booking.id}`, RedirectType.replace)
         } else {
-          toast.error(t("ConfirmError"));
+          toast.error(t("ConfirmError"))
         }
-      });
+      })
     }
   }
 
@@ -107,55 +110,55 @@ export default function ConfirmBookingPageComponent({
       //If cancel is successful, show cancel success message and redirect to cancelled booking details
       if (await cancelBookingAction(booking.id)) {
         if (olderBooking) {
-          toast.warning(t("CancelSuccess2"));
+          toast.warning(t("CancelSuccess2"))
         } else {
-          toast.success(t("CancelSuccess"));
+          toast.success(t("CancelSuccess"))
         }
-        redirect(`/dashboard/bookings/${booking.id}`, RedirectType.replace);
+        redirect(`/dashboard/bookings/${booking.id}`, RedirectType.replace)
       } else {
         //If cancel is not successful, show error message
         if (olderBooking) {
-          toast.warning(t("CancelError2"));
+          toast.warning(t("CancelError2"))
         } else {
-          toast.error(t("CancelError"));
+          toast.error(t("CancelError"))
         }
       }
-    });
+    })
   }
 
   // Send quote to customer over whatsapp
   async function sendQuote() {
     //If booking in the past, cancel it
     if (new Date(booking.endDate) < new Date()) {
-      await cancel(true);
+      await cancel(true)
     } else {
       //Else go ahead for sending quote
       startSendTransition(async () => {
         if (await sendQuoteAction(booking.id)) {
-          toast.success(t("SendSuccess"));
-          setQuoteSent(true);
+          toast.success(t("SendSuccess"))
+          setQuoteSent(true)
         } else {
-          toast.error(t("SendError"));
+          toast.error(t("SendError"))
         }
-      });
+      })
     }
   }
 
-  const setValue = form.setValue;
+  const setValue = form.setValue
   // Watch the checkbox and the source input field
-  const pickupAddressCopySelection = form.watch("sameAsCustomerAddress");
-  const pickupAddressSourceValue = booking.customer.address;
+  const pickupAddressCopySelection = form.watch("sameAsCustomerAddress")
+  const pickupAddressSourceValue = booking.customer.address
 
   useEffect(() => {
-    if (!pickupAddressSourceValue) return;
+    if (!pickupAddressSourceValue) return
     if (pickupAddressCopySelection) {
       // If the checkbox is checked, set the target input's value
-      setValue("pickupAddress", pickupAddressSourceValue);
+      setValue("pickupAddress", pickupAddressSourceValue)
     } else {
       // Optionally, clear the target input if unchecked
-      setValue("pickupAddress", "");
+      setValue("pickupAddress", "")
     }
-  }, [pickupAddressCopySelection, pickupAddressSourceValue, setValue]);
+  }, [pickupAddressCopySelection, pickupAddressSourceValue, setValue])
 
   return (
     <div id="ConfirmBookingPage" className={pageClassName}>
@@ -345,72 +348,74 @@ export default function ConfirmBookingPageComponent({
               />
               <DashboardTimePicker name="startTime" label={t("PickupTime")} />
             </ConfirmBookingSection>
-            <div className="flex flex-col gap-3 lg:gap-4">
-              <ConfirmBookingAlertDialog
-                title={t("Confirm.Title")}
-                desc={t("Confirm.Desc")}
-                noCTA={t("Confirm.NoCTA")}
-                labelChild={
-                  <Button variant={"default"}>{t("Confirm.Label")}</Button>
-                }
-              >
-                <Button
-                  onClick={() => form.handleSubmit(confirm)()}
-                  variant={"default"}
-                  disabled={isConfirmPending}
+            {(isOwner || isAssignedUser) && (
+              <div className="flex flex-col gap-3 lg:gap-4">
+                <ConfirmBookingAlertDialog
+                  title={t("Confirm.Title")}
+                  desc={t("Confirm.Desc")}
+                  noCTA={t("Confirm.NoCTA")}
+                  labelChild={
+                    <Button variant={"default"}>{t("Confirm.Label")}</Button>
+                  }
                 >
-                  {isConfirmPending && <Spinner />}
-                  {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
-                </Button>
-              </ConfirmBookingAlertDialog>
-              <ConfirmBookingAlertDialog
-                title={t("Send.Title")}
-                desc={t("Send.Desc")}
-                noCTA={t("Send.NoCTA")}
-                labelChild={
-                  <Button variant={"outline"} disabled={quoteSent}>
-                    {quoteSent ? t("QuoteSent") : t("Send.Label")}
+                  <Button
+                    onClick={() => form.handleSubmit(confirm)()}
+                    variant={"default"}
+                    disabled={isConfirmPending}
+                  >
+                    {isConfirmPending && <Spinner />}
+                    {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
                   </Button>
-                }
-              >
-                <Button
-                  variant={"default"}
-                  onClick={sendQuote}
-                  disabled={isSendPending}
+                </ConfirmBookingAlertDialog>
+                <ConfirmBookingAlertDialog
+                  title={t("Send.Title")}
+                  desc={t("Send.Desc")}
+                  noCTA={t("Send.NoCTA")}
+                  labelChild={
+                    <Button variant={"outline"} disabled={quoteSent}>
+                      {quoteSent ? t("QuoteSent") : t("Send.Label")}
+                    </Button>
+                  }
                 >
-                  {isSendPending && <Spinner />}
-                  {isSendPending ? t("Loading") : t("Send.YesCTA")}
-                </Button>
-              </ConfirmBookingAlertDialog>
-              <ConfirmBookingAlertDialog
-                title={t("Cancel.Title")}
-                desc={t("Cancel.Desc")}
-                noCTA={t("Cancel.NoCTA")}
-                labelChild={
-                  <Button variant={"link"}>{t("Cancel.Label")}</Button>
-                }
-              >
-                <Button
-                  variant={"destructive"}
-                  onClick={() => cancel(false)}
-                  disabled={isCancelPending}
+                  <Button
+                    variant={"default"}
+                    onClick={sendQuote}
+                    disabled={isSendPending}
+                  >
+                    {isSendPending && <Spinner />}
+                    {isSendPending ? t("Loading") : t("Send.YesCTA")}
+                  </Button>
+                </ConfirmBookingAlertDialog>
+                <ConfirmBookingAlertDialog
+                  title={t("Cancel.Title")}
+                  desc={t("Cancel.Desc")}
+                  noCTA={t("Cancel.NoCTA")}
+                  labelChild={
+                    <Button variant={"secondary"}>{t("Cancel.Label")}</Button>
+                  }
                 >
-                  {isCancelPending && <Spinner />}
-                  {isCancelPending ? t("Loading") : t("Cancel.YesCTA")}
-                </Button>
-              </ConfirmBookingAlertDialog>
-            </div>
+                  <Button
+                    variant={"destructive"}
+                    onClick={() => cancel(false)}
+                    disabled={isCancelPending}
+                  >
+                    {isCancelPending && <Spinner />}
+                    {isCancelPending ? t("Loading") : t("Cancel.YesCTA")}
+                  </Button>
+                </ConfirmBookingAlertDialog>
+              </div>
+            )}
           </div>
         </form>
       </Form>
     </div>
-  );
+  )
 }
 
 type ConfirmBookingSectionType = {
-  sectionTitle: string;
-  children: React.ReactNode;
-};
+  sectionTitle: string
+  children: React.ReactNode
+}
 const ConfirmBookingSection = (props: ConfirmBookingSectionType) => {
   return (
     <div className="flex flex-col gap-2 lg:gap-3">
@@ -419,8 +424,8 @@ const ConfirmBookingSection = (props: ConfirmBookingSectionType) => {
         {props.children}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const ConfirmBookingFinalSection = (props: ConfirmBookingSectionType) => {
   return (
@@ -430,27 +435,27 @@ const ConfirmBookingFinalSection = (props: ConfirmBookingSectionType) => {
         {props.children}
       </div>
     </div>
-  );
-};
+  )
+}
 
 type ConfirmBookingItemType = {
-  title: string;
-  value: string;
-};
+  title: string
+  value: string
+}
 const ConfirmBookingItem = (props: ConfirmBookingItemType) => {
   return (
     <div className="flex flex-row sm:flex-col justify-between sm:justify-start items-center sm:items-start gap-2 sm:gap-0.5 lg:gap-1 last:text-end sm:last:text-start">
       <Caption>{props.title}</Caption>
       <PBold>{props.value}</PBold>
     </div>
-  );
-};
+  )
+}
 
 type ConfirmBookingPriceItemType = {
-  title: string;
-  value: string;
-  subtitle?: string;
-};
+  title: string
+  value: string
+  subtitle?: string
+}
 const ConfirmBookingPriceItem = (props: ConfirmBookingPriceItemType) => {
   return (
     <div className="flex flex-row justify-between items-center gap-2 lg:gap-3">
@@ -460,18 +465,17 @@ const ConfirmBookingPriceItem = (props: ConfirmBookingPriceItemType) => {
         {props.subtitle && <CaptionGrey>{props.subtitle}</CaptionGrey>}
       </div>
     </div>
-  );
-};
+  )
+}
 
 type ConfirmBookingAlertDialogType = {
-  title: string;
-  desc: string;
-  noCTA: string;
-  labelChild: JSX.Element;
-  children: React.ReactNode;
-};
+  title: string
+  desc: string
+  noCTA: string
+  labelChild: JSX.Element
+  children: React.ReactNode
+}
 const ConfirmBookingAlertDialog = (props: ConfirmBookingAlertDialogType) => {
-  const t = useTranslations("Dashboard.ConfirmBooking");
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{props.labelChild}</AlertDialogTrigger>
@@ -486,5 +490,5 @@ const ConfirmBookingAlertDialog = (props: ConfirmBookingAlertDialogType) => {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
-};
+  )
+}

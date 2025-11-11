@@ -5,31 +5,31 @@ import {
   headerLeftClassName,
   headerRightClassName,
   headerTooltipClassName,
-} from "@/components/header/headerCommon";
-import { H4, SmallGrey } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+} from "@/components/header/headerCommon"
+import { H5, SmallGrey } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { LucidePlus, LucideTarget } from "lucide-react";
-import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+} from "@/components/ui/tooltip"
+import { LucidePlus, LucideTarget } from "lucide-react"
+import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 
 export default async function DashboardHeader(props: { pathName: string }) {
-  const t = await getTranslations("Dashboard.Header");
+  const t = await getTranslations("Dashboard.Header")
 
   const titleKey = ("Title." + props.pathName ||
-    "Title./dashboard") as Parameters<typeof t>[0];
-  const title = t(titleKey);
+    "Title./dashboard") as Parameters<typeof t>[0]
+  const title = t(titleKey)
 
   return (
     <div id="DashboardHeader" className={headerClassName}>
       <div id="HeaderLeft" className={headerLeftClassName}>
         <SidebarTrigger />
-        <H4>{title}</H4>
+        <H5>{title}</H5>
       </div>
       <div id="HeaderRight" className={headerRightClassName}>
         {props.pathName !== "/dashboard/bookings/new" && (
@@ -68,5 +68,5 @@ export default async function DashboardHeader(props: { pathName: string }) {
         )}
       </div>
     </div>
-  );
+  )
 }

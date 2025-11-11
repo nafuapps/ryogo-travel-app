@@ -1,0 +1,1 @@
+ALTER TABLE "bookings" ALTER COLUMN "start_time" SET DATA TYPE time;

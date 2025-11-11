@@ -8,7 +8,7 @@ import { BookingRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 import { mainClassName } from "@/components/page/pageCommons"
 import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
-import { cancelBookingAction } from "./cancelBookingAction"
+import { cancelBookingAction } from "../../../components/actions/cancelBookingAction"
 
 export default async function ConfirmBookingPage({
   params,
@@ -49,6 +49,7 @@ export default async function ConfirmBookingPage({
       <ConfirmBookingPageComponent
         booking={booking}
         isOwner={user.userRole === "owner"}
+        isAssignedUser={booking.assignedUser.id === user?.userId}
       />
     </div>
   )

@@ -1021,8 +1021,10 @@
       "Yes": "Yes",
       "No": "No",
       "AssignmentInfo": "ASSIGNMENT INFO",
+      "AssignedVehicle": "Vehicle",
       "ChangeVehicle": "Change Vehicle",
       "AssignVehicle": "Assign Vehicle",
+      "AssignedDriver": "Driver",
       "ChangeDriver": "Change Driver",
       "AssignDriver": "Assign Driver",
       "PriceInfo": "PRICE INFO",
@@ -1054,27 +1056,6 @@
         "Desc": "Once confirmed, this booking will be visible to the assigned driver and liable for billing.",
         "NoCTA": "No",
         "YesCTA": "Yes, Confirm"
-      },
-      "QuoteSent": "Quote Sent!",
-      "SendSuccess": "Booking quote sent to the customer!",
-      "SendError": "Cannot send booking quote.. Try again later!",
-      "Send": {
-        "Label": "Send quote to Customer",
-        "Title": "Are you sure you want to send quote to customer?",
-        "Desc": "If you have sent a quote already, refrain from sending it again.. It might look like spam to the customer",
-        "NoCTA": "No",
-        "YesCTA": "Yes, Send"
-      },
-      "CancelSuccess": "Booking cancelled!",
-      "CancelSuccess2": "This old lead is being cancelled.. Create a new booking",
-      "CancelError": "Cannot cancel booking.. Try again later!",
-      "CancelError2": "This is an old lead.. Create a new booking!",
-      "Cancel": {
-        "Label": "Cancel Booking",
-        "Title": "Are you sure you want to cancel this booking?",
-        "Desc": "When cancelled, this booking cannot be confirmed or modified later.",
-        "NoCTA": "No",
-        "YesCTA": "Yes, Cancel"
       }
     },
     "BookingDetails": {
@@ -1125,29 +1106,7 @@
       "Commission":"Commission",
       "CommissionRate":"({rate}%)",
       "TotalAmount":"Total Amount",
-      "Reconcile":"Reconcile Booking",
-      "Loading":"Loading..",
-      "InvoiceSent": "Invoice Sent!",
-      "SendSuccess": "Invoice sent to the customer!",
-      "SendError": "Cannot send invoice.. Try again later!",
-      "Send": {
-        "Label": "Send invoice to Customer",
-        "Title": "Are you sure you want to send invoice to customer?",
-        "Desc": "If you have sent an invoice already, refrain from sending it again.. It might look like spam to the customer",
-        "NoCTA": "No",
-        "YesCTA": "Yes, Send"
-      },
-      "CancelSuccess": "Booking cancelled!",
-      "CancelError": "Cannot cancel booking.. Try again later!",
-      "Cancel": {
-        "Label": "Cancel Booking",
-        "Title": "Are you sure you want to cancel this booking?",
-        "Desc": "When cancelled, this booking cannot be modified later.",
-        "NoCTA": "No",
-        "YesCTA": "Yes, Cancel"
-      }
-
-
+      "Reconcile":"Reconcile Booking"
     },
     "BookingTransactions": {},
     "BookingExpenses": {},
@@ -1157,6 +1116,40 @@
       "Expenses": "Expenses",
       "Transactions": "Transactions",
       "TripLogs": "Trip Logs"
+    },
+    "Buttons":{
+      "Cancel":{
+        "Label": "Cancel Booking",
+        "Title": "Are you sure you want to cancel this booking?",
+        "Desc": "When cancelled, this booking cannot be modified later.",
+        "NoCTA": "No",
+        "Success":"Booking cancelled!",
+        "Error":"Cannot cancel booking.. Try again later!",
+        "Loading":"Loading..",
+        "YesCTA":"Yes, Cancel"
+      },
+      "SendInvoice":{
+        "Label": "Send invoice to Customer",
+        "Title": "Are you sure you want to send invoice to customer?",
+        "Desc": "If you have sent an invoice already, refrain from sending it again.. It might look like spam to the customer",
+        "NoCTA": "No",
+        "Success":"Invoice sent to the customer!",
+        "Error":"Cannot send invoice.. Try again later!",
+        "Loading":"Loading..",
+        "YesCTA":"Yes, Send",
+        "InvoiceSent":"Invoice Sent!"
+      },
+      "SendQuote":{
+        "Label": "Send quote to Customer",
+        "Title": "Are you sure you want to send quote to customer?",
+        "Desc": "If you have sent a quote already, refrain from sending it again.. It might look like spam to the customer",
+        "NoCTA": "No",
+        "Success":"Quote sent to the customer!",
+        "Error":"Cannot send quote.. Try again later!",
+        "Loading":"Loading..",
+        "YesCTA":"Yes, Send",
+        "QuoteSent":"Quote Sent!"
+      }
     }
   },
   "Rider": {

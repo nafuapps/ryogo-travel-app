@@ -1,14 +1,13 @@
 "use client"
 
 import { pageClassName } from "@/components/page/pageCommons"
-import { PBold, PGrey, CaptionGrey, Caption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
 import z from "zod"
 import { confirmBookingAction } from "../../../components/actions/confirmBookingAction"
-import { JSX, useEffect, useState, useTransition } from "react"
+import { useEffect, useTransition } from "react"
 import { Spinner } from "@/components/ui/spinner"
 import {
   DashboardCheckbox,
@@ -19,23 +18,17 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import Link from "next/link"
-import { cancelBookingAction } from "../../../components/actions/cancelBookingAction"
 import { toast } from "sonner"
 import { redirect, RedirectType } from "next/navigation"
 import moment from "moment"
-import { sendQuoteAction } from "../../../components/actions/sendQuoteAction"
 import { format } from "date-fns"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+import CancelBookingAlertButton from "@/app/dashboard/components/buttons/cancelBookingAlertButton"
+import SendQuoteAlertButton from "@/app/dashboard/components/buttons/sendQuoteAlertButton"
+import BookingAlertDialog from "@/app/dashboard/components/buttons/bookingAlertDialog"
+import BookingItem from "@/app/dashboard/components/bookings/bookingItem"
+import BookingSection from "@/app/dashboard/components/bookings/bookingSection"
+import BookingPriceItem from "@/app/dashboard/components/bookings/bookingPriceItem"
+import BookingPriceSection from "@/app/dashboard/components/bookings/bookingPriceSection"
 
 export default function ConfirmBookingPageComponent({
   booking,
@@ -49,10 +42,6 @@ export default function ConfirmBookingPageComponent({
   const t = useTranslations("Dashboard.ConfirmBooking")
 
   const [isConfirmPending, startConfirmTransition] = useTransition()
-  const [isCancelPending, startCancelTransition] = useTransition()
-  const [isSendPending, startSendTransition] = useTransition()
-
-  const [quoteSent, setQuoteSent] = useState(false)
 
   const confirmBookingSchema = z.object({
     pickupAddress: z
@@ -79,69 +68,23 @@ export default function ConfirmBookingPageComponent({
 
   //Confirm booking
   async function confirm(values: ConfirmBookingType) {
-    //If booking in the past, cancel it
-    if (new Date(booking.endDate) < new Date()) {
-      await cancel(true)
-    } else {
-      //Else go ahead for confirmation
-      startConfirmTransition(async () => {
-        if (
-          await confirmBookingAction(
-            booking.id,
-            values.startTime,
-            values.pickupAddress,
-            values.dropAddress,
-            booking.customer.address ? false : true,
-            booking.customer.id
-          )
-        ) {
-          toast.success(t("ConfirmSuccess"))
-          redirect(`/dashboard/bookings/${booking.id}`, RedirectType.replace)
-        } else {
-          toast.error(t("ConfirmError"))
-        }
-      })
-    }
-  }
-
-  //Cancel booking
-  async function cancel(olderBooking?: boolean) {
-    startCancelTransition(async () => {
-      //If cancel is successful, show cancel success message and redirect to cancelled booking details
-      if (await cancelBookingAction(booking.id)) {
-        if (olderBooking) {
-          toast.warning(t("CancelSuccess2"))
-        } else {
-          toast.success(t("CancelSuccess"))
-        }
+    startConfirmTransition(async () => {
+      if (
+        await confirmBookingAction(
+          booking.id,
+          values.startTime,
+          values.pickupAddress,
+          values.dropAddress,
+          booking.customer.address ? false : true,
+          booking.customer.id
+        )
+      ) {
+        toast.success(t("ConfirmSuccess"))
         redirect(`/dashboard/bookings/${booking.id}`, RedirectType.replace)
       } else {
-        //If cancel is not successful, show error message
-        if (olderBooking) {
-          toast.warning(t("CancelError2"))
-        } else {
-          toast.error(t("CancelError"))
-        }
+        toast.error(t("ConfirmError"))
       }
     })
-  }
-
-  // Send quote to customer over whatsapp
-  async function sendQuote() {
-    //If booking in the past, cancel it
-    if (new Date(booking.endDate) < new Date()) {
-      await cancel(true)
-    } else {
-      //Else go ahead for sending quote
-      startSendTransition(async () => {
-        if (await sendQuoteAction(booking.id)) {
-          toast.success(t("SendSuccess"))
-          setQuoteSent(true)
-        } else {
-          toast.error(t("SendError"))
-        }
-      })
-    }
   }
 
   const setValue = form.setValue
@@ -168,17 +111,17 @@ export default function ConfirmBookingPageComponent({
             id="ConfirmBookingInfo"
             className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
           >
-            <ConfirmBookingSection sectionTitle={t("BookingInfo")}>
-              <ConfirmBookingItem title={t("BookingId")} value={booking.id} />
-              <ConfirmBookingItem
+            <BookingSection sectionTitle={t("BookingInfo")}>
+              <BookingItem title={t("BookingId")} value={booking.id} />
+              <BookingItem
                 title={t("Created")}
                 value={format(booking.createdAt, "dd MMM hh:mm aaa")}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("BookedBy")}
                 value={booking.bookedByUser.name}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("AssignedTo")}
                 value={booking.assignedUser.name}
               />
@@ -195,14 +138,14 @@ export default function ConfirmBookingPageComponent({
                   </Link>
                 </Button>
               )}
-            </ConfirmBookingSection>
+            </BookingSection>
             <Separator />
-            <ConfirmBookingSection sectionTitle={t("CustomerInfo")}>
-              <ConfirmBookingItem
+            <BookingSection sectionTitle={t("CustomerInfo")}>
+              <BookingItem
                 title={t("CustomerName")}
                 value={booking.customer.name}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("CustomerLocation")}
                 value={
                   booking.customer.location.city +
@@ -210,69 +153,73 @@ export default function ConfirmBookingPageComponent({
                   booking.customer.location.state
                 }
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("CustomerPhone")}
                 value={booking.customer.phone}
               />
               {booking.customer.address && (
-                <ConfirmBookingItem
+                <BookingItem
                   title={t("CustomerAddress")}
                   value={booking.customer.address}
                 />
               )}
               {booking.customer.remarks && (
-                <ConfirmBookingItem
+                <BookingItem
                   title={t("CustomerRemarks")}
                   value={booking.customer.remarks}
                 />
               )}
-            </ConfirmBookingSection>
+            </BookingSection>
             <Separator />
-            <ConfirmBookingSection sectionTitle={t("TripInfo")}>
-              <ConfirmBookingItem
+            <BookingSection sectionTitle={t("TripInfo")}>
+              <BookingItem
                 title={t("From")}
                 value={booking.source.city + ", " + booking.source.state}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("To")}
                 value={
                   booking.destination.city + ", " + booking.destination.state
                 }
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("StartDate")}
                 value={moment(booking.startDate).format("DD MMM")}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("EndDate")}
                 value={moment(booking.endDate).format("DD MMM")}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("Distance")}
                 value={booking.citydistance + t("Km")}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("Type")}
                 value={booking.type.toUpperCase()}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("Passengers")}
                 value={booking.passengers.toString()}
               />
-              <ConfirmBookingItem
+              <BookingItem
                 title={t("NeedsAC")}
                 value={booking.needsAc ? t("Yes") : t("No")}
               />
-            </ConfirmBookingSection>
+            </BookingSection>
             <Separator />
-            <ConfirmBookingSection sectionTitle={t("AssignmentInfo")}>
-              <PBold>{booking.assignedVehicle?.vehicleNumber ?? "-"}</PBold>
+            <BookingSection sectionTitle={t("AssignmentInfo")}>
+              <BookingItem
+                title={t("AssignedVehicle")}
+                value={booking.assignedVehicle?.vehicleNumber ?? "-"}
+              />{" "}
               <Button
                 variant={
                   booking.assignedVehicle?.vehicleNumber
                     ? "secondary"
                     : "outline"
                 }
+                className="xl:col-span-3"
               >
                 <Link
                   href={`/dashboard/bookings/${booking.id}/assign-vehicle`}
@@ -283,9 +230,13 @@ export default function ConfirmBookingPageComponent({
                     : t("AssignVehicle")}
                 </Link>
               </Button>
-              <PBold>{booking.assignedDriver?.name ?? "-"}</PBold>
+              <BookingItem
+                title={t("AssignedDriver")}
+                value={booking.assignedDriver?.name ?? "-"}
+              />{" "}
               <Button
                 variant={booking.assignedDriver?.name ? "secondary" : "outline"}
+                className="xl:col-span-3"
               >
                 <Link
                   href={`/dashboard/bookings/${booking.id}/assign-driver`}
@@ -296,10 +247,10 @@ export default function ConfirmBookingPageComponent({
                     : t("AssignDriver")}
                 </Link>
               </Button>
-            </ConfirmBookingSection>
+            </BookingSection>
             <Separator />
-            <ConfirmBookingFinalSection sectionTitle={t("PriceInfo")}>
-              <ConfirmBookingPriceItem
+            <BookingPriceSection sectionTitle={t("PriceInfo")}>
+              <BookingPriceItem
                 title={t("VehicleCharge")}
                 value={"₹" + booking.totalVehicleRate}
                 subtitle={t("RatePerKm", {
@@ -307,30 +258,30 @@ export default function ConfirmBookingPageComponent({
                   km: booking.totalDistance,
                 })}
               />
-              <ConfirmBookingPriceItem
+              <BookingPriceItem
                 title={t("ACCharge")}
                 value={"₹" + booking.totalAcCharge}
                 subtitle={t("ACPerDay", { charge: booking.acChargePerDay })}
               />
-              <ConfirmBookingPriceItem
+              <BookingPriceItem
                 title={t("DriverAllowance")}
                 value={"₹" + booking.totalDriverAllowance}
                 subtitle={t("AllowancePerDay", {
                   allowance: booking.allowancePerDay,
                 })}
               />
-              <ConfirmBookingPriceItem
+              <BookingPriceItem
                 title={t("Commission")}
                 value={"₹" + booking.totalCommission}
                 subtitle={t("CommissionRate", { rate: booking.commissionRate })}
               />
-              <ConfirmBookingPriceItem
+              <BookingPriceItem
                 title={t("TotalAmount")}
                 value={"₹" + booking.totalAmount}
               />
-            </ConfirmBookingFinalSection>
+            </BookingPriceSection>
             <Separator />
-            <ConfirmBookingSection sectionTitle={t("ConfirmInfo")}>
+            <BookingSection sectionTitle={t("ConfirmInfo")}>
               <DashboardTextarea
                 name="pickupAddress"
                 label={t("PickupAddress")}
@@ -347,10 +298,10 @@ export default function ConfirmBookingPageComponent({
                 placeholder={t("DropAddressPlaceholder")}
               />
               <DashboardTimePicker name="startTime" label={t("PickupTime")} />
-            </ConfirmBookingSection>
+            </BookingSection>
             {(isOwner || isAssignedUser) && (
               <div className="flex flex-col gap-3 lg:gap-4">
-                <ConfirmBookingAlertDialog
+                <BookingAlertDialog
                   title={t("Confirm.Title")}
                   desc={t("Confirm.Desc")}
                   noCTA={t("Confirm.NoCTA")}
@@ -366,129 +317,14 @@ export default function ConfirmBookingPageComponent({
                     {isConfirmPending && <Spinner />}
                     {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
                   </Button>
-                </ConfirmBookingAlertDialog>
-                <ConfirmBookingAlertDialog
-                  title={t("Send.Title")}
-                  desc={t("Send.Desc")}
-                  noCTA={t("Send.NoCTA")}
-                  labelChild={
-                    <Button variant={"outline"} disabled={quoteSent}>
-                      {quoteSent ? t("QuoteSent") : t("Send.Label")}
-                    </Button>
-                  }
-                >
-                  <Button
-                    variant={"default"}
-                    onClick={sendQuote}
-                    disabled={isSendPending}
-                  >
-                    {isSendPending && <Spinner />}
-                    {isSendPending ? t("Loading") : t("Send.YesCTA")}
-                  </Button>
-                </ConfirmBookingAlertDialog>
-                <ConfirmBookingAlertDialog
-                  title={t("Cancel.Title")}
-                  desc={t("Cancel.Desc")}
-                  noCTA={t("Cancel.NoCTA")}
-                  labelChild={
-                    <Button variant={"secondary"}>{t("Cancel.Label")}</Button>
-                  }
-                >
-                  <Button
-                    variant={"destructive"}
-                    onClick={() => cancel(false)}
-                    disabled={isCancelPending}
-                  >
-                    {isCancelPending && <Spinner />}
-                    {isCancelPending ? t("Loading") : t("Cancel.YesCTA")}
-                  </Button>
-                </ConfirmBookingAlertDialog>
+                </BookingAlertDialog>
+                <SendQuoteAlertButton bookingId={booking.id} />
+                <CancelBookingAlertButton bookingId={booking.id} />
               </div>
             )}
           </div>
         </form>
       </Form>
     </div>
-  )
-}
-
-type ConfirmBookingSectionType = {
-  sectionTitle: string
-  children: React.ReactNode
-}
-const ConfirmBookingSection = (props: ConfirmBookingSectionType) => {
-  return (
-    <div className="flex flex-col gap-2 lg:gap-3">
-      <PGrey>{props.sectionTitle}</PGrey>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-4 items-center">
-        {props.children}
-      </div>
-    </div>
-  )
-}
-
-const ConfirmBookingFinalSection = (props: ConfirmBookingSectionType) => {
-  return (
-    <div className="flex flex-col gap-2 lg:gap-3">
-      <PGrey>{props.sectionTitle}</PGrey>
-      <div className="grid grid-cols-1 gap-3 lg:gap-4 items-center">
-        {props.children}
-      </div>
-    </div>
-  )
-}
-
-type ConfirmBookingItemType = {
-  title: string
-  value: string
-}
-const ConfirmBookingItem = (props: ConfirmBookingItemType) => {
-  return (
-    <div className="flex flex-row sm:flex-col justify-between sm:justify-start items-center sm:items-start gap-2 sm:gap-0.5 lg:gap-1 last:text-end sm:last:text-start">
-      <Caption>{props.title}</Caption>
-      <PBold>{props.value}</PBold>
-    </div>
-  )
-}
-
-type ConfirmBookingPriceItemType = {
-  title: string
-  value: string
-  subtitle?: string
-}
-const ConfirmBookingPriceItem = (props: ConfirmBookingPriceItemType) => {
-  return (
-    <div className="flex flex-row justify-between items-center gap-2 lg:gap-3">
-      <Caption>{props.title}</Caption>
-      <div className="flex flex-col gap-0.5 lg:gap-1 text-end">
-        <PBold>{props.value}</PBold>
-        {props.subtitle && <CaptionGrey>{props.subtitle}</CaptionGrey>}
-      </div>
-    </div>
-  )
-}
-
-type ConfirmBookingAlertDialogType = {
-  title: string
-  desc: string
-  noCTA: string
-  labelChild: JSX.Element
-  children: React.ReactNode
-}
-const ConfirmBookingAlertDialog = (props: ConfirmBookingAlertDialogType) => {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{props.labelChild}</AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{props.title}</AlertDialogTitle>
-          <AlertDialogDescription>{props.desc}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{props.noCTA}</AlertDialogCancel>
-          <AlertDialogAction asChild>{props.children}</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
   )
 }

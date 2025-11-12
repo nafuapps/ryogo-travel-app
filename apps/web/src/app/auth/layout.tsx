@@ -1,26 +1,26 @@
 //Layout for auth pages
 
-import { getCurrentUser } from "@/lib/auth";
-import AuthMarketing from "./components/authMarketing";
-import { redirect, RedirectType } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth"
+import AuthMarketing from "./components/authMarketing"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function AuthLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const user = await getCurrentUser();
+  const user = await getCurrentUser()
 
   // Redirect to private route if the user is authenticated
   if (user?.userId) {
     if (user.userRole == "driver") {
-      redirect("/rider", RedirectType.replace);
+      redirect("/rider", RedirectType.replace)
     }
-    redirect("/dashboard", RedirectType.replace);
+    redirect("/dashboard", RedirectType.replace)
   }
 
   return (
-    <section id="AuthLayout" className="flex flex-row w-screen h-screen">
+    <section id="AuthLayout" className="flex flex-row w-screen h-dvh">
       <AuthMarketing />
       <div
         id="AuthMainSection"
@@ -29,5 +29,5 @@ export default async function AuthLayout({
         {children}
       </div>
     </section>
-  );
+  )
 }

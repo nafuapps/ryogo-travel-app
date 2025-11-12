@@ -6,7 +6,6 @@ import { mainClassName } from "@/components/page/pageCommons"
 import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import BookingDetailHeaderTabs from "./bookingDetailHeaderTabs"
 
 export default async function BookingDetailsPage({
   params,
@@ -29,9 +28,7 @@ export default async function BookingDetailsPage({
         bookingDetails={bookingDetails}
         isOwner={user?.userRole === "owner"}
         isAssignedUser={bookingDetails.assignedUser.id === user?.userId}
-      >
-        <BookingDetailHeaderTabs id={id} selectedTab="Details" />
-      </BookingDetailsPageComponent>
+      />
     </div>
   )
 }

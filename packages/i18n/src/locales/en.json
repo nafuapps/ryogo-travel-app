@@ -1108,7 +1108,13 @@
       "TotalAmount":"Total Amount",
       "Reconcile":"Reconcile Booking"
     },
-    "BookingTransactions": {},
+    "BookingTransactions": {
+      "NoTransactions": "No transactions found for this booking.",
+      "To":"To",
+      "From":"From",
+      "AddTransaction": "Add Transaction",
+      "Modify": "Modify"
+    },
     "BookingExpenses": {},
     "BookingTripLogs": {},
     "BookingDetailsHeaderTabs": {

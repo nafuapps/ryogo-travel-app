@@ -25,6 +25,14 @@ export const transactionRepository = {
   async getTransactionsByBookingId(bookingId: string) {
     return db.query.transactions.findMany({
       where: eq(transactions.bookingId, bookingId),
+      with:{
+        booking:{
+          columns:{
+            assignedUserId:true
+          },
+        },
+      }
+
     })
   },
 };

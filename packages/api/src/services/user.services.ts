@@ -302,7 +302,7 @@ export const userServices = {
     await userRepository.updateLastLogout(userId, new Date());
   },
 
-  // ? Reset password - Update
+  // ? Reset password (by system)
   async resetPassword(userId: string, email: string) {
     //Step1: Find user with userID
     const emailFound = await userRepository.getUserById(userId);
@@ -323,6 +323,7 @@ export const userServices = {
 
     //Step3: Generate a new password
     const newPassword = generateNewPassword();
+    console.log(newPassword);
 
     // TODO: Step4: send pwd in email
 
@@ -337,10 +338,10 @@ export const userServices = {
     }
 
     //Return userId as reset confirmation
-    return newUserData[0]!.id;
+    return {id: newUserData[0]!.id};
   },
 
-  // ? Reset password - Update
+  // ? Change password (by user)
   async changePassword(
     userId: string,
     oldPassword: string,

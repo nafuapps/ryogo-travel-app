@@ -183,8 +183,6 @@ export const users = pgTable(
   (t) => [
     unique().on(t.agencyId, t.phone, t.userRole), //Owner or Agent can also be a driver
     unique().on(t.phone, t.email, t.userRole), //same user can be added to multiple agencies but with different email or role
-    check("last login <= now", sql`${t.lastLogin} <= now()`),
-    check("last logout <= now", sql`${t.lastLogout} <= now()`),
     uniqueIndex("users_agency_role_phone_idx").on(
       t.agencyId,
       t.phone,

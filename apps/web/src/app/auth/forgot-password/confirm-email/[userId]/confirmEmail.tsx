@@ -1,10 +1,10 @@
 //Confirm Email page
-"use client";
+"use client"
 
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { useTranslations } from "next-intl"
 import {
   Form,
   FormControl,
@@ -13,38 +13,38 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { H2, H5, PGrey } from "@/components/typography";
-import { useRouter } from "next/navigation";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { ResetPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
-import { Spinner } from "@/components/ui/spinner";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { H2, H5, PGrey } from "@/components/typography"
+import { useRouter } from "next/navigation"
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
+import { ResetPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
+import { Spinner } from "@/components/ui/spinner"
 
 type ConfirmEmailPageComponentProps = {
-  userId: string;
-};
+  userId: string
+}
 export default function ConfirmEmailPageComponent(
   props: ConfirmEmailPageComponentProps
 ) {
-  const userId = props.userId;
+  const userId = props.userId
 
-  const t = useTranslations("Auth.ForgotPasswordPage.Step2");
+  const t = useTranslations("Auth.ForgotPasswordPage.Step2")
   const formSchema = z.object({
     email: z.email(t("Error1")),
-  });
+  })
 
-  type FormFields = z.infer<typeof formSchema>;
+  type FormFields = z.infer<typeof formSchema>
 
-  const router = useRouter();
+  const router = useRouter()
   // For managing form data and validation
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
@@ -55,15 +55,15 @@ export default function ConfirmEmailPageComponent(
         method: "POST",
         body: JSON.stringify({ userId: userId, email: data.email }),
       }
-    );
+    )
     if (resetSuccess.id) {
       //Redirect to success page
-      router.replace("/auth/forgot-password/success");
+      router.replace("/auth/forgot-password/success")
     } else {
       // Show error
-      methods.setError("email", { type: "manual", message: t("APIError") });
+      methods.setError("email", { type: "manual", message: t("APIError") })
     }
-  };
+  }
 
   return (
     <div id="ConfirmEmailPage" className="gap-4 w-full h-full">
@@ -108,7 +108,7 @@ export default function ConfirmEmailPageComponent(
               variant={"secondary"}
               type="button"
               onClick={() => {
-                router.back();
+                router.back()
               }}
             >
               {t("Back")}
@@ -117,5 +117,5 @@ export default function ConfirmEmailPageComponent(
         </form>
       </Form>
     </div>
-  );
+  )
 }

@@ -3,6 +3,7 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services";
 import { OnboardingChangePasswordAPIRequestType } from "@ryogo-travel-app/api/types/user.types";
 import { getCurrentUser } from "@/lib/auth";
 import { UserRegex } from "@/lib/regex";
+import { updateSessionUserStatus } from "@/lib/session"
 
 export async function POST(
   req: NextRequest,
@@ -11,7 +12,7 @@ export async function POST(
   try {
     //Check user auth
     const user = await getCurrentUser();
-    if (!user || user.userRole !== "owner") {
+    if (!user || user.userRole == "owner") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -30,6 +31,9 @@ export async function POST(
       oldPassword,
       newPassword
     );
+
+    //Update status in session cookie
+    await updateSessionUserStatus("active");
 
     return NextResponse.json(updatedUser, { status: 201 });
   } catch (err) {

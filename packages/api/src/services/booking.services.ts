@@ -1,15 +1,13 @@
 import {
   BookingStatusEnum,
   InsertBookingType,
-} from "@ryogo-travel-app/db/schema";
-import { bookingRepository } from "../repositories/booking.repo";
-import { CreateNewBookingAPIRequestType } from "../types/booking.types";
-import { locationRepository } from "../repositories/location.repo";
-import { routeRepository } from "../repositories/route.repo";
-import { customerServices } from "./customer.services";
-import { routeServices } from "./route.services";
-import { vehicleRepository } from "../repositories/vehicle.repo";
-import { customerRepository } from "../repositories/customer.repo";
+} from "@ryogo-travel-app/db/schema"
+import { bookingRepository } from "../repositories/booking.repo"
+import { CreateNewBookingAPIRequestType } from "../types/booking.types"
+import { locationRepository } from "../repositories/location.repo"
+import { customerServices } from "./customer.services"
+import { routeServices } from "./route.services"
+import { customerRepository } from "../repositories/customer.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
@@ -20,32 +18,32 @@ export const bookingServices = {
     //Day N days ago
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000
-    );
+    )
     //Day today
-    const endDate = new Date();
+    const endDate = new Date()
     const bookings =
       await bookingRepository.getBookingsByStatusCreatedDateRange(
         agencyId,
         startDate,
         endDate,
         BookingStatusEnum.CONFIRMED
-      );
+      )
     return bookings.map((booking) => {
       return {
         id: booking.id,
         status: booking.status,
         createdAt: booking.createdAt,
-      };
-    });
+      }
+    })
   },
 
   async findBookingsRevenuePreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000
-    );
+    )
     //Day today
-    const endDate = new Date();
+    const endDate = new Date()
 
     const bookings =
       await bookingRepository.getBookingsByStatusCreatedDateRange(
@@ -53,54 +51,54 @@ export const bookingServices = {
         startDate,
         endDate,
         BookingStatusEnum.CONFIRMED
-      );
+      )
     return bookings.map((booking) => {
       return {
         id: booking.id,
         createdAt: booking.createdAt,
         totalAmount: booking.totalAmount,
         commissionRate: booking.commissionRate,
-      };
-    });
+      }
+    })
   },
 
   async findBookingsUpdatedPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000
-    );
+    )
     //Day today
-    const endDate = new Date();
+    const endDate = new Date()
 
     const bookings = await bookingRepository.getBookingsByUpdatedDateRange(
       startDate,
       endDate,
       agencyId
-    );
+    )
 
     return bookings.map((booking) => {
       return {
         id: booking.id,
         status: booking.status,
         updatedAt: booking.updatedAt,
-      };
-    });
+      }
+    })
   },
 
   async findInProgressBookings(agencyId: string) {
     const bookings = await bookingRepository.getBookingsByStatus(
       BookingStatusEnum.IN_PROGRESS,
       agencyId
-    );
+    )
     return bookings.map((booking) => {
       return {
         id: booking.id,
-      };
-    });
+      }
+    })
   },
 
   async findOngoingTrips(agencyId: string) {
-    const bookings = await bookingRepository.getOngoingBookingsData(agencyId);
+    const bookings = await bookingRepository.getOngoingBookingsData(agencyId)
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
@@ -110,22 +108,22 @@ export const bookingServices = {
         customerName: booking.customer?.name,
         bookingId: booking.id,
         status: booking.tripLogs[0]?.type.toString(),
-      };
-    });
+      }
+    })
   },
 
   async findCompletedBookingsPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000
-    );
+    )
     //Day today
-    const endDate = new Date();
+    const endDate = new Date()
     const bookings = await bookingRepository.getCompletedBookingsData(
       agencyId,
       startDate,
       endDate
-    );
+    )
     return bookings.map((booking) => {
       return {
         status: booking.status.toString(),
@@ -137,20 +135,20 @@ export const bookingServices = {
         customerName: booking.customer?.name,
         bookingId: booking.id,
         createdAt: booking.tripLogs[0]?.createdAt,
-      };
-    });
+      }
+    })
   },
 
   async findUpcomingBookingsNextDays(agencyId: string, days: number = 1) {
     //Day today
-    const startDate = new Date();
+    const startDate = new Date()
     //Day N days later
-    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000);
+    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
     const bookings = await bookingRepository.getUpcomingBookingsData(
       agencyId,
       startDate,
       endDate
-    );
+    )
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
@@ -162,21 +160,21 @@ export const bookingServices = {
         startDate: booking.startDate,
         startTime: booking.startTime,
         endDate: booking.endDate,
-      };
-    });
+      }
+    })
   },
 
   async findLeadBookingsPreviousDays(agencyId: string, days: number = 1) {
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000
-    );
+    )
     //Day today
-    const endDate = new Date();
+    const endDate = new Date()
     const bookings = await bookingRepository.getLeadBookingsData(
       agencyId,
       startDate,
       endDate
-    );
+    )
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
@@ -187,52 +185,55 @@ export const bookingServices = {
         assignedUser: booking.assignedUser.name,
         passengers: booking.passengers,
         amount: booking.totalAmount,
-      };
-    });
+      }
+    })
   },
 
   //Get (lead) booking by id
   async findLeadBookingById(bookingId: string) {
-    const booking = await bookingRepository.getBookingById(bookingId);
-    return booking;
+    const booking = await bookingRepository.getBookingById(bookingId)
+    return booking
   },
 
   //Get booking status by id
   async findBookingStatusById(bookingId: string) {
-    const booking=
-      await bookingRepository.getBookingStatusById(bookingId);
-    return booking;
+    const booking = await bookingRepository.getBookingStatusById(bookingId)
+    return booking
   },
 
   //Get booking details by id
   async findBookingDetailsById(bookingId: string) {
-    const booking = await bookingRepository.getBookingDetailsById(bookingId);
-    return booking;
+    const booking = await bookingRepository.getBookingDetailsById(bookingId)
+    return booking
   },
 
   //Get transactions by booking id
   async findBookingTransactionsById(bookingId: string) {
     const bookingTransactions =
-      await transactionRepository.getTransactionsByBookingId(bookingId);
-    return bookingTransactions;
+      await transactionRepository.readTransactionsByBookingId(bookingId)
+    return bookingTransactions
   },
-  
+
   //Get booking expenses by id
   async findBookingExpensesById(bookingId: string) {
-    const bookingExpenses = await expenseRepository.getExpensesByBookingId(bookingId);
-    return bookingExpenses;
+    const bookingExpenses = await expenseRepository.getExpensesByBookingId(
+      bookingId
+    )
+    return bookingExpenses
   },
 
   //Get booking trip logs by id
   async findBookingTripLogsById(bookingId: string) {
-    const bookingTripLogs = await tripLogRepository.getTripLogsByBookingId(bookingId);
-    return bookingTripLogs;
+    const bookingTripLogs = await tripLogRepository.getTripLogsByBookingId(
+      bookingId
+    )
+    return bookingTripLogs
   },
 
   //Create a new Booking
   async addNewBooking(data: CreateNewBookingAPIRequestType) {
     //Step1: If no existing customer, create a new customer
-    let customerId = data.existingCustomerId;
+    let customerId = data.existingCustomerId
     if (!customerId) {
       const newCustomer = await customerServices.addNewCustomer(
         data.newCustomerName!,
@@ -241,50 +242,50 @@ export const bookingServices = {
         data.newCustomerLocationState!,
         data.agencyId,
         data.userId
-      );
-      customerId = newCustomer.id;
+      )
+      customerId = newCustomer.id
     }
     if (!customerId) {
-      throw new Error("Invalid customerId");
+      throw new Error("Invalid customerId")
     }
 
     //Step2: Get trip sourceId and destinationId from city & state
-    let sourceId = data.sourceId;
+    let sourceId = data.sourceId
     if (!sourceId) {
       const source = await locationRepository.getLocationByCityState(
         data.tripSourceLocationCity,
         data.tripSourceLocationState
-      );
-      sourceId = source?.id;
+      )
+      sourceId = source?.id
     }
-    let destinationId = data.destinationId;
+    let destinationId = data.destinationId
     if (!destinationId) {
       const destination = await locationRepository.getLocationByCityState(
         data.tripDestinationLocationCity,
         data.tripDestinationLocationState
-      );
-      destinationId = destination?.id;
+      )
+      destinationId = destination?.id
     }
     if (!sourceId || !destinationId) {
-      throw new Error("Invalid Locations");
+      throw new Error("Invalid Locations")
     }
 
     //Step3: Check if a route exists.. if not create a new one
-    let routeId = data.routeId;
-    let distance = data.selectedDistance;
+    let routeId = data.routeId
+    let distance = data.selectedDistance
     if (!routeId) {
       const newRoute = await routeServices.addNewRouteWithDistance(
         sourceId,
         destinationId,
         distance
-      );
+      )
       if (!newRoute) {
-        throw new Error("Failed to create route");
+        throw new Error("Failed to create route")
       }
-      routeId = newRoute.id;
+      routeId = newRoute.id
     }
     if (!routeId) {
-      throw new Error("Invalid routeId");
+      throw new Error("Invalid routeId")
     }
 
     //Step4: Prepare data
@@ -316,14 +317,14 @@ export const bookingServices = {
       commissionRate: data.selectedCommissionRate,
       totalCommission: data.totalCommission,
       totalAmount: data.finalAmount,
-    };
+    }
 
     //Step5: Create a new booking
-    const newBooking = await bookingRepository.createBooking(newBookingData);
+    const newBooking = await bookingRepository.createBooking(newBookingData)
     if (!newBooking || newBooking.length < 1) {
-      throw new Error("Error creating booking");
+      throw new Error("Error creating booking")
     }
-    return newBooking[0];
+    return newBooking[0]
   },
 
   //Confirm a booking lead
@@ -336,54 +337,54 @@ export const bookingServices = {
     customerId?: string
   ) {
     if (updateCustomerAddress && pickupAddress && customerId) {
-      await customerRepository.updateCustomerAddress(customerId, pickupAddress);
+      await customerRepository.updateCustomerAddress(customerId, pickupAddress)
     }
     const updatedBooking = await bookingRepository.updateBookingToConfirm(
       bookingId,
       startTime,
       pickupAddress,
       dropAddress
-    );
-    return updatedBooking;
+    )
+    return updatedBooking
   },
 
   //Cancel a booking
   async cancelBooking(id: string) {
-    const updatedBooking = await bookingRepository.updateBookingToCancel(id);
-    return updatedBooking;
+    const updatedBooking = await bookingRepository.updateBookingToCancel(id)
+    return updatedBooking
   },
 
   // TODO: Send booking quote to customer over whatsapp
   async sendQuote(id: string) {
-    return true;
+    return true
   },
 
   // TODO: Send booking invoice to customer over whatsapp
   async sendInvoice(id: string) {
-    return true;
+    return true
   },
-};
+}
 
 export type FindLeadBookingByIdType = Awaited<
   ReturnType<typeof bookingServices.findLeadBookingById>
->;
+>
 
 export type FindBookingStatusByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingStatusById>
->;
+>
 
 export type FindBookingDetailsByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingDetailsById>
->;
+>
 
 export type FindBookingTransactionsByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingTransactionsById>
->;
+>
 
 export type FindBookingExpensesByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingExpensesById>
->;
+>
 
 export type FindBookingTripLogsByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingTripLogsById>
->;
+>

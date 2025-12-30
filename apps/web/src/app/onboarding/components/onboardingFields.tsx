@@ -1,5 +1,5 @@
-import { PBold, CaptionGrey, Caption } from "@/components/typography";
-import { Checkbox } from "@/components/ui/checkbox";
+import { PBold, CaptionGrey, Caption } from "@/components/typography"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   FormControl,
   FormDescription,
@@ -7,38 +7,38 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import React from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { Switch } from "@/components/ui/switch";
+} from "@/components/ui/popover"
+import { CalendarIcon } from "lucide-react"
+import React from "react"
+import { UseFormRegisterReturn } from "react-hook-form"
+import { cn } from "@/lib/utils"
+import { format } from "date-fns"
+import { Switch } from "@/components/ui/switch"
 
 type OnboardingInputProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-  description: string;
-  type: React.HTMLInputTypeAttribute | undefined;
-  disabled?: boolean;
-};
+  name: string
+  label: string
+  placeholder: string
+  description: string
+  type: React.HTMLInputTypeAttribute | undefined
+  disabled?: boolean
+}
 
 export function OnboardingInput(props: OnboardingInputProps) {
   return (
@@ -64,16 +64,16 @@ export function OnboardingInput(props: OnboardingInputProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type OnboardingFileInputProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-  description: string;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  label: string
+  placeholder: string
+  description: string
+  register: UseFormRegisterReturn<string>
+}
 export function OnboardingFileInput(props: OnboardingFileInputProps) {
   return (
     <FormField
@@ -97,14 +97,14 @@ export function OnboardingFileInput(props: OnboardingFileInputProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type OnboardingTextareaProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-};
+  name: string
+  label: string
+  placeholder: string
+}
 
 export function OnboardingTextarea(props: OnboardingTextareaProps) {
   return (
@@ -122,16 +122,16 @@ export function OnboardingTextarea(props: OnboardingTextareaProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type OnboardingSelectProps = {
-  name: string;
-  title: string;
-  array: string[] | undefined;
-  placeholder: string;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  title: string
+  array: string[] | undefined
+  placeholder: string
+  register: UseFormRegisterReturn<string>
+}
 export function OnboardingSelect(props: OnboardingSelectProps) {
   return (
     <FormField
@@ -163,14 +163,14 @@ export function OnboardingSelect(props: OnboardingSelectProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type OnboardingCheckboxProps = {
-  name: string;
-  label: string;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  label: string
+  register: UseFormRegisterReturn<string>
+}
 export function OnboardingCheckbox(props: OnboardingCheckboxProps) {
   return (
     <FormField
@@ -188,18 +188,18 @@ export function OnboardingCheckbox(props: OnboardingCheckboxProps) {
               <Caption>{props.label}</Caption>
             </FormLabel>
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }
 
 type OnboardingMultipleCheckboxProps = {
-  name: string;
-  label: string;
-  array: string[] | undefined;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  label: string
+  array: string[] | undefined
+  register: UseFormRegisterReturn<string>
+}
 export function OnboardingMultipleCheckbox(
   props: OnboardingMultipleCheckboxProps
 ) {
@@ -231,7 +231,7 @@ export function OnboardingMultipleCheckbox(
                                 field.value?.filter(
                                   (value: string) => value !== item
                                 )
-                              );
+                              )
                         }}
                       />
                     </FormControl>
@@ -239,7 +239,7 @@ export function OnboardingMultipleCheckbox(
                       <Caption>{item}</Caption>
                     </FormLabel>
                   </FormItem>
-                );
+                )
               }}
             />
           ))}
@@ -247,15 +247,15 @@ export function OnboardingMultipleCheckbox(
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type OnboardingDatePickerProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-  description: string;
-};
+  name: string
+  label: string
+  placeholder: string
+  description: string
+}
 export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
   return (
     <FormField
@@ -271,7 +271,7 @@ export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-[240px] pl-3 text-left font-normal",
+                    "w-60 pl-3 text-left font-normal",
                     !field.value && "text-muted-foreground"
                   )}
                 >
@@ -301,13 +301,13 @@ export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type OnboardingSwitchProps = {
-  name: string;
-  label: string;
-};
+  name: string
+  label: string
+}
 export function OnboardingSwitch(props: OnboardingSwitchProps) {
   return (
     <FormField
@@ -323,5 +323,5 @@ export function OnboardingSwitch(props: OnboardingSwitchProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import { uploadFile } from "@ryogo-travel-app/db/storage";
-import { VehicleRegex } from "@/lib/regex";
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services";
-import { getCurrentUser } from "@/lib/auth";
+import { NextResponse } from "next/server"
+import { uploadFile } from "@ryogo-travel-app/db/storage"
+import { VehicleRegex } from "@/lib/regex"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { getCurrentUser } from "@/lib/auth"
 
 export async function POST(
   req: Request,
@@ -10,63 +10,63 @@ export async function POST(
 ) {
   try {
     //Check user auth
-    const user = await getCurrentUser();
+    const user = await getCurrentUser()
     if (!user || user.userRole !== "owner") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     //Get vehicleId
-    const { vehicleId } = await params;
+    const { vehicleId } = await params
     if (!VehicleRegex.safeParse(vehicleId).success) {
-      return NextResponse.json({ error: "Invalid vehicleId" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid vehicleId" }, { status: 400 })
     }
 
     //Get files
-    const formData = await req.formData();
-    const rc = formData.get("rc") as File;
-    const puc = formData.get("puc") as File;
-    const insurance = formData.get("insurance") as File;
-    const vehiclePhoto = formData.get("vehicle") as File;
+    const formData = await req.formData()
+    const rc = formData.get("rc") as File
+    const puc = formData.get("puc") as File
+    const insurance = formData.get("insurance") as File
+    const vehiclePhoto = formData.get("vehicle") as File
     if (!rc && !puc && !insurance && !vehiclePhoto) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 })
     }
 
-    let rcUrl = "";
-    let pucUrl = "";
-    let insuranceUrl = "";
-    let vehiclePhotoUrl = "";
+    let rcUrl = ""
+    let pucUrl = ""
+    let insuranceUrl = ""
+    let vehiclePhotoUrl = ""
 
     // Upload files to Supabase Storage
     if (rc) {
       const data = await uploadFile(
         rc,
         `${vehicleId}/rc/${Date.now()}-${rc.name}`
-      );
-      rcUrl = data?.fullPath;
+      )
+      rcUrl = data?.path
       // await vehicleServices.renewRcURL(vehicleId, rcUrl);
     }
     if (puc) {
       const data = await uploadFile(
         puc,
         `${vehicleId}/puc/${Date.now()}-${puc.name}`
-      );
-      pucUrl = data?.fullPath;
+      )
+      pucUrl = data?.path
       // await vehicleServices.renewPucURL(vehicleId, pucUrl);
     }
     if (insurance) {
       const data = await uploadFile(
         insurance,
         `${vehicleId}/insurance/${Date.now()}-${insurance.name}`
-      );
-      insuranceUrl = data?.fullPath;
+      )
+      insuranceUrl = data?.path
       // await vehicleServices.renewInsuranceURL(vehicleId, insuranceUrl);
     }
     if (vehiclePhoto) {
       const data = await uploadFile(
         vehiclePhoto,
         `${vehicleId}/vehiclePhoto/${Date.now()}-${vehiclePhoto.name}`
-      );
-      vehiclePhotoUrl = data?.fullPath;
+      )
+      vehiclePhotoUrl = data?.path
       // await vehicleServices.renewVehiclePhotoURL(vehicleId, vehiclePhotoUrl);
     }
 
@@ -76,16 +76,16 @@ export async function POST(
       pucUrl,
       insuranceUrl,
       vehiclePhotoUrl
-    );
-    return NextResponse.json({ id: vehicleId }, { status: 201 });
+    )
+    return NextResponse.json({ id: vehicleId }, { status: 201 })
   } catch (err) {
     const errorMessage =
       typeof err === "object" && err !== null && "message" in err
         ? (err as { message?: string }).message
-        : undefined;
+        : undefined
     return NextResponse.json(
       { error: errorMessage || "Something went wrong" },
       { status: 400 }
-    );
+    )
   }
 }

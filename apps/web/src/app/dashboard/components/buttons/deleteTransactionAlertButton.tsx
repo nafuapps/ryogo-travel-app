@@ -2,31 +2,35 @@
 
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
-import { cancelBookingAction } from "../actions/cancelBookingAction"
+import { deleteTransactionAction } from "../actions/deleteTransactionAction"
 import { toast } from "sonner"
 import { redirect, RedirectType } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
 
-type CancelBookingAlertButtonProps = {
+type DeleteTransactionAlertButtonProps = {
   bookingId: string
+  transactionId: string
 }
-export default function CancelBookingAlertButton(
-  props: CancelBookingAlertButtonProps
+export default function DeleteTransactionAlertButton(
+  props: DeleteTransactionAlertButtonProps
 ) {
   const [isCancelPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.CancelBooking")
+  const t = useTranslations("Dashboard.Buttons.DeleteTransaction")
 
-  //Cancel booking
-  async function cancel() {
+  //Delete transaction
+  async function deleteTransaction() {
     startCancelTransition(async () => {
-      //If cancel is successful, show cancel success message and redirect to cancelled booking details
-      if (await cancelBookingAction(props.bookingId)) {
+      //If delete is successful, show delete success message and redirect to transactions
+      if (await deleteTransactionAction(props.transactionId)) {
         toast.success(t("Success"))
-        redirect(`/dashboard/bookings/${props.bookingId}`, RedirectType.replace)
+        redirect(
+          `/dashboard/bookings/${props.bookingId}/transactions`,
+          RedirectType.replace
+        )
       } else {
-        //If cancel is not successful, show error message
+        //If delete is not successful, show error message
         toast.error(t("Error"))
       }
     })
@@ -41,7 +45,7 @@ export default function CancelBookingAlertButton(
     >
       <Button
         variant={"destructive"}
-        onClick={cancel}
+        onClick={deleteTransaction}
         disabled={isCancelPending}
       >
         {isCancelPending && <Spinner />}

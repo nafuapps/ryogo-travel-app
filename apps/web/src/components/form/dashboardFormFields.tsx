@@ -3,8 +3,8 @@ import {
   CaptionGrey,
   Caption,
   SmallGrey,
-} from "@/components/typography";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "@/components/typography"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   FormControl,
   FormDescription,
@@ -12,38 +12,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import React from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { Switch } from "@/components/ui/switch";
+} from "@/components/ui/popover"
+import { CalendarIcon } from "lucide-react"
+import React from "react"
+import { UseFormRegisterReturn } from "react-hook-form"
+import { cn } from "@/lib/utils"
+import { format } from "date-fns"
+import { Switch } from "@/components/ui/switch"
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
+import { Label } from "../ui/label"
 
 type DashboardInputProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-  description?: string;
-  type: React.HTMLInputTypeAttribute | undefined;
-  disabled?: boolean;
-};
+  name: string
+  label: string
+  placeholder: string
+  description?: string
+  type: React.HTMLInputTypeAttribute | undefined
+  disabled?: boolean
+}
 
 export function DashboardInput(props: DashboardInputProps) {
   return (
@@ -75,16 +77,16 @@ export function DashboardInput(props: DashboardInputProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type DashboardFileInputProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-  description?: string;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  label: string
+  placeholder: string
+  description?: string
+  register: UseFormRegisterReturn<string>
+}
 export function DashboardFileInput(props: DashboardFileInputProps) {
   return (
     <FormField
@@ -110,14 +112,14 @@ export function DashboardFileInput(props: DashboardFileInputProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type DashboardTextareaProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-};
+  name: string
+  label: string
+  placeholder: string
+}
 
 export function DashboardTextarea(props: DashboardTextareaProps) {
   return (
@@ -135,16 +137,16 @@ export function DashboardTextarea(props: DashboardTextareaProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type DashboardSelectProps = {
-  name: string;
-  title?: string;
-  array: string[] | undefined;
-  placeholder: string;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  title?: string
+  array: string[] | undefined
+  placeholder: string
+  register: UseFormRegisterReturn<string>
+}
 export function DashboardSelect(props: DashboardSelectProps) {
   return (
     <FormField
@@ -176,14 +178,53 @@ export function DashboardSelect(props: DashboardSelectProps) {
         </FormItem>
       )}
     />
-  );
+  )
+}
+
+type DashboardRadioProps = {
+  name: string
+  title?: string
+  array: string[] | undefined
+  register: UseFormRegisterReturn<string>
+  defaultValue: string
+  description?: string
+}
+export function DashboardRadio(props: DashboardRadioProps) {
+  return (
+    <FormField
+      name={props.name}
+      render={({ field }) => (
+        <FormItem className="w-full">
+          <FormLabel>
+            <SmallBold>{props.title}</SmallBold>
+          </FormLabel>
+          <RadioGroup
+            {...props.register}
+            onValueChange={field.onChange}
+            defaultValue={props.defaultValue}
+          >
+            {props.array!.map((item, index) => (
+              <div className="flex items-center gap-3" key={index}>
+                <RadioGroupItem value={item} id={`r${index}`} />
+                <Label htmlFor={`r${index}`}>{item.toUpperCase()}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+          <FormDescription>
+            <CaptionGrey>{props.description}</CaptionGrey>
+          </FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
 }
 
 type DashboardCheckboxProps = {
-  name: string;
-  label: string;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  label: string
+  register: UseFormRegisterReturn<string>
+}
 export function DashboardCheckbox(props: DashboardCheckboxProps) {
   return (
     <FormField
@@ -201,18 +242,18 @@ export function DashboardCheckbox(props: DashboardCheckboxProps) {
               <Caption>{props.label}</Caption>
             </FormLabel>
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }
 
 type DashboardMultipleCheckboxProps = {
-  name: string;
-  label: string;
-  array: string[] | undefined;
-  register: UseFormRegisterReturn<string>;
-};
+  name: string
+  label: string
+  array: string[] | undefined
+  register: UseFormRegisterReturn<string>
+}
 export function DashboardMultipleCheckbox(
   props: DashboardMultipleCheckboxProps
 ) {
@@ -244,7 +285,7 @@ export function DashboardMultipleCheckbox(
                                 field.value?.filter(
                                   (value: string) => value !== item
                                 )
-                              );
+                              )
                         }}
                       />
                     </FormControl>
@@ -252,7 +293,7 @@ export function DashboardMultipleCheckbox(
                       <Caption>{item}</Caption>
                     </FormLabel>
                   </FormItem>
-                );
+                )
               }}
             />
           ))}
@@ -260,16 +301,16 @@ export function DashboardMultipleCheckbox(
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type DashboardDatePickerProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-  description?: string;
-  disabled?: boolean;
-};
+  name: string
+  label: string
+  placeholder: string
+  description?: string
+  disabled?: boolean
+}
 export function DashboardDatePicker(props: DashboardDatePickerProps) {
   return (
     <FormField
@@ -321,13 +362,13 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type DashboardSwitchProps = {
-  name: string;
-  label: string;
-};
+  name: string
+  label: string
+}
 export function DashboardSwitch(props: DashboardSwitchProps) {
   return (
     <FormField
@@ -343,15 +384,15 @@ export function DashboardSwitch(props: DashboardSwitchProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type DashboardTimePickerProps = {
-  name: string;
-  label: string;
-  description?: string;
-  disabled?: boolean;
-};
+  name: string
+  label: string
+  description?: string
+  disabled?: boolean
+}
 export function DashboardTimePicker(props: DashboardTimePickerProps) {
   return (
     <FormField
@@ -378,5 +419,5 @@ export function DashboardTimePicker(props: DashboardTimePickerProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }

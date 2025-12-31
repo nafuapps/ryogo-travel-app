@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
-import "./globals.css";
-import { NextIntlClientProvider } from "next-intl";
-import { Toaster } from "@/components/ui/sonner";
+import type { Metadata } from "next"
+import { Noto_Sans } from "next/font/google"
+import "./globals.css"
+import { NextIntlClientProvider } from "next-intl"
+import { Toaster } from "@/components/ui/sonner"
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: "RyoGo Travel Agency App",
   description: "RyoGo is an app for travel agencies to manage their operations",
-};
+}
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -25,5 +25,5 @@ export default async function RootLayout({
         <Toaster position="top-center" richColors />
       </body>
     </html>
-  );
+  )
 }

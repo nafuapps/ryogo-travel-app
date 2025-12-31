@@ -1,31 +1,31 @@
 //Onboarding home page
 
-import { H2, H4, P, PGrey, Small } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { getCurrentUser } from "@/lib/auth";
-import { LucideFootprints, LucideListCheck } from "lucide-react";
-import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import Link from "next/link";
-import { redirect, RedirectType } from "next/navigation";
+import { H2, H4, P, PGrey, Small } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { getCurrentUser } from "@/lib/auth"
+import { LucideFootprints, LucideListCheck } from "lucide-react"
+import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Onboarding Page | RyoGo",
   description: "Onboarding page for RyoGo Travel App",
-};
+}
 
 export default async function OnboardingHomePage() {
-  const user = await getCurrentUser();
+  const user = await getCurrentUser()
 
   // Redirect to private route if the user is authenticated
   if (user?.userId) {
     if (user.userRole == "driver") {
-      redirect("/rider", RedirectType.replace);
+      redirect("/rider", RedirectType.replace)
     }
-    redirect("/dashboard", RedirectType.replace);
+    redirect("/dashboard", RedirectType.replace)
   }
-  const t = await getTranslations("Onboarding.HomePage");
+  const t = await getTranslations("Onboarding.HomePage")
   return (
     <div
       id="OnboardingHomePage"
@@ -35,7 +35,7 @@ export default async function OnboardingHomePage() {
         id="OnboardingHomeHeader"
         className="flex flex-col w-full items-center text-center"
       >
-        {/* TODO: Logo*/}
+        {/* TODO: Add Logo*/}
         <H2>{t("Header.Title")}</H2>
         <P>{t("Header.Description")}</P>
       </div>
@@ -108,5 +108,5 @@ export default async function OnboardingHomePage() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

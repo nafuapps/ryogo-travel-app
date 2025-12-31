@@ -1,9 +1,10 @@
 import {
   CaptionGrey,
   H4,
-  CaptionBold,
-  CaptionRed,
   Caption,
+  SmallBold,
+  Small,
+  SmallRed,
 } from "@/components/typography"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -29,8 +30,10 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 
 export default async function TransactionItem({
   transaction,
+  canModifyTransaction,
 }: {
   transaction: NonNullable<FindBookingTransactionsByIdType>[0]
+  canModifyTransaction: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingTransactions")
   const id = transaction.bookingId
@@ -58,35 +61,37 @@ export default async function TransactionItem({
             </div>
           )}
           {transaction.type == TransactionTypesEnum.DEBIT ? (
-            <CaptionRed>{transaction.otherParty.toUpperCase()}</CaptionRed>
+            <SmallRed>{transaction.otherParty.toUpperCase()}</SmallRed>
           ) : (
-            <Caption>{transaction.otherParty.toUpperCase()}</Caption>
+            <Small>{transaction.otherParty.toUpperCase()}</Small>
           )}
           <CaptionGrey>{transaction.id}</CaptionGrey>
         </div>
-        <div className="flex flex-col gap-2 lg:gap-3 justify-start w-full">
-          <Caption>{format(transaction.createdAt, "dd MMM hh:mm aaa")}</Caption>
-          <CaptionBold>{transaction.mode.toUpperCase()}</CaptionBold>
-          {transaction.remarks && (
-            <CaptionGrey>{transaction.remarks}</CaptionGrey>
-          )}
+        <div className="flex flex-col gap-2 lg:gap-3 w-full">
+          <SmallBold>{transaction.mode.toUpperCase()}</SmallBold>
+          {transaction.remarks && <Caption>{transaction.remarks}</Caption>}
+          <CaptionGrey>
+            {format(transaction.createdAt, "dd MMM hh:mm aaa")}
+          </CaptionGrey>
+          <CaptionGrey>{transaction.addedByUser.name}</CaptionGrey>
         </div>
-
         <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
           <H4>{transaction.amount}</H4>
         </div>
-        <Link
-          href={
-            `/dashboard/bookings/${id}/transactions/modify/${txnId}` as unknown as UrlObject
-          }
-        >
-          <div className="flex p-2 lg:pl-3 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-            <div className="hidden lg:flex">
-              <CaptionGrey>{t("Modify")}</CaptionGrey>
+        {canModifyTransaction && (
+          <Link
+            href={
+              `/dashboard/bookings/${id}/transactions/modify/${txnId}` as unknown as UrlObject
+            }
+          >
+            <div className="flex p-2 lg:pl-3 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
+              <div className="hidden lg:flex">
+                <CaptionGrey>{t("Modify")}</CaptionGrey>
+              </div>
+              <LucideChevronRight className="size-5 lg:size-6 text-slate-500" />
             </div>
-            <LucideChevronRight className="size-5 lg:size-6 text-slate-500" />
-          </div>
-        </Link>
+          </Link>
+        )}
       </div>
       {transaction.transactionPhotoUrl && (
         <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">

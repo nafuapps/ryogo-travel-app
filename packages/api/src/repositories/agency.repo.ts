@@ -1,24 +1,14 @@
-import { db } from "@ryogo-travel-app/db";
+import { db } from "@ryogo-travel-app/db"
 import {
   agencies,
   AgencyStatusEnum,
   InsertAgencyType,
-} from "@ryogo-travel-app/db/schema";
-import { eq, and } from "drizzle-orm";
+} from "@ryogo-travel-app/db/schema"
+import { eq, and } from "drizzle-orm"
 
 export const agencyRepository = {
-  //Get all agencies
-  async getAllAgencies() {
-    return await db.select().from(agencies);
-  },
-
-  //Get agencies by status
-  async getAgenciesByStatus(status: AgencyStatusEnum) {
-    return await db.select().from(agencies).where(eq(agencies.status, status));
-  },
-
   //Get agency by id
-  async getAgencyById(id: string) {
+  async readAgencyById(id: string) {
     return await db.query.agencies.findFirst({
       where: eq(agencies.id, id),
       with: {
@@ -26,11 +16,11 @@ export const agencyRepository = {
           columns: { id: true, city: true, state: true },
         },
       },
-    });
+    })
   },
 
   //Get agency by phone and email
-  async getAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
+  async readAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
     return await db
       .select({ id: agencies.id })
       .from(agencies)
@@ -39,12 +29,12 @@ export const agencyRepository = {
           eq(agencies.businessPhone, businessPhone),
           eq(agencies.businessEmail, businessEmail)
         )
-      );
+      )
   },
 
   //Create agency
   async createAgency(data: InsertAgencyType) {
-    return await db.insert(agencies).values(data).returning();
+    return await db.insert(agencies).values(data).returning()
   },
 
   //Update agency status by Id
@@ -53,7 +43,7 @@ export const agencyRepository = {
       .update(agencies)
       .set({ status })
       .where(eq(agencies.id, id))
-      .returning();
+      .returning()
   },
 
   //Update agency subscription expiry time by Id
@@ -62,7 +52,7 @@ export const agencyRepository = {
       .update(agencies)
       .set({ subscriptionExpiresOn: expiryTime })
       .where(eq(agencies.id, id))
-      .returning();
+      .returning()
   },
 
   //Update agency default commission rate by Id
@@ -71,7 +61,7 @@ export const agencyRepository = {
       .update(agencies)
       .set({ defaultCommissionRate: rate })
       .where(eq(agencies.id, id))
-      .returning();
+      .returning()
   },
 
   //Update logo URL by Id
@@ -80,11 +70,11 @@ export const agencyRepository = {
       .update(agencies)
       .set({ logoUrl: logoUrl })
       .where(eq(agencies.id, id))
-      .returning();
+      .returning()
   },
 
   //Delete agency by Id
   async deleteAgency(id: string) {
-    return await db.delete(agencies).where(eq(agencies.id, id)).returning();
+    return await db.delete(agencies).where(eq(agencies.id, id)).returning()
   },
-};
+}

@@ -32,9 +32,11 @@ export const transactionRepository = {
     return db.query.transactions.findMany({
       where: eq(transactions.bookingId, bookingId),
       with: {
-        booking: {
+        addedByUser: {
           columns: {
-            assignedUserId: true,
+            id: true,
+            name: true,
+            userRole: true,
           },
         },
       },

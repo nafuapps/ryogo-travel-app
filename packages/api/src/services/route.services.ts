@@ -1,5 +1,5 @@
-import { locationRepository } from "../repositories/location.repo";
-import { routeRepository } from "../repositories/route.repo";
+import { locationRepository } from "../repositories/location.repo"
+import { routeRepository } from "../repositories/route.repo"
 
 export const routeServices = {
   async findOrCreateRouteByLocations(
@@ -8,43 +8,43 @@ export const routeServices = {
     destinationCity: string,
     destinationState: string
   ) {
-    const source = await locationRepository.getLocationByCityState(
+    const source = await locationRepository.readLocationByCityState(
       sourceCity,
       sourceState
-    );
-    const destination = await locationRepository.getLocationByCityState(
+    )
+    const destination = await locationRepository.readLocationByCityState(
       destinationCity,
       destinationState
-    );
+    )
 
     if (!source || !destination) {
-      throw new Error("Location not found");
+      throw new Error("Location not found")
     }
 
-    const route = await routeRepository.getRouteByLocations(
+    const route = await routeRepository.readRouteByLocations(
       source.id,
       destination.id
-    );
+    )
     if (route) {
-      return route;
+      return route
     }
     //No route found, create a new one
-    const newRoute = await this.addNewRoute(source.id, destination.id);
-    return newRoute;
+    const newRoute = await this.addNewRoute(source.id, destination.id)
+    return newRoute
   },
 
   async addNewRoute(sourceId: string, destinationId: string) {
     if (sourceId === destinationId) {
-      throw new Error("Source and destination cannot be same");
+      throw new Error("Source and destination cannot be same")
     }
 
     // Get postgis distance
-    const newDistance = await locationRepository.getDistance(
+    const newDistance = await locationRepository.readDistanceBetweenLocations(
       sourceId,
       destinationId
-    );
+    )
     if (!newDistance || newDistance < 1) {
-      throw new Error("Invalid distance");
+      throw new Error("Invalid distance")
     }
 
     //Create new route with this distance
@@ -52,11 +52,11 @@ export const routeServices = {
       sourceId,
       destinationId,
       newDistance
-    );
+    )
     if (!newRoute || newRoute.length < 1) {
-      throw new Error("Error creating route");
+      throw new Error("Error creating route")
     }
-    return newRoute[0];
+    return newRoute[0]
   },
 
   async addNewRouteWithDistance(
@@ -65,32 +65,32 @@ export const routeServices = {
     distance: number
   ) {
     if (sourceId === destinationId) {
-      throw new Error("Source and destination cannot be same");
+      throw new Error("Source and destination cannot be same")
     }
 
     // Get postgis distance
-    const dbDistance = await locationRepository.getDistance(
+    const dbDistance = await locationRepository.readDistanceBetweenLocations(
       sourceId,
       destinationId
-    );
+    )
 
-    const ratio = distance / dbDistance;
-    let newDistance: number;
+    const ratio = distance / dbDistance
+    let newDistance: number
     // Check if entered distance is close to db distance
     // If close enough, use entered distance otherwise use db (postgis) distance
     if (!dbDistance || dbDistance < 1 || (ratio > 0.8 && ratio < 1.2)) {
-      newDistance = distance;
+      newDistance = distance
     } else {
-      newDistance = dbDistance;
+      newDistance = dbDistance
     }
     const newRoute = await routeRepository.createRoute(
       sourceId,
       destinationId,
       newDistance
-    );
+    )
     if (!newRoute || newRoute.length < 1) {
-      throw new Error("Error creating route");
+      throw new Error("Error creating route")
     }
-    return newRoute[0];
+    return newRoute[0]
   },
-};
+}

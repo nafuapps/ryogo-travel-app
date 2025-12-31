@@ -13,18 +13,22 @@ export default async function BookingDetailsPage({
 }) {
   const { id } = await params
   const user = await getCurrentUser()
+
+  const assignedUserId = await bookingServices.findAssignedUserIdByBookingId(id)
+
   const bookingTransactions = await bookingServices.findBookingTransactionsById(
     id
   )
+
+  //Only booking assigned user or owner can create/modify transactions
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/transactions"} />
       <BookingTransactionsPageComponent
         bookingId={id}
         bookingTransactions={bookingTransactions}
-        isOwner={user?.userRole == "owner"}
-        isAssignedUser={
-          user?.userId == bookingTransactions[0]?.booking.assignedUserId
+        canCreateTransaction={
+          user?.userRole == "owner" || user?.userId == assignedUserId
         }
       />
     </div>

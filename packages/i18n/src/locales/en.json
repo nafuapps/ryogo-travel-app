@@ -1110,15 +1110,21 @@
     },
     "BookingTransactions": {
       "NoTransactions": "No transactions found for this booking.",
-      "To": "To",
-      "From": "From",
       "AddTransaction": "Add Transaction",
       "Modify": "Modify",
-      "Proof":" View Proof",
-      "TransactionProofImage":"Transaction Image"
+      "Proof":" View Attachment"
     },
-    "BookingExpenses": {},
-    "BookingTripLogs": {},
+    "BookingExpenses": {
+      "NoExpenses": "No expenses found for this booking.",
+      "AddExpense": "Add Expense",
+      "Modify": "Modify",
+      "Proof":" View Attachment"
+    },
+    "BookingTripLogs": {
+      "NoTripLogs": "No trip logs found for this booking.",
+      "Km":" Km",
+      "Proof":" View Attachment"
+    },
     "BookingDetailsHeaderTabs": {
       "Details": "Details",
       "Expenses": "Expenses",
@@ -1213,6 +1219,74 @@
       "Success": "Transaction details modified successfully!",
       "Error": "Cannot modify transaction.. Try again later!"
     },
+    "NewExpense": {
+      "Title": "New Expense",
+      "Field1": {
+        "Title": "Expense type",
+        "Description":"Select type of item purchased",
+        "Error1": "Expense type is required"
+      },
+      "Field2": {
+        "Title": "Amount (in ₹)",
+        "Placeholder": "500",
+        "Error1": "Amount must be a number",
+        "Error2": "Amount must be atleast ₹1",
+        "Error3": "Amount must be less than ₹1000000",
+        "Error4": "Amount cannot be in decimals",
+        "Error5": "Amount must be a positive number"
+      },
+      "Field3": {
+        "Title": "Remarks (optional)",
+        "Placeholder": "Enter any remarks regarding this expense",
+        "Error1": "Remarks must be less than 300 characters"
+      },
+      "Field4":{
+        "Title":"Upload proof (optional)",
+         "Placeholder": "UPLOAD",
+          "Description": "Upload the expense document photo",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image or pdf files are allowed"
+      },
+      "PrimaryCTA": "Create Expense",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "Expense added successfully!",
+      "Error": "Cannot add expense.. Try again later!"
+    },
+    "ModifyExpense": {
+      "Title": "Modify Expense",
+      "Field1": {
+        "Title": "Expense type",
+        "Description":"Select type of item purchased",
+        "Error1": "Expense type is required"
+      },
+      "Field2": {
+        "Title": "Amount (in ₹)",
+        "Placeholder": "500",
+        "Error1": "Amount must be a number",
+        "Error2": "Amount must be atleast ₹1",
+        "Error3": "Amount must be less than ₹1000000",
+        "Error4": "Amount cannot be in decimals",
+        "Error5": "Amount must be a positive number"
+      },
+      "Field3": {
+        "Title": "Remarks (optional)",
+        "Placeholder": "Enter any remarks regarding this expense",
+        "Error1": "Remarks must be less than 300 characters"
+      },
+      "Field4":{
+        "Title":"Upload proof (optional)",
+         "Placeholder": "UPLOAD",
+          "Description": "Upload the expense document photo",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image or pdf files are allowed"
+      },
+      "PrimaryCTA": "Save changes",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "Expense details modified successfully!",
+      "Error": "Cannot modify expense.. Try again later!"
+    },
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",
@@ -1253,6 +1327,16 @@
         "NoCTA": "No",
         "Success": "Transaction deleted!",
         "Error": "Cannot delete transaction.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Delete"
+      },
+      "DeleteExpense": {
+        "Label": "Delete Expense",
+        "Title": "Are you sure you want to delete this expense?",
+        "Desc": "When deleted, this expense cannot be recovered later.",
+        "NoCTA": "No",
+        "Success": "Expense deleted!",
+        "Error": "Cannot delete expense.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Delete"
       }

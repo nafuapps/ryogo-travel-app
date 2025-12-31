@@ -1,29 +1,29 @@
-import { db } from "@ryogo-travel-app/db";
+import { db } from "@ryogo-travel-app/db"
 import {
   BookingStatusEnum,
   InsertVehicleType,
   vehicleRepairs,
   vehicles,
   VehicleStatusEnum,
-} from "@ryogo-travel-app/db/schema";
-import { eq, and, notInArray, inArray } from "drizzle-orm";
+} from "@ryogo-travel-app/db/schema"
+import { eq, and, notInArray, inArray } from "drizzle-orm"
 
 export const vehicleRepository = {
   //Get vehicle by id
-  async getVehicleById(id: string) {
-    return await db.select().from(vehicles).where(eq(vehicles.id, id));
+  async readVehicleById(id: string) {
+    return await db.select().from(vehicles).where(eq(vehicles.id, id))
   },
 
   //Get all vehicles of an agency
-  async getVehiclesByAgencyId(agencyId: string) {
+  async readVehiclesByAgencyId(agencyId: string) {
     return await db
       .select()
       .from(vehicles)
-      .where(eq(vehicles.agencyId, agencyId));
+      .where(eq(vehicles.agencyId, agencyId))
   },
 
   //Get all vehicles data for a new booking in an agency
-  async getAllVehiclesDataByAgencyId(agencyId: string) {
+  async readAllVehiclesDataByAgencyId(agencyId: string) {
     return await db.query.vehicles.findMany({
       columns: {
         id: true,
@@ -69,11 +69,11 @@ export const vehicleRepository = {
             eq(vehicleRepairs.isCompleted, false),
         },
       },
-    });
+    })
   },
 
   //Get vehicle by number in an agency
-  async getVehicleByNumberInAgency(agencyId: string, vehicleNumber: string) {
+  async readVehicleByNumberInAgency(agencyId: string, vehicleNumber: string) {
     return await db
       .select({ id: vehicles.id })
       .from(vehicles)
@@ -82,12 +82,12 @@ export const vehicleRepository = {
           eq(vehicles.vehicleNumber, vehicleNumber),
           eq(vehicles.agencyId, agencyId)
         )
-      );
+      )
   },
 
   //Create vehicle
   async createVehicle(vehicle: InsertVehicleType) {
-    return await db.insert(vehicles).values(vehicle).returning();
+    return await db.insert(vehicles).values(vehicle).returning()
   },
 
   //Update vehicle Docs Urls
@@ -107,7 +107,7 @@ export const vehicleRepository = {
         vehiclePhotoUrl: vehiclePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id });
+      .returning({ id: vehicles.id })
   },
 
   //Update vehicle PUC Url
@@ -118,7 +118,7 @@ export const vehicleRepository = {
         pucPhotoUrl: pucPhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id });
+      .returning({ id: vehicles.id })
   },
 
   //Update vehicle RC Url
@@ -129,7 +129,7 @@ export const vehicleRepository = {
         rcPhotoUrl: rcPhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id });
+      .returning({ id: vehicles.id })
   },
   //Update vehicle photo Url
   async updateVehiclePhotoUrl(vehicleId: string, vehiclePhotoUrl: string) {
@@ -139,7 +139,7 @@ export const vehicleRepository = {
         vehiclePhotoUrl: vehiclePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id });
+      .returning({ id: vehicles.id })
   },
   //Update vehicle Insurance Url
   async updateInsuranceUrl(vehicleId: string, insurancePhotoUrl: string) {
@@ -149,6 +149,6 @@ export const vehicleRepository = {
         insurancePhotoUrl: insurancePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id });
+      .returning({ id: vehicles.id })
   },
-};
+}

@@ -1,15 +1,15 @@
-import { db } from "@ryogo-travel-app/db";
-import { routes } from "@ryogo-travel-app/db/schema";
-import { and, eq } from "drizzle-orm";
+import { db } from "@ryogo-travel-app/db"
+import { routes } from "@ryogo-travel-app/db/schema"
+import { and, eq } from "drizzle-orm"
 
 export const routeRepository = {
-  async getRouteByLocations(sourceId: string, destinationId: string) {
+  async readRouteByLocations(sourceId: string, destinationId: string) {
     return await db.query.routes.findFirst({
       where: and(
         eq(routes.sourceId, sourceId),
         eq(routes.destinationId, destinationId)
       ),
-    });
+    })
   },
 
   async createRoute(
@@ -27,6 +27,6 @@ export const routeRepository = {
         estimatedTime: time ?? distance,
         isActive: true,
       })
-      .returning();
+      .returning()
   },
-};
+}

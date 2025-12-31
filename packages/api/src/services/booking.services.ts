@@ -22,7 +22,7 @@ export const bookingServices = {
     //Day today
     const endDate = new Date()
     const bookings =
-      await bookingRepository.getBookingsByStatusCreatedDateRange(
+      await bookingRepository.readBookingsByStatusCreatedDateRange(
         agencyId,
         startDate,
         endDate,
@@ -46,7 +46,7 @@ export const bookingServices = {
     const endDate = new Date()
 
     const bookings =
-      await bookingRepository.getBookingsByStatusCreatedDateRange(
+      await bookingRepository.readBookingsByStatusCreatedDateRange(
         agencyId,
         startDate,
         endDate,
@@ -70,7 +70,7 @@ export const bookingServices = {
     //Day today
     const endDate = new Date()
 
-    const bookings = await bookingRepository.getBookingsByUpdatedDateRange(
+    const bookings = await bookingRepository.readBookingsByUpdatedDateRange(
       startDate,
       endDate,
       agencyId
@@ -86,7 +86,7 @@ export const bookingServices = {
   },
 
   async findInProgressBookings(agencyId: string) {
-    const bookings = await bookingRepository.getBookingsByStatus(
+    const bookings = await bookingRepository.readBookingsByStatus(
       BookingStatusEnum.IN_PROGRESS,
       agencyId
     )
@@ -98,7 +98,7 @@ export const bookingServices = {
   },
 
   async findOngoingTrips(agencyId: string) {
-    const bookings = await bookingRepository.getOngoingBookingsData(agencyId)
+    const bookings = await bookingRepository.readOngoingBookingsData(agencyId)
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
@@ -119,7 +119,7 @@ export const bookingServices = {
     )
     //Day today
     const endDate = new Date()
-    const bookings = await bookingRepository.getCompletedBookingsData(
+    const bookings = await bookingRepository.readCompletedBookingsData(
       agencyId,
       startDate,
       endDate
@@ -144,7 +144,7 @@ export const bookingServices = {
     const startDate = new Date()
     //Day N days later
     const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
-    const bookings = await bookingRepository.getUpcomingBookingsData(
+    const bookings = await bookingRepository.readUpcomingBookingsData(
       agencyId,
       startDate,
       endDate
@@ -170,7 +170,7 @@ export const bookingServices = {
     )
     //Day today
     const endDate = new Date()
-    const bookings = await bookingRepository.getLeadBookingsData(
+    const bookings = await bookingRepository.readLeadBookingsData(
       agencyId,
       startDate,
       endDate
@@ -189,21 +189,27 @@ export const bookingServices = {
     })
   },
 
+  //Get assigned user id by booking id
+  async findAssignedUserIdByBookingId(bookingId: string) {
+    const booking = await bookingRepository.readBookingById(bookingId)
+    return booking?.assignedUserId || null
+  },
+
   //Get (lead) booking by id
   async findLeadBookingById(bookingId: string) {
-    const booking = await bookingRepository.getBookingById(bookingId)
+    const booking = await bookingRepository.readBookingById(bookingId)
     return booking
   },
 
   //Get booking status by id
   async findBookingStatusById(bookingId: string) {
-    const booking = await bookingRepository.getBookingStatusById(bookingId)
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
     return booking
   },
 
   //Get booking details by id
   async findBookingDetailsById(bookingId: string) {
-    const booking = await bookingRepository.getBookingDetailsById(bookingId)
+    const booking = await bookingRepository.readBookingDetailsById(bookingId)
     return booking
   },
 
@@ -216,7 +222,7 @@ export const bookingServices = {
 
   //Get booking expenses by id
   async findBookingExpensesById(bookingId: string) {
-    const bookingExpenses = await expenseRepository.getExpensesByBookingId(
+    const bookingExpenses = await expenseRepository.readExpensesByBookingId(
       bookingId
     )
     return bookingExpenses
@@ -224,7 +230,7 @@ export const bookingServices = {
 
   //Get booking trip logs by id
   async findBookingTripLogsById(bookingId: string) {
-    const bookingTripLogs = await tripLogRepository.getTripLogsByBookingId(
+    const bookingTripLogs = await tripLogRepository.readTripLogsByBookingId(
       bookingId
     )
     return bookingTripLogs
@@ -252,7 +258,7 @@ export const bookingServices = {
     //Step2: Get trip sourceId and destinationId from city & state
     let sourceId = data.sourceId
     if (!sourceId) {
-      const source = await locationRepository.getLocationByCityState(
+      const source = await locationRepository.readLocationByCityState(
         data.tripSourceLocationCity,
         data.tripSourceLocationState
       )
@@ -260,7 +266,7 @@ export const bookingServices = {
     }
     let destinationId = data.destinationId
     if (!destinationId) {
-      const destination = await locationRepository.getLocationByCityState(
+      const destination = await locationRepository.readLocationByCityState(
         data.tripDestinationLocationCity,
         data.tripDestinationLocationState
       )
@@ -339,7 +345,7 @@ export const bookingServices = {
     if (updateCustomerAddress && pickupAddress && customerId) {
       await customerRepository.updateCustomerAddress(customerId, pickupAddress)
     }
-    const updatedBooking = await bookingRepository.updateBookingToConfirm(
+    const updatedBooking = await bookingRepository.updateBookingToConfirmed(
       bookingId,
       startTime,
       pickupAddress,

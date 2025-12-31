@@ -1,15 +1,15 @@
-import { InsertCustomerType } from "@ryogo-travel-app/db/schema";
-import { customerRepository } from "../repositories/customer.repo";
-import { locationRepository } from "../repositories/location.repo";
+import { InsertCustomerType } from "@ryogo-travel-app/db/schema"
+import { customerRepository } from "../repositories/customer.repo"
+import { locationRepository } from "../repositories/location.repo"
 
 export const customerServices = {
   async findCustomerByPhoneInAgency(phone: string, agencyId: string) {
-    const customer = await customerRepository.getCustomerByPhoneAgencyId(
+    const customer = await customerRepository.readCustomerByPhoneAgencyId(
       phone,
       agencyId
-    );
+    )
     if (!customer) {
-      return null;
+      return null
     }
     return {
       id: customer?.id,
@@ -17,7 +17,7 @@ export const customerServices = {
       phone: customer?.phone,
       remarks: customer?.remarks,
       location: customer?.location.city + ", " + customer?.location.state,
-    };
+    }
   },
 
   async addNewCustomer(
@@ -28,12 +28,12 @@ export const customerServices = {
     agencyId: string,
     userId: string
   ) {
-    const location = await locationRepository.getLocationByCityState(
+    const location = await locationRepository.readLocationByCityState(
       locationCity,
       locationState
-    );
+    )
     if (!location) {
-      throw Error("Location not found");
+      throw Error("Location not found")
     }
     const newCustomerData = {
       name: name,
@@ -41,19 +41,17 @@ export const customerServices = {
       locationId: location.id,
       agencyId: agencyId,
       addedByUserId: userId,
-    };
-    const newCustomer = await customerRepository.createCustomer(
-      newCustomerData
-    );
+    }
+    const newCustomer = await customerRepository.createCustomer(newCustomerData)
     if (!newCustomer || newCustomer.length < 1) {
-      throw Error("Failed to add new customer");
+      throw Error("Failed to add new customer")
     }
     if (newCustomer.length > 1) {
       // !This is a major issue
-      throw Error("Multiple customers found");
+      throw Error("Multiple customers found")
     }
     return {
       id: newCustomer[0]!.id,
-    };
+    }
   },
-};
+}

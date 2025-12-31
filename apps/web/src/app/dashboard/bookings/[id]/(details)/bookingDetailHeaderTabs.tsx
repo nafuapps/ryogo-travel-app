@@ -1,3 +1,4 @@
+import { Small } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { UrlObject } from "url"
@@ -36,7 +37,7 @@ export default async function BookingDetailHeaderTabs(
   }
 
   return (
-    <div className="flex rounded bg-slate-300 flex-row gap-1 lg:gap-1.5 p-1 lg:p-1.5 self-start my-2 lg:my-3">
+    <div className="flex rounded bg-slate-300 flex-row gap-1 lg:gap-1.5 p-1 lg:p-1.5 self-center my-2 lg:my-3">
       {(
         [
           "Details",
@@ -51,7 +52,7 @@ export default async function BookingDetailHeaderTabs(
               props.selectedTab == tab ? "bg-white shadow" : ""
             }`}
           >
-            {t(tab)}
+            <Small>{t(tab)}</Small>
           </div>
         </Link>
       ))}

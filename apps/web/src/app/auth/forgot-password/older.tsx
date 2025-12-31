@@ -1,10 +1,10 @@
 //Forgot password page
-"use client";
+"use client"
 
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { useTranslations } from "next-intl"
 import {
   Form,
   FormControl,
@@ -13,50 +13,50 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { H2, H5, H5Grey } from "@/components/typography";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Spinner } from "@/components/ui/spinner";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { H2, H5, H5Grey } from "@/components/typography"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Spinner } from "@/components/ui/spinner"
 
 export default function ForgotPasswordPage() {
-  const searchParams = useSearchParams();
-  const phoneNumber = searchParams.get("phone");
+  const searchParams = useSearchParams()
+  const phoneNumber = searchParams.get("phone")
 
-  const t = useTranslations("Auth.ForgotPasswordPage.Step1");
+  const t = useTranslations("Auth.ForgotPasswordPage.Step1")
   const formSchema = z.object({
     phoneNumber: z
       .string()
       .length(10, t("Error1"))
       .regex(/^[0-9]+$/, t("Error2")),
-  });
+  })
 
-  type FormFields = z.infer<typeof formSchema>;
+  type FormFields = z.infer<typeof formSchema>
 
-  const router = useRouter();
+  const router = useRouter()
 
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       phoneNumber: phoneNumber ?? "",
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = (data: FormFields) => {
-    // TODO: Find phone number in DB
+    // Find phone number in DB
     if (data.phoneNumber == "1234567890") {
       // If found, go to password page
-      router.push(`/auth/forgot-password/confirm-email/${data.phoneNumber}`);
+      router.push(`/auth/forgot-password/confirm-email/${data.phoneNumber}`)
     } else {
       // else, Show error
       methods.setError("phoneNumber", {
         type: "manual",
         message: t("APIError"),
-      });
+      })
     }
-  };
+  }
 
   return (
     <div id="ForgotPasswordPage" className="gap-4 w-full h-full">
@@ -106,5 +106,5 @@ export default function ForgotPasswordPage() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

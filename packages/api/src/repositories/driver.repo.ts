@@ -1,28 +1,25 @@
-import { db } from "@ryogo-travel-app/db";
+import { db } from "@ryogo-travel-app/db"
 import {
   BookingStatusEnum,
   drivers,
   DriverStatusEnum,
   InsertDriverType,
-} from "@ryogo-travel-app/db/schema";
-import { eq, and, notInArray } from "drizzle-orm";
+} from "@ryogo-travel-app/db/schema"
+import { eq, and, notInArray } from "drizzle-orm"
 
 export const driverRepository = {
   //Get driver by id
-  async getDriverById(id: string) {
-    return await db.select().from(drivers).where(eq(drivers.id, id));
+  async readDriverById(id: string) {
+    return await db.select().from(drivers).where(eq(drivers.id, id))
   },
 
   //Get all drivers of an agency
-  async getDriversByAgencyId(agencyId: string) {
-    return await db
-      .select()
-      .from(drivers)
-      .where(eq(drivers.agencyId, agencyId));
+  async readDriversByAgencyId(agencyId: string) {
+    return await db.select().from(drivers).where(eq(drivers.agencyId, agencyId))
   },
 
   //Get all drivers data for a new booking in an agency
-  async getAllDriversDataByAgencyId(agencyId: string) {
+  async readAllDriversDataByAgencyId(agencyId: string) {
     return await db.query.drivers.findMany({
       columns: {
         id: true,
@@ -61,25 +58,25 @@ export const driverRepository = {
           where: (driverLeaves, { eq }) => eq(driverLeaves.isCompleted, false),
         },
       },
-    });
+    })
   },
 
   //Get driver by phone in agency
-  async getDriverByPhoneInAgency(agencyId: string, phone: string) {
+  async readDriverByPhoneInAgency(agencyId: string, phone: string) {
     return await db
       .select()
       .from(drivers)
-      .where(and(eq(drivers.phone, phone), eq(drivers.agencyId, agencyId)));
+      .where(and(eq(drivers.phone, phone), eq(drivers.agencyId, agencyId)))
   },
 
   //Get driver by userId
-  async getDriverByUserId(userId: string) {
-    return await db.select().from(drivers).where(eq(drivers.userId, userId));
+  async readDriverByUserId(userId: string) {
+    return await db.select().from(drivers).where(eq(drivers.userId, userId))
   },
 
   //Create driver
   async createDriver(data: InsertDriverType) {
-    return await db.insert(drivers).values(data).returning();
+    return await db.insert(drivers).values(data).returning()
   },
 
   //Update driver license URL by Id
@@ -88,6 +85,6 @@ export const driverRepository = {
       .update(drivers)
       .set({ licensePhotoUrl: licenseUrl })
       .where(eq(drivers.id, driverId))
-      .returning({ id: drivers.id });
+      .returning({ id: drivers.id })
   },
-};
+}

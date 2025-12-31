@@ -1,14 +1,9 @@
-import { db } from "@ryogo-travel-app/db";
-import { customers, InsertCustomerType } from "@ryogo-travel-app/db/schema";
-import { eq, and } from "drizzle-orm";
+import { db } from "@ryogo-travel-app/db"
+import { customers, InsertCustomerType } from "@ryogo-travel-app/db/schema"
+import { eq, and } from "drizzle-orm"
 
 export const customerRepository = {
-  //Get all customers
-  async getAllCustomers() {
-    return await db.select().from(customers);
-  },
-
-  async getCustomerByPhoneAgencyId(phone: string, agencyId: string) {
+  async readCustomerByPhoneAgencyId(phone: string, agencyId: string) {
     return await db.query.customers.findFirst({
       where: and(eq(customers.phone, phone), eq(customers.agencyId, agencyId)),
       with: {
@@ -19,11 +14,11 @@ export const customerRepository = {
           },
         },
       },
-    });
+    })
   },
 
   async createCustomer(data: InsertCustomerType) {
-    return await db.insert(customers).values(data).returning();
+    return await db.insert(customers).values(data).returning()
   },
 
   async updateCustomerAddress(customerId: string, address: string) {
@@ -31,6 +26,6 @@ export const customerRepository = {
       .update(customers)
       .set({ address: address })
       .where(eq(customers.id, customerId))
-      .returning();
+      .returning()
   },
-};
+}

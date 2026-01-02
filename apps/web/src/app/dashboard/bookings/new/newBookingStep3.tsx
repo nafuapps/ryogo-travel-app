@@ -1,9 +1,9 @@
-import { H4, PBold, SmallGrey, Caption } from "@/components/typography";
-import { DriverRegex, VehicleRegex } from "@/lib/regex";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { H4, PBold, SmallGrey, Caption } from "@/components/typography"
+import { DriverRegex, VehicleRegex } from "@/lib/regex"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   NewBookingFindDriversType,
   NewBookingFindVehiclesType,
@@ -14,32 +14,32 @@ import {
   newBookingSectionClassName,
   Step3Type,
   NewBookingTotalSteps,
-} from "./newBookingCommon";
-import NewBookingStepsTracker from "./newBookingStepsTracker";
-import { Form } from "@/components/ui/form";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
-import VehicleTile from "./newBookingVehicleTile";
-import DriverTile from "./newBookingDriverTile";
+} from "./newBookingCommon"
+import NewBookingStepsTracker from "./newBookingStepsTracker"
+import { Form } from "@/components/ui/form"
+import { Spinner } from "@/components/ui/spinner"
+import { Button } from "@/components/ui/button"
+import NewBookingVehicleTile from "./newBookingVehicleTile"
+import NewBookingDriverTile from "./newBookingDriverTile"
 
 type NewBookingStep3Props = {
-  onNext: () => void;
-  onPrev: () => void;
-  newBookingFormData: NewBookingFormDataType;
+  onNext: () => void
+  onPrev: () => void
+  newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
-  >;
-  vehicles: NewBookingFindVehiclesType;
-  drivers: NewBookingFindDriversType;
-};
+  >
+  vehicles: NewBookingFindVehiclesType
+  drivers: NewBookingFindDriversType
+}
 export default function NewBookingStep3(props: NewBookingStep3Props) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step3");
+  const t = useTranslations("Dashboard.NewBooking.Form.Step3")
 
   const step3Schema = z.object({
     //Assignment
     assignedDriverId: DriverRegex.optional(),
     assignedVehicleId: VehicleRegex.optional(),
-  });
+  })
 
   // type Step3Type = z.infer<typeof step3Schema>;
 
@@ -50,7 +50,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
       assignedDriverId: props.newBookingFormData.assignedDriverId,
       assignedVehicleId: props.newBookingFormData.assignedVehicleId,
     },
-  });
+  })
 
   //Form submit
   function onSubmit(values: Step3Type) {
@@ -67,8 +67,8 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
       selectedAllowancePerDay: props.drivers.find(
         (driver) => driver.id === values.assignedDriverId
       )?.defaultAllowancePerDay,
-    });
-    props.onNext();
+    })
+    props.onNext()
   }
 
   return (
@@ -97,7 +97,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
                 (a, b) => a.assignedBookings.length - b.assignedBookings.length
               )
               .map((vehicle, index) => (
-                <VehicleTile
+                <NewBookingVehicleTile
                   key={index}
                   vehicleData={vehicle}
                   newBookingFormData={props.newBookingFormData}
@@ -111,7 +111,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
             className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
           >
             {props.drivers.map((driver, index) => (
-              <DriverTile
+              <NewBookingDriverTile
                 key={index}
                 driverData={driver}
                 newBookingFormData={props.newBookingFormData}
@@ -140,5 +140,5 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
         </form>
       </Form>
     </div>
-  );
+  )
 }

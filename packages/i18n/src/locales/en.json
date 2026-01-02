@@ -1287,6 +1287,41 @@
       "Success": "Expense details modified successfully!",
       "Error": "Cannot modify expense.. Try again later!"
     },
+    "AssignDriver":{
+      "Title": "Select a driver to assign for this booking",
+      "Tile": {
+        "Score": "RyoGo Score",
+        "CurrentlyAssigned": "Currently Assigned",
+        "Booked": "Booked",
+        "Leave": "On Leave",
+        "Available": "Available",
+        "PerDay": "/day"
+      },
+      "PrimaryCTA": "Assign Driver",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "Driver assigned successfully!",
+      "Error": "Cannot assign driver.. Try again later!"
+    },
+    "AssignVehicle":{
+      "Title": "Select a vehicle to assign for this booking",
+      "Tile": {
+            "Title": "Choose vehicle",
+            "Score": "RyoGo Score",
+            "CurrentlyAssigned": "Currently Assigned",
+            "Seats": " {count, plural, =1 {seat} other {seats}}",
+            "AC": "AC",
+            "Booked": "Booked",
+            "RepairScheduled": "In Service",
+            "Available": "Available",
+            "PerKm": "/Km"
+          },
+      "PrimaryCTA": "Assign Vehicle",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "Vehicle assigned successfully!",
+      "Error": "Cannot assign vehicle.. Try again later!"
+    },
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",

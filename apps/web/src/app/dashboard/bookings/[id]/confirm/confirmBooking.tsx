@@ -212,7 +212,7 @@ export default function ConfirmBookingPageComponent({
               <BookingItem
                 title={t("AssignedVehicle")}
                 value={booking.assignedVehicle?.vehicleNumber ?? "-"}
-              />{" "}
+              />
               <Button
                 variant={
                   booking.assignedVehicle?.vehicleNumber
@@ -233,7 +233,7 @@ export default function ConfirmBookingPageComponent({
               <BookingItem
                 title={t("AssignedDriver")}
                 value={booking.assignedDriver?.name ?? "-"}
-              />{" "}
+              />
               <Button
                 variant={booking.assignedDriver?.name ? "secondary" : "outline"}
                 className="xl:col-span-3"

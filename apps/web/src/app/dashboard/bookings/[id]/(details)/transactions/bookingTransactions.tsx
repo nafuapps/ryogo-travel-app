@@ -28,7 +28,7 @@ export default async function BookingTransactionsPageComponent({
           className="min-w-1/2 self-center"
         >
           <Button variant={"default"} className="w-full">
-            {t("AddTransaction")}{" "}
+            {t("AddTransaction")}
           </Button>
         </Link>
       )}

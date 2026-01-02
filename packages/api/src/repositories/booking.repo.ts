@@ -450,4 +450,24 @@ export const bookingRepository = {
       .where(eq(bookings.id, id))
       .returning()
   },
+
+  async updateAssignedDriver(bookingId: string, driverId: string) {
+    return await db
+      .update(bookings)
+      .set({
+        assignedDriverId: driverId,
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning()
+  },
+
+  async updateAssignedVehicle(bookingId: string, vehicleId: string) {
+    return await db
+      .update(bookings)
+      .set({
+        assignedVehicleId: vehicleId,
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning()
+  },
 }

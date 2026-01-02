@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
-import { UseFormSetValue, useWatch } from "react-hook-form";
+import { useTranslations } from "next-intl"
+import { UseFormSetValue, useWatch } from "react-hook-form"
 import {
   NewBookingFindDriversType,
   NewBookingFormDataType,
@@ -21,40 +21,40 @@ import {
   getTileClassName,
   getDriverTotalScore,
   getCanDriveIcons,
-} from "./newBookingCommon";
-import { PBold, H2, Caption, Small } from "@/components/typography";
-import { IconsTag, IconTextTag } from "./newBookingTileTag";
+} from "./newBookingCommon"
+import { PBold, H2, Caption, Small } from "@/components/typography"
+import { IconsTag, IconTextTag } from "./newBookingTileTag"
 import {
   LucideTicketX,
   LucideCalendarX,
   LucideCheck,
   LucideBadgeIndianRupee,
   LucidePhone,
-} from "lucide-react";
+} from "lucide-react"
 
-type DriverTileProps = {
-  driverData: NewBookingFindDriversType[number];
-  newBookingFormData: NewBookingFormDataType;
-  setValue: UseFormSetValue<Step3Type>;
-};
-export default function DriverTile({
+type NewBookingDriverTileProps = {
+  driverData: NewBookingFindDriversType[number]
+  newBookingFormData: NewBookingFormDataType
+  setValue: UseFormSetValue<Step3Type>
+}
+export default function NewBookingDriverTile({
   driverData,
   newBookingFormData,
   setValue,
-}: DriverTileProps) {
+}: NewBookingDriverTileProps) {
   const assignedDriverIdWatch = useWatch({
     name: "assignedDriverId",
-  });
-  const t = useTranslations("Dashboard.NewBooking.Form.Step3.Driver");
+  })
+  const t = useTranslations("Dashboard.NewBooking.Form.Step3.Driver")
 
-  const bookingOverLapScores = driverData.assignedBookings.map((booking) => {
+  const bookingOverLapScores = driverData.assignedBookings.map((other) => {
     return getOverlapScore(
-      new Date(booking.startDate),
-      new Date(booking.endDate),
+      new Date(other.startDate),
+      new Date(other.endDate),
       newBookingFormData.tripStartDate,
       newBookingFormData.tripEndDate
-    );
-  });
+    )
+  })
 
   const leaveOverLapScores = driverData.driverLeaves.map((leave) => {
     return getOverlapScore(
@@ -62,40 +62,38 @@ export default function DriverTile({
       new Date(leave.endDate),
       newBookingFormData.tripStartDate,
       newBookingFormData.tripEndDate
-    );
-  });
+    )
+  })
 
-  const isBooked = bookingOverLapScores.some(
-    (score) => score != NoOverlapScore
-  );
+  const isBooked = bookingOverLapScores.some((score) => score != NoOverlapScore)
 
-  const isOnLeave = leaveOverLapScores.some((score) => score != NoOverlapScore);
+  const isOnLeave = leaveOverLapScores.some((score) => score != NoOverlapScore)
 
   const bookingScore =
     bookingOverLapScores.length == 0
       ? 100
       : bookingOverLapScores.reduce((a, b) => a + b, 0) /
-        bookingOverLapScores.length;
+        bookingOverLapScores.length
 
   const leaveScore =
     leaveOverLapScores.length == 0
       ? 100
       : leaveOverLapScores.reduce((a, b) => a + b, 0) /
-        leaveOverLapScores.length;
+        leaveOverLapScores.length
 
-  const statusScore = getDriverStatusScore(driverData.status);
+  const statusScore = getDriverStatusScore(driverData.status)
 
   const licenseScore = getExpiryScore(
     newBookingFormData.tripEndDate,
     driverData.licenseExpiresOn
-  );
+  )
 
-  const allowanceScore = getAllowanceScore(driverData.defaultAllowancePerDay);
+  const allowanceScore = getAllowanceScore(driverData.defaultAllowancePerDay)
 
   const canDriveScore = getCanDriveScore(
     driverData.canDriveVehicleTypes,
     newBookingFormData.tripPassengers
-  );
+  )
 
   const totalScore = getDriverTotalScore({
     bookingScore,
@@ -104,7 +102,7 @@ export default function DriverTile({
     licenseScore,
     allowanceScore,
     canDriveScore,
-  });
+  })
 
   return (
     <div
@@ -116,13 +114,13 @@ export default function DriverTile({
         )
       }
     >
-      <div id="left" className={tileLeftClassName}>
-        <div id="header" className={tileHeaderLeftClassName}>
+      <div className={tileLeftClassName}>
+        <div className={tileHeaderLeftClassName}>
           <PBold>{driverData.name}</PBold>
           <Small>{driverData.address}</Small>
           <IconTextTag icon={LucidePhone} text={driverData.phone} />
         </div>
-        <div id="footer" className={tileFooterClassName}>
+        <div className={tileFooterClassName}>
           <IconTextTag
             icon={LucideBadgeIndianRupee}
             text={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
@@ -130,12 +128,12 @@ export default function DriverTile({
           <IconsTag icons={getCanDriveIcons(driverData.canDriveVehicleTypes)} />
         </div>
       </div>
-      <div id="right" className={tileRightClassName}>
-        <div id="score" className={getRyogoScoreClassName(totalScore)}>
+      <div className={tileRightClassName}>
+        <div className={getRyogoScoreClassName(totalScore)}>
           <Caption>{t("Score")}</Caption>
           <H2>{totalScore.toFixed(0)}</H2>
         </div>
-        <div id="status" className={tileStatusClassName}>
+        <div className={tileStatusClassName}>
           {isBooked ? (
             <LucideTicketX className={tileRedIconClassName} />
           ) : isOnLeave ? (
@@ -149,5 +147,5 @@ export default function DriverTile({
         </div>
       </div>
     </div>
-  );
+  )
 }

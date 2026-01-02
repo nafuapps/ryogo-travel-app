@@ -1,4 +1,4 @@
-import { PBold, Small, H2, Caption } from "@/components/typography";
+import { PBold, Small, H2, Caption } from "@/components/typography"
 import {
   LucideArmchair,
   LucideAirVent,
@@ -6,9 +6,9 @@ import {
   LucideWrench,
   LucideCheck,
   LucideBadgeIndianRupee,
-} from "lucide-react";
-import { useTranslations } from "next-intl";
-import { UseFormSetValue, useWatch } from "react-hook-form";
+} from "lucide-react"
+import { useTranslations } from "next-intl"
+import { UseFormSetValue, useWatch } from "react-hook-form"
 import {
   NewBookingFindVehiclesType,
   NewBookingFormDataType,
@@ -31,23 +31,23 @@ import {
   getTileClassName,
   getVehicleTypeIcon,
   getVehicleTotalScore,
-} from "./newBookingCommon";
-import { IconTextTag } from "./newBookingTileTag";
+} from "./newBookingCommon"
+import { IconTextTag } from "./newBookingTileTag"
 
-type VehicleTileProps = {
-  vehicleData: NewBookingFindVehiclesType[number];
-  newBookingFormData: NewBookingFormDataType;
-  setValue: UseFormSetValue<Step3Type>;
-};
-export default function VehicleTile({
+type NewBookingVehicleTileProps = {
+  vehicleData: NewBookingFindVehiclesType[number]
+  newBookingFormData: NewBookingFormDataType
+  setValue: UseFormSetValue<Step3Type>
+}
+export default function NewBookingVehicleTile({
   vehicleData,
   newBookingFormData,
   setValue,
-}: VehicleTileProps) {
+}: NewBookingVehicleTileProps) {
   const assignedVehicleIdWatch = useWatch({
     name: "assignedVehicleId",
-  });
-  const t = useTranslations("Dashboard.NewBooking.Form.Step3.Vehicle");
+  })
+  const t = useTranslations("Dashboard.NewBooking.Form.Step3.Vehicle")
 
   const bookingOverLapScores = vehicleData.assignedBookings.map((booking) => {
     return getOverlapScore(
@@ -55,57 +55,55 @@ export default function VehicleTile({
       new Date(booking.endDate),
       newBookingFormData.tripStartDate,
       newBookingFormData.tripEndDate
-    );
-  });
+    )
+  })
   const repairOverLapScores = vehicleData.vehicleRepairs.map((repair) => {
     return getOverlapScore(
       new Date(repair.startDate),
       new Date(repair.endDate),
       newBookingFormData.tripStartDate,
       newBookingFormData.tripEndDate
-    );
-  });
+    )
+  })
 
-  const isBooked = bookingOverLapScores.some(
-    (score) => score != NoOverlapScore
-  );
+  const isBooked = bookingOverLapScores.some((score) => score != NoOverlapScore)
 
   const isRepairScheduled = repairOverLapScores.some(
     (score) => score != NoOverlapScore
-  );
+  )
 
   const bookingScore =
     bookingOverLapScores.length == 0
       ? 100
       : bookingOverLapScores.reduce((a, b) => a + b, 0) /
-        bookingOverLapScores.length;
+        bookingOverLapScores.length
 
   const repairScore =
     repairOverLapScores.length == 0
       ? 100
       : repairOverLapScores.reduce((a, b) => a + b, 0) /
-        repairOverLapScores.length;
+        repairOverLapScores.length
 
   const capacityScore = getCapacityScore(
     vehicleData.capacity,
     newBookingFormData.tripPassengers
-  );
+  )
 
-  const statusScore = getVehicleStatusScore(vehicleData.status);
+  const statusScore = getVehicleStatusScore(vehicleData.status)
 
   const insuranceScore = getExpiryScore(
     newBookingFormData.tripEndDate,
     vehicleData.insuranceExpiresOn
-  );
+  )
   const pucScore = getExpiryScore(
     newBookingFormData.tripEndDate,
     vehicleData.pucExpiresOn
-  );
-  const odometerScore = getOdometerScore(vehicleData.odometerReading);
+  )
+  const odometerScore = getOdometerScore(vehicleData.odometerReading)
 
-  const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm);
+  const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm)
 
-  const acScore = vehicleData.hasAC == newBookingFormData.tripNeedsAC ? 4 : 1;
+  const acScore = vehicleData.hasAC == newBookingFormData.tripNeedsAC ? 4 : 1
 
   const totalScore = getVehicleTotalScore({
     bookingScore,
@@ -117,7 +115,7 @@ export default function VehicleTile({
     pucScore,
     odometerScore,
     ratePerKmScore,
-  });
+  })
 
   return (
     <div
@@ -181,5 +179,5 @@ export default function VehicleTile({
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -360,6 +360,24 @@ export const bookingServices = {
     return updatedBooking
   },
 
+  //Assign driver to booking
+  async assignDriverToBooking(bookingId: string, driverId: string) {
+    const updatedBooking = await bookingRepository.updateAssignedDriver(
+      bookingId,
+      driverId
+    )
+    return updatedBooking[0]?.assignedDriverId
+  },
+
+  //Assign vehicle to booking
+  async assignVehicleToBooking(bookingId: string, vehicleId: string) {
+    const updatedBooking = await bookingRepository.updateAssignedVehicle(
+      bookingId,
+      vehicleId
+    )
+    return updatedBooking[0]?.assignedVehicleId
+  },
+
   // TODO: Send booking quote to customer over whatsapp
   async sendQuote(id: string) {
     return true

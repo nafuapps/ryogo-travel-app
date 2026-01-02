@@ -6,6 +6,8 @@ import {
   VehicleStatusEnum,
   BookingTypeEnum,
   VehicleTypesEnum,
+  UserStatusEnum,
+  UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import {
   LucideArrowRightFromLine,
@@ -258,6 +260,26 @@ export function getCanDriveScore(
   return MediumCanDriveScore
 }
 
+export const NewUserScore = 50
+export function getUserStatusScore(status: UserStatusEnum): number {
+  if (status == UserStatusEnum.INACTIVE) {
+    return InactiveScore
+  }
+  if (status == UserStatusEnum.NEW) {
+    return NewUserScore
+  }
+  return AvailableScore
+}
+
+export const OwnerRoleScore = 100
+export const AgentRoleScore = 50
+export function getUserRoleScore(role: UserRolesEnum): number {
+  if (role == UserRolesEnum.OWNER) {
+    return OwnerRoleScore
+  }
+  return AgentRoleScore
+}
+
 // Vehicle Score weightage: 25% booking, 15% repair, 25% capacity, 10% status, 5% ac, 5% insurance expiry, 5% puc expiry, 5% odometer, 5% rate/km
 export const VehicleWeightage_Booking = 0.25
 export const VehicleWeightage_Repair = 0.15
@@ -318,6 +340,24 @@ export const getDriverTotalScore = (data: GetDriverTotalScoreType) => {
     data.licenseScore * DriverWeightage_License +
     data.allowanceScore * DriverWeightage_Allowance +
     data.canDriveScore * DriverWeightage_CanDrive
+  )
+}
+
+// User Score weightage: 60% booking, 30% status, 10% role
+export const UserWeightage_Booking = 0.6
+export const UserWeightage_Status = 0.3
+export const UserWeightage_Role = 0.1
+
+type GetUserTotalScoreType = {
+  bookingScore: number
+  statusScore: number
+  roleScore: number
+}
+export const getUserTotalScore = (data: GetUserTotalScoreType) => {
+  return (
+    data.bookingScore * UserWeightage_Booking +
+    data.statusScore * UserWeightage_Status +
+    data.roleScore * UserWeightage_Role
   )
 }
 

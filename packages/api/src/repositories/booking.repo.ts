@@ -470,4 +470,14 @@ export const bookingRepository = {
       .where(eq(bookings.id, bookingId))
       .returning()
   },
+
+  async updateAssignedUser(bookingId: string, userId: string) {
+    return await db
+      .update(bookings)
+      .set({
+        assignedUserId: userId,
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning()
+  },
 }

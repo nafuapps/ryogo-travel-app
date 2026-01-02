@@ -1,8 +1,60 @@
 //Bookings/id/assign-user page (only for owner)
 
-import { useTranslations } from "next-intl";
+import { BookingRegex } from "@/lib/regex"
+import { getCurrentUser } from "@/lib/auth"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { cancelBookingAction } from "@/app/dashboard/components/actions/cancelBookingAction"
+import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import { mainClassName } from "@/components/page/pageCommons"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { redirect, RedirectType } from "next/navigation"
+import AssignUserPageComponent from "./assignUser"
 
-export default function AssignUserBookingPage() {
-  const t = useTranslations("Landing");
-  return <h1>{t("title")}</h1>;
+export default async function AssignUserBookingPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const user = await getCurrentUser()
+
+  //Invalid booking id regex
+  if (!BookingRegex.safeParse(id).success) {
+    redirect("/dashboard/bookings", RedirectType.replace)
+  }
+
+  //Only owner can assign user
+  if (user?.userRole !== "owner") {
+    redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
+  }
+
+  const booking = await bookingServices.findBookingDetailsById(id)
+
+  //No booking found or agency mismatch
+  if (!booking || booking.agency.id !== user?.agencyId) {
+    redirect("/dashboard/bookings", RedirectType.replace)
+  }
+
+  //If it is a lead booking and old, cancel it automatically
+  if (
+    booking.status === BookingStatusEnum.LEAD &&
+    new Date(booking.endDate) < new Date()
+  ) {
+    if (await cancelBookingAction(booking.id)) {
+      redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
+    } else {
+      redirect(`/dashboard/bookings`, RedirectType.replace)
+    }
+  }
+
+  //Get users data with their bookings and leaves (for available users and allowance per day)
+  const users = await userServices.findOwnerAndAgentsByAgency(user.agencyId)
+
+  return (
+    <div className={mainClassName}>
+      <DashboardHeader pathName={"/dashboard/bookings/[id]/assign-user"} />
+      <AssignUserPageComponent bookingId={id} users={users} booking={booking} />
+    </div>
+  )
 }

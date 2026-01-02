@@ -56,7 +56,7 @@ export default async function AssignVehicleBookingPage({
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
-  //Get vehicle data with their bookings and leaves (for available vehicles and allowance per day)
+  //Get vehicle data with their bookings and repairs
   const vehicles = await vehicleServices.findVehiclesByAgency(user.agencyId)
 
   return (

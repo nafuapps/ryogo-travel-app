@@ -129,16 +129,12 @@ export default function AssignVehicleTile({
     >
       <div className={tileLeftClassName}>
         <div className={tileHeaderLeftClassName}>
-          <div>
-            <PBold>{vehicleData.vehicleNumber}</PBold>
-          </div>
-          <div className={tileHeaderLeftClassName}>
-            <Small>{vehicleData.brand + " " + vehicleData.model}</Small>
-            <IconTextTag
-              icon={getVehicleTypeIcon(vehicleData.type)}
-              text={vehicleData.color}
-            />
-          </div>
+          <PBold>{vehicleData.vehicleNumber}</PBold>
+          <Small>{vehicleData.brand + " " + vehicleData.model}</Small>
+          <IconTextTag
+            icon={getVehicleTypeIcon(vehicleData.type)}
+            text={vehicleData.color}
+          />
         </div>
         <div className={tileFooterClassName}>
           <IconTextTag

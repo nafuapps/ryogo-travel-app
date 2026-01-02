@@ -127,20 +127,16 @@ export default function NewBookingVehicleTile({
         )
       }
     >
-      <div id="left" className={tileLeftClassName}>
-        <div id="header" className={tileHeaderLeftClassName}>
-          <div id="number">
-            <PBold>{vehicleData.vehicleNumber}</PBold>
-          </div>
-          <div id="mmv" className={tileHeaderLeftClassName}>
-            <Small>{vehicleData.brand + " " + vehicleData.model}</Small>
-            <IconTextTag
-              icon={getVehicleTypeIcon(vehicleData.type)}
-              text={vehicleData.color}
-            />
-          </div>
+      <div className={tileLeftClassName}>
+        <div className={tileHeaderLeftClassName}>
+          <PBold>{vehicleData.vehicleNumber}</PBold>
+          <Small>{vehicleData.brand + " " + vehicleData.model}</Small>
+          <IconTextTag
+            icon={getVehicleTypeIcon(vehicleData.type)}
+            text={vehicleData.color}
+          />
         </div>
-        <div id="footer" className={tileFooterClassName}>
+        <div className={tileFooterClassName}>
           <IconTextTag
             icon={LucideBadgeIndianRupee}
             text={vehicleData.defaultRatePerKm.toString() + t("PerKm")}
@@ -156,12 +152,12 @@ export default function NewBookingVehicleTile({
           )}
         </div>
       </div>
-      <div id="right" className={tileRightClassName}>
-        <div id="score" className={getRyogoScoreClassName(totalScore)}>
+      <div className={tileRightClassName}>
+        <div className={getRyogoScoreClassName(totalScore)}>
           <Caption>{t("Score")}</Caption>
           <H2>{totalScore.toFixed(0)}</H2>
         </div>
-        <div id="status" className={tileStatusClassName}>
+        <div className={tileStatusClassName}>
           {isBooked ? (
             <LucideTicketX className={tileRedIconClassName} />
           ) : isRepairScheduled ? (

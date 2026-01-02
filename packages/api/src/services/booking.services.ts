@@ -378,6 +378,15 @@ export const bookingServices = {
     return updatedBooking[0]?.assignedVehicleId
   },
 
+  //Assign user to booking
+  async assignUserToBooking(bookingId: string, userId: string) {
+    const updatedBooking = await bookingRepository.updateAssignedUser(
+      bookingId,
+      userId
+    )
+    return updatedBooking[0]?.assignedUserId
+  },
+
   // TODO: Send booking quote to customer over whatsapp
   async sendQuote(id: string) {
     return true

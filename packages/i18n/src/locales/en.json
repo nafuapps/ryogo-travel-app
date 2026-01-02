@@ -1291,7 +1291,7 @@
       "Title": "Select a driver to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
-        "CurrentlyAssigned": "Currently Assigned",
+        "CurrentlyAssigned": "Already Assigned",
         "Booked": "Booked",
         "Leave": "On Leave",
         "Available": "Available",
@@ -1308,7 +1308,7 @@
       "Tile": {
             "Title": "Choose vehicle",
             "Score": "RyoGo Score",
-            "CurrentlyAssigned": "Currently Assigned",
+            "CurrentlyAssigned": "Already Assigned",
             "Seats": " {count, plural, =1 {seat} other {seats}}",
             "AC": "AC",
             "Booked": "Booked",
@@ -1321,6 +1321,20 @@
       "CancelCTA": "Cancel",
       "Success": "Vehicle assigned successfully!",
       "Error": "Cannot assign vehicle.. Try again later!"
+    },
+    "AssignUser":{
+      "Title": "Select a user to assign for this booking",
+      "Tile": {
+        "Score": "RyoGo Score",
+        "CurrentlyAssigned": "Already Assigned",
+        "Booked": "Booked",
+        "Available": "Available"
+      },
+      "PrimaryCTA": "Assign User",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "User assigned successfully!",
+      "Error": "Cannot assign user.. Try again later!"
     },
     "Buttons": {
       "CancelBooking": {

@@ -66,6 +66,14 @@ export const userServices = {
     return agents
   },
 
+  //Find owner and agents by agencyId
+  async findOwnerAndAgentsByAgency(agencyId: string) {
+    const users = await userRepository.readAllDashboardUsersDataByAgencyId(
+      agencyId
+    )
+    return users
+  },
+
   //Activate user
   async activateUser(userId: string) {
     const user = await userRepository.updateUserStatus(
@@ -387,3 +395,6 @@ export const userServices = {
     return updatedUser[0]?.id
   },
 }
+
+export type FindOwnerAndAgentsByAgencyType =
+  (typeof userServices)["findOwnerAndAgentsByAgency"]

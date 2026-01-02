@@ -56,7 +56,7 @@ export default async function AssignDriverBookingPage({
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
-  //Get driver data with their bookings and leaves (for available drivers and allowance per day)
+  //Get driver data with their bookings and leaves
   const drivers = await driverServices.findDriversByAgency(user.agencyId)
 
   return (

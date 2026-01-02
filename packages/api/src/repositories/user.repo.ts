@@ -4,8 +4,9 @@ import {
   UserRolesEnum,
   InsertUserType,
   UserStatusEnum,
+  BookingStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, inArray } from "drizzle-orm"
+import { eq, and, inArray, not } from "drizzle-orm"
 
 export const userRepository = {
   //Get unique user by id
@@ -57,6 +58,43 @@ export const userRepository = {
       .where(
         and(eq(users.agencyId, agencyId), inArray(users.userRole, userRoles))
       )
+  },
+
+  //Get all dashboard users data by agency id (owner and agents)
+  async readAllDashboardUsersDataByAgencyId(agencyId: string) {
+    return await db.query.users.findMany({
+      columns: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        userRole: true,
+        status: true,
+        photoUrl: true,
+        languagePref: true,
+      },
+      where: and(
+        eq(users.agencyId, agencyId),
+        inArray(users.userRole, [UserRolesEnum.OWNER, UserRolesEnum.AGENT]),
+        not(eq(users.status, UserStatusEnum.SUSPENDED))
+      ),
+      with: {
+        bookingsAssigned: {
+          columns: {
+            id: true,
+            status: true,
+            startDate: true,
+            endDate: true,
+          },
+          where: (assignedBookings, { inArray }) =>
+            inArray(assignedBookings.status, [
+              BookingStatusEnum.LEAD,
+              BookingStatusEnum.CONFIRMED,
+              BookingStatusEnum.IN_PROGRESS,
+            ]),
+        },
+      },
+    })
   },
 
   //Get users with agency data by roles and phone number

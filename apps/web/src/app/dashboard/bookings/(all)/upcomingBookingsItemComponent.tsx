@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { PGrey, H5Grey, PBold, Caption } from "@/components/typography";
+import { PGrey, H5Grey, PBold, Caption } from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -8,91 +8,38 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { LucideClock } from "lucide-react";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { useState } from "react";
-import { format } from "date-fns";
-import moment from "moment";
+} from "@/components/ui/select"
+import { LucideClock } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useState } from "react"
+import { format } from "date-fns"
+import moment from "moment"
 import {
   gridClassName,
   gridItemClassName,
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "./bookingCommons";
+} from "./bookingCommons"
+import { FindUpcomingBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 
-type UpcomingBookingType = {
-  type: string;
-  route: string;
-  vehicle: string | undefined;
-  driver: string | undefined;
-  customerName: string;
-  bookingId: string;
-  startDate: string;
-  startTime: string | null;
-};
-
-type UpcomingBookingsItemComponentProps = {
-  upcomingBookings7Days: Promise<UpcomingBookingType[]>;
-};
-
-export default function UpcomingBookingsItemComponent(
-  props: UpcomingBookingsItemComponentProps
-) {
-  // const upcomingBookings7Days = use(props.upcomingBookings7Days)
-
-  const upcomingBookings7Days: UpcomingBookingType[] = [
-    {
-      bookingId: "B1234253",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      startDate: new Date(
-        new Date().getTime() + 10 * 60 * 60 * 1000
-      ).toDateString(),
-      startTime: "07:05 PM",
-    },
-    {
-      bookingId: "B1234252",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      startDate: new Date(
-        new Date().getTime() + 74 * 60 * 60 * 1000
-      ).toDateString(),
-      startTime: "07:05 PM",
-    },
-    {
-      bookingId: "B1234255",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      startDate: new Date(
-        new Date().getTime() + 5 * 60 * 60 * 1000
-      ).toDateString(),
-      startTime: "08:05 PM",
-    },
-  ];
-
-  const t = useTranslations("Dashboard.Bookings.Upcoming");
-  const [selectedTab, setSelectedTab] = useState("24hrs");
+export default function UpcomingBookingsItemComponent({
+  upcomingBookings7Days,
+}: {
+  upcomingBookings7Days: FindUpcomingBookingsNextDaysType
+}) {
+  const t = useTranslations("Dashboard.Bookings.Upcoming")
+  const [selectedTab, setSelectedTab] = useState("24hrs")
 
   const upcomingBookings24Hrs = upcomingBookings7Days.filter(
     (b) =>
       new Date(b.startDate) <
       new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-  );
+  )
 
   const trips =
-    selectedTab == "24hrs" ? upcomingBookings24Hrs : upcomingBookings7Days;
+    selectedTab == "24hrs" ? upcomingBookings24Hrs : upcomingBookings7Days
 
   return (
     <div id="UpcomingBookingsSection" className={sectionClassName}>
@@ -124,10 +71,10 @@ export default function UpcomingBookingsItemComponent(
         <UpcomingComponent key={trip.bookingId} {...trip} />
       ))}
     </div>
-  );
+  )
 }
 
-function UpcomingComponent(props: UpcomingBookingType) {
+function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <div className={gridClassName}>
@@ -151,5 +98,5 @@ function UpcomingComponent(props: UpcomingBookingType) {
         </div>
       </div>
     </Link>
-  );
+  )
 }

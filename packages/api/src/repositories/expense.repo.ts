@@ -65,10 +65,10 @@ export const expenseRepository = {
   },
 
   //Update expense's approval status
-  async updateExpenseApprovalStatus(expenseId: string) {
+  async updateExpenseApprovalStatus(expenseId: string, status: boolean) {
     return db
       .update(expenses)
-      .set({ isApproved: true })
+      .set({ isApproved: status })
       .where(eq(expenses.id, expenseId))
       .returning()
   },

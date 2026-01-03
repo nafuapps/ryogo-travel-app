@@ -1,6 +1,5 @@
 import { CaptionGrey, H4, Caption, SmallBold } from "@/components/typography"
 import {
-  LucideChevronRight,
   LucideFuel,
   LucideParkingSquare,
   LucideWrench,
@@ -8,6 +7,7 @@ import {
   LucidePizza,
   LucideTicket,
   LucideBanknote,
+  LucidePencil,
 } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
@@ -25,6 +25,8 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
+import { getCurrentUser } from "@/lib/auth"
+import { ExpenseApprovalButton } from "./expenseApprovalButton"
 
 export default async function ExpenseItem({
   expense,
@@ -35,6 +37,8 @@ export default async function ExpenseItem({
 }) {
   const t = await getTranslations("Dashboard.BookingExpenses")
   const id = expense.bookingId
+  const user = await getCurrentUser()
+
   const expId = expense.id
   let fileUrl = ""
   if (expense.expensePhotoUrl) {
@@ -65,23 +69,33 @@ export default async function ExpenseItem({
             {expense.addedByUser.userRole.toUpperCase()})
           </CaptionGrey>
         </div>
-        <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
-          <H4>{expense.amount}</H4>
+        <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
+          <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
+            <H4>{expense.amount}</H4>
+          </div>
+          <div className="flex flex-row gap-2 lg:gap-3">
+            {user?.userRole == "owner" && (
+              <ExpenseApprovalButton
+                expId={expId}
+                isApproved={expense.isApproved}
+              />
+            )}
+            {canModifyExpense && (
+              <Link
+                href={
+                  `/dashboard/bookings/${id}/expenses/modify/${expId}` as unknown as UrlObject
+                }
+              >
+                <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
+                  <div className="hidden lg:flex">
+                    <CaptionGrey>{t("Modify")}</CaptionGrey>
+                  </div>
+                  <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+                </div>
+              </Link>
+            )}
+          </div>
         </div>
-        {canModifyExpense && (
-          <Link
-            href={
-              `/dashboard/bookings/${id}/expenses/modify/${expId}` as unknown as UrlObject
-            }
-          >
-            <div className="flex p-2 lg:pl-3 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-              <div className="hidden lg:flex">
-                <CaptionGrey>{t("Modify")}</CaptionGrey>
-              </div>
-              <LucideChevronRight className="size-5 lg:size-6 text-slate-500" />
-            </div>
-          </Link>
-        )}
       </div>
       {expense.expensePhotoUrl && (
         <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">

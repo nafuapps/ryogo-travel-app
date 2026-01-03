@@ -1,8 +1,8 @@
-import { H4, H1, CaptionGrey, PGrey } from "@/components/typography";
-import { getCurrentUser } from "@/lib/auth";
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services";
-import { LucideCar } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { H4, H1, CaptionGrey, PGrey } from "@/components/typography"
+import { getCurrentUser } from "@/lib/auth"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { LucideCar } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 import {
   metricsClassName,
   metricFirstColClassName,
@@ -14,33 +14,28 @@ import {
   metricItem3ClassName,
   metricItem2ClassName,
   iconClassName,
-} from "./dashboardMetricsCommons";
+} from "./dashboardMetricsCommons"
+import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function DashboardVehicleMetricsComponent() {
-  const t = await getTranslations("Dashboard.Home.VehicleMetrics");
-  const user = await getCurrentUser();
+  const t = await getTranslations("Dashboard.Home.VehicleMetrics")
+  const user = await getCurrentUser()
 
-  // const vehicles = await vehicleServices.getAllVehicles(user!.agencyId);
+  const vehicles = await vehicleServices.findVehiclesByAgency(user!.agencyId)
 
-  // const totalVehicles = vehicles.length;
-  // const availableVehicles = vehicles.filter(
-  //   (vehicle) => vehicle.status === "available"
-  // ).length;
-  // const onTripVehicles = vehicles.filter(
-  //   (vehicle) => vehicle.status === "on_trip"
-  // ).length;
-  // const repairVehicles = vehicles.filter(
-  //   (vehicle) => vehicle.status === "repair"
-  // ).length;
-  // const inactiveVehicles = vehicles.filter(
-  //   (vehicle) => vehicle.status === "inactive"
-  // ).length;
-
-  const totalVehicles = 8;
-  const availableVehicles = 3;
-  const onTripVehicles = 3;
-  const repairVehicles = 1;
-  const inactiveVehicles = 1;
+  const totalVehicles = vehicles.length
+  const availableVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === VehicleStatusEnum.AVAILABLE
+  ).length
+  const onTripVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === VehicleStatusEnum.ON_TRIP
+  ).length
+  const repairVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === VehicleStatusEnum.REPAIR
+  ).length
+  const inactiveVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === VehicleStatusEnum.INACTIVE
+  ).length
 
   return (
     <div id="dashboardVehicleMetrics" className={metricsClassName}>
@@ -58,7 +53,7 @@ export default async function DashboardVehicleMetricsComponent() {
         <div className={metricMainClassName}>
           <H1>{totalVehicles}</H1>
           <CaptionGrey>
-            {(availableVehicles / totalVehicles).toLocaleString("en-IN", {
+            {(onTripVehicles / totalVehicles).toLocaleString("en-IN", {
               style: "percent",
               maximumFractionDigits: 1,
             }) +
@@ -101,5 +96,5 @@ export default async function DashboardVehicleMetricsComponent() {
         </div>
       </div>
     </div>
-  );
+  )
 }

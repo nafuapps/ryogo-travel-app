@@ -17,6 +17,22 @@ import {
   geometry,
 } from "drizzle-orm/pg-core"
 
+//ID initials
+export const agencyInitial = "A"
+export const userInitial = "U"
+export const sessionInitial = "S"
+export const vehicleInitial = "V"
+export const driverInitial = "D"
+export const routeInitial = "R"
+export const customerInitial = "C"
+export const bookingInitial = "B"
+export const expenseInitial = "E"
+export const tripLogInitial = "TL"
+export const transactionInitial = "T"
+export const locationInitial = "L"
+export const vehicleRepairInitial = "VR"
+export const driverLeaveInitial = "DL"
+
 //Common timestamps
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -65,7 +81,7 @@ export const agencies = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'A' || nextval(${"agency_id_seq"})`
+        return sql`${agencyInitial} || nextval(${"agency_id_seq"})`
       }),
     businessName: varchar("business_name", { length: 30 }).notNull(),
     businessPhone: varchar("business_phone", { length: 10 }).notNull(),
@@ -157,7 +173,7 @@ export const users = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'U' || nextval(${"user_id_seq"})`
+        return sql`${userInitial} || nextval(${"user_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -221,7 +237,7 @@ export const sessions = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'S' || nextval(${"session_id_seq"})`
+        return sql`${sessionInitial} || nextval(${"session_id_seq"})`
       }),
     token: text("token").notNull().unique(),
     userId: text("user_id")
@@ -279,7 +295,7 @@ export const vehicles = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'V' || nextval(${"vehicle_id_seq"})`
+        return sql`${vehicleInitial} || nextval(${"vehicle_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -316,8 +332,8 @@ export const vehicles = pgTable(
       sql`${t.odometerReading} >= 0 AND ${t.odometerReading} < 1000000`
     ),
     check(
-      "rate per km > 0 and < 50",
-      sql`${t.defaultRatePerKm} > 0 AND ${t.defaultRatePerKm} < 50`
+      "rate per km > 0 and < 100",
+      sql`${t.defaultRatePerKm} > 0 AND ${t.defaultRatePerKm} < 100`
     ),
     check("ac charge < 10000", sql`${t.defaultAcChargePerDay} < 10000`),
     index("vehicles_agency_idx").on(t.agencyId), // to quickly filter all vehicles in an agency
@@ -361,7 +377,7 @@ export const drivers = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'D' || nextval(${"driver_id_seq"})`
+        return sql`${driverInitial} || nextval(${"driver_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -421,7 +437,7 @@ export const routes = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'R' || nextval(${"route_id_seq"})`
+        return sql`${routeInitial} || nextval(${"route_id_seq"})`
       }),
     sourceId: text("source_id")
       .references(() => locations.id, { onDelete: "cascade" })
@@ -483,7 +499,7 @@ export const customers = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'C' || nextval(${"customer_id_seq"})`
+        return sql`${customerInitial} || nextval(${"customer_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -564,7 +580,7 @@ export const bookings = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'B' || nextval(${"booking_id_seq"})`
+        return sql`${bookingInitial} || nextval(${"booking_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -632,8 +648,8 @@ export const bookings = pgTable(
     ),
     check("ac charge per day  < 10000", sql`${t.acChargePerDay} < 10000`),
     check(
-      "rate per km > 0 and < 50",
-      sql`${t.ratePerKm} > 0 AND ${t.ratePerKm} < 50`
+      "rate per km > 0 and < 100",
+      sql`${t.ratePerKm} > 0 AND ${t.ratePerKm} < 100`
     ),
     check(
       "allowance >= 0 and allowance < 10000",
@@ -741,7 +757,7 @@ export const expenses = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'E' || nextval(${"expense_id_seq"})`
+        return sql`${expenseInitial} || nextval(${"expense_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -811,7 +827,7 @@ export const tripLogs = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'TL' || nextval(${"trip_log_id_seq"})`
+        return sql`${tripLogInitial} || nextval(${"trip_log_id_seq"})`
       }),
     bookingId: text("booking_id")
       .references(() => bookings.id, { onDelete: "cascade" })
@@ -902,7 +918,7 @@ export const transactions = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'T' || nextval(${"transaction_id_seq"})`
+        return sql`${transactionInitial} || nextval(${"transaction_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -965,7 +981,7 @@ export const locations = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'L' || nextval(${"location_id_seq"})`
+        return sql`${locationInitial} || nextval(${"location_id_seq"})`
       }),
     city: varchar("city", { length: 30 }).notNull(),
     state: varchar("state", { length: 30 }).notNull(),
@@ -1005,7 +1021,7 @@ export const vehicleRepairs = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'VR' || nextval(${"vehicle_repair_id_seq"})`
+        return sql`${vehicleRepairInitial} || nextval(${"vehicle_repair_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
@@ -1060,7 +1076,7 @@ export const driverLeaves = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`'DL' || nextval(${"driver_leave_id_seq"})`
+        return sql`${driverLeaveInitial} || nextval(${"driver_leave_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })

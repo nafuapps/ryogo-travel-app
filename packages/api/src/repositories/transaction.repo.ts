@@ -89,10 +89,10 @@ export const transactionRepository = {
   },
 
   //Update transaction's approval status
-  async updateTransactionApprovalStatus(txnId: string) {
+  async updateTransactionApprovalStatus(txnId: string, status: boolean) {
     return db
       .update(transactions)
-      .set({ isApproved: true })
+      .set({ isApproved: status })
       .where(eq(transactions.id, txnId))
       .returning()
   },

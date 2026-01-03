@@ -189,7 +189,7 @@ export function getRatePerKmScore(rate: number): number {
   if (rate < 20) {
     return MediumRateScore
   }
-  if (rate < 30) {
+  if (rate < 40) {
     return HighRateScore
   }
   return VeryHighRateScore
@@ -199,14 +199,14 @@ export const LowAllowanceScore = 75
 export const MediumAllowanceScore = 100
 export const HighAllowanceScore = 50
 export const VeryHighAllowanceScore = 10
-export function getAllowanceScore(rate: number): number {
-  if (rate < 500) {
+export function getAllowanceScore(allowance: number): number {
+  if (allowance < 500) {
     return LowAllowanceScore
   }
-  if (rate < 1000) {
+  if (allowance < 1000) {
     return MediumAllowanceScore
   }
-  if (rate < 2000) {
+  if (allowance < 2000) {
     return HighAllowanceScore
   }
   return VeryHighAllowanceScore

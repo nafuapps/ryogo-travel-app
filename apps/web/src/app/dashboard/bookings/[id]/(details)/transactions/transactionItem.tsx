@@ -7,11 +7,7 @@ import {
   SmallRed,
 } from "@/components/typography"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  LucideChevronRight,
-  LucideMaximize2,
-  LucideMinimize2,
-} from "lucide-react"
+import { LucideMaximize2, LucideMinimize2, LucidePencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
 import Image from "next/image"
@@ -27,6 +23,8 @@ import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { getCurrentUser } from "@/lib/auth"
+import { TransactionApprovalButton } from "./transactionApprovalButton"
 
 export default async function TransactionItem({
   transaction,
@@ -38,6 +36,9 @@ export default async function TransactionItem({
   const t = await getTranslations("Dashboard.BookingTransactions")
   const id = transaction.bookingId
   const txnId = transaction.id
+
+  const user = await getCurrentUser()
+
   let fileUrl = ""
   if (transaction.transactionPhotoUrl) {
     fileUrl = getFileUrl(transaction.transactionPhotoUrl)
@@ -75,23 +76,33 @@ export default async function TransactionItem({
           </CaptionGrey>
           <CaptionGrey>{transaction.addedByUser.name}</CaptionGrey>
         </div>
-        <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
-          <H4>{transaction.amount}</H4>
+        <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
+          <div className="flex gap-2 lg:gap-3 justify-end lg:items-center">
+            <H4>{transaction.amount}</H4>
+          </div>
+          <div className="flex flex-row gap-2 lg:gap-3">
+            {user?.userRole == "owner" && (
+              <TransactionApprovalButton
+                txnId={txnId}
+                isApproved={transaction.isApproved}
+              />
+            )}
+            {canModifyTransaction && (
+              <Link
+                href={
+                  `/dashboard/bookings/${id}/transactions/modify/${txnId}` as unknown as UrlObject
+                }
+              >
+                <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
+                  <div className="hidden lg:flex">
+                    <CaptionGrey>{t("Modify")}</CaptionGrey>
+                  </div>
+                  <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+                </div>
+              </Link>
+            )}
+          </div>
         </div>
-        {canModifyTransaction && (
-          <Link
-            href={
-              `/dashboard/bookings/${id}/transactions/modify/${txnId}` as unknown as UrlObject
-            }
-          >
-            <div className="flex p-2 lg:pl-3 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-              <div className="hidden lg:flex">
-                <CaptionGrey>{t("Modify")}</CaptionGrey>
-              </div>
-              <LucideChevronRight className="size-5 lg:size-6 text-slate-500" />
-            </div>
-          </Link>
-        )}
       </div>
       {transaction.transactionPhotoUrl && (
         <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">

@@ -164,6 +164,31 @@ export const bookingServices = {
     })
   },
 
+  async findScheduleNextDays(agencyId: string, days: number = 1) {
+    //Day today
+    const startDate = new Date()
+    //Day N days later
+    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const bookings = await bookingRepository.readScheduleData(
+      agencyId,
+      startDate,
+      endDate
+    )
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+        status: booking.status,
+      }
+    })
+  },
+
   async findLeadBookingsPreviousDays(agencyId: string, days: number = 1) {
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000
@@ -420,4 +445,24 @@ export type FindBookingExpensesByIdType = Awaited<
 
 export type FindBookingTripLogsByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingTripLogsById>
+>
+
+export type FindScheduleNextDaysType = Awaited<
+  ReturnType<typeof bookingServices.findScheduleNextDays>
+>
+
+export type FindCompletedBookingsPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findCompletedBookingsPreviousDays>
+>
+
+export type FindOngoingTripsType = Awaited<
+  ReturnType<typeof bookingServices.findOngoingTrips>
+>
+
+export type FindLeadBookingsPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findLeadBookingsPreviousDays>
+>
+
+export type FindUpcomingBookingsNextDaysType = Awaited<
+  ReturnType<typeof bookingServices.findUpcomingBookingsNextDays>
 >

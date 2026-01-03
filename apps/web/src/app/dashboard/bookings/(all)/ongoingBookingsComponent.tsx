@@ -4,54 +4,24 @@ import {
   H5Grey,
   PBold,
   PGrey,
-} from "@/components/typography";
-import { getCurrentUser } from "@/lib/auth";
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services";
-import { LucideRoute } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+} from "@/components/typography"
+import { getCurrentUser } from "@/lib/auth"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { LucideRoute } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 import {
   gridClassName,
   gridItemClassName,
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "./bookingCommons";
+} from "./bookingCommons"
 
 export default async function OngoingBookingsComponent() {
-  const t = await getTranslations("Dashboard.Bookings.Ongoing");
-  // const user = await getCurrentUser();
-  // const ongoingTrips = await bookingServices.findOngoingTrips(user!.agencyId);
-
-  const ongoingTrips: OngoingBookingType[] = [
-    {
-      bookingId: "B1234253",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      status: "Picked Up",
-    },
-    {
-      bookingId: "B1234252",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      status: "Picked Up",
-    },
-    {
-      bookingId: "B1234255",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      status: "Picked Up",
-    },
-  ];
+  const t = await getTranslations("Dashboard.Bookings.Ongoing")
+  const user = await getCurrentUser()
+  const ongoingTrips = await bookingServices.findOngoingTrips(user!.agencyId)
 
   return (
     <div id="OngoingBookingsSection" className={sectionClassName}>
@@ -64,18 +34,18 @@ export default async function OngoingBookingsComponent() {
         <OngoingComponent key={trip.bookingId} {...trip} />
       ))}
     </div>
-  );
+  )
 }
 
 type OngoingBookingType = {
-  type: string;
-  route: string;
-  vehicle: string | undefined;
-  driver: string | undefined;
-  customerName: string;
-  bookingId: string;
-  status: string | undefined;
-};
+  type: string
+  route: string
+  vehicle: string | undefined
+  driver: string | undefined
+  customerName: string
+  bookingId: string
+  status: string | undefined
+}
 function OngoingComponent(props: OngoingBookingType) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
@@ -99,5 +69,5 @@ function OngoingComponent(props: OngoingBookingType) {
         </div>
       </div>
     </Link>
-  );
+  )
 }

@@ -90,6 +90,15 @@ export const transactionServices = {
     return updatedTransaction
   },
 
+  //Modify a transaction approval status
+  async modifyTransactionApprovalStatus(txnId: string, status: boolean) {
+    const transaction = transactionRepository.updateTransactionApprovalStatus(
+      txnId,
+      status
+    )
+    return transaction
+  },
+
   //Upload transaction photo
   async uploadTransactionPhoto(txnId: string, file: File) {
     //Name file

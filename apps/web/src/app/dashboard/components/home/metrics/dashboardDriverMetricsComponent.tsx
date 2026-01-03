@@ -1,8 +1,8 @@
-import { H4, CaptionGrey, H1, PGrey } from "@/components/typography";
-import { getCurrentUser } from "@/lib/auth";
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services";
-import { LucideLifeBuoy } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { H4, CaptionGrey, H1, PGrey } from "@/components/typography"
+import { getCurrentUser } from "@/lib/auth"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { LucideLifeBuoy } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 import {
   metricFirstColClassName,
   metricHeaderClassName,
@@ -14,33 +14,28 @@ import {
   metricsClassName,
   metricSecondColClassName,
   iconClassName,
-} from "./dashboardMetricsCommons";
+} from "./dashboardMetricsCommons"
+import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function DashboardDriverMetricsComponent() {
-  const t = await getTranslations("Dashboard.Home.DriverMetrics");
-  const user = await getCurrentUser();
+  const t = await getTranslations("Dashboard.Home.DriverMetrics")
+  const user = await getCurrentUser()
 
-  // const drivers = await driverServices.getAllDrivers(user!.agencyId);
+  const drivers = await driverServices.findDriversByAgency(user!.agencyId)
 
-  // const totalDrivers = drivers.length;
-  // const availableDrivers = drivers.filter(
-  //   (driver) => driver.status === "available"
-  // ).length;
-  // const onTripDrivers = drivers.filter(
-  //   (driver) => driver.status === "on_trip"
-  // ).length;
-  // const leaveDrivers = drivers.filter(
-  //   (driver) => driver.status === "leave"
-  // ).length;
-  // const inactiveDrivers = drivers.filter(
-  //   (driver) => driver.status === "inactive"
-  // ).length;
-
-  const totalDrivers = 8;
-  const availableDrivers = 3;
-  const onTripDrivers = 3;
-  const leaveDrivers = 1;
-  const inactiveDrivers = 1;
+  const totalDrivers = drivers.length
+  const availableDrivers = drivers.filter(
+    (driver) => driver.status === DriverStatusEnum.AVAILABLE
+  ).length
+  const onTripDrivers = drivers.filter(
+    (driver) => driver.status === DriverStatusEnum.ON_TRIP
+  ).length
+  const leaveDrivers = drivers.filter(
+    (driver) => driver.status === DriverStatusEnum.LEAVE
+  ).length
+  const inactiveDrivers = drivers.filter(
+    (driver) => driver.status === DriverStatusEnum.INACTIVE
+  ).length
 
   return (
     <div id="dashboardDriverMetrics" className={metricsClassName}>
@@ -58,7 +53,7 @@ export default async function DashboardDriverMetricsComponent() {
         <div className={metricMainClassName}>
           <H1>{totalDrivers}</H1>
           <CaptionGrey>
-            {(availableDrivers / totalDrivers).toLocaleString("en-IN", {
+            {(onTripDrivers / totalDrivers).toLocaleString("en-IN", {
               style: "percent",
               maximumFractionDigits: 1,
             }) +
@@ -98,5 +93,5 @@ export default async function DashboardDriverMetricsComponent() {
         </div>
       </div>
     </div>
-  );
+  )
 }

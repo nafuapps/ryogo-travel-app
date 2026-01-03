@@ -57,6 +57,12 @@ export const expenseServices = {
     return updatedExpense
   },
 
+  //Modify anexpense approval status
+  async modifyExpenseApprovalStatus(expId: string, status: boolean) {
+    const expense = expenseRepository.updateExpenseApprovalStatus(expId, status)
+    return expense
+  },
+
   //Upload expense photo
   async uploadExpensePhoto(expenseId: string, file: File) {
     //Name file

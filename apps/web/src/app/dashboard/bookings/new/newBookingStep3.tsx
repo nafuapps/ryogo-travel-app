@@ -21,6 +21,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import NewBookingVehicleTile from "./newBookingVehicleTile"
 import NewBookingDriverTile from "./newBookingDriverTile"
+import { Separator } from "@/components/ui/separator"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -105,6 +106,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
                 />
               ))}
           </div>
+          <Separator />
           <PBold>{t("Driver.Title")}</PBold>
           <div
             id="driverAssignment"

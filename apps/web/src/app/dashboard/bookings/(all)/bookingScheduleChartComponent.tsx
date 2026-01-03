@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 import {
   iconClassName,
   sectionClassName,
   sectionHeaderClassName,
-} from "./bookingCommons";
+} from "./bookingCommons"
 import {
   PGrey,
   H5Grey,
@@ -18,7 +18,7 @@ import {
   Small,
   CaptionRed,
   SmallRed,
-} from "@/components/typography";
+} from "@/components/typography"
 import {
   SelectTrigger,
   SelectValue,
@@ -26,119 +26,36 @@ import {
   SelectGroup,
   SelectItem,
   Select,
-} from "@/components/ui/select";
-import { LucideCalendarDays } from "lucide-react";
-import moment from "moment";
+} from "@/components/ui/select"
+import { LucideCalendarDays } from "lucide-react"
+import moment from "moment"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/popover"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { FindScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
-type BookingScheduleType = {
-  type: string;
-  route: string;
-  vehicle: string | undefined;
-  driver: string | undefined;
-  customerName: string;
-  bookingId: string;
-  startDate: string;
-  endDate: string;
-};
-
-type BookingScheduleChartComponentProps = {
-  bookings14Days: Promise<BookingScheduleType[]>;
-};
-
-export default function BookingScheduleChartComponent(
-  props: BookingScheduleChartComponentProps
-) {
-  const t = useTranslations("Dashboard.Bookings.Schedule");
-  const [selectedTab, setSelectedTab] = useState("7Days");
-
-  // const bookings14Days = use(props.bookings14Days);
-  const bookings14Days: BookingScheduleType[] = [
-    {
-      bookingId: "B1234250",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: undefined,
-      driver: "Surender K",
-      startDate: new Date(
-        new Date().getTime() + 40 * 60 * 60 * 1000
-      ).toDateString(),
-      endDate: new Date(
-        new Date().getTime() + 70 * 60 * 60 * 1000
-      ).toDateString(),
-    },
-    {
-      bookingId: "B1234251",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      startDate: new Date(
-        new Date().getTime() + 24 * 60 * 60 * 1000
-      ).toDateString(),
-      endDate: new Date(
-        new Date().getTime() + 48 * 60 * 60 * 1000
-      ).toDateString(),
-    },
-    {
-      bookingId: "B1234231",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      startDate: new Date().toDateString(),
-      endDate: new Date(
-        new Date().getTime() + 48 * 60 * 60 * 1000
-      ).toDateString(),
-    },
-    {
-      bookingId: "B1234252",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      startDate: new Date(
-        new Date().getTime() + 30 * 60 * 60 * 1000
-      ).toDateString(),
-      endDate: new Date(
-        new Date().getTime() + 80 * 60 * 60 * 1000
-      ).toDateString(),
-    },
-    {
-      bookingId: "B1234253",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      startDate: new Date(
-        new Date().getTime() + 180 * 60 * 60 * 1000
-      ).toDateString(),
-      endDate: new Date(
-        new Date().getTime() + 250 * 60 * 60 * 1000
-      ).toDateString(),
-    },
-  ];
+export default function BookingScheduleChartComponent({
+  bookings14Days,
+}: {
+  bookings14Days: FindScheduleNextDaysType
+}) {
+  const t = useTranslations("Dashboard.Bookings.Schedule")
+  const [selectedTab, setSelectedTab] = useState("7Days")
 
   const bookings7Days = bookings14Days.filter(
     (b) =>
       new Date(b.startDate) <=
       new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000)
-  );
+  )
 
-  const chartData = selectedTab == "7Days" ? bookings7Days : bookings14Days;
-  const selectedDays: number = selectedTab == "7Days" ? 7 : 14;
-  const chartStartDate = new Date();
+  const chartData = selectedTab == "7Days" ? bookings7Days : bookings14Days
+  const selectedDays: number = selectedTab == "7Days" ? 7 : 14
+  const chartStartDate = new Date()
 
   return (
     <div id="BookingScheduleSection" className={sectionClassName}>
@@ -196,10 +113,10 @@ export default function BookingScheduleChartComponent(
         <div
           id="BookingScheduleChartContainer"
           className="grid w-full gap-1 lg:gap-1.5 overflow-auto no-scrollbar 
-    [grid-template-columns:repeat(var(--bookings),1fr)]
-    [grid-template-rows:repeat(var(--days),1fr)]
-    sm:[grid-template-columns:repeat(var(--days),1fr)]
-    sm:[grid-template-rows:repeat(var(--bookings),1fr)]"
+    grid-cols-[repeat(var(--bookings),1fr)]
+    grid-rows-[repeat(var(--days),1fr)]
+    sm:grid-cols-[repeat(var(--days),1fr)]
+    sm:grid-rows-[repeat(var(--bookings),1fr)]"
           style={
             {
               // For mobile: columns = bookings, rows = days
@@ -209,32 +126,25 @@ export default function BookingScheduleChartComponent(
           }
         >
           {chartData.map((booking, index) => {
-            const startDate = new Date(booking.startDate);
-            const endDate = new Date(booking.endDate);
-            const millisecondsPerDay = 1000 * 60 * 60 * 24;
+            const startDate = new Date(booking.startDate)
+            const endDate = new Date(booking.endDate)
+            const millisecondsPerDay = 1000 * 60 * 60 * 24
 
             //Calculate gantt start and end index
             let dayIndexStart =
               Math.ceil(
                 (startDate.getTime() - chartStartDate.getTime()) /
                   millisecondsPerDay
-              ) + 1;
+              ) + 1
             let dayIndexEnd =
               Math.ceil(
                 (endDate.getTime() - chartStartDate.getTime()) /
                   millisecondsPerDay
-              ) + 2;
-
-            //Put limits on start and end
-            if (dayIndexStart < 1) {
-              dayIndexStart = 1;
-            }
-            if (dayIndexEnd > selectedDays) {
-              dayIndexEnd = selectedDays;
-            }
+              ) + 2
 
             //Check if booking is assigned
-            const isAssigned = booking.driver && booking.vehicle ? true : false;
+            const isVehicleAssigned = booking.vehicle ? true : false
+            const isDriverAssigned = booking.driver ? true : false
 
             return (
               <Popover key={index}>
@@ -242,28 +152,38 @@ export default function BookingScheduleChartComponent(
                   <div
                     key={index}
                     className={`flex flex-row p-1 lg:p-1.5 ${
-                      isAssigned
+                      booking.status == BookingStatusEnum.IN_PROGRESS
+                        ? "bg-green-200 hover:bg-green-300"
+                        : isVehicleAssigned && isDriverAssigned
                         ? "bg-slate-200 hover:bg-slate-300"
                         : "bg-red-200 hover:bg-red-300"
                     }  rounded-lg ${
-                      dayIndexEnd == selectedDays
+                      dayIndexEnd > selectedDays
                         ? "rounded-b-none sm:rounded-bl-lg sm:rounded-r-none"
                         : ""
+                    } ${
+                      dayIndexStart < 1
+                        ? "rounded-t-none sm:rounded-tr-lg sm:rounded-l-none"
+                        : ""
                     } justify-center items-center text-ellipsis 
-                    [grid-column-start:var(--index)+1]
-                    sm:[grid-column-start:var(--dayIndexStart)]
-                    [grid-row-start:var(--dayIndexStart)]
-                    sm:[grid-row-start:var(--index)+1]
-                    [grid-column-end:var(--index)+2]
-                    sm:[grid-column-end:var(--dayIndexEnd)]
-                    [grid-row-end:var(--dayIndexEnd)]
-                    sm:[grid-row-end:var(--index)+2]
+                    col-start-[var(--index)+1]
+                    sm:col-start-(--dayIndexStart)
+                    row-start-(--dayIndexStart)
+                    sm:row-start-[var(--index)+1]
+                    col-end-[var(--index)+2]
+                    sm:col-end-(--dayIndexEnd)
+                    row-end-(--dayIndexEnd)
+                    sm:row-end-[var(--index)+2]
                     `}
                     style={
                       {
                         "--index": index,
-                        "--dayIndexStart": dayIndexStart,
-                        "--dayIndexEnd": dayIndexEnd,
+                        "--dayIndexStart":
+                          dayIndexStart < 1 ? 1 : dayIndexStart,
+                        "--dayIndexEnd":
+                          dayIndexEnd > selectedDays
+                            ? selectedDays
+                            : dayIndexEnd,
                       } as React.CSSProperties
                     }
                   >
@@ -271,21 +191,28 @@ export default function BookingScheduleChartComponent(
                   </div>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto">
-                  <BookingPopoverCard {...booking} isAssigned={isAssigned} />
+                  <BookingPopoverCard
+                    {...booking}
+                    isVehicleAssigned={isVehicleAssigned}
+                    isDriverAssigned={isDriverAssigned}
+                  />
                 </PopoverContent>
               </Popover>
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function BookingPopoverCard(
-  props: BookingScheduleType & { isAssigned: boolean }
+  props: FindScheduleNextDaysType[number] & {
+    isVehicleAssigned: boolean
+    isDriverAssigned: boolean
+  }
 ) {
-  const t = useTranslations("Dashboard.Bookings.Schedule");
+  const t = useTranslations("Dashboard.Bookings.Schedule")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
       <div className="flex flex-row justify-between gap-3 lg:gap-4 items-start">
@@ -316,18 +243,26 @@ function BookingPopoverCard(
           <CaptionBold>{props.endDate}</CaptionBold>
         </div>
       </div>
-      {!props.isAssigned && (
-        <Link href={`/dashboard/bookings/${props.bookingId}/modify`}>
+      {(!props.isDriverAssigned || !props.isVehicleAssigned) && (
+        <Link
+          href={`/dashboard/bookings/${props.bookingId}/${
+            props.isVehicleAssigned ? "assign-driver" : "assign-vehicle"
+          }`}
+        >
           <Button variant={"default"} type="button" className="w-full">
             {t("Assign")}
           </Button>
         </Link>
       )}
       <Link href={`/dashboard/bookings/${props.bookingId}`}>
-        <Button variant={"secondary"} type="button" className="w-full">
+        <Button
+          variant={"secondary"}
+          type="button"
+          className="w-full hover:cursor-pointer"
+        >
           {t("ViewDetails")}
         </Button>
       </Link>
     </div>
-  );
+  )
 }

@@ -388,12 +388,12 @@
       },
       "Step4": {
         "Field1": {
-          "Title": "Vehicle charge per Km (in Rs.)",
+          "Title": "Vehicle charge per Km (in ₹)",
           "Placeholder": "18",
           "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer. You can always change it later.",
           "Error1": "Vehicle Charge must be a number",
           "Error2": "Vehicle Charge must be atleast 0.",
-          "Error3": "Vehicle Charge must be less than 50Rs",
+          "Error3": "Vehicle Charge must be less than ₹100",
           "Error4": "Vehicle Charge cannot be in decimals",
           "Error5": "Vehicle Charge must be a positive number"
         },
@@ -401,12 +401,12 @@
           "Title": "Vehicle has AC?"
         },
         "Field3": {
-          "Title": "AC charge per day (in Rs.)",
+          "Title": "AC charge per day (in ₹)",
           "Placeholder": "1000",
           "Description": "Based on customer's AC preference, this per day charge will be added to the booking quote.",
           "Error1": "AC Charge must be a number",
           "Error2": "AC Charge must be atleast 0",
-          "Error3": "AC Charge must be less than 10000Rs",
+          "Error3": "AC Charge must be less than ₹10000",
           "Error4": "AC Charge cannot be in decimals",
           "Error5": "AC Charge must be a positive number"
         },
@@ -515,12 +515,12 @@
           "Error1": "Providing atleast 1 vehicle type is mandatory"
         },
         "Field3": {
-          "Title": "Driver allowance per day (in Rs.)",
+          "Title": "Driver allowance per day (in ₹)",
           "Placeholder": "500",
           "Description": "How much do you pay driver per day? This will be used to calculate the booking quote for the customer. You can always change it later.",
           "Error1": "Driver allowance must be a number",
-          "Error2": "Driver allowance must be atleast 1 Rs.",
-          "Error3": "Driver allowance must be less than 10000 Rs",
+          "Error2": "Driver allowance must be atleast ₹1",
+          "Error3": "Driver allowance must be less than ₹10000",
           "Error4": "Driver allowance cannot be in decimals",
           "Error5": "Driver allowance must be a positive number"
         },
@@ -689,9 +689,8 @@
         "/dashboard/bookings/[id]": "Booking Details",
         "/dashboard/bookings/[id]/confirm": "Confirm Booking",
         "/dashboard/bookings/[id]/expenses": "Booking Expenses",
-        "/dashboard/bookings/[id]/expenses/modify": "Modify Expenses",
+        "/dashboard/bookings/[id]/expenses/modify": "Modify Expense",
         "/dashboard/bookings/[id]/expenses/new": "New Expense",
-        "/dashboard/bookings/[id]/modify": "Modify Booking",
         "/dashboard/bookings/[id]/assign-driver": "Assign Driver",
         "/dashboard/bookings/[id]/assign-user": "Assign User",
         "/dashboard/bookings/[id]/assign-vehicle": "Assign Vehicle",
@@ -895,7 +894,7 @@
           "Subtitle": "Step 3 of 5",
           "Description": "Assign vehicle and driver for the trip",
           "Vehicle": {
-            "Title": "Choose vehicle",
+            "Title": "Choose a vehicle:",
             "Score": "RyoGo Score",
             "Seats": " {count, plural, =1 {seat} other {seats}}",
             "AC": "AC",
@@ -905,7 +904,7 @@
             "PerKm": "/Km"
           },
           "Driver": {
-            "Title": "Choose driver",
+            "Title": "Choose a driver:",
             "Score": "RyoGo Score",
             "Booked": "Booked",
             "Leave": "On Leave",
@@ -926,7 +925,7 @@
             "Description": "How much is the vehicle rental charge per Km (in ₹)?",
             "Error1": "Vehicle Charge must be a number",
             "Error2": "Vehicle Charge must be atleast ₹1",
-            "Error3": "Vehicle Charge must be less than ₹50",
+            "Error3": "Vehicle Charge must be less than ₹100",
             "Error4": "Vehicle Charge cannot be in decimals",
             "Error5": "Vehicle Charge must be a positive number"
           },
@@ -1058,6 +1057,9 @@
         "YesCTA": "Yes, Confirm"
       }
     },
+    "ReconcileBooking":{
+
+    },
     "BookingDetails": {
       "BookingInfo": "BOOKING INFO",
       "BookingId": "Booking ID",
@@ -1112,13 +1114,31 @@
       "NoTransactions": "No transactions found for this booking.",
       "AddTransaction": "Add Transaction",
       "Modify": "Modify",
-      "Proof":" View Attachment"
+      "ModifyTitle":"Modify Transaction",
+      "Proof":" View Attachment",
+      "Approve":"Approve",
+      "Approved":"Approved",
+      "ApproveTitle":"Approve Transaction",
+      "ApproveSuccess":"Transaction approved successfully!",
+      "ApproveError":"Could not approve.. try again later",
+      "RejectTitle":"Remove approval",
+      "RejectSuccess":"Transaction approval removed!",
+      "RejectError":"Could not remove approval.. try again later"
     },
     "BookingExpenses": {
       "NoExpenses": "No expenses found for this booking.",
       "AddExpense": "Add Expense",
       "Modify": "Modify",
-      "Proof":" View Attachment"
+      "ModifyTitle":"Modify Expense",
+      "Proof":" View Attachment",
+      "Approve":"Approve",
+      "Approved":"Approved",
+      "ApproveTitle":"Approve Expense",
+      "ApproveSuccess":"Expense approved successfully!",
+      "ApproveError":"Could not approve.. try again later",
+      "RejectTitle":"Remove approval",
+      "RejectSuccess":"Expense approval removed!",
+      "RejectError":"Could not remove approval.. try again later"
     },
     "BookingTripLogs": {
       "NoTripLogs": "No trip logs found for this booking.",
@@ -1348,7 +1368,7 @@
         "YesCTA": "Yes, Cancel"
       },
       "SendInvoice": {
-        "Label": "Send invoice to Customer",
+        "Label": "Send Invoice to Customer",
         "Title": "Are you sure you want to send invoice to customer?",
         "Desc": "If you have sent an invoice already, refrain from sending it again.. It might look like spam to the customer",
         "NoCTA": "No",
@@ -1359,7 +1379,7 @@
         "InvoiceSent": "Invoice Sent!"
       },
       "SendQuote": {
-        "Label": "Send quote to Customer",
+        "Label": "Send Quote to Customer",
         "Title": "Are you sure you want to send quote to customer?",
         "Desc": "If you have sent a quote already, refrain from sending it again.. It might look like spam to the customer",
         "NoCTA": "No",

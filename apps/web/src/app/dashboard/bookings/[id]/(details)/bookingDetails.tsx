@@ -262,18 +262,32 @@ export default async function BookingDetailsPageComponent({
         </BookingSection>
         {(isOwner || isAssignedUser) && (
           <div className="flex flex-col gap-3 lg:gap-4">
-            {bookingDetails.status == BookingStatusEnum.COMPLETED &&
-              isOwner && (
-                <Link href={`/dashboard/bookings/${bookingId}/reconcile`}>
-                  <Button variant={"default"}>{t("Reconcile")}</Button>
-                </Link>
-              )}
-            {bookingDetails.status == BookingStatusEnum.COMPLETED && (
-              <SendInvoiceAlertButton bookingId={bookingId} />
-            )}
-            {bookingDetails.status == BookingStatusEnum.CONFIRMED && (
-              <CancelBookingAlertButton bookingId={bookingId} />
-            )}
+            {
+              //Only owner can reconcile a completed booking
+              bookingDetails.status == BookingStatusEnum.COMPLETED &&
+                isOwner && (
+                  <Link href={`/dashboard/bookings/${bookingId}/reconcile`}>
+                    <Button variant={"default"} className="w-full">
+                      {t("Reconcile")}
+                    </Button>
+                  </Link>
+                )
+            }
+            {
+              //Invoice can be sent for a completed or reconciled booking only
+              [
+                BookingStatusEnum.COMPLETED,
+                BookingStatusEnum.RECONCILED,
+              ].includes(bookingDetails.status) && (
+                <SendInvoiceAlertButton bookingId={bookingId} />
+              )
+            }
+            {
+              //Only confirmed booking can be cancelled here
+              bookingDetails.status == BookingStatusEnum.CONFIRMED && (
+                <CancelBookingAlertButton bookingId={bookingId} />
+              )
+            }
           </div>
         )}
       </div>

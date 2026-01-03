@@ -6,13 +6,13 @@ import {
   tripLogs,
   TripLogTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, gte, lte, inArray } from "drizzle-orm"
+import { eq, and, or, gte, lte, inArray } from "drizzle-orm"
 
 export const bookingRepository = {
   async readBookingsByStatusCreatedDateRange(
     agencyId: string,
-    startDate: Date,
-    endDate: Date,
+    queryStartDate: Date,
+    queryEndDate: Date,
     status: BookingStatusEnum
   ) {
     return await db
@@ -20,8 +20,8 @@ export const bookingRepository = {
       .from(bookings)
       .where(
         and(
-          gte(bookings.createdAt, startDate),
-          lte(bookings.createdAt, endDate),
+          gte(bookings.createdAt, queryStartDate),
+          lte(bookings.createdAt, queryEndDate),
           eq(bookings.agencyId, agencyId),
           eq(bookings.status, status)
         )
@@ -29,8 +29,8 @@ export const bookingRepository = {
   },
 
   async readBookingsByUpdatedDateRange(
-    startDate: Date,
-    endDate: Date,
+    queryStartDate: Date,
+    queryEndDate: Date,
     agencyId: string
   ) {
     return await db
@@ -38,8 +38,8 @@ export const bookingRepository = {
       .from(bookings)
       .where(
         and(
-          gte(bookings.createdAt, startDate),
-          lte(bookings.createdAt, endDate),
+          gte(bookings.createdAt, queryStartDate),
+          lte(bookings.createdAt, queryEndDate),
           eq(bookings.agencyId, agencyId)
         )
       )
@@ -101,8 +101,8 @@ export const bookingRepository = {
 
   async readCompletedBookingsData(
     agencyId: string,
-    startDate: Date,
-    endDate: Date
+    queryStartDate: Date,
+    queryEndDate: Date
   ) {
     return await db.query.bookings.findMany({
       where: and(
@@ -111,8 +111,8 @@ export const bookingRepository = {
           BookingStatusEnum.COMPLETED,
           BookingStatusEnum.RECONCILED,
         ]),
-        gte(bookings.createdAt, startDate),
-        lte(bookings.createdAt, endDate)
+        gte(bookings.updatedAt, queryStartDate),
+        lte(bookings.updatedAt, queryEndDate)
       ),
       columns: {
         status: true,
@@ -159,15 +159,15 @@ export const bookingRepository = {
 
   async readUpcomingBookingsData(
     agencyId: string,
-    startDate: Date,
-    endDate: Date
+    queryStartDate: Date,
+    queryEndDate: Date
   ) {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
-        gte(bookings.createdAt, startDate),
-        lte(bookings.createdAt, endDate)
+        gte(bookings.createdAt, queryStartDate),
+        lte(bookings.createdAt, queryEndDate)
       ),
       columns: {
         startDate: true,
@@ -207,13 +207,72 @@ export const bookingRepository = {
     })
   },
 
-  async readLeadBookingsData(agencyId: string, startDate: Date, endDate: Date) {
+  async readScheduleData(
+    agencyId: string,
+    queryStartDate: Date,
+    queryEndDate: Date
+  ) {
+    return await db.query.bookings.findMany({
+      where: and(
+        eq(bookings.agencyId, agencyId),
+        or(
+          and(
+            eq(bookings.status, BookingStatusEnum.CONFIRMED),
+            gte(bookings.createdAt, queryStartDate),
+            lte(bookings.createdAt, queryEndDate)
+          ),
+          eq(bookings.status, BookingStatusEnum.IN_PROGRESS)
+        )
+      ),
+      columns: {
+        startDate: true,
+        endDate: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+        status: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+      },
+    })
+  },
+
+  async readLeadBookingsData(
+    agencyId: string,
+    queryStartDate: Date,
+    queryEndDate: Date
+  ) {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.LEAD),
-        gte(bookings.createdAt, startDate),
-        lte(bookings.createdAt, endDate)
+        gte(bookings.createdAt, queryStartDate),
+        lte(bookings.createdAt, queryEndDate)
       ),
       columns: {
         totalAmount: true,

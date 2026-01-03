@@ -1,12 +1,12 @@
-import { getCurrentUser } from "@/lib/auth";
-import { getTranslations } from "next-intl/server";
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services";
-import { CaptionGrey, H4, H1, PGrey } from "@/components/typography";
+import { getCurrentUser } from "@/lib/auth"
+import { getTranslations } from "next-intl/server"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { CaptionGrey, H4, H1, PGrey } from "@/components/typography"
 import {
   LucideTrendingUp,
   LucideTrendingDown,
   LucideTickets,
-} from "lucide-react";
+} from "lucide-react"
 import {
   metricsClassName,
   metricFirstColClassName,
@@ -19,68 +19,59 @@ import {
   metricItem4ClassName,
   iconClassName,
   boldIconClassName,
-} from "./dashboardMetricsCommons";
+} from "./dashboardMetricsCommons"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function DashboardBookingMetricsComponent() {
-  const t = await getTranslations("Dashboard.Home.BookingMetrics");
-  const user = await getCurrentUser();
+  const t = await getTranslations("Dashboard.Home.BookingMetrics")
+  const user = await getCurrentUser()
 
-  // //Get confirmed bookings
-  // const confirmedBookingsThisWeek =
-  //   await bookingServices.findConfirmedBookingsPreviousDays(user!.agencyId, 7);
-  // const confirmed24HrsBookings = confirmedBookingsThisWeek.filter(
-  //   (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-  // );
+  //Get confirmed bookings
+  const confirmedBookingsThisWeek =
+    await bookingServices.findConfirmedBookingsPreviousDays(user!.agencyId, 7)
+  const confirmed24HrsBookings = confirmedBookingsThisWeek.filter(
+    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+  )
 
-  // //Get In progress bookings
-  // const inProgressBookings = await bookingServices.findInProgressBookings(
-  //   user!.agencyId
-  // );
+  //Get In progress bookings
+  const inProgressBookings = await bookingServices.findInProgressBookings(
+    user!.agencyId
+  )
 
-  // //Get updated bookings with all the status (lead, completed, cancelled)
-  // const updatedBookings = await bookingServices.findBookingsUpdatedPreviousDays(
-  //   user!.agencyId
-  // );
+  //Get updated bookings with all the status (lead, completed, cancelled)
+  const updatedBookings = await bookingServices.findBookingsUpdatedPreviousDays(
+    user!.agencyId
+  )
 
-  const confirmedThisWeekCount = 15;
-  const confirmed24HrsCount = 2;
-  // const confirmedThisWeekCount = confirmedBookingsThisWeek.length;
-  // const confirmed24HrsCount = confirmed24HrsBookings.length;
+  const confirmedThisWeekCount = confirmedBookingsThisWeek.length
+  const confirmed24HrsCount = confirmed24HrsBookings.length
 
-  const confirmedWeeklyAvg = confirmedThisWeekCount / 7;
+  const confirmedWeeklyAvg = confirmedThisWeekCount / 7
 
-  const more = confirmed24HrsCount > confirmedWeeklyAvg;
+  const more = confirmed24HrsCount > confirmedWeeklyAvg
   const createdChange = more
     ? (confirmed24HrsCount - confirmedWeeklyAvg) / confirmedWeeklyAvg
-    : (confirmedWeeklyAvg - confirmed24HrsCount) / confirmedWeeklyAvg;
+    : (confirmedWeeklyAvg - confirmed24HrsCount) / confirmedWeeklyAvg
 
-  const inProgressCount = 3;
+  const inProgressCount = inProgressBookings.length
 
-  const leadCount = 3;
+  const leadCount = updatedBookings.filter(
+    (b) => b.status === BookingStatusEnum.LEAD
+  ).length
 
-  const completedCount = 6;
+  const completedCount = updatedBookings.filter(
+    (b) => b.status === BookingStatusEnum.COMPLETED
+  ).length
 
-  const cancelledCount = 1;
-
-  // const inProgress = inProgressBookings.length;
-
-  // const leadCount = updatedBookings.filter(
-  //   (b) => b.status === "lead"
-  // ).length;
-
-  // const completedCount = updatedBookings.filter(
-  //   (b) => b.status === "completed"
-  // ).length;
-
-  // const cancelledCount = updatedBookings.filter(
-  //   (b) => b.status === "cancelled"
-  // ).length;
+  const cancelledCount = updatedBookings.filter(
+    (b) => b.status === BookingStatusEnum.CANCELLED
+  ).length
 
   const icon = more ? (
     <LucideTrendingUp className={boldIconClassName} />
   ) : (
     <LucideTrendingDown className={boldIconClassName} />
-  );
+  )
 
   return (
     <div id="dashboardBookingMetrics" className={metricsClassName}>
@@ -146,5 +137,5 @@ export default async function DashboardBookingMetricsComponent() {
         </div>
       </div>
     </div>
-  );
+  )
 }

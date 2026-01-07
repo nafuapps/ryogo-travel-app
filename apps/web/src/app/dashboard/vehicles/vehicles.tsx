@@ -27,7 +27,7 @@ export default async function VehiclesPageComponent() {
       <OnTripVehiclesComponent agencyId={agencyId} />
       <AllVehiclesListComponent agencyId={agencyId} />
       <VehiclesScheduleComponent agencyId={agencyId} />
-      <VehiclesHistoryComponent agencyId={agencyId} />
+      {/* <VehiclesHistoryComponent agencyId={agencyId} /> */}
       {/*<VehicleActionsComponent agencyId={agencyId}/> */}
     </div>
   )

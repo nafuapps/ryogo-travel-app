@@ -1374,6 +1374,24 @@
       },
       "History":{}
     },
+    "Drivers":{
+      "All":{
+        "Title":"All Drivers",
+        "Photo":"Driver photo",
+        "Km":" Km"
+      },
+      "OnTrip":{
+        "Title":"On Trip"
+      },
+      "Schedule": {
+        "Title": "Schedule",
+        "7Days": "Next 7 Days",
+        "14Days": "Next 14 Days",
+        "ViewDetails": "View Details",
+        "Driver":"Driver"
+      },
+      "History":{}
+    },
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",

@@ -33,13 +33,6 @@ export const vehicleServices = {
       )
 
     return vehiclesScheduleData
-    // .map((vehicle)=>{
-    //   return {
-    //     data:{
-
-    //     }
-    //   }
-    // })
   },
 
   //Add vehicle to agency

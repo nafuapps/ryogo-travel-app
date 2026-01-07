@@ -5,8 +5,8 @@ import {
   Small,
   SmallBold,
   SmallGrey,
-} from "@/components/typography";
-import { useTranslations } from "next-intl";
+} from "@/components/typography"
+import { useTranslations } from "next-intl"
 import {
   getFinalPrice,
   newBookingFormClassName,
@@ -17,43 +17,43 @@ import {
   newBookingLineSubtitleClassName,
   newBookingSectionClassName,
   NewBookingTotalSteps,
-} from "./newBookingCommon";
-import NewBookingStepsTracker from "./newBookingStepsTracker";
-import { Form } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
+} from "./newBookingCommon"
+import NewBookingStepsTracker from "./newBookingStepsTracker"
+import { Form } from "@/components/ui/form"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 import {
   CreateNewBookingAPIRequestType,
   CreateNewBookingAPIResponseType,
-} from "@ryogo-travel-app/api/types/booking.types";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { BigIconTextTag } from "./newBookingTileTag";
+} from "@ryogo-travel-app/api/types/booking.types"
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import { BigIconTextTag } from "./newBookingTileTag"
 import {
   LucideAirVent,
   LucideCar,
   LucideCirclePercent,
   LucideIdCard,
   LucideInfo,
-} from "lucide-react";
-import { Alert } from "@/components/ui/alert";
-import NewBookingTripInfo from "./newBookingTripInfo";
+} from "lucide-react"
+import { Alert } from "@/components/ui/alert"
+import NewBookingTripInfo from "./newBookingTripInfo"
 
 type NewBookingFinalProps = {
-  onPrev: () => void;
-  newBookingFormData: NewBookingFormDataType;
-  userId: string;
-  agencyId: string;
-};
+  onPrev: () => void
+  newBookingFormData: NewBookingFormDataType
+  userId: string
+  agencyId: string
+}
 export default function NewBookingFinal(props: NewBookingFinalProps) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Final");
-  const router = useRouter();
-  const form = useForm<NewBookingFormDataType>();
+  const t = useTranslations("Dashboard.NewBooking.Form.Final")
+  const router = useRouter()
+  const form = useForm<NewBookingFormDataType>()
 
   //Calculate final price
-  const finalAmount = getFinalPrice(props.newBookingFormData);
+  const finalAmount = getFinalPrice(props.newBookingFormData)
 
   //Final form submit to create a new booking
   const onSubmit = async () => {
@@ -77,8 +77,8 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
       sourceId: props.newBookingFormData.sourceId,
       destinationId: props.newBookingFormData.destinationId,
       tripType: props.newBookingFormData.tripType,
-      tripStartDate: props.newBookingFormData.tripStartDate.toDateString(),
-      tripEndDate: props.newBookingFormData.tripEndDate.toDateString(),
+      tripStartDate: props.newBookingFormData.tripStartDate,
+      tripEndDate: props.newBookingFormData.tripEndDate,
       tripPassengers: props.newBookingFormData.tripPassengers,
       tripNeedsAC: props.newBookingFormData.tripNeedsAC,
       assignedDriverId: props.newBookingFormData.assignedDriverId,
@@ -96,19 +96,19 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
       totalAcCharge: finalAmount.totalAcPrice,
       totalDriverAllowance: finalAmount.totalDriverAllowance,
       totalCommission: finalAmount.totalCommission,
-    };
+    }
     const createdBooking = await apiClient<CreateNewBookingAPIResponseType>(
       "/api/new-booking",
       { method: "POST", body: JSON.stringify(newBookingData) }
-    );
+    )
     if (createdBooking) {
-      router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`);
-      toast.success(t("Success"));
+      router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`)
+      toast.success(t("Success"))
     } else {
-      router.replace(`/dashboard/bookings`);
-      toast.error(t("Error"));
+      router.replace(`/dashboard/bookings`)
+      toast.error(t("Error"))
     }
-  };
+  }
 
   return (
     <div id="FinalSection" className={newBookingSectionClassName}>
@@ -206,5 +206,5 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         </form>
       </Form>
     </div>
-  );
+  )
 }

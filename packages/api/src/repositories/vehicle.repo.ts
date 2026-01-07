@@ -2,11 +2,10 @@ import { db } from "@ryogo-travel-app/db"
 import {
   BookingStatusEnum,
   InsertVehicleType,
-  vehicleRepairs,
   vehicles,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, notInArray, inArray } from "drizzle-orm"
+import { eq, and, notInArray, inArray, or, gte, lte } from "drizzle-orm"
 
 export const vehicleRepository = {
   //Get vehicle by id
@@ -40,6 +39,7 @@ export const vehicleRepository = {
         defaultAcChargePerDay: true,
         defaultRatePerKm: true,
         hasAC: true,
+        vehiclePhotoUrl: true,
       },
       where: and(
         eq(vehicles.agencyId, agencyId),
@@ -53,7 +53,7 @@ export const vehicleRepository = {
             startDate: true,
             endDate: true,
           },
-          where: (assignedBookings, { inArray }) =>
+          where: (assignedBookings) =>
             inArray(assignedBookings.status, [
               BookingStatusEnum.CONFIRMED,
               BookingStatusEnum.IN_PROGRESS,
@@ -65,8 +65,52 @@ export const vehicleRepository = {
             startDate: true,
             endDate: true,
           },
-          where: (vehicleRepairs, { eq }) =>
-            eq(vehicleRepairs.isCompleted, false),
+          where: (vehicleRepairs) => eq(vehicleRepairs.isCompleted, false),
+        },
+      },
+    })
+  },
+
+  //Get all vehicles data for a new booking in an agency
+  async readOnTripVehiclesDataByAgencyId(agencyId: string) {
+    return await db.query.vehicles.findMany({
+      where: and(
+        eq(vehicles.agencyId, agencyId),
+        eq(vehicles.status, VehicleStatusEnum.ON_TRIP)
+      ),
+      with: {
+        assignedBookings: {
+          columns: {
+            id: true,
+            startDate: true,
+            endDate: true,
+          },
+          where: (assignedBookings, { eq }) =>
+            eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
+          with: {
+            assignedDriver: {
+              columns: {
+                name: true,
+              },
+            },
+            source: {
+              columns: {
+                city: true,
+              },
+            },
+            destination: {
+              columns: {
+                city: true,
+              },
+            },
+            tripLogs: {
+              orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+              columns: {
+                type: true,
+              },
+              limit: 1,
+            },
+          },
         },
       },
     })
@@ -83,6 +127,103 @@ export const vehicleRepository = {
           eq(vehicles.agencyId, agencyId)
         )
       )
+  },
+
+  //Get vehicle schedule data
+  async readVehiclesScheduleData(
+    agencyId: string,
+    queryStartDate: Date,
+    queryEndDate: Date
+  ) {
+    return await db.query.vehicles.findMany({
+      columns: {
+        id: true,
+        brand: true,
+        color: true,
+        model: true,
+        vehicleNumber: true,
+        vehiclePhotoUrl: true,
+        type: true,
+      },
+      where: and(
+        eq(vehicles.agencyId, agencyId),
+        notInArray(vehicles.status, [VehicleStatusEnum.SUSPENDED])
+      ),
+      with: {
+        assignedBookings: {
+          columns: {
+            id: true,
+            status: true,
+            startDate: true,
+            endDate: true,
+            type: true,
+            updatedAt: true,
+          },
+          with: {
+            assignedDriver: {
+              columns: {
+                name: true,
+              },
+            },
+            assignedVehicle: {
+              columns: {
+                vehicleNumber: true,
+              },
+            },
+            customer: {
+              columns: {
+                name: true,
+              },
+            },
+            source: {
+              columns: {
+                city: true,
+              },
+            },
+            destination: {
+              columns: {
+                city: true,
+              },
+            },
+          },
+          where: (assignedBookings) =>
+            or(
+              and(
+                eq(assignedBookings.status, BookingStatusEnum.CONFIRMED),
+                gte(assignedBookings.endDate, queryStartDate),
+                lte(assignedBookings.startDate, queryEndDate)
+              ),
+              eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS)
+            ),
+        },
+        vehicleRepairs: {
+          columns: {
+            id: true,
+            startDate: true,
+            endDate: true,
+            vehicleId: true,
+          },
+          with: {
+            addedByUser: {
+              columns: {
+                name: true,
+              },
+            },
+            vehicle: {
+              columns: {
+                vehicleNumber: true,
+              },
+            },
+          },
+          where: (vehicleRepairs) =>
+            and(
+              eq(vehicleRepairs.isCompleted, false),
+              gte(vehicleRepairs.endDate, queryStartDate),
+              lte(vehicleRepairs.startDate, queryEndDate)
+            ),
+        },
+      },
+    })
   },
 
   //Create vehicle

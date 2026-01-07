@@ -1,5 +1,3 @@
-import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { NewBookingFindCustomerAPIResponseType } from "@ryogo-travel-app/api/types/customer.types"
 import {
   DriverStatusEnum,
@@ -49,14 +47,6 @@ export type NewBookingFormDataType = {
   selectedAllowancePerDay?: number
   selectedCommissionRate?: number
 }
-
-export type NewBookingFindVehiclesType = Awaited<
-  ReturnType<FindVehiclesByAgencyType>
->
-
-export type NewBookingFindDriversType = Awaited<
-  ReturnType<FindDriversByAgencyType>
->
 
 export type NewBookingAgencyLocationType = {
   id: string
@@ -140,11 +130,13 @@ export const NoExpiryDateScore = 10
 export const ExpiredScore = 10
 export const SoonExpiringScore = 50
 export const OKExpiryScore = 100
-export function getExpiryScore(newBookingEndDate: Date, date?: string | null) {
-  if (!date) {
+export function getExpiryScore(
+  newBookingEndDate: Date,
+  expiryDate: Date | null
+) {
+  if (!expiryDate) {
     return NoExpiryDateScore
   }
-  const expiryDate = new Date(date)
   //Expired already or null
   if (expiryDate < new Date()) {
     return ExpiredScore

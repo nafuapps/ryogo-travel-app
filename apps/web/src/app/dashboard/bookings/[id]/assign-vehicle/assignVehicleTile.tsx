@@ -33,7 +33,7 @@ import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 
 type AssignVehicleTileProps = {
-  vehicleData: Awaited<ReturnType<FindVehiclesByAgencyType>>[number]
+  vehicleData: FindVehiclesByAgencyType[number]
   booking: NonNullable<FindBookingDetailsByIdType>
   selectedVehicleId: string | null
   setSelectedVehicleId: (vehicleId: string | null) => void

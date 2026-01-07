@@ -61,5 +61,6 @@ export const driverServices = {
   },
 }
 
-export type FindDriversByAgencyType =
-  (typeof driverServices)["findDriversByAgency"]
+export type FindDriversByAgencyType = Awaited<
+  ReturnType<typeof driverServices.findDriversByAgency>
+>

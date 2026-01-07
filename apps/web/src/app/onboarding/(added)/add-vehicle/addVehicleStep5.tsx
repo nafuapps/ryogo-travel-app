@@ -1,35 +1,35 @@
-import { H3Grey } from "@/components/typography";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
-import ConfirmValues from "@/app/onboarding/components/confirmValues";
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { H3Grey } from "@/components/typography"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import ConfirmValues from "@/app/onboarding/components/confirmValues"
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
 import {
   OnboardingAddVehicleAPIRequestType,
   OnboardingAddVehicleAPIResponseType,
-} from "@ryogo-travel-app/api/types/vehicle.types";
+} from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   apiClient,
   apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient";
-import { toast } from "sonner";
-import { redirect, RedirectType } from "next/navigation";
+} from "@ryogo-travel-app/api/client/apiClient"
+import { toast } from "sonner"
+import { redirect, RedirectType } from "next/navigation"
 
 export function AddVehicleConfirm(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: AddVehicleFormDataType;
+  onNext: () => void
+  onPrev: () => void
+  finalData: AddVehicleFormDataType
 }) {
-  const t = useTranslations("Onboarding.AddVehiclePage.Confirm");
-  const formData = useForm<AddVehicleFormDataType>();
+  const t = useTranslations("Onboarding.AddVehiclePage.Confirm")
+  const formData = useForm<AddVehicleFormDataType>()
 
   //Submit actions
   const onSubmit = async () => {
@@ -43,31 +43,31 @@ export function AddVehicleConfirm(props: {
         model: props.finalData.model,
         capacity: props.finalData.capacity,
         odometerReading: props.finalData.odometerReading,
-        insuranceExpiresOn: props.finalData.insuranceExpiresOn!.toDateString(),
-        pucExpiresOn: props.finalData.pucExpiresOn!.toDateString(),
+        insuranceExpiresOn: props.finalData.insuranceExpiresOn!,
+        pucExpiresOn: props.finalData.pucExpiresOn!,
         hasAC: props.finalData.hasAC,
         defaultRatePerKm: props.finalData.defaultRatePerKm,
         defaultAcChargePerDay: props.finalData.defaultAcChargePerDay,
       },
-    };
+    }
     const addedVehicle = await apiClient<OnboardingAddVehicleAPIResponseType>(
       "/api/onboarding/add-vehicle",
       { method: "POST", body: JSON.stringify(newVehicleData) }
-    );
+    )
     if (addedVehicle.id) {
       //Try to upload vehicle docs
-      const formData = new FormData();
+      const formData = new FormData()
       if (props.finalData.rcPhotos) {
-        formData.append("rc", props.finalData.rcPhotos[0]!);
+        formData.append("rc", props.finalData.rcPhotos[0]!)
       }
       if (props.finalData.insurancePhotos) {
-        formData.append("insurance", props.finalData.insurancePhotos[0]!);
+        formData.append("insurance", props.finalData.insurancePhotos[0]!)
       }
       if (props.finalData.pucPhotos) {
-        formData.append("puc", props.finalData.pucPhotos[0]!);
+        formData.append("puc", props.finalData.pucPhotos[0]!)
       }
       if (props.finalData.vehiclePhotos) {
-        formData.append("vehicle", props.finalData.vehiclePhotos[0]!);
+        formData.append("vehicle", props.finalData.vehiclePhotos[0]!)
       }
       await apiClientWithoutHeaders(
         `/api/onboarding/add-vehicle/upload-docs/${addedVehicle.id}`,
@@ -75,14 +75,14 @@ export function AddVehicleConfirm(props: {
           method: "POST",
           body: formData,
         }
-      );
-      props.onNext();
+      )
+      props.onNext()
     } else {
       //If failed, Take back to vehicle onboarding page and show error
-      toast.error(t("APIError"));
-      redirect("/onboarding/add-vehicle", RedirectType.replace);
+      toast.error(t("APIError"))
+      redirect("/onboarding/add-vehicle", RedirectType.replace)
     }
-  };
+  }
 
   return (
     <Form {...formData}>
@@ -153,5 +153,5 @@ export function AddVehicleConfirm(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

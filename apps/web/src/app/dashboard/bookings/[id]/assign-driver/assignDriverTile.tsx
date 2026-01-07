@@ -31,7 +31,7 @@ import {
 import { IconTextTag, IconsTag } from "../../new/newBookingTileTag"
 
 type AssignDriverTileProps = {
-  driverData: Awaited<ReturnType<FindDriversByAgencyType>>[number]
+  driverData: FindDriversByAgencyType[number]
   selectedDriverId: string | null
   setSelectedDriverId: (driverId: string | null) => void
   booking: NonNullable<FindBookingDetailsByIdType>

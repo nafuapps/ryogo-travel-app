@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl"
 import { UseFormSetValue, useWatch } from "react-hook-form"
 import {
-  NewBookingFindDriversType,
   NewBookingFormDataType,
   getOverlapScore,
   getDriverStatusScore,
@@ -31,9 +30,10 @@ import {
   LucideBadgeIndianRupee,
   LucidePhone,
 } from "lucide-react"
+import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 
 type NewBookingDriverTileProps = {
-  driverData: NewBookingFindDriversType[number]
+  driverData: FindDriversByAgencyType[number]
   newBookingFormData: NewBookingFormDataType
   setValue: UseFormSetValue<Step3Type>
 }

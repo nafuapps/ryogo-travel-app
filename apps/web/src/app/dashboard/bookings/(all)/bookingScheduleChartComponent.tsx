@@ -49,8 +49,7 @@ export default function BookingScheduleChartComponent({
 
   const bookings7Days = bookings14Days.filter(
     (b) =>
-      new Date(b.startDate) <=
-      new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000)
+      b.startDate <= new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000)
   )
 
   const chartData = selectedTab == "7Days" ? bookings7Days : bookings14Days
@@ -85,11 +84,11 @@ export default function BookingScheduleChartComponent({
       </div>
       <div
         id="BookingScheduleChart"
-        className="flex flex-row sm:flex-col gap-2 lg:gap-3 w-full"
+        className="flex flex-row sm:flex-col gap-1 lg:gap-1.5 w-full"
       >
         <div
           id="BookingScheduleChartDayAxis"
-          className={`grid whitespace- shrink-0 sm:w-full grid-cols-1 sm:grid-rows-1 divide-y sm:divide-x sm:divide-y-0 divide-slate-200 gap-1 lg:gap-1.5 ${
+          className={`grid shrink-0 sm:w-full grid-cols-1 sm:grid-rows-1 divide-y sm:divide-x sm:divide-y-0 divide-slate-200 gap-1 lg:gap-1.5 ${
             selectedDays == 7
               ? "grid-rows-7 sm:grid-cols-7"
               : "grid-rows-14 sm:grid-cols-14"
@@ -113,39 +112,36 @@ export default function BookingScheduleChartComponent({
         <div
           id="BookingScheduleChartContainer"
           className="grid w-full gap-1 lg:gap-1.5 overflow-auto no-scrollbar 
-    grid-cols-[repeat(var(--bookings),1fr)]
+    grid-cols-[repeat(var(--items),1fr)]
     grid-rows-[repeat(var(--days),1fr)]
     sm:grid-cols-[repeat(var(--days),1fr)]
-    sm:grid-rows-[repeat(var(--bookings),1fr)]"
+    sm:grid-rows-[repeat(var(--items),1fr)]"
           style={
             {
-              // For mobile: columns = bookings, rows = days
+              // For mobile: columns = items, rows = days
               "--days": selectedDays,
-              "--bookings": chartData.length,
+              "--items": chartData.length,
             } as React.CSSProperties
           }
         >
           {chartData.map((booking, index) => {
-            const startDate = new Date(booking.startDate)
-            const endDate = new Date(booking.endDate)
             const millisecondsPerDay = 1000 * 60 * 60 * 24
 
             //Calculate gantt start and end index
             let dayIndexStart =
               Math.ceil(
-                (startDate.getTime() - chartStartDate.getTime()) /
+                (booking.startDate.getTime() - chartStartDate.getTime()) /
                   millisecondsPerDay
               ) + 1
             let dayIndexEnd =
               Math.ceil(
-                (endDate.getTime() - chartStartDate.getTime()) /
+                (booking.endDate.getTime() - chartStartDate.getTime()) /
                   millisecondsPerDay
               ) + 2
 
             //Check if booking is assigned
             const isVehicleAssigned = booking.vehicle ? true : false
             const isDriverAssigned = booking.driver ? true : false
-
             return (
               <Popover key={index}>
                 <PopoverTrigger asChild>
@@ -165,19 +161,20 @@ export default function BookingScheduleChartComponent({
                       dayIndexStart < 1
                         ? "rounded-t-none sm:rounded-tr-lg sm:rounded-l-none"
                         : ""
-                    } justify-center items-center text-ellipsis 
-                    col-start-[var(--index)+1]
+                    } justify-center items-center min-w-0 
+                    col-start-(--startIndex)
                     sm:col-start-(--dayIndexStart)
                     row-start-(--dayIndexStart)
-                    sm:row-start-[var(--index)+1]
-                    col-end-[var(--index)+2]
+                    sm:row-start-(--startIndex)
+                    col-end-(--endIndex)
                     sm:col-end-(--dayIndexEnd)
                     row-end-(--dayIndexEnd)
-                    sm:row-end-[var(--index)+2]
+                    sm:row-end-(--endIndex)
                     `}
                     style={
                       {
-                        "--index": index,
+                        "--startIndex": index + 1,
+                        "--endIndex": index + 2,
                         "--dayIndexStart":
                           dayIndexStart < 1 ? 1 : dayIndexStart,
                         "--dayIndexEnd":
@@ -217,8 +214,21 @@ function BookingPopoverCard(
     <div className="flex flex-col gap-3 lg:gap-4">
       <div className="flex flex-row justify-between gap-3 lg:gap-4 items-start">
         <div className="flex flex-col gap-1 item-start">
-          <CaptionBold>{props.type}</CaptionBold>
-          <H5>{props.route.toUpperCase()}</H5>
+          <CaptionBold>{props.type.toUpperCase()}</CaptionBold>
+          <H5>{props.route}</H5>
+        </div>
+        <div className="flex flex-col gap-1 items-end">
+          <Caption>
+            {moment(props.startDate).format("DD MMM") +
+              " - " +
+              moment(props.endDate).format("DD MMM")}
+          </Caption>
+        </div>
+      </div>
+      <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
+        <div className="flex flex-col gap-1 items-start">
+          <Small>{props.customerName}</Small>
+          <CaptionBold>{props.bookingId}</CaptionBold>
         </div>
         <div className="flex flex-col gap-1 items-end">
           {props.vehicle ? (
@@ -231,16 +241,6 @@ function BookingPopoverCard(
           ) : (
             <CaptionRed>{t("NotAssigned")}</CaptionRed>
           )}
-        </div>
-      </div>
-      <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
-        <div className="flex flex-col gap-1 items-start">
-          <Small>{props.customerName}</Small>
-          <CaptionBold>{props.bookingId}</CaptionBold>
-        </div>
-        <div className="flex flex-col gap-1 items-end">
-          <Small>{props.startDate}</Small>
-          <CaptionBold>{props.endDate}</CaptionBold>
         </div>
       </div>
       {(!props.isDriverAssigned || !props.isVehicleAssigned) && (

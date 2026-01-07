@@ -1,158 +1,158 @@
-import { SelectDriverType, UserRolesEnum } from "@ryogo-travel-app/db/schema";
+import { SelectDriverType, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 // /api/auth/login (POST)
 export type LoginAPIRequestType = {
-  phone: string;
-};
+  phone: string
+}
 export type LoginAPIResponseType = {
-  id: string;
-}[];
+  id: string
+}[]
 
 // /api/auth/login/accounts/[phone] (GET)
 export type LoginAccountsAPIRequestType = {
-  phone: string;
-};
+  phone: string
+}
 export type LoginAccountsAPIResponseType = {
-  id: string;
-  name: string;
-  agencyId: string;
-  phone: string;
-  userRole: UserRolesEnum;
+  id: string
+  name: string
+  agencyId: string
+  phone: string
+  userRole: UserRolesEnum
   agency: {
-    businessName: string;
-  };
-}[];
+    businessName: string
+  }
+}[]
 
 // /api/auth/login/password (POST)
 export type LoginPasswordAPIRequestType = {
-  userId: string;
-  password: string;
-};
+  userId: string
+  password: string
+}
 export type LoginPasswordAPIResponseType =
   | {
-      id: string;
-      userRole: string;
+      id: string
+      userRole: string
     }
   | null
-  | undefined;
+  | undefined
 
 // /api/auth/reset (POST)
 export type ResetPasswordAPIRequestType = {
-  userId: string;
-  email: string;
-};
+  userId: string
+  email: string
+}
 export type ResetPasswordAPIResponseType = {
-  id: string;
-};
+  id: string
+}
 
 // /api/auth/signup (POST)
 export type SignupAPIRequestType = {
-  phone: string;
-};
+  phone: string
+}
 export type SignupAPIResponseType = {
-  id: string;
-}[];
+  id: string
+}[]
 
 // /api/auth/signup/existing/[phone] (GET)
 export type SignupExistingAPIRequestType = {
-  phone: string;
-};
+  phone: string
+}
 export type SignupExistingAPIResponseType = {
-  id: string;
-  name: string;
-  agencyId: string;
-  phone: string;
-  userRole: UserRolesEnum;
+  id: string
+  name: string
+  agencyId: string
+  phone: string
+  userRole: UserRolesEnum
   agency: {
-    businessName: string;
-  };
-}[];
+    businessName: string
+  }
+}[]
 
 // /api/onboarding/create-account/existing-owner?phone=[phone]&email=[email] (GET)
-export type OnboardingExistingOwnerAPIRequestType = {};
+export type OnboardingExistingOwnerAPIRequestType = {}
 export type OnboardingExistingOwnerAPIResponseType = {
-  id: string;
-}[];
+  id: string
+}[]
 
 // /api/onboarding/create-account (POST)
 export type OnboardingCreateAccountAPIRequestType = {
   agency: {
-    businessEmail: string;
-    businessPhone: string;
-    businessName: string;
-    businessAddress: string;
-    agencyCity: string;
-    agencyState: string;
-    commissionRate?: number | undefined;
-  };
+    businessEmail: string
+    businessPhone: string
+    businessName: string
+    businessAddress: string
+    agencyCity: string
+    agencyState: string
+    commissionRate?: number | undefined
+  }
   owner: {
-    email: string;
-    phone: string;
-    name: string;
-    password: string;
-  };
-};
+    email: string
+    phone: string
+    name: string
+    password: string
+  }
+}
 export type OnboardingCreateAccountAPIResponseType = {
-  agencyId: string;
-  userId: string;
-  password: string;
-};
+  agencyId: string
+  userId: string
+  password: string
+}
 
 // /api/onboarding/add-driver/existing-driver?phone=[phone]&email=[email] (GET)
-export type OnboardingExistingDriverAPIRequestType = {};
+export type OnboardingExistingDriverAPIRequestType = {}
 export type OnboardingExistingDriverAPIResponseType = {
-  id: string;
-}[];
+  id: string
+}[]
 
 // /api/onboarding/add-driver (POST)
 export type OnboardingAddDriverAPIRequestType = {
-  agencyId: string;
+  agencyId: string
   data: {
-    name: string;
-    phone: string;
-    email: string;
-    licenseNumber: string;
-    licenseExpiresOn: string;
-    address: string;
-    canDriveVehicleTypes: string[];
-    defaultAllowancePerDay?: number | undefined;
-  };
-};
+    name: string
+    phone: string
+    email: string
+    licenseNumber: string
+    licenseExpiresOn: Date
+    address: string
+    canDriveVehicleTypes: string[]
+    defaultAllowancePerDay?: number | undefined
+  }
+}
 export type OnboardingAddDriverAPIResponseType = {
-  id: string;
-  userId: string;
-};
+  id: string
+  userId: string
+}
 
 // /api/onboarding/add-agent/existing-agent?phone=[phone]&email=[email] (GET)
-export type OnboardingExistingAgentAPIRequestType = {};
+export type OnboardingExistingAgentAPIRequestType = {}
 export type OnboardingExistingAgentAPIResponseType = {
-  id: string;
-}[];
+  id: string
+}[]
 
 // /api/onboarding/add-agent (POST)
 export type OnboardingAddAgentAPIRequestType = {
-  agencyId: string;
+  agencyId: string
   data: {
-    name: string;
-    phone: string;
-    email: string;
-  };
-};
+    name: string
+    phone: string
+    email: string
+  }
+}
 export type OnboardingAddAgentAPIResponseType = {
-  id: string;
-};
+  id: string
+}
 
 // /api/onboarding/set-active/[userId] (POST)
-export type OnboardingSetActiveAPIRequestType = {};
+export type OnboardingSetActiveAPIRequestType = {}
 export type OnboardingSetActiveAPIResponseType = {
-  agencyId: string;
-};
+  agencyId: string
+}
 
 // /api/onboarding/change-password/[userId] (POST)
 export type OnboardingChangePasswordAPIRequestType = {
-  oldPassword: string;
-  newPassword: string;
-};
+  oldPassword: string
+  newPassword: string
+}
 export type OnboardingChangePasswordAPIResponseType = {
-  id: string;
-};
+  id: string
+}

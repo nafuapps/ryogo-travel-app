@@ -1,37 +1,37 @@
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
-import { H3Grey } from "@/components/typography";
-import ConfirmValues from "@/app/onboarding/components/confirmValues";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
+import { H3Grey } from "@/components/typography"
+import ConfirmValues from "@/app/onboarding/components/confirmValues"
 import {
   OnboardingAddDriverAPIRequestType,
   OnboardingAddDriverAPIResponseType,
   OnboardingSetActiveAPIResponseType,
-} from "@ryogo-travel-app/api/types/user.types";
+} from "@ryogo-travel-app/api/types/user.types"
 import {
   apiClient,
   apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient";
-import { redirect, RedirectType } from "next/navigation";
-import { toast } from "sonner";
+} from "@ryogo-travel-app/api/client/apiClient"
+import { redirect, RedirectType } from "next/navigation"
+import { toast } from "sonner"
 
 export function AddDriverConfirm(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: AddDriverFormDataType;
-  ownerId: string;
+  onNext: () => void
+  onPrev: () => void
+  finalData: AddDriverFormDataType
+  ownerId: string
 }) {
-  const t = useTranslations("Onboarding.AddDriverPage.Confirm");
-  const formData = useForm<AddDriverFormDataType>();
+  const t = useTranslations("Onboarding.AddDriverPage.Confirm")
+  const formData = useForm<AddDriverFormDataType>()
   //Submit actions
   const onSubmit = async () => {
     // Add driver
@@ -45,36 +45,36 @@ export function AddDriverConfirm(props: {
         canDriveVehicleTypes: props.finalData.canDriveVehicleTypes,
         defaultAllowancePerDay: props.finalData.defaultAllowancePerDay,
         licenseNumber: props.finalData.licenseNumber,
-        licenseExpiresOn: props.finalData.licenseExpiresOn!.toDateString(),
+        licenseExpiresOn: props.finalData.licenseExpiresOn!,
       },
-    };
+    }
     const addedDriver = await apiClient<OnboardingAddDriverAPIResponseType>(
       "/api/onboarding/add-driver",
       { method: "POST", body: JSON.stringify(newDriverData) }
-    );
+    )
     if (addedDriver.id) {
       //If success, Try to upload license photo and driver user photo
       if (props.finalData.licensePhotos) {
-        const formData = new FormData();
-        formData.append("license", props.finalData.licensePhotos[0]!);
+        const formData = new FormData()
+        formData.append("license", props.finalData.licensePhotos[0]!)
         await apiClientWithoutHeaders(
           `/api/onboarding/add-driver/upload-license/${addedDriver.id}`,
           {
             method: "POST",
             body: formData,
           }
-        );
+        )
       }
       if (props.finalData.driverPhotos) {
-        const formData = new FormData();
-        formData.append("file", props.finalData.driverPhotos[0]!);
+        const formData = new FormData()
+        formData.append("file", props.finalData.driverPhotos[0]!)
         await apiClientWithoutHeaders(
           `/api/onboarding/upload-user-photo/${addedDriver.userId}`,
           {
             method: "POST",
             body: formData,
           }
-        );
+        )
       }
       //Set owner and agency status as ACTIVE
       await apiClient<OnboardingSetActiveAPIResponseType>(
@@ -82,15 +82,15 @@ export function AddDriverConfirm(props: {
         {
           method: "POST",
         }
-      );
+      )
       //Move to next step
-      props.onNext();
+      props.onNext()
     } else {
       //If failed, Take back to driver onboarding page and show error
-      toast.error(t("APIError"));
-      redirect("/onboarding/add-driver", RedirectType.replace);
+      toast.error(t("APIError"))
+      redirect("/onboarding/add-driver", RedirectType.replace)
     }
-  };
+  }
   return (
     <Form {...formData}>
       <OnboardingStepForm
@@ -147,5 +147,5 @@ export function AddDriverConfirm(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

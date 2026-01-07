@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import { useMultiStepForm } from "@/hooks/useMultiStepForm";
-import NewBookingStep1 from "./newBookingStep1";
-import NewBookingStep2 from "./newBookingStep2";
-import NewBookingStep3 from "./newBookingStep3";
-import NewBookingStep4 from "./newBookingStep4";
-import NewBookingFinal from "./newBookingFinal";
-import { useState } from "react";
+import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import NewBookingStep1 from "./newBookingStep1"
+import NewBookingStep2 from "./newBookingStep2"
+import NewBookingStep3 from "./newBookingStep3"
+import NewBookingStep4 from "./newBookingStep4"
+import NewBookingFinal from "./newBookingFinal"
+import { useState } from "react"
 import {
   NewBookingAgencyLocationType,
-  NewBookingFindDriversType,
-  NewBookingFindVehiclesType,
   NewBookingFormDataType,
-} from "./newBookingCommon";
-import { BookingTypeEnum } from "@ryogo-travel-app/db/schema";
+} from "./newBookingCommon"
+import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
+import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 
 type NewBookingFormProps = {
-  agencyId: string;
-  agencyLocation: NewBookingAgencyLocationType;
-  vehicles: NewBookingFindVehiclesType;
-  drivers: NewBookingFindDriversType;
-  commissionRate: number;
-  userId: string;
-};
+  agencyId: string
+  agencyLocation: NewBookingAgencyLocationType
+  vehicles: FindVehiclesByAgencyType
+  drivers: FindDriversByAgencyType
+  commissionRate: number
+  userId: string
+}
 export default function NewBookingForm(props: NewBookingFormProps) {
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingFormDataType>({
@@ -43,15 +43,15 @@ export default function NewBookingForm(props: NewBookingFormProps) {
       selectedRatePerKm: undefined,
       selectedAllowancePerDay: undefined,
       selectedAcChargePerDay: undefined,
-    });
+    })
 
   const nextStepHandler = () => {
-    nextStep();
-  };
+    nextStep()
+  }
 
   const prevStepHandler = () => {
-    prevStep();
-  };
+    prevStep()
+  }
 
   const { currentStepIndex, steps, nextStep, prevStep } = useMultiStepForm([
     <NewBookingStep1
@@ -91,7 +91,7 @@ export default function NewBookingForm(props: NewBookingFormProps) {
       userId={props.userId}
       agencyId={props.agencyId}
     />,
-  ]);
+  ])
 
   return (
     <div
@@ -100,5 +100,5 @@ export default function NewBookingForm(props: NewBookingFormProps) {
     >
       {steps[currentStepIndex]}
     </div>
-  );
+  )
 }

@@ -5,8 +5,6 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
-  NewBookingFindDriversType,
-  NewBookingFindVehiclesType,
   newBookingFormClassName,
   NewBookingFormDataType,
   newBookingHeaderClassName,
@@ -22,6 +20,8 @@ import { Button } from "@/components/ui/button"
 import NewBookingVehicleTile from "./newBookingVehicleTile"
 import NewBookingDriverTile from "./newBookingDriverTile"
 import { Separator } from "@/components/ui/separator"
+import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -30,8 +30,8 @@ type NewBookingStep3Props = {
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
   >
-  vehicles: NewBookingFindVehiclesType
-  drivers: NewBookingFindDriversType
+  vehicles: FindVehiclesByAgencyType
+  drivers: FindDriversByAgencyType
 }
 export default function NewBookingStep3(props: NewBookingStep3Props) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step3")

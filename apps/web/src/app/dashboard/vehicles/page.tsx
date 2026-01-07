@@ -1,8 +1,14 @@
 //All vehicles page
 
-import {useTranslations} from 'next-intl';
- 
+import { mainClassName } from "@/components/page/pageCommons"
+import DashboardHeader from "../components/extra/dashboardHeader"
+import VehiclesPageComponent from "./vehicles"
+
 export default function AllVehiclesPage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+  return (
+    <div className={mainClassName}>
+      <DashboardHeader pathName={"/dashboard/vehicles"} />
+      <VehiclesPageComponent />
+    </div>
+  )
 }

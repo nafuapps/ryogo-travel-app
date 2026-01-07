@@ -1,12 +1,13 @@
-import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import LeadBookingsItemComponent from "./leadBookingsItemComponent"
 
-export default async function LeadsBookingsComponent() {
-  const user = await getCurrentUser()
-
+export default async function LeadsBookingsComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   const leadBookings7Days = await bookingServices.findLeadBookingsPreviousDays(
-    user!.agencyId,
+    agencyId,
     7
   )
 

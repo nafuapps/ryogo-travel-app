@@ -1356,6 +1356,24 @@
       "Success": "User assigned successfully!",
       "Error": "Cannot assign user.. Try again later!"
     },
+    "Vehicles":{
+      "All":{
+        "Title":"All Vehicles",
+        "Photo":"Vehicle photo",
+        "Km":" Km"
+      },
+      "OnTrip":{
+        "Title":"On Trip"
+      },
+      "Schedule": {
+        "Title": "Schedule",
+        "7Days": "Next 7 Days",
+        "14Days": "Next 14 Days",
+        "ViewDetails": "View Details",
+        "Vehicle":"Vehicle"
+      },
+      "History":{}
+    },
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",

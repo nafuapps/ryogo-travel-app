@@ -11,6 +11,37 @@ export const vehicleServices = {
     return vehicles
   },
 
+  //Get onTrip vehicles data
+  async findVehiclesOnTrip(agencyId: string) {
+    const vehicles = await vehicleRepository.readOnTripVehiclesDataByAgencyId(
+      agencyId
+    )
+    return vehicles
+  },
+
+  //Get vehicles schedule
+  async findVehiclesScheduleNextDays(agencyId: string, days: number = 7) {
+    //Day today
+    const startDate = new Date()
+    //Day N days later
+    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const vehiclesScheduleData =
+      await vehicleRepository.readVehiclesScheduleData(
+        agencyId,
+        startDate,
+        endDate
+      )
+
+    return vehiclesScheduleData
+    // .map((vehicle)=>{
+    //   return {
+    //     data:{
+
+    //     }
+    //   }
+    // })
+  },
+
   //Add vehicle to agency
   async addVehicle({ data, agencyId }: OnboardingAddVehicleAPIRequestType) {
     //Step1: Check if the vehicle already exists in this agency
@@ -119,5 +150,14 @@ export const vehicleServices = {
   },
 }
 
-export type FindVehiclesByAgencyType =
-  (typeof vehicleServices)["findVehiclesByAgency"]
+export type FindVehiclesByAgencyType = Awaited<
+  ReturnType<typeof vehicleServices.findVehiclesByAgency>
+>
+
+export type FindVehiclesOnTripType = Awaited<
+  ReturnType<typeof vehicleServices.findVehiclesOnTrip>
+>
+
+export type FindVehiclesScheduleNextDaysType = Awaited<
+  ReturnType<typeof vehicleServices.findVehiclesScheduleNextDays>
+>

@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     externalDir: true,
   },
   images: {
-    domains: ["uxlvdjfgmmorufabopzd.supabase.co"],
+    remotePatterns: [new URL("https://uxlvdjfgmmorufabopzd.supabase.co/**")],
   },
 }
 

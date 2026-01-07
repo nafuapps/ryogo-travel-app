@@ -304,8 +304,8 @@ export const vehicles = pgTable(
     brand: varchar("brand", { length: 15 }).notNull(),
     model: varchar("model", { length: 30 }).notNull(),
     color: varchar("color", { length: 15 }).notNull(),
-    insuranceExpiresOn: date("insurance_expires_on", { mode: "string" }),
-    pucExpiresOn: date("puc_expires_on", { mode: "string" }),
+    insuranceExpiresOn: date("insurance_expires_on", { mode: "date" }),
+    pucExpiresOn: date("puc_expires_on", { mode: "date" }),
     odometerReading: integer("odometer_reading").notNull().default(0), // in kilometers
     capacity: integer("capacity").notNull().default(4), //number of seats
     hasAC: boolean("has_ac").notNull(),
@@ -390,7 +390,7 @@ export const drivers = pgTable(
     phone: varchar("phone", { length: 10 }).notNull(),
     address: varchar("address", { length: 300 }).notNull(),
     licenseNumber: varchar("license_number", { length: 20 }).notNull(),
-    licenseExpiresOn: date("license_expires_on", { mode: "string" }),
+    licenseExpiresOn: date("license_expires_on", { mode: "date" }),
     status: driverStatus().notNull().default(DriverStatusEnum.AVAILABLE),
     licensePhotoUrl: text("license_photo_url"),
     canDriveVehicleTypes: vehicleTypes()
@@ -610,8 +610,8 @@ export const bookings = pgTable(
     routeId: text("route_id").references(() => routes.id, {
       onDelete: "set null",
     }),
-    startDate: date("start_date").notNull(),
-    endDate: date("end_date").notNull(),
+    startDate: date("start_date", { mode: "date" }).notNull(),
+    endDate: date("end_date", { mode: "date" }).notNull(),
     startTime: time("start_time", { withTimezone: false }),
     pickupAddress: varchar("pickup_address", { length: 300 }),
     dropAddress: varchar("drop_address", { length: 300 }),
@@ -1032,8 +1032,8 @@ export const vehicleRepairs = pgTable(
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "no action" })
       .notNull(),
-    startDate: date("start_date").notNull(),
-    endDate: date("end_date").notNull(),
+    startDate: date("start_date", { mode: "date" }).notNull(),
+    endDate: date("end_date", { mode: "date" }).notNull(),
     cost: integer("cost"),
     isCompleted: boolean("is_completed").notNull().default(false),
     remarks: text("remarks"),
@@ -1087,8 +1087,8 @@ export const driverLeaves = pgTable(
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "no action" })
       .notNull(),
-    startDate: date("start_date").notNull(),
-    endDate: date("end_date").notNull(),
+    startDate: date("start_date", { mode: "date" }).notNull(),
+    endDate: date("end_date", { mode: "date" }).notNull(),
     isCompleted: boolean("is_completed").notNull().default(false),
     remarks: text("remarks"),
     ...timestamps,

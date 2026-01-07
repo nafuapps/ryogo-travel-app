@@ -10,7 +10,6 @@ import {
 import { useTranslations } from "next-intl"
 import { UseFormSetValue, useWatch } from "react-hook-form"
 import {
-  NewBookingFindVehiclesType,
   NewBookingFormDataType,
   getOverlapScore,
   NoOverlapScore,
@@ -33,9 +32,10 @@ import {
   getVehicleTotalScore,
 } from "./newBookingCommon"
 import { IconTextTag } from "./newBookingTileTag"
+import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 
 type NewBookingVehicleTileProps = {
-  vehicleData: NewBookingFindVehiclesType[number]
+  vehicleData: FindVehiclesByAgencyType[number]
   newBookingFormData: NewBookingFormDataType
   setValue: UseFormSetValue<Step3Type>
 }

@@ -5,7 +5,6 @@ import {
   PBold,
   PGrey,
 } from "@/components/typography"
-import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { LucideRoute } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -18,10 +17,13 @@ import {
   iconClassName,
 } from "./bookingCommons"
 
-export default async function OngoingBookingsComponent() {
+export default async function OngoingBookingsComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   const t = await getTranslations("Dashboard.Bookings.Ongoing")
-  const user = await getCurrentUser()
-  const ongoingTrips = await bookingServices.findOngoingTrips(user!.agencyId)
+  const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
 
   return (
     <div id="OngoingBookingsSection" className={sectionClassName}>

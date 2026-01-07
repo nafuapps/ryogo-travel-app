@@ -1,9 +1,11 @@
-import { pageClassName } from "@/components/page/pageCommons";
-import OngoingBookingsComponent from "./(all)/ongoingBookingsComponent";
-import CompletedBookingsComponent from "./(all)/completedBookingsComponent";
-import UpcomingBookingsComponent from "./(all)/upcomingBookingsComponent";
-import LeadBookingsComponent from "./(all)/leadBookingsComponent";
-import BookingScheduleComponent from "./(all)/bookingScheduleComponent";
+import { pageClassName } from "@/components/page/pageCommons"
+import OngoingBookingsComponent from "./(all)/ongoingBookingsComponent"
+import CompletedBookingsComponent from "./(all)/completedBookingsComponent"
+import UpcomingBookingsComponent from "./(all)/upcomingBookingsComponent"
+import LeadBookingsComponent from "./(all)/leadBookingsComponent"
+import BookingScheduleComponent from "./(all)/bookingScheduleComponent"
+import { getCurrentUser } from "@/lib/auth"
+import { redirect, RedirectType } from "next/navigation"
 
 /*
  * Ongoing Bookings
@@ -12,18 +14,26 @@ import BookingScheduleComponent from "./(all)/bookingScheduleComponent";
  * Open leads
  * Bookings schedule
   TODO:Actions
-  TODO:Daily trips (last 14 days)
+  TODO:Bookings History (last 14 days)
  */
 
-export default function BookingsPageComponent() {
+export default async function BookingsPageComponent() {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect("/dashboard", RedirectType.replace)
+  }
+  const agencyId = user.agencyId
+
   return (
     <div id="BookingsPage" className={pageClassName}>
-      <OngoingBookingsComponent />
-      <CompletedBookingsComponent />
-      <UpcomingBookingsComponent />
-      <LeadBookingsComponent />
-      <BookingScheduleComponent />
-      {/*<BookingActionsComponent/> */}
+      <OngoingBookingsComponent agencyId={agencyId} />
+      <CompletedBookingsComponent agencyId={agencyId} />
+      <UpcomingBookingsComponent agencyId={agencyId} />
+      <LeadBookingsComponent agencyId={agencyId} />
+      <BookingScheduleComponent agencyId={agencyId} />
+      {/*<BookingActionsComponent agencyId={agencyId}/> */}
+      {/*<BookingsHistoryComponent agencyId={agencyId}/> */}
     </div>
-  );
+  )
 }

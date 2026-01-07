@@ -19,7 +19,7 @@ export default function AssignVehiclePageComponent({
   booking,
 }: {
   bookingId: string
-  vehicles: Awaited<ReturnType<FindVehiclesByAgencyType>>
+  vehicles: FindVehiclesByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.AssignVehicle")

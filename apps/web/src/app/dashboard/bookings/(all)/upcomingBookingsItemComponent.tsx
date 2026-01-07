@@ -1,6 +1,6 @@
 "use client"
 
-import { PGrey, H5Grey, PBold, Caption } from "@/components/typography"
+import { PGrey, H5Grey, PBold, Caption, PRed } from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -75,6 +75,11 @@ export default function UpcomingBookingsItemComponent({
 }
 
 function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
+  const startDate = moment(props.startDate)
+  const startTime = moment(props.startTime)
+  startDate.hours(startTime.hours())
+  startDate.minutes(startTime.minutes())
+  startDate.seconds(startTime.seconds())
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <div className={gridClassName}>
@@ -92,9 +97,14 @@ function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
         </div>
         <div className={gridItemClassName}>
           <Caption>{format(props.startDate, "PP")}</Caption>
-          <PBold>
-            {moment(props.startDate + " " + props.startTime).fromNow()}
-          </PBold>
+          {props.startDate < new Date() ? (
+            <PRed>{startDate.fromNow()}</PRed>
+          ) : (
+            <PBold>
+              {/* {moment(props.startDate + " " + props.startTime).fromNow()} */}
+              {startDate.fromNow()}
+            </PBold>
+          )}
         </div>
       </div>
     </Link>

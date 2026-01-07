@@ -19,7 +19,7 @@ export default function AssignDriverPageComponent({
   booking,
 }: {
   bookingId: string
-  drivers: Awaited<ReturnType<FindDriversByAgencyType>>
+  drivers: FindDriversByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.AssignDriver")

@@ -166,8 +166,8 @@ export const bookingRepository = {
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
-        gte(bookings.createdAt, queryStartDate),
-        lte(bookings.createdAt, queryEndDate)
+        lte(bookings.startDate, queryEndDate),
+        gte(bookings.endDate, queryStartDate)
       ),
       columns: {
         startDate: true,
@@ -207,7 +207,7 @@ export const bookingRepository = {
     })
   },
 
-  async readScheduleData(
+  async readBookingsScheduleData(
     agencyId: string,
     queryStartDate: Date,
     queryEndDate: Date
@@ -218,8 +218,8 @@ export const bookingRepository = {
         or(
           and(
             eq(bookings.status, BookingStatusEnum.CONFIRMED),
-            gte(bookings.createdAt, queryStartDate),
-            lte(bookings.createdAt, queryEndDate)
+            gte(bookings.endDate, queryStartDate),
+            lte(bookings.startDate, queryEndDate)
           ),
           eq(bookings.status, BookingStatusEnum.IN_PROGRESS)
         )

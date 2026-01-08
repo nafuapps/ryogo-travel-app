@@ -209,7 +209,9 @@ export default function DriversScheduleChartComponent({
                               "--dayIndexStart":
                                 dayIndexStart < 1 ? 1 : dayIndexStart,
                               "--dayIndexEnd":
-                                dayIndexEnd > selectedDays
+                                dayIndexEnd < 2
+                                  ? 2
+                                  : dayIndexEnd > selectedDays
                                   ? selectedDays
                                   : dayIndexEnd,
                             } as React.CSSProperties
@@ -265,7 +267,9 @@ export default function DriversScheduleChartComponent({
                               "--dayIndexStart":
                                 dayIndexStart < 1 ? 1 : dayIndexStart,
                               "--dayIndexEnd":
-                                dayIndexEnd > selectedDays
+                                dayIndexEnd < 2
+                                  ? 2
+                                  : dayIndexEnd > selectedDays
                                   ? selectedDays
                                   : dayIndexEnd,
                             } as React.CSSProperties

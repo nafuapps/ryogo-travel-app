@@ -86,8 +86,8 @@ async function AllVehiclesItemComponent({
           <PBold>{vehicle.vehicleNumber}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <Caption>{vehicle.type.toUpperCase()}</Caption>
-          <PBold>{vehicle.odometerReading + t("Km")}</PBold>
+          <Caption>{vehicle.odometerReading + t("Km")}</Caption>
+          <PBold>{t("RatePerKm", { rate: vehicle.defaultRatePerKm })}</PBold>
         </div>
         <div className={gridItemClassName}>
           <div
@@ -114,7 +114,7 @@ const getVehicleStatusColor = (status: VehicleStatusEnum) => {
   return "bg-slate-200"
 }
 
-export const getVehicleIcon = (vehicleType: VehicleTypesEnum) => {
+const getVehicleIcon = (vehicleType: VehicleTypesEnum) => {
   const className = "size-8 lg:size-10 text-slate-400"
   if (vehicleType == VehicleTypesEnum.TRUCK) {
     return <LucideTruck className={className} />

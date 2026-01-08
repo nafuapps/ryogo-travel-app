@@ -1360,7 +1360,8 @@
       "All":{
         "Title":"All Vehicles",
         "Photo":"Vehicle photo",
-        "Km":" Km"
+        "Km":" Km",
+        "RatePerKm": "₹{rate}/Km"
       },
       "OnTrip":{
         "Title":"On Trip"
@@ -1378,7 +1379,7 @@
       "All":{
         "Title":"All Drivers",
         "Photo":"Driver photo",
-        "Km":" Km"
+        "AllowancePerDay": "₹{allowance}/day"
       },
       "OnTrip":{
         "Title":"On Trip"

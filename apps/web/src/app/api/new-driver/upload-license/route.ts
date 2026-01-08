@@ -1,41 +1,44 @@
 import { NextRequest, NextResponse } from "next/server"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRegex } from "@/lib/regex"
+import { DriverRegex } from "@/lib/regex"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { getCurrentUser } from "@/lib/auth"
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
-) {
+export async function POST(req: NextRequest) {
   try {
     //Check user auth
     const user = await getCurrentUser()
-    if (!user || user.userRole !== "owner") {
+    if (!user || !["owner", "agent"].includes(user.userRole)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
-    //Get userId
-    const { userId } = await params
-    if (!UserRegex.safeParse(userId).success) {
-      return NextResponse.json({ error: "Invalid userId" }, { status: 400 })
-    }
 
-    //Get file
+    //Get file and driver Id from body
     const formData = await req.formData()
-    const file = formData.get("file") as File
+    const file = formData.get("license") as File
+    const driverId = formData.get("id") as string
+
+    if (!DriverRegex.safeParse(driverId).success) {
+      return NextResponse.json({ error: "Invalid driver id" }, { status: 400 })
+    }
     if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 })
+      return NextResponse.json(
+        { error: "No license uploaded" },
+        { status: 400 }
+      )
     }
 
     //Name file
     const fileName = `${Date.now()}-${file.name}`
 
     // Upload to Supabase Storage
-    const data = await uploadFile(file, `${userId}/photo/${fileName}`)
+    const data = await uploadFile(file, `${driverId}/license/${fileName}`)
 
     //Update photoUrl in DB
     const photoUrl = data!.path
-    const updatedId = await userServices.updateUserPhoto(userId, photoUrl)
+    const updatedId = await driverServices.updateDriverLicensePhoto(
+      driverId,
+      photoUrl
+    )
 
     return NextResponse.json({ id: updatedId }, { status: 201 })
   } catch (err) {

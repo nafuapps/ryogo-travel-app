@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { AgencyRegex } from "@/lib/regex"
 
 export async function POST(
-  req: Request,
+  req: NextRequest,
   { params }: { params: Promise<{ agencyId: string }> }
 ) {
   try {

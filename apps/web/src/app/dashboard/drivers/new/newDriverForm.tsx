@@ -2,7 +2,6 @@
 
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { useState } from "react"
-import { NewDriverFinish } from "./newDriverFinish"
 import { NewDriverStep1 } from "./newDriverStep1"
 import { NewDriverStep2 } from "./newDriverStep2"
 import { NewDriverStep3 } from "./newDriverStep3"
@@ -23,7 +22,6 @@ export type NewDriverFormDataType = {
 
 type NewDriverFormProps = {
   agencyId: string
-  userId: string
 }
 export default function NewDriverForm(props: NewDriverFormProps) {
   const [newDriverFormData, setNewDriverFormData] =
@@ -75,10 +73,8 @@ export default function NewDriverForm(props: NewDriverFormProps) {
       onNext={nextStepHandler}
       onPrev={prevStepHandler}
       newDriverFormData={newDriverFormData}
-      userId={props.userId}
       agencyId={props.agencyId}
     />,
-    <NewDriverFinish key={4} newDriverFormData={newDriverFormData} />,
   ])
 
   return (

@@ -11,6 +11,23 @@ export const vehicleServices = {
     return vehicles
   },
 
+  //Find vehicle by number and agency
+  async findExistingVehicleByNumberAgency(
+    vehicleNumber: string,
+    agency: string
+  ) {
+    const vehicles = await vehicleRepository.readVehicleByNumberInAgency(
+      vehicleNumber,
+      agency
+    )
+    if (vehicles.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple vehicles found with same number in agency")
+    }
+
+    return vehicles
+  },
+
   //Get onTrip vehicles data
   async findVehiclesOnTrip(agencyId: string) {
     const vehicles = await vehicleRepository.readOnTripVehiclesDataByAgencyId(
@@ -62,8 +79,8 @@ export const vehicleServices = {
       model: data.model,
       capacity: data.capacity,
       odometerReading: data.odometerReading,
-      insuranceExpiresOn: data.insuranceExpiresOn,
-      pucExpiresOn: data.pucExpiresOn,
+      insuranceExpiresOn: new Date(data.insuranceExpiresOn),
+      pucExpiresOn: new Date(data.pucExpiresOn),
       hasAC: data.hasAC,
       defaultRatePerKm: data.defaultRatePerKm,
       defaultAcChargePerDay: data.defaultAcChargePerDay,

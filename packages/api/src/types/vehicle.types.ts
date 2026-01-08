@@ -20,3 +20,8 @@ export type OnboardingAddVehicleAPIRequestType = {
 export type OnboardingAddVehicleAPIResponseType = {
   id: string
 }
+
+// /api/new-vehicle/existing-vehicle?vehicleNumber=[vehicleNumber]&agency=[agency] (GET)
+export type NewVehicleExistingAPIResponseType = {
+  id: string
+}[]

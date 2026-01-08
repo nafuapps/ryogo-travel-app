@@ -4,25 +4,22 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
-) {
+export async function POST(req: NextRequest) {
   try {
     //Check user auth
     const user = await getCurrentUser()
-    if (!user || user.userRole !== "owner") {
+    if (!user || !["owner", "agent"].includes(user.userRole)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-    //Get userId
-    const { userId } = await params
-    if (!UserRegex.safeParse(userId).success) {
-      return NextResponse.json({ error: "Invalid userId" }, { status: 400 })
     }
 
     //Get file
     const formData = await req.formData()
-    const file = formData.get("file") as File
+    const file = formData.get("photo") as File
+    const userId = formData.get("userId") as string
+
+    if (!UserRegex.safeParse(userId).success) {
+      return NextResponse.json({ error: "Invalid userId" }, { status: 400 })
+    }
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 })
     }

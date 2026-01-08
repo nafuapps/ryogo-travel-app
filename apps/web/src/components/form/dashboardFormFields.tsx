@@ -350,6 +350,8 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
                 onSelect={field.onChange}
                 disabled={(date) => date < new Date()}
                 captionLayout="dropdown"
+                reverseYears
+                endMonth={new Date(2040, 0)}
               />
             </PopoverContent>
           </Popover>

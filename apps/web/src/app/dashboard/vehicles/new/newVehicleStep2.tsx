@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
-import { NewDriverFormDataType } from "./newDriverForm"
+import { NewVehicleFormDataType } from "./newVehicleForm"
 import {
   DashboardDatePicker,
   DashboardFileInput,
@@ -21,13 +21,13 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 
-export function NewDriverStep2(props: {
+export function NewVehicleStep2(props: {
   onNext: () => void
   onPrev: () => void
-  newDriverFormData: NewDriverFormDataType
-  setNewDriverFormData: Dispatch<SetStateAction<NewDriverFormDataType>>
+  newVehicleFormData: NewVehicleFormDataType
+  setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
 }) {
-  const t = useTranslations("Dashboard.NewDriver.Step2")
+  const t = useTranslations("Dashboard.NewVehicle.Step2")
   const step2Schema = z.object({
     licenseNumber: z
       .string()
@@ -66,16 +66,16 @@ export function NewDriverStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      licenseNumber: props.newDriverFormData.licenseNumber,
-      licenseExpiresOn: props.newDriverFormData.licenseExpiresOn,
-      licensePhotos: props.newDriverFormData.licensePhotos,
+      licenseNumber: props.newVehicleFormData.licenseNumber,
+      licenseExpiresOn: props.newVehicleFormData.licenseExpiresOn,
+      licensePhotos: props.newVehicleFormData.licensePhotos,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
-    props.setNewDriverFormData({
-      ...props.newDriverFormData,
+    props.setNewVehicleFormData({
+      ...props.newVehicleFormData,
       licenseNumber: data.licenseNumber,
       licenseExpiresOn: data.licenseExpiresOn,
       licensePhotos: data.licensePhotos,
@@ -84,7 +84,7 @@ export function NewDriverStep2(props: {
   }
 
   return (
-    <div id="NewDriverStep2" className={newBookingSectionClassName}>
+    <div id="NewVehicleStep2" className={newBookingSectionClassName}>
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>

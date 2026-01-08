@@ -1,6 +1,11 @@
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { InsertDriverType, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { driverRepository } from "../repositories/driver.repo"
 import { CreateDriverType } from "../types/driver.types"
+import {
+  NewDriverAPIRequestType,
+  NewDriverAPIResponseType,
+} from "../types/driver.types"
+import { userServices } from "./user.services"
 
 export const driverServices = {
   //Get all drivers in an agency
@@ -53,14 +58,14 @@ export const driverServices = {
     )
 
     //Step3: Prepare driver data
-    const newDriverData = {
+    const newDriverData: InsertDriverType = {
       agencyId: data.agencyId,
       userId: data.userId,
       name: data.name,
       phone: data.phone,
       address: data.address,
       licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
+      licenseExpiresOn: new Date(data.licenseExpiresOn),
       defaultAllowancePerDay: data.defaultAllowancePerDay,
       canDriveVehicleTypes: canDrive,
     }
@@ -69,6 +74,15 @@ export const driverServices = {
       throw new Error("Failed to create driver")
     }
     return newDriver[0]
+  },
+
+  //Add a new driver to an agency
+  async addNewDriver({
+    agencyId,
+    data,
+  }: NewDriverAPIRequestType): Promise<NewDriverAPIResponseType> {
+    const newDriver = userServices.addDriverUser({ agencyId, data })
+    return newDriver
   },
 
   //Upload driver license photo

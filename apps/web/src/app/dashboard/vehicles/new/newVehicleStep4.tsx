@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
-import { NewDriverFormDataType } from "./newDriverForm"
+import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
 import {
   DashboardInput,
@@ -22,15 +22,15 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 
-export function NewDriverStep3(props: {
+export function NewVehicleStep4(props: {
   onNext: () => void
   onPrev: () => void
-  newDriverFormData: NewDriverFormDataType
-  setNewDriverFormData: Dispatch<SetStateAction<NewDriverFormDataType>>
+  newVehicleFormData: NewVehicleFormDataType
+  setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
 }) {
-  const t = useTranslations("Dashboard.NewDriver.Step3")
+  const t = useTranslations("Dashboard.NewVehicle.Step3")
   const step3Schema = z.object({
-    driverAddress: z
+    vehicleAddress: z
       .string()
       .min(20, t("Field1.Error1"))
       .max(300, t("Field1.Error2")),
@@ -46,17 +46,17 @@ export function NewDriverStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      driverAddress: props.newDriverFormData.address,
-      canDriveVehicleTypes: props.newDriverFormData.canDriveVehicleTypes,
-      defaultAllowancePerDay: props.newDriverFormData.defaultAllowancePerDay,
+      vehicleAddress: props.newVehicleFormData.address,
+      canDriveVehicleTypes: props.newVehicleFormData.canDriveVehicleTypes,
+      defaultAllowancePerDay: props.newVehicleFormData.defaultAllowancePerDay,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    props.setNewDriverFormData({
-      ...props.newDriverFormData,
-      address: data.driverAddress,
+    props.setNewVehicleFormData({
+      ...props.newVehicleFormData,
+      address: data.vehicleAddress,
       canDriveVehicleTypes: data.canDriveVehicleTypes,
       defaultAllowancePerDay: data.defaultAllowancePerDay,
     })
@@ -66,7 +66,7 @@ export function NewDriverStep3(props: {
   const vehicles = Object.values(VehicleTypesEnum).map((i) => i.toUpperCase())
 
   return (
-    <div id="NewDriverStep3" className={newBookingSectionClassName}>
+    <div id="NewVehicleStep3" className={newBookingSectionClassName}>
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -83,7 +83,7 @@ export function NewDriverStep3(props: {
         >
           <div id="Step3Fields" className="flex flex-col gap-3 lg:gap-4">
             <DashboardTextarea
-              name={"driverAddress"}
+              name={"vehicleAddress"}
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
             />

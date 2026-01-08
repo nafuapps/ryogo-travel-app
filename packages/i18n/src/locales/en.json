@@ -1375,6 +1375,171 @@
       },
       "History":{}
     },
+    "NewVehicle":{
+      "Step1": {
+        "Title":"Adding vehicle",
+        "Subtitle":"Step 1 of 5",
+        "Description":"Provide basic details of the vehicle",
+        "Field1": {
+          "Title": "Enter vehicle number",
+          "Placeholder": "KA01AB1234",
+          "Description": "Provide registration number of the vehicle (without space or dash)",
+          "Error1": "Vehicle number must be atleast 7 characters",
+          "Error2": "Vehicle number must be less than 15 characters"
+        },
+        "Field2": {
+          "Title": "Select vehicle type",
+          "Error1": "Providing vehicle type is mandatory"
+        },
+        "Field3": {
+          "Title": "Vehicle brand",
+          "Placeholder": "Honda",
+          "Description": "Provide vehicle manufacturer brand",
+          "Error1": "Brand name must be atleast 3 characters",
+          "Error2": "Brand name must be less than 15 characters"
+        },
+        "Field4": {
+          "Title": "Vehicle color",
+          "Placeholder": "Black",
+          "Description": "Provide vehicle color",
+          "Error1": "Vehicle color must be atleast 3 characters",
+          "Error2": "Vehicle color must be less than 15 characters"
+        },
+        "Field5": {
+          "Title": "Vehicle model",
+          "Placeholder": "City 2017",
+          "Description": "Provide vehicle model and variant",
+          "Error1": "Vehicle model must be atleast 3 characters",
+          "Error2": "Vehicle model must be less than 30 characters"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "APIError": "Vehicle number is already added to this agency"
+      },
+      "Step2": {
+        "Field1": {
+          "Title": "Enter passenger capacity",
+          "Placeholder": "4",
+          "Description": "How many passengers can travel in this vehicle (excluding driver)?",
+          "Error1": "Vehicle passenger capacity is required",
+          "Error2": "Capacity must be atleast 0",
+          "Error3": "Capacity must be less than 100",
+          "Error4": "Capacity cannot be in decimals",
+          "Error5": "Capacity must be a non-negative number"
+        },
+        "Field2": {
+          "Title": "Enter odometer reading (Km)",
+          "Placeholder": "10000",
+          "Description": "Check your odometer and enter the current reading",
+          "Error1": "Odometer reading is required",
+          "Error2": "Odometer must be atleast 0Km",
+          "Error3": "Odometer must be less than 1000000Km",
+          "Error4": "Odometer cannot be in decimals (round it up)",
+          "Error5": "Odometer must be a positive number"
+        },
+        "Field3": {
+          "Title": "RC Photo",
+          "Placeholder": "UPLOAD RC",
+          "Description": "Upload photo of vehicle registration certificate",
+          "Error1": "RC photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field4": {
+          "Title": "Vehicle photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload photos of the vehicle (atleast 1 photo with number plate visible)",
+          "Error1": "Vehicle photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Step3": {
+        "Field1": {
+          "Title": "Insurance expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide vehicle insurance policy expiry date",
+          "Error1": "Providing insurance expiry date is mandatory",
+          "Error2": "Insurance should not be expired"
+        },
+        "Field2": {
+          "Title": "Insurance policy photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload insurance policy photo",
+          "Error1": "Insurance policy photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field3": {
+          "Title": "PUC expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide PUC certificate expiry date",
+          "Error1": "Providing PUC certifacte date is mandatory",
+          "Error2": "PUC should not be expired"
+        },
+        "Field4": {
+          "Title": "PUC certificate photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload Pollution Under Control Certificate photo",
+          "Error1": "PUC certificate photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Step4": {
+        "Field1": {
+          "Title": "Vehicle charge per Km (in ₹)",
+          "Placeholder": "18",
+          "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer. You can always change it later.",
+          "Error1": "Vehicle Charge must be a number",
+          "Error2": "Vehicle Charge must be atleast 0.",
+          "Error3": "Vehicle Charge must be less than ₹100",
+          "Error4": "Vehicle Charge cannot be in decimals",
+          "Error5": "Vehicle Charge must be a positive number"
+        },
+        "Field2": {
+          "Title": "Vehicle has AC?"
+        },
+        "Field3": {
+          "Title": "AC charge per day (in ₹)",
+          "Placeholder": "1000",
+          "Description": "Based on customer's AC preference, this per day charge will be added to the booking quote.",
+          "Error1": "AC Charge must be a number",
+          "Error2": "AC Charge must be atleast 0",
+          "Error3": "AC Charge must be less than ₹10000",
+          "Error4": "AC Charge cannot be in decimals",
+          "Error5": "AC Charge must be a positive number"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Confirm": {
+        "Title": "Confirm details to add your vehicle:",
+        "VehicleNumber": "Vehicle Number",
+        "Type": "Type",
+        "Brand": "Brand",
+        "Model": "Model",
+        "Color": "Color",
+        "Capacity": "Capacity",
+        "OdometerReading": "Odometer Reading",
+        "InsuranceExpiresOn": "Insurance Expiry Date",
+        "PUCExpiresOn": "PUC Expiry Date",
+        "RatePerKm": "Vehicle Charge Per Km",
+        "HasAC": "Has AC?",
+        "ACChagePerDay": "AC Charge Per Day",
+        "PrimaryCTA": "Confirm and Submit",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "APIError": "Vehicle could not be added.. Please try again"
+      }
+     },
     "Drivers":{
       "All":{
         "Title":"All Drivers",
@@ -1430,8 +1595,83 @@
         "Loading": "Loading",
         "APIError1": "Driver with this phone already exists in this agency.. try adding with a different phone",
         "APIError2": "Driver with this phone and email is already added to another agency.. try adding with a different phone or email"
+      },
+      "Step2": {
+        "Title":"Adding Driver",
+        "Subtitle":"Step 2 of 4",
+        "Description":"Provide license related details of the driver",
+        "Field1": {
+          "Title": "Driver license number",
+          "Placeholder": "GJ1220190000001",
+          "Description": "Provide license number of the driver (without space or dash)",
+          "Error1": "License number must be atleast 12 characters",
+          "Error2": "License number must be less than 20 characters"
+        },
+        "Field2": {
+          "Title": "License expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide driver license expiry date",
+          "Error1": "Providing driver license expiry date is mandatory",
+          "Error2": "License should not be expired"
+        },
+        "Field3": {
+          "Title": "Driver License photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload driver license photo",
+          "Error1": "License photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Step3": {
+        "Title":"Adding Driver",
+        "Subtitle":"Step 3 of 4",
+        "Description":"Provide working details of the driver",
+        "Field1": {
+          "Title": "Driver address",
+          "Placeholder": "Address Line 1, Street, City, State, Pincode",
+          "Error1": "Address must be atleast 20 characters",
+          "Error2": "Address must be less than 300 characters"
+        },
+        "Field2": {
+          "Title": "Select all the vehicles that driver can drive",
+          "Error1": "Providing atleast 1 vehicle type is mandatory"
+        },
+        "Field3": {
+          "Title": "Driver allowance per day (in ₹)",
+          "Placeholder": "500",
+          "Description": "How much do you pay driver per day? This will be used to calculate the booking quote for the customer. You can always change it later.",
+          "Error1": "Driver allowance must be a number",
+          "Error2": "Driver allowance must be atleast ₹1",
+          "Error3": "Driver allowance must be less than ₹10000",
+          "Error4": "Driver allowance cannot be in decimals",
+          "Error5": "Driver allowance must be a positive number"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading"
+      },
+      "Confirm": {
+        "Title": "Confirm details",
+        "Subtitle":"Step 4 of 4",
+        "Description":"Review driver details being added",
+        "DriverName": "Driver Name",
+        "DriverPhone": "Driver Phone",
+        "DriverEmail": "Driver Email",
+        "LicenseNumber": "License Number",
+        "LicenseExpiresOn": "License Expiry Date",
+        "DriverAddress": "Address",
+        "CanDriveVehicleTypes": "Can Drive",
+        "DefaultAllowancePerDay": "Allowance Per Day",
+        "PrimaryCTA": "Confirm and Add",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "APIError": "Driver could not be added.. please try again",
+        "Success": "Driver added successfully!"
       }
-      
     },
     "Buttons": {
       "CancelBooking": {

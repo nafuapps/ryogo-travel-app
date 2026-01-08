@@ -9,7 +9,7 @@ import {
 } from "@ryogo-travel-app/api/client/apiClient"
 import { redirect, RedirectType } from "next/navigation"
 import { toast } from "sonner"
-import { NewDriverFormDataType } from "./newDriverForm"
+import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
 import {
   newBookingSectionClassName,
@@ -19,71 +19,74 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import {
-  NewDriverAPIRequestType,
-  NewDriverAPIResponseType,
-} from "@ryogo-travel-app/api/types/driver.types"
+  NewVehicleAPIRequestType,
+  NewVehicleAPIResponseType,
+} from "@ryogo-travel-app/api/types/vehicle.types"
 
-export function NewDriverConfirm(props: {
+export function NewVehicleConfirm(props: {
   onNext: () => void
   onPrev: () => void
-  newDriverFormData: NewDriverFormDataType
+  newVehicleFormData: NewVehicleFormDataType
   agencyId: string
 }) {
-  const t = useTranslations("Dashboard.NewDriver.Confirm")
-  const formData = useForm<NewDriverFormDataType>()
+  const t = useTranslations("Dashboard.NewVehicle.Confirm")
+  const formData = useForm<NewVehicleFormDataType>()
   //Submit actions
   const onSubmit = async () => {
-    // Add driver
-    const newDriverData: NewDriverAPIRequestType = {
+    // Add vehicle
+    const newVehicleData: NewVehicleAPIRequestType = {
       agencyId: props.agencyId,
       data: {
-        name: props.newDriverFormData.name,
-        email: props.newDriverFormData.email,
-        phone: props.newDriverFormData.phone,
-        address: props.newDriverFormData.address,
-        canDriveVehicleTypes: props.newDriverFormData.canDriveVehicleTypes,
-        defaultAllowancePerDay: props.newDriverFormData.defaultAllowancePerDay,
-        licenseNumber: props.newDriverFormData.licenseNumber,
-        licenseExpiresOn: props.newDriverFormData.licenseExpiresOn!,
+        name: props.newVehicleFormData.name,
+        email: props.newVehicleFormData.email,
+        phone: props.newVehicleFormData.phone,
+        address: props.newVehicleFormData.address,
+        canDriveVehicleTypes: props.newVehicleFormData.canDriveVehicleTypes,
+        defaultAllowancePerDay: props.newVehicleFormData.defaultAllowancePerDay,
+        licenseNumber: props.newVehicleFormData.licenseNumber,
+        licenseExpiresOn: props.newVehicleFormData.licenseExpiresOn!,
       },
     }
-    const addedDriver = await apiClient<NewDriverAPIResponseType>(
-      "/api/new-driver",
-      { method: "POST", body: JSON.stringify(newDriverData) }
+    const addedVehicle = await apiClient<NewVehicleAPIResponseType>(
+      "/api/new-vehicle",
+      { method: "POST", body: JSON.stringify(newVehicleData) }
     )
-    if (addedDriver.id) {
-      //If success, Try to upload license photo and driver user photo
-      if (props.newDriverFormData.licensePhotos) {
+    if (addedVehicle.id) {
+      //If success, Try to upload license photo and vehicle user photo
+      if (props.newVehicleFormData.licensePhotos) {
         const licenseFormData = new FormData()
         licenseFormData.append(
           "license",
-          props.newDriverFormData.licensePhotos[0]!
+          props.newVehicleFormData.licensePhotos[0]!
         )
-        licenseFormData.append("id", addedDriver.id)
-        await apiClientWithoutHeaders(`/api/new-driver/upload-license`, {
+        licenseFormData.append("id", addedVehicle.id)
+        await apiClientWithoutHeaders(`/api/new-vehicle/upload-license`, {
           method: "POST",
           body: licenseFormData,
         })
       }
-      if (props.newDriverFormData.driverPhotos) {
+      if (props.newVehicleFormData.vehiclePhotos) {
         const photoFormData = new FormData()
-        photoFormData.append("photo", props.newDriverFormData.driverPhotos[0]!)
-        photoFormData.append("userId", addedDriver.userId)
-        await apiClientWithoutHeaders(`/api/new-driver/upload-user-photo`, {
+        photoFormData.append(
+          "photo",
+          props.newVehicleFormData.vehiclePhotos[0]!
+        )
+        photoFormData.append("userId", addedVehicle.userId)
+        await apiClientWithoutHeaders(`/api/new-vehicle/upload-user-photo`, {
           method: "POST",
           body: photoFormData,
         })
       }
-      //Send to added driver details page
-      redirect(`/dashboard/drivers/${addedDriver.id}`)
+      //Send to added vehicle details page
+      redirect(`/dashboard/vehicles/${addedVehicle.id}`)
     } else {
-      //If failed, Take back to driver page and show error
+      //If failed, Take back to vehicle page and show error
       toast.error(t("APIError"))
-      redirect("/dashboard/drivers", RedirectType.replace)
+      redirect("/dashboard/vehicles", RedirectType.replace)
     }
   }
   return (
-    <div id="NewDriverConfirm" className={newBookingSectionClassName}>
+    <div id="NewVehicleConfirm" className={newBookingSectionClassName}>
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -100,37 +103,37 @@ export function NewDriverConfirm(props: {
         >
           <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
             <ConfirmValues
-              name={t("DriverName")}
-              value={props.newDriverFormData.name}
+              name={t("VehicleName")}
+              value={props.newVehicleFormData.name}
             />
             <ConfirmValues
-              name={t("DriverPhone")}
-              value={props.newDriverFormData.phone}
+              name={t("VehiclePhone")}
+              value={props.newVehicleFormData.phone}
             />
             <ConfirmValues
-              name={t("DriverEmail")}
-              value={props.newDriverFormData.email}
+              name={t("VehicleEmail")}
+              value={props.newVehicleFormData.email}
             />
             <ConfirmValues
               name={t("LicenseNumber")}
-              value={props.newDriverFormData.licenseNumber}
+              value={props.newVehicleFormData.licenseNumber}
             />
             <ConfirmValues
               name={t("LicenseExpiresOn")}
-              value={props.newDriverFormData.licenseExpiresOn!.toDateString()}
+              value={props.newVehicleFormData.licenseExpiresOn!.toDateString()}
             />
             <ConfirmValues
-              name={t("DriverAddress")}
-              value={props.newDriverFormData.address}
+              name={t("VehicleAddress")}
+              value={props.newVehicleFormData.address}
             />
             <ConfirmValues
               name={t("CanDriveVehicleTypes")}
-              value={props.newDriverFormData.canDriveVehicleTypes.join(", ")}
+              value={props.newVehicleFormData.canDriveVehicleTypes.join(", ")}
             />
-            {props.newDriverFormData.defaultAllowancePerDay && (
+            {props.newVehicleFormData.defaultAllowancePerDay && (
               <ConfirmValues
                 name={t("DefaultAllowancePerDay")}
-                value={`${props.newDriverFormData.defaultAllowancePerDay}`}
+                value={`${props.newVehicleFormData.defaultAllowancePerDay}`}
               />
             )}
           </div>

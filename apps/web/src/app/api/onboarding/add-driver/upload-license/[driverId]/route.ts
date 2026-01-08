@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { DriverRegex } from "@/lib/regex"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { getCurrentUser } from "@/lib/auth"
 
 export async function POST(
-  req: Request,
+  req: NextRequest,
   { params }: { params: Promise<{ driverId: string }> }
 ) {
   try {

@@ -9,10 +9,7 @@ export default async function NewDriverPageComponent() {
 
   return (
     <div id="NewDriverPage" className={pageClassName}>
-      <NewDriverForm
-        agencyId={currentUser!.agencyId}
-        userId={currentUser!.userId}
-      />
+      <NewDriverForm agencyId={currentUser!.agencyId} />
     </div>
   )
 }

@@ -30,6 +30,7 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { Button } from "@/components/ui/button"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -49,6 +50,11 @@ export default async function AllDriversListComponent({
       {allDrivers.map((driver) => (
         <AllDriversItemComponent key={driver.id} driver={driver} />
       ))}
+      <Link href={`/dashboard/drivers/new`} className="min-w-1/2 self-center">
+        <Button variant={"default"} className="w-full">
+          {t("AddDriver")}
+        </Button>
+      </Link>
     </div>
   )
 }

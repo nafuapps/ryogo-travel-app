@@ -21,7 +21,7 @@ export const userRepository = {
     agencyId: string
   ) {
     return await db
-      .select()
+      .select({ id: users.id })
       .from(users)
       .where(
         and(

@@ -52,6 +52,38 @@ export const userServices = {
     return drivers
   },
 
+  //Find driver by phone, email and agency
+  async findExistingDriverByPhoneEmailAgency(
+    phone: string,
+    email: string,
+    agency: string
+  ) {
+    const driversWithSamePhoneEmail =
+      await userRepository.readUserByPhoneRoleEmail(
+        phone,
+        [UserRolesEnum.DRIVER],
+        email
+      )
+    if (driversWithSamePhoneEmail.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple drivers found with same phone and email")
+    }
+    const driversWithPhoneAgency =
+      await userRepository.readUserByPhoneRolesAgencyId(
+        phone,
+        [UserRolesEnum.DRIVER],
+        agency
+      )
+    if (driversWithPhoneAgency.length > 1) {
+      // !This is a major issue
+      throw new Error("Multiple drivers found with same phone in an agency")
+    }
+    return {
+      sameEmail: driversWithSamePhoneEmail,
+      sameAgency: driversWithPhoneAgency,
+    }
+  },
+
   //Find driver by phone and email
   async findAgentByPhoneEmail(phone: string, email: string) {
     const agents = await userRepository.readUserByPhoneRoleEmail(

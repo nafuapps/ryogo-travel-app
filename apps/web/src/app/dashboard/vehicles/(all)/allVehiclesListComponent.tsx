@@ -32,6 +32,7 @@ import {
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
+import { Button } from "@/components/ui/button"
 
 export default async function AllVehiclesListComponent({
   agencyId,
@@ -51,6 +52,11 @@ export default async function AllVehiclesListComponent({
       {allVehicles.map((vehicle) => (
         <AllVehiclesItemComponent key={vehicle.id} vehicle={vehicle} />
       ))}
+      <Link href={`/dashboard/vehicles/new`} className="min-w-1/2 self-center">
+        <Button variant={"default"} className="w-full">
+          {t("AddVehicle")}
+        </Button>
+      </Link>
     </div>
   )
 }

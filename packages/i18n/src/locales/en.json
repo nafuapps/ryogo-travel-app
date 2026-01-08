@@ -794,7 +794,6 @@
       }
     },
     "NewBooking": {
-      "Title": "New Booking",
       "Form": {
         "Km": " Km",
         "Days": " {count, plural, =1 {day} other {days}}",
@@ -1361,7 +1360,8 @@
         "Title":"All Vehicles",
         "Photo":"Vehicle photo",
         "Km":" Km",
-        "RatePerKm": "₹{rate}/Km"
+        "RatePerKm": "₹{rate}/Km",
+        "AddVehicle":"Add Vehicle"
       },
       "OnTrip":{
         "Title":"On Trip"
@@ -1379,7 +1379,8 @@
       "All":{
         "Title":"All Drivers",
         "Photo":"Driver photo",
-        "AllowancePerDay": "₹{allowance}/day"
+        "AllowancePerDay": "₹{allowance}/day",
+        "AddDriver":"Add Driver"
       },
       "OnTrip":{
         "Title":"On Trip"
@@ -1392,6 +1393,45 @@
         "Driver":"Driver"
       },
       "History":{}
+    },
+    "NewDriver":{
+      "Step1": {
+        "Title":"Adding Driver",
+        "Subtitle":"Step 1 of 4",
+        "Description":"Provide basic details of the driver",
+        "Field1": {
+          "Title": "Driver name",
+          "Placeholder": "Surender Kumar",
+          "Description": "Enter the driver's name",
+          "Error1": "Name must be atleast 5 characters",
+          "Error2": "Name must be less than 30 characters"
+        },
+        "Field2": {
+          "Title": "Driver phone number",
+          "Placeholder": "9876543210",
+          "Description": "Enter the driver's phone number (to be used for login). You can provide owner's phone number for now and change this later.",
+          "Error1": "Phone number must be 10 digits"
+        },
+        "Field3": {
+          "Title": "Driver email",
+          "Placeholder": "surender.kumar@gmail.com",
+          "Description": "Enter the driver's email address (login password will be sent here). You can enter owner's email for now and change this later.",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters"
+        },
+        "Field4": {
+          "Title": "Driver photo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload the driver's photo",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "PrimaryCTA": "Continue",
+        "Loading": "Loading",
+        "APIError1": "Driver with this phone already exists in this agency.. try adding with a different phone",
+        "APIError2": "Driver with this phone and email is already added to another agency.. try adding with a different phone or email"
+      }
+      
     },
     "Buttons": {
       "CancelBooking": {

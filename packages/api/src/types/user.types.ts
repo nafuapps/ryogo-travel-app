@@ -1,17 +1,11 @@
 import { SelectDriverType, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 // /api/auth/login (POST)
-export type LoginAPIRequestType = {
-  phone: string
-}
 export type LoginAPIResponseType = {
   id: string
 }[]
 
 // /api/auth/login/accounts/[phone] (GET)
-export type LoginAccountsAPIRequestType = {
-  phone: string
-}
 export type LoginAccountsAPIResponseType = {
   id: string
   name: string
@@ -24,10 +18,6 @@ export type LoginAccountsAPIResponseType = {
 }[]
 
 // /api/auth/login/password (POST)
-export type LoginPasswordAPIRequestType = {
-  userId: string
-  password: string
-}
 export type LoginPasswordAPIResponseType =
   | {
       id: string
@@ -37,26 +27,16 @@ export type LoginPasswordAPIResponseType =
   | undefined
 
 // /api/auth/reset (POST)
-export type ResetPasswordAPIRequestType = {
-  userId: string
-  email: string
-}
 export type ResetPasswordAPIResponseType = {
   id: string
 }
 
 // /api/auth/signup (POST)
-export type SignupAPIRequestType = {
-  phone: string
-}
 export type SignupAPIResponseType = {
   id: string
 }[]
 
 // /api/auth/signup/existing/[phone] (GET)
-export type SignupExistingAPIRequestType = {
-  phone: string
-}
 export type SignupExistingAPIResponseType = {
   id: string
   name: string
@@ -69,7 +49,6 @@ export type SignupExistingAPIResponseType = {
 }[]
 
 // /api/onboarding/create-account/existing-owner?phone=[phone]&email=[email] (GET)
-export type OnboardingExistingOwnerAPIRequestType = {}
 export type OnboardingExistingOwnerAPIResponseType = {
   id: string
 }[]
@@ -99,7 +78,6 @@ export type OnboardingCreateAccountAPIResponseType = {
 }
 
 // /api/onboarding/add-driver/existing-driver?phone=[phone]&email=[email] (GET)
-export type OnboardingExistingDriverAPIRequestType = {}
 export type OnboardingExistingDriverAPIResponseType = {
   id: string
 }[]
@@ -124,7 +102,6 @@ export type OnboardingAddDriverAPIResponseType = {
 }
 
 // /api/onboarding/add-agent/existing-agent?phone=[phone]&email=[email] (GET)
-export type OnboardingExistingAgentAPIRequestType = {}
 export type OnboardingExistingAgentAPIResponseType = {
   id: string
 }[]
@@ -143,7 +120,6 @@ export type OnboardingAddAgentAPIResponseType = {
 }
 
 // /api/onboarding/set-active/[userId] (POST)
-export type OnboardingSetActiveAPIRequestType = {}
 export type OnboardingSetActiveAPIResponseType = {
   agencyId: string
 }
@@ -155,4 +131,14 @@ export type OnboardingChangePasswordAPIRequestType = {
 }
 export type OnboardingChangePasswordAPIResponseType = {
   id: string
+}
+
+// /api/new-driver/existing-driver?phone=[phone]&email=[email]&agency=[agency] (GET)
+export type NewDriverExistingAPIResponseType = {
+  sameEmail: {
+    id: string
+  }[]
+  sameAgency: {
+    id: string
+  }[]
 }

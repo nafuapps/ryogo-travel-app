@@ -1,0 +1,92 @@
+"use client"
+
+import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import { useState } from "react"
+import { NewDriverFinish } from "./newDriverFinish"
+import { NewDriverStep1 } from "./newDriverStep1"
+import { NewDriverStep2 } from "./newDriverStep2"
+import { NewDriverStep3 } from "./newDriverStep3"
+import { NewDriverConfirm } from "./newDriverConfirm"
+
+export type NewDriverFormDataType = {
+  name: string
+  phone: string
+  email: string
+  driverPhotos: FileList | undefined
+  licenseNumber: string
+  licenseExpiresOn: Date | undefined
+  licensePhotos: FileList | undefined
+  address: string
+  canDriveVehicleTypes: string[]
+  defaultAllowancePerDay: number | undefined
+}
+
+type NewDriverFormProps = {
+  agencyId: string
+  userId: string
+}
+export default function NewDriverForm(props: NewDriverFormProps) {
+  const [newDriverFormData, setNewDriverFormData] =
+    useState<NewDriverFormDataType>({
+      name: "",
+      phone: "",
+      email: "",
+      driverPhotos: undefined,
+      licenseNumber: "",
+      licenseExpiresOn: undefined,
+      licensePhotos: undefined,
+      address: "",
+      canDriveVehicleTypes: [],
+      defaultAllowancePerDay: undefined,
+    })
+
+  const nextStepHandler = () => {
+    nextStep()
+  }
+
+  const prevStepHandler = () => {
+    prevStep()
+  }
+
+  const { currentStepIndex, steps, nextStep, prevStep } = useMultiStepForm([
+    <NewDriverStep1
+      key={0}
+      onNext={nextStepHandler}
+      newDriverFormData={newDriverFormData}
+      setNewDriverFormData={setNewDriverFormData}
+      agencyId={props.agencyId}
+    />,
+    <NewDriverStep2
+      key={1}
+      onNext={nextStepHandler}
+      onPrev={prevStepHandler}
+      newDriverFormData={newDriverFormData}
+      setNewDriverFormData={setNewDriverFormData}
+    />,
+    <NewDriverStep3
+      key={2}
+      onNext={nextStepHandler}
+      onPrev={prevStepHandler}
+      newDriverFormData={newDriverFormData}
+      setNewDriverFormData={setNewDriverFormData}
+    />,
+    <NewDriverConfirm
+      key={3}
+      onNext={nextStepHandler}
+      onPrev={prevStepHandler}
+      newDriverFormData={newDriverFormData}
+      userId={props.userId}
+      agencyId={props.agencyId}
+    />,
+    <NewDriverFinish key={4} newDriverFormData={newDriverFormData} />,
+  ])
+
+  return (
+    <div
+      id="newDriverForm"
+      className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+    >
+      {steps[currentStepIndex]}
+    </div>
+  )
+}

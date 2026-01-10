@@ -822,7 +822,8 @@
           "Loading": "Loading",
           "FindCTA": "Find Customer",
           "PrimaryCTA": "Next",
-          "CustomerNotFound": "No customer found.. Adding a new one"
+          "CustomerNotFound": "No customer found.. Adding a new one",
+          "Photo":"View photo"
         },
         "Step2": {
           "Title": "Trip details",

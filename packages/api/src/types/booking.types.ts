@@ -1,6 +1,6 @@
 import { BookingTypeEnum, SelectBookingType } from "@ryogo-travel-app/db/schema"
 
-export type CreateNewBookingAPIRequestType = {
+export type CreateNewBookingRequestType = {
   agencyId: string
   userId: string
   customerPhone: string
@@ -36,4 +36,4 @@ export type CreateNewBookingAPIRequestType = {
   finalAmount: number
 }
 
-export type CreateNewBookingAPIResponseType = SelectBookingType | undefined
+export type CreateNewBookingResponseType = SelectBookingType | undefined

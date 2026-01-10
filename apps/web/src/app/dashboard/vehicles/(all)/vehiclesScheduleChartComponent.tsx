@@ -86,7 +86,7 @@ export default function VehiclesScheduleChartComponent({
       </div>
       <div
         id="VehiclesScheduleChart"
-        className="flex flex-col sm:flex-row gap-1 lg:gap-1.5 w-full"
+        className="flex flex-col sm:flex-row gap-2 lg:gap-2.5 w-full"
       >
         <div
           id="VehiclesScheduleChartVehicleNumberAxis"
@@ -108,7 +108,7 @@ export default function VehiclesScheduleChartComponent({
             {chartData.map((v, index) => (
               <div
                 key={index}
-                className="flex flex-row justify-center items-center min-w-0"
+                className="flex flex-row justify-center items-center min-w-0 text-ellipsis whitespace-nowrap"
               >
                 <CaptionBold>{v.vehicleNumber}</CaptionBold>
               </div>

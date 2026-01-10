@@ -1,9 +1,9 @@
-import { CaptionGrey, H4, Small, SmallGrey } from "@/components/typography";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { CaptionGrey, H4, Small, SmallGrey } from "@/components/typography"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { useEffect, useRef, useState } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   newBookingFormClassName,
   NewBookingFormDataType,
@@ -11,40 +11,39 @@ import {
   newBookingHeaderLineClassName,
   newBookingSectionClassName,
   NewBookingTotalSteps,
-} from "./newBookingCommon";
-import NewBookingStepsTracker from "./newBookingStepsTracker";
+} from "./newBookingCommon"
+import NewBookingStepsTracker from "./newBookingStepsTracker"
 import {
   DashboardInput,
   DashboardSelect,
-} from "@/components/form/dashboardFormFields";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { NewBookingFindCustomerAPIResponseType } from "@ryogo-travel-app/api/types/customer.types";
-import stateCityData from "@/lib/states_cities.json";
-import { LucideInfo } from "lucide-react";
-import { PhoneRegex } from "@/lib/regex";
-import { Alert } from "@/components/ui/alert";
-import ExistingCutomerCard from "./newBookingExistingCustomer";
+} from "@/components/form/dashboardFormFields"
+import { Form } from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
+import stateCityData from "@/lib/states_cities.json"
+import { LucideInfo } from "lucide-react"
+import { PhoneRegex } from "@/lib/regex"
+import { Alert } from "@/components/ui/alert"
+import ExistingCutomerCard from "./newBookingExistingCustomer"
+import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 
 type NewBookingStep1Props = {
-  onNext: () => void;
-  newBookingFormData: NewBookingFormDataType;
+  onNext: () => void
+  newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
-  >;
-  agencyId: string;
-};
+  >
+  agencyId: string
+  customers: FindCustomersInAgencyType
+}
 export default function NewBookingStep1(props: NewBookingStep1Props) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step1");
-  const [existingCustomer, setExistingCustomer] =
-    useState<NewBookingFindCustomerAPIResponseType>(
-      props.newBookingFormData.existingCustomer
-    );
+  const t = useTranslations("Dashboard.NewBooking.Form.Step1")
+  const [existingCustomer, setExistingCustomer] = useState<
+    FindCustomersInAgencyType[number] | undefined
+  >(props.newBookingFormData.existingCustomer)
   const [customerNotFound, setCustomerNotFound] = useState<string | undefined>(
     props.newBookingFormData.newCustomerName
-  );
+  )
 
   const step1Schema = z.object({
     //Customer
@@ -52,24 +51,24 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     newCustomerName: z
       .string()
       .refine((s) => {
-        return existingCustomer || s.length > 5;
+        return existingCustomer || s.length > 5
       }, t("Field2.Error1"))
       .optional(),
     newCustomerState: z
       .string()
       .refine((s) => {
-        return existingCustomer || s != "";
+        return existingCustomer || s != ""
       }, t("Field3.Error1"))
       .optional(),
     newCustomerCity: z
       .string()
       .refine((s) => {
-        return existingCustomer || s != "";
+        return existingCustomer || s != ""
       }, t("Field4.Error1"))
       .optional(),
-  });
+  })
 
-  type Step1Type = z.infer<typeof step1Schema>;
+  type Step1Type = z.infer<typeof step1Schema>
 
   //Form init
   const form = useForm<Step1Type>({
@@ -80,7 +79,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       newCustomerState: props.newBookingFormData.newCustomerLocationState,
       newCustomerCity: props.newBookingFormData.newCustomerLocationCity,
     },
-  });
+  })
 
   //Form submit
   function onSubmit(values: Step1Type) {
@@ -91,8 +90,8 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       newCustomerName: values.newCustomerName,
       newCustomerLocationState: values.newCustomerState,
       newCustomerLocationCity: values.newCustomerCity,
-    });
-    props.onNext();
+    })
+    props.onNext()
   }
 
   //Find customer
@@ -101,38 +100,35 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       form.setError("customerPhone", {
         type: "manual",
         message: t("Field1.Error1"),
-      });
-      return;
+      })
+      return
     }
-    const customer = await apiClient<NewBookingFindCustomerAPIResponseType>(
-      `/api/new-booking/find-customer?phone=${form.getValues(
-        "customerPhone"
-      )}&agencyId=${props.agencyId}`,
-      { method: "GET" }
-    );
-    setExistingCustomer(customer);
-    if (!customer) {
-      setCustomerNotFound(t("CustomerNotFound"));
+    const foundCustomer = props.customers.find(
+      (c) => c.phone == form.getValues("customerPhone")
+    )
+    setExistingCustomer(foundCustomer)
+    if (!foundCustomer) {
+      setCustomerNotFound(t("CustomerNotFound"))
     } else {
-      setCustomerNotFound(undefined);
+      setCustomerNotFound(undefined)
     }
-  };
+  }
 
-  const data: Record<string, string[]> = stateCityData;
-  const selectedState = form.watch("newCustomerState");
-  const cityOptions = selectedState ? data[selectedState] : [];
-  const setValue = form.setValue;
+  const data: Record<string, string[]> = stateCityData
+  const selectedState = form.watch("newCustomerState")
+  const cityOptions = selectedState ? data[selectedState] : []
+  const setValue = form.setValue
 
-  const isFirstRender = useRef(true);
+  const isFirstRender = useRef(true)
 
   useEffect(() => {
     // Skip on the initial render of the component
     if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
+      isFirstRender.current = false
+      return
     }
-    setValue("newCustomerCity", ""); // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState, setValue]);
+    setValue("newCustomerCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedState, setValue])
 
   return (
     <div id="CustomerSection" className={newBookingSectionClassName}>
@@ -212,5 +208,5 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
         </form>
       </Form>
     </div>
-  );
+  )
 }

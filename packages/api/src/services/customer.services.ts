@@ -2,21 +2,20 @@ import { customerRepository } from "../repositories/customer.repo"
 import { locationRepository } from "../repositories/location.repo"
 
 export const customerServices = {
-  async findCustomerByPhoneInAgency(phone: string, agencyId: string) {
-    const customer = await customerRepository.readCustomerByPhoneAgencyId(
-      phone,
+  async findCustomersInAgency(agencyId: string) {
+    const customers = await customerRepository.readAllCustomersByAgencyId(
       agencyId
     )
-    if (!customer) {
-      return null
-    }
-    return {
-      id: customer?.id,
-      name: customer?.name,
-      phone: customer?.phone,
-      remarks: customer?.remarks,
-      location: customer?.location.city + ", " + customer?.location.state,
-    }
+    return customers.map((c) => {
+      return {
+        id: c.id,
+        name: c.name,
+        phone: c.phone,
+        photoUrl: c.photoUrl,
+        remarks: c.remarks,
+        location: c.location.city + ", " + c.location.state,
+      }
+    })
   },
 
   async addNewCustomer(
@@ -54,3 +53,7 @@ export const customerServices = {
     }
   },
 }
+
+export type FindCustomersInAgencyType = Awaited<
+  ReturnType<typeof customerServices.findCustomersInAgency>
+>

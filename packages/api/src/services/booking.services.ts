@@ -3,7 +3,7 @@ import {
   InsertBookingType,
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
-import { CreateNewBookingAPIRequestType } from "../types/booking.types"
+import { CreateNewBookingRequestType } from "../types/booking.types"
 import { locationRepository } from "../repositories/location.repo"
 import { customerServices } from "./customer.services"
 import { routeServices } from "./route.services"
@@ -262,7 +262,7 @@ export const bookingServices = {
   },
 
   //Create a new Booking
-  async addNewBooking(data: CreateNewBookingAPIRequestType) {
+  async addNewBooking(data: CreateNewBookingRequestType) {
     //Step1: If no existing customer, create a new customer
     let customerId = data.existingCustomerId
     if (!customerId) {

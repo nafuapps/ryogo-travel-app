@@ -1,11 +1,18 @@
 import { db } from "@ryogo-travel-app/db"
 import { customers, InsertCustomerType } from "@ryogo-travel-app/db/schema"
-import { eq, and } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 
 export const customerRepository = {
-  async readCustomerByPhoneAgencyId(phone: string, agencyId: string) {
-    return await db.query.customers.findFirst({
-      where: and(eq(customers.phone, phone), eq(customers.agencyId, agencyId)),
+  async readAllCustomersByAgencyId(agencyId: string) {
+    return await db.query.customers.findMany({
+      columns: {
+        id: true,
+        name: true,
+        phone: true,
+        photoUrl: true,
+        remarks: true,
+      },
+      where: eq(customers.agencyId, agencyId),
       with: {
         location: {
           columns: {

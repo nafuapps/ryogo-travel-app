@@ -86,7 +86,7 @@ export default function DriversScheduleChartComponent({
       </div>
       <div
         id="DriversScheduleChart"
-        className="flex flex-col sm:flex-row gap-1 lg:gap-1.5 w-full"
+        className="flex flex-col sm:flex-row gap-2 lg:gap-2.5 w-full"
       >
         <div
           id="DriversScheduleChartDriverNumberAxis"
@@ -108,7 +108,7 @@ export default function DriversScheduleChartComponent({
             {chartData.map((d, index) => (
               <div
                 key={index}
-                className="flex flex-row justify-center items-center min-w-0"
+                className="flex flex-row justify-center items-center min-w-0 text-ellipsis whitespace-nowrap"
               >
                 <CaptionBold>{d.name}</CaptionBold>
               </div>

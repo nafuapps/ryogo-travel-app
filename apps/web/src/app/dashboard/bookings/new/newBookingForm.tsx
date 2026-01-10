@@ -14,6 +14,7 @@ import {
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
+import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 
 type NewBookingFormProps = {
   agencyId: string
@@ -22,12 +23,13 @@ type NewBookingFormProps = {
   drivers: FindDriversByAgencyType
   commissionRate: number
   userId: string
+  customers: FindCustomersInAgencyType
 }
 export default function NewBookingForm(props: NewBookingFormProps) {
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingFormDataType>({
       customerPhone: "",
-      existingCustomer: null,
+      existingCustomer: undefined,
       newCustomerLocationState: props.agencyLocation.state,
       newCustomerLocationCity: props.agencyLocation.city,
       tripStartDate: new Date(),
@@ -60,6 +62,7 @@ export default function NewBookingForm(props: NewBookingFormProps) {
       newBookingFormData={newBookingFormData}
       setNewBookingFormData={setNewBookingFormData}
       agencyId={props.agencyId}
+      customers={props.customers}
     />,
     <NewBookingStep2
       key={1}

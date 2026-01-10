@@ -1,4 +1,4 @@
-import { NewBookingFindCustomerAPIResponseType } from "@ryogo-travel-app/api/types/customer.types"
+import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import {
   DriverStatusEnum,
   VehicleStatusEnum,
@@ -22,7 +22,7 @@ import { ForwardRefExoticComponent, RefAttributes } from "react"
 
 export type NewBookingFormDataType = {
   customerPhone?: string
-  existingCustomer: NewBookingFindCustomerAPIResponseType
+  existingCustomer: FindCustomersInAgencyType[number] | undefined
   newCustomerName?: string
   newCustomerLocationState?: string
   newCustomerLocationCity?: string

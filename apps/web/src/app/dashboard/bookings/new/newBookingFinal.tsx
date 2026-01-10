@@ -23,11 +23,7 @@ import { Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import {
-  CreateNewBookingAPIRequestType,
-  CreateNewBookingAPIResponseType,
-} from "@ryogo-travel-app/api/types/booking.types"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
+import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { BigIconTextTag } from "./newBookingTileTag"
@@ -40,6 +36,7 @@ import {
 } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
 import NewBookingTripInfo from "./newBookingTripInfo"
+import { newBookingAction } from "./newBookingAction"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -57,7 +54,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
 
   //Final form submit to create a new booking
   const onSubmit = async () => {
-    const newBookingData: CreateNewBookingAPIRequestType = {
+    const newBookingData: CreateNewBookingRequestType = {
       agencyId: props.agencyId,
       userId: props.userId,
       existingCustomerId: props.newBookingFormData.existingCustomer?.id,
@@ -97,10 +94,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
       totalDriverAllowance: finalAmount.totalDriverAllowance,
       totalCommission: finalAmount.totalCommission,
     }
-    const createdBooking = await apiClient<CreateNewBookingAPIResponseType>(
-      "/api/new-booking",
-      { method: "POST", body: JSON.stringify(newBookingData) }
-    )
+    const createdBooking = await newBookingAction(newBookingData)
     if (createdBooking) {
       router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`)
       toast.success(t("Success"))

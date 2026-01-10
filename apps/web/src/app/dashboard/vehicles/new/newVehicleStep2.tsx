@@ -7,7 +7,6 @@ import z from "zod"
 import { Form } from "@/components/ui/form"
 import { NewVehicleFormDataType } from "./newVehicleForm"
 import {
-  DashboardDatePicker,
   DashboardFileInput,
   DashboardInput,
 } from "@/components/form/dashboardFormFields"
@@ -28,17 +27,21 @@ export function NewVehicleStep2(props: {
   setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step2")
+
   const step2Schema = z.object({
-    licenseNumber: z
-      .string()
-      .trim()
-      .min(12, t("Field1.Error1"))
-      .max(20, t("Field1.Error2")),
-    licenseExpiresOn: z
-      .date(t("Field2.Error1"))
-      .min(new Date(), t("Field2.Error2"))
-      .nonoptional(t("Field2.Error1")),
-    licensePhotos: z
+    capacity: z.coerce
+      .number<number>(t("Field1.Error1"))
+      .min(0, t("Field1.Error2"))
+      .max(100, t("Field1.Error3"))
+      .multipleOf(1, t("Field1.Error4"))
+      .nonnegative(t("Field1.Error5")),
+    odometerReading: z.coerce
+      .number<number>(t("Field2.Error1"))
+      .min(0, t("Field2.Error2"))
+      .max(1000000, t("Field2.Error3"))
+      .multipleOf(1, t("Field2.Error4"))
+      .nonnegative(t("Field2.Error5")),
+    rcPhotos: z
       .instanceof(FileList)
       .refine((file) => {
         return file.length >= 1
@@ -58,17 +61,41 @@ export function NewVehicleStep2(props: {
             "image/bmp",
             "image/webp",
             "application/pdf",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field3.Error3")),
+    vehiclePhotos: z
+      .instanceof(FileList)
+      .refine((file) => {
+        return file.length >= 1
+      }, t("Field4.Error1"))
+      .refine((file) => {
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
+      }, t("Field4.Error2"))
+      .refine((file) => {
+        if (file.length < 1) return false
+        return (
+          file[0] &&
+          [
+            "image/jpeg",
+            "image/png",
+            "image/jpg",
+            "image/bmp",
+            "image/webp",
+            "application/pdf",
+          ].includes(file[0].type)
+        )
+      }, t("Field4.Error3")),
   })
   type Step2Type = z.infer<typeof step2Schema>
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      licenseNumber: props.newVehicleFormData.licenseNumber,
-      licenseExpiresOn: props.newVehicleFormData.licenseExpiresOn,
-      licensePhotos: props.newVehicleFormData.licensePhotos,
+      capacity: props.newVehicleFormData.capacity,
+      odometerReading: props.newVehicleFormData.odometerReading,
+      rcPhotos: props.newVehicleFormData.rcPhotos,
+      vehiclePhotos: props.newVehicleFormData.vehiclePhotos,
     },
   })
 
@@ -76,13 +103,13 @@ export function NewVehicleStep2(props: {
   const onSubmit = (data: Step2Type) => {
     props.setNewVehicleFormData({
       ...props.newVehicleFormData,
-      licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
+      capacity: data.capacity,
+      odometerReading: data.odometerReading,
+      rcPhotos: data.rcPhotos,
+      vehiclePhotos: data.vehiclePhotos,
     })
     props.onNext()
   }
-
   return (
     <div id="NewVehicleStep2" className={newBookingSectionClassName}>
       <div id="Header" className={newBookingHeaderClassName}>
@@ -101,24 +128,32 @@ export function NewVehicleStep2(props: {
         >
           <div id="Step2Fields" className="flex flex-col gap-3 lg:gap-4">
             <DashboardInput
-              name={"licenseNumber"}
-              type="text"
+              name={"capacity"}
+              type="tel"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
               description={t("Field1.Description")}
             />
-            <DashboardDatePicker
-              name="licenseExpiresOn"
+            <DashboardInput
+              name={"odometerReading"}
+              type="tel"
               label={t("Field2.Title")}
               placeholder={t("Field2.Placeholder")}
               description={t("Field2.Description")}
             />
             <DashboardFileInput
-              name={"licensePhotos"}
-              register={formData.register("licensePhotos")}
+              name={"rcPhotos"}
+              register={formData.register("rcPhotos")}
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
+            />
+            <DashboardFileInput
+              name={"vehiclePhotos"}
+              register={formData.register("vehiclePhotos")}
+              label={t("Field4.Title")}
+              placeholder={t("Field4.Placeholder")}
+              description={t("Field4.Description")}
             />
           </div>
           <Button
@@ -133,7 +168,8 @@ export function NewVehicleStep2(props: {
           <Button
             variant={"secondary"}
             size={"lg"}
-            type="submit"
+            type="button"
+            onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}

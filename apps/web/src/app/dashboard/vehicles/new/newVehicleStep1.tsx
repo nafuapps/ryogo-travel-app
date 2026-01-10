@@ -10,8 +10,6 @@ import {
   DashboardInput,
   DashboardSelect,
 } from "@/components/form/dashboardFormFields"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
-import { NewVehicleExistingAPIResponseType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   newBookingFormClassName,
   newBookingHeaderClassName,
@@ -27,6 +25,7 @@ export function NewVehicleStep1(props: {
   newVehicleFormData: NewVehicleFormDataType
   setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
   agencyId: string
+  existingVehicles: string[]
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step1")
 
@@ -56,13 +55,9 @@ export function NewVehicleStep1(props: {
   })
 
   //Submit actions
-  // Check (in vehicles) if a vehicle with same number exists in this agency
   const onSubmit = async (data: Step1Type) => {
-    const existingVehicle = await apiClient<NewVehicleExistingAPIResponseType>(
-      `/api/new-vehicle/existing-vehicle?vehicleNumber=${data.vehicleNumber}&agency=${props.agencyId}`,
-      { method: "GET" }
-    )
-    if (existingVehicle.length > 0) {
+    // Check if a vehicle with same number exists in this agency
+    if (props.existingVehicles.includes(data.vehicleNumber)) {
       //If vehicle exists in agency, show error
       formData.setError("vehicleNumber", {
         type: "manual",

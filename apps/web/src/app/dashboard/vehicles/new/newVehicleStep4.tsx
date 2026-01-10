@@ -9,11 +9,9 @@ import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
 import {
   DashboardInput,
-  DashboardMultipleCheckbox,
-  DashboardTextarea,
+  DashboardSwitch,
 } from "@/components/form/dashboardFormFields"
 import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   newBookingSectionClassName,
   newBookingHeaderClassName,
@@ -28,45 +26,47 @@ export function NewVehicleStep4(props: {
   newVehicleFormData: NewVehicleFormDataType
   setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
 }) {
-  const t = useTranslations("Dashboard.NewVehicle.Step3")
-  const step3Schema = z.object({
-    vehicleAddress: z
-      .string()
-      .min(20, t("Field1.Error1"))
-      .max(300, t("Field1.Error2")),
-    canDriveVehicleTypes: z.array(z.string()).min(1, t("Field2.Error1")),
-    defaultAllowancePerDay: z.coerce
-      .number<number>(t("Field3.Error1"))
-      .min(1, t("Field3.Error2"))
+  const t = useTranslations("Dashboard.NewVehicle.Step4")
+  const step4Schema = z.object({
+    defaultRatePerKm: z.coerce
+      .number<number>(t("Field1.Error1"))
+      .min(0, t("Field1.Error2"))
+      .max(50, t("Field1.Error3"))
+      .nonnegative(t("Field1.Error4"))
+      .multipleOf(1, t("Field1.Error5"))
+      .optional(),
+    hasAC: z.boolean(),
+    defaultAcChargePerDay: z.coerce
+      .number<number>()
+      .min(0, t("Field3.Error2"))
       .max(10000, t("Field3.Error3"))
-      .positive(t("Field3.Error4"))
-      .multipleOf(1, t("Field3.Error5")),
+      .nonnegative(t("Field3.Error4"))
+      .multipleOf(1, t("Field3.Error5"))
+      .optional(),
   })
-  type Step3Type = z.infer<typeof step3Schema>
-  const formData = useForm<Step3Type>({
-    resolver: zodResolver(step3Schema),
+  type Step4Type = z.infer<typeof step4Schema>
+  const formData = useForm<Step4Type>({
+    resolver: zodResolver(step4Schema),
     defaultValues: {
-      vehicleAddress: props.newVehicleFormData.address,
-      canDriveVehicleTypes: props.newVehicleFormData.canDriveVehicleTypes,
-      defaultAllowancePerDay: props.newVehicleFormData.defaultAllowancePerDay,
+      defaultRatePerKm: props.newVehicleFormData.defaultRatePerKm,
+      hasAC: props.newVehicleFormData.hasAC,
+      defaultAcChargePerDay: props.newVehicleFormData.defaultAcChargePerDay,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step3Type) => {
+  const onSubmit = (data: Step4Type) => {
     props.setNewVehicleFormData({
       ...props.newVehicleFormData,
-      address: data.vehicleAddress,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
+      defaultRatePerKm: data.defaultRatePerKm,
+      hasAC: data.hasAC,
+      defaultAcChargePerDay: data.defaultAcChargePerDay,
     })
     props.onNext()
   }
 
-  const vehicles = Object.values(VehicleTypesEnum).map((i) => i.toUpperCase())
-
   return (
-    <div id="NewVehicleStep3" className={newBookingSectionClassName}>
+    <div id="NewVehicleStep4" className={newBookingSectionClassName}>
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -77,28 +77,26 @@ export function NewVehicleStep4(props: {
       </div>
       <Form {...formData}>
         <form
-          id="Step3Form"
+          id="Step4Form"
           onSubmit={formData.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div id="Step3Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardTextarea
-              name={"vehicleAddress"}
+          <div id="Step4Fields" className="flex flex-col gap-3 lg:gap-4">
+            <DashboardInput
+              name={"defaultRatePerKm"}
+              type="tel"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
             />
-            <DashboardMultipleCheckbox
-              array={vehicles}
-              name={"canDriveVehicleTypes"}
-              label={t("Field2.Title")}
-              register={formData.register("canDriveVehicleTypes")}
-            />
+            <DashboardSwitch name={"hasAC"} label={t("Field2.Title")} />
             <DashboardInput
-              name={"defaultAllowancePerDay"}
+              name={"defaultAcChargePerDay"}
               type="tel"
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
+              disabled={!formData.watch("hasAC")}
             />
           </div>
           <Button
@@ -113,7 +111,8 @@ export function NewVehicleStep4(props: {
           <Button
             variant={"secondary"}
             size={"lg"}
-            type="submit"
+            type="button"
+            onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}

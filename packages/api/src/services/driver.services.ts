@@ -2,8 +2,8 @@ import { InsertDriverType, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { driverRepository } from "../repositories/driver.repo"
 import { CreateDriverType } from "../types/driver.types"
 import {
-  NewDriverAPIRequestType,
-  NewDriverAPIResponseType,
+  NewDriverRequestType,
+  NewDriverResponseType,
 } from "../types/driver.types"
 import { userServices } from "./user.services"
 
@@ -80,7 +80,7 @@ export const driverServices = {
   async addNewDriver({
     agencyId,
     data,
-  }: NewDriverAPIRequestType): Promise<NewDriverAPIResponseType> {
+  }: NewDriverRequestType): Promise<NewDriverResponseType> {
     const newDriver = userServices.addDriverUser({ agencyId, data })
     return newDriver
   },

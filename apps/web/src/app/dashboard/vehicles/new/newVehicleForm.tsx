@@ -29,6 +29,7 @@ export type NewVehicleFormDataType = {
 
 type NewVehicleFormProps = {
   agencyId: string
+  existingVehicles: string[]
 }
 export default function NewVehicleForm(props: NewVehicleFormProps) {
   const [newVehicleFormData, setNewVehicleFormData] =
@@ -66,6 +67,7 @@ export default function NewVehicleForm(props: NewVehicleFormProps) {
       newVehicleFormData={newVehicleFormData}
       setNewVehicleFormData={setNewVehicleFormData}
       agencyId={props.agencyId}
+      existingVehicles={props.existingVehicles}
     />,
     <NewVehicleStep2
       key={1}

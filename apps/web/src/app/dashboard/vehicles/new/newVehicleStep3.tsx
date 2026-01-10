@@ -8,12 +8,10 @@ import { Form } from "@/components/ui/form"
 import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
 import {
-  DashboardInput,
-  DashboardMultipleCheckbox,
-  DashboardTextarea,
+  DashboardDatePicker,
+  DashboardFileInput,
 } from "@/components/form/dashboardFormFields"
 import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   newBookingSectionClassName,
   newBookingHeaderClassName,
@@ -30,25 +28,69 @@ export function NewVehicleStep3(props: {
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step3")
   const step3Schema = z.object({
-    vehicleAddress: z
-      .string()
-      .min(20, t("Field1.Error1"))
-      .max(300, t("Field1.Error2")),
-    canDriveVehicleTypes: z.array(z.string()).min(1, t("Field2.Error1")),
-    defaultAllowancePerDay: z.coerce
-      .number<number>(t("Field3.Error1"))
-      .min(1, t("Field3.Error2"))
-      .max(10000, t("Field3.Error3"))
-      .positive(t("Field3.Error4"))
-      .multipleOf(1, t("Field3.Error5")),
+    insuranceExpiresOn: z
+      .date(t("Field1.Error1"))
+      .min(new Date(), t("Field1.Error2"))
+      .nonoptional(t("Field1.Error1")),
+    insurancePhotos: z
+      .instanceof(FileList)
+      .refine((file) => {
+        return file.length >= 1
+      }, t("Field2.Error1"))
+      .refine((file) => {
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
+      }, t("Field2.Error2"))
+      .refine((file) => {
+        if (file.length < 1) return false
+        return (
+          file[0] &&
+          [
+            "image/jpeg",
+            "image/png",
+            "image/jpg",
+            "image/bmp",
+            "image/webp",
+            "application/pdf",
+          ].includes(file[0]!.type)
+        )
+      }, t("Field2.Error3")),
+    pucExpiresOn: z
+      .date(t("Field3.Error1"))
+      .min(new Date(), t("Field3.Error2"))
+      .nonoptional(t("Field3.Error1")),
+    pucPhotos: z
+      .instanceof(FileList)
+      .refine((file) => {
+        return file.length >= 1
+      }, t("Field4.Error1"))
+      .refine((file) => {
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
+      }, t("Field4.Error2"))
+      .refine((file) => {
+        if (file.length < 1) return false
+        return (
+          file[0] &&
+          [
+            "image/jpeg",
+            "image/png",
+            "image/jpg",
+            "image/bmp",
+            "image/webp",
+            "application/pdf",
+          ].includes(file[0]!.type)
+        )
+      }, t("Field4.Error3")),
   })
   type Step3Type = z.infer<typeof step3Schema>
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      vehicleAddress: props.newVehicleFormData.address,
-      canDriveVehicleTypes: props.newVehicleFormData.canDriveVehicleTypes,
-      defaultAllowancePerDay: props.newVehicleFormData.defaultAllowancePerDay,
+      insuranceExpiresOn: props.newVehicleFormData.insuranceExpiresOn,
+      insurancePhotos: props.newVehicleFormData.insurancePhotos,
+      pucExpiresOn: props.newVehicleFormData.pucExpiresOn,
+      pucPhotos: props.newVehicleFormData.pucPhotos,
     },
   })
 
@@ -56,14 +98,13 @@ export function NewVehicleStep3(props: {
   const onSubmit = (data: Step3Type) => {
     props.setNewVehicleFormData({
       ...props.newVehicleFormData,
-      address: data.vehicleAddress,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
+      insuranceExpiresOn: data.insuranceExpiresOn,
+      insurancePhotos: data.insurancePhotos,
+      pucExpiresOn: data.pucExpiresOn,
+      pucPhotos: data.pucPhotos,
     })
     props.onNext()
   }
-
-  const vehicles = Object.values(VehicleTypesEnum).map((i) => i.toUpperCase())
 
   return (
     <div id="NewVehicleStep3" className={newBookingSectionClassName}>
@@ -82,23 +123,31 @@ export function NewVehicleStep3(props: {
           className={newBookingFormClassName}
         >
           <div id="Step3Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardTextarea
-              name={"vehicleAddress"}
+            <DashboardDatePicker
+              name="insuranceExpiresOn"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
             />
-            <DashboardMultipleCheckbox
-              array={vehicles}
-              name={"canDriveVehicleTypes"}
+            <DashboardFileInput
+              name={"insurancePhotos"}
+              register={formData.register("insurancePhotos")}
               label={t("Field2.Title")}
-              register={formData.register("canDriveVehicleTypes")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
             />
-            <DashboardInput
-              name={"defaultAllowancePerDay"}
-              type="tel"
+            <DashboardDatePicker
+              name="pucExpiresOn"
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
+            />
+            <DashboardFileInput
+              name={"pucPhotos"}
+              register={formData.register("pucPhotos")}
+              label={t("Field4.Title")}
+              placeholder={t("Field4.Placeholder")}
+              description={t("Field4.Description")}
             />
           </div>
           <Button
@@ -113,7 +162,8 @@ export function NewVehicleStep3(props: {
           <Button
             variant={"secondary"}
             size={"lg"}
-            type="submit"
+            type="button"
+            onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}

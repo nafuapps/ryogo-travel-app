@@ -133,7 +133,8 @@ export function NewDriverStep2(props: {
           <Button
             variant={"secondary"}
             size={"lg"}
-            type="submit"
+            type="button"
+            onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}

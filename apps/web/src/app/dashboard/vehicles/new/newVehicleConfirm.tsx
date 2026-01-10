@@ -3,11 +3,7 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { CaptionGrey, H4, P, PBold, SmallGrey } from "@/components/typography"
-import {
-  apiClient,
-  apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient"
-import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
@@ -18,10 +14,8 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
-import {
-  NewVehicleAPIRequestType,
-  NewVehicleAPIResponseType,
-} from "@ryogo-travel-app/api/types/vehicle.types"
+import { NewVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { newVehicleAction } from "./newVehicleAction"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -31,58 +25,41 @@ export function NewVehicleConfirm(props: {
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Confirm")
   const formData = useForm<NewVehicleFormDataType>()
+  const router = useRouter()
   //Submit actions
   const onSubmit = async () => {
     // Add vehicle
-    const newVehicleData: NewVehicleAPIRequestType = {
+    const newVehicleData: NewVehicleRequestType = {
       agencyId: props.agencyId,
       data: {
-        name: props.newVehicleFormData.name,
-        email: props.newVehicleFormData.email,
-        phone: props.newVehicleFormData.phone,
-        address: props.newVehicleFormData.address,
-        canDriveVehicleTypes: props.newVehicleFormData.canDriveVehicleTypes,
-        defaultAllowancePerDay: props.newVehicleFormData.defaultAllowancePerDay,
-        licenseNumber: props.newVehicleFormData.licenseNumber,
-        licenseExpiresOn: props.newVehicleFormData.licenseExpiresOn!,
+        vehicleNumber: props.newVehicleFormData.vehicleNumber,
+        type: props.newVehicleFormData.type,
+        brand: props.newVehicleFormData.brand,
+        color: props.newVehicleFormData.color,
+        model: props.newVehicleFormData.model,
+        capacity: props.newVehicleFormData.capacity,
+        odometerReading: props.newVehicleFormData.odometerReading,
+        insuranceExpiresOn: props.newVehicleFormData.insuranceExpiresOn!,
+        pucExpiresOn: props.newVehicleFormData.pucExpiresOn!,
+        hasAC: props.newVehicleFormData.hasAC,
+        defaultRatePerKm: props.newVehicleFormData.defaultRatePerKm,
+        defaultAcChargePerDay: props.newVehicleFormData.defaultAcChargePerDay,
+        insurancePhotos: props.newVehicleFormData.insurancePhotos,
+        pucPhotos: props.newVehicleFormData.pucPhotos,
+        rcPhotos: props.newVehicleFormData.rcPhotos,
+        vehiclePhotos: props.newVehicleFormData.vehiclePhotos,
       },
     }
-    const addedVehicle = await apiClient<NewVehicleAPIResponseType>(
-      "/api/new-vehicle",
-      { method: "POST", body: JSON.stringify(newVehicleData) }
-    )
+    const addedVehicle = await newVehicleAction(newVehicleData)
+
     if (addedVehicle.id) {
-      //If success, Try to upload license photo and vehicle user photo
-      if (props.newVehicleFormData.licensePhotos) {
-        const licenseFormData = new FormData()
-        licenseFormData.append(
-          "license",
-          props.newVehicleFormData.licensePhotos[0]!
-        )
-        licenseFormData.append("id", addedVehicle.id)
-        await apiClientWithoutHeaders(`/api/new-vehicle/upload-license`, {
-          method: "POST",
-          body: licenseFormData,
-        })
-      }
-      if (props.newVehicleFormData.vehiclePhotos) {
-        const photoFormData = new FormData()
-        photoFormData.append(
-          "photo",
-          props.newVehicleFormData.vehiclePhotos[0]!
-        )
-        photoFormData.append("userId", addedVehicle.userId)
-        await apiClientWithoutHeaders(`/api/new-vehicle/upload-user-photo`, {
-          method: "POST",
-          body: photoFormData,
-        })
-      }
       //Send to added vehicle details page
-      redirect(`/dashboard/vehicles/${addedVehicle.id}`)
+      toast.success(t("APISuccess"))
+      router.replace(`/dashboard/vehicles/${addedVehicle.id}`)
     } else {
       //If failed, Take back to vehicle page and show error
       toast.error(t("APIError"))
-      redirect("/dashboard/vehicles", RedirectType.replace)
+      router.replace("/dashboard/vehicles")
     }
   }
   return (
@@ -103,39 +80,62 @@ export function NewVehicleConfirm(props: {
         >
           <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
             <ConfirmValues
-              name={t("VehicleName")}
-              value={props.newVehicleFormData.name}
+              name={t("VehicleNumber")}
+              value={props.newVehicleFormData.vehicleNumber}
             />
             <ConfirmValues
-              name={t("VehiclePhone")}
-              value={props.newVehicleFormData.phone}
+              name={t("Type")}
+              value={props.newVehicleFormData.type}
             />
             <ConfirmValues
-              name={t("VehicleEmail")}
-              value={props.newVehicleFormData.email}
+              name={t("Brand")}
+              value={props.newVehicleFormData.brand}
             />
             <ConfirmValues
-              name={t("LicenseNumber")}
-              value={props.newVehicleFormData.licenseNumber}
+              name={t("Model")}
+              value={props.newVehicleFormData.model}
             />
             <ConfirmValues
-              name={t("LicenseExpiresOn")}
-              value={props.newVehicleFormData.licenseExpiresOn!.toDateString()}
+              name={t("Color")}
+              value={props.newVehicleFormData.color}
             />
-            <ConfirmValues
-              name={t("VehicleAddress")}
-              value={props.newVehicleFormData.address}
-            />
-            <ConfirmValues
-              name={t("CanDriveVehicleTypes")}
-              value={props.newVehicleFormData.canDriveVehicleTypes.join(", ")}
-            />
-            {props.newVehicleFormData.defaultAllowancePerDay && (
+            {props.newVehicleFormData.capacity && (
               <ConfirmValues
-                name={t("DefaultAllowancePerDay")}
-                value={`${props.newVehicleFormData.defaultAllowancePerDay}`}
+                name={t("Capacity")}
+                value={`${props.newVehicleFormData.capacity}`}
               />
             )}
+            {props.newVehicleFormData.odometerReading && (
+              <ConfirmValues
+                name={t("OdometerReading")}
+                value={`${props.newVehicleFormData.odometerReading}`}
+              />
+            )}
+            <ConfirmValues
+              name={t("InsuranceExpiresOn")}
+              value={props.newVehicleFormData.insuranceExpiresOn!.toDateString()}
+            />
+            <ConfirmValues
+              name={t("PUCExpiresOn")}
+              value={props.newVehicleFormData.pucExpiresOn!.toDateString()}
+            />
+            {props.newVehicleFormData.defaultRatePerKm && (
+              <ConfirmValues
+                name={t("RatePerKm")}
+                value={`${props.newVehicleFormData.defaultRatePerKm}`}
+              />
+            )}
+            <ConfirmValues
+              name={t("HasAC")}
+              value={props.newVehicleFormData.hasAC ? "Yes" : "No"}
+            />
+            {props.newVehicleFormData.hasAC &&
+              props.newVehicleFormData.defaultAcChargePerDay && (
+                <ConfirmValues
+                  name={t("ACChagePerDay")}
+                  value={`${props.newVehicleFormData.defaultAcChargePerDay}`}
+                />
+              )}
           </div>
           <Button
             variant={"default"}
@@ -149,7 +149,8 @@ export function NewVehicleConfirm(props: {
           <Button
             variant={"secondary"}
             size={"lg"}
-            type="submit"
+            type="button"
+            onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}

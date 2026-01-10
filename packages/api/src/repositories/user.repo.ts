@@ -9,6 +9,11 @@ import {
 import { eq, and, inArray, not } from "drizzle-orm"
 
 export const userRepository = {
+  //Get all users
+  async readAllUsersByRole(role: UserRolesEnum) {
+    return await db.select().from(users).where(eq(users.userRole, role))
+  },
+
   //Get unique user by id
   async readUserById(id: string) {
     return await db.select().from(users).where(eq(users.id, id))

@@ -1,6 +1,9 @@
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import { OnboardingAddVehicleAPIRequestType } from "../types/vehicle.types"
+import {
+  NewVehicleRequestType,
+  OnboardingAddVehicleAPIRequestType,
+} from "../types/vehicle.types"
 
 export const vehicleServices = {
   //Get all vehicles of an agency
@@ -11,20 +14,9 @@ export const vehicleServices = {
     return vehicles
   },
 
-  //Find vehicle by number and agency
-  async findExistingVehicleByNumberAgency(
-    vehicleNumber: string,
-    agency: string
-  ) {
-    const vehicles = await vehicleRepository.readVehicleByNumberInAgency(
-      vehicleNumber,
-      agency
-    )
-    if (vehicles.length > 1) {
-      // !This is a major issue
-      throw new Error("Multiple vehicles found with same number in agency")
-    }
-
+  //Find existing vehicles in agency
+  async findExistingVehiclesInAgency(agency: string) {
+    const vehicles = await vehicleRepository.readAllVehiclesInAgency(agency)
     return vehicles
   },
 
@@ -92,6 +84,15 @@ export const vehicleServices = {
     }
     //Step4: Return added vehicle
     return newVehicle[0]
+  },
+
+  //New vehicle (dashboard)
+  async addNewVehicle(data: NewVehicleRequestType) {
+    const vehicle = await this.addVehicle(data)
+    if (!vehicle) {
+      throw new Error("Vehicle not added")
+    }
+    return vehicle
   },
 
   //Update Vehicle doc URL

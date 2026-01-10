@@ -132,13 +132,3 @@ export type OnboardingChangePasswordAPIRequestType = {
 export type OnboardingChangePasswordAPIResponseType = {
   id: string
 }
-
-// /api/new-driver/existing-driver?phone=[phone]&email=[email]&agency=[agency] (GET)
-export type NewDriverExistingAPIResponseType = {
-  sameEmail: {
-    id: string
-  }[]
-  sameAgency: {
-    id: string
-  }[]
-}

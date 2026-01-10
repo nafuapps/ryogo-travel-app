@@ -1,4 +1,3 @@
-import { InsertCustomerType } from "@ryogo-travel-app/db/schema"
 import { customerRepository } from "../repositories/customer.repo"
 import { locationRepository } from "../repositories/location.repo"
 

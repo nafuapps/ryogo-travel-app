@@ -10,8 +10,6 @@ import {
   DashboardFileInput,
   DashboardInput,
 } from "@/components/form/dashboardFormFields"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
-import { NewDriverExistingAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 import {
   newBookingFormClassName,
   newBookingHeaderClassName,
@@ -21,12 +19,14 @@ import {
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { Button } from "@/components/ui/button"
+import { SelectUserType } from "@ryogo-travel-app/db/schema"
 
 export function NewDriverStep1(props: {
   onNext: () => void
   newDriverFormData: NewDriverFormDataType
   setNewDriverFormData: Dispatch<SetStateAction<NewDriverFormDataType>>
   agencyId: string
+  allDrivers: SelectUserType[]
 }) {
   const t = useTranslations("Dashboard.NewDriver.Step1")
 
@@ -72,21 +72,23 @@ export function NewDriverStep1(props: {
   })
 
   //Submit actions
-  // 1. Check (in users) if a driver with same phone exists in this agency
-  // 2. Check (in users) if a driver with same phone and email exists in entire DB
   const onSubmit = async (data: Step1Type) => {
-    const existingDriver = await apiClient<NewDriverExistingAPIResponseType>(
-      `/api/new-driver/existing-driver?phone=${data.driverPhone}&email=${data.driverEmail}&agency=${props.agencyId}`,
-      { method: "GET" }
-    )
-    if (existingDriver.sameAgency.length > 0) {
-      //If driver exists in agency, show error
+    if (
+      props.allDrivers.some(
+        (u) => u.phone == data.driverPhone && u.agencyId == props.agencyId
+      )
+    ) {
+      // Check if a driver with same phone exists in this agency
       formData.setError("driverPhone", {
         type: "manual",
         message: t("APIError1"),
       })
-    } else if (existingDriver.sameEmail.length > 0) {
-      //If driver with email exists in system, show error
+    } else if (
+      props.allDrivers.some(
+        (u) => u.phone == data.driverPhone && u.email == data.driverEmail
+      )
+    ) {
+      // Check if a driver with same phone and email exists in entire DB
       formData.setError("driverPhone", {
         type: "manual",
         message: t("APIError2"),

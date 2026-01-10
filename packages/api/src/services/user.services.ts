@@ -23,6 +23,11 @@ export function generateNewPassword() {
 }
 
 export const userServices = {
+  //Find all users
+  async findAllUsersByRole(role: UserRolesEnum) {
+    return await userRepository.readAllUsersByRole(role)
+  },
+
   // ? Onboarding flow - Read
   //Find owner by phone and email
   async findOwnerByPhoneEmail(phone: string, email: string) {

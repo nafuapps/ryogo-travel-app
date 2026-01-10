@@ -119,7 +119,7 @@ export const vehicleRepository = {
   //Get vehicle by number in an agency
   async readVehicleByNumberInAgency(agencyId: string, vehicleNumber: string) {
     return await db
-      .select({ id: vehicles.id })
+      .select({ id: vehicles.id, vehicleNumber: vehicles.vehicleNumber })
       .from(vehicles)
       .where(
         and(
@@ -127,6 +127,14 @@ export const vehicleRepository = {
           eq(vehicles.agencyId, agencyId)
         )
       )
+  },
+
+  //Get vehicle by number in an agency
+  async readAllVehiclesInAgency(agencyId: string) {
+    return await db
+      .select({ id: vehicles.id, vehicleNumber: vehicles.vehicleNumber })
+      .from(vehicles)
+      .where(eq(vehicles.agencyId, agencyId))
   },
 
   //Get vehicle schedule data

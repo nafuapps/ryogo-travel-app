@@ -6,6 +6,7 @@ import { NewDriverStep1 } from "./newDriverStep1"
 import { NewDriverStep2 } from "./newDriverStep2"
 import { NewDriverStep3 } from "./newDriverStep3"
 import { NewDriverConfirm } from "./newDriverConfirm"
+import { SelectUserType } from "@ryogo-travel-app/db/schema"
 
 export type NewDriverFormDataType = {
   name: string
@@ -22,6 +23,7 @@ export type NewDriverFormDataType = {
 
 type NewDriverFormProps = {
   agencyId: string
+  allDrivers: SelectUserType[]
 }
 export default function NewDriverForm(props: NewDriverFormProps) {
   const [newDriverFormData, setNewDriverFormData] =
@@ -53,6 +55,7 @@ export default function NewDriverForm(props: NewDriverFormProps) {
       newDriverFormData={newDriverFormData}
       setNewDriverFormData={setNewDriverFormData}
       agencyId={props.agencyId}
+      allDrivers={props.allDrivers}
     />,
     <NewDriverStep2
       key={1}

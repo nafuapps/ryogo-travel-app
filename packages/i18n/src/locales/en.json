@@ -1417,6 +1417,9 @@
         "APIError": "Vehicle number is already added to this agency"
       },
       "Step2": {
+        "Title":"Adding vehicle",
+        "Subtitle":"Step 2 of 5",
+        "Description":"Provide document and details of the vehicle",
         "Field1": {
           "Title": "Enter passenger capacity",
           "Placeholder": "4",
@@ -1458,6 +1461,9 @@
         "Loading": "Loading"
       },
       "Step3": {
+          "Title":"Adding vehicle",
+        "Subtitle":"Step 3 of 5",
+        "Description":"Provide policy details of the vehicle",
         "Field1": {
           "Title": "Insurance expiry date",
           "Placeholder": "Select date",
@@ -1493,6 +1499,9 @@
         "Loading": "Loading"
       },
       "Step4": {
+          "Title":"Adding vehicle",
+        "Subtitle":"Step 4 of 5",
+        "Description":"Provide agency related details of the vehicle",
         "Field1": {
           "Title": "Vehicle charge per Km (in ₹)",
           "Placeholder": "18",
@@ -1521,7 +1530,9 @@
         "Loading": "Loading"
       },
       "Confirm": {
-        "Title": "Confirm details to add your vehicle:",
+        "Title":"Confirm details",
+        "Subtitle":"Step 5 of 5",
+        "Description":"Review details of the vehicle being added",
         "VehicleNumber": "Vehicle Number",
         "Type": "Type",
         "Brand": "Brand",
@@ -1537,6 +1548,7 @@
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
+        "APISuccess": "Vehicle added successfully!",
         "APIError": "Vehicle could not be added.. Please try again"
       }
      },
@@ -1670,7 +1682,7 @@
         "SecondaryCTA": "Back",
         "Loading": "Loading",
         "APIError": "Driver could not be added.. please try again",
-        "Success": "Driver added successfully!"
+        "APISuccess": "Driver added successfully!"
       }
     },
     "Buttons": {

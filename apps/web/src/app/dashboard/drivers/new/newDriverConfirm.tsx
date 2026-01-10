@@ -3,11 +3,7 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { CaptionGrey, H4, P, PBold, SmallGrey } from "@/components/typography"
-import {
-  apiClient,
-  apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient"
-import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { NewDriverFormDataType } from "./newDriverForm"
 import { Button } from "@/components/ui/button"
@@ -18,10 +14,8 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
-import {
-  NewDriverAPIRequestType,
-  NewDriverAPIResponseType,
-} from "@ryogo-travel-app/api/types/driver.types"
+import { NewDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
+import { newDriverAction } from "./newDriverAction"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -31,10 +25,12 @@ export function NewDriverConfirm(props: {
 }) {
   const t = useTranslations("Dashboard.NewDriver.Confirm")
   const formData = useForm<NewDriverFormDataType>()
-  //Submit actions
+  const router = useRouter()
+
+  //Submit action
   const onSubmit = async () => {
     // Add driver
-    const newDriverData: NewDriverAPIRequestType = {
+    const newDriverData: NewDriverRequestType = {
       agencyId: props.agencyId,
       data: {
         name: props.newDriverFormData.name,
@@ -45,41 +41,20 @@ export function NewDriverConfirm(props: {
         defaultAllowancePerDay: props.newDriverFormData.defaultAllowancePerDay,
         licenseNumber: props.newDriverFormData.licenseNumber,
         licenseExpiresOn: props.newDriverFormData.licenseExpiresOn!,
+        licensePhotos: props.newDriverFormData.licensePhotos,
+        driverPhotos: props.newDriverFormData.driverPhotos,
       },
     }
-    const addedDriver = await apiClient<NewDriverAPIResponseType>(
-      "/api/new-driver",
-      { method: "POST", body: JSON.stringify(newDriverData) }
-    )
+    const addedDriver = await newDriverAction(newDriverData)
+
     if (addedDriver.id) {
-      //If success, Try to upload license photo and driver user photo
-      if (props.newDriverFormData.licensePhotos) {
-        const licenseFormData = new FormData()
-        licenseFormData.append(
-          "license",
-          props.newDriverFormData.licensePhotos[0]!
-        )
-        licenseFormData.append("id", addedDriver.id)
-        await apiClientWithoutHeaders(`/api/new-driver/upload-license`, {
-          method: "POST",
-          body: licenseFormData,
-        })
-      }
-      if (props.newDriverFormData.driverPhotos) {
-        const photoFormData = new FormData()
-        photoFormData.append("photo", props.newDriverFormData.driverPhotos[0]!)
-        photoFormData.append("userId", addedDriver.userId)
-        await apiClientWithoutHeaders(`/api/new-driver/upload-user-photo`, {
-          method: "POST",
-          body: photoFormData,
-        })
-      }
-      //Send to added driver details page
-      redirect(`/dashboard/drivers/${addedDriver.id}`)
+      //Send to driver details page
+      toast.success(t("APISuccess"))
+      router.replace(`/dashboard/drivers/${addedDriver.id}`)
     } else {
       //If failed, Take back to driver page and show error
       toast.error(t("APIError"))
-      redirect("/dashboard/drivers", RedirectType.replace)
+      router.replace("/dashboard/drivers")
     }
   }
   return (
@@ -146,7 +121,8 @@ export function NewDriverConfirm(props: {
           <Button
             variant={"secondary"}
             size={"lg"}
-            type="submit"
+            type="button"
+            onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}

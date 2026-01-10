@@ -10,8 +10,7 @@ export type CreateDriverType = {
   defaultAllowancePerDay?: number
 }
 
-// /api/new-driver (POST)
-export type NewDriverAPIRequestType = {
+export type NewDriverRequestType = {
   agencyId: string
   data: {
     name: string
@@ -22,9 +21,11 @@ export type NewDriverAPIRequestType = {
     address: string
     canDriveVehicleTypes: string[]
     defaultAllowancePerDay?: number | undefined
+    licensePhotos?: FileList | undefined
+    driverPhotos?: FileList | undefined
   }
 }
-export type NewDriverAPIResponseType = {
+export type NewDriverResponseType = {
   id: string
   userId: string
 }

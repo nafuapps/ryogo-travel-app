@@ -1,10 +1,10 @@
 //Signup page
-"use client";
+"use client"
 
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { useTranslations } from "next-intl"
 import {
   Form,
   FormControl,
@@ -13,34 +13,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { H2, H5 } from "@/components/typography";
-import { useRouter } from "next/navigation";
-import { Spinner } from "@/components/ui/spinner";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { SignupAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { H2, H5 } from "@/components/typography"
+import { useRouter } from "next/navigation"
+import { Spinner } from "@/components/ui/spinner"
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
+import { SignupAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 
 export default function SignupPageComponent() {
-  const t = useTranslations("Auth.SignupPage.Step1");
+  const t = useTranslations("Auth.SignupPage.Step1")
   const formSchema = z.object({
     phoneNumber: z
       .string()
       .length(10, t("Error1"))
       .regex(/^[0-9]+$/, t("Error2")),
-  });
+  })
 
-  type FormFields = z.infer<typeof formSchema>;
+  type FormFields = z.infer<typeof formSchema>
 
-  const router = useRouter();
+  const router = useRouter()
 
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       phoneNumber: "",
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
@@ -49,15 +49,15 @@ export default function SignupPageComponent() {
       {
         method: "GET",
       }
-    );
+    )
     if (users.length > 0) {
       // If found, go to existing account page
-      router.push(`/auth/signup/${data.phoneNumber}`);
+      router.push(`/auth/signup/${data.phoneNumber}`)
     } else {
       // else, go to onboarding
-      router.push("/onboarding");
+      router.push("/onboarding")
     }
-  };
+  }
 
   return (
     <div id="SignupPage" className="gap-4 w-full h-full">
@@ -101,5 +101,5 @@ export default function SignupPageComponent() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

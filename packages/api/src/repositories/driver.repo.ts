@@ -10,7 +10,16 @@ import { eq, and, notInArray, or, gte, lte } from "drizzle-orm"
 export const driverRepository = {
   //Get driver by id
   async readDriverById(id: string) {
-    return await db.select().from(drivers).where(eq(drivers.id, id))
+    return await db.query.drivers.findFirst({
+      where: eq(drivers.id, id),
+      with: {
+        user: {
+          columns: {
+            photoUrl: true,
+          },
+        },
+      },
+    })
   },
 
   //Get all drivers of an agency

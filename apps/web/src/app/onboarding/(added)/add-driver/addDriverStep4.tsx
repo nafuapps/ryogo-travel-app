@@ -21,7 +21,7 @@ import {
   apiClient,
   apiClientWithoutHeaders,
 } from "@ryogo-travel-app/api/client/apiClient"
-import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 export function AddDriverConfirm(props: {
@@ -31,6 +31,8 @@ export function AddDriverConfirm(props: {
   ownerId: string
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Confirm")
+  const router = useRouter()
+
   const formData = useForm<AddDriverFormDataType>()
   //Submit actions
   const onSubmit = async () => {
@@ -88,7 +90,7 @@ export function AddDriverConfirm(props: {
     } else {
       //If failed, Take back to driver onboarding page and show error
       toast.error(t("APIError"))
-      redirect("/onboarding/add-driver", RedirectType.replace)
+      router.replace("/onboarding/add-driver")
     }
   }
   return (

@@ -1,25 +1,25 @@
 //Confirm Email page
 
-import { redirect, RedirectType } from "next/navigation";
-import { UserRegex } from "@/lib/regex";
-import ConfirmEmailPageComponent from "./confirmEmail";
-import { Metadata } from "next";
+import { redirect, RedirectType } from "next/navigation"
+import { UserRegex } from "@/lib/regex"
+import ConfirmEmailPageComponent from "./confirmEmail"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Confirm Email Page | RyoGo",
   description: "Comfirm Email page for RyoGo Travel App",
-};
+}
 
 export default async function ConfirmEmailPage({
   params,
 }: {
-  params: Promise<{ userId: string }>;
+  params: Promise<{ userId: string }>
 }) {
-  const userId = (await params).userId;
+  const userId = (await params).userId
 
   if (!UserRegex.safeParse(userId).success) {
-    redirect("/auth/login", RedirectType.replace);
+    redirect("/auth/login", RedirectType.replace)
   }
 
-  return <ConfirmEmailPageComponent userId={userId} />;
+  return <ConfirmEmailPageComponent userId={userId} />
 }

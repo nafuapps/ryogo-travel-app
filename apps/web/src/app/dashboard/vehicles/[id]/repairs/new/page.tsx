@@ -1,8 +1,26 @@
-//Add a new vehicle service record page
+//Add a new vehicle repair page
 
-import {useTranslations} from 'next-intl';
- 
-export default function NewVehicleServicePage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import { mainClassName } from "@/components/page/pageCommons"
+import { getCurrentUser } from "@/lib/auth"
+import NewVehicleRepairPageComponent from "./newVehicleRepair"
+
+export default async function NewVehicleRepairPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const user = await getCurrentUser()
+
+  return (
+    <div className={mainClassName}>
+      <DashboardHeader pathName={"/dashboard/vehicle/[id]/repairs/new"} />
+      <NewVehicleRepairPageComponent
+        userId={user!.userId}
+        agencyId={user!.agencyId}
+        vehicleId={id}
+      />
+    </div>
+  )
 }

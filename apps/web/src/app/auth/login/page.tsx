@@ -1,11 +1,11 @@
 //Login  page
-import { Metadata } from "next";
-import LoginPageComponent from "./login";
+import { Metadata } from "next"
+import LoginPageComponent from "./login"
 
 export const metadata: Metadata = {
   title: "Login Page | RyoGo",
   description: "Login page for RyoGo Travel App",
-};
+}
 export default function LoginPage() {
-  return <LoginPageComponent />;
+  return <LoginPageComponent />
 }

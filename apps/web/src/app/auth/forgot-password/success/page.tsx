@@ -1,18 +1,18 @@
 //Confirm Email page
 
-import { Button } from "@/components/ui/button";
-import { H2, H5 } from "@/components/typography";
-import Link from "next/link";
-import { getTranslations } from "next-intl/server";
-import { Metadata } from "next";
+import { Button } from "@/components/ui/button"
+import { H2, H5 } from "@/components/typography"
+import Link from "next/link"
+import { getTranslations } from "next-intl/server"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Password Reset Success Page | RyoGo",
   description: "Password Reset Success page for RyoGo Travel App",
-};
+}
 
 export default async function ForgotPasswordSuccessPage() {
-  const t = await getTranslations("Auth.ForgotPasswordPage.Step3");
+  const t = await getTranslations("Auth.ForgotPasswordPage.Step3")
 
   return (
     <div
@@ -27,5 +27,5 @@ export default async function ForgotPasswordSuccessPage() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

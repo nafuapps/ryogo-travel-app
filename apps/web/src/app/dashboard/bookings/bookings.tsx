@@ -4,8 +4,6 @@ import CompletedBookingsComponent from "./(all)/completedBookingsComponent"
 import UpcomingBookingsComponent from "./(all)/upcomingBookingsComponent"
 import LeadBookingsComponent from "./(all)/leadBookingsComponent"
 import BookingScheduleComponent from "./(all)/bookingScheduleComponent"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
 
 /*
  * Ongoing Bookings
@@ -17,14 +15,11 @@ import { redirect, RedirectType } from "next/navigation"
   TODO:Bookings History (last 14 days)
  */
 
-export default async function BookingsPageComponent() {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/dashboard", RedirectType.replace)
-  }
-  const agencyId = user.agencyId
-
+export default async function BookingsPageComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   return (
     <div id="BookingsPage" className={pageClassName}>
       <OngoingBookingsComponent agencyId={agencyId} />

@@ -21,7 +21,7 @@ import {
   apiClientWithoutHeaders,
 } from "@ryogo-travel-app/api/client/apiClient"
 import { toast } from "sonner"
-import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 export function AddVehicleConfirm(props: {
   onNext: () => void
@@ -29,6 +29,8 @@ export function AddVehicleConfirm(props: {
   finalData: AddVehicleFormDataType
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Confirm")
+  const router = useRouter()
+
   const formData = useForm<AddVehicleFormDataType>()
 
   //Submit actions
@@ -80,7 +82,7 @@ export function AddVehicleConfirm(props: {
     } else {
       //If failed, Take back to vehicle onboarding page and show error
       toast.error(t("APIError"))
-      redirect("/onboarding/add-vehicle", RedirectType.replace)
+      router.replace("/onboarding/add-vehicle")
     }
   }
 

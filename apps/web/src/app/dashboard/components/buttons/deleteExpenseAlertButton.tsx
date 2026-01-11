@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { deleteExpenseAction } from "../actions/deleteExpenseAction"
 import { toast } from "sonner"
-import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
@@ -19,16 +19,15 @@ export default function DeleteExpenseAlertButton(
   const [isCancelPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteExpense")
 
+  const router = useRouter()
+
   //Delete expense
   async function deleteExpense() {
     startCancelTransition(async () => {
       //If delete is successful, show delete success message and redirect to expenses
       if (await deleteExpenseAction(props.expenseId)) {
         toast.success(t("Success"))
-        redirect(
-          `/dashboard/bookings/${props.bookingId}/expenses`,
-          RedirectType.replace
-        )
+        router.replace(`/dashboard/bookings/${props.bookingId}/expenses`)
       } else {
         //If delete is not successful, show error message
         toast.error(t("Error"))

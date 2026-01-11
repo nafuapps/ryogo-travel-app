@@ -1,20 +1,6 @@
-import { SelectDriverType, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-
 // /api/auth/login (POST)
 export type LoginAPIResponseType = {
   id: string
-}[]
-
-// /api/auth/login/accounts/[phone] (GET)
-export type LoginAccountsAPIResponseType = {
-  id: string
-  name: string
-  agencyId: string
-  phone: string
-  userRole: UserRolesEnum
-  agency: {
-    businessName: string
-  }
 }[]
 
 // /api/auth/login/password (POST)
@@ -34,18 +20,6 @@ export type ResetPasswordAPIResponseType = {
 // /api/auth/signup (POST)
 export type SignupAPIResponseType = {
   id: string
-}[]
-
-// /api/auth/signup/existing/[phone] (GET)
-export type SignupExistingAPIResponseType = {
-  id: string
-  name: string
-  agencyId: string
-  phone: string
-  userRole: UserRolesEnum
-  agency: {
-    businessName: string
-  }
 }[]
 
 // /api/onboarding/create-account/existing-owner?phone=[phone]&email=[email] (GET)

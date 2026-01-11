@@ -1,15 +1,10 @@
 //Existing Account page
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { CaptionGrey, H2, P } from "@/components/typography";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
-import { AccountCard } from "@/app/auth/components/accountCard";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { SignupExistingAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
-import { redirect, RedirectType } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button"
+import { CaptionGrey, H2, P } from "@/components/typography"
+import Link from "next/link"
+import { AccountCard } from "@/app/auth/components/accountCard"
+import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
+import { getTranslations } from "next-intl/server"
 
 /*
   1. Get user details from DB using phone number
@@ -17,43 +12,17 @@ import { useEffect, useState } from "react";
   3. If no owner account found, show account details and nudge user to login (but also an extra option to create account)
   4. If some owner account found, show a list and nudge to login (with callout to contact support for creating account)
 */
-export async function fetchAccounts(phone: string) {
-  const fetchedAccounts = await apiClient<SignupExistingAPIResponseType>(
-    `/api/auth/signup/existing/${phone}`,
-    {
-      method: "GET",
-    }
-  );
-  //If no account found, take directly to onboarding
-  if (fetchedAccounts.length < 1) {
-    redirect("/onboarding", RedirectType.replace);
-  } else {
-    return fetchedAccounts;
-  }
-}
 
-type SignupExistingPageComponentProps = {
-  phone: string;
-};
-export default function SignupExistingPageComponent(
-  props: SignupExistingPageComponentProps
-) {
-  const phone = props.phone;
-  const [accounts, setAccounts] = useState<SignupExistingAPIResponseType>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedAccounts = await fetchAccounts(phone);
-      setAccounts(fetchedAccounts);
-    };
-    fetchData();
-  }, [phone]);
-
+export default async function SignupExistingPageComponent({
+  accounts,
+}: {
+  accounts: FindUserAccountsByPhoneType
+}) {
   const hasOwnerAccount = accounts.some(
     (p) => p.userRole.toString().toLowerCase() === "owner"
-  );
+  )
 
-  const t = useTranslations("Auth.SignupPage.Step2");
+  const t = await getTranslations("Auth.SignupPage.Step2")
 
   return (
     <div
@@ -65,14 +34,7 @@ export default function SignupExistingPageComponent(
         <P>{hasOwnerAccount ? t("InfoYes") : t("InfoNo")}</P>
         {accounts.length > 0 &&
           accounts.map((item, index) => (
-            <AccountCard
-              key={index}
-              agencyName={item.agency.businessName}
-              name={item.name}
-              phone={item.phone}
-              userId={item.id}
-              userRole={item.userRole}
-            />
+            <AccountCard key={index} account={item} />
           ))}
       </div>
       <div id="SignupExistingActions" className="flex flex-col gap-4 w-full">
@@ -96,5 +58,5 @@ export default function SignupExistingPageComponent(
         )}
       </div>
     </div>
-  );
+  )
 }

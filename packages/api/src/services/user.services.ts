@@ -433,5 +433,10 @@ export const userServices = {
   },
 }
 
-export type FindOwnerAndAgentsByAgencyType =
-  (typeof userServices)["findOwnerAndAgentsByAgency"]
+export type FindOwnerAndAgentsByAgencyType = Awaited<
+  ReturnType<typeof userServices.findOwnerAndAgentsByAgency>
+>
+
+export type FindUserAccountsByPhoneType = Awaited<
+  ReturnType<typeof userServices.findUserAccountsByPhone>
+>

@@ -1,36 +1,38 @@
-import { H3Grey } from "@/components/typography";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
-import ConfirmValues from "../components/confirmValues";
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { H3Grey } from "@/components/typography"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import ConfirmValues from "../components/confirmValues"
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "../components/onboardingSteps";
-import { Form } from "@/components/ui/form";
+} from "../components/onboardingSteps"
+import { Form } from "@/components/ui/form"
 import {
   LoginPasswordAPIResponseType,
   OnboardingCreateAccountAPIRequestType,
   OnboardingCreateAccountAPIResponseType,
-} from "@ryogo-travel-app/api/types/user.types";
+} from "@ryogo-travel-app/api/types/user.types"
 import {
   apiClient,
   apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient";
-import { redirect, RedirectType } from "next/navigation";
-import { toast } from "sonner";
+} from "@ryogo-travel-app/api/client/apiClient"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export function CreateAccountConfirm(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: CreateAccountFormDataType;
+  onNext: () => void
+  onPrev: () => void
+  finalData: CreateAccountFormDataType
 }) {
-  const t = useTranslations("Onboarding.CreateAccountPage.Confirm");
-  const formData = useForm<CreateAccountFormDataType>();
+  const t = useTranslations("Onboarding.CreateAccountPage.Confirm")
+  const router = useRouter()
+
+  const formData = useForm<CreateAccountFormDataType>()
   //Submit actions
   const onSubmit = async () => {
     // Create Agency and Owner Account
@@ -50,35 +52,35 @@ export function CreateAccountConfirm(props: {
         name: props.finalData.ownerName,
         password: props.finalData.password,
       },
-    };
+    }
     const createdOwnerAccount =
       await apiClient<OnboardingCreateAccountAPIResponseType>(
         "/api/onboarding/create-account",
         { method: "POST", body: JSON.stringify(newAccountData) }
-      );
+      )
     if (createdOwnerAccount.agencyId && createdOwnerAccount.userId) {
       //If success, Try to upload business logo and owner photo
       if (props.finalData.agencyLogo) {
-        const formData = new FormData();
-        formData.append("file", props.finalData.agencyLogo[0]!);
+        const formData = new FormData()
+        formData.append("file", props.finalData.agencyLogo[0]!)
         await apiClientWithoutHeaders(
           `/api/onboarding/create-account/upload-logo/${createdOwnerAccount.agencyId}`,
           {
             method: "POST",
             body: formData,
           }
-        );
+        )
       }
       if (props.finalData.ownerPhoto) {
-        const formData = new FormData();
-        formData.append("file", props.finalData.ownerPhoto[0]!);
+        const formData = new FormData()
+        formData.append("file", props.finalData.ownerPhoto[0]!)
         await apiClientWithoutHeaders(
           `/api/onboarding/upload-user-photo/${createdOwnerAccount.userId}`,
           {
             method: "POST",
             body: formData,
           }
-        );
+        )
       }
 
       //Login the new user
@@ -91,15 +93,15 @@ export function CreateAccountConfirm(props: {
             password: props.finalData.password,
           }),
         }
-      );
+      )
       //Move to next step
-      props.onNext();
+      props.onNext()
     } else {
       //If failed, Take to onboarding page and show error
-      toast.error(t("APIError"));
-      redirect("/onboarding", RedirectType.replace);
+      toast.error(t("APIError"))
+      router.replace("/onboarding")
     }
-  };
+  }
   return (
     <Form {...formData}>
       <OnboardingStepForm
@@ -163,5 +165,5 @@ export function CreateAccountConfirm(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

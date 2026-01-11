@@ -1,4 +1,5 @@
 import { vehicleRepository } from "../repositories/vehicle.repo"
+import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   NewVehicleRequestType,
@@ -42,6 +43,28 @@ export const vehicleServices = {
       )
 
     return vehiclesScheduleData
+  },
+
+  //Get vehicle details
+  async findVehicleDetailsById(id: string) {
+    const vehicle = await vehicleRepository.readVehicleById(id)
+    if (!vehicle) {
+      throw new Error("Vehicle not found")
+    }
+    return vehicle
+  },
+
+  //Get all vehicle repairs by vehicleId
+  async findAllVehicleRepairsByVehicleId(id: string) {
+    const repairs = await vehicleRepairRepository.readVehicleRepairsByVehicleId(
+      id
+    )
+    return repairs
+  },
+
+  //Get vehicle repair by id
+  async findVehicleRepairById(id: string) {
+    return await vehicleRepairRepository.readRepairById(id)
   },
 
   //Add vehicle to agency
@@ -171,4 +194,16 @@ export type FindVehiclesOnTripType = Awaited<
 
 export type FindVehiclesScheduleNextDaysType = Awaited<
   ReturnType<typeof vehicleServices.findVehiclesScheduleNextDays>
+>
+
+export type FindVehicleDetailsByIdType = Awaited<
+  ReturnType<typeof vehicleServices.findVehicleDetailsById>
+>
+
+export type FindAllVehicleRepairsByVehicleIdType = Awaited<
+  ReturnType<typeof vehicleServices.findAllVehicleRepairsByVehicleId>
+>
+
+export type FindVehicleRepairByIdType = Awaited<
+  ReturnType<typeof vehicleServices.findVehicleRepairById>
 >

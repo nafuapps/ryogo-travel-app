@@ -19,7 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import Link from "next/link"
 import { toast } from "sonner"
-import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/navigation"
 import moment from "moment"
 import { format } from "date-fns"
 import CancelBookingAlertButton from "@/app/dashboard/components/buttons/cancelBookingAlertButton"
@@ -40,6 +40,7 @@ export default function ConfirmBookingPageComponent({
   isAssignedUser: boolean
 }) {
   const t = useTranslations("Dashboard.ConfirmBooking")
+  const router = useRouter()
 
   const [isConfirmPending, startConfirmTransition] = useTransition()
 
@@ -80,7 +81,7 @@ export default function ConfirmBookingPageComponent({
         )
       ) {
         toast.success(t("ConfirmSuccess"))
-        redirect(`/dashboard/bookings/${booking.id}`, RedirectType.replace)
+        router.replace(`/dashboard/bookings/${booking.id}`)
       } else {
         toast.error(t("ConfirmError"))
       }

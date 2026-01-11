@@ -10,7 +10,9 @@ import { eq, and, notInArray, inArray, or, gte, lte } from "drizzle-orm"
 export const vehicleRepository = {
   //Get vehicle by id
   async readVehicleById(id: string) {
-    return await db.select().from(vehicles).where(eq(vehicles.id, id))
+    return await db.query.vehicles.findFirst({
+      where: eq(vehicles.id, id),
+    })
   },
 
   //Get all vehicles of an agency

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { deleteTransactionAction } from "../actions/deleteTransactionAction"
 import { toast } from "sonner"
-import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
@@ -18,6 +18,7 @@ export default function DeleteTransactionAlertButton(
 ) {
   const [isCancelPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteTransaction")
+  const router = useRouter()
 
   //Delete transaction
   async function deleteTransaction() {
@@ -25,10 +26,7 @@ export default function DeleteTransactionAlertButton(
       //If delete is successful, show delete success message and redirect to transactions
       if (await deleteTransactionAction(props.transactionId)) {
         toast.success(t("Success"))
-        redirect(
-          `/dashboard/bookings/${props.bookingId}/transactions`,
-          RedirectType.replace
-        )
+        router.replace(`/dashboard/bookings/${props.bookingId}/transactions`)
       } else {
         //If delete is not successful, show error message
         toast.error(t("Error"))

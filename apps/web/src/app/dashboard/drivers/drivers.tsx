@@ -3,8 +3,6 @@ import OnTripDriversComponent from "./(all)/onTripDriversComponent"
 import AllDriversListComponent from "./(all)/allDriversListComponent"
 import DriversHistoryComponent from "./(all)/driversHistoryComponent"
 import DriversScheduleComponent from "./(all)/driversScheduleComponent"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
 
 /**
  *  Show in progress drivers
@@ -14,14 +12,11 @@ import { redirect, RedirectType } from "next/navigation"
  *  TODO: Driver actions
  */
 
-export default async function DriversPageComponent() {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/dashboard", RedirectType.replace)
-  }
-  const agencyId = user.agencyId
-
+export default async function DriversPageComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   return (
     <div id="BookingsPage" className={pageClassName}>
       <OnTripDriversComponent agencyId={agencyId} />

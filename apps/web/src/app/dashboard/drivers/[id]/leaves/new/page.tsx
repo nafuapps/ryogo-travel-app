@@ -1,8 +1,25 @@
-//New Driver Leave Page
+import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import { mainClassName } from "@/components/page/pageCommons"
+import { getCurrentUser } from "@/lib/auth"
+import NewDriverLeavePageComponent from "./newDriverLeave"
 
-import {useTranslations} from 'next-intl';
- 
-export default function NewDriverLeavePage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+//New Driver Leave Page
+export default async function NewDriverLeavePage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const user = await getCurrentUser()
+
+  return (
+    <div className={mainClassName}>
+      <DashboardHeader pathName={"/dashboard/drivers/[id]/leaves/new"} />
+      <NewDriverLeavePageComponent
+        userId={user!.userId}
+        agencyId={user!.agencyId}
+        driverId={id}
+      />
+    </div>
+  )
 }

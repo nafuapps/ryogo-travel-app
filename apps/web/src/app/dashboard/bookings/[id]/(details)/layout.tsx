@@ -6,7 +6,7 @@ import { BookingRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export default async function DashboardLayout({
+export default async function BookingDetailsLayout({
   children,
   params,
 }: {

@@ -28,7 +28,7 @@ import {
 import { IconTextTag } from "../../new/newBookingTileTag"
 
 type AssignUserTileProps = {
-  userData: Awaited<ReturnType<FindOwnerAndAgentsByAgencyType>>[number]
+  userData: FindOwnerAndAgentsByAgencyType[number]
   selectedUserId: string | null
   setSelectedUserId: (userId: string | null) => void
   booking: NonNullable<FindBookingDetailsByIdType>

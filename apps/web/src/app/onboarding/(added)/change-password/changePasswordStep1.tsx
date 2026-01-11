@@ -1,23 +1,25 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { OnboardingInput } from "@/app/onboarding/components/onboardingFields";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import z from "zod"
+import { OnboardingInput } from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { OnboardingChangePasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
-import { redirect, RedirectType } from "next/navigation";
-import { toast } from "sonner";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
+import { OnboardingChangePasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export function ChangePasswordStep1(props: { userId: string; role: string }) {
-  const t = useTranslations("Onboarding.ChangePasswordPage.Step1");
+  const t = useTranslations("Onboarding.ChangePasswordPage.Step1")
+  const router = useRouter()
+
   const step1Schema = z
     .object({
       oldPassword: z
@@ -36,8 +38,8 @@ export function ChangePasswordStep1(props: { userId: string; role: string }) {
     .refine((data) => data.newPassword === data.confirmPassword, {
       message: t("Field3.Error3"),
       path: ["confirmPassword"], // path of error
-    });
-  type Step1Type = z.infer<typeof step1Schema>;
+    })
+  type Step1Type = z.infer<typeof step1Schema>
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -45,7 +47,7 @@ export function ChangePasswordStep1(props: { userId: string; role: string }) {
       newPassword: "",
       confirmPassword: "",
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
@@ -59,24 +61,24 @@ export function ChangePasswordStep1(props: { userId: string; role: string }) {
           newPassword: data.newPassword,
         }),
       }
-    );
+    )
     if (result.id) {
       //If success, redirect
-      toast.success(t("Success"));
+      toast.success(t("Success"))
       if (props.role === "driver") {
-        redirect("/rider", RedirectType.replace);
+        router.replace("/rider")
       } else {
-        redirect("/dashboard", RedirectType.replace);
+        router.replace("/dashboard")
       }
     } else {
       //If failed, show error
       formData.setError("oldPassword", {
         type: "manual",
         message: t("APIError"),
-      });
+      })
       // formData.reset();
     }
-  };
+  }
 
   return (
     <Form {...formData}>
@@ -117,5 +119,5 @@ export function ChangePasswordStep1(props: { userId: string; role: string }) {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

@@ -1,5 +1,6 @@
 import { InsertDriverType, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { driverRepository } from "../repositories/driver.repo"
+import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { CreateDriverType } from "../types/driver.types"
 import {
   NewDriverRequestType,
@@ -37,6 +38,26 @@ export const driverServices = {
     )
 
     return driversScheduleData
+  },
+
+  //Get driver details
+  async findDriverDetailsById(id: string) {
+    const driver = await driverRepository.readDriverById(id)
+    if (!driver) {
+      throw new Error("Driver not found")
+    }
+    return driver
+  },
+
+  //Get all driver leaves by driverId
+  async findAllDriverLeavesByDriverId(id: string) {
+    const leaves = await driverLeaveRepository.readDriverLeavesByDriverId(id)
+    return leaves
+  },
+
+  //Get driver leave by id
+  async findDriverLeaveById(id: string) {
+    return await driverLeaveRepository.readLeaveById(id)
   },
 
   //Create driver
@@ -108,4 +129,16 @@ export type FindDriversOnTripType = Awaited<
 
 export type FindDriversScheduleNextDaysType = Awaited<
   ReturnType<typeof driverServices.findDriversScheduleNextDays>
+>
+
+export type FindDriverDetailsByIdType = Awaited<
+  ReturnType<typeof driverServices.findDriverDetailsById>
+>
+
+export type FindAllDriverLeavesByDriverIdType = Awaited<
+  ReturnType<typeof driverServices.findAllDriverLeavesByDriverId>
+>
+
+export type FindDriverLeaveByIdType = Awaited<
+  ReturnType<typeof driverServices.findDriverLeaveById>
 >

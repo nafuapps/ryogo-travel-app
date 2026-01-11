@@ -19,7 +19,7 @@ export default function AssignUserPageComponent({
   booking,
 }: {
   bookingId: string
-  users: Awaited<ReturnType<FindOwnerAndAgentsByAgencyType>>
+  users: FindOwnerAndAgentsByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.AssignUser")

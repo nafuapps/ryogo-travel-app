@@ -51,7 +51,7 @@
     "@ryogo-travel-app/i18n": "1.0.0",
     "@ryogo-travel-app/ts-tooling": "1.0.0",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "25.0.6",
+    "@types/node": "25.0.7",
     "@types/react": "19.2.8",
     "@types/react-dom": "19.2.3",
     "@types/web-push": "^3.6.4",

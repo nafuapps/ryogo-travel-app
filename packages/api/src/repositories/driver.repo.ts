@@ -16,6 +16,7 @@ export const driverRepository = {
         user: {
           columns: {
             photoUrl: true,
+            email: true,
           },
         },
       },

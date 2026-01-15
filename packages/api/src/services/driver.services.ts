@@ -7,6 +7,7 @@ import {
   NewDriverResponseType,
 } from "../types/driver.types"
 import { userServices } from "./user.services"
+import { bookingRepository } from "../repositories/booking.repo"
 
 export const driverServices = {
   //Get all drivers in an agency
@@ -47,6 +48,62 @@ export const driverServices = {
       throw new Error("Driver not found")
     }
     return driver
+  },
+
+  //Get driver's assigned bookings
+  async findDriverAssignedBookingsById(id: string, days: number = 1) {
+    //Day today
+    const startDate = new Date()
+    //Day N days later
+    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const bookings = await bookingRepository.readAssignedBookingsByDriverId(
+      id,
+      startDate,
+      endDate
+    )
+
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        startDate: booking.startDate,
+        startTime: booking.startTime,
+        endDate: booking.endDate,
+      }
+    })
+  },
+
+  //Get driver's completed bookings
+  async findDriverCompletedBookingsById(id: string, days: number = 1) {
+    //Day N days ago
+    const startDate = new Date(
+      new Date().getTime() - days * 24 * 60 * 60 * 1000
+    )
+    //Day today
+    const endDate = new Date()
+    const bookings = await bookingRepository.readCompletedBookingsByDriverId(
+      id,
+      startDate,
+      endDate
+    )
+
+    return bookings.map((booking) => {
+      return {
+        status: booking.status.toString(),
+        updatedAt: booking.updatedAt,
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        createdAt: booking.tripLogs[0]?.createdAt,
+      }
+    })
   },
 
   //Get all driver leaves by driverId
@@ -141,4 +198,11 @@ export type FindAllDriverLeavesByDriverIdType = Awaited<
 
 export type FindDriverLeaveByIdType = Awaited<
   ReturnType<typeof driverServices.findDriverLeaveById>
+>
+
+export type FindDriverAssignedBookingsByIdType = Awaited<
+  ReturnType<typeof driverServices.findDriverAssignedBookingsById>
+>
+export type FindDriverCompletedBookingsByIdType = Awaited<
+  ReturnType<typeof driverServices.findDriverCompletedBookingsById>
 >

@@ -31,6 +31,10 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Button } from "@/components/ui/button"
+import {
+  getDriverStatusColor,
+  GetVehicleIcon,
+} from "../../components/drivers/driverCommon"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -92,7 +96,13 @@ async function AllDriversItemComponent({
         <div className={gridItemClassName}>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
-              return getVehicleIcon(v)
+              const IconComponent = GetVehicleIcon({ vehicleType: v })
+              return (
+                <IconComponent
+                  key={v}
+                  className="text-slate-400 size-5 lg:size-6"
+                />
+              )
             })}
           </div>
           <PBold>
@@ -109,34 +119,4 @@ async function AllDriversItemComponent({
       </div>
     </Link>
   )
-}
-
-const getDriverStatusColor = (status: DriverStatusEnum) => {
-  if (status == DriverStatusEnum.AVAILABLE) {
-    return "bg-green-200"
-  }
-  if (status == DriverStatusEnum.LEAVE) {
-    return "bg-yellow-200"
-  }
-  if (status == DriverStatusEnum.INACTIVE) {
-    return "bg-red-200"
-  }
-  return "bg-slate-200"
-}
-
-const getVehicleIcon = (vehicleType: VehicleTypesEnum) => {
-  const className = "size-5 lg:size-6 text-slate-400"
-  if (vehicleType == VehicleTypesEnum.TRUCK) {
-    return <LucideTruck key={vehicleType} className={className} />
-  }
-  if (vehicleType == VehicleTypesEnum.BUS) {
-    return <LucideBus key={vehicleType} className={className} />
-  }
-  if (vehicleType == VehicleTypesEnum.CAR) {
-    return <LucideCar key={vehicleType} className={className} />
-  }
-  if (vehicleType == VehicleTypesEnum.BIKE) {
-    return <LucideMotorbike key={vehicleType} className={className} />
-  }
-  return <LucideTractor key={vehicleType} className={className} />
 }

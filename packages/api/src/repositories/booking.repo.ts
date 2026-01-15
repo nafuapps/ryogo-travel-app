@@ -6,7 +6,7 @@ import {
   tripLogs,
   TripLogTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, or, gte, lte, inArray } from "drizzle-orm"
+import { eq, and, or, gte, lte } from "drizzle-orm"
 
 export const bookingRepository = {
   async readBookingsByStatusCreatedDateRange(
@@ -107,10 +107,119 @@ export const bookingRepository = {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.agencyId, agencyId),
-        inArray(bookings.status, [
-          BookingStatusEnum.COMPLETED,
-          BookingStatusEnum.RECONCILED,
-        ]),
+        eq(bookings.status, BookingStatusEnum.COMPLETED),
+        gte(bookings.updatedAt, queryStartDate),
+        lte(bookings.updatedAt, queryEndDate)
+      ),
+      columns: {
+        status: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+        tripLogs: {
+          where: eq(tripLogs.type, TripLogTypesEnum.END_TRIP),
+          columns: {
+            createdAt: true,
+          },
+          limit: 1,
+        },
+      },
+    })
+  },
+
+  //Read Assigned bookings by driver id
+  async readCompletedBookingsByDriverId(
+    driverId: string,
+    queryStartDate: Date,
+    queryEndDate: Date
+  ) {
+    return await db.query.bookings.findMany({
+      where: and(
+        eq(bookings.assignedDriverId, driverId),
+        eq(bookings.status, BookingStatusEnum.COMPLETED),
+        gte(bookings.updatedAt, queryStartDate),
+        lte(bookings.updatedAt, queryEndDate)
+      ),
+      columns: {
+        status: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+        tripLogs: {
+          where: eq(tripLogs.type, TripLogTypesEnum.END_TRIP),
+          columns: {
+            createdAt: true,
+          },
+          limit: 1,
+        },
+      },
+    })
+  },
+
+  //Read Assigned bookings by vehicle id
+  async readCompletedBookingsByVehicleId(
+    vehicleId: string,
+    queryStartDate: Date,
+    queryEndDate: Date
+  ) {
+    return await db.query.bookings.findMany({
+      where: and(
+        eq(bookings.assignedVehicleId, vehicleId),
+        eq(bookings.status, BookingStatusEnum.COMPLETED),
         gte(bookings.updatedAt, queryStartDate),
         lte(bookings.updatedAt, queryEndDate)
       ),
@@ -165,6 +274,108 @@ export const bookingRepository = {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.agencyId, agencyId),
+        eq(bookings.status, BookingStatusEnum.CONFIRMED),
+        lte(bookings.startDate, queryEndDate),
+        gte(bookings.endDate, queryStartDate)
+      ),
+      columns: {
+        startDate: true,
+        startTime: true,
+        endDate: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+      },
+    })
+  },
+
+  //Read Assigned bookings by vehicle id
+  async readAssignedBookingsByVehicleId(
+    vehicleId: string,
+    queryStartDate: Date,
+    queryEndDate: Date
+  ) {
+    return await db.query.bookings.findMany({
+      where: and(
+        eq(bookings.assignedVehicleId, vehicleId),
+        eq(bookings.status, BookingStatusEnum.CONFIRMED),
+        lte(bookings.startDate, queryEndDate),
+        gte(bookings.endDate, queryStartDate)
+      ),
+      columns: {
+        startDate: true,
+        startTime: true,
+        endDate: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+      },
+    })
+  },
+
+  //Read Assigned bookings by driver id
+  async readAssignedBookingsByDriverId(
+    driverId: string,
+    queryStartDate: Date,
+    queryEndDate: Date
+  ) {
+    return await db.query.bookings.findMany({
+      where: and(
+        eq(bookings.assignedDriverId, driverId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
         lte(bookings.startDate, queryEndDate),
         gte(bookings.endDate, queryStartDate)

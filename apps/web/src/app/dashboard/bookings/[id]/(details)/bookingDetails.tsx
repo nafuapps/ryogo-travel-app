@@ -265,6 +265,7 @@ export default async function BookingDetailsPageComponent({
             {
               //Only owner can reconcile a completed booking
               bookingDetails.status == BookingStatusEnum.COMPLETED &&
+                !bookingDetails.isReconciled &&
                 isOwner && (
                   <Link href={`/dashboard/bookings/${bookingId}/reconcile`}>
                     <Button variant={"default"} className="w-full">
@@ -274,11 +275,8 @@ export default async function BookingDetailsPageComponent({
                 )
             }
             {
-              //Invoice can be sent for a completed or reconciled booking only
-              [
-                BookingStatusEnum.COMPLETED,
-                BookingStatusEnum.RECONCILED,
-              ].includes(bookingDetails.status) && (
+              //Invoice can be sent for a completed booking only
+              bookingDetails.status == BookingStatusEnum.COMPLETED && (
                 <SendInvoiceAlertButton bookingId={bookingId} />
               )
             }

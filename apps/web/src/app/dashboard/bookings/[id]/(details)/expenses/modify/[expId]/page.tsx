@@ -7,6 +7,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { redirect, RedirectType } from "next/navigation"
 import ModifyExpensePageComponent from "./modifyExpense"
+import { ExpenseRegex } from "@/lib/regex"
 
 export default async function ModifyExpensePage({
   params,
@@ -14,6 +15,11 @@ export default async function ModifyExpensePage({
   params: Promise<{ id: string; expId: string }>
 }) {
   const { id, expId } = await params
+
+  //Invalid expense id regex check
+  if (!ExpenseRegex.safeParse(expId).success) {
+    redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
+  }
 
   const user = await getCurrentUser()
 

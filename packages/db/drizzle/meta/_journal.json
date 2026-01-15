@@ -127,6 +127,13 @@
       "when": 1767770876970,
       "tag": "0017_violet_prowler",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1768188757892,
+      "tag": "0018_sweet_catseye",
+      "breakpoints": true
     }
   ]
 }

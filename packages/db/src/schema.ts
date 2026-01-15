@@ -315,6 +315,7 @@ export const vehicles = pgTable(
     pucPhotoUrl: text("puc_photo_url"),
     rcPhotoUrl: text("rc_photo_url"),
     vehiclePhotoUrl: text("vehicle_photo_url"),
+    customerRatings: integer("customer_ratings").array(),
     defaultRatePerKm: integer("default_rate_per_km").notNull().default(18), // in currency units
     defaultAcChargePerDay: integer("extra_ac_charge_per_day")
       .notNull()
@@ -330,6 +331,10 @@ export const vehicles = pgTable(
     check(
       "odometer >= 0 and < 1000000",
       sql`${t.odometerReading} >= 0 AND ${t.odometerReading} < 1000000`
+    ),
+    check(
+      "customer_ratings_between_1_and_5",
+      sql`${t.customerRatings} IS NULL OR ${t.customerRatings} <@ ARRAY[1,2,3,4,5]::int[]`
     ),
     check(
       "rate per km > 0 and < 100",
@@ -397,6 +402,7 @@ export const drivers = pgTable(
       .array()
       .notNull()
       .default([VehicleTypesEnum.CAR]),
+    customerRatings: integer("customer_ratings").array(),
     defaultAllowancePerDay: integer("default_allowance_per_day")
       .notNull()
       .default(500), // in currency units
@@ -404,6 +410,10 @@ export const drivers = pgTable(
   },
   (t) => [
     unique().on(t.phone, t.agencyId), //same driver can be added to different agencies
+    check(
+      "customer_ratings_between_1_and_5",
+      sql`${t.customerRatings} IS NULL OR ${t.customerRatings} <@ ARRAY[1,2,3,4,5]::int[]`
+    ),
     check(
       "allowance >=0 and < 10000",
       sql`${t.defaultAllowancePerDay} >=0 AND ${t.defaultAllowancePerDay} < 10000`
@@ -515,6 +525,7 @@ export const customers = pgTable(
     locationId: text("location_id")
       .references(() => locations.id, { onDelete: "no action" })
       .notNull(),
+    driverRatings: integer("driver_ratings").array(),
     remarks: text("remarks"),
     status: customerStatus().notNull().default(CustomerStatusEnum.ACTIVE),
     ...timestamps,
@@ -526,6 +537,10 @@ export const customers = pgTable(
     index("customers_agency_status_idx").on(t.status, t.agencyId), // to quickly filter customers by status in an agency
     index("customers_agency_location_idx").on(t.locationId, t.agencyId), // to quickly filter customers by location in an agency
     index("customers_phone_idx").on(t.phone), // to quickly filter customers by phone number across agencies (quick search in a new booking)
+    check(
+      "driver_ratings_between_1_and_5",
+      sql`${t.driverRatings} IS NULL OR ${t.driverRatings} <@ ARRAY[1,2,3,4,5]::int[]`
+    ),
   ]
 )
 export const customerRelations = relations(customers, ({ one, many }) => ({
@@ -550,7 +565,6 @@ export enum BookingStatusEnum {
   IN_PROGRESS = "in progress",
   COMPLETED = "completed",
   CANCELLED = "cancelled",
-  RECONCILED = "reconciled",
 }
 export const bookingStatus = pgEnum("booking_status", [
   BookingStatusEnum.LEAD,
@@ -558,7 +572,6 @@ export const bookingStatus = pgEnum("booking_status", [
   BookingStatusEnum.IN_PROGRESS,
   BookingStatusEnum.COMPLETED,
   BookingStatusEnum.CANCELLED,
-  BookingStatusEnum.RECONCILED,
 ])
 export enum BookingTypeEnum {
   OneWay = "one way",
@@ -634,6 +647,7 @@ export const bookings = pgTable(
     totalAmount: integer("total_amount").notNull().default(0), // in currency
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
+    isReconciled: boolean("is_reconciled").notNull().default(false),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
     ...timestamps,
   },

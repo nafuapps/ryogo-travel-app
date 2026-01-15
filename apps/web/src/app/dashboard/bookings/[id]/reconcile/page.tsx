@@ -33,8 +33,8 @@ export default async function ReconcileBookingPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Only confirmed booking can be reconciled
-  if (booking?.status !== BookingStatusEnum.COMPLETED) {
+  //Only completed booking can be reconciled
+  if (booking.status !== BookingStatusEnum.COMPLETED || booking.isReconciled) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 

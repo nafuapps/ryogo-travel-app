@@ -5,6 +5,7 @@ import {
   NewVehicleRequestType,
   OnboardingAddVehicleAPIRequestType,
 } from "../types/vehicle.types"
+import { bookingRepository } from "../repositories/booking.repo"
 
 export const vehicleServices = {
   //Get all vehicles of an agency
@@ -52,6 +53,62 @@ export const vehicleServices = {
       throw new Error("Vehicle not found")
     }
     return vehicle
+  },
+
+  //Get vehicle's assigned bookings
+  async findVehicleAssignedBookingsById(id: string, days: number = 1) {
+    //Day today
+    const startDate = new Date()
+    //Day N days later
+    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const bookings = await bookingRepository.readAssignedBookingsByVehicleId(
+      id,
+      startDate,
+      endDate
+    )
+
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        startDate: booking.startDate,
+        startTime: booking.startTime,
+        endDate: booking.endDate,
+      }
+    })
+  },
+
+  //Get vehicle's completed bookings
+  async findVehicleCompletedBookingsById(id: string, days: number = 1) {
+    //Day N days ago
+    const startDate = new Date(
+      new Date().getTime() - days * 24 * 60 * 60 * 1000
+    )
+    //Day today
+    const endDate = new Date()
+    const bookings = await bookingRepository.readCompletedBookingsByVehicleId(
+      id,
+      startDate,
+      endDate
+    )
+
+    return bookings.map((booking) => {
+      return {
+        status: booking.status.toString(),
+        updatedAt: booking.updatedAt,
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        createdAt: booking.tripLogs[0]?.createdAt,
+      }
+    })
   },
 
   //Get all vehicle repairs by vehicleId
@@ -206,4 +263,11 @@ export type FindAllVehicleRepairsByVehicleIdType = Awaited<
 
 export type FindVehicleRepairByIdType = Awaited<
   ReturnType<typeof vehicleServices.findVehicleRepairById>
+>
+
+export type FindVehicleAssignedBookingsByIdType = Awaited<
+  ReturnType<typeof vehicleServices.findVehicleAssignedBookingsById>
+>
+export type FindVehicleCompletedBookingsByIdType = Awaited<
+  ReturnType<typeof vehicleServices.findVehicleCompletedBookingsById>
 >

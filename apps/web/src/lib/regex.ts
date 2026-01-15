@@ -1,15 +1,20 @@
-import z from "zod";
+import z from "zod"
 
-export const AgencyRegex = z.string().length(8).startsWith("A");
-export const UserRegex = z.string().length(8).startsWith("U");
-export const VehicleRegex = z.string().length(8).startsWith("V");
-export const DriverRegex = z.string().length(8).startsWith("D");
-export const CustomerRegex = z.string().length(8).startsWith("C");
-export const BookingRegex = z.string().length(8).startsWith("B");
+export const AgencyRegex = z.string().length(8).startsWith("A")
+export const UserRegex = z.string().length(8).startsWith("U")
+export const VehicleRegex = z.string().length(8).startsWith("V")
+export const VehicleRepairRegex = z.string().length(9).startsWith("VR")
+export const DriverRegex = z.string().length(8).startsWith("D")
+export const DriverLeaveRegex = z.string().length(9).startsWith("DL")
+export const CustomerRegex = z.string().length(8).startsWith("C")
+export const BookingRegex = z.string().length(8).startsWith("B")
+export const TransactionRegex = z.string().length(8).startsWith("T")
+export const ExpenseRegex = z.string().length(8).startsWith("E")
+export const TripLogRegex = z.string().length(9).startsWith("TL")
 
 export const PhoneRegex = z
   .string()
   .length(10)
-  .regex(/^[0-9]+$/);
-export const EmailRegex = z.email();
-export const PasswordRegex = z.string().trim().min(8);
+  .regex(/^[0-9]+$/)
+export const EmailRegex = z.email()
+export const PasswordRegex = z.string().trim().min(8)

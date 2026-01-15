@@ -706,6 +706,8 @@
         "/dashboard/drivers": "Drivers",
         "/dashboard/drivers/new": "New Driver",
         "/dashboard/drivers/[id]": "Driver Details",
+        "/dashboard/drivers/[id]/assigned": "Driver Assigned Bookings",
+        "/dashboard/drivers/[id]/completed": "Driver Completed Bookings",
         "/dashboard/drivers/[id]/modify": "Modify Driver",
         "/dashboard/drivers/[id]/leaves": "Driver Leaves",
         "/dashboard/drivers/[id]/leaves/new": "New Leave",
@@ -717,6 +719,8 @@
         "/dashboard/vehicles": "Vehicles",
         "/dashboard/vehicles/new": "New Vehicle",
         "/dashboard/vehicles/[id]": "Vehicle Details",
+        "/dashboard/vehicles/[id]/assigned": "Vehicle Assigned Bookings",
+        "/dashboard/vehicles/[id]/completed": "Vehicle Completed Bookings",
         "/dashboard/vehicles/[id]/modify": "Modify Vehicle",
         "/dashboard/vehicles/[id]/repairs": "Vehicle Repairs",
         "/dashboard/vehicles/[id]/repairs/new": "New Repair",
@@ -1553,6 +1557,15 @@
         "APIError": "Vehicle could not be added.. Please try again"
       }
      },
+    "VehicleDetailsHeaderTabs": {
+      "Details": "Details",
+      "Assigned": "Assigned",
+      "Completed": "Completed",
+      "Repairs": "Repairs"
+    },
+    "VehicleDetails":{
+      
+    },
     "Drivers":{
       "All":{
         "Title":"All Drivers",
@@ -1685,6 +1698,20 @@
         "APIError": "Driver could not be added.. please try again",
         "APISuccess": "Driver added successfully!"
       }
+    },
+    "DriverDetailsHeaderTabs": {
+      "Details": "Details",
+      "Assigned": "Assigned",
+      "Completed": "Completed",
+      "Leaves": "Leaves"
+    },
+    "DriverDetails":{
+      "BasicInfo":"Basic info",
+      "Photo":"Driver photo",
+      "NumberRatings":"[{number} ratings]",
+      "LicenseInfo":"License info",
+      "LicensePhoto":"License Photo",
+      "AgencyInfo":"Agency related info"
     },
     "Buttons": {
       "CancelBooking": {

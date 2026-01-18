@@ -11,6 +11,7 @@ export type OnboardingAddVehicleAPIRequestType = {
     odometerReading: number | undefined
     insuranceExpiresOn: Date
     pucExpiresOn: Date
+    rcExpiresOn: Date
     hasAC: boolean
     defaultRatePerKm?: number | undefined
     defaultAcChargePerDay?: number | undefined
@@ -33,6 +34,7 @@ export type NewVehicleRequestType = {
     odometerReading: number | undefined
     insuranceExpiresOn: Date
     pucExpiresOn: Date
+    rcExpiresOn: Date
     hasAC: boolean
     defaultRatePerKm?: number | undefined
     defaultAcChargePerDay?: number | undefined
@@ -41,8 +43,4 @@ export type NewVehicleRequestType = {
     insurancePhotos?: FileList | undefined
     pucPhotos?: FileList | undefined
   }
-}
-
-export type NewVehicleResponseType = {
-  id: string
 }

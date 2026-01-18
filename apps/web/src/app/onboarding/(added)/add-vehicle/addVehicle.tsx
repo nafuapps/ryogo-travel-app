@@ -1,41 +1,41 @@
 //(Onboarding) Add vehicle page
-"use client";
+"use client"
 
-import { useTranslations } from "next-intl";
-import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar";
-import { useMultiStepForm } from "@/hooks/useMultiStepForm";
-import { CaptionGrey, H2 } from "@/components/typography";
-import StepsTracker from "@/app/onboarding/components/stepsTracker";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl"
+import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
+import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import { CaptionGrey, H2 } from "@/components/typography"
+import StepsTracker from "@/app/onboarding/components/stepsTracker"
+import { useEffect, useState } from "react"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "@/app/onboarding/components/onboardingSteps";
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { AddVehicleStep1 } from "./addVehicleStep1";
-import { AddVehicleFinish } from "./addVehicleFinish";
-import { AddVehicleStep2 } from "./addVehicleStep2";
-import { AddVehicleStep3 } from "./addVehicleStep3";
-import { AddVehicleStep4 } from "./addVehicleStep4";
-import { AddVehicleConfirm } from "./addVehicleStep5";
-import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData";
+} from "@/app/onboarding/components/onboardingSteps"
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { AddVehicleStep1 } from "./addVehicleStep1"
+import { AddVehicleFinish } from "./addVehicleFinish"
+import { AddVehicleStep2 } from "./addVehicleStep2"
+import { AddVehicleStep3 } from "./addVehicleStep3"
+import { AddVehicleStep4 } from "./addVehicleStep4"
+import { AddVehicleConfirm } from "./addVehicleStep5"
+import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData"
 
-const TotalSteps = 5;
+const TotalSteps = 5
 
 type AddVehiclePageComponentProps = {
-  agencyId: string;
-  status: string;
-};
+  agencyId: string
+  status: string
+}
 export default function AddVehiclePageComponent(
-  props: AddVehiclePageComponentProps
+  props: AddVehiclePageComponentProps,
 ) {
   useEffect(() => {
     //Redirect if needed
-    fetchAgenyData(props.agencyId, "add-vehicle");
-  }, [props.agencyId]);
+    fetchAgenyData(props.agencyId, "add-vehicle")
+  }, [props.agencyId])
 
-  const t = useTranslations("Onboarding.AddVehiclePage");
+  const t = useTranslations("Onboarding.AddVehiclePage")
   const [finalData, setFinalData] = useState<AddVehicleFormDataType>({
     agencyId: props.agencyId,
     vehicleNumber: "",
@@ -49,20 +49,21 @@ export default function AddVehiclePageComponent(
     vehiclePhotos: undefined,
     insuranceExpiresOn: undefined,
     pucExpiresOn: undefined,
+    rcExpiresOn: undefined,
     insurancePhotos: undefined,
     pucPhotos: undefined,
     hasAC: true,
     defaultRatePerKm: undefined,
     defaultAcChargePerDay: undefined,
-  });
+  })
 
   const nextStepHandler = () => {
-    nextStep();
-  };
+    nextStep()
+  }
 
   const prevStepHandler = () => {
-    prevStep();
-  };
+    prevStep()
+  }
 
   const { currentStepIndex, isLastStep, nextStep, prevStep, steps } =
     useMultiStepForm([
@@ -100,7 +101,7 @@ export default function AddVehiclePageComponent(
         finalData={finalData}
       />,
       <AddVehicleFinish key={5} />,
-    ]);
+    ])
 
   return (
     <>
@@ -123,5 +124,5 @@ export default function AddVehiclePageComponent(
       </OnboardingStepPage>
       <OnboardingSidebar currentProcess={isLastStep ? 2 : 1} />
     </>
-  );
+  )
 }

@@ -15,6 +15,7 @@ import { redirect, RedirectType } from "next/navigation"
      color: varchar("color", { length: 15 }).notNull(),
      insuranceExpiresOn: date("insurance_expires_on", { mode: "date" }),
      pucExpiresOn: date("puc_expires_on", { mode: "date" }),
+     rcExpiresOn: date("rc_expires_on", { mode: "date" }),
      odometerReading: integer("odometer_reading").notNull().default(0), // in kilometers
      capacity: integer("capacity").notNull().default(4), //number of seats
      hasAC: boolean("has_ac").notNull(),

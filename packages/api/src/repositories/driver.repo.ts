@@ -43,7 +43,7 @@ export const driverRepository = {
       },
       where: and(
         eq(drivers.agencyId, agencyId),
-        notInArray(drivers.status, [DriverStatusEnum.SUSPENDED])
+        notInArray(drivers.status, [DriverStatusEnum.SUSPENDED]),
       ),
       with: {
         assignedBookings: {
@@ -81,7 +81,7 @@ export const driverRepository = {
     return await db.query.drivers.findMany({
       where: and(
         eq(drivers.agencyId, agencyId),
-        eq(drivers.status, DriverStatusEnum.ON_TRIP)
+        eq(drivers.status, DriverStatusEnum.ON_TRIP),
       ),
       with: {
         assignedBookings: {
@@ -140,7 +140,7 @@ export const driverRepository = {
   async readDriversScheduleData(
     agencyId: string,
     queryStartDate: Date,
-    queryEndDate: Date
+    queryEndDate: Date,
   ) {
     return await db.query.drivers.findMany({
       columns: {
@@ -155,7 +155,7 @@ export const driverRepository = {
       },
       where: and(
         eq(drivers.agencyId, agencyId),
-        notInArray(drivers.status, [DriverStatusEnum.SUSPENDED])
+        notInArray(drivers.status, [DriverStatusEnum.SUSPENDED]),
       ),
       with: {
         assignedBookings: {
@@ -199,9 +199,9 @@ export const driverRepository = {
               and(
                 eq(assignedBookings.status, BookingStatusEnum.CONFIRMED),
                 gte(assignedBookings.endDate, queryStartDate),
-                lte(assignedBookings.startDate, queryEndDate)
+                lte(assignedBookings.startDate, queryEndDate),
               ),
-              eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS)
+              eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
             ),
         },
         driverLeaves: {
@@ -227,7 +227,7 @@ export const driverRepository = {
             and(
               eq(driverLeaves.isCompleted, false),
               gte(driverLeaves.endDate, queryStartDate),
-              lte(driverLeaves.startDate, queryEndDate)
+              lte(driverLeaves.startDate, queryEndDate),
             ),
         },
       },
@@ -244,6 +244,15 @@ export const driverRepository = {
     return await db
       .update(drivers)
       .set({ licensePhotoUrl: licenseUrl })
+      .where(eq(drivers.id, driverId))
+      .returning({ id: drivers.id })
+  },
+
+  //Update driver status
+  async updateStatus(driverId: string, status: DriverStatusEnum) {
+    return await db
+      .update(drivers)
+      .set({ status: status })
       .where(eq(drivers.id, driverId))
       .returning({ id: drivers.id })
   },

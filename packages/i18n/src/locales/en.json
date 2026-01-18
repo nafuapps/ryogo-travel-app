@@ -347,6 +347,13 @@
           "Error2": "File size should be less than 1MB",
           "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
         },
+        "Field5": {
+          "Title": "RC expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide vehicle registration expiry date",
+          "Error1": "Providing registration expiry date is mandatory",
+          "Error2": "RC cannot be expired"
+        },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
         "Loading": "Loading"
@@ -425,6 +432,7 @@
         "OdometerReading": "Odometer Reading",
         "InsuranceExpiresOn": "Insurance Expiry Date",
         "PUCExpiresOn": "PUC Expiry Date",
+        "RCExpiresOn": "Registration Expiry Date",
         "RatePerKm": "Vehicle Charge Per Km",
         "HasAC": "Has AC?",
         "ACChagePerDay": "AC Charge Per Day",
@@ -1461,6 +1469,13 @@
           "Error2": "File size should be less than 1MB",
           "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
         },
+        "Field5": {
+          "Title": "RC expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide vehicle registration expiry date",
+          "Error1": "Providing registration expiry date is mandatory",
+          "Error2": "RC cannot be expired"
+        },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
         "Loading": "Loading"
@@ -1547,6 +1562,7 @@
         "OdometerReading": "Odometer Reading",
         "InsuranceExpiresOn": "Insurance Expiry Date",
         "PUCExpiresOn": "PUC Expiry Date",
+        "RCExpiresOn": "Registration Expiry Date",
         "RatePerKm": "Vehicle Charge Per Km",
         "HasAC": "Has AC?",
         "ACChagePerDay": "AC Charge Per Day",
@@ -1564,7 +1580,27 @@
       "Repairs": "Repairs"
     },
     "VehicleDetails":{
-      
+       "BasicInfo":"Basic info",
+      "Photo":"Vehicle photo",
+      "ChangePhoto":"Change photo",
+      "AC":"AC",
+      "NonAC":"Non AC",
+      "Capacity":"{capacity} seater",
+      "Odometer":"{odometer} Km",
+      "NumberRatings":"[{number}]",
+      "PolicyInfo":"Policy info",
+      "Insurance":"Insurance",
+      "InsurancePhoto":"Insurance Photo",
+      "PUC":"PUC",
+      "PUCPhoto":"PUC Photo",
+      "RC":"Registration",
+      "RCPhoto":"RC Photo",
+      "ValidTill":"Valid till: ",
+      "AgencyInfo":"Agency related info",
+      "ACCharge":"AC ₹{ac}/day",
+      "RatePerKm":"₹{rate}/Km",
+      "EditDetails":"Edit Details",
+      "Inactivate":"Inactivate Driver"
     },
     "Drivers":{
       "All":{
@@ -1708,10 +1744,15 @@
     "DriverDetails":{
       "BasicInfo":"Basic info",
       "Photo":"Driver photo",
-      "NumberRatings":"[{number} ratings]",
+      "ChangePhoto":"Change photo",
+      "NumberRatings":"[{number}]",
       "LicenseInfo":"License info",
       "LicensePhoto":"License Photo",
-      "AgencyInfo":"Agency related info"
+      "ValidTill":"Valid till: ",
+      "AgencyInfo":"Agency related info",
+      "PerDay":"₹{allowance}/day",
+      "EditDetails":"Edit Details",
+      "Inactivate":"Inactivate Driver"
     },
     "Buttons": {
       "CancelBooking": {
@@ -1765,6 +1806,46 @@
         "Error": "Cannot delete expense.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Delete"
+      },
+      "InactivateDriver": {
+        "Label": "Inactivate Driver",
+        "Title": "Are you sure you want to inactivate this driver?",
+        "Desc": "When inactivated, this driver cannot be assigned any booking.",
+        "NoCTA": "No",
+        "Success": "Driver inactivated!",
+        "Error": "Cannot inactivate driver.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Inactivate"
+      },
+      "ActivateDriver": {
+        "Label": "Activate Driver",
+        "Title": "Are you sure you want to activate this driver?",
+        "Desc": "When activated, this driver will start receiving bookings.",
+        "NoCTA": "No",
+        "Success": "Driver activated!",
+        "Error": "Cannot activate driver.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Activate"
+      },
+      "InactivateVehicle": {
+        "Label": "Inactivate Vehicle",
+        "Title": "Are you sure you want to inactivate this vehicle?",
+        "Desc": "When inactivated, this vehicle cannot receive booking.",
+        "NoCTA": "No",
+        "Success": "Vehicle inactivated!",
+        "Error": "Cannot inactivate vehicle.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Inactivate"
+      },
+      "ActivateVehicle": {
+        "Label": "Activate Vehicle",
+        "Title": "Are you sure you want to activate this vehicle?",
+        "Desc": "When activated, this vehicle will start receiving bookings.",
+        "NoCTA": "No",
+        "Success": "Vehicle activated!",
+        "Error": "Cannot activate vehicle.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Activate"
       }
     }
   },

@@ -11,14 +11,13 @@ export default async function AllVehicleRepairsPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const vehicleRepairs = await vehicleServices.findAllVehicleRepairsByVehicleId(
-    id
-  )
+  const vehicleRepairs =
+    await vehicleServices.findAllVehicleRepairsByVehicleId(id)
 
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs"} />
-      <AllVehicleRepairsPageComponent repairs={vehicleRepairs} />
+      <AllVehicleRepairsPageComponent repairs={vehicleRepairs} id={id} />
     </div>
   )
 }

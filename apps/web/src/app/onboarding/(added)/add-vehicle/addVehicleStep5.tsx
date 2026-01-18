@@ -47,6 +47,7 @@ export function AddVehicleConfirm(props: {
         odometerReading: props.finalData.odometerReading,
         insuranceExpiresOn: props.finalData.insuranceExpiresOn!,
         pucExpiresOn: props.finalData.pucExpiresOn!,
+        rcExpiresOn: props.finalData.rcExpiresOn!,
         hasAC: props.finalData.hasAC,
         defaultRatePerKm: props.finalData.defaultRatePerKm,
         defaultAcChargePerDay: props.finalData.defaultAcChargePerDay,
@@ -54,7 +55,7 @@ export function AddVehicleConfirm(props: {
     }
     const addedVehicle = await apiClient<OnboardingAddVehicleAPIResponseType>(
       "/api/onboarding/add-vehicle",
-      { method: "POST", body: JSON.stringify(newVehicleData) }
+      { method: "POST", body: JSON.stringify(newVehicleData) },
     )
     if (addedVehicle.id) {
       //Try to upload vehicle docs
@@ -76,7 +77,7 @@ export function AddVehicleConfirm(props: {
         {
           method: "POST",
           body: formData,
-        }
+        },
       )
       props.onNext()
     } else {
@@ -121,6 +122,10 @@ export function AddVehicleConfirm(props: {
           <ConfirmValues
             name={t("PUCExpiresOn")}
             value={props.finalData.pucExpiresOn!.toDateString()}
+          />
+          <ConfirmValues
+            name={t("RCExpiresOn")}
+            value={props.finalData.rcExpiresOn!.toDateString()}
           />
           {props.finalData.defaultRatePerKm && (
             <ConfirmValues

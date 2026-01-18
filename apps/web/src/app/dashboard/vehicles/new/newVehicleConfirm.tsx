@@ -41,6 +41,7 @@ export function NewVehicleConfirm(props: {
         odometerReading: props.newVehicleFormData.odometerReading,
         insuranceExpiresOn: props.newVehicleFormData.insuranceExpiresOn!,
         pucExpiresOn: props.newVehicleFormData.pucExpiresOn!,
+        rcExpiresOn: props.newVehicleFormData.rcExpiresOn!,
         hasAC: props.newVehicleFormData.hasAC,
         defaultRatePerKm: props.newVehicleFormData.defaultRatePerKm,
         defaultAcChargePerDay: props.newVehicleFormData.defaultAcChargePerDay,
@@ -118,6 +119,10 @@ export function NewVehicleConfirm(props: {
             <ConfirmValues
               name={t("PUCExpiresOn")}
               value={props.newVehicleFormData.pucExpiresOn!.toDateString()}
+            />
+            <ConfirmValues
+              name={t("RCExpiresOn")}
+              value={props.newVehicleFormData.rcExpiresOn!.toDateString()}
             />
             {props.newVehicleFormData.defaultRatePerKm && (
               <ConfirmValues

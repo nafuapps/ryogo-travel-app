@@ -20,6 +20,7 @@ export type NewVehicleFormDataType = {
   vehiclePhotos: FileList | undefined
   insuranceExpiresOn: Date | undefined
   pucExpiresOn: Date | undefined
+  rcExpiresOn: Date | undefined
   insurancePhotos: FileList | undefined
   pucPhotos: FileList | undefined
   hasAC: boolean
@@ -45,6 +46,7 @@ export default function NewVehicleForm(props: NewVehicleFormProps) {
       vehiclePhotos: undefined,
       insuranceExpiresOn: undefined,
       pucExpiresOn: undefined,
+      rcExpiresOn: undefined,
       insurancePhotos: undefined,
       pucPhotos: undefined,
       hasAC: true,

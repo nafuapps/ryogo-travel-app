@@ -1,4 +1,8 @@
-import { InsertDriverType, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  DriverStatusEnum,
+  InsertDriverType,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { CreateDriverType } from "../types/driver.types"
@@ -12,17 +16,15 @@ import { bookingRepository } from "../repositories/booking.repo"
 export const driverServices = {
   //Get all drivers in an agency
   async findDriversByAgency(agencyId: string) {
-    const drivers = await driverRepository.readAllDriversDataByAgencyId(
-      agencyId
-    )
+    const drivers =
+      await driverRepository.readAllDriversDataByAgencyId(agencyId)
     return drivers
   },
 
   //Get onTrip drivers data
   async findDriversOnTrip(agencyId: string) {
-    const drivers = await driverRepository.readOnTripDriversDataByAgencyId(
-      agencyId
-    )
+    const drivers =
+      await driverRepository.readOnTripDriversDataByAgencyId(agencyId)
     return drivers
   },
 
@@ -35,7 +37,7 @@ export const driverServices = {
     const driversScheduleData = await driverRepository.readDriversScheduleData(
       agencyId,
       startDate,
-      endDate
+      endDate,
     )
 
     return driversScheduleData
@@ -59,7 +61,7 @@ export const driverServices = {
     const bookings = await bookingRepository.readAssignedBookingsByDriverId(
       id,
       startDate,
-      endDate
+      endDate,
     )
 
     return bookings.map((booking) => {
@@ -81,14 +83,14 @@ export const driverServices = {
   async findDriverCompletedBookingsById(id: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
     )
     //Day today
     const endDate = new Date()
     const bookings = await bookingRepository.readCompletedBookingsByDriverId(
       id,
       startDate,
-      endDate
+      endDate,
     )
 
     return bookings.map((booking) => {
@@ -121,7 +123,7 @@ export const driverServices = {
   async addDriver(data: CreateDriverType) {
     //Step1: Check if driver (userId) already exists in the system
     const existingDriverUser = await driverRepository.readDriverByUserId(
-      data.userId
+      data.userId,
     )
     if (existingDriverUser.length > 0) {
       throw new Error("Driver with same userId already exists ")
@@ -132,7 +134,7 @@ export const driverServices = {
       return x.toLowerCase()
     })
     const canDrive = Object.values(VehicleTypesEnum).filter((x) =>
-      input.includes(x.toString().toLowerCase() as string)
+      input.includes(x.toString().toLowerCase() as string),
     )
 
     //Step3: Prepare driver data
@@ -167,12 +169,30 @@ export const driverServices = {
   async updateDriverLicensePhoto(driverId: string, licenseUrl?: string) {
     const updatedDriver = await driverRepository.updateDriverLicenseUrl(
       driverId,
-      licenseUrl
+      licenseUrl,
     )
     if (!updatedDriver || updatedDriver.length < 1) {
       throw new Error("Failed to update license url for this driver")
     }
     return updatedDriver[0]
+  },
+
+  //Activate Driver
+  async activateDriver(id: string) {
+    const driver = await driverRepository.updateStatus(
+      id,
+      DriverStatusEnum.AVAILABLE,
+    )
+    return driver[0]
+  },
+
+  //Inctivate Driver
+  async inactivateDriver(id: string) {
+    const driver = await driverRepository.updateStatus(
+      id,
+      DriverStatusEnum.INACTIVE,
+    )
+    return driver[0]
   },
 }
 

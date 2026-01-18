@@ -107,12 +107,12 @@ export const agencies = pgTable(
     unique().on(t.businessPhone, t.businessEmail), //Same agency can be added again but with different phone+email
     check(
       "commission_rate >= 0 AND commission_rate <= 100",
-      sql`${t.defaultCommissionRate} >= 0 AND ${t.defaultCommissionRate} <= 100`
+      sql`${t.defaultCommissionRate} >= 0 AND ${t.defaultCommissionRate} <= 100`,
     ),
     index("agencies_subscription_expiry_idx").on(t.subscriptionExpiresOn), // to quickly find agencies with expired subscriptions
     index("agencies_status_idx").on(t.status), // to quickly filter agencies by status
     index("agencies_location_idx").on(t.locationId), // to quickly filter agencies by location
-  ]
+  ],
 )
 export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   locations: one(locations, {
@@ -198,14 +198,14 @@ export const users = pgTable(
     uniqueIndex("users_agency_role_phone_idx").on(
       t.agencyId,
       t.phone,
-      t.userRole
+      t.userRole,
     ), // to quickly find unique user with phone number & role in an agency
     uniqueIndex("users_phone_email_role_idx").on(t.phone, t.email, t.userRole),
     index("users_agency_idx").on(t.agencyId), // to quickly filter all users in an agency
     index("users_agency_phone_idx").on(t.phone, t.agencyId), // to quickly filter users by phone number in an agency
     index("users_agency_role_idx").on(t.userRole, t.agencyId), // to quickly filter users by role in an agency
     index("users_agency_status_idx").on(t.status, t.agencyId), // to quickly filter users by status in an agency
-  ]
+  ],
 )
 export const usersRelations = relations(users, ({ one, many }) => ({
   agency: one(agencies, {
@@ -248,7 +248,7 @@ export const sessions = pgTable(
   },
   (t) => [
     index("sessions_user_idx").on(t.userId), // to quickly filter sessions by user
-  ]
+  ],
 )
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, {
@@ -306,6 +306,7 @@ export const vehicles = pgTable(
     color: varchar("color", { length: 15 }).notNull(),
     insuranceExpiresOn: date("insurance_expires_on", { mode: "date" }),
     pucExpiresOn: date("puc_expires_on", { mode: "date" }),
+    rcExpiresOn: date("rc_expires_on", { mode: "date" }),
     odometerReading: integer("odometer_reading").notNull().default(0), // in kilometers
     capacity: integer("capacity").notNull().default(4), //number of seats
     hasAC: boolean("has_ac").notNull(),
@@ -326,19 +327,19 @@ export const vehicles = pgTable(
     unique().on(t.vehicleNumber, t.agencyId), //same vehicle can be added to different agencies
     check(
       "capacity > 0 and < 100",
-      sql`${t.capacity} > 0 AND ${t.capacity} < 100`
+      sql`${t.capacity} > 0 AND ${t.capacity} < 100`,
     ),
     check(
       "odometer >= 0 and < 1000000",
-      sql`${t.odometerReading} >= 0 AND ${t.odometerReading} < 1000000`
+      sql`${t.odometerReading} >= 0 AND ${t.odometerReading} < 1000000`,
     ),
     check(
       "customer_ratings_between_1_and_5",
-      sql`${t.customerRatings} IS NULL OR ${t.customerRatings} <@ ARRAY[1,2,3,4,5]::int[]`
+      sql`${t.customerRatings} IS NULL OR ${t.customerRatings} <@ ARRAY[1,2,3,4,5]::int[]`,
     ),
     check(
       "rate per km > 0 and < 100",
-      sql`${t.defaultRatePerKm} > 0 AND ${t.defaultRatePerKm} < 100`
+      sql`${t.defaultRatePerKm} > 0 AND ${t.defaultRatePerKm} < 100`,
     ),
     check("ac charge < 10000", sql`${t.defaultAcChargePerDay} < 10000`),
     index("vehicles_agency_idx").on(t.agencyId), // to quickly filter all vehicles in an agency
@@ -346,7 +347,7 @@ export const vehicles = pgTable(
     index("vehicles_agency_type_idx").on(t.type, t.agencyId), // to quickly filter vehicles by type in an agency
     index("vehicles_agency_capacity_idx").on(t.capacity, t.agencyId), // to quickly filter vehicles by capacity in an agency
     index("vehicles_agency_ac_idx").on(t.hasAC, t.agencyId), // to quickly filter vehicles by ac in an agency
-  ]
+  ],
 )
 export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
   agency: one(agencies, {
@@ -412,19 +413,19 @@ export const drivers = pgTable(
     unique().on(t.phone, t.agencyId), //same driver can be added to different agencies
     check(
       "customer_ratings_between_1_and_5",
-      sql`${t.customerRatings} IS NULL OR ${t.customerRatings} <@ ARRAY[1,2,3,4,5]::int[]`
+      sql`${t.customerRatings} IS NULL OR ${t.customerRatings} <@ ARRAY[1,2,3,4,5]::int[]`,
     ),
     check(
       "allowance >=0 and < 10000",
-      sql`${t.defaultAllowancePerDay} >=0 AND ${t.defaultAllowancePerDay} < 10000`
+      sql`${t.defaultAllowancePerDay} >=0 AND ${t.defaultAllowancePerDay} < 10000`,
     ),
     index("drivers_agency_idx").on(t.agencyId), // to quickly filter all drivers in an agency
     index("drivers_agency_status_idx").on(t.status, t.agencyId), // to quickly filter drivers by status in an agency
     index("drivers_agency_drive_type_idx").on(
       t.canDriveVehicleTypes,
-      t.agencyId
+      t.agencyId,
     ), // to quickly filter drivers by vehicle types in an agency
-  ]
+  ],
 )
 export const driverRelations = relations(drivers, ({ one, many }) => ({
   agency: one(agencies, {
@@ -463,17 +464,17 @@ export const routes = pgTable(
   (t) => [
     check(
       "distance > 0 and < 5000",
-      sql`${t.distance} > 0 AND ${t.distance} < 5000`
+      sql`${t.distance} > 0 AND ${t.distance} < 5000`,
     ),
     check(
       "time > 0 and < 10000",
-      sql`${t.estimatedTime} > 0 AND ${t.estimatedTime} < 10000`
+      sql`${t.estimatedTime} > 0 AND ${t.estimatedTime} < 10000`,
     ),
     unique().on(t.sourceId, t.destinationId), //same route can be added in reverse direction but not in the same direction
     index("routes_source_idx").on(t.sourceId), // to quickly filter routes by source
     index("routes_destination_idx").on(t.destinationId), // to quickly filter routes by destination
     index("routes_active_idx").on(t.isActive), // to quickly filter active/inactive routes
-  ]
+  ],
 )
 export const routeRelations = relations(routes, ({ one, many }) => ({
   source: one(locations, {
@@ -539,9 +540,9 @@ export const customers = pgTable(
     index("customers_phone_idx").on(t.phone), // to quickly filter customers by phone number across agencies (quick search in a new booking)
     check(
       "driver_ratings_between_1_and_5",
-      sql`${t.driverRatings} IS NULL OR ${t.driverRatings} <@ ARRAY[1,2,3,4,5]::int[]`
+      sql`${t.driverRatings} IS NULL OR ${t.driverRatings} <@ ARRAY[1,2,3,4,5]::int[]`,
     ),
-  ]
+  ],
 )
 export const customerRelations = relations(customers, ({ one, many }) => ({
   agency: one(agencies, {
@@ -603,7 +604,7 @@ export const bookings = pgTable(
       .notNull(),
     assignedVehicleId: text("assigned_vehicle_id").references(
       () => vehicles.id,
-      { onDelete: "set null" }
+      { onDelete: "set null" },
     ),
     assignedDriverId: text("assigned_driver_id").references(() => drivers.id, {
       onDelete: "set null",
@@ -654,33 +655,33 @@ export const bookings = pgTable(
   (t) => [
     check(
       "commission_rate >= 0 AND commission_rate <= 100",
-      sql`${t.commissionRate} >= 0 AND ${t.commissionRate} <= 100`
+      sql`${t.commissionRate} >= 0 AND ${t.commissionRate} <= 100`,
     ),
     check(
       "passengers >= 0 and < 100",
-      sql`${t.passengers} >= 0 AND ${t.passengers} < 100`
+      sql`${t.passengers} >= 0 AND ${t.passengers} < 100`,
     ),
     check("ac charge per day  < 10000", sql`${t.acChargePerDay} < 10000`),
     check(
       "rate per km > 0 and < 100",
-      sql`${t.ratePerKm} > 0 AND ${t.ratePerKm} < 100`
+      sql`${t.ratePerKm} > 0 AND ${t.ratePerKm} < 100`,
     ),
     check(
       "allowance >= 0 and allowance < 10000",
-      sql`${t.allowancePerDay} >= 0 AND ${t.allowancePerDay} < 10000`
+      sql`${t.allowancePerDay} >= 0 AND ${t.allowancePerDay} < 10000`,
     ),
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
     check(
       "total_amount > 0 and < 1000000",
-      sql`${t.totalAmount} > 0 AND ${t.totalAmount} < 1000000`
+      sql`${t.totalAmount} > 0 AND ${t.totalAmount} < 1000000`,
     ),
     check(
       "driver rating >=1 and rating <=5",
-      sql`${t.ratingByDriver} >=1 AND ${t.ratingByDriver} <=5`
+      sql`${t.ratingByDriver} >=1 AND ${t.ratingByDriver} <=5`,
     ),
     check(
       "customer rating >=1 and rating <=5",
-      sql`${t.ratingByCustomer} >=1 AND ${t.ratingByCustomer} <=5`
+      sql`${t.ratingByCustomer} >=1 AND ${t.ratingByCustomer} <=5`,
     ),
     index("bookings_agency_idx").on(t.agencyId), // to quickly filter all bookings in an agency
     index("bookings_agency_status_idx").on(t.status, t.agencyId), // to quickly filter bookings by status in an agency
@@ -688,7 +689,7 @@ export const bookings = pgTable(
     index("bookings_agency_assigned_user_idx").on(t.assignedUserId, t.agencyId), // to quickly filter bookings by assigned user in an agency
     index("bookings_agency_booked_by_user_idx").on(
       t.bookedByUserId,
-      t.agencyId
+      t.agencyId,
     ), // to quickly filter bookings by booked by user in an agency
     index("bookings_agency_driver_idx").on(t.assignedDriverId, t.agencyId), // to quickly filter bookings by assigned driver in an agency
     index("bookings_agency_vehicle_idx").on(t.assignedVehicleId, t.agencyId), // to quickly filter bookings by assigned vehicle in an agency
@@ -698,7 +699,7 @@ export const bookings = pgTable(
     index("bookings_agency_destination_idx").on(t.destinationId, t.agencyId), // to quickly filter bookings by destination location in an agency
     index("bookings_agency_route_idx").on(t.routeId, t.agencyId), // to quickly filter bookings by route in an agency
     index("bookings_agency_type_idx").on(t.type, t.agencyId), // to quickly filter bookings by type in an agency
-  ]
+  ],
 )
 export const bookingRelations = relations(bookings, ({ one, many }) => ({
   agency: one(agencies, {
@@ -794,13 +795,13 @@ export const expenses = pgTable(
   (t) => [
     check(
       "amount > 0 and < 1000000",
-      sql`${t.amount} > 0 AND ${t.amount} < 1000000`
+      sql`${t.amount} > 0 AND ${t.amount} < 1000000`,
     ),
     index("expenses_booking_idx").on(t.bookingId), // to quickly filter expenses by booking
     index("expenses_booking_type_idx").on(t.type, t.bookingId), // to quickly filter expenses by type in a booking
     index("expenses_booking_approved_idx").on(t.isApproved, t.bookingId), // to quickly filter expenses by approval status in a booking
     index("expenses_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter expenses added by a user in an agency
-  ]
+  ],
 )
 export const expenseRelations = relations(expenses, ({ one }) => ({
   agency: one(agencies, {
@@ -865,13 +866,13 @@ export const tripLogs = pgTable(
   (t) => [
     check(
       "odometer >= 0 and < 1000000",
-      sql`${t.odometerReading} >= 0 AND ${t.odometerReading} < 1000000`
+      sql`${t.odometerReading} >= 0 AND ${t.odometerReading} < 1000000`,
     ),
     index("trip_logs_booking_idx").on(t.bookingId), // to quickly filter trip logs by booking
     index("trip_logs_booking_type_idx").on(t.type, t.bookingId), // to quickly filter trip logs by type in a booking
     index("trip_logs_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter trip logs by vehicle in an agency
     index("trip_logs_agency_driver_idx").on(t.driverId, t.agencyId), // to quickly filter trip logs by driver in an agency
-  ]
+  ],
 )
 export const tripLogsRelations = relations(tripLogs, ({ one }) => ({
   agency: one(agencies, {
@@ -961,14 +962,14 @@ export const transactions = pgTable(
   (t) => [
     check(
       "amount > 0 and < 1000000",
-      sql`${t.amount} > 0 AND ${t.amount} < 1000000`
+      sql`${t.amount} > 0 AND ${t.amount} < 1000000`,
     ),
     index("transactions_booking_idx").on(t.bookingId), // to quickly filter transactions by booking
     index("transactions_booking_type_idx").on(t.type, t.bookingId), // to quickly filter transactions by type in a booking
     index("transactions_booking_party_idx").on(t.otherParty, t.bookingId), // to quickly filter transactions by other party in a booking
     index("transactions_booking_approved_idx").on(t.isApproved, t.bookingId), // to quickly filter transactions by approval status in a booking
     index("transactions_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter transactions added by a user in an agency
-  ]
+  ],
 )
 export const transactionRelations = relations(transactions, ({ one }) => ({
   agency: one(agencies, {
@@ -1012,7 +1013,7 @@ export const locations = pgTable(
     unique().on(t.city, t.state), //same location cannot be added twice
     index("locations_active_idx").on(t.isActive), // to quickly filter active/inactive locations
     index("locations_spatial_idx").using("gist", t.location), // to quickly filter locations by spatial queries
-  ]
+  ],
 )
 export const locationRelations = relations(locations, ({ many }) => ({
   agencies: many(agencies),
@@ -1057,13 +1058,13 @@ export const vehicleRepairs = pgTable(
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
     check(
       "cost >= 0 and < 1000000",
-      sql`${t.cost} > 0 AND ${t.cost} < 1000000`
+      sql`${t.cost} > 0 AND ${t.cost} < 1000000`,
     ),
     index("vehicle_repairs_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter vehicle repairs by vehicle in an agency
     index("vehicle_repairs_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter vehicle repairs added by a user in an agency
     index("vehicle_repairs_agency_start_date_idx").on(t.startDate, t.agencyId), // to quickly filter vehicle repairs by start date in an agency
     index("vehicle_repairs_agency_end_date_idx").on(t.endDate, t.agencyId), // to quickly filter vehicle repairs by end date in an agency
-  ]
+  ],
 )
 export const vehicleRepairsRelations = relations(vehicleRepairs, ({ one }) => ({
   agency: one(agencies, {
@@ -1113,7 +1114,7 @@ export const driverLeaves = pgTable(
     index("driver_leaves_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter driver leaves added by a user in an agency
     index("driver_leaves_agency_start_date_idx").on(t.startDate, t.agencyId), // to quickly filter driver leaves by start date in an agency
     index("driver_leaves_agency_end_date_idx").on(t.endDate, t.agencyId), // to quickly filter driver leaves by end date in an agency
-  ]
+  ],
 )
 export const driverLeaveRelations = relations(driverLeaves, ({ one }) => ({
   agency: one(agencies, {

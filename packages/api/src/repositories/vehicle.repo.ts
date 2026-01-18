@@ -38,6 +38,7 @@ export const vehicleRepository = {
         insuranceExpiresOn: true,
         odometerReading: true,
         pucExpiresOn: true,
+        rcExpiresOn: true,
         defaultAcChargePerDay: true,
         defaultRatePerKm: true,
         hasAC: true,
@@ -45,7 +46,7 @@ export const vehicleRepository = {
       },
       where: and(
         eq(vehicles.agencyId, agencyId),
-        notInArray(vehicles.status, [VehicleStatusEnum.SUSPENDED])
+        notInArray(vehicles.status, [VehicleStatusEnum.SUSPENDED]),
       ),
       with: {
         assignedBookings: {
@@ -78,7 +79,7 @@ export const vehicleRepository = {
     return await db.query.vehicles.findMany({
       where: and(
         eq(vehicles.agencyId, agencyId),
-        eq(vehicles.status, VehicleStatusEnum.ON_TRIP)
+        eq(vehicles.status, VehicleStatusEnum.ON_TRIP),
       ),
       with: {
         assignedBookings: {
@@ -126,8 +127,8 @@ export const vehicleRepository = {
       .where(
         and(
           eq(vehicles.vehicleNumber, vehicleNumber),
-          eq(vehicles.agencyId, agencyId)
-        )
+          eq(vehicles.agencyId, agencyId),
+        ),
       )
   },
 
@@ -143,7 +144,7 @@ export const vehicleRepository = {
   async readVehiclesScheduleData(
     agencyId: string,
     queryStartDate: Date,
-    queryEndDate: Date
+    queryEndDate: Date,
   ) {
     return await db.query.vehicles.findMany({
       columns: {
@@ -157,7 +158,7 @@ export const vehicleRepository = {
       },
       where: and(
         eq(vehicles.agencyId, agencyId),
-        notInArray(vehicles.status, [VehicleStatusEnum.SUSPENDED])
+        notInArray(vehicles.status, [VehicleStatusEnum.SUSPENDED]),
       ),
       with: {
         assignedBookings: {
@@ -201,9 +202,9 @@ export const vehicleRepository = {
               and(
                 eq(assignedBookings.status, BookingStatusEnum.CONFIRMED),
                 gte(assignedBookings.endDate, queryStartDate),
-                lte(assignedBookings.startDate, queryEndDate)
+                lte(assignedBookings.startDate, queryEndDate),
               ),
-              eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS)
+              eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
             ),
         },
         vehicleRepairs: {
@@ -229,7 +230,7 @@ export const vehicleRepository = {
             and(
               eq(vehicleRepairs.isCompleted, false),
               gte(vehicleRepairs.endDate, queryStartDate),
-              lte(vehicleRepairs.startDate, queryEndDate)
+              lte(vehicleRepairs.startDate, queryEndDate),
             ),
         },
       },
@@ -247,7 +248,7 @@ export const vehicleRepository = {
     rcPhotoUrl?: string,
     pucPhotoUrl?: string,
     insurancePhotoUrl?: string,
-    vehiclePhotoUrl?: string
+    vehiclePhotoUrl?: string,
   ) {
     return await db
       .update(vehicles)
@@ -299,6 +300,15 @@ export const vehicleRepository = {
       .set({
         insurancePhotoUrl: insurancePhotoUrl,
       })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({ id: vehicles.id })
+  },
+
+  //Update vehicle status
+  async updateStatus(vehicleId: string, status: VehicleStatusEnum) {
+    return await db
+      .update(vehicles)
+      .set({ status: status })
       .where(eq(vehicles.id, vehicleId))
       .returning({ id: vehicles.id })
   },

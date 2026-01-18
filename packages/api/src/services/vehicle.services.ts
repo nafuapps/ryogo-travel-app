@@ -1,6 +1,9 @@
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  VehicleStatusEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import {
   NewVehicleRequestType,
   OnboardingAddVehicleAPIRequestType,
@@ -10,9 +13,8 @@ import { bookingRepository } from "../repositories/booking.repo"
 export const vehicleServices = {
   //Get all vehicles of an agency
   async findVehiclesByAgency(agencyId: string) {
-    const vehicles = await vehicleRepository.readAllVehiclesDataByAgencyId(
-      agencyId
-    )
+    const vehicles =
+      await vehicleRepository.readAllVehiclesDataByAgencyId(agencyId)
     return vehicles
   },
 
@@ -24,9 +26,8 @@ export const vehicleServices = {
 
   //Get onTrip vehicles data
   async findVehiclesOnTrip(agencyId: string) {
-    const vehicles = await vehicleRepository.readOnTripVehiclesDataByAgencyId(
-      agencyId
-    )
+    const vehicles =
+      await vehicleRepository.readOnTripVehiclesDataByAgencyId(agencyId)
     return vehicles
   },
 
@@ -40,7 +41,7 @@ export const vehicleServices = {
       await vehicleRepository.readVehiclesScheduleData(
         agencyId,
         startDate,
-        endDate
+        endDate,
       )
 
     return vehiclesScheduleData
@@ -64,7 +65,7 @@ export const vehicleServices = {
     const bookings = await bookingRepository.readAssignedBookingsByVehicleId(
       id,
       startDate,
-      endDate
+      endDate,
     )
 
     return bookings.map((booking) => {
@@ -86,14 +87,14 @@ export const vehicleServices = {
   async findVehicleCompletedBookingsById(id: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
     )
     //Day today
     const endDate = new Date()
     const bookings = await bookingRepository.readCompletedBookingsByVehicleId(
       id,
       startDate,
-      endDate
+      endDate,
     )
 
     return bookings.map((booking) => {
@@ -113,9 +114,8 @@ export const vehicleServices = {
 
   //Get all vehicle repairs by vehicleId
   async findAllVehicleRepairsByVehicleId(id: string) {
-    const repairs = await vehicleRepairRepository.readVehicleRepairsByVehicleId(
-      id
-    )
+    const repairs =
+      await vehicleRepairRepository.readVehicleRepairsByVehicleId(id)
     return repairs
   },
 
@@ -130,16 +130,16 @@ export const vehicleServices = {
     const existingVehicleInAgency =
       await vehicleRepository.readVehicleByNumberInAgency(
         data.vehicleNumber,
-        agencyId
+        agencyId,
       )
     if (existingVehicleInAgency.length > 0) {
       throw new Error(
-        "Vehicle with same vehicle number already exists in this agency"
+        "Vehicle with same vehicle number already exists in this agency",
       )
     }
     //Step2: Prepare vehicle data
     const vehicleType = Object.values(VehicleTypesEnum).find(
-      (x) => x.toString() === data.type.toLowerCase()
+      (x) => x.toString() === data.type.toLowerCase(),
     )
 
     const newVehicleData = {
@@ -153,6 +153,7 @@ export const vehicleServices = {
       odometerReading: data.odometerReading,
       insuranceExpiresOn: new Date(data.insuranceExpiresOn),
       pucExpiresOn: new Date(data.pucExpiresOn),
+      rcExpiresOn: new Date(data.rcExpiresOn),
       hasAC: data.hasAC,
       defaultRatePerKm: data.defaultRatePerKm,
       defaultAcChargePerDay: data.defaultAcChargePerDay,
@@ -181,14 +182,14 @@ export const vehicleServices = {
     rcUrl?: string,
     pucUrl?: string,
     insuranceURL?: string,
-    vehiclePhotoUrl?: string
+    vehiclePhotoUrl?: string,
   ) {
     const updatedVehicle = await vehicleRepository.updateDocUrls(
       vehicleId,
       rcUrl,
       pucUrl,
       insuranceURL,
-      vehiclePhotoUrl
+      vehiclePhotoUrl,
     )
     if (!updatedVehicle) {
       throw new Error("Failed to update document url for this vehicle in DB")
@@ -218,7 +219,7 @@ export const vehicleServices = {
   async renewInsuranceURL(vehicleId: string, url: string) {
     const updatedVehicle = await vehicleRepository.updateInsuranceUrl(
       vehicleId,
-      url
+      url,
     )
     if (!updatedVehicle) {
       throw new Error("Failed to update insurance url for this vehicle in DB")
@@ -230,14 +231,32 @@ export const vehicleServices = {
   async renewVehiclePhotoURL(vehicleId: string, url: string) {
     const updatedVehicle = await vehicleRepository.updateVehiclePhotoUrl(
       vehicleId,
-      url
+      url,
     )
     if (!updatedVehicle) {
       throw new Error(
-        "Failed to update vehicle photo url for this vehicle in DB"
+        "Failed to update vehicle photo url for this vehicle in DB",
       )
     }
     return updatedVehicle[0]
+  },
+
+  //Activate Vehicle
+  async activateVehicle(id: string) {
+    const vehicle = await vehicleRepository.updateStatus(
+      id,
+      VehicleStatusEnum.AVAILABLE,
+    )
+    return vehicle[0]
+  },
+
+  //Inctivate Vehicle
+  async inactivateVehicle(id: string) {
+    const vehicle = await vehicleRepository.updateStatus(
+      id,
+      VehicleStatusEnum.INACTIVE,
+    )
+    return vehicle[0]
   },
 }
 

@@ -1,16 +1,11 @@
 "use server"
 
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import {
-  NewVehicleResponseType,
-  NewVehicleRequestType,
-} from "@ryogo-travel-app/api/types/vehicle.types"
+import { NewVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function newVehicleAction(data: NewVehicleRequestType) {
-  const vehicle: NewVehicleResponseType = await vehicleServices.addNewVehicle(
-    data
-  )
+  const vehicle = await vehicleServices.addNewVehicle(data)
 
   if (vehicle.id) {
     let rcUrl
@@ -23,7 +18,7 @@ export async function newVehicleAction(data: NewVehicleRequestType) {
       const rc = data.data.rcPhotos[0]
       const uploadedFile = await uploadFile(
         rc,
-        `${vehicle.id}/rc/${Date.now()}-${rc.name}`
+        `${vehicle.id}/rc/${Date.now()}-${rc.name}`,
       )
       rcUrl = uploadedFile?.path
     }
@@ -31,7 +26,7 @@ export async function newVehicleAction(data: NewVehicleRequestType) {
       const puc = data.data.pucPhotos[0]
       const uploadedFile = await uploadFile(
         puc,
-        `${vehicle.id}/puc/${Date.now()}-${puc.name}`
+        `${vehicle.id}/puc/${Date.now()}-${puc.name}`,
       )
       pucUrl = uploadedFile?.path
     }
@@ -39,7 +34,7 @@ export async function newVehicleAction(data: NewVehicleRequestType) {
       const insurance = data.data.insurancePhotos[0]
       const uploadedFile = await uploadFile(
         insurance,
-        `${vehicle.id}/insurance/${Date.now()}-${insurance.name}`
+        `${vehicle.id}/insurance/${Date.now()}-${insurance.name}`,
       )
       insuranceUrl = uploadedFile?.path
     }
@@ -47,7 +42,7 @@ export async function newVehicleAction(data: NewVehicleRequestType) {
       const vehiclePhoto = data.data.vehiclePhotos[0]
       const uploadedFile = await uploadFile(
         vehiclePhoto,
-        `${vehicle.id}/vehiclePhoto/${Date.now()}-${vehiclePhoto.name}`
+        `${vehicle.id}/vehiclePhoto/${Date.now()}-${vehiclePhoto.name}`,
       )
       vehiclePhotoUrl = uploadedFile?.path
     }
@@ -57,7 +52,7 @@ export async function newVehicleAction(data: NewVehicleRequestType) {
       rcUrl,
       pucUrl,
       insuranceUrl,
-      vehiclePhotoUrl
+      vehiclePhotoUrl,
     )
   }
   return vehicle

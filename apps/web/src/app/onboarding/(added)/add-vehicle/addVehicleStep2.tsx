@@ -1,30 +1,31 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   OnboardingInput,
   OnboardingFileInput,
-} from "@/app/onboarding/components/onboardingFields";
+  OnboardingDatePicker,
+} from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { Form } from "@/components/ui/form";
+} from "@/app/onboarding/components/onboardingSteps"
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { Form } from "@/components/ui/form"
 
 export function AddVehicleStep2(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: AddVehicleFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>;
+  onNext: () => void
+  onPrev: () => void
+  finalData: AddVehicleFormDataType
+  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>
 }) {
-  const t = useTranslations("Onboarding.AddVehiclePage.Step2");
+  const t = useTranslations("Onboarding.AddVehiclePage.Step2")
 
   const step2Schema = z.object({
     capacity: z.coerce
@@ -42,14 +43,14 @@ export function AddVehicleStep2(props: {
     rcPhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        return file.length >= 1;
+        return file.length >= 1
       }, t("Field3.Error1"))
       .refine((file) => {
-        if (file.length < 1) return false;
-        return file[0]!.size < 1000000;
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
       }, t("Field3.Error2"))
       .refine((file) => {
-        if (file.length < 1) return false;
+        if (file.length < 1) return false
         return (
           file[0] &&
           [
@@ -60,19 +61,19 @@ export function AddVehicleStep2(props: {
             "image/webp",
             "application/pdf",
           ].includes(file[0].type)
-        );
+        )
       }, t("Field3.Error3")),
     vehiclePhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        return file.length >= 1;
+        return file.length >= 1
       }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return false;
-        return file[0]!.size < 1000000;
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
       }, t("Field4.Error2"))
       .refine((file) => {
-        if (file.length < 1) return false;
+        if (file.length < 1) return false
         return (
           file[0] &&
           [
@@ -83,10 +84,14 @@ export function AddVehicleStep2(props: {
             "image/webp",
             "application/pdf",
           ].includes(file[0].type)
-        );
+        )
       }, t("Field4.Error3")),
-  });
-  type Step2Type = z.infer<typeof step2Schema>;
+    rcExpiresOn: z
+      .date(t("Field5.Error1"))
+      .min(new Date(), t("Field5.Error2"))
+      .nonoptional(t("Field5.Error1")),
+  })
+  type Step2Type = z.infer<typeof step2Schema>
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
@@ -94,8 +99,9 @@ export function AddVehicleStep2(props: {
       odometerReading: props.finalData.odometerReading,
       rcPhotos: props.finalData.rcPhotos,
       vehiclePhotos: props.finalData.vehiclePhotos,
+      rcExpiresOn: props.finalData.rcExpiresOn,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
@@ -105,9 +111,10 @@ export function AddVehicleStep2(props: {
       odometerReading: data.odometerReading,
       rcPhotos: data.rcPhotos,
       vehiclePhotos: data.vehiclePhotos,
-    });
-    props.onNext();
-  };
+      rcExpiresOn: data.rcExpiresOn,
+    })
+    props.onNext()
+  }
 
   return (
     <Form {...formData}>
@@ -144,6 +151,12 @@ export function AddVehicleStep2(props: {
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
+          <OnboardingDatePicker
+            name="rcExpiresOn"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+            description={t("Field5.Description")}
+          />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step2Actions">
           <OnboardingStepPrimaryAction
@@ -161,5 +174,5 @@ export function AddVehicleStep2(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

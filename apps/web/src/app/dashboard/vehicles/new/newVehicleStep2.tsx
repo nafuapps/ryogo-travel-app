@@ -7,6 +7,7 @@ import z from "zod"
 import { Form } from "@/components/ui/form"
 import { NewVehicleFormDataType } from "./newVehicleForm"
 import {
+  DashboardDatePicker,
   DashboardFileInput,
   DashboardInput,
 } from "@/components/form/dashboardFormFields"
@@ -87,6 +88,10 @@ export function NewVehicleStep2(props: {
           ].includes(file[0].type)
         )
       }, t("Field4.Error3")),
+    rcExpiresOn: z
+      .date(t("Field5.Error1"))
+      .min(new Date(), t("Field5.Error2"))
+      .nonoptional(t("Field5.Error1")),
   })
   type Step2Type = z.infer<typeof step2Schema>
   const formData = useForm<Step2Type>({
@@ -96,6 +101,7 @@ export function NewVehicleStep2(props: {
       odometerReading: props.newVehicleFormData.odometerReading,
       rcPhotos: props.newVehicleFormData.rcPhotos,
       vehiclePhotos: props.newVehicleFormData.vehiclePhotos,
+      rcExpiresOn: props.newVehicleFormData.rcExpiresOn,
     },
   })
 
@@ -107,6 +113,7 @@ export function NewVehicleStep2(props: {
       odometerReading: data.odometerReading,
       rcPhotos: data.rcPhotos,
       vehiclePhotos: data.vehiclePhotos,
+      rcExpiresOn: data.rcExpiresOn,
     })
     props.onNext()
   }
@@ -154,6 +161,12 @@ export function NewVehicleStep2(props: {
               label={t("Field4.Title")}
               placeholder={t("Field4.Placeholder")}
               description={t("Field4.Description")}
+            />
+            <DashboardDatePicker
+              name="rcExpiresOn"
+              label={t("Field5.Title")}
+              placeholder={t("Field5.Placeholder")}
+              description={t("Field5.Description")}
             />
           </div>
           <Button

@@ -58,7 +58,7 @@ export default function AssignVehicleTile({
         new Date(other.startDate),
         new Date(other.endDate),
         bookingStartDate,
-        bookingEndDate
+        bookingEndDate,
       )
     })
   const repairOverLapScores = vehicleData.vehicleRepairs.map((repair) => {
@@ -66,14 +66,14 @@ export default function AssignVehicleTile({
       new Date(repair.startDate),
       new Date(repair.endDate),
       bookingStartDate,
-      bookingEndDate
+      bookingEndDate,
     )
   })
 
   const isBooked = bookingOverLapScores.some((score) => score != NoOverlapScore)
 
   const isRepairScheduled = repairOverLapScores.some(
-    (score) => score != NoOverlapScore
+    (score) => score != NoOverlapScore,
   )
 
   const bookingScore =
@@ -90,16 +90,17 @@ export default function AssignVehicleTile({
 
   const capacityScore = getCapacityScore(
     vehicleData.capacity,
-    booking.passengers
+    booking.passengers,
   )
 
   const statusScore = getVehicleStatusScore(vehicleData.status)
 
   const insuranceScore = getExpiryScore(
     bookingEndDate,
-    vehicleData.insuranceExpiresOn
+    vehicleData.insuranceExpiresOn,
   )
   const pucScore = getExpiryScore(bookingEndDate, vehicleData.pucExpiresOn)
+  const rcScore = getExpiryScore(bookingEndDate, vehicleData.rcExpiresOn)
   const odometerScore = getOdometerScore(vehicleData.odometerReading)
 
   const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm)
@@ -123,7 +124,7 @@ export default function AssignVehicleTile({
       className={getTileClassName(selectedVehicleId == vehicleData.id)}
       onClick={() =>
         setSelectedVehicleId(
-          selectedVehicleId == vehicleData.id ? null : vehicleData.id
+          selectedVehicleId == vehicleData.id ? null : vehicleData.id,
         )
       }
     >
@@ -171,10 +172,10 @@ export default function AssignVehicleTile({
             {isCurrentlyAssigned
               ? t("CurrentlyAssigned")
               : isBooked
-              ? t("Booked")
-              : isRepairScheduled
-              ? t("RepairScheduled")
-              : t("Available")}
+                ? t("Booked")
+                : isRepairScheduled
+                  ? t("RepairScheduled")
+                  : t("Available")}
           </Caption>
         </div>
       </div>

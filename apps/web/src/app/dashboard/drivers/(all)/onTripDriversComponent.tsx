@@ -49,16 +49,12 @@ function OnTripDriverComponent(props: FindDriversOnTripType[number]) {
     <Link href={`/dashboard/bookings/${booking?.id}`}>
       <div className={gridClassName}>
         <div className={gridItemClassName}>
-          <Caption>
-            {booking?.assignedVehicle?.brand +
-              " " +
-              booking?.assignedVehicle?.model}
-          </Caption>
-          <PBold>{booking?.assignedVehicle?.vehicleNumber}</PBold>
+          <Caption>{props.phone}</Caption>
+          <PBold>{props.name}</PBold>
         </div>
         <div className={gridItemClassName}>
           <Caption>{booking?.id}</Caption>
-          <PBold>{props.name}</PBold>
+          <PBold>{booking?.assignedVehicle?.vehicleNumber}</PBold>
         </div>
         <div className={gridItemClassName}>
           <Caption>

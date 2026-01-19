@@ -17,7 +17,7 @@ export default async function AllDriverLeavesPage({
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/drivers/[id]/leaves"} />
-      <AllDriverLeavesPageComponent leaves={driverLeaves} />
+      <AllDriverLeavesPageComponent leaves={driverLeaves} id={id} />
     </div>
   )
 }

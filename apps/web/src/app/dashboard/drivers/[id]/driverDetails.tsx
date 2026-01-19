@@ -32,11 +32,7 @@ import Link from "next/link"
 import InactivateDriverAlertButton from "../../components/buttons/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "../../components/buttons/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-
-/**
- * Actions:
- * TODO Change profile picture
- */
+import ChangeDriverPhotoSheet from "./changeDriverPhotoSheet"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -69,9 +65,7 @@ export default async function DriverDetailsPageComponent({
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <Button variant={"link"} size={"sm"}>
-                <SmallGrey>{t("ChangePhoto")}</SmallGrey>
-              </Button>
+              <ChangeDriverPhotoSheet userId={driver.userId} />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{driver.name}</H4>

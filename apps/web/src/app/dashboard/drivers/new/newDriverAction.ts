@@ -17,7 +17,7 @@ export async function newDriverAction(data: NewDriverRequestType) {
       const fileName = `${Date.now()}-${license.name}`
       const uploadedLicense = await uploadFile(
         license,
-        `${driver.id}/license/${fileName}`
+        `${driver.id}/license/${fileName}`,
       )
       const url = uploadedLicense!.path
       await driverServices.updateDriverLicensePhoto(driver.id, url)
@@ -27,7 +27,7 @@ export async function newDriverAction(data: NewDriverRequestType) {
       const fileName = `${Date.now()}-${photo.name}`
       const uploadedLicense = await uploadFile(
         photo,
-        `${driver.id}/license/${fileName}`
+        `${driver.id}/photo/${fileName}`,
       )
       const url = uploadedLicense!.path
       await userServices.updateUserPhoto(driver.userId, url)

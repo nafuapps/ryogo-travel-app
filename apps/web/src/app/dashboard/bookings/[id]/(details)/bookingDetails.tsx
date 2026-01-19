@@ -69,10 +69,15 @@ export default async function BookingDetailsPageComponent({
         </BookingSection>
         <Separator />
         <BookingSection sectionTitle={t("CustomerInfo")}>
-          <BookingItem
-            title={t("CustomerName")}
-            value={bookingDetails.customer.name}
-          />
+          <Link
+            href={`/dashboard/customers/${bookingDetails.customer.id}`}
+            className="hover:underline"
+          >
+            <BookingItem
+              title={t("CustomerName")}
+              value={bookingDetails.customer.name}
+            />
+          </Link>
           <BookingItem
             title={t("CustomerLocation")}
             value={
@@ -167,7 +172,7 @@ export default async function BookingDetailsPageComponent({
             <BookingItem
               title={t("StartTime")}
               value={moment(bookingDetails.startTime!, "hh:mm:ss").format(
-                "h:mm a"
+                "h:mm a",
               )}
             />
           )}
@@ -177,10 +182,19 @@ export default async function BookingDetailsPageComponent({
         </BookingSection>
         <Separator />
         <BookingSection sectionTitle={t("AssignmentInfo")}>
-          <BookingItem
-            title={t("AssignedVehicle")}
-            value={bookingDetails.assignedVehicle?.vehicleNumber ?? "-"}
-          />
+          {bookingDetails.assignedVehicle ? (
+            <Link
+              href={`/dashboard/vehicles/${bookingDetails.assignedVehicle.id}`}
+              className="hover:underline"
+            >
+              <BookingItem
+                title={t("AssignedVehicle")}
+                value={bookingDetails.assignedVehicle.vehicleNumber}
+              />
+            </Link>
+          ) : (
+            <BookingItem title={t("AssignedVehicle")} value={"-"} />
+          )}
           {bookingDetails.status == BookingStatusEnum.CONFIRMED && (
             <Button
               variant={
@@ -200,10 +214,19 @@ export default async function BookingDetailsPageComponent({
               </Link>
             </Button>
           )}
-          <BookingItem
-            title={t("AssignedDriver")}
-            value={bookingDetails.assignedDriver?.name ?? "-"}
-          />
+          {bookingDetails.assignedDriver ? (
+            <Link
+              href={`/dashboard/drivers/${bookingDetails.assignedDriver.id}`}
+              className="hover:underline"
+            >
+              <BookingItem
+                title={t("AssignedVehicle")}
+                value={bookingDetails.assignedDriver.name}
+              />
+            </Link>
+          ) : (
+            <BookingItem title={t("AssignedDriver")} value={"-"} />
+          )}
           {bookingDetails.status == BookingStatusEnum.CONFIRMED && (
             <Button
               variant={

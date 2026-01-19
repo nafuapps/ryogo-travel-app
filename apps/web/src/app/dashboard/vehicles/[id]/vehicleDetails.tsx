@@ -32,6 +32,7 @@ import {
 import ActivateVehicleAlertButton from "../../components/buttons/activateVehicleAlertButton"
 import InactivateVehicleAlertButton from "../../components/buttons/inactivateVehicleAlertButton"
 import Link from "next/link"
+import ChangeVehiclePhotoSheet from "./changeVehiclePhotoSheet"
 
 export default async function VehicleDetailsPageComponent({
   vehicle,
@@ -64,9 +65,7 @@ export default async function VehicleDetailsPageComponent({
               ) : (
                 <IconComponent className="size-20 lg:size-24 text-slate-400" />
               )}
-              <Button variant={"link"} size={"sm"}>
-                <SmallGrey>{t("ChangePhoto")}</SmallGrey>
-              </Button>
+              <ChangeVehiclePhotoSheet vehicleId={vehicle.id} />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{vehicle.vehicleNumber}</H4>
@@ -233,7 +232,7 @@ export default async function VehicleDetailsPageComponent({
           <div className="flex flex-col gap-1 lg:gap-1.5">
             {vehicle.hasAC && (
               <Caption>
-                {t("ACCharge", { acCharge: vehicle.defaultAcChargePerDay })}
+                {t("ACCharge", { ac: vehicle.defaultAcChargePerDay })}
               </Caption>
             )}
             <PBold>{t("RatePerKm", { rate: vehicle.defaultRatePerKm })}</PBold>

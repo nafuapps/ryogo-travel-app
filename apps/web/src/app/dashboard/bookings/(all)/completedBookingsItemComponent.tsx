@@ -33,7 +33,7 @@ export default function CompletedBookingsItemComponent({
   const [selectedTab, setSelectedTab] = useState("24hrs")
 
   const completedBookings24Hrs = completedBookings7Days.filter(
-    (b) => b.updatedAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+    (b) => b.updatedAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
   )
 
   const trips =
@@ -73,7 +73,7 @@ export default function CompletedBookingsItemComponent({
 }
 
 function CompletedComponent(
-  props: FindCompletedBookingsPreviousDaysType[number]
+  props: FindCompletedBookingsPreviousDaysType[number],
 ) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
@@ -91,10 +91,8 @@ function CompletedComponent(
           <PBold>{props.driver}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <Caption>
-            {format(props.createdAt ? props.createdAt : props.updatedAt, "PP")}
-          </Caption>
-          <PBold>{moment(props.createdAt).fromNow()}</PBold>
+          <Caption>{format(props.updatedAt, "PP")}</Caption>
+          <PBold>{moment(props.updatedAt).fromNow()}</PBold>
         </div>
       </div>
     </Link>

@@ -1,6 +1,7 @@
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import {
+  InsertVehicleRepairType,
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -57,16 +58,8 @@ export const vehicleServices = {
   },
 
   //Get vehicle's assigned bookings
-  async findVehicleAssignedBookingsById(id: string, days: number = 1) {
-    //Day today
-    const startDate = new Date()
-    //Day N days later
-    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
-    const bookings = await bookingRepository.readAssignedBookingsByVehicleId(
-      id,
-      startDate,
-      endDate,
-    )
+  async findVehicleAssignedBookingsById(id: string) {
+    const bookings = await bookingRepository.readAssignedBookingsByVehicleId(id)
 
     return bookings.map((booking) => {
       return {
@@ -84,18 +77,9 @@ export const vehicleServices = {
   },
 
   //Get vehicle's completed bookings
-  async findVehicleCompletedBookingsById(id: string, days: number = 1) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
-    const endDate = new Date()
-    const bookings = await bookingRepository.readCompletedBookingsByVehicleId(
-      id,
-      startDate,
-      endDate,
-    )
+  async findVehicleCompletedBookingsById(id: string) {
+    const bookings =
+      await bookingRepository.readCompletedBookingsByVehicleId(id)
 
     return bookings.map((booking) => {
       return {
@@ -165,6 +149,27 @@ export const vehicleServices = {
     }
     //Step4: Return added vehicle
     return newVehicle[0]
+  },
+
+  //Add vehicle repair
+  async addVehicleRepair(data: InsertVehicleRepairType) {
+    const repair = await vehicleRepairRepository.createRepair(data)
+    return repair
+  },
+
+  //Modify vehicle repair
+  async modifyVehicleRepair(
+    id: string,
+    data: Partial<InsertVehicleRepairType>,
+  ) {
+    const repair = await vehicleRepairRepository.updateRepair(
+      id,
+      data.startDate,
+      data.endDate,
+      data.isCompleted,
+      data.remarks ?? undefined,
+    )
+    return repair
   },
 
   //New vehicle (dashboard)

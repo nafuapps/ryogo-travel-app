@@ -1,5 +1,6 @@
 import {
   DriverStatusEnum,
+  InsertDriverLeaveType,
   InsertDriverType,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -53,16 +54,8 @@ export const driverServices = {
   },
 
   //Get driver's assigned bookings
-  async findDriverAssignedBookingsById(id: string, days: number = 1) {
-    //Day today
-    const startDate = new Date()
-    //Day N days later
-    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
-    const bookings = await bookingRepository.readAssignedBookingsByDriverId(
-      id,
-      startDate,
-      endDate,
-    )
+  async findDriverAssignedBookingsById(id: string) {
+    const bookings = await bookingRepository.readAssignedBookingsByDriverId(id)
 
     return bookings.map((booking) => {
       return {
@@ -80,18 +73,8 @@ export const driverServices = {
   },
 
   //Get driver's completed bookings
-  async findDriverCompletedBookingsById(id: string, days: number = 1) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
-    const endDate = new Date()
-    const bookings = await bookingRepository.readCompletedBookingsByDriverId(
-      id,
-      startDate,
-      endDate,
-    )
+  async findDriverCompletedBookingsById(id: string) {
+    const bookings = await bookingRepository.readCompletedBookingsByDriverId(id)
 
     return bookings.map((booking) => {
       return {
@@ -163,6 +146,24 @@ export const driverServices = {
   }: NewDriverRequestType): Promise<NewDriverResponseType> {
     const newDriver = userServices.addDriverUser({ agencyId, data })
     return newDriver
+  },
+
+  //Add driver leave
+  async addDriverLeave(data: InsertDriverLeaveType) {
+    const leave = await driverLeaveRepository.createLeave(data)
+    return leave
+  },
+
+  //Modify driver leave
+  async modifyDriverLeave(id: string, data: Partial<InsertDriverLeaveType>) {
+    const leave = await driverLeaveRepository.updateLeave(
+      id,
+      data.startDate,
+      data.endDate,
+      data.isCompleted,
+      data.remarks ?? undefined,
+    )
+    return leave
   },
 
   //Upload driver license photo

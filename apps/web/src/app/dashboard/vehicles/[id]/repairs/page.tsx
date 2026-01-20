@@ -17,7 +17,7 @@ export default async function AllVehicleRepairsPage({
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs"} />
-      <AllVehicleRepairsPageComponent repairs={vehicleRepairs} id={id} />
+      <AllVehicleRepairsPageComponent repairs={vehicleRepairs} vehicleId={id} />
     </div>
   )
 }

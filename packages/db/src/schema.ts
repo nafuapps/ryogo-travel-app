@@ -1082,7 +1082,7 @@ export const vehicleRepairsRelations = relations(vehicleRepairs, ({ one }) => ({
 }))
 
 //Driver Leaves table
-export const driverLeaveIdSequence = pgSequence("driverLeave_id_seq", {
+export const driverLeaveIdSequence = pgSequence("driver_leave_id_seq", {
   ...sequenceValues,
 })
 export const driverLeaves = pgTable(

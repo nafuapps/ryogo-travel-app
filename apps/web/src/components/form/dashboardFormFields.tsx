@@ -255,7 +255,7 @@ type DashboardMultipleCheckboxProps = {
   register: UseFormRegisterReturn<string>
 }
 export function DashboardMultipleCheckbox(
-  props: DashboardMultipleCheckboxProps
+  props: DashboardMultipleCheckboxProps,
 ) {
   return (
     <FormField
@@ -283,8 +283,8 @@ export function DashboardMultipleCheckbox(
                             ? field.onChange([...field.value, item])
                             : field.onChange(
                                 field.value?.filter(
-                                  (value: string) => value !== item
-                                )
+                                  (value: string) => value !== item,
+                                ),
                               )
                         }}
                       />
@@ -310,6 +310,7 @@ type DashboardDatePickerProps = {
   placeholder: string
   description?: string
   disabled?: boolean
+  pastAllowed?: boolean
 }
 export function DashboardDatePicker(props: DashboardDatePickerProps) {
   return (
@@ -331,7 +332,7 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
                   variant={"outline"}
                   className={cn(
                     "w-full pl-3 text-left font-normal",
-                    !field.value && "text-muted-foreground"
+                    !field.value && "text-muted-foreground",
                   )}
                 >
                   {field.value ? (
@@ -348,7 +349,12 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
-                disabled={(date) => date < new Date()}
+                disabled={
+                  //If past allowed, disable dates before 2025, else disable dates before today
+                  props.pastAllowed
+                    ? { before: new Date(2025, 1, 1) }
+                    : { before: new Date() }
+                }
                 captionLayout="dropdown"
                 reverseYears
                 endMonth={new Date(2040, 0)}

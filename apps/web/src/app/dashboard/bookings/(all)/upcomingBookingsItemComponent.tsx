@@ -35,7 +35,7 @@ export default function UpcomingBookingsItemComponent({
   const upcomingBookings24Hrs = upcomingBookings7Days.filter(
     (b) =>
       new Date(b.startDate) <
-      new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+      new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   )
 
   const trips =
@@ -100,10 +100,7 @@ function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
           {props.startDate < new Date() ? (
             <PRed>{startDate.fromNow()}</PRed>
           ) : (
-            <PBold>
-              {/* {moment(props.startDate + " " + props.startTime).fromNow()} */}
-              {startDate.fromNow()}
-            </PBold>
+            <PBold>{startDate.fromNow()}</PBold>
           )}
         </div>
       </div>

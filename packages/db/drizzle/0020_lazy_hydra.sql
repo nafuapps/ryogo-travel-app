@@ -1,0 +1,1 @@
+ALTER SEQUENCE "public"."driverLeave_id_seq" RENAME TO "driver_leave_id_seq";

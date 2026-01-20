@@ -8,7 +8,7 @@ import {
   headerRightClassName,
   headerTooltipClassName,
 } from "@/components/header/headerCommon"
-import { H5, SmallGrey } from "@/components/typography"
+import { CaptionGrey, H5 } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
@@ -39,9 +39,9 @@ export default function RiderHeader() {
         <Link href="/rider/myActions">
           <Tooltip disableHoverableContent>
             <TooltipTrigger asChild>
-              <Button variant="outline" size={"lg"}>
+              <Button variant="outline" size={"default"}>
                 <span className={headerButtonClassName}>
-                  <SmallGrey>{t("ActionCenter")}</SmallGrey>
+                  <CaptionGrey>{t("ActionCenter")}</CaptionGrey>
                 </span>
                 <LucideTarget className={headerIconClassName} />
               </Button>

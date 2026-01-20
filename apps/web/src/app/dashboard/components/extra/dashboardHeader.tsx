@@ -6,7 +6,7 @@ import {
   headerRightClassName,
   headerTooltipClassName,
 } from "@/components/header/headerCommon"
-import { H5, SmallGrey } from "@/components/typography"
+import { CaptionGrey, H5 } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
@@ -36,10 +36,10 @@ export default async function DashboardHeader(props: { pathName: string }) {
           <Link href="/dashboard/bookings/new">
             <Tooltip disableHoverableContent>
               <TooltipTrigger asChild>
-                <Button variant="outline" size={"lg"}>
+                <Button variant="outline" size={"default"}>
                   <LucidePlus className={headerIconClassName} />
                   <span className={headerButtonClassName}>
-                    <SmallGrey>{t("NewBooking")}</SmallGrey>
+                    <CaptionGrey>{t("NewBooking")}</CaptionGrey>
                   </span>
                 </Button>
               </TooltipTrigger>
@@ -53,9 +53,9 @@ export default async function DashboardHeader(props: { pathName: string }) {
           <Link href="/dashboard/action-center">
             <Tooltip disableHoverableContent>
               <TooltipTrigger asChild>
-                <Button variant="outline" size={"lg"}>
+                <Button variant="outline" size={"default"}>
                   <span className={headerButtonClassName}>
-                    <SmallGrey>{t("ActionCenter")}</SmallGrey>
+                    <CaptionGrey>{t("ActionCenter")}</CaptionGrey>
                   </span>
                   <LucideTarget className={headerIconClassName} />
                 </Button>

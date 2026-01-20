@@ -21,6 +21,10 @@ export default async function ModifyDriverLeavePage({
 
   const leave = await driverServices.findDriverLeaveById(leaveId)
 
+  //If no such leave found, redirect
+  if (!leave) {
+    redirect(`/dashboard/drivers/${id}/leaves`, RedirectType.replace)
+  }
   //Can anyone modify leave?
 
   return (

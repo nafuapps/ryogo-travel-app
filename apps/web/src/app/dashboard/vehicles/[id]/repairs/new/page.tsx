@@ -15,7 +15,7 @@ export default async function NewVehicleRepairPage({
 
   return (
     <div className={mainClassName}>
-      <DashboardHeader pathName={"/dashboard/vehicle/[id]/repairs/new"} />
+      <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs/new"} />
       <NewVehicleRepairPageComponent
         userId={user!.userId}
         agencyId={user!.agencyId}

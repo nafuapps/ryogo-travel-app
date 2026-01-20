@@ -719,7 +719,7 @@
         "/dashboard/drivers/[id]/modify": "Modify Driver",
         "/dashboard/drivers/[id]/leaves": "Driver Leaves",
         "/dashboard/drivers/[id]/leaves/new": "New Leave",
-        "/dashboard/drivers/[id]/leaves/modify": "Modify Leaves",
+        "/dashboard/drivers/[id]/leaves/modify": "Modify Leave",
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New User",
         "/dashboard/users/[id]": "User Details",
@@ -732,7 +732,7 @@
         "/dashboard/vehicles/[id]/modify": "Modify Vehicle",
         "/dashboard/vehicles/[id]/repairs": "Vehicle Repairs",
         "/dashboard/vehicles/[id]/repairs/new": "New Repair",
-        "/dashboard/vehicles/[id]/repairs/modify": "Modify Repairs"
+        "/dashboard/vehicles/[id]/repairs/modify": "Modify Repair"
       }
     },
     "Home": {
@@ -1611,6 +1611,68 @@
       "EditDetails": "Edit Details",
       "Inactivate": "Inactivate Driver"
     },
+    "VehicleAssignedBookings":{
+      "NoBookings":"No bookings assigned to this vehicle."
+    },
+    "VehicleCompletedBookings":{
+      "NoBookings":"This vehicle has not completed any bookings yet."
+    },
+    "VehicleRepairs":{
+       "AddRepair":"Add Repair",
+      "Completed":"COMPLETED",
+      "Pending":"PENDING",
+      "Edit":"Edit"
+    },
+    "NewVehicleRepair":{
+      "Field1":{
+        "Error1":"Repair start date is required",
+        "Title":"Repair Start Date",
+        "Placeholder":"Select a date"
+      },
+      "Field2":{
+        "Error1":"Repair end date is required",
+        "Error2":"Start date cannot be after end date",
+        "Title":"Repair End Date",
+        "Placeholder":"Select a date"
+      },
+      "Field3":{
+        "Title":"Repair already completed?"
+      },
+      "Field4":{
+        "Title":"Remarks (optional)",
+        "Placeholder":"Add any special note about the repair"
+      },
+      "Loading":"Loading..",
+      "PrimaryCTA":"Add Repair",
+      "Back":"Back",
+      "Success":"Vehicle repair added successfully!",
+      "Error":"Cannot add repair.. please try again later."
+    },
+    "ModifyVehicleRepair":{
+      "Field1":{
+        "Error1":"Repair start date is required",
+        "Title":"Repair Start Date",
+        "Placeholder":"Select a date"
+      },
+      "Field2":{
+        "Error1":"Repair end date is required",
+        "Error2":"Start date cannot be after end date",
+        "Title":"Repair End Date",
+        "Placeholder":"Select a date"
+      },
+      "Field3":{
+        "Title":"Repair already completed?"
+      },
+      "Field4":{
+        "Title":"Remarks (optional)",
+        "Placeholder":"Add any special note about the repair"
+      },
+      "Loading":"Loading..",
+      "PrimaryCTA":"Edit Repair",
+      "Back":"Back",
+      "Success":"Vehicle repair edited successfully!",
+      "Error":"Cannot edit repair.. please try again later."
+    },
     "Drivers": {
       "All": {
         "Title": "All Drivers",
@@ -1773,6 +1835,68 @@
       "PerDay": "₹{allowance}/day",
       "EditDetails": "Edit Details",
       "Inactivate": "Inactivate Driver"
+    },
+    "DriverAssignedBookings":{
+      "NoBookings":"No bookings assigned to this driver."
+    },
+    "DriverCompletedBookings":{
+      "NoBookings":"This driver has not completed any bookings yet."
+    },
+    "DriverLeaves":{
+      "AddLeave":"Add Leave",
+      "Completed":"COMPLETED",
+      "Pending":"PENDING",
+      "Edit":"Edit"
+    },
+    "NewDriverLeave":{
+      "Field1":{
+        "Error1":"Leave start date is required",
+        "Title":"Leave Start Date",
+        "Placeholder":"Select a date"
+      },
+      "Field2":{
+        "Error1":"Leave end date is required",
+        "Error2":"Start date cannot be after end date",
+        "Title":"Leave End Date",
+        "Placeholder":"Select a date"
+      },
+      "Field3":{
+        "Title":"Leave already completed?"
+      },
+      "Field4":{
+        "Title":"Remarks (optional)",
+        "Placeholder":"Add any special note about the leave"
+      },
+      "Loading":"Loading..",
+      "PrimaryCTA":"Add Leave",
+      "Back":"Back",
+      "Success":"Driver leave added successfully!",
+      "Error":"Cannot add leave.. please try again later."
+    },
+    "ModifyDriverLeave":{
+      "Field1":{
+        "Error1":"Leave start date is required",
+        "Title":"Leave Start Date",
+        "Placeholder":"Select a date"
+      },
+      "Field2":{
+        "Error1":"Leave end date is required",
+        "Error2":"Start date cannot be after end date",
+        "Title":"Leave End Date",
+        "Placeholder":"Select a date"
+      },
+      "Field3":{
+        "Title":"Leave already completed?"
+      },
+      "Field4":{
+        "Title":"Remarks (optional)",
+        "Placeholder":"Add any special note about the leave"
+      },
+      "Loading":"Loading..",
+      "PrimaryCTA":"Edit Leave",
+      "Back":"Back",
+      "Success":"Driver leave edited successfully!",
+      "Error":"Cannot edit leave.. please try again later."
     },
     "Buttons": {
       "CancelBooking": {

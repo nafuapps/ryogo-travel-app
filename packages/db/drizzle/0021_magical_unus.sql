@@ -1,0 +1,2 @@
+ALTER TABLE "vehicle_repairs" DROP CONSTRAINT "cost >= 0 and < 1000000";--> statement-breakpoint
+ALTER TABLE "vehicle_repairs" ADD CONSTRAINT "cost >= 0 and < 1000000" CHECK ("vehicle_repairs"."cost" >= 0 AND "vehicle_repairs"."cost" < 1000000);

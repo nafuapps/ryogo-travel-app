@@ -168,6 +168,7 @@ export const vehicleServices = {
       data.endDate,
       data.isCompleted,
       data.remarks ?? undefined,
+      data.cost ?? undefined,
     )
     return repair
   },

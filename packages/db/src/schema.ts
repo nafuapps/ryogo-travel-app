@@ -1058,7 +1058,7 @@ export const vehicleRepairs = pgTable(
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
     check(
       "cost >= 0 and < 1000000",
-      sql`${t.cost} > 0 AND ${t.cost} < 1000000`,
+      sql`${t.cost} >= 0 AND ${t.cost} < 1000000`,
     ),
     index("vehicle_repairs_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter vehicle repairs by vehicle in an agency
     index("vehicle_repairs_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter vehicle repairs added by a user in an agency

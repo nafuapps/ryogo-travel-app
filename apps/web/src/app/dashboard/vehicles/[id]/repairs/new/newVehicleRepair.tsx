@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl"
 import {
   DashboardDatePicker,
+  DashboardInput,
   DashboardSwitch,
   DashboardTextarea,
 } from "@/components/form/dashboardFormFields"
@@ -36,6 +37,13 @@ export default function NewVehicleRepairPageComponent({
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
       isCompleted: z.boolean(),
       remarks: z.string().optional(),
+      cost: z.coerce
+        .number<number>(t("Field5.Error1"))
+        .min(0, t("Field5.Error2"))
+        .max(1000000, t("Field5.Error3"))
+        .multipleOf(1, t("Field5.Error4"))
+        .nonnegative(t("Field5.Error5"))
+        .optional(),
     })
     .superRefine((data, ctx) => {
       //Start date cannot be after end date
@@ -68,6 +76,7 @@ export default function NewVehicleRepairPageComponent({
       endDate: values.endDate,
       isCompleted: values.isCompleted,
       remarks: values.remarks,
+      cost: values.cost,
     }
     const createdLeave = await newVehicleRepairAction(newLeave)
     if (createdLeave) {
@@ -103,6 +112,12 @@ export default function NewVehicleRepairPageComponent({
             name="remarks"
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
+          />
+          <DashboardInput
+            name={"cost"}
+            type="tel"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
           />
           <Button
             variant={"default"}

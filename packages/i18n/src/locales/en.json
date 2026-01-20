@@ -1642,6 +1642,15 @@
         "Title":"Remarks (optional)",
         "Placeholder":"Add any special note about the repair"
       },
+      "Field5":{
+        "Title":"Cost of repair (optional)",
+        "Placeholder":" ₹500",
+          "Error1": "Cost is required",
+          "Error2": "Cost must be atleast ₹0",
+          "Error3": "Cost must be less than ₹1000000",
+          "Error4": "Cost cannot be in decimals (round it up)",
+          "Error5": "Cost must be a positive number"
+      },
       "Loading":"Loading..",
       "PrimaryCTA":"Add Repair",
       "Back":"Back",
@@ -1666,6 +1675,15 @@
       "Field4":{
         "Title":"Remarks (optional)",
         "Placeholder":"Add any special note about the repair"
+      },
+      "Field5":{
+        "Title":"Cost of repair (optional)",
+        "Placeholder":" ₹500",
+          "Error1": "Cost is required",
+          "Error2": "Cost must be atleast ₹0",
+          "Error3": "Cost must be less than ₹1000000",
+          "Error4": "Cost cannot be in decimals (round it up)",
+          "Error5": "Cost must be a positive number"
       },
       "Loading":"Loading..",
       "PrimaryCTA":"Edit Repair",

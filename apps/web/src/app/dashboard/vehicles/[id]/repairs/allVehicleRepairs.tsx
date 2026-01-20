@@ -59,6 +59,7 @@ async function VehicleRepairComponent(
             " - " +
             moment(props.endDate).format("DD MMM")}
         </PBold>
+        {props.cost && <CaptionGrey>{"₹" + props.cost}</CaptionGrey>}
       </div>
       <div className={gridItemClassName}>
         <Caption>{props.addedByUser.name}</Caption>

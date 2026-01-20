@@ -39,14 +39,16 @@ export const vehicleRepairRepository = {
     endDate?: Date,
     isCompleted?: boolean,
     remarks?: string,
+    cost?: number,
   ) {
     return await db
       .update(vehicleRepairs)
       .set({
-        isCompleted,
-        remarks,
         startDate,
         endDate,
+        isCompleted,
+        remarks,
+        cost,
       })
       .where(eq(vehicleRepairs.id, id))
       .returning()

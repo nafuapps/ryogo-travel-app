@@ -21,6 +21,10 @@ export default async function ModifyVehicleRepairPage({
 
   const repair = await vehicleServices.findVehicleRepairById(repairId)
 
+  //If no such repair found, redirect
+  if (!repair) {
+    redirect(`/dashboard/vehicles/${id}/repairs`, RedirectType.replace)
+  }
   //Can anyone modify repair?
 
   return (

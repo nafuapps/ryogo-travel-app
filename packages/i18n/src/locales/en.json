@@ -1611,6 +1611,126 @@
       "EditDetails": "Edit Details",
       "Inactivate": "Inactivate Driver"
     },
+    "ModifyVehicle":{
+      "Field1":{
+        "Title": "Select vehicle type",
+        "Error1": "Providing vehicle type is mandatory"
+      },
+      "Field2": {
+          "Title": "Vehicle brand",
+          "Placeholder": "Honda",
+          "Description": "Provide vehicle manufacturer brand",
+          "Error1": "Brand name must be atleast 3 characters",
+          "Error2": "Brand name must be less than 15 characters"
+        },
+        "Field3": {
+          "Title": "Vehicle color",
+          "Placeholder": "Black",
+          "Description": "Provide vehicle color",
+          "Error1": "Vehicle color must be atleast 3 characters",
+          "Error2": "Vehicle color must be less than 15 characters"
+        },
+        "Field4": {
+          "Title": "Vehicle model",
+          "Placeholder": "City 2017",
+          "Description": "Provide vehicle model and variant",
+          "Error1": "Vehicle model must be atleast 3 characters",
+          "Error2": "Vehicle model must be less than 30 characters"
+        },
+         "Field5": {
+          "Title": "Enter passenger capacity",
+          "Placeholder": "4",
+          "Description": "How many passengers can travel in this vehicle (excluding driver)?",
+          "Error1": "Vehicle passenger capacity is required",
+          "Error2": "Capacity must be atleast 0",
+          "Error3": "Capacity must be less than 100",
+          "Error4": "Capacity cannot be in decimals",
+          "Error5": "Capacity must be a non-negative number"
+        },
+        "Field6": {
+          "Title": "Enter odometer reading (Km)",
+          "Placeholder": "10000",
+          "Description": "Check your odometer and enter the current reading",
+          "Error1": "Odometer reading is required",
+          "Error2": "Odometer must be atleast 0Km",
+          "Error3": "Odometer must be less than 1000000Km",
+          "Error4": "Odometer cannot be in decimals (round it up)",
+          "Error5": "Odometer must be a positive number"
+        },
+        "Field7": {
+          "Title": "Registration expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide Registration certificate expiry date",
+          "Error1": "Providing RC expiry date is mandatory",
+          "Error2": "RC should not be expired"
+        },
+        "Field8": {
+          "Title": "RC Photo",
+          "Placeholder": "UPLOAD RC",
+          "Description": "Upload photo of vehicle registration certificate",
+          "Error1": "RC photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field9": {
+          "Title": "Insurance expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide vehicle insurance policy expiry date",
+          "Error1": "Providing insurance expiry date is mandatory",
+          "Error2": "Insurance should not be expired"
+        },
+        "Field10": {
+          "Title": "Insurance policy photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload insurance policy photo",
+          "Error1": "Insurance policy photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field11": {
+          "Title": "PUC expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide PUC certificate expiry date",
+          "Error1": "Providing PUC certifacte date is mandatory",
+          "Error2": "PUC should not be expired"
+        },
+        "Field12": {
+          "Title": "PUC certificate photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload Pollution Under Control Certificate photo",
+          "Error1": "PUC certificate photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+        },
+        "Field13": {
+          "Title": "Vehicle rate per Km (in ₹)",
+          "Placeholder": "18",
+          "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer.",
+          "Error1": "Vehicle rate must be a number",
+          "Error2": "Vehicle rate must be atleast 0.",
+          "Error3": "Vehicle rate must be less than ₹100",
+          "Error4": "Vehicle rate cannot be in decimals",
+          "Error5": "Vehicle rate must be a positive number"
+        },
+        "Field14": {
+          "Title": "Vehicle has AC?"
+        },
+        "Field15": {
+          "Title": "AC charge per day (in ₹)",
+          "Placeholder": "1000",
+          "Description": "Based on customer's AC preference, this per day charge will be added to the booking quote.",
+          "Error1": "AC Charge must be a number",
+          "Error2": "AC Charge must be atleast 0",
+          "Error3": "AC Charge must be less than ₹10000",
+          "Error4": "AC Charge cannot be in decimals",
+          "Error5": "AC Charge must be a positive number"
+        },
+        "PrimaryCTA": "Save changes",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success":"Vehicle details edited successfully!",
+        "Error":"Cannot change vehicle details.. please try again later."
+    },
     "VehicleAssignedBookings":{
       "NoBookings":"No bookings assigned to this vehicle."
     },
@@ -1853,6 +1973,55 @@
       "PerDay": "₹{allowance}/day",
       "EditDetails": "Edit Details",
       "Inactivate": "Inactivate Driver"
+    },
+    "ModifyDriver":{
+      "Field1": {
+          "Title": "Driver address",
+          "Placeholder": "Address Line 1, Street, City, State, Pincode",
+          "Error1": "Address must be atleast 20 characters",
+          "Error2": "Address must be less than 300 characters"
+        },
+        "Field2": {
+          "Title": "Select all the vehicles that driver can drive",
+          "Error1": "Providing atleast 1 vehicle type is mandatory"
+        },
+        "Field3": {
+          "Title": "Driver allowance per day (in ₹)",
+          "Placeholder": "500",
+          "Description": "How much do you pay driver per day? This will be used to calculate the booking quote for the customer.",
+          "Error1": "Driver allowance must be a number",
+          "Error2": "Driver allowance must be atleast ₹1",
+          "Error3": "Driver allowance must be less than ₹10000",
+          "Error4": "Driver allowance cannot be in decimals",
+          "Error5": "Driver allowance must be a positive number"
+        },
+       "Field4": {
+          "Title": "Driver license number",
+          "Placeholder": "GJ1220190000001",
+          "Description": "Provide license number of the driver (without space or dash)",
+          "Error1": "License number must be atleast 12 characters",
+          "Error2": "License number must be less than 20 characters"
+        },
+        "Field5": {
+          "Title": "License expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide driver license expiry date",
+          "Error1": "Providing driver license expiry date is mandatory",
+          "Error2": "License should not be expired"
+        },
+        "Field6": {
+          "Title": "Driver License photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload driver license photo",
+          "Error1": "License photo is required",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+"PrimaryCTA": "Save changes",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success":"Driver details edited successfully!",
+        "Error":"Cannot change driver details.. please try again later."
     },
     "DriverAssignedBookings":{
       "NoBookings":"No bookings assigned to this driver."

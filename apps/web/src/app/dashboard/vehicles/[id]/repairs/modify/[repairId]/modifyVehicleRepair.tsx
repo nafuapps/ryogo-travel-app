@@ -77,11 +77,11 @@ export default function ModifyVehicleRepairPageComponent({
       remarks: values.remarks,
       cost: values.cost,
     }
-    const createdRepair = await modifyVehicleRepairAction(
+    const modifiedRepair = await modifyVehicleRepairAction(
       repair.id,
       modifyRepair,
     )
-    if (createdRepair) {
+    if (modifiedRepair) {
       router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
       toast.success(t("Success"))
     } else {

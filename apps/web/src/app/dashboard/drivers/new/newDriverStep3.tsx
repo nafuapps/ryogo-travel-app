@@ -117,8 +117,7 @@ export function NewDriverStep3(props: {
             onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("SecondaryCTA")}
+            {t("SecondaryCTA")}
           </Button>
         </form>
       </Form>

@@ -148,6 +148,28 @@ export const driverServices = {
     return newDriver
   },
 
+  //Modify driver details
+  async modifyDriver(
+    id: string,
+    address?: string,
+    canDriveVehicleTypes?: VehicleTypesEnum[],
+    defaultAllowancePerDay?: number,
+    licenseNumber?: string,
+    licenseExpiresOn?: Date,
+    licensePhotoUrl?: string,
+  ) {
+    const driver = await driverRepository.updateDriver(
+      id,
+      address,
+      canDriveVehicleTypes,
+      defaultAllowancePerDay,
+      licenseNumber,
+      licenseExpiresOn,
+      licensePhotoUrl,
+    )
+    return driver
+  },
+
   //Add driver leave
   async addDriverLeave(data: InsertDriverLeaveType) {
     const leave = await driverLeaveRepository.createLeave(data)

@@ -1,7 +1,7 @@
 "use client"
 
 import { DashboardFileInput } from "@/components/form/dashboardFormFields"
-import { SmallGrey } from "@/components/typography"
+import { CaptionGrey } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
@@ -73,8 +73,8 @@ export default function ChangeVehiclePhotoSheet({
 
   return (
     <Sheet>
-      <SheetTrigger>
-        <SmallGrey>{t("Button")}</SmallGrey>
+      <SheetTrigger className="hover:underline">
+        <CaptionGrey>{t("Button")}</CaptionGrey>
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

@@ -4,6 +4,7 @@ import {
   InsertVehicleType,
   vehicles,
   VehicleStatusEnum,
+  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, notInArray, inArray, or, gte, lte } from "drizzle-orm"
 
@@ -242,6 +243,48 @@ export const vehicleRepository = {
     return await db.insert(vehicles).values(vehicle).returning()
   },
 
+  //Update vehicle details
+  async updateVehicle(
+    id: string,
+    type?: VehicleTypesEnum,
+    brand?: string,
+    color?: string,
+    model?: string,
+    capacity?: number,
+    odometerReading?: number,
+    rcExpiresOn?: Date,
+    insuranceExpiresOn?: Date,
+    pucExpiresOn?: Date,
+    defaultRatePerKm?: number,
+    hasAC?: boolean,
+    defaultAcChargePerDay?: number,
+    rcPhotoUrl?: string,
+    pucPhotoUrl?: string,
+    insurancePhotoUrl?: string,
+  ) {
+    return await db
+      .update(vehicles)
+      .set({
+        type,
+        brand,
+        color,
+        model,
+        capacity,
+        odometerReading,
+        rcExpiresOn,
+        insuranceExpiresOn,
+        pucExpiresOn,
+        defaultRatePerKm,
+        hasAC,
+        defaultAcChargePerDay,
+        rcPhotoUrl,
+        pucPhotoUrl,
+        insurancePhotoUrl,
+      })
+      .where(eq(vehicles.id, id))
+      .returning()
+  },
+
   //Update vehicle Docs Urls
   async updateDocUrls(
     vehicleId: string,
@@ -262,43 +305,12 @@ export const vehicleRepository = {
       .returning({ id: vehicles.id })
   },
 
-  //Update vehicle PUC Url
-  async updatePUCUrl(vehicleId: string, pucPhotoUrl: string) {
-    return await db
-      .update(vehicles)
-      .set({
-        pucPhotoUrl: pucPhotoUrl,
-      })
-      .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id })
-  },
-
-  //Update vehicle RC Url
-  async updateRCUrl(vehicleId: string, rcPhotoUrl: string) {
-    return await db
-      .update(vehicles)
-      .set({
-        rcPhotoUrl: rcPhotoUrl,
-      })
-      .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id })
-  },
   //Update vehicle photo Url
   async updateVehiclePhotoUrl(vehicleId: string, vehiclePhotoUrl: string) {
     return await db
       .update(vehicles)
       .set({
         vehiclePhotoUrl: vehiclePhotoUrl,
-      })
-      .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id })
-  },
-  //Update vehicle Insurance Url
-  async updateInsuranceUrl(vehicleId: string, insurancePhotoUrl: string) {
-    return await db
-      .update(vehicles)
-      .set({
-        insurancePhotoUrl: insurancePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
       .returning({ id: vehicles.id })

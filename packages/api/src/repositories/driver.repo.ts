@@ -4,6 +4,7 @@ import {
   drivers,
   DriverStatusEnum,
   InsertDriverType,
+  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, notInArray, or, gte, lte } from "drizzle-orm"
 
@@ -237,6 +238,30 @@ export const driverRepository = {
   //Create driver
   async createDriver(data: InsertDriverType) {
     return await db.insert(drivers).values(data).returning()
+  },
+
+  //Update driver
+  async updateDriver(
+    id: string,
+    address?: string,
+    canDriveVehicleTypes?: VehicleTypesEnum[],
+    defaultAllowancePerDay?: number,
+    licenseNumber?: string,
+    licenseExpiresOn?: Date,
+    licensePhotoUrl?: string,
+  ) {
+    return await db
+      .update(drivers)
+      .set({
+        address,
+        canDriveVehicleTypes,
+        defaultAllowancePerDay,
+        licenseNumber,
+        licenseExpiresOn,
+        licensePhotoUrl,
+      })
+      .where(eq(drivers.id, id))
+      .returning()
   },
 
   //Update driver license URL by Id

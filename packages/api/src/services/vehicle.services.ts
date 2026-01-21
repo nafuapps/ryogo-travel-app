@@ -2,6 +2,7 @@ import { vehicleRepository } from "../repositories/vehicle.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import {
   InsertVehicleRepairType,
+  InsertVehicleType,
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -182,6 +183,46 @@ export const vehicleServices = {
     return vehicle
   },
 
+  //Modify vehicle details
+  async modifyVehicle(
+    id: string,
+    type?: VehicleTypesEnum,
+    brand?: string,
+    color?: string,
+    model?: string,
+    capacity?: number,
+    odometerReading?: number,
+    rcExpiresOn?: Date,
+    insuranceExpiresOn?: Date,
+    pucExpiresOn?: Date,
+    defaultRatePerKm?: number,
+    hasAC?: boolean,
+    defaultAcChargePerDay?: number,
+    rcPhotoUrl?: string,
+    pucPhotoUrl?: string,
+    insurancePhotoUrl?: string,
+  ) {
+    const vehicle = await vehicleRepository.updateVehicle(
+      id,
+      type,
+      brand,
+      color,
+      model,
+      capacity,
+      odometerReading,
+      rcExpiresOn,
+      insuranceExpiresOn,
+      pucExpiresOn,
+      defaultRatePerKm,
+      hasAC,
+      defaultAcChargePerDay,
+      rcPhotoUrl,
+      pucPhotoUrl,
+      insurancePhotoUrl,
+    )
+    return vehicle
+  },
+
   //Update Vehicle doc URL
   async renewVehicleDocURLs(
     vehicleId: string,
@@ -199,36 +240,6 @@ export const vehicleServices = {
     )
     if (!updatedVehicle) {
       throw new Error("Failed to update document url for this vehicle in DB")
-    }
-    return updatedVehicle[0]
-  },
-
-  //Update RC URL
-  async renewRcURL(vehicleId: string, url: string) {
-    const updatedVehicle = await vehicleRepository.updateRCUrl(vehicleId, url)
-    if (!updatedVehicle) {
-      throw new Error("Failed to update rc url for this vehicle in DB")
-    }
-    return updatedVehicle[0]
-  },
-
-  //Update PUC URL
-  async renewPucURL(vehicleId: string, url: string) {
-    const updatedVehicle = await vehicleRepository.updatePUCUrl(vehicleId, url)
-    if (!updatedVehicle) {
-      throw new Error("Failed to update puc url for this vehicle in DB")
-    }
-    return updatedVehicle[0]
-  },
-
-  //Update Insurance URL
-  async renewInsuranceURL(vehicleId: string, url: string) {
-    const updatedVehicle = await vehicleRepository.updateInsuranceUrl(
-      vehicleId,
-      url,
-    )
-    if (!updatedVehicle) {
-      throw new Error("Failed to update insurance url for this vehicle in DB")
     }
     return updatedVehicle[0]
   },

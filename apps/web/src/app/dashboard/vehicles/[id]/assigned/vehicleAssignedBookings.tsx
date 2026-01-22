@@ -47,7 +47,7 @@ function AssignedBookingComponent(
   startDate.minutes(startTime.minutes())
   startDate.seconds(startTime.seconds())
   return (
-    <Link href={`/dashboard/bookings/${props.bookingId}`}>
+    <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
       <div className={gridClassName}>
         <div className={gridItemClassName}>
           <Caption>{props.bookingId}</Caption>

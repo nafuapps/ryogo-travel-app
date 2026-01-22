@@ -154,7 +154,7 @@ export const bookingRepository = {
     })
   },
 
-  //Read Assigned bookings by driver id
+  //Read Completed bookings by driver id
   async readCompletedBookingsByDriverId(driverId: string) {
     return await db.query.bookings.findMany({
       limit: 100,
@@ -205,12 +205,63 @@ export const bookingRepository = {
     })
   },
 
-  //Read Assigned bookings by vehicle id
+  //Read Completed bookings by vehicle id
   async readCompletedBookingsByVehicleId(vehicleId: string) {
     return await db.query.bookings.findMany({
       limit: 100,
       where: and(
         eq(bookings.assignedVehicleId, vehicleId),
+        eq(bookings.status, BookingStatusEnum.COMPLETED),
+      ),
+      columns: {
+        status: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+        tripLogs: {
+          where: eq(tripLogs.type, TripLogTypesEnum.END_TRIP),
+          columns: {
+            createdAt: true,
+          },
+          limit: 1,
+        },
+      },
+    })
+  },
+
+  //Read Completed bookings by customer id
+  async readCompletedBookingsByCustomerId(customerId: string) {
+    return await db.query.bookings.findMany({
+      limit: 100,
+      where: and(
+        eq(bookings.customerId, customerId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
       ),
       columns: {
@@ -356,6 +407,51 @@ export const bookingRepository = {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.assignedDriverId, driverId),
+        eq(bookings.status, BookingStatusEnum.CONFIRMED),
+      ),
+      columns: {
+        startDate: true,
+        startTime: true,
+        endDate: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+      },
+    })
+  },
+
+  //Read Upcoming bookings by customer id
+  async readUpcomingBookingsByCustomerId(customerId: string) {
+    return await db.query.bookings.findMany({
+      where: and(
+        eq(bookings.customerId, customerId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
       ),
       columns: {

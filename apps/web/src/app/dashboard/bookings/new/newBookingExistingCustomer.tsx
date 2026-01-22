@@ -41,7 +41,11 @@ export default function ExistingCutomerCard({
       <div className="flex flex-col gap-0.5 lg:gap-1 items-start">
         <H5>{existingCustomer?.name}</H5>
         <SmallGrey>{existingCustomer?.remarks}</SmallGrey>
-        <CaptionGrey>{existingCustomer?.location}</CaptionGrey>
+        <CaptionGrey>
+          {existingCustomer?.location.city +
+            ", " +
+            existingCustomer?.location.state}
+        </CaptionGrey>
       </div>
     </div>
   )

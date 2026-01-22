@@ -1,6 +1,6 @@
 import { pageClassName } from "@/components/page/pageCommons"
-import { FindDriverCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "../driverDetailHeaderTabs"
+import { FindCustomerCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
+import CustomerDetailHeaderTabs from "../customerDetailHeaderTabs"
 import {
   gridClassName,
   gridItemClassName,
@@ -11,20 +11,20 @@ import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 
-export default async function DriverCompletedBookingsPageComponent({
+export default async function CustomerCompletedBookingsPageComponent({
   bookings,
   id,
 }: {
-  bookings: FindDriverCompletedBookingsByIdType
+  bookings: FindCustomerCompletedBookingsByIdType
   id: string
 }) {
-  const t = await getTranslations("Dashboard.DriverCompletedBookings")
+  const t = await getTranslations("Dashboard.CustomerCompletedBookings")
 
   return (
-    <div id="DriverCompletedBookingsPage" className={pageClassName}>
-      <DriverDetailHeaderTabs selectedTab={"Completed"} id={id} />
+    <div id="CustomerCompletedBookingsPage" className={pageClassName}>
+      <CustomerDetailHeaderTabs selectedTab={"Completed"} id={id} />
       <div
-        id="DriverCompletedBookingsList"
+        id="CustomerCompletedBookingsList"
         className="flex flex-col items-center gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
       >
         {bookings.length > 0 ? (
@@ -40,7 +40,7 @@ export default async function DriverCompletedBookingsPageComponent({
 }
 
 function CompletedBookingComponent(
-  props: FindDriverCompletedBookingsByIdType[number],
+  props: FindCustomerCompletedBookingsByIdType[number],
 ) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
@@ -55,7 +55,7 @@ function CompletedBookingComponent(
         </div>
         <div className={gridItemClassName}>
           <Caption>{props.vehicle}</Caption>
-          <PBold>{props.driver}</PBold>
+          <PBold>{props.customer}</PBold>
         </div>
         <div className={gridItemClassName}>
           <Caption>{format(props.updatedAt, "PP")}</Caption>

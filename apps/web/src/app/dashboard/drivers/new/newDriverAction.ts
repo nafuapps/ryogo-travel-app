@@ -25,11 +25,11 @@ export async function newDriverAction(data: NewDriverRequestType) {
     if (data.data.driverPhotos && data.data.driverPhotos[0]) {
       const photo = data.data.driverPhotos[0]
       const fileName = `${Date.now()}-${photo.name}`
-      const uploadedLicense = await uploadFile(
+      const uploadedPhoto = await uploadFile(
         photo,
-        `${driver.id}/photo/${fileName}`,
+        `${driver.userId}/photo/${fileName}`,
       )
-      const url = uploadedLicense!.path
+      const url = uploadedPhoto!.path
       await userServices.updateUserPhoto(driver.userId, url)
     }
   }

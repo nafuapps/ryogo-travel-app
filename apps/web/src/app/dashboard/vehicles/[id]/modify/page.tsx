@@ -14,13 +14,7 @@ export default async function ModifyVehiclePage({
 }) {
   const { id } = await params
 
-  const user = await getCurrentUser()
-
   const vehicle = await vehicleServices.findVehicleDetailsById(id)
-
-  if (!user || user.agencyId != vehicle.agencyId) {
-    redirect("/dashboard", RedirectType.replace)
-  }
 
   return (
     <div className={mainClassName}>

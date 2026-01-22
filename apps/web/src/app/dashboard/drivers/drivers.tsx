@@ -18,7 +18,7 @@ export default async function DriversPageComponent({
   agencyId: string
 }) {
   return (
-    <div id="BookingsPage" className={pageClassName}>
+    <div id="DriversPage" className={pageClassName}>
       <OnTripDriversComponent agencyId={agencyId} />
       <AllDriversListComponent agencyId={agencyId} />
       <DriversScheduleComponent agencyId={agencyId} />

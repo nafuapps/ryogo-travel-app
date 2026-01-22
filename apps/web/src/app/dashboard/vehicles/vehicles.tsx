@@ -18,7 +18,7 @@ export default async function VehiclesPageComponent({
   agencyId: string
 }) {
   return (
-    <div id="BookingsPage" className={pageClassName}>
+    <div id="VehiclesPage" className={pageClassName}>
       <OnTripVehiclesComponent agencyId={agencyId} />
       <AllVehiclesListComponent agencyId={agencyId} />
       <VehiclesScheduleComponent agencyId={agencyId} />

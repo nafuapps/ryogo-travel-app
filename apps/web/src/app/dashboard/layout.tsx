@@ -1,6 +1,6 @@
 //Layout for dashboard pages
 
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 import DashboardSidebar from "./components/extra/dashboardSidebar"
 import { getCurrentUser } from "@/lib/auth"
@@ -13,7 +13,7 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
-  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
+  const defaultOpen = cookieStore.get(SIDEBAR_COOKIE_NAME)?.value == "true"
   const currentUser = await getCurrentUser()
 
   // Redirect to auth if the user is not authenticated

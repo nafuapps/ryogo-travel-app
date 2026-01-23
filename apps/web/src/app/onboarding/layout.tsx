@@ -1,6 +1,6 @@
 //Layout page for onboarding pages
 
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 
 export default async function OnboardingHomeLayout({
@@ -9,7 +9,7 @@ export default async function OnboardingHomeLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
-  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
+  const defaultOpen = cookieStore.get(SIDEBAR_COOKIE_NAME)?.value == "true"
 
   return (
     <SidebarProvider

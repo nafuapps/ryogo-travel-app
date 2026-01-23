@@ -1,6 +1,6 @@
 //Layout for Rider pages
 
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 import RiderHeader from "./components/riderHeader"
 import RiderSidebar from "./components/riderSidebar"
@@ -14,7 +14,7 @@ export default async function RiderLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
-  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
+  const defaultOpen = cookieStore.get(SIDEBAR_COOKIE_NAME)?.value == "true"
   const currentUser = await getCurrentUser()
 
   //If no user logged in, go to login page

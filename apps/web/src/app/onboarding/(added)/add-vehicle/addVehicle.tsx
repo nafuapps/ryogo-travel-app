@@ -20,6 +20,7 @@ import { AddVehicleStep3 } from "./addVehicleStep3"
 import { AddVehicleStep4 } from "./addVehicleStep4"
 import { AddVehicleConfirm } from "./addVehicleStep5"
 import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 const TotalSteps = 5
 
@@ -39,7 +40,7 @@ export default function AddVehiclePageComponent(
   const [finalData, setFinalData] = useState<AddVehicleFormDataType>({
     agencyId: props.agencyId,
     vehicleNumber: "",
-    type: "",
+    type: VehicleTypesEnum.CAR,
     brand: "",
     color: "",
     model: "",

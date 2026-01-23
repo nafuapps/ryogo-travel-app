@@ -6,7 +6,10 @@ import {
   Small,
   SmallRed,
 } from "@/components/typography"
-import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  TransactionTypesEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { LucideMaximize2, LucideMinimize2, LucidePencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
@@ -81,7 +84,7 @@ export default async function TransactionItem({
             <H4>{transaction.amount}</H4>
           </div>
           <div className="flex flex-row gap-2 lg:gap-3">
-            {user?.userRole == "owner" && (
+            {user?.userRole == UserRolesEnum.OWNER && (
               <TransactionApprovalButton
                 txnId={txnId}
                 isApproved={transaction.isApproved}

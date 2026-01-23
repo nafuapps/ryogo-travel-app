@@ -5,7 +5,7 @@ import { mainClassName } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { BookingRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import ReconcileBookingPageComponent from "./reconcileBooking"
 
@@ -23,18 +23,18 @@ export default async function ReconcileBookingPage({
   }
 
   //Only owner can reconcile booking
-  if (user?.userRole != "owner") {
+  if (user?.userRole != UserRolesEnum.OWNER) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingDetailsById(id)
-  if (!booking || booking.agency.id !== user?.agencyId) {
+  if (!booking || booking.agency.id != user?.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Only completed booking can be reconciled
-  if (booking.status !== BookingStatusEnum.COMPLETED || booking.isReconciled) {
+  if (booking.status != BookingStatusEnum.COMPLETED || booking.isReconciled) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 

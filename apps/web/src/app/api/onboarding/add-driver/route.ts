@@ -1,27 +1,28 @@
-import { NextRequest, NextResponse } from "next/server";
-import { OnboardingAddDriverAPIRequestType } from "@ryogo-travel-app/api/types/user.types";
-import { userServices } from "@ryogo-travel-app/api/services/user.services";
-import { getCurrentUser } from "@/lib/auth";
+import { NextRequest, NextResponse } from "next/server"
+import { OnboardingAddDriverAPIRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function POST(req: NextRequest) {
   try {
     //Check user auth
-    const user = await getCurrentUser();
-    if (!user || user.userRole !== "owner") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const user = await getCurrentUser()
+    if (!user || user.userRole != UserRolesEnum.OWNER) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const body: OnboardingAddDriverAPIRequestType = await req.json();
-    const driver = await userServices.addDriverUser(body);
-    return NextResponse.json(driver, { status: 201 });
+    const body: OnboardingAddDriverAPIRequestType = await req.json()
+    const driver = await userServices.addDriverUser(body)
+    return NextResponse.json(driver, { status: 201 })
   } catch (err) {
     const errorMessage =
       typeof err === "object" && err !== null && "message" in err
         ? (err as { message?: string }).message
-        : undefined;
+        : undefined
     return NextResponse.json(
       { error: errorMessage || "Something went wrong" },
-      { status: 400 }
-    );
+      { status: 400 },
+    )
   }
 }

@@ -6,6 +6,7 @@ import { transactionServices } from "@ryogo-travel-app/api/services/transaction.
 import { redirect, RedirectType } from "next/navigation"
 import ModifyTransactionPageComponent from "./modifyTransaction"
 import { TransactionRegex } from "@/lib/regex"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function ModifyTransactionPage({
   params,
@@ -29,8 +30,8 @@ export default async function ModifyTransactionPage({
   if (
     !user ||
     !transactionDetails ||
-    (user?.userRole !== "owner" &&
-      user?.userId !== bookingDetails?.assignedUser.id)
+    (user?.userRole != UserRolesEnum.OWNER &&
+      user?.userId != bookingDetails?.assignedUser.id)
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)

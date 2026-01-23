@@ -1,13 +1,18 @@
 import { cookies } from "next/headers"
 import { jwtVerify, SignJWT } from "jose"
 import { sessionRepository } from "@ryogo-travel-app/api/repositories/session.repo"
-import { SelectUserType } from "@ryogo-travel-app/db/schema"
+import {
+  SelectUserType,
+  UserRolesEnum,
+  UserStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 
 const secretKey = process.env.AUTH_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
 export const SESSION_COOKIE_NAME = "session"
 export const LOCALE_COOKIE_NAME = "locale"
+export const DARK_MODE_COOKIE_NAME = "dark"
 export const SESSION_COOKIE_EXPIRATION = 7 * 24 * 60 * 60 * 1000
 
 export type SessionPayload = {
@@ -15,9 +20,10 @@ export type SessionPayload = {
   userId: string
   token: string
   agencyId: string
-  userRole: string
+  userRole: UserRolesEnum
+  phone: string
   isAdmin: boolean
-  status: string
+  status: UserStatusEnum
   expiresAt: Date
 }
 
@@ -80,8 +86,9 @@ export async function createWebSession(user: SelectUserType) {
     userId: sessionData[0]!.userId,
     agencyId: user.agencyId,
     isAdmin: user.isAdmin ?? false,
-    userRole: user.userRole.toString().toLowerCase(),
-    status: user.status.toString().toLowerCase(),
+    userRole: user.userRole,
+    phone: user.phone,
+    status: user.status,
     expiresAt,
   }
   const session = await encrypt(newPayload)
@@ -103,6 +110,19 @@ export async function createWebSession(user: SelectUserType) {
     secure: true,
     sameSite: "lax",
   })
+
+  //5. Also set dark mode cookie
+  cookieStore.set(
+    DARK_MODE_COOKIE_NAME,
+    user.prefersDarkTheme ? "true" : "false",
+    {
+      maxAge: 31536000, // 1 year
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+    },
+  )
+
   return token
 }
 
@@ -134,7 +154,7 @@ export async function updateWebSession() {
 }
 
 //Update user status in session
-export async function updateSessionUserStatus(newStatus: string) {
+export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
   const payload = (await decrypt(session)) as SessionPayload | undefined

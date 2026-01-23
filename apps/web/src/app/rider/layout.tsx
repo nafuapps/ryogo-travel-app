@@ -6,6 +6,7 @@ import RiderHeader from "./components/riderHeader"
 import RiderSidebar from "./components/riderSidebar"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function RiderLayout({
   children,
@@ -22,8 +23,8 @@ export default async function RiderLayout({
   }
 
   //New user
-  if (currentUser?.status == "new") {
-    if (currentUser?.userRole == "owner") {
+  if (currentUser?.status == UserStatusEnum.NEW) {
+    if (currentUser?.userRole == UserRolesEnum.OWNER) {
       //If owner, go to vehicle onboarding
       redirect("/onboarding/add-vehicle", RedirectType.replace)
     }
@@ -31,7 +32,7 @@ export default async function RiderLayout({
     redirect("/onboarding/change-password", RedirectType.replace)
   }
 
-  if (currentUser?.userRole != "driver") {
+  if (currentUser?.userRole != UserRolesEnum.DRIVER) {
     //If not driver, go to dashboard
     redirect("/dashboard", RedirectType.replace)
   }

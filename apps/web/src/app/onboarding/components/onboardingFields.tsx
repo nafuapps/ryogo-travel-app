@@ -128,7 +128,7 @@ export function OnboardingTextarea(props: OnboardingTextareaProps) {
 type OnboardingSelectProps = {
   name: string
   title: string
-  array: string[] | undefined
+  array: { value: string; display: string }[] | undefined
   placeholder: string
   register: UseFormRegisterReturn<string>
 }
@@ -153,8 +153,8 @@ export function OnboardingSelect(props: OnboardingSelectProps) {
             </FormControl>
             <SelectContent>
               {props.array!.map((item, index) => (
-                <SelectItem key={index} value={item}>
-                  {item}
+                <SelectItem key={index} value={item.value}>
+                  {item.display}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -197,11 +197,11 @@ export function OnboardingCheckbox(props: OnboardingCheckboxProps) {
 type OnboardingMultipleCheckboxProps = {
   name: string
   label: string
-  array: string[] | undefined
+  array: { value: string; display: string }[] | undefined
   register: UseFormRegisterReturn<string>
 }
 export function OnboardingMultipleCheckbox(
-  props: OnboardingMultipleCheckboxProps
+  props: OnboardingMultipleCheckboxProps,
 ) {
   return (
     <FormField
@@ -213,30 +213,30 @@ export function OnboardingMultipleCheckbox(
           </FormLabel>
           {props.array!.map((item) => (
             <FormField
-              key={item}
+              key={item.value}
               name={props.name}
               render={({ field }) => {
                 return (
                   <FormItem
-                    key={item}
+                    key={item.value}
                     className="flex flex-row items-end gap-2 lg:gap-3 w-full px-2"
                   >
                     <FormControl>
                       <Checkbox
-                        checked={field.value?.includes(item)}
+                        checked={field.value?.includes(item.value)}
                         onCheckedChange={(checked) => {
                           return checked
-                            ? field.onChange([...field.value, item])
+                            ? field.onChange([...field.value, item.value])
                             : field.onChange(
                                 field.value?.filter(
-                                  (value: string) => value !== item
-                                )
+                                  (value: string) => value !== item.value,
+                                ),
                               )
                         }}
                       />
                     </FormControl>
                     <FormLabel className="text-sm font-normal">
-                      <Caption>{item}</Caption>
+                      <Caption>{item.display}</Caption>
                     </FormLabel>
                   </FormItem>
                 )
@@ -272,7 +272,7 @@ export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
                   variant={"outline"}
                   className={cn(
                     "w-60 pl-3 text-left font-normal",
-                    !field.value && "text-muted-foreground"
+                    !field.value && "text-muted-foreground",
                   )}
                 >
                   {field.value ? (

@@ -1,44 +1,45 @@
 //(Onboarding) Add agent page
-"use client";
+"use client"
 
-import { useTranslations } from "next-intl";
-import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar";
-import { useMultiStepForm } from "@/hooks/useMultiStepForm";
-import { CaptionGrey, H2 } from "@/components/typography";
-import StepsTracker from "@/app/onboarding/components/stepsTracker";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl"
+import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
+import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import { CaptionGrey, H2 } from "@/components/typography"
+import StepsTracker from "@/app/onboarding/components/stepsTracker"
+import { useEffect, useState } from "react"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "@/app/onboarding/components/onboardingSteps";
-import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { AddAgentStep1 } from "./addAgentStep1";
-import { AddAgentFinish } from "./addAgentFinish";
-import { AddAgentConfirm } from "./addAgentStep2";
-import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData";
+} from "@/app/onboarding/components/onboardingSteps"
+import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { AddAgentStep1 } from "./addAgentStep1"
+import { AddAgentFinish } from "./addAgentFinish"
+import { AddAgentConfirm } from "./addAgentStep2"
+import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData"
+import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
-const TotalSteps = 2;
+const TotalSteps = 2
 
 export type AgentCheckedType = {
-  [key: string]: boolean; // Keys are [phone+email] , values are boolean
-};
+  [key: string]: boolean // Keys are [phone+email] , values are boolean
+}
 
 type AddAgentPageComponentProps = {
-  agencyId: string;
-  ownerId: string;
-  status: string;
-};
+  agencyId: string
+  ownerId: string
+  status: UserStatusEnum
+}
 export default function AddAgentPageComponent(
-  props: AddAgentPageComponentProps
+  props: AddAgentPageComponentProps,
 ) {
   useEffect(() => {
     //Redirect if needed
-    fetchAgenyData(props.agencyId, "add-agent");
-  }, [props.agencyId]);
+    fetchAgenyData(props.agencyId, "add-agent")
+  }, [props.agencyId])
 
-  const t = useTranslations("Onboarding.AddAgentPage");
-  const [checkedAgents, setCheckedAgents] = useState<AgentCheckedType>({});
+  const t = useTranslations("Onboarding.AddAgentPage")
+  const [checkedAgents, setCheckedAgents] = useState<AgentCheckedType>({})
 
   const [finalData, setFinalData] = useState<AddAgentFormDataType>({
     agencyId: props.agencyId,
@@ -46,15 +47,15 @@ export default function AddAgentPageComponent(
     phone: "",
     email: "",
     agentPhotos: undefined,
-  });
+  })
 
   const nextStepHandler = () => {
-    nextStep();
-  };
+    nextStep()
+  }
 
   const prevStepHandler = () => {
-    prevStep();
-  };
+    prevStep()
+  }
 
   const { currentStepIndex, isLastStep, nextStep, prevStep, steps } =
     useMultiStepForm([
@@ -75,7 +76,7 @@ export default function AddAgentPageComponent(
         ownerId={props.ownerId}
       />,
       <AddAgentFinish key={2} finalData={finalData} />,
-    ]);
+    ])
 
   return (
     <>
@@ -98,5 +99,5 @@ export default function AddAgentPageComponent(
       </OnboardingStepPage>
       <OnboardingSidebar currentProcess={isLastStep ? 4 : 3} />
     </>
-  );
+  )
 }

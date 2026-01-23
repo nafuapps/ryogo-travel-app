@@ -23,12 +23,13 @@ import {
 } from "@ryogo-travel-app/api/client/apiClient"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export function AddAgentConfirm(props: {
   onNext: () => void
   onPrev: () => void
   finalData: AddAgentFormDataType
-  status: string
+  status: UserStatusEnum
   ownerId: string
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm")
@@ -48,7 +49,7 @@ export function AddAgentConfirm(props: {
     }
     const addedAgent = await apiClient<OnboardingAddAgentAPIResponseType>(
       "/api/onboarding/add-agent",
-      { method: "POST", body: JSON.stringify(newAgentData) }
+      { method: "POST", body: JSON.stringify(newAgentData) },
     )
     if (addedAgent.id) {
       //If success, Try to upload user photo and driver user photo
@@ -60,16 +61,16 @@ export function AddAgentConfirm(props: {
           {
             method: "POST",
             body: formData,
-          }
+          },
         )
       }
-      if (props.status == "new") {
+      if (props.status == UserStatusEnum.NEW) {
         //If the owner is still new somehow, change to active
         await apiClientWithoutHeaders<OnboardingSetActiveAPIResponseType>(
           `/api/onboarding/set-active/${props.ownerId}`,
           {
             method: "POST",
-          }
+          },
         )
       }
       props.onNext()

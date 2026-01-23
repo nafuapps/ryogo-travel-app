@@ -2,7 +2,7 @@
 
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import ConfirmBookingPageComponent from "./confirmBooking"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { BookingRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
@@ -25,12 +25,12 @@ export default async function ConfirmBookingPage({
 
   //No booking found or agency mismatch
   const booking = await bookingServices.findLeadBookingById(id)
-  if (!booking || booking.agency.id !== user?.agencyId) {
+  if (!booking || booking.agency.id != user?.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Not a lead booking -> send to details page
-  if (booking?.status !== BookingStatusEnum.LEAD) {
+  if (booking?.status != BookingStatusEnum.LEAD) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
@@ -48,7 +48,7 @@ export default async function ConfirmBookingPage({
       <DashboardHeader pathName={"/dashboard/bookings/[id]/confirm"} />
       <ConfirmBookingPageComponent
         booking={booking}
-        isOwner={user.userRole === "owner"}
+        isOwner={user.userRole == UserRolesEnum.OWNER}
         isAssignedUser={booking.assignedUser.id === user?.userId}
       />
     </div>

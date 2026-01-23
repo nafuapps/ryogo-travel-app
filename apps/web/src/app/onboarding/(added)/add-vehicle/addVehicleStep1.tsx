@@ -1,40 +1,42 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   OnboardingInput,
   OnboardingSelect,
-} from "@/app/onboarding/components/onboardingFields";
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+} from "@/app/onboarding/components/onboardingFields"
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepActions,
   OnboardingStepContent,
   OnboardingStepForm,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
-import { useTranslations } from "next-intl";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
+import { useTranslations } from "next-intl"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export function AddVehicleStep1(props: {
-  onNext: () => void;
-  finalData: AddVehicleFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>;
+  onNext: () => void
+  finalData: AddVehicleFormDataType
+  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>
 }) {
-  const t = useTranslations("Onboarding.AddVehiclePage.Step1");
+  const t = useTranslations("Onboarding.AddVehiclePage.Step1")
   const step1Schema = z.object({
     vehicleNumber: z
       .string()
       .trim()
       .min(7, t("Field1.Error1"))
       .max(15, t("Field1.Error2")),
-    type: z.string().min(1, t("Field2.Error1")),
+    type: z.enum(VehicleTypesEnum).nonoptional(t("Field2.Error1")),
     brand: z.string().min(3, t("Field3.Error1")).max(15, t("Field3.Error2")),
     color: z.string().min(3, t("Field4.Error1")).max(15, t("Field4.Error2")),
     model: z.string().min(3, t("Field5.Error1")).max(30, t("Field5.Error2")),
-  });
-  type Step1Type = z.infer<typeof step1Schema>;
+  })
+  type Step1Type = z.infer<typeof step1Schema>
 
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
@@ -45,7 +47,7 @@ export function AddVehicleStep1(props: {
       color: props.finalData.color,
       model: props.finalData.model,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
@@ -56,9 +58,9 @@ export function AddVehicleStep1(props: {
       brand: data.brand,
       color: data.color,
       model: data.model,
-    });
-    props.onNext();
-  };
+    })
+    props.onNext()
+  }
 
   return (
     <Form {...formData}>
@@ -77,7 +79,7 @@ export function AddVehicleStep1(props: {
           <OnboardingSelect
             name={"type"}
             register={formData.register("type")}
-            array={["Car", "Bus", "Truck", "Bike", "Other"]}
+            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
             title={t("Field2.Title")}
             placeholder={t("Field2.Title")}
           />
@@ -113,5 +115,5 @@ export function AddVehicleStep1(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

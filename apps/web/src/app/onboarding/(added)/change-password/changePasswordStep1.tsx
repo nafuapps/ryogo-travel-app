@@ -15,8 +15,12 @@ import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import { OnboardingChangePasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export function ChangePasswordStep1(props: { userId: string; role: string }) {
+export function ChangePasswordStep1(props: {
+  userId: string
+  role: UserRolesEnum
+}) {
   const t = useTranslations("Onboarding.ChangePasswordPage.Step1")
   const router = useRouter()
 
@@ -28,14 +32,18 @@ export function ChangePasswordStep1(props: { userId: string; role: string }) {
         .refine((s) => !s.includes(" "), t("Field1.Error2")),
       newPassword: z
         .string()
-        .min(8, t("Field1.Error1"))
+        .min(8, t("Field2.Error1"))
         .refine((s) => !s.includes(" "), t("Field2.Error2")),
       confirmPassword: z
         .string()
-        .min(8, t("Field2.Error1"))
+        .min(8, t("Field3.Error1"))
         .refine((s) => !s.includes(" "), t("Field3.Error2")),
     })
-    .refine((data) => data.newPassword === data.confirmPassword, {
+    .refine((data) => data.newPassword == data.oldPassword, {
+      message: t("Field2.Error3"),
+      path: ["newPassword"], // path of error
+    })
+    .refine((data) => data.newPassword == data.confirmPassword, {
       message: t("Field3.Error3"),
       path: ["confirmPassword"], // path of error
     })
@@ -60,12 +68,12 @@ export function ChangePasswordStep1(props: { userId: string; role: string }) {
           oldPassword: data.oldPassword,
           newPassword: data.newPassword,
         }),
-      }
+      },
     )
     if (result.id) {
       //If success, redirect
       toast.success(t("Success"))
-      if (props.role === "driver") {
+      if (props.role == UserRolesEnum.DRIVER) {
         router.replace("/rider")
       } else {
         router.replace("/dashboard")

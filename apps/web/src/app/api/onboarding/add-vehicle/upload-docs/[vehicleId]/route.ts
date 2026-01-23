@@ -3,15 +3,16 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { VehicleRegex } from "@/lib/regex"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: Promise<{ vehicleId: string }> }
+  { params }: { params: Promise<{ vehicleId: string }> },
 ) {
   try {
     //Check user auth
     const user = await getCurrentUser()
-    if (!user || user.userRole !== "owner") {
+    if (!user || user.userRole != UserRolesEnum.OWNER) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
@@ -40,7 +41,7 @@ export async function POST(
     if (rc) {
       const data = await uploadFile(
         rc,
-        `${vehicleId}/rc/${Date.now()}-${rc.name}`
+        `${vehicleId}/rc/${Date.now()}-${rc.name}`,
       )
       rcUrl = data?.path
       // await vehicleServices.renewRcURL(vehicleId, rcUrl);
@@ -48,7 +49,7 @@ export async function POST(
     if (puc) {
       const data = await uploadFile(
         puc,
-        `${vehicleId}/puc/${Date.now()}-${puc.name}`
+        `${vehicleId}/puc/${Date.now()}-${puc.name}`,
       )
       pucUrl = data?.path
       // await vehicleServices.renewPucURL(vehicleId, pucUrl);
@@ -56,7 +57,7 @@ export async function POST(
     if (insurance) {
       const data = await uploadFile(
         insurance,
-        `${vehicleId}/insurance/${Date.now()}-${insurance.name}`
+        `${vehicleId}/insurance/${Date.now()}-${insurance.name}`,
       )
       insuranceUrl = data?.path
       // await vehicleServices.renewInsuranceURL(vehicleId, insuranceUrl);
@@ -64,7 +65,7 @@ export async function POST(
     if (vehiclePhoto) {
       const data = await uploadFile(
         vehiclePhoto,
-        `${vehicleId}/vehiclePhoto/${Date.now()}-${vehiclePhoto.name}`
+        `${vehicleId}/vehiclePhoto/${Date.now()}-${vehiclePhoto.name}`,
       )
       vehiclePhotoUrl = data?.path
       // await vehicleServices.renewVehiclePhotoURL(vehicleId, vehiclePhotoUrl);
@@ -75,7 +76,7 @@ export async function POST(
       rcUrl,
       pucUrl,
       insuranceUrl,
-      vehiclePhotoUrl
+      vehiclePhotoUrl,
     )
     return NextResponse.json({ id: vehicleId }, { status: 201 })
   } catch (err) {
@@ -85,7 +86,7 @@ export async function POST(
         : undefined
     return NextResponse.json(
       { error: errorMessage || "Something went wrong" },
-      { status: 400 }
+      { status: 400 },
     )
   }
 }

@@ -30,7 +30,7 @@ export const agencyServices = {
   async findAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
     const agencies = await agencyRepository.readAgencyByPhoneEmail(
       businessPhone,
-      businessEmail
+      businessEmail,
     )
     if (agencies.length > 1) {
       // !This is a major issue
@@ -66,12 +66,12 @@ export const agencyServices = {
     //Step1: Check if another agency exists with same phone and email
     const existingAgencies = await agencyRepository.readAgencyByPhoneEmail(
       data.businessPhone,
-      data.businessEmail
+      data.businessEmail,
     )
     if (existingAgencies.length > 1) {
       // !This is a major issue
       throw new Error(
-        "Multiple agencies with same phone and email already exists"
+        "Multiple agencies with same phone and email already exists",
       )
     }
     if (existingAgencies.length > 0) {
@@ -81,7 +81,7 @@ export const agencyServices = {
     //Step2: Get location id from city, state
     const location = await locationRepository.readLocationByCityState(
       data.agencyCity,
-      data.agencyState
+      data.agencyState,
     )
     if (!location) {
       throw new Error("Location not found")
@@ -111,15 +111,11 @@ export const agencyServices = {
   async activateAgency(id: string) {
     const agency = await agencyRepository.updateAgencyStatus(
       id,
-      AgencyStatusEnum.ACTIVE
+      AgencyStatusEnum.ACTIVE,
     )
 
-    if (!agency) {
+    if (!agency || agency.length < 1) {
       throw new Error("Failed to update status for this agency")
-    }
-    if (agency.length > 1) {
-      // !This is a major issue
-      throw new Error("Multiple agencies found with this id")
     }
     return agency[0]!
   },
@@ -127,7 +123,7 @@ export const agencyServices = {
   async updateAgencyLogo(agencyId: string, url: string) {
     const updatedAgency = await agencyRepository.updateAgencyLogoUrl(
       agencyId,
-      url
+      url,
     )
     if (!updatedAgency) {
       throw new Error("Failed to update logo url for this agency")
@@ -138,7 +134,7 @@ export const agencyServices = {
   //Increase subscription of an agency by N days
   async increaseSubscriptionExpiry(id: string, days: number) {
     const expiryTime = new Date(
-      new Date().getTime() + days * 24 * 60 * 60 * 1000
+      new Date().getTime() + days * 24 * 60 * 60 * 1000,
     )
     return await agencyRepository.updateAgencySubscriptionExpiry(id, expiryTime)
   },

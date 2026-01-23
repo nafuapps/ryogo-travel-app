@@ -11,10 +11,12 @@ export default async function BookingExpensesPageComponent({
   bookingId,
   bookingExpenses,
   canCreateExpense,
+  canApproveExpense,
 }: {
   bookingId: string
   bookingExpenses: FindBookingExpensesByIdType
   canCreateExpense: boolean
+  canApproveExpense: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingExpenses")
 
@@ -45,6 +47,7 @@ export default async function BookingExpensesPageComponent({
               key={expense.id}
               expense={expense}
               canModifyExpense={canCreateExpense}
+              canApproveExpense={canApproveExpense}
             />
           ))}
         </div>

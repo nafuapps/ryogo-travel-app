@@ -6,6 +6,7 @@ import NewTransactionPageComponent from "./newTransaction"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { redirect, RedirectType } from "next/navigation"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function NewTransactionPage({
   params,
@@ -20,8 +21,8 @@ export default async function NewTransactionPage({
   //Only owner or assigned user can add transactions
   if (
     !user ||
-    (user?.userRole !== "owner" &&
-      user?.userId !== bookingDetails?.assignedUser.id)
+    (user?.userRole != UserRolesEnum.OWNER &&
+      user?.userId != bookingDetails?.assignedUser.id)
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)

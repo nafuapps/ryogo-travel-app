@@ -1,8 +1,14 @@
 //Account page
 
-import {useTranslations} from 'next-intl';
- 
-export default function AccountPage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+import DashboardHeader from "../components/extra/dashboardHeader"
+import { mainClassName } from "@/components/page/pageCommons"
+import AccountPageComponent from "./account"
+
+export default async function AccountPage() {
+  return (
+    <div className={mainClassName}>
+      <DashboardHeader pathName={"/dashboard/account"} />
+      <AccountPageComponent />
+    </div>
+  )
 }

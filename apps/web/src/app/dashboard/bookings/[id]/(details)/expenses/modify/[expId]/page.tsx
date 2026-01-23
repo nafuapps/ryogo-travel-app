@@ -8,6 +8,7 @@ import { expenseServices } from "@ryogo-travel-app/api/services/expense.services
 import { redirect, RedirectType } from "next/navigation"
 import ModifyExpensePageComponent from "./modifyExpense"
 import { ExpenseRegex } from "@/lib/regex"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function ModifyExpensePage({
   params,
@@ -30,8 +31,8 @@ export default async function ModifyExpensePage({
   if (
     !user ||
     !expenseDetails ||
-    (user?.userRole !== "owner" &&
-      user?.userId !== bookingDetails?.assignedUser.id)
+    (user?.userRole != UserRolesEnum.OWNER &&
+      user?.userId != bookingDetails?.assignedUser.id)
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)

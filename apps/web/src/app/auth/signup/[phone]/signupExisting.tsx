@@ -5,6 +5,7 @@ import Link from "next/link"
 import { AccountCard } from "@/app/auth/components/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 /*
   1. Get user details from DB using phone number
@@ -19,7 +20,7 @@ export default async function SignupExistingPageComponent({
   accounts: FindUserAccountsByPhoneType
 }) {
   const hasOwnerAccount = accounts.some(
-    (p) => p.userRole.toString().toLowerCase() === "owner"
+    (p) => p.userRole == UserRolesEnum.OWNER,
   )
 
   const t = await getTranslations("Auth.SignupPage.Step2")

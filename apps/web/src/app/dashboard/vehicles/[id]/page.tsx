@@ -16,10 +16,14 @@ export default async function VehicleDetailsPage({
 
   const user = await getCurrentUser()
 
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const vehicle = await vehicleServices.findVehicleDetailsById(id)
 
-  if (!user || !vehicle || user.agencyId != vehicle.agencyId) {
-    redirect("/dashboard", RedirectType.replace)
+  if (!vehicle || user.agencyId != vehicle.agencyId) {
+    redirect("/dashboard/vehicles", RedirectType.replace)
   }
 
   return (

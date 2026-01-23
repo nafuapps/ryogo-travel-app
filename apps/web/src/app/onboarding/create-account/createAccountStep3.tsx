@@ -1,41 +1,45 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction, useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction, useRef, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingFileInput,
   OnboardingInput,
   OnboardingSelect,
-} from "../components/onboardingFields";
+} from "../components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "../components/onboardingSteps";
-import stateCityData from "@/lib/states_cities.json";
-import { Form } from "@/components/ui/form";
+} from "../components/onboardingSteps"
+import stateCityData from "@/lib/states_cities.json"
+import { Form } from "@/components/ui/form"
+import {
+  getArrayValueDisplayPairs,
+  getStringValueDisplayPairs,
+} from "@/lib/utils"
 
 export function CreateAccountStep3(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: CreateAccountFormDataType;
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>;
+  onNext: () => void
+  onPrev: () => void
+  finalData: CreateAccountFormDataType
+  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>
 }) {
-  const t = useTranslations("Onboarding.CreateAccountPage.Step3");
+  const t = useTranslations("Onboarding.CreateAccountPage.Step3")
   const step3Schema = z.object({
     agencyLogo: z
       .instanceof(FileList)
       .refine((file) => {
-        if (file.length < 1) return true;
-        return file[0] && file[0]!.size < 1000000;
+        if (file.length < 1) return true
+        return file[0] && file[0]!.size < 1000000
       }, t("Field1.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true;
+        if (file.length < 1) return true
         return (
           file[0] &&
           [
@@ -45,7 +49,7 @@ export function CreateAccountStep3(props: {
             "image/bmp",
             "image/webp",
           ].includes(file[0]!.type)
-        );
+        )
       }, t("Field1.Error2"))
       .optional(),
     commissionRate: z.coerce
@@ -57,8 +61,8 @@ export function CreateAccountStep3(props: {
       .optional(),
     agencyState: z.string().min(1, t("Field3.Error1")),
     agencyCity: z.string().min(1, t("Field4.Error1")),
-  });
-  type Step3Type = z.infer<typeof step3Schema>;
+  })
+  type Step3Type = z.infer<typeof step3Schema>
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
@@ -68,7 +72,7 @@ export function CreateAccountStep3(props: {
       agencyCity: props.finalData.agencyCity,
     },
     shouldUnregister: false,
-  });
+  })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
@@ -78,25 +82,27 @@ export function CreateAccountStep3(props: {
       commissionRate: data.commissionRate,
       agencyState: data.agencyState,
       agencyCity: data.agencyCity,
-    });
-    props.onNext();
-  };
+    })
+    props.onNext()
+  }
 
-  const data: Record<string, string[]> = stateCityData;
-  const selectedState = formData.watch("agencyState");
-  const cityOptions = selectedState ? data[selectedState] : [];
-  const setValue = formData.setValue;
+  const data: Record<string, string[]> = stateCityData
+  const selectedState = formData.watch("agencyState")
+  const cityOptions = selectedState
+    ? (data[selectedState] ?? [t("Field4.Title")])
+    : []
+  const setValue = formData.setValue
 
-  const isFirstRender = useRef(true);
+  const isFirstRender = useRef(true)
 
   useEffect(() => {
     // Skip on the initial render of the component
     if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
+      isFirstRender.current = false
+      return
     }
-    setValue("agencyCity", ""); // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState, setValue]);
+    setValue("agencyCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedState, setValue])
 
   return (
     <Form {...formData}>
@@ -123,14 +129,14 @@ export function CreateAccountStep3(props: {
             name={"agencyState"}
             register={formData.register("agencyState")}
             title={t("Field3.Title")}
-            array={Object.keys(data)}
+            array={getArrayValueDisplayPairs(data)}
             placeholder={t("Field3.Title")}
           />
           <OnboardingSelect
             name={"agencyCity"}
             register={formData.register("agencyCity")}
             title={t("Field4.Title")}
-            array={cityOptions}
+            array={getStringValueDisplayPairs(cityOptions)}
             placeholder={t("Field4.Title")}
           />
         </OnboardingStepContent>
@@ -150,5 +156,5 @@ export function CreateAccountStep3(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

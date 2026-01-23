@@ -94,12 +94,8 @@ export const customerServices = {
     if (!newCustomer || newCustomer.length < 1) {
       throw Error("Failed to add new customer")
     }
-    if (newCustomer.length > 1) {
-      // !This is a major issue
-      throw Error("Multiple customers found")
-    }
     return {
-      id: newCustomer[0]!.id,
+      id: newCustomer[0]?.id,
     }
   },
 

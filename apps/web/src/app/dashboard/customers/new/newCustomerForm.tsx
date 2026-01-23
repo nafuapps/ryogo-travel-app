@@ -21,6 +21,7 @@ import stateCityData from "@/lib/states_cities.json"
 import { useEffect, useRef } from "react"
 import { newCustomerAction } from "./newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
+import { getArrayValueDisplayPairs } from "@/lib/utils"
 
 export default function NewCustomerForm({
   agencyId,
@@ -118,7 +119,9 @@ export default function NewCustomerForm({
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = formData.watch("state")
-  const cityOptions = selectedState ? data[selectedState] : []
+  const cityOptions = selectedState
+    ? (data[selectedState] ?? [t("Field8.Title")])
+    : []
   const setValue = formData.setValue
 
   const isFirstRender = useRef(true)
@@ -182,14 +185,14 @@ export default function NewCustomerForm({
             name={"state"}
             register={formData.register("state")}
             title={t("Field7.Title")}
-            array={Object.keys(data)}
+            array={getArrayValueDisplayPairs(data)}
             placeholder={t("Field7.Title")}
           />
           <DashboardSelect
             name={"city"}
             register={formData.register("city")}
             title={t("Field8.Title")}
-            array={cityOptions}
+            array={getArrayValueDisplayPairs(cityOptions)}
             placeholder={t("Field8.Title")}
           />
           <Button

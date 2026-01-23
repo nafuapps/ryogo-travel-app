@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { addExpenseAction } from "./addExpenseAction"
 import { toast } from "sonner"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export default function NewExpensePageComponent({
   bookingId,
@@ -100,7 +101,7 @@ export default function NewExpensePageComponent({
             name="type"
             title={t("Field1.Title")}
             register={formData.register("type")}
-            array={Object.values(ExpenseTypesEnum)}
+            array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
             placeholder={t("Field1.Description")}
           />
           <DashboardInput

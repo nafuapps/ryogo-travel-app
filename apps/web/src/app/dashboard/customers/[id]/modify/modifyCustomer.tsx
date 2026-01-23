@@ -19,6 +19,10 @@ import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
 import { useEffect, useRef } from "react"
+import {
+  getArrayValueDisplayPairs,
+  getStringValueDisplayPairs,
+} from "@/lib/utils"
 
 export default function ModifyCustomerPageComponent({
   customer,
@@ -79,7 +83,9 @@ export default function ModifyCustomerPageComponent({
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = formData.watch("state")
-  const cityOptions = selectedState ? data[selectedState] : []
+  const cityOptions = selectedState
+    ? (data[selectedState] ?? [t("Field6.Title")])
+    : []
   const setValue = formData.setValue
 
   const isFirstRender = useRef(true)
@@ -129,14 +135,14 @@ export default function ModifyCustomerPageComponent({
             name={"state"}
             register={formData.register("state")}
             title={t("Field5.Title")}
-            array={Object.keys(data)}
+            array={getArrayValueDisplayPairs(data)}
             placeholder={t("Field5.Title")}
           />
           <DashboardSelect
             name={"city"}
             register={formData.register("city")}
             title={t("Field6.Title")}
-            array={cityOptions}
+            array={getStringValueDisplayPairs(cityOptions)}
             placeholder={t("Field6.Title")}
           />
           <Button

@@ -193,7 +193,7 @@ export const users = pgTable(
     ...timestamps,
   },
   (t) => [
-    unique().on(t.agencyId, t.phone, t.userRole), //Owner or Agent can also be a driver
+    unique().on(t.agencyId, t.phone, t.userRole), //Owner or Agent can also be a driver with same phone
     unique().on(t.phone, t.email, t.userRole), //same user can be added to multiple agencies but with different email or role
     uniqueIndex("users_agency_role_phone_idx").on(
       t.agencyId,

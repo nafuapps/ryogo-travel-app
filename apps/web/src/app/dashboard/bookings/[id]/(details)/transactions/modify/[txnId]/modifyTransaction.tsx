@@ -25,6 +25,7 @@ import z from "zod"
 import { updateTransactionAction } from "./updateTransactionAction"
 import { Button } from "@/components/ui/button"
 import DeleteTransactionAlertButton from "@/app/dashboard/components/buttons/deleteTransactionAlertButton"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export default function ModifyTransactionPageComponent({
   bookingId,
@@ -109,7 +110,7 @@ export default function ModifyTransactionPageComponent({
             title={t("Field1.Title")}
             register={formData.register("type")}
             defaultValue={TransactionTypesEnum.CREDIT}
-            array={Object.values(TransactionTypesEnum)}
+            array={getEnumValueDisplayPairs(TransactionTypesEnum)}
             description={t("Field1.Description")}
           />
           <DashboardInput
@@ -122,14 +123,14 @@ export default function ModifyTransactionPageComponent({
             name="mode"
             register={formData.register("mode")}
             title={t("Field3.Title")}
-            array={Object.values(TransactionModesEnum)}
+            array={getEnumValueDisplayPairs(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
           <DashboardSelect
             name="otherParty"
             register={formData.register("otherParty")}
             title={t("Field4.Title")}
-            array={Object.values(TransactionsPartiesEnum)}
+            array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
             placeholder={t("Field4.Placeholder")}
           />
           <DashboardTextarea

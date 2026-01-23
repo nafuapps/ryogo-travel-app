@@ -5,6 +5,7 @@ import { mainClassName } from "@/components/page/pageCommons"
 import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
 import BookingExpensesPageComponent from "./bookingExpenses"
 import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function BookingDetailsPage({
   params,
@@ -25,8 +26,10 @@ export default async function BookingDetailsPage({
         bookingId={id}
         bookingExpenses={bookingExpenses}
         canCreateExpense={
-          user?.userRole == "owner" || user?.userId == assignedUserId
+          user?.userRole == UserRolesEnum.OWNER ||
+          user?.userId == assignedUserId
         }
+        canApproveExpense={user?.userRole == UserRolesEnum.OWNER}
       />
     </div>
   )

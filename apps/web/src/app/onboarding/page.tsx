@@ -4,6 +4,7 @@ import { H2, H4, P, PGrey, Small } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { LucideFootprints, LucideListCheck } from "lucide-react"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
@@ -20,7 +21,7 @@ export default async function OnboardingHomePage() {
 
   // Redirect to private route if the user is authenticated
   if (user?.userId) {
-    if (user.userRole == "driver") {
+    if (user.userRole == UserRolesEnum.DRIVER) {
       redirect("/rider", RedirectType.replace)
     }
     redirect("/dashboard", RedirectType.replace)

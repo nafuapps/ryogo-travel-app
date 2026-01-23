@@ -3,7 +3,7 @@
 import { BookingRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { cancelBookingAction } from "@/app/dashboard/components/actions/cancelBookingAction"
 import { mainClassName } from "@/components/page/pageCommons"
@@ -52,7 +52,10 @@ export default async function AssignDriverBookingPage({
   }
 
   //Only owner or assigned agent can assign driver
-  if (user.userRole !== "owner" && booking.assignedUser.id !== user.userId) {
+  if (
+    user.userRole != UserRolesEnum.OWNER &&
+    booking.assignedUser.id !== user.userId
+  ) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 

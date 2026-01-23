@@ -26,6 +26,10 @@ import { PhoneRegex } from "@/lib/regex"
 import { Alert } from "@/components/ui/alert"
 import ExistingCutomerCard from "./newBookingExistingCustomer"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
+import {
+  getArrayValueDisplayPairs,
+  getStringValueDisplayPairs,
+} from "@/lib/utils"
 
 type NewBookingStep1Props = {
   onNext: () => void
@@ -42,7 +46,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     FindCustomersInAgencyType[number] | undefined
   >(props.newBookingFormData.existingCustomer)
   const [customerNotFound, setCustomerNotFound] = useState<string | undefined>(
-    props.newBookingFormData.newCustomerName
+    props.newBookingFormData.newCustomerName,
   )
 
   const step1Schema = z.object({
@@ -51,7 +55,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     newCustomerName: z
       .string()
       .refine((s) => {
-        return existingCustomer || s.length > 5
+        return existingCustomer || s.length > 4
       }, t("Field2.Error1"))
       .optional(),
     newCustomerState: z
@@ -104,7 +108,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       return
     }
     const foundCustomer = props.customers.find(
-      (c) => c.phone == form.getValues("customerPhone")
+      (c) => c.phone == form.getValues("customerPhone"),
     )
     setExistingCustomer(foundCustomer)
     if (!foundCustomer) {
@@ -116,7 +120,9 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = form.watch("newCustomerState")
-  const cityOptions = selectedState ? data[selectedState] : []
+  const cityOptions = selectedState
+    ? (data[selectedState] ?? [t("Field4.Title")])
+    : [t("Field4.Title")]
   const setValue = form.setValue
 
   const isFirstRender = useRef(true)
@@ -182,14 +188,14 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
                 name={"newCustomerState"}
                 register={form.register("newCustomerState")}
                 title={t("Field3.Title")}
-                array={Object.keys(data)}
+                array={getArrayValueDisplayPairs(data)}
                 placeholder={t("Field3.Title")}
               />
               <DashboardSelect
                 name={"newCustomerCity"}
                 register={form.register("newCustomerCity")}
                 title={t("Field4.Title")}
-                array={cityOptions}
+                array={getStringValueDisplayPairs(cityOptions)}
                 placeholder={t("Field4.Title")}
               />
             </div>

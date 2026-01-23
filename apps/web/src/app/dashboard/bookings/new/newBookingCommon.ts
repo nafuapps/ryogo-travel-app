@@ -62,7 +62,7 @@ export function getOverlapScore(
   otherStart: Date,
   otherEnd: Date,
   newBookingStart: Date,
-  newBookingEnd: Date
+  newBookingEnd: Date,
 ): number {
   //Full Overlap
   if (otherStart <= newBookingStart && otherEnd >= newBookingEnd) {
@@ -132,7 +132,7 @@ export const SoonExpiringScore = 50
 export const OKExpiryScore = 100
 export function getExpiryScore(
   newBookingEndDate: Date,
-  expiryDate: Date | null
+  expiryDate: Date | null,
 ) {
   if (!expiryDate) {
     return NoExpiryDateScore
@@ -223,7 +223,7 @@ export const MediumCanDriveScore = 50
 export const LowCanDriveScore = 10
 export function getCanDriveScore(
   canDrive: VehicleTypesEnum[],
-  passengers: number
+  passengers: number,
 ): number {
   if (passengers < 1) {
     if (canDrive.includes(VehicleTypesEnum.TRUCK)) {
@@ -415,7 +415,7 @@ export const getFinalPrice = (data: NewBookingFormDataType) => {
 
   const totalVehiclePrice = Math.round(totalDistance * data.selectedRatePerKm!)
   const totalDriverAllowance = Math.round(
-    totalAllowanceDays * data.selectedAllowancePerDay!
+    totalAllowanceDays * data.selectedAllowancePerDay!,
   )
 
   const netPrice = totalVehiclePrice + totalDriverAllowance + totalAcPrice
@@ -471,12 +471,12 @@ export const getRyogoScoreClassName = (totalScore: number): string => {
     totalScore < BadTotalScore
       ? "bg-red-300"
       : totalScore < MediumTotalScore
-      ? "bg-orange-300"
-      : totalScore < GoodTotalScore
-      ? "bg-yellow-300"
-      : totalScore < BestTotalScore
-      ? "bg-green-300"
-      : "bg-cyan-300"
+        ? "bg-orange-300"
+        : totalScore < GoodTotalScore
+          ? "bg-yellow-300"
+          : totalScore < BestTotalScore
+            ? "bg-green-300"
+            : "bg-cyan-300"
   }`
 }
 

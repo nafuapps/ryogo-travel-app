@@ -3,15 +3,16 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { DriverRegex } from "@/lib/regex"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: Promise<{ driverId: string }> }
+  { params }: { params: Promise<{ driverId: string }> },
 ) {
   try {
     //Check user auth
     const user = await getCurrentUser()
-    if (!user || user.userRole !== "owner") {
+    if (!user || user.userRole != UserRolesEnum.OWNER) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
@@ -27,7 +28,7 @@ export async function POST(
     if (!file) {
       return NextResponse.json(
         { error: "No license uploaded" },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
@@ -41,7 +42,7 @@ export async function POST(
     const photoUrl = data!.path
     const updatedId = await driverServices.updateDriverLicensePhoto(
       driverId,
-      photoUrl
+      photoUrl,
     )
 
     return NextResponse.json({ id: updatedId }, { status: 201 })
@@ -52,7 +53,7 @@ export async function POST(
         : undefined
     return NextResponse.json(
       { error: errorMessage || "Something went wrong" },
-      { status: 400 }
+      { status: 400 },
     )
   }
 }

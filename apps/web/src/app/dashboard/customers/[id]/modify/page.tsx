@@ -6,6 +6,7 @@ import ModifyCustomerPageComponent from "./modifyCustomer"
 import { getCurrentUser } from "@/lib/auth"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { redirect, RedirectType } from "next/navigation"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function ModifyCustomerPage({
   params,
@@ -16,10 +17,17 @@ export default async function ModifyCustomerPage({
 
   const user = await getCurrentUser()
 
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const customer = await customerServices.findCustomerDetailsById(id)
 
   //Only owner or the adding agent can modify customer
-  if (user?.userRole != "owner" && customer.addedByUserId != user?.userId) {
+  if (
+    user.userRole != UserRolesEnum.OWNER &&
+    customer.addedByUserId != user.userId
+  ) {
     redirect("/dashboard", RedirectType.replace)
   }
 

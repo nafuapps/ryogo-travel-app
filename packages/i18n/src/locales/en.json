@@ -630,7 +630,8 @@
           "Placeholder": "********",
           "Description": "Choose a new password",
           "Error1": "Password must be at least 8 characters",
-          "Error2": "Password should not contain spaces"
+          "Error2": "Password should not contain spaces",
+          "Error3": "New password cannot be the same as old password"
         },
         "Field3": {
           "Title": "Confirm New Password",
@@ -688,7 +689,8 @@
         "/dashboard/account/agency": "Agency Details",
         "/dashboard/account/agency/modify": "Modify Agency",
         "/dashboard/account/help": "Help",
-        "/dashboard/account/modify": "Modify Account",
+        "/dashboard/account/change-password": "Change Password",
+        "/dashboard/account/change-email": "Change Email",
         "/dashboard/account/settings": "Settings",
         "/dashboard/action-center": "Action Center",
         "/dashboard/analytics": "Analytics",
@@ -2092,7 +2094,7 @@
         "Title": "All Customers",
         "AddCustomer": "Add customer",
         "Photo": "View customer photo",
-        "Search":"Search.."
+        "Search": "Search.."
       }
     },
     "NewCustomer": {
@@ -2103,12 +2105,12 @@
         "Error1": "Name must be atleast 5 characters",
         "Error2": "Name must be less than 30 characters"
       },
-       "Field2": {
-          "Title": "Enter customer phone number",
-          "Placeholder": "9876543210",
-          "Description": "Provide customer's phone number",
-          "Error1": "Phone number must be 10 digits"
-        },
+      "Field2": {
+        "Title": "Enter customer phone number",
+        "Placeholder": "9876543210",
+        "Description": "Provide customer's phone number",
+        "Error1": "Phone number must be 10 digits"
+      },
       "Field3": {
         "Title": "Enter customer email",
         "Placeholder": "raj.sharma@gmail.com",
@@ -2116,13 +2118,13 @@
         "Error1": "Invalid email",
         "Error2": "Email must be less than 60 characters"
       },
-       "Field4": {
+      "Field4": {
         "Title": "Upload customer photo (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the customer's photo",
-       "Error1": "Customer photo is required",
-          "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+        "Error1": "Customer photo is required",
+        "Error2": "File size should be less than 1MB",
+        "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
       },
       "Field5": {
         "Title": "Enter customer address",
@@ -2143,7 +2145,7 @@
         "Title": "Select city",
         "Error1": "Providing city is mandatory"
       },
-      "APIError":"Customer with this phone is already added.. try another phone number",
+      "APIError": "Customer with this phone is already added.. try another phone number",
       "Success": "Customer added successfully!",
       "Error": "Cannot add customer.. Try again later!",
       "PrimaryCTA": "Save changes",
@@ -2220,6 +2222,113 @@
     "CustomerUpcomingBookings": {
       "NoBookings": "No upcoming bookings for this customer."
     },
+    "AccountDetailsHeaderTabs": {
+      "Details": "Details",
+      "Settings": "Settings",
+      "Agency": "Agency",
+      "Help": "Help"
+    },
+    "Account": {
+      "Photo": "View photo",
+      "ChangePhoto": {
+        "Button": "Change Photo",
+        "Header": "Upload your photo",
+        "Title": "Choose a photo to upload:",
+        "Placeholder": "Browse a new photo",
+        "Error1": "Your photo is required",
+        "Error2": "File size should be less than 1MB",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Your photo updated successfully!",
+        "Error": "Cannot upload photo.. please try again after some time."
+      },
+      "ChangeName": {
+        "Button": "Change Name",
+        "Header": "Change your name",
+        "Title": "Enter your name:",
+        "Placeholder": "Raj Sharma",
+        "Error1": "Name must be atleast 5 characters",
+        "Error2": "Name must be less than 30 characters",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Your name changed successfully!",
+        "Error": "Cannot change name.. please try again after some time."
+      },
+      "ChangePassword": {
+        "Title": "Change Password",
+        "Field1": {
+          "Title": "Current Password",
+          "Placeholder": "********",
+          "Description": "Enter your current password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field2": {
+          "Title": "New Password",
+          "Placeholder": "********",
+          "Description": "Choose a new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces",
+          "Error3": "New password cannot be the same as old password"
+        },
+        "Field3": {
+          "Title": "Confirm New Password",
+          "Placeholder": "********",
+          "Description": "Re-enter your new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces",
+          "Error3": "Confirm Password does not match"
+        },
+        "PrimaryCTA": "Update password",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Password updated successfully",
+        "APIError": "Password does not match.. please try again"
+      },
+      "ChangeEmail": {
+        "Title": "Change Email",
+        "Field1": {
+          "Title": "Current Password",
+          "Placeholder": "********",
+          "Description": "Enter your password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field2": {
+          "Title": "Enter new email",
+          "Placeholder": "raj.sharma@gmail.com",
+          "Description": "Provide your new email address",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters",
+          "Error3": "New email cannot be the same as previous email",
+          "Error4": "Another user already has this email.. try another email address"
+        },
+        "PrimaryCTA": "Update Email",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Email updated successfully",
+        "APIError": "Password does not match.. please try again"
+      },
+      "Logout": "Logout",
+      "LastLogin": "Last login at {loginTime}"
+    },
+    "AccountSettings": {
+      "Field1":{
+        "Title":"Enable dark mode"
+      },
+      "Field2":{
+        "Title":"Preferred Language",
+        "Error1":"Language is required"
+      },
+      "Success": "Preferences updated successfully!",
+      "Error": "Cannot edit preferences.. Try again later!",
+      "PrimaryCTA": "Save preferences",
+      "Loading": "Loading..",
+      "SecondaryCTA": "Back"
+    },
+    "AccountAgency": {},
+    "AccountChangePassword": {},
+    "AccountHelp": {},
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",
@@ -2332,6 +2441,12 @@
         "Error": "Cannot activate customer.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Activate"
+      },
+      "Logout": {
+        "Label": "Logout",
+        "Title": "Are you sure you want to logout?",
+        "NoCTA": "No",
+        "YesCTA": "Yes, logout"
       }
     }
   },

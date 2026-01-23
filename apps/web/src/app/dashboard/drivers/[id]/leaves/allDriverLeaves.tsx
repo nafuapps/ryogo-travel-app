@@ -10,6 +10,7 @@ import Link from "next/link"
 import { UrlObject } from "url"
 import { LucidePencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function AllDriverLeavesPageComponent({
   leaves,
@@ -49,7 +50,7 @@ async function DriverLeaveComponent(
 
   const user = await getCurrentUser()
   const canModify =
-    user?.userRole == "owner" || user?.userId == props.addedByUserId
+    user?.userRole == UserRolesEnum.OWNER || user?.userId == props.addedByUserId
   return (
     <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
       <div className={gridItemClassName}>

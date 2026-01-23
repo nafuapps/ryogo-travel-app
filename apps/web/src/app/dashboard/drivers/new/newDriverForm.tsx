@@ -6,7 +6,7 @@ import { NewDriverStep1 } from "./newDriverStep1"
 import { NewDriverStep2 } from "./newDriverStep2"
 import { NewDriverStep3 } from "./newDriverStep3"
 import { NewDriverConfirm } from "./newDriverConfirm"
-import { SelectUserType } from "@ryogo-travel-app/db/schema"
+import { SelectUserType, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export type NewDriverFormDataType = {
   name: string
@@ -17,7 +17,7 @@ export type NewDriverFormDataType = {
   licenseExpiresOn: Date | undefined
   licensePhotos: FileList | undefined
   address: string
-  canDriveVehicleTypes: string[]
+  canDriveVehicleTypes: VehicleTypesEnum[]
   defaultAllowancePerDay: number | undefined
 }
 

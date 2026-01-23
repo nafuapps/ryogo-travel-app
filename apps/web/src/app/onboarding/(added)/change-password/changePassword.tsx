@@ -1,25 +1,26 @@
-"use client";
+"use client"
 
-import { H2, H5Grey } from "@/components/typography";
-import { useTranslations } from "next-intl";
+import { H2, H5Grey } from "@/components/typography"
+import { useTranslations } from "next-intl"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "@/app/onboarding/components/onboardingSteps";
-import { ChangePasswordStep1 } from "./changePasswordStep1";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar";
+} from "@/app/onboarding/components/onboardingSteps"
+import { ChangePasswordStep1 } from "./changePasswordStep1"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 type ChangePasswordPageComponentProps = {
-  userId: string;
-  role: string;
-};
+  userId: string
+  role: UserRolesEnum
+}
 export default function ChangePasswordPageComponent(
-  props: ChangePasswordPageComponentProps
+  props: ChangePasswordPageComponentProps,
 ) {
-  const t = useTranslations("Onboarding.ChangePasswordPage");
-  const { isMobile } = useSidebar();
+  const t = useTranslations("Onboarding.ChangePasswordPage")
+  const { isMobile } = useSidebar()
 
   return (
     <>
@@ -44,5 +45,5 @@ export default function ChangePasswordPageComponent(
         </SidebarContent>
       </Sidebar>
     </>
-  );
+  )
 }

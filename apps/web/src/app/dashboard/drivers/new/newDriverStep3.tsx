@@ -21,6 +21,7 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export function NewDriverStep3(props: {
   onNext: () => void
@@ -34,7 +35,9 @@ export function NewDriverStep3(props: {
       .string()
       .min(20, t("Field1.Error1"))
       .max(300, t("Field1.Error2")),
-    canDriveVehicleTypes: z.array(z.string()).min(1, t("Field2.Error1")),
+    canDriveVehicleTypes: z
+      .array(z.enum(VehicleTypesEnum))
+      .min(1, t("Field2.Error1")),
     defaultAllowancePerDay: z.coerce
       .number<number>(t("Field3.Error1"))
       .min(1, t("Field3.Error2"))
@@ -63,8 +66,6 @@ export function NewDriverStep3(props: {
     props.onNext()
   }
 
-  const vehicles = Object.values(VehicleTypesEnum).map((i) => i.toUpperCase())
-
   return (
     <div id="NewDriverStep3" className={newBookingSectionClassName}>
       <div id="Header" className={newBookingHeaderClassName}>
@@ -88,7 +89,7 @@ export function NewDriverStep3(props: {
               placeholder={t("Field1.Placeholder")}
             />
             <DashboardMultipleCheckbox
-              array={vehicles}
+              array={getEnumValueDisplayPairs(VehicleTypesEnum)}
               name={"canDriveVehicleTypes"}
               label={t("Field2.Title")}
               register={formData.register("canDriveVehicleTypes")}

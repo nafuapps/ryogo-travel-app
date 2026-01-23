@@ -5,6 +5,7 @@ import {
   InsertUserType,
   UserStatusEnum,
   BookingStatusEnum,
+  UserLangEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, inArray, not } from "drizzle-orm"
 
@@ -16,14 +17,14 @@ export const userRepository = {
 
   //Get unique user by id
   async readUserById(id: string) {
-    return await db.select().from(users).where(eq(users.id, id))
+    return await db.query.users.findFirst({ where: eq(users.id, id) })
   },
 
   //Get unique user by phone, roles and agency id
   async readUserByPhoneRolesAgencyId(
     phone: string,
     roles: UserRolesEnum[],
-    agencyId: string
+    agencyId: string,
   ) {
     return await db
       .select({ id: users.id })
@@ -32,8 +33,8 @@ export const userRepository = {
         and(
           eq(users.phone, phone),
           inArray(users.userRole, roles),
-          eq(users.agencyId, agencyId)
-        )
+          eq(users.agencyId, agencyId),
+        ),
       )
   },
 
@@ -41,7 +42,7 @@ export const userRepository = {
   async readUserByPhoneRoleEmail(
     phone: string,
     roles: UserRolesEnum[],
-    email: string
+    email: string,
   ) {
     return await db
       .select({ id: users.id })
@@ -50,9 +51,16 @@ export const userRepository = {
         and(
           eq(users.phone, phone),
           inArray(users.userRole, roles),
-          eq(users.email, email)
-        )
+          eq(users.email, email),
+        ),
       )
+  },
+
+  //Get users by phone and role
+  async readUserAccountsByPhoneRole(phone: string, role: UserRolesEnum) {
+    return await db.query.users.findMany({
+      where: and(eq(users.phone, phone), eq(users.userRole, role)),
+    })
   },
 
   //Get user by roles in an agency
@@ -61,7 +69,7 @@ export const userRepository = {
       .select()
       .from(users)
       .where(
-        and(eq(users.agencyId, agencyId), inArray(users.userRole, userRoles))
+        and(eq(users.agencyId, agencyId), inArray(users.userRole, userRoles)),
       )
   },
 
@@ -81,7 +89,7 @@ export const userRepository = {
       where: and(
         eq(users.agencyId, agencyId),
         inArray(users.userRole, [UserRolesEnum.OWNER, UserRolesEnum.AGENT]),
-        not(eq(users.status, UserStatusEnum.SUSPENDED))
+        not(eq(users.status, UserStatusEnum.SUSPENDED)),
       ),
       with: {
         bookingsAssigned: {
@@ -175,6 +183,37 @@ export const userRepository = {
     return await db
       .update(users)
       .set({ photoUrl: photoUrl })
+      .where(eq(users.id, userId))
+      .returning()
+  },
+
+  //Update user name
+  async updateName(userId: string, name: string) {
+    return await db
+      .update(users)
+      .set({ name })
+      .where(eq(users.id, userId))
+      .returning()
+  },
+
+  //Update user preferences
+  async updateUserPreferences(
+    userId: string,
+    prefersDarkTheme?: boolean,
+    languagePref?: UserLangEnum,
+  ) {
+    return await db
+      .update(users)
+      .set({ prefersDarkTheme, languagePref })
+      .where(eq(users.id, userId))
+      .returning()
+  },
+
+  //Update user email
+  async updateEmail(userId: string, email: string) {
+    return await db
+      .update(users)
+      .set({ email })
       .where(eq(users.id, userId))
       .returning()
   },

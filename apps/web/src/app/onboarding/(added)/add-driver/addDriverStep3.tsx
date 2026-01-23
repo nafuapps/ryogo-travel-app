@@ -1,45 +1,49 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingInput,
   OnboardingMultipleCheckbox,
   OnboardingTextarea,
-} from "@/app/onboarding/components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export function AddDriverStep3(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: AddDriverFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>;
+  onNext: () => void
+  onPrev: () => void
+  finalData: AddDriverFormDataType
+  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>
 }) {
-  const t = useTranslations("Onboarding.AddDriverPage.Step3");
+  const t = useTranslations("Onboarding.AddDriverPage.Step3")
   const step3Schema = z.object({
     driverAddress: z
       .string()
       .min(20, t("Field1.Error1"))
       .max(300, t("Field1.Error2")),
-    canDriveVehicleTypes: z.array(z.string()).min(1, t("Field2.Error1")),
+    canDriveVehicleTypes: z
+      .array(z.enum(VehicleTypesEnum))
+      .min(1, t("Field2.Error1")),
     defaultAllowancePerDay: z.coerce
       .number<number>(t("Field3.Error1"))
       .min(1, t("Field3.Error2"))
       .max(10000, t("Field3.Error3"))
       .positive(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5")),
-  });
-  type Step3Type = z.infer<typeof step3Schema>;
+  })
+  type Step3Type = z.infer<typeof step3Schema>
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
@@ -47,7 +51,7 @@ export function AddDriverStep3(props: {
       canDriveVehicleTypes: props.finalData.canDriveVehicleTypes,
       defaultAllowancePerDay: props.finalData.defaultAllowancePerDay,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
@@ -56,11 +60,9 @@ export function AddDriverStep3(props: {
       address: data.driverAddress,
       canDriveVehicleTypes: data.canDriveVehicleTypes,
       defaultAllowancePerDay: data.defaultAllowancePerDay,
-    });
-    props.onNext();
-  };
-
-  const vehicles = ["Car", "Bus", "Truck", "Bike", "Other"];
+    })
+    props.onNext()
+  }
 
   return (
     <Form {...formData}>
@@ -75,7 +77,7 @@ export function AddDriverStep3(props: {
             placeholder={t("Field1.Placeholder")}
           />
           <OnboardingMultipleCheckbox
-            array={vehicles}
+            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
             name={"canDriveVehicleTypes"}
             label={t("Field2.Title")}
             register={formData.register("canDriveVehicleTypes")}
@@ -104,5 +106,5 @@ export function AddDriverStep3(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

@@ -3,15 +3,16 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   try {
     //Check user auth
     const user = await getCurrentUser()
-    if (!user || user.userRole !== "owner") {
+    if (!user || user.userRole != UserRolesEnum.OWNER) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
     //Get userId
@@ -45,7 +46,7 @@ export async function POST(
         : undefined
     return NextResponse.json(
       { error: errorMessage || "Something went wrong" },
-      { status: 400 }
+      { status: 400 },
     )
   }
 }

@@ -10,7 +10,7 @@ export default async function AllDriversPage() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/auth/login", RedirectType.replace)
   }
   const agencyId = user.agencyId
   return (

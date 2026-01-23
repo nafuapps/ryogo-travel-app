@@ -4,12 +4,12 @@ import {
   PBold,
   SmallBold,
   SmallGrey,
-} from "@/components/typography";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+} from "@/components/typography"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { useEffect, useRef, useState } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   getTripTypeClassName,
   newBookingFormClassName,
@@ -18,39 +18,43 @@ import {
   newBookingHeaderLineClassName,
   newBookingSectionClassName,
   NewBookingTotalSteps,
-} from "./newBookingCommon";
-import stateCityData from "@/lib/states_cities.json";
-import NewBookingStepsTracker from "./newBookingStepsTracker";
-import { Form } from "@/components/ui/form";
+} from "./newBookingCommon"
+import stateCityData from "@/lib/states_cities.json"
+import NewBookingStepsTracker from "./newBookingStepsTracker"
+import { Form } from "@/components/ui/form"
 import {
   DashboardDatePicker,
   DashboardInput,
   DashboardSelect,
   DashboardSwitch,
   DashboardTextarea,
-} from "@/components/form/dashboardFormFields";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
+} from "@/components/form/dashboardFormFields"
+import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 import {
   LucideArrowRightFromLine,
   LucideArrowRightLeft,
   LucideWaypoints,
-} from "lucide-react";
-import { BookingTypeEnum } from "@ryogo-travel-app/db/schema";
+} from "lucide-react"
+import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
+import {
+  getArrayValueDisplayPairs,
+  getStringValueDisplayPairs,
+} from "@/lib/utils"
 
 type NewBookingStep2Props = {
-  onNext: () => void;
-  onPrev: () => void;
-  newBookingFormData: NewBookingFormDataType;
+  onNext: () => void
+  onPrev: () => void
+  newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
-  >;
-};
+  >
+}
 export default function NewBookingStep2(props: NewBookingStep2Props) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step2");
+  const t = useTranslations("Dashboard.NewBooking.Form.Step2")
   const [selectedTripType, setSelectedTripType] = useState<BookingTypeEnum>(
-    props.newBookingFormData.tripType
-  );
+    props.newBookingFormData.tripType,
+  )
 
   const step2Schema = z
     .object({
@@ -82,7 +86,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           code: "custom",
           message: t("Field6.Error2"),
           path: ["tripEndDate"],
-        });
+        })
       }
       //For Multi day trip, end date must be after start date
       if (
@@ -93,7 +97,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           code: "custom",
           message: t("Field6.Error3"),
           path: ["tripEndDate"],
-        });
+        })
       }
       //Source and destination cannot be the same
       if (
@@ -104,11 +108,11 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           code: "custom",
           message: t("Field4.Error2"),
           path: ["tripDestinationLocationCity"],
-        });
+        })
       }
-    });
+    })
 
-  type Step2Type = z.infer<typeof step2Schema>;
+  type Step2Type = z.infer<typeof step2Schema>
 
   //Form init
   const form = useForm<Step2Type>({
@@ -127,7 +131,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
       tripNeedsAC: props.newBookingFormData.tripNeedsAC,
       tripRemarks: props.newBookingFormData.tripRemarks,
     },
-  });
+  })
 
   //Form submit
   function onSubmit(values: Step2Type) {
@@ -145,37 +149,41 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           : values.tripEndDate,
       tripPassengers: values.tripPassengers,
       tripNeedsAC: values.tripNeedsAC,
-    });
-    props.onNext();
+    })
+    props.onNext()
   }
 
-  const data: Record<string, string[]> = stateCityData;
+  const data: Record<string, string[]> = stateCityData
 
-  const selectedSourceState = form.watch("tripSourceLocationState");
-  const sourceCityOptions = data[selectedSourceState];
+  const selectedSourceState = form.watch("tripSourceLocationState")
+  const sourceCityOptions = selectedSourceState
+    ? (data[selectedSourceState] ?? [t("Field2.Placeholder")])
+    : []
 
-  const selectedDestinationState = form.watch("tripDestinationLocationState");
-  const destinationCityOptions = data[selectedDestinationState];
+  const selectedDestinationState = form.watch("tripDestinationLocationState")
+  const destinationCityOptions = data[selectedDestinationState] ?? [
+    t("Field4.Placeholder"),
+  ]
 
-  const isFirstRender = useRef(true);
-  const setValue = form.setValue;
-
-  useEffect(() => {
-    // Skip on the initial render of the component
-    if (isFirstRender.current) {
-      return;
-    }
-    setValue("tripDestinationLocationCity", ""); // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedDestinationState, setValue]);
+  const isFirstRender = useRef(true)
+  const setValue = form.setValue
 
   useEffect(() => {
     // Skip on the initial render of the component
     if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
+      return
     }
-    setValue("tripSourceLocationCity", ""); // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedSourceState, setValue]);
+    setValue("tripDestinationLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedDestinationState, setValue])
+
+  useEffect(() => {
+    // Skip on the initial render of the component
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    setValue("tripSourceLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedSourceState, setValue])
 
   return (
     <div id="TripSection" className={newBookingSectionClassName}>
@@ -204,13 +212,13 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               <DashboardSelect
                 name="tripSourceLocationState"
                 title={t("Field1.Title")}
-                array={Object.keys(stateCityData)}
+                array={getArrayValueDisplayPairs(stateCityData)}
                 register={form.register("tripSourceLocationState")}
                 placeholder={t("Field1.Placeholder")}
               />
               <DashboardSelect
                 name="tripSourceLocationCity"
-                array={sourceCityOptions}
+                array={getStringValueDisplayPairs(sourceCityOptions)}
                 register={form.register("tripSourceLocationCity")}
                 placeholder={t("Field2.Placeholder")}
               />
@@ -222,13 +230,13 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               <DashboardSelect
                 name="tripDestinationLocationState"
                 title={t("Field3.Title")}
-                array={Object.keys(stateCityData)}
+                array={getArrayValueDisplayPairs(stateCityData)}
                 register={form.register("tripDestinationLocationState")}
                 placeholder={t("Field3.Placeholder")}
               />
               <DashboardSelect
                 name="tripDestinationLocationCity"
-                array={destinationCityOptions}
+                array={getStringValueDisplayPairs(destinationCityOptions)}
                 register={form.register("tripDestinationLocationCity")}
                 placeholder={t("Field4.Placeholder")}
               />
@@ -240,11 +248,11 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               <div
                 id={BookingTypeEnum.OneWay}
                 onClick={() => {
-                  setSelectedTripType(BookingTypeEnum.OneWay);
-                  form.setValue("tripEndDate", form.getValues("tripStartDate"));
+                  setSelectedTripType(BookingTypeEnum.OneWay)
+                  form.setValue("tripEndDate", form.getValues("tripStartDate"))
                 }}
                 className={getTripTypeClassName(
-                  selectedTripType == BookingTypeEnum.OneWay
+                  selectedTripType == BookingTypeEnum.OneWay,
                 )}
               >
                 <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
@@ -255,7 +263,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                 id={BookingTypeEnum.Round}
                 onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
                 className={getTripTypeClassName(
-                  selectedTripType == BookingTypeEnum.Round
+                  selectedTripType == BookingTypeEnum.Round,
                 )}
               >
                 <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
@@ -266,7 +274,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                 id={BookingTypeEnum.MultiDay}
                 onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
                 className={getTripTypeClassName(
-                  selectedTripType == BookingTypeEnum.MultiDay
+                  selectedTripType == BookingTypeEnum.MultiDay,
                 )}
               >
                 <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
@@ -331,5 +339,5 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
         </form>
       </Form>
     </div>
-  );
+  )
 }

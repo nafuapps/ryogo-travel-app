@@ -5,6 +5,7 @@ import { cookies } from "next/headers"
 import DashboardSidebar from "./components/extra/dashboardSidebar"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function DashboardLayout({
   children,
@@ -21,8 +22,8 @@ export default async function DashboardLayout({
   }
 
   //New user
-  if (currentUser?.status == "new") {
-    if (currentUser?.userRole == "owner") {
+  if (currentUser.status == UserStatusEnum.NEW) {
+    if (currentUser.userRole == UserRolesEnum.OWNER) {
       //If owner, go to vehicle onboarding
       redirect("/onboarding/add-vehicle", RedirectType.replace)
     }
@@ -31,7 +32,7 @@ export default async function DashboardLayout({
   }
 
   //Old user
-  if (currentUser?.userRole == "driver") {
+  if (currentUser.userRole == UserRolesEnum.DRIVER) {
     //If old driver, go to rider page
     redirect("/rider", RedirectType.replace)
   }
@@ -49,7 +50,9 @@ export default async function DashboardLayout({
       }
     >
       <main id="DashboardLayout" className="flex flex-row w-screen h-dvh">
-        <DashboardSidebar isOwner={currentUser?.userRole === "owner"} />
+        <DashboardSidebar
+          isOwner={currentUser.userRole == UserRolesEnum.OWNER}
+        />
         <section
           id="DashboardMainSection"
           className="flex flex-row w-full h-dvh"

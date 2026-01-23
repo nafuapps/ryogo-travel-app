@@ -25,19 +25,19 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
-import { getCurrentUser } from "@/lib/auth"
 import { ExpenseApprovalButton } from "./expenseApprovalButton"
 
 export default async function ExpenseItem({
   expense,
   canModifyExpense,
+  canApproveExpense,
 }: {
   expense: NonNullable<FindBookingExpensesByIdType>[0]
   canModifyExpense: boolean
+  canApproveExpense: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingExpenses")
   const id = expense.bookingId
-  const user = await getCurrentUser()
 
   const expId = expense.id
   let fileUrl = ""
@@ -74,7 +74,7 @@ export default async function ExpenseItem({
             <H4>{expense.amount}</H4>
           </div>
           <div className="flex flex-row gap-2 lg:gap-3">
-            {user?.userRole == "owner" && (
+            {canApproveExpense && (
               <ExpenseApprovalButton
                 expId={expId}
                 isApproved={expense.isApproved}

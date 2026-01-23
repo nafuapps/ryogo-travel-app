@@ -7,10 +7,11 @@ import { NewVehicleStep2 } from "./newVehicleStep2"
 import { NewVehicleStep3 } from "./newVehicleStep3"
 import { NewVehicleStep4 } from "./newVehicleStep4"
 import { NewVehicleConfirm } from "./newVehicleConfirm"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export type NewVehicleFormDataType = {
   vehicleNumber: string
-  type: string
+  type: VehicleTypesEnum
   brand: string
   color: string
   model: string
@@ -36,7 +37,7 @@ export default function NewVehicleForm(props: NewVehicleFormProps) {
   const [newVehicleFormData, setNewVehicleFormData] =
     useState<NewVehicleFormDataType>({
       vehicleNumber: "",
-      type: "",
+      type: VehicleTypesEnum.CAR,
       brand: "",
       color: "",
       model: "",

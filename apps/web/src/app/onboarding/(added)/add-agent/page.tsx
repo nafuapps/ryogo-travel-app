@@ -1,36 +1,37 @@
 //(Onboarding) Add agent page
 
-import { Metadata } from "next";
-import AddAgentPageComponent from "./addAgent";
-import { getCurrentUser } from "@/lib/auth";
-import { redirect, RedirectType } from "next/navigation";
+import { Metadata } from "next"
+import AddAgentPageComponent from "./addAgent"
+import { getCurrentUser } from "@/lib/auth"
+import { redirect, RedirectType } from "next/navigation"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: "Add Agent Page | RyoGo",
   description: "Add Agent page for RyoGo Travel App",
-};
+}
 
 export default async function AddAgentPage() {
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser()
   //If no user logged in, go to login page
   if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace);
+    redirect("/auth/login", RedirectType.replace)
   }
 
   //Not owner
-  if (currentUser.userRole !== "owner") {
+  if (currentUser.userRole != UserRolesEnum.OWNER) {
     //New users
-    if (currentUser.status == "new") {
+    if (currentUser.status == UserStatusEnum.NEW) {
       //Go to change password
-      redirect("/onboarding/change-password", RedirectType.replace);
+      redirect("/onboarding/change-password", RedirectType.replace)
     }
     //Old users
-    if (currentUser.userRole == "driver") {
+    if (currentUser.userRole == UserRolesEnum.DRIVER) {
       //If driver, go to rider page
-      redirect("/rider", RedirectType.replace);
+      redirect("/rider", RedirectType.replace)
     }
     //Else, go to dashboard
-    redirect("/dashboard", RedirectType.replace);
+    redirect("/dashboard", RedirectType.replace)
   }
 
   //Only owner can add agent
@@ -40,5 +41,5 @@ export default async function AddAgentPage() {
       ownerId={currentUser.userId}
       status={currentUser.status}
     />
-  );
+  )
 }

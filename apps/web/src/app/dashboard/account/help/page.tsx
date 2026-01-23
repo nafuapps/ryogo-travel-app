@@ -1,8 +1,14 @@
 //Account/help page
 
-import {useTranslations} from 'next-intl';
- 
-export default function AccountHelpPage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+import { mainClassName } from "@/components/page/pageCommons"
+import DashboardHeader from "../../components/extra/dashboardHeader"
+import AccountHelpPageComponent from "./help"
+
+export default async function AccountHelpPage() {
+  return (
+    <div className={mainClassName}>
+      <DashboardHeader pathName={"/dashboard/account/help"} />
+      <AccountHelpPageComponent />
+    </div>
+  )
 }

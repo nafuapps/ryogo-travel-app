@@ -143,7 +143,7 @@ export function DashboardTextarea(props: DashboardTextareaProps) {
 type DashboardSelectProps = {
   name: string
   title?: string
-  array: string[] | undefined
+  array: { value: string; display: string }[] | undefined
   placeholder: string
   register: UseFormRegisterReturn<string>
 }
@@ -168,8 +168,8 @@ export function DashboardSelect(props: DashboardSelectProps) {
             </FormControl>
             <SelectContent>
               {props.array!.map((item, index) => (
-                <SelectItem key={index} value={item}>
-                  {item}
+                <SelectItem key={index} value={item.value}>
+                  {item.display}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -184,7 +184,7 @@ export function DashboardSelect(props: DashboardSelectProps) {
 type DashboardRadioProps = {
   name: string
   title?: string
-  array: string[] | undefined
+  array: { value: string; display: string }[] | undefined
   register: UseFormRegisterReturn<string>
   defaultValue: string
   description?: string
@@ -205,8 +205,8 @@ export function DashboardRadio(props: DashboardRadioProps) {
           >
             {props.array!.map((item, index) => (
               <div className="flex items-center gap-3" key={index}>
-                <RadioGroupItem value={item} id={`r${index}`} />
-                <Label htmlFor={`r${index}`}>{item.toUpperCase()}</Label>
+                <RadioGroupItem value={item.value} id={`r${index}`} />
+                <Label htmlFor={`r${index}`}>{item.display}</Label>
               </div>
             ))}
           </RadioGroup>
@@ -251,7 +251,7 @@ export function DashboardCheckbox(props: DashboardCheckboxProps) {
 type DashboardMultipleCheckboxProps = {
   name: string
   label: string
-  array: string[] | undefined
+  array: { value: string; display: string }[] | undefined
   register: UseFormRegisterReturn<string>
 }
 export function DashboardMultipleCheckbox(
@@ -267,30 +267,30 @@ export function DashboardMultipleCheckbox(
           </FormLabel>
           {props.array!.map((item) => (
             <FormField
-              key={item}
+              key={item.value}
               name={props.name}
               render={({ field }) => {
                 return (
                   <FormItem
-                    key={item}
+                    key={item.value}
                     className="flex flex-row items-end gap-2 lg:gap-3 w-full px-2"
                   >
                     <FormControl>
                       <Checkbox
-                        checked={field.value?.includes(item)}
+                        checked={field.value?.includes(item.value)}
                         onCheckedChange={(checked) => {
                           return checked
-                            ? field.onChange([...field.value, item])
+                            ? field.onChange([...field.value, item.value])
                             : field.onChange(
                                 field.value?.filter(
-                                  (value: string) => value !== item,
+                                  (value: string) => value !== item.value,
                                 ),
                               )
                         }}
                       />
                     </FormControl>
                     <FormLabel className="text-sm font-normal">
-                      <Caption>{item}</Caption>
+                      <Caption>{item.display}</Caption>
                     </FormLabel>
                   </FormItem>
                 )

@@ -1,3 +1,5 @@
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+
 export type CreateAccountFormDataType = {
   agencyName: string
   ownerName: string
@@ -18,7 +20,7 @@ export type CreateAccountFormDataType = {
 export type AddVehicleFormDataType = {
   agencyId: string
   vehicleNumber: string
-  type: string
+  type: VehicleTypesEnum
   brand: string
   color: string
   model: string
@@ -46,7 +48,7 @@ export type AddDriverFormDataType = {
   licenseExpiresOn: Date | undefined
   licensePhotos: FileList | undefined
   address: string
-  canDriveVehicleTypes: string[]
+  canDriveVehicleTypes: VehicleTypesEnum[]
   defaultAllowancePerDay: number | undefined
 }
 

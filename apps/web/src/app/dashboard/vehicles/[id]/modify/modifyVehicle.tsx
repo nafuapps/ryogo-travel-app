@@ -20,6 +20,7 @@ import {
   DashboardFileInput,
   DashboardSwitch,
 } from "@/components/form/dashboardFormFields"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -199,7 +200,7 @@ export default function ModifyVehiclePageComponent({
           <DashboardSelect
             name={"type"}
             register={formData.register("type")}
-            array={Object.values(VehicleTypesEnum)}
+            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
             title={t("Field1.Title")}
             placeholder={t("Field1.Title")}
           />

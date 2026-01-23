@@ -22,6 +22,7 @@ import z from "zod"
 import { updateExpenseAction } from "./updateExpenseAction"
 import { Button } from "@/components/ui/button"
 import DeleteExpenseAlertButton from "@/app/dashboard/components/buttons/deleteExpenseAlertButton"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export default function ModifyExpensePageComponent({
   bookingId,
@@ -101,7 +102,7 @@ export default function ModifyExpensePageComponent({
             name="type"
             title={t("Field1.Title")}
             register={formData.register("type")}
-            array={Object.values(ExpenseTypesEnum)}
+            array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
             placeholder={t("Field1.Description")}
           />
           <DashboardInput

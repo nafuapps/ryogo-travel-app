@@ -22,6 +22,7 @@ import { redirect, RedirectType, useRouter } from "next/navigation"
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import { LoginPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 import { Spinner } from "@/components/ui/spinner"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 // TODO: Add a feature to show the user had recently reset password
 
@@ -29,7 +30,7 @@ type LoginPageComponentProps = {
   userId: string
 }
 export default function LoginPasswordPageComponent(
-  props: LoginPageComponentProps
+  props: LoginPageComponentProps,
 ) {
   const userId = props.userId
 
@@ -57,7 +58,7 @@ export default function LoginPasswordPageComponent(
       {
         method: "POST",
         body: JSON.stringify({ userId: userId, password: data.password }),
-      }
+      },
     )
     if (loginResponse == null) {
       // Show password match error
@@ -67,7 +68,7 @@ export default function LoginPasswordPageComponent(
       methods.setError("password", { type: "manual", message: t("APIError2") })
     } else {
       //Login user
-      if (loginResponse.userRole === "driver") {
+      if (loginResponse.userRole == UserRolesEnum.DRIVER) {
         //Redirect to Rider page
         router.replace("/rider")
       } else {

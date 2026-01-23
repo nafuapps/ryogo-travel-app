@@ -7,7 +7,7 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cancelBookingAction } from "@/app/dashboard/components/actions/cancelBookingAction"
 import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
 import { mainClassName } from "@/components/page/pageCommons"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import AssignUserPageComponent from "./assignUser"
 
@@ -25,7 +25,7 @@ export default async function AssignUserBookingPage({
   }
 
   //Only owner can assign user
-  if (user?.userRole !== "owner") {
+  if (user?.userRole != UserRolesEnum.OWNER) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 

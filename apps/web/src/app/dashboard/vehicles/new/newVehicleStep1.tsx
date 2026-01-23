@@ -19,6 +19,8 @@ import {
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { Button } from "@/components/ui/button"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export function NewVehicleStep1(props: {
   onNext: () => void
@@ -35,7 +37,7 @@ export function NewVehicleStep1(props: {
       .trim()
       .min(7, t("Field1.Error1"))
       .max(15, t("Field1.Error2")),
-    type: z.string().min(1, t("Field2.Error1")),
+    type: z.enum(VehicleTypesEnum).nonoptional(t("Field2.Error1")),
     brand: z.string().min(3, t("Field3.Error1")).max(15, t("Field3.Error2")),
     color: z.string().min(3, t("Field4.Error1")).max(15, t("Field4.Error2")),
     model: z.string().min(3, t("Field5.Error1")).max(30, t("Field5.Error2")),
@@ -105,7 +107,7 @@ export function NewVehicleStep1(props: {
             <DashboardSelect
               name={"type"}
               register={formData.register("type")}
-              array={["Car", "Bus", "Truck", "Bike", "Other"]}
+              array={getEnumValueDisplayPairs(VehicleTypesEnum)}
               title={t("Field2.Title")}
               placeholder={t("Field2.Title")}
             />

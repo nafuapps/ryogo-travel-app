@@ -4,7 +4,7 @@ import VehicleDetailHeaderTabs from "../vehicleDetailHeaderTabs"
 import {
   gridClassName,
   gridItemClassName,
-} from "@/app/dashboard/bookings/(all)/bookingCommons"
+} from "@/app/dashboard/components/pageCommons"
 import { Caption, CaptionGrey, PBold } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"

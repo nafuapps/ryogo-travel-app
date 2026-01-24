@@ -15,7 +15,7 @@ import {
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "../../bookings/(all)/bookingCommons"
+} from "../../components/pageCommons"
 import { useState } from "react"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
 import {
@@ -137,8 +137,8 @@ export default function VehiclesScheduleChartComponent({
                 <CaptionGrey>
                   {moment(
                     new Date(
-                      chartStartDate.getTime() + index * 24 * 60 * 60 * 1000
-                    )
+                      chartStartDate.getTime() + index * 24 * 60 * 60 * 1000,
+                    ),
                   ).format("D MMM")}
                 </CaptionGrey>
               </div>
@@ -169,12 +169,12 @@ export default function VehiclesScheduleChartComponent({
                   let dayIndexStart =
                     Math.ceil(
                       (b.startDate.getTime() - chartStartDate.getTime()) /
-                        millisecondsPerDay
+                        millisecondsPerDay,
                     ) + 1
                   let dayIndexEnd =
                     Math.ceil(
                       (b.endDate.getTime() - chartStartDate.getTime()) /
-                        millisecondsPerDay
+                        millisecondsPerDay,
                     ) + 2
                   return (
                     <Popover key={b.id}>
@@ -212,8 +212,8 @@ export default function VehiclesScheduleChartComponent({
                                 dayIndexEnd < 2
                                   ? 2
                                   : dayIndexEnd > selectedDays
-                                  ? selectedDays
-                                  : dayIndexEnd,
+                                    ? selectedDays
+                                    : dayIndexEnd,
                             } as React.CSSProperties
                           }
                         >
@@ -231,12 +231,12 @@ export default function VehiclesScheduleChartComponent({
                   let dayIndexStart =
                     Math.ceil(
                       (r.startDate.getTime() - chartStartDate.getTime()) /
-                        millisecondsPerDay
+                        millisecondsPerDay,
                     ) + 1
                   let dayIndexEnd =
                     Math.ceil(
                       (r.endDate.getTime() - chartStartDate.getTime()) /
-                        millisecondsPerDay
+                        millisecondsPerDay,
                     ) + 2
                   return (
                     <Popover key={r.id}>
@@ -270,8 +270,8 @@ export default function VehiclesScheduleChartComponent({
                                 dayIndexEnd < 2
                                   ? 2
                                   : dayIndexEnd > selectedDays
-                                  ? selectedDays
-                                  : dayIndexEnd,
+                                    ? selectedDays
+                                    : dayIndexEnd,
                             } as React.CSSProperties
                           }
                         >

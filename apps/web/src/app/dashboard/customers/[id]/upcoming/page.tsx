@@ -5,7 +5,7 @@ import { customerServices } from "@ryogo-travel-app/api/services/customer.servic
 import DashboardHeader from "../../../components/extra/dashboardHeader"
 import CustomerUpcomingBookingsPageComponent from "./customerUpcomingBookings"
 
-export default async function CustomerDetailsPage({
+export default async function CustomerUpcomingBookingsPage({
   params,
 }: {
   params: Promise<{ id: string }>

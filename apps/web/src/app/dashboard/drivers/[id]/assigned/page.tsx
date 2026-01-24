@@ -5,7 +5,7 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import DashboardHeader from "../../../components/extra/dashboardHeader"
 import DriverAssignedBookingsPageComponent from "./driverAssignedBookings"
 
-export default async function DriverDetailsPage({
+export default async function DriverAssignedBookingsPage({
   params,
 }: {
   params: Promise<{ id: string }>

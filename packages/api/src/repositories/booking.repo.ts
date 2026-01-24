@@ -6,7 +6,7 @@ import {
   tripLogs,
   TripLogTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, or, gte, lte } from "drizzle-orm"
+import { eq, and, or, gte, lte, inArray } from "drizzle-orm"
 
 export const bookingRepository = {
   async readBookingsByStatusCreatedDateRange(
@@ -362,7 +362,10 @@ export const bookingRepository = {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.assignedVehicleId, vehicleId),
-        eq(bookings.status, BookingStatusEnum.CONFIRMED),
+        inArray(bookings.status, [
+          BookingStatusEnum.CONFIRMED,
+          BookingStatusEnum.IN_PROGRESS,
+        ]),
       ),
       columns: {
         startDate: true,
@@ -397,6 +400,13 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
+        },
+        tripLogs: {
+          orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+          columns: {
+            type: true,
+          },
+          limit: 1,
         },
       },
     })
@@ -407,7 +417,10 @@ export const bookingRepository = {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.assignedDriverId, driverId),
-        eq(bookings.status, BookingStatusEnum.CONFIRMED),
+        inArray(bookings.status, [
+          BookingStatusEnum.CONFIRMED,
+          BookingStatusEnum.IN_PROGRESS,
+        ]),
       ),
       columns: {
         startDate: true,
@@ -442,6 +455,13 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
+        },
+        tripLogs: {
+          orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+          columns: {
+            type: true,
+          },
+          limit: 1,
         },
       },
     })
@@ -452,7 +472,10 @@ export const bookingRepository = {
     return await db.query.bookings.findMany({
       where: and(
         eq(bookings.customerId, customerId),
-        eq(bookings.status, BookingStatusEnum.CONFIRMED),
+        inArray(bookings.status, [
+          BookingStatusEnum.CONFIRMED,
+          BookingStatusEnum.IN_PROGRESS,
+        ]),
       ),
       columns: {
         startDate: true,
@@ -487,6 +510,13 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
+        },
+        tripLogs: {
+          orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+          columns: {
+            type: true,
+          },
+          limit: 1,
         },
       },
     })

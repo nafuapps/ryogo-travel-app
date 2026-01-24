@@ -1,29 +1,30 @@
+/* eslint-disable react-hooks/immutability */
 //(Onboarding) Add agency and owner page
-"use client";
+"use client"
 
-import { useTranslations } from "next-intl";
-import OnboardingSidebar from "../components/onboardingSidebar";
-import { useMultiStepForm } from "@/hooks/useMultiStepForm";
-import { CaptionGrey, H2 } from "@/components/typography";
-import StepsTracker from "../components/stepsTracker";
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { CreateAccountFinish } from "./createAccountFinish";
-import { CreateAccountStep1 } from "./createAccountStep1";
-import { CreateAccountStep2 } from "./createAccountStep2";
-import { CreateAccountStep3 } from "./createAccountStep3";
-import { CreateAccountStep4 } from "./createAccountStep4";
-import { CreateAccountConfirm } from "./createAccountStep5";
-import { useState } from "react";
+import { useTranslations } from "next-intl"
+import OnboardingSidebar from "../components/onboardingSidebar"
+import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import { CaptionGrey, H2 } from "@/components/typography"
+import StepsTracker from "../components/stepsTracker"
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { CreateAccountFinish } from "./createAccountFinish"
+import { CreateAccountStep1 } from "./createAccountStep1"
+import { CreateAccountStep2 } from "./createAccountStep2"
+import { CreateAccountStep3 } from "./createAccountStep3"
+import { CreateAccountStep4 } from "./createAccountStep4"
+import { CreateAccountConfirm } from "./createAccountStep5"
+import { useState } from "react"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "../components/onboardingSteps";
+} from "../components/onboardingSteps"
 
-const TotalSteps = 5;
+const TotalSteps = 5
 
 export default function CreateAccountPageComponent() {
-  const t = useTranslations("Onboarding.CreateAccountPage");
+  const t = useTranslations("Onboarding.CreateAccountPage")
 
   const [finalData, setFinalData] = useState<CreateAccountFormDataType>({
     agencyName: "",
@@ -40,15 +41,15 @@ export default function CreateAccountPageComponent() {
     agencyCity: "",
     password: "",
     confirmPassword: "",
-  });
+  })
 
   const nextStepHandler = () => {
-    nextStep();
-  };
+    nextStep()
+  }
 
   const prevStepHandler = () => {
-    prevStep();
-  };
+    prevStep()
+  }
 
   const { currentStepIndex, isLastStep, nextStep, prevStep, steps } =
     useMultiStepForm([
@@ -86,7 +87,7 @@ export default function CreateAccountPageComponent() {
         finalData={finalData}
       />,
       <CreateAccountFinish key={5} />,
-    ]);
+    ])
 
   return (
     <>
@@ -109,5 +110,5 @@ export default function CreateAccountPageComponent() {
       </OnboardingStepPage>
       <OnboardingSidebar currentProcess={isLastStep ? 1 : 0} />
     </>
-  );
+  )
 }

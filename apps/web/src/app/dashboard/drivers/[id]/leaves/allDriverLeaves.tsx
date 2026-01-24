@@ -1,7 +1,7 @@
 import { pageClassName } from "@/components/page/pageCommons"
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "../driverDetailHeaderTabs"
-import { gridItemClassName } from "@/app/dashboard/bookings/(all)/bookingCommons"
+import { gridItemClassName } from "@/app/dashboard/components/pageCommons"
 import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"

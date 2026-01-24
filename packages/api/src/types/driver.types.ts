@@ -1,14 +1,4 @@
-export type CreateDriverType = {
-  agencyId: string
-  userId: string
-  name: string
-  phone: string
-  address: string
-  licenseNumber: string
-  licenseExpiresOn: Date
-  canDriveVehicleTypes: string[]
-  defaultAllowancePerDay?: number
-}
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export type NewDriverRequestType = {
   agencyId: string
@@ -19,7 +9,7 @@ export type NewDriverRequestType = {
     licenseNumber: string
     licenseExpiresOn: Date
     address: string
-    canDriveVehicleTypes: string[]
+    canDriveVehicleTypes: VehicleTypesEnum[]
     defaultAllowancePerDay?: number | undefined
     licensePhotos?: FileList | undefined
     driverPhotos?: FileList | undefined

@@ -4,7 +4,7 @@ import CustomerDetailHeaderTabs from "../customerDetailHeaderTabs"
 import {
   gridClassName,
   gridItemClassName,
-} from "@/app/dashboard/bookings/(all)/bookingCommons"
+} from "@/app/dashboard/components/pageCommons"
 import { Caption, CaptionGrey, PBold } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
@@ -55,7 +55,7 @@ function CompletedBookingComponent(
         </div>
         <div className={gridItemClassName}>
           <Caption>{props.vehicle}</Caption>
-          <PBold>{props.customer}</PBold>
+          <PBold>{props.driver}</PBold>
         </div>
         <div className={gridItemClassName}>
           <Caption>{format(props.updatedAt, "PP")}</Caption>

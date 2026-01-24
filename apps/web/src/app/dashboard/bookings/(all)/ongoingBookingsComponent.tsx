@@ -15,7 +15,7 @@ import {
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "./bookingCommons"
+} from "../../components/pageCommons"
 
 export default async function OngoingBookingsComponent({
   agencyId,

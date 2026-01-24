@@ -14,6 +14,7 @@ import {
   OnboardingAddDriverAPIResponseType,
   OnboardingCreateAccountAPIRequestType,
   OnboardingCreateAccountAPIResponseType,
+  NewAgentRequestType,
 } from "../types/user.types"
 
 export async function generatePasswordHash(password: string) {
@@ -27,14 +28,19 @@ export function generateNewPassword() {
 }
 
 export const userServices = {
-  //Find all users
-  async findAllUsersByRole(role: UserRolesEnum) {
-    return await userRepository.readAllUsersByRole(role)
+  //Find all users by role
+  async findAllUsersByRole(roles: UserRolesEnum[]) {
+    return await userRepository.readAllUsersByRole(roles)
+  },
+
+  //Find all users in an agency
+  async findAllUsersInAgency(agencyId: string) {
+    return await userRepository.readAllUsersByAgency(agencyId)
   },
 
   //Find user account details
   async findUserDetailsById(userId: string) {
-    const user = userRepository.readUserById(userId)
+    const user = await userRepository.readUserById(userId)
     return user
   },
 
@@ -177,16 +183,16 @@ export const userServices = {
     agencyId,
     data,
   }: OnboardingAddAgentAPIRequestType): Promise<OnboardingAddAgentAPIResponseType> {
-    //Step1: Check if agent or owner (phone) already exists in this agency
+    //Step1: Check if agent with same phone already exists in this agency
     const existingUserInAgency =
       await userRepository.readUserByPhoneRolesAgencyId(
         agencyId,
-        [UserRolesEnum.AGENT, UserRolesEnum.OWNER],
+        [UserRolesEnum.AGENT],
         data.phone,
       )
     if (existingUserInAgency.length > 0) {
       throw new Error(
-        "Agent or Owner with same phone number already exists in this agency",
+        "Agent with same phone number already exists in this agency",
       )
     }
 
@@ -223,6 +229,12 @@ export const userServices = {
       throw new Error("Failed to create agent for this agency")
     }
     return { id: newUser[0]!.id }
+  },
+
+  //Add a new agent to an agency
+  async addNewAgent(agencyId: string, data: NewAgentRequestType) {
+    const newAgent = userServices.addAgentUser({ agencyId, data })
+    return newAgent
   },
 
   //Create Driver (Onboarding flow)
@@ -286,6 +298,7 @@ export const userServices = {
       licenseNumber: data.licenseNumber,
       licenseExpiresOn: data.licenseExpiresOn,
       canDriveVehicleTypes: data.canDriveVehicleTypes,
+      defaultAllowancePerDay: data.defaultAllowancePerDay,
     })
     if (!newDriver) {
       throw new Error("Failed to create driver")
@@ -357,6 +370,28 @@ export const userServices = {
     return { id: newUserData[0]!.id }
   },
 
+  //Reset user password (by owner)
+  async resetUserPassword(userId: string) {
+    //Step1: Generate a new password
+    const newPassword = generateNewPassword()
+    console.log(newPassword)
+
+    // TODO: Step2: send pwd in email
+
+    //Step3: Store new password in DB
+    const passwordHash = await generatePasswordHash(newPassword)
+    const newUserData = await userRepository.updatePassword(
+      userId,
+      passwordHash,
+    )
+    if (!newUserData) {
+      throw new Error("Could not reset password in DB")
+    }
+
+    //Return userId as reset confirmation
+    return newUserData[0]
+  },
+
   // ? Change password (by user)
   async changePassword(
     userId: string,
@@ -425,7 +460,7 @@ export const userServices = {
     return updatedUser[0]?.id
   },
 
-  //Change email
+  //Change self email
   async changeEmail(userId: string, password: string, newEmail: string) {
     //Step1: Find user with userID
     const userFound = await userRepository.readUserById(userId)
@@ -446,7 +481,42 @@ export const userServices = {
     }
     return updatedUser[0]?.id
   },
+
+  //change user's email (by owner)
+  async changeUserEmail(userId: string, newEmail: string) {
+    const updatedUser = await userRepository.updateEmail(userId, newEmail)
+    if (!updatedUser) {
+      throw new Error("Failed to update email for this user")
+    }
+    return updatedUser[0]?.id
+  },
+
+  //change user's phone (by owner)
+  async changeUserPhone(userId: string, newPhone: string) {
+    const updatedUser = await userRepository.updatePhone(userId, newPhone)
+    if (!updatedUser) {
+      throw new Error("Failed to update phone for this user")
+    }
+    return updatedUser[0]?.id
+  },
+
+  //Inctivate User
+  async inactivateUser(id: string) {
+    const user = await userRepository.updateUserStatus(
+      id,
+      UserStatusEnum.INACTIVE,
+    )
+    return user[0]
+  },
 }
+
+export type FindAllUsersInAgencyType = Awaited<
+  ReturnType<typeof userServices.findAllUsersInAgency>
+>
+
+export type FindAllUsersByRoleType = Awaited<
+  ReturnType<typeof userServices.findAllUsersByRole>
+>
 
 export type FindOwnerAndAgentsByAgencyType = Awaited<
   ReturnType<typeof userServices.findOwnerAndAgentsByAgency>

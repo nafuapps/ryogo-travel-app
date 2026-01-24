@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability */
 //(Onboarding) Add vehicle page
 "use client"
 

@@ -6,14 +6,19 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function NewDriverPageComponent() {
   const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
   //TODO: Only allow subscribed agencies to add more than 2 drivers
 
-  const allDrivers = await userServices.findAllUsersByRole(UserRolesEnum.DRIVER)
+  const allDrivers = await userServices.findAllUsersByRole([
+    UserRolesEnum.DRIVER,
+  ])
 
   return (
     <div id="NewDriverPage" className={pageClassName}>
-      <NewDriverForm agencyId={currentUser!.agencyId} allDrivers={allDrivers} />
+      <NewDriverForm agencyId={currentUser.agencyId} allDrivers={allDrivers} />
     </div>
   )
 }

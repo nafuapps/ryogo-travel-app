@@ -6,7 +6,6 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
-import { CreateDriverType } from "../types/driver.types"
 import {
   NewDriverRequestType,
   NewDriverResponseType,
@@ -68,6 +67,7 @@ export const driverServices = {
         startDate: booking.startDate,
         startTime: booking.startTime,
         endDate: booking.endDate,
+        status: booking.tripLogs[0]?.type.toString(),
       }
     })
   },
@@ -103,7 +103,7 @@ export const driverServices = {
   },
 
   //Create driver
-  async addDriver(data: CreateDriverType) {
+  async addDriver(data: InsertDriverType) {
     //Step1: Check if driver (userId) already exists in the system
     const existingDriverUser = await driverRepository.readDriverByUserId(
       data.userId,
@@ -112,15 +112,7 @@ export const driverServices = {
       throw new Error("Driver with same userId already exists ")
     }
 
-    //Step2: Prepare vehicle types
-    const input = data.canDriveVehicleTypes.map((x) => {
-      return x.toLowerCase()
-    })
-    const canDrive = Object.values(VehicleTypesEnum).filter((x) =>
-      input.includes(x.toString().toLowerCase() as string),
-    )
-
-    //Step3: Prepare driver data
+    //Step2: Prepare driver data
     const newDriverData: InsertDriverType = {
       agencyId: data.agencyId,
       userId: data.userId,
@@ -128,9 +120,9 @@ export const driverServices = {
       phone: data.phone,
       address: data.address,
       licenseNumber: data.licenseNumber,
-      licenseExpiresOn: new Date(data.licenseExpiresOn),
+      licenseExpiresOn: data.licenseExpiresOn,
       defaultAllowancePerDay: data.defaultAllowancePerDay,
-      canDriveVehicleTypes: canDrive,
+      canDriveVehicleTypes: data.canDriveVehicleTypes,
     }
     const newDriver = await driverRepository.createDriver(newDriverData)
     if (newDriver.length < 1) {

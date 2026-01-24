@@ -1,3 +1,5 @@
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+
 // /api/auth/login (POST)
 export type LoginAPIResponseType = {
   id: string
@@ -66,7 +68,7 @@ export type OnboardingAddDriverAPIRequestType = {
     licenseNumber: string
     licenseExpiresOn: Date
     address: string
-    canDriveVehicleTypes: string[]
+    canDriveVehicleTypes: VehicleTypesEnum[]
     defaultAllowancePerDay?: number | undefined
   }
 }
@@ -105,4 +107,11 @@ export type OnboardingChangePasswordAPIRequestType = {
 }
 export type OnboardingChangePasswordAPIResponseType = {
   id: string
+}
+
+export type NewAgentRequestType = {
+  name: string
+  phone: string
+  email: string
+  photos?: FileList
 }

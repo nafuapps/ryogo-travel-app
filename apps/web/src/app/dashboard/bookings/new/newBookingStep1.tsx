@@ -55,7 +55,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     newCustomerName: z
       .string()
       .refine((s) => {
-        return existingCustomer || s.length > 4
+        return existingCustomer || s.length >= 5
       }, t("Field2.Error1"))
       .optional(),
     newCustomerState: z

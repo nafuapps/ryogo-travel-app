@@ -21,7 +21,7 @@ import {
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "./bookingCommons"
+} from "../../components/pageCommons"
 import { FindCompletedBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 
 export default function CompletedBookingsItemComponent({

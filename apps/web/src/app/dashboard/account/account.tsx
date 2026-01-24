@@ -17,13 +17,13 @@ import LogoutAlertButton from "../components/buttons/logoutAlertButton"
 import ChangeNameSheet from "./changeNameSheet"
 
 export default async function AccountPageComponent() {
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const userDetails = await userServices.findUserDetailsById(user.userId)
+  const userDetails = await userServices.findUserDetailsById(currentUser.userId)
 
   if (!userDetails) {
     redirect("/auth/login", RedirectType.replace)
@@ -55,7 +55,7 @@ export default async function AccountPageComponent() {
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeAccountPhotoSheet userId={user.userId} />
+              <ChangeAccountPhotoSheet userId={currentUser.userId} />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{userDetails.name}</H4>
@@ -72,7 +72,10 @@ export default async function AccountPageComponent() {
               </div>
             </div>
           </div>
-          <ChangeNameSheet userId={user.userId} userName={userDetails.name} />
+          <ChangeNameSheet
+            userId={currentUser.userId}
+            userName={userDetails.name}
+          />
           <Link href="/dashboard/account/change-email">
             <Button variant={"outline"} className="w-full">
               {t("ChangeEmail.Title")}

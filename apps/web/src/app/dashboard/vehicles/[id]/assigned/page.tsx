@@ -5,7 +5,7 @@ import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services
 import DashboardHeader from "../../../components/extra/dashboardHeader"
 import VehicleAssignedBookingsPageComponent from "./vehicleAssignedBookings"
 
-export default async function VehicleDetailsPage({
+export default async function VehicleAssignedBookingsPage({
   params,
 }: {
   params: Promise<{ id: string }>

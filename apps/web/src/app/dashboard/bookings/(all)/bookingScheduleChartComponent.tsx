@@ -7,7 +7,7 @@ import {
   iconClassName,
   sectionClassName,
   sectionHeaderClassName,
-} from "./bookingCommons"
+} from "../../components/pageCommons"
 import {
   PGrey,
   H5Grey,
@@ -49,7 +49,7 @@ export default function BookingScheduleChartComponent({
 
   const bookings7Days = bookings14Days.filter(
     (b) =>
-      b.startDate <= new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000)
+      b.startDate <= new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000),
   )
 
   const chartData = selectedTab == "7Days" ? bookings7Days : bookings14Days
@@ -102,8 +102,8 @@ export default function BookingScheduleChartComponent({
               <CaptionGrey>
                 {moment(
                   new Date(
-                    chartStartDate.getTime() + index * 24 * 60 * 60 * 1000
-                  )
+                    chartStartDate.getTime() + index * 24 * 60 * 60 * 1000,
+                  ),
                 ).format("D MMM")}
               </CaptionGrey>
             </div>
@@ -131,12 +131,12 @@ export default function BookingScheduleChartComponent({
             let dayIndexStart =
               Math.ceil(
                 (booking.startDate.getTime() - chartStartDate.getTime()) /
-                  millisecondsPerDay
+                  millisecondsPerDay,
               ) + 1
             let dayIndexEnd =
               Math.ceil(
                 (booking.endDate.getTime() - chartStartDate.getTime()) /
-                  millisecondsPerDay
+                  millisecondsPerDay,
               ) + 2
             console.log(dayIndexStart, dayIndexEnd)
             //Check if booking is assigned
@@ -151,8 +151,8 @@ export default function BookingScheduleChartComponent({
                       booking.status == BookingStatusEnum.IN_PROGRESS
                         ? "bg-green-200 hover:bg-green-300"
                         : isVehicleAssigned && isDriverAssigned
-                        ? "bg-slate-200 hover:bg-slate-300"
-                        : "bg-red-200 hover:bg-red-300"
+                          ? "bg-slate-200 hover:bg-slate-300"
+                          : "bg-red-200 hover:bg-red-300"
                     }  rounded-lg ${
                       dayIndexEnd > selectedDays
                         ? "rounded-b-none sm:rounded-bl-lg sm:rounded-r-none"
@@ -181,8 +181,8 @@ export default function BookingScheduleChartComponent({
                           dayIndexEnd < 2
                             ? 2
                             : dayIndexEnd > selectedDays
-                            ? selectedDays
-                            : dayIndexEnd,
+                              ? selectedDays
+                              : dayIndexEnd,
                       } as React.CSSProperties
                     }
                   >
@@ -209,7 +209,7 @@ function BookingPopoverCard(
   props: FindScheduleNextDaysType[number] & {
     isVehicleAssigned: boolean
     isDriverAssigned: boolean
-  }
+  },
 ) {
   const t = useTranslations("Dashboard.Bookings.Schedule")
   return (

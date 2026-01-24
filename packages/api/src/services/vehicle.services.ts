@@ -73,6 +73,7 @@ export const vehicleServices = {
         startDate: booking.startDate,
         startTime: booking.startTime,
         endDate: booking.endDate,
+        status: booking.tripLogs[0]?.type.toString(),
       }
     })
   },

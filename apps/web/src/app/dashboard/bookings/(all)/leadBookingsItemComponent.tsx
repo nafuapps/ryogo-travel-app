@@ -20,7 +20,7 @@ import {
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "./bookingCommons"
+} from "../../components/pageCommons"
 import { FindLeadBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 
 export default function LeadBookingsItemComponent({
@@ -32,7 +32,7 @@ export default function LeadBookingsItemComponent({
   const [selectedTab, setSelectedTab] = useState("24hrs")
 
   const leadBookings24Hrs = leadBookings7Days.filter(
-    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
   )
 
   const trips = selectedTab == "24hrs" ? leadBookings24Hrs : leadBookings7Days
@@ -71,7 +71,7 @@ export default function LeadBookingsItemComponent({
 }
 
 function LeadBookingsComponent(
-  props: FindLeadBookingsPreviousDaysType[number]
+  props: FindLeadBookingsPreviousDaysType[number],
 ) {
   const t = useTranslations("Dashboard.Bookings.Leads")
   return (

@@ -66,17 +66,15 @@ export function NewVehicleStep1(props: {
         message: t("APIError"),
       })
     } else {
-      if (!formData.formState.errors.vehicleNumber) {
-        props.setNewVehicleFormData({
-          ...props.newVehicleFormData,
-          vehicleNumber: data.vehicleNumber,
-          type: data.type,
-          brand: data.brand,
-          color: data.color,
-          model: data.model,
-        })
-        props.onNext()
-      }
+      props.setNewVehicleFormData({
+        ...props.newVehicleFormData,
+        vehicleNumber: data.vehicleNumber,
+        type: data.type,
+        brand: data.brand,
+        color: data.color,
+        model: data.model,
+      })
+      props.onNext()
     }
   }
 

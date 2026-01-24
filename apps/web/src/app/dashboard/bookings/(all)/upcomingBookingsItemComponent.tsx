@@ -21,7 +21,7 @@ import {
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "./bookingCommons"
+} from "../../components/pageCommons"
 import { FindUpcomingBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 
 export default function UpcomingBookingsItemComponent({

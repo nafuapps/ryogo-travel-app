@@ -576,7 +576,7 @@
         "Field2": {
           "Title": "Agent phone number",
           "Placeholder": "9988776655",
-          "Description": "Enter the agent's phone number (to be used for login). Must be different from owner's phone number.",
+          "Description": "Enter the agent's phone number (to be used for login)",
           "Error1": "Phone number must be 10 digits"
         },
         "Field3": {
@@ -727,7 +727,10 @@
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New User",
         "/dashboard/users/[id]": "User Details",
-        "/dashboard/users/[id]/modify": "Modify User",
+        "/dashboard/users/[id]/change-email": "Change User Email",
+        "/dashboard/users/[id]/change-phone": "Change User Phone",
+        "/dashboard/users/[id]/assigned": "User Assigned Bookings",
+        "/dashboard/users/[id]/activity": "User Activity ",
         "/dashboard/vehicles": "Vehicles",
         "/dashboard/vehicles/new": "New Vehicle",
         "/dashboard/vehicles/[id]": "Vehicle Details",
@@ -2313,12 +2316,12 @@
       "LastLogin": "Last login at {loginTime}"
     },
     "AccountSettings": {
-      "Field1":{
-        "Title":"Enable dark mode"
+      "Field1": {
+        "Title": "Enable dark mode"
       },
-      "Field2":{
-        "Title":"Preferred Language",
-        "Error1":"Language is required"
+      "Field2": {
+        "Title": "Preferred Language",
+        "Error1": "Language is required"
       },
       "Success": "Preferences updated successfully!",
       "Error": "Cannot edit preferences.. Try again later!",
@@ -2329,6 +2332,124 @@
     "AccountAgency": {},
     "AccountChangePassword": {},
     "AccountHelp": {},
+    "UserDetailsHeaderTabs": {
+      "Details": "Details",
+      "Assigned": "Assigned",
+      "Activity": "Activity"
+    },
+    "Users": {
+      "Photo": "User photo",
+      "Owners": {
+        "Title": "Owners"
+      },
+      "Agents": {
+        "Title": "Agents",
+        "AddAgent": "Add Agent"
+      },
+      "Drivers": {
+        "Title": "Drivers",
+        "AddDriver": "Add Driver"
+      }
+    },
+    "UserDetails": {
+      "Photo": "User photo",
+      "ChangePhoto": {
+        "Button": "Change Photo",
+        "Header": "Upload user's photo",
+        "Title": "Choose a photo to upload:",
+        "Placeholder": "Browse a new photo",
+        "Error1": "User photo is required",
+        "Error2": "File size should be less than 1MB",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "User photo updated successfully!",
+        "Error": "Cannot upload photo.. please try again after some time."
+      },
+      "ChangeName": {
+        "Button": "Change Name",
+        "Header": "Change your name",
+        "Title": "Enter your name:",
+        "Placeholder": "Raj Sharma",
+        "Error1": "Name must be atleast 5 characters",
+        "Error2": "Name must be less than 30 characters",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Your name changed successfully!",
+        "Error": "Cannot change name.. please try again after some time."
+      },
+      "ChangeEmail": {
+        "Title": "Change Email",
+        "Field1": {
+          "Title": "Enter new email",
+          "Placeholder": "raj.sharma@gmail.com",
+          "Description": "Provide user's new email",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters",
+          "Error3": "New email cannot be the same as previous email",
+          "Error4": "Another user already has this email.. try another email address"
+        },
+        "PrimaryCTA": "Update Email",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Email updated successfully!",
+        "Error": "Cannot update email.. please try again later"
+      },
+      "ChangePhone": {
+        "Title": "Change Phone",
+        "Field1": {
+          "Title": "Enter new phone",
+          "Placeholder": "9876543210",
+          "Description": "Provide user's new phone number",
+          "Error1": "Phone number must be 10 digits",
+          "Error2": "New phone cannot be the same as previous phone",
+          "Error3": "Another user has already registered this phone.. try another phone number"
+        },
+        "PrimaryCTA": "Update Phone",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Phone updated successfully!",
+        "Error": "Cannot update phone.. please try again later"
+      }
+    },
+    "NewAgent": {
+      "Field1": {
+        "Title": "Agent name",
+        "Placeholder": "Vikram Sharma",
+        "Description": "Enter the agent's name",
+        "Error1": "Name must be atleast 5 characters",
+        "Error2": "Name must be less than 30 characters"
+      },
+      "Field2": {
+        "Title": "Agent phone number",
+        "Placeholder": "9988776655",
+        "Description": "Enter the agent's phone number (to be used for login)",
+        "Error1": "Phone number must be 10 digits"
+      },
+      "Field3": {
+        "Title": "Agent email",
+        "Placeholder": "surender.kumar@gmail.com",
+        "Description": "Enter the agent's email address (login password will be sent here). You can enter owner's email for now and change this later.",
+        "Error1": "Invalid email",
+        "Error2": "Email must be less than 60 characters"
+      },
+      "Field4": {
+        "Title": "Agent photo (optional)",
+        "Placeholder": "UPLOAD",
+        "Description": "Upload the agent's photo",
+        "Error1": "Image file size should be less than 1MB",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+      },
+      "PrimaryCTA": "Continue",
+      "Loading": "Loading",
+      "SecondaryCTA": "Back",
+      "APIError1": "Agent with this phone already added .. try adding with a different phone",
+      "APIError2": "Agent with this phone and email is already added to another agency.. try adding with a different phone or email",
+      "Success": "Agent added successfully!",
+      "Error": "Cannot add agent.. Try again later!"
+    },
+    "ModifyUser": {},
+    "UserAssignedBookings": {},
+    "UserActivity": {},
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",
@@ -2441,6 +2562,36 @@
         "Error": "Cannot activate customer.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Activate"
+      },
+      "InactivateUser": {
+        "Label": "Inactivate User",
+        "Title": "Are you sure you want to inactivate this user?",
+        "Desc": "When inactivated, this user cannot use the app.",
+        "NoCTA": "No",
+        "Success": "User inactivated!",
+        "Error": "Cannot inactivate user.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Inactivate"
+      },
+      "ActivateUser": {
+        "Label": "Activate User",
+        "Title": "Are you sure you want to activate this user?",
+        "Desc": "When activated, this user can start using the app.",
+        "NoCTA": "No",
+        "Success": "User activated!",
+        "Error": "Cannot activate user.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Activate"
+      },
+      "ResetUserPassword": {
+        "Label": "Reset User Password",
+        "Title": "Are you sure you want to reset the password for this user?",
+        "Desc": "Old password will not work anymore. User will receive an email with the new password.",
+        "NoCTA": "No",
+        "Success": "Password reset email sent!",
+        "Error": "Cannot reset password.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Reset Password"
       },
       "Logout": {
         "Label": "Logout",

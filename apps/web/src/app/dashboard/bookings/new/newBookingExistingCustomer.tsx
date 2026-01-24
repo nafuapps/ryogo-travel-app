@@ -9,26 +9,19 @@ import { useEffect, useState } from "react"
 export default function ExistingCutomerCard({
   existingCustomer,
 }: {
-  existingCustomer: FindCustomersInAgencyType[number] | undefined
+  existingCustomer: FindCustomersInAgencyType[number]
 }) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step1")
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null)
-  useEffect(() => {
-    if (existingCustomer?.photoUrl) {
-      setPhotoUrl(getFileUrl(existingCustomer?.photoUrl))
-    }
-  }, [])
-  console.log(photoUrl)
   return (
     <div
       id="ExistingCustomer"
       className="flex flex-row gap-3 lg:gap-4 bg-white border border-slate-100 rounded-lg p-3 lg:p-4"
     >
-      {photoUrl ? (
+      {existingCustomer.photoUrl ? (
         <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
           <Image
-            src={photoUrl}
-            alt={t("Photo") + " " + existingCustomer?.id}
+            src={getFileUrl(existingCustomer.photoUrl)}
+            alt={t("Photo") + " " + existingCustomer.id}
             fill
             sizes="(max-width: 768px) 24px,32px"
           />
@@ -39,12 +32,12 @@ export default function ExistingCutomerCard({
         </div>
       )}
       <div className="flex flex-col gap-0.5 lg:gap-1 items-start">
-        <H5>{existingCustomer?.name}</H5>
-        <SmallGrey>{existingCustomer?.remarks}</SmallGrey>
+        <H5>{existingCustomer.name}</H5>
+        <SmallGrey>{existingCustomer.remarks}</SmallGrey>
         <CaptionGrey>
-          {existingCustomer?.location.city +
+          {existingCustomer.location.city +
             ", " +
-            existingCustomer?.location.state}
+            existingCustomer.location.state}
         </CaptionGrey>
       </div>
     </div>

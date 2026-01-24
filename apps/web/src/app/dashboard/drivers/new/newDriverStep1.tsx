@@ -75,7 +75,7 @@ export function NewDriverStep1(props: {
   const onSubmit = async (data: Step1Type) => {
     if (
       props.allDrivers.some(
-        (u) => u.phone == data.driverPhone && u.agencyId == props.agencyId
+        (u) => u.phone == data.driverPhone && u.agencyId == props.agencyId,
       )
     ) {
       // Check if a driver with same phone exists in this agency
@@ -85,7 +85,7 @@ export function NewDriverStep1(props: {
       })
     } else if (
       props.allDrivers.some(
-        (u) => u.phone == data.driverPhone && u.email == data.driverEmail
+        (u) => u.phone == data.driverPhone && u.email == data.driverEmail,
       )
     ) {
       // Check if a driver with same phone and email exists in entire DB
@@ -94,16 +94,14 @@ export function NewDriverStep1(props: {
         message: t("APIError2"),
       })
     } else {
-      if (!formData.formState.errors.driverPhone) {
-        props.setNewDriverFormData({
-          ...props.newDriverFormData,
-          name: data.driverName,
-          phone: data.driverPhone,
-          email: data.driverEmail,
-          driverPhotos: data.driverPhotos,
-        })
-        props.onNext()
-      }
+      props.setNewDriverFormData({
+        ...props.newDriverFormData,
+        name: data.driverName,
+        phone: data.driverPhone,
+        email: data.driverEmail,
+        driverPhotos: data.driverPhotos,
+      })
+      props.onNext()
     }
   }
 

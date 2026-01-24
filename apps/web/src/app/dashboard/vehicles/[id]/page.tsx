@@ -6,6 +6,7 @@ import { getCurrentUser } from "@/lib/auth"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import DashboardHeader from "../../components/extra/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
+import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function VehicleDetailsPage({
   params,
@@ -22,7 +23,11 @@ export default async function VehicleDetailsPage({
 
   const vehicle = await vehicleServices.findVehicleDetailsById(id)
 
-  if (!vehicle || user.agencyId != vehicle.agencyId) {
+  if (
+    !vehicle ||
+    user.agencyId != vehicle.agencyId ||
+    vehicle.status == VehicleStatusEnum.SUSPENDED
+  ) {
     redirect("/dashboard/vehicles", RedirectType.replace)
   }
 

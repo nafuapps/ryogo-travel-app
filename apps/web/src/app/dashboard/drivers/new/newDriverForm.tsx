@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability */
 "use client"
 
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
@@ -6,7 +7,8 @@ import { NewDriverStep1 } from "./newDriverStep1"
 import { NewDriverStep2 } from "./newDriverStep2"
 import { NewDriverStep3 } from "./newDriverStep3"
 import { NewDriverConfirm } from "./newDriverConfirm"
-import { SelectUserType, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 
 export type NewDriverFormDataType = {
   name: string
@@ -23,7 +25,7 @@ export type NewDriverFormDataType = {
 
 type NewDriverFormProps = {
   agencyId: string
-  allDrivers: SelectUserType[]
+  allDrivers: FindAllUsersByRoleType
 }
 export default function NewDriverForm(props: NewDriverFormProps) {
   const [newDriverFormData, setNewDriverFormData] =

@@ -1,46 +1,47 @@
+/* eslint-disable react-hooks/immutability */
 //(Onboarding) Add driver page
-"use client";
+"use client"
 
-import { useTranslations } from "next-intl";
-import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar";
-import { useMultiStepForm } from "@/hooks/useMultiStepForm";
-import { CaptionGrey, H2 } from "@/components/typography";
-import StepsTracker from "@/app/onboarding/components/stepsTracker";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl"
+import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
+import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import { CaptionGrey, H2 } from "@/components/typography"
+import StepsTracker from "@/app/onboarding/components/stepsTracker"
+import { useEffect, useState } from "react"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "@/app/onboarding/components/onboardingSteps";
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { AddDriverStep1 } from "./addDriverStep1";
-import { AddDriverFinish } from "./addDriverFinish";
-import { AddDriverStep2 } from "./addDriverStep2";
-import { AddDriverStep3 } from "./addDriverStep3";
-import { AddDriverConfirm } from "./addDriverStep4";
-import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData";
+} from "@/app/onboarding/components/onboardingSteps"
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { AddDriverStep1 } from "./addDriverStep1"
+import { AddDriverFinish } from "./addDriverFinish"
+import { AddDriverStep2 } from "./addDriverStep2"
+import { AddDriverStep3 } from "./addDriverStep3"
+import { AddDriverConfirm } from "./addDriverStep4"
+import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData"
 
-const TotalSteps = 4;
+const TotalSteps = 4
 
 export type DriverCheckedType = {
-  [key: string]: boolean; // Keys are [phone+email] , values are boolean
-};
+  [key: string]: boolean // Keys are [phone+email] , values are boolean
+}
 type AddDriverPageComponentProps = {
-  agencyId: string;
-  userId: string;
-  userStatus: string;
-};
+  agencyId: string
+  userId: string
+  userStatus: string
+}
 export default function AddDriverPageComponent(
-  props: AddDriverPageComponentProps
+  props: AddDriverPageComponentProps,
 ) {
   useEffect(() => {
     //Redirect if needed
-    fetchAgenyData(props.agencyId, "add-driver");
-  }, [props.agencyId]);
+    fetchAgenyData(props.agencyId, "add-driver")
+  }, [props.agencyId])
 
-  const t = useTranslations("Onboarding.AddDriverPage");
+  const t = useTranslations("Onboarding.AddDriverPage")
 
-  const [checkedDrivers, setCheckedDrivers] = useState<DriverCheckedType>({});
+  const [checkedDrivers, setCheckedDrivers] = useState<DriverCheckedType>({})
 
   const [finalData, setFinalData] = useState<AddDriverFormDataType>({
     agencyId: props.agencyId,
@@ -54,15 +55,15 @@ export default function AddDriverPageComponent(
     driverPhotos: undefined,
     canDriveVehicleTypes: [],
     defaultAllowancePerDay: undefined,
-  });
+  })
 
   const nextStepHandler = () => {
-    nextStep();
-  };
+    nextStep()
+  }
 
   const prevStepHandler = () => {
-    prevStep();
-  };
+    prevStep()
+  }
 
   const { currentStepIndex, isLastStep, nextStep, prevStep, steps } =
     useMultiStepForm([
@@ -96,7 +97,7 @@ export default function AddDriverPageComponent(
         ownerId={props.userId}
       />,
       <AddDriverFinish key={4} finalData={finalData} />,
-    ]);
+    ])
 
   return (
     <>
@@ -119,5 +120,5 @@ export default function AddDriverPageComponent(
       </OnboardingStepPage>
       <OnboardingSidebar currentProcess={isLastStep ? 3 : 2} />
     </>
-  );
+  )
 }

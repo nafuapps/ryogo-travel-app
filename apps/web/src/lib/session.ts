@@ -15,6 +15,7 @@ export const LOCALE_COOKIE_NAME = "locale"
 export const DARK_MODE_COOKIE_NAME = "dark"
 export const SESSION_COOKIE_EXPIRATION = 7 * 24 * 60 * 60 * 1000
 
+// Don't add any sensitive data like email, password in this payload
 export type SessionPayload = {
   sessionId: string
   userId: string

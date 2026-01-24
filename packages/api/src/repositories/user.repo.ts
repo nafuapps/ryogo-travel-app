@@ -10,9 +10,21 @@ import {
 import { eq, and, inArray, not } from "drizzle-orm"
 
 export const userRepository = {
-  //Get all users
-  async readAllUsersByRole(role: UserRolesEnum) {
-    return await db.select().from(users).where(eq(users.userRole, role))
+  //Get all users by role
+  async readAllUsersByRole(roles: UserRolesEnum[]) {
+    return await db.query.users.findMany({
+      where: inArray(users.userRole, roles),
+    })
+  },
+
+  //Get all users in an agency
+  async readAllUsersByAgency(agencyId: string) {
+    return await db.query.users.findMany({
+      where: and(
+        eq(users.agencyId, agencyId),
+        not(eq(users.status, UserStatusEnum.SUSPENDED)),
+      ),
+    })
   },
 
   //Get unique user by id
@@ -214,6 +226,15 @@ export const userRepository = {
     return await db
       .update(users)
       .set({ email })
+      .where(eq(users.id, userId))
+      .returning()
+  },
+
+  //Update user phone
+  async updatePhone(userId: string, phone: string) {
+    return await db
+      .update(users)
+      .set({ phone })
       .where(eq(users.id, userId))
       .returning()
   },

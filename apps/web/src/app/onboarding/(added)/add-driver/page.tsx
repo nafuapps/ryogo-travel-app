@@ -5,6 +5,8 @@ import { redirect, RedirectType } from "next/navigation"
 import AddDriverPageComponent from "./addDriver"
 import { Metadata } from "next"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: "Add Driver Page | RyoGo",
@@ -39,12 +41,29 @@ export default async function AddDriverPage() {
     redirect("/dashboard", RedirectType.replace)
   }
 
+  //Check for Onboarding flow
+  const agencyData = await agencyServices.getAgencyData(currentUser.agencyId)
+  if (agencyData.vehicles.length < 1) {
+    redirect("/onboarding/add-vehicle", RedirectType.replace)
+  }
+  if (agencyData.drivers.length > 0) {
+    if (agencyData.agents.length < 1) {
+      redirect("/onboarding/add-agent", RedirectType.replace)
+    }
+    redirect("/dashboard", RedirectType.replace)
+  }
+
+  const allDrivers = await userServices.findAllUsersByRole([
+    UserRolesEnum.DRIVER,
+  ])
+
   //Only new owners can add driver
   return (
     <AddDriverPageComponent
       agencyId={currentUser.agencyId}
       userId={currentUser.userId}
       userStatus={currentUser.status}
+      allDrivers={allDrivers}
     />
   )
 }

@@ -7,7 +7,7 @@ import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "@/app/onboarding/components/stepsTracker"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
@@ -17,30 +17,21 @@ import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { AddAgentStep1 } from "./addAgentStep1"
 import { AddAgentFinish } from "./addAgentFinish"
 import { AddAgentConfirm } from "./addAgentStep2"
-import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 
 const TotalSteps = 2
-
-export type AgentCheckedType = {
-  [key: string]: boolean // Keys are [phone+email] , values are boolean
-}
 
 type AddAgentPageComponentProps = {
   agencyId: string
   ownerId: string
   status: UserStatusEnum
+  allAgents: FindAllUsersByRoleType
 }
 export default function AddAgentPageComponent(
   props: AddAgentPageComponentProps,
 ) {
-  useEffect(() => {
-    //Redirect if needed
-    fetchAgenyData(props.agencyId, "add-agent")
-  }, [props.agencyId])
-
   const t = useTranslations("Onboarding.AddAgentPage")
-  const [checkedAgents, setCheckedAgents] = useState<AgentCheckedType>({})
 
   const [finalData, setFinalData] = useState<AddAgentFormDataType>({
     agencyId: props.agencyId,
@@ -65,8 +56,7 @@ export default function AddAgentPageComponent(
         onNext={nextStepHandler}
         finalData={finalData}
         updateFinalData={setFinalData}
-        setCheckedAgents={setCheckedAgents}
-        checkedAgents={checkedAgents}
+        allAgents={props.allAgents}
       />,
       <AddAgentConfirm
         key={1}

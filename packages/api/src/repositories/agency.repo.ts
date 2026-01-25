@@ -7,6 +7,11 @@ import {
 import { eq, and } from "drizzle-orm"
 
 export const agencyRepository = {
+  //get all agencies
+  async readAllAgencies() {
+    return db.query.agencies.findMany({})
+  },
+
   //Get agency by id
   async readAgencyById(id: string) {
     return await db.query.agencies.findFirst({
@@ -27,8 +32,8 @@ export const agencyRepository = {
       .where(
         and(
           eq(agencies.businessPhone, businessPhone),
-          eq(agencies.businessEmail, businessEmail)
-        )
+          eq(agencies.businessEmail, businessEmail),
+        ),
       )
   },
 

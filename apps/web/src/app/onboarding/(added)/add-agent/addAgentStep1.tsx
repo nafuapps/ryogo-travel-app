@@ -1,33 +1,30 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   OnboardingFileInput,
   OnboardingInput,
-} from "@/app/onboarding/components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { Form } from "@/components/ui/form";
-import { AgentCheckedType } from "./addAgent";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { OnboardingExistingAgentAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
+} from "@/app/onboarding/components/onboardingSteps"
+import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { Form } from "@/components/ui/form"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 
 export function AddAgentStep1(props: {
-  onNext: () => void;
-  finalData: AddAgentFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddAgentFormDataType>>;
-  checkedAgents: AgentCheckedType;
-  setCheckedAgents: Dispatch<SetStateAction<AgentCheckedType>>;
+  onNext: () => void
+  finalData: AddAgentFormDataType
+  updateFinalData: Dispatch<SetStateAction<AddAgentFormDataType>>
+  allAgents: FindAllUsersByRoleType
 }) {
-  const t = useTranslations("Onboarding.AddAgentPage.Step1");
+  const t = useTranslations("Onboarding.AddAgentPage.Step1")
   const step1Schema = z.object({
     agentName: z
       .string()
@@ -38,11 +35,11 @@ export function AddAgentStep1(props: {
     agentPhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        if (file.length < 1) return true;
-        return file[0] && file[0]!.size < 1000000;
+        if (file.length < 1) return true
+        return file[0] && file[0]!.size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true;
+        if (file.length < 1) return true
         return (
           file[0] &&
           [
@@ -52,11 +49,11 @@ export function AddAgentStep1(props: {
             "image/bmp",
             "image/webp",
           ].includes(file[0]!.type)
-        );
+        )
       }, t("Field4.Error2"))
       .optional(),
-  });
-  type Step1Type = z.infer<typeof step1Schema>;
+  })
+  type Step1Type = z.infer<typeof step1Schema>
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -65,50 +62,21 @@ export function AddAgentStep1(props: {
       agentEmail: props.finalData.email,
       agentPhotos: props.finalData.agentPhotos,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    //Dictonary to store if the agent was already checked in the DB (to save API calls)
-    const alreadyChecked = Object.keys(props.checkedAgents).includes(
-      data.agentPhone + data.agentEmail
-    );
-    if (!alreadyChecked) {
-      //If (phone+email) not checked in DB already, make an API call
-      const existingAgent =
-        await apiClient<OnboardingExistingAgentAPIResponseType>(
-          `/api/onboarding/add-agent/existing-agent?phone=${data.agentPhone}&email=${data.agentEmail}`,
-          { method: "GET" }
-        );
-      if (existingAgent.length > 0) {
-        //If agent exists in system, show error
-        formData.setError("agentPhone", {
-          type: "manual",
-          message: t("APIError"),
-        });
-        //Store in dictionary
-        props.setCheckedAgents({
-          ...props.checkedAgents,
-          [data.agentPhone + data.agentEmail]: true,
-        });
-      } else {
-        //If agent does not exist in DB, store in dictionaty and move to next step
-        props.setCheckedAgents({
-          ...props.checkedAgents,
-          [data.agentPhone + data.agentEmail]: false,
-        });
-      }
+    if (
+      props.allAgents.some(
+        (a) => a.email == data.agentEmail && a.phone == data.agentPhone,
+      )
+    ) {
+      //If agent with same phone and email exists in system already, show error
+      formData.setError("agentPhone", {
+        type: "manual",
+        message: t("APIError"),
+      })
     } else {
-      // If Agent was searched for already, take result from dictionary
-      if (props.checkedAgents[data.agentPhone + data.agentEmail]) {
-        //If Agent exists in search dictionary and was in DB, show error
-        formData.setError("agentPhone", {
-          type: "manual",
-          message: t("APIError"),
-        });
-      }
-    }
-    if (!formData.formState.errors.agentPhone) {
       //If no errors, move ahead
       props.updateFinalData({
         ...props.finalData,
@@ -116,10 +84,10 @@ export function AddAgentStep1(props: {
         phone: data.agentPhone,
         email: data.agentEmail,
         agentPhotos: data.agentPhotos,
-      });
-      props.onNext();
+      })
+      props.onNext()
     }
-  };
+  }
 
   return (
     <Form {...formData}>
@@ -167,5 +135,5 @@ export function AddAgentStep1(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

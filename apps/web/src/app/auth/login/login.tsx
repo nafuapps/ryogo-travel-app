@@ -43,9 +43,6 @@ export default function LoginPageComponent() {
 
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      phoneNumber: "",
-    },
   })
 
   //Submit actions
@@ -54,7 +51,7 @@ export default function LoginPageComponent() {
       `/api/auth/login?phone=${data.phoneNumber}`,
       {
         method: "GET",
-      }
+      },
     )
     if (users.length > 0) {
       // If atleast 1 user found, go to accounts page

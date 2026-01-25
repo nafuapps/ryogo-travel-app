@@ -12,16 +12,10 @@ import {
   OnboardingStepSecondaryAction,
 } from "@/app/onboarding/components/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import {
-  OnboardingAddVehicleAPIRequestType,
-  OnboardingAddVehicleAPIResponseType,
-} from "@ryogo-travel-app/api/types/vehicle.types"
-import {
-  apiClient,
-  apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient"
+import { NewVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { addVehicleAction } from "./addVehicleAction"
 
 export function AddVehicleConfirm(props: {
   onNext: () => void
@@ -35,7 +29,7 @@ export function AddVehicleConfirm(props: {
 
   //Submit actions
   const onSubmit = async () => {
-    const newVehicleData: OnboardingAddVehicleAPIRequestType = {
+    const newVehicleData: NewVehicleRequestType = {
       agencyId: props.finalData.agencyId,
       data: {
         vehicleNumber: props.finalData.vehicleNumber,
@@ -51,34 +45,14 @@ export function AddVehicleConfirm(props: {
         hasAC: props.finalData.hasAC,
         defaultRatePerKm: props.finalData.defaultRatePerKm,
         defaultAcChargePerDay: props.finalData.defaultAcChargePerDay,
+        rcPhotos: props.finalData.rcPhotos,
+        pucPhotos: props.finalData.pucPhotos,
+        insurancePhotos: props.finalData.insurancePhotos,
+        vehiclePhotos: props.finalData.vehiclePhotos,
       },
     }
-    const addedVehicle = await apiClient<OnboardingAddVehicleAPIResponseType>(
-      "/api/onboarding/add-vehicle",
-      { method: "POST", body: JSON.stringify(newVehicleData) },
-    )
+    const addedVehicle = await addVehicleAction(newVehicleData)
     if (addedVehicle.id) {
-      //Try to upload vehicle docs
-      const formData = new FormData()
-      if (props.finalData.rcPhotos) {
-        formData.append("rc", props.finalData.rcPhotos[0]!)
-      }
-      if (props.finalData.insurancePhotos) {
-        formData.append("insurance", props.finalData.insurancePhotos[0]!)
-      }
-      if (props.finalData.pucPhotos) {
-        formData.append("puc", props.finalData.pucPhotos[0]!)
-      }
-      if (props.finalData.vehiclePhotos) {
-        formData.append("vehicle", props.finalData.vehiclePhotos[0]!)
-      }
-      await apiClientWithoutHeaders(
-        `/api/onboarding/add-vehicle/upload-docs/${addedVehicle.id}`,
-        {
-          method: "POST",
-          body: formData,
-        },
-      )
       props.onNext()
     } else {
       //If failed, Take back to vehicle onboarding page and show error

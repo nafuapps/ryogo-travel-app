@@ -18,9 +18,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { H2, H5 } from "@/components/typography"
 import Link from "next/link"
-import { redirect, RedirectType, useRouter } from "next/navigation"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
-import { LoginPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
+import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -28,17 +26,15 @@ import {
   LOGIN_USER_ERROR,
 } from "@ryogo-travel-app/api/services/user.services"
 import { LOGIN_SESSION_ERROR, LOGIN_UNKNOWN_ERROR } from "@/lib/auth"
+import { loginAction } from "./loginAction"
 
 // TODO: Add a feature to show the user had recently reset password
 
-type LoginPageComponentProps = {
+export default function LoginPasswordPageComponent({
+  userId,
+}: {
   userId: string
-}
-export default function LoginPasswordPageComponent(
-  props: LoginPageComponentProps,
-) {
-  const userId = props.userId
-
+}) {
   const t = useTranslations("Auth.LoginPage.Step3")
   const formSchema = z.object({
     password: z.string().min(8, t("Error1")),
@@ -51,20 +47,11 @@ export default function LoginPasswordPageComponent(
   // For managing form data and validation
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      password: "",
-    },
   })
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    const loginResponse = await apiClient<LoginPasswordAPIResponseType>(
-      "/api/auth/login/password",
-      {
-        method: "POST",
-        body: JSON.stringify({ userId: userId, password: data.password }),
-      },
-    )
+    const loginResponse = await loginAction(userId, data.password)
     if (loginResponse.error == LOGIN_PASSWORD_ERROR) {
       // Show password match error
       methods.setError("password", { type: "manual", message: t("APIError1") })

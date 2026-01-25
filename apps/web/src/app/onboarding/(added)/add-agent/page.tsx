@@ -5,6 +5,8 @@ import AddAgentPageComponent from "./addAgent"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: "Add Agent Page | RyoGo",
@@ -34,12 +36,27 @@ export default async function AddAgentPage() {
     redirect("/dashboard", RedirectType.replace)
   }
 
+  //Check for Onboarding flow
+  const agencyData = await agencyServices.getAgencyData(currentUser.agencyId)
+  if (agencyData.vehicles.length < 1) {
+    redirect("/onboarding/add-vehicle", RedirectType.replace)
+  }
+  if (agencyData.drivers.length < 1) {
+    redirect("/onboarding/add-driver", RedirectType.replace)
+  }
+  if (agencyData.agents.length > 0) {
+    redirect("/dashboard", RedirectType.replace)
+  }
+
+  const allAgents = await userServices.findAllUsersByRole([UserRolesEnum.AGENT])
+
   //Only owner can add agent
   return (
     <AddAgentPageComponent
       agencyId={currentUser.agencyId}
       ownerId={currentUser.userId}
       status={currentUser.status}
+      allAgents={allAgents}
     />
   )
 }

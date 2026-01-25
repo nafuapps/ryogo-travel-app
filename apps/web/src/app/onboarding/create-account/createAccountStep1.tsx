@@ -1,27 +1,27 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { OnboardingInput } from "../components/onboardingFields";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
+import { OnboardingInput } from "../components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
-} from "../components/onboardingSteps";
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { Form } from "@/components/ui/form";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { OnboardingExistingOwnerAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
+} from "../components/onboardingSteps"
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { Form } from "@/components/ui/form"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 
 export function CreateAccountStep1(props: {
-  onNext: () => void;
-  finalData: CreateAccountFormDataType;
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>;
+  onNext: () => void
+  finalData: CreateAccountFormDataType
+  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>
+  allOwners: FindAllUsersByRoleType
 }) {
-  const t = useTranslations("Onboarding.CreateAccountPage.Step1");
+  const t = useTranslations("Onboarding.CreateAccountPage.Step1")
   const step1Schema = z.object({
     agencyName: z
       .string()
@@ -33,8 +33,8 @@ export function CreateAccountStep1(props: {
       .max(30, t("Field2.Error2")),
     ownerPhone: z.string().length(10, t("Field3.Error1")),
     ownerEmail: z.email(t("Field4.Error1")).max(60, t("Field4.Error2")),
-  });
-  type Step1Type = z.infer<typeof step1Schema>;
+  })
+  type Step1Type = z.infer<typeof step1Schema>
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -43,20 +43,19 @@ export function CreateAccountStep1(props: {
       ownerPhone: props.finalData.ownerPhone,
       ownerEmail: props.finalData.ownerEmail,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    const existingOwner =
-      await apiClient<OnboardingExistingOwnerAPIResponseType>(
-        `/api/onboarding/create-account/existing-owner?phone=${data.ownerPhone}&email=${data.ownerEmail}`,
-        { method: "GET" }
-      );
-    if (existingOwner.length > 0) {
+    if (
+      props.allOwners.some(
+        (o) => o.email == data.ownerEmail && o.phone == data.ownerPhone,
+      )
+    ) {
       formData.setError("ownerPhone", {
         type: "manual",
         message: t("APIError"),
-      });
+      })
     } else {
       props.updateFinalData({
         ...props.finalData,
@@ -64,10 +63,10 @@ export function CreateAccountStep1(props: {
         ownerName: data.ownerName,
         ownerPhone: data.ownerPhone,
         ownerEmail: data.ownerEmail,
-      });
-      props.onNext();
+      })
+      props.onNext()
     }
-  };
+  }
 
   return (
     <Form {...formData}>
@@ -115,5 +114,5 @@ export function CreateAccountStep1(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

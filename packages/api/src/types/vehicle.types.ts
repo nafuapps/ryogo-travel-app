@@ -1,32 +1,10 @@
-// /api/onboarding/add-vehicle (POST)
-export type OnboardingAddVehicleAPIRequestType = {
-  agencyId: string
-  data: {
-    vehicleNumber: string
-    type: string
-    brand: string
-    color: string
-    model: string
-    capacity?: number | undefined
-    odometerReading: number | undefined
-    insuranceExpiresOn: Date
-    pucExpiresOn: Date
-    rcExpiresOn: Date
-    hasAC: boolean
-    defaultRatePerKm?: number | undefined
-    defaultAcChargePerDay?: number | undefined
-  }
-}
-
-export type OnboardingAddVehicleAPIResponseType = {
-  id: string
-}
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export type NewVehicleRequestType = {
   agencyId: string
   data: {
     vehicleNumber: string
-    type: string
+    type: VehicleTypesEnum
     brand: string
     color: string
     model: string

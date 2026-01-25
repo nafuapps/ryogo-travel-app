@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { newAgentAction } from "./newAgentAction"
-import { NewAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export default function NewAgentForm({
   agencyId,
@@ -86,13 +86,16 @@ export default function NewAgentForm({
         message: t("APIError2"),
       })
     } else {
-      const newAgentData: NewAgentRequestType = {
-        name: values.agentName,
-        phone: values.agentPhone,
-        email: values.agentEmail,
-        photos: values.agentPhotos,
+      const newAgentData: AddAgentRequestType = {
+        agencyId: agencyId,
+        data: {
+          name: values.agentName,
+          phone: values.agentPhone,
+          email: values.agentEmail,
+          photos: values.agentPhotos,
+        },
       }
-      const createdAgent = await newAgentAction(agencyId, newAgentData)
+      const createdAgent = await newAgentAction(newAgentData)
       if (createdAgent.id) {
         toast.success(t("Success"))
         router.replace(`/dashboard/users/${createdAgent.id}`)

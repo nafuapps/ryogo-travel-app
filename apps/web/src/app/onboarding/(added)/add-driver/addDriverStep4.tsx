@@ -12,23 +12,18 @@ import {
 import { Form } from "@/components/ui/form"
 import { H3Grey } from "@/components/typography"
 import ConfirmValues from "@/app/onboarding/components/confirmValues"
-import {
-  OnboardingAddDriverAPIRequestType,
-  OnboardingAddDriverAPIResponseType,
-  OnboardingSetActiveAPIResponseType,
-} from "@ryogo-travel-app/api/types/user.types"
-import {
-  apiClient,
-  apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { addDriverAction } from "./addDriverAction"
 
 export function AddDriverConfirm(props: {
   onNext: () => void
   onPrev: () => void
   finalData: AddDriverFormDataType
   ownerId: string
+  userStatus: UserStatusEnum
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Confirm")
   const router = useRouter()
@@ -37,8 +32,10 @@ export function AddDriverConfirm(props: {
   //Submit actions
   const onSubmit = async () => {
     // Add driver
-    const newDriverData: OnboardingAddDriverAPIRequestType = {
+    const newDriverData: AddDriverRequestType = {
       agencyId: props.finalData.agencyId,
+      ownerId:
+        props.userStatus == UserStatusEnum.NEW ? props.ownerId : undefined,
       data: {
         name: props.finalData.name,
         email: props.finalData.email,
@@ -48,43 +45,12 @@ export function AddDriverConfirm(props: {
         defaultAllowancePerDay: props.finalData.defaultAllowancePerDay,
         licenseNumber: props.finalData.licenseNumber,
         licenseExpiresOn: props.finalData.licenseExpiresOn!,
+        licensePhotos: props.finalData.licensePhotos,
+        userPhotos: props.finalData.driverPhotos,
       },
     }
-    const addedDriver = await apiClient<OnboardingAddDriverAPIResponseType>(
-      "/api/onboarding/add-driver",
-      { method: "POST", body: JSON.stringify(newDriverData) }
-    )
+    const addedDriver = await addDriverAction(newDriverData)
     if (addedDriver.id) {
-      //If success, Try to upload license photo and driver user photo
-      if (props.finalData.licensePhotos) {
-        const formData = new FormData()
-        formData.append("license", props.finalData.licensePhotos[0]!)
-        await apiClientWithoutHeaders(
-          `/api/onboarding/add-driver/upload-license/${addedDriver.id}`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        )
-      }
-      if (props.finalData.driverPhotos) {
-        const formData = new FormData()
-        formData.append("file", props.finalData.driverPhotos[0]!)
-        await apiClientWithoutHeaders(
-          `/api/onboarding/upload-user-photo/${addedDriver.userId}`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        )
-      }
-      //Set owner and agency status as ACTIVE
-      await apiClient<OnboardingSetActiveAPIResponseType>(
-        `/api/onboarding/set-active/${props.ownerId}`,
-        {
-          method: "POST",
-        }
-      )
       //Move to next step
       props.onNext()
     } else {

@@ -12,17 +12,11 @@ import {
   OnboardingStepSecondaryAction,
 } from "../components/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import {
-  LoginPasswordAPIResponseType,
-  OnboardingCreateAccountAPIRequestType,
-  OnboardingCreateAccountAPIResponseType,
-} from "@ryogo-travel-app/api/types/user.types"
-import {
-  apiClient,
-  apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient"
+import { OnboardingCreateAccountAPIRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { loginAction } from "@/app/auth/login/password/[userId]/loginAction"
+import { createOwnerAccountAction } from "./createOwnerAccountAction"
 
 export function CreateAccountConfirm(props: {
   onNext: () => void
@@ -45,55 +39,22 @@ export function CreateAccountConfirm(props: {
         agencyCity: props.finalData.agencyCity,
         agencyState: props.finalData.agencyState,
         commissionRate: props.finalData.commissionRate,
+        logo: props.finalData.agencyLogo,
       },
       owner: {
         email: props.finalData.ownerEmail,
         phone: props.finalData.ownerPhone,
         name: props.finalData.ownerName,
         password: props.finalData.password,
+        photos: props.finalData.ownerPhoto,
       },
     }
-    const createdOwnerAccount =
-      await apiClient<OnboardingCreateAccountAPIResponseType>(
-        "/api/onboarding/create-account",
-        { method: "POST", body: JSON.stringify(newAccountData) }
-      )
-    if (createdOwnerAccount.agencyId && createdOwnerAccount.userId) {
-      //If success, Try to upload business logo and owner photo
-      if (props.finalData.agencyLogo) {
-        const formData = new FormData()
-        formData.append("file", props.finalData.agencyLogo[0]!)
-        await apiClientWithoutHeaders(
-          `/api/onboarding/create-account/upload-logo/${createdOwnerAccount.agencyId}`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        )
-      }
-      if (props.finalData.ownerPhoto) {
-        const formData = new FormData()
-        formData.append("file", props.finalData.ownerPhoto[0]!)
-        await apiClientWithoutHeaders(
-          `/api/onboarding/upload-user-photo/${createdOwnerAccount.userId}`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        )
-      }
 
-      //Login the new user
-      await apiClient<LoginPasswordAPIResponseType>(
-        "/api/auth/login/password",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            userId: createdOwnerAccount.userId,
-            password: props.finalData.password,
-          }),
-        }
-      )
+    const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
+    if (createdOwnerAccount.agencyId && createdOwnerAccount.userId) {
+      //If success
+      //Login the user
+      await loginAction(createdOwnerAccount.userId, props.finalData.password)
       //Move to next step
       props.onNext()
     } else {

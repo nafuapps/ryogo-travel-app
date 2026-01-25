@@ -2,14 +2,10 @@ import { vehicleRepository } from "../repositories/vehicle.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import {
   InsertVehicleRepairType,
-  InsertVehicleType,
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import {
-  NewVehicleRequestType,
-  OnboardingAddVehicleAPIRequestType,
-} from "../types/vehicle.types"
+import { NewVehicleRequestType } from "../types/vehicle.types"
 import { bookingRepository } from "../repositories/booking.repo"
 
 export const vehicleServices = {
@@ -111,7 +107,7 @@ export const vehicleServices = {
   },
 
   //Add vehicle to agency
-  async addVehicle({ data, agencyId }: OnboardingAddVehicleAPIRequestType) {
+  async addVehicle({ data, agencyId }: NewVehicleRequestType) {
     //Step1: Check if the vehicle already exists in this agency
     const existingVehicleInAgency =
       await vehicleRepository.readVehicleByNumberInAgency(
@@ -123,15 +119,11 @@ export const vehicleServices = {
         "Vehicle with same vehicle number already exists in this agency",
       )
     }
-    //Step2: Prepare vehicle data
-    const vehicleType = Object.values(VehicleTypesEnum).find(
-      (x) => x.toString() === data.type.toLowerCase(),
-    )
 
     const newVehicleData = {
       agencyId: agencyId,
       vehicleNumber: data.vehicleNumber,
-      type: vehicleType,
+      type: data.type,
       brand: data.brand,
       color: data.color,
       model: data.model,
@@ -150,7 +142,7 @@ export const vehicleServices = {
       throw new Error("Vehicle not created")
     }
     //Step4: Return added vehicle
-    return newVehicle[0]
+    return { id: newVehicle[0]!.id }
   },
 
   //Add vehicle repair
@@ -173,15 +165,6 @@ export const vehicleServices = {
       data.cost ?? undefined,
     )
     return repair
-  },
-
-  //New vehicle (dashboard)
-  async addNewVehicle(data: NewVehicleRequestType) {
-    const vehicle = await this.addVehicle(data)
-    if (!vehicle) {
-      throw new Error("Vehicle not added")
-    }
-    return vehicle
   },
 
   //Modify vehicle details

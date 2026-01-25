@@ -1,21 +1,20 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 type BackButtonProps = {
-  label: string;
-};
+  label: string
+}
 export function BackButton(props: BackButtonProps) {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <Button
       variant={"secondary"}
       onClick={() => {
-        router.back();
+        router.back()
       }}
       size={"lg"}
     >
       {props.label}
     </Button>
-  );
+  )
 }

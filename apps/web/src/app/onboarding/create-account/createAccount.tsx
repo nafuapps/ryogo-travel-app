@@ -20,10 +20,18 @@ import {
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "../components/onboardingSteps"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 
 const TotalSteps = 5
 
-export default function CreateAccountPageComponent() {
+export default function CreateAccountPageComponent({
+  allOwners,
+  allAgencies,
+}: {
+  allOwners: FindAllUsersByRoleType
+  allAgencies: FindAllAgenciesType
+}) {
   const t = useTranslations("Onboarding.CreateAccountPage")
 
   const [finalData, setFinalData] = useState<CreateAccountFormDataType>({
@@ -58,6 +66,7 @@ export default function CreateAccountPageComponent() {
         onNext={nextStepHandler}
         finalData={finalData}
         updateFinalData={setFinalData}
+        allOwners={allOwners}
       />,
       <CreateAccountStep2
         key={1}
@@ -65,6 +74,7 @@ export default function CreateAccountPageComponent() {
         onPrev={prevStepHandler}
         finalData={finalData}
         updateFinalData={setFinalData}
+        allAgencies={allAgencies}
       />,
       <CreateAccountStep3
         key={2}

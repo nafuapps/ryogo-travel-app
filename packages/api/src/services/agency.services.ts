@@ -7,6 +7,13 @@ import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
 
 export const agencyServices = {
+  //Find all agencies
+
+  async findAllAgencies() {
+    const agencies = agencyRepository.readAllAgencies()
+    return agencies
+  },
+
   //Find agency by id
   async findAgencyById(id: string) {
     const agency = await agencyRepository.readAgencyById(id)
@@ -23,20 +30,6 @@ export const agencyServices = {
       defaultCommissionRate: agency.defaultCommissionRate,
       subscriptionExpiresOn: agency.subscriptionExpiresOn,
     }
-  },
-
-  // ? Onboarding flow
-  //Find agency by phone and email
-  async findAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
-    const agencies = await agencyRepository.readAgencyByPhoneEmail(
-      businessPhone,
-      businessEmail,
-    )
-    if (agencies.length > 1) {
-      // !This is a major issue
-      throw new Error("Multiple agencies found")
-    }
-    return agencies
   },
 
   //Get agency data (vehicles, drivers, agents)
@@ -139,3 +132,7 @@ export const agencyServices = {
     return await agencyRepository.updateAgencySubscriptionExpiry(id, expiryTime)
   },
 }
+
+export type FindAllAgenciesType = Awaited<
+  ReturnType<typeof agencyServices.findAllAgencies>
+>

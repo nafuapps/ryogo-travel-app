@@ -91,13 +91,9 @@
         "Loading": "Loading",
         "Back": "Back",
         "Error1": "Not a valid email",
-        "APIError": "Email address does not match our records"
-      },
-      "Step3": {
-        "PageTitle": "Password reset complete",
-        "Info": "Check your inbox.. We just sent a new password to your email!",
-        "PrimaryCTA": "Go to Login",
-        "Loading": "Loading"
+        "APIError": "Email address does not match our records",
+        "Success":"Password reset email sent.. check your inbox for new password!",
+        "Error":"Cannot reset password.. Try again later!"
       }
     }
   },

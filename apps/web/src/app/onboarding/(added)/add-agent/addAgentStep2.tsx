@@ -12,18 +12,11 @@ import {
 import { Form } from "@/components/ui/form"
 import { H3Grey } from "@/components/typography"
 import ConfirmValues from "@/app/onboarding/components/confirmValues"
-import {
-  OnboardingAddAgentAPIRequestType,
-  OnboardingAddAgentAPIResponseType,
-  OnboardingSetActiveAPIResponseType,
-} from "@ryogo-travel-app/api/types/user.types"
-import {
-  apiClient,
-  apiClientWithoutHeaders,
-} from "@ryogo-travel-app/api/client/apiClient"
+import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { addAgentAction } from "./addAgentAction"
 
 export function AddAgentConfirm(props: {
   onNext: () => void
@@ -39,40 +32,18 @@ export function AddAgentConfirm(props: {
   //Submit actions
   const onSubmit = async () => {
     // Add agent
-    const newAgentData: OnboardingAddAgentAPIRequestType = {
+    const newAgentData: AddAgentRequestType = {
       agencyId: props.finalData.agencyId,
+      ownerId: props.status == UserStatusEnum.NEW ? props.ownerId : undefined,
       data: {
         name: props.finalData.name,
         email: props.finalData.email,
         phone: props.finalData.phone,
+        photos: props.finalData.agentPhotos,
       },
     }
-    const addedAgent = await apiClient<OnboardingAddAgentAPIResponseType>(
-      "/api/onboarding/add-agent",
-      { method: "POST", body: JSON.stringify(newAgentData) },
-    )
+    const addedAgent = await addAgentAction(newAgentData)
     if (addedAgent.id) {
-      //If success, Try to upload user photo and driver user photo
-      if (props.finalData.agentPhotos) {
-        const formData = new FormData()
-        formData.append("file", props.finalData.agentPhotos[0]!)
-        await apiClientWithoutHeaders(
-          `/api/onboarding/upload-user-photo/${addedAgent.id}`,
-          {
-            method: "POST",
-            body: formData,
-          },
-        )
-      }
-      if (props.status == UserStatusEnum.NEW) {
-        //If the owner is still new somehow, change to active
-        await apiClientWithoutHeaders<OnboardingSetActiveAPIResponseType>(
-          `/api/onboarding/set-active/${props.ownerId}`,
-          {
-            method: "POST",
-          },
-        )
-      }
       props.onNext()
     } else {
       //Take back to agent onboarding page and show error

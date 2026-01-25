@@ -7,7 +7,7 @@ import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "@/app/onboarding/components/stepsTracker"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
@@ -19,29 +19,21 @@ import { AddDriverFinish } from "./addDriverFinish"
 import { AddDriverStep2 } from "./addDriverStep2"
 import { AddDriverStep3 } from "./addDriverStep3"
 import { AddDriverConfirm } from "./addDriverStep4"
-import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 const TotalSteps = 4
 
-export type DriverCheckedType = {
-  [key: string]: boolean // Keys are [phone+email] , values are boolean
-}
 type AddDriverPageComponentProps = {
   agencyId: string
   userId: string
-  userStatus: string
+  userStatus: UserStatusEnum
+  allDrivers: FindAllUsersByRoleType
 }
 export default function AddDriverPageComponent(
   props: AddDriverPageComponentProps,
 ) {
-  useEffect(() => {
-    //Redirect if needed
-    fetchAgenyData(props.agencyId, "add-driver")
-  }, [props.agencyId])
-
   const t = useTranslations("Onboarding.AddDriverPage")
-
-  const [checkedDrivers, setCheckedDrivers] = useState<DriverCheckedType>({})
 
   const [finalData, setFinalData] = useState<AddDriverFormDataType>({
     agencyId: props.agencyId,
@@ -72,8 +64,7 @@ export default function AddDriverPageComponent(
         onNext={nextStepHandler}
         finalData={finalData}
         updateFinalData={setFinalData}
-        checkedDrivers={checkedDrivers}
-        setCheckedDrivers={setCheckedDrivers}
+        allDrivers={props.allDrivers}
       />,
       <AddDriverStep2
         key={1}
@@ -95,6 +86,7 @@ export default function AddDriverPageComponent(
         onPrev={prevStepHandler}
         finalData={finalData}
         ownerId={props.userId}
+        userStatus={props.userStatus}
       />,
       <AddDriverFinish key={4} finalData={finalData} />,
     ])

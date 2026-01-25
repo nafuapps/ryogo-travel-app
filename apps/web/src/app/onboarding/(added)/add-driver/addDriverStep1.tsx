@@ -1,33 +1,30 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   OnboardingFileInput,
   OnboardingInput,
-} from "@/app/onboarding/components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { Form } from "@/components/ui/form";
-import { DriverCheckedType } from "./addDriver";
-import { OnboardingExistingDriverAPIResponseType } from "@ryogo-travel-app/api/types/user.types";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
+} from "@/app/onboarding/components/onboardingSteps"
+import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { Form } from "@/components/ui/form"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 
 export function AddDriverStep1(props: {
-  onNext: () => void;
-  finalData: AddDriverFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>;
-  checkedDrivers: DriverCheckedType;
-  setCheckedDrivers: Dispatch<SetStateAction<DriverCheckedType>>;
+  onNext: () => void
+  finalData: AddDriverFormDataType
+  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>
+  allDrivers: FindAllUsersByRoleType
 }) {
-  const t = useTranslations("Onboarding.AddDriverPage.Step1");
+  const t = useTranslations("Onboarding.AddDriverPage.Step1")
 
   const step1Schema = z.object({
     driverName: z
@@ -39,11 +36,11 @@ export function AddDriverStep1(props: {
     driverPhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        if (file.length < 1) return true;
-        return file[0] && file[0]!.size < 1000000;
+        if (file.length < 1) return true
+        return file[0] && file[0]!.size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true;
+        if (file.length < 1) return true
         return (
           file[0] &&
           [
@@ -53,12 +50,12 @@ export function AddDriverStep1(props: {
             "image/bmp",
             "image/webp",
           ].includes(file[0]!.type)
-        );
+        )
       }, t("Field4.Error2"))
       .optional(),
-  });
+  })
 
-  type Step1Type = z.infer<typeof step1Schema>;
+  type Step1Type = z.infer<typeof step1Schema>
 
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
@@ -68,60 +65,30 @@ export function AddDriverStep1(props: {
       driverEmail: props.finalData.email,
       driverPhotos: props.finalData.driverPhotos,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    //Dictonary to store if the driver was already checked in the DB (to save API calls)
-    const alreadyChecked = Object.keys(props.checkedDrivers).includes(
-      data.driverPhone + data.driverEmail
-    );
-    if (!alreadyChecked) {
-      //If (phone+email) not checked in DB already, make an API call
-      const existingDriver =
-        await apiClient<OnboardingExistingDriverAPIResponseType>(
-          `/api/onboarding/add-driver/existing-driver?phone=${data.driverPhone}&email=${data.driverEmail}`,
-          { method: "GET" }
-        );
-      if (existingDriver.length > 0) {
-        //If driver exists in system, show error
-        formData.setError("driverPhone", {
-          type: "manual",
-          message: t("APIError"),
-        });
-        //Store in dictionary
-        props.setCheckedDrivers({
-          ...props.checkedDrivers,
-          [data.driverPhone + data.driverEmail]: true,
-        });
-      } else {
-        //If driver does not exist in DB, store in dictionaty and move to next step
-        props.setCheckedDrivers({
-          ...props.checkedDrivers,
-          [data.driverPhone + data.driverEmail]: false,
-        });
-      }
-    } else {
-      // If Driver was searched for already, take result from dictionary
-      if (props.checkedDrivers[data.driverPhone + data.driverEmail]) {
-        //If Driver exists in search dictionary and was in DB, show error
-        formData.setError("driverPhone", {
-          type: "manual",
-          message: t("APIError"),
-        });
-      }
+    if (
+      props.allDrivers.some(
+        (d) => d.email == data.driverEmail && d.phone == data.driverPhone,
+      )
+    ) {
+      //If driver exists with same email and phone already in system, show error
+      formData.setError("driverPhone", {
+        type: "manual",
+        message: t("APIError"),
+      })
     }
-    if (!formData.formState.errors.driverPhone) {
-      props.updateFinalData({
-        ...props.finalData,
-        name: data.driverName,
-        phone: data.driverPhone,
-        email: data.driverEmail,
-        driverPhotos: data.driverPhotos,
-      });
-      props.onNext();
-    }
-  };
+    props.updateFinalData({
+      ...props.finalData,
+      name: data.driverName,
+      phone: data.driverPhone,
+      email: data.driverEmail,
+      driverPhotos: data.driverPhotos,
+    })
+    props.onNext()
+  }
 
   return (
     <Form {...formData}>
@@ -169,5 +136,5 @@ export function AddDriverStep1(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

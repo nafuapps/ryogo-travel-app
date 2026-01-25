@@ -1,34 +1,34 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   OnboardingInput,
   OnboardingCheckbox,
   OnboardingTextarea,
   OnboardingFileInput,
-} from "../components/onboardingFields";
+} from "../components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "../components/onboardingSteps";
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
-import { Form } from "@/components/ui/form";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { OnboardingExistingAgencyAPIResponseType } from "@ryogo-travel-app/api/types/agency.types";
+} from "../components/onboardingSteps"
+import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
+import { Form } from "@/components/ui/form"
+import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 
 export function CreateAccountStep2(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: CreateAccountFormDataType;
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>;
+  onNext: () => void
+  onPrev: () => void
+  finalData: CreateAccountFormDataType
+  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>
+  allAgencies: FindAllAgenciesType
 }) {
-  const t = useTranslations("Onboarding.CreateAccountPage.Step2");
+  const t = useTranslations("Onboarding.CreateAccountPage.Step2")
 
   const step2Schema = z.object({
     agencyPhone: z.string().length(10, t("Field1.Error1")),
@@ -42,11 +42,11 @@ export function CreateAccountStep2(props: {
     ownerPhoto: z
       .instanceof(FileList)
       .refine((file) => {
-        if (file.length < 1) return true;
-        return file[0] && file[0]!.size < 1000000;
+        if (file.length < 1) return true
+        return file[0] && file[0]!.size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true;
+        if (file.length < 1) return true
         return (
           file[0] &&
           [
@@ -56,11 +56,11 @@ export function CreateAccountStep2(props: {
             "image/bmp",
             "image/webp",
           ].includes(file[0]!.type)
-        );
+        )
       }, t("Field4.Error2"))
       .optional(),
-  });
-  type Step2Type = z.infer<typeof step2Schema>;
+  })
+  type Step2Type = z.infer<typeof step2Schema>
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
@@ -71,48 +71,49 @@ export function CreateAccountStep2(props: {
       agencyAddress: props.finalData.agencyAddress,
       ownerPhoto: props.finalData.ownerPhoto,
     },
-  });
+  })
 
-  const setValue = formData.setValue;
+  const setValue = formData.setValue
   // Watch the checkbox and the source input field
-  const phoneCopySelection = formData.watch("sameAsOwnerPhone");
-  const phoneSourceValue = props.finalData.ownerPhone;
+  const phoneCopySelection = formData.watch("sameAsOwnerPhone")
+  const phoneSourceValue = props.finalData.ownerPhone
 
-  const emailCopySelection = formData.watch("sameAsOwnerEmail");
-  const emailSourceValue = props.finalData.ownerEmail;
+  const emailCopySelection = formData.watch("sameAsOwnerEmail")
+  const emailSourceValue = props.finalData.ownerEmail
 
   useEffect(() => {
     if (phoneCopySelection) {
       // If the checkbox is checked, set the target input's value
-      setValue("agencyPhone", phoneSourceValue);
+      setValue("agencyPhone", phoneSourceValue)
     } else {
       // Optionally, clear the target input if unchecked
-      setValue("agencyPhone", "");
+      setValue("agencyPhone", "")
     }
-  }, [phoneCopySelection, phoneSourceValue, setValue]);
+  }, [phoneCopySelection, phoneSourceValue, setValue])
 
   useEffect(() => {
     if (emailCopySelection) {
       // If the checkbox is checked, set the target input's value
-      setValue("agencyEmail", emailSourceValue); // Name of the input to copy to
+      setValue("agencyEmail", emailSourceValue) // Name of the input to copy to
     } else {
       // Optionally, clear the target input if unchecked
-      setValue("agencyEmail", "");
+      setValue("agencyEmail", "")
     }
-  }, [emailCopySelection, emailSourceValue, setValue]);
+  }, [emailCopySelection, emailSourceValue, setValue])
 
   //Submit actions
   const onSubmit = async (data: Step2Type) => {
-    const existingAgeny =
-      await apiClient<OnboardingExistingAgencyAPIResponseType>(
-        `/api/onboarding/create-account/existing-agency?phone=${data.agencyPhone}&email=${data.agencyEmail}`,
-        { method: "GET" }
-      );
-    if (existingAgeny.length > 0) {
+    if (
+      props.allAgencies.some(
+        (a) =>
+          a.businessEmail == data.agencyEmail &&
+          a.businessPhone == data.agencyPhone,
+      )
+    ) {
       formData.setError("agencyPhone", {
         type: "manual",
         message: t("APIError"),
-      });
+      })
     } else {
       props.updateFinalData({
         ...props.finalData,
@@ -120,10 +121,10 @@ export function CreateAccountStep2(props: {
         agencyEmail: data.agencyEmail,
         agencyAddress: data.agencyAddress,
         ownerPhoto: data.ownerPhoto,
-      });
-      props.onNext();
+      })
+      props.onNext()
     }
-  };
+  }
 
   return (
     <Form {...formData}>
@@ -185,5 +186,5 @@ export function CreateAccountStep2(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

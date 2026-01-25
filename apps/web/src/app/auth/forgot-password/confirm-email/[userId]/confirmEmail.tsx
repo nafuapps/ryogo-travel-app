@@ -18,18 +18,17 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { H2, H5, PGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
-import { ResetPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 import { Spinner } from "@/components/ui/spinner"
+import { resetAction } from "./resetAction"
+import { toast } from "sonner"
 
-type ConfirmEmailPageComponentProps = {
+export default function ConfirmEmailPageComponent({
+  userId,
+  currentEmail,
+}: {
   userId: string
-}
-export default function ConfirmEmailPageComponent(
-  props: ConfirmEmailPageComponentProps
-) {
-  const userId = props.userId
-
+  currentEmail: string
+}) {
   const t = useTranslations("Auth.ForgotPasswordPage.Step2")
   const formSchema = z.object({
     email: z.email(t("Error1")),
@@ -41,28 +40,22 @@ export default function ConfirmEmailPageComponent(
   // For managing form data and validation
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
   })
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    // Try Reset password
-    const resetSuccess = await apiClient<ResetPasswordAPIResponseType>(
-      "/api/auth/reset",
-      {
-        method: "POST",
-        body: JSON.stringify({ userId: userId, email: data.email }),
-      }
-    )
-    if (resetSuccess.id) {
-      //Redirect to success page
-      router.replace("/auth/forgot-password/success")
-    } else {
-      // Show error
+    if (data.email != currentEmail) {
       methods.setError("email", { type: "manual", message: t("APIError") })
     }
+    // Try Reset password
+    const resetSuccess = await resetAction(userId)
+    if (resetSuccess?.id) {
+      //Redirect to success page
+      toast.success(t("Success"))
+    } else {
+      toast.error(t("Error"))
+    }
+    router.replace("/auth/login")
   }
 
   return (

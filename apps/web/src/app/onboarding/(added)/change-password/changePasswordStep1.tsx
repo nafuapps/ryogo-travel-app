@@ -11,11 +11,10 @@ import {
   OnboardingStepPrimaryAction,
 } from "@/app/onboarding/components/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
-import { OnboardingChangePasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { changeNewUserPasswordAction } from "./changeNewUserPasswordAction"
 
 export function ChangePasswordStep1(props: {
   userId: string
@@ -50,27 +49,17 @@ export function ChangePasswordStep1(props: {
   type Step1Type = z.infer<typeof step1Schema>
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
-    defaultValues: {
-      oldPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
   })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     //Change password in DB
-    const result = await apiClient<OnboardingChangePasswordAPIResponseType>(
-      `/api/onboarding/change-password/${props.userId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          oldPassword: data.oldPassword,
-          newPassword: data.newPassword,
-        }),
-      },
+    const result = await changeNewUserPasswordAction(
+      props.userId,
+      data.oldPassword,
+      data.newPassword,
     )
-    if (result.id) {
+    if (result) {
       //If success, redirect
       toast.success(t("Success"))
       if (props.role == UserRolesEnum.DRIVER) {

@@ -5,6 +5,7 @@ import AddVehiclePageComponent from "./addVehicle"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: "Add Vehicle Page | RyoGo",
@@ -36,6 +37,18 @@ export default async function AddVehiclePage() {
   //Owner
   if (currentUser.status !== UserStatusEnum.NEW) {
     //If not new, go to dashboard
+    redirect("/dashboard", RedirectType.replace)
+  }
+
+  //Check for Onboarding flow
+  const agencyData = await agencyServices.getAgencyData(currentUser.agencyId)
+  if (agencyData.vehicles.length > 0) {
+    if (agencyData.drivers.length < 1) {
+      redirect("/onboarding/add-driver", RedirectType.replace)
+    }
+    if (agencyData.agents.length < 1) {
+      redirect("/onboarding/add-agent", RedirectType.replace)
+    }
     redirect("/dashboard", RedirectType.replace)
   }
 

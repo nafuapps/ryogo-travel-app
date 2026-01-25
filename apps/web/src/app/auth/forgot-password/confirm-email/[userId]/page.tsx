@@ -4,6 +4,7 @@ import { redirect, RedirectType } from "next/navigation"
 import { UserRegex } from "@/lib/regex"
 import ConfirmEmailPageComponent from "./confirmEmail"
 import { Metadata } from "next"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export const metadata: Metadata = {
   title: "Confirm Email Page | RyoGo",
@@ -21,5 +22,10 @@ export default async function ConfirmEmailPage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  return <ConfirmEmailPageComponent userId={userId} />
+  const user = await userServices.findUserDetailsById(userId)
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
+  return <ConfirmEmailPageComponent userId={userId} currentEmail={user.email} />
 }

@@ -5,6 +5,8 @@ import CreateAccountPageComponent from "./createAccount"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: "Create Account Page | RyoGo",
@@ -20,5 +22,13 @@ export default async function CreateAccountPage() {
     }
     redirect("/dashboard", RedirectType.replace)
   }
-  return <CreateAccountPageComponent />
+  const allOwners = await userServices.findAllUsersByRole([UserRolesEnum.OWNER])
+  const allAgencies = await agencyServices.findAllAgencies()
+
+  return (
+    <CreateAccountPageComponent
+      allOwners={allOwners}
+      allAgencies={allAgencies}
+    />
+  )
 }

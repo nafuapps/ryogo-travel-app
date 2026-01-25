@@ -7,7 +7,7 @@ import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "@/app/onboarding/components/stepsTracker"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
@@ -20,7 +20,6 @@ import { AddVehicleStep2 } from "./addVehicleStep2"
 import { AddVehicleStep3 } from "./addVehicleStep3"
 import { AddVehicleStep4 } from "./addVehicleStep4"
 import { AddVehicleConfirm } from "./addVehicleStep5"
-import { fetchAgenyData } from "@/app/onboarding/components/fetchAgenyData"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 const TotalSteps = 5
@@ -32,11 +31,6 @@ type AddVehiclePageComponentProps = {
 export default function AddVehiclePageComponent(
   props: AddVehiclePageComponentProps,
 ) {
-  useEffect(() => {
-    //Redirect if needed
-    fetchAgenyData(props.agencyId, "add-vehicle")
-  }, [props.agencyId])
-
   const t = useTranslations("Onboarding.AddVehiclePage")
   const [finalData, setFinalData] = useState<AddVehicleFormDataType>({
     agencyId: props.agencyId,

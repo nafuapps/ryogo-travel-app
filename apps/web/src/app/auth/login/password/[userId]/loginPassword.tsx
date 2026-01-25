@@ -23,6 +23,11 @@ import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import { LoginPasswordAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  LOGIN_PASSWORD_ERROR,
+  LOGIN_USER_ERROR,
+} from "@ryogo-travel-app/api/services/user.services"
+import { LOGIN_SESSION_ERROR, LOGIN_UNKNOWN_ERROR } from "@/lib/auth"
 
 // TODO: Add a feature to show the user had recently reset password
 
@@ -60,10 +65,14 @@ export default function LoginPasswordPageComponent(
         body: JSON.stringify({ userId: userId, password: data.password }),
       },
     )
-    if (loginResponse == null) {
+    if (loginResponse.error == LOGIN_PASSWORD_ERROR) {
       // Show password match error
       methods.setError("password", { type: "manual", message: t("APIError1") })
-    } else if (loginResponse.id == undefined) {
+    } else if (
+      loginResponse.error == LOGIN_USER_ERROR ||
+      loginResponse.error == LOGIN_SESSION_ERROR ||
+      loginResponse.error == LOGIN_UNKNOWN_ERROR
+    ) {
       // Show user not found error
       methods.setError("password", { type: "manual", message: t("APIError2") })
     } else {

@@ -6,9 +6,13 @@ import {
   SESSION_COOKIE_NAME,
 } from "./session"
 import { cookies } from "next/headers"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { redirect, RedirectType } from "next/navigation"
+import {
+  CheckLoginInDBType,
+  userServices,
+} from "@ryogo-travel-app/api/services/user.services"
 
+export const LOGIN_SESSION_ERROR = "sessionNotCreated"
+export const LOGIN_UNKNOWN_ERROR = "unknown"
 // Get current user from session
 export async function getCurrentUser() {
   // S1. Get session from cookie
@@ -25,29 +29,27 @@ export async function getCurrentUser() {
 
 // Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {
-  try {
-    //1. Try login
-    const userData = await userServices.checkLoginInDB(userId, password)
-    if (userData == null) {
-      return null
-    }
-    if (!userData) {
-      return {}
-    }
+  //1. Try login
+  const userData: CheckLoginInDBType = await userServices.checkLoginInDB(
+    userId,
+    password,
+  )
+  if (userData.error) {
+    return { error: userData.error }
+  }
+
+  if (userData.data) {
     //2. create session
-    const token = await createWebSession(userData)
-    if (!token) return null
+    const token = await createWebSession(userData.data)
+    if (!token) return { error: LOGIN_SESSION_ERROR }
 
     //3. Return login success if token created
     return {
-      id: userData.id,
-      userRole: userData.userRole,
+      id: userData.data.id,
+      userRole: userData.data.userRole,
     }
-  } catch (error) {
-    console.log(error)
-    //No user found with this id.. redirect to login page
-    redirect("/auth/login", RedirectType.replace)
   }
+  return { error: LOGIN_UNKNOWN_ERROR }
 }
 
 // Logout user - Delete session and log last logout time in DB

@@ -1,4 +1,3 @@
-import { getCurrentUser } from "@/lib/auth"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { CaptionGrey, H4, H1, PGrey } from "@/components/typography"
@@ -22,26 +21,27 @@ import {
 } from "./dashboardMetricsCommons"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export default async function DashboardBookingMetricsComponent() {
+export default async function DashboardBookingMetricsComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   const t = await getTranslations("Dashboard.Home.BookingMetrics")
-  const user = await getCurrentUser()
 
   //Get confirmed bookings
   const confirmedBookingsThisWeek =
-    await bookingServices.findConfirmedBookingsPreviousDays(user!.agencyId, 7)
+    await bookingServices.findConfirmedBookingsPreviousDays(agencyId, 7)
   const confirmed24HrsBookings = confirmedBookingsThisWeek.filter(
-    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
   )
 
   //Get In progress bookings
-  const inProgressBookings = await bookingServices.findInProgressBookings(
-    user!.agencyId
-  )
+  const inProgressBookings =
+    await bookingServices.findInProgressBookings(agencyId)
 
   //Get updated bookings with all the status (lead, completed, cancelled)
-  const updatedBookings = await bookingServices.findBookingsUpdatedPreviousDays(
-    user!.agencyId
-  )
+  const updatedBookings =
+    await bookingServices.findBookingsUpdatedPreviousDays(agencyId)
 
   const confirmedThisWeekCount = confirmedBookingsThisWeek.length
   const confirmed24HrsCount = confirmed24HrsBookings.length
@@ -56,15 +56,15 @@ export default async function DashboardBookingMetricsComponent() {
   const inProgressCount = inProgressBookings.length
 
   const leadCount = updatedBookings.filter(
-    (b) => b.status === BookingStatusEnum.LEAD
+    (b) => b.status === BookingStatusEnum.LEAD,
   ).length
 
   const completedCount = updatedBookings.filter(
-    (b) => b.status === BookingStatusEnum.COMPLETED
+    (b) => b.status === BookingStatusEnum.COMPLETED,
   ).length
 
   const cancelledCount = updatedBookings.filter(
-    (b) => b.status === BookingStatusEnum.CANCELLED
+    (b) => b.status === BookingStatusEnum.CANCELLED,
   ).length
 
   const icon = more ? (

@@ -1,5 +1,4 @@
 import { pageClassName } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
 import AccountDetailHeaderTabs from "./accountDetailHeaderTabs"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
@@ -16,14 +15,12 @@ import { Button } from "@/components/ui/button"
 import LogoutAlertButton from "../components/buttons/logoutAlertButton"
 import ChangeNameSheet from "./changeNameSheet"
 
-export default async function AccountPageComponent() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  const userDetails = await userServices.findUserDetailsById(currentUser.userId)
+export default async function AccountPageComponent({
+  userId,
+}: {
+  userId: string
+}) {
+  const userDetails = await userServices.findUserDetailsById(userId)
 
   if (!userDetails) {
     redirect("/auth/login", RedirectType.replace)
@@ -55,7 +52,7 @@ export default async function AccountPageComponent() {
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeAccountPhotoSheet userId={currentUser.userId} />
+              <ChangeAccountPhotoSheet userId={userId} />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{userDetails.name}</H4>
@@ -72,10 +69,7 @@ export default async function AccountPageComponent() {
               </div>
             </div>
           </div>
-          <ChangeNameSheet
-            userId={currentUser.userId}
-            userName={userDetails.name}
-          />
+          <ChangeNameSheet userId={userId} userName={userDetails.name} />
           <Link href="/dashboard/account/change-email">
             <Button variant={"outline"} className="w-full">
               {t("ChangeEmail.Title")}

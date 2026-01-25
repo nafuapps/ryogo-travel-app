@@ -1,45 +1,16 @@
-import { PGrey } from "@/components/typography";
-import React from "react";
-import DashboardOngoingTripComponent from "./dashboardOngoingTripComponent";
-import { getTranslations } from "next-intl/server";
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services";
-import { getCurrentUser } from "@/lib/auth";
+import { PGrey } from "@/components/typography"
+import DashboardOngoingTripComponent from "./dashboardOngoingTripComponent"
+import { getTranslations } from "next-intl/server"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 
-export default async function DashboardOngoingTripSection() {
-  const t = await getTranslations("Dashboard.Home.OngoingTrips");
-  const user = await getCurrentUser();
+export default async function DashboardOngoingTripSection({
+  agencyId,
+}: {
+  agencyId: string
+}) {
+  const t = await getTranslations("Dashboard.Home.OngoingTrips")
 
-  // const ongoingTrips = await bookingServices.findOngoingTrips(user!.agencyId);
-
-  const ongoingTrips = [
-    {
-      bookingId: "B1234255",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      status: "Picked Up",
-    },
-    {
-      bookingId: "B1234255",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      status: "Picked Up",
-    },
-    {
-      bookingId: "B1234255",
-      customerName: "Karan Singh",
-      route: "Delhi - Agra",
-      type: "One way",
-      vehicle: "MH46AL9803",
-      driver: "Surender K",
-      status: "Picked Up",
-    },
-  ];
+  const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
 
   return (
     <div
@@ -53,5 +24,5 @@ export default async function DashboardOngoingTripSection() {
         ))}
       </div>
     </div>
-  );
+  )
 }

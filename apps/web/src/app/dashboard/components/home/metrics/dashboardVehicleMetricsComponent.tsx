@@ -1,5 +1,4 @@
 import { H4, H1, CaptionGrey, PGrey } from "@/components/typography"
-import { getCurrentUser } from "@/lib/auth"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { LucideCar } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -17,24 +16,27 @@ import {
 } from "./dashboardMetricsCommons"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export default async function DashboardVehicleMetricsComponent() {
+export default async function DashboardVehicleMetricsComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   const t = await getTranslations("Dashboard.Home.VehicleMetrics")
-  const user = await getCurrentUser()
 
-  const vehicles = await vehicleServices.findVehiclesByAgency(user!.agencyId)
+  const vehicles = await vehicleServices.findVehiclesByAgency(agencyId)
 
   const totalVehicles = vehicles.length
   const availableVehicles = vehicles.filter(
-    (vehicle) => vehicle.status === VehicleStatusEnum.AVAILABLE
+    (vehicle) => vehicle.status === VehicleStatusEnum.AVAILABLE,
   ).length
   const onTripVehicles = vehicles.filter(
-    (vehicle) => vehicle.status === VehicleStatusEnum.ON_TRIP
+    (vehicle) => vehicle.status === VehicleStatusEnum.ON_TRIP,
   ).length
   const repairVehicles = vehicles.filter(
-    (vehicle) => vehicle.status === VehicleStatusEnum.REPAIR
+    (vehicle) => vehicle.status === VehicleStatusEnum.REPAIR,
   ).length
   const inactiveVehicles = vehicles.filter(
-    (vehicle) => vehicle.status === VehicleStatusEnum.INACTIVE
+    (vehicle) => vehicle.status === VehicleStatusEnum.INACTIVE,
   ).length
 
   return (

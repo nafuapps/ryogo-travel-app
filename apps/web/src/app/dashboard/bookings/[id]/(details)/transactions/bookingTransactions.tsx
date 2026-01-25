@@ -11,10 +11,12 @@ export default async function BookingTransactionsPageComponent({
   bookingId,
   bookingTransactions,
   canCreateTransaction,
+  isOwner,
 }: {
   bookingId: string
   bookingTransactions: FindBookingTransactionsByIdType
   canCreateTransaction: boolean
+  isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingTransactions")
 
@@ -46,6 +48,7 @@ export default async function BookingTransactionsPageComponent({
               key={transaction.id}
               transaction={transaction}
               canModifyTransaction={canCreateTransaction}
+              isOwner={isOwner}
             />
           ))}
         </div>

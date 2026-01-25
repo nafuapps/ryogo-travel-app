@@ -1,5 +1,4 @@
 import { H4, CaptionGrey, H3, H5, PGrey } from "@/components/typography"
-import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import {
@@ -22,25 +21,27 @@ import {
 } from "./dashboardMetricsCommons"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 
-export default async function DashboardRevenueMetricsComponent() {
+export default async function DashboardRevenueMetricsComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   const t = await getTranslations("Dashboard.Home.RevenueMetrics")
-  const user = await getCurrentUser()
 
   const revenueBookingsThisWeek =
-    await bookingServices.findBookingsRevenuePreviousDays(user!.agencyId, 7)
+    await bookingServices.findBookingsRevenuePreviousDays(agencyId, 7)
   const revenueBookings24Hrs = revenueBookingsThisWeek.filter(
-    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
   )
 
-  const transactions = await transactionServices.getTransactionsPreviousDays(
-    user!.agencyId
-  )
+  const transactions =
+    await transactionServices.getTransactionsPreviousDays(agencyId)
 
   const revenueThisWeekAmount = revenueBookingsThisWeek.reduce(
     (total, booking) => {
       return total + booking.totalAmount
     },
-    0
+    0,
   )
 
   const revenue24HrsAmount = revenueBookings24Hrs.reduce((total, booking) => {

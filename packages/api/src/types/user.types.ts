@@ -1,4 +1,4 @@
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 // /api/auth/login (POST)
 export type LoginAPIResponseType = {
@@ -8,11 +8,15 @@ export type LoginAPIResponseType = {
 // /api/auth/login/password (POST)
 export type LoginPasswordAPIResponseType =
   | {
-      id: string
-      userRole: string
+      error: string
+      id?: undefined
+      userRole?: undefined
     }
-  | null
-  | undefined
+  | {
+      id: string
+      userRole: UserRolesEnum
+      error?: undefined
+    }
 
 // /api/auth/reset (POST)
 export type ResetPasswordAPIResponseType = {

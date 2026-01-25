@@ -6,6 +6,7 @@ import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
 import BookingTransactionsPageComponent from "./bookingTransactions"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function BookingDetailsPage({
   params,
@@ -13,7 +14,10 @@ export default async function BookingDetailsPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
   const assignedUserId = await bookingServices.findAssignedUserIdByBookingId(id)
 
@@ -28,9 +32,10 @@ export default async function BookingDetailsPage({
         bookingId={id}
         bookingTransactions={bookingTransactions}
         canCreateTransaction={
-          user?.userRole == UserRolesEnum.OWNER ||
-          user?.userId == assignedUserId
+          currentUser.userRole == UserRolesEnum.OWNER ||
+          currentUser.userId == assignedUserId
         }
+        isOwner={currentUser.userRole == UserRolesEnum.OWNER}
       />
     </div>
   )

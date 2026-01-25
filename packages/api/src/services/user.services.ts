@@ -17,6 +17,9 @@ import {
   NewAgentRequestType,
 } from "../types/user.types"
 
+export const LOGIN_PASSWORD_ERROR = "passwordNotMatching"
+export const LOGIN_USER_ERROR = "userNotFound"
+
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
@@ -315,19 +318,23 @@ export const userServices = {
     const userFound = await userRepository.readUserById(userId)
     // If no user found, cannot login
     if (!userFound) {
-      return userFound
+      return {
+        error: LOGIN_USER_ERROR,
+      }
     }
 
     //Step2: Check password
     const valid = await bcrypt.compare(password, userFound.password)
     if (!valid) {
-      return null
+      return {
+        error: LOGIN_PASSWORD_ERROR,
+      }
     }
     //Step3: Update last login
     await userRepository.updateLastLogin(userFound.id, new Date())
 
     //Step4: Return user details
-    return userFound
+    return { data: userFound }
   },
 
   //Logout in DB
@@ -532,4 +539,8 @@ export type FindUserAccountsByPhoneRoleType = Awaited<
 
 export type FindUserDetailsByIdType = Awaited<
   ReturnType<typeof userServices.findUserDetailsById>
+>
+
+export type CheckLoginInDBType = Awaited<
+  ReturnType<typeof userServices.checkLoginInDB>
 >

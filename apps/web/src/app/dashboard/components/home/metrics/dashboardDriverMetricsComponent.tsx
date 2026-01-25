@@ -1,5 +1,4 @@
 import { H4, CaptionGrey, H1, PGrey } from "@/components/typography"
-import { getCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { LucideLifeBuoy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -17,24 +16,27 @@ import {
 } from "./dashboardMetricsCommons"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export default async function DashboardDriverMetricsComponent() {
+export default async function DashboardDriverMetricsComponent({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   const t = await getTranslations("Dashboard.Home.DriverMetrics")
-  const user = await getCurrentUser()
 
-  const drivers = await driverServices.findDriversByAgency(user!.agencyId)
+  const drivers = await driverServices.findDriversByAgency(agencyId)
 
   const totalDrivers = drivers.length
   const availableDrivers = drivers.filter(
-    (driver) => driver.status === DriverStatusEnum.AVAILABLE
+    (driver) => driver.status === DriverStatusEnum.AVAILABLE,
   ).length
   const onTripDrivers = drivers.filter(
-    (driver) => driver.status === DriverStatusEnum.ON_TRIP
+    (driver) => driver.status === DriverStatusEnum.ON_TRIP,
   ).length
   const leaveDrivers = drivers.filter(
-    (driver) => driver.status === DriverStatusEnum.LEAVE
+    (driver) => driver.status === DriverStatusEnum.LEAVE,
   ).length
   const inactiveDrivers = drivers.filter(
-    (driver) => driver.status === DriverStatusEnum.INACTIVE
+    (driver) => driver.status === DriverStatusEnum.INACTIVE,
   ).length
 
   return (

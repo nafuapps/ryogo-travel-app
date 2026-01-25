@@ -6,10 +6,7 @@ import {
   Small,
   SmallRed,
 } from "@/components/typography"
-import {
-  TransactionTypesEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import { LucideMaximize2, LucideMinimize2, LucidePencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
@@ -26,21 +23,20 @@ import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { getCurrentUser } from "@/lib/auth"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
 
 export default async function TransactionItem({
   transaction,
   canModifyTransaction,
+  isOwner,
 }: {
   transaction: NonNullable<FindBookingTransactionsByIdType>[0]
   canModifyTransaction: boolean
+  isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingTransactions")
   const id = transaction.bookingId
   const txnId = transaction.id
-
-  const user = await getCurrentUser()
 
   let fileUrl = ""
   if (transaction.transactionPhotoUrl) {
@@ -84,7 +80,7 @@ export default async function TransactionItem({
             <H4>{transaction.amount}</H4>
           </div>
           <div className="flex flex-row gap-2 lg:gap-3">
-            {user?.userRole == UserRolesEnum.OWNER && (
+            {isOwner && (
               <TransactionApprovalButton
                 txnId={txnId}
                 isApproved={transaction.isApproved}

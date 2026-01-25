@@ -2586,7 +2586,7 @@
       "ResetUserPassword": {
         "Label": "Reset User Password",
         "Title": "Are you sure you want to reset the password for this user?",
-        "Desc": "Old password will not work anymore. User will receive an email with the new password.",
+        "Desc": "Old password will not work for login anymore. User will receive an email with the new password.",
         "NoCTA": "No",
         "Success": "Password reset email sent!",
         "Error": "Cannot reset password.. Try again later!",

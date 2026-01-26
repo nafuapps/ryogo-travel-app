@@ -1,8 +1,9 @@
 import { H2, P } from "@/components/typography"
 import { AccountCard } from "@/app/auth/components/accountCard"
-import { BackButton } from "@/app/auth/components/backButton"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default async function LoginAccountsPageComponent({
   accounts,
@@ -23,9 +24,11 @@ export default async function LoginAccountsPageComponent({
           <AccountCard key={account.id} account={account} />
         ))}
       </div>
-      <div id="LoginAccountsActions" className="flex flex-col gap-4 w-full">
-        <BackButton label={t("SecondaryCTA")} />
-      </div>
+      <Link href={"/auth/login"}>
+        <Button variant={"secondary"} size={"lg"}>
+          {t("SecondaryCTA")}
+        </Button>
+      </Link>
     </div>
   )
 }

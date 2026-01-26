@@ -14,7 +14,7 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
-import { NewVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { newVehicleAction } from "./newVehicleAction"
 
 export function NewVehicleConfirm(props: {
@@ -29,7 +29,7 @@ export function NewVehicleConfirm(props: {
   //Submit actions
   const onSubmit = async () => {
     // Add vehicle
-    const newVehicleData: NewVehicleRequestType = {
+    const newVehicleData: AddVehicleRequestType = {
       agencyId: props.agencyId,
       data: {
         vehicleNumber: props.newVehicleFormData.vehicleNumber,

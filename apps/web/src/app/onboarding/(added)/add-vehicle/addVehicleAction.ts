@@ -1,10 +1,10 @@
 "use server"
 
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { NewVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function addVehicleAction(data: NewVehicleRequestType) {
+export async function addVehicleAction(data: AddVehicleRequestType) {
   const vehicle = await vehicleServices.addVehicle(data)
 
   if (vehicle.id) {

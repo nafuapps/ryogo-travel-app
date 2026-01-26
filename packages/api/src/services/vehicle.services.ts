@@ -5,7 +5,7 @@ import {
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { NewVehicleRequestType } from "../types/vehicle.types"
+import { AddVehicleRequestType } from "../types/vehicle.types"
 import { bookingRepository } from "../repositories/booking.repo"
 
 export const vehicleServices = {
@@ -107,7 +107,7 @@ export const vehicleServices = {
   },
 
   //Add vehicle to agency
-  async addVehicle({ data, agencyId }: NewVehicleRequestType) {
+  async addVehicle({ data, agencyId }: AddVehicleRequestType) {
     //Step1: Check if the vehicle already exists in this agency
     const existingVehicleInAgency =
       await vehicleRepository.readVehicleByNumberInAgency(

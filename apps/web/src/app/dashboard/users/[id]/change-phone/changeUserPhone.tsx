@@ -53,7 +53,11 @@ export default function ChangeUserPhonePageComponent({
         message: t("Field1.Error3"),
       })
     } else {
-      const modifiedUser = await changeUserPhoneAction(user.id, data.newPhone)
+      const modifiedUser = await changeUserPhoneAction(
+        user.id,
+        data.newPhone,
+        user.userRole,
+      )
       if (modifiedUser) {
         router.replace(`/dashboard/users/${user.id}`)
         toast.success(t("Success"))

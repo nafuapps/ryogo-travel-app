@@ -2,14 +2,11 @@
 
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import {
-  NewDriverResponseType,
-  NewDriverRequestType,
-} from "@ryogo-travel-app/api/types/driver.types"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function newDriverAction(data: NewDriverRequestType) {
-  const driver: NewDriverResponseType = await driverServices.addNewDriver(data)
+export async function newDriverAction(data: AddDriverRequestType) {
+  const driver = await userServices.addDriverUser(data)
 
   if (driver.id) {
     if (data.data.licensePhotos && data.data.licensePhotos[0]) {
@@ -22,8 +19,8 @@ export async function newDriverAction(data: NewDriverRequestType) {
       const url = uploadedLicense!.path
       await driverServices.updateDriverLicensePhoto(driver.id, url)
     }
-    if (data.data.driverPhotos && data.data.driverPhotos[0]) {
-      const photo = data.data.driverPhotos[0]
+    if (data.data.userPhotos && data.data.userPhotos[0]) {
+      const photo = data.data.userPhotos[0]
       const fileName = `${Date.now()}-${photo.name}`
       const uploadedPhoto = await uploadFile(
         photo,

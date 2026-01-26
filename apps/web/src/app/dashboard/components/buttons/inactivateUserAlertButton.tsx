@@ -8,9 +8,11 @@ import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
 import { inactivateUserAction } from "../actions/inactivateUserAction"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 type InactivateUserAlertButtonProps = {
   userId: string
+  role: UserRolesEnum
 }
 export default function InactivateUserAlertButton(
   props: InactivateUserAlertButtonProps,
@@ -21,7 +23,7 @@ export default function InactivateUserAlertButton(
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateUserAction(props.userId)) {
+      if (await inactivateUserAction(props.userId, props.role)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

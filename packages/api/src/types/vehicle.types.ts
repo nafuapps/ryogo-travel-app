@@ -1,6 +1,6 @@
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
-export type NewVehicleRequestType = {
+export type AddVehicleRequestType = {
   agencyId: string
   data: {
     vehicleNumber: string

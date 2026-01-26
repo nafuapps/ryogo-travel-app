@@ -10,7 +10,7 @@ export type SignupAPIResponseType = {
   id: string
 }[]
 
-export type OnboardingCreateAccountAPIRequestType = {
+export type CreateOwnerAccountRequestType = {
   agency: {
     businessEmail: string
     businessPhone: string

@@ -12,7 +12,7 @@ import {
   OnboardingStepSecondaryAction,
 } from "@/app/onboarding/components/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import { NewVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { addVehicleAction } from "./addVehicleAction"
@@ -29,7 +29,7 @@ export function AddVehicleConfirm(props: {
 
   //Submit actions
   const onSubmit = async () => {
-    const newVehicleData: NewVehicleRequestType = {
+    const newVehicleData: AddVehicleRequestType = {
       agencyId: props.finalData.agencyId,
       data: {
         vehicleNumber: props.finalData.vehicleNumber,

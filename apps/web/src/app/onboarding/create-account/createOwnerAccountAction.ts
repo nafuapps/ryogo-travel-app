@@ -2,11 +2,11 @@
 
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { OnboardingCreateAccountAPIRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function createOwnerAccountAction(
-  data: OnboardingCreateAccountAPIRequestType,
+  data: CreateOwnerAccountRequestType,
 ) {
   const user = await userServices.addAgencyAndOwnerAccount(data)
 

@@ -62,9 +62,12 @@ export default async function UserDetailsPageComponent({
             </div>
           </div>
         </div>
-
         <div id="UserActions" className="flex flex-col gap-2 lg:gap-3">
-          <ChangeUserNameSheet userId={user.id} userName={user.name} />
+          <ChangeUserNameSheet
+            userId={user.id}
+            userName={user.name}
+            userRole={user.userRole}
+          />
           <Link href={`/dashboard/users/${user.id}/change-email`}>
             <Button variant={"outline"} className="w-full">
               {t("ChangeEmail.Title")}
@@ -77,10 +80,10 @@ export default async function UserDetailsPageComponent({
           </Link>
           <ResetUserPasswordAlertButton userId={user.id} />
           {user.status != UserStatusEnum.INACTIVE && (
-            <InactivateUserAlertButton userId={user.id} />
+            <InactivateUserAlertButton userId={user.id} role={user.userRole} />
           )}
           {user.status == UserStatusEnum.INACTIVE && (
-            <ActivateUserAlertButton userId={user.id} />
+            <ActivateUserAlertButton userId={user.id} role={user.userRole} />
           )}
         </div>
       </div>

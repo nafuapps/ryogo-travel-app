@@ -21,12 +21,13 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { loginAction } from "./loginAction"
 import {
   LOGIN_PASSWORD_ERROR,
   LOGIN_USER_ERROR,
-} from "@ryogo-travel-app/api/services/user.services"
-import { LOGIN_SESSION_ERROR, LOGIN_UNKNOWN_ERROR } from "@/lib/auth"
-import { loginAction } from "./loginAction"
+  LOGIN_SESSION_ERROR,
+  LOGIN_UNKNOWN_ERROR,
+} from "@/lib/utils"
 
 // TODO: Add a feature to show the user had recently reset password
 

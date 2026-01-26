@@ -31,3 +31,8 @@ export function getStringValueDisplayPairs(
     display: key,
   }))
 }
+
+export const LOGIN_PASSWORD_ERROR = "passwordNotMatching"
+export const LOGIN_USER_ERROR = "userNotFound"
+export const LOGIN_SESSION_ERROR = "sessionNotCreated"
+export const LOGIN_UNKNOWN_ERROR = "unknown"

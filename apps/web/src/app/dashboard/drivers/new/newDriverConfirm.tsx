@@ -14,7 +14,7 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
-import { NewDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { newDriverAction } from "./newDriverAction"
 
 export function NewDriverConfirm(props: {
@@ -30,7 +30,7 @@ export function NewDriverConfirm(props: {
   //Submit action
   const onSubmit = async () => {
     // Add driver
-    const newDriverData: NewDriverRequestType = {
+    const newDriverData: AddDriverRequestType = {
       agencyId: props.agencyId,
       data: {
         name: props.newDriverFormData.name,
@@ -42,7 +42,7 @@ export function NewDriverConfirm(props: {
         licenseNumber: props.newDriverFormData.licenseNumber,
         licenseExpiresOn: props.newDriverFormData.licenseExpiresOn!,
         licensePhotos: props.newDriverFormData.licensePhotos,
-        driverPhotos: props.newDriverFormData.driverPhotos,
+        userPhotos: props.newDriverFormData.driverPhotos,
       },
     }
     const addedDriver = await newDriverAction(newDriverData)

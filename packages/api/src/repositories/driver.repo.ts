@@ -270,7 +270,7 @@ export const driverRepository = {
       .update(drivers)
       .set({ licensePhotoUrl: licenseUrl })
       .where(eq(drivers.id, driverId))
-      .returning({ id: drivers.id })
+      .returning()
   },
 
   //Update driver status
@@ -279,6 +279,33 @@ export const driverRepository = {
       .update(drivers)
       .set({ status: status })
       .where(eq(drivers.id, driverId))
-      .returning({ id: drivers.id })
+      .returning()
+  },
+
+  //Update driver status by userId
+  async updateStatusByUserId(userId: string, status: DriverStatusEnum) {
+    return await db
+      .update(drivers)
+      .set({ status: status })
+      .where(eq(drivers.userId, userId))
+      .returning()
+  },
+
+  //Update driver name by userId
+  async updateNameByUserId(userId: string, name: string) {
+    return await db
+      .update(drivers)
+      .set({ name })
+      .where(eq(drivers.userId, userId))
+      .returning()
+  },
+
+  //Update driver phone by userId
+  async updatePhoneByUserId(userId: string, phone: string) {
+    return await db
+      .update(drivers)
+      .set({ phone })
+      .where(eq(drivers.userId, userId))
+      .returning()
   },
 }

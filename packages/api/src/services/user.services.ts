@@ -2,6 +2,7 @@ import {
   UserStatusEnum,
   UserRolesEnum,
   UserLangEnum,
+  DriverStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import bcrypt from "bcryptjs"
 import { userRepository } from "../repositories/user.repo"
@@ -9,12 +10,11 @@ import { agencyServices } from "./agency.services"
 import { driverServices } from "./driver.services"
 import {
   AddDriverRequestType,
-  OnboardingCreateAccountAPIRequestType,
+  CreateOwnerAccountRequestType,
   AddAgentRequestType,
 } from "../types/user.types"
-
-export const LOGIN_PASSWORD_ERROR = "passwordNotMatching"
-export const LOGIN_USER_ERROR = "userNotFound"
+import { driverRepository } from "../repositories/driver.repo"
+import { LOGIN_USER_ERROR, LOGIN_PASSWORD_ERROR } from "@/lib/utils"
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -51,11 +51,17 @@ export const userServices = {
   },
 
   //Activate user
-  async activateUser(userId: string) {
+  async activateUser(userId: string, role?: UserRolesEnum) {
     const user = await userRepository.updateUserStatus(
       userId,
       UserStatusEnum.ACTIVE,
     )
+    if (role == UserRolesEnum.DRIVER) {
+      await driverRepository.updateStatusByUserId(
+        userId,
+        DriverStatusEnum.AVAILABLE,
+      )
+    }
     if (!user) {
       throw new Error("Failed to activate user")
     }
@@ -89,7 +95,7 @@ export const userServices = {
 
   // ? Onboarding flow - Create
   //Create Agency and Owner Account
-  async addAgencyAndOwnerAccount(data: OnboardingCreateAccountAPIRequestType) {
+  async addAgencyAndOwnerAccount(data: CreateOwnerAccountRequestType) {
     //Step1: Check if user already exists with this phone, email and role
     const existingUsers = await userRepository.readUserByPhoneRoleEmail(
       data.owner.phone,
@@ -353,8 +359,11 @@ export const userServices = {
   },
 
   //Change user name
-  async changeName(userId: string, name: string) {
+  async changeName(userId: string, name: string, role?: UserRolesEnum) {
     const updatedUser = await userRepository.updateName(userId, name)
+    if (role == UserRolesEnum.DRIVER) {
+      await driverRepository.updateNameByUserId(userId, name)
+    }
     if (!updatedUser) {
       throw new Error("Failed to update name for this user")
     }
@@ -410,20 +419,30 @@ export const userServices = {
   },
 
   //change user's phone (by owner)
-  async changeUserPhone(userId: string, newPhone: string) {
+  async changeUserPhone(
+    userId: string,
+    newPhone: string,
+    role?: UserRolesEnum,
+  ) {
     const updatedUser = await userRepository.updatePhone(userId, newPhone)
+    if (role == UserRolesEnum.DRIVER) {
+      await driverRepository.updatePhoneByUserId(userId, newPhone)
+    }
     if (!updatedUser) {
       throw new Error("Failed to update phone for this user")
     }
     return updatedUser[0]?.id
   },
 
-  //Inctivate User
-  async inactivateUser(id: string) {
+  //Inactivate User
+  async inactivateUser(id: string, role?: UserRolesEnum) {
     const user = await userRepository.updateUserStatus(
       id,
       UserStatusEnum.INACTIVE,
     )
+    if (role == UserRolesEnum.DRIVER) {
+      await driverRepository.updateStatusByUserId(id, DriverStatusEnum.INACTIVE)
+    }
     return user[0]
   },
 }

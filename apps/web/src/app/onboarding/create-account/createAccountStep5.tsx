@@ -12,7 +12,7 @@ import {
   OnboardingStepSecondaryAction,
 } from "../components/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import { OnboardingCreateAccountAPIRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { loginAction } from "@/app/auth/login/password/[userId]/loginAction"
@@ -30,7 +30,7 @@ export function CreateAccountConfirm(props: {
   //Submit actions
   const onSubmit = async () => {
     // Create Agency and Owner Account
-    const newAccountData: OnboardingCreateAccountAPIRequestType = {
+    const newAccountData: CreateOwnerAccountRequestType = {
       agency: {
         businessEmail: props.finalData.agencyEmail,
         businessPhone: props.finalData.agencyPhone,

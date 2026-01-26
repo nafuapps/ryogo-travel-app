@@ -21,13 +21,16 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserNameAction } from "./changeUserNameAction"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default function ChangeUserNameSheet({
   userId,
   userName,
+  userRole,
 }: {
   userId: string
   userName: string
+  userRole: UserRolesEnum
 }) {
   const t = useTranslations("Dashboard.UserDetails.ChangeName")
   const [isPending, startTransition] = useTransition()
@@ -48,7 +51,7 @@ export default function ChangeUserNameSheet({
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeUserNameAction(userId, data.name)) {
+      if (await changeUserNameAction(userId, data.name, userRole)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

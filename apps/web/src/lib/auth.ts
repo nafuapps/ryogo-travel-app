@@ -10,9 +10,8 @@ import {
   CheckLoginInDBType,
   userServices,
 } from "@ryogo-travel-app/api/services/user.services"
+import { LOGIN_SESSION_ERROR, LOGIN_UNKNOWN_ERROR } from "./utils"
 
-export const LOGIN_SESSION_ERROR = "sessionNotCreated"
-export const LOGIN_UNKNOWN_ERROR = "unknown"
 // Get current user from session
 export async function getCurrentUser() {
   // S1. Get session from cookie
@@ -63,3 +62,4 @@ export async function logout() {
   await userServices.checkLogoutInDB(payload.userId)
   await deleteWebSession()
 }
+export { LOGIN_SESSION_ERROR }

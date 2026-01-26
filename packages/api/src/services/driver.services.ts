@@ -2,16 +2,13 @@ import {
   DriverStatusEnum,
   InsertDriverLeaveType,
   InsertDriverType,
+  UserStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
-import {
-  NewDriverRequestType,
-  NewDriverResponseType,
-} from "../types/driver.types"
-import { userServices } from "./user.services"
 import { bookingRepository } from "../repositories/booking.repo"
+import { userRepository } from "../repositories/user.repo"
 
 export const driverServices = {
   //Get all drivers in an agency
@@ -131,15 +128,6 @@ export const driverServices = {
     return newDriver[0]
   },
 
-  //Add a new driver to an agency
-  async addNewDriver({
-    agencyId,
-    data,
-  }: NewDriverRequestType): Promise<NewDriverResponseType> {
-    const newDriver = userServices.addDriverUser({ agencyId, data })
-    return newDriver
-  },
-
   //Modify driver details
   async modifyDriver(
     id: string,
@@ -193,7 +181,12 @@ export const driverServices = {
   },
 
   //Activate Driver
-  async activateDriver(id: string) {
+  async activateDriver(id: string, userId: string) {
+    //Cannot activate if the user is inactive
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.INACTIVE) {
+      throw new Error("Cannot activate driver. User is inactive")
+    }
     const driver = await driverRepository.updateStatus(
       id,
       DriverStatusEnum.AVAILABLE,
@@ -201,7 +194,7 @@ export const driverServices = {
     return driver[0]
   },
 
-  //Inctivate Driver
+  //Inactivate Driver
   async inactivateDriver(id: string) {
     const driver = await driverRepository.updateStatus(
       id,

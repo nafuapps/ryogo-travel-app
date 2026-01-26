@@ -173,7 +173,10 @@ export default async function DriverDetailsPageComponent({
               <InactivateDriverAlertButton driverId={driver.id} />
             )}
           {driver.status == DriverStatusEnum.INACTIVE && (
-            <ActivateDriverAlertButton driverId={driver.id} />
+            <ActivateDriverAlertButton
+              driverId={driver.id}
+              userId={driver.userId}
+            />
           )}
         </div>
       </div>

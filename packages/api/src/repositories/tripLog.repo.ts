@@ -21,4 +21,25 @@ export const tripLogRepository = {
       },
     })
   },
+
+  //Get tripLogs by driver id
+  async readTripLogsByDriverId(driverId: string) {
+    return db.query.tripLogs.findMany({
+      orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+      limit: 20,
+      where: eq(tripLogs.driverId, driverId),
+      with: {
+        driver: {
+          columns: {
+            name: true,
+          },
+        },
+        vehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+      },
+    })
+  },
 }

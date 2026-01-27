@@ -115,7 +115,7 @@ export const agencies = pgTable(
   ],
 )
 export const agenciesRelations = relations(agencies, ({ many, one }) => ({
-  locations: one(locations, {
+  location: one(locations, {
     fields: [agencies.locationId],
     references: [locations.id],
   }),

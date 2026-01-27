@@ -3,7 +3,11 @@
 import { mainClassName } from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import DashboardHeader from "../../../components/extra/dashboardHeader"
-import UserUpcomingBookingsPageComponent from "./userActivity"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { redirect, RedirectType } from "next/navigation"
+import UserActivityPageComponent from "./userActivity"
+import DriverActivityPageComponent from "./driverActivity"
 
 export default async function UserActivityPage({
   params,
@@ -12,12 +16,26 @@ export default async function UserActivityPage({
 }) {
   const { id } = await params
 
-  const bookings = await userServices.findUserUpcomingBookingsById(id)
+  const user = await userServices.findUserDetailsById(id)
+  if (!user) {
+    redirect("/dashboard/users", RedirectType.replace)
+  }
+
+  if (user.userRole == UserRolesEnum.DRIVER) {
+    const activities = await driverServices.findDriverActivityByUserId(user.id)
+    return (
+      <div className={mainClassName}>
+        <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />
+        <DriverActivityPageComponent activities={activities} id={id} />
+      </div>
+    )
+  }
+  const activities = await userServices.findUserActivityById(id)
 
   return (
     <div className={mainClassName}>
-      <DashboardHeader pathName={"/dashboard/users/[id]/upcoming"} />
-      <UserUpcomingBookingsPageComponent bookings={bookings} id={id} />
+      <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />
+      <UserActivityPageComponent activities={activities} id={id} />
     </div>
   )
 }

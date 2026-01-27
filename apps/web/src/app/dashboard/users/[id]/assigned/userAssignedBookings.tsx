@@ -1,5 +1,4 @@
 import { pageClassName } from "@/components/page/pageCommons"
-import { FindUserAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import UserDetailHeaderTabs from "../userDetailHeaderTabs"
 import moment from "moment"
 import {
@@ -16,8 +15,9 @@ import {
 import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
+import { FindUserAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/user.services"
 
-export default async function UserAssignedBookingsPageComponent({
+export default async function UserAssignedPageComponent({
   bookings,
   id,
 }: {
@@ -59,7 +59,7 @@ function OngoingBookingComponent(
       <div className={gridClassName}>
         <div className={gridItemClassName}>
           <Caption>{props.bookingId}</Caption>
-          <PBold>{props.userName}</PBold>
+          <PBold>{props.customerName}</PBold>
         </div>
         <div className={gridItemClassName}>
           <Caption>{props.type.toUpperCase()}</Caption>
@@ -92,7 +92,7 @@ function AssignedBookingComponent(
       <div className={gridClassName}>
         <div className={gridItemClassName}>
           <Caption>{props.bookingId}</Caption>
-          <PBold>{props.userName}</PBold>
+          <PBold>{props.customerName}</PBold>
         </div>
         <div className={gridItemClassName}>
           <Caption>{props.type.toUpperCase()}</Caption>

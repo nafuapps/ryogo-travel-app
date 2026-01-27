@@ -11,13 +11,15 @@ import { customerRepository } from "../repositories/customer.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
+import { userRepository } from "../repositories/user.repo"
+import { driverRepository } from "../repositories/driver.repo"
 
 export const bookingServices = {
   //Bookings dashboard
   async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
     )
     //Day today
     const endDate = new Date()
@@ -26,7 +28,7 @@ export const bookingServices = {
         agencyId,
         startDate,
         endDate,
-        BookingStatusEnum.CONFIRMED
+        BookingStatusEnum.CONFIRMED,
       )
     return bookings.map((booking) => {
       return {
@@ -40,7 +42,7 @@ export const bookingServices = {
   async findBookingsRevenuePreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
     )
     //Day today
     const endDate = new Date()
@@ -50,7 +52,7 @@ export const bookingServices = {
         agencyId,
         startDate,
         endDate,
-        BookingStatusEnum.CONFIRMED
+        BookingStatusEnum.CONFIRMED,
       )
     return bookings.map((booking) => {
       return {
@@ -65,7 +67,7 @@ export const bookingServices = {
   async findBookingsUpdatedPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
     )
     //Day today
     const endDate = new Date()
@@ -73,7 +75,7 @@ export const bookingServices = {
     const bookings = await bookingRepository.readBookingsByUpdatedDateRange(
       startDate,
       endDate,
-      agencyId
+      agencyId,
     )
 
     return bookings.map((booking) => {
@@ -88,7 +90,7 @@ export const bookingServices = {
   async findInProgressBookings(agencyId: string) {
     const bookings = await bookingRepository.readBookingsByStatus(
       BookingStatusEnum.IN_PROGRESS,
-      agencyId
+      agencyId,
     )
     return bookings.map((booking) => {
       return {
@@ -115,14 +117,14 @@ export const bookingServices = {
   async findCompletedBookingsPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
     )
     //Day today
     const endDate = new Date()
     const bookings = await bookingRepository.readCompletedBookingsData(
       agencyId,
       startDate,
-      endDate
+      endDate,
     )
     return bookings.map((booking) => {
       return {
@@ -147,7 +149,7 @@ export const bookingServices = {
     const bookings = await bookingRepository.readUpcomingBookingsData(
       agencyId,
       startDate,
-      endDate
+      endDate,
     )
     return bookings.map((booking) => {
       return {
@@ -172,7 +174,7 @@ export const bookingServices = {
     const bookings = await bookingRepository.readBookingsScheduleData(
       agencyId,
       startDate,
-      endDate
+      endDate,
     )
     return bookings.map((booking) => {
       return {
@@ -191,14 +193,14 @@ export const bookingServices = {
 
   async findLeadBookingsPreviousDays(agencyId: string, days: number = 1) {
     const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
     )
     //Day today
     const endDate = new Date()
     const bookings = await bookingRepository.readLeadBookingsData(
       agencyId,
       startDate,
-      endDate
+      endDate,
     )
     return bookings.map((booking) => {
       return {
@@ -247,17 +249,15 @@ export const bookingServices = {
 
   //Get booking expenses by id
   async findBookingExpensesById(bookingId: string) {
-    const bookingExpenses = await expenseRepository.readExpensesByBookingId(
-      bookingId
-    )
+    const bookingExpenses =
+      await expenseRepository.readExpensesByBookingId(bookingId)
     return bookingExpenses
   },
 
   //Get booking trip logs by id
   async findBookingTripLogsById(bookingId: string) {
-    const bookingTripLogs = await tripLogRepository.readTripLogsByBookingId(
-      bookingId
-    )
+    const bookingTripLogs =
+      await tripLogRepository.readTripLogsByBookingId(bookingId)
     return bookingTripLogs
   },
 
@@ -272,7 +272,7 @@ export const bookingServices = {
         data.newCustomerLocationCity!,
         data.newCustomerLocationState!,
         data.agencyId,
-        data.userId
+        data.userId,
       )
       customerId = newCustomer.id
     }
@@ -285,7 +285,7 @@ export const bookingServices = {
     if (!sourceId) {
       const source = await locationRepository.readLocationByCityState(
         data.tripSourceLocationCity,
-        data.tripSourceLocationState
+        data.tripSourceLocationState,
       )
       sourceId = source?.id
     }
@@ -293,7 +293,7 @@ export const bookingServices = {
     if (!destinationId) {
       const destination = await locationRepository.readLocationByCityState(
         data.tripDestinationLocationCity,
-        data.tripDestinationLocationState
+        data.tripDestinationLocationState,
       )
       destinationId = destination?.id
     }
@@ -308,7 +308,7 @@ export const bookingServices = {
       const newRoute = await routeServices.addNewRouteWithDistance(
         sourceId,
         destinationId,
-        distance
+        distance,
       )
       if (!newRoute) {
         throw new Error("Failed to create route")
@@ -365,7 +365,7 @@ export const bookingServices = {
     pickupAddress?: string,
     dropAddress?: string,
     updateCustomerAddress?: boolean,
-    customerId?: string
+    customerId?: string,
   ) {
     if (updateCustomerAddress && pickupAddress && customerId) {
       await customerRepository.updateCustomerAddress(customerId, pickupAddress)
@@ -374,7 +374,7 @@ export const bookingServices = {
       bookingId,
       startTime,
       pickupAddress,
-      dropAddress
+      dropAddress,
     )
     return updatedBooking
   },
@@ -389,7 +389,7 @@ export const bookingServices = {
   async assignDriverToBooking(bookingId: string, driverId: string) {
     const updatedBooking = await bookingRepository.updateAssignedDriver(
       bookingId,
-      driverId
+      driverId,
     )
     return updatedBooking[0]?.assignedDriverId
   },
@@ -398,7 +398,7 @@ export const bookingServices = {
   async assignVehicleToBooking(bookingId: string, vehicleId: string) {
     const updatedBooking = await bookingRepository.updateAssignedVehicle(
       bookingId,
-      vehicleId
+      vehicleId,
     )
     return updatedBooking[0]?.assignedVehicleId
   },
@@ -407,7 +407,7 @@ export const bookingServices = {
   async assignUserToBooking(bookingId: string, userId: string) {
     const updatedBooking = await bookingRepository.updateAssignedUser(
       bookingId,
-      userId
+      userId,
     )
     return updatedBooking[0]?.assignedUserId
   },

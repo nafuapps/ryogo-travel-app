@@ -13,7 +13,7 @@ export const transactionRepository = {
   async readTransactionsByCreatedRange(
     agencyId: string,
     startDate: Date,
-    endDate: Date
+    endDate: Date,
   ) {
     return db
       .select()
@@ -22,14 +22,16 @@ export const transactionRepository = {
         and(
           gte(transactions.createdAt, startDate),
           lte(transactions.createdAt, endDate),
-          eq(transactions.agencyId, agencyId)
-        )
+          eq(transactions.agencyId, agencyId),
+        ),
       )
   },
 
   //Get transactions by booking id
   async readTransactionsByBookingId(bookingId: string) {
     return db.query.transactions.findMany({
+      orderBy: (transactions, { desc }) => [desc(transactions.createdAt)],
+      limit: 20,
       where: eq(transactions.bookingId, bookingId),
       with: {
         addedByUser: {
@@ -47,6 +49,13 @@ export const transactionRepository = {
   async readTransactionById(txnId: string) {
     return db.query.transactions.findFirst({
       where: eq(transactions.id, txnId),
+    })
+  },
+
+  //Get transactions by user id
+  async readTransactionsByAddedUserId(userId: string) {
+    return db.query.transactions.findMany({
+      where: eq(transactions.addedByUserId, userId),
     })
   },
 
@@ -72,7 +81,7 @@ export const transactionRepository = {
     mode: TransactionModesEnum,
     otherParty: TransactionsPartiesEnum,
     remarks?: string,
-    transactionPhotoUrl?: string
+    transactionPhotoUrl?: string,
   ) {
     return db
       .update(transactions)

@@ -23,6 +23,15 @@ export const expenseRepository = {
     })
   },
 
+  //Get expenses by user id
+  async readExpensesByAddedUserId(userId: string) {
+    return db.query.expenses.findMany({
+      orderBy: (expenses, { desc }) => [desc(expenses.createdAt)],
+      limit: 20,
+      where: eq(expenses.addedByUserId, userId),
+    })
+  },
+
   //Get expense by expense id
   async readExpenseById(expenseId: string) {
     return db.query.expenses.findFirst({
@@ -50,7 +59,7 @@ export const expenseRepository = {
     amount: number,
     type: ExpenseTypesEnum,
     remarks?: string,
-    expensePhotoUrl?: string
+    expensePhotoUrl?: string,
   ) {
     return db
       .update(expenses)

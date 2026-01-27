@@ -1,5 +1,6 @@
 "use server"
 
+import { updateSessionUserStatus } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export async function changeNewUserPasswordAction(
@@ -13,5 +14,11 @@ export async function changeNewUserPasswordAction(
     newPassword,
   )
   if (!user) return false
+
+  //Update user status in cookies
+  const updatedUser = await userServices.activateUser(userId)
+  if (!updatedUser) return false
+
+  await updateSessionUserStatus(updatedUser.status)
   return true
 }

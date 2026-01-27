@@ -9,6 +9,8 @@ import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { userRepository } from "../repositories/user.repo"
+import { expenseRepository } from "../repositories/expense.repo"
+import { tripLogRepository } from "../repositories/tripLog.repo"
 
 export const driverServices = {
   //Get all drivers in an agency
@@ -88,6 +90,30 @@ export const driverServices = {
     })
   },
 
+  //Get driver by user id
+  async findDriverByUserId(userId: string) {
+    const driver = await driverRepository.readDriverByUserId(userId)
+    return driver
+  },
+
+  //Get driver's activity
+  async findDriverActivityByUserId(userId: string) {
+    //Get expenses
+    const expenses = await expenseRepository.readExpensesByAddedUserId(userId)
+
+    //Get trip logs
+    const driver = await driverRepository.readDriverByUserId(userId)
+    if (!driver) {
+      throw new Error("Driver with same userId already exists ")
+    }
+    const tripLogs = await tripLogRepository.readTripLogsByDriverId(driver!.id)
+
+    return {
+      expenses,
+      tripLogs,
+    }
+  },
+
   //Get all driver leaves by driverId
   async findAllDriverLeavesByDriverId(id: string) {
     const leaves = await driverLeaveRepository.readDriverLeavesByDriverId(id)
@@ -105,7 +131,7 @@ export const driverServices = {
     const existingDriverUser = await driverRepository.readDriverByUserId(
       data.userId,
     )
-    if (existingDriverUser.length > 0) {
+    if (existingDriverUser) {
       throw new Error("Driver with same userId already exists ")
     }
 
@@ -182,7 +208,7 @@ export const driverServices = {
 
   //Activate Driver
   async activateDriver(id: string, userId: string) {
-    //Cannot activate if the user is inactive
+    //Cannot activate if the corresponding user is inactive
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.INACTIVE) {
       throw new Error("Cannot activate driver. User is inactive")
@@ -231,6 +257,11 @@ export type FindDriverLeaveByIdType = Awaited<
 export type FindDriverAssignedBookingsByIdType = Awaited<
   ReturnType<typeof driverServices.findDriverAssignedBookingsById>
 >
+
 export type FindDriverCompletedBookingsByIdType = Awaited<
   ReturnType<typeof driverServices.findDriverCompletedBookingsById>
+>
+
+export type FindDriverActivityByUserIdType = Awaited<
+  ReturnType<typeof driverServices.findDriverActivityByUserId>
 >

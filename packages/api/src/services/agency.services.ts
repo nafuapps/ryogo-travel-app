@@ -14,22 +14,25 @@ export const agencyServices = {
     return agencies
   },
 
+  //Find all agencies by phone
+  async findAgenciesByPhone(phone: string) {
+    const agencies = agencyRepository.readAgenciesByPhone(phone)
+    return agencies
+  },
+
+  //Find all agencies by email
+  async findAgenciesByEmail(email: string) {
+    const agencies = agencyRepository.readAgenciesByEmail(email)
+    return agencies
+  },
+
   //Find agency by id
   async findAgencyById(id: string) {
     const agency = await agencyRepository.readAgencyById(id)
     if (!agency) {
       throw new Error("Agency not found")
     }
-    return {
-      id: agency.id,
-      status: agency.status,
-      location: agency.locations,
-      name: agency.businessName,
-      businessPhone: agency.businessPhone,
-      businessEmail: agency.businessEmail,
-      defaultCommissionRate: agency.defaultCommissionRate,
-      subscriptionExpiresOn: agency.subscriptionExpiresOn,
-    }
+    return agency
   },
 
   //Get agency data (vehicles, drivers, agents)
@@ -100,6 +103,41 @@ export const agencyServices = {
     return newAgency[0]
   },
 
+  //Modify agency details
+  async modifyAgency(
+    agencyId: string,
+    businessName?: string,
+    businessAddress?: string,
+    defaultCommissionRate?: number,
+    agencyState?: string,
+    agencyCity?: string,
+    logoUrl?: string,
+  ) {
+    //Step1: Get location id from city, state (if provided)
+    let locationId: string | undefined = undefined
+    if (agencyCity && agencyState) {
+      const location = await locationRepository.readLocationByCityState(
+        agencyCity,
+        agencyState,
+      )
+      if (!location) {
+        throw new Error("Location not found")
+      }
+      locationId = location.id
+    }
+
+    //Step2: Update agency details
+    const updatedAgency = await agencyRepository.updateAgencyDetails(
+      agencyId,
+      businessName,
+      businessAddress,
+      defaultCommissionRate,
+      locationId,
+      logoUrl,
+    )
+    return updatedAgency[0]
+  },
+
   //Activate an agency
   async activateAgency(id: string) {
     const agency = await agencyRepository.updateAgencyStatus(
@@ -124,6 +162,24 @@ export const agencyServices = {
     return updatedAgency[0]?.id
   },
 
+  //Change agency phone
+  async changeAgencyPhone(agencyId: string, newPhone: string) {
+    const updatedAgency = await agencyRepository.updateAgencyPhone(
+      agencyId,
+      newPhone,
+    )
+    return updatedAgency[0]
+  },
+
+  //Change agency email
+  async changeAgencyEmail(agencyId: string, newEmail: string) {
+    const updatedAgency = await agencyRepository.updateAgencyEmail(
+      agencyId,
+      newEmail,
+    )
+    return updatedAgency[0]
+  },
+
   //Increase subscription of an agency by N days
   async increaseSubscriptionExpiry(id: string, days: number) {
     const expiryTime = new Date(
@@ -135,4 +191,15 @@ export const agencyServices = {
 
 export type FindAllAgenciesType = Awaited<
   ReturnType<typeof agencyServices.findAllAgencies>
+>
+
+export type FindAgencyByIdType = Awaited<
+  ReturnType<typeof agencyServices.findAgencyById>
+>
+
+export type FindAgenciesByPhoneType = Awaited<
+  ReturnType<typeof agencyServices.findAgenciesByPhone>
+>
+export type FindAgenciesByEmailType = Awaited<
+  ReturnType<typeof agencyServices.findAgenciesByEmail>
 >

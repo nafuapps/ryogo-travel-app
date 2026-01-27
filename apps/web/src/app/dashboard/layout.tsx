@@ -21,6 +21,12 @@ export default async function DashboardLayout({
     redirect("/auth/login", RedirectType.replace)
   }
 
+  //Driver
+  if (currentUser.userRole == UserRolesEnum.DRIVER) {
+    //Go to rider page
+    redirect("/rider", RedirectType.replace)
+  }
+
   //New user
   if (currentUser.status == UserStatusEnum.NEW) {
     if (currentUser.userRole == UserRolesEnum.OWNER) {
@@ -31,13 +37,7 @@ export default async function DashboardLayout({
     redirect("/onboarding/change-password", RedirectType.replace)
   }
 
-  //Old user
-  if (currentUser.userRole == UserRolesEnum.DRIVER) {
-    //If old driver, go to rider page
-    redirect("/rider", RedirectType.replace)
-  }
-
-  //Only old owner/agent can come to dashboard
+  //Only non-new owner/agent can come to dashboard
   return (
     <SidebarProvider
       defaultOpen={defaultOpen}

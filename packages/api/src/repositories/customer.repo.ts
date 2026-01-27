@@ -52,6 +52,23 @@ export const customerRepository = {
     })
   },
 
+  //Get customers by user id
+  async readCustomersByAddedUserId(userId: string) {
+    return db.query.customers.findMany({
+      orderBy: (customers, { desc }) => [desc(customers.createdAt)],
+      limit: 20,
+      where: eq(customers.addedByUserId, userId),
+      with: {
+        location: {
+          columns: {
+            city: true,
+            state: true,
+          },
+        },
+      },
+    })
+  },
+
   async createCustomer(data: InsertCustomerType) {
     return await db.insert(customers).values(data).returning()
   },

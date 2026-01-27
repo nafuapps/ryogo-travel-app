@@ -90,6 +90,10 @@ export function Caption({ children }: { children: React.ReactNode }) {
   return <span className="text-xs lg:text-sm text-slate-700">{children}</span>
 }
 
+export function CaptionLight({ children }: { children: React.ReactNode }) {
+  return <span className="text-xs lg:text-sm text-slate-400">{children}</span>
+}
+
 export function CaptionRed({ children }: { children: React.ReactNode }) {
   return <span className="text-xs lg:text-sm text-red-400">{children}</span>
 }

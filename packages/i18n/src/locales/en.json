@@ -683,6 +683,8 @@
         "/dashboard": "Home",
         "/dashboard/account": "Account",
         "/dashboard/account/agency": "Agency Details",
+        "/dashboard/account/agency/change-email": "Change Agency Email",
+        "/dashboard/account/agency/change-phone": "Change Agency Phone",
         "/dashboard/account/agency/modify": "Modify Agency",
         "/dashboard/account/help": "Help",
         "/dashboard/account/change-password": "Change Password",
@@ -726,6 +728,7 @@
         "/dashboard/users/[id]/change-email": "Change User Email",
         "/dashboard/users/[id]/change-phone": "Change User Phone",
         "/dashboard/users/[id]/assigned": "User Assigned Bookings",
+        "/dashboard/users/[id]/completed": "User Completed Bookings",
         "/dashboard/users/[id]/activity": "User Activity ",
         "/dashboard/vehicles": "Vehicles",
         "/dashboard/vehicles/new": "New Vehicle",
@@ -2325,12 +2328,96 @@
       "Loading": "Loading..",
       "SecondaryCTA": "Back"
     },
-    "AccountAgency": {},
-    "AccountChangePassword": {},
+    "AccountAgency": {
+      "BasicInfo": "Basic info",
+      "Photo":"View logo",
+      "SubscriptionInfo": "Subscription info",
+      "ValidTill":"Expires on: ",
+      "EditDetails":"Edit Basic Details",
+      "ChangeEmail": {
+        "Title": "Change Email",
+        "Field1": {
+          "Title": "Enter new email",
+          "Placeholder": "awesometours@gmail.com",
+          "Description": "Provide agency's new email to be used for communication",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters",
+          "Error3": "New email cannot be the same as previous email",
+          "Error4": "Another agency already has this email.. try another email address"
+        },
+        "PrimaryCTA": "Update Email",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Email updated successfully!",
+        "Error": "Cannot update email.. please try again later"
+      },
+      "ChangePhone": {
+        "Title": "Change Phone",
+        "Field1": {
+          "Title": "Enter new phone",
+          "Placeholder": "9876543210",
+          "Description": "Provide agency's new phone number for communication",
+          "Error1": "Phone number must be 10 digits",
+          "Error2": "New phone cannot be the same as previous phone",
+          "Error3": "Another agency has already registered this phone.. try another phone number"
+        },
+        "PrimaryCTA": "Update Phone",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Phone updated successfully!",
+        "Error": "Cannot update phone.. please try again later"
+      }
+    },
+    "ModifyAgency": {
+      "Field1": {
+          "Title": "Enter agency name",
+          "Placeholder": "Raj Tour & Travels",
+          "Description": "Provide your agency's business name",
+          "Error1": "Name must be atleast 5 characters",
+          "Error2": "Name must be less than 30 characters"
+        },
+         "Field2": {
+          "Title": "Enter agency address",
+          "Placeholder": "Address Line 1, Street, City, State, Pincode",
+          "Error1": "Address must be atleast 20 characters",
+          "Error2": "Address must be less than 300 characters"
+        },
+        "Field3": {
+          "Title": "Agency logo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload a logo associated with your business",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "Field4": {
+          "Title": "Commission rate (in %)",
+          "Placeholder": "15",
+          "Description": "The extra commission that will be added to every booking quote. (Don't worry, you can leave it blank and change it later. Default 15% will be set)",
+          "Error1": "Rate must be a number",
+          "Error2": "Rate must be atleast 1%",
+          "Error3": "Rate must be less than 100%",
+          "Error4": "Rate cannot be in decimals",
+          "Error5": "Rate must be a positive number"
+        },
+        "Field5": {
+          "Title": "Select state",
+          "Error1": "Providing state is mandatory"
+        },
+        "Field6": {
+          "Title": "Select city",
+          "Error1": "Providing city is mandatory"
+        },
+        "PrimaryCTA": "Save changes",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Agency details edited successfully!",
+        "Error": "Cannot change agency details.. please try again later."
+    },
     "AccountHelp": {},
     "UserDetailsHeaderTabs": {
       "Details": "Details",
       "Assigned": "Assigned",
+      "Completed": "Completed",
       "Activity": "Activity"
     },
     "Users": {
@@ -2443,9 +2530,23 @@
       "Success": "Agent added successfully!",
       "Error": "Cannot add agent.. Try again later!"
     },
-    "ModifyUser": {},
-    "UserAssignedBookings": {},
-    "UserActivity": {},
+    "UserAssignedBookings": {
+      "NoBookings": "No bookings assigned to this user."
+    },
+    "UserCompletedBookings": {
+      "NoBookings": "This user has not completed any bookings yet."
+    },
+    "UserActivity": {
+      "Bookings": "Bookings",
+      "Transactions": "Transactions",
+      "Expenses": "Expenses",
+      "Customers": "Customers",
+      "VehicleRepairs": "Vehicle Repairs",
+      "DriverLeaves": "Driver Leaves",
+      "TripLogs": "Trip Logs",
+      "Completed": "COMPLETED",
+      "Pending": "PENDING"
+    },
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",
@@ -2618,7 +2719,7 @@
       }
     },
     "Home": {
-      "Title": "Home"
+      "Upcoming":"Upcoming bookings"
     },
     "MyBookings": {
       "Title": "Bookings"

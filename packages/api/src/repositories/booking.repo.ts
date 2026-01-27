@@ -205,6 +205,57 @@ export const bookingRepository = {
     })
   },
 
+  //Read Completed bookings by user id
+  async readCompletedBookingsByUserId(userId: string) {
+    return await db.query.bookings.findMany({
+      limit: 100,
+      where: and(
+        eq(bookings.assignedUserId, userId),
+        eq(bookings.status, BookingStatusEnum.COMPLETED),
+      ),
+      columns: {
+        status: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+        tripLogs: {
+          where: eq(tripLogs.type, TripLogTypesEnum.END_TRIP),
+          columns: {
+            createdAt: true,
+          },
+          limit: 1,
+        },
+      },
+    })
+  },
+
   //Read Completed bookings by vehicle id
   async readCompletedBookingsByVehicleId(vehicleId: string) {
     return await db.query.bookings.findMany({
@@ -467,6 +518,61 @@ export const bookingRepository = {
     })
   },
 
+  //Read Assigned bookings by user id
+  async readAssignedBookingsByUserId(userId: string) {
+    return await db.query.bookings.findMany({
+      where: and(
+        eq(bookings.assignedUserId, userId),
+        inArray(bookings.status, [
+          BookingStatusEnum.CONFIRMED,
+          BookingStatusEnum.IN_PROGRESS,
+        ]),
+      ),
+      columns: {
+        startDate: true,
+        startTime: true,
+        endDate: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+        tripLogs: {
+          orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+          columns: {
+            type: true,
+          },
+          limit: 1,
+        },
+      },
+    })
+  },
+
   //Read Upcoming bookings by customer id
   async readUpcomingBookingsByCustomerId(customerId: string) {
     return await db.query.bookings.findMany({
@@ -615,6 +721,41 @@ export const bookingRepository = {
         assignedUser: {
           columns: {
             name: true,
+          },
+        },
+      },
+    })
+  },
+
+  async readBookingsByBookedUserId(userId: string) {
+    return await db.query.bookings.findMany({
+      orderBy: (bookings, { desc }) => [desc(bookings.createdAt)],
+      limit: 20,
+      where: eq(bookings.bookedByUserId, userId),
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
           },
         },
       },

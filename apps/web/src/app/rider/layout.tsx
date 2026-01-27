@@ -22,22 +22,19 @@ export default async function RiderLayout({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  //New user
-  if (currentUser?.status == UserStatusEnum.NEW) {
-    if (currentUser?.userRole == UserRolesEnum.OWNER) {
-      //If owner, go to vehicle onboarding
-      redirect("/onboarding/add-vehicle", RedirectType.replace)
-    }
-    //Else, go to change-password
-    redirect("/onboarding/change-password", RedirectType.replace)
-  }
-
-  if (currentUser?.userRole != UserRolesEnum.DRIVER) {
+  //If not driver, go to dashboard
+  if (currentUser.userRole != UserRolesEnum.DRIVER) {
     //If not driver, go to dashboard
     redirect("/dashboard", RedirectType.replace)
   }
 
-  //Only old driver can come to rider pages
+  //New driver
+  if (currentUser.status == UserStatusEnum.NEW) {
+    //Go to change-password
+    redirect("/onboarding/change-password", RedirectType.replace)
+  }
+
+  //Only non-new driver can come to rider pages
   return (
     <SidebarProvider
       defaultOpen={defaultOpen}
@@ -52,10 +49,7 @@ export default async function RiderLayout({
       <main id="RiderLayout" className="flex flex-row w-screen h-dvh">
         <RiderSidebar />
         <section id="RiderMainSection" className="flex flex-row w-full h-dvh">
-          <div className="flex flex-col w-full h-dvh bg-slate-50 p-4 lg:p-5">
-            <RiderHeader />
-            {children}
-          </div>
+          {children}
         </section>
       </main>
     </SidebarProvider>

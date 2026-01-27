@@ -5,7 +5,10 @@ import {
   PBold,
   PGrey,
 } from "@/components/typography"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import {
+  bookingServices,
+  FindOngoingTripsType,
+} from "@ryogo-travel-app/api/services/booking.services"
 import { LucideRoute } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -39,16 +42,7 @@ export default async function OngoingBookingsComponent({
   )
 }
 
-type OngoingBookingType = {
-  type: string
-  route: string
-  vehicle: string | undefined
-  driver: string | undefined
-  customerName: string
-  bookingId: string
-  status: string | undefined
-}
-function OngoingComponent(props: OngoingBookingType) {
+function OngoingComponent(props: FindOngoingTripsType[number]) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <div className={gridClassName}>

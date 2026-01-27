@@ -15,6 +15,12 @@ import {
 } from "../types/user.types"
 import { driverRepository } from "../repositories/driver.repo"
 import { LOGIN_USER_ERROR, LOGIN_PASSWORD_ERROR } from "@/lib/utils"
+import { bookingRepository } from "../repositories/booking.repo"
+import { expenseRepository } from "../repositories/expense.repo"
+import { customerRepository } from "../repositories/customer.repo"
+import { driverLeaveRepository } from "../repositories/driverLeave.repo"
+import { transactionRepository } from "../repositories/transaction.repo"
+import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -50,25 +56,6 @@ export const userServices = {
     return users
   },
 
-  //Activate user
-  async activateUser(userId: string, role?: UserRolesEnum) {
-    const user = await userRepository.updateUserStatus(
-      userId,
-      UserStatusEnum.ACTIVE,
-    )
-    if (role == UserRolesEnum.DRIVER) {
-      await driverRepository.updateStatusByUserId(
-        userId,
-        DriverStatusEnum.AVAILABLE,
-      )
-    }
-    if (!user) {
-      throw new Error("Failed to activate user")
-    }
-    return user[0]!
-  },
-
-  // ? Login flow - Read
   //Find login users by phone
   async findUsersByPhone(phone: string) {
     const users = await userRepository.readUsersWithPhone(phone)
@@ -93,7 +80,78 @@ export const userServices = {
     return users
   },
 
-  // ? Onboarding flow - Create
+  //Get user's assigned bookings
+  async findUserAssignedBookingsById(id: string) {
+    const bookings = await bookingRepository.readAssignedBookingsByUserId(id)
+
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        startDate: booking.startDate,
+        startTime: booking.startTime,
+        endDate: booking.endDate,
+        status: booking.tripLogs[0]?.type.toString(),
+      }
+    })
+  },
+
+  //Get user's completed bookings
+  async findUserCompletedBookingsById(id: string) {
+    const bookings = await bookingRepository.readCompletedBookingsByUserId(id)
+
+    return bookings.map((booking) => {
+      return {
+        status: booking.status.toString(),
+        updatedAt: booking.updatedAt,
+        type: booking.type.toString(),
+        route: booking.source?.city + " - " + booking.destination?.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        createdAt: booking.tripLogs[0]?.createdAt,
+      }
+    })
+  },
+
+  //Get user's activity
+  async findUserActivityById(id: string) {
+    //Get added bookings
+    const bookings = await bookingRepository.readBookingsByBookedUserId(id)
+
+    //Get added transactions
+    const transactions =
+      await transactionRepository.readTransactionsByAddedUserId(id)
+
+    //Get added expenses
+    const expenses = await expenseRepository.readExpensesByAddedUserId(id)
+
+    //Get added customers
+    const customers = await customerRepository.readCustomersByAddedUserId(id)
+
+    //Get added driver leaves
+    const driverLeaves =
+      await driverLeaveRepository.readDriverLeavesByAddedUserId(id)
+
+    //Get added vehicle repairs
+    const vehicleRepairs =
+      await vehicleRepairRepository.readVehicleRepairsByAddedUserId(id)
+
+    return {
+      bookings,
+      transactions,
+      expenses,
+      customers,
+      driverLeaves,
+      vehicleRepairs,
+    }
+  },
+
   //Create Agency and Owner Account
   async addAgencyAndOwnerAccount(data: CreateOwnerAccountRequestType) {
     //Step1: Check if user already exists with this phone, email and role
@@ -256,7 +314,6 @@ export const userServices = {
     return { id: newDriver.id, userId: newDriver.userId }
   },
 
-  // ?Login flow Create
   //Validate user login with userId and password
   async checkLoginInDB(userId: string, password: string) {
     //Step1: Find user with userID
@@ -287,7 +344,7 @@ export const userServices = {
     await userRepository.updateLastLogout(userId, new Date())
   },
 
-  //Reset user password
+  //Reset user password (by owner)
   async resetUserPassword(userId: string) {
     //Step1: get email
     const emailFound = await userRepository.readUserById(userId)
@@ -316,7 +373,7 @@ export const userServices = {
     return newUserData[0]
   },
 
-  // ? Change password (by user)
+  // Change password (by user)
   async changePassword(
     userId: string,
     oldPassword: string,
@@ -337,7 +394,7 @@ export const userServices = {
 
     //Step3: Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
-    const newUserData = await userRepository.updateUserStatusAndPassword(
+    const newUserData = await userRepository.updatePassword(
       userId,
       passwordHash,
     )
@@ -346,7 +403,7 @@ export const userServices = {
     }
 
     //Return userId as reset confirmation
-    return { id: newUserData[0]!.id }
+    return newUserData[0]
   },
 
   //Update user photo url
@@ -434,6 +491,24 @@ export const userServices = {
     return updatedUser[0]?.id
   },
 
+  //Activate user
+  async activateUser(userId: string, role?: UserRolesEnum) {
+    const user = await userRepository.updateUserStatus(
+      userId,
+      UserStatusEnum.ACTIVE,
+    )
+    if (role == UserRolesEnum.DRIVER) {
+      await driverRepository.updateStatusByUserId(
+        userId,
+        DriverStatusEnum.AVAILABLE,
+      )
+    }
+    if (!user) {
+      throw new Error("Failed to activate user")
+    }
+    return user[0]!
+  },
+
   //Inactivate User
   async inactivateUser(id: string, role?: UserRolesEnum) {
     const user = await userRepository.updateUserStatus(
@@ -469,6 +544,18 @@ export type FindUserAccountsByPhoneRoleType = Awaited<
 
 export type FindUserDetailsByIdType = Awaited<
   ReturnType<typeof userServices.findUserDetailsById>
+>
+
+export type FindUserAssignedBookingsByIdType = Awaited<
+  ReturnType<typeof userServices.findUserAssignedBookingsById>
+>
+
+export type FindUserCompletedBookingsByIdType = Awaited<
+  ReturnType<typeof userServices.findUserCompletedBookingsById>
+>
+
+export type FindUserActivityByIdType = Awaited<
+  ReturnType<typeof userServices.findUserActivityById>
 >
 
 export type CheckLoginInDBType = Awaited<

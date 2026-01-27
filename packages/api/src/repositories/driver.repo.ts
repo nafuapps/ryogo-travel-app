@@ -134,7 +134,9 @@ export const driverRepository = {
 
   //Get driver by userId
   async readDriverByUserId(userId: string) {
-    return await db.select().from(drivers).where(eq(drivers.userId, userId))
+    return await db.query.drivers.findFirst({
+      where: eq(drivers.userId, userId),
+    })
   },
 
   //Get driver schedule data

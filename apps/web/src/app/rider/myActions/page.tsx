@@ -1,8 +1,5 @@
-//MyVehicle home page
-
-import { getTranslations } from "next-intl/server";
+//Rider My actions home page
 
 export default async function MyActionsPage() {
-  const t = await getTranslations("Rider.MyActions");
-  return <h1>{t("Title")}</h1>;
+  return <div></div>
 }

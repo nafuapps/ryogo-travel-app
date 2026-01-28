@@ -9,6 +9,7 @@ import {
 import { Caption, PBold, SmallBold } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
+import { UrlObject } from "url"
 
 export default async function UserActivityPageComponent({
   activities,
@@ -132,7 +133,9 @@ function TransactionActivityComponent(
 ) {
   return (
     <Link
-      href={`/dashboard/bookings/${transaction.bookingId}/transactions/${transaction.id}`}
+      href={
+        `/dashboard/bookings/${transaction.bookingId}/transactions` as unknown as UrlObject
+      }
       className="w-full"
     >
       <div className={gridClassName}>
@@ -162,7 +165,9 @@ function ExpenseActivityComponent(
 ) {
   return (
     <Link
-      href={`/dashboard/bookings/${expense.bookingId}/expenses/${expense.id}`}
+      href={
+        `/dashboard/bookings/${expense.bookingId}/expenses` as unknown as UrlObject
+      }
       className="w-full"
     >
       <div className={gridClassName}>

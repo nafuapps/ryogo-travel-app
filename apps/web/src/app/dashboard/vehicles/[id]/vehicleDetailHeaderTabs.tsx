@@ -18,7 +18,7 @@ export default async function VehicleDetailHeaderTabs(
     Assigned: `/dashboard/vehicles/${props.id}/assigned`,
     Completed: `/dashboard/vehicles/${props.id}/completed`,
     Repairs: `/dashboard/vehicles/${props.id}/repairs`,
-  }
+  } as const
 
   return (
     <div className="flex rounded bg-slate-300 flex-row gap-1 lg:gap-1.5 p-1 lg:p-1.5 self-center my-2 lg:my-3">

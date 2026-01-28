@@ -18,7 +18,7 @@ export default async function UserDetailHeaderTabs(
     Assigned: `/dashboard/users/${props.id}/assigned`,
     Completed: `/dashboard/users/${props.id}/completed`,
     Activity: `/dashboard/users/${props.id}/activity`,
-  }
+  } as const
 
   return (
     <div className="flex rounded bg-slate-300 flex-row gap-1 lg:gap-1.5 p-1 lg:p-1.5 self-center my-2 lg:my-3">

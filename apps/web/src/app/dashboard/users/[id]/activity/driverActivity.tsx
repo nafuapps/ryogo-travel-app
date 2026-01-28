@@ -9,6 +9,7 @@ import { Caption, PBold, SmallBold } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { FindDriverActivityByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
+import { UrlObject } from "url"
 
 export default async function DriverActivityPageComponent({
   activities,
@@ -50,7 +51,9 @@ function ExpenseActivityComponent(
 ) {
   return (
     <Link
-      href={`/dashboard/bookings/${expense.bookingId}/expenses/${expense.id}`}
+      href={
+        `/dashboard/bookings/${expense.bookingId}/expenses` as unknown as UrlObject
+      }
       className="w-full"
     >
       <div className={gridClassName}>
@@ -78,7 +81,9 @@ function TripLogActivityComponent(
 ) {
   return (
     <Link
-      href={`/dashboard/bookings/${tripLog.bookingId}/tripLogs`}
+      href={
+        `/dashboard/bookings/${tripLog.bookingId}/tripLogs` as unknown as UrlObject
+      }
       className="w-full"
     >
       <div className={gridClassName}>

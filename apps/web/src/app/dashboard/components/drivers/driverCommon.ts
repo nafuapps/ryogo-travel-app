@@ -1,11 +1,4 @@
-import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  LucideBus,
-  LucideCar,
-  LucideMotorbike,
-  LucideTractor,
-  LucideTruck,
-} from "lucide-react"
+import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export const getDriverStatusColor = (status: DriverStatusEnum) => {
   if (status == DriverStatusEnum.AVAILABLE) {
@@ -18,24 +11,4 @@ export const getDriverStatusColor = (status: DriverStatusEnum) => {
     return "bg-red-200"
   }
   return "bg-slate-200"
-}
-
-export function GetVehicleIcon({
-  vehicleType,
-}: {
-  vehicleType: VehicleTypesEnum
-}) {
-  if (vehicleType == VehicleTypesEnum.TRUCK) {
-    return LucideTruck
-  }
-  if (vehicleType == VehicleTypesEnum.BUS) {
-    return LucideBus
-  }
-  if (vehicleType == VehicleTypesEnum.CAR) {
-    return LucideCar
-  }
-  if (vehicleType == VehicleTypesEnum.BIKE) {
-    return LucideMotorbike
-  }
-  return LucideTractor
 }

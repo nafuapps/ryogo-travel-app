@@ -119,6 +119,20 @@ export const userServices = {
     })
   },
 
+  //Get assigned user for a booking by driverId
+  async findAssignedUserByDriverId(driverId: string) {
+    const ongoingBooking =
+      await bookingRepository.readOngoingBookingByDriverId(driverId)
+
+    if (!ongoingBooking) {
+      return
+    }
+    const assignedUser = userRepository.readUserById(
+      ongoingBooking.assignedUserId,
+    )
+    return assignedUser
+  },
+
   //Get user's activity
   async findUserActivityById(id: string) {
     //Get added bookings
@@ -416,7 +430,7 @@ export const userServices = {
   },
 
   //Change user name
-  async changeName(userId: string, name: string, role?: UserRolesEnum) {
+  async changeName(userId: string, name: string, role: UserRolesEnum) {
     const updatedUser = await userRepository.updateName(userId, name)
     if (role == UserRolesEnum.DRIVER) {
       await driverRepository.updateNameByUserId(userId, name)
@@ -560,4 +574,8 @@ export type FindUserActivityByIdType = Awaited<
 
 export type CheckLoginInDBType = Awaited<
   ReturnType<typeof userServices.checkLoginInDB>
+>
+
+export type FindAssignedUserByDriverIdType = Awaited<
+  ReturnType<typeof userServices.findAssignedUserByDriverId>
 >

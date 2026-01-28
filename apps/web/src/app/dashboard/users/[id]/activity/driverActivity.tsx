@@ -1,10 +1,10 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import UserDetailHeaderTabs from "../userDetailHeaderTabs"
 import moment from "moment"
 import {
   gridClassName,
   gridItemClassName,
-} from "@/app/dashboard/components/pageCommons"
+  pageClassName,
+} from "@/components/page/pageCommons"
 import { Caption, PBold, SmallBold } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"

@@ -1,7 +1,6 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "../driverDetailHeaderTabs"
-import { gridItemClassName } from "@/app/dashboard/components/pageCommons"
+import { gridItemClassName, pageClassName } from "@/components/page/pageCommons"
 import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
@@ -9,6 +8,8 @@ import Link from "next/link"
 import { UrlObject } from "url"
 import { LucidePencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
+
+//TODO: User can mark driver has gone on leave
 
 export default async function AllDriverLeavesPageComponent({
   leaves,

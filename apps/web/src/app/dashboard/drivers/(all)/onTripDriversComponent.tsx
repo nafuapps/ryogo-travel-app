@@ -18,7 +18,7 @@ import {
   iconClassName,
   sectionClassName,
   sectionHeaderClassName,
-} from "../../components/pageCommons"
+} from "@/components/page/pageCommons"
 import moment from "moment"
 
 export default async function OnTripDriversComponent({

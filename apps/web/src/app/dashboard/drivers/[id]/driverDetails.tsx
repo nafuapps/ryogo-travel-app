@@ -23,16 +23,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  getDriverStatusColor,
-  GetVehicleIcon,
-} from "../../components/drivers/driverCommon"
+import { getDriverStatusColor } from "../../components/drivers/driverCommon"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import InactivateDriverAlertButton from "../../components/buttons/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "../../components/buttons/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import ChangeDriverPhotoSheet from "./changeDriverPhotoSheet"
+import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -150,7 +148,7 @@ export default async function DriverDetailsPageComponent({
             </PBold>
             <div className="flex flex-row gap-1 lg:gap-1.5">
               {driver.canDriveVehicleTypes.map((v) => {
-                const IconComponent = GetVehicleIcon({ vehicleType: v })
+                const IconComponent = getVehicleIcon({ vehicleType: v })
                 return (
                   <IconComponent
                     key={v}

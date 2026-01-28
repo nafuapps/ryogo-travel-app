@@ -1,7 +1,6 @@
 import { pageClassName } from "@/components/page/pageCommons"
 import AccountDetailHeaderTabs from "./accountDetailHeaderTabs"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { redirect, RedirectType } from "next/navigation"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
@@ -9,23 +8,17 @@ import { LucideUser } from "lucide-react"
 import { H4, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import { getUserStatusColor } from "../components/users/userCommon"
-import ChangeAccountPhotoSheet from "./changeAccountPhotoSheet"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import LogoutAlertButton from "../components/buttons/logoutAlertButton"
-import ChangeNameSheet from "./changeNameSheet"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
+import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
 
 export default async function AccountPageComponent({
-  userId,
+  userDetails,
 }: {
-  userId: string
+  userDetails: NonNullable<FindUserDetailsByIdType>
 }) {
-  const userDetails = await userServices.findUserDetailsById(userId)
-
-  if (!userDetails) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
   const t = await getTranslations("Dashboard.Account")
 
   const bgColor = getUserStatusColor(userDetails.status)
@@ -52,7 +45,7 @@ export default async function AccountPageComponent({
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeAccountPhotoSheet userId={userId} />
+              <ChangeUserPhotoSheet userId={userDetails.id} />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{userDetails.name}</H4>
@@ -69,7 +62,11 @@ export default async function AccountPageComponent({
               </div>
             </div>
           </div>
-          <ChangeNameSheet userId={userId} userName={userDetails.name} />
+          <ChangeUserNameSheet
+            userId={userDetails.id}
+            userName={userDetails.name}
+            userRole={userDetails.userRole}
+          />
           <Link href="/dashboard/account/change-email">
             <Button variant={"outline"} className="w-full">
               {t("ChangeEmail.Title")}

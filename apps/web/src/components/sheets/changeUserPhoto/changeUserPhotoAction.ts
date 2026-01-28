@@ -3,10 +3,7 @@
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function changeAccountPhotoAction(
-  userId: string,
-  photo: FileList,
-) {
+export async function changeUserPhotoAction(userId: string, photo: FileList) {
   if (photo && photo[0]) {
     const file = photo[0]
     const fileName = `${Date.now()}-${file.name}`

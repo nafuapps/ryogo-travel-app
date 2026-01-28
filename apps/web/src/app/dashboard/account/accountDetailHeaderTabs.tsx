@@ -12,10 +12,10 @@ export default async function AccountDetailHeaderTabs(
 ) {
   const t = await getTranslations("Dashboard.AccountDetailsHeaderTabs")
   const links = {
-    Details: "/dashboard/account",
-    Settings: "/dashboard/account/settings",
-    Agency: "/dashboard/account/agency",
-    Help: "/dashboard/account/help",
+    Details: `/dashboard/account`,
+    Settings: `/dashboard/account/settings`,
+    Agency: `/dashboard/account/agency`,
+    Help: `/dashboard/account/help`,
   }
 
   return (

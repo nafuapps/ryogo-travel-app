@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import {
   PGrey,
   H5Grey,
@@ -18,7 +17,8 @@ import {
   iconClassName,
   gridClassName,
   gridItemClassName,
-} from "../components/pageCommons"
+  pageClassName,
+} from "@/components/page/pageCommons"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"

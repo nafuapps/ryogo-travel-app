@@ -1,11 +1,11 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindCustomerUpcomingBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "../customerDetailHeaderTabs"
 import moment from "moment"
 import {
   gridClassName,
   gridItemClassName,
-} from "@/app/dashboard/components/pageCommons"
+  pageClassName,
+} from "@/components/page/pageCommons"
 import {
   Caption,
   CaptionBold,

@@ -518,6 +518,16 @@ export const bookingRepository = {
     })
   },
 
+  //Read Ongoing booking by driver id
+  async readOngoingBookingByDriverId(driverId: string) {
+    return await db.query.bookings.findFirst({
+      where: and(
+        eq(bookings.assignedDriverId, driverId),
+        eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+      ),
+    })
+  },
+
   //Read Assigned bookings by user id
   async readAssignedBookingsByUserId(userId: string) {
     return await db.query.bookings.findMany({

@@ -9,15 +9,7 @@ import {
   FindDriversByAgencyType,
   driverServices,
 } from "@ryogo-travel-app/api/services/driver.services"
-import {
-  LucideBus,
-  LucideCar,
-  LucideMotorbike,
-  LucideRows3,
-  LucideTractor,
-  LucideTruck,
-  LucideUser,
-} from "lucide-react"
+import { LucideRows3, LucideUser } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
   gridClassName,
@@ -25,16 +17,13 @@ import {
   iconClassName,
   sectionClassName,
   sectionHeaderClassName,
-} from "../../components/pageCommons"
+} from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
-import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Button } from "@/components/ui/button"
-import {
-  getDriverStatusColor,
-  GetVehicleIcon,
-} from "../../components/drivers/driverCommon"
+import { getDriverStatusColor } from "../../components/drivers/driverCommon"
+import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -96,7 +85,7 @@ async function AllDriversItemComponent({
         <div className={gridItemClassName}>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
-              const IconComponent = GetVehicleIcon({ vehicleType: v })
+              const IconComponent = getVehicleIcon({ vehicleType: v })
               return (
                 <IconComponent
                   key={v}

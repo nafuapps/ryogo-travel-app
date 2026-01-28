@@ -265,3 +265,7 @@ export type FindDriverCompletedBookingsByIdType = Awaited<
 export type FindDriverActivityByUserIdType = Awaited<
   ReturnType<typeof driverServices.findDriverActivityByUserId>
 >
+
+export type FindDriverByUserIdType = Awaited<
+  ReturnType<typeof driverServices.findDriverByUserId>
+>

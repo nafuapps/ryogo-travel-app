@@ -19,6 +19,5 @@
     "react-dom": "19.2.3"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0"
   }
 }

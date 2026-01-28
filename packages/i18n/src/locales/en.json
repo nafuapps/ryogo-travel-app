@@ -92,8 +92,8 @@
         "Back": "Back",
         "Error1": "Not a valid email",
         "APIError": "Email address does not match our records",
-        "Success":"Password reset email sent.. check your inbox for new password!",
-        "Error":"Cannot reset password.. Try again later!"
+        "Success": "Password reset email sent.. check your inbox for new password!",
+        "Error": "Cannot reset password.. Try again later!"
       }
     }
   },
@@ -2232,30 +2232,6 @@
     },
     "Account": {
       "Photo": "View photo",
-      "ChangePhoto": {
-        "Button": "Change Photo",
-        "Header": "Upload your photo",
-        "Title": "Choose a photo to upload:",
-        "Placeholder": "Browse a new photo",
-        "Error1": "Your photo is required",
-        "Error2": "File size should be less than 1MB",
-        "Save": "Save changes",
-        "Close": "Cancel",
-        "Success": "Your photo updated successfully!",
-        "Error": "Cannot upload photo.. please try again after some time."
-      },
-      "ChangeName": {
-        "Button": "Change Name",
-        "Header": "Change your name",
-        "Title": "Enter your name:",
-        "Placeholder": "Raj Sharma",
-        "Error1": "Name must be atleast 5 characters",
-        "Error2": "Name must be less than 30 characters",
-        "Save": "Save changes",
-        "Close": "Cancel",
-        "Success": "Your name changed successfully!",
-        "Error": "Cannot change name.. please try again after some time."
-      },
       "ChangePassword": {
         "Title": "Change Password",
         "Field1": {
@@ -2290,9 +2266,9 @@
       "ChangeEmail": {
         "Title": "Change Email",
         "Field1": {
-          "Title": "Current Password",
+          "Title": "Enter Password",
           "Placeholder": "********",
-          "Description": "Enter your password",
+          "Description": "Enter your password to verify identity",
           "Error1": "Password must be at least 8 characters",
           "Error2": "Password should not contain spaces"
         },
@@ -2330,14 +2306,14 @@
     },
     "AccountAgency": {
       "BasicInfo": "Basic info",
-      "Photo":"View logo",
+      "Photo": "View logo",
       "SubscriptionInfo": "Subscription info",
-      "ValidTill":"Expires on: ",
-      "EditDetails":"Edit Basic Details",
+      "ValidTill": "Expires on: ",
+      "EditDetails": "Edit Basic Details",
       "ChangeEmail": {
         "Title": "Change Email",
         "Field1": {
-          "Title": "Enter new email",
+          "Title": "Enter new business email",
           "Placeholder": "awesometours@gmail.com",
           "Description": "Provide agency's new email to be used for communication",
           "Error1": "Invalid email",
@@ -2370,48 +2346,48 @@
     },
     "ModifyAgency": {
       "Field1": {
-          "Title": "Enter agency name",
-          "Placeholder": "Raj Tour & Travels",
-          "Description": "Provide your agency's business name",
-          "Error1": "Name must be atleast 5 characters",
-          "Error2": "Name must be less than 30 characters"
-        },
-         "Field2": {
-          "Title": "Enter agency address",
-          "Placeholder": "Address Line 1, Street, City, State, Pincode",
-          "Error1": "Address must be atleast 20 characters",
-          "Error2": "Address must be less than 300 characters"
-        },
-        "Field3": {
-          "Title": "Agency logo (optional)",
-          "Placeholder": "UPLOAD",
-          "Description": "Upload a logo associated with your business",
-          "Error1": "Image file size should be less than 1MB",
-          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
-        },
-        "Field4": {
-          "Title": "Commission rate (in %)",
-          "Placeholder": "15",
-          "Description": "The extra commission that will be added to every booking quote. (Don't worry, you can leave it blank and change it later. Default 15% will be set)",
-          "Error1": "Rate must be a number",
-          "Error2": "Rate must be atleast 1%",
-          "Error3": "Rate must be less than 100%",
-          "Error4": "Rate cannot be in decimals",
-          "Error5": "Rate must be a positive number"
-        },
-        "Field5": {
-          "Title": "Select state",
-          "Error1": "Providing state is mandatory"
-        },
-        "Field6": {
-          "Title": "Select city",
-          "Error1": "Providing city is mandatory"
-        },
-        "PrimaryCTA": "Save changes",
-        "SecondaryCTA": "Back",
-        "Loading": "Loading",
-        "Success": "Agency details edited successfully!",
-        "Error": "Cannot change agency details.. please try again later."
+        "Title": "Enter agency name",
+        "Placeholder": "Raj Tour & Travels",
+        "Description": "Provide your agency's business name",
+        "Error1": "Name must be atleast 5 characters",
+        "Error2": "Name must be less than 30 characters"
+      },
+      "Field2": {
+        "Title": "Enter agency address",
+        "Placeholder": "Address Line 1, Street, City, State, Pincode",
+        "Error1": "Address must be atleast 20 characters",
+        "Error2": "Address must be less than 300 characters"
+      },
+      "Field3": {
+        "Title": "Agency logo (optional)",
+        "Placeholder": "UPLOAD",
+        "Description": "Upload a logo associated with your business",
+        "Error1": "Image file size should be less than 1MB",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+      },
+      "Field4": {
+        "Title": "Commission rate (in %)",
+        "Placeholder": "15",
+        "Description": "The extra commission that will be added to every booking quote. (Don't worry, you can leave it blank and change it later. Default 15% will be set)",
+        "Error1": "Rate must be a number",
+        "Error2": "Rate must be atleast 1%",
+        "Error3": "Rate must be less than 100%",
+        "Error4": "Rate cannot be in decimals",
+        "Error5": "Rate must be a positive number"
+      },
+      "Field5": {
+        "Title": "Select state",
+        "Error1": "Providing state is mandatory"
+      },
+      "Field6": {
+        "Title": "Select city",
+        "Error1": "Providing city is mandatory"
+      },
+      "PrimaryCTA": "Save changes",
+      "SecondaryCTA": "Back",
+      "Loading": "Loading",
+      "Success": "Agency details edited successfully!",
+      "Error": "Cannot change agency details.. please try again later."
     },
     "AccountHelp": {},
     "UserDetailsHeaderTabs": {
@@ -2436,30 +2412,6 @@
     },
     "UserDetails": {
       "Photo": "User photo",
-      "ChangePhoto": {
-        "Button": "Change Photo",
-        "Header": "Upload user's photo",
-        "Title": "Choose a photo to upload:",
-        "Placeholder": "Browse a new photo",
-        "Error1": "User photo is required",
-        "Error2": "File size should be less than 1MB",
-        "Save": "Save changes",
-        "Close": "Cancel",
-        "Success": "User photo updated successfully!",
-        "Error": "Cannot upload photo.. please try again after some time."
-      },
-      "ChangeName": {
-        "Button": "Change Name",
-        "Header": "Change your name",
-        "Title": "Enter your name:",
-        "Placeholder": "Raj Sharma",
-        "Error1": "Name must be atleast 5 characters",
-        "Error2": "Name must be less than 30 characters",
-        "Save": "Save changes",
-        "Close": "Cancel",
-        "Success": "Your name changed successfully!",
-        "Error": "Cannot change name.. please try again after some time."
-      },
       "ChangeEmail": {
         "Title": "Change Email",
         "Field1": {
@@ -2715,26 +2667,146 @@
         "/rider/myBookings": "Bookings",
         "/rider/myBookings/{id}": "Booking Details",
         "/rider/myProfile": "Profile",
+        "/rider/myProfile/change-email": "Change Email",
+        "/rider/myProfile/change-password": "Change Password",
+        "/rider/myProfile/agency": "Agency Details",
+        "/rider/myProfile/settings": "Settings",
+        "/rider/myProfile/help": "Help",
         "/rider/myVehicle": "Vehicle"
       }
     },
     "Home": {
-      "Upcoming":"Upcoming bookings"
+      "Upcoming": "Upcoming bookings"
     },
-    "MyBookings": {
-      "Title": "Bookings"
-    },
-    "BookingDetails": {
-      "Title": "Booking Details"
-    },
-    "MyActions": {
-      "Title": "Actions"
-    },
+    "MyBookings": {},
+    "BookingDetails": {},
+    "MyActions": {},
     "MyVehicle": {
-      "Title": "Vehicle"
+      "BasicInfo": "Basic info",
+      "Photo": "Vehicle photo",
+      "AC": "AC",
+      "NonAC": "Non AC",
+      "Capacity": "{capacity} seater",
+      "Odometer": "{odometer} Km",
+      "NumberRatings": "[{number}]",
+      "PolicyInfo": "Policy info",
+      "Insurance": "Insurance",
+      "InsurancePhoto": "Insurance Photo",
+      "PUC": "PUC",
+      "PUCPhoto": "PUC Photo",
+      "RC": "Registration",
+      "RCPhoto": "RC Photo",
+      "ValidTill": "Valid till: ",
+      "AgencyInfo": "Agency related info",
+      "ACCharge": "AC ₹{ac}/day",
+      "RatePerKm": "₹{rate}/Km",
+      "NoVehicleAssigned": "No vehicle assigned to you yet."
     },
     "MyProfile": {
-      "Title": "Profile"
+      "Photo": "View photo",
+      "ChangeEmail": {
+        "Title": "Change Email",
+        "Field1": {
+          "Title": "Enter your Password",
+          "Placeholder": "********",
+          "Description": "Enter your password to verify identity",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field2": {
+          "Title": "Enter new email",
+          "Placeholder": "raj.sharma@gmail.com",
+          "Description": "Provide your new email address",
+          "Error1": "Invalid email",
+          "Error2": "Email must be less than 60 characters",
+          "Error3": "New email cannot be the same as previous email",
+          "Error4": "Another user already has this email.. try another email address"
+        },
+        "PrimaryCTA": "Update Email",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Email updated successfully",
+        "APIError": "Password does not match.. please try again"
+      },
+      "ChangePassword": {
+        "Title": "Change Password",
+        "Field1": {
+          "Title": "Current Password",
+          "Placeholder": "********",
+          "Description": "Enter your current password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field2": {
+          "Title": "New Password",
+          "Placeholder": "********",
+          "Description": "Choose a new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces",
+          "Error3": "New password cannot be the same as old password"
+        },
+        "Field3": {
+          "Title": "Confirm New Password",
+          "Placeholder": "********",
+          "Description": "Re-enter your new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces",
+          "Error3": "Confirm Password does not match"
+        },
+        "PrimaryCTA": "Update password",
+        "SecondaryCTA": "Back",
+        "Loading": "Loading",
+        "Success": "Password updated successfully",
+        "APIError": "Password does not match.. please try again"
+      },
+      "LastLogin": "Last login at {loginTime}"
+    },
+    "MyProfileAgency": {
+      "BasicInfo": "Basic info",
+      "Photo": "View logo",
+      "AssignedUserInfo": "Assigned agent info",
+      "CallAgent": "Call Agent"
+    },
+    "MyProfileHelp":{
+
+    },
+    "MyProfileSettings": {
+      "Field1": {
+        "Title": "Enable dark mode"
+      },
+      "Field2": {
+        "Title": "Preferred Language",
+        "Error1": "Language is required"
+      },
+      "Success": "Preferences updated successfully!",
+      "Error": "Cannot edit preferences.. Try again later!",
+      "PrimaryCTA": "Save preferences",
+      "Loading": "Loading..",
+      "SecondaryCTA": "Back"
+    }
+  },
+  "Sheets": {
+    "ChangeName": {
+      "Title": "Change Name",
+      "Placeholder": "Raj Sharma",
+      "Error1": "Name must be atleast 5 characters",
+      "Error2": "Name must be less than 30 characters",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Name changed successfully!",
+      "Error": "Cannot change name.. please try again after some time."
+    },
+    "ChangePhoto": {
+      "Button": "Change Photo",
+      "Title": "Choose a Photo",
+      "Header": "Upload user photo",
+      "Placeholder": "Browse a new photo",
+      "Error1": "Photo is required",
+      "Error2": "File size should be less than 1MB",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Photo updated successfully!",
+      "Error": "Cannot upload photo.. please try again after some time."
     }
   },
   "Landing": {

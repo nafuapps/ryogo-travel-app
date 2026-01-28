@@ -14,13 +14,13 @@ export default async function BookingDetailsLayout({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
 
   //Invalid booking id regex check
   if (!BookingRegex.safeParse(id).success) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
+  const user = await getCurrentUser()
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingStatusById(id)
   if (!booking || booking.agencyId !== user?.agencyId) {

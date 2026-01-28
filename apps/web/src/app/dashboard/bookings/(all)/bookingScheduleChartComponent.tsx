@@ -7,7 +7,7 @@ import {
   iconClassName,
   sectionClassName,
   sectionHeaderClassName,
-} from "../../components/pageCommons"
+} from "@/components/page/pageCommons"
 import {
   PGrey,
   H5Grey,

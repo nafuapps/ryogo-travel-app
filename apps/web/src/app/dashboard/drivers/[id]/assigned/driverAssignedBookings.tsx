@@ -1,11 +1,11 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindDriverAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "../driverDetailHeaderTabs"
 import moment from "moment"
 import {
   gridClassName,
   gridItemClassName,
-} from "@/app/dashboard/components/pageCommons"
+  pageClassName,
+} from "@/components/page/pageCommons"
 import {
   Caption,
   CaptionBold,

@@ -1,9 +1,9 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindDriverAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import {
   gridClassName,
   gridItemClassName,
-} from "../dashboard/components/pageCommons"
+  pageClassName,
+} from "@/components/page/pageCommons"
 import Link from "next/link"
 import {
   PBold,
@@ -18,18 +18,26 @@ import moment from "moment"
 import { getTranslations } from "next-intl/server"
 
 /**
- * - Show current booking (if any)
- * - Show upcoming bookings
  * TODO: Show important actions
  */
+
 export default async function RiderHomePageComponent({
   assignedBookings,
 }: {
   assignedBookings: FindDriverAssignedBookingsByIdType
 }) {
   const t = await getTranslations("Rider.Home")
+  //Get in progress booking (if any)
   const currentBooking = assignedBookings.find((booking) => booking.status)
-  const upcomingBookings = assignedBookings.filter((booking) => !booking.status)
+  //Get atmost 3 upcoming bookings
+  const upcomingBookings = assignedBookings
+    .filter((booking) => !booking.status)
+    .sort(
+      (a, b) =>
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
+    )
+    .slice(0, 3)
+
   return (
     <div id="RiderHomePage" className={pageClassName}>
       {currentBooking && <OngoingComponent booking={currentBooking} />}

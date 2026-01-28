@@ -15,7 +15,7 @@ import {
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "../../components/pageCommons"
+} from "@/components/page/pageCommons"
 import { useState } from "react"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
 import {

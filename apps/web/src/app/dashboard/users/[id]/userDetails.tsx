@@ -13,9 +13,9 @@ import Link from "next/link"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateUserAlertButton from "../../components/buttons/inactivateUserAlertButton"
 import ActivateUserAlertButton from "../../components/buttons/activateUserAlertButton"
-import ChangeUserPhotoSheet from "./changeUserPhotoSheet"
-import ChangeUserNameSheet from "./changeUserNameSheet"
 import ResetUserPasswordAlertButton from "../../components/buttons/resetUserPasswordAlertButton"
+import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
 
 export default async function UserDetailsPageComponent({
   user,

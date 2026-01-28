@@ -24,7 +24,7 @@ import {
   iconClassName,
   sectionClassName,
   sectionHeaderClassName,
-} from "../../components/pageCommons"
+} from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"

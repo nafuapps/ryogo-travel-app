@@ -136,6 +136,18 @@ export const driverRepository = {
   async readDriverByUserId(userId: string) {
     return await db.query.drivers.findFirst({
       where: eq(drivers.userId, userId),
+      with: {
+        user: {
+          columns: {
+            photoUrl: true,
+            email: true,
+            status: true,
+            lastLogin: true,
+            userRole: true,
+            name: true,
+          },
+        },
+      },
     })
   },
 

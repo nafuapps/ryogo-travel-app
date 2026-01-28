@@ -3,7 +3,7 @@ import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehic
 import VehicleDetailHeaderTabs from "./vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import {
-  GetVehicleIcon,
+  getVehicleIcon,
   getVehicleStatusColor,
 } from "../../components/vehicles/vehicleCommon"
 import Image from "next/image"
@@ -42,7 +42,7 @@ export default async function VehicleDetailsPageComponent({
   const t = await getTranslations("Dashboard.VehicleDetails")
 
   const bgColor = getVehicleStatusColor(vehicle.status)
-  const IconComponent = GetVehicleIcon({ vehicleType: vehicle.type })
+  const IconComponent = getVehicleIcon({ vehicleType: vehicle.type })
   return (
     <div id="VehicleDetailsPage" className={pageClassName}>
       <VehicleDetailHeaderTabs selectedTab={"Details"} id={vehicle.id} />
@@ -63,6 +63,7 @@ export default async function VehicleDetailsPageComponent({
                   />
                 </div>
               ) : (
+                // eslint-disable-next-line react-hooks/static-components
                 <IconComponent className="size-20 lg:size-24 text-slate-400" />
               )}
               <ChangeVehiclePhotoSheet vehicleId={vehicle.id} />

@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import VehicleDetailHeaderTabs from "../vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
@@ -6,9 +5,11 @@ import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import Link from "next/link"
 import { UrlObject } from "url"
 import { LucidePencil } from "lucide-react"
-import { gridItemClassName } from "@/app/dashboard/components/pageCommons"
+import { gridItemClassName, pageClassName } from "@/components/page/pageCommons"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
+
+//TODO: User can mark vehicle has gone for repair
 
 export default async function AllVehicleRepairsPageComponent({
   repairs,

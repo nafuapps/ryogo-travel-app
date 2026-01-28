@@ -94,6 +94,20 @@ export const vehicleServices = {
     })
   },
 
+  //Get assigned vehicle for a booking by driverId
+  async findAssignedVehicleByDriverId(driverId: string) {
+    const ongoingBooking =
+      await bookingRepository.readOngoingBookingByDriverId(driverId)
+
+    if (!ongoingBooking || ongoingBooking.assignedVehicleId == null) {
+      return
+    }
+    const assignedVehicle = vehicleRepository.readVehicleById(
+      ongoingBooking.assignedVehicleId,
+    )
+    return assignedVehicle
+  },
+
   //Get all vehicle repairs by vehicleId
   async findAllVehicleRepairsByVehicleId(id: string) {
     const repairs =
@@ -288,6 +302,11 @@ export type FindVehicleRepairByIdType = Awaited<
 export type FindVehicleAssignedBookingsByIdType = Awaited<
   ReturnType<typeof vehicleServices.findVehicleAssignedBookingsById>
 >
+
 export type FindVehicleCompletedBookingsByIdType = Awaited<
   ReturnType<typeof vehicleServices.findVehicleCompletedBookingsById>
+>
+
+export type FindAssignedVehicleByDriverIdType = Awaited<
+  ReturnType<typeof vehicleServices.findAssignedVehicleByDriverId>
 >

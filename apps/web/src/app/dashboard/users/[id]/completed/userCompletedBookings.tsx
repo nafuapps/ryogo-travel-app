@@ -1,9 +1,9 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindDriverCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import {
   gridClassName,
   gridItemClassName,
-} from "@/app/dashboard/components/pageCommons"
+  pageClassName,
+} from "@/components/page/pageCommons"
 import { Caption, CaptionGrey, PBold } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"

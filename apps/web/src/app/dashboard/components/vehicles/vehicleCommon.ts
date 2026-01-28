@@ -23,7 +23,7 @@ export const getVehicleStatusColor = (status: VehicleStatusEnum) => {
   return "bg-slate-200"
 }
 
-export function GetVehicleIcon({
+export function getVehicleIcon({
   vehicleType,
 }: {
   vehicleType: VehicleTypesEnum

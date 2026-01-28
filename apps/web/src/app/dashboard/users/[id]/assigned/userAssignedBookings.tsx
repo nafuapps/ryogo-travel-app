@@ -1,10 +1,10 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import UserDetailHeaderTabs from "../userDetailHeaderTabs"
 import moment from "moment"
 import {
   gridClassName,
   gridItemClassName,
-} from "@/app/dashboard/components/pageCommons"
+  pageClassName,
+} from "@/components/page/pageCommons"
 import {
   Caption,
   CaptionBold,

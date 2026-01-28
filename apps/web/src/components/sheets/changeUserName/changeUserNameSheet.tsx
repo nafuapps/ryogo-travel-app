@@ -1,7 +1,6 @@
 "use client"
 
-import { DashboardFileInput } from "@/components/form/dashboardFormFields"
-import { CaptionGrey } from "@/components/typography"
+import { DashboardInput } from "@/components/form/dashboardFormFields"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
@@ -21,48 +20,38 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { changeAccountPhotoAction } from "./changeAccountPhotoAction"
+import { changeUserNameAction } from "./changeUserNameAction"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export default function ChangeAccountPhotoSheet({
+export default function ChangeUserNameSheet({
   userId,
+  userName,
+  userRole,
 }: {
   userId: string
+  userName: string
+  userRole: UserRolesEnum
 }) {
-  const t = useTranslations("Dashboard.Account.ChangePhoto")
+  const t = useTranslations("Sheets.ChangeName")
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const schema = z.object({
-    accountPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
-      }, t("Error1"))
-      .refine((file) => {
-        if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0]!.type)
-        )
-      }, t("Error2")),
+    name: z.string().min(5, t("Error1")).max(30, t("Error2")),
   })
 
   type SchemaType = z.infer<typeof schema>
 
   const formData = useForm<SchemaType>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      name: userName,
+    },
   })
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeAccountPhotoAction(userId, data.accountPhotos)) {
+      if (await changeUserNameAction(userId, data.name, userRole)) {
         toast.success(t("Success"))
         router.refresh()
       } else {
@@ -73,20 +62,22 @@ export default function ChangeAccountPhotoSheet({
 
   return (
     <Sheet>
-      <SheetTrigger className="hover:underline">
-        <CaptionGrey>{t("Button")}</CaptionGrey>
+      <SheetTrigger asChild>
+        <Button variant="outline" className="w-full">
+          {t("Title")}
+        </Button>
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
-          <SheetTitle>{t("Header")}</SheetTitle>
+          <SheetTitle>{t("Title")}</SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
+          <form id="changeName" onSubmit={formData.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
-              <DashboardFileInput
-                name={"accountPhotos"}
-                register={formData.register("accountPhotos")}
+              <DashboardInput
+                name={"name"}
+                type="text"
                 label={t("Title")}
                 placeholder={t("Placeholder")}
               />
@@ -95,7 +86,7 @@ export default function ChangeAccountPhotoSheet({
         </Form>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit" disabled={isPending} form="changePhoto">
+            <Button type="submit" disabled={isPending} form="changeName">
               {t("Save")}
             </Button>
           </SheetClose>

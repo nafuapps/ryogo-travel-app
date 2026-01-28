@@ -20,7 +20,7 @@ import {
   sectionClassName,
   sectionHeaderClassName,
   iconClassName,
-} from "../../components/pageCommons"
+} from "@/components/page/pageCommons"
 import { FindLeadBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 
 export default function LeadBookingsItemComponent({

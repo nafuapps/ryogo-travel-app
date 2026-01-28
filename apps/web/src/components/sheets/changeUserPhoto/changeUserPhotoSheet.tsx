@@ -24,12 +24,12 @@ import { useRouter } from "next/navigation"
 import { changeUserPhotoAction } from "./changeUserPhotoAction"
 
 export default function ChangeUserPhotoSheet({ userId }: { userId: string }) {
-  const t = useTranslations("Dashboard.UserDetails.ChangePhoto")
+  const t = useTranslations("Sheets.ChangePhoto")
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const schema = z.object({
-    userPhotos: z
+    accountPhotos: z
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
@@ -58,7 +58,7 @@ export default function ChangeUserPhotoSheet({ userId }: { userId: string }) {
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeUserPhotoAction(userId, data.userPhotos)) {
+      if (await changeUserPhotoAction(userId, data.accountPhotos)) {
         toast.success(t("Success"))
         router.refresh()
       } else {
@@ -81,8 +81,8 @@ export default function ChangeUserPhotoSheet({ userId }: { userId: string }) {
           <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
               <DashboardFileInput
-                name={"userPhotos"}
-                register={formData.register("userPhotos")}
+                name={"accountPhotos"}
+                register={formData.register("accountPhotos")}
                 label={t("Title")}
                 placeholder={t("Placeholder")}
               />

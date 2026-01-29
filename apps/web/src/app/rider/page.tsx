@@ -25,7 +25,10 @@ export default async function RiderHomePage() {
   return (
     <div className={mainClassName}>
       <RiderHeader pathName={"/rider"} />
-      <RiderHomePageComponent assignedBookings={assignedBookings} />
+      <RiderHomePageComponent
+        assignedBookings={assignedBookings}
+        driver={driver}
+      />
     </div>
   )
 }

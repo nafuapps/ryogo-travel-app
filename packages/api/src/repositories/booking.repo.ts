@@ -54,6 +54,7 @@ export const bookingRepository = {
 
   async readOngoingBookingsData(agencyId: string) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
@@ -105,6 +106,7 @@ export const bookingRepository = {
     queryEndDate: Date,
   ) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
@@ -158,6 +160,7 @@ export const bookingRepository = {
   async readCompletedBookingsByDriverId(driverId: string) {
     return await db.query.bookings.findMany({
       limit: 100,
+      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.assignedDriverId, driverId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
@@ -209,6 +212,7 @@ export const bookingRepository = {
   async readCompletedBookingsByUserId(userId: string) {
     return await db.query.bookings.findMany({
       limit: 100,
+      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.assignedUserId, userId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
@@ -260,6 +264,7 @@ export const bookingRepository = {
   async readCompletedBookingsByVehicleId(vehicleId: string) {
     return await db.query.bookings.findMany({
       limit: 100,
+      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.assignedVehicleId, vehicleId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
@@ -311,6 +316,7 @@ export const bookingRepository = {
   async readCompletedBookingsByCustomerId(customerId: string) {
     return await db.query.bookings.findMany({
       limit: 100,
+      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.customerId, customerId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
@@ -364,6 +370,7 @@ export const bookingRepository = {
     queryEndDate: Date,
   ) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
@@ -411,6 +418,7 @@ export const bookingRepository = {
   //Read Assigned bookings by vehicle id
   async readAssignedBookingsByVehicleId(vehicleId: string) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.assignedVehicleId, vehicleId),
         inArray(bookings.status, [
@@ -466,6 +474,7 @@ export const bookingRepository = {
   //Read Assigned bookings by driver id
   async readAssignedBookingsByDriverId(driverId: string) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.assignedDriverId, driverId),
         inArray(bookings.status, [
@@ -521,6 +530,7 @@ export const bookingRepository = {
   //Read Ongoing booking by driver id
   async readOngoingBookingByDriverId(driverId: string) {
     return await db.query.bookings.findFirst({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.assignedDriverId, driverId),
         eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
@@ -531,6 +541,7 @@ export const bookingRepository = {
   //Read Assigned bookings by user id
   async readAssignedBookingsByUserId(userId: string) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.assignedUserId, userId),
         inArray(bookings.status, [
@@ -586,6 +597,7 @@ export const bookingRepository = {
   //Read Upcoming bookings by customer id
   async readUpcomingBookingsByCustomerId(customerId: string) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.customerId, customerId),
         inArray(bookings.status, [
@@ -644,6 +656,7 @@ export const bookingRepository = {
     queryEndDate: Date,
   ) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         or(
@@ -699,6 +712,7 @@ export const bookingRepository = {
     queryEndDate: Date,
   ) {
     return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.LEAD),
@@ -889,6 +903,7 @@ export const bookingRepository = {
           columns: {
             id: true,
             vehicleNumber: true,
+            odometerReading: true,
           },
         },
         bookedByUser: {
@@ -938,6 +953,38 @@ export const bookingRepository = {
             distance: true,
           },
         },
+        tripLogs: {
+          columns: {
+            id: true,
+            type: true,
+            odometerReading: true,
+            tripLogPhotoUrl: true,
+            remarks: true,
+            latLong: true,
+            createdAt: true,
+          },
+        },
+        expenses: {
+          columns: {
+            id: true,
+            addedByUserId: true,
+            amount: true,
+            expensePhotoUrl: true,
+            isApproved: true,
+            type: true,
+            remarks: true,
+            createdAt: true,
+          },
+          with: {
+            addedByUser: {
+              columns: {
+                name: true,
+                userRole: true,
+                id: true,
+              },
+            },
+          },
+        },
       },
     })
   },
@@ -962,6 +1009,16 @@ export const bookingRepository = {
       })
       .where(eq(bookings.id, id))
       .returning({ id: bookings.id })
+  },
+
+  async updateStatus(id: string, status: BookingStatusEnum) {
+    return await db
+      .update(bookings)
+      .set({
+        status,
+      })
+      .where(eq(bookings.id, id))
+      .returning()
   },
 
   async updateBookingToCancel(id: string) {

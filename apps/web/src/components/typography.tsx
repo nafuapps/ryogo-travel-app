@@ -58,6 +58,10 @@ export function PGrey({ children }: { children: React.ReactNode }) {
   return <p className="text-base lg:text-lg text-slate-500">{children}</p>
 }
 
+export function PLight({ children }: { children: React.ReactNode }) {
+  return <p className="text-base lg:text-lg text-slate-100">{children}</p>
+}
+
 export function SmallBold({ children }: { children: React.ReactNode }) {
   return (
     <small className="text-sm font-semibold lg:text-base">{children}</small>
@@ -78,6 +82,12 @@ export function SmallGrey({ children }: { children: React.ReactNode }) {
   )
 }
 
+export function SmallLight({ children }: { children: React.ReactNode }) {
+  return (
+    <small className="text-sm lg:text-base text-slate-100">{children}</small>
+  )
+}
+
 export function CaptionBold({ children }: { children: React.ReactNode }) {
   return (
     <span className="text-xs font-semibold lg:text-sm text-slate-500">
@@ -91,7 +101,7 @@ export function Caption({ children }: { children: React.ReactNode }) {
 }
 
 export function CaptionLight({ children }: { children: React.ReactNode }) {
-  return <span className="text-xs lg:text-sm text-slate-400">{children}</span>
+  return <span className="text-xs lg:text-sm text-slate-300">{children}</span>
 }
 
 export function CaptionRed({ children }: { children: React.ReactNode }) {

@@ -2665,7 +2665,9 @@
         "/rider": "Home",
         "/rider/myActions": "Action Center",
         "/rider/myBookings": "Bookings",
-        "/rider/myBookings/{id}": "Booking Details",
+        "/rider/myBookings/[id]": "Booking Details",
+        "/rider/myBookings/[id]/add-expense": "Add Expense",
+        "/rider/myBookings/[id]/modify-expense": "Modify Expense",
         "/rider/myProfile": "Profile",
         "/rider/myProfile/change-email": "Change Email",
         "/rider/myProfile/change-password": "Change Password",
@@ -2676,10 +2678,140 @@
       }
     },
     "Home": {
-      "Upcoming": "Upcoming bookings"
+      "Upcoming": "Upcoming bookings",
+      "Continue": "Continue",
+      "Start": "Start Trip"
     },
-    "MyBookings": {},
-    "BookingDetails": {},
+    "MyBookings": {
+      "Ongoing": "Ongoing booking",
+      "Upcoming": "Upcoming bookings",
+      "Completed": "Completed bookings"
+    },
+    "MyBooking": {
+      "BookingInfo": "BOOKING INFO",
+      "BookingId": "Booking ID",
+      "CustomerName": "Name",
+      "CustomerAddress": "Address",
+      "CallCustomer": "Call Customer",
+      "TripInfo": "TRIP INFO",
+      "From": "From",
+      "To": "To",
+      "Distance": "Distance",
+      "StartDate": "Start Date",
+      "EndDate": "End Date",
+      "StartTime": "Start Time",
+      "PickupAddress": "Pickup Address",
+      "DropAddress": "Drop Address",
+      "Type": "Trip Type",
+      "Passengers": "Passengers",
+      "NeedsAC": "Needs AC",
+      "Yes": "Yes",
+      "No": "No",
+      "Km": " Km",
+      "Remarks": "Remarks",
+      "AddExpense":"Add Expense",
+      "Expenses":"Expenses",
+      "TripLogs":"Trip Logs",
+      "StartTrip": {
+        "Title": "Start Trip",
+        "Field1": {
+          "Title": "Enter odometer reading (Km)",
+          "Placeholder": "10000",
+          "Description": "Check your odometer and enter the current reading",
+          "Error1": "Odometer reading is required",
+          "Error2": "Odometer must be atleast {maxOdo}Km",
+          "Error3": "Odometer must be less than 1000000Km",
+          "Error4": "Odometer cannot be in decimals (round it up)",
+          "Error5": "Odometer must be a positive number"
+        },
+        "Field2": {
+          "Title": "Upload Trip photo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload trip start photo",
+          "Error1": "File size should be less than 1MB",
+          "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field3": {
+          "Title": "Remarks (optional)",
+          "Placeholder": "Enter any remarks regarding this trip",
+          "Error1": "Remarks must be less than 300 characters"
+        },
+        "Start": "Confirm and Start Trip",
+        "Close": "Cancel",
+        "Loading": "Loading",
+        "Error": "Cannot start trip now.. please try again later"
+      },
+      "EndTrip": {
+        "Title": "End Trip",
+        "Warning": "Make sure to add all expenses before you end the trip",
+        "Field1": {
+          "Title": "Enter odometer reading (Km)",
+          "Placeholder": "10000",
+          "Description": "Check your odometer and enter the current reading",
+          "Error1": "Odometer reading is required",
+          "Error2": "Odometer must be atleast {maxOdo}Km",
+          "Error3": "Odometer must be less than 1000000Km",
+          "Error4": "Odometer cannot be in decimals (round it up)",
+          "Error5": "Odometer must be a positive number"
+        },
+        "Field2": {
+          "Title": "Upload Trip photo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload trip end photo",
+          "Error1": "File size should be less than 1MB",
+          "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field3": {
+          "Title": "Remarks (optional)",
+          "Placeholder": "Enter any remarks regarding this trip",
+          "Error1": "Remarks must be less than 300 characters"
+        },
+        "End": "Confirm and End Trip",
+        "Close": "Cancel",
+        "Loading": "Loading",
+        "AddExpense": "Add Expense",
+        "Error": "Cannot end trip now.. please try again later"
+      },
+      "MidTrip":{
+        "Title": "{type, select, Arrived {Reached Customer Address} Pickup {Pickup Customer} Drop {Drop Customer} other {End Trip}}",
+        "Field1": {
+          "Title": "Enter odometer reading (Km)",
+          "Placeholder": "10000",
+          "Description": "Check your odometer and enter the current reading",
+          "Error1": "Odometer reading is required",
+          "Error2": "Odometer must be atleast {maxOdo}Km",
+          "Error3": "Odometer must be less than 1000000Km",
+          "Error4": "Odometer cannot be in decimals (round it up)",
+          "Error5": "Odometer must be a positive number"
+        },
+        "Field2": {
+          "Title": "Upload Trip photo (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload trip {type} photo",
+          "Error1": "File size should be less than 1MB",
+          "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        },
+        "Field3": {
+          "Title": "Remarks (optional)",
+          "Placeholder": "Enter any remarks regarding this trip",
+          "Error1": "Remarks must be less than 300 characters"
+        },
+        "Mid": "{type, select, Arrived {Confirm Arrival} Pickup {Confirm Pickup} Drop {Confirm Drop} other {Confirm End Trip}}",
+        "Close": "Cancel",
+        "Loading": "Loading",
+        "Error": "Cannot mark {type} now.. please try again later"
+      },
+      "TripLog":{
+        "Km":"Km",
+        "Proof":" View Attachment"
+      },
+      "Expense":{
+        "Modify":"Modify",
+        "Proof":" View Attachment"
+      }
+    },
+    "AddExpense":{},
+    "ModifyExpense":{},
     "MyActions": {},
     "MyVehicle": {
       "BasicInfo": "Basic info",
@@ -2767,9 +2899,7 @@
       "AssignedUserInfo": "Assigned agent info",
       "CallAgent": "Call Agent"
     },
-    "MyProfileHelp":{
-
-    },
+    "MyProfileHelp": {},
     "MyProfileSettings": {
       "Field1": {
         "Title": "Enable dark mode"

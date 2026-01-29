@@ -25,7 +25,7 @@ import z from "zod"
 export default function ModifyDriverPageComponent({
   driver,
 }: {
-  driver: FindDriverDetailsByIdType
+  driver: NonNullable<FindDriverDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.ModifyDriver")
   const router = useRouter()

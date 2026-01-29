@@ -31,6 +31,7 @@ export default async function MyBookingsPage() {
       <RiderMyBookingsPageComponent
         assignedBookings={assignedBookings}
         completedBookings={completedBookings}
+        driver={driver}
       />
     </div>
   )

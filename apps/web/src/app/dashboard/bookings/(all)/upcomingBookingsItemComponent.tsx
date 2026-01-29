@@ -23,6 +23,7 @@ import {
   iconClassName,
 } from "@/components/page/pageCommons"
 import { FindUpcomingBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import { getCombinedDateTime } from "@/lib/utils"
 
 export default function UpcomingBookingsItemComponent({
   upcomingBookings7Days,
@@ -75,11 +76,10 @@ export default function UpcomingBookingsItemComponent({
 }
 
 function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
-  const startDate = moment(props.startDate)
-  const startTime = moment(props.startTime)
-  startDate.hours(startTime.hours())
-  startDate.minutes(startTime.minutes())
-  startDate.seconds(startTime.seconds())
+  const combinedDateTime = getCombinedDateTime(
+    props.startDate,
+    props.startTime!,
+  )
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <div className={gridClassName}>
@@ -96,11 +96,11 @@ function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
           <PBold>{props.driver}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <Caption>{format(props.startDate, "PP")}</Caption>
-          {props.startDate < new Date() ? (
-            <PRed>{startDate.fromNow()}</PRed>
+          <Caption>{format(props.startDate, "dd MMM hh:mm aaa")}</Caption>
+          {combinedDateTime < new Date() ? (
+            <PRed>{moment(combinedDateTime).fromNow()}</PRed>
           ) : (
-            <PBold>{startDate.fromNow()}</PBold>
+            <PBold>{moment(combinedDateTime).fromNow()}</PBold>
           )}
         </div>
       </div>

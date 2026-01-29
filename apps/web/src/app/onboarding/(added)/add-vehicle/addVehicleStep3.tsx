@@ -1,30 +1,30 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
+import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingDatePicker,
   OnboardingFileInput,
-} from "@/app/onboarding/components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
 
 export function AddVehicleStep3(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: AddVehicleFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>;
+  onNext: () => void
+  onPrev: () => void
+  finalData: AddVehicleFormDataType
+  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>
 }) {
-  const t = useTranslations("Onboarding.AddVehiclePage.Step3");
+  const t = useTranslations("Onboarding.AddVehiclePage.Step3")
   const step3Schema = z.object({
     insuranceExpiresOn: z
       .date(t("Field1.Error1"))
@@ -33,14 +33,14 @@ export function AddVehicleStep3(props: {
     insurancePhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        return file.length >= 1;
+        return file.length >= 1
       }, t("Field2.Error1"))
       .refine((file) => {
-        if (file.length < 1) return false;
-        return file[0]!.size < 1000000;
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
       }, t("Field2.Error2"))
       .refine((file) => {
-        if (file.length < 1) return false;
+        if (file.length < 1) return false
         return (
           file[0] &&
           [
@@ -51,7 +51,7 @@ export function AddVehicleStep3(props: {
             "image/webp",
             "application/pdf",
           ].includes(file[0]!.type)
-        );
+        )
       }, t("Field2.Error3")),
     pucExpiresOn: z
       .date(t("Field3.Error1"))
@@ -60,14 +60,14 @@ export function AddVehicleStep3(props: {
     pucPhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        return file.length >= 1;
+        return file.length >= 1
       }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return false;
-        return file[0]!.size < 1000000;
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
       }, t("Field4.Error2"))
       .refine((file) => {
-        if (file.length < 1) return false;
+        if (file.length < 1) return false
         return (
           file[0] &&
           [
@@ -78,10 +78,10 @@ export function AddVehicleStep3(props: {
             "image/webp",
             "application/pdf",
           ].includes(file[0]!.type)
-        );
+        )
       }, t("Field4.Error3")),
-  });
-  type Step3Type = z.infer<typeof step3Schema>;
+  })
+  type Step3Type = z.infer<typeof step3Schema>
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
@@ -90,7 +90,7 @@ export function AddVehicleStep3(props: {
       pucExpiresOn: props.finalData.pucExpiresOn,
       pucPhotos: props.finalData.pucPhotos,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
@@ -100,9 +100,9 @@ export function AddVehicleStep3(props: {
       insurancePhotos: data.insurancePhotos,
       pucExpiresOn: data.pucExpiresOn,
       pucPhotos: data.pucPhotos,
-    });
-    props.onNext();
-  };
+    })
+    props.onNext()
+  }
 
   return (
     <Form {...formData}>
@@ -154,5 +154,5 @@ export function AddVehicleStep3(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

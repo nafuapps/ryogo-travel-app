@@ -4,6 +4,7 @@ import { mainClassName } from "@/components/page/pageCommons"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import DashboardHeader from "../../components/extra/dashboardHeader"
 import DriverDetailsPageComponent from "./driverDetails"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function DriverDetailsPage({
   params,
@@ -13,7 +14,9 @@ export default async function DriverDetailsPage({
   const { id } = await params
 
   const driver = await driverServices.findDriverDetailsById(id)
-
+  if (!driver) {
+    redirect("/dashboard/drivers", RedirectType.replace)
+  }
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/drivers/[id]"} />

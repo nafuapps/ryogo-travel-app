@@ -32,6 +32,25 @@ export function getStringValueDisplayPairs(
   }))
 }
 
+export function getCombinedDateTime(date: Date, time: string) {
+  // 1. Ensure dateObj is a Date object (make a copy to avoid mutation)
+  const combinedDateTime = new Date(date.getTime())
+
+  // 2. Parse the time string (assuming "HH:MM" or "HH:MM:SS" format)
+  const timeParts = time.split(":")
+  const hours = parseInt(timeParts[0]!, 10)
+  const minutes = parseInt(timeParts[1]!, 10)
+  const seconds = parseInt(timeParts[2] || "0", 10) // Default to 0 seconds if not provided
+
+  // 3. Set the time components on the combined date object (local time)
+  combinedDateTime.setHours(hours)
+  combinedDateTime.setMinutes(minutes)
+  combinedDateTime.setSeconds(seconds)
+  combinedDateTime.setMilliseconds(0) // Optional: reset milliseconds
+
+  return combinedDateTime
+}
+
 export const LOGIN_PASSWORD_ERROR = "passwordNotMatching"
 export const LOGIN_USER_ERROR = "userNotFound"
 export const LOGIN_SESSION_ERROR = "sessionNotCreated"

@@ -310,7 +310,7 @@ export const vehicleRepository = {
     return await db
       .update(vehicles)
       .set({
-        vehiclePhotoUrl: vehiclePhotoUrl,
+        vehiclePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
       .returning({ id: vehicles.id })
@@ -320,7 +320,16 @@ export const vehicleRepository = {
   async updateStatus(vehicleId: string, status: VehicleStatusEnum) {
     return await db
       .update(vehicles)
-      .set({ status: status })
+      .set({ status })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({ id: vehicles.id })
+  },
+
+  //Update vehicle odometerReading
+  async updateOdometerReading(vehicleId: string, odometerReading: number) {
+    return await db
+      .update(vehicles)
+      .set({ odometerReading })
       .where(eq(vehicles.id, vehicleId))
       .returning({ id: vehicles.id })
   },

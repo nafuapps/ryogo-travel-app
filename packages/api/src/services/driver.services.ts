@@ -45,9 +45,6 @@ export const driverServices = {
   //Get driver details
   async findDriverDetailsById(id: string) {
     const driver = await driverRepository.readDriverById(id)
-    if (!driver) {
-      throw new Error("Driver not found")
-    }
     return driver
   },
 

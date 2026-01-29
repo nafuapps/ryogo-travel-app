@@ -1,5 +1,5 @@
 import { db } from "@ryogo-travel-app/db"
-import { tripLogs } from "@ryogo-travel-app/db/schema"
+import { InsertTripLogType, tripLogs } from "@ryogo-travel-app/db/schema"
 import { eq } from "drizzle-orm"
 
 export const tripLogRepository = {
@@ -41,5 +41,19 @@ export const tripLogRepository = {
         },
       },
     })
+  },
+
+  //create trip log
+  async createTripLog(data: InsertTripLogType) {
+    return db.insert(tripLogs).values(data).returning()
+  },
+
+  //Update trip log photo url
+  async updateTripLogPhotoUrl(tripLogId: string, tripLogPhotoUrl: string) {
+    return db
+      .update(tripLogs)
+      .set({ tripLogPhotoUrl })
+      .where(eq(tripLogs.id, tripLogId))
+      .returning()
   },
 }

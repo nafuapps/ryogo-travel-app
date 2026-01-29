@@ -1,38 +1,38 @@
 import {
-  CaptionGrey,
-  Caption,
   Small,
+  CaptionGrey,
   CaptionBold,
+  Caption,
 } from "@/components/typography"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  LucideCheckCheck,
-  LucideFlagTriangleRight,
-  LucideHandshake,
-  LucideMapPinCheck,
-  LucidePin,
-  LucidePlay,
-} from "lucide-react"
-import { format } from "date-fns"
-import Image from "next/image"
 import {
   Dialog,
+  DialogTrigger,
   DialogContent,
+  DialogTitle,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
+import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { getTranslations } from "next-intl/server"
+import { format } from "date-fns"
+import Image from "next/image"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  LucidePlay,
+  LucideMapPinCheck,
+  LucideHandshake,
+  LucideFlagTriangleRight,
+  LucideCheckCheck,
+  LucidePin,
+} from "lucide-react"
 
-export default async function TripLogItem({
+export default async function RiderTripLogItem({
   tripLog,
 }: {
-  tripLog: NonNullable<FindBookingTripLogsByIdType>[0]
+  tripLog: NonNullable<FindBookingDetailsByIdType>["tripLogs"][number]
 }) {
-  const t = await getTranslations("Dashboard.BookingTripLogs")
+  const t = await getTranslations("Rider.MyBooking.TripLog")
   let fileUrl = ""
   if (tripLog.tripLogPhotoUrl) {
     fileUrl = getFileUrl(tripLog.tripLogPhotoUrl)
@@ -41,24 +41,20 @@ export default async function TripLogItem({
   return (
     <div className="flex flex-col">
       <div
-        className={`flex flex-row ${
+        className={`flex flex-row border border-slate-100 ${
           tripLog.tripLogPhotoUrl ? "rounded-t-lg" : "rounded-lg"
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
         <div className="flex flex-col gap-1.5 lg:gap-2 justify-end w-full">
-          <Small>{format(tripLog.createdAt, "dd MMM hh:mm aaa")}</Small>
-          <Caption>{tripLog.odometerReading + t("Km")}</Caption>
+          <Caption>{format(tripLog.createdAt, "dd MMM hh:mm aaa")}</Caption>
+          <Small>{tripLog.odometerReading + t("Km")}</Small>
           <CaptionGrey>{tripLog.latLong}</CaptionGrey>
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 w-full">
-          <Caption>{tripLog.vehicle.vehicleNumber}</Caption>
-          <Caption>{tripLog.driver.name}</Caption>
           {tripLog.remarks && <Caption>{tripLog.remarks}</Caption>}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
-          <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
-            {getTripLogIcon(tripLog.type)}
-          </div>
+          {getTripLogIcon(tripLog.type)}
           <CaptionBold>{tripLog.type.toUpperCase()}</CaptionBold>
         </div>
       </div>
@@ -87,20 +83,44 @@ export default async function TripLogItem({
   )
 }
 
-const getTripLogIcon = (type: TripLogTypesEnum) => {
+function getTripLogIcon(type: TripLogTypesEnum) {
   const className = "size-4 lg:size-5 text-slate-500"
   switch (type) {
     case TripLogTypesEnum.START_TRIP:
-      return <LucidePlay className={className} />
+      return (
+        <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
+          <LucidePlay className={className} />
+        </div>
+      )
     case TripLogTypesEnum.ARRIVED:
-      return <LucideMapPinCheck className={className} />
+      return (
+        <div className="flex size-7 lg:size-8 bg-amber-100 rounded-full items-center justify-center">
+          <LucideMapPinCheck className={className} />
+        </div>
+      )
     case TripLogTypesEnum.PICKUP:
-      return <LucideHandshake className={className} />
+      return (
+        <div className="flex size-7 lg:size-8 bg-indigo-100 rounded-full items-center justify-center">
+          <LucideHandshake className={className} />
+        </div>
+      )
     case TripLogTypesEnum.DROP:
-      return <LucideFlagTriangleRight className={className} />
+      return (
+        <div className="flex size-7 lg:size-8 bg-green-100 rounded-full items-center justify-center">
+          <LucideFlagTriangleRight className={className} />
+        </div>
+      )
     case TripLogTypesEnum.END_TRIP:
-      return <LucideCheckCheck className={className} />
+      return (
+        <div className="flex size-7 lg:size-8 bg-slate-700 rounded-full items-center justify-center">
+          <LucideCheckCheck className={"size-4 lg:size-5 text-slate-100"} />
+        </div>
+      )
     default:
-      return <LucidePin className={className} />
+      return (
+        <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
+          <LucidePin className={className} />
+        </div>
+      )
   }
 }

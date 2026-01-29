@@ -34,6 +34,8 @@ import InactivateVehicleAlertButton from "../../components/buttons/inactivateVeh
 import Link from "next/link"
 import ChangeVehiclePhotoSheet from "./changeVehiclePhotoSheet"
 
+//TODO: Add vehicle schedule chart
+
 export default async function VehicleDetailsPageComponent({
   vehicle,
 }: {

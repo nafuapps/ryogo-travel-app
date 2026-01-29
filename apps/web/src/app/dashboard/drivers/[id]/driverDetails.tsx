@@ -32,10 +32,12 @@ import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import ChangeDriverPhotoSheet from "./changeDriverPhotoSheet"
 import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 
+//TODO: Add driver schedule chart
+
 export default async function DriverDetailsPageComponent({
   driver,
 }: {
-  driver: FindDriverDetailsByIdType
+  driver: NonNullable<FindDriverDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.DriverDetails")
 

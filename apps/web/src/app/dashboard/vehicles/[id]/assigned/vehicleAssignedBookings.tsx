@@ -16,6 +16,7 @@ import {
 import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
+import { getCombinedDateTime } from "@/lib/utils"
 
 export default async function VehicleAssignedBookingsPageComponent({
   bookings,
@@ -83,11 +84,10 @@ function OngoingBookingComponent(
 function AssignedBookingComponent(
   props: FindVehicleAssignedBookingsByIdType[number],
 ) {
-  const startDate = moment(props.startDate)
-  const startTime = moment(props.startTime)
-  startDate.hours(startTime.hours())
-  startDate.minutes(startTime.minutes())
-  startDate.seconds(startTime.seconds())
+  const combinedDateTime = getCombinedDateTime(
+    props.startDate,
+    props.startTime!,
+  )
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
       <div className={gridClassName}>
@@ -104,11 +104,11 @@ function AssignedBookingComponent(
           <PBold>{props.driver}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <Caption>{format(props.startDate, "PP")}</Caption>
-          {props.startDate < new Date() ? (
-            <PRed>{startDate.fromNow()}</PRed>
+          <Caption>{format(combinedDateTime, "dd MMM hh:mm aaa")}</Caption>
+          {combinedDateTime < new Date() ? (
+            <PRed>{moment(combinedDateTime).fromNow()}</PRed>
           ) : (
-            <PBold>{startDate.fromNow()}</PBold>
+            <PBold>{moment(combinedDateTime).fromNow()}</PBold> // <PBold>{startDate.fromNow()}</PBold>
           )}
         </div>
       </div>

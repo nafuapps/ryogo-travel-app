@@ -1,6 +1,8 @@
 import {
   BookingStatusEnum,
+  DriverStatusEnum,
   InsertBookingType,
+  VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
 import { CreateNewBookingRequestType } from "../types/booking.types"
@@ -11,8 +13,8 @@ import { customerRepository } from "../repositories/customer.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
-import { userRepository } from "../repositories/user.repo"
 import { driverRepository } from "../repositories/driver.repo"
+import { vehicleRepository } from "../repositories/vehicle.repo"
 
 export const bookingServices = {
   //Bookings dashboard
@@ -377,6 +379,54 @@ export const bookingServices = {
       dropAddress,
     )
     return updatedBooking
+  },
+
+  //Start booking to in progress
+  async changeBookingToInProgress(
+    bookingId: string,
+    driverId: string,
+    vehicleId: string,
+  ) {
+    const booking = await bookingRepository.updateStatus(
+      bookingId,
+      BookingStatusEnum.IN_PROGRESS,
+    )
+    const driver = await driverRepository.updateStatus(
+      driverId,
+      DriverStatusEnum.ON_TRIP,
+    )
+    const vehicle = await vehicleRepository.updateStatus(
+      vehicleId,
+      VehicleStatusEnum.ON_TRIP,
+    )
+    if (!booking[0] || !driver[0] || !vehicle[0]) {
+      return
+    }
+    return booking[0]
+  },
+
+  //End booking to completed
+  async changeBookingToCompleted(
+    bookingId: string,
+    driverId: string,
+    vehicleId: string,
+  ) {
+    const booking = await bookingRepository.updateStatus(
+      bookingId,
+      BookingStatusEnum.COMPLETED,
+    )
+    const driver = await driverRepository.updateStatus(
+      driverId,
+      DriverStatusEnum.AVAILABLE,
+    )
+    const vehicle = await vehicleRepository.updateStatus(
+      vehicleId,
+      VehicleStatusEnum.AVAILABLE,
+    )
+    if (!booking[0] || !driver[0] || !vehicle[0]) {
+      return
+    }
+    return booking[0]
   },
 
   //Cancel a booking

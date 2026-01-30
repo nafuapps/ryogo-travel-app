@@ -23,16 +23,19 @@ export default async function ModifyExpensePage({
   }
 
   const user = await getCurrentUser()
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
   const expenseDetails = await expenseServices.getExpenseDetailsById(expId)
 
   //Only owner or assigned user can modify expenses
   if (
-    !user ||
     !expenseDetails ||
-    (user?.userRole != UserRolesEnum.OWNER &&
-      user?.userId != bookingDetails?.assignedUser.id)
+    !bookingDetails ||
+    (user.userRole != UserRolesEnum.OWNER &&
+      user.userId != bookingDetails.assignedUser.id)
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
@@ -41,11 +44,7 @@ export default async function ModifyExpensePage({
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses/modify"} />
-      <ModifyExpensePageComponent
-        bookingId={id}
-        expenseId={expId}
-        expenseDetails={expenseDetails}
-      />
+      <ModifyExpensePageComponent expenseDetails={expenseDetails} />
     </div>
   )
 }

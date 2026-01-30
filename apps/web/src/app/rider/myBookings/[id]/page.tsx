@@ -3,15 +3,14 @@
 import { mainClassName } from "@/components/page/pageCommons"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "../../components/riderHeader"
-import { BookingRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {
   BookingStatusEnum,
-  TripLogTypesEnum,
+  DriverStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import RiderMyCompletedBookingPageComponent from "./completedBooking"
 import RiderMyOngoingBookingPageComponent from "./currentBooking"
-import RiderMyAssignedBookingPageComponent from "./upcomingBooking"
+import RiderMyUpcomingBookingPageComponent from "./upcomingBooking"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 
 export default async function MyBookingPage({
@@ -21,29 +20,14 @@ export default async function MyBookingPage({
 }) {
   const id = (await params).id
 
-  //Invalid booking id regex check
-  if (!BookingRegex.safeParse(id).success) {
-    redirect("/rider/myBookings", RedirectType.replace)
-  }
-
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
-
-  //Lead or cancelled or unassigned bookings are not accessible
-  if (
-    !bookingDetails ||
-    bookingDetails.assignedDriverId == null ||
-    bookingDetails.assignedVehicleId == null ||
-    [BookingStatusEnum.CANCELLED, BookingStatusEnum.LEAD].includes(
-      bookingDetails.status,
-    )
-  ) {
+  if (!bookingDetails || bookingDetails.assignedDriverId == null) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
   const driver = await driverServices.findDriverDetailsById(
     bookingDetails.assignedDriverId,
   )
-
   if (!driver) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
@@ -53,9 +37,12 @@ export default async function MyBookingPage({
     return (
       <div className={mainClassName}>
         <RiderHeader pathName={"/rider/myBookings/[id]"} />
-        <RiderMyAssignedBookingPageComponent
+        <RiderMyUpcomingBookingPageComponent
           booking={bookingDetails}
-          driver={driver}
+          canStartTrip={
+            bookingDetails.startDate <= new Date() &&
+            driver.status == DriverStatusEnum.AVAILABLE
+          }
         />
       </div>
     )
@@ -64,20 +51,14 @@ export default async function MyBookingPage({
     return (
       <div className={mainClassName}>
         <RiderHeader pathName={"/rider/myBookings/[id]"} />
-        <RiderMyOngoingBookingPageComponent
-          booking={bookingDetails}
-          driver={driver}
-        />
+        <RiderMyOngoingBookingPageComponent booking={bookingDetails} />
       </div>
     )
   }
   return (
     <div className={mainClassName}>
       <RiderHeader pathName={"/rider/myBookings/[id]"} />
-      <RiderMyCompletedBookingPageComponent
-        booking={bookingDetails}
-        driver={driver}
-      />
+      <RiderMyCompletedBookingPageComponent booking={bookingDetails} />
     </div>
   )
 }

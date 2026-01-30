@@ -205,7 +205,7 @@ export default function NewCustomerForm({
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
-            variant={"ghost"}
+            variant={"outline"}
             size={"default"}
             type="button"
             disabled={formData.formState.isSubmitting}

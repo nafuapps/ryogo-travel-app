@@ -25,12 +25,8 @@ import DeleteExpenseAlertButton from "@/app/dashboard/components/buttons/deleteE
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export default function ModifyExpensePageComponent({
-  bookingId,
-  expenseId,
   expenseDetails,
 }: {
-  bookingId: string
-  expenseId: string
   expenseDetails: SelectExpenseType
 }) {
   const t = useTranslations("Dashboard.ModifyExpense")
@@ -82,9 +78,11 @@ export default function ModifyExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyExpenseType) {
-    if (await updateExpenseAction({ ...values, expenseId })) {
+    if (
+      await updateExpenseAction({ expenseId: expenseDetails.id, ...values })
+    ) {
       toast.success(t("Success"))
-      router.replace(`/dashboard/bookings/${bookingId}/expenses`)
+      router.replace(`/dashboard/bookings/${expenseDetails.bookingId}/expenses`)
     } else {
       toast.error(t("Error"))
     }
@@ -133,11 +131,11 @@ export default function ModifyExpensePageComponent({
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <DeleteExpenseAlertButton
-            bookingId={bookingId}
-            expenseId={expenseId}
+            bookingId={expenseDetails.bookingId}
+            expenseId={expenseDetails.id}
           />
           <Button
-            variant={"link"}
+            variant={"outline"}
             size={"default"}
             type="button"
             disabled={formData.formState.isSubmitting}

@@ -122,7 +122,7 @@ export default function LoginPasswordPageComponent({
             >
               {t("Back")}
             </Button>
-            <Button variant={"link"}>
+            <Button variant={"outline"}>
               <Link href={`/auth/forgot-password/confirm-email/${userId}`}>
                 {t("ForgotCTA")}
               </Link>

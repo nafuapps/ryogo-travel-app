@@ -159,7 +159,7 @@ export default function ModifyTransactionPageComponent({
             transactionId={transactionId}
           />
           <Button
-            variant={"link"}
+            variant={"outline"}
             size={"default"}
             type="button"
             disabled={formData.formState.isSubmitting}

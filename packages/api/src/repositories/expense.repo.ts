@@ -59,7 +59,6 @@ export const expenseRepository = {
     amount: number,
     type: ExpenseTypesEnum,
     remarks?: string,
-    expensePhotoUrl?: string,
   ) {
     return db
       .update(expenses)
@@ -67,7 +66,6 @@ export const expenseRepository = {
         amount,
         type,
         remarks,
-        expensePhotoUrl,
       })
       .where(eq(expenses.id, expenseId))
       .returning()

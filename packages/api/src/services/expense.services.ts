@@ -18,43 +18,32 @@ export const expenseServices = {
       agencyId: data.agencyId,
     }
     const addedExpense = await expenseRepository.createExpense(newExpenseData)
-    console.log("Added Expense:", addedExpense)
-    const expenseId = addedExpense[0]?.id
+    if (!addedExpense[0]) return
 
     //If there is a url for expense photo, upload it to cloud storage
-    if (data.expensePhoto && data.expensePhoto.length > 0 && expenseId) {
-      this.uploadExpensePhoto(expenseId, data.expensePhoto[0]!)
+    if (data.expensePhoto && data.expensePhoto[0]) {
+      await expenseServices.uploadExpensePhoto(
+        addedExpense[0].id,
+        data.expensePhoto[0],
+      )
     }
-
-    return addedExpense
+    return addedExpense[0]
   },
 
   //Modify an expense's details
   async modifyExpense(data: UpdateExpenseRequestType) {
-    let photoUrl
     //If there is a url for expense photo, upload it to cloud storage
-    if (data.expensePhoto && data.expensePhoto.length > 0) {
-      photoUrl = await this.uploadExpensePhoto(
-        data.expenseId,
-        data.expensePhoto[0]!
-      )
+    if (data.expensePhoto && data.expensePhoto[0]) {
+      await this.uploadExpensePhoto(data.expenseId, data.expensePhoto[0])
     }
 
-    const updatedExpense = photoUrl
-      ? await expenseRepository.updateExpenseDetails(
-          data.expenseId,
-          data.amount,
-          data.type,
-          data.remarks,
-          photoUrl
-        )
-      : await expenseRepository.updateExpenseDetails(
-          data.expenseId,
-          data.amount,
-          data.type,
-          data.remarks
-        )
-    return updatedExpense
+    const updatedExpense = await expenseRepository.updateExpenseDetails(
+      data.expenseId,
+      data.amount,
+      data.type,
+      data.remarks,
+    )
+    return updatedExpense[0]
   },
 
   //Modify anexpense approval status
@@ -66,18 +55,16 @@ export const expenseServices = {
   //Upload expense photo
   async uploadExpensePhoto(expenseId: string, file: File) {
     //Name file
-    const fileName = `${Date.now()}-${file?.name}`
+    const fileName = `${Date.now()}-${file.name}`
 
     // Upload to Supabase Storage
     const uploadResult = await uploadFile(
       file!,
-      `${expenseId}/proof/${fileName}`
+      `${expenseId}/proof/${fileName}`,
     )
-
     //Update photoUrl in DB
-    const photoUrl = uploadResult!.path
-    await expenseRepository.updateExpensePhotoUrl(expenseId, photoUrl)
-    return photoUrl
+    await expenseRepository.updateExpensePhotoUrl(expenseId, uploadResult.path)
+    return uploadResult.path
   },
 
   //Get expense details by expense id

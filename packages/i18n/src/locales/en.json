@@ -2690,13 +2690,13 @@
     "MyBooking": {
       "BookingInfo": "BOOKING INFO",
       "BookingId": "Booking ID",
-      "CustomerName": "Name",
-      "CustomerAddress": "Address",
+      "CustomerName": "Customer Name",
       "CallCustomer": "Call Customer",
       "TripInfo": "TRIP INFO",
       "From": "From",
       "To": "To",
-      "Distance": "Distance",
+      "Distance": "City Distance",
+      "TotalDistance": "Total Distance",
       "StartDate": "Start Date",
       "EndDate": "End Date",
       "StartTime": "Start Time",
@@ -2712,6 +2712,7 @@
       "AddExpense":"Add Expense",
       "Expenses":"Expenses",
       "TripLogs":"Trip Logs",
+      "Back":"Back",
       "StartTrip": {
         "Title": "Start Trip",
         "Field1": {
@@ -2810,8 +2811,74 @@
         "Proof":" View Attachment"
       }
     },
-    "AddExpense":{},
-    "ModifyExpense":{},
+    "AddRiderExpense":{
+      "Title": "New Expense",
+      "Field1": {
+        "Title": "Expense type",
+        "Description": "Select type of item purchased",
+        "Error1": "Expense type is required"
+      },
+      "Field2": {
+        "Title": "Amount (in ₹)",
+        "Placeholder": "500",
+        "Error1": "Amount must be a number",
+        "Error2": "Amount must be atleast ₹1",
+        "Error3": "Amount must be less than ₹1000000",
+        "Error4": "Amount cannot be in decimals",
+        "Error5": "Amount must be a positive number"
+      },
+      "Field3": {
+        "Title": "Remarks (optional)",
+        "Placeholder": "Enter any remarks regarding this expense",
+        "Error1": "Remarks must be less than 300 characters"
+      },
+      "Field4": {
+        "Title": "Upload proof (optional)",
+        "Placeholder": "UPLOAD",
+        "Description": "Upload the expense document photo",
+        "Error1": "Image file size should be less than 1MB",
+        "Error2": "Only image or pdf files are allowed"
+      },
+      "PrimaryCTA": "Create Expense",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "Expense added successfully!",
+      "Error": "Cannot add expense.. Try again later!"
+    },
+    "ModifyRiderExpense":{
+      "Title": "Modify Expense",
+      "Field1": {
+        "Title": "Expense type",
+        "Description": "Select type of item purchased",
+        "Error1": "Expense type is required"
+      },
+      "Field2": {
+        "Title": "Amount (in ₹)",
+        "Placeholder": "500",
+        "Error1": "Amount must be a number",
+        "Error2": "Amount must be atleast ₹1",
+        "Error3": "Amount must be less than ₹1000000",
+        "Error4": "Amount cannot be in decimals",
+        "Error5": "Amount must be a positive number"
+      },
+      "Field3": {
+        "Title": "Remarks (optional)",
+        "Placeholder": "Enter any remarks regarding this expense",
+        "Error1": "Remarks must be less than 300 characters"
+      },
+      "Field4": {
+        "Title": "Upload proof (optional)",
+        "Placeholder": "UPLOAD",
+        "Description": "Upload the expense document photo",
+        "Error1": "Image file size should be less than 1MB",
+        "Error2": "Only image or pdf files are allowed"
+      },
+      "PrimaryCTA": "Save changes",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "Expense details modified successfully!",
+      "Error": "Cannot modify expense.. Try again later!"
+    },
     "MyActions": {},
     "MyVehicle": {
       "BasicInfo": "Basic info",

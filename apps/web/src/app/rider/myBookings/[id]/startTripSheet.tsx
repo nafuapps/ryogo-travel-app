@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -35,6 +35,7 @@ export default function StartTripSheet({
   const t = useTranslations("Rider.MyBooking.StartTrip")
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const [open, setOpen] = useState(false)
 
   const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
 
@@ -91,6 +92,7 @@ export default function StartTripSheet({
         })
       ) {
         router.refresh()
+        setOpen(false)
       } else {
         toast.error(t("Error"))
         router.replace("/rider/myBookings")
@@ -99,7 +101,7 @@ export default function StartTripSheet({
   }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
         <Button variant="default" className="w-full">
           {t("Title")}
@@ -136,11 +138,9 @@ export default function StartTripSheet({
           </form>
         </Form>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit" disabled={isPending} form="startTrip">
-              {isPending ? t("Loading") : t("Start")}
-            </Button>
-          </SheetClose>
+          <Button type="submit" disabled={isPending} form="startTrip">
+            {isPending ? t("Loading") : t("Start")}
+          </Button>
           <SheetClose asChild>
             <Button variant="outline" disabled={isPending}>
               {t("Close")}

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -38,6 +38,7 @@ export default function EndTripSheet({
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
+  const [open, setOpen] = useState(false)
 
   const schema = z.object({
     odometerReading: z.coerce
@@ -92,6 +93,7 @@ export default function EndTripSheet({
         })
       ) {
         router.refresh()
+        setOpen(false)
       } else {
         toast.error(t("Error"))
         router.replace("/rider/myBookings")
@@ -100,7 +102,7 @@ export default function EndTripSheet({
   }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
         <Button variant="default" className="w-full">
           {t("Title")}

@@ -41,7 +41,7 @@ export default function NewExpensePageComponent({
       .multipleOf(1, t("Field2.Error4"))
       .positive(t("Field2.Error5")),
     remarks: z.string().max(300, t("Field3.Error1")).optional(),
-    txnPhoto: z
+    expensePhoto: z
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
@@ -116,8 +116,8 @@ export default function NewExpensePageComponent({
             placeholder={t("Field3.Placeholder")}
           />
           <DashboardFileInput
-            name={"txnPhoto"}
-            register={formData.register("txnPhoto")}
+            name={"expensePhoto"}
+            register={formData.register("expensePhoto")}
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
@@ -132,7 +132,7 @@ export default function NewExpensePageComponent({
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
-            variant={"ghost"}
+            variant={"outline"}
             size={"default"}
             type="button"
             disabled={formData.formState.isSubmitting}

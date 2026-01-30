@@ -74,7 +74,7 @@ export default async function RiderExpenseItem({
             {expense.addedByUser.id == currentUser?.userId && (
               <Link
                 href={
-                  `/rider/myBooking/${bookingId}/modify-expense/${expense.id}` as unknown as UrlObject
+                  `/rider/myBookings/${bookingId}/modify-expense/${expense.id}` as unknown as UrlObject
                 }
               >
                 <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">

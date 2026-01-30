@@ -954,6 +954,7 @@ export const bookingRepository = {
           },
         },
         tripLogs: {
+          orderBy: (tripLogs, { asc }) => [asc(tripLogs.createdAt)],
           columns: {
             id: true,
             type: true,

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -39,6 +39,7 @@ export default function MidTripSheet({
   const t = useTranslations("Rider.MyBooking.MidTrip")
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const [open, setOpen] = useState(false)
 
   const latLong = useLocation()
   console.log(latLong)
@@ -106,6 +107,7 @@ export default function MidTripSheet({
         })
       ) {
         router.refresh()
+        setOpen(false)
       } else {
         toast.error(t("Error", { type: type }))
         router.replace("/rider/myBookings")
@@ -114,7 +116,7 @@ export default function MidTripSheet({
   }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
         <Button variant="default" className="w-full">
           {t("Title", { type: type })}
@@ -151,11 +153,9 @@ export default function MidTripSheet({
           </form>
         </Form>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit" disabled={isPending} form="midTrip">
-              {isPending ? t("Loading") : t("Mid", { type: type })}
-            </Button>
-          </SheetClose>
+          <Button type="submit" disabled={isPending} form="midTrip">
+            {isPending ? t("Loading") : t("Mid", { type: type })}
+          </Button>
           <SheetClose asChild>
             <Button variant="outline" disabled={isPending}>
               {t("Close")}

@@ -1,7 +1,7 @@
 import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import { BookingCommingInfo } from "@/app/rider/components/myBookingCommon"
+import { BookingCommonInfo } from "@/app/rider/components/myBookingCommon"
 import { SmallBold } from "@/components/typography"
 import RiderExpenseItem from "./riderExpenseItem"
 import RiderTripLogItem from "./riderTripLogItem"
@@ -17,7 +17,7 @@ export default async function RiderMyCompletedBookingPageComponent({
 
   return (
     <div id="RiderCompletedBookingPage" className={pageClassName}>
-      <BookingCommingInfo booking={booking} canCallCustomer={false} />
+      <BookingCommonInfo booking={booking} canCallCustomer={false} />
       <div
         id="CompletedBookingTripLogs"
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"

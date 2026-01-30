@@ -1,6 +1,7 @@
 "use server"
 
 import { updateSessionUserStatus } from "@/lib/session"
+import { generateUserPhotoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -11,10 +12,9 @@ export async function addAgentAction(data: AddAgentRequestType) {
   const agent = await userServices.addAgentUser(data)
   if (agent.id && data.data.photos && data.data.photos[0]) {
     const photo = data.data.photos[0]
-    const fileName = `${Date.now()}-${photo.name}`
     const uploadedPhoto = await uploadFile(
       photo,
-      `${agent.id}/photo/${fileName}`,
+      generateUserPhotoPathName(agent.id, photo),
     )
     await userServices.updateUserPhoto(agent.id, uploadedPhoto.path)
   }

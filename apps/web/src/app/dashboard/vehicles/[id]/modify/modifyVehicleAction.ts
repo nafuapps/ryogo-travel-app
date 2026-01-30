@@ -1,5 +1,10 @@
 "use server"
 
+import {
+  generateInsurancePhotoPathName,
+  generatePUCPhotoPathName,
+  generateRCPhotoPathName,
+} from "@/lib/utils"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import {
   SelectVehicleType,
@@ -34,27 +39,24 @@ export async function modifyVehicleAction(
   // Upload files to Supabase Storage
   if (data.rcPhotos && data.rcPhotos[0]) {
     const rc = data.rcPhotos[0]
-    const uploadedFile = await uploadFile(
-      rc,
-      `${id}/rc/${Date.now()}-${rc.name}`,
-    )
-    rcUrl = uploadedFile?.path
+    const uploadedFile = await uploadFile(rc, generateRCPhotoPathName(id, rc))
+    rcUrl = uploadedFile.path
   }
   if (data.pucPhotos && data.pucPhotos[0]) {
     const puc = data.pucPhotos[0]
     const uploadedFile = await uploadFile(
       puc,
-      `${id}/puc/${Date.now()}-${puc.name}`,
+      generatePUCPhotoPathName(id, puc),
     )
-    pucUrl = uploadedFile?.path
+    pucUrl = uploadedFile.path
   }
   if (data.insurancePhotos && data.insurancePhotos[0]) {
     const insurance = data.insurancePhotos[0]
     const uploadedFile = await uploadFile(
       insurance,
-      `${id}/insurance/${Date.now()}-${insurance.name}`,
+      generateInsurancePhotoPathName(id, insurance),
     )
-    insuranceUrl = uploadedFile?.path
+    insuranceUrl = uploadedFile.path
   }
 
   const vehicle: SelectVehicleType[] = await vehicleServices.modifyVehicle(

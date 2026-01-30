@@ -267,7 +267,7 @@ export function CompletedBookingComponent({
   )
 }
 
-export async function BookingCommingInfo({
+export async function BookingCommonInfo({
   booking,
   canCallCustomer,
 }: {

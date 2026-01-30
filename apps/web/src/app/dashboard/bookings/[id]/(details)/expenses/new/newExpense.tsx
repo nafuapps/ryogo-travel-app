@@ -76,10 +76,10 @@ export default function NewExpensePageComponent({
   //Form submit
   async function onSubmit(values: NewExpenseType) {
     const addSuccess = await addExpenseAction({
-      ...values,
       bookingId,
       userId,
       agencyId,
+      ...values,
     })
     if (addSuccess) {
       toast.success(t("Success"))

@@ -79,7 +79,11 @@ export default function ModifyExpensePageComponent({
   //Form submit
   async function onSubmit(values: ModifyExpenseType) {
     if (
-      await updateExpenseAction({ expenseId: expenseDetails.id, ...values })
+      await updateExpenseAction({
+        expenseId: expenseDetails.id,
+        bookingId: expenseDetails.bookingId,
+        ...values,
+      })
     ) {
       toast.success(t("Success"))
       router.replace(`/dashboard/bookings/${expenseDetails.bookingId}/expenses`)

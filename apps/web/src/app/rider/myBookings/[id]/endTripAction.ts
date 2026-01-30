@@ -1,4 +1,5 @@
 "use server"
+import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -37,10 +38,13 @@ export async function endTripAction(data: {
 
   //Upload triplog photo if attached
   if (data.tripLogPhoto && data.tripLogPhoto[0]) {
-    const fileName = `${Date.now()}-${data.tripLogPhoto[0].name}-${TripLogTypesEnum.END_TRIP}-${newTripLog.id}`
     const uploadedFile = await uploadFile(
       data.tripLogPhoto[0],
-      `${data.bookingId}/tripLogs/${fileName}`,
+      generateTripLogPhotoPathName(
+        data.bookingId,
+        newTripLog.id,
+        data.tripLogPhoto[0],
+      ),
     )
     await tripLogServices.changeTripLogPhotoUrl(
       newTripLog.id,

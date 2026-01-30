@@ -12,6 +12,7 @@ export type AddExpenseRequestType = {
 
 export type UpdateExpenseRequestType = {
   expenseId: string
+  bookingId: string
   type: ExpenseTypesEnum
   amount: number
   remarks?: string | undefined

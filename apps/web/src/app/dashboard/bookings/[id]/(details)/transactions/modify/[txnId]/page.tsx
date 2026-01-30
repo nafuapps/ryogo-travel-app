@@ -42,11 +42,7 @@ export default async function ModifyTransactionPage({
       <DashboardHeader
         pathName={"/dashboard/bookings/[id]/transactions/modify"}
       />
-      <ModifyTransactionPageComponent
-        bookingId={id}
-        transactionId={txnId}
-        transactionDetails={transactionDetails}
-      />
+      <ModifyTransactionPageComponent transactionDetails={transactionDetails} />
     </div>
   )
 }

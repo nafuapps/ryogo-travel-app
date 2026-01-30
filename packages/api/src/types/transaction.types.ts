@@ -18,6 +18,7 @@ export type AddTransactionRequestType = {
 
 export type UpdateTransactionRequestType = {
   transactionId: string
+  bookingId: string
   type: TransactionTypesEnum
   amount: number
   mode: TransactionModesEnum

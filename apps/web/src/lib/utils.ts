@@ -51,6 +51,62 @@ export function getCombinedDateTime(date: Date, time: string) {
   return combinedDateTime
 }
 
+export function generateAgencyLogoPathName(agencyId: string, logo: File) {
+  return `agencies/${agencyId}/logo/${Date.now()}-${logo.name}`
+}
+
+export function generateUserPhotoPathName(userId: string, photo: File) {
+  return `users/${userId}/photo/${Date.now()}-${photo.name}`
+}
+
+export function generateInsurancePhotoPathName(vehicleId: string, photo: File) {
+  return `vehicles/${vehicleId}/insurancePhoto/${Date.now()}-${photo.name}`
+}
+
+export function generateRCPhotoPathName(vehicleId: string, photo: File) {
+  return `vehicles/${vehicleId}/rcPhoto/${Date.now()}-${photo.name}`
+}
+
+export function generatePUCPhotoPathName(vehicleId: string, photo: File) {
+  return `vehicles/${vehicleId}/pucPhoto/${Date.now()}-${photo.name}`
+}
+
+export function generateVehiclePhotoPathName(vehicleId: string, photo: File) {
+  return `vehicles/${vehicleId}/vehiclePhoto/${Date.now()}-${photo.name}`
+}
+
+export function generateLicensePhotoPathName(driverId: string, photo: File) {
+  return `drivers/${driverId}/licensePhoto/${Date.now()}-${photo.name}`
+}
+
+export function generateCustomerPhotoPathName(customerId: string, photo: File) {
+  return `customers/${customerId}/photo/${Date.now()}-${photo.name}`
+}
+
+export function generateExpensePhotoPathName(
+  bookingId: string,
+  expenseId: string,
+  photo: File,
+) {
+  return `bookings/${bookingId}/expenses/${expenseId}/photo/${Date.now()}-${photo.name}`
+}
+
+export function generateTransactionPhotoPathName(
+  bookingId: string,
+  txnId: string,
+  photo: File,
+) {
+  return `bookings/${bookingId}/transactions/${txnId}/photo/${Date.now()}-${photo.name}`
+}
+
+export function generateTripLogPhotoPathName(
+  bookingId: string,
+  tripLogId: string,
+  photo: File,
+) {
+  return `bookings/${bookingId}/tripLogs/${tripLogId}/photo/${Date.now()}-${photo.name}`
+}
+
 export const LOGIN_PASSWORD_ERROR = "passwordNotMatching"
 export const LOGIN_USER_ERROR = "userNotFound"
 export const LOGIN_SESSION_ERROR = "sessionNotCreated"

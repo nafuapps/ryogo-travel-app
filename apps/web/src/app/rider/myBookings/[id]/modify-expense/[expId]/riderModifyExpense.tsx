@@ -81,6 +81,7 @@ export default function RiderModifyExpensePageComponent({
     if (
       await modifyRiderExpenseAction({
         expenseId: expenseDetails.id,
+        bookingId: expenseDetails.bookingId,
         ...values,
       })
     ) {

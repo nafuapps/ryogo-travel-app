@@ -28,12 +28,8 @@ import DeleteTransactionAlertButton from "@/app/dashboard/components/buttons/del
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 
 export default function ModifyTransactionPageComponent({
-  bookingId,
-  transactionId,
   transactionDetails,
 }: {
-  bookingId: string
-  transactionId: string
   transactionDetails: SelectTransactionType
 }) {
   const t = useTranslations("Dashboard.ModifyTransaction")
@@ -89,9 +85,17 @@ export default function ModifyTransactionPageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyTransactionType) {
-    if (await updateTransactionAction({ ...values, transactionId })) {
+    if (
+      await updateTransactionAction({
+        ...values,
+        transactionId: transactionDetails.id,
+        bookingId: transactionDetails.bookingId,
+      })
+    ) {
       toast.success(t("Success"))
-      router.replace(`/dashboard/bookings/${bookingId}/transactions`)
+      router.replace(
+        `/dashboard/bookings/${transactionDetails.bookingId}/transactions`,
+      )
     } else {
       toast.error(t("Error"))
     }
@@ -155,8 +159,8 @@ export default function ModifyTransactionPageComponent({
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <DeleteTransactionAlertButton
-            bookingId={bookingId}
-            transactionId={transactionId}
+            bookingId={transactionDetails.bookingId}
+            transactionId={transactionDetails.id}
           />
           <Button
             variant={"outline"}

@@ -1,5 +1,6 @@
 "use server"
 
+import { generateAgencyLogoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
@@ -10,7 +11,7 @@ export async function modifyAgencyAction(data: ModifyAgencyRequestType) {
     const logo = data.logo[0]
     const uploadedFile = await uploadFile(
       logo,
-      `${data.agencyId}/logo/${Date.now()}-${logo.name}`,
+      generateAgencyLogoPathName(data.agencyId, logo),
     )
     logoUrl = uploadedFile?.path
   }

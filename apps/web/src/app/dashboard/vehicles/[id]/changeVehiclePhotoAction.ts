@@ -1,5 +1,6 @@
 "use server"
 
+import { generateVehiclePhotoPathName } from "@/lib/utils"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
@@ -9,13 +10,14 @@ export async function changeVehiclePhotoAction(
 ) {
   if (photo && photo[0]) {
     const file = photo[0]
-    const fileName = `${Date.now()}-${file.name}`
     const uploadedPhoto = await uploadFile(
       file,
-      `${vehicleId}/vehiclePhoto/${fileName}`,
+      generateVehiclePhotoPathName(vehicleId, file),
     )
-    const url = uploadedPhoto!.path
-    const user = await vehicleServices.renewVehiclePhotoURL(vehicleId, url)
+    const user = await vehicleServices.renewVehiclePhotoURL(
+      vehicleId,
+      uploadedPhoto.path,
+    )
 
     if (!user) return false
     return true

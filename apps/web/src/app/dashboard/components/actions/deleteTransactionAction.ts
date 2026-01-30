@@ -4,6 +4,6 @@ import { transactionServices } from "@ryogo-travel-app/api/services/transaction.
 
 export async function deleteTransactionAction(id: string) {
   const deletedTransaction = await transactionServices.removeTransaction(id)
-  if (!deletedTransaction || deletedTransaction.length < 1) return false
+  if (!deletedTransaction) return false
   return true
 }

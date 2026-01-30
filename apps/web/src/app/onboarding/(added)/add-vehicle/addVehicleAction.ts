@@ -1,5 +1,11 @@
 "use server"
 
+import {
+  generateInsurancePhotoPathName,
+  generatePUCPhotoPathName,
+  generateRCPhotoPathName,
+  generateVehiclePhotoPathName,
+} from "@/lib/utils"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
@@ -18,33 +24,33 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
       const rc = data.data.rcPhotos[0]
       const uploadedFile = await uploadFile(
         rc,
-        `${vehicle.id}/rc/${Date.now()}-${rc.name}`,
+        generateRCPhotoPathName(vehicle.id, rc),
       )
-      rcUrl = uploadedFile?.path
+      rcUrl = uploadedFile.path
     }
     if (data.data.pucPhotos && data.data.pucPhotos[0]) {
       const puc = data.data.pucPhotos[0]
       const uploadedFile = await uploadFile(
         puc,
-        `${vehicle.id}/puc/${Date.now()}-${puc.name}`,
+        generatePUCPhotoPathName(vehicle.id, puc),
       )
-      pucUrl = uploadedFile?.path
+      pucUrl = uploadedFile.path
     }
     if (data.data.insurancePhotos && data.data.insurancePhotos[0]) {
       const insurance = data.data.insurancePhotos[0]
       const uploadedFile = await uploadFile(
         insurance,
-        `${vehicle.id}/insurance/${Date.now()}-${insurance.name}`,
+        generateInsurancePhotoPathName(vehicle.id, insurance),
       )
-      insuranceUrl = uploadedFile?.path
+      insuranceUrl = uploadedFile.path
     }
     if (data.data.vehiclePhotos && data.data.vehiclePhotos[0]) {
       const vehiclePhoto = data.data.vehiclePhotos[0]
       const uploadedFile = await uploadFile(
         vehiclePhoto,
-        `${vehicle.id}/vehiclePhoto/${Date.now()}-${vehiclePhoto.name}`,
+        generateVehiclePhotoPathName(vehicle.id, vehiclePhoto),
       )
-      vehiclePhotoUrl = uploadedFile?.path
+      vehiclePhotoUrl = uploadedFile.path
     }
 
     await vehicleServices.renewVehicleDocURLs(

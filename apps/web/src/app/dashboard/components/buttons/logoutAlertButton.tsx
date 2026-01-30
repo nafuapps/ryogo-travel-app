@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import BookingAlertDialog from "./bookingAlertDialog"
-import { logoutAction } from "../actions/logoutAction"
+import { logoutAction } from "@/app/actions/logoutAction"
 import { getTranslations } from "next-intl/server"
 
 export default async function LogoutAlertButton() {

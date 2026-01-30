@@ -9,7 +9,7 @@ import AssignUserTile from "./assignUserTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
-import { assignUserAction } from "./assignUserAction"
+import { assignUserAction } from "@/app/actions/assignUserAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
 
@@ -28,7 +28,7 @@ export default function AssignUserPageComponent({
   const [isPending, startTransition] = useTransition()
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(
-    booking.assignedUserId
+    booking.assignedUserId,
   )
 
   const canAssignUser =

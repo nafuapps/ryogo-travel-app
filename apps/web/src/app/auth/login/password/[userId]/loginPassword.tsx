@@ -21,7 +21,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { loginAction } from "./loginAction"
+import { loginAction } from "@/app/actions/loginAction"
 import {
   LOGIN_PASSWORD_ERROR,
   LOGIN_USER_ERROR,

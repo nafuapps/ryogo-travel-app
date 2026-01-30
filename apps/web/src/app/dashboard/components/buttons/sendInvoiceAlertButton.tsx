@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import BookingAlertDialog from "./bookingAlertDialog"
 import { Button } from "@/components/ui/button"
 import { useState, useTransition } from "react"
-import { sendInvoiceAction } from "../actions/sendInvoiceAction"
+import { sendInvoiceAction } from "@/app/actions/sendInvoiceAction"
 import { toast } from "sonner"
 import { Spinner } from "@/components/ui/spinner"
 
@@ -12,7 +12,7 @@ type SendInvoiceAlertButtonProps = {
   bookingId: string
 }
 export default function SendInvoiceAlertButton(
-  props: SendInvoiceAlertButtonProps
+  props: SendInvoiceAlertButtonProps,
 ) {
   const t = useTranslations("Dashboard.Buttons.SendInvoice")
 

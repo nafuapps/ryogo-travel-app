@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
-import { cancelBookingAction } from "../actions/cancelBookingAction"
+import { cancelBookingAction } from "@/app/actions/cancelBookingAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -13,7 +13,7 @@ type CancelBookingAlertButtonProps = {
   bookingId: string
 }
 export default function CancelBookingAlertButton(
-  props: CancelBookingAlertButtonProps
+  props: CancelBookingAlertButtonProps,
 ) {
   const [isCancelPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.CancelBooking")

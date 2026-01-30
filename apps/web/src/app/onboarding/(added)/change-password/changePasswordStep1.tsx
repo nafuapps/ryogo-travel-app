@@ -14,7 +14,7 @@ import { Form } from "@/components/ui/form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { changeNewUserPasswordAction } from "./changeNewUserPasswordAction"
+import { changePasswordAction } from "@/app/actions/changePasswordAction"
 
 export function ChangePasswordStep1(props: {
   userId: string
@@ -54,10 +54,11 @@ export function ChangePasswordStep1(props: {
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     //Change password in DB
-    const result = await changeNewUserPasswordAction(
+    const result = await changePasswordAction(
       props.userId,
       data.oldPassword,
       data.newPassword,
+      true,
     )
     if (result) {
       //If success, redirect

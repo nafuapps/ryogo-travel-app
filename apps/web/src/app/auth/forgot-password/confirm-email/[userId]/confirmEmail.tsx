@@ -19,8 +19,8 @@ import { Button } from "@/components/ui/button"
 import { H2, H5, PGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
-import { resetAction } from "./resetAction"
 import { toast } from "sonner"
+import { resetUserPasswordAction } from "@/app/actions/resetUserPasswordAction"
 
 export default function ConfirmEmailPageComponent({
   userId,
@@ -48,8 +48,8 @@ export default function ConfirmEmailPageComponent({
       methods.setError("email", { type: "manual", message: t("APIError") })
     }
     // Try Reset password
-    const resetSuccess = await resetAction(userId)
-    if (resetSuccess?.id) {
+    const resetSuccess = await resetUserPasswordAction(userId)
+    if (resetSuccess) {
       //Redirect to success page
       toast.success(t("Success"))
     } else {

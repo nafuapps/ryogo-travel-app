@@ -8,7 +8,7 @@ export async function changeCustomerPhotoAction(
   customerId: string,
   photo: FileList,
 ) {
-  if (photo && photo[0]) {
+  if (photo[0]) {
     const file = photo[0]
     const uploadedPhoto = await uploadFile(
       file,

@@ -19,7 +19,7 @@ import { useTranslations } from "next-intl"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { changeVehiclePhotoAction } from "./changeVehiclePhotoAction"
+import { changeVehiclePhotoAction } from "@/app/actions/changeVehiclePhotoAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 

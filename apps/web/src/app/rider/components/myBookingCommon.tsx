@@ -19,11 +19,7 @@ import {
   FindDriverAssignedBookingsByIdType,
   FindDriverCompletedBookingsByIdType,
 } from "@ryogo-travel-app/api/services/driver.services"
-import {
-  BookingStatusEnum,
-  BookingTypeEnum,
-  TripLogTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { BookingTypeEnum, TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { format } from "date-fns"
 import { LucideChevronRight } from "lucide-react"
 import moment from "moment"

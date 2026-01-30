@@ -36,7 +36,7 @@ import {
 } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
 import NewBookingTripInfo from "./newBookingTripInfo"
-import { newBookingAction } from "./newBookingAction"
+import { newBookingAction } from "@/app/actions/newBookingAction"
 
 type NewBookingFinalProps = {
   onPrev: () => void

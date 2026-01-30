@@ -2,13 +2,13 @@
 
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 
-export async function changeTransactionStatusAction(
+export async function changeTransactionApprovalAction(
   txnId: string,
-  status: boolean
+  status: boolean,
 ) {
   const updatedTransaction =
     await transactionServices.modifyTransactionApprovalStatus(txnId, status)
-  if (!updatedTransaction || updatedTransaction.length === 0) {
+  if (!updatedTransaction) {
     return false
   }
   return true

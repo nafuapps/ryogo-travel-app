@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { newVehicleRepairAction } from "./newVehicleRepairAction"
+import { newVehicleRepairAction } from "../../../../../actions/newVehicleRepairAction"
 
 export default function NewVehicleRepairPageComponent({
   userId,

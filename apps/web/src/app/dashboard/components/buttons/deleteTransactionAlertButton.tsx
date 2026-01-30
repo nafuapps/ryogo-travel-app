@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
-import { deleteTransactionAction } from "../actions/deleteTransactionAction"
+import { deleteTransactionAction } from "@/app/actions/deleteTransactionAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -14,7 +14,7 @@ type DeleteTransactionAlertButtonProps = {
   transactionId: string
 }
 export default function DeleteTransactionAlertButton(
-  props: DeleteTransactionAlertButtonProps
+  props: DeleteTransactionAlertButtonProps,
 ) {
   const [isCancelPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteTransaction")

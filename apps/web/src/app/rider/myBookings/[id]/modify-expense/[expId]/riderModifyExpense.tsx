@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { modifyRiderExpenseAction } from "./modifyRiderExpenseAction"
+import { modifyExpenseAction } from "../../../../../actions/modifyExpenseAction"
 import { Button } from "@/components/ui/button"
 import DeleteExpenseAlertButton from "@/app/dashboard/components/buttons/deleteExpenseAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
@@ -79,7 +79,7 @@ export default function RiderModifyExpensePageComponent({
   //Form submit
   async function onSubmit(values: ModifyExpenseType) {
     if (
-      await modifyRiderExpenseAction({
+      await modifyExpenseAction({
         expenseId: expenseDetails.id,
         bookingId: expenseDetails.bookingId,
         ...values,

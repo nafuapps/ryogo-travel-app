@@ -25,7 +25,7 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { startTripAction } from "./startTripAction"
+import { startTripAction } from "@/app/actions/startTripAction"
 
 export default function StartTripSheet({
   booking,

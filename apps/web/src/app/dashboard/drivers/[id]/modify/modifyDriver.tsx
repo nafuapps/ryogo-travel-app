@@ -1,6 +1,6 @@
 "use client"
 
-import { modifyDriverAction } from "@/app/dashboard/drivers/[id]/modify/modifyDriverAction"
+import { modifyDriverAction } from "@/app/actions/modifyDriverAction"
 import {
   DashboardTextarea,
   DashboardMultipleCheckbox,

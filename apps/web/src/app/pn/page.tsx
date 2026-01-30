@@ -3,7 +3,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { subscribeUser, unsubscribeUser, sendNotification } from "./actions"
+import {
+  subscribeUserAction,
+  unsubscribeUserAction,
+  sendNotificationAction,
+} from "../actions/pnActions"
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4)
@@ -51,18 +55,18 @@ function PushNotificationManager() {
     })
     setSubscription(sub)
     const serializedSub = JSON.parse(JSON.stringify(sub))
-    await subscribeUser(serializedSub)
+    await subscribeUserAction(serializedSub)
   }
 
   async function unsubscribeFromPush() {
     await subscription?.unsubscribe()
     setSubscription(null)
-    await unsubscribeUser()
+    await unsubscribeUserAction()
   }
 
   async function sendTestNotification() {
     if (subscription) {
-      await sendNotification(message)
+      await sendNotificationAction(message)
       setMessage("")
     }
   }

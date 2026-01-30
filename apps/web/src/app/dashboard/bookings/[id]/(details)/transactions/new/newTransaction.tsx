@@ -21,7 +21,7 @@ import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { addTransactionAction } from "./addTransactionAction"
+import { addTransactionAction } from "@/app/actions/addTransactionAction"
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 

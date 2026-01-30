@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { modifyVehicleRepairAction } from "./modifyVehicleRepairAction"
+import { modifyVehicleRepairAction } from "../../../../../../actions/modifyVehicleRepairAction"
 
 import { FindVehicleRepairByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 

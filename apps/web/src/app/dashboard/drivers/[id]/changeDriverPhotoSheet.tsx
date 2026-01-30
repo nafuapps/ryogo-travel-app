@@ -19,9 +19,9 @@ import { useTranslations } from "next-intl"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { changeDriverPhotoAction } from "./changeDriverPhotoAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { changeUserPhotoAction } from "@/app/actions/changeUserPhotoAction"
 
 export default function ChangeDriverPhotoSheet({ userId }: { userId: string }) {
   const t = useTranslations("Dashboard.DriverDetails.ChangePhoto")
@@ -58,7 +58,7 @@ export default function ChangeDriverPhotoSheet({ userId }: { userId: string }) {
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeDriverPhotoAction(userId, data.driverPhotos)) {
+      if (await changeUserPhotoAction(userId, data.driverPhotos)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -5,7 +5,7 @@ import { transactionServices } from "@ryogo-travel-app/api/services/transaction.
 import { UpdateTransactionRequestType } from "@ryogo-travel-app/api/types/transaction.types"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function updateTransactionAction(
+export async function modifyTransactionAction(
   data: UpdateTransactionRequestType,
 ) {
   //If there is a url for transaction photo, upload it to cloud storage

@@ -19,7 +19,7 @@ import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
 import { useEffect, useRef } from "react"
-import { newCustomerAction } from "./newCustomerAction"
+import { newCustomerAction } from "@/app/actions/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
 

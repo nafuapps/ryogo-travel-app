@@ -16,9 +16,9 @@ import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { addRiderExpenseAction } from "./addRiderExpenseAction"
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
+import { addExpenseAction } from "@/app/actions/addExpenseAction"
 
 export default function RiderAddExpensePageComponent({
   bookingId,
@@ -75,7 +75,7 @@ export default function RiderAddExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: NewExpenseType) {
-    const addSuccess = await addRiderExpenseAction({
+    const addSuccess = await addExpenseAction({
       agencyId,
       bookingId,
       userId,

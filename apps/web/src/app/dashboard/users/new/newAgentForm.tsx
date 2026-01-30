@@ -15,8 +15,8 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { newAgentAction } from "./newAgentAction"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { addAgentAction } from "@/app/actions/addAgentAction"
 
 export default function NewAgentForm({
   agencyId,
@@ -95,7 +95,7 @@ export default function NewAgentForm({
           photos: values.agentPhotos,
         },
       }
-      const createdAgent = await newAgentAction(newAgentData)
+      const createdAgent = await addAgentAction(newAgentData)
       if (createdAgent.id) {
         toast.success(t("Success"))
         router.replace(`/dashboard/users/${createdAgent.id}`)

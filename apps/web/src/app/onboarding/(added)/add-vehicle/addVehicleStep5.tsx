@@ -15,7 +15,7 @@ import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { addVehicleAction } from "./addVehicleAction"
+import { addVehicleAction } from "@/app/actions/addVehicleAction"
 
 export function AddVehicleConfirm(props: {
   onNext: () => void

@@ -12,7 +12,7 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { pageClassName } from "@/components/page/pageCommons"
-import { modifyVehicleAction } from "./modifyVehicleAction"
+import { modifyVehicleAction } from "../../../../actions/modifyVehicleAction"
 import {
   DashboardSelect,
   DashboardInput,

@@ -1,7 +1,6 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { changeTransactionStatusAction } from "./changeTransactionStatusAction"
 import { toast } from "sonner"
 import { CaptionGrey } from "@/components/typography"
 import { LucideCheckCheck, LucideCheck } from "lucide-react"
@@ -11,6 +10,7 @@ import {
   Tooltip,
   TooltipContent,
 } from "@/components/ui/tooltip"
+import { changeTransactionApprovalAction } from "@/app/actions/changeTransactionApprovalAction"
 
 export function TransactionApprovalButton({
   txnId,
@@ -23,7 +23,7 @@ export function TransactionApprovalButton({
   const router = useRouter()
 
   async function approveTransaction() {
-    if (await changeTransactionStatusAction(txnId, true)) {
+    if (await changeTransactionApprovalAction(txnId, true)) {
       toast.success(t("ApproveSuccess"))
     } else {
       toast.success(t("ApproveError"))
@@ -32,7 +32,7 @@ export function TransactionApprovalButton({
   }
 
   async function rejectTransaction() {
-    if (await changeTransactionStatusAction(txnId, false)) {
+    if (await changeTransactionApprovalAction(txnId, false)) {
       toast.info(t("RejectSuccess"))
     } else {
       toast.success(t("RejectError"))

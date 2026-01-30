@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
 import z from "zod"
-import { confirmBookingAction } from "../../../components/actions/confirmBookingAction"
+import { confirmBookingAction } from "@/app/actions/confirmBookingAction"
 import { useEffect, useTransition } from "react"
 import { Spinner } from "@/components/ui/spinner"
 import {
@@ -77,7 +77,7 @@ export default function ConfirmBookingPageComponent({
           values.pickupAddress,
           values.dropAddress,
           booking.customer.address ? false : true,
-          booking.customer.id
+          booking.customer.id,
         )
       ) {
         toast.success(t("ConfirmSuccess"))

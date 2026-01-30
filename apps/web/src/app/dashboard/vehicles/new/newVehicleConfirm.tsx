@@ -15,7 +15,7 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { newVehicleAction } from "./newVehicleAction"
+import { addVehicleAction } from "@/app/actions/addVehicleAction"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -51,7 +51,7 @@ export function NewVehicleConfirm(props: {
         vehiclePhotos: props.newVehicleFormData.vehiclePhotos,
       },
     }
-    const addedVehicle = await newVehicleAction(newVehicleData)
+    const addedVehicle = await addVehicleAction(newVehicleData)
 
     if (addedVehicle.id) {
       //Send to added vehicle details page

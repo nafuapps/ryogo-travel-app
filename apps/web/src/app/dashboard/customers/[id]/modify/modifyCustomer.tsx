@@ -1,6 +1,6 @@
 "use client"
 
-import { modifyCustomerAction } from "@/app/dashboard/customers/[id]/modify/modifyCustomerAction"
+import { modifyCustomerAction } from "@/app/actions/modifyCustomerAction"
 import {
   DashboardInput,
   DashboardSelect,

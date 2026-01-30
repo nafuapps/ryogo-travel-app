@@ -25,7 +25,7 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { endTripAction } from "./endTripAction"
+import { endTripAction } from "@/app/actions/endTripAction"
 import Link from "next/link"
 import { UrlObject } from "url"
 

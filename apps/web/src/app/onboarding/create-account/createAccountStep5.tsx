@@ -15,8 +15,8 @@ import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { loginAction } from "@/app/auth/login/password/[userId]/loginAction"
-import { createOwnerAccountAction } from "./createOwnerAccountAction"
+import { loginAction } from "@/app/actions/loginAction"
+import { createOwnerAccountAction } from "@/app/actions/createOwnerAccountAction"
 
 export function CreateAccountConfirm(props: {
   onNext: () => void

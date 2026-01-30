@@ -16,7 +16,7 @@ import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import { addDriverAction } from "./addDriverAction"
+import { addDriverAction } from "@/app/actions/addDriverAction"
 
 export function AddDriverConfirm(props: {
   onNext: () => void

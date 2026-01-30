@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { changeUserNameAction } from "./changeUserNameAction"
+import { changeUserNameAction } from "../../../app/actions/changeUserNameAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default function ChangeUserNameSheet({

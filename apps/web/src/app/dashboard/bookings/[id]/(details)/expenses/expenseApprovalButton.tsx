@@ -1,7 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { changeExpenseStatusAction } from "./changeExpenseStatusAction"
+import { changeExpenseApprovalAction } from "@/app/actions/changeExpenseApprovalAction"
 import { toast } from "sonner"
 import { CaptionGrey } from "@/components/typography"
 import { LucideCheckCheck, LucideCheck } from "lucide-react"
@@ -23,7 +23,7 @@ export function ExpenseApprovalButton({
   const router = useRouter()
 
   async function approveExpense() {
-    if (await changeExpenseStatusAction(expId, true)) {
+    if (await changeExpenseApprovalAction(expId, true)) {
       toast.success(t("ApproveSuccess"))
     } else {
       toast.success(t("ApproveError"))
@@ -32,7 +32,7 @@ export function ExpenseApprovalButton({
   }
 
   async function rejectExpense() {
-    if (await changeExpenseStatusAction(expId, false)) {
+    if (await changeExpenseApprovalAction(expId, false)) {
       toast.info(t("RejectSuccess"))
     } else {
       toast.success(t("RejectError"))

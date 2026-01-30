@@ -16,7 +16,7 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import { addAgentAction } from "./addAgentAction"
+import { addAgentAction } from "@/app/actions/addAgentAction"
 
 export function AddAgentConfirm(props: {
   onNext: () => void

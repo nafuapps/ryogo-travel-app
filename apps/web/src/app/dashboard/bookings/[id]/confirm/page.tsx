@@ -8,7 +8,7 @@ import { BookingRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 import { mainClassName } from "@/components/page/pageCommons"
 import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
-import { cancelBookingAction } from "../../../components/actions/cancelBookingAction"
+import { cancelBookingAction } from "@/app/actions/cancelBookingAction"
 
 export default async function ConfirmBookingPage({
   params,

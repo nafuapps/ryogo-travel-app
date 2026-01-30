@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
-import { inactivateUserAction } from "../actions/inactivateUserAction"
+import { inactivateUserAction } from "@/app/actions/inactivateUserAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 type InactivateUserAlertButtonProps = {

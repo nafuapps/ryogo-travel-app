@@ -9,7 +9,7 @@ import AssignVehicleTile from "./assignVehicleTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
-import { assignVehicleAction } from "./assignVehicleAction"
+import { assignVehicleAction } from "@/app/actions/assignVehicleAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
 
@@ -28,7 +28,7 @@ export default function AssignVehiclePageComponent({
   const [isPending, startTransition] = useTransition()
 
   const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(
-    booking.assignedVehicleId
+    booking.assignedVehicleId,
   )
 
   const canAssignVehicle =

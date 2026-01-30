@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
-import { deleteExpenseAction } from "../actions/deleteExpenseAction"
+import { deleteExpenseAction } from "@/app/actions/deleteExpenseAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -14,7 +14,7 @@ type DeleteExpenseAlertButtonProps = {
   expenseId: string
 }
 export default function DeleteExpenseAlertButton(
-  props: DeleteExpenseAlertButtonProps
+  props: DeleteExpenseAlertButtonProps,
 ) {
   const [isCancelPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteExpense")

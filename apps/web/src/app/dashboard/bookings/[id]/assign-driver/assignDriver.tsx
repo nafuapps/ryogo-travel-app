@@ -9,7 +9,7 @@ import AssignDriverTile from "./assignDriverTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
-import { assignDriverAction } from "./assignDriverAction"
+import { assignDriverAction } from "@/app/actions/assignDriverAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
 
@@ -28,7 +28,7 @@ export default function AssignDriverPageComponent({
   const [isPending, startTransition] = useTransition()
 
   const [selectedDriverId, setSelectedDriverId] = useState<string | null>(
-    booking.assignedDriverId
+    booking.assignedDriverId,
   )
 
   const canAssignDriver =

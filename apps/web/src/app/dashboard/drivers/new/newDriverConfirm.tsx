@@ -15,7 +15,7 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { newDriverAction } from "./newDriverAction"
+import { addDriverAction } from "@/app/actions/addDriverAction"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -45,7 +45,7 @@ export function NewDriverConfirm(props: {
         userPhotos: props.newDriverFormData.driverPhotos,
       },
     }
-    const addedDriver = await newDriverAction(newDriverData)
+    const addedDriver = await addDriverAction(newDriverData)
 
     if (addedDriver.id) {
       //Send to driver details page

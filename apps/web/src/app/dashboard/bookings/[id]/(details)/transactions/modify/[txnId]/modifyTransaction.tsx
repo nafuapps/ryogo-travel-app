@@ -12,7 +12,6 @@ import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
-  SelectTransactionType,
   TransactionModesEnum,
   TransactionsPartiesEnum,
   TransactionTypesEnum,
@@ -26,11 +25,12 @@ import { Button } from "@/components/ui/button"
 import DeleteTransactionAlertButton from "@/app/dashboard/components/buttons/deleteTransactionAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
+import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
 }: {
-  transactionDetails: SelectTransactionType
+  transactionDetails: NonNullable<FindTransactionDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.ModifyTransaction")
   const router = useRouter()

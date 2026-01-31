@@ -163,13 +163,13 @@ export const driverServices = {
       licenseExpiresOn,
       licensePhotoUrl,
     )
-    return driver
+    return driver[0]
   },
 
   //Add driver leave
   async addDriverLeave(data: InsertDriverLeaveType) {
     const leave = await driverLeaveRepository.createLeave(data)
-    return leave
+    return leave[0]
   },
 
   //Modify driver leave

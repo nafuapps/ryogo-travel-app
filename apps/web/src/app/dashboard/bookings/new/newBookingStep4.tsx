@@ -1,8 +1,8 @@
-import { CaptionGrey, H4, SmallGrey } from "@/components/typography";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   newBookingFormClassName,
   NewBookingFormDataType,
@@ -10,37 +10,37 @@ import {
   newBookingHeaderLineClassName,
   newBookingSectionClassName,
   NewBookingTotalSteps,
-} from "./newBookingCommon";
-import NewBookingStepsTracker from "./newBookingStepsTracker";
-import { Form } from "@/components/ui/form";
-import { DashboardInput } from "@/components/form/dashboardFormFields";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import { useCallback, useEffect } from "react";
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient";
-import { NewBookingGetRouteAPIResponseType } from "@ryogo-travel-app/api/types/route.types";
-import NewBookingTripInfo from "./newBookingTripInfo";
+} from "./newBookingCommon"
+import NewBookingStepsTracker from "./newBookingStepsTracker"
+import { Form } from "@/components/ui/form"
+import { DashboardInput } from "@/components/form/dashboardFormFields"
+import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
+import { useCallback, useEffect } from "react"
+import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
+import NewBookingTripInfo from "./newBookingTripInfo"
+import { FindOrCreateRouteByLocationsType } from "@ryogo-travel-app/api/services/route.services"
 
 const getRoute = async (data: NewBookingFormDataType) => {
-  const route = await apiClient<NewBookingGetRouteAPIResponseType>(
+  const route = await apiClient<FindOrCreateRouteByLocationsType>(
     `/api/new-booking/get-route?sourceCity=${data.tripSourceLocationCity}&sourceState=${data.tripSourceLocationState}&destinationCity=${data.tripDestinationLocationCity}&destinationState=${data.tripDestinationLocationState}`,
     {
       method: "GET",
-    }
-  );
-  return route;
-};
+    },
+  )
+  return route
+}
 
 type NewBookingStep4Props = {
-  onNext: () => void;
-  onPrev: () => void;
-  newBookingFormData: NewBookingFormDataType;
+  onNext: () => void
+  onPrev: () => void
+  newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
-  >;
-};
+  >
+}
 export default function NewBookingStep4(props: NewBookingStep4Props) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step4");
+  const t = useTranslations("Dashboard.NewBooking.Form.Step4")
 
   const step4Schema = z.object({
     //Cost
@@ -75,9 +75,9 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
       .max(3000, t("Field5.Error3"))
       .positive(t("Field5.Error4"))
       .multipleOf(1, t("Field5.Error5")),
-  });
+  })
 
-  type Step4Type = z.infer<typeof step4Schema>;
+  type Step4Type = z.infer<typeof step4Schema>
 
   //Form init
   const form = useForm<Step4Type>({
@@ -89,9 +89,9 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
       selectedCommissionRate: props.newBookingFormData.selectedCommissionRate,
       selectedDistance: props.newBookingFormData.selectedDistance,
     },
-  });
+  })
 
-  const setValue = form.setValue;
+  const setValue = form.setValue
   const fetchData = useCallback(async () => {
     if (!props.newBookingFormData.routeId) {
       getRoute(props.newBookingFormData).then((res) => {
@@ -102,16 +102,16 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
             sourceId: res.sourceId,
             destinationId: res.destinationId,
             selectedDistance: res.distance,
-          });
-          setValue("selectedDistance", res.distance);
+          })
+          setValue("selectedDistance", res.distance)
         }
-      });
+      })
     }
-  }, [props, setValue]);
+  }, [props, setValue])
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchData()
+  }, [fetchData])
 
   //Form submit
   function onSubmit(values: Step4Type) {
@@ -122,8 +122,8 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
       selectedAcChargePerDay: values.selectedAcChargePerDay,
       selectedCommissionRate: values.selectedCommissionRate,
       selectedDistance: values.selectedDistance,
-    });
-    props.onNext();
+    })
+    props.onNext()
   }
 
   return (
@@ -201,5 +201,5 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
         </form>
       </Form>
     </div>
-  );
+  )
 }

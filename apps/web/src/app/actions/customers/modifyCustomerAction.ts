@@ -1,7 +1,6 @@
 "use server"
 
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import { SelectCustomerType } from "@ryogo-travel-app/db/schema"
 
 export async function modifyCustomerAction(
   id: string,
@@ -14,7 +13,7 @@ export async function modifyCustomerAction(
     city: string
   },
 ) {
-  const customer: SelectCustomerType[] = await customerServices.modifyCustomer(
+  const customer = await customerServices.modifyCustomer(
     id,
     data.state,
     data.city,
@@ -23,5 +22,5 @@ export async function modifyCustomerAction(
     data.address,
     data.remarks,
   )
-  return customer[0]
+  return customer
 }

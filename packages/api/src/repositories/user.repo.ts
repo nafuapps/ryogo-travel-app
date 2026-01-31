@@ -192,6 +192,7 @@ export const userRepository = {
       .update(users)
       .set({ lastLogout: lastLogout })
       .where(eq(users.id, userId))
+      .returning({ id: users.id })
   },
 
   //Update password

@@ -4,6 +4,7 @@ import { logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 
 export async function logoutAction() {
-  await logout()
+  const user = await logout()
+  if (!user) return
   redirect("/auth/login", RedirectType.replace)
 }

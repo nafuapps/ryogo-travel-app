@@ -25,7 +25,7 @@ export default async function LoginAccountsPageComponent({
         ))}
       </div>
       <Link href={"/auth/login"}>
-        <Button variant={"secondary"} size={"lg"}>
+        <Button variant={"secondary"} size={"lg"} className="w-full">
           {t("SecondaryCTA")}
         </Button>
       </Link>

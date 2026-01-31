@@ -1,5 +1,5 @@
-//Login password page
 "use client"
+//Login password page
 
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,12 +22,7 @@ import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
-import {
-  LOGIN_PASSWORD_ERROR,
-  LOGIN_USER_ERROR,
-  LOGIN_UNKNOWN_ERROR,
-  LOGIN_SESSION_ERROR,
-} from "@ryogo-travel-app/api/services/user.services"
+// import { LOGIN_PASSWORD_ERROR } from "@ryogo-travel-app/api/services/user.services"
 
 // TODO: Add a feature to show the user had recently reset password
 
@@ -53,14 +48,10 @@ export default function LoginPasswordPageComponent({
   //Submit actions
   const onSubmit = async (data: FormFields) => {
     const loginResponse = await loginAction(userId, data.password)
-    if (loginResponse.error == LOGIN_PASSWORD_ERROR) {
+    if (loginResponse.error == "passwordNotMatching") {
       // Show password match error
       methods.setError("password", { type: "manual", message: t("APIError1") })
-    } else if (
-      loginResponse.error == LOGIN_USER_ERROR ||
-      loginResponse.error == LOGIN_SESSION_ERROR ||
-      loginResponse.error == LOGIN_UNKNOWN_ERROR
-    ) {
+    } else if (loginResponse.error) {
       // Show user not found error
       methods.setError("password", { type: "manual", message: t("APIError2") })
     } else {

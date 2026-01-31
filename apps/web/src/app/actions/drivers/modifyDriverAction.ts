@@ -2,7 +2,7 @@
 
 import { generateLicensePhotoPathName } from "@/lib/utils"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { SelectDriverType, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyDriverAction(
@@ -28,7 +28,7 @@ export async function modifyDriverAction(
     licenseUrl = uploadedFile.path
   }
 
-  const driver: SelectDriverType[] = await driverServices.modifyDriver(
+  const driver = await driverServices.modifyDriver(
     id,
     data.address,
     data.canDriveVehicleTypes,
@@ -37,5 +37,5 @@ export async function modifyDriverAction(
     data.licenseExpiresOn,
     licenseUrl,
   )
-  return driver[0]
+  return driver
 }

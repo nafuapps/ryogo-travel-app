@@ -32,7 +32,7 @@ export default async function RiderModifyExpensePage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const expenseDetails = await expenseServices.getExpenseDetailsById(expId)
+  const expenseDetails = await expenseServices.findExpenseDetailsById(expId)
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
   //Driver can modify expense which was added by him and for in progress booking only
   if (

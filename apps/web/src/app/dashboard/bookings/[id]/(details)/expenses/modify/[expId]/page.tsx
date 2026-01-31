@@ -28,7 +28,7 @@ export default async function ModifyExpensePage({
   }
 
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
-  const expenseDetails = await expenseServices.getExpenseDetailsById(expId)
+  const expenseDetails = await expenseServices.findExpenseDetailsById(expId)
 
   //Only owner or assigned user can modify expenses
   if (

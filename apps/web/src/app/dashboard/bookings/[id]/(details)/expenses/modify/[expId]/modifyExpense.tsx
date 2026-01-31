@@ -10,10 +10,7 @@ import { pageClassName } from "@/components/page/pageCommons"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  SelectExpenseType,
-  ExpenseTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -23,11 +20,12 @@ import { Button } from "@/components/ui/button"
 import DeleteExpenseAlertButton from "@/app/dashboard/components/buttons/deleteExpenseAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
+import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 
 export default function ModifyExpensePageComponent({
   expenseDetails,
 }: {
-  expenseDetails: SelectExpenseType
+  expenseDetails: NonNullable<FindExpenseDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.ModifyExpense")
   const router = useRouter()

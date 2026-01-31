@@ -6,11 +6,7 @@ import {
   SESSION_COOKIE_NAME,
 } from "./session"
 import { cookies } from "next/headers"
-import {
-  LOGIN_SESSION_ERROR,
-  LOGIN_UNKNOWN_ERROR,
-  userServices,
-} from "@ryogo-travel-app/api/services/user.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 // Get current user from session
 export async function getCurrentUser() {
@@ -37,7 +33,7 @@ export async function login(userId: string, password: string) {
   if (userData.data) {
     //2. create session
     const token = await createWebSession(userData.data)
-    if (!token) return { error: LOGIN_SESSION_ERROR }
+    if (!token) return { error: "sessionNotCreated" }
 
     //3. Return login success if token created
     return {
@@ -45,18 +41,19 @@ export async function login(userId: string, password: string) {
       userRole: userData.data.userRole,
     }
   }
-  return { error: LOGIN_UNKNOWN_ERROR }
+  return { error: "unknown" }
 }
 
 // Logout user - Delete session and log last logout time in DB
 export async function logout() {
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return null
+  if (!session) return
 
   const payload = (await decrypt(session)) as SessionPayload | undefined
-  if (!payload) return null
+  if (!payload) return
 
-  await userServices.checkLogoutInDB(payload.userId)
+  const user = await userServices.checkLogoutInDB(payload.userId)
+  if (!user) return
   await deleteWebSession()
+  return user
 }
-export { LOGIN_SESSION_ERROR }

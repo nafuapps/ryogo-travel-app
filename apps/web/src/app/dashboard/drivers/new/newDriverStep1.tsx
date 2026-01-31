@@ -19,14 +19,14 @@ import {
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { Button } from "@/components/ui/button"
-import { SelectUserType } from "@ryogo-travel-app/db/schema"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 
 export function NewDriverStep1(props: {
   onNext: () => void
   newDriverFormData: NewDriverFormDataType
   setNewDriverFormData: Dispatch<SetStateAction<NewDriverFormDataType>>
   agencyId: string
-  allDrivers: SelectUserType[]
+  allDrivers: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Dashboard.NewDriver.Step1")
 

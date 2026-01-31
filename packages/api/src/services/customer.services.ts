@@ -108,7 +108,7 @@ export const customerServices = {
       state,
     )
     if (!location) {
-      throw "Cannot find this location"
+      return
     }
     const customer = await customerRepository.updateCustomer(
       id,
@@ -118,7 +118,7 @@ export const customerServices = {
       address,
       remarks,
     )
-    return customer
+    return customer[0]
   },
   //Update customer photo url
   async updateCustomerPhoto(userId: string, url: string) {

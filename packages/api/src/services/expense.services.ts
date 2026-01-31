@@ -6,6 +6,11 @@ import {
 } from "../types/expense.types"
 
 export const expenseServices = {
+  //Get expense details by expense id
+  async findExpenseDetailsById(expenseId: string) {
+    return await expenseRepository.readExpenseById(expenseId)
+  },
+
   //Add a expense
   async addExpense(data: AddExpenseRequestType) {
     const newExpenseData: InsertExpenseType = {
@@ -33,26 +38,25 @@ export const expenseServices = {
 
   //Modify an expense approval status
   async modifyExpenseApprovalStatus(expId: string, status: boolean) {
-    const expense = expenseRepository.updateExpenseApprovalStatus(expId, status)
-    return expense
-  },
-
-  //update expense photo url
-  async changeExpensePhotoUrl(expenseId: string, url: string) {
-    const expense = await expenseRepository.updateExpensePhotoUrl(
-      expenseId,
-      url,
+    const expense = await expenseRepository.updateExpenseApprovalStatus(
+      expId,
+      status,
     )
     return expense[0]
   },
 
-  //Get expense details by expense id
-  async getExpenseDetailsById(expenseId: string) {
-    return expenseRepository.readExpenseById(expenseId)
+  //update expense photo url
+  async changeExpensePhotoUrl(expenseId: string, url: string) {
+    await expenseRepository.updateExpensePhotoUrl(expenseId, url)
   },
 
   //Delete a expense
   async removeExpense(expenseId: string) {
-    return expenseRepository.deleteExpense(expenseId)
+    const expenses = await expenseRepository.deleteExpense(expenseId)
+    return expenses[0]
   },
 }
+
+export type FindExpenseDetailsByIdType = Awaited<
+  ReturnType<typeof expenseServices.findExpenseDetailsById>
+>

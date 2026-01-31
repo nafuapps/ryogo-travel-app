@@ -50,7 +50,6 @@ export const expenseRepository = {
       .update(expenses)
       .set({ expensePhotoUrl: photoUrl })
       .where(eq(expenses.id, expenseId))
-      .returning()
   },
 
   //Update expense details

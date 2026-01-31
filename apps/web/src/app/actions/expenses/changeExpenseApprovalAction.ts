@@ -10,7 +10,7 @@ export async function changeExpenseApprovalAction(
     txnId,
     status,
   )
-  if (!updatedExpense || updatedExpense.length === 0) {
+  if (!updatedExpense) {
     return false
   }
   return true

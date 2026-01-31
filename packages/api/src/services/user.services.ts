@@ -21,11 +21,6 @@ import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 
-export const LOGIN_PASSWORD_ERROR = "passwordNotMatching"
-export const LOGIN_USER_ERROR = "userNotFound"
-export const LOGIN_SESSION_ERROR = "sessionNotCreated"
-export const LOGIN_UNKNOWN_ERROR = "unknown"
-
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
@@ -337,7 +332,7 @@ export const userServices = {
     // If no user found, cannot login
     if (!userFound) {
       return {
-        error: LOGIN_USER_ERROR,
+        error: "userNotFound",
       }
     }
 
@@ -345,7 +340,7 @@ export const userServices = {
     const valid = await bcrypt.compare(password, userFound.password)
     if (!valid) {
       return {
-        error: LOGIN_PASSWORD_ERROR,
+        error: "passwordNotMatching",
       }
     }
     //Step3: Update last login
@@ -357,7 +352,7 @@ export const userServices = {
 
   //Logout in DB
   async checkLogoutInDB(userId: string) {
-    await userRepository.updateLastLogout(userId, new Date())
+    return await userRepository.updateLastLogout(userId, new Date())
   },
 
   //Reset user password (by owner)

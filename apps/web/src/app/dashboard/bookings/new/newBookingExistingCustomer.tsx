@@ -4,7 +4,6 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideUserCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
-import { useEffect, useState } from "react"
 
 export default function ExistingCutomerCard({
   existingCustomer,

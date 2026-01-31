@@ -14,7 +14,7 @@ import { Form } from "@/components/ui/form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { changePasswordAction } from "@/app/actions/changePasswordAction"
+import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
 
 export function ChangePasswordStep1(props: {
   userId: string

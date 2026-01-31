@@ -16,7 +16,7 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import { Form } from "@/components/ui/form"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
-import { changeUserPreferencesAction } from "@/app/actions/changeUserPreferencesAction"
+import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
 
 export default function MyProfileSettingsPageComponent({
   userDetails,

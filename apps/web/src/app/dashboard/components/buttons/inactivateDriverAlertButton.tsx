@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
-import { inactivateDriverAction } from "@/app/actions/inactivateDriverAction"
+import { inactivateDriverAction } from "@/app/actions/drivers/inactivateDriverAction"
 
 type InactivateDriverAlertButtonProps = {
   driverId: string

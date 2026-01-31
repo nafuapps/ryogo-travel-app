@@ -9,9 +9,7 @@ export default async function NewVehiclePageComponent({
 }) {
   //TODO: Only allow subscribed agencies to add more than 2 vehicles
 
-  const vehicles = (
-    await vehicleServices.findExistingVehiclesInAgency(agencyId)
-  ).map((v) => v.vehicleNumber)
+  const vehicles = await vehicleServices.findExistingVehiclesInAgency(agencyId)
 
   return (
     <div id="NewVehiclePage" className={pageClassName}>

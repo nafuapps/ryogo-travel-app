@@ -15,7 +15,7 @@ import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { addVehicleAction } from "@/app/actions/addVehicleAction"
+import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 
 export function AddVehicleConfirm(props: {
   onNext: () => void
@@ -52,7 +52,7 @@ export function AddVehicleConfirm(props: {
       },
     }
     const addedVehicle = await addVehicleAction(newVehicleData)
-    if (addedVehicle.id) {
+    if (addedVehicle) {
       props.onNext()
     } else {
       //If failed, Take back to vehicle onboarding page and show error

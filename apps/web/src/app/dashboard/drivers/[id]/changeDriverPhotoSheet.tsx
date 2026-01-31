@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { changeUserPhotoAction } from "@/app/actions/changeUserPhotoAction"
+import { changeUserPhotoAction } from "@/app/actions/users/changeUserPhotoAction"
 
 export default function ChangeDriverPhotoSheet({ userId }: { userId: string }) {
   const t = useTranslations("Dashboard.DriverDetails.ChangePhoto")

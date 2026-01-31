@@ -1,6 +1,6 @@
-"use server";
+"use server"
 
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services";
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 
 export async function confirmBookingAction(
   id: string,
@@ -8,7 +8,7 @@ export async function confirmBookingAction(
   pickupAddress?: string,
   dropAddress?: string,
   updateCustomerAddress?: boolean,
-  customerId?: string
+  customerId?: string,
 ) {
   const confirmedBooking = await bookingServices.confirmBooking(
     id,
@@ -16,8 +16,8 @@ export async function confirmBookingAction(
     pickupAddress,
     dropAddress,
     updateCustomerAddress,
-    customerId
-  );
-  if (!confirmedBooking || confirmedBooking.length < 1) return false;
-  return true;
+    customerId,
+  )
+  if (!confirmedBooking) return false
+  return confirmedBooking
 }

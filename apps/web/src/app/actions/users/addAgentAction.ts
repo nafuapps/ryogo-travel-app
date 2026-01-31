@@ -1,5 +1,7 @@
 "use server"
 
+import { AddAgentEmailTemplate } from "@/components/email/addAgentEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
 import { updateSessionUserStatus } from "@/lib/session"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
@@ -10,6 +12,8 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addAgentAction(data: AddAgentRequestType) {
   const agent = await userServices.addAgentUser(data)
+  if (!agent) return
+
   if (agent.id && data.data.photos && data.data.photos[0]) {
     const photo = data.data.photos[0]
     const uploadedPhoto = await uploadFile(
@@ -23,10 +27,17 @@ export async function addAgentAction(data: AddAgentRequestType) {
     //Activate owner account
     await userServices.activateUser(data.ownerId)
     //Activate agency
-    const agency = await agencyServices.activateAgency(data.agencyId)
+    await agencyServices.activateAgency(data.agencyId)
     //Update status in session cookie
     await updateSessionUserStatus(UserStatusEnum.ACTIVE)
   }
+
+  //Send new password email to the agent
+  sendEmail(
+    [agent.email],
+    "Welcome to RyoGo",
+    AddAgentEmailTemplate({ name: agent.name, password: agent.password }),
+  )
 
   return agent
 }

@@ -15,7 +15,7 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { addDriverAction } from "@/app/actions/addDriverAction"
+import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -47,7 +47,7 @@ export function NewDriverConfirm(props: {
     }
     const addedDriver = await addDriverAction(newDriverData)
 
-    if (addedDriver.id) {
+    if (addedDriver) {
       //Send to driver details page
       toast.success(t("APISuccess"))
       router.replace(`/dashboard/drivers/${addedDriver.id}`)

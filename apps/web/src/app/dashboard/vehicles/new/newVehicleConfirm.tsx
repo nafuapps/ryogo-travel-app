@@ -15,7 +15,7 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { addVehicleAction } from "@/app/actions/addVehicleAction"
+import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -53,7 +53,7 @@ export function NewVehicleConfirm(props: {
     }
     const addedVehicle = await addVehicleAction(newVehicleData)
 
-    if (addedVehicle.id) {
+    if (addedVehicle) {
       //Send to added vehicle details page
       toast.success(t("APISuccess"))
       router.replace(`/dashboard/vehicles/${addedVehicle.id}`)

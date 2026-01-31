@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
 import z from "zod"
-import { confirmBookingAction } from "@/app/actions/confirmBookingAction"
+import { confirmBookingAction } from "@/app/actions/bookings/confirmBookingAction"
 import { useEffect, useTransition } from "react"
 import { Spinner } from "@/components/ui/spinner"
 import {
@@ -70,16 +70,15 @@ export default function ConfirmBookingPageComponent({
   //Confirm booking
   async function confirm(values: ConfirmBookingType) {
     startConfirmTransition(async () => {
-      if (
-        await confirmBookingAction(
-          booking.id,
-          values.startTime,
-          values.pickupAddress,
-          values.dropAddress,
-          booking.customer.address ? false : true,
-          booking.customer.id,
-        )
-      ) {
+      const confirmedBooking = await confirmBookingAction(
+        booking.id,
+        values.startTime,
+        values.pickupAddress,
+        values.dropAddress,
+        booking.customer.address ? false : true,
+        booking.customer.id,
+      )
+      if (confirmedBooking) {
         toast.success(t("ConfirmSuccess"))
         router.replace(`/dashboard/bookings/${booking.id}`)
       } else {

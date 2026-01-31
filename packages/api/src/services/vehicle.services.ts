@@ -48,9 +48,6 @@ export const vehicleServices = {
   //Get vehicle details
   async findVehicleDetailsById(id: string) {
     const vehicle = await vehicleRepository.readVehicleById(id)
-    if (!vehicle) {
-      throw new Error("Vehicle not found")
-    }
     return vehicle
   },
 
@@ -129,9 +126,7 @@ export const vehicleServices = {
         agencyId,
       )
     if (existingVehicleInAgency.length > 0) {
-      throw new Error(
-        "Vehicle with same vehicle number already exists in this agency",
-      )
+      return
     }
 
     const newVehicleData = {
@@ -152,17 +147,13 @@ export const vehicleServices = {
     }
     //Step3: Create vehicle in DB
     const newVehicle = await vehicleRepository.createVehicle(newVehicleData)
-    if (!newVehicle || newVehicle.length < 1) {
-      throw new Error("Vehicle not created")
-    }
-    //Step4: Return added vehicle
-    return { id: newVehicle[0]!.id }
+    return newVehicle[0]
   },
 
   //Add vehicle repair
   async addVehicleRepair(data: InsertVehicleRepairType) {
     const repair = await vehicleRepairRepository.createRepair(data)
-    return repair
+    return repair[0]
   },
 
   //Modify vehicle repair
@@ -178,7 +169,7 @@ export const vehicleServices = {
       data.remarks ?? undefined,
       data.cost ?? undefined,
     )
-    return repair
+    return repair[0]
   },
 
   //Modify vehicle details
@@ -218,7 +209,7 @@ export const vehicleServices = {
       pucPhotoUrl,
       insurancePhotoUrl,
     )
-    return vehicle
+    return vehicle[0]
   },
 
   //Update Vehicle doc URL
@@ -229,17 +220,13 @@ export const vehicleServices = {
     insuranceURL?: string,
     vehiclePhotoUrl?: string,
   ) {
-    const updatedVehicle = await vehicleRepository.updateDocUrls(
+    await vehicleRepository.updateDocUrls(
       vehicleId,
       rcUrl,
       pucUrl,
       insuranceURL,
       vehiclePhotoUrl,
     )
-    if (!updatedVehicle) {
-      throw new Error("Failed to update document url for this vehicle in DB")
-    }
-    return updatedVehicle[0]
   },
 
   //Update Vehicle photo URL
@@ -248,11 +235,6 @@ export const vehicleServices = {
       vehicleId,
       url,
     )
-    if (!updatedVehicle) {
-      throw new Error(
-        "Failed to update vehicle photo url for this vehicle in DB",
-      )
-    }
     return updatedVehicle[0]
   },
 
@@ -277,6 +259,10 @@ export const vehicleServices = {
 
 export type FindVehiclesByAgencyType = Awaited<
   ReturnType<typeof vehicleServices.findVehiclesByAgency>
+>
+
+export type FindExistingVehiclesInAgencyType = Awaited<
+  ReturnType<typeof vehicleServices.findExistingVehiclesInAgency>
 >
 
 export type FindVehiclesOnTripType = Awaited<

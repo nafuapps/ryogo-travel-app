@@ -11,7 +11,7 @@ import { Form } from "@/components/ui/form"
 import { DashboardInput } from "@/components/form/dashboardFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
-import { changePasswordAction } from "@/app/actions/changePasswordAction"
+import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
 
 export default function ChangePasswordMyProfileComponent({
   userId,

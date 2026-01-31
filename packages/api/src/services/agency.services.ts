@@ -29,9 +29,6 @@ export const agencyServices = {
   //Find agency by id
   async findAgencyById(id: string) {
     const agency = await agencyRepository.readAgencyById(id)
-    if (!agency) {
-      throw new Error("Agency not found")
-    }
     return agency
   },
 
@@ -64,14 +61,8 @@ export const agencyServices = {
       data.businessPhone,
       data.businessEmail,
     )
-    if (existingAgencies.length > 1) {
-      // !This is a major issue
-      throw new Error(
-        "Multiple agencies with same phone and email already exists",
-      )
-    }
     if (existingAgencies.length > 0) {
-      throw new Error("An agency with same phone and email already exists")
+      return
     }
 
     //Step2: Get location id from city, state
@@ -80,7 +71,7 @@ export const agencyServices = {
       data.agencyState,
     )
     if (!location) {
-      throw new Error("Location not found")
+      return
     }
 
     //Step3: Prepare agency data (Trial subscription with 30 day expiry, Status New)
@@ -96,10 +87,6 @@ export const agencyServices = {
 
     //Step4: create a new agency
     const newAgency = await agencyRepository.createAgency(createAgencyData)
-    if (!newAgency || newAgency.length < 1) {
-      throw new Error("Failed to create new agency")
-    }
-
     return newAgency[0]
   },
 
@@ -111,7 +98,6 @@ export const agencyServices = {
     defaultCommissionRate?: number,
     agencyState?: string,
     agencyCity?: string,
-    logoUrl?: string,
   ) {
     //Step1: Get location id from city, state (if provided)
     let locationId: string | undefined = undefined
@@ -121,7 +107,7 @@ export const agencyServices = {
         agencyState,
       )
       if (!location) {
-        throw new Error("Location not found")
+        return
       }
       locationId = location.id
     }
@@ -133,33 +119,17 @@ export const agencyServices = {
       businessAddress,
       defaultCommissionRate,
       locationId,
-      logoUrl,
     )
     return updatedAgency[0]
   },
 
   //Activate an agency
   async activateAgency(id: string) {
-    const agency = await agencyRepository.updateAgencyStatus(
-      id,
-      AgencyStatusEnum.ACTIVE,
-    )
-
-    if (!agency || agency.length < 1) {
-      throw new Error("Failed to update status for this agency")
-    }
-    return agency[0]!
+    await agencyRepository.updateAgencyStatus(id, AgencyStatusEnum.ACTIVE)
   },
 
   async updateAgencyLogo(agencyId: string, url: string) {
-    const updatedAgency = await agencyRepository.updateAgencyLogoUrl(
-      agencyId,
-      url,
-    )
-    if (!updatedAgency) {
-      throw new Error("Failed to update logo url for this agency")
-    }
-    return updatedAgency[0]?.id
+    await agencyRepository.updateAgencyLogoUrl(agencyId, url)
   },
 
   //Change agency phone
@@ -185,7 +155,7 @@ export const agencyServices = {
     const expiryTime = new Date(
       new Date().getTime() + days * 24 * 60 * 60 * 1000,
     )
-    return await agencyRepository.updateAgencySubscriptionExpiry(id, expiryTime)
+    await agencyRepository.updateAgencySubscriptionExpiry(id, expiryTime)
   },
 }
 
@@ -200,6 +170,7 @@ export type FindAgencyByIdType = Awaited<
 export type FindAgenciesByPhoneType = Awaited<
   ReturnType<typeof agencyServices.findAgenciesByPhone>
 >
+
 export type FindAgenciesByEmailType = Awaited<
   ReturnType<typeof agencyServices.findAgenciesByEmail>
 >

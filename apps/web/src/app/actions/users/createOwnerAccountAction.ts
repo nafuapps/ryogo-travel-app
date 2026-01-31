@@ -1,5 +1,7 @@
 "use server"
 
+import { OnboardOwnerEmailTemplate } from "@/components/email/onboardOwnerEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
 import {
   generateAgencyLogoPathName,
   generateUserPhotoPathName,
@@ -13,6 +15,7 @@ export async function createOwnerAccountAction(
   data: CreateOwnerAccountRequestType,
 ) {
   const user = await userServices.addAgencyAndOwnerAccount(data)
+  if (!user) return
 
   if (data.agency.logo && data.agency.logo[0]) {
     const logo = data.agency.logo[0]
@@ -32,6 +35,13 @@ export async function createOwnerAccountAction(
     const url = uploadedPhoto!.path
     await userServices.updateUserPhoto(user.userId, url)
   }
+
+  //Send new password email to the agent
+  sendEmail(
+    [user.email],
+    "Welcome to RyoGo",
+    OnboardOwnerEmailTemplate({ name: user.name }),
+  )
 
   return user
 }

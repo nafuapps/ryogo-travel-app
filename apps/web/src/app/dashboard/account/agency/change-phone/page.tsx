@@ -15,11 +15,14 @@ export default async function ChangeAgencyPhonePage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   if (currentUser.userRole != UserRolesEnum.OWNER) {
     redirect("/dashboard/account/agency", RedirectType.replace)
   }
-
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
 
   //Get all agencies with this agency's email
   const allAgencies = await agencyServices.findAgenciesByEmail(

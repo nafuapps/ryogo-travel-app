@@ -15,6 +15,10 @@ export default async function AgencyDetailsPage() {
   }
 
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const isOwner = currentUser.userRole == UserRolesEnum.OWNER
   return (
     <div className={mainClassName}>

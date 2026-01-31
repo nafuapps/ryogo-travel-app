@@ -275,7 +275,15 @@ export const driverRepository = {
         licensePhotoUrl,
       })
       .where(eq(drivers.id, id))
-      .returning()
+      .returning({
+        id: drivers.id,
+        address: drivers.address,
+        canDriveVehicleTypes: drivers.canDriveVehicleTypes,
+        defaultAllowancePerDay: drivers.defaultAllowancePerDay,
+        licenseNumber: drivers.licenseNumber,
+        licenseExpiresOn: drivers.licenseExpiresOn,
+        licensePhotoUrl: drivers.licensePhotoUrl,
+      })
   },
 
   //Update driver license URL by Id
@@ -284,7 +292,6 @@ export const driverRepository = {
       .update(drivers)
       .set({ licensePhotoUrl: licenseUrl })
       .where(eq(drivers.id, driverId))
-      .returning()
   },
 
   //Update driver status
@@ -293,7 +300,10 @@ export const driverRepository = {
       .update(drivers)
       .set({ status: status })
       .where(eq(drivers.id, driverId))
-      .returning()
+      .returning({
+        id: drivers.id,
+        status: drivers.status,
+      })
   },
 
   //Update driver status by userId
@@ -302,7 +312,11 @@ export const driverRepository = {
       .update(drivers)
       .set({ status: status })
       .where(eq(drivers.userId, userId))
-      .returning()
+      .returning({
+        id: drivers.id,
+        userId: drivers.userId,
+        status: drivers.status,
+      })
   },
 
   //Update driver name by userId
@@ -311,7 +325,11 @@ export const driverRepository = {
       .update(drivers)
       .set({ name })
       .where(eq(drivers.userId, userId))
-      .returning()
+      .returning({
+        id: drivers.id,
+        userId: drivers.userId,
+        name: drivers.name,
+      })
   },
 
   //Update driver phone by userId
@@ -320,6 +338,10 @@ export const driverRepository = {
       .update(drivers)
       .set({ phone })
       .where(eq(drivers.userId, userId))
-      .returning()
+      .returning({
+        id: drivers.id,
+        userId: drivers.userId,
+        phone: drivers.phone,
+      })
   },
 }

@@ -22,7 +22,9 @@ export default async function ModifyCustomerPage({
   }
 
   const customer = await customerServices.findCustomerDetailsById(id)
-
+  if (!customer) {
+    redirect("/dashboard/customers", RedirectType.replace)
+  }
   //Only owner or the adding agent can modify customer
   if (
     user.userRole != UserRolesEnum.OWNER &&

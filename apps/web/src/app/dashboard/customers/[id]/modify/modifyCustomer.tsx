@@ -1,6 +1,6 @@
 "use client"
 
-import { modifyCustomerAction } from "@/app/actions/modifyCustomerAction"
+import { modifyCustomerAction } from "@/app/actions/customers/modifyCustomerAction"
 import {
   DashboardInput,
   DashboardSelect,
@@ -27,7 +27,7 @@ import {
 export default function ModifyCustomerPageComponent({
   customer,
 }: {
-  customer: FindCustomerDetailsByIdType
+  customer: NonNullable<FindCustomerDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.ModifyCustomer")
   const router = useRouter()

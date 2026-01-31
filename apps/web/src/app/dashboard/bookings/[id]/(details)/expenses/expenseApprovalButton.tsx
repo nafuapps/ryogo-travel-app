@@ -1,7 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { changeExpenseApprovalAction } from "@/app/actions/changeExpenseApprovalAction"
+import { changeExpenseApprovalAction } from "@/app/actions/expenses/changeExpenseApprovalAction"
 import { toast } from "sonner"
 import { CaptionGrey } from "@/components/typography"
 import { LucideCheckCheck, LucideCheck } from "lucide-react"

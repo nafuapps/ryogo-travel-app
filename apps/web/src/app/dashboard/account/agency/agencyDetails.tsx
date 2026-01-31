@@ -24,7 +24,7 @@ export default async function AgencyDetailsPageComponent({
   agency,
   isOwner,
 }: {
-  agency: FindAgencyByIdType
+  agency: NonNullable<FindAgencyByIdType>
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.AccountAgency")

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
-import { deleteExpenseAction } from "@/app/actions/deleteExpenseAction"
+import { deleteExpenseAction } from "@/app/actions/expenses/deleteExpenseAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"

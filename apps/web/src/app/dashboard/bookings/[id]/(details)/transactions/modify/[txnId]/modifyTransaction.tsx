@@ -25,7 +25,7 @@ import z from "zod"
 import { Button } from "@/components/ui/button"
 import DeleteTransactionAlertButton from "@/app/dashboard/components/buttons/deleteTransactionAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { modifyTransactionAction } from "@/app/actions/modifyTransactionAction"
+import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,

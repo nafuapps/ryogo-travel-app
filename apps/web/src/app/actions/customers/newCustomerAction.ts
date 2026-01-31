@@ -17,19 +17,15 @@ export async function newCustomerAction(data: NewCustomerRequestType) {
     data.address,
     data.remarks,
   )
+  if (!customer) return
 
-  if (customer.id) {
-    if (data.photo && data.photo[0]) {
-      const photo = data.photo[0]
-      const uploadedPhoto = await uploadFile(
-        photo,
-        generateCustomerPhotoPathName(customer.id, photo),
-      )
-      await customerServices.updateCustomerPhoto(
-        customer.id,
-        uploadedPhoto.path,
-      )
-    }
+  if (data.photo && data.photo[0]) {
+    const photo = data.photo[0]
+    const uploadedPhoto = await uploadFile(
+      photo,
+      generateCustomerPhotoPathName(customer.id, photo),
+    )
+    await customerServices.updateCustomerPhoto(customer.id, uploadedPhoto.path)
   }
   return customer
 }

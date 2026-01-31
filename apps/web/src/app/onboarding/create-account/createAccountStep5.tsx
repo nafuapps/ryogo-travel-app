@@ -15,8 +15,8 @@ import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { loginAction } from "@/app/actions/loginAction"
-import { createOwnerAccountAction } from "@/app/actions/createOwnerAccountAction"
+import { loginAction } from "@/app/actions/users/loginAction"
+import { createOwnerAccountAction } from "@/app/actions/users/createOwnerAccountAction"
 
 export function CreateAccountConfirm(props: {
   onNext: () => void
@@ -51,7 +51,7 @@ export function CreateAccountConfirm(props: {
     }
 
     const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
-    if (createdOwnerAccount.agencyId && createdOwnerAccount.userId) {
+    if (createdOwnerAccount) {
       //If success
       //Login the user
       await loginAction(createdOwnerAccount.userId, props.finalData.password)

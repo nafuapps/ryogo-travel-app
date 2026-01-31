@@ -12,7 +12,7 @@ import { DashboardInput } from "@/components/form/dashboardFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { changeEmailAction } from "@/app/actions/changeEmailAction"
+import { changeEmailAction } from "@/app/actions/users/changeEmailAction"
 
 export default function ChangeEmailMyProfileComponent({
   usersWithPhoneRole,

@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { newDriverLeaveAction } from "../../../../../actions/newDriverLeaveAction"
+import { newDriverLeaveAction } from "../../../../../actions/drivers/newDriverLeaveAction"
 
 export default function NewDriverLeavePageComponent({
   userId,

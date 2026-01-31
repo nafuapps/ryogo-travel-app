@@ -94,16 +94,12 @@ export const driverServices = {
   },
 
   //Get driver's activity
-  async findDriverActivityByUserId(userId: string) {
+  async findDriverActivityByUserId(userId: string, driverId: string) {
+    //Get trip logs
+    const tripLogs = await tripLogRepository.readTripLogsByDriverId(driverId)
+
     //Get expenses
     const expenses = await expenseRepository.readExpensesByAddedUserId(userId)
-
-    //Get trip logs
-    const driver = await driverRepository.readDriverByUserId(userId)
-    if (!driver) {
-      throw new Error("Driver with same userId already exists ")
-    }
-    const tripLogs = await tripLogRepository.readTripLogsByDriverId(driver!.id)
 
     return {
       expenses,
@@ -129,7 +125,7 @@ export const driverServices = {
       data.userId,
     )
     if (existingDriverUser) {
-      throw new Error("Driver with same userId already exists ")
+      return
     }
 
     //Step2: Prepare driver data
@@ -145,9 +141,6 @@ export const driverServices = {
       canDriveVehicleTypes: data.canDriveVehicleTypes,
     }
     const newDriver = await driverRepository.createDriver(newDriverData)
-    if (newDriver.length < 1) {
-      throw new Error("Failed to create driver")
-    }
     return newDriver[0]
   },
 
@@ -193,14 +186,7 @@ export const driverServices = {
 
   //Upload driver license photo
   async updateDriverLicensePhoto(driverId: string, licenseUrl?: string) {
-    const updatedDriver = await driverRepository.updateDriverLicenseUrl(
-      driverId,
-      licenseUrl,
-    )
-    if (!updatedDriver || updatedDriver.length < 1) {
-      throw new Error("Failed to update license url for this driver")
-    }
-    return updatedDriver[0]
+    await driverRepository.updateDriverLicenseUrl(driverId, licenseUrl)
   },
 
   //Activate Driver
@@ -208,7 +194,7 @@ export const driverServices = {
     //Cannot activate if the corresponding user is inactive
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.INACTIVE) {
-      throw new Error("Cannot activate driver. User is inactive")
+      return
     }
     const driver = await driverRepository.updateStatus(
       id,

@@ -14,13 +14,17 @@ import {
   AddAgentRequestType,
 } from "../types/user.types"
 import { driverRepository } from "../repositories/driver.repo"
-import { LOGIN_USER_ERROR, LOGIN_PASSWORD_ERROR } from "@/lib/utils"
 import { bookingRepository } from "../repositories/booking.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { customerRepository } from "../repositories/customer.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
+
+export const LOGIN_PASSWORD_ERROR = "passwordNotMatching"
+export const LOGIN_USER_ERROR = "userNotFound"
+export const LOGIN_SESSION_ERROR = "sessionNotCreated"
+export const LOGIN_UNKNOWN_ERROR = "unknown"
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -59,9 +63,6 @@ export const userServices = {
   //Find login users by phone
   async findUsersByPhone(phone: string) {
     const users = await userRepository.readUsersWithPhone(phone)
-    if (!users || users.length < 1) {
-      throw new Error("No user found with this phone number")
-    }
     return users
   },
 
@@ -175,13 +176,14 @@ export const userServices = {
       data.owner.email,
     )
     if (existingUsers.length > 0) {
-      throw new Error(
-        "Owner with same phone, already exists.. try a different phone or email",
-      )
+      return
     }
 
     //Step2: Try to Create agency
     const newAgency = await agencyServices.createAgency(data.agency)
+    if (!newAgency) {
+      return
+    }
 
     //Step3: Prepare owner data
     const passwordHash = await generatePasswordHash(data.owner.password)
@@ -195,18 +197,18 @@ export const userServices = {
       password: passwordHash,
     }
 
-    //Step4: Create the owner
+    //Step4: Create the owner user
     const owner = await userRepository.createUser(ownerData)
-    if (!owner || owner.length < 1) {
-      throw new Error("Failed to create owner for this agency")
+    if (!owner[0]) {
+      return
     }
 
-    // TODO Step6: Send welcome mail to the owner
-
     return {
-      agencyId: newAgency!.id,
-      userId: owner[0]!.id,
+      agencyId: newAgency.id,
+      userId: owner[0].id,
       password: data.owner.password,
+      email: owner[0].email,
+      name: owner[0].name,
     }
   },
 
@@ -220,9 +222,7 @@ export const userServices = {
         data.phone,
       )
     if (existingUserInAgency.length > 0) {
-      throw new Error(
-        "Agent with same phone number already exists in this agency",
-      )
+      return
     }
 
     //Step2: Check if agent (phone, email) already exists in the system
@@ -232,15 +232,12 @@ export const userServices = {
       data.email,
     )
     if (existingUserInSystem.length > 0) {
-      throw new Error(
-        "Agent with same phone number and email already exists in another agency.. try different phone/email ",
-      )
+      return
     }
 
     //Step3: Generate a new password
     const newPassword = generateNewPassword()
     console.log(newPassword)
-    // TODO: send pwd in email
 
     const passwordHash = await generatePasswordHash(newPassword)
 
@@ -254,10 +251,15 @@ export const userServices = {
       agencyId: agencyId,
       password: passwordHash,
     })
-    if (!newUser || newUser.length < 1) {
-      throw new Error("Failed to create agent for this agency")
+    if (!newUser[0]) {
+      return
     }
-    return { id: newUser[0]!.id }
+    return {
+      id: newUser[0].id,
+      password: newPassword,
+      email: newUser[0].email,
+      name: newUser[0].name,
+    }
   },
 
   //Create Driver (Onboarding flow)
@@ -270,9 +272,7 @@ export const userServices = {
         agencyId,
       )
     if (existingUserInAgency.length > 0) {
-      throw new Error(
-        "Driver with same phone number already exists in this agency",
-      )
+      return
     }
 
     //Step2: Check if driver user (phone, email) already exists in the system
@@ -282,16 +282,12 @@ export const userServices = {
       data.email,
     )
     if (existingUserInSystem.length > 0) {
-      throw new Error(
-        "Driver with same phone number and email already exists in another agency.. try different phone/email ",
-      )
+      return
     }
 
     //Step3: generate a new password
     const newPassword = generateNewPassword() //Generate a random 8 character password
     console.log(newPassword)
-    // TODO: send pwd in email
-
     const passwordHash = await generatePasswordHash(newPassword)
 
     //Step4: Create the driver user
@@ -304,8 +300,8 @@ export const userServices = {
       agencyId: agencyId,
       password: passwordHash,
     })
-    if (newUser.length < 1) {
-      throw new Error("Failed to create driver user")
+    if (!newUser[0]) {
+      return
     }
 
     //Step5: Create a driver
@@ -321,17 +317,23 @@ export const userServices = {
       defaultAllowancePerDay: data.defaultAllowancePerDay,
     })
     if (!newDriver) {
-      throw new Error("Failed to create driver")
+      return
     }
 
     //Return driver Id
-    return { id: newDriver.id, userId: newDriver.userId }
+    return {
+      id: newDriver.id,
+      userId: newDriver.userId,
+      name: newUser[0].name,
+      password: newPassword,
+      email: newUser[0].email,
+    }
   },
 
   //Validate user login with userId and password
   async checkLoginInDB(userId: string, password: string) {
     //Step1: Find user with userID
-    const userFound = await userRepository.readUserById(userId)
+    const userFound = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot login
     if (!userFound) {
       return {
@@ -364,14 +366,12 @@ export const userServices = {
     const emailFound = await userRepository.readUserById(userId)
     // If no user found, cannot reset password
     if (!emailFound) {
-      throw new Error("No user found with this id")
+      return
     }
 
     //Step1: Generate a new password
     const newPassword = generateNewPassword()
     console.log(newPassword)
-
-    // TODO: Step2: send pwd in email
 
     //Step3: Store new password in DB
     const passwordHash = await generatePasswordHash(newPassword)
@@ -379,25 +379,30 @@ export const userServices = {
       userId,
       passwordHash,
     )
-    if (!newUserData) {
-      throw new Error("Could not reset password in DB")
+    if (!newUserData[0]) {
+      return
     }
 
-    //Return userId as reset confirmation
-    return newUserData[0]
+    //Return user details for reset password confirmation
+    return {
+      id: newUserData[0].id,
+      name: newUserData[0].name,
+      password: newPassword,
+      email: newUserData[0].email,
+    }
   },
 
   // Change password (by user)
-  async changePassword(
+  async changeMyPassword(
     userId: string,
     oldPassword: string,
     newPassword: string,
   ) {
     //Step1: Find user with userID
-    const userFound = await userRepository.readUserById(userId)
+    const userFound = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot change password
     if (!userFound) {
-      throw new Error("No user found with this id")
+      return
     }
 
     //Step2: Match old password
@@ -412,9 +417,6 @@ export const userServices = {
       userId,
       passwordHash,
     )
-    if (!newUserData) {
-      throw new Error("Could not change password in DB")
-    }
 
     //Return userId as reset confirmation
     return newUserData[0]
@@ -423,10 +425,7 @@ export const userServices = {
   //Update user photo url
   async updateUserPhoto(userId: string, url: string) {
     const updatedUser = await userRepository.updatePhotoUrl(userId, url)
-    if (!updatedUser) {
-      throw new Error("Failed to update photo url for this user")
-    }
-    return updatedUser[0]?.id
+    return updatedUser[0]
   },
 
   //Change user name
@@ -435,10 +434,7 @@ export const userServices = {
     if (role == UserRolesEnum.DRIVER) {
       await driverRepository.updateNameByUserId(userId, name)
     }
-    if (!updatedUser) {
-      throw new Error("Failed to update name for this user")
-    }
-    return updatedUser[0]?.id
+    return updatedUser[0]
   },
 
   //Change UserPreferences  url
@@ -452,41 +448,36 @@ export const userServices = {
       prefersDarkTheme,
       languagePref,
     )
-    if (!updatedUser) {
-      throw new Error("Failed to update preferences for this user")
-    }
-    return updatedUser[0]?.id
+    return updatedUser[0]
   },
 
   //Change self email
-  async changeEmail(userId: string, password: string, newEmail: string) {
+  async changeEmailWithPasswordConfirmation(
+    userId: string,
+    password: string,
+    newEmail: string,
+  ) {
     //Step1: Find user with userID
-    const userFound = await userRepository.readUserById(userId)
+    const userFound = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot change email
     if (!userFound) {
-      throw new Error("No user found with this id")
+      return
     }
 
     //Step2: Match password
     const valid = await bcrypt.compare(password, userFound.password)
     if (!valid) {
-      return null
+      return
     }
     //Step3: Update email
     const updatedUser = await userRepository.updateEmail(userId, newEmail)
-    if (!updatedUser) {
-      throw new Error("Failed to update email for this user")
-    }
-    return updatedUser[0]?.id
+    return updatedUser[0]
   },
 
   //change user's email (by owner)
   async changeUserEmail(userId: string, newEmail: string) {
     const updatedUser = await userRepository.updateEmail(userId, newEmail)
-    if (!updatedUser) {
-      throw new Error("Failed to update email for this user")
-    }
-    return updatedUser[0]?.id
+    return updatedUser[0]
   },
 
   //change user's phone (by owner)
@@ -499,10 +490,7 @@ export const userServices = {
     if (role == UserRolesEnum.DRIVER) {
       await driverRepository.updatePhoneByUserId(userId, newPhone)
     }
-    if (!updatedUser) {
-      throw new Error("Failed to update phone for this user")
-    }
-    return updatedUser[0]?.id
+    return updatedUser[0]
   },
 
   //Activate user
@@ -517,10 +505,7 @@ export const userServices = {
         DriverStatusEnum.AVAILABLE,
       )
     }
-    if (!user) {
-      throw new Error("Failed to activate user")
-    }
-    return user[0]!
+    return user[0]
   },
 
   //Inactivate User
@@ -572,10 +557,10 @@ export type FindUserActivityByIdType = Awaited<
   ReturnType<typeof userServices.findUserActivityById>
 >
 
-export type CheckLoginInDBType = Awaited<
-  ReturnType<typeof userServices.checkLoginInDB>
->
-
 export type FindAssignedUserByDriverIdType = Awaited<
   ReturnType<typeof userServices.findAssignedUserByDriverId>
+>
+
+export type FindUsersByPhoneType = Awaited<
+  ReturnType<typeof userServices.findUsersByPhone>
 >

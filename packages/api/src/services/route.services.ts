@@ -6,24 +6,24 @@ export const routeServices = {
     sourceCity: string,
     sourceState: string,
     destinationCity: string,
-    destinationState: string
+    destinationState: string,
   ) {
     const source = await locationRepository.readLocationByCityState(
       sourceCity,
-      sourceState
+      sourceState,
     )
     const destination = await locationRepository.readLocationByCityState(
       destinationCity,
-      destinationState
+      destinationState,
     )
 
     if (!source || !destination) {
-      throw new Error("Location not found")
+      return
     }
 
     const route = await routeRepository.readRouteByLocations(
       source.id,
-      destination.id
+      destination.id,
     )
     if (route) {
       return route
@@ -34,44 +34,41 @@ export const routeServices = {
   },
 
   async addNewRoute(sourceId: string, destinationId: string) {
-    if (sourceId === destinationId) {
-      throw new Error("Source and destination cannot be same")
+    if (sourceId == destinationId) {
+      return
     }
 
     // Get postgis distance
     const newDistance = await locationRepository.readDistanceBetweenLocations(
       sourceId,
-      destinationId
+      destinationId,
     )
     if (!newDistance || newDistance < 1) {
-      throw new Error("Invalid distance")
+      return
     }
 
     //Create new route with this distance
     const newRoute = await routeRepository.createRoute(
       sourceId,
       destinationId,
-      newDistance
+      newDistance,
     )
-    if (!newRoute || newRoute.length < 1) {
-      throw new Error("Error creating route")
-    }
     return newRoute[0]
   },
 
   async addNewRouteWithDistance(
     sourceId: string,
     destinationId: string,
-    distance: number
+    distance: number,
   ) {
-    if (sourceId === destinationId) {
-      throw new Error("Source and destination cannot be same")
+    if (sourceId == destinationId) {
+      return
     }
 
     // Get postgis distance
     const dbDistance = await locationRepository.readDistanceBetweenLocations(
       sourceId,
-      destinationId
+      destinationId,
     )
 
     const ratio = distance / dbDistance
@@ -86,11 +83,12 @@ export const routeServices = {
     const newRoute = await routeRepository.createRoute(
       sourceId,
       destinationId,
-      newDistance
+      newDistance,
     )
-    if (!newRoute || newRoute.length < 1) {
-      throw new Error("Error creating route")
-    }
     return newRoute[0]
   },
 }
+
+export type FindOrCreateRouteByLocationsType = Awaited<
+  ReturnType<typeof routeServices.findOrCreateRouteByLocations>
+>

@@ -276,10 +276,8 @@ export const bookingServices = {
         data.agencyId,
         data.userId,
       )
+      if (!newCustomer) return
       customerId = newCustomer.id
-    }
-    if (!customerId) {
-      throw new Error("Invalid customerId")
     }
 
     //Step2: Get trip sourceId and destinationId from city & state
@@ -289,7 +287,8 @@ export const bookingServices = {
         data.tripSourceLocationCity,
         data.tripSourceLocationState,
       )
-      sourceId = source?.id
+      if (!source) return
+      sourceId = source.id
     }
     let destinationId = data.destinationId
     if (!destinationId) {
@@ -297,28 +296,22 @@ export const bookingServices = {
         data.tripDestinationLocationCity,
         data.tripDestinationLocationState,
       )
-      destinationId = destination?.id
-    }
-    if (!sourceId || !destinationId) {
-      throw new Error("Invalid Locations")
+      if (!destination) return
+      destinationId = destination.id
     }
 
     //Step3: Check if a route exists.. if not create a new one
     let routeId = data.routeId
-    let distance = data.selectedDistance
     if (!routeId) {
       const newRoute = await routeServices.addNewRouteWithDistance(
         sourceId,
         destinationId,
-        distance,
+        data.selectedDistance,
       )
       if (!newRoute) {
-        throw new Error("Failed to create route")
+        return
       }
       routeId = newRoute.id
-    }
-    if (!routeId) {
-      throw new Error("Invalid routeId")
     }
 
     //Step4: Prepare data
@@ -330,8 +323,8 @@ export const bookingServices = {
       sourceId: sourceId,
       destinationId: destinationId,
       routeId: routeId,
-      startDate: new Date(data.tripStartDate),
-      endDate: new Date(data.tripEndDate),
+      startDate: data.tripStartDate,
+      endDate: data.tripEndDate,
       type: data.tripType,
       status: BookingStatusEnum.LEAD,
       remarks: data.tripRemarks,
@@ -354,9 +347,6 @@ export const bookingServices = {
 
     //Step5: Create a new booking
     const newBooking = await bookingRepository.createBooking(newBookingData)
-    if (!newBooking || newBooking.length < 1) {
-      throw new Error("Error creating booking")
-    }
     return newBooking[0]
   },
 
@@ -378,7 +368,7 @@ export const bookingServices = {
       pickupAddress,
       dropAddress,
     )
-    return updatedBooking
+    return updatedBooking[0]
   },
 
   //Start booking to in progress
@@ -432,7 +422,7 @@ export const bookingServices = {
   //Cancel a booking
   async cancelBooking(id: string) {
     const updatedBooking = await bookingRepository.updateBookingToCancel(id)
-    return updatedBooking
+    return updatedBooking[0]
   },
 
   //Assign driver to booking
@@ -441,7 +431,7 @@ export const bookingServices = {
       bookingId,
       driverId,
     )
-    return updatedBooking[0]?.assignedDriverId
+    return updatedBooking[0]
   },
 
   //Assign vehicle to booking
@@ -450,7 +440,7 @@ export const bookingServices = {
       bookingId,
       vehicleId,
     )
-    return updatedBooking[0]?.assignedVehicleId
+    return updatedBooking[0]
   },
 
   //Assign user to booking
@@ -459,7 +449,7 @@ export const bookingServices = {
       bookingId,
       userId,
     )
-    return updatedBooking[0]?.assignedUserId
+    return updatedBooking[0]
   },
 
   // TODO: Send booking quote to customer over whatsapp
@@ -472,6 +462,46 @@ export const bookingServices = {
     return true
   },
 }
+
+export type FindConfirmedBookingsPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findConfirmedBookingsPreviousDays>
+>
+
+export type FindBookingsRevenuePreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findBookingsRevenuePreviousDays>
+>
+
+export type FindBookingsUpdatedPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findBookingsUpdatedPreviousDays>
+>
+
+export type FindInProgressBookingsType = Awaited<
+  ReturnType<typeof bookingServices.findInProgressBookings>
+>
+
+export type FindOngoingTripsType = Awaited<
+  ReturnType<typeof bookingServices.findOngoingTrips>
+>
+
+export type FindCompletedBookingsPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findCompletedBookingsPreviousDays>
+>
+
+export type FindUpcomingBookingsNextDaysType = Awaited<
+  ReturnType<typeof bookingServices.findUpcomingBookingsNextDays>
+>
+
+export type FindScheduleNextDaysType = Awaited<
+  ReturnType<typeof bookingServices.findBookingsScheduleNextDays>
+>
+
+export type FindLeadBookingsPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findLeadBookingsPreviousDays>
+>
+
+export type FindAssignedUserIdByBookingIdType = Awaited<
+  ReturnType<typeof bookingServices.findAssignedUserIdByBookingId>
+>
 
 export type FindLeadBookingByIdType = Awaited<
   ReturnType<typeof bookingServices.findLeadBookingById>
@@ -495,24 +525,4 @@ export type FindBookingExpensesByIdType = Awaited<
 
 export type FindBookingTripLogsByIdType = Awaited<
   ReturnType<typeof bookingServices.findBookingTripLogsById>
->
-
-export type FindScheduleNextDaysType = Awaited<
-  ReturnType<typeof bookingServices.findBookingsScheduleNextDays>
->
-
-export type FindCompletedBookingsPreviousDaysType = Awaited<
-  ReturnType<typeof bookingServices.findCompletedBookingsPreviousDays>
->
-
-export type FindOngoingTripsType = Awaited<
-  ReturnType<typeof bookingServices.findOngoingTrips>
->
-
-export type FindLeadBookingsPreviousDaysType = Awaited<
-  ReturnType<typeof bookingServices.findLeadBookingsPreviousDays>
->
-
-export type FindUpcomingBookingsNextDaysType = Awaited<
-  ReturnType<typeof bookingServices.findUpcomingBookingsNextDays>
 >

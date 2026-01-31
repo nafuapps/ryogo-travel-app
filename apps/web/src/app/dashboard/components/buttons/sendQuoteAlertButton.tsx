@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import BookingAlertDialog from "./bookingAlertDialog"
 import { Button } from "@/components/ui/button"
 import { useState, useTransition } from "react"
-import { sendQuoteAction } from "@/app/actions/sendQuoteAction"
+import { sendQuoteAction } from "@/app/actions/bookings/sendQuoteAction"
 import { toast } from "sonner"
 import { Spinner } from "@/components/ui/spinner"
 

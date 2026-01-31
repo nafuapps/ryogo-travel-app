@@ -9,6 +9,7 @@ import { NewVehicleStep3 } from "./newVehicleStep3"
 import { NewVehicleStep4 } from "./newVehicleStep4"
 import { NewVehicleConfirm } from "./newVehicleConfirm"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 
 export type NewVehicleFormDataType = {
   vehicleNumber: string
@@ -32,7 +33,7 @@ export type NewVehicleFormDataType = {
 
 type NewVehicleFormProps = {
   agencyId: string
-  existingVehicles: string[]
+  existingVehicles: FindExistingVehiclesInAgencyType
 }
 export default function NewVehicleForm(props: NewVehicleFormProps) {
   const [newVehicleFormData, setNewVehicleFormData] =

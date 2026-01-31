@@ -6,10 +6,7 @@ import {
   generateRCPhotoPathName,
 } from "@/lib/utils"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import {
-  SelectVehicleType,
-  VehicleTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyVehicleAction(
@@ -59,7 +56,7 @@ export async function modifyVehicleAction(
     insuranceUrl = uploadedFile.path
   }
 
-  const vehicle: SelectVehicleType[] = await vehicleServices.modifyVehicle(
+  const vehicle = await vehicleServices.modifyVehicle(
     id,
     data.type,
     data.brand,
@@ -77,5 +74,6 @@ export async function modifyVehicleAction(
     insuranceUrl,
     pucUrl,
   )
-  return vehicle[0]
+  if (!vehicle) return false
+  return true
 }

@@ -91,7 +91,14 @@ export const customerRepository = {
         remarks,
       })
       .where(eq(customers.id, customerId))
-      .returning()
+      .returning({
+        id: customers.id,
+        locationId: customers.locationId,
+        name: customers.name,
+        email: customers.email,
+        address: customers.address,
+        remarks: customers.remarks,
+      })
   },
 
   async updateCustomerAddress(customerId: string, address: string) {
@@ -99,7 +106,10 @@ export const customerRepository = {
       .update(customers)
       .set({ address: address })
       .where(eq(customers.id, customerId))
-      .returning()
+      .returning({
+        id: customers.id,
+        address: customers.address,
+      })
   },
 
   //Update customer photo url
@@ -108,7 +118,10 @@ export const customerRepository = {
       .update(customers)
       .set({ photoUrl: photoUrl })
       .where(eq(customers.id, customerId))
-      .returning()
+      .returning({
+        id: customers.id,
+        photoUrl: customers.photoUrl,
+      })
   },
 
   //Update customer status
@@ -117,6 +130,9 @@ export const customerRepository = {
       .update(customers)
       .set({ status: status })
       .where(eq(customers.id, customerId))
-      .returning()
+      .returning({
+        id: customers.id,
+        status: customers.status,
+      })
   },
 }

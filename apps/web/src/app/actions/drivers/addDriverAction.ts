@@ -1,5 +1,7 @@
 "use server"
 
+import { AddDriverEmailTemplate } from "@/components/email/addDriverEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
 import { updateSessionUserStatus } from "@/lib/session"
 import {
   generateLicensePhotoPathName,
@@ -14,6 +16,7 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addDriverAction(data: AddDriverRequestType) {
   const driver = await userServices.addDriverUser(data)
+  if (!driver) return
 
   if (data.ownerId) {
     //Activate owner account
@@ -45,5 +48,12 @@ export async function addDriverAction(data: AddDriverRequestType) {
       await userServices.updateUserPhoto(driver.userId, uploadedPhoto.path)
     }
   }
+  //Send new password email to the driver
+  sendEmail(
+    [driver.email],
+    "Welcome to RyoGo",
+    AddDriverEmailTemplate({ name: driver.name, password: driver.password }),
+  )
+
   return driver
 }

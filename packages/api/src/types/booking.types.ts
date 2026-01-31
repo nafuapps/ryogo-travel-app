@@ -1,4 +1,4 @@
-import { BookingTypeEnum, SelectBookingType } from "@ryogo-travel-app/db/schema"
+import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export type CreateNewBookingRequestType = {
   agencyId: string
@@ -35,5 +35,3 @@ export type CreateNewBookingRequestType = {
   totalCommission: number
   finalAmount: number
 }
-
-export type CreateNewBookingResponseType = SelectBookingType | undefined

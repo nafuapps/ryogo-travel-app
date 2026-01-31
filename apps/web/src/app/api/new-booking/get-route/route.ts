@@ -33,8 +33,7 @@ export async function GET(req: NextRequest) {
       destinationCity,
       destinationState,
     )
-
-    return NextResponse.json(route ?? null, { status: 200 })
+    return NextResponse.json(route, { status: 200 })
   } catch (err: unknown) {
     const errorMessage =
       typeof err === "object" && err !== null && "message" in err

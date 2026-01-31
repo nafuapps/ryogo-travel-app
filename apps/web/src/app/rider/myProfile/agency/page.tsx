@@ -16,7 +16,9 @@ export default async function MyProfileAgencyDetailsPage() {
   }
 
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   const driver = await driverServices.findDriverByUserId(currentUser.userId)
   if (!driver) {
     redirect("/auth/login", RedirectType.replace)

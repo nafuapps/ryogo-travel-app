@@ -24,7 +24,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
   agency,
   assignedUser,
 }: {
-  agency: FindAgencyByIdType
+  agency: NonNullable<FindAgencyByIdType>
   assignedUser: FindAssignedUserByDriverIdType
 }) {
   const t = await getTranslations("Rider.MyProfileAgency")

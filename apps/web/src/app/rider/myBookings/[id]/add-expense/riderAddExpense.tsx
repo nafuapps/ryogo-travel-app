@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { addExpenseAction } from "@/app/actions/addExpenseAction"
+import { addExpenseAction } from "@/app/actions/expenses/addExpenseAction"
 
 export default function RiderAddExpensePageComponent({
   bookingId,

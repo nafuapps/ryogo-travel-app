@@ -7,7 +7,11 @@ export async function changeEmailAction(
   password: string,
   newEmail: string,
 ) {
-  const user = await userServices.changeEmail(userId, password, newEmail)
+  const user = await userServices.changeEmailWithPasswordConfirmation(
+    userId,
+    password,
+    newEmail,
+  )
   if (!user) return false
   return true
 }

@@ -7,7 +7,7 @@ import {
 
 export const transactionServices = {
   //Get previous N days transactions
-  async getTransactionsPreviousDays(agencyId: string, days: number = 1) {
+  async findTransactionsPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000,
@@ -29,6 +29,11 @@ export const transactionServices = {
         amount: transaction.amount,
       }
     })
+  },
+
+  //Get transaction details by transaction id
+  async findTransactionDetailsById(txnId: string) {
+    return await transactionRepository.readTransactionById(txnId)
   },
 
   //Add a transaction
@@ -79,14 +84,17 @@ export const transactionServices = {
     return txn[0]
   },
 
-  //Get transaction details by transaction id
-  async getTransactionDetailsById(txnId: string) {
-    return await transactionRepository.readTransactionById(txnId)
-  },
-
   //Delete a transaction
   async removeTransaction(txnId: string) {
     const transaction = await transactionRepository.deleteTransaction(txnId)
     return transaction[0]
   },
 }
+
+export type FindTransactionsPreviousDaysType = Awaited<
+  ReturnType<typeof transactionServices.findTransactionsPreviousDays>
+>
+
+export type FindTransactionDetailsByIdType = Awaited<
+  ReturnType<typeof transactionServices.findTransactionDetailsById>
+>

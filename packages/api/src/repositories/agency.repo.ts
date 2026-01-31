@@ -63,7 +63,6 @@ export const agencyRepository = {
     businessAddress?: string,
     defaultCommissionRate?: number,
     locationId?: string,
-    logoUrl?: string,
   ) {
     return await db
       .update(agencies)
@@ -72,10 +71,15 @@ export const agencyRepository = {
         businessAddress,
         defaultCommissionRate,
         locationId,
-        logoUrl,
       })
       .where(eq(agencies.id, id))
-      .returning()
+      .returning({
+        id: agencies.id,
+        businessName: agencies.businessName,
+        businessAddress: agencies.businessAddress,
+        defaultCommissionRate: agencies.defaultCommissionRate,
+        locationId: agencies.locationId,
+      })
   },
 
   //Update agency status by Id
@@ -84,7 +88,10 @@ export const agencyRepository = {
       .update(agencies)
       .set({ status })
       .where(eq(agencies.id, id))
-      .returning()
+      .returning({
+        id: agencies.id,
+        status: agencies.status,
+      })
   },
 
   //Update agency subscription expiry time by Id
@@ -93,24 +100,22 @@ export const agencyRepository = {
       .update(agencies)
       .set({ subscriptionExpiresOn: expiryTime })
       .where(eq(agencies.id, id))
-      .returning()
+      .returning({
+        id: agencies.id,
+        expiryTime: agencies.subscriptionExpiresOn,
+      })
   },
 
-  //Update agency default commission rate by Id
-  async updateAgencyCommissionRate(id: string, rate: number) {
-    return await db
-      .update(agencies)
-      .set({ defaultCommissionRate: rate })
-      .where(eq(agencies.id, id))
-      .returning()
-  },
   //Update agency phone by Id
   async updateAgencyPhone(id: string, businessPhone: string) {
     return await db
       .update(agencies)
       .set({ businessPhone: businessPhone })
       .where(eq(agencies.id, id))
-      .returning()
+      .returning({
+        id: agencies.id,
+        businessPhone: agencies.businessPhone,
+      })
   },
 
   //Update agency email by Id
@@ -119,7 +124,10 @@ export const agencyRepository = {
       .update(agencies)
       .set({ businessEmail: businessEmail })
       .where(eq(agencies.id, id))
-      .returning()
+      .returning({
+        id: agencies.id,
+        businessEmail: agencies.businessEmail,
+      })
   },
 
   //Update logo URL by Id
@@ -128,11 +136,13 @@ export const agencyRepository = {
       .update(agencies)
       .set({ logoUrl: logoUrl })
       .where(eq(agencies.id, id))
-      .returning()
   },
 
   //Delete agency by Id
   async deleteAgency(id: string) {
-    return await db.delete(agencies).where(eq(agencies.id, id)).returning()
+    return await db
+      .delete(agencies)
+      .where(eq(agencies.id, id))
+      .returning({ id: agencies.id })
   },
 }

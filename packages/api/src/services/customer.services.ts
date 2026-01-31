@@ -15,9 +15,6 @@ export const customerServices = {
 
   async findCustomerDetailsById(customerId: string) {
     const customer = await customerRepository.readCustomerById(customerId)
-    if (!customer) {
-      throw new Error("Customer not found")
-    }
     return customer
   },
 
@@ -92,12 +89,8 @@ export const customerServices = {
       status: CustomerStatusEnum.ACTIVE,
     }
     const newCustomer = await customerRepository.createCustomer(newCustomerData)
-    if (!newCustomer || newCustomer.length < 1) {
-      throw Error("Failed to add new customer")
-    }
-    return {
-      id: newCustomer[0]?.id,
-    }
+    if (!newCustomer[0]) return
+    return newCustomer[0]
   },
 
   async modifyCustomer(
@@ -130,10 +123,7 @@ export const customerServices = {
   //Update customer photo url
   async updateCustomerPhoto(userId: string, url: string) {
     const updatedCustomer = await customerRepository.updatePhotoUrl(userId, url)
-    if (!updatedCustomer) {
-      throw new Error("Failed to update photo url for this user")
-    }
-    return updatedCustomer[0]?.id
+    return updatedCustomer[0]
   },
 
   //Activate Customer

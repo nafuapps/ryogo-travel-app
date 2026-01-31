@@ -24,7 +24,7 @@ export default async function ModifyTransactionPage({
 
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
   const transactionDetails =
-    await transactionServices.getTransactionDetailsById(txnId)
+    await transactionServices.findTransactionDetailsById(txnId)
 
   //Only owner or assigned user can modify transactions
   if (

@@ -4,6 +4,7 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function NewBookingPageComponent({
   userId,
@@ -14,7 +15,9 @@ export default async function NewBookingPageComponent({
 }) {
   //Get agency Data (for location and commission rate)
   const agency = await agencyServices.findAgencyById(agencyId)
-
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   //Get vehicle Data with their bookings and repairs (for available vehicles and rate per km)
   const vehicles = await vehicleServices.findVehiclesByAgency(agencyId)
 

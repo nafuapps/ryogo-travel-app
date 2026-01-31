@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
-import { resetUserPasswordAction } from "@/app/actions/resetUserPasswordAction"
+import { resetUserPasswordAction } from "@/app/actions/users/resetUserPasswordAction"
 
 export default function ResetUserPasswordAlertButton({
   userId,

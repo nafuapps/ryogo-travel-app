@@ -12,7 +12,7 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { pageClassName } from "@/components/page/pageCommons"
-import { modifyVehicleAction } from "../../../../actions/modifyVehicleAction"
+import { modifyVehicleAction } from "../../../../actions/vehicles/modifyVehicleAction"
 import {
   DashboardSelect,
   DashboardInput,
@@ -25,7 +25,7 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 export default function ModifyVehiclePageComponent({
   vehicle,
 }: {
-  vehicle: FindVehicleDetailsByIdType
+  vehicle: NonNullable<FindVehicleDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.ModifyVehicle")
   const router = useRouter()

@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import BookingAlertDialog from "./bookingAlertDialog"
 import { Button } from "@/components/ui/button"
 import { useState, useTransition } from "react"
-import { sendInvoiceAction } from "@/app/actions/sendInvoiceAction"
+import { sendInvoiceAction } from "@/app/actions/bookings/sendInvoiceAction"
 import { toast } from "sonner"
 import { Spinner } from "@/components/ui/spinner"
 

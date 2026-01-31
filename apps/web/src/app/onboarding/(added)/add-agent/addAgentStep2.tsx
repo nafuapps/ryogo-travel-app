@@ -16,7 +16,7 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import { addAgentAction } from "@/app/actions/addAgentAction"
+import { addAgentAction } from "@/app/actions/users/addAgentAction"
 
 export function AddAgentConfirm(props: {
   onNext: () => void
@@ -43,7 +43,7 @@ export function AddAgentConfirm(props: {
       },
     }
     const addedAgent = await addAgentAction(newAgentData)
-    if (addedAgent.id) {
+    if (addedAgent) {
       props.onNext()
     } else {
       //Take back to agent onboarding page and show error

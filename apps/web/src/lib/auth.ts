@@ -7,10 +7,10 @@ import {
 } from "./session"
 import { cookies } from "next/headers"
 import {
-  CheckLoginInDBType,
+  LOGIN_SESSION_ERROR,
+  LOGIN_UNKNOWN_ERROR,
   userServices,
 } from "@ryogo-travel-app/api/services/user.services"
-import { LOGIN_SESSION_ERROR, LOGIN_UNKNOWN_ERROR } from "./utils"
 
 // Get current user from session
 export async function getCurrentUser() {
@@ -29,10 +29,7 @@ export async function getCurrentUser() {
 // Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {
   //1. Try login
-  const userData: CheckLoginInDBType = await userServices.checkLoginInDB(
-    userId,
-    password,
-  )
+  const userData = await userServices.checkLoginInDB(userId, password)
   if (userData.error) {
     return { error: userData.error }
   }

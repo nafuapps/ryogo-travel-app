@@ -9,7 +9,7 @@ import AssignUserTile from "./assignUserTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
-import { assignUserAction } from "@/app/actions/assignUserAction"
+import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
 

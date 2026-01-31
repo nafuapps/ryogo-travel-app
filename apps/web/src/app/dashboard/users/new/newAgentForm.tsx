@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { addAgentAction } from "@/app/actions/addAgentAction"
+import { addAgentAction } from "@/app/actions/users/addAgentAction"
 
 export default function NewAgentForm({
   agencyId,
@@ -96,7 +96,7 @@ export default function NewAgentForm({
         },
       }
       const createdAgent = await addAgentAction(newAgentData)
-      if (createdAgent.id) {
+      if (createdAgent) {
         toast.success(t("Success"))
         router.replace(`/dashboard/users/${createdAgent.id}`)
       } else {

@@ -39,7 +39,7 @@ import ChangeVehiclePhotoSheet from "./changeVehiclePhotoSheet"
 export default async function VehicleDetailsPageComponent({
   vehicle,
 }: {
-  vehicle: FindVehicleDetailsByIdType
+  vehicle: NonNullable<FindVehicleDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.VehicleDetails")
 

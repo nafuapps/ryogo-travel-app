@@ -23,13 +23,13 @@ import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { modifyAgencyAction } from "@/app/actions/modifyAgencyAction"
+import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
 
 export default function ModifyAgencyPageForm({
   agency,
 }: {
-  agency: FindAgencyByIdType
+  agency: NonNullable<FindAgencyByIdType>
 }) {
   const t = useTranslations("Dashboard.ModifyAgency")
   const router = useRouter()

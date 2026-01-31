@@ -4,6 +4,7 @@ import { mainClassName } from "@/components/page/pageCommons"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import DashboardHeader from "../../components/extra/dashboardHeader"
 import CustomerDetailsPageComponent from "./customerDetails"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function CustomerDetailsPage({
   params,
@@ -13,6 +14,9 @@ export default async function CustomerDetailsPage({
   const { id } = await params
 
   const customer = await customerServices.findCustomerDetailsById(id)
+  if (!customer) {
+    redirect("/dashboard/customers", RedirectType.replace)
+  }
 
   return (
     <div className={mainClassName}>

@@ -13,13 +13,16 @@ export default async function ModifyAgencyPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
+  //Only owner can modify agency details
   if (currentUser.userRole != UserRolesEnum.OWNER) {
     redirect("/dashboard/account/agency", RedirectType.replace)
   }
 
-  //Only owner can modify agency details
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/account/agency/modify"} />

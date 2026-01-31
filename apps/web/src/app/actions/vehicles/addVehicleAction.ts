@@ -12,6 +12,7 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addVehicleAction(data: AddVehicleRequestType) {
   const vehicle = await vehicleServices.addVehicle(data)
+  if (!vehicle) return
 
   if (vehicle.id) {
     let rcUrl

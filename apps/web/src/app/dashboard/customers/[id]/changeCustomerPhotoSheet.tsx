@@ -19,7 +19,7 @@ import { useTranslations } from "next-intl"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { changeCustomerPhotoAction } from "@/app/actions/changeCustomerPhotoAction"
+import { changeCustomerPhotoAction } from "@/app/actions/customers/changeCustomerPhotoAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 

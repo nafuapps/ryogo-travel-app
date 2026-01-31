@@ -26,7 +26,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import { midTripAction } from "@/app/actions/midTripAction"
+import { midTripAction } from "@/app/actions/bookings/midTripAction"
 import { useLocation } from "@/hooks/useLocation"
 
 export default function MidTripSheet({

@@ -13,6 +13,9 @@ export const userRepository = {
   //Get all users by role
   async readAllUsersByRole(roles: UserRolesEnum[]) {
     return await db.query.users.findMany({
+      columns: {
+        password: false,
+      },
       where: inArray(users.userRole, roles),
     })
   },
@@ -20,6 +23,9 @@ export const userRepository = {
   //Get all users in an agency
   async readAllUsersByAgency(agencyId: string) {
     return await db.query.users.findMany({
+      columns: {
+        password: false,
+      },
       where: and(
         eq(users.agencyId, agencyId),
         not(eq(users.status, UserStatusEnum.SUSPENDED)),
@@ -29,7 +35,19 @@ export const userRepository = {
 
   //Get unique user by id
   async readUserById(id: string) {
-    return await db.query.users.findFirst({ where: eq(users.id, id) })
+    return await db.query.users.findFirst({
+      columns: {
+        password: false,
+      },
+      where: eq(users.id, id),
+    })
+  },
+
+  //Get unique user by id
+  async readUserWithPasswordById(id: string) {
+    return await db.query.users.findFirst({
+      where: eq(users.id, id),
+    })
   },
 
   //Get unique user by phone, roles and agency id
@@ -71,6 +89,9 @@ export const userRepository = {
   //Get users by phone and role
   async readUserAccountsByPhoneRole(phone: string, role: UserRolesEnum) {
     return await db.query.users.findMany({
+      columns: {
+        password: false,
+      },
       where: and(eq(users.phone, phone), eq(users.userRole, role)),
     })
   },
@@ -78,7 +99,7 @@ export const userRepository = {
   //Get user by roles in an agency
   async readUserByRolesAgencyId(agencyId: string, userRoles: UserRolesEnum[]) {
     return await db
-      .select()
+      .select({ id: users.id })
       .from(users)
       .where(
         and(eq(users.agencyId, agencyId), inArray(users.userRole, userRoles)),
@@ -151,7 +172,10 @@ export const userRepository = {
 
   //Create user
   async createUser(data: InsertUserType) {
-    return await db.insert(users).values(data).returning()
+    return await db
+      .insert(users)
+      .values(data)
+      .returning({ id: users.id, email: users.email, name: users.email })
   },
 
   // Update user's last login time
@@ -160,7 +184,6 @@ export const userRepository = {
       .update(users)
       .set({ lastLogin: lastLogin })
       .where(eq(users.id, userId))
-      .returning()
   },
 
   // Update user's last logout time
@@ -169,7 +192,6 @@ export const userRepository = {
       .update(users)
       .set({ lastLogout: lastLogout })
       .where(eq(users.id, userId))
-      .returning()
   },
 
   //Update password
@@ -178,7 +200,7 @@ export const userRepository = {
       .update(users)
       .set({ password: password })
       .where(eq(users.id, userId))
-      .returning({ id: users.id })
+      .returning({ id: users.id, email: users.email, name: users.email })
   },
 
   //Update user photo url
@@ -187,7 +209,7 @@ export const userRepository = {
       .update(users)
       .set({ photoUrl: photoUrl })
       .where(eq(users.id, userId))
-      .returning()
+      .returning({ id: users.id, photoUrl: users.photoUrl })
   },
 
   //Update user name
@@ -196,7 +218,7 @@ export const userRepository = {
       .update(users)
       .set({ name })
       .where(eq(users.id, userId))
-      .returning()
+      .returning({ id: users.id, name: users.name })
   },
 
   //Update user preferences
@@ -209,7 +231,11 @@ export const userRepository = {
       .update(users)
       .set({ prefersDarkTheme, languagePref })
       .where(eq(users.id, userId))
-      .returning()
+      .returning({
+        id: users.id,
+        prefersDarkTheme: users.prefersDarkTheme,
+        languagePref: users.languagePref,
+      })
   },
 
   //Update user email
@@ -218,7 +244,7 @@ export const userRepository = {
       .update(users)
       .set({ email })
       .where(eq(users.id, userId))
-      .returning()
+      .returning({ id: users.id, email: users.email })
   },
 
   //Update user phone
@@ -227,7 +253,7 @@ export const userRepository = {
       .update(users)
       .set({ phone })
       .where(eq(users.id, userId))
-      .returning()
+      .returning({ id: users.id, status: users.status })
   },
 
   //Update user status
@@ -236,11 +262,14 @@ export const userRepository = {
       .update(users)
       .set({ status: status })
       .where(eq(users.id, userId))
-      .returning()
+      .returning({ id: users.id, status: users.status })
   },
 
   //Delete user
   async deleteUser(userId: string) {
-    return await db.delete(users).where(eq(users.id, userId)).returning()
+    return await db
+      .delete(users)
+      .where(eq(users.id, userId))
+      .returning({ id: users.id })
   },
 }

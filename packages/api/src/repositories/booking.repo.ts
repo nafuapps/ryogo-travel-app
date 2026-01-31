@@ -1009,7 +1009,13 @@ export const bookingRepository = {
         dropAddress: dropAddress,
       })
       .where(eq(bookings.id, id))
-      .returning({ id: bookings.id })
+      .returning({
+        id: bookings.id,
+        status: bookings.status,
+        startTime: bookings.startTime,
+        pickupAddress: bookings.pickupAddress,
+        dropAddress: bookings.dropAddress,
+      })
   },
 
   async updateStatus(id: string, status: BookingStatusEnum) {
@@ -1019,7 +1025,10 @@ export const bookingRepository = {
         status,
       })
       .where(eq(bookings.id, id))
-      .returning()
+      .returning({
+        id: bookings.id,
+        status: bookings.status,
+      })
   },
 
   async updateBookingToCancel(id: string) {
@@ -1031,7 +1040,12 @@ export const bookingRepository = {
         assignedVehicleId: null,
       })
       .where(eq(bookings.id, id))
-      .returning()
+      .returning({
+        id: bookings.id,
+        status: bookings.status,
+        assignedDriverId: bookings.assignedDriverId,
+        assignedVehicleId: bookings.assignedVehicleId,
+      })
   },
 
   async updateAssignedDriver(bookingId: string, driverId: string) {
@@ -1041,7 +1055,10 @@ export const bookingRepository = {
         assignedDriverId: driverId,
       })
       .where(eq(bookings.id, bookingId))
-      .returning()
+      .returning({
+        id: bookings.id,
+        assignedDriverId: bookings.assignedDriverId,
+      })
   },
 
   async updateAssignedVehicle(bookingId: string, vehicleId: string) {
@@ -1051,7 +1068,10 @@ export const bookingRepository = {
         assignedVehicleId: vehicleId,
       })
       .where(eq(bookings.id, bookingId))
-      .returning()
+      .returning({
+        id: bookings.id,
+        assignedVehicleId: bookings.assignedVehicleId,
+      })
   },
 
   async updateAssignedUser(bookingId: string, userId: string) {
@@ -1061,6 +1081,6 @@ export const bookingRepository = {
         assignedUserId: userId,
       })
       .where(eq(bookings.id, bookingId))
-      .returning()
+      .returning({ id: bookings.id, assignedUserId: bookings.assignedUserId })
   },
 }

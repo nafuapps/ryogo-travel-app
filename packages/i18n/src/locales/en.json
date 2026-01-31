@@ -2680,7 +2680,8 @@
     "Home": {
       "Upcoming": "Upcoming bookings",
       "Continue": "Continue",
-      "Start": "Start Trip"
+      "Start": "Start Trip",
+      "NoBooking":"No bookings assigned at the moment."
     },
     "MyBookings": {
       "Ongoing": "Ongoing booking",

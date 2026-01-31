@@ -21,13 +21,14 @@ import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { Button } from "@/components/ui/button"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
+import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 
 export function NewVehicleStep1(props: {
   onNext: () => void
   newVehicleFormData: NewVehicleFormDataType
   setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
   agencyId: string
-  existingVehicles: string[]
+  existingVehicles: FindExistingVehiclesInAgencyType
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step1")
 
@@ -59,8 +60,9 @@ export function NewVehicleStep1(props: {
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     // Check if a vehicle with same number exists in this agency
-    if (props.existingVehicles.includes(data.vehicleNumber)) {
-      //If vehicle exists in agency, show error
+    if (
+      props.existingVehicles.some((v) => v.vehicleNumber == data.vehicleNumber)
+    ) {
       formData.setError("vehicleNumber", {
         type: "manual",
         message: t("APIError"),

@@ -22,7 +22,14 @@ export default async function UserActivityPage({
   }
 
   if (user.userRole == UserRolesEnum.DRIVER) {
-    const activities = await driverServices.findDriverActivityByUserId(user.id)
+    const driver = await driverServices.findDriverByUserId(user.id)
+    if (!driver) {
+      redirect("/dashboard/users", RedirectType.replace)
+    }
+    const activities = await driverServices.findDriverActivityByUserId(
+      user.id,
+      driver.id,
+    )
     return (
       <div className={mainClassName}>
         <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />
@@ -31,7 +38,6 @@ export default async function UserActivityPage({
     )
   }
   const activities = await userServices.findUserActivityById(id)
-
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />

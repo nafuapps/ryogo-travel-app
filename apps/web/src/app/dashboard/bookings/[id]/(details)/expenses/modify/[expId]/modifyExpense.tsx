@@ -22,7 +22,7 @@ import z from "zod"
 import { Button } from "@/components/ui/button"
 import DeleteExpenseAlertButton from "@/app/dashboard/components/buttons/deleteExpenseAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { modifyExpenseAction } from "@/app/actions/modifyExpenseAction"
+import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
 
 export default function ModifyExpensePageComponent({
   expenseDetails,

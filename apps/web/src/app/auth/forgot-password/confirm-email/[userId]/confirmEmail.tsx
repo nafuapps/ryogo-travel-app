@@ -20,7 +20,7 @@ import { H2, H5, PGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
-import { resetUserPasswordAction } from "@/app/actions/resetUserPasswordAction"
+import { resetUserPasswordAction } from "@/app/actions/users/resetUserPasswordAction"
 
 export default function ConfirmEmailPageComponent({
   userId,

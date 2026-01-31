@@ -10,7 +10,7 @@ import {
   Tooltip,
   TooltipContent,
 } from "@/components/ui/tooltip"
-import { changeTransactionApprovalAction } from "@/app/actions/changeTransactionApprovalAction"
+import { changeTransactionApprovalAction } from "@/app/actions/transactions/changeTransactionApprovalAction"
 
 export function TransactionApprovalButton({
   txnId,

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import BookingAlertDialog from "./bookingAlertDialog"
-import { activateCustomerAction } from "@/app/actions/activateCustomerAction"
+import { activateCustomerAction } from "@/app/actions/customers/activateCustomerAction"
 
 type ActivateCustomerAlertButtonProps = {
   customerId: string

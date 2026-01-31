@@ -35,7 +35,7 @@ export default async function DashboardRevenueMetricsComponent({
   )
 
   const transactions =
-    await transactionServices.getTransactionsPreviousDays(agencyId)
+    await transactionServices.findTransactionsPreviousDays(agencyId)
 
   const revenueThisWeekAmount = revenueBookingsThisWeek.reduce(
     (total, booking) => {

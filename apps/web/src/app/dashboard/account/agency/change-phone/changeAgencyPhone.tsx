@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { changeAgencyPhoneAction } from "@/app/actions/changeAgencyPhoneAction"
+import { changeAgencyPhoneAction } from "@/app/actions/agencies/changeAgencyPhoneAction"
 
 export default function ChangeAgencyPhonePageComponent({
   agency,

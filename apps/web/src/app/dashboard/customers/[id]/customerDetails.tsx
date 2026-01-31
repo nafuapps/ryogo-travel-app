@@ -26,7 +26,7 @@ import ChangeCustomerPhotoSheet from "./changeCustomerPhotoSheet"
 export default async function CustomerDetailsPageComponent({
   customer,
 }: {
-  customer: FindCustomerDetailsByIdType
+  customer: NonNullable<FindCustomerDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.CustomerDetails")
 

@@ -9,7 +9,7 @@ export async function changePasswordAction(
   newPassword: string,
   activateUser?: boolean,
 ) {
-  const user = await userServices.changePassword(
+  const user = await userServices.changeMyPassword(
     userId,
     oldPassword,
     newPassword,

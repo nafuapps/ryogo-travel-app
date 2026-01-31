@@ -4,14 +4,14 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 
 export async function assignDriverAction(
   bookingId: string,
-  selectedDriverId: string
+  selectedDriverId: string,
 ) {
   const assignedDriver = await bookingServices.assignDriverToBooking(
     bookingId,
-    selectedDriverId
+    selectedDriverId,
   )
-  if (!assignedDriver) {
+  if (!assignedDriver || !assignedDriver.assignedDriverId) {
     return false
   }
-  return true
+  return assignedDriver
 }

@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
 import { Dispatch, SetStateAction } from "react"
-import { NewVehicleFormDataType } from "./newVehicleForm"
 import {
   DashboardInput,
   DashboardSelect,
@@ -22,11 +21,12 @@ import { Button } from "@/components/ui/button"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function NewVehicleStep1(props: {
   onNext: () => void
-  newVehicleFormData: NewVehicleFormDataType
-  setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
+  newVehicleFormData: AddVehicleRequestType
+  setNewVehicleFormData: Dispatch<SetStateAction<AddVehicleRequestType>>
   agencyId: string
   existingVehicles: FindExistingVehiclesInAgencyType
 }) {
@@ -49,11 +49,11 @@ export function NewVehicleStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      vehicleNumber: props.newVehicleFormData.vehicleNumber,
-      type: props.newVehicleFormData.type,
-      brand: props.newVehicleFormData.brand,
-      color: props.newVehicleFormData.color,
-      model: props.newVehicleFormData.model,
+      vehicleNumber: props.newVehicleFormData.data.vehicleNumber,
+      type: props.newVehicleFormData.data.type,
+      brand: props.newVehicleFormData.data.brand,
+      color: props.newVehicleFormData.data.color,
+      model: props.newVehicleFormData.data.model,
     },
   })
 
@@ -69,12 +69,15 @@ export function NewVehicleStep1(props: {
       })
     } else {
       props.setNewVehicleFormData({
-        ...props.newVehicleFormData,
-        vehicleNumber: data.vehicleNumber,
-        type: data.type,
-        brand: data.brand,
-        color: data.color,
-        model: data.model,
+        agencyId: props.agencyId,
+        data: {
+          ...props.newVehicleFormData.data,
+          vehicleNumber: data.vehicleNumber,
+          type: data.type,
+          brand: data.brand,
+          color: data.color,
+          model: data.model,
+        },
       })
       props.onNext()
     }

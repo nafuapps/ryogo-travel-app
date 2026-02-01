@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
-import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
 import {
   DashboardDatePicker,
@@ -19,12 +18,13 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function NewVehicleStep3(props: {
   onNext: () => void
   onPrev: () => void
-  newVehicleFormData: NewVehicleFormDataType
-  setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
+  newVehicleFormData: AddVehicleRequestType
+  setNewVehicleFormData: Dispatch<SetStateAction<AddVehicleRequestType>>
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step3")
   const step3Schema = z.object({
@@ -87,21 +87,24 @@ export function NewVehicleStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      insuranceExpiresOn: props.newVehicleFormData.insuranceExpiresOn,
-      insurancePhotos: props.newVehicleFormData.insurancePhotos,
-      pucExpiresOn: props.newVehicleFormData.pucExpiresOn,
-      pucPhotos: props.newVehicleFormData.pucPhotos,
+      insuranceExpiresOn: props.newVehicleFormData.data.insuranceExpiresOn,
+      insurancePhotos: props.newVehicleFormData.data.insurancePhotos,
+      pucExpiresOn: props.newVehicleFormData.data.pucExpiresOn,
+      pucPhotos: props.newVehicleFormData.data.pucPhotos,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
     props.setNewVehicleFormData({
-      ...props.newVehicleFormData,
-      insuranceExpiresOn: data.insuranceExpiresOn,
-      insurancePhotos: data.insurancePhotos,
-      pucExpiresOn: data.pucExpiresOn,
-      pucPhotos: data.pucPhotos,
+      agencyId: props.newVehicleFormData.agencyId,
+      data: {
+        ...props.newVehicleFormData.data,
+        insuranceExpiresOn: data.insuranceExpiresOn,
+        insurancePhotos: data.insurancePhotos,
+        pucExpiresOn: data.pucExpiresOn,
+        pucPhotos: data.pucPhotos,
+      },
     })
     props.onNext()
   }

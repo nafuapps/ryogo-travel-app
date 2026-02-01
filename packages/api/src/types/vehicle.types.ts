@@ -10,9 +10,9 @@ export type AddVehicleRequestType = {
     model: string
     capacity?: number | undefined
     odometerReading: number | undefined
-    insuranceExpiresOn: Date
-    pucExpiresOn: Date
-    rcExpiresOn: Date
+    insuranceExpiresOn?: Date
+    pucExpiresOn?: Date
+    rcExpiresOn?: Date
     hasAC: boolean
     defaultRatePerKm?: number | undefined
     defaultAcChargePerDay?: number | undefined

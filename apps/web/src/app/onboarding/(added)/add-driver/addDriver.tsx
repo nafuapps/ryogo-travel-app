@@ -13,7 +13,6 @@ import {
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "@/app/onboarding/components/onboardingSteps"
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { AddDriverStep1 } from "./addDriverStep1"
 import { AddDriverFinish } from "./addDriverFinish"
 import { AddDriverStep2 } from "./addDriverStep2"
@@ -21,6 +20,7 @@ import { AddDriverStep3 } from "./addDriverStep3"
 import { AddDriverConfirm } from "./addDriverStep4"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 const TotalSteps = 4
 
@@ -35,18 +35,20 @@ export default function AddDriverPageComponent(
 ) {
   const t = useTranslations("Onboarding.AddDriverPage")
 
-  const [finalData, setFinalData] = useState<AddDriverFormDataType>({
+  const [finalData, setFinalData] = useState<AddDriverRequestType>({
     agencyId: props.agencyId,
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-    licenseNumber: "",
-    licenseExpiresOn: undefined,
-    licensePhotos: undefined,
-    driverPhotos: undefined,
-    canDriveVehicleTypes: [],
-    defaultAllowancePerDay: undefined,
+    data: {
+      name: "",
+      phone: "",
+      email: "",
+      licenseNumber: "",
+      licenseExpiresOn: undefined,
+      address: "",
+      canDriveVehicleTypes: [],
+      defaultAllowancePerDay: undefined,
+      licensePhotos: undefined,
+      userPhotos: undefined,
+    },
   })
 
   const nextStepHandler = () => {

@@ -16,14 +16,14 @@ import {
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
 } from "@/app/onboarding/components/onboardingSteps"
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { Form } from "@/components/ui/form"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function AddVehicleStep2(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: AddVehicleFormDataType
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>
+  finalData: AddVehicleRequestType
+  updateFinalData: Dispatch<SetStateAction<AddVehicleRequestType>>
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Step2")
 
@@ -95,23 +95,26 @@ export function AddVehicleStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      capacity: props.finalData.capacity,
-      odometerReading: props.finalData.odometerReading,
-      rcPhotos: props.finalData.rcPhotos,
-      vehiclePhotos: props.finalData.vehiclePhotos,
-      rcExpiresOn: props.finalData.rcExpiresOn,
+      capacity: props.finalData.data.capacity,
+      odometerReading: props.finalData.data.odometerReading,
+      rcPhotos: props.finalData.data.rcPhotos,
+      vehiclePhotos: props.finalData.data.vehiclePhotos,
+      rcExpiresOn: props.finalData.data.rcExpiresOn,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      capacity: data.capacity,
-      odometerReading: data.odometerReading,
-      rcPhotos: data.rcPhotos,
-      vehiclePhotos: data.vehiclePhotos,
-      rcExpiresOn: data.rcExpiresOn,
+      agencyId: props.finalData.agencyId,
+      data: {
+        ...props.finalData.data,
+        capacity: data.capacity,
+        odometerReading: data.odometerReading,
+        rcPhotos: data.rcPhotos,
+        vehiclePhotos: data.vehiclePhotos,
+        rcExpiresOn: data.rcExpiresOn,
+      },
     })
     props.onNext()
   }

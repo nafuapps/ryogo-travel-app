@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
-import { NewDriverFormDataType } from "./newDriverForm"
 import { Button } from "@/components/ui/button"
 import {
   DashboardInput,
@@ -22,12 +21,13 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function NewDriverStep3(props: {
   onNext: () => void
   onPrev: () => void
-  newDriverFormData: NewDriverFormDataType
-  setNewDriverFormData: Dispatch<SetStateAction<NewDriverFormDataType>>
+  newDriverFormData: AddDriverRequestType
+  setNewDriverFormData: Dispatch<SetStateAction<AddDriverRequestType>>
 }) {
   const t = useTranslations("Dashboard.NewDriver.Step3")
   const step3Schema = z.object({
@@ -49,19 +49,23 @@ export function NewDriverStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      driverAddress: props.newDriverFormData.address,
-      canDriveVehicleTypes: props.newDriverFormData.canDriveVehicleTypes,
-      defaultAllowancePerDay: props.newDriverFormData.defaultAllowancePerDay,
+      driverAddress: props.newDriverFormData.data.address,
+      canDriveVehicleTypes: props.newDriverFormData.data.canDriveVehicleTypes,
+      defaultAllowancePerDay:
+        props.newDriverFormData.data.defaultAllowancePerDay,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
     props.setNewDriverFormData({
-      ...props.newDriverFormData,
-      address: data.driverAddress,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
+      agencyId: props.newDriverFormData.agencyId,
+      data: {
+        ...props.newDriverFormData.data,
+        address: data.driverAddress,
+        canDriveVehicleTypes: data.canDriveVehicleTypes,
+        defaultAllowancePerDay: data.defaultAllowancePerDay,
+      },
     })
     props.onNext()
   }

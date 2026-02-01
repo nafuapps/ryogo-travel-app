@@ -38,7 +38,7 @@ export type AddDriverRequestType = {
     phone: string
     email: string
     licenseNumber: string
-    licenseExpiresOn: Date
+    licenseExpiresOn?: Date
     address: string
     canDriveVehicleTypes: VehicleTypesEnum[]
     defaultAllowancePerDay?: number | undefined

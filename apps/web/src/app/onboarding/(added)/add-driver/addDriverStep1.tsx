@@ -14,14 +14,14 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
 } from "@/app/onboarding/components/onboardingSteps"
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { Form } from "@/components/ui/form"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function AddDriverStep1(props: {
   onNext: () => void
-  finalData: AddDriverFormDataType
-  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>
+  finalData: AddDriverRequestType
+  updateFinalData: Dispatch<SetStateAction<AddDriverRequestType>>
   allDrivers: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Step1")
@@ -60,10 +60,10 @@ export function AddDriverStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      driverName: props.finalData.name,
-      driverPhone: props.finalData.phone,
-      driverEmail: props.finalData.email,
-      driverPhotos: props.finalData.driverPhotos,
+      driverName: props.finalData.data.name,
+      driverPhone: props.finalData.data.phone,
+      driverEmail: props.finalData.data.email,
+      driverPhotos: props.finalData.data.userPhotos,
     },
   })
 
@@ -81,11 +81,14 @@ export function AddDriverStep1(props: {
       })
     }
     props.updateFinalData({
-      ...props.finalData,
-      name: data.driverName,
-      phone: data.driverPhone,
-      email: data.driverEmail,
-      driverPhotos: data.driverPhotos,
+      agencyId: props.finalData.agencyId,
+      data: {
+        ...props.finalData.data,
+        name: data.driverName,
+        phone: data.driverPhone,
+        email: data.driverEmail,
+        userPhotos: data.driverPhotos,
+      },
     })
     props.onNext()
   }

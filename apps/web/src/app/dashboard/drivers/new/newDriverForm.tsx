@@ -7,21 +7,8 @@ import { NewDriverStep1 } from "./newDriverStep1"
 import { NewDriverStep2 } from "./newDriverStep2"
 import { NewDriverStep3 } from "./newDriverStep3"
 import { NewDriverConfirm } from "./newDriverConfirm"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-
-export type NewDriverFormDataType = {
-  name: string
-  phone: string
-  email: string
-  driverPhotos: FileList | undefined
-  licenseNumber: string
-  licenseExpiresOn: Date | undefined
-  licensePhotos: FileList | undefined
-  address: string
-  canDriveVehicleTypes: VehicleTypesEnum[]
-  defaultAllowancePerDay: number | undefined
-}
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 type NewDriverFormProps = {
   agencyId: string
@@ -29,17 +16,20 @@ type NewDriverFormProps = {
 }
 export default function NewDriverForm(props: NewDriverFormProps) {
   const [newDriverFormData, setNewDriverFormData] =
-    useState<NewDriverFormDataType>({
-      name: "",
-      phone: "",
-      email: "",
-      driverPhotos: undefined,
-      licenseNumber: "",
-      licenseExpiresOn: undefined,
-      licensePhotos: undefined,
-      address: "",
-      canDriveVehicleTypes: [],
-      defaultAllowancePerDay: undefined,
+    useState<AddDriverRequestType>({
+      agencyId: props.agencyId,
+      data: {
+        name: "",
+        phone: "",
+        email: "",
+        userPhotos: undefined,
+        licenseNumber: "",
+        licenseExpiresOn: undefined,
+        licensePhotos: undefined,
+        address: "",
+        canDriveVehicleTypes: [],
+        defaultAllowancePerDay: undefined,
+      },
     })
 
   const nextStepHandler = () => {

@@ -1,30 +1,30 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   OnboardingInput,
   OnboardingSwitch,
-} from "@/app/onboarding/components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function AddVehicleStep4(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: AddVehicleFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>;
+  onNext: () => void
+  onPrev: () => void
+  finalData: AddVehicleRequestType
+  updateFinalData: Dispatch<SetStateAction<AddVehicleRequestType>>
 }) {
-  const t = useTranslations("Onboarding.AddVehiclePage.Step4");
+  const t = useTranslations("Onboarding.AddVehiclePage.Step4")
   const step4Schema = z.object({
     defaultRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
@@ -41,27 +41,30 @@ export function AddVehicleStep4(props: {
       .nonnegative(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5"))
       .optional(),
-  });
-  type Step4Type = z.infer<typeof step4Schema>;
+  })
+  type Step4Type = z.infer<typeof step4Schema>
   const formData = useForm<Step4Type>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      defaultRatePerKm: props.finalData.defaultRatePerKm,
-      hasAC: props.finalData.hasAC,
-      defaultAcChargePerDay: props.finalData.defaultAcChargePerDay,
+      defaultRatePerKm: props.finalData.data.defaultRatePerKm,
+      hasAC: props.finalData.data.hasAC,
+      defaultAcChargePerDay: props.finalData.data.defaultAcChargePerDay,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = (data: Step4Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      defaultRatePerKm: data.defaultRatePerKm,
-      hasAC: data.hasAC,
-      defaultAcChargePerDay: data.defaultAcChargePerDay,
-    });
-    props.onNext();
-  };
+      agencyId: props.finalData.agencyId,
+      data: {
+        ...props.finalData.data,
+        defaultRatePerKm: data.defaultRatePerKm,
+        hasAC: data.hasAC,
+        defaultAcChargePerDay: data.defaultAcChargePerDay,
+      },
+    })
+    props.onNext()
+  }
   return (
     <Form {...formData}>
       <OnboardingStepForm
@@ -102,5 +105,5 @@ export function AddVehicleStep4(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

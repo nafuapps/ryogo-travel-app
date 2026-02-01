@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction, useRef, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingFileInput,
   OnboardingInput,
@@ -23,12 +22,13 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function CreateAccountStep3(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: CreateAccountFormDataType
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>
+  finalData: CreateOwnerAccountRequestType
+  updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step3")
   const step3Schema = z.object({
@@ -66,10 +66,10 @@ export function CreateAccountStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      agencyLogo: props.finalData.agencyLogo,
-      commissionRate: props.finalData.commissionRate,
-      agencyState: props.finalData.agencyState,
-      agencyCity: props.finalData.agencyCity,
+      agencyLogo: props.finalData.agency.logo,
+      commissionRate: props.finalData.agency.commissionRate,
+      agencyState: props.finalData.agency.agencyState,
+      agencyCity: props.finalData.agency.agencyCity,
     },
     shouldUnregister: false,
   })
@@ -77,11 +77,16 @@ export function CreateAccountStep3(props: {
   //Submit actions
   const onSubmit = (data: Step3Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      agencyLogo: data.agencyLogo,
-      commissionRate: data.commissionRate,
-      agencyState: data.agencyState,
-      agencyCity: data.agencyCity,
+      agency: {
+        ...props.finalData.agency,
+        logo: data.agencyLogo,
+        commissionRate: data.commissionRate,
+        agencyState: data.agencyState,
+        agencyCity: data.agencyCity,
+      },
+      owner: {
+        ...props.finalData.owner,
+      },
     })
     props.onNext()
   }

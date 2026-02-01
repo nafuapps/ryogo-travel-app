@@ -7,7 +7,6 @@ import OnboardingSidebar from "../components/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "../components/stepsTracker"
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { CreateAccountFinish } from "./createAccountFinish"
 import { CreateAccountStep1 } from "./createAccountStep1"
 import { CreateAccountStep2 } from "./createAccountStep2"
@@ -22,6 +21,7 @@ import {
 } from "../components/onboardingSteps"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 const TotalSteps = 5
 
@@ -34,21 +34,24 @@ export default function CreateAccountPageComponent({
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage")
 
-  const [finalData, setFinalData] = useState<CreateAccountFormDataType>({
-    agencyName: "",
-    ownerName: "",
-    ownerPhone: "",
-    ownerEmail: "",
-    agencyPhone: "",
-    agencyEmail: "",
-    agencyAddress: "",
-    ownerPhoto: undefined,
-    agencyLogo: undefined,
-    commissionRate: undefined,
-    agencyState: "",
-    agencyCity: "",
-    password: "",
-    confirmPassword: "",
+  const [finalData, setFinalData] = useState<CreateOwnerAccountRequestType>({
+    agency: {
+      businessName: "",
+      businessPhone: "",
+      businessEmail: "",
+      businessAddress: "",
+      logo: undefined,
+      commissionRate: undefined,
+      agencyState: "",
+      agencyCity: "",
+    },
+    owner: {
+      name: "",
+      phone: "",
+      email: "",
+      photos: undefined,
+      password: "",
+    },
   })
 
   const nextStepHandler = () => {

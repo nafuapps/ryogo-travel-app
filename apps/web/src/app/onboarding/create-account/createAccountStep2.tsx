@@ -17,15 +17,15 @@ import {
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
 } from "../components/onboardingSteps"
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { Form } from "@/components/ui/form"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function CreateAccountStep2(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: CreateAccountFormDataType
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>
+  finalData: CreateOwnerAccountRequestType
+  updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
   allAgencies: FindAllAgenciesType
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step2")
@@ -64,22 +64,22 @@ export function CreateAccountStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      agencyPhone: props.finalData.agencyPhone,
+      agencyPhone: props.finalData.agency.businessPhone,
       sameAsOwnerPhone: false,
-      agencyEmail: props.finalData.agencyEmail,
+      agencyEmail: props.finalData.agency.businessEmail,
       sameAsOwnerEmail: false,
-      agencyAddress: props.finalData.agencyAddress,
-      ownerPhoto: props.finalData.ownerPhoto,
+      agencyAddress: props.finalData.agency.businessAddress,
+      ownerPhoto: props.finalData.owner.photos,
     },
   })
 
   const setValue = formData.setValue
   // Watch the checkbox and the source input field
   const phoneCopySelection = formData.watch("sameAsOwnerPhone")
-  const phoneSourceValue = props.finalData.ownerPhone
+  const phoneSourceValue = props.finalData.owner.phone
 
   const emailCopySelection = formData.watch("sameAsOwnerEmail")
-  const emailSourceValue = props.finalData.ownerEmail
+  const emailSourceValue = props.finalData.owner.email
 
   useEffect(() => {
     if (phoneCopySelection) {
@@ -116,11 +116,16 @@ export function CreateAccountStep2(props: {
       })
     } else {
       props.updateFinalData({
-        ...props.finalData,
-        agencyPhone: data.agencyPhone,
-        agencyEmail: data.agencyEmail,
-        agencyAddress: data.agencyAddress,
-        ownerPhoto: data.ownerPhoto,
+        agency: {
+          ...props.finalData.agency,
+          businessPhone: data.agencyPhone,
+          businessEmail: data.agencyEmail,
+          businessAddress: data.agencyAddress,
+        },
+        owner: {
+          ...props.finalData.owner,
+          photos: data.ownerPhoto,
+        },
       })
       props.onNext()
     }

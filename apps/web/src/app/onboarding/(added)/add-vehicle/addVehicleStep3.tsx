@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingDatePicker,
   OnboardingFileInput,
@@ -17,12 +16,13 @@ import {
   OnboardingStepPrimaryAction,
 } from "@/app/onboarding/components/onboardingSteps"
 import { Form } from "@/components/ui/form"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function AddVehicleStep3(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: AddVehicleFormDataType
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>
+  finalData: AddVehicleRequestType
+  updateFinalData: Dispatch<SetStateAction<AddVehicleRequestType>>
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Step3")
   const step3Schema = z.object({
@@ -85,21 +85,24 @@ export function AddVehicleStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      insuranceExpiresOn: props.finalData.insuranceExpiresOn,
-      insurancePhotos: props.finalData.insurancePhotos,
-      pucExpiresOn: props.finalData.pucExpiresOn,
-      pucPhotos: props.finalData.pucPhotos,
+      insuranceExpiresOn: props.finalData.data.insuranceExpiresOn,
+      insurancePhotos: props.finalData.data.insurancePhotos,
+      pucExpiresOn: props.finalData.data.pucExpiresOn,
+      pucPhotos: props.finalData.data.pucPhotos,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      insuranceExpiresOn: data.insuranceExpiresOn,
-      insurancePhotos: data.insurancePhotos,
-      pucExpiresOn: data.pucExpiresOn,
-      pucPhotos: data.pucPhotos,
+      agencyId: props.finalData.agencyId,
+      data: {
+        ...props.finalData.data,
+        insuranceExpiresOn: data.insuranceExpiresOn,
+        insurancePhotos: data.insurancePhotos,
+        pucExpiresOn: data.pucExpiresOn,
+        pucPhotos: data.pucPhotos,
+      },
     })
     props.onNext()
   }

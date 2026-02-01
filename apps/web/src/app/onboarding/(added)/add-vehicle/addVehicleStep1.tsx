@@ -7,7 +7,6 @@ import {
   OnboardingInput,
   OnboardingSelect,
 } from "@/app/onboarding/components/onboardingFields"
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepActions,
   OnboardingStepContent,
@@ -18,11 +17,12 @@ import { Form } from "@/components/ui/form"
 import { useTranslations } from "next-intl"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function AddVehicleStep1(props: {
   onNext: () => void
-  finalData: AddVehicleFormDataType
-  updateFinalData: Dispatch<SetStateAction<AddVehicleFormDataType>>
+  finalData: AddVehicleRequestType
+  updateFinalData: Dispatch<SetStateAction<AddVehicleRequestType>>
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Step1")
   const step1Schema = z.object({
@@ -41,23 +41,26 @@ export function AddVehicleStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      vehicleNumber: props.finalData.vehicleNumber,
-      type: props.finalData.type,
-      brand: props.finalData.brand,
-      color: props.finalData.color,
-      model: props.finalData.model,
+      vehicleNumber: props.finalData.data.vehicleNumber,
+      type: props.finalData.data.type,
+      brand: props.finalData.data.brand,
+      color: props.finalData.data.color,
+      model: props.finalData.data.model,
     },
   })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      vehicleNumber: data.vehicleNumber,
-      type: data.type,
-      brand: data.brand,
-      color: data.color,
-      model: data.model,
+      agencyId: props.finalData.agencyId,
+      data: {
+        ...props.finalData.data,
+        vehicleNumber: data.vehicleNumber,
+        type: data.type,
+        brand: data.brand,
+        color: data.color,
+        model: data.model,
+      },
     })
     props.onNext()
   }

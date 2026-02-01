@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
-import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
 import {
   DashboardInput,
@@ -19,12 +18,13 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function NewVehicleStep4(props: {
   onNext: () => void
   onPrev: () => void
-  newVehicleFormData: NewVehicleFormDataType
-  setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
+  newVehicleFormData: AddVehicleRequestType
+  setNewVehicleFormData: Dispatch<SetStateAction<AddVehicleRequestType>>
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step4")
   const step4Schema = z.object({
@@ -48,19 +48,23 @@ export function NewVehicleStep4(props: {
   const formData = useForm<Step4Type>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      defaultRatePerKm: props.newVehicleFormData.defaultRatePerKm,
-      hasAC: props.newVehicleFormData.hasAC,
-      defaultAcChargePerDay: props.newVehicleFormData.defaultAcChargePerDay,
+      defaultRatePerKm: props.newVehicleFormData.data.defaultRatePerKm,
+      hasAC: props.newVehicleFormData.data.hasAC,
+      defaultAcChargePerDay:
+        props.newVehicleFormData.data.defaultAcChargePerDay,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step4Type) => {
     props.setNewVehicleFormData({
-      ...props.newVehicleFormData,
-      defaultRatePerKm: data.defaultRatePerKm,
-      hasAC: data.hasAC,
-      defaultAcChargePerDay: data.defaultAcChargePerDay,
+      agencyId: props.newVehicleFormData.agencyId,
+      data: {
+        ...props.newVehicleFormData.data,
+        defaultRatePerKm: data.defaultRatePerKm,
+        hasAC: data.hasAC,
+        defaultAcChargePerDay: data.defaultAcChargePerDay,
+      },
     })
     props.onNext()
   }

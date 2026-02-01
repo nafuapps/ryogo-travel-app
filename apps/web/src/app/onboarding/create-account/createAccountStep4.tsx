@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { OnboardingInput } from "../components/onboardingFields"
 import {
   OnboardingStepForm,
@@ -14,12 +13,13 @@ import {
   OnboardingStepSecondaryAction,
 } from "../components/onboardingSteps"
 import { Form } from "@/components/ui/form"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function CreateAccountStep4(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: CreateAccountFormDataType
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>
+  finalData: CreateOwnerAccountRequestType
+  updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step4")
   const step4Schema = z
@@ -41,17 +41,20 @@ export function CreateAccountStep4(props: {
   const formData = useForm<Step4Type>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      password: props.finalData.password,
-      confirmPassword: props.finalData.confirmPassword,
+      password: props.finalData.owner.password,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step4Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      password: data.password,
-      confirmPassword: data.confirmPassword,
+      agency: {
+        ...props.finalData.agency,
+      },
+      owner: {
+        ...props.finalData.owner,
+        password: data.password,
+      },
     })
     props.onNext()
   }

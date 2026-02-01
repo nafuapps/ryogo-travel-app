@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
 import { Dispatch, SetStateAction } from "react"
-import { NewDriverFormDataType } from "./newDriverForm"
 import {
   DashboardFileInput,
   DashboardInput,
@@ -20,11 +19,12 @@ import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { Button } from "@/components/ui/button"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function NewDriverStep1(props: {
   onNext: () => void
-  newDriverFormData: NewDriverFormDataType
-  setNewDriverFormData: Dispatch<SetStateAction<NewDriverFormDataType>>
+  newDriverFormData: AddDriverRequestType
+  setNewDriverFormData: Dispatch<SetStateAction<AddDriverRequestType>>
   agencyId: string
   allDrivers: FindAllUsersByRoleType
 }) {
@@ -64,10 +64,10 @@ export function NewDriverStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      driverName: props.newDriverFormData.name,
-      driverPhone: props.newDriverFormData.phone,
-      driverEmail: props.newDriverFormData.email,
-      driverPhotos: props.newDriverFormData.driverPhotos,
+      driverName: props.newDriverFormData.data.name,
+      driverPhone: props.newDriverFormData.data.phone,
+      driverEmail: props.newDriverFormData.data.email,
+      driverPhotos: props.newDriverFormData.data.userPhotos,
     },
   })
 
@@ -95,11 +95,14 @@ export function NewDriverStep1(props: {
       })
     } else {
       props.setNewDriverFormData({
-        ...props.newDriverFormData,
-        name: data.driverName,
-        phone: data.driverPhone,
-        email: data.driverEmail,
-        driverPhotos: data.driverPhotos,
+        agencyId: props.newDriverFormData.agencyId,
+        data: {
+          ...props.newDriverFormData.data,
+          name: data.driverName,
+          phone: data.driverPhone,
+          email: data.driverEmail,
+          userPhotos: data.driverPhotos,
+        },
       })
       props.onNext()
     }

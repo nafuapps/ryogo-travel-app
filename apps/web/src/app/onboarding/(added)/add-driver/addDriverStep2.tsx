@@ -1,31 +1,31 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "@/components/ui/spinner";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 import {
   OnboardingDatePicker,
   OnboardingFileInput,
   OnboardingInput,
-} from "@/app/onboarding/components/onboardingFields";
+} from "@/app/onboarding/components/onboardingFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import { Form } from "@/components/ui/form";
+} from "@/app/onboarding/components/onboardingSteps"
+import { Form } from "@/components/ui/form"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function AddDriverStep2(props: {
-  onNext: () => void;
-  onPrev: () => void;
-  finalData: AddDriverFormDataType;
-  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>;
+  onNext: () => void
+  onPrev: () => void
+  finalData: AddDriverRequestType
+  updateFinalData: Dispatch<SetStateAction<AddDriverRequestType>>
 }) {
-  const t = useTranslations("Onboarding.AddDriverPage.Step2");
+  const t = useTranslations("Onboarding.AddDriverPage.Step2")
   const step2Schema = z.object({
     licenseNumber: z
       .string()
@@ -39,14 +39,14 @@ export function AddDriverStep2(props: {
     licensePhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        return file.length >= 1;
+        return file.length >= 1
       }, t("Field3.Error1"))
       .refine((file) => {
-        if (file.length < 1) return false;
-        return file[0]!.size < 1000000;
+        if (file.length < 1) return false
+        return file[0]!.size < 1000000
       }, t("Field3.Error2"))
       .refine((file) => {
-        if (file.length < 1) return false;
+        if (file.length < 1) return false
         return (
           file[0] &&
           [
@@ -57,29 +57,32 @@ export function AddDriverStep2(props: {
             "image/webp",
             "application/pdf",
           ].includes(file[0]!.type)
-        );
+        )
       }, t("Field3.Error3")),
-  });
-  type Step2Type = z.infer<typeof step2Schema>;
+  })
+  type Step2Type = z.infer<typeof step2Schema>
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      licenseNumber: props.finalData.licenseNumber,
-      licenseExpiresOn: props.finalData.licenseExpiresOn,
-      licensePhotos: props.finalData.licensePhotos,
+      licenseNumber: props.finalData.data.licenseNumber,
+      licenseExpiresOn: props.finalData.data.licenseExpiresOn,
+      licensePhotos: props.finalData.data.licensePhotos,
     },
-  });
+  })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
-    });
-    props.onNext();
-  };
+      agencyId: props.finalData.agencyId,
+      data: {
+        ...props.finalData.data,
+        licenseNumber: data.licenseNumber,
+        licenseExpiresOn: data.licenseExpiresOn,
+        licensePhotos: data.licensePhotos,
+      },
+    })
+    props.onNext()
+  }
 
   return (
     <Form {...formData}>
@@ -125,5 +128,5 @@ export function AddDriverStep2(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
-  );
+  )
 }

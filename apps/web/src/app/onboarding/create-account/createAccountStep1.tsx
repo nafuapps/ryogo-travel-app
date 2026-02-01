@@ -11,14 +11,14 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
 } from "../components/onboardingSteps"
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { Form } from "@/components/ui/form"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function CreateAccountStep1(props: {
   onNext: () => void
-  finalData: CreateAccountFormDataType
-  updateFinalData: Dispatch<SetStateAction<CreateAccountFormDataType>>
+  finalData: CreateOwnerAccountRequestType
+  updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
   allOwners: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step1")
@@ -38,10 +38,10 @@ export function CreateAccountStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      agencyName: props.finalData.agencyName,
-      ownerName: props.finalData.ownerName,
-      ownerPhone: props.finalData.ownerPhone,
-      ownerEmail: props.finalData.ownerEmail,
+      agencyName: props.finalData.agency.businessName,
+      ownerName: props.finalData.owner.name,
+      ownerPhone: props.finalData.owner.phone,
+      ownerEmail: props.finalData.owner.email,
     },
   })
 
@@ -58,11 +58,16 @@ export function CreateAccountStep1(props: {
       })
     } else {
       props.updateFinalData({
-        ...props.finalData,
-        agencyName: data.agencyName,
-        ownerName: data.ownerName,
-        ownerPhone: data.ownerPhone,
-        ownerEmail: data.ownerEmail,
+        agency: {
+          ...props.finalData.agency,
+          businessName: data.agencyName,
+        },
+        owner: {
+          ...props.finalData.owner,
+          name: data.ownerName,
+          phone: data.ownerPhone,
+          email: data.ownerEmail,
+        },
       })
       props.onNext()
     }

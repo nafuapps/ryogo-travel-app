@@ -14,14 +14,14 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
 } from "@/app/onboarding/components/onboardingSteps"
-import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { Form } from "@/components/ui/form"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function AddAgentStep1(props: {
   onNext: () => void
-  finalData: AddAgentFormDataType
-  updateFinalData: Dispatch<SetStateAction<AddAgentFormDataType>>
+  finalData: AddAgentRequestType
+  updateFinalData: Dispatch<SetStateAction<AddAgentRequestType>>
   allAgents: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Step1")
@@ -57,10 +57,10 @@ export function AddAgentStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      agentName: props.finalData.name,
-      agentPhone: props.finalData.phone,
-      agentEmail: props.finalData.email,
-      agentPhotos: props.finalData.agentPhotos,
+      agentName: props.finalData.data.name,
+      agentPhone: props.finalData.data.phone,
+      agentEmail: props.finalData.data.email,
+      agentPhotos: props.finalData.data.photos,
     },
   })
 
@@ -79,11 +79,14 @@ export function AddAgentStep1(props: {
     } else {
       //If no errors, move ahead
       props.updateFinalData({
-        ...props.finalData,
-        name: data.agentName,
-        phone: data.agentPhone,
-        email: data.agentEmail,
-        agentPhotos: data.agentPhotos,
+        agencyId: props.finalData.agencyId,
+        data: {
+          ...props.finalData.data,
+          name: data.agentName,
+          phone: data.agentPhone,
+          email: data.agentEmail,
+          photos: data.agentPhotos,
+        },
       })
       props.onNext()
     }

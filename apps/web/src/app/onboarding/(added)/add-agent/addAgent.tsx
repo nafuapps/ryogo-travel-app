@@ -13,12 +13,12 @@ import {
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "@/app/onboarding/components/onboardingSteps"
-import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { AddAgentStep1 } from "./addAgentStep1"
 import { AddAgentFinish } from "./addAgentFinish"
 import { AddAgentConfirm } from "./addAgentStep2"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 const TotalSteps = 2
 
@@ -33,12 +33,14 @@ export default function AddAgentPageComponent(
 ) {
   const t = useTranslations("Onboarding.AddAgentPage")
 
-  const [finalData, setFinalData] = useState<AddAgentFormDataType>({
+  const [finalData, setFinalData] = useState<AddAgentRequestType>({
     agencyId: props.agencyId,
-    name: "",
-    phone: "",
-    email: "",
-    agentPhotos: undefined,
+    data: {
+      name: "",
+      phone: "",
+      email: "",
+      photos: undefined,
+    },
   })
 
   const nextStepHandler = () => {

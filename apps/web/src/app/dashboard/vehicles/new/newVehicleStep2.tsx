@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
-import { NewVehicleFormDataType } from "./newVehicleForm"
 import {
   DashboardDatePicker,
   DashboardFileInput,
@@ -20,12 +19,13 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function NewVehicleStep2(props: {
   onNext: () => void
   onPrev: () => void
-  newVehicleFormData: NewVehicleFormDataType
-  setNewVehicleFormData: Dispatch<SetStateAction<NewVehicleFormDataType>>
+  newVehicleFormData: AddVehicleRequestType
+  setNewVehicleFormData: Dispatch<SetStateAction<AddVehicleRequestType>>
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step2")
 
@@ -97,23 +97,26 @@ export function NewVehicleStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      capacity: props.newVehicleFormData.capacity,
-      odometerReading: props.newVehicleFormData.odometerReading,
-      rcPhotos: props.newVehicleFormData.rcPhotos,
-      vehiclePhotos: props.newVehicleFormData.vehiclePhotos,
-      rcExpiresOn: props.newVehicleFormData.rcExpiresOn,
+      capacity: props.newVehicleFormData.data.capacity,
+      odometerReading: props.newVehicleFormData.data.odometerReading,
+      rcPhotos: props.newVehicleFormData.data.rcPhotos,
+      vehiclePhotos: props.newVehicleFormData.data.vehiclePhotos,
+      rcExpiresOn: props.newVehicleFormData.data.rcExpiresOn,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
     props.setNewVehicleFormData({
-      ...props.newVehicleFormData,
-      capacity: data.capacity,
-      odometerReading: data.odometerReading,
-      rcPhotos: data.rcPhotos,
-      vehiclePhotos: data.vehiclePhotos,
-      rcExpiresOn: data.rcExpiresOn,
+      agencyId: props.newVehicleFormData.agencyId,
+      data: {
+        ...props.newVehicleFormData.data,
+        capacity: data.capacity,
+        odometerReading: data.odometerReading,
+        rcPhotos: data.rcPhotos,
+        vehiclePhotos: data.vehiclePhotos,
+        rcExpiresOn: data.rcExpiresOn,
+      },
     })
     props.onNext()
   }

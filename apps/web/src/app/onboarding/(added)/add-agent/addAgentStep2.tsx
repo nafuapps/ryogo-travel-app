@@ -1,7 +1,6 @@
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { AddAgentFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -21,14 +20,14 @@ import { addAgentAction } from "@/app/actions/users/addAgentAction"
 export function AddAgentConfirm(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: AddAgentFormDataType
+  finalData: AddAgentRequestType
   status: UserStatusEnum
   ownerId: string
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm")
   const router = useRouter()
 
-  const formData = useForm<AddAgentFormDataType>()
+  const formData = useForm<AddAgentRequestType>()
   //Submit actions
   const onSubmit = async () => {
     // Add agent
@@ -36,10 +35,10 @@ export function AddAgentConfirm(props: {
       agencyId: props.finalData.agencyId,
       ownerId: props.status == UserStatusEnum.NEW ? props.ownerId : undefined,
       data: {
-        name: props.finalData.name,
-        email: props.finalData.email,
-        phone: props.finalData.phone,
-        photos: props.finalData.agentPhotos,
+        name: props.finalData.data.name,
+        email: props.finalData.data.email,
+        phone: props.finalData.data.phone,
+        photos: props.finalData.data.photos,
       },
     }
     const addedAgent = await addAgentAction(newAgentData)
@@ -59,9 +58,18 @@ export function AddAgentConfirm(props: {
       >
         <OnboardingStepContent contentId="Step2Content">
           <H3Grey>{t("Title")}</H3Grey>
-          <ConfirmValues name={t("AgentName")} value={props.finalData.name} />
-          <ConfirmValues name={t("AgentPhone")} value={props.finalData.phone} />
-          <ConfirmValues name={t("AgentEmail")} value={props.finalData.email} />
+          <ConfirmValues
+            name={t("AgentName")}
+            value={props.finalData.data.name}
+          />
+          <ConfirmValues
+            name={t("AgentPhone")}
+            value={props.finalData.data.phone}
+          />
+          <ConfirmValues
+            name={t("AgentEmail")}
+            value={props.finalData.data.email}
+          />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step2Actions">
           <OnboardingStepPrimaryAction

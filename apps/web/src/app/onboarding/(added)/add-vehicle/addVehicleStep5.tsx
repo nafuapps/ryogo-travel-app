@@ -3,7 +3,6 @@ import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import ConfirmValues from "@/app/onboarding/components/confirmValues"
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -20,35 +19,35 @@ import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 export function AddVehicleConfirm(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: AddVehicleFormDataType
+  finalData: AddVehicleRequestType
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Confirm")
   const router = useRouter()
 
-  const formData = useForm<AddVehicleFormDataType>()
+  const formData = useForm<AddVehicleRequestType>()
 
   //Submit actions
   const onSubmit = async () => {
     const newVehicleData: AddVehicleRequestType = {
       agencyId: props.finalData.agencyId,
       data: {
-        vehicleNumber: props.finalData.vehicleNumber,
-        type: props.finalData.type,
-        brand: props.finalData.brand,
-        color: props.finalData.color,
-        model: props.finalData.model,
-        capacity: props.finalData.capacity,
-        odometerReading: props.finalData.odometerReading,
-        insuranceExpiresOn: props.finalData.insuranceExpiresOn!,
-        pucExpiresOn: props.finalData.pucExpiresOn!,
-        rcExpiresOn: props.finalData.rcExpiresOn!,
-        hasAC: props.finalData.hasAC,
-        defaultRatePerKm: props.finalData.defaultRatePerKm,
-        defaultAcChargePerDay: props.finalData.defaultAcChargePerDay,
-        rcPhotos: props.finalData.rcPhotos,
-        pucPhotos: props.finalData.pucPhotos,
-        insurancePhotos: props.finalData.insurancePhotos,
-        vehiclePhotos: props.finalData.vehiclePhotos,
+        vehicleNumber: props.finalData.data.vehicleNumber,
+        type: props.finalData.data.type,
+        brand: props.finalData.data.brand,
+        color: props.finalData.data.color,
+        model: props.finalData.data.model,
+        capacity: props.finalData.data.capacity,
+        odometerReading: props.finalData.data.odometerReading,
+        insuranceExpiresOn: props.finalData.data.insuranceExpiresOn,
+        pucExpiresOn: props.finalData.data.pucExpiresOn,
+        rcExpiresOn: props.finalData.data.rcExpiresOn,
+        hasAC: props.finalData.data.hasAC,
+        defaultRatePerKm: props.finalData.data.defaultRatePerKm,
+        defaultAcChargePerDay: props.finalData.data.defaultAcChargePerDay,
+        rcPhotos: props.finalData.data.rcPhotos,
+        pucPhotos: props.finalData.data.pucPhotos,
+        insurancePhotos: props.finalData.data.insurancePhotos,
+        vehiclePhotos: props.finalData.data.vehiclePhotos,
       },
     }
     const addedVehicle = await addVehicleAction(newVehicleData)
@@ -71,52 +70,59 @@ export function AddVehicleConfirm(props: {
           <H3Grey>{t("Title")}</H3Grey>
           <ConfirmValues
             name={t("VehicleNumber")}
-            value={props.finalData.vehicleNumber}
+            value={props.finalData.data.vehicleNumber}
           />
-          <ConfirmValues name={t("Type")} value={props.finalData.type} />
-          <ConfirmValues name={t("Brand")} value={props.finalData.brand} />
-          <ConfirmValues name={t("Model")} value={props.finalData.model} />
-          <ConfirmValues name={t("Color")} value={props.finalData.color} />
-          {props.finalData.capacity && (
+          <ConfirmValues name={t("Type")} value={props.finalData.data.type} />
+          <ConfirmValues name={t("Brand")} value={props.finalData.data.brand} />
+          <ConfirmValues name={t("Model")} value={props.finalData.data.model} />
+          <ConfirmValues name={t("Color")} value={props.finalData.data.color} />
+          {props.finalData.data.capacity && (
             <ConfirmValues
               name={t("Capacity")}
-              value={`${props.finalData.capacity}`}
+              value={`${props.finalData.data.capacity}`}
             />
           )}
-          {props.finalData.odometerReading && (
+          {props.finalData.data.odometerReading && (
             <ConfirmValues
               name={t("OdometerReading")}
-              value={`${props.finalData.odometerReading}`}
+              value={`${props.finalData.data.odometerReading}`}
             />
           )}
-          <ConfirmValues
-            name={t("InsuranceExpiresOn")}
-            value={props.finalData.insuranceExpiresOn!.toDateString()}
-          />
-          <ConfirmValues
-            name={t("PUCExpiresOn")}
-            value={props.finalData.pucExpiresOn!.toDateString()}
-          />
-          <ConfirmValues
-            name={t("RCExpiresOn")}
-            value={props.finalData.rcExpiresOn!.toDateString()}
-          />
-          {props.finalData.defaultRatePerKm && (
+          {props.finalData.data.insuranceExpiresOn && (
+            <ConfirmValues
+              name={t("InsuranceExpiresOn")}
+              value={props.finalData.data.insuranceExpiresOn.toDateString()}
+            />
+          )}
+          {props.finalData.data.pucExpiresOn && (
+            <ConfirmValues
+              name={t("PUCExpiresOn")}
+              value={props.finalData.data.pucExpiresOn.toDateString()}
+            />
+          )}
+          {props.finalData.data.rcExpiresOn && (
+            <ConfirmValues
+              name={t("RCExpiresOn")}
+              value={props.finalData.data.rcExpiresOn.toDateString()}
+            />
+          )}
+          {props.finalData.data.defaultRatePerKm && (
             <ConfirmValues
               name={t("RatePerKm")}
-              value={`${props.finalData.defaultRatePerKm}`}
+              value={`${props.finalData.data.defaultRatePerKm}`}
             />
           )}
           <ConfirmValues
             name={t("HasAC")}
-            value={props.finalData.hasAC ? "Yes" : "No"}
+            value={props.finalData.data.hasAC ? "Yes" : "No"}
           />
-          {props.finalData.hasAC && props.finalData.defaultAcChargePerDay && (
-            <ConfirmValues
-              name={t("ACChagePerDay")}
-              value={`${props.finalData.defaultAcChargePerDay}`}
-            />
-          )}
+          {props.finalData.data.hasAC &&
+            props.finalData.data.defaultAcChargePerDay && (
+              <ConfirmValues
+                name={t("ACChagePerDay")}
+                value={`${props.finalData.data.defaultAcChargePerDay}`}
+              />
+            )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step5Actions">
           <OnboardingStepPrimaryAction

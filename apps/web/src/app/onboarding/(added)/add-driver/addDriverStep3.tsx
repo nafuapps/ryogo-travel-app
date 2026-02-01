@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingInput,
   OnboardingMultipleCheckbox,
@@ -20,12 +19,13 @@ import {
 import { Form } from "@/components/ui/form"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function AddDriverStep3(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: AddDriverFormDataType
-  updateFinalData: Dispatch<SetStateAction<AddDriverFormDataType>>
+  finalData: AddDriverRequestType
+  updateFinalData: Dispatch<SetStateAction<AddDriverRequestType>>
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Step3")
   const step3Schema = z.object({
@@ -47,19 +47,22 @@ export function AddDriverStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      driverAddress: props.finalData.address,
-      canDriveVehicleTypes: props.finalData.canDriveVehicleTypes,
-      defaultAllowancePerDay: props.finalData.defaultAllowancePerDay,
+      driverAddress: props.finalData.data.address,
+      canDriveVehicleTypes: props.finalData.data.canDriveVehicleTypes,
+      defaultAllowancePerDay: props.finalData.data.defaultAllowancePerDay,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
     props.updateFinalData({
-      ...props.finalData,
-      address: data.driverAddress,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
+      agencyId: props.finalData.agencyId,
+      data: {
+        ...props.finalData.data,
+        address: data.driverAddress,
+        canDriveVehicleTypes: data.canDriveVehicleTypes,
+        defaultAllowancePerDay: data.defaultAllowancePerDay,
+      },
     })
     props.onNext()
   }

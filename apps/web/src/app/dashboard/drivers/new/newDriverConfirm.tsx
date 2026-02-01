@@ -5,7 +5,6 @@ import { Form } from "@/components/ui/form"
 import { CaptionGrey, H4, P, PBold, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { NewDriverFormDataType } from "./newDriverForm"
 import { Button } from "@/components/ui/button"
 import {
   newBookingSectionClassName,
@@ -20,11 +19,11 @@ import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 export function NewDriverConfirm(props: {
   onNext: () => void
   onPrev: () => void
-  newDriverFormData: NewDriverFormDataType
+  newDriverFormData: AddDriverRequestType
   agencyId: string
 }) {
   const t = useTranslations("Dashboard.NewDriver.Confirm")
-  const formData = useForm<NewDriverFormDataType>()
+  const formData = useForm<AddDriverRequestType>()
   const router = useRouter()
 
   //Submit action
@@ -33,16 +32,17 @@ export function NewDriverConfirm(props: {
     const newDriverData: AddDriverRequestType = {
       agencyId: props.agencyId,
       data: {
-        name: props.newDriverFormData.name,
-        email: props.newDriverFormData.email,
-        phone: props.newDriverFormData.phone,
-        address: props.newDriverFormData.address,
-        canDriveVehicleTypes: props.newDriverFormData.canDriveVehicleTypes,
-        defaultAllowancePerDay: props.newDriverFormData.defaultAllowancePerDay,
-        licenseNumber: props.newDriverFormData.licenseNumber,
-        licenseExpiresOn: props.newDriverFormData.licenseExpiresOn!,
-        licensePhotos: props.newDriverFormData.licensePhotos,
-        userPhotos: props.newDriverFormData.driverPhotos,
+        name: props.newDriverFormData.data.name,
+        email: props.newDriverFormData.data.email,
+        phone: props.newDriverFormData.data.phone,
+        address: props.newDriverFormData.data.address,
+        canDriveVehicleTypes: props.newDriverFormData.data.canDriveVehicleTypes,
+        defaultAllowancePerDay:
+          props.newDriverFormData.data.defaultAllowancePerDay,
+        licenseNumber: props.newDriverFormData.data.licenseNumber,
+        licenseExpiresOn: props.newDriverFormData.data.licenseExpiresOn,
+        licensePhotos: props.newDriverFormData.data.licensePhotos,
+        userPhotos: props.newDriverFormData.data.userPhotos,
       },
     }
     const addedDriver = await addDriverAction(newDriverData)
@@ -76,36 +76,40 @@ export function NewDriverConfirm(props: {
           <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
             <ConfirmValues
               name={t("DriverName")}
-              value={props.newDriverFormData.name}
+              value={props.newDriverFormData.data.name}
             />
             <ConfirmValues
               name={t("DriverPhone")}
-              value={props.newDriverFormData.phone}
+              value={props.newDriverFormData.data.phone}
             />
             <ConfirmValues
               name={t("DriverEmail")}
-              value={props.newDriverFormData.email}
+              value={props.newDriverFormData.data.email}
             />
             <ConfirmValues
               name={t("LicenseNumber")}
-              value={props.newDriverFormData.licenseNumber}
+              value={props.newDriverFormData.data.licenseNumber}
             />
-            <ConfirmValues
-              name={t("LicenseExpiresOn")}
-              value={props.newDriverFormData.licenseExpiresOn!.toDateString()}
-            />
+            {props.newDriverFormData.data.licenseExpiresOn && (
+              <ConfirmValues
+                name={t("LicenseExpiresOn")}
+                value={props.newDriverFormData.data.licenseExpiresOn.toDateString()}
+              />
+            )}
             <ConfirmValues
               name={t("DriverAddress")}
-              value={props.newDriverFormData.address}
+              value={props.newDriverFormData.data.address}
             />
             <ConfirmValues
               name={t("CanDriveVehicleTypes")}
-              value={props.newDriverFormData.canDriveVehicleTypes.join(", ")}
+              value={props.newDriverFormData.data.canDriveVehicleTypes.join(
+                ", ",
+              )}
             />
-            {props.newDriverFormData.defaultAllowancePerDay && (
+            {props.newDriverFormData.data.defaultAllowancePerDay && (
               <ConfirmValues
                 name={t("DefaultAllowancePerDay")}
-                value={`${props.newDriverFormData.defaultAllowancePerDay}`}
+                value={`${props.newDriverFormData.data.defaultAllowancePerDay}`}
               />
             )}
           </div>

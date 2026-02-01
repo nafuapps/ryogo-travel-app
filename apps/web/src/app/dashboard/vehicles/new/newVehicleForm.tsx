@@ -10,26 +10,7 @@ import { NewVehicleStep4 } from "./newVehicleStep4"
 import { NewVehicleConfirm } from "./newVehicleConfirm"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
-
-export type NewVehicleFormDataType = {
-  vehicleNumber: string
-  type: VehicleTypesEnum
-  brand: string
-  color: string
-  model: string
-  capacity: number | undefined
-  odometerReading: number | undefined
-  rcPhotos: FileList | undefined
-  vehiclePhotos: FileList | undefined
-  insuranceExpiresOn: Date | undefined
-  pucExpiresOn: Date | undefined
-  rcExpiresOn: Date | undefined
-  insurancePhotos: FileList | undefined
-  pucPhotos: FileList | undefined
-  hasAC: boolean
-  defaultRatePerKm: number | undefined
-  defaultAcChargePerDay: number | undefined
-}
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 type NewVehicleFormProps = {
   agencyId: string
@@ -37,24 +18,27 @@ type NewVehicleFormProps = {
 }
 export default function NewVehicleForm(props: NewVehicleFormProps) {
   const [newVehicleFormData, setNewVehicleFormData] =
-    useState<NewVehicleFormDataType>({
-      vehicleNumber: "",
-      type: VehicleTypesEnum.CAR,
-      brand: "",
-      color: "",
-      model: "",
-      capacity: undefined,
-      odometerReading: undefined,
-      rcPhotos: undefined,
-      vehiclePhotos: undefined,
-      insuranceExpiresOn: undefined,
-      pucExpiresOn: undefined,
-      rcExpiresOn: undefined,
-      insurancePhotos: undefined,
-      pucPhotos: undefined,
-      hasAC: true,
-      defaultRatePerKm: undefined,
-      defaultAcChargePerDay: undefined,
+    useState<AddVehicleRequestType>({
+      agencyId: props.agencyId,
+      data: {
+        vehicleNumber: "",
+        type: VehicleTypesEnum.CAR,
+        brand: "",
+        color: "",
+        model: "",
+        capacity: undefined,
+        odometerReading: undefined,
+        insuranceExpiresOn: undefined,
+        pucExpiresOn: undefined,
+        rcExpiresOn: undefined,
+        hasAC: true,
+        defaultRatePerKm: undefined,
+        defaultAcChargePerDay: undefined,
+        rcPhotos: undefined,
+        vehiclePhotos: undefined,
+        insurancePhotos: undefined,
+        pucPhotos: undefined,
+      },
     })
 
   const nextStepHandler = () => {

@@ -3,7 +3,6 @@ import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import ConfirmValues from "../components/confirmValues"
-import { CreateAccountFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -21,32 +20,32 @@ import { createOwnerAccountAction } from "@/app/actions/users/createOwnerAccount
 export function CreateAccountConfirm(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: CreateAccountFormDataType
+  finalData: CreateOwnerAccountRequestType
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Confirm")
   const router = useRouter()
 
-  const formData = useForm<CreateAccountFormDataType>()
+  const formData = useForm<CreateOwnerAccountRequestType>()
   //Submit actions
   const onSubmit = async () => {
     // Create Agency and Owner Account
     const newAccountData: CreateOwnerAccountRequestType = {
       agency: {
-        businessEmail: props.finalData.agencyEmail,
-        businessPhone: props.finalData.agencyPhone,
-        businessName: props.finalData.agencyName,
-        businessAddress: props.finalData.agencyAddress,
-        agencyCity: props.finalData.agencyCity,
-        agencyState: props.finalData.agencyState,
-        commissionRate: props.finalData.commissionRate,
-        logo: props.finalData.agencyLogo,
+        businessEmail: props.finalData.agency.businessEmail,
+        businessPhone: props.finalData.agency.businessPhone,
+        businessName: props.finalData.agency.businessName,
+        businessAddress: props.finalData.agency.businessAddress,
+        agencyCity: props.finalData.agency.agencyCity,
+        agencyState: props.finalData.agency.agencyState,
+        commissionRate: props.finalData.agency.commissionRate,
+        logo: props.finalData.agency.logo,
       },
       owner: {
-        email: props.finalData.ownerEmail,
-        phone: props.finalData.ownerPhone,
-        name: props.finalData.ownerName,
-        password: props.finalData.password,
-        photos: props.finalData.ownerPhoto,
+        email: props.finalData.owner.email,
+        phone: props.finalData.owner.phone,
+        name: props.finalData.owner.name,
+        password: props.finalData.owner.password,
+        photos: props.finalData.owner.photos,
       },
     }
 
@@ -54,7 +53,10 @@ export function CreateAccountConfirm(props: {
     if (createdOwnerAccount) {
       //If success
       //Login the user
-      await loginAction(createdOwnerAccount.userId, props.finalData.password)
+      await loginAction(
+        createdOwnerAccount.userId,
+        props.finalData.owner.password,
+      )
       //Move to next step
       props.onNext()
     } else {
@@ -73,40 +75,40 @@ export function CreateAccountConfirm(props: {
           <H3Grey>{t("Title")}</H3Grey>
           <ConfirmValues
             name={t("AgencyName")}
-            value={props.finalData.agencyName}
+            value={props.finalData.agency.businessName}
           />
           <ConfirmValues
             name={t("OwnerName")}
-            value={props.finalData.ownerName}
+            value={props.finalData.owner.name}
           />
           <ConfirmValues
             name={t("OwnerPhone")}
-            value={props.finalData.ownerPhone}
+            value={props.finalData.owner.phone}
           />
           <ConfirmValues
             name={t("OwnerEmail")}
-            value={props.finalData.ownerEmail}
+            value={props.finalData.owner.email}
           />
           <ConfirmValues
             name={t("AgencyPhone")}
-            value={props.finalData.agencyPhone}
+            value={props.finalData.agency.businessPhone}
           />
           <ConfirmValues
             name={t("AgencyEmail")}
-            value={props.finalData.agencyEmail}
+            value={props.finalData.agency.businessEmail}
           />
           <ConfirmValues
             name={t("AgencyAddress")}
-            value={props.finalData.agencyAddress}
+            value={props.finalData.agency.businessAddress}
           />
           <ConfirmValues
             name={t("Location")}
-            value={`${props.finalData.agencyCity}, ${props.finalData.agencyState}`}
+            value={`${props.finalData.agency.agencyCity}, ${props.finalData.agency.agencyState}`}
           />
-          {props.finalData.commissionRate && (
+          {props.finalData.agency.commissionRate && (
             <ConfirmValues
               name={t("CommissionRate")}
-              value={`${props.finalData.commissionRate}`}
+              value={`${props.finalData.agency.commissionRate}`}
             />
           )}
         </OnboardingStepContent>

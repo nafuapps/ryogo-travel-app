@@ -5,7 +5,6 @@ import { Form } from "@/components/ui/form"
 import { CaptionGrey, H4, P, PBold, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { NewVehicleFormDataType } from "./newVehicleForm"
 import { Button } from "@/components/ui/button"
 import {
   newBookingSectionClassName,
@@ -20,11 +19,11 @@ import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 export function NewVehicleConfirm(props: {
   onNext: () => void
   onPrev: () => void
-  newVehicleFormData: NewVehicleFormDataType
+  newVehicleFormData: AddVehicleRequestType
   agencyId: string
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Confirm")
-  const formData = useForm<NewVehicleFormDataType>()
+  const formData = useForm<AddVehicleRequestType>()
   const router = useRouter()
   //Submit actions
   const onSubmit = async () => {
@@ -32,23 +31,24 @@ export function NewVehicleConfirm(props: {
     const newVehicleData: AddVehicleRequestType = {
       agencyId: props.agencyId,
       data: {
-        vehicleNumber: props.newVehicleFormData.vehicleNumber,
-        type: props.newVehicleFormData.type,
-        brand: props.newVehicleFormData.brand,
-        color: props.newVehicleFormData.color,
-        model: props.newVehicleFormData.model,
-        capacity: props.newVehicleFormData.capacity,
-        odometerReading: props.newVehicleFormData.odometerReading,
-        insuranceExpiresOn: props.newVehicleFormData.insuranceExpiresOn!,
-        pucExpiresOn: props.newVehicleFormData.pucExpiresOn!,
-        rcExpiresOn: props.newVehicleFormData.rcExpiresOn!,
-        hasAC: props.newVehicleFormData.hasAC,
-        defaultRatePerKm: props.newVehicleFormData.defaultRatePerKm,
-        defaultAcChargePerDay: props.newVehicleFormData.defaultAcChargePerDay,
-        insurancePhotos: props.newVehicleFormData.insurancePhotos,
-        pucPhotos: props.newVehicleFormData.pucPhotos,
-        rcPhotos: props.newVehicleFormData.rcPhotos,
-        vehiclePhotos: props.newVehicleFormData.vehiclePhotos,
+        vehicleNumber: props.newVehicleFormData.data.vehicleNumber,
+        type: props.newVehicleFormData.data.type,
+        brand: props.newVehicleFormData.data.brand,
+        color: props.newVehicleFormData.data.color,
+        model: props.newVehicleFormData.data.model,
+        capacity: props.newVehicleFormData.data.capacity,
+        odometerReading: props.newVehicleFormData.data.odometerReading,
+        insuranceExpiresOn: props.newVehicleFormData.data.insuranceExpiresOn,
+        pucExpiresOn: props.newVehicleFormData.data.pucExpiresOn,
+        rcExpiresOn: props.newVehicleFormData.data.rcExpiresOn,
+        hasAC: props.newVehicleFormData.data.hasAC,
+        defaultRatePerKm: props.newVehicleFormData.data.defaultRatePerKm,
+        defaultAcChargePerDay:
+          props.newVehicleFormData.data.defaultAcChargePerDay,
+        insurancePhotos: props.newVehicleFormData.data.insurancePhotos,
+        pucPhotos: props.newVehicleFormData.data.pucPhotos,
+        rcPhotos: props.newVehicleFormData.data.rcPhotos,
+        vehiclePhotos: props.newVehicleFormData.data.vehiclePhotos,
       },
     }
     const addedVehicle = await addVehicleAction(newVehicleData)
@@ -82,63 +82,69 @@ export function NewVehicleConfirm(props: {
           <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
             <ConfirmValues
               name={t("VehicleNumber")}
-              value={props.newVehicleFormData.vehicleNumber}
+              value={props.newVehicleFormData.data.vehicleNumber}
             />
             <ConfirmValues
               name={t("Type")}
-              value={props.newVehicleFormData.type}
+              value={props.newVehicleFormData.data.type}
             />
             <ConfirmValues
               name={t("Brand")}
-              value={props.newVehicleFormData.brand}
+              value={props.newVehicleFormData.data.brand}
             />
             <ConfirmValues
               name={t("Model")}
-              value={props.newVehicleFormData.model}
+              value={props.newVehicleFormData.data.model}
             />
             <ConfirmValues
               name={t("Color")}
-              value={props.newVehicleFormData.color}
+              value={props.newVehicleFormData.data.color}
             />
-            {props.newVehicleFormData.capacity && (
+            {props.newVehicleFormData.data.capacity && (
               <ConfirmValues
                 name={t("Capacity")}
-                value={`${props.newVehicleFormData.capacity}`}
+                value={`${props.newVehicleFormData.data.capacity}`}
               />
             )}
-            {props.newVehicleFormData.odometerReading && (
+            {props.newVehicleFormData.data.odometerReading && (
               <ConfirmValues
                 name={t("OdometerReading")}
-                value={`${props.newVehicleFormData.odometerReading}`}
+                value={`${props.newVehicleFormData.data.odometerReading}`}
               />
             )}
-            <ConfirmValues
-              name={t("InsuranceExpiresOn")}
-              value={props.newVehicleFormData.insuranceExpiresOn!.toDateString()}
-            />
-            <ConfirmValues
-              name={t("PUCExpiresOn")}
-              value={props.newVehicleFormData.pucExpiresOn!.toDateString()}
-            />
-            <ConfirmValues
-              name={t("RCExpiresOn")}
-              value={props.newVehicleFormData.rcExpiresOn!.toDateString()}
-            />
-            {props.newVehicleFormData.defaultRatePerKm && (
+            {props.newVehicleFormData.data.insuranceExpiresOn && (
+              <ConfirmValues
+                name={t("InsuranceExpiresOn")}
+                value={props.newVehicleFormData.data.insuranceExpiresOn.toDateString()}
+              />
+            )}
+            {props.newVehicleFormData.data.pucExpiresOn && (
+              <ConfirmValues
+                name={t("PUCExpiresOn")}
+                value={props.newVehicleFormData.data.pucExpiresOn.toDateString()}
+              />
+            )}
+            {props.newVehicleFormData.data.rcExpiresOn && (
+              <ConfirmValues
+                name={t("RCExpiresOn")}
+                value={props.newVehicleFormData.data.rcExpiresOn.toDateString()}
+              />
+            )}
+            {props.newVehicleFormData.data.defaultRatePerKm && (
               <ConfirmValues
                 name={t("RatePerKm")}
-                value={`${props.newVehicleFormData.defaultRatePerKm}`}
+                value={`${props.newVehicleFormData.data.defaultRatePerKm}`}
               />
             )}
             <ConfirmValues
               name={t("HasAC")}
-              value={props.newVehicleFormData.hasAC ? "Yes" : "No"}
+              value={props.newVehicleFormData.data.hasAC ? "Yes" : "No"}
             />
-            {props.newVehicleFormData.hasAC &&
-              props.newVehicleFormData.defaultAcChargePerDay && (
+            {props.newVehicleFormData.data.hasAC &&
+              props.newVehicleFormData.data.defaultAcChargePerDay && (
                 <ConfirmValues
                   name={t("ACChagePerDay")}
-                  value={`${props.newVehicleFormData.defaultAcChargePerDay}`}
+                  value={`${props.newVehicleFormData.data.defaultAcChargePerDay}`}
                 />
               )}
           </div>

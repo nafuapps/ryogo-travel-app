@@ -1,7 +1,6 @@
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { AddDriverFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -21,14 +20,14 @@ import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 export function AddDriverConfirm(props: {
   onNext: () => void
   onPrev: () => void
-  finalData: AddDriverFormDataType
+  finalData: AddDriverRequestType
   ownerId: string
   userStatus: UserStatusEnum
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Confirm")
   const router = useRouter()
 
-  const formData = useForm<AddDriverFormDataType>()
+  const formData = useForm<AddDriverRequestType>()
   //Submit actions
   const onSubmit = async () => {
     // Add driver
@@ -37,16 +36,16 @@ export function AddDriverConfirm(props: {
       ownerId:
         props.userStatus == UserStatusEnum.NEW ? props.ownerId : undefined,
       data: {
-        name: props.finalData.name,
-        email: props.finalData.email,
-        phone: props.finalData.phone,
-        address: props.finalData.address,
-        canDriveVehicleTypes: props.finalData.canDriveVehicleTypes,
-        defaultAllowancePerDay: props.finalData.defaultAllowancePerDay,
-        licenseNumber: props.finalData.licenseNumber,
-        licenseExpiresOn: props.finalData.licenseExpiresOn!,
-        licensePhotos: props.finalData.licensePhotos,
-        userPhotos: props.finalData.driverPhotos,
+        name: props.finalData.data.name,
+        email: props.finalData.data.email,
+        phone: props.finalData.data.phone,
+        address: props.finalData.data.address,
+        canDriveVehicleTypes: props.finalData.data.canDriveVehicleTypes,
+        defaultAllowancePerDay: props.finalData.data.defaultAllowancePerDay,
+        licenseNumber: props.finalData.data.licenseNumber,
+        licenseExpiresOn: props.finalData.data.licenseExpiresOn!,
+        licensePhotos: props.finalData.data.licensePhotos,
+        userPhotos: props.finalData.data.userPhotos,
       },
     }
     const addedDriver = await addDriverAction(newDriverData)
@@ -67,35 +66,40 @@ export function AddDriverConfirm(props: {
       >
         <OnboardingStepContent contentId="Step4Content">
           <H3Grey>{t("Title")}</H3Grey>
-          <ConfirmValues name={t("DriverName")} value={props.finalData.name} />
+          <ConfirmValues
+            name={t("DriverName")}
+            value={props.finalData.data.name}
+          />
           <ConfirmValues
             name={t("DriverPhone")}
-            value={props.finalData.phone}
+            value={props.finalData.data.phone}
           />
           <ConfirmValues
             name={t("DriverEmail")}
-            value={props.finalData.email}
+            value={props.finalData.data.email}
           />
           <ConfirmValues
             name={t("LicenseNumber")}
-            value={props.finalData.licenseNumber}
+            value={props.finalData.data.licenseNumber}
           />
-          <ConfirmValues
-            name={t("LicenseExpiresOn")}
-            value={props.finalData.licenseExpiresOn!.toDateString()}
-          />
+          {props.finalData.data.licenseExpiresOn && (
+            <ConfirmValues
+              name={t("LicenseExpiresOn")}
+              value={props.finalData.data.licenseExpiresOn.toDateString()}
+            />
+          )}
           <ConfirmValues
             name={t("DriverAddress")}
-            value={props.finalData.address}
+            value={props.finalData.data.address}
           />
           <ConfirmValues
             name={t("CanDriveVehicleTypes")}
-            value={props.finalData.canDriveVehicleTypes.join(", ")}
+            value={props.finalData.data.canDriveVehicleTypes.join(", ")}
           />
-          {props.finalData.defaultAllowancePerDay && (
+          {props.finalData.data.defaultAllowancePerDay && (
             <ConfirmValues
               name={t("DefaultAllowancePerDay")}
-              value={`${props.finalData.defaultAllowancePerDay}`}
+              value={`${props.finalData.data.defaultAllowancePerDay}`}
             />
           )}
         </OnboardingStepContent>

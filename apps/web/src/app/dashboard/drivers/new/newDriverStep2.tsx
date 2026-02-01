@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
-import { NewDriverFormDataType } from "./newDriverForm"
 import {
   DashboardDatePicker,
   DashboardFileInput,
@@ -20,12 +19,13 @@ import {
   newBookingFormClassName,
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function NewDriverStep2(props: {
   onNext: () => void
   onPrev: () => void
-  newDriverFormData: NewDriverFormDataType
-  setNewDriverFormData: Dispatch<SetStateAction<NewDriverFormDataType>>
+  newDriverFormData: AddDriverRequestType
+  setNewDriverFormData: Dispatch<SetStateAction<AddDriverRequestType>>
 }) {
   const t = useTranslations("Dashboard.NewDriver.Step2")
   const step2Schema = z.object({
@@ -66,19 +66,22 @@ export function NewDriverStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      licenseNumber: props.newDriverFormData.licenseNumber,
-      licenseExpiresOn: props.newDriverFormData.licenseExpiresOn,
-      licensePhotos: props.newDriverFormData.licensePhotos,
+      licenseNumber: props.newDriverFormData.data.licenseNumber,
+      licenseExpiresOn: props.newDriverFormData.data.licenseExpiresOn,
+      licensePhotos: props.newDriverFormData.data.licensePhotos,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
     props.setNewDriverFormData({
-      ...props.newDriverFormData,
-      licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
+      agencyId: props.newDriverFormData.agencyId,
+      data: {
+        ...props.newDriverFormData.data,
+        licenseNumber: data.licenseNumber,
+        licenseExpiresOn: data.licenseExpiresOn,
+        licensePhotos: data.licensePhotos,
+      },
     })
     props.onNext()
   }

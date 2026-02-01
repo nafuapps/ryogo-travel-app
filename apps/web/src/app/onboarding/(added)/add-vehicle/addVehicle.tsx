@@ -13,7 +13,6 @@ import {
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "@/app/onboarding/components/onboardingSteps"
-import { AddVehicleFormDataType } from "@ryogo-travel-app/api/types/formDataTypes"
 import { AddVehicleStep1 } from "./addVehicleStep1"
 import { AddVehicleFinish } from "./addVehicleFinish"
 import { AddVehicleStep2 } from "./addVehicleStep2"
@@ -21,6 +20,7 @@ import { AddVehicleStep3 } from "./addVehicleStep3"
 import { AddVehicleStep4 } from "./addVehicleStep4"
 import { AddVehicleConfirm } from "./addVehicleStep5"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 const TotalSteps = 5
 
@@ -32,25 +32,27 @@ export default function AddVehiclePageComponent(
   props: AddVehiclePageComponentProps,
 ) {
   const t = useTranslations("Onboarding.AddVehiclePage")
-  const [finalData, setFinalData] = useState<AddVehicleFormDataType>({
+  const [finalData, setFinalData] = useState<AddVehicleRequestType>({
     agencyId: props.agencyId,
-    vehicleNumber: "",
-    type: VehicleTypesEnum.CAR,
-    brand: "",
-    color: "",
-    model: "",
-    capacity: undefined,
-    odometerReading: undefined,
-    rcPhotos: undefined,
-    vehiclePhotos: undefined,
-    insuranceExpiresOn: undefined,
-    pucExpiresOn: undefined,
-    rcExpiresOn: undefined,
-    insurancePhotos: undefined,
-    pucPhotos: undefined,
-    hasAC: true,
-    defaultRatePerKm: undefined,
-    defaultAcChargePerDay: undefined,
+    data: {
+      vehicleNumber: "",
+      type: VehicleTypesEnum.CAR,
+      brand: "",
+      color: "",
+      model: "",
+      capacity: undefined,
+      odometerReading: undefined,
+      insuranceExpiresOn: undefined,
+      pucExpiresOn: undefined,
+      rcExpiresOn: undefined,
+      hasAC: true,
+      defaultRatePerKm: undefined,
+      defaultAcChargePerDay: undefined,
+      rcPhotos: undefined,
+      vehiclePhotos: undefined,
+      insurancePhotos: undefined,
+      pucPhotos: undefined,
+    },
   })
 
   const nextStepHandler = () => {

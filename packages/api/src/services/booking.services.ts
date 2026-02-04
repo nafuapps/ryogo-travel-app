@@ -268,12 +268,13 @@ export const bookingServices = {
   async addNewBooking(data: CreateNewBookingRequestType) {
     //Step1: If no existing customer, create a new customer
     let customerId = data.existingCustomerId
-    if (
-      !customerId &&
-      data.newCustomerName &&
-      data.newCustomerLocationCity &&
-      data.newCustomerLocationState
-    ) {
+    if (!customerId) {
+      if (
+        !data.newCustomerName ||
+        !data.newCustomerLocationCity ||
+        !data.newCustomerLocationState
+      )
+        return
       const newCustomer = await customerServices.addNewCustomer(
         data.newCustomerName,
         data.customerPhone,

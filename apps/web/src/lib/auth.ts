@@ -12,11 +12,11 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 export async function getCurrentUser() {
   // S1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return null
+  if (!session) return
 
   // S2: Decrypt payload from encrypted session
   const payload = (await decrypt(session)) as SessionPayload | undefined
-  if (!payload) return null
+  if (!payload) return
 
   // S3: Return payload as current user data
   return payload

@@ -39,7 +39,7 @@ export default function ChangeAgencyPhonePageComponent({
   //Submit actions
   async function onSubmit(data: ModifyAgencyType) {
     //Check if same phone has been entered
-    if (data.newPhone == agency.businessPhone) {
+    if (data.newPhone === agency.businessPhone) {
       formData.setError("newPhone", {
         type: "manual",
         message: t("Field1.Error2"),
@@ -48,8 +48,8 @@ export default function ChangeAgencyPhonePageComponent({
       //check if another agency has this phone and email
       allAgencies.some(
         (u) =>
-          u.businessPhone == data.newPhone &&
-          u.businessEmail == agency.businessEmail,
+          u.businessPhone === data.newPhone &&
+          u.businessEmail === agency.businessEmail,
       )
     ) {
       formData.setError("newPhone", {

@@ -54,8 +54,8 @@ export default function VehiclesScheduleChartComponent({
   })
 
   const chartData =
-    selectedTab == "7Days" ? vehicleSchedule7Days : vehicleSchedule14Days
-  const selectedDays: number = selectedTab == "7Days" ? 7 : 14
+    selectedTab === "7Days" ? vehicleSchedule7Days : vehicleSchedule14Days
+  const selectedDays: number = selectedTab === "7Days" ? 7 : 14
   const chartStartDate = new Date()
 
   return (

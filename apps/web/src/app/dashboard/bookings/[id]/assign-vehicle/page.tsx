@@ -18,7 +18,9 @@ export default async function AssignVehicleBookingPage({
 }) {
   const { id } = await params
   const user = await getCurrentUser()
-
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   //Invalid booking id regex
   if (!BookingRegex.safeParse(id).success) {
     redirect("/dashboard/bookings", RedirectType.replace)
@@ -27,13 +29,13 @@ export default async function AssignVehicleBookingPage({
   const booking = await bookingServices.findBookingDetailsById(id)
 
   //No booking found or agency mismatch
-  if (!booking || booking.agency.id != user?.agencyId) {
+  if (!booking || booking.agency.id !== user.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //If it is a lead booking and old, cancel it automatically
   if (
-    booking.status == BookingStatusEnum.LEAD &&
+    booking.status === BookingStatusEnum.LEAD &&
     new Date(booking.endDate) < new Date()
   ) {
     if (await cancelBookingAction(booking.id)) {
@@ -45,16 +47,16 @@ export default async function AssignVehicleBookingPage({
 
   //Only lead and confirmed bookings can be assigned vehicles
   if (
-    booking.status != BookingStatusEnum.LEAD &&
-    booking.status != BookingStatusEnum.CONFIRMED
+    booking.status !== BookingStatusEnum.LEAD &&
+    booking.status !== BookingStatusEnum.CONFIRMED
   ) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
   //Only owner or assigned agent can assign vehicle
   if (
-    user.userRole != UserRolesEnum.OWNER &&
-    booking.assignedUser.id != user.userId
+    user.userRole !== UserRolesEnum.OWNER &&
+    booking.assignedUser.id !== user.userId
   ) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }

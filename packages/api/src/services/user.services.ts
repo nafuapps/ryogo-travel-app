@@ -3,10 +3,11 @@ import {
   UserRolesEnum,
   UserLangEnum,
   DriverStatusEnum,
+  InsertAgencyType,
+  InsertUserType,
 } from "@ryogo-travel-app/db/schema"
 import bcrypt from "bcryptjs"
 import { userRepository } from "../repositories/user.repo"
-import { agencyServices } from "./agency.services"
 import { driverServices } from "./driver.services"
 import {
   AddDriverRequestType,
@@ -20,6 +21,10 @@ import { customerRepository } from "../repositories/customer.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
+import { agencyRepository } from "../repositories/agency.repo"
+import { locationRepository } from "../repositories/location.repo"
+
+const TRIAL_DAYS = 30
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -83,10 +88,10 @@ export const userServices = {
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         startDate: booking.startDate,
         startTime: booking.startTime,
@@ -105,10 +110,10 @@ export const userServices = {
         status: booking.status.toString(),
         updatedAt: booking.updatedAt,
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         createdAt: booking.tripLogs[0]?.createdAt,
       }
@@ -174,32 +179,63 @@ export const userServices = {
       return
     }
 
-    //Step2: Try to Create agency
-    const newAgency = await agencyServices.createAgency(data.agency)
-    if (!newAgency) {
+    //Step2: Check if another agency exists with same phone and email
+    const existingAgencies = await agencyRepository.readAgencyByPhoneEmail(
+      data.agency.businessPhone,
+      data.agency.businessEmail,
+    )
+    if (existingAgencies.length > 0) {
       return
     }
 
-    //Step3: Prepare owner data
+    //Step3: Get location id from city, state
+    const location = await locationRepository.readLocationByCityState(
+      data.agency.agencyCity,
+      data.agency.agencyState,
+    )
+    if (!location) {
+      return
+    }
+
+    //Step4: Create agency (Trial subscription with 30 day expiry, Status New)
+    const createAgencyData: InsertAgencyType = {
+      businessEmail: data.agency.businessEmail,
+      businessPhone: data.agency.businessPhone,
+      businessName: data.agency.businessName,
+      businessAddress: data.agency.businessAddress,
+      locationId: location.id,
+      subscriptionExpiresOn: new Date(
+        Date.now() + 1000 * 60 * 60 * 24 * TRIAL_DAYS,
+      ),
+      defaultCommissionRate: data.agency.commissionRate,
+    }
+
+    //Step5: Create new agency
+    const newAgency = await agencyRepository.createAgency(createAgencyData)
+    if (!newAgency[0]) {
+      return
+    }
+
+    //Step6: Prepare owner data
     const passwordHash = await generatePasswordHash(data.owner.password)
-    const ownerData = {
+    const ownerData: InsertUserType = {
       name: data.owner.name,
       email: data.owner.email,
       phone: data.owner.phone,
-      agencyId: newAgency!.id,
+      agencyId: newAgency[0].id,
       userRole: UserRolesEnum.OWNER,
       status: UserStatusEnum.NEW,
       password: passwordHash,
     }
 
-    //Step4: Create the owner user
+    //Step7: Create the owner user
     const owner = await userRepository.createUser(ownerData)
     if (!owner[0]) {
       return
     }
 
     return {
-      agencyId: newAgency.id,
+      agencyId: newAgency[0].id,
       userId: owner[0].id,
       password: data.owner.password,
       email: owner[0].email,
@@ -302,7 +338,7 @@ export const userServices = {
     //Step5: Create a driver
     const newDriver = await driverServices.addDriver({
       agencyId: agencyId,
-      userId: newUser[0]!.id,
+      userId: newUser[0].id,
       name: data.name,
       phone: data.phone,
       address: data.address,
@@ -426,7 +462,7 @@ export const userServices = {
   //Change user name
   async changeName(userId: string, name: string, role: UserRolesEnum) {
     const updatedUser = await userRepository.updateName(userId, name)
-    if (role == UserRolesEnum.DRIVER) {
+    if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updateNameByUserId(userId, name)
     }
     return updatedUser[0]
@@ -482,7 +518,7 @@ export const userServices = {
     role?: UserRolesEnum,
   ) {
     const updatedUser = await userRepository.updatePhone(userId, newPhone)
-    if (role == UserRolesEnum.DRIVER) {
+    if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updatePhoneByUserId(userId, newPhone)
     }
     return updatedUser[0]
@@ -494,7 +530,7 @@ export const userServices = {
       userId,
       UserStatusEnum.ACTIVE,
     )
-    if (role == UserRolesEnum.DRIVER) {
+    if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updateStatusByUserId(
         userId,
         DriverStatusEnum.AVAILABLE,
@@ -509,7 +545,7 @@ export const userServices = {
       id,
       UserStatusEnum.INACTIVE,
     )
-    if (role == UserRolesEnum.DRIVER) {
+    if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updateStatusByUserId(id, DriverStatusEnum.INACTIVE)
     }
     return user[0]

@@ -21,14 +21,17 @@ export default async function BookingDetailsLayout({
   }
 
   const user = await getCurrentUser()
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingStatusById(id)
-  if (!booking || booking.agencyId !== user?.agencyId) {
+  if (!booking || booking.agencyId !== user.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Lead booking -> send to confirm page
-  if (booking?.status == BookingStatusEnum.LEAD) {
+  if (booking.status === BookingStatusEnum.LEAD) {
     redirect(`/dashboard/bookings/${id}/confirm`, RedirectType.replace)
   }
   return children

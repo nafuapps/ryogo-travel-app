@@ -1,7 +1,6 @@
 import { AgencyStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
-import { CreateAgencyType } from "../types/agency.types"
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
@@ -51,43 +50,6 @@ export const agencyServices = {
         return { id: agent.id }
       }),
     }
-  },
-
-  // ? Onboarding flow
-  //Create agency
-  async createAgency(data: CreateAgencyType) {
-    //Step1: Check if another agency exists with same phone and email
-    const existingAgencies = await agencyRepository.readAgencyByPhoneEmail(
-      data.businessPhone,
-      data.businessEmail,
-    )
-    if (existingAgencies.length > 0) {
-      return
-    }
-
-    //Step2: Get location id from city, state
-    const location = await locationRepository.readLocationByCityState(
-      data.agencyCity,
-      data.agencyState,
-    )
-    if (!location) {
-      return
-    }
-
-    //Step3: Prepare agency data (Trial subscription with 30 day expiry, Status New)
-    const createAgencyData = {
-      businessEmail: data.businessEmail,
-      businessPhone: data.businessPhone,
-      businessName: data.businessName,
-      businessAddress: data.businessAddress,
-      locationId: location.id,
-      subscriptionExpiresOn: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
-      defaultCommissionRate: data.commissionRate,
-    }
-
-    //Step4: create a new agency
-    const newAgency = await agencyRepository.createAgency(createAgencyData)
-    return newAgency[0]
   },
 
   //Modify agency details

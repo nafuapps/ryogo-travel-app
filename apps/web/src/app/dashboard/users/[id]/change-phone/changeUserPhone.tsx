@@ -39,14 +39,14 @@ export default function ChangeUserPhonePageComponent({
   //Submit actions
   async function onSubmit(data: ModifyUserType) {
     //Check if same phone has been entered
-    if (data.newPhone == user.phone) {
+    if (data.newPhone === user.phone) {
       formData.setError("newPhone", {
         type: "manual",
         message: t("Field1.Error2"),
       })
     } else if (
       //check if another user has this phone
-      allUsers.some((u) => u.phone == data.newPhone)
+      allUsers.some((u) => u.phone === data.newPhone)
     ) {
       formData.setError("newPhone", {
         type: "manual",

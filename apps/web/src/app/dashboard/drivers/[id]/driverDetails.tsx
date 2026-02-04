@@ -103,7 +103,8 @@ export default async function DriverDetailsPageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{driver.licenseNumber}</SmallGrey>
-              {driver.licenseExpiresOn! < new Date() ? (
+              {driver.licenseExpiresOn &&
+              driver.licenseExpiresOn < new Date() ? (
                 <CaptionRed>
                   {t("ValidTill") +
                     moment(driver.licenseExpiresOn).format("DD MMM YYYY")}
@@ -168,11 +169,11 @@ export default async function DriverDetailsPageComponent({
               {t("EditDetails")}
             </Button>
           </Link>
-          {driver.status != DriverStatusEnum.INACTIVE &&
-            driver.status != DriverStatusEnum.ON_TRIP && (
+          {driver.status !== DriverStatusEnum.INACTIVE &&
+            driver.status !== DriverStatusEnum.ON_TRIP && (
               <InactivateDriverAlertButton driverId={driver.id} />
             )}
-          {driver.status == DriverStatusEnum.INACTIVE && (
+          {driver.status === DriverStatusEnum.INACTIVE && (
             <ActivateDriverAlertButton
               driverId={driver.id}
               userId={driver.userId}

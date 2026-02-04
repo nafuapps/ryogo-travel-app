@@ -57,17 +57,18 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
     const newBookingData: CreateNewBookingRequestType = {
       agencyId: props.agencyId,
       userId: props.userId,
-      existingCustomerId: props.newBookingFormData.existingCustomer?.id,
-      customerPhone: props.newBookingFormData.customerPhone!,
+      existingCustomerId: props.newBookingFormData.existingCustomer
+        ? props.newBookingFormData.existingCustomer.id
+        : undefined,
+      customerPhone: props.newBookingFormData.customerPhone,
       newCustomerName: props.newBookingFormData.newCustomerName,
       newCustomerLocationState:
         props.newBookingFormData.newCustomerLocationState,
       newCustomerLocationCity: props.newBookingFormData.newCustomerLocationCity,
-      tripSourceLocationState:
-        props.newBookingFormData.tripSourceLocationState!,
-      tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity!,
+      tripSourceLocationState: props.newBookingFormData.tripSourceLocationState,
+      tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
       tripDestinationLocationState:
-        props.newBookingFormData.tripDestinationLocationState!,
+        props.newBookingFormData.tripDestinationLocationState,
       tripDestinationLocationCity:
         props.newBookingFormData.tripDestinationLocationCity!,
       routeId: props.newBookingFormData.routeId,

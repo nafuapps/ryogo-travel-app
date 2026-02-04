@@ -18,7 +18,9 @@ export default async function AssignDriverBookingPage({
 }) {
   const { id } = await params
   const user = await getCurrentUser()
-
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   //Invalid booking id regex
   if (!BookingRegex.safeParse(id).success) {
     redirect("/dashboard/bookings", RedirectType.replace)
@@ -27,7 +29,7 @@ export default async function AssignDriverBookingPage({
   const booking = await bookingServices.findBookingDetailsById(id)
 
   //No booking found or agency mismatch
-  if (!booking || booking.agency.id !== user?.agencyId) {
+  if (!booking || booking.agency.id !== user.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
@@ -53,7 +55,7 @@ export default async function AssignDriverBookingPage({
 
   //Only owner or assigned agent can assign driver
   if (
-    user.userRole != UserRolesEnum.OWNER &&
+    user.userRole !== UserRolesEnum.OWNER &&
     booking.assignedUser.id !== user.userId
   ) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)

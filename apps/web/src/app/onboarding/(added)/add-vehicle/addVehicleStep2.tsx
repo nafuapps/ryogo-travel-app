@@ -47,7 +47,7 @@ export function AddVehicleStep2(props: {
       }, t("Field3.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field3.Error2"))
       .refine((file) => {
         if (file.length < 1) return false
@@ -70,7 +70,7 @@ export function AddVehicleStep2(props: {
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error2"))
       .refine((file) => {
         if (file.length < 1) return false

@@ -57,7 +57,7 @@ export default function ModifyDriverPageComponent({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field6.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -70,7 +70,7 @@ export default function ModifyDriverPageComponent({
             "image/bmp",
             "image/webp",
             "application/pdf",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field6.Error3"))
       .optional(),

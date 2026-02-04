@@ -106,7 +106,8 @@ export default async function RiderMyVehiclePageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{t("Insurance")}</SmallGrey>
-              {vehicle.insuranceExpiresOn! < new Date() ? (
+              {vehicle.insuranceExpiresOn &&
+              vehicle.insuranceExpiresOn < new Date() ? (
                 <CaptionRed>
                   {t("ValidTill") +
                     moment(vehicle.insuranceExpiresOn).format("DD MMM YYYY")}
@@ -146,7 +147,7 @@ export default async function RiderMyVehiclePageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{t("PUC")}</SmallGrey>
-              {vehicle.pucExpiresOn! < new Date() ? (
+              {vehicle.pucExpiresOn && vehicle.pucExpiresOn < new Date() ? (
                 <CaptionRed>
                   {t("ValidTill") +
                     moment(vehicle.pucExpiresOn).format("DD MMM YYYY")}
@@ -186,7 +187,7 @@ export default async function RiderMyVehiclePageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{t("RC")}</SmallGrey>
-              {vehicle.rcExpiresOn! < new Date() ? (
+              {vehicle.rcExpiresOn && vehicle.rcExpiresOn < new Date() ? (
                 <CaptionRed>
                   {t("ValidTill") +
                     moment(vehicle.rcExpiresOn).format("DD MMM YYYY")}

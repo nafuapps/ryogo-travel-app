@@ -21,13 +21,13 @@ export default async function AddDriverPage() {
   }
 
   //Not owner
-  if (currentUser.userRole != UserRolesEnum.OWNER) {
-    if (currentUser.status == UserStatusEnum.NEW) {
+  if (currentUser.userRole !== UserRolesEnum.OWNER) {
+    if (currentUser.status === UserStatusEnum.NEW) {
       //If new, go to change password
       redirect("/onboarding/change-password", RedirectType.replace)
     }
     //Not new users
-    if (currentUser.userRole == UserRolesEnum.DRIVER) {
+    if (currentUser.userRole === UserRolesEnum.DRIVER) {
       //If driver, go to rider page
       redirect("/rider", RedirectType.replace)
     }
@@ -36,7 +36,7 @@ export default async function AddDriverPage() {
   }
 
   //Owner
-  if (currentUser.status != UserStatusEnum.NEW) {
+  if (currentUser.status !== UserStatusEnum.NEW) {
     //If not new, go to dashboard
     redirect("/dashboard", RedirectType.replace)
   }

@@ -38,11 +38,11 @@ export function ChangePasswordStep1(props: {
         .min(8, t("Field3.Error1"))
         .refine((s) => !s.includes(" "), t("Field3.Error2")),
     })
-    .refine((data) => data.newPassword != data.oldPassword, {
+    .refine((data) => data.newPassword !== data.oldPassword, {
       message: t("Field2.Error3"),
       path: ["newPassword"], // path of error
     })
-    .refine((data) => data.newPassword == data.confirmPassword, {
+    .refine((data) => data.newPassword === data.confirmPassword, {
       message: t("Field3.Error3"),
       path: ["confirmPassword"], // path of error
     })
@@ -63,7 +63,7 @@ export function ChangePasswordStep1(props: {
     if (result) {
       //If success, redirect
       toast.success(t("Success"))
-      if (props.role == UserRolesEnum.DRIVER) {
+      if (props.role === UserRolesEnum.DRIVER) {
         router.replace("/rider")
       } else {
         router.replace("/dashboard")

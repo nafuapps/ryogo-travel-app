@@ -46,13 +46,13 @@ export default function AssignVehicleTile({
 }: AssignVehicleTileProps) {
   const t = useTranslations("Dashboard.AssignVehicle.Tile")
 
-  const isCurrentlyAssigned = booking.assignedVehicleId == vehicleData.id
+  const isCurrentlyAssigned = booking.assignedVehicleId === vehicleData.id
 
   const bookingStartDate = new Date(booking.startDate)
   const bookingEndDate = new Date(booking.endDate)
 
   const bookingOverLapScores = vehicleData.assignedBookings
-    .filter((b) => b.id != booking.id)
+    .filter((b) => b.id !== booking.id)
     .map((other) => {
       return getOverlapScore(
         new Date(other.startDate),
@@ -70,20 +70,22 @@ export default function AssignVehicleTile({
     )
   })
 
-  const isBooked = bookingOverLapScores.some((score) => score != NoOverlapScore)
+  const isBooked = bookingOverLapScores.some(
+    (score) => score !== NoOverlapScore,
+  )
 
   const isRepairScheduled = repairOverLapScores.some(
-    (score) => score != NoOverlapScore,
+    (score) => score !== NoOverlapScore,
   )
 
   const bookingScore =
-    bookingOverLapScores.length == 0
+    bookingOverLapScores.length === 0
       ? 100
       : bookingOverLapScores.reduce((a, b) => a + b, 0) /
         bookingOverLapScores.length
 
   const repairScore =
-    repairOverLapScores.length == 0
+    repairOverLapScores.length === 0
       ? 100
       : repairOverLapScores.reduce((a, b) => a + b, 0) /
         repairOverLapScores.length
@@ -105,7 +107,7 @@ export default function AssignVehicleTile({
 
   const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm)
 
-  const acScore = vehicleData.hasAC == booking.needsAc ? 4 : 1
+  const acScore = vehicleData.hasAC === booking.needsAc ? 4 : 1
 
   const totalScore = getVehicleTotalScore({
     bookingScore,
@@ -121,10 +123,10 @@ export default function AssignVehicleTile({
 
   return (
     <div
-      className={getTileClassName(selectedVehicleId == vehicleData.id)}
+      className={getTileClassName(selectedVehicleId === vehicleData.id)}
       onClick={() =>
         setSelectedVehicleId(
-          selectedVehicleId == vehicleData.id ? null : vehicleData.id,
+          selectedVehicleId === vehicleData.id ? null : vehicleData.id,
         )
       }
     >

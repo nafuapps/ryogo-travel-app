@@ -49,7 +49,7 @@ export default function NewCustomerForm({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -88,7 +88,7 @@ export default function NewCustomerForm({
 
   //Form submit
   async function onSubmit(values: NewCustomerType) {
-    if (allCustomers.some((c) => c.phone == values.phone)) {
+    if (allCustomers.some((c) => c.phone === values.phone)) {
       //If customer with this phone exists in agency, show error
       formData.setError("phone", {
         type: "manual",

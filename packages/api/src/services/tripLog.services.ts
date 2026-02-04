@@ -37,9 +37,6 @@ export const tripLogServices = {
 
   //Update trip log photo url
   async changeTripLogPhotoUrl(tripLogId: string, tripLogPhotoUrl: string) {
-    return await tripLogRepository.updateTripLogPhotoUrl(
-      tripLogId,
-      tripLogPhotoUrl,
-    )
+    await tripLogRepository.updateTripLogPhotoUrl(tripLogId, tripLogPhotoUrl)
   },
 }

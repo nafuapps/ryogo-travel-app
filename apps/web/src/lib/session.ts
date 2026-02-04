@@ -52,17 +52,16 @@ export async function decrypt(session: string | undefined = "") {
 //Get session from DB by token
 export async function getWebSession() {
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
+  if (!session) return
+
   const payload = (await decrypt(session)) as SessionPayload | undefined
+  if (!payload) return
 
-  const token = payload?.token
-  const sessionDB = await sessionRepository.readSessionByToken(token!)
+  const token = payload.token
+  const sessionDB = await sessionRepository.readSessionByToken(token)
 
-  if (
-    !sessionDB ||
-    sessionDB.length === 0 ||
-    sessionDB[0]!.expiresAt < new Date()
-  ) {
-    return null
+  if (!sessionDB[0] || sessionDB[0].expiresAt < new Date()) {
+    return
   }
   return sessionDB[0]
 }
@@ -80,11 +79,13 @@ export async function createWebSession(user: SelectUserType) {
     expiresAt,
   })
 
+  if (!sessionData[0]) return
+
   // 2. Encrypt the session data
   const newPayload: SessionPayload = {
-    sessionId: sessionData[0]!.id,
-    token: sessionData[0]!.token,
-    userId: sessionData[0]!.userId,
+    sessionId: sessionData[0].id,
+    token: sessionData[0].token,
+    userId: sessionData[0].userId,
     agencyId: user.agencyId,
     isAdmin: user.isAdmin ?? false,
     userRole: user.userRole,
@@ -131,11 +132,10 @@ export async function createWebSession(user: SelectUserType) {
 export async function updateWebSession() {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+  if (!session) return
 
-  if (!session || !payload) {
-    return null
-  }
+  const payload = (await decrypt(session)) as SessionPayload | undefined
+  if (!payload) return
 
   // 2. New expiry
   const expires = new Date(Date.now() + SESSION_COOKIE_EXPIRATION)
@@ -185,11 +185,10 @@ export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
 export async function deleteWebSession() {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+  if (!session) return
 
-  if (!session || !payload) {
-    return null
-  }
+  const payload = (await decrypt(session)) as SessionPayload | undefined
+  if (!payload) return
 
   // 2. Delete session from database
   sessionRepository.deleteSession(payload.sessionId)

@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Sidebar,
@@ -6,8 +6,8 @@ import {
   SidebarFooter,
   SidebarHeader,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { useTranslations } from "next-intl";
+} from "@/components/ui/sidebar"
+import { useTranslations } from "next-intl"
 import {
   House,
   Tickets,
@@ -17,18 +17,18 @@ import {
   ShieldUser,
   BadgeIndianRupee,
   UserRoundPen,
-} from "lucide-react";
-import { MenuButton } from "@/components/sidebar/sidebarMenuButton";
-import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem";
-import { MenuItemType } from "@/components/sidebar/sidebarCommon";
-import { usePathname } from "next/navigation";
+} from "lucide-react"
+import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
+import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem"
+import { MenuItemType } from "@/components/sidebar/sidebarCommon"
+import { usePathname } from "next/navigation"
 
 export default function DashboardSidebar(props: { isOwner: boolean }) {
-  const { isMobile, open, openMobile } = useSidebar();
-  const t = useTranslations("Dashboard.Sidebar");
-  const pathname = usePathname();
+  const { isMobile, open, openMobile } = useSidebar()
+  const t = useTranslations("Dashboard.Sidebar")
+  const pathname = usePathname()
 
-  const sidebarOpen = open || openMobile;
+  const sidebarOpen = open || openMobile
 
   // Content Menu items
   const contentItems: MenuItemType = [
@@ -74,7 +74,7 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       icon: ChartLine,
       onlyOwner: true,
     },
-  ];
+  ]
 
   //Footer menu items
   const footerItems: MenuItemType = [
@@ -84,7 +84,7 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       icon: UserRoundPen,
       onlyOwner: false,
     },
-  ];
+  ]
 
   return (
     <Sidebar
@@ -108,7 +108,7 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
                 key={item.title}
                 {...item}
                 open={sidebarOpen}
-                active={pathname == item.url}
+                active={pathname === item.url}
               />
             )
           ) : (
@@ -116,9 +116,9 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
               key={item.title}
               {...item}
               open={sidebarOpen}
-              active={pathname == item.url}
+              active={pathname === item.url}
             />
-          )
+          ),
         )}
       </SidebarContent>
       <SidebarFooter className="my-4">
@@ -127,10 +127,10 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
             key={item.title}
             {...item}
             open={sidebarOpen}
-            active={pathname == item.url}
+            active={pathname === item.url}
           />
         ))}
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }

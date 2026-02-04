@@ -39,7 +39,7 @@ export default function NewAgentForm({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -51,7 +51,7 @@ export default function NewAgentForm({
             "image/jpg",
             "image/bmp",
             "image/webp",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field4.Error2"))
       .optional(),
@@ -67,7 +67,7 @@ export default function NewAgentForm({
   async function onSubmit(values: NewAgentType) {
     if (
       allAgents.some(
-        (u) => u.phone == values.agentPhone && u.agencyId == agencyId,
+        (u) => u.phone === values.agentPhone && u.agencyId === agencyId,
       )
     ) {
       // Check if an agent with same phone exists in this agency
@@ -77,7 +77,7 @@ export default function NewAgentForm({
       })
     } else if (
       allAgents.some(
-        (u) => u.phone == values.agentPhone && u.email == values.agentEmail,
+        (u) => u.phone === values.agentPhone && u.email === values.agentEmail,
       )
     ) {
       // Check if an agent with same phone and email exists in entire DB

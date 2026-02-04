@@ -20,7 +20,7 @@ export default async function RiderMyBookingsPageComponent({
 }: {
   assignedBookings: FindDriverAssignedBookingsByIdType
   completedBookings: FindDriverCompletedBookingsByIdType
-  driver: FindDriverByUserIdType
+  driver: NonNullable<FindDriverByUserIdType>
 }) {
   const t = await getTranslations("Rider.MyBookings")
   //Get in progress booking (if any)
@@ -51,10 +51,10 @@ export default async function RiderMyBookingsPageComponent({
                 key={b.bookingId}
                 booking={b}
                 canStart={
-                  driver?.status == DriverStatusEnum.AVAILABLE &&
+                  driver.status === DriverStatusEnum.AVAILABLE &&
                   !currentBooking &&
                   b.startDate <= new Date() &&
-                  i == 0
+                  i === 0
                 }
               />
             )

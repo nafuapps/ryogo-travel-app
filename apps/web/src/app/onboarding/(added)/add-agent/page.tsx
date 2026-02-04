@@ -21,14 +21,14 @@ export default async function AddAgentPage() {
   }
 
   //Not owner
-  if (currentUser.userRole != UserRolesEnum.OWNER) {
+  if (currentUser.userRole !== UserRolesEnum.OWNER) {
     //New users
-    if (currentUser.status == UserStatusEnum.NEW) {
+    if (currentUser.status === UserStatusEnum.NEW) {
       //Go to change password
       redirect("/onboarding/change-password", RedirectType.replace)
     }
     //Old users
-    if (currentUser.userRole == UserRolesEnum.DRIVER) {
+    if (currentUser.userRole === UserRolesEnum.DRIVER) {
       //If driver, go to rider page
       redirect("/rider", RedirectType.replace)
     }

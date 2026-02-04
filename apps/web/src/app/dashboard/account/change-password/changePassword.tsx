@@ -36,11 +36,11 @@ export default function ChangePasswordAccountComponent({
         .min(8, t("Field3.Error1"))
         .refine((s) => !s.includes(" "), t("Field3.Error2")),
     })
-    .refine((data) => data.newPassword != data.oldPassword, {
+    .refine((data) => data.newPassword !== data.oldPassword, {
       message: t("Field2.Error3"),
       path: ["newPassword"], // path of error
     })
-    .refine((data) => data.newPassword == data.confirmPassword, {
+    .refine((data) => data.newPassword === data.confirmPassword, {
       message: t("Field3.Error3"),
       path: ["confirmPassword"], // path of error
     })

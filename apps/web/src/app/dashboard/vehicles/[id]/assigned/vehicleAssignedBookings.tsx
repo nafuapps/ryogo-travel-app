@@ -36,7 +36,7 @@ export default async function VehicleAssignedBookingsPageComponent({
         id="VehicleAssignedBookingsList"
         className="flex flex-col items-center gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
       >
-        {bookings.length == 0 ? (
+        {bookings.length === 0 ? (
           <CaptionGrey>{t("NoBookings")}</CaptionGrey>
         ) : (
           <>
@@ -71,11 +71,13 @@ function OngoingBookingComponent(
           <Caption>{props.vehicle}</Caption>
           <PBold>{props.driver}</PBold>
         </div>
-        <div className={gridItemClassName}>
-          <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-            <CaptionBold>{props.status?.toUpperCase()}</CaptionBold>
+        {props.status && (
+          <div className={gridItemClassName}>
+            <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
+              <CaptionBold>{props.status.toUpperCase()}</CaptionBold>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Link>
   )
@@ -84,10 +86,7 @@ function OngoingBookingComponent(
 function AssignedBookingComponent(
   props: FindVehicleAssignedBookingsByIdType[number],
 ) {
-  const combinedDateTime = getCombinedDateTime(
-    props.startDate,
-    props.startTime!,
-  )
+  const combinedDateTime = getCombinedDateTime(props.startDate, props.startTime)
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
       <div className={gridClassName}>

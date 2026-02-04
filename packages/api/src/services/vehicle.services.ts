@@ -2,6 +2,7 @@ import { vehicleRepository } from "../repositories/vehicle.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import {
   InsertVehicleRepairType,
+  InsertVehicleType,
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -58,10 +59,10 @@ export const vehicleServices = {
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         startDate: booking.startDate,
         startTime: booking.startTime,
@@ -81,10 +82,10 @@ export const vehicleServices = {
         status: booking.status.toString(),
         updatedAt: booking.updatedAt,
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         createdAt: booking.tripLogs[0]?.createdAt,
       }
@@ -96,7 +97,7 @@ export const vehicleServices = {
     const ongoingBooking =
       await bookingRepository.readOngoingBookingByDriverId(driverId)
 
-    if (!ongoingBooking || ongoingBooking.assignedVehicleId == null) {
+    if (!ongoingBooking || ongoingBooking.assignedVehicleId === null) {
       return
     }
     const assignedVehicle = vehicleRepository.readVehicleById(
@@ -129,7 +130,7 @@ export const vehicleServices = {
       return
     }
 
-    const newVehicleData = {
+    const newVehicleData: InsertVehicleType = {
       agencyId: agencyId,
       vehicleNumber: data.vehicleNumber,
       type: data.type,
@@ -138,12 +139,13 @@ export const vehicleServices = {
       model: data.model,
       capacity: data.capacity,
       odometerReading: data.odometerReading,
-      insuranceExpiresOn: new Date(data.insuranceExpiresOn),
-      pucExpiresOn: new Date(data.pucExpiresOn),
-      rcExpiresOn: new Date(data.rcExpiresOn),
+      insuranceExpiresOn: data.insuranceExpiresOn,
+      pucExpiresOn: data.pucExpiresOn,
+      rcExpiresOn: data.rcExpiresOn,
       hasAC: data.hasAC,
       defaultRatePerKm: data.defaultRatePerKm,
       defaultAcChargePerDay: data.defaultAcChargePerDay,
+      status: VehicleStatusEnum.AVAILABLE,
     }
     //Step3: Create vehicle in DB
     const newVehicle = await vehicleRepository.createVehicle(newVehicleData)

@@ -47,8 +47,8 @@ export default function ChangeEmailAccountComponent({
     if (
       usersWithPhoneRole.some(
         (u) =>
-          u.id == userId &&
-          u.email.toLowerCase() == data.newEmail.toLowerCase(),
+          u.id === userId &&
+          u.email.toLowerCase() === data.newEmail.toLowerCase(),
       )
     ) {
       formData.setError("newEmail", {
@@ -57,7 +57,7 @@ export default function ChangeEmailAccountComponent({
       })
     } else if (
       usersWithPhoneRole.some(
-        (u) => u.email.toLowerCase() == data.newEmail.toLowerCase(),
+        (u) => u.email.toLowerCase() === data.newEmail.toLowerCase(),
       )
     ) {
       formData.setError("newEmail", {

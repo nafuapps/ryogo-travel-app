@@ -13,8 +13,8 @@ export default async function ChangePasswordPage() {
   }
 
   // Owner
-  if (currentUser.userRole == UserRolesEnum.OWNER) {
-    if (currentUser.status == UserStatusEnum.NEW) {
+  if (currentUser.userRole === UserRolesEnum.OWNER) {
+    if (currentUser.status === UserStatusEnum.NEW) {
       //If new owner, go to vehicle onboarding
       redirect("/onboarding/add-vehicle", RedirectType.replace)
     }
@@ -23,8 +23,8 @@ export default async function ChangePasswordPage() {
   }
 
   // Old user
-  if (currentUser.status != UserStatusEnum.NEW) {
-    if (currentUser.userRole == UserRolesEnum.DRIVER) {
+  if (currentUser.status !== UserStatusEnum.NEW) {
+    if (currentUser.userRole === UserRolesEnum.DRIVER) {
       //If driver, go to rider
       redirect("/rider", RedirectType.replace)
     } else {

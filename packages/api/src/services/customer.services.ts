@@ -9,12 +9,12 @@ import { locationRepository } from "../repositories/location.repo"
 export const customerServices = {
   async findCustomersInAgency(agencyId: string) {
     const customers =
-      await customerRepository.readAllCustomersByAgencyId(agencyId)
+      await customerRepository.findAllCustomersByAgencyId(agencyId)
     return customers
   },
 
   async findCustomerDetailsById(customerId: string) {
-    const customer = await customerRepository.readCustomerById(customerId)
+    const customer = await customerRepository.findCustomerById(customerId)
     return customer
   },
 
@@ -26,10 +26,10 @@ export const customerServices = {
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         startDate: booking.startDate,
         startTime: booking.startTime,
@@ -49,10 +49,10 @@ export const customerServices = {
         status: booking.status.toString(),
         updatedAt: booking.updatedAt,
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         createdAt: booking.tripLogs[0]?.createdAt,
       }
@@ -70,12 +70,19 @@ export const customerServices = {
     address?: string,
     remarks?: string,
   ) {
+    //Check if a customer with same phone already exists in this agency
+    const existingCustomer =
+      await customerRepository.findCustomerByPhoneInAgency(phone, agencyId)
+    if (existingCustomer.length > 0) {
+      return
+    }
+
     const location = await locationRepository.readLocationByCityState(
       locationCity,
       locationState,
     )
     if (!location) {
-      throw Error("Location not found")
+      return
     }
     const newCustomerData: InsertCustomerType = {
       name: name,

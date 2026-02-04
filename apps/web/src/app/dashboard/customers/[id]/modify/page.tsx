@@ -27,8 +27,8 @@ export default async function ModifyCustomerPage({
   }
   //Only owner or the adding agent can modify customer
   if (
-    user.userRole != UserRolesEnum.OWNER &&
-    customer.addedByUserId != user.userId
+    user.userRole !== UserRolesEnum.OWNER &&
+    customer.addedByUserId !== user.userId
   ) {
     redirect("/dashboard", RedirectType.replace)
   }

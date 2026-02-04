@@ -44,7 +44,7 @@ export default function ConfirmEmailPageComponent({
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    if (data.email != currentEmail) {
+    if (data.email !== currentEmail) {
       methods.setError("email", { type: "manual", message: t("APIError") })
     }
     // Try Reset password

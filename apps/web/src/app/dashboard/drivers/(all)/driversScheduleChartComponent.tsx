@@ -32,7 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { BookingStatusEnum, BookingTypeEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -54,8 +54,8 @@ export default function DriversScheduleChartComponent({
   })
 
   const chartData =
-    selectedTab == "7Days" ? driverSchedule7Days : driverSchedule14Days
-  const selectedDays: number = selectedTab == "7Days" ? 7 : 14
+    selectedTab === "7Days" ? driverSchedule7Days : driverSchedule14Days
+  const selectedDays: number = selectedTab === "7Days" ? 7 : 14
   const chartStartDate = new Date()
 
   return (
@@ -293,29 +293,9 @@ export default function DriversScheduleChartComponent({
   )
 }
 
-function AssignedBookingPopoverCard(props: {
-  id: string
-  status: BookingStatusEnum
-  type: BookingTypeEnum
-  updatedAt: Date
-  startDate: Date
-  endDate: Date
-  source: {
-    city: string
-  }
-  destination: {
-    city: string
-  }
-  customer: {
-    name: string
-  }
-  assignedVehicle: {
-    vehicleNumber: string
-  } | null
-  assignedDriver: {
-    name: string
-  } | null
-}) {
+function AssignedBookingPopoverCard(
+  props: FindDriversScheduleNextDaysType[number]["assignedBookings"][number],
+) {
   const t = useTranslations("Dashboard.Drivers.Schedule")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
@@ -355,18 +335,9 @@ function AssignedBookingPopoverCard(props: {
   )
 }
 
-function LeavePopoverCard(props: {
-  id: string
-  startDate: Date
-  endDate: Date
-  driverId: string
-  addedByUser: {
-    name: string
-  }
-  driver: {
-    name: string
-  }
-}) {
+function LeavePopoverCard(
+  props: FindDriversScheduleNextDaysType[number]["driverLeaves"][number],
+) {
   const t = useTranslations("Dashboard.Drivers.Schedule")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">

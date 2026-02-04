@@ -34,8 +34,8 @@ export default async function ModifyExpensePage({
   if (
     !expenseDetails ||
     !bookingDetails ||
-    (user.userRole != UserRolesEnum.OWNER &&
-      user.userId != bookingDetails.assignedUser.id)
+    (user.userRole !== UserRolesEnum.OWNER &&
+      user.userId !== bookingDetails.assignedUser.id)
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)

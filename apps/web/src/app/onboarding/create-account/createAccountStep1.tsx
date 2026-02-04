@@ -49,7 +49,7 @@ export function CreateAccountStep1(props: {
   const onSubmit = async (data: Step1Type) => {
     if (
       props.allOwners.some(
-        (o) => o.email == data.ownerEmail && o.phone == data.ownerPhone,
+        (o) => o.email === data.ownerEmail && o.phone === data.ownerPhone,
       )
     ) {
       formData.setError("ownerPhone", {

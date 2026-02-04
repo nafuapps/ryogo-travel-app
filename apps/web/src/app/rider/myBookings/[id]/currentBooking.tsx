@@ -66,9 +66,9 @@ export default async function RiderMyOngoingBookingPageComponent({
         id="CurrentBookingAction"
         className="sticky bottom-1 lg:bottom-2 w-full bg-white p-1 lg:p-1.5 rounded-lg "
       >
-        {nextStep == TripLogTypesEnum.START_TRIP ? (
+        {nextStep === TripLogTypesEnum.START_TRIP ? (
           <StartTripSheet booking={booking} />
-        ) : nextStep == TripLogTypesEnum.END_TRIP ? (
+        ) : nextStep === TripLogTypesEnum.END_TRIP ? (
           <EndTripSheet booking={booking} />
         ) : (
           <MidTripSheet booking={booking} tripType={nextStep} />

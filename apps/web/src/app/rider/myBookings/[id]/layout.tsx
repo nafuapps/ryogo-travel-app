@@ -27,15 +27,15 @@ export default async function RiderMyBookingLayout({
 
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingDetailsById(id)
-  if (!booking || booking.agencyId != currentUser.agencyId) {
+  if (!booking || booking.agencyId !== currentUser.agencyId) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
   //Lead or cancelled or unassigned bookings are not accessible
   if (
     !booking ||
-    booking.assignedDriverId == null ||
-    booking.assignedVehicleId == null ||
+    booking.assignedDriverId === null ||
+    booking.assignedVehicleId === null ||
     [BookingStatusEnum.CANCELLED, BookingStatusEnum.LEAD].includes(
       booking.status,
     )
@@ -48,7 +48,7 @@ export default async function RiderMyBookingLayout({
   )
 
   //Assigned driver user is not the same as current user
-  if (!driver || driver.userId != currentUser.userId) {
+  if (!driver || driver.userId !== currentUser.userId) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 

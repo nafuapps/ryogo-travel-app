@@ -79,10 +79,10 @@ export default async function UserDetailsPageComponent({
             </Button>
           </Link>
           <ResetUserPasswordAlertButton userId={user.id} />
-          {user.status != UserStatusEnum.INACTIVE && (
+          {user.status !== UserStatusEnum.INACTIVE && (
             <InactivateUserAlertButton userId={user.id} role={user.userRole} />
           )}
-          {user.status == UserStatusEnum.INACTIVE && (
+          {user.status === UserStatusEnum.INACTIVE && (
             <ActivateUserAlertButton userId={user.id} role={user.userRole} />
           )}
         </div>

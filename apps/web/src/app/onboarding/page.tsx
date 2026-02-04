@@ -20,8 +20,8 @@ export default async function OnboardingHomePage() {
   const user = await getCurrentUser()
 
   // Redirect to private route if the user is authenticated
-  if (user?.userId) {
-    if (user.userRole == UserRolesEnum.DRIVER) {
+  if (user) {
+    if (user.userRole === UserRolesEnum.DRIVER) {
       redirect("/rider", RedirectType.replace)
     }
     redirect("/dashboard", RedirectType.replace)

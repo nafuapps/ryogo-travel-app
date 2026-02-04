@@ -33,7 +33,7 @@ export function CreateAccountStep4(props: {
         .min(8, t("Field2.Error1"))
         .refine((s) => !s.includes(" "), t("Field2.Error3")),
     })
-    .refine((data) => data.password == data.confirmPassword, {
+    .refine((data) => data.password === data.confirmPassword, {
       message: t("Field2.Error2"),
       path: ["confirmPassword"], // path of error
     })

@@ -19,7 +19,7 @@ export default async function ChangeAgencyEmailPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  if (currentUser.userRole != UserRolesEnum.OWNER) {
+  if (currentUser.userRole !== UserRolesEnum.OWNER) {
     redirect("/dashboard/account/agency", RedirectType.replace)
   }
 

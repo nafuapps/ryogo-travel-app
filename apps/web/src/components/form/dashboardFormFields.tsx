@@ -143,7 +143,7 @@ export function DashboardTextarea(props: DashboardTextareaProps) {
 type DashboardSelectProps = {
   name: string
   title?: string
-  array: { value: string; display: string }[] | undefined
+  array: { value: string; display: string }[]
   placeholder: string
   register: UseFormRegisterReturn<string>
 }
@@ -167,7 +167,7 @@ export function DashboardSelect(props: DashboardSelectProps) {
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {props.array!.map((item, index) => (
+              {props.array.map((item, index) => (
                 <SelectItem key={index} value={item.value}>
                   {item.display}
                 </SelectItem>
@@ -184,7 +184,7 @@ export function DashboardSelect(props: DashboardSelectProps) {
 type DashboardRadioProps = {
   name: string
   title?: string
-  array: { value: string; display: string }[] | undefined
+  array: { value: string; display: string }[]
   register: UseFormRegisterReturn<string>
   defaultValue: string
   description?: string
@@ -203,7 +203,7 @@ export function DashboardRadio(props: DashboardRadioProps) {
             onValueChange={field.onChange}
             defaultValue={props.defaultValue}
           >
-            {props.array!.map((item, index) => (
+            {props.array.map((item, index) => (
               <div className="flex items-center gap-3" key={index}>
                 <RadioGroupItem value={item.value} id={`r${index}`} />
                 <Label htmlFor={`r${index}`}>{item.display}</Label>
@@ -251,7 +251,7 @@ export function DashboardCheckbox(props: DashboardCheckboxProps) {
 type DashboardMultipleCheckboxProps = {
   name: string
   label: string
-  array: { value: string; display: string }[] | undefined
+  array: { value: string; display: string }[]
   register: UseFormRegisterReturn<string>
 }
 export function DashboardMultipleCheckbox(
@@ -265,7 +265,7 @@ export function DashboardMultipleCheckbox(
           <FormLabel className="text-base">
             <SmallBold>{props.label}</SmallBold>
           </FormLabel>
-          {props.array!.map((item) => (
+          {props.array.map((item) => (
             <FormField
               key={item.value}
               name={props.name}
@@ -277,12 +277,12 @@ export function DashboardMultipleCheckbox(
                   >
                     <FormControl>
                       <Checkbox
-                        checked={field.value?.includes(item.value)}
+                        checked={field.value.includes(item.value)}
                         onCheckedChange={(checked) => {
                           return checked
                             ? field.onChange([...field.value, item.value])
                             : field.onChange(
-                                field.value?.filter(
+                                field.value.filter(
                                   (value: string) => value !== item.value,
                                 ),
                               )

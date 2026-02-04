@@ -16,7 +16,7 @@ export default async function RiderAddExpensePage({
   const id = (await params).id
 
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
-  if (!bookingDetails || bookingDetails.assignedDriverId == null) {
+  if (!bookingDetails || bookingDetails.assignedDriverId === null) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
@@ -28,7 +28,7 @@ export default async function RiderAddExpensePage({
   }
 
   //Driver can add expense for in progress booking only
-  if (bookingDetails.status != BookingStatusEnum.IN_PROGRESS) {
+  if (bookingDetails.status !== BookingStatusEnum.IN_PROGRESS) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
   return (

@@ -1,6 +1,9 @@
 import { locationRepository } from "../repositories/location.repo"
 import { routeRepository } from "../repositories/route.repo"
 
+const MIN_RATIO = 0.8
+const MAX_RATIO = 1.2
+
 export const routeServices = {
   async findOrCreateRouteByLocations(
     sourceCity: string,
@@ -8,6 +11,9 @@ export const routeServices = {
     destinationCity: string,
     destinationState: string,
   ) {
+    if (sourceCity === destinationCity && sourceState === destinationState) {
+      return
+    }
     const source = await locationRepository.readLocationByCityState(
       sourceCity,
       sourceState,
@@ -29,19 +35,10 @@ export const routeServices = {
       return route
     }
     //No route found, create a new one
-    const newRoute = await this.addNewRoute(source.id, destination.id)
-    return newRoute
-  },
-
-  async addNewRoute(sourceId: string, destinationId: string) {
-    if (sourceId == destinationId) {
-      return
-    }
-
     // Get postgis distance
     const newDistance = await locationRepository.readDistanceBetweenLocations(
-      sourceId,
-      destinationId,
+      source.id,
+      destination.id,
     )
     if (!newDistance || newDistance < 1) {
       return
@@ -49,8 +46,8 @@ export const routeServices = {
 
     //Create new route with this distance
     const newRoute = await routeRepository.createRoute(
-      sourceId,
-      destinationId,
+      source.id,
+      destination.id,
       newDistance,
     )
     return newRoute[0]
@@ -61,8 +58,17 @@ export const routeServices = {
     destinationId: string,
     distance: number,
   ) {
-    if (sourceId == destinationId) {
+    if (sourceId === destinationId) {
       return
+    }
+
+    //Check if a route already exists for these locations
+    const route = await routeRepository.readRouteByLocations(
+      sourceId,
+      destinationId,
+    )
+    if (route) {
+      return route
     }
 
     // Get postgis distance
@@ -71,11 +77,15 @@ export const routeServices = {
       destinationId,
     )
 
+    // Check if user entered distance is close to postgis distance
+    // If close enough, take user entered distance otherwise take postgis distance
     const ratio = distance / dbDistance
     let newDistance: number
-    // Check if entered distance is close to db distance
-    // If close enough, use entered distance otherwise use db (postgis) distance
-    if (!dbDistance || dbDistance < 1 || (ratio > 0.8 && ratio < 1.2)) {
+    if (
+      !dbDistance ||
+      dbDistance < 1 ||
+      (ratio > MIN_RATIO && ratio < MAX_RATIO)
+    ) {
       newDistance = distance
     } else {
       newDistance = dbDistance

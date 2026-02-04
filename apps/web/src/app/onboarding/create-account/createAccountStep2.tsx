@@ -43,7 +43,7 @@ export function CreateAccountStep2(props: {
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -55,7 +55,7 @@ export function CreateAccountStep2(props: {
             "image/jpg",
             "image/bmp",
             "image/webp",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field4.Error2"))
       .optional(),
@@ -106,8 +106,8 @@ export function CreateAccountStep2(props: {
     if (
       props.allAgencies.some(
         (a) =>
-          a.businessEmail == data.agencyEmail &&
-          a.businessPhone == data.agencyPhone,
+          a.businessEmail === data.agencyEmail &&
+          a.businessPhone === data.agencyPhone,
       )
     ) {
       formData.setError("agencyPhone", {

@@ -17,7 +17,9 @@ export default async function ConfirmBookingPage({
 }) {
   const { id } = await params
   const user = await getCurrentUser()
-
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   //Invalid booking id regex
   if (!BookingRegex.safeParse(id).success) {
     redirect("/dashboard/bookings", RedirectType.replace)
@@ -25,12 +27,12 @@ export default async function ConfirmBookingPage({
 
   //No booking found or agency mismatch
   const booking = await bookingServices.findLeadBookingById(id)
-  if (!booking || booking.agency.id != user?.agencyId) {
+  if (!booking || booking.agency.id !== user.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Not a lead booking -> send to details page
-  if (booking?.status != BookingStatusEnum.LEAD) {
+  if (booking.status !== BookingStatusEnum.LEAD) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
@@ -48,8 +50,8 @@ export default async function ConfirmBookingPage({
       <DashboardHeader pathName={"/dashboard/bookings/[id]/confirm"} />
       <ConfirmBookingPageComponent
         booking={booking}
-        isOwner={user.userRole == UserRolesEnum.OWNER}
-        isAssignedUser={booking.assignedUser.id === user?.userId}
+        isOwner={user.userRole === UserRolesEnum.OWNER}
+        isAssignedUser={booking.assignedUser.id === user.userId}
       />
     </div>
   )

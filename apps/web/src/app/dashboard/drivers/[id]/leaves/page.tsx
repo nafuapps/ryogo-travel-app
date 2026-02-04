@@ -27,7 +27,7 @@ export default async function AllDriverLeavesPage({
         leaves={driverLeaves}
         driverId={id}
         userId={currentUser.userId}
-        isOwner={currentUser.userRole == UserRolesEnum.OWNER}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </div>
   )

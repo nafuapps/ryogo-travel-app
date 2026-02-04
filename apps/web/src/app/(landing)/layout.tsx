@@ -16,8 +16,8 @@ export default async function RootLayout({
   const user = await getCurrentUser()
 
   // Redirect to private route if the user is already authenticated
-  if (user?.userId) {
-    if (user.userRole == UserRolesEnum.DRIVER) {
+  if (user) {
+    if (user.userRole === UserRolesEnum.DRIVER) {
       redirect("/rider", RedirectType.replace)
     }
     redirect("/dashboard", RedirectType.replace)

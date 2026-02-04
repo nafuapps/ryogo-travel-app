@@ -28,7 +28,7 @@ export default async function AllVehicleRepairsPage({
         repairs={vehicleRepairs}
         vehicleId={id}
         userId={currentUser.userId}
-        isOwner={currentUser.userRole == UserRolesEnum.OWNER}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </div>
   )

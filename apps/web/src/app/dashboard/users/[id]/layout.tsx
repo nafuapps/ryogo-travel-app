@@ -28,7 +28,7 @@ export default async function UserDetailsLayout({
   if (
     !user ||
     user.agencyId !== user.agencyId ||
-    user?.status == UserStatusEnum.SUSPENDED
+    user.status === UserStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/users", RedirectType.replace)
   }

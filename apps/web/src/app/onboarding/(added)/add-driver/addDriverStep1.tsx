@@ -37,7 +37,7 @@ export function AddDriverStep1(props: {
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -49,7 +49,7 @@ export function AddDriverStep1(props: {
             "image/jpg",
             "image/bmp",
             "image/webp",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field4.Error2"))
       .optional(),
@@ -71,7 +71,7 @@ export function AddDriverStep1(props: {
   const onSubmit = async (data: Step1Type) => {
     if (
       props.allDrivers.some(
-        (d) => d.email == data.driverEmail && d.phone == data.driverPhone,
+        (d) => d.email === data.driverEmail && d.phone === data.driverPhone,
       )
     ) {
       //If driver exists with same email and phone already in system, show error

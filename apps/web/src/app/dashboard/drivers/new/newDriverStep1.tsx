@@ -41,7 +41,7 @@ export function NewDriverStep1(props: {
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -53,7 +53,7 @@ export function NewDriverStep1(props: {
             "image/jpg",
             "image/bmp",
             "image/webp",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field4.Error2"))
       .optional(),
@@ -75,7 +75,7 @@ export function NewDriverStep1(props: {
   const onSubmit = async (data: Step1Type) => {
     if (
       props.allDrivers.some(
-        (u) => u.phone == data.driverPhone && u.agencyId == props.agencyId,
+        (u) => u.phone === data.driverPhone && u.agencyId === props.agencyId,
       )
     ) {
       // Check if a driver with same phone exists in this agency
@@ -85,7 +85,7 @@ export function NewDriverStep1(props: {
       })
     } else if (
       props.allDrivers.some(
-        (u) => u.phone == data.driverPhone && u.email == data.driverEmail,
+        (u) => u.phone === data.driverPhone && u.email === data.driverEmail,
       )
     ) {
       // Check if a driver with same phone and email exists in entire DB

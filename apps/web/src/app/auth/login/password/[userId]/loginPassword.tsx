@@ -48,7 +48,7 @@ export default function LoginPasswordPageComponent({
   //Submit actions
   const onSubmit = async (data: FormFields) => {
     const loginResponse = await loginAction(userId, data.password)
-    if (loginResponse.error == "passwordNotMatching") {
+    if (loginResponse.error === "passwordNotMatching") {
       // Show password match error
       methods.setError("password", { type: "manual", message: t("APIError1") })
     } else if (loginResponse.error) {
@@ -56,7 +56,7 @@ export default function LoginPasswordPageComponent({
       methods.setError("password", { type: "manual", message: t("APIError2") })
     } else {
       //Login user
-      if (loginResponse.userRole == UserRolesEnum.DRIVER) {
+      if (loginResponse.userRole === UserRolesEnum.DRIVER) {
         //Redirect to Rider page
         router.replace("/rider")
       } else {

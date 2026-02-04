@@ -105,10 +105,10 @@ export default async function CustomerDetailsPageComponent({
               {t("EditDetails")}
             </Button>
           </Link>
-          {customer.status != CustomerStatusEnum.INACTIVE && (
+          {customer.status !== CustomerStatusEnum.INACTIVE && (
             <InactivateCustomerAlertButton customerId={customer.id} />
           )}
-          {customer.status == CustomerStatusEnum.INACTIVE && (
+          {customer.status === CustomerStatusEnum.INACTIVE && (
             <ActivateCustomerAlertButton customerId={customer.id} />
           )}
         </div>

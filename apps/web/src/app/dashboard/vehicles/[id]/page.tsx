@@ -25,8 +25,8 @@ export default async function VehicleDetailsPage({
 
   if (
     !vehicle ||
-    user.agencyId != vehicle.agencyId ||
-    vehicle.status == VehicleStatusEnum.SUSPENDED
+    user.agencyId !== vehicle.agencyId ||
+    vehicle.status === VehicleStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/vehicles", RedirectType.replace)
   }

@@ -46,7 +46,7 @@ export default function ModifyAgencyPageForm({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field3.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -58,7 +58,7 @@ export default function ModifyAgencyPageForm({
             "image/jpg",
             "image/bmp",
             "image/webp",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field3.Error2"))
       .optional(),

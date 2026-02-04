@@ -39,14 +39,14 @@ export default function ChangeUserEmailPageComponent({
   //Submit actions
   async function onSubmit(data: ModifyUserType) {
     //Check if same emailhas been entered
-    if (data.newEmail == user.email) {
+    if (data.newEmail === user.email) {
       formData.setError("newEmail", {
         type: "manual",
         message: t("Field1.Error3"),
       })
     } else if (
       //check if another user has this email
-      allUsers.some((u) => u.email == data.newEmail)
+      allUsers.some((u) => u.email === data.newEmail)
     ) {
       formData.setError("newEmail", {
         type: "manual",

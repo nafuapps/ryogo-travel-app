@@ -16,25 +16,27 @@ export default async function ReconcileBookingPage({
 }) {
   const { id } = await params
   const user = await getCurrentUser()
-
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   //Invalid booking id regex
   if (!BookingRegex.safeParse(id).success) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Only owner can reconcile booking
-  if (user?.userRole != UserRolesEnum.OWNER) {
+  if (user.userRole !== UserRolesEnum.OWNER) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingDetailsById(id)
-  if (!booking || booking.agency.id != user?.agencyId) {
+  if (!booking || booking.agency.id !== user.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Only completed booking can be reconciled
-  if (booking.status != BookingStatusEnum.COMPLETED || booking.isReconciled) {
+  if (booking.status !== BookingStatusEnum.COMPLETED || booking.isReconciled) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 

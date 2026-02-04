@@ -90,7 +90,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
       }
       //For Multi day trip, end date must be after start date
       if (
-        selectedTripType == BookingTypeEnum.MultiDay &&
+        selectedTripType === BookingTypeEnum.MultiDay &&
         data.tripEndDate <= data.tripStartDate
       ) {
         ctx.addIssue({
@@ -252,7 +252,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                   form.setValue("tripEndDate", form.getValues("tripStartDate"))
                 }}
                 className={getTripTypeClassName(
-                  selectedTripType == BookingTypeEnum.OneWay,
+                  selectedTripType === BookingTypeEnum.OneWay,
                 )}
               >
                 <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
@@ -263,7 +263,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                 id={BookingTypeEnum.Round}
                 onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
                 className={getTripTypeClassName(
-                  selectedTripType == BookingTypeEnum.Round,
+                  selectedTripType === BookingTypeEnum.Round,
                 )}
               >
                 <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
@@ -274,7 +274,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                 id={BookingTypeEnum.MultiDay}
                 onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
                 className={getTripTypeClassName(
-                  selectedTripType == BookingTypeEnum.MultiDay,
+                  selectedTripType === BookingTypeEnum.MultiDay,
                 )}
               >
                 <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />

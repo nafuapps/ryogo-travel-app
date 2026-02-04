@@ -52,7 +52,7 @@ export default function NewBookingDriverTile({
       new Date(other.startDate),
       new Date(other.endDate),
       newBookingFormData.tripStartDate,
-      newBookingFormData.tripEndDate
+      newBookingFormData.tripEndDate,
     )
   })
 
@@ -61,22 +61,24 @@ export default function NewBookingDriverTile({
       new Date(leave.startDate),
       new Date(leave.endDate),
       newBookingFormData.tripStartDate,
-      newBookingFormData.tripEndDate
+      newBookingFormData.tripEndDate,
     )
   })
 
-  const isBooked = bookingOverLapScores.some((score) => score != NoOverlapScore)
+  const isBooked = bookingOverLapScores.some(
+    (score) => score !== NoOverlapScore,
+  )
 
-  const isOnLeave = leaveOverLapScores.some((score) => score != NoOverlapScore)
+  const isOnLeave = leaveOverLapScores.some((score) => score !== NoOverlapScore)
 
   const bookingScore =
-    bookingOverLapScores.length == 0
+    bookingOverLapScores.length === 0
       ? 100
       : bookingOverLapScores.reduce((a, b) => a + b, 0) /
         bookingOverLapScores.length
 
   const leaveScore =
-    leaveOverLapScores.length == 0
+    leaveOverLapScores.length === 0
       ? 100
       : leaveOverLapScores.reduce((a, b) => a + b, 0) /
         leaveOverLapScores.length
@@ -85,14 +87,14 @@ export default function NewBookingDriverTile({
 
   const licenseScore = getExpiryScore(
     newBookingFormData.tripEndDate,
-    driverData.licenseExpiresOn
+    driverData.licenseExpiresOn,
   )
 
   const allowanceScore = getAllowanceScore(driverData.defaultAllowancePerDay)
 
   const canDriveScore = getCanDriveScore(
     driverData.canDriveVehicleTypes,
-    newBookingFormData.tripPassengers
+    newBookingFormData.tripPassengers,
   )
 
   const totalScore = getDriverTotalScore({
@@ -106,11 +108,11 @@ export default function NewBookingDriverTile({
 
   return (
     <div
-      className={getTileClassName(assignedDriverIdWatch == driverData.id)}
+      className={getTileClassName(assignedDriverIdWatch === driverData.id)}
       onClick={() =>
         setValue(
           "assignedDriverId",
-          assignedDriverIdWatch == driverData.id ? undefined : driverData.id
+          assignedDriverIdWatch === driverData.id ? undefined : driverData.id,
         )
       }
     >

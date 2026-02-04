@@ -15,14 +15,17 @@ export default async function NewTransactionPage({
 }) {
   const { id } = await params
   const user = await getCurrentUser()
-
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
-
+  if (!bookingDetails) {
+    redirect("/dashboard/bookings", RedirectType.replace)
+  }
   //Only owner or assigned user can add transactions
   if (
-    !user ||
-    (user?.userRole != UserRolesEnum.OWNER &&
-      user?.userId != bookingDetails?.assignedUser.id)
+    user.userRole !== UserRolesEnum.OWNER &&
+    user.userId !== bookingDetails.assignedUser.id
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
@@ -33,8 +36,8 @@ export default async function NewTransactionPage({
       <DashboardHeader pathName={"/dashboard/bookings/[id]/transactions/new"} />
       <NewTransactionPageComponent
         bookingId={id}
-        userId={user?.userId}
-        agencyId={user?.agencyId}
+        userId={user.userId}
+        agencyId={user.agencyId}
       />
     </div>
   )

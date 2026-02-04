@@ -63,7 +63,7 @@ async function VehicleRepairComponent({
 }) {
   const t = await getTranslations("Dashboard.VehicleRepairs")
 
-  const canModify = isOwner || userId == repair.addedByUserId
+  const canModify = isOwner || userId === repair.addedByUserId
   return (
     <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
       <div className={gridItemClassName}>

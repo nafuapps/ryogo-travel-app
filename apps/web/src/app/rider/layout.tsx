@@ -14,7 +14,8 @@ export default async function RiderLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
-  const defaultOpen = cookieStore.get(SIDEBAR_COOKIE_NAME)?.value == "true"
+  const sidebarCookie = cookieStore.get(SIDEBAR_COOKIE_NAME)
+  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : false
   const currentUser = await getCurrentUser()
 
   //If no user logged in, go to login page
@@ -23,13 +24,13 @@ export default async function RiderLayout({
   }
 
   //If not driver, go to dashboard
-  if (currentUser.userRole != UserRolesEnum.DRIVER) {
+  if (currentUser.userRole !== UserRolesEnum.DRIVER) {
     //If not driver, go to dashboard
     redirect("/dashboard", RedirectType.replace)
   }
 
   //New driver
-  if (currentUser.status == UserStatusEnum.NEW) {
+  if (currentUser.status === UserStatusEnum.NEW) {
     //Go to change-password
     redirect("/onboarding/change-password", RedirectType.replace)
   }

@@ -20,13 +20,13 @@ export default async function AddVehiclePage() {
   }
 
   //Not owner
-  if (currentUser.userRole != UserRolesEnum.OWNER) {
-    if (currentUser.status == UserStatusEnum.NEW) {
+  if (currentUser.userRole !== UserRolesEnum.OWNER) {
+    if (currentUser.status === UserStatusEnum.NEW) {
       //If new, go to change password
       redirect("/onboarding/change-password", RedirectType.replace)
     }
     //Not new users
-    if (currentUser.userRole == UserRolesEnum.DRIVER) {
+    if (currentUser.userRole === UserRolesEnum.DRIVER) {
       //If driver, go to rider page
       redirect("/rider", RedirectType.replace)
     }

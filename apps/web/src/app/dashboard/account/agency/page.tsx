@@ -19,7 +19,7 @@ export default async function AgencyDetailsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const isOwner = currentUser.userRole == UserRolesEnum.OWNER
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/account/agency"} />

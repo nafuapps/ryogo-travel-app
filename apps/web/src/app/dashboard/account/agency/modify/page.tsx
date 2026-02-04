@@ -19,7 +19,7 @@ export default async function ModifyAgencyPage() {
   }
 
   //Only owner can modify agency details
-  if (currentUser.userRole != UserRolesEnum.OWNER) {
+  if (currentUser.userRole !== UserRolesEnum.OWNER) {
     redirect("/dashboard/account/agency", RedirectType.replace)
   }
 

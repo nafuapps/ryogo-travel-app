@@ -28,7 +28,7 @@ export default async function VehicleDetailsLayout({
   if (
     !vehicle ||
     vehicle.agencyId !== user.agencyId ||
-    vehicle?.status == VehicleStatusEnum.SUSPENDED
+    vehicle.status === VehicleStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/vehicles", RedirectType.replace)
   }

@@ -21,7 +21,7 @@ import {
 import { ForwardRefExoticComponent, RefAttributes } from "react"
 
 export type NewBookingFormDataType = {
-  customerPhone?: string
+  customerPhone: string
   existingCustomer: FindCustomersInAgencyType[number] | undefined
   newCustomerName?: string
   newCustomerLocationState?: string
@@ -76,7 +76,7 @@ export function getOverlapScore(
     return PartialOverlapScore
   }
   //Touching
-  if (otherEnd == newBookingStart || otherStart == newBookingEnd) {
+  if (otherEnd === newBookingStart || otherStart === newBookingEnd) {
     return TouchingOverlapScore
   }
   //No overlap
@@ -114,13 +114,13 @@ export const RepairScore = 50
 export const OnTripScore = 75
 export const AvailableScore = 100
 export function getVehicleStatusScore(status: VehicleStatusEnum): number {
-  if (status == VehicleStatusEnum.INACTIVE) {
+  if (status === VehicleStatusEnum.INACTIVE) {
     return InactiveScore
   }
-  if (status == VehicleStatusEnum.REPAIR) {
+  if (status === VehicleStatusEnum.REPAIR) {
     return RepairScore
   }
-  if (status == VehicleStatusEnum.ON_TRIP) {
+  if (status === VehicleStatusEnum.ON_TRIP) {
     return OnTripScore
   }
   return AvailableScore
@@ -206,13 +206,13 @@ export function getAllowanceScore(allowance: number): number {
 
 export const LeaveScore = 50
 export function getDriverStatusScore(status: DriverStatusEnum): number {
-  if (status == DriverStatusEnum.INACTIVE) {
+  if (status === DriverStatusEnum.INACTIVE) {
     return InactiveScore
   }
-  if (status == DriverStatusEnum.LEAVE) {
+  if (status === DriverStatusEnum.LEAVE) {
     return LeaveScore
   }
-  if (status == DriverStatusEnum.ON_TRIP) {
+  if (status === DriverStatusEnum.ON_TRIP) {
     return OnTripScore
   }
   return AvailableScore
@@ -254,10 +254,10 @@ export function getCanDriveScore(
 
 export const NewUserScore = 50
 export function getUserStatusScore(status: UserStatusEnum): number {
-  if (status == UserStatusEnum.INACTIVE) {
+  if (status === UserStatusEnum.INACTIVE) {
     return InactiveScore
   }
-  if (status == UserStatusEnum.NEW) {
+  if (status === UserStatusEnum.NEW) {
     return NewUserScore
   }
   return AvailableScore
@@ -266,7 +266,7 @@ export function getUserStatusScore(status: UserStatusEnum): number {
 export const OwnerRoleScore = 100
 export const AgentRoleScore = 50
 export function getUserRoleScore(role: UserRolesEnum): number {
-  if (role == UserRolesEnum.OWNER) {
+  if (role === UserRolesEnum.OWNER) {
     return OwnerRoleScore
   }
   return AgentRoleScore
@@ -359,23 +359,23 @@ export const MediumTotalScore = 60
 export const BadTotalScore = 30
 
 export type Step3Type = {
-  assignedDriverId?: string | undefined
-  assignedVehicleId?: string | undefined
+  assignedDriverId?: string
+  assignedVehicleId?: string
 }
 
 export const NewBookingTotalSteps = 5
 
 export const getVehicleTypeIcon = (vehicleType: VehicleTypesEnum) => {
-  if (vehicleType == VehicleTypesEnum.TRUCK) {
+  if (vehicleType === VehicleTypesEnum.TRUCK) {
     return LucideTruck
   }
-  if (vehicleType == VehicleTypesEnum.BUS) {
+  if (vehicleType === VehicleTypesEnum.BUS) {
     return LucideBus
   }
-  if (vehicleType == VehicleTypesEnum.CAR) {
+  if (vehicleType === VehicleTypesEnum.CAR) {
     return LucideCar
   }
-  if (vehicleType == VehicleTypesEnum.BIKE) {
+  if (vehicleType === VehicleTypesEnum.BIKE) {
     return LucideMotorbike
   }
   return LucideTractor
@@ -393,7 +393,7 @@ export const getFinalPrice = (data: NewBookingFormDataType) => {
   let totalDistance = data.selectedDistance!
   let totalAllowanceDays = 1
 
-  if (data.tripType == BookingTypeEnum.Round) {
+  if (data.tripType === BookingTypeEnum.Round) {
     //For round trip, double the vehicle rental
     totalDistance *= 2
     if (days > 1) {
@@ -402,21 +402,22 @@ export const getFinalPrice = (data: NewBookingFormDataType) => {
     } else {
       totalAllowanceDays = 1.5
     }
-  } else if (data.tripType == BookingTypeEnum.MultiDay) {
+  } else if (data.tripType === BookingTypeEnum.MultiDay) {
     //For multi day trip, include intermediate tour days @ X(50) km
     totalDistance = totalDistance * 2 + (days - 2) * MultiPerDayDistance
     //For multi day trip, driver allowance is for each day
     totalAllowanceDays *= days
   }
 
-  const totalAcPrice = data.tripNeedsAC
-    ? Math.round(data.selectedAcChargePerDay! * totalAllowanceDays)
-    : 0
+  const totalAcPrice =
+    data.tripNeedsAC && data.selectedAcChargePerDay
+      ? Math.round(data.selectedAcChargePerDay * totalAllowanceDays)
+      : 0
 
   const totalVehiclePrice = Math.round(totalDistance * data.selectedRatePerKm!)
-  const totalDriverAllowance = Math.round(
-    totalAllowanceDays * data.selectedAllowancePerDay!,
-  )
+  const totalDriverAllowance = data.selectedAllowancePerDay
+    ? Math.round(totalAllowanceDays * data.selectedAllowancePerDay)
+    : 0
 
   const netPrice = totalVehiclePrice + totalDriverAllowance + totalAcPrice
 
@@ -457,10 +458,10 @@ export const getCanDriveIcons = (canDrive: VehicleTypesEnum[]) => {
 }
 
 export const getTripTypeIcon = (tripType: BookingTypeEnum) => {
-  if (tripType == BookingTypeEnum.OneWay) {
+  if (tripType === BookingTypeEnum.OneWay) {
     return LucideArrowRightFromLine
   }
-  if (tripType == BookingTypeEnum.Round) {
+  if (tripType === BookingTypeEnum.Round) {
     return LucideArrowRightLeft
   }
   return LucideWaypoints

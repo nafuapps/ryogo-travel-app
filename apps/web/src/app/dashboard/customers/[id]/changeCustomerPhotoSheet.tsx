@@ -37,7 +37,7 @@ export default function ChangeCustomerPhotoSheet({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -49,7 +49,7 @@ export default function ChangeCustomerPhotoSheet({
             "image/jpg",
             "image/bmp",
             "image/webp",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Error2")),
   })

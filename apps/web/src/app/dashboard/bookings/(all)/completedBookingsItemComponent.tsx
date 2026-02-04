@@ -37,7 +37,7 @@ export default function CompletedBookingsItemComponent({
   )
 
   const trips =
-    selectedTab == "24hrs" ? completedBookings24Hrs : completedBookings7Days
+    selectedTab === "24hrs" ? completedBookings24Hrs : completedBookings7Days
 
   return (
     <div id="CompletedBookingsSection" className={sectionClassName}>

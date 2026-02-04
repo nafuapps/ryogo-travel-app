@@ -55,6 +55,5 @@ export const tripLogRepository = {
       .update(tripLogs)
       .set({ tripLogPhotoUrl })
       .where(eq(tripLogs.id, tripLogId))
-      .returning()
   },
 }

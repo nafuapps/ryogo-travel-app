@@ -23,8 +23,8 @@ export const locationRepository = {
       Number(
         (result as any)?.rows?.[0]?.distance_km ??
           (result as any)?.[0]?.distance_km ??
-          0
-      )
+          0,
+      ),
     )
   },
 }

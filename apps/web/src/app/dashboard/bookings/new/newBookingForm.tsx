@@ -17,7 +17,7 @@ import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 
-type NewBookingFormProps = {
+export default function NewBookingForm(props: {
   agencyId: string
   agencyLocation: NewBookingAgencyLocationType
   vehicles: FindVehiclesByAgencyType
@@ -25,8 +25,7 @@ type NewBookingFormProps = {
   commissionRate: number
   userId: string
   customers: FindCustomersInAgencyType
-}
-export default function NewBookingForm(props: NewBookingFormProps) {
+}) {
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingFormDataType>({
       customerPhone: "",

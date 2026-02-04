@@ -36,7 +36,7 @@ export function AddAgentStep1(props: {
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -48,7 +48,7 @@ export function AddAgentStep1(props: {
             "image/jpg",
             "image/bmp",
             "image/webp",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field4.Error2"))
       .optional(),
@@ -68,7 +68,7 @@ export function AddAgentStep1(props: {
   const onSubmit = async (data: Step1Type) => {
     if (
       props.allAgents.some(
-        (a) => a.email == data.agentEmail && a.phone == data.agentPhone,
+        (a) => a.email === data.agentEmail && a.phone === data.agentPhone,
       )
     ) {
       //If agent with same phone and email exists in system already, show error

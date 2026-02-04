@@ -26,6 +26,7 @@ import { format } from "date-fns"
 import { UrlObject } from "url"
 import Image from "next/image"
 import Link from "next/link"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function RiderExpenseItem({
   expense,
@@ -36,6 +37,9 @@ export default async function RiderExpenseItem({
 }) {
   const t = await getTranslations("Rider.MyBooking.Expense")
   const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
   let fileUrl = ""
   if (expense.expensePhotoUrl) {
@@ -71,7 +75,7 @@ export default async function RiderExpenseItem({
             <H4>{expense.amount}</H4>
           </div>
           <div className="flex flex-row gap-2 lg:gap-3">
-            {expense.addedByUser.id == currentUser?.userId && (
+            {expense.addedByUser.id === currentUser.userId && (
               <Link
                 href={
                   `/rider/myBookings/${bookingId}/modify-expense/${expense.id}` as unknown as UrlObject

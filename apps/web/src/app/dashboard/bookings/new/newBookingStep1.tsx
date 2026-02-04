@@ -61,13 +61,13 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     newCustomerState: z
       .string()
       .refine((s) => {
-        return existingCustomer || s != ""
+        return existingCustomer || s !== ""
       }, t("Field3.Error1"))
       .optional(),
     newCustomerCity: z
       .string()
       .refine((s) => {
-        return existingCustomer || s != ""
+        return existingCustomer || s !== ""
       }, t("Field4.Error1"))
       .optional(),
   })
@@ -108,7 +108,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       return
     }
     const foundCustomer = props.customers.find(
-      (c) => c.phone == form.getValues("customerPhone"),
+      (c) => c.phone === form.getValues("customerPhone"),
     )
     setExistingCustomer(foundCustomer)
     if (!foundCustomer) {

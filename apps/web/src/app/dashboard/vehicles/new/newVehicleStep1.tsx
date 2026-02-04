@@ -61,7 +61,7 @@ export function NewVehicleStep1(props: {
   const onSubmit = async (data: Step1Type) => {
     // Check if a vehicle with same number exists in this agency
     if (
-      props.existingVehicles.some((v) => v.vehicleNumber == data.vehicleNumber)
+      props.existingVehicles.some((v) => v.vehicleNumber === data.vehicleNumber)
     ) {
       formData.setError("vehicleNumber", {
         type: "manual",

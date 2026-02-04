@@ -48,10 +48,10 @@ export default function AllCustomersListComponent({
     usePagination(displayedCustomers, CUSTOMERS_PER_PAGE)
 
   function searchCustomer(term: string) {
-    if (term == "") {
+    if (term === "") {
       setDisplayedCustomers(allCustomers)
     } else if (PhoneRegex.safeParse(term).success) {
-      setDisplayedCustomers(allCustomers.filter((c) => c.phone == term))
+      setDisplayedCustomers(allCustomers.filter((c) => c.phone === term))
     } else {
       setDisplayedCustomers(allCustomers.filter((c) => c.name.includes(term)))
     }
@@ -76,7 +76,7 @@ export default function AllCustomersListComponent({
             placeholder="Type to search..."
             value={searchTerm}
             onChange={(e) => {
-              if (e.target.value == "") {
+              if (e.target.value === "") {
                 searchCustomer("")
               }
               setSearchTerm(e.target.value)

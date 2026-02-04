@@ -52,7 +52,7 @@ export default function EndTripSheet({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field2.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -65,7 +65,7 @@ export default function EndTripSheet({
             "image/bmp",
             "image/webp",
             "application/pdf",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field2.Error2"))
       .optional(),

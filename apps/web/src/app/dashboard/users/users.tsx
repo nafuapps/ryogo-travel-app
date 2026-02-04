@@ -36,9 +36,9 @@ export default async function UsersPageComponent({
 
   const allUsers = await userServices.findAllUsersInAgency(agencyId)
 
-  const owners = allUsers.filter((u) => u.userRole == UserRolesEnum.OWNER)
-  const agents = allUsers.filter((u) => u.userRole == UserRolesEnum.AGENT)
-  const drivers = allUsers.filter((u) => u.userRole == UserRolesEnum.DRIVER)
+  const owners = allUsers.filter((u) => u.userRole === UserRolesEnum.OWNER)
+  const agents = allUsers.filter((u) => u.userRole === UserRolesEnum.AGENT)
+  const drivers = allUsers.filter((u) => u.userRole === UserRolesEnum.DRIVER)
 
   return (
     <div id="UsersPage" className={pageClassName}>

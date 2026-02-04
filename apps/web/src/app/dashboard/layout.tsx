@@ -13,7 +13,8 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
-  const defaultOpen = cookieStore.get(SIDEBAR_COOKIE_NAME)?.value == "true"
+  const sidebarCookie = cookieStore.get(SIDEBAR_COOKIE_NAME)
+  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : false
   const currentUser = await getCurrentUser()
 
   // Redirect to auth if the user is not authenticated
@@ -22,14 +23,14 @@ export default async function DashboardLayout({
   }
 
   //Driver
-  if (currentUser.userRole == UserRolesEnum.DRIVER) {
+  if (currentUser.userRole === UserRolesEnum.DRIVER) {
     //Go to rider page
     redirect("/rider", RedirectType.replace)
   }
 
   //New user
-  if (currentUser.status == UserStatusEnum.NEW) {
-    if (currentUser.userRole == UserRolesEnum.OWNER) {
+  if (currentUser.status === UserStatusEnum.NEW) {
+    if (currentUser.userRole === UserRolesEnum.OWNER) {
       //If owner, go to vehicle onboarding
       redirect("/onboarding/add-vehicle", RedirectType.replace)
     }
@@ -51,7 +52,7 @@ export default async function DashboardLayout({
     >
       <main id="DashboardLayout" className="flex flex-row w-screen h-dvh">
         <DashboardSidebar
-          isOwner={currentUser.userRole == UserRolesEnum.OWNER}
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         />
         <section
           id="DashboardMainSection"

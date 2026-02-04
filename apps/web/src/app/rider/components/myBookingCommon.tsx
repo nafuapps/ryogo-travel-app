@@ -64,45 +64,50 @@ export function getNextStep(
   tripLogs: NonNullable<FindBookingDetailsByIdType>["tripLogs"],
 ) {
   //One way trip: START_TRIP->ARRIVED->PICKUP->DROP->END_TRIP
-  if (bookingType == BookingTypeEnum.OneWay) {
-    if (tripLogs.some((t) => t.type == TripLogTypesEnum.DROP)) {
+  if (bookingType === BookingTypeEnum.OneWay) {
+    if (tripLogs.some((t) => t.type === TripLogTypesEnum.DROP)) {
       return TripLogTypesEnum.END_TRIP
     }
-    if (tripLogs.some((t) => t.type == TripLogTypesEnum.PICKUP)) {
+    if (tripLogs.some((t) => t.type === TripLogTypesEnum.PICKUP)) {
       return TripLogTypesEnum.DROP
     }
-    if (tripLogs.some((t) => t.type == TripLogTypesEnum.ARRIVED)) {
+    if (tripLogs.some((t) => t.type === TripLogTypesEnum.ARRIVED)) {
       return TripLogTypesEnum.PICKUP
     }
-    if (tripLogs.some((t) => t.type == TripLogTypesEnum.START_TRIP)) {
+    if (tripLogs.some((t) => t.type === TripLogTypesEnum.START_TRIP)) {
       return TripLogTypesEnum.ARRIVED
     }
     return TripLogTypesEnum.START_TRIP
   }
   //Round trip: START_TRIP->ARRIVED->PICKUP->DROP->ARRIVED->PICKUP->DROP->END_TRIP
-  if (bookingType == BookingTypeEnum.Round) {
-    if (tripLogs.filter((t) => t.type == TripLogTypesEnum.DROP).length > 1) {
+  if (bookingType === BookingTypeEnum.Round) {
+    if (tripLogs.filter((t) => t.type === TripLogTypesEnum.DROP).length > 1) {
       return TripLogTypesEnum.END_TRIP
     }
-    if (tripLogs.filter((t) => t.type == TripLogTypesEnum.PICKUP).length > 1) {
-      return TripLogTypesEnum.DROP
-    }
-    if (tripLogs.filter((t) => t.type == TripLogTypesEnum.ARRIVED).length > 1) {
-      return TripLogTypesEnum.PICKUP
-    }
-    if (tripLogs.filter((t) => t.type == TripLogTypesEnum.DROP).length == 1) {
-      return TripLogTypesEnum.ARRIVED
-    }
-    if (tripLogs.filter((t) => t.type == TripLogTypesEnum.PICKUP).length == 1) {
+    if (tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKUP).length > 1) {
       return TripLogTypesEnum.DROP
     }
     if (
-      tripLogs.filter((t) => t.type == TripLogTypesEnum.ARRIVED).length == 1
+      tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length > 1
+    ) {
+      return TripLogTypesEnum.PICKUP
+    }
+    if (tripLogs.filter((t) => t.type === TripLogTypesEnum.DROP).length === 1) {
+      return TripLogTypesEnum.ARRIVED
+    }
+    if (
+      tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKUP).length === 1
+    ) {
+      return TripLogTypesEnum.DROP
+    }
+    if (
+      tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length === 1
     ) {
       return TripLogTypesEnum.PICKUP
     }
     if (
-      tripLogs.filter((t) => t.type == TripLogTypesEnum.START_TRIP).length == 1
+      tripLogs.filter((t) => t.type === TripLogTypesEnum.START_TRIP).length ===
+      1
     ) {
       return TripLogTypesEnum.ARRIVED
     }
@@ -110,29 +115,29 @@ export function getNextStep(
   }
   //Multi day trip: START_TRIP->(ARRIVED->PICKUP->DROP)->END_TRIP
   if (
-    tripLogs.filter((t) => t.type == TripLogTypesEnum.DROP).length ==
-    tripLogs.filter((t) => t.type == TripLogTypesEnum.ARRIVED).length
+    tripLogs.filter((t) => t.type === TripLogTypesEnum.DROP).length ==
+    tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length
   ) {
     if (
       endDate <= new Date() &&
-      tripLogs.filter((t) => t.type == TripLogTypesEnum.DROP).length > 0
+      tripLogs.filter((t) => t.type === TripLogTypesEnum.DROP).length > 0
     ) {
       return TripLogTypesEnum.END_TRIP
     }
-    if (tripLogs.some((t) => t.type == TripLogTypesEnum.START_TRIP)) {
+    if (tripLogs.some((t) => t.type === TripLogTypesEnum.START_TRIP)) {
       return TripLogTypesEnum.ARRIVED
     }
     return TripLogTypesEnum.START_TRIP
   }
   if (
-    tripLogs.filter((t) => t.type == TripLogTypesEnum.DROP).length <
-    tripLogs.filter((t) => t.type == TripLogTypesEnum.PICKUP).length
+    tripLogs.filter((t) => t.type === TripLogTypesEnum.DROP).length <
+    tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKUP).length
   ) {
     return TripLogTypesEnum.DROP
   }
   if (
-    tripLogs.filter((t) => t.type == TripLogTypesEnum.PICKUP).length <
-    tripLogs.filter((t) => t.type == TripLogTypesEnum.ARRIVED).length
+    tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKUP).length <
+    tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length
   ) {
     return TripLogTypesEnum.PICKUP
   }
@@ -170,11 +175,13 @@ export async function OngoingBookingComponent({
           <CaptionLight>{booking.vehicle}</CaptionLight>
           <PBold>{booking.driver}</PBold>
         </div>
-        <div className={gridItemClassName}>
-          <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-            <CaptionBold>{booking.status?.toUpperCase()}</CaptionBold>
+        {booking.status && (
+          <div className={gridItemClassName}>
+            <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
+              <CaptionBold>{booking.status.toUpperCase()}</CaptionBold>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="bg-slate-600 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 p-3 lg:p-4">
         <SmallLight>{t("Continue")}</SmallLight>
@@ -195,7 +202,7 @@ export async function UpcomingBookingComponent({
 
   const combinedDateTime = getCombinedDateTime(
     booking.startDate,
-    booking.startTime!,
+    booking.startTime,
   )
 
   return (
@@ -310,7 +317,7 @@ export async function BookingCommonInfo({
         {booking.startTime && (
           <BookingItem
             title={t("StartTime")}
-            value={moment(booking.startTime!, "hh:mm:ss").format("h:mm a")}
+            value={moment(booking.startTime, "hh:mm:ss").format("h:mm a")}
           />
         )}
         {booking.dropAddress && (

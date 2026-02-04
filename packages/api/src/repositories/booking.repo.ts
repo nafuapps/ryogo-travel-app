@@ -2,9 +2,13 @@ import { db } from "@ryogo-travel-app/db"
 import {
   bookings,
   BookingStatusEnum,
+  drivers,
+  DriverStatusEnum,
   InsertBookingType,
   tripLogs,
   TripLogTypesEnum,
+  vehicles,
+  VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, or, gte, lte, inArray } from "drizzle-orm"
 
@@ -1016,6 +1020,70 @@ export const bookingRepository = {
         pickupAddress: bookings.pickupAddress,
         dropAddress: bookings.dropAddress,
       })
+  },
+
+  async startBookingTransaction(
+    bookingId: string,
+    driverId: string,
+    vehicleId: string,
+  ) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(bookings)
+        .set({
+          status: BookingStatusEnum.IN_PROGRESS,
+        })
+        .where(eq(bookings.id, bookingId))
+      await tx
+        .update(drivers)
+        .set({
+          status: DriverStatusEnum.ON_TRIP,
+        })
+        .where(eq(drivers.id, driverId))
+      await tx
+        .update(vehicles)
+        .set({
+          status: VehicleStatusEnum.ON_TRIP,
+        })
+        .where(eq(vehicles.id, vehicleId))
+
+      return await tx
+        .select({ id: bookings.id, status: bookings.status })
+        .from(bookings)
+        .where(eq(bookings.id, bookingId))
+    })
+  },
+
+  async completeBookingTransaction(
+    bookingId: string,
+    driverId: string,
+    vehicleId: string,
+  ) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(bookings)
+        .set({
+          status: BookingStatusEnum.COMPLETED,
+        })
+        .where(eq(bookings.id, bookingId))
+      await tx
+        .update(drivers)
+        .set({
+          status: DriverStatusEnum.AVAILABLE,
+        })
+        .where(eq(drivers.id, driverId))
+      await tx
+        .update(vehicles)
+        .set({
+          status: VehicleStatusEnum.AVAILABLE,
+        })
+        .where(eq(vehicles.id, vehicleId))
+
+      return await tx
+        .select({ id: bookings.id, status: bookings.status })
+        .from(bookings)
+        .where(eq(bookings.id, bookingId))
+    })
   },
 
   async updateStatus(id: string, status: BookingStatusEnum) {

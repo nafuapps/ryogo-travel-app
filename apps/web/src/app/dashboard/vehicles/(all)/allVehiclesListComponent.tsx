@@ -108,13 +108,13 @@ async function AllVehiclesItemComponent({
 }
 
 const getVehicleStatusColor = (status: VehicleStatusEnum) => {
-  if (status == VehicleStatusEnum.AVAILABLE) {
+  if (status === VehicleStatusEnum.AVAILABLE) {
     return "bg-green-200"
   }
-  if (status == VehicleStatusEnum.REPAIR) {
+  if (status === VehicleStatusEnum.REPAIR) {
     return "bg-yellow-200"
   }
-  if (status == VehicleStatusEnum.INACTIVE) {
+  if (status === VehicleStatusEnum.INACTIVE) {
     return "bg-red-200"
   }
   return "bg-slate-200"
@@ -122,16 +122,16 @@ const getVehicleStatusColor = (status: VehicleStatusEnum) => {
 
 const getVehicleIcon = (vehicleType: VehicleTypesEnum) => {
   const className = "size-8 lg:size-10 text-slate-400"
-  if (vehicleType == VehicleTypesEnum.TRUCK) {
+  if (vehicleType === VehicleTypesEnum.TRUCK) {
     return <LucideTruck className={className} />
   }
-  if (vehicleType == VehicleTypesEnum.BUS) {
+  if (vehicleType === VehicleTypesEnum.BUS) {
     return <LucideBus className={className} />
   }
-  if (vehicleType == VehicleTypesEnum.CAR) {
+  if (vehicleType === VehicleTypesEnum.CAR) {
     return <LucideCar className={className} />
   }
-  if (vehicleType == VehicleTypesEnum.BIKE) {
+  if (vehicleType === VehicleTypesEnum.BIKE) {
     return <LucideMotorbike className={className} />
   }
   return <LucideTractor className={className} />

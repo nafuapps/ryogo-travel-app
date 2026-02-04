@@ -28,7 +28,7 @@ export default async function CustomerDetailsLayout({
   if (
     !customer ||
     customer.agencyId !== user.agencyId ||
-    customer?.status == CustomerStatusEnum.SUSPENDED
+    customer.status === CustomerStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/customers", RedirectType.replace)
   }

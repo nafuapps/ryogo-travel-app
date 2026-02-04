@@ -43,7 +43,7 @@ export default function ModifyExpensePageComponent({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true

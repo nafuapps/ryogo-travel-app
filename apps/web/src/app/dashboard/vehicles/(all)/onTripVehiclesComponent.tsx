@@ -45,34 +45,41 @@ export default async function OnTripVehiclesComponent({
 
 function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
   const booking = props.assignedBookings[0]
+  if (!booking) {
+    return <></>
+  }
   return (
-    <Link href={`/dashboard/bookings/${booking?.id}`}>
+    <Link href={`/dashboard/bookings/${booking.id}`}>
       <div className={gridClassName}>
         <div className={gridItemClassName}>
           <Caption>{props.brand + " " + props.model}</Caption>
           <PBold>{props.vehicleNumber}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <Caption>{booking?.id}</Caption>
-          <PBold>{booking?.assignedDriver?.name}</PBold>
+          <Caption>{booking.id}</Caption>
+          {booking.assignedDriver && (
+            <PBold>{booking.assignedDriver.name}</PBold>
+          )}
         </div>
         <div className={gridItemClassName}>
           <Caption>
-            {moment(booking?.startDate).format("DD MMM") +
+            {moment(booking.startDate).format("DD MMM") +
               " - " +
-              moment(booking?.endDate).format("DD MMM")}
+              moment(booking.endDate).format("DD MMM")}
           </Caption>
           <PBold>
-            {booking?.source.city + " - " + booking?.destination.city}
+            {booking.source.city + " - " + booking.destination.city}
           </PBold>
         </div>
-        <div className={gridItemClassName}>
-          <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-            <CaptionBold>
-              {booking?.tripLogs[0]?.type.toUpperCase()}
-            </CaptionBold>
+        {booking.tripLogs[0] && (
+          <div className={gridItemClassName}>
+            <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
+              <CaptionBold>
+                {booking.tripLogs[0].type.toUpperCase()}
+              </CaptionBold>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Link>
   )

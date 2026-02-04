@@ -40,7 +40,7 @@ export default function UpcomingBookingsItemComponent({
   )
 
   const trips =
-    selectedTab == "24hrs" ? upcomingBookings24Hrs : upcomingBookings7Days
+    selectedTab === "24hrs" ? upcomingBookings24Hrs : upcomingBookings7Days
 
   return (
     <div id="UpcomingBookingsSection" className={sectionClassName}>
@@ -76,10 +76,7 @@ export default function UpcomingBookingsItemComponent({
 }
 
 function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
-  const combinedDateTime = getCombinedDateTime(
-    props.startDate,
-    props.startTime!,
-  )
+  const combinedDateTime = getCombinedDateTime(props.startDate, props.startTime)
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <div className={gridClassName}>

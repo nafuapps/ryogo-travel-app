@@ -1,18 +1,18 @@
-import { CaptionBold, H4, Small } from "@/components/typography";
+import { CaptionBold, H4, Small } from "@/components/typography"
 
-import Link from "next/link";
+import Link from "next/link"
 
 type DashboardOngoingTripComponentProps = {
-  bookingId: string;
-  customerName: string;
-  route: string;
-  type: string;
-  vehicle?: string;
-  driver?: string;
-  status?: string;
-};
+  bookingId: string
+  customerName: string
+  route: string
+  type: string
+  vehicle?: string
+  driver?: string
+  status?: string
+}
 export default function DashboardOngoingTripComponent(
-  props: DashboardOngoingTripComponentProps
+  props: DashboardOngoingTripComponentProps,
 ) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
@@ -32,11 +32,13 @@ export default function DashboardOngoingTripComponent(
             <Small>{props.customerName}</Small>
             <CaptionBold>{props.bookingId}</CaptionBold>
           </div>
-          <div className="flex rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-            <CaptionBold>{props.status?.toUpperCase()}</CaptionBold>
-          </div>
+          {props.status && (
+            <div className="flex rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
+              <CaptionBold>{props.status.toUpperCase()}</CaptionBold>
+            </div>
+          )}
         </div>
       </div>
     </Link>
-  );
+  )
 }

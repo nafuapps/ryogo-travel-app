@@ -38,8 +38,8 @@ export default async function RiderModifyExpensePage({
   if (
     !bookingDetails ||
     !expenseDetails ||
-    bookingDetails.status != BookingStatusEnum.IN_PROGRESS ||
-    expenseDetails.addedByUserId != driver.userId
+    bookingDetails.status !== BookingStatusEnum.IN_PROGRESS ||
+    expenseDetails.addedByUserId !== driver.userId
   ) {
     redirect("/rider/myBookings", RedirectType.replace)
   }

@@ -128,7 +128,7 @@ export function OnboardingTextarea(props: OnboardingTextareaProps) {
 type OnboardingSelectProps = {
   name: string
   title: string
-  array: { value: string; display: string }[] | undefined
+  array: { value: string; display: string }[]
   placeholder: string
   register: UseFormRegisterReturn<string>
 }
@@ -152,7 +152,7 @@ export function OnboardingSelect(props: OnboardingSelectProps) {
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {props.array!.map((item, index) => (
+              {props.array.map((item, index) => (
                 <SelectItem key={index} value={item.value}>
                   {item.display}
                 </SelectItem>
@@ -197,7 +197,7 @@ export function OnboardingCheckbox(props: OnboardingCheckboxProps) {
 type OnboardingMultipleCheckboxProps = {
   name: string
   label: string
-  array: { value: string; display: string }[] | undefined
+  array: { value: string; display: string }[]
   register: UseFormRegisterReturn<string>
 }
 export function OnboardingMultipleCheckbox(
@@ -211,7 +211,7 @@ export function OnboardingMultipleCheckbox(
           <FormLabel className="text-base">
             <PBold>{props.label}</PBold>
           </FormLabel>
-          {props.array!.map((item) => (
+          {props.array.map((item) => (
             <FormField
               key={item.value}
               name={props.name}
@@ -223,12 +223,12 @@ export function OnboardingMultipleCheckbox(
                   >
                     <FormControl>
                       <Checkbox
-                        checked={field.value?.includes(item.value)}
+                        checked={field.value.includes(item.value)}
                         onCheckedChange={(checked) => {
                           return checked
                             ? field.onChange([...field.value, item.value])
                             : field.onChange(
-                                field.value?.filter(
+                                field.value.filter(
                                   (value: string) => value !== item.value,
                                 ),
                               )

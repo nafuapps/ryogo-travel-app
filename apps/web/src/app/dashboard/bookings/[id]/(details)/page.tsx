@@ -32,8 +32,8 @@ export default async function BookingDetailsPage({
       <BookingDetailsPageComponent
         bookingId={id}
         bookingDetails={bookingDetails}
-        isOwner={user.userRole == UserRolesEnum.OWNER}
-        isAssignedUser={bookingDetails.assignedUser.id === user?.userId}
+        isOwner={user.userRole === UserRolesEnum.OWNER}
+        isAssignedUser={bookingDetails.assignedUser.id === user.userId}
       />
     </div>
   )

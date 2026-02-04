@@ -35,7 +35,7 @@ export default function LeadBookingsItemComponent({
     (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
   )
 
-  const trips = selectedTab == "24hrs" ? leadBookings24Hrs : leadBookings7Days
+  const trips = selectedTab === "24hrs" ? leadBookings24Hrs : leadBookings7Days
 
   return (
     <div id="leadsBookingsSection" className={sectionClassName}>

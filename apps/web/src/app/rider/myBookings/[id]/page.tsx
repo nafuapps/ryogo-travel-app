@@ -21,7 +21,11 @@ export default async function MyBookingPage({
   const id = (await params).id
 
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
-  if (!bookingDetails || bookingDetails.assignedDriverId == null) {
+  if (
+    !bookingDetails ||
+    !bookingDetails.assignedDriverId ||
+    bookingDetails.assignedVehicleId
+  ) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
@@ -33,7 +37,7 @@ export default async function MyBookingPage({
   }
 
   //Redirect based on booking status
-  if (bookingDetails.status == BookingStatusEnum.CONFIRMED) {
+  if (bookingDetails.status === BookingStatusEnum.CONFIRMED) {
     return (
       <div className={mainClassName}>
         <RiderHeader pathName={"/rider/myBookings/[id]"} />
@@ -41,13 +45,13 @@ export default async function MyBookingPage({
           booking={bookingDetails}
           canStartTrip={
             bookingDetails.startDate <= new Date() &&
-            driver.status == DriverStatusEnum.AVAILABLE
+            driver.status === DriverStatusEnum.AVAILABLE
           }
         />
       </div>
     )
   }
-  if (bookingDetails.status == BookingStatusEnum.IN_PROGRESS) {
+  if (bookingDetails.status === BookingStatusEnum.IN_PROGRESS) {
     return (
       <div className={mainClassName}>
         <RiderHeader pathName={"/rider/myBookings/[id]"} />

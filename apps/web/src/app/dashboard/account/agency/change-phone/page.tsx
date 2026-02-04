@@ -20,7 +20,7 @@ export default async function ChangeAgencyPhonePage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  if (currentUser.userRole != UserRolesEnum.OWNER) {
+  if (currentUser.userRole !== UserRolesEnum.OWNER) {
     redirect("/dashboard/account/agency", RedirectType.replace)
   }
 

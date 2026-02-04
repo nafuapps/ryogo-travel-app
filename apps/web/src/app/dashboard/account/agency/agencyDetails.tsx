@@ -30,9 +30,9 @@ export default async function AgencyDetailsPageComponent({
   const t = await getTranslations("Dashboard.AccountAgency")
 
   const bgColor =
-    agency.status == AgencyStatusEnum.ACTIVE
+    agency.status === AgencyStatusEnum.ACTIVE
       ? " bg-green-100 "
-      : agency.status == AgencyStatusEnum.EXPIRED
+      : agency.status === AgencyStatusEnum.EXPIRED
         ? " bg-red-100 "
         : " bg-slate-100 "
 
@@ -85,7 +85,7 @@ export default async function AgencyDetailsPageComponent({
           <SmallBold>{t("SubscriptionInfo")}</SmallBold>
           <div className="flex flex-col gap-1 lg:gap-1.5">
             <SmallGrey>{agency.subscriptionPlan.toUpperCase()}</SmallGrey>
-            {agency.subscriptionExpiresOn! < new Date() ? (
+            {agency.subscriptionExpiresOn < new Date() ? (
               <CaptionRed>
                 {t("ValidTill") +
                   moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}

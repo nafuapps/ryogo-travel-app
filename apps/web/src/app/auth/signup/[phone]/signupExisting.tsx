@@ -20,7 +20,7 @@ export default async function SignupExistingPageComponent({
   accounts: FindUserAccountsByPhoneType
 }) {
   const hasOwnerAccount = accounts.some(
-    (p) => p.userRole == UserRolesEnum.OWNER,
+    (p) => p.userRole === UserRolesEnum.OWNER,
   )
 
   const t = await getTranslations("Auth.SignupPage.Step2")

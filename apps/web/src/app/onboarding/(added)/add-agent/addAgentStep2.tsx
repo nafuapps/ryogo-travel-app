@@ -33,7 +33,7 @@ export function AddAgentConfirm(props: {
     // Add agent
     const newAgentData: AddAgentRequestType = {
       agencyId: props.finalData.agencyId,
-      ownerId: props.status == UserStatusEnum.NEW ? props.ownerId : undefined,
+      ownerId: props.status === UserStatusEnum.NEW ? props.ownerId : undefined,
       data: {
         name: props.finalData.data.name,
         email: props.finalData.data.email,

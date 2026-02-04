@@ -44,19 +44,19 @@ export default function AssignDriverTile({
 }: AssignDriverTileProps) {
   const t = useTranslations("Dashboard.AssignDriver.Tile")
 
-  const isCurrentlyAssigned = booking.assignedDriverId == driverData.id
+  const isCurrentlyAssigned = booking.assignedDriverId === driverData.id
 
   const bookingStartDate = new Date(booking.startDate)
   const bookingEndDate = new Date(booking.endDate)
 
   const bookingOverLapScores = driverData.assignedBookings
-    .filter((b) => b.id != booking.id)
+    .filter((b) => b.id !== booking.id)
     .map((other) => {
       return getOverlapScore(
         new Date(other.startDate),
         new Date(other.endDate),
         bookingStartDate,
-        bookingEndDate
+        bookingEndDate,
       )
     })
 
@@ -65,22 +65,24 @@ export default function AssignDriverTile({
       new Date(leave.startDate),
       new Date(leave.endDate),
       bookingStartDate,
-      bookingEndDate
+      bookingEndDate,
     )
   })
 
-  const isBooked = bookingOverLapScores.some((score) => score != NoOverlapScore)
+  const isBooked = bookingOverLapScores.some(
+    (score) => score !== NoOverlapScore,
+  )
 
-  const isOnLeave = leaveOverLapScores.some((score) => score != NoOverlapScore)
+  const isOnLeave = leaveOverLapScores.some((score) => score !== NoOverlapScore)
 
   const bookingScore =
-    bookingOverLapScores.length == 0
+    bookingOverLapScores.length === 0
       ? 100
       : bookingOverLapScores.reduce((a, b) => a + b, 0) /
         bookingOverLapScores.length
 
   const leaveScore =
-    leaveOverLapScores.length == 0
+    leaveOverLapScores.length === 0
       ? 100
       : leaveOverLapScores.reduce((a, b) => a + b, 0) /
         leaveOverLapScores.length
@@ -89,14 +91,14 @@ export default function AssignDriverTile({
 
   const licenseScore = getExpiryScore(
     bookingEndDate,
-    driverData.licenseExpiresOn
+    driverData.licenseExpiresOn,
   )
 
   const allowanceScore = getAllowanceScore(driverData.defaultAllowancePerDay)
 
   const canDriveScore = getCanDriveScore(
     driverData.canDriveVehicleTypes,
-    booking.passengers
+    booking.passengers,
   )
 
   const totalScore = getDriverTotalScore({
@@ -110,10 +112,10 @@ export default function AssignDriverTile({
 
   return (
     <div
-      className={getTileClassName(selectedDriverId == driverData.id)}
+      className={getTileClassName(selectedDriverId === driverData.id)}
       onClick={() =>
         setSelectedDriverId(
-          selectedDriverId == driverData.id ? null : driverData.id
+          selectedDriverId === driverData.id ? null : driverData.id,
         )
       }
     >
@@ -150,10 +152,10 @@ export default function AssignDriverTile({
             {isCurrentlyAssigned
               ? t("CurrentlyAssigned")
               : isBooked
-              ? t("Booked")
-              : isOnLeave
-              ? t("Leave")
-              : t("Available")}
+                ? t("Booked")
+                : isOnLeave
+                  ? t("Leave")
+                  : t("Available")}
           </Caption>
         </div>
       </div>

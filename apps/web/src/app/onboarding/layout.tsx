@@ -9,8 +9,8 @@ export default async function OnboardingHomeLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
-  const defaultOpen = cookieStore.get(SIDEBAR_COOKIE_NAME)?.value == "true"
-
+  const sidebarCookie = cookieStore.get(SIDEBAR_COOKIE_NAME)
+  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : false
   return (
     <SidebarProvider
       defaultOpen={defaultOpen}

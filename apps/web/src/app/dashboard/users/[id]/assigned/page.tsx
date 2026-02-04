@@ -20,7 +20,7 @@ export default async function UserDetailsPage({
   }
 
   let bookings
-  if (user.userRole == UserRolesEnum.DRIVER) {
+  if (user.userRole === UserRolesEnum.DRIVER) {
     bookings = await driverServices.findDriverAssignedBookingsById(id)
   } else {
     bookings = await userServices.findUserAssignedBookingsById(id)

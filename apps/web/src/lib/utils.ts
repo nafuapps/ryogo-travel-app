@@ -32,14 +32,20 @@ export function getStringValueDisplayPairs(
   }))
 }
 
-export function getCombinedDateTime(date: Date, time: string) {
+export function getCombinedDateTime(date: Date, time: string | null) {
+  if (!time) {
+    return date
+  }
   // 1. Ensure dateObj is a Date object (make a copy to avoid mutation)
   const combinedDateTime = new Date(date.getTime())
 
   // 2. Parse the time string (assuming "HH:MM" or "HH:MM:SS" format)
   const timeParts = time.split(":")
-  const hours = parseInt(timeParts[0]!, 10)
-  const minutes = parseInt(timeParts[1]!, 10)
+  if (!timeParts[0] || !timeParts[1]) {
+    return date
+  }
+  const hours = parseInt(timeParts[0], 10)
+  const minutes = parseInt(timeParts[1], 10)
   const seconds = parseInt(timeParts[2] || "0", 10) // Default to 0 seconds if not provided
 
   // 3. Set the time components on the combined date object (local time)

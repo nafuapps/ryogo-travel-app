@@ -106,10 +106,10 @@ export const bookingServices = {
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         status: booking.tripLogs[0]?.type.toString(),
       }
@@ -133,7 +133,7 @@ export const bookingServices = {
         status: booking.status.toString(),
         updatedAt: booking.updatedAt,
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
         customerName: booking.customer?.name,
@@ -156,7 +156,7 @@ export const bookingServices = {
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
         customerName: booking.customer?.name,
@@ -181,7 +181,7 @@ export const bookingServices = {
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
+        route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
         customerName: booking.customer?.name,
@@ -207,8 +207,8 @@ export const bookingServices = {
     return bookings.map((booking) => {
       return {
         type: booking.type.toString(),
-        route: booking.source?.city + " - " + booking.destination?.city,
-        customerName: booking.customer?.name,
+        route: booking.source.city + " - " + booking.destination.city,
+        customerName: booking.customer.name,
         bookingId: booking.id,
         createdAt: booking.createdAt,
         assignedUser: booking.assignedUser.name,
@@ -221,7 +221,8 @@ export const bookingServices = {
   //Get assigned user id by booking id
   async findAssignedUserIdByBookingId(bookingId: string) {
     const booking = await bookingRepository.readBookingById(bookingId)
-    return booking?.assignedUserId || null
+    if (!booking) return
+    return booking.assignedUserId
   },
 
   //Get (lead) booking by id
@@ -267,12 +268,17 @@ export const bookingServices = {
   async addNewBooking(data: CreateNewBookingRequestType) {
     //Step1: If no existing customer, create a new customer
     let customerId = data.existingCustomerId
-    if (!customerId) {
+    if (
+      !customerId &&
+      data.newCustomerName &&
+      data.newCustomerLocationCity &&
+      data.newCustomerLocationState
+    ) {
       const newCustomer = await customerServices.addNewCustomer(
-        data.newCustomerName!,
+        data.newCustomerName,
         data.customerPhone,
-        data.newCustomerLocationCity!,
-        data.newCustomerLocationState!,
+        data.newCustomerLocationCity,
+        data.newCustomerLocationState,
         data.agencyId,
         data.userId,
       )
@@ -371,49 +377,79 @@ export const bookingServices = {
     return updatedBooking[0]
   },
 
-  //Start booking to in progress
+  //Start booking to mark it in progress
   async changeBookingToInProgress(
     bookingId: string,
     driverId: string,
     vehicleId: string,
   ) {
-    const booking = await bookingRepository.updateStatus(
+    //Check if the booking is confirmed
+    const bookingStatus = await this.findBookingStatusById(bookingId)
+    if (
+      !bookingStatus ||
+      bookingStatus.status !== BookingStatusEnum.CONFIRMED
+    ) {
+      return
+    }
+    //Check if the driver is available
+    const driverStatus = await driverRepository.readDriverById(driverId)
+    if (!driverStatus || driverStatus.status !== DriverStatusEnum.AVAILABLE) {
+      return
+    }
+    //Check if the vehicle is available
+    const vehicleStatus = await vehicleRepository.readVehicleById(vehicleId)
+    if (
+      !vehicleStatus ||
+      vehicleStatus.status !== VehicleStatusEnum.AVAILABLE
+    ) {
+      return
+    }
+
+    //Atomic transaction to change booking to in progress and driver, vehicle to on trip
+    const booking = await bookingRepository.startBookingTransaction(
       bookingId,
-      BookingStatusEnum.IN_PROGRESS,
-    )
-    const driver = await driverRepository.updateStatus(
       driverId,
-      DriverStatusEnum.ON_TRIP,
-    )
-    const vehicle = await vehicleRepository.updateStatus(
       vehicleId,
-      VehicleStatusEnum.ON_TRIP,
     )
-    if (!booking[0] || !driver[0] || !vehicle[0]) {
+
+    if (!booking[0] || booking[0].status !== BookingStatusEnum.IN_PROGRESS) {
       return
     }
     return booking[0]
   },
 
-  //End booking to completed
+  //End booking to mark it completed
   async changeBookingToCompleted(
     bookingId: string,
     driverId: string,
     vehicleId: string,
   ) {
-    const booking = await bookingRepository.updateStatus(
+    //Check if the booking is in progress
+    const bookingStatus = await this.findBookingStatusById(bookingId)
+    if (
+      !bookingStatus ||
+      bookingStatus.status !== BookingStatusEnum.IN_PROGRESS
+    ) {
+      return
+    }
+    //Check if the driver is on trip
+    const driverStatus = await driverRepository.readDriverById(driverId)
+    if (!driverStatus || driverStatus.status !== DriverStatusEnum.ON_TRIP) {
+      return
+    }
+    //Check if the vehicle is on trip
+    const vehicleStatus = await vehicleRepository.readVehicleById(vehicleId)
+    if (!vehicleStatus || vehicleStatus.status !== VehicleStatusEnum.ON_TRIP) {
+      return
+    }
+
+    //Atomic transaction to change booking to completed and driver, vehicle to available
+    const booking = await bookingRepository.completeBookingTransaction(
       bookingId,
-      BookingStatusEnum.COMPLETED,
-    )
-    const driver = await driverRepository.updateStatus(
       driverId,
-      DriverStatusEnum.AVAILABLE,
-    )
-    const vehicle = await vehicleRepository.updateStatus(
       vehicleId,
-      VehicleStatusEnum.AVAILABLE,
     )
-    if (!booking[0] || !driver[0] || !vehicle[0]) {
+    if (!booking[0] || booking[0].status !== BookingStatusEnum.COMPLETED) {
       return
     }
     return booking[0]

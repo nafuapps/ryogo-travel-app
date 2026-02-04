@@ -8,7 +8,7 @@ import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 
-export default async function BookingDetailsPage({
+export default async function BookingTransactionsPage({
   params,
 }: {
   params: Promise<{ id: string }>
@@ -32,10 +32,10 @@ export default async function BookingDetailsPage({
         bookingId={id}
         bookingTransactions={bookingTransactions}
         canCreateTransaction={
-          currentUser.userRole == UserRolesEnum.OWNER ||
-          currentUser.userId == assignedUserId
+          currentUser.userRole === UserRolesEnum.OWNER ||
+          currentUser.userId === assignedUserId
         }
-        isOwner={currentUser.userRole == UserRolesEnum.OWNER}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </div>
   )

@@ -34,7 +34,7 @@ export function AddDriverConfirm(props: {
     const newDriverData: AddDriverRequestType = {
       agencyId: props.finalData.agencyId,
       ownerId:
-        props.userStatus == UserStatusEnum.NEW ? props.ownerId : undefined,
+        props.userStatus === UserStatusEnum.NEW ? props.ownerId : undefined,
       data: {
         name: props.finalData.data.name,
         email: props.finalData.data.email,
@@ -43,7 +43,7 @@ export function AddDriverConfirm(props: {
         canDriveVehicleTypes: props.finalData.data.canDriveVehicleTypes,
         defaultAllowancePerDay: props.finalData.data.defaultAllowancePerDay,
         licenseNumber: props.finalData.data.licenseNumber,
-        licenseExpiresOn: props.finalData.data.licenseExpiresOn!,
+        licenseExpiresOn: props.finalData.data.licenseExpiresOn,
         licensePhotos: props.finalData.data.licensePhotos,
         userPhotos: props.finalData.data.userPhotos,
       },

@@ -21,7 +21,7 @@ export default async function UserActivityPage({
     redirect("/dashboard/users", RedirectType.replace)
   }
 
-  if (user.userRole == UserRolesEnum.DRIVER) {
+  if (user.userRole === UserRolesEnum.DRIVER) {
     const driver = await driverServices.findDriverByUserId(user.id)
     if (!driver) {
       redirect("/dashboard/users", RedirectType.replace)

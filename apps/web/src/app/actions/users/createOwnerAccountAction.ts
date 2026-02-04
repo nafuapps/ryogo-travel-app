@@ -32,8 +32,7 @@ export async function createOwnerAccountAction(
       photo,
       generateUserPhotoPathName(user.userId, photo),
     )
-    const url = uploadedPhoto!.path
-    await userServices.updateUserPhoto(user.userId, url)
+    await userServices.updateUserPhoto(user.userId, uploadedPhoto.path)
   }
 
   //Send new password email to the agent

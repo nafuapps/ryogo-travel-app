@@ -49,13 +49,15 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
       .min(1, t("Field1.Error2"))
       .max(50, t("Field1.Error3"))
       .positive(t("Field1.Error4"))
-      .multipleOf(1, t("Field1.Error5")),
+      .multipleOf(1, t("Field1.Error5"))
+      .nonoptional(),
     selectedAllowancePerDay: z.coerce
       .number<number>(t("Field2.Error1"))
       .min(0, t("Field2.Error2"))
       .max(10000, t("Field2.Error3"))
       .nonnegative(t("Field2.Error4"))
-      .multipleOf(1, t("Field2.Error5")),
+      .multipleOf(1, t("Field2.Error5"))
+      .nonoptional(),
     selectedAcChargePerDay: z.coerce
       .number<number>(t("Field3.Error1"))
       .min(0, t("Field3.Error2"))
@@ -68,13 +70,15 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
       .min(0, t("Field4.Error2"))
       .max(100, t("Field4.Error3"))
       .nonnegative(t("Field4.Error4"))
-      .multipleOf(1, t("Field4.Error5")),
+      .multipleOf(1, t("Field4.Error5"))
+      .nonoptional(),
     selectedDistance: z.coerce
       .number<number>(t("Field5.Error1"))
       .min(1, t("Field5.Error2"))
       .max(3000, t("Field5.Error3"))
       .positive(t("Field5.Error4"))
-      .multipleOf(1, t("Field5.Error5")),
+      .multipleOf(1, t("Field5.Error5"))
+      .nonoptional(),
   })
 
   type Step4Type = z.infer<typeof step4Schema>

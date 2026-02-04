@@ -55,7 +55,7 @@ export default function ModifyVehiclePageComponent({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field8.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -80,7 +80,7 @@ export default function ModifyVehiclePageComponent({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field10.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -93,7 +93,7 @@ export default function ModifyVehiclePageComponent({
             "image/bmp",
             "image/webp",
             "application/pdf",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field10.Error3"))
       .optional(),
@@ -105,7 +105,7 @@ export default function ModifyVehiclePageComponent({
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0]!.size < 1000000
+        return file[0] && file[0].size < 1000000
       }, t("Field12.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
@@ -118,7 +118,7 @@ export default function ModifyVehiclePageComponent({
             "image/bmp",
             "image/webp",
             "application/pdf",
-          ].includes(file[0]!.type)
+          ].includes(file[0].type)
         )
       }, t("Field12.Error3"))
       .optional(),

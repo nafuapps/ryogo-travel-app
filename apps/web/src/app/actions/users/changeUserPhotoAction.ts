@@ -11,7 +11,7 @@ export async function changeUserPhotoAction(userId: string, photo: FileList) {
       file,
       generateUserPhotoPathName(userId, file),
     )
-    const url = uploadedPhoto!.path
+    const url = uploadedPhoto.path
     const user = await userServices.updateUserPhoto(userId, url)
 
     if (!user) return false

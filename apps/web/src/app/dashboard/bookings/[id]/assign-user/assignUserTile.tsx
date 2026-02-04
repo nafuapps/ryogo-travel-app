@@ -41,25 +41,27 @@ export default function AssignUserTile({
 }: AssignUserTileProps) {
   const t = useTranslations("Dashboard.AssignUser.Tile")
 
-  const isCurrentlyAssigned = booking.assignedUserId == userData.id
+  const isCurrentlyAssigned = booking.assignedUserId === userData.id
 
   const bookingStartDate = new Date(booking.startDate)
   const bookingEndDate = new Date(booking.endDate)
 
   const bookingOverLapScores = userData.bookingsAssigned
-    .filter((b) => b.id != booking.id)
+    .filter((b) => b.id !== booking.id)
     .map((other) => {
       return getOverlapScore(
         new Date(other.startDate),
         new Date(other.endDate),
         bookingStartDate,
-        bookingEndDate
+        bookingEndDate,
       )
     })
-  const isBooked = bookingOverLapScores.some((score) => score == NoOverlapScore)
+  const isBooked = bookingOverLapScores.some(
+    (score) => score === NoOverlapScore,
+  )
 
   const bookingScore =
-    bookingOverLapScores.length == 0
+    bookingOverLapScores.length === 0
       ? 100
       : bookingOverLapScores.reduce((a, b) => a + b, 0) /
         bookingOverLapScores.length
@@ -76,9 +78,9 @@ export default function AssignUserTile({
 
   return (
     <div
-      className={getTileClassName(selectedUserId == userData.id)}
+      className={getTileClassName(selectedUserId === userData.id)}
       onClick={() =>
-        setSelectedUserId(selectedUserId == userData.id ? null : userData.id)
+        setSelectedUserId(selectedUserId === userData.id ? null : userData.id)
       }
     >
       <div className={tileLeftClassName}>
@@ -112,8 +114,8 @@ export default function AssignUserTile({
             {isCurrentlyAssigned
               ? t("CurrentlyAssigned")
               : isBooked
-              ? t("Booked")
-              : t("Available")}
+                ? t("Booked")
+                : t("Available")}
           </Caption>
         </div>
       </div>

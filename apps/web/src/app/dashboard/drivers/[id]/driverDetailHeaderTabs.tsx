@@ -26,7 +26,7 @@ export default async function DriverDetailHeaderTabs(
         <Link href={links[tab]} key={tab}>
           <div
             className={`flex items-center rounded justify-center px-2 py-1 lg:px-3 lg:py-1.5 ${
-              props.selectedTab == tab ? "bg-white shadow" : ""
+              props.selectedTab === tab ? "bg-white shadow" : ""
             }`}
           >
             <Small>{t(tab)}</Small>

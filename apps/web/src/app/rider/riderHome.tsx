@@ -20,7 +20,7 @@ export default async function RiderHomePageComponent({
   driver,
 }: {
   assignedBookings: FindDriverAssignedBookingsByIdType
-  driver: FindDriverByUserIdType
+  driver: NonNullable<FindDriverByUserIdType>
 }) {
   const t = await getTranslations("Rider.Home")
   //Get in progress booking (if any)
@@ -36,7 +36,7 @@ export default async function RiderHomePageComponent({
 
   return (
     <div id="RiderHomePage" className={pageClassName}>
-      {assignedBookings.length == 0 ? (
+      {assignedBookings.length === 0 ? (
         <div className="flex flex-col items-center">
           <SmallGrey>{t("NoBooking")}</SmallGrey>
         </div>
@@ -54,10 +54,10 @@ export default async function RiderHomePageComponent({
                     key={b.bookingId}
                     booking={b}
                     canStart={
-                      driver?.status == DriverStatusEnum.AVAILABLE &&
+                      driver.status === DriverStatusEnum.AVAILABLE &&
                       !currentBooking &&
                       b.startDate <= new Date() &&
-                      i == 0
+                      i === 0
                     }
                   />
                 )

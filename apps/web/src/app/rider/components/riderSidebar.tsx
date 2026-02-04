@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Sidebar,
@@ -6,20 +6,20 @@ import {
   SidebarFooter,
   SidebarHeader,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { useTranslations } from "next-intl";
-import { House, Tickets, Car, UserRoundPen } from "lucide-react";
-import { MenuButton } from "@/components/sidebar/sidebarMenuButton";
-import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem";
-import { MenuItemType } from "@/components/sidebar/sidebarCommon";
-import { usePathname } from "next/navigation";
+} from "@/components/ui/sidebar"
+import { useTranslations } from "next-intl"
+import { House, Tickets, Car, UserRoundPen } from "lucide-react"
+import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
+import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem"
+import { MenuItemType } from "@/components/sidebar/sidebarCommon"
+import { usePathname } from "next/navigation"
 
 export default function RiderSidebar() {
-  const { isMobile, open, openMobile } = useSidebar();
-  const t = useTranslations("Rider.Sidebar");
-  const pathname = usePathname();
+  const { isMobile, open, openMobile } = useSidebar()
+  const t = useTranslations("Rider.Sidebar")
+  const pathname = usePathname()
 
-  const sidebarOpen = open || openMobile;
+  const sidebarOpen = open || openMobile
 
   // Content Menu items
   const contentItems: MenuItemType = [
@@ -38,7 +38,7 @@ export default function RiderSidebar() {
       url: "/rider/myVehicle",
       icon: Car,
     },
-  ];
+  ]
 
   //Footer menu items
   const footerItems: MenuItemType = [
@@ -47,7 +47,7 @@ export default function RiderSidebar() {
       url: "/rider/myProfile",
       icon: UserRoundPen,
     },
-  ];
+  ]
 
   return (
     <Sidebar
@@ -68,7 +68,7 @@ export default function RiderSidebar() {
             key={item.title}
             {...item}
             open={sidebarOpen}
-            active={pathname == item.url}
+            active={pathname === item.url}
           />
         ))}
       </SidebarContent>
@@ -78,10 +78,10 @@ export default function RiderSidebar() {
             key={item.title}
             {...item}
             open={sidebarOpen}
-            active={pathname == item.url}
+            active={pathname === item.url}
           />
         ))}
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }

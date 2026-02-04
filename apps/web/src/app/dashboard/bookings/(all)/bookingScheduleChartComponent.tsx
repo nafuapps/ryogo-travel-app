@@ -52,8 +52,8 @@ export default function BookingScheduleChartComponent({
       b.startDate <= new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000),
   )
 
-  const chartData = selectedTab == "7Days" ? bookings7Days : bookings14Days
-  const selectedDays: number = selectedTab == "7Days" ? 7 : 14
+  const chartData = selectedTab === "7Days" ? bookings7Days : bookings14Days
+  const selectedDays: number = selectedTab === "7Days" ? 7 : 14
   const chartStartDate = new Date()
 
   return (
@@ -89,7 +89,7 @@ export default function BookingScheduleChartComponent({
         <div
           id="BookingScheduleChartDayAxis"
           className={`grid shrink-0 sm:w-full grid-cols-1 sm:grid-rows-1 divide-y sm:divide-x sm:divide-y-0 divide-slate-200 gap-1 lg:gap-1.5 ${
-            selectedDays == 7
+            selectedDays === 7
               ? "grid-rows-7 sm:grid-cols-7"
               : "grid-rows-14 sm:grid-cols-14"
           }`}
@@ -148,7 +148,7 @@ export default function BookingScheduleChartComponent({
                   <div
                     key={index}
                     className={`flex flex-row p-1 lg:p-1.5 ${
-                      booking.status == BookingStatusEnum.IN_PROGRESS
+                      booking.status === BookingStatusEnum.IN_PROGRESS
                         ? "bg-green-200 hover:bg-green-300"
                         : isVehicleAssigned && isDriverAssigned
                           ? "bg-slate-200 hover:bg-slate-300"
@@ -186,7 +186,7 @@ export default function BookingScheduleChartComponent({
                       } as React.CSSProperties
                     }
                   >
-                    <Caption>{chartData[index]!.bookingId}</Caption>
+                    <Caption>{booking.bookingId}</Caption>
                   </div>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto">

@@ -54,7 +54,7 @@ export default function NewBookingVehicleTile({
       new Date(booking.startDate),
       new Date(booking.endDate),
       newBookingFormData.tripStartDate,
-      newBookingFormData.tripEndDate
+      newBookingFormData.tripEndDate,
     )
   })
   const repairOverLapScores = vehicleData.vehicleRepairs.map((repair) => {
@@ -62,48 +62,50 @@ export default function NewBookingVehicleTile({
       new Date(repair.startDate),
       new Date(repair.endDate),
       newBookingFormData.tripStartDate,
-      newBookingFormData.tripEndDate
+      newBookingFormData.tripEndDate,
     )
   })
 
-  const isBooked = bookingOverLapScores.some((score) => score != NoOverlapScore)
+  const isBooked = bookingOverLapScores.some(
+    (score) => score !== NoOverlapScore,
+  )
 
   const isRepairScheduled = repairOverLapScores.some(
-    (score) => score != NoOverlapScore
+    (score) => score !== NoOverlapScore,
   )
 
   const bookingScore =
-    bookingOverLapScores.length == 0
+    bookingOverLapScores.length === 0
       ? 100
       : bookingOverLapScores.reduce((a, b) => a + b, 0) /
         bookingOverLapScores.length
 
   const repairScore =
-    repairOverLapScores.length == 0
+    repairOverLapScores.length === 0
       ? 100
       : repairOverLapScores.reduce((a, b) => a + b, 0) /
         repairOverLapScores.length
 
   const capacityScore = getCapacityScore(
     vehicleData.capacity,
-    newBookingFormData.tripPassengers
+    newBookingFormData.tripPassengers,
   )
 
   const statusScore = getVehicleStatusScore(vehicleData.status)
 
   const insuranceScore = getExpiryScore(
     newBookingFormData.tripEndDate,
-    vehicleData.insuranceExpiresOn
+    vehicleData.insuranceExpiresOn,
   )
   const pucScore = getExpiryScore(
     newBookingFormData.tripEndDate,
-    vehicleData.pucExpiresOn
+    vehicleData.pucExpiresOn,
   )
   const odometerScore = getOdometerScore(vehicleData.odometerReading)
 
   const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm)
 
-  const acScore = vehicleData.hasAC == newBookingFormData.tripNeedsAC ? 4 : 1
+  const acScore = vehicleData.hasAC === newBookingFormData.tripNeedsAC ? 4 : 1
 
   const totalScore = getVehicleTotalScore({
     bookingScore,
@@ -119,11 +121,13 @@ export default function NewBookingVehicleTile({
 
   return (
     <div
-      className={getTileClassName(assignedVehicleIdWatch == vehicleData.id)}
+      className={getTileClassName(assignedVehicleIdWatch === vehicleData.id)}
       onClick={() =>
         setValue(
           "assignedVehicleId",
-          assignedVehicleIdWatch == vehicleData.id ? undefined : vehicleData.id
+          assignedVehicleIdWatch === vehicleData.id
+            ? undefined
+            : vehicleData.id,
         )
       }
     >
@@ -169,8 +173,8 @@ export default function NewBookingVehicleTile({
             {isBooked
               ? t("Booked")
               : isRepairScheduled
-              ? t("RepairScheduled")
-              : t("Available")}
+                ? t("RepairScheduled")
+                : t("Available")}
           </Caption>
         </div>
       </div>

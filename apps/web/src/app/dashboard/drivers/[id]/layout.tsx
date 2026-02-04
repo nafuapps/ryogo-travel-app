@@ -28,7 +28,7 @@ export default async function DriverDetailsLayout({
   if (
     !driver ||
     driver.agencyId !== user.agencyId ||
-    driver?.status == DriverStatusEnum.SUSPENDED
+    driver.status === DriverStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/drivers", RedirectType.replace)
   }

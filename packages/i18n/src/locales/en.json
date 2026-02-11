@@ -674,6 +674,7 @@
       "Customers": "Customers",
       "Users": "Users",
       "Analytics": "Analytics",
+      "Search": "Search",
       "Account": "Account"
     },
     "Header": {
@@ -722,6 +723,7 @@
         "/dashboard/drivers/[id]/leaves": "Driver Leaves",
         "/dashboard/drivers/[id]/leaves/new": "New Leave",
         "/dashboard/drivers/[id]/leaves/modify": "Modify Leave",
+        "/dashboard/search": "Search",
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New User",
         "/dashboard/users/[id]": "User Details",
@@ -2096,7 +2098,8 @@
         "Title": "All Customers",
         "AddCustomer": "Add customer",
         "Photo": "View customer photo",
-        "Search": "Search.."
+        "Search": "Search",
+        "Type":"Type to search"
       }
     },
     "NewCustomer": {
@@ -2498,6 +2501,15 @@
       "TripLogs": "Trip Logs",
       "Completed": "COMPLETED",
       "Pending": "PENDING"
+    },
+    "Search":{
+      "Field1":{
+        "Placeholder":"Enter keyword or id to search..",
+        "Error1":"Enter atleast 3 characters to search",
+        "Error2":"Enter less than 20 characters for search"
+      },
+      "Clear":"Clear",
+      "Search":"Search"
     },
     "Buttons": {
       "CancelBooking": {

@@ -37,7 +37,7 @@ export default async function AddAgentPage() {
   }
 
   //Check for Onboarding flow
-  const agencyData = await agencyServices.getAgencyData(currentUser.agencyId)
+  const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
   if (agencyData.vehicles.length < 1) {
     redirect("/onboarding/add-vehicle", RedirectType.replace)
   }

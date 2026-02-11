@@ -13,6 +13,18 @@ import {
 import { eq, and, or, gte, lte, inArray } from "drizzle-orm"
 
 export const bookingRepository = {
+  async readAllBookingsByAgencyId(agencyId: string, queryStartDate: Date) {
+    return await db
+      .select()
+      .from(bookings)
+      .where(
+        and(
+          gte(bookings.createdAt, queryStartDate),
+          eq(bookings.agencyId, agencyId),
+        ),
+      )
+  },
+
   async readBookingsByStatusCreatedDateRange(
     agencyId: string,
     queryStartDate: Date,

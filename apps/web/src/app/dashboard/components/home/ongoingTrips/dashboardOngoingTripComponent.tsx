@@ -19,7 +19,7 @@ export default function DashboardOngoingTripComponent(
       <div className="flex flex-row gap-3 hover:bg-slate-100 lg:gap-4 w-full justify-between border-2 border-slate-100 rounded-lg p-4 lg:p-5">
         <div className="flex flex-col justify-start gap-4 lg:gap-5 items-start">
           <div className="flex flex-col gap-1 item-start">
-            <CaptionBold>{props.type}</CaptionBold>
+            <CaptionBold>{props.type.toUpperCase()}</CaptionBold>
             <H4>{props.route.toUpperCase()}</H4>
           </div>
           <div className="flex flex-col gap-1 items-start">

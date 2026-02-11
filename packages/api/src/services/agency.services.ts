@@ -4,10 +4,11 @@ import { locationRepository } from "../repositories/location.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
+import { bookingRepository } from "../repositories/booking.repo"
+import { customerRepository } from "../repositories/customer.repo"
 
 export const agencyServices = {
   //Find all agencies
-
   async findAllAgencies() {
     const agencies = agencyRepository.readAllAgencies()
     return agencies
@@ -32,7 +33,7 @@ export const agencyServices = {
   },
 
   //Get agency data (vehicles, drivers, agents)
-  async getAgencyData(agencyId: string) {
+  async findAgencyData(agencyId: string) {
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
     const agents = await userRepository.readUserByRolesAgencyId(agencyId, [
@@ -49,6 +50,30 @@ export const agencyServices = {
       agents: agents.map((agent) => {
         return { id: agent.id }
       }),
+    }
+  },
+
+  async findAgencySearchData(agencyId: string) {
+    const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
+    const drivers = await driverRepository.readDriversByAgencyId(agencyId)
+    const agents = await userRepository.readUserByRolesAgencyId(agencyId, [
+      UserRolesEnum.AGENT,
+    ])
+
+    const startDate = new Date(new Date().getTime() - 60 * 24 * 60 * 60 * 1000)
+    const bookings = await bookingRepository.readAllBookingsByAgencyId(
+      agencyId,
+      startDate,
+    )
+    const customers =
+      await customerRepository.readAllCustomersByAgencyId(agencyId)
+
+    return {
+      vehicles,
+      drivers,
+      agents,
+      customers,
+      bookings,
     }
   },
 
@@ -135,4 +160,12 @@ export type FindAgenciesByPhoneType = Awaited<
 
 export type FindAgenciesByEmailType = Awaited<
   ReturnType<typeof agencyServices.findAgenciesByEmail>
+>
+
+export type FindAgencyDataType = Awaited<
+  ReturnType<typeof agencyServices.findAgencyData>
+>
+
+export type FindAgencySearchDataType = Awaited<
+  ReturnType<typeof agencyServices.findAgencySearchData>
 >

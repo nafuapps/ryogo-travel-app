@@ -9,14 +9,15 @@ import {
 } from "@/components/ui/sidebar"
 import { useTranslations } from "next-intl"
 import {
-  House,
-  Tickets,
-  Car,
-  IdCard,
-  ChartLine,
-  ShieldUser,
-  BadgeIndianRupee,
-  UserRoundPen,
+  LucideHouse,
+  LucideTickets,
+  LucideCar,
+  LucideIdCard,
+  LucideChartLine,
+  LucideShieldUser,
+  LucideBadgeIndianRupee,
+  LucideUserRoundPen,
+  LucideSearch,
 } from "lucide-react"
 import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
 import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem"
@@ -35,43 +36,43 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
     {
       title: t("Home"),
       url: "/dashboard",
-      icon: House,
+      icon: LucideHouse,
       onlyOwner: false,
     },
     {
       title: t("Bookings"),
       url: "/dashboard/bookings",
-      icon: Tickets,
+      icon: LucideTickets,
       onlyOwner: false,
     },
     {
       title: t("Vehicles"),
       url: "/dashboard/vehicles",
-      icon: Car,
+      icon: LucideCar,
       onlyOwner: false,
     },
     {
       title: t("Drivers"),
       url: "/dashboard/drivers",
-      icon: IdCard,
+      icon: LucideIdCard,
       onlyOwner: false,
     },
     {
       title: t("Customers"),
       url: "/dashboard/customers",
-      icon: BadgeIndianRupee,
+      icon: LucideBadgeIndianRupee,
       onlyOwner: false,
     },
     {
       title: t("Users"),
       url: "/dashboard/users",
-      icon: ShieldUser,
+      icon: LucideShieldUser,
       onlyOwner: true,
     },
     {
       title: t("Analytics"),
       url: "/dashboard/analytics",
-      icon: ChartLine,
+      icon: LucideChartLine,
       onlyOwner: true,
     },
   ]
@@ -79,9 +80,15 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
   //Footer menu items
   const footerItems: MenuItemType = [
     {
+      title: t("Search"),
+      url: "/dashboard/search",
+      icon: LucideSearch,
+      onlyOwner: false,
+    },
+    {
       title: t("Account"),
       url: "/dashboard/account",
-      icon: UserRoundPen,
+      icon: LucideUserRoundPen,
       onlyOwner: false,
     },
   ]

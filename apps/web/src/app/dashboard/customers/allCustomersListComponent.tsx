@@ -73,7 +73,7 @@ export default function AllCustomersListComponent({
         <ButtonGroup>
           <Input
             id="input-button-group"
-            placeholder="Type to search..."
+            placeholder={t("Type")}
             value={searchTerm}
             onChange={(e) => {
               if (e.target.value === "") {

@@ -7,7 +7,7 @@ import {
 import { eq, inArray, and } from "drizzle-orm"
 
 export const customerRepository = {
-  async findAllCustomersByAgencyId(agencyId: string) {
+  async readAllCustomersByAgencyId(agencyId: string) {
     return await db.query.customers.findMany({
       where: and(
         eq(customers.agencyId, agencyId),
@@ -27,13 +27,13 @@ export const customerRepository = {
     })
   },
 
-  async findCustomerByPhoneInAgency(phone: string, agencyId: string) {
+  async readCustomerByPhoneInAgency(phone: string, agencyId: string) {
     return await db.query.customers.findMany({
       where: and(eq(customers.phone, phone), eq(customers.agencyId, agencyId)),
     })
   },
 
-  async findCustomerById(id: string) {
+  async readCustomerById(id: string) {
     return await db.query.customers.findFirst({
       where: and(
         eq(customers.id, id),

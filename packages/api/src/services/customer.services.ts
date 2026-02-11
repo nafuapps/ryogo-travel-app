@@ -9,12 +9,12 @@ import { locationRepository } from "../repositories/location.repo"
 export const customerServices = {
   async findCustomersInAgency(agencyId: string) {
     const customers =
-      await customerRepository.findAllCustomersByAgencyId(agencyId)
+      await customerRepository.readAllCustomersByAgencyId(agencyId)
     return customers
   },
 
   async findCustomerDetailsById(customerId: string) {
-    const customer = await customerRepository.findCustomerById(customerId)
+    const customer = await customerRepository.readCustomerById(customerId)
     return customer
   },
 
@@ -72,7 +72,7 @@ export const customerServices = {
   ) {
     //Check if a customer with same phone already exists in this agency
     const existingCustomer =
-      await customerRepository.findCustomerByPhoneInAgency(phone, agencyId)
+      await customerRepository.readCustomerByPhoneInAgency(phone, agencyId)
     if (existingCustomer.length > 0) {
       return
     }

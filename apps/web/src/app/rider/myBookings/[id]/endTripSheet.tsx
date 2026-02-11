@@ -78,6 +78,13 @@ export default function EndTripSheet({
     resolver: zodResolver(schema),
   })
 
+  if (!booking.assignedDriverId || !booking.assignedVehicleId) {
+    router.replace("/rider/myBookings")
+    return
+  }
+  const vehicleId = booking.assignedVehicleId
+  const driverId = booking.assignedDriverId
+
   const onSubmit = async (data: SchemaType) => {
     //TODO: Get lat long of the device
     startTransition(async () => {
@@ -85,8 +92,8 @@ export default function EndTripSheet({
         await endTripAction({
           agencyId: booking.agencyId,
           bookingId: booking.id,
-          driverId: booking.assignedDriverId!,
-          vehicleId: booking.assignedVehicleId!,
+          driverId: driverId,
+          vehicleId: vehicleId,
           odometerReading: data.odometerReading,
           remarks: data.remarks,
           tripLogPhoto: data.tripLogPhoto,

@@ -21,22 +21,27 @@ import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 import { resetUserPasswordAction } from "@/app/actions/users/resetUserPasswordAction"
+import { useTransition } from "react"
 
 export default function ConfirmEmailPageComponent({
   userId,
+  agencyId,
   currentEmail,
 }: {
   userId: string
+  agencyId: string
   currentEmail: string
 }) {
   const t = useTranslations("Auth.ForgotPasswordPage.Step2")
+
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
   const formSchema = z.object({
     email: z.email(t("Error1")),
   })
 
   type FormFields = z.infer<typeof formSchema>
-
-  const router = useRouter()
   // For managing form data and validation
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
@@ -47,15 +52,14 @@ export default function ConfirmEmailPageComponent({
     if (data.email !== currentEmail) {
       methods.setError("email", { type: "manual", message: t("APIError") })
     }
-    // Try Reset password
-    const resetSuccess = await resetUserPasswordAction(userId)
-    if (resetSuccess) {
-      //Redirect to success page
-      toast.success(t("Success"))
-    } else {
-      toast.error(t("Error"))
-    }
-    router.replace("/auth/login")
+    startTransition(async () => {
+      if (await resetUserPasswordAction(userId, agencyId)) {
+        toast.success(t("Success"))
+      } else {
+        toast.error(t("Error"))
+      }
+      router.replace("/auth/login")
+    })
   }
 
   return (
@@ -89,13 +93,9 @@ export default function ConfirmEmailPageComponent({
             )}
           />
           <div id="ConfirmEmailActions" className="flex flex-col gap-4 w-full">
-            <Button
-              variant={"default"}
-              size={"lg"}
-              disabled={methods.formState.isSubmitting}
-            >
-              {methods.formState.isSubmitting && <Spinner />}
-              {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            <Button variant={"default"} size={"lg"} disabled={isPending}>
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
             </Button>
             <Button
               variant={"secondary"}

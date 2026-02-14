@@ -11,8 +11,10 @@ import { resetUserPasswordAction } from "@/app/actions/users/resetUserPasswordAc
 
 export default function ResetUserPasswordAlertButton({
   userId,
+  agencyId,
 }: {
   userId: string
+  agencyId: string
 }) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.ResetUserPassword")
@@ -20,7 +22,7 @@ export default function ResetUserPasswordAlertButton({
 
   const reset = async () => {
     startTransition(async () => {
-      if (await resetUserPasswordAction(userId)) {
+      if (await resetUserPasswordAction(userId, agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

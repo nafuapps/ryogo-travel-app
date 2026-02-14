@@ -12,6 +12,7 @@ import { activateDriverAction } from "@/app/actions/drivers/activateDriverAction
 type ActivateDriverAlertButtonProps = {
   driverId: string
   userId: string
+  agencyId: string
 }
 export default function ActivateDriverAlertButton(
   props: ActivateDriverAlertButtonProps,
@@ -22,7 +23,9 @@ export default function ActivateDriverAlertButton(
 
   async function activate() {
     startTransition(async () => {
-      if (await activateDriverAction(props.driverId, props.userId)) {
+      if (
+        await activateDriverAction(props.driverId, props.userId, props.agencyId)
+      ) {
         toast.success(t("Success"))
         router.refresh()
       } else {

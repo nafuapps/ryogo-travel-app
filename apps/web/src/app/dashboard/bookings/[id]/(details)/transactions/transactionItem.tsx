@@ -84,6 +84,7 @@ export default async function TransactionItem({
               <TransactionApprovalButton
                 txnId={txnId}
                 isApproved={transaction.isApproved}
+                agencyId={transaction.agencyId}
               />
             )}
             {canModifyTransaction && (

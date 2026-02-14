@@ -35,7 +35,7 @@ export default async function ModifyTransactionPage({
   if (
     !transactionDetails ||
     (user.userRole !== UserRolesEnum.OWNER &&
-      user.userId !== bookingDetails.assignedUser.id)
+      user.userId !== bookingDetails.assignedUserId)
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
@@ -46,7 +46,10 @@ export default async function ModifyTransactionPage({
       <DashboardHeader
         pathName={"/dashboard/bookings/[id]/transactions/modify"}
       />
-      <ModifyTransactionPageComponent transactionDetails={transactionDetails} />
+      <ModifyTransactionPageComponent
+        transactionDetails={transactionDetails}
+        assignedUserId={bookingDetails.assignedUserId}
+      />
     </div>
   )
 }

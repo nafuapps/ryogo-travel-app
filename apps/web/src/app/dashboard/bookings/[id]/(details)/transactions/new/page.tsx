@@ -25,7 +25,7 @@ export default async function NewTransactionPage({
   //Only owner or assigned user can add transactions
   if (
     user.userRole !== UserRolesEnum.OWNER &&
-    user.userId !== bookingDetails.assignedUser.id
+    user.userId !== bookingDetails.assignedUserId
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
@@ -38,6 +38,7 @@ export default async function NewTransactionPage({
         bookingId={id}
         userId={user.userId}
         agencyId={user.agencyId}
+        assignedUserId={bookingDetails.assignedUserId}
       />
     </div>
   )

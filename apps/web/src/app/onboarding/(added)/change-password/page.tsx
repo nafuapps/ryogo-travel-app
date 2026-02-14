@@ -38,6 +38,7 @@ export default async function ChangePasswordPage() {
     <ChangePasswordPageComponent
       userId={currentUser.userId}
       role={currentUser.userRole}
+      agencyId={currentUser.agencyId}
     />
   )
 }

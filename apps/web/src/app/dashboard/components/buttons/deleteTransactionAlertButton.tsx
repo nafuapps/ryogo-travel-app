@@ -12,19 +12,27 @@ import BookingAlertDialog from "./bookingAlertDialog"
 type DeleteTransactionAlertButtonProps = {
   bookingId: string
   transactionId: string
+  agencyId: string
+  assignedUserId: string
 }
 export default function DeleteTransactionAlertButton(
   props: DeleteTransactionAlertButtonProps,
 ) {
-  const [isCancelPending, startCancelTransition] = useTransition()
+  const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteTransaction")
   const router = useRouter()
 
   //Delete transaction
   async function deleteTransaction() {
-    startCancelTransition(async () => {
+    startTransition(async () => {
       //If delete is successful, show delete success message and redirect to transactions
-      if (await deleteTransactionAction(props.transactionId)) {
+      if (
+        await deleteTransactionAction(
+          props.transactionId,
+          props.agencyId,
+          props.assignedUserId,
+        )
+      ) {
         toast.success(t("Success"))
         router.replace(`/dashboard/bookings/${props.bookingId}/transactions`)
       } else {
@@ -44,10 +52,10 @@ export default function DeleteTransactionAlertButton(
       <Button
         variant={"destructive"}
         onClick={deleteTransaction}
-        disabled={isCancelPending}
+        disabled={isPending}
       >
-        {isCancelPending && <Spinner />}
-        {isCancelPending ? t("Loading") : t("YesCTA")}
+        {isPending && <Spinner />}
+        {isPending ? t("Loading") : t("YesCTA")}
       </Button>
     </BookingAlertDialog>
   )

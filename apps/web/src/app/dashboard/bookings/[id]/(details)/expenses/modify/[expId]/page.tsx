@@ -35,7 +35,7 @@ export default async function ModifyExpensePage({
     !expenseDetails ||
     !bookingDetails ||
     (user.userRole !== UserRolesEnum.OWNER &&
-      user.userId !== bookingDetails.assignedUser.id)
+      user.userId !== bookingDetails.assignedUserId)
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
@@ -44,7 +44,10 @@ export default async function ModifyExpensePage({
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses/modify"} />
-      <ModifyExpensePageComponent expenseDetails={expenseDetails} />
+      <ModifyExpensePageComponent
+        expenseDetails={expenseDetails}
+        assignedUserId={bookingDetails.assignedUserId}
+      />
     </div>
   )
 }

@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { changeAgencyPhoneAction } from "@/app/actions/agencies/changeAgencyPhoneAction"
+import { useTransition } from "react"
 
 export default function ChangeAgencyPhonePageComponent({
   agency,
@@ -26,6 +27,7 @@ export default function ChangeAgencyPhonePageComponent({
 }) {
   const t = useTranslations("Dashboard.AccountAgency.ChangePhone")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyAgencySchema = z.object({
     newPhone: z.string().length(10, t("Field1.Error1")),
@@ -57,17 +59,15 @@ export default function ChangeAgencyPhonePageComponent({
         message: t("Field1.Error3"),
       })
     } else {
-      const modifiedAgency = await changeAgencyPhoneAction(
-        agency.id,
-        data.newPhone,
-      )
-      if (modifiedAgency) {
-        router.replace(`/dashboard/account/agency`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
+      startTransition(async () => {
+        if (await changeAgencyPhoneAction(agency.id, data.newPhone)) {
+          router.replace(`/dashboard/account/agency`)
+          toast.success(t("Success"))
+        } else {
+          router.back()
+          toast.error(t("Error"))
+        }
+      })
     }
   }
 
@@ -90,17 +90,17 @@ export default function ChangeAgencyPhonePageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

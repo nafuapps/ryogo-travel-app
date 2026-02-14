@@ -11,6 +11,7 @@ import { activateVehicleAction } from "@/app/actions/vehicles/activateVehicleAct
 
 type ActivateVehicleAlertButtonProps = {
   vehicleId: string
+  agencyId: string
 }
 export default function ActivateVehicleAlertButton(
   props: ActivateVehicleAlertButtonProps,
@@ -21,7 +22,7 @@ export default function ActivateVehicleAlertButton(
 
   async function activate() {
     startTransition(async () => {
-      if (await activateVehicleAction(props.vehicleId)) {
+      if (await activateVehicleAction(props.vehicleId, props.agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -23,10 +23,10 @@ export default async function NewExpensePage({
     redirect("/dashboard/bookings")
   }
 
-  //Only owner or assigned user can add expenses
+  //Only owner or assigned user can add expense
   if (
     user.userRole !== UserRolesEnum.OWNER &&
-    user.userId !== bookingDetails.assignedUser.id
+    user.userId !== bookingDetails.assignedUserId
   ) {
     console.log({ user })
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
@@ -39,6 +39,7 @@ export default async function NewExpensePage({
         bookingId={id}
         userId={user.userId}
         agencyId={user.agencyId}
+        assignedUserId={bookingDetails.assignedUserId}
       />
     </div>
   )

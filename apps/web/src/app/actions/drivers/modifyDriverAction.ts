@@ -1,12 +1,14 @@
 "use server"
 
+import { getCurrentUser } from "@/lib/auth"
 import { generateLicensePhotoPathName } from "@/lib/utils"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyDriverAction(
   id: string,
+  agencyId: string,
   data: {
     address?: string
     canDriveVehicleTypes?: VehicleTypesEnum[]
@@ -16,6 +18,17 @@ export async function modifyDriverAction(
     licensePhotos?: FileList
   },
 ) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
+      currentUser.userRole,
+    ) ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
+  }
+
   let licenseUrl
 
   // Upload files to Supabase Storage

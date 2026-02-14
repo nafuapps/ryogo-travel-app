@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "baseline-browser-mapping": "^2.9.15",
-    "turbo": "^2.8.5",
+    "turbo": "^2.8.8",
     "typescript": "^5.9.3"
   },
   "main": "index.js",

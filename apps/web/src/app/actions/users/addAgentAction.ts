@@ -2,15 +2,24 @@
 
 import { AddAgentEmailTemplate } from "@/components/email/addAgentEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
+import { getCurrentUser } from "@/lib/auth"
 import { updateSessionUserStatus } from "@/lib/session"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addAgentAction(data: AddAgentRequestType) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    currentUser.userRole !== UserRolesEnum.OWNER ||
+    currentUser.agencyId !== data.agencyId
+  ) {
+    return
+  }
   const agent = await userServices.addAgentUser(data)
   if (!agent) return
 

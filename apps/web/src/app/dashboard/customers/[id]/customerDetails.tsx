@@ -54,7 +54,10 @@ export default async function CustomerDetailsPageComponent({
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeCustomerPhotoSheet customerId={customer.id} />
+              <ChangeCustomerPhotoSheet
+                customerId={customer.id}
+                agencyId={customer.agencyId}
+              />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{customer.name}</H4>
@@ -106,10 +109,16 @@ export default async function CustomerDetailsPageComponent({
             </Button>
           </Link>
           {customer.status !== CustomerStatusEnum.INACTIVE && (
-            <InactivateCustomerAlertButton customerId={customer.id} />
+            <InactivateCustomerAlertButton
+              customerId={customer.id}
+              agencyId={customer.agencyId}
+            />
           )}
           {customer.status === CustomerStatusEnum.INACTIVE && (
-            <ActivateCustomerAlertButton customerId={customer.id} />
+            <ActivateCustomerAlertButton
+              customerId={customer.id}
+              agencyId={customer.agencyId}
+            />
           )}
         </div>
       </div>

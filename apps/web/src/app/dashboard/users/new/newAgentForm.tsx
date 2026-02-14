@@ -17,6 +17,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
+import { useTransition } from "react"
 
 export default function NewAgentForm({
   agencyId,
@@ -27,6 +28,7 @@ export default function NewAgentForm({
 }) {
   const t = useTranslations("Dashboard.NewAgent")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const newAgentSchema = z.object({
     agentName: z
@@ -86,23 +88,25 @@ export default function NewAgentForm({
         message: t("APIError2"),
       })
     } else {
-      const newAgentData: AddAgentRequestType = {
-        agencyId: agencyId,
-        data: {
-          name: values.agentName,
-          phone: values.agentPhone,
-          email: values.agentEmail,
-          photos: values.agentPhotos,
-        },
-      }
-      const createdAgent = await addAgentAction(newAgentData)
-      if (createdAgent) {
-        toast.success(t("Success"))
-        router.replace(`/dashboard/users/${createdAgent.id}`)
-      } else {
-        toast.error(t("Error"))
-        router.replace(`/dashboard/users`)
-      }
+      startTransition(async () => {
+        const newAgentData: AddAgentRequestType = {
+          agencyId: agencyId,
+          data: {
+            name: values.agentName,
+            phone: values.agentPhone,
+            email: values.agentEmail,
+            photos: values.agentPhotos,
+          },
+        }
+        const createdAgent = await addAgentAction(newAgentData)
+        if (createdAgent) {
+          toast.success(t("Success"))
+          router.replace(`/dashboard/users/${createdAgent.id}`)
+        } else {
+          toast.error(t("Error"))
+          router.replace(`/dashboard/users`)
+        }
+      })
     }
   }
 
@@ -146,16 +150,16 @@ export default function NewAgentForm({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"default"}
             type="button"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
             onClick={() => router.back()}
           >
             {t("SecondaryCTA")}

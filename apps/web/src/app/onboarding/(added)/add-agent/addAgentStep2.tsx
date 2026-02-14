@@ -16,6 +16,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
+import { useTransition } from "react"
 
 export function AddAgentConfirm(props: {
   onNext: () => void
@@ -26,29 +27,32 @@ export function AddAgentConfirm(props: {
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const formData = useForm<AddAgentRequestType>()
   //Submit actions
   const onSubmit = async () => {
-    // Add agent
-    const newAgentData: AddAgentRequestType = {
-      agencyId: props.finalData.agencyId,
-      ownerId: props.status === UserStatusEnum.NEW ? props.ownerId : undefined,
-      data: {
-        name: props.finalData.data.name,
-        email: props.finalData.data.email,
-        phone: props.finalData.data.phone,
-        photos: props.finalData.data.photos,
-      },
-    }
-    const addedAgent = await addAgentAction(newAgentData)
-    if (addedAgent) {
-      props.onNext()
-    } else {
-      //Take back to agent onboarding page and show error
-      toast.error(t("APIError"))
-      router.replace("/dashboard")
-    }
+    startTransition(async () => {
+      // Add agent
+      const newAgentData: AddAgentRequestType = {
+        agencyId: props.finalData.agencyId,
+        ownerId:
+          props.status === UserStatusEnum.NEW ? props.ownerId : undefined,
+        data: {
+          name: props.finalData.data.name,
+          email: props.finalData.data.email,
+          phone: props.finalData.data.phone,
+          photos: props.finalData.data.photos,
+        },
+      }
+      if (await addAgentAction(newAgentData)) {
+        props.onNext()
+      } else {
+        //Take back to agent onboarding page and show error
+        toast.error(t("APIError"))
+        router.replace("/dashboard")
+      }
+    })
   }
   return (
     <Form {...formData}>
@@ -72,15 +76,13 @@ export function AddAgentConfirm(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step2Actions">
-          <OnboardingStepPrimaryAction
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          <OnboardingStepPrimaryAction disabled={isPending}>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction
             onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </OnboardingStepSecondaryAction>

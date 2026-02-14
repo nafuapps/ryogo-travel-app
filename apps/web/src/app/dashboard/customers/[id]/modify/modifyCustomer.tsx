@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useTransition } from "react"
 import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
@@ -31,6 +31,7 @@ export default function ModifyCustomerPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyCustomer")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyCustomerSchema = z.object({
     name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
@@ -60,25 +61,29 @@ export default function ModifyCustomerPageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyCustomerType) {
-    const modifyCustomerData = {
-      name: data.name,
-      email: data.email ?? undefined,
-      address: data.address ?? undefined,
-      remarks: data.remarks ?? undefined,
-      state: data.state,
-      city: data.city,
-    }
-    const modifiedCustomer = await modifyCustomerAction(
-      customer.id,
-      modifyCustomerData,
-    )
-    if (modifiedCustomer) {
-      router.replace(`/dashboard/customers/${customer.id}`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const modifyCustomerData = {
+        name: data.name,
+        email: data.email ?? undefined,
+        address: data.address ?? undefined,
+        remarks: data.remarks ?? undefined,
+        state: data.state,
+        city: data.city,
+      }
+      if (
+        await modifyCustomerAction(
+          customer.id,
+          customer.agencyId,
+          modifyCustomerData,
+        )
+      ) {
+        router.replace(`/dashboard/customers/${customer.id}`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
 
   const data: Record<string, string[]> = stateCityData
@@ -149,17 +154,17 @@ export default function ModifyCustomerPageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useTransition } from "react"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
@@ -40,6 +40,7 @@ export default function NewCustomerForm({
 }) {
   const t = useTranslations("Dashboard.NewCustomer")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const newCustomerSchema = z.object({
     name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
@@ -95,25 +96,27 @@ export default function NewCustomerForm({
         message: t("APIError"),
       })
     } else {
-      const newCustomerData: NewCustomerRequestType = {
-        agencyId: agencyId,
-        addedByUserId: userId,
-        name: values.name,
-        phone: values.phone,
-        state: values.state,
-        city: values.city,
-        email: values.email,
-        address: values.address,
-        remarks: values.remarks,
-        photo: values.photo,
-      }
-      const createdCustomer = await newCustomerAction(newCustomerData)
-      if (createdCustomer) {
-        toast.success(t("Success"))
-        router.replace(`/dashboard/customers/${createdCustomer.id}`)
-      } else {
-        toast.error(t("Error"))
-      }
+      startTransition(async () => {
+        const newCustomerData: NewCustomerRequestType = {
+          agencyId: agencyId,
+          addedByUserId: userId,
+          name: values.name,
+          phone: values.phone,
+          state: values.state,
+          city: values.city,
+          email: values.email,
+          address: values.address,
+          remarks: values.remarks,
+          photo: values.photo,
+        }
+        const createdCustomer = await newCustomerAction(newCustomerData)
+        if (createdCustomer) {
+          toast.success(t("Success"))
+          router.replace(`/dashboard/customers/${createdCustomer.id}`)
+        } else {
+          toast.error(t("Error"))
+        }
+      })
     }
   }
 
@@ -199,16 +202,16 @@ export default function NewCustomerForm({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"default"}
             type="button"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
             onClick={() => router.back()}
           >
             {t("SecondaryCTA")}

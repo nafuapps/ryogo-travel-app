@@ -11,6 +11,8 @@ import BookingAlertDialog from "./bookingAlertDialog"
 
 type CancelBookingAlertButtonProps = {
   bookingId: string
+  agencyId: string
+  assignedUserId: string
 }
 export default function CancelBookingAlertButton(
   props: CancelBookingAlertButtonProps,
@@ -23,7 +25,13 @@ export default function CancelBookingAlertButton(
   async function cancel() {
     startCancelTransition(async () => {
       //If cancel is successful, show cancel success message and redirect to cancelled booking details
-      if (await cancelBookingAction(props.bookingId)) {
+      if (
+        await cancelBookingAction(
+          props.bookingId,
+          props.agencyId,
+          props.assignedUserId,
+        )
+      ) {
         toast.success(t("Success"))
         router.replace(`/dashboard/bookings/${props.bookingId}`)
       } else {

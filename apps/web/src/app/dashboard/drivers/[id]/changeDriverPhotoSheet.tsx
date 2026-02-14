@@ -23,7 +23,13 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserPhotoAction } from "@/app/actions/users/changeUserPhotoAction"
 
-export default function ChangeDriverPhotoSheet({ userId }: { userId: string }) {
+export default function ChangeDriverPhotoSheet({
+  userId,
+  agencyId,
+}: {
+  userId: string
+  agencyId: string
+}) {
   const t = useTranslations("Dashboard.DriverDetails.ChangePhoto")
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -58,7 +64,7 @@ export default function ChangeDriverPhotoSheet({ userId }: { userId: string }) {
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeUserPhotoAction(userId, data.driverPhotos)) {
+      if (await changeUserPhotoAction(userId, agencyId, data.driverPhotos)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

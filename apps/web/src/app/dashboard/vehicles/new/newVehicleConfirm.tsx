@@ -15,6 +15,7 @@ import {
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
+import { useTransition } from "react"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -25,43 +26,47 @@ export function NewVehicleConfirm(props: {
   const t = useTranslations("Dashboard.NewVehicle.Confirm")
   const formData = useForm<AddVehicleRequestType>()
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
   //Submit actions
   const onSubmit = async () => {
-    // Add vehicle
-    const newVehicleData: AddVehicleRequestType = {
-      agencyId: props.agencyId,
-      data: {
-        vehicleNumber: props.newVehicleFormData.data.vehicleNumber,
-        type: props.newVehicleFormData.data.type,
-        brand: props.newVehicleFormData.data.brand,
-        color: props.newVehicleFormData.data.color,
-        model: props.newVehicleFormData.data.model,
-        capacity: props.newVehicleFormData.data.capacity,
-        odometerReading: props.newVehicleFormData.data.odometerReading,
-        insuranceExpiresOn: props.newVehicleFormData.data.insuranceExpiresOn,
-        pucExpiresOn: props.newVehicleFormData.data.pucExpiresOn,
-        rcExpiresOn: props.newVehicleFormData.data.rcExpiresOn,
-        hasAC: props.newVehicleFormData.data.hasAC,
-        defaultRatePerKm: props.newVehicleFormData.data.defaultRatePerKm,
-        defaultAcChargePerDay:
-          props.newVehicleFormData.data.defaultAcChargePerDay,
-        insurancePhotos: props.newVehicleFormData.data.insurancePhotos,
-        pucPhotos: props.newVehicleFormData.data.pucPhotos,
-        rcPhotos: props.newVehicleFormData.data.rcPhotos,
-        vehiclePhotos: props.newVehicleFormData.data.vehiclePhotos,
-      },
-    }
-    const addedVehicle = await addVehicleAction(newVehicleData)
+    startTransition(async () => {
+      // Add vehicle
+      const newVehicleData: AddVehicleRequestType = {
+        agencyId: props.agencyId,
+        data: {
+          vehicleNumber: props.newVehicleFormData.data.vehicleNumber,
+          type: props.newVehicleFormData.data.type,
+          brand: props.newVehicleFormData.data.brand,
+          color: props.newVehicleFormData.data.color,
+          model: props.newVehicleFormData.data.model,
+          capacity: props.newVehicleFormData.data.capacity,
+          odometerReading: props.newVehicleFormData.data.odometerReading,
+          insuranceExpiresOn: props.newVehicleFormData.data.insuranceExpiresOn,
+          pucExpiresOn: props.newVehicleFormData.data.pucExpiresOn,
+          rcExpiresOn: props.newVehicleFormData.data.rcExpiresOn,
+          hasAC: props.newVehicleFormData.data.hasAC,
+          defaultRatePerKm: props.newVehicleFormData.data.defaultRatePerKm,
+          defaultAcChargePerDay:
+            props.newVehicleFormData.data.defaultAcChargePerDay,
+          insurancePhotos: props.newVehicleFormData.data.insurancePhotos,
+          pucPhotos: props.newVehicleFormData.data.pucPhotos,
+          rcPhotos: props.newVehicleFormData.data.rcPhotos,
+          vehiclePhotos: props.newVehicleFormData.data.vehiclePhotos,
+        },
+      }
+      const addedVehicle = await addVehicleAction(newVehicleData)
 
-    if (addedVehicle) {
-      //Send to added vehicle details page
-      toast.success(t("APISuccess"))
-      router.replace(`/dashboard/vehicles/${addedVehicle.id}`)
-    } else {
-      //If failed, Take back to vehicle page and show error
-      toast.error(t("APIError"))
-      router.replace("/dashboard/vehicles")
-    }
+      if (addedVehicle) {
+        //Send to added vehicle details page
+        toast.success(t("APISuccess"))
+        router.replace(`/dashboard/vehicles/${addedVehicle.id}`)
+      } else {
+        //If failed, Take back to vehicle page and show error
+        toast.error(t("APIError"))
+        router.replace("/dashboard/vehicles")
+      }
+    })
   }
   return (
     <div id="NewVehicleConfirm" className={newBookingSectionClassName}>
@@ -152,17 +157,17 @@ export function NewVehicleConfirm(props: {
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

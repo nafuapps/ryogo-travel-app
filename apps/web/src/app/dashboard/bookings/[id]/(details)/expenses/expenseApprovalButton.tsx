@@ -11,33 +11,41 @@ import {
   Tooltip,
   TooltipContent,
 } from "@/components/ui/tooltip"
+import { useTransition } from "react"
 
 export function ExpenseApprovalButton({
   expId,
   isApproved,
+  agencyId,
 }: {
   expId: string
   isApproved: boolean
+  agencyId: string
 }) {
   const t = useTranslations("Dashboard.BookingExpenses")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   async function approveExpense() {
-    if (await changeExpenseApprovalAction(expId, true)) {
-      toast.success(t("ApproveSuccess"))
-    } else {
-      toast.success(t("ApproveError"))
-    }
-    router.refresh()
+    startTransition(async () => {
+      if (await changeExpenseApprovalAction(expId, true, agencyId)) {
+        toast.success(t("ApproveSuccess"))
+      } else {
+        toast.success(t("ApproveError"))
+      }
+      router.refresh()
+    })
   }
 
   async function rejectExpense() {
-    if (await changeExpenseApprovalAction(expId, false)) {
-      toast.info(t("RejectSuccess"))
-    } else {
-      toast.success(t("RejectError"))
-    }
-    router.refresh()
+    startTransition(async () => {
+      if (await changeExpenseApprovalAction(expId, false, agencyId)) {
+        toast.info(t("RejectSuccess"))
+      } else {
+        toast.success(t("RejectError"))
+      }
+      router.refresh()
+    })
   }
 
   return isApproved ? (
@@ -45,6 +53,7 @@ export function ExpenseApprovalButton({
       <TooltipTrigger
         className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-green-200 justify-center items-center hover:bg-red-200 lg:cursor-pointer transition"
         onClick={rejectExpense}
+        disabled={isPending}
       >
         <div className="hidden lg:flex">
           <CaptionGrey>{t("Approved")}</CaptionGrey>
@@ -58,6 +67,7 @@ export function ExpenseApprovalButton({
       <TooltipTrigger
         className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition"
         onClick={approveExpense}
+        disabled={isPending}
       >
         <div className="hidden lg:flex">
           <CaptionGrey>{t("Approve")}</CaptionGrey>

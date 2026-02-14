@@ -21,14 +21,18 @@ import DeleteExpenseAlertButton from "@/app/dashboard/components/buttons/deleteE
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
+import { useTransition } from "react"
 
 export default function ModifyExpensePageComponent({
   expenseDetails,
+  assignedUserId,
 }: {
   expenseDetails: NonNullable<FindExpenseDetailsByIdType>
+  assignedUserId: string
 }) {
   const t = useTranslations("Dashboard.ModifyExpense")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyExpenseSchema = z.object({
     type: z.enum(ExpenseTypesEnum).nonoptional(t("Field1.Error1")),
@@ -76,18 +80,26 @@ export default function ModifyExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyExpenseType) {
-    if (
-      await modifyExpenseAction({
-        expenseId: expenseDetails.id,
-        bookingId: expenseDetails.bookingId,
-        ...values,
-      })
-    ) {
-      toast.success(t("Success"))
-      router.replace(`/dashboard/bookings/${expenseDetails.bookingId}/expenses`)
-    } else {
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      if (
+        await modifyExpenseAction(
+          {
+            expenseId: expenseDetails.id,
+            bookingId: expenseDetails.bookingId,
+            ...values,
+          },
+          expenseDetails.agencyId,
+          assignedUserId,
+        )
+      ) {
+        toast.success(t("Success"))
+        router.replace(
+          `/dashboard/bookings/${expenseDetails.bookingId}/expenses`,
+        )
+      } else {
+        toast.error(t("Error"))
+      }
+    })
   }
 
   return (
@@ -127,20 +139,22 @@ export default function ModifyExpensePageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <DeleteExpenseAlertButton
             bookingId={expenseDetails.bookingId}
             expenseId={expenseDetails.id}
+            agencyId={expenseDetails.agencyId}
+            assignedUserId={assignedUserId}
           />
           <Button
             variant={"outline"}
             size={"default"}
             type="button"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
             onClick={() => router.back()}
           >
             {t("CancelCTA")}

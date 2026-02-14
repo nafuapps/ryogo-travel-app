@@ -181,7 +181,7 @@ export const driverServices = {
       data.isCompleted,
       data.remarks ?? undefined,
     )
-    return leave
+    return leave[0]
   },
 
   //Upload driver license photo

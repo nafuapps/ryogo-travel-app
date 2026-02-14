@@ -12,14 +12,18 @@ import { DashboardInput } from "@/components/form/dashboardFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
+import { useTransition } from "react"
 
 export default function ChangePasswordAccountComponent({
   userId,
+  agencyId,
 }: {
   userId: string
+  agencyId: string
 }) {
   const t = useTranslations("Dashboard.Account.ChangePassword")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const schema = z
     .object({
@@ -57,24 +61,27 @@ export default function ChangePasswordAccountComponent({
 
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
-    const result = await changePasswordAction(
-      userId,
-      data.oldPassword,
-      data.newPassword,
-    )
-    if (result) {
-      //If success, redirect
-      toast.success(t("Success"))
+    startTransition(async () => {
+      const result = await changePasswordAction(
+        userId,
+        agencyId,
+        data.oldPassword,
+        data.newPassword,
+      )
+      if (result) {
+        //If success, redirect
+        toast.success(t("Success"))
 
-      router.replace("/dashboard/account")
-    } else {
-      //If failed, show error
-      formData.setError("oldPassword", {
-        type: "manual",
-        message: t("APIError"),
-      })
-      // formData.reset();
-    }
+        router.replace("/dashboard/account")
+      } else {
+        //If failed, show error
+        formData.setError("oldPassword", {
+          type: "manual",
+          message: t("APIError"),
+        })
+        // formData.reset();
+      }
+    })
   }
   return (
     <div id="ChangePassword" className={pageClassName}>
@@ -109,17 +116,17 @@ export default function ChangePasswordAccountComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

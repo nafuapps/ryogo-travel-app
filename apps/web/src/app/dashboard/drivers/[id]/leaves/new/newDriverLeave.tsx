@@ -16,7 +16,8 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { newDriverLeaveAction } from "../../../../../actions/drivers/newDriverLeaveAction"
+import { newDriverLeaveAction } from "@/app/actions/drivers/newDriverLeaveAction"
+import { useTransition } from "react"
 
 export default function NewDriverLeavePageComponent({
   userId,
@@ -29,6 +30,7 @@ export default function NewDriverLeavePageComponent({
 }) {
   const t = useTranslations("Dashboard.NewDriverLeave")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const newDriverleaveSchema = z
     .object({
@@ -60,23 +62,25 @@ export default function NewDriverLeavePageComponent({
 
   //Form submit
   async function onSubmit(values: NewDriverLeaveType) {
-    const newLeave: InsertDriverLeaveType = {
-      agencyId: agencyId,
-      driverId: driverId,
-      addedByUserId: userId,
-      startDate: values.startDate,
-      endDate: values.endDate,
-      isCompleted: values.isCompleted,
-      remarks: values.remarks,
-    }
-    const createdLeave = await newDriverLeaveAction(newLeave)
-    if (createdLeave) {
-      router.replace(`/dashboard/drivers/${driverId}/leaves`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const newLeave: InsertDriverLeaveType = {
+        agencyId: agencyId,
+        driverId: driverId,
+        addedByUserId: userId,
+        startDate: values.startDate,
+        endDate: values.endDate,
+        isCompleted: values.isCompleted,
+        remarks: values.remarks,
+      }
+      const createdLeave = await newDriverLeaveAction(newLeave)
+      if (createdLeave) {
+        router.replace(`/dashboard/drivers/${driverId}/leaves`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
 
   return (
@@ -109,17 +113,17 @@ export default function NewDriverLeavePageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("Back")}
           </Button>

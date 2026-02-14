@@ -15,7 +15,8 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { changeUserEmailAction } from "../../../../actions/users/changeUserEmailAction"
+import { changeUserEmailAction } from "@/app/actions/users/changeUserEmailAction"
+import { useTransition } from "react"
 
 export default function ChangeUserEmailPageComponent({
   user,
@@ -26,6 +27,7 @@ export default function ChangeUserEmailPageComponent({
 }) {
   const t = useTranslations("Dashboard.UserDetails.ChangeEmail")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyUserSchema = z.object({
     newEmail: z.email(t("Field1.Error1")).max(60, t("Field1.Error2")),
@@ -38,7 +40,7 @@ export default function ChangeUserEmailPageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyUserType) {
-    //Check if same emailhas been entered
+    //Check if same email has been entered
     if (data.newEmail === user.email) {
       formData.setError("newEmail", {
         type: "manual",
@@ -53,14 +55,20 @@ export default function ChangeUserEmailPageComponent({
         message: t("Field1.Error4"),
       })
     } else {
-      const modifiedUser = await changeUserEmailAction(user.id, data.newEmail)
-      if (modifiedUser) {
-        router.replace(`/dashboard/users/${user.id}`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
+      startTransition(async () => {
+        const modifiedUser = await changeUserEmailAction(
+          user.id,
+          user.agencyId,
+          data.newEmail,
+        )
+        if (modifiedUser) {
+          router.replace(`/dashboard/users/${user.id}`)
+          toast.success(t("Success"))
+        } else {
+          router.back()
+          toast.error(t("Error"))
+        }
+      })
     }
   }
 
@@ -83,17 +91,17 @@ export default function ChangeUserEmailPageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

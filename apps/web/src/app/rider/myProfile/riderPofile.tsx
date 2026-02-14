@@ -45,7 +45,10 @@ export default async function RiderProfilePageComponent({
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeUserPhotoSheet userId={driverDetails.userId} />
+              <ChangeUserPhotoSheet
+                userId={driverDetails.userId}
+                agencyId={driverDetails.agencyId}
+              />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{driverDetails.name}</H4>
@@ -66,6 +69,7 @@ export default async function RiderProfilePageComponent({
             userId={driverDetails.userId}
             userName={driverDetails.user.name}
             userRole={driverDetails.user.userRole}
+            agencyId={driverDetails.agencyId}
           />
           <Link href="/rider/myProfile/change-email">
             <Button variant={"outline"} className="w-full">

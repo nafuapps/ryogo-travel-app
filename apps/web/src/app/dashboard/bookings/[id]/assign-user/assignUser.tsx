@@ -37,7 +37,9 @@ export default function AssignUserPageComponent({
   const handleAssignUser = async () => {
     if (selectedUserId) {
       startTransition(async () => {
-        if (await assignUserAction(bookingId, selectedUserId)) {
+        if (
+          await assignUserAction(bookingId, selectedUserId, booking.agencyId)
+        ) {
           toast.success(t("Success"))
           router.replace(`/dashboard/bookings/${bookingId}`)
         } else {

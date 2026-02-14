@@ -1012,9 +1012,9 @@ export const bookingRepository = {
 
   async updateBookingToConfirmed(
     id: string,
-    startTime?: string,
-    pickupAddress?: string,
-    dropAddress?: string,
+    startTime: string,
+    pickupAddress: string,
+    dropAddress: string,
   ) {
     return await db
       .update(bookings)

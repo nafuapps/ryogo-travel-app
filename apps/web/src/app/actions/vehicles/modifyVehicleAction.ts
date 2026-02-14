@@ -1,16 +1,18 @@
 "use server"
 
+import { getCurrentUser } from "@/lib/auth"
 import {
   generateInsurancePhotoPathName,
   generatePUCPhotoPathName,
   generateRCPhotoPathName,
 } from "@/lib/utils"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyVehicleAction(
   id: string,
+  agencyId: string,
   data: {
     type?: VehicleTypesEnum
     brand?: string
@@ -29,6 +31,17 @@ export async function modifyVehicleAction(
     insurancePhotos?: FileList
   },
 ) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
+      currentUser.userRole,
+    ) ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
+  }
+
   let rcUrl
   let insuranceUrl
   let pucUrl
@@ -74,6 +87,5 @@ export async function modifyVehicleAction(
     insuranceUrl,
     pucUrl,
   )
-  if (!vehicle) return false
-  return true
+  return vehicle
 }

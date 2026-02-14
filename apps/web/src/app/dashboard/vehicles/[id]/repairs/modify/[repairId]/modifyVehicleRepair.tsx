@@ -17,9 +17,10 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { modifyVehicleRepairAction } from "../../../../../../actions/vehicles/modifyVehicleRepairAction"
+import { modifyVehicleRepairAction } from "@/app/actions/vehicles/modifyVehicleRepairAction"
 
 import { FindVehicleRepairByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { useTransition } from "react"
 
 export default function ModifyVehicleRepairPageComponent({
   repair,
@@ -28,6 +29,7 @@ export default function ModifyVehicleRepairPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyVehicleRepair")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyVehicleRepairSchema = z
     .object({
@@ -70,24 +72,26 @@ export default function ModifyVehicleRepairPageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyVehicleRepairType) {
-    const modifyRepair: Partial<InsertVehicleRepairType> = {
-      startDate: values.startDate,
-      endDate: values.endDate,
-      isCompleted: values.isCompleted,
-      remarks: values.remarks,
-      cost: values.cost,
-    }
-    const modifiedRepair = await modifyVehicleRepairAction(
-      repair.id,
-      modifyRepair,
-    )
-    if (modifiedRepair) {
-      router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const modifyRepair: Partial<InsertVehicleRepairType> = {
+        startDate: values.startDate,
+        endDate: values.endDate,
+        isCompleted: values.isCompleted,
+        remarks: values.remarks,
+        cost: values.cost,
+      }
+      const modifiedRepair = await modifyVehicleRepairAction(
+        repair.id,
+        modifyRepair,
+      )
+      if (modifiedRepair) {
+        router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
   return (
     <div id="ModifyVehicleRepairPage" className={pageClassName}>
@@ -125,17 +129,17 @@ export default function ModifyVehicleRepairPageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("Back")}
           </Button>

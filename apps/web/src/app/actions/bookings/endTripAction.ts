@@ -1,8 +1,9 @@
 "use server"
+import { getCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { TripLogTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function endTripAction(data: {
@@ -15,13 +16,22 @@ export async function endTripAction(data: {
   latLong?: string
   tripLogPhoto?: FileList
 }) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    currentUser.userRole !== UserRolesEnum.DRIVER ||
+    currentUser.agencyId !== data.agencyId
+  ) {
+    return
+  }
+
   //Change Booking, Driver and vehicle status to Completed
   const bookingChanged = await bookingServices.changeBookingToCompleted(
     data.bookingId,
     data.driverId,
     data.vehicleId,
   )
-  if (!bookingChanged) return false
+  if (!bookingChanged) return
 
   // Create End Trip Log
   const newTripLog = await tripLogServices.addTripLog({
@@ -34,7 +44,7 @@ export async function endTripAction(data: {
     remarks: data.remarks,
     latLong: data.latLong,
   })
-  if (!newTripLog) return false
+  if (!newTripLog) return
 
   //Upload triplog photo if attached
   if (data.tripLogPhoto && data.tripLogPhoto[0]) {
@@ -51,5 +61,5 @@ export async function endTripAction(data: {
       uploadedFile.path,
     )
   }
-  return true
+  return newTripLog
 }

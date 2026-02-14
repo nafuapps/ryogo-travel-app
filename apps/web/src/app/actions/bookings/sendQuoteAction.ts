@@ -1,7 +1,22 @@
-"use server";
+"use server"
 
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services";
+import { getCurrentUser } from "@/lib/auth"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function sendQuoteAction(id: string) {
-  return await bookingServices.sendQuote(id);
+export async function sendQuoteAction(
+  id: string,
+  agencyId: string,
+  assignedUserId: string,
+) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    (currentUser.userRole !== UserRolesEnum.OWNER &&
+      assignedUserId !== currentUser.userId) ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
+  }
+  return await bookingServices.sendQuote(id)
 }

@@ -12,7 +12,7 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { pageClassName } from "@/components/page/pageCommons"
-import { modifyVehicleAction } from "../../../../actions/vehicles/modifyVehicleAction"
+import { modifyVehicleAction } from "@/app/actions/vehicles/modifyVehicleAction"
 import {
   DashboardSelect,
   DashboardInput,
@@ -21,6 +21,7 @@ import {
   DashboardSwitch,
 } from "@/components/form/dashboardFormFields"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
+import { useTransition } from "react"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -29,12 +30,13 @@ export default function ModifyVehiclePageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyVehicle")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyVehicleSchema = z.object({
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field1.Error1")),
-    brand: z.string().min(3, t("Field3.Error1")).max(15, t("Field2.Error2")),
-    color: z.string().min(3, t("Field4.Error1")).max(15, t("Field3.Error2")),
-    model: z.string().min(3, t("Field5.Error1")).max(30, t("Field4.Error2")),
+    brand: z.string().min(3, t("Field2.Error1")).max(15, t("Field2.Error2")),
+    color: z.string().min(3, t("Field3.Error1")).max(15, t("Field3.Error2")),
+    model: z.string().min(3, t("Field4.Error1")).max(30, t("Field4.Error2")),
     capacity: z.coerce
       .number<number>(t("Field5.Error1"))
       .min(0, t("Field5.Error2"))
@@ -159,34 +161,37 @@ export default function ModifyVehiclePageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyVehicleType) {
-    const modifyVehicleData = {
-      type: data.type,
-      brand: data.brand,
-      color: data.color,
-      model: data.model,
-      capacity: data.capacity,
-      odometerReading: data.odometerReading,
-      rcExpiresOn: data.rcExpiresOn,
-      insuranceExpiresOn: data.insuranceExpiresOn,
-      pucExpiresOn: data.pucExpiresOn,
-      rcPhotos: data.rcPhotos,
-      insurancePhotos: data.insurancePhotos,
-      pucPhotos: data.pucPhotos,
-      defaultRatePerKm: data.defaultRatePerKm,
-      hasAC: data.hasAC,
-      defaultAcChargePerDay: data.defaultAcChargePerDay,
-    }
-    const modifiedVehicle = await modifyVehicleAction(
-      vehicle.id,
-      modifyVehicleData,
-    )
-    if (modifiedVehicle) {
-      router.replace(`/dashboard/vehicles/${vehicle.id}`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const modifyVehicleData = {
+        type: data.type,
+        brand: data.brand,
+        color: data.color,
+        model: data.model,
+        capacity: data.capacity,
+        odometerReading: data.odometerReading,
+        rcExpiresOn: data.rcExpiresOn,
+        insuranceExpiresOn: data.insuranceExpiresOn,
+        pucExpiresOn: data.pucExpiresOn,
+        rcPhotos: data.rcPhotos,
+        insurancePhotos: data.insurancePhotos,
+        pucPhotos: data.pucPhotos,
+        defaultRatePerKm: data.defaultRatePerKm,
+        hasAC: data.hasAC,
+        defaultAcChargePerDay: data.defaultAcChargePerDay,
+      }
+      const modifiedVehicle = await modifyVehicleAction(
+        vehicle.id,
+        vehicle.agencyId,
+        modifyVehicleData,
+      )
+      if (modifiedVehicle) {
+        router.replace(`/dashboard/vehicles/${vehicle.id}`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
 
   return (
@@ -298,17 +303,17 @@ export default function ModifyVehiclePageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

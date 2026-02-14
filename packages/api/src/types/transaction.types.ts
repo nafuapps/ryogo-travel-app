@@ -8,6 +8,7 @@ export type AddTransactionRequestType = {
   agencyId: string
   bookingId: string
   userId: string
+  assignedUserId: string
   type: TransactionTypesEnum
   amount: number
   mode: TransactionModesEnum

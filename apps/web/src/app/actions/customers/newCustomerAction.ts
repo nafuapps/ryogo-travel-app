@@ -1,11 +1,23 @@
 "use server"
 
+import { getCurrentUser } from "@/lib/auth"
 import { generateCustomerPhotoPathName } from "@/lib/utils"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function newCustomerAction(data: NewCustomerRequestType) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
+      currentUser.userRole,
+    ) ||
+    currentUser.agencyId !== data.agencyId
+  ) {
+    return
+  }
   const customer = await customerServices.addNewCustomer(
     data.name,
     data.phone,

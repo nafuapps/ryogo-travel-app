@@ -72,6 +72,8 @@ export default function ConfirmBookingPageComponent({
     startConfirmTransition(async () => {
       const confirmedBooking = await confirmBookingAction(
         booking.id,
+        booking.agencyId,
+        booking.assignedUserId,
         values.startTime,
         values.pickupAddress,
         values.dropAddress,
@@ -320,8 +322,16 @@ export default function ConfirmBookingPageComponent({
                     {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
                   </Button>
                 </BookingAlertDialog>
-                <SendQuoteAlertButton bookingId={booking.id} />
-                <CancelBookingAlertButton bookingId={booking.id} />
+                <SendQuoteAlertButton
+                  bookingId={booking.id}
+                  agencyId={booking.agencyId}
+                  assignedUserId={booking.assignedUserId}
+                />
+                <CancelBookingAlertButton
+                  bookingId={booking.id}
+                  agencyId={booking.agencyId}
+                  assignedUserId={booking.assignedUserId}
+                />
               </div>
             )}
           </div>

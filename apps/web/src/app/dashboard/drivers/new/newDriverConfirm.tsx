@@ -15,6 +15,7 @@ import {
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
+import { useTransition } from "react"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -25,37 +26,40 @@ export function NewDriverConfirm(props: {
   const t = useTranslations("Dashboard.NewDriver.Confirm")
   const formData = useForm<AddDriverRequestType>()
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   //Submit action
   const onSubmit = async () => {
-    // Add driver
-    const newDriverData: AddDriverRequestType = {
-      agencyId: props.agencyId,
-      data: {
-        name: props.newDriverFormData.data.name,
-        email: props.newDriverFormData.data.email,
-        phone: props.newDriverFormData.data.phone,
-        address: props.newDriverFormData.data.address,
-        canDriveVehicleTypes: props.newDriverFormData.data.canDriveVehicleTypes,
-        defaultAllowancePerDay:
-          props.newDriverFormData.data.defaultAllowancePerDay,
-        licenseNumber: props.newDriverFormData.data.licenseNumber,
-        licenseExpiresOn: props.newDriverFormData.data.licenseExpiresOn,
-        licensePhotos: props.newDriverFormData.data.licensePhotos,
-        userPhotos: props.newDriverFormData.data.userPhotos,
-      },
-    }
-    const addedDriver = await addDriverAction(newDriverData)
-
-    if (addedDriver) {
-      //Send to driver details page
-      toast.success(t("APISuccess"))
-      router.replace(`/dashboard/drivers/${addedDriver.id}`)
-    } else {
-      //If failed, Take back to driver page and show error
-      toast.error(t("APIError"))
-      router.replace("/dashboard/drivers")
-    }
+    startTransition(async () => {
+      // Add driver
+      const newDriverData: AddDriverRequestType = {
+        agencyId: props.agencyId,
+        data: {
+          name: props.newDriverFormData.data.name,
+          email: props.newDriverFormData.data.email,
+          phone: props.newDriverFormData.data.phone,
+          address: props.newDriverFormData.data.address,
+          canDriveVehicleTypes:
+            props.newDriverFormData.data.canDriveVehicleTypes,
+          defaultAllowancePerDay:
+            props.newDriverFormData.data.defaultAllowancePerDay,
+          licenseNumber: props.newDriverFormData.data.licenseNumber,
+          licenseExpiresOn: props.newDriverFormData.data.licenseExpiresOn,
+          licensePhotos: props.newDriverFormData.data.licensePhotos,
+          userPhotos: props.newDriverFormData.data.userPhotos,
+        },
+      }
+      const addedDriver = await addDriverAction(newDriverData)
+      if (addedDriver) {
+        //Send to driver details page
+        toast.success(t("APISuccess"))
+        router.replace(`/dashboard/drivers/${addedDriver.id}`)
+      } else {
+        //If failed, Take back to driver page and show error
+        toast.error(t("APIError"))
+        router.replace("/dashboard/drivers")
+      }
+    })
   }
   return (
     <div id="NewDriverConfirm" className={newBookingSectionClassName}>
@@ -117,17 +121,17 @@ export function NewDriverConfirm(props: {
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

@@ -12,6 +12,8 @@ import BookingAlertDialog from "./bookingAlertDialog"
 type DeleteExpenseAlertButtonProps = {
   bookingId: string
   expenseId: string
+  agencyId: string
+  assignedUserId: string
 }
 export default function DeleteExpenseAlertButton(
   props: DeleteExpenseAlertButtonProps,
@@ -25,7 +27,13 @@ export default function DeleteExpenseAlertButton(
   async function deleteExpense() {
     startCancelTransition(async () => {
       //If delete is successful, show delete success message and redirect to expenses
-      if (await deleteExpenseAction(props.expenseId)) {
+      if (
+        await deleteExpenseAction(
+          props.expenseId,
+          props.agencyId,
+          props.assignedUserId,
+        )
+      ) {
         toast.success(t("Success"))
         router.replace(`/dashboard/bookings/${props.bookingId}/expenses`)
       } else {

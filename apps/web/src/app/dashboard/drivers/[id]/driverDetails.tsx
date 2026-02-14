@@ -65,7 +65,10 @@ export default async function DriverDetailsPageComponent({
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeDriverPhotoSheet userId={driver.userId} />
+              <ChangeDriverPhotoSheet
+                userId={driver.userId}
+                agencyId={driver.agencyId}
+              />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{driver.name}</H4>
@@ -171,12 +174,16 @@ export default async function DriverDetailsPageComponent({
           </Link>
           {driver.status !== DriverStatusEnum.INACTIVE &&
             driver.status !== DriverStatusEnum.ON_TRIP && (
-              <InactivateDriverAlertButton driverId={driver.id} />
+              <InactivateDriverAlertButton
+                driverId={driver.id}
+                agencyId={driver.agencyId}
+              />
             )}
           {driver.status === DriverStatusEnum.INACTIVE && (
             <ActivateDriverAlertButton
               driverId={driver.id}
               userId={driver.userId}
+              agencyId={driver.agencyId}
             />
           )}
         </div>

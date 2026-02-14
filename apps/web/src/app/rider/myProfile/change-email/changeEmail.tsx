@@ -13,16 +13,20 @@ import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeEmailAction } from "@/app/actions/users/changeEmailAction"
+import { useTransition } from "react"
 
 export default function ChangeEmailMyProfileComponent({
   usersWithPhoneRole,
   userId,
+  agencyId,
 }: {
   usersWithPhoneRole: FindUserAccountsByPhoneRoleType
   userId: string
+  agencyId: string
 }) {
   const t = useTranslations("Rider.MyProfile.ChangeEmail")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const schema = z.object({
     password: z
@@ -64,23 +68,26 @@ export default function ChangeEmailMyProfileComponent({
         message: t("Field2.Error4"),
       })
     } else {
-      const result = await changeEmailAction(
-        userId,
-        data.password,
-        data.newEmail,
-      )
-      if (result) {
-        //If success, redirect
-        toast.success(t("Success"))
-        router.replace("/rider/myProfile")
-      } else {
-        //If failed, show error
-        formData.setError("password", {
-          type: "manual",
-          message: t("APIError"),
-        })
-        // formData.reset();
-      }
+      startTransition(async () => {
+        const result = await changeEmailAction(
+          userId,
+          data.password,
+          data.newEmail,
+          agencyId,
+        )
+        if (result) {
+          //If success, redirect
+          toast.success(t("Success"))
+          router.replace("/rider/myProfile")
+        } else {
+          //If failed, show error
+          formData.setError("password", {
+            type: "manual",
+            message: t("APIError"),
+          })
+          // formData.reset();
+        }
+      })
     }
   }
   return (
@@ -110,17 +117,17 @@ export default function ChangeEmailMyProfileComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

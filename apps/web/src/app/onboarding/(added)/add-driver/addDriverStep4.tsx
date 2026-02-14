@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
+import { useTransition } from "react"
 
 export function AddDriverConfirm(props: {
   onNext: () => void
@@ -26,37 +27,40 @@ export function AddDriverConfirm(props: {
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Confirm")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const formData = useForm<AddDriverRequestType>()
   //Submit actions
   const onSubmit = async () => {
-    // Add driver
-    const newDriverData: AddDriverRequestType = {
-      agencyId: props.finalData.agencyId,
-      ownerId:
-        props.userStatus === UserStatusEnum.NEW ? props.ownerId : undefined,
-      data: {
-        name: props.finalData.data.name,
-        email: props.finalData.data.email,
-        phone: props.finalData.data.phone,
-        address: props.finalData.data.address,
-        canDriveVehicleTypes: props.finalData.data.canDriveVehicleTypes,
-        defaultAllowancePerDay: props.finalData.data.defaultAllowancePerDay,
-        licenseNumber: props.finalData.data.licenseNumber,
-        licenseExpiresOn: props.finalData.data.licenseExpiresOn,
-        licensePhotos: props.finalData.data.licensePhotos,
-        userPhotos: props.finalData.data.userPhotos,
-      },
-    }
-    const addedDriver = await addDriverAction(newDriverData)
-    if (addedDriver) {
-      //Move to next step
-      props.onNext()
-    } else {
-      //If failed, Take back to driver onboarding page and show error
-      toast.error(t("APIError"))
-      router.replace("/onboarding/add-driver")
-    }
+    startTransition(async () => {
+      // Add driver
+      const newDriverData: AddDriverRequestType = {
+        agencyId: props.finalData.agencyId,
+        ownerId:
+          props.userStatus === UserStatusEnum.NEW ? props.ownerId : undefined,
+        data: {
+          name: props.finalData.data.name,
+          email: props.finalData.data.email,
+          phone: props.finalData.data.phone,
+          address: props.finalData.data.address,
+          canDriveVehicleTypes: props.finalData.data.canDriveVehicleTypes,
+          defaultAllowancePerDay: props.finalData.data.defaultAllowancePerDay,
+          licenseNumber: props.finalData.data.licenseNumber,
+          licenseExpiresOn: props.finalData.data.licenseExpiresOn,
+          licensePhotos: props.finalData.data.licensePhotos,
+          userPhotos: props.finalData.data.userPhotos,
+        },
+      }
+      const addedDriver = await addDriverAction(newDriverData)
+      if (addedDriver) {
+        //Move to next step
+        props.onNext()
+      } else {
+        //If failed, Take back to driver onboarding page and show error
+        toast.error(t("APIError"))
+        router.replace("/onboarding/add-driver")
+      }
+    })
   }
   return (
     <Form {...formData}>
@@ -104,15 +108,13 @@ export function AddDriverConfirm(props: {
           )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step4Actions">
-          <OnboardingStepPrimaryAction
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          <OnboardingStepPrimaryAction disabled={isPending}>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction
             onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </OnboardingStepSecondaryAction>

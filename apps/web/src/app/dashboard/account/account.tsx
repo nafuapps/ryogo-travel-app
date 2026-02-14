@@ -45,7 +45,10 @@ export default async function AccountPageComponent({
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeUserPhotoSheet userId={userDetails.id} />
+              <ChangeUserPhotoSheet
+                userId={userDetails.id}
+                agencyId={userDetails.agencyId}
+              />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{userDetails.name}</H4>
@@ -66,6 +69,7 @@ export default async function AccountPageComponent({
             userId={userDetails.id}
             userName={userDetails.name}
             userRole={userDetails.userRole}
+            agencyId={userDetails.agencyId}
           />
           <Link href="/dashboard/account/change-email">
             <Button variant={"outline"} className="w-full">

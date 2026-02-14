@@ -14,7 +14,10 @@ export default async function ChangePasswordAccountPage() {
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/account/change-password"} />
-      <ChangePasswordAccountComponent userId={user.userId} />
+      <ChangePasswordAccountComponent
+        userId={user.userId}
+        agencyId={user.agencyId}
+      />
     </div>
   )
 }

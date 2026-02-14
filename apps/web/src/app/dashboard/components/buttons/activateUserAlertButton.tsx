@@ -12,6 +12,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 type ActivateUserAlertButtonProps = {
   userId: string
+  agencyId: string
   role: UserRolesEnum
 }
 export default function ActivateUserAlertButton(
@@ -23,7 +24,7 @@ export default function ActivateUserAlertButton(
 
   async function activate() {
     startTransition(async () => {
-      if (await activateUserAction(props.userId, props.role)) {
+      if (await activateUserAction(props.userId, props.agencyId, props.role)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

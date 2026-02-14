@@ -27,5 +27,11 @@ export default async function ConfirmEmailPage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  return <ConfirmEmailPageComponent userId={userId} currentEmail={user.email} />
+  return (
+    <ConfirmEmailPageComponent
+      userId={userId}
+      currentEmail={user.email}
+      agencyId={user.agencyId}
+    />
+  )
 }

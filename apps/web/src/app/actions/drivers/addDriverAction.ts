@@ -2,6 +2,7 @@
 
 import { AddDriverEmailTemplate } from "@/components/email/addDriverEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
+import { getCurrentUser } from "@/lib/auth"
 import { updateSessionUserStatus } from "@/lib/session"
 import {
   generateLicensePhotoPathName,
@@ -11,10 +12,20 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addDriverAction(data: AddDriverRequestType) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
+      currentUser.userRole,
+    ) ||
+    currentUser.agencyId !== data.agencyId
+  ) {
+    return
+  }
   const driver = await userServices.addDriverUser(data)
   if (!driver) return
 

@@ -47,7 +47,10 @@ export default async function RiderModifyExpensePage({
   return (
     <div className={mainClassName}>
       <RiderHeader pathName={"/rider/myBookings/[id]/modify-expense"} />
-      <RiderModifyExpensePageComponent expenseDetails={expenseDetails} />
+      <RiderModifyExpensePageComponent
+        expenseDetails={expenseDetails}
+        assignedUserId={bookingDetails.assignedUserId}
+      />
     </div>
   )
 }

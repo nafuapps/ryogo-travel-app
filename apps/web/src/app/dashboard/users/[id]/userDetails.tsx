@@ -47,7 +47,7 @@ export default async function UserDetailsPageComponent({
             ) : (
               <LucideUser className="size-20 lg:size-24 text-slate-400" />
             )}
-            <ChangeUserPhotoSheet userId={user.id} />
+            <ChangeUserPhotoSheet userId={user.id} agencyId={user.agencyId} />
           </div>
           <div className="flex flex-col gap-2 lg:gap-3 items-end">
             <H4>{user.name}</H4>
@@ -67,6 +67,7 @@ export default async function UserDetailsPageComponent({
             userId={user.id}
             userName={user.name}
             userRole={user.userRole}
+            agencyId={user.agencyId}
           />
           <Link href={`/dashboard/users/${user.id}/change-email`}>
             <Button variant={"outline"} className="w-full">
@@ -78,12 +79,23 @@ export default async function UserDetailsPageComponent({
               {t("ChangePhone.Title")}
             </Button>
           </Link>
-          <ResetUserPasswordAlertButton userId={user.id} />
+          <ResetUserPasswordAlertButton
+            userId={user.id}
+            agencyId={user.agencyId}
+          />
           {user.status !== UserStatusEnum.INACTIVE && (
-            <InactivateUserAlertButton userId={user.id} role={user.userRole} />
+            <InactivateUserAlertButton
+              userId={user.id}
+              agencyId={user.agencyId}
+              role={user.userRole}
+            />
           )}
           {user.status === UserStatusEnum.INACTIVE && (
-            <ActivateUserAlertButton userId={user.id} role={user.userRole} />
+            <ActivateUserAlertButton
+              userId={user.id}
+              agencyId={user.agencyId}
+              role={user.userRole}
+            />
           )}
         </div>
       </div>

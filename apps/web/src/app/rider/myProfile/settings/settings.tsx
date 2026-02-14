@@ -17,6 +17,7 @@ import { Form } from "@/components/ui/form"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
+import { useTransition } from "react"
 
 export default function MyProfileSettingsPageComponent({
   userDetails,
@@ -25,6 +26,7 @@ export default function MyProfileSettingsPageComponent({
 }) {
   const t = useTranslations("Rider.MyProfileSettings")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const schema = z.object({
     dark: z.boolean(),
@@ -41,21 +43,23 @@ export default function MyProfileSettingsPageComponent({
   })
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
-    console.log({ data })
-    const newPreferences = {
-      prefersDarkTheme: data.dark,
-      languagePref: data.lang,
-    }
-    const updatedUser = await changeUserPreferencesAction(
-      userDetails.id,
-      newPreferences,
-    )
-    if (updatedUser) {
-      router.replace("/rider/myProfile")
-      toast.success(t("Success"))
-    } else {
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const newPreferences = {
+        prefersDarkTheme: data.dark,
+        languagePref: data.lang,
+      }
+      const updatedUser = await changeUserPreferencesAction(
+        userDetails.id,
+        userDetails.agencyId,
+        newPreferences,
+      )
+      if (updatedUser) {
+        router.replace("/rider/myProfile")
+        toast.success(t("Success"))
+      } else {
+        toast.error(t("Error"))
+      }
+    })
   }
 
   const languages = getEnumValueDisplayPairs(UserLangEnum)
@@ -82,17 +86,17 @@ export default function MyProfileSettingsPageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

@@ -1,11 +1,22 @@
 "use server"
 
+import { getCurrentUser } from "@/lib/auth"
 import { generateAgencyLogoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyAgencyAction(data: ModifyAgencyRequestType) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    currentUser.userRole !== UserRolesEnum.OWNER ||
+    currentUser.agencyId !== data.agencyId
+  ) {
+    return
+  }
+
   const agency = await agencyServices.modifyAgency(
     data.agencyId,
     data.businessName,

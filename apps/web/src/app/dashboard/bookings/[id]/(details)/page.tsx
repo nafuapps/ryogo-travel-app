@@ -30,7 +30,6 @@ export default async function BookingDetailsPage({
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/bookings/[id]"} />
       <BookingDetailsPageComponent
-        bookingId={id}
         bookingDetails={bookingDetails}
         isOwner={user.userRole === UserRolesEnum.OWNER}
         isAssignedUser={bookingDetails.assignedUser.id === user.userId}

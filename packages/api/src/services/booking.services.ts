@@ -360,9 +360,9 @@ export const bookingServices = {
   //Confirm a booking lead
   async confirmBooking(
     bookingId: string,
-    startTime?: string,
-    pickupAddress?: string,
-    dropAddress?: string,
+    startTime: string,
+    pickupAddress: string,
+    dropAddress: string,
     updateCustomerAddress?: boolean,
     customerId?: string,
   ) {

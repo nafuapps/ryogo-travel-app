@@ -12,6 +12,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 type InactivateUserAlertButtonProps = {
   userId: string
+  agencyId: string
   role: UserRolesEnum
 }
 export default function InactivateUserAlertButton(
@@ -23,7 +24,9 @@ export default function InactivateUserAlertButton(
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateUserAction(props.userId, props.role)) {
+      if (
+        await inactivateUserAction(props.userId, props.agencyId, props.role)
+      ) {
         toast.success(t("Success"))
         router.refresh()
       } else {

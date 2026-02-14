@@ -11,17 +11,18 @@ import { inactivateVehicleAction } from "@/app/actions/vehicles/inactivateVehicl
 
 type InactivateVehicleAlertButtonProps = {
   vehicleId: string
+  agencyId: string
 }
 export default function InactivateVehicleAlertButton(
   props: InactivateVehicleAlertButtonProps,
 ) {
-  const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.InactivateVehicle")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateVehicleAction(props.vehicleId)) {
+      if (await inactivateVehicleAction(props.vehicleId, props.agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

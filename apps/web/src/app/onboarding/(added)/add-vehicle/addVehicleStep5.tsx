@@ -15,6 +15,7 @@ import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
+import { useTransition } from "react"
 
 export function AddVehicleConfirm(props: {
   onNext: () => void
@@ -23,41 +24,43 @@ export function AddVehicleConfirm(props: {
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage.Confirm")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const formData = useForm<AddVehicleRequestType>()
 
   //Submit actions
   const onSubmit = async () => {
-    const newVehicleData: AddVehicleRequestType = {
-      agencyId: props.finalData.agencyId,
-      data: {
-        vehicleNumber: props.finalData.data.vehicleNumber,
-        type: props.finalData.data.type,
-        brand: props.finalData.data.brand,
-        color: props.finalData.data.color,
-        model: props.finalData.data.model,
-        capacity: props.finalData.data.capacity,
-        odometerReading: props.finalData.data.odometerReading,
-        insuranceExpiresOn: props.finalData.data.insuranceExpiresOn,
-        pucExpiresOn: props.finalData.data.pucExpiresOn,
-        rcExpiresOn: props.finalData.data.rcExpiresOn,
-        hasAC: props.finalData.data.hasAC,
-        defaultRatePerKm: props.finalData.data.defaultRatePerKm,
-        defaultAcChargePerDay: props.finalData.data.defaultAcChargePerDay,
-        rcPhotos: props.finalData.data.rcPhotos,
-        pucPhotos: props.finalData.data.pucPhotos,
-        insurancePhotos: props.finalData.data.insurancePhotos,
-        vehiclePhotos: props.finalData.data.vehiclePhotos,
-      },
-    }
-    const addedVehicle = await addVehicleAction(newVehicleData)
-    if (addedVehicle) {
-      props.onNext()
-    } else {
-      //If failed, Take back to vehicle onboarding page and show error
-      toast.error(t("APIError"))
-      router.replace("/onboarding/add-vehicle")
-    }
+    startTransition(async () => {
+      const newVehicleData: AddVehicleRequestType = {
+        agencyId: props.finalData.agencyId,
+        data: {
+          vehicleNumber: props.finalData.data.vehicleNumber,
+          type: props.finalData.data.type,
+          brand: props.finalData.data.brand,
+          color: props.finalData.data.color,
+          model: props.finalData.data.model,
+          capacity: props.finalData.data.capacity,
+          odometerReading: props.finalData.data.odometerReading,
+          insuranceExpiresOn: props.finalData.data.insuranceExpiresOn,
+          pucExpiresOn: props.finalData.data.pucExpiresOn,
+          rcExpiresOn: props.finalData.data.rcExpiresOn,
+          hasAC: props.finalData.data.hasAC,
+          defaultRatePerKm: props.finalData.data.defaultRatePerKm,
+          defaultAcChargePerDay: props.finalData.data.defaultAcChargePerDay,
+          rcPhotos: props.finalData.data.rcPhotos,
+          pucPhotos: props.finalData.data.pucPhotos,
+          insurancePhotos: props.finalData.data.insurancePhotos,
+          vehiclePhotos: props.finalData.data.vehiclePhotos,
+        },
+      }
+      if (await addVehicleAction(newVehicleData)) {
+        props.onNext()
+      } else {
+        //If failed, Take back to vehicle onboarding page and show error
+        toast.error(t("APIError"))
+        router.replace("/onboarding/add-vehicle")
+      }
+    })
   }
 
   return (
@@ -125,15 +128,13 @@ export function AddVehicleConfirm(props: {
             )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step5Actions">
-          <OnboardingStepPrimaryAction
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          <OnboardingStepPrimaryAction disabled={isPending}>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction
             onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </OnboardingStepSecondaryAction>

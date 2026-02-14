@@ -540,7 +540,7 @@ export const userServices = {
   },
 
   //Inactivate User
-  async inactivateUser(id: string, role?: UserRolesEnum) {
+  async inactivateUser(id: string, role: UserRolesEnum) {
     const user = await userRepository.updateUserStatus(
       id,
       UserStatusEnum.INACTIVE,

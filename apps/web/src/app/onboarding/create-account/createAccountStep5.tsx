@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { createOwnerAccountAction } from "@/app/actions/users/createOwnerAccountAction"
+import { useTransition } from "react"
 
 export function CreateAccountConfirm(props: {
   onNext: () => void
@@ -24,46 +25,49 @@ export function CreateAccountConfirm(props: {
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Confirm")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const formData = useForm<CreateOwnerAccountRequestType>()
   //Submit actions
   const onSubmit = async () => {
-    // Create Agency and Owner Account
-    const newAccountData: CreateOwnerAccountRequestType = {
-      agency: {
-        businessEmail: props.finalData.agency.businessEmail,
-        businessPhone: props.finalData.agency.businessPhone,
-        businessName: props.finalData.agency.businessName,
-        businessAddress: props.finalData.agency.businessAddress,
-        agencyCity: props.finalData.agency.agencyCity,
-        agencyState: props.finalData.agency.agencyState,
-        commissionRate: props.finalData.agency.commissionRate,
-        logo: props.finalData.agency.logo,
-      },
-      owner: {
-        email: props.finalData.owner.email,
-        phone: props.finalData.owner.phone,
-        name: props.finalData.owner.name,
-        password: props.finalData.owner.password,
-        photos: props.finalData.owner.photos,
-      },
-    }
+    startTransition(async () => {
+      // Create Agency and Owner Account
+      const newAccountData: CreateOwnerAccountRequestType = {
+        agency: {
+          businessEmail: props.finalData.agency.businessEmail,
+          businessPhone: props.finalData.agency.businessPhone,
+          businessName: props.finalData.agency.businessName,
+          businessAddress: props.finalData.agency.businessAddress,
+          agencyCity: props.finalData.agency.agencyCity,
+          agencyState: props.finalData.agency.agencyState,
+          commissionRate: props.finalData.agency.commissionRate,
+          logo: props.finalData.agency.logo,
+        },
+        owner: {
+          email: props.finalData.owner.email,
+          phone: props.finalData.owner.phone,
+          name: props.finalData.owner.name,
+          password: props.finalData.owner.password,
+          photos: props.finalData.owner.photos,
+        },
+      }
 
-    const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
-    if (createdOwnerAccount) {
-      //If success
-      //Login the user
-      await loginAction(
-        createdOwnerAccount.userId,
-        props.finalData.owner.password,
-      )
-      //Move to next step
-      props.onNext()
-    } else {
-      //If failed, Take to onboarding page and show error
-      toast.error(t("APIError"))
-      router.replace("/onboarding")
-    }
+      const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
+      if (createdOwnerAccount) {
+        //If success
+        //Login the user
+        await loginAction(
+          createdOwnerAccount.userId,
+          props.finalData.owner.password,
+        )
+        //Move to next step
+        props.onNext()
+      } else {
+        //If failed, Take to onboarding page and show error
+        toast.error(t("APIError"))
+        router.replace("/onboarding")
+      }
+    })
   }
   return (
     <Form {...formData}>
@@ -113,15 +117,13 @@ export function CreateAccountConfirm(props: {
           )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step5Actions">
-          <OnboardingStepPrimaryAction
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          <OnboardingStepPrimaryAction disabled={isPending}>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction
             onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </OnboardingStepSecondaryAction>

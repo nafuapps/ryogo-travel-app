@@ -14,6 +14,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 type ChangePasswordPageComponentProps = {
   userId: string
+  agencyId: string
   role: UserRolesEnum
 }
 export default function ChangePasswordPageComponent(
@@ -31,7 +32,11 @@ export default function ChangePasswordPageComponent(
           </OnboardingStepHeaderTopLine>
         </OnboardingStepHeader>
         <H5Grey>{t("Subtitle")}</H5Grey>
-        <ChangePasswordStep1 userId={props.userId} role={props.role} />
+        <ChangePasswordStep1
+          userId={props.userId}
+          role={props.role}
+          agencyId={props.agencyId}
+        />
       </OnboardingStepPage>
       <Sidebar side="right" collapsible={isMobile ? "offcanvas" : "none"}>
         <SidebarContent>

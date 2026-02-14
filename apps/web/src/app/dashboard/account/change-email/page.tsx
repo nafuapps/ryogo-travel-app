@@ -22,6 +22,7 @@ export default async function ChangeEmailAccountPage() {
       <ChangeEmailAccountComponent
         usersWithPhoneRole={usersWithPhoneRole}
         userId={user.userId}
+        agencyId={user.agencyId}
       />
     </div>
   )

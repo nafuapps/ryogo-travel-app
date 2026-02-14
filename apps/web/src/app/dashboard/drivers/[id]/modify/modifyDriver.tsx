@@ -18,6 +18,7 @@ import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
+import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
@@ -29,6 +30,7 @@ export default function ModifyDriverPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyDriver")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyDriverSchema = z.object({
     address: z
@@ -90,22 +92,25 @@ export default function ModifyDriverPageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyDriverType) {
-    const modifyDriverData = {
-      address: data.address,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
-      licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
-    }
-    const modifiedDriver = await modifyDriverAction(driver.id, modifyDriverData)
-    if (modifiedDriver) {
-      router.replace(`/dashboard/drivers/${driver.id}`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const modifyDriverData = {
+        address: data.address,
+        canDriveVehicleTypes: data.canDriveVehicleTypes,
+        defaultAllowancePerDay: data.defaultAllowancePerDay,
+        licenseNumber: data.licenseNumber,
+        licenseExpiresOn: data.licenseExpiresOn,
+        licensePhotos: data.licensePhotos,
+      }
+      if (
+        await modifyDriverAction(driver.id, driver.agencyId, modifyDriverData)
+      ) {
+        router.replace(`/dashboard/drivers/${driver.id}`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
 
   return (
@@ -158,17 +163,17 @@ export default function ModifyDriverPageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

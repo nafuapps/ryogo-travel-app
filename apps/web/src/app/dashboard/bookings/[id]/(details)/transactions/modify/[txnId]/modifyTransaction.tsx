@@ -26,14 +26,18 @@ import DeleteTransactionAlertButton from "@/app/dashboard/components/buttons/del
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
 import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
+import { useTransition } from "react"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
+  assignedUserId,
 }: {
   transactionDetails: NonNullable<FindTransactionDetailsByIdType>
+  assignedUserId: string
 }) {
   const t = useTranslations("Dashboard.ModifyTransaction")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyTransactionSchema = z.object({
     type: z.enum(TransactionTypesEnum).nonoptional(t("Field1.Error1")),
@@ -85,20 +89,26 @@ export default function ModifyTransactionPageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyTransactionType) {
-    if (
-      await modifyTransactionAction({
-        ...values,
-        transactionId: transactionDetails.id,
-        bookingId: transactionDetails.bookingId,
-      })
-    ) {
-      toast.success(t("Success"))
-      router.replace(
-        `/dashboard/bookings/${transactionDetails.bookingId}/transactions`,
-      )
-    } else {
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      if (
+        await modifyTransactionAction(
+          {
+            transactionId: transactionDetails.id,
+            bookingId: transactionDetails.bookingId,
+            ...values,
+          },
+          transactionDetails.agencyId,
+          assignedUserId,
+        )
+      ) {
+        toast.success(t("Success"))
+        router.replace(
+          `/dashboard/bookings/${transactionDetails.bookingId}/transactions`,
+        )
+      } else {
+        toast.error(t("Error"))
+      }
+    })
   }
 
   return (
@@ -153,20 +163,22 @@ export default function ModifyTransactionPageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <DeleteTransactionAlertButton
             bookingId={transactionDetails.bookingId}
             transactionId={transactionDetails.id}
+            agencyId={transactionDetails.agencyId}
+            assignedUserId={assignedUserId}
           />
           <Button
             variant={"outline"}
             size={"default"}
             type="button"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
             onClick={() => router.back()}
           >
             {t("CancelCTA")}

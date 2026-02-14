@@ -1,5 +1,6 @@
 "use server"
 
+import { getCurrentUser } from "@/lib/auth"
 import {
   generateInsurancePhotoPathName,
   generatePUCPhotoPathName,
@@ -8,9 +9,20 @@ import {
 } from "@/lib/utils"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addVehicleAction(data: AddVehicleRequestType) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
+      currentUser.userRole,
+    ) ||
+    currentUser.agencyId !== data.agencyId
+  ) {
+    return
+  }
   const vehicle = await vehicleServices.addVehicle(data)
   if (!vehicle) return
 

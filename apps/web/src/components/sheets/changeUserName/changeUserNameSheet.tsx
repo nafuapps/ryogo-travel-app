@@ -25,10 +25,12 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default function ChangeUserNameSheet({
   userId,
+  agencyId,
   userName,
   userRole,
 }: {
   userId: string
+  agencyId: string
   userName: string
   userRole: UserRolesEnum
 }) {
@@ -51,7 +53,7 @@ export default function ChangeUserNameSheet({
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeUserNameAction(userId, data.name, userRole)) {
+      if (await changeUserNameAction(userId, agencyId, data.name, userRole)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

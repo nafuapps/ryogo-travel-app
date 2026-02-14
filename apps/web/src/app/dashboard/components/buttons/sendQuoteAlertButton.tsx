@@ -10,6 +10,8 @@ import { Spinner } from "@/components/ui/spinner"
 
 type SendQuoteAlertButtonProps = {
   bookingId: string
+  agencyId: string
+  assignedUserId: string
 }
 export default function SendQuoteAlertButton(props: SendQuoteAlertButtonProps) {
   const t = useTranslations("Dashboard.Buttons.SendQuote")
@@ -21,7 +23,13 @@ export default function SendQuoteAlertButton(props: SendQuoteAlertButtonProps) {
   // Send quote to customer over whatsapp
   async function sendQuote() {
     startSendTransition(async () => {
-      if (await sendQuoteAction(props.bookingId)) {
+      if (
+        await sendQuoteAction(
+          props.bookingId,
+          props.agencyId,
+          props.assignedUserId,
+        )
+      ) {
         toast.success(t("Success"))
         setQuoteSent(true)
       } else {

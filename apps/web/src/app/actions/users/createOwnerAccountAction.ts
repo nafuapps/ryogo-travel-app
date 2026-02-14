@@ -2,6 +2,7 @@
 
 import { OnboardOwnerEmailTemplate } from "@/components/email/onboardOwnerEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
+import { getCurrentUser } from "@/lib/auth"
 import {
   generateAgencyLogoPathName,
   generateUserPhotoPathName,
@@ -9,11 +10,20 @@ import {
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
+import { redirect, RedirectType } from "next/navigation"
 
 export async function createOwnerAccountAction(
   data: CreateOwnerAccountRequestType,
 ) {
+  const currentUser = await getCurrentUser()
+  if (currentUser) {
+    if (currentUser.userRole === UserRolesEnum.DRIVER) {
+      redirect("/rider", RedirectType.replace)
+    }
+    redirect("/dashboard", RedirectType.replace)
+  }
   const user = await userServices.addAgencyAndOwnerAccount(data)
   if (!user) return
 

@@ -68,7 +68,10 @@ export default async function VehicleDetailsPageComponent({
                 // eslint-disable-next-line react-hooks/static-components
                 <IconComponent className="size-20 lg:size-24 text-slate-400" />
               )}
-              <ChangeVehiclePhotoSheet vehicleId={vehicle.id} />
+              <ChangeVehiclePhotoSheet
+                vehicleId={vehicle.id}
+                agencyId={vehicle.agencyId}
+              />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
               <H4>{vehicle.vehicleNumber}</H4>
@@ -251,10 +254,16 @@ export default async function VehicleDetailsPageComponent({
           </Link>
           {vehicle.status !== VehicleStatusEnum.INACTIVE &&
             vehicle.status !== VehicleStatusEnum.ON_TRIP && (
-              <InactivateVehicleAlertButton vehicleId={vehicle.id} />
+              <InactivateVehicleAlertButton
+                vehicleId={vehicle.id}
+                agencyId={vehicle.agencyId}
+              />
             )}
           {vehicle.status === VehicleStatusEnum.INACTIVE && (
-            <ActivateVehicleAlertButton vehicleId={vehicle.id} />
+            <ActivateVehicleAlertButton
+              vehicleId={vehicle.id}
+              agencyId={vehicle.agencyId}
+            />
           )}
         </div>
       </div>

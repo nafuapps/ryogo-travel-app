@@ -1,5 +1,6 @@
 "use server"
 
+import { getCurrentUser } from "@/lib/auth"
 import { DARK_MODE_COOKIE_NAME, LOCALE_COOKIE_NAME } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
@@ -7,16 +8,25 @@ import { cookies } from "next/headers"
 
 export async function changeUserPreferencesAction(
   userId: string,
+  agencyId: string,
   data: { prefersDarkTheme: boolean; languagePref: UserLangEnum },
 ) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    currentUser.userId !== userId ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
+  }
   const user = await userServices.changeUserPreferences(
     userId,
     data.prefersDarkTheme,
     data.languagePref,
   )
-  if (!user) return false
+  if (!user) return
   const store = await cookies()
   store.set(LOCALE_COOKIE_NAME, data.languagePref)
   store.set(DARK_MODE_COOKIE_NAME, data.prefersDarkTheme ? "true" : "false")
-  return true
+  return user
 }

@@ -11,6 +11,7 @@ import { inactivateCustomerAction } from "@/app/actions/customers/inactivateCust
 
 type InactivateCustomerAlertButtonProps = {
   customerId: string
+  agencyId: string
 }
 export default function InactivateCustomerAlertButton(
   props: InactivateCustomerAlertButtonProps,
@@ -21,7 +22,7 @@ export default function InactivateCustomerAlertButton(
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateCustomerAction(props.customerId)) {
+      if (await inactivateCustomerAction(props.customerId, props.agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

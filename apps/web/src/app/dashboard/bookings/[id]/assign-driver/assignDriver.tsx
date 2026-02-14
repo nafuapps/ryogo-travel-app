@@ -37,7 +37,14 @@ export default function AssignDriverPageComponent({
   const handleAssignDriver = async () => {
     if (selectedDriverId) {
       startTransition(async () => {
-        if (await assignDriverAction(bookingId, selectedDriverId)) {
+        if (
+          await assignDriverAction(
+            bookingId,
+            selectedDriverId,
+            booking.agencyId,
+            booking.assignedUserId,
+          )
+        ) {
           toast.success(t("Success"))
           router.replace(`/dashboard/bookings/${bookingId}`)
         } else {

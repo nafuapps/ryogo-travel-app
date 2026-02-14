@@ -1,7 +1,8 @@
 "use server"
+import { getCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { TripLogTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function midTripAction(data: {
@@ -15,6 +16,14 @@ export async function midTripAction(data: {
   latLong?: string
   tripLogPhoto?: FileList
 }) {
+  const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    currentUser.userRole !== UserRolesEnum.DRIVER ||
+    currentUser.agencyId !== data.agencyId
+  ) {
+    return
+  }
   // Create Mid Trip Log
   const newTripLog = await tripLogServices.addTripLog({
     driverId: data.driverId,
@@ -26,7 +35,7 @@ export async function midTripAction(data: {
     remarks: data.remarks,
     latLong: data.latLong,
   })
-  if (!newTripLog) return false
+  if (!newTripLog) return
 
   //Upload triplog photo if attached
   if (data.tripLogPhoto && data.tripLogPhoto[0]) {
@@ -43,5 +52,5 @@ export async function midTripAction(data: {
       uploadedFile.path,
     )
   }
-  return true
+  return newTripLog
 }

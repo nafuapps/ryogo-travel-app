@@ -14,7 +14,10 @@ export default async function ChangePasswordMyProfilePage() {
   return (
     <div className={mainClassName}>
       <RiderHeader pathName={"/rider/myProfile/change-password"} />
-      <ChangePasswordMyProfileComponent userId={user.userId} />
+      <ChangePasswordMyProfileComponent
+        userId={user.userId}
+        agencyId={user.agencyId}
+      />
     </div>
   )
 }

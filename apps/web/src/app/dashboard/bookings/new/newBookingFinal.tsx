@@ -37,6 +37,7 @@ import {
 import { Alert } from "@/components/ui/alert"
 import NewBookingTripInfo from "./newBookingTripInfo"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
+import { useTransition } from "react"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -47,6 +48,8 @@ type NewBookingFinalProps = {
 export default function NewBookingFinal(props: NewBookingFinalProps) {
   const t = useTranslations("Dashboard.NewBooking.Form.Final")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<NewBookingFormDataType>()
 
   //Calculate final price
@@ -54,55 +57,60 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
 
   //Final form submit to create a new booking
   const onSubmit = async () => {
-    const newBookingData: CreateNewBookingRequestType = {
-      agencyId: props.agencyId,
-      userId: props.userId,
-      existingCustomerId: props.newBookingFormData.existingCustomer
-        ? props.newBookingFormData.existingCustomer.id
-        : undefined,
-      customerPhone: props.newBookingFormData.customerPhone,
-      newCustomerName: props.newBookingFormData.newCustomerName,
-      newCustomerLocationState:
-        props.newBookingFormData.newCustomerLocationState,
-      newCustomerLocationCity: props.newBookingFormData.newCustomerLocationCity,
-      tripSourceLocationState: props.newBookingFormData.tripSourceLocationState,
-      tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
-      tripDestinationLocationState:
-        props.newBookingFormData.tripDestinationLocationState,
-      tripDestinationLocationCity:
-        props.newBookingFormData.tripDestinationLocationCity!,
-      routeId: props.newBookingFormData.routeId,
-      sourceId: props.newBookingFormData.sourceId,
-      destinationId: props.newBookingFormData.destinationId,
-      tripType: props.newBookingFormData.tripType,
-      tripStartDate: props.newBookingFormData.tripStartDate,
-      tripEndDate: props.newBookingFormData.tripEndDate,
-      tripPassengers: props.newBookingFormData.tripPassengers,
-      tripNeedsAC: props.newBookingFormData.tripNeedsAC,
-      assignedDriverId: props.newBookingFormData.assignedDriverId,
-      assignedVehicleId: props.newBookingFormData.assignedVehicleId,
-      selectedRatePerKm: props.newBookingFormData.selectedRatePerKm!,
-      selectedDistance: props.newBookingFormData.selectedDistance!,
-      selectedAcChargePerDay:
-        props.newBookingFormData.selectedAcChargePerDay ?? 0,
-      selectedAllowancePerDay:
-        props.newBookingFormData.selectedAllowancePerDay!,
-      selectedCommissionRate: props.newBookingFormData.selectedCommissionRate!,
-      finalAmount: finalAmount.totalAmount,
-      totalDistance: finalAmount.totalDistance,
-      totalVehicleRate: finalAmount.totalVehiclePrice,
-      totalAcCharge: finalAmount.totalAcPrice,
-      totalDriverAllowance: finalAmount.totalDriverAllowance,
-      totalCommission: finalAmount.totalCommission,
-    }
-    const createdBooking = await newBookingAction(newBookingData)
-    if (createdBooking) {
-      router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`)
-      toast.success(t("Success"))
-    } else {
-      router.replace(`/dashboard/bookings`)
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const newBookingData: CreateNewBookingRequestType = {
+        agencyId: props.agencyId,
+        userId: props.userId,
+        existingCustomerId: props.newBookingFormData.existingCustomer
+          ? props.newBookingFormData.existingCustomer.id
+          : undefined,
+        customerPhone: props.newBookingFormData.customerPhone,
+        newCustomerName: props.newBookingFormData.newCustomerName,
+        newCustomerLocationState:
+          props.newBookingFormData.newCustomerLocationState,
+        newCustomerLocationCity:
+          props.newBookingFormData.newCustomerLocationCity,
+        tripSourceLocationState:
+          props.newBookingFormData.tripSourceLocationState,
+        tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
+        tripDestinationLocationState:
+          props.newBookingFormData.tripDestinationLocationState,
+        tripDestinationLocationCity:
+          props.newBookingFormData.tripDestinationLocationCity!,
+        routeId: props.newBookingFormData.routeId,
+        sourceId: props.newBookingFormData.sourceId,
+        destinationId: props.newBookingFormData.destinationId,
+        tripType: props.newBookingFormData.tripType,
+        tripStartDate: props.newBookingFormData.tripStartDate,
+        tripEndDate: props.newBookingFormData.tripEndDate,
+        tripPassengers: props.newBookingFormData.tripPassengers,
+        tripNeedsAC: props.newBookingFormData.tripNeedsAC,
+        assignedDriverId: props.newBookingFormData.assignedDriverId,
+        assignedVehicleId: props.newBookingFormData.assignedVehicleId,
+        selectedRatePerKm: props.newBookingFormData.selectedRatePerKm!,
+        selectedDistance: props.newBookingFormData.selectedDistance!,
+        selectedAcChargePerDay:
+          props.newBookingFormData.selectedAcChargePerDay ?? 0,
+        selectedAllowancePerDay:
+          props.newBookingFormData.selectedAllowancePerDay!,
+        selectedCommissionRate:
+          props.newBookingFormData.selectedCommissionRate!,
+        finalAmount: finalAmount.totalAmount,
+        totalDistance: finalAmount.totalDistance,
+        totalVehicleRate: finalAmount.totalVehiclePrice,
+        totalAcCharge: finalAmount.totalAcPrice,
+        totalDriverAllowance: finalAmount.totalDriverAllowance,
+        totalCommission: finalAmount.totalCommission,
+      }
+      const createdBooking = await newBookingAction(newBookingData)
+      if (createdBooking) {
+        router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`)
+        toast.success(t("Success"))
+      } else {
+        router.replace(`/dashboard/bookings`)
+        toast.error(t("Error"))
+      }
+    })
   }
 
   return (
@@ -180,17 +188,17 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={isPending}
           >
-            {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"lg"}
             type="button"
             onClick={props.onPrev}
-            disabled={form.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("Back")}
           </Button>

@@ -38,15 +38,11 @@ export async function encrypt(payload: SessionPayload) {
 }
 
 //Decrypt session JWT to get session data
-export async function decrypt(session: string | undefined = "") {
-  try {
-    const { payload } = await jwtVerify(session, encodedKey, {
-      algorithms: ["HS256"],
-    })
-    return payload
-  } catch (error) {
-    console.log(error, "Failed to verify session")
-  }
+export async function decrypt(session: string = "") {
+  const { payload } = await jwtVerify(session, encodedKey, {
+    algorithms: ["HS256"],
+  })
+  return payload
 }
 
 //Get session from DB by token
@@ -161,7 +157,7 @@ export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
   const payload = (await decrypt(session)) as SessionPayload | undefined
 
   if (!session || !payload) {
-    return null
+    return
   }
 
   // 2. Update user status in payload

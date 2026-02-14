@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import { SignupAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
+import { useTransition } from "react"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -34,6 +35,7 @@ export default function SignupPageComponent() {
   type FormFields = z.infer<typeof formSchema>
 
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
@@ -44,19 +46,21 @@ export default function SignupPageComponent() {
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    const users = await apiClient<SignupAPIResponseType>(
-      `/api/auth/signup?phone=${data.phoneNumber}`,
-      {
-        method: "GET",
+    startTransition(async () => {
+      const users = await apiClient<SignupAPIResponseType>(
+        `/api/auth/signup?phone=${data.phoneNumber}`,
+        {
+          method: "GET",
+        },
+      )
+      if (users.length > 0) {
+        // If found, go to existing account page
+        router.push(`/auth/signup/${data.phoneNumber}`)
+      } else {
+        // else, go to onboarding
+        router.push("/onboarding")
       }
-    )
-    if (users.length > 0) {
-      // If found, go to existing account page
-      router.push(`/auth/signup/${data.phoneNumber}`)
-    } else {
-      // else, go to onboarding
-      router.push("/onboarding")
-    }
+    })
   }
 
   return (
@@ -89,13 +93,9 @@ export default function SignupPageComponent() {
             )}
           />
           <div id="SignupActions" className="flex flex-col gap-4 w-full">
-            <Button
-              variant={"default"}
-              size={"lg"}
-              disabled={methods.formState.isSubmitting}
-            >
-              {methods.formState.isSubmitting && <Spinner />}
-              {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            <Button variant={"default"} size={"lg"} disabled={isPending}>
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
             </Button>
           </div>
         </form>

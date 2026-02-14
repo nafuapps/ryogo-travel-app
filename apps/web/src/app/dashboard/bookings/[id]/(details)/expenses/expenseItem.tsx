@@ -78,6 +78,7 @@ export default async function ExpenseItem({
               <ExpenseApprovalButton
                 expId={expId}
                 isApproved={expense.isApproved}
+                agencyId={expense.agencyId}
               />
             )}
             {canModifyExpense && (

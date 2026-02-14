@@ -25,8 +25,10 @@ import { useRouter } from "next/navigation"
 
 export default function ChangeVehiclePhotoSheet({
   vehicleId,
+  agencyId,
 }: {
   vehicleId: string
+  agencyId: string
 }) {
   const t = useTranslations("Dashboard.VehicleDetails.ChangePhoto")
   const [isPending, startTransition] = useTransition()
@@ -62,7 +64,9 @@ export default function ChangeVehiclePhotoSheet({
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeVehiclePhotoAction(vehicleId, data.vehiclePhotos)) {
+      if (
+        await changeVehiclePhotoAction(vehicleId, agencyId, data.vehiclePhotos)
+      ) {
         toast.success(t("Success"))
         router.refresh()
       } else {

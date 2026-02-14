@@ -23,7 +23,13 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserPhotoAction } from "../../../app/actions/users/changeUserPhotoAction"
 
-export default function ChangeUserPhotoSheet({ userId }: { userId: string }) {
+export default function ChangeUserPhotoSheet({
+  userId,
+  agencyId,
+}: {
+  userId: string
+  agencyId: string
+}) {
   const t = useTranslations("Sheets.ChangePhoto")
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -58,7 +64,7 @@ export default function ChangeUserPhotoSheet({ userId }: { userId: string }) {
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeUserPhotoAction(userId, data.accountPhotos)) {
+      if (await changeUserPhotoAction(userId, agencyId, data.accountPhotos)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

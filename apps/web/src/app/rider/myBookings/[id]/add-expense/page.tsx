@@ -38,6 +38,7 @@ export default async function RiderAddExpensePage({
         bookingId={bookingDetails.id}
         agencyId={bookingDetails.agencyId}
         userId={driver.userId}
+        assignedUserId={bookingDetails.assignedUserId}
       />
     </div>
   )

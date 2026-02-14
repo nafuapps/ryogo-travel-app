@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
+import { useTransition } from "react"
 // import { LOGIN_PASSWORD_ERROR } from "@ryogo-travel-app/api/services/user.services"
 
 // TODO: Add a feature to show the user had recently reset password
@@ -39,6 +40,7 @@ export default function LoginPasswordPageComponent({
   type FormFields = z.infer<typeof formSchema>
 
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   // For managing form data and validation
   const methods = useForm<FormFields>({
@@ -47,23 +49,31 @@ export default function LoginPasswordPageComponent({
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    const loginResponse = await loginAction(userId, data.password)
-    if (loginResponse.error === "passwordNotMatching") {
-      // Show password match error
-      methods.setError("password", { type: "manual", message: t("APIError1") })
-    } else if (loginResponse.error) {
-      // Show user not found error
-      methods.setError("password", { type: "manual", message: t("APIError2") })
-    } else {
-      //Login user
-      if (loginResponse.userRole === UserRolesEnum.DRIVER) {
-        //Redirect to Rider page
-        router.replace("/rider")
+    startTransition(async () => {
+      const loginResponse = await loginAction(userId, data.password)
+      if (loginResponse.error === "passwordNotMatching") {
+        // Show password match error
+        methods.setError("password", {
+          type: "manual",
+          message: t("APIError1"),
+        })
+      } else if (loginResponse.error) {
+        // Show user not found error
+        methods.setError("password", {
+          type: "manual",
+          message: t("APIError2"),
+        })
       } else {
-        //Redirect to Dashboard
-        router.replace("/dashboard")
+        //Login user
+        if (loginResponse.userRole === UserRolesEnum.DRIVER) {
+          //Redirect to Rider page
+          router.replace("/rider")
+        } else {
+          //Redirect to Dashboard
+          router.replace("/dashboard")
+        }
       }
-    }
+    })
   }
 
   return (
@@ -96,13 +106,9 @@ export default function LoginPasswordPageComponent({
             )}
           />
           <div id="LoginPasswordActions" className="flex flex-col gap-4 w-full">
-            <Button
-              variant={"default"}
-              size={"lg"}
-              disabled={methods.formState.isSubmitting}
-            >
-              {methods.formState.isSubmitting && <Spinner />}
-              {methods.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            <Button variant={"default"} size={"lg"} disabled={isPending}>
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
             </Button>
             <Button
               variant={"secondary"}

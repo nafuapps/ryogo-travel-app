@@ -17,7 +17,8 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { newVehicleRepairAction } from "../../../../../actions/vehicles/newVehicleRepairAction"
+import { newVehicleRepairAction } from "@/app/actions/vehicles/newVehicleRepairAction"
+import { useTransition } from "react"
 
 export default function NewVehicleRepairPageComponent({
   userId,
@@ -30,6 +31,7 @@ export default function NewVehicleRepairPageComponent({
 }) {
   const t = useTranslations("Dashboard.NewVehicleRepair")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const newDriverleaveSchema = z
     .object({
@@ -68,24 +70,26 @@ export default function NewVehicleRepairPageComponent({
 
   //Form submit
   async function onSubmit(values: NewVehicleRepairType) {
-    const newLeave: InsertVehicleRepairType = {
-      agencyId: agencyId,
-      vehicleId: vehicleId,
-      addedByUserId: userId,
-      startDate: values.startDate,
-      endDate: values.endDate,
-      isCompleted: values.isCompleted,
-      remarks: values.remarks,
-      cost: values.cost,
-    }
-    const createdLeave = await newVehicleRepairAction(newLeave)
-    if (createdLeave) {
-      router.replace(`/dashboard/vehicles/${vehicleId}/repairs`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const newLeave: InsertVehicleRepairType = {
+        agencyId: agencyId,
+        vehicleId: vehicleId,
+        addedByUserId: userId,
+        startDate: values.startDate,
+        endDate: values.endDate,
+        isCompleted: values.isCompleted,
+        remarks: values.remarks,
+        cost: values.cost,
+      }
+      const createdLeave = await newVehicleRepairAction(newLeave)
+      if (createdLeave) {
+        router.replace(`/dashboard/vehicles/${vehicleId}/repairs`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
   return (
     <div id="NewVehicleRepairPage" className={pageClassName}>
@@ -123,17 +127,17 @@ export default function NewVehicleRepairPageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("Back")}
           </Button>

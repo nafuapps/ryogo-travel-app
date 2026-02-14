@@ -15,7 +15,8 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { changeUserPhoneAction } from "../../../../actions/users/changeUserPhoneAction"
+import { changeUserPhoneAction } from "@/app/actions/users/changeUserPhoneAction"
+import { useTransition } from "react"
 
 export default function ChangeUserPhonePageComponent({
   user,
@@ -26,6 +27,7 @@ export default function ChangeUserPhonePageComponent({
 }) {
   const t = useTranslations("Dashboard.UserDetails.ChangePhone")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyUserSchema = z.object({
     newPhone: z.string().length(10, t("Field1.Error1")),
@@ -53,18 +55,20 @@ export default function ChangeUserPhonePageComponent({
         message: t("Field1.Error3"),
       })
     } else {
-      const modifiedUser = await changeUserPhoneAction(
-        user.id,
-        data.newPhone,
-        user.userRole,
-      )
-      if (modifiedUser) {
-        router.replace(`/dashboard/users/${user.id}`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
+      startTransition(async () => {
+        const modifiedUser = await changeUserPhoneAction(
+          user.id,
+          data.newPhone,
+          user.userRole,
+        )
+        if (modifiedUser) {
+          router.replace(`/dashboard/users/${user.id}`)
+          toast.success(t("Success"))
+        } else {
+          router.back()
+          toast.error(t("Error"))
+        }
+      })
     }
   }
 
@@ -87,17 +91,17 @@ export default function ChangeUserPhonePageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

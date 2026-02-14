@@ -4,6 +4,7 @@ export type AddExpenseRequestType = {
   agencyId: string
   bookingId: string
   userId: string
+  assignedUserId: string
   type: ExpenseTypesEnum
   amount: number
   remarks?: string | undefined

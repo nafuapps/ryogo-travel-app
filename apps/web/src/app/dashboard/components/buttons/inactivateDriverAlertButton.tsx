@@ -11,6 +11,7 @@ import { inactivateDriverAction } from "@/app/actions/drivers/inactivateDriverAc
 
 type InactivateDriverAlertButtonProps = {
   driverId: string
+  agencyId: string
 }
 export default function InactivateDriverAlertButton(
   props: InactivateDriverAlertButtonProps,
@@ -21,7 +22,7 @@ export default function InactivateDriverAlertButton(
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateDriverAction(props.driverId)) {
+      if (await inactivateDriverAction(props.driverId, props.agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

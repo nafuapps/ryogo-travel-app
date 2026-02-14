@@ -38,7 +38,13 @@ export default async function AssignVehicleBookingPage({
     booking.status === BookingStatusEnum.LEAD &&
     new Date(booking.endDate) < new Date()
   ) {
-    if (await cancelBookingAction(booking.id)) {
+    if (
+      await cancelBookingAction(
+        booking.id,
+        booking.agencyId,
+        booking.assignedUserId,
+      )
+    ) {
       redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
     } else {
       redirect(`/dashboard/bookings`, RedirectType.replace)

@@ -11,7 +11,7 @@ import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { useTranslations } from "next-intl"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
@@ -33,6 +33,7 @@ export default function ModifyAgencyPageForm({
 }) {
   const t = useTranslations("Dashboard.ModifyAgency")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
   const schema = z.object({
     agencyName: z
       .string()
@@ -96,14 +97,15 @@ export default function ModifyAgencyPageForm({
       agencyState: data.agencyState,
       agencyCity: data.agencyCity,
     }
-    const modifiedAgency = await modifyAgencyAction(modifyAgencyData)
-    if (modifiedAgency) {
-      router.replace(`/dashboard/account/agency`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      if (await modifyAgencyAction(modifyAgencyData)) {
+        router.replace(`/dashboard/account/agency`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
 
   const data: Record<string, string[]> = stateCityData
@@ -176,17 +178,17 @@ export default function ModifyAgencyPageForm({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("SecondaryCTA")}
           </Button>

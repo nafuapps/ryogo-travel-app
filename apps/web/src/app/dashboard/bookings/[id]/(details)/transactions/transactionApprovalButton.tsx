@@ -15,15 +15,17 @@ import { changeTransactionApprovalAction } from "@/app/actions/transactions/chan
 export function TransactionApprovalButton({
   txnId,
   isApproved,
+  agencyId,
 }: {
   txnId: string
   isApproved: boolean
+  agencyId: string
 }) {
   const t = useTranslations("Dashboard.BookingTransactions")
   const router = useRouter()
 
   async function approveTransaction() {
-    if (await changeTransactionApprovalAction(txnId, true)) {
+    if (await changeTransactionApprovalAction(txnId, true, agencyId)) {
       toast.success(t("ApproveSuccess"))
     } else {
       toast.success(t("ApproveError"))
@@ -32,7 +34,7 @@ export function TransactionApprovalButton({
   }
 
   async function rejectTransaction() {
-    if (await changeTransactionApprovalAction(txnId, false)) {
+    if (await changeTransactionApprovalAction(txnId, false, agencyId)) {
       toast.info(t("RejectSuccess"))
     } else {
       toast.success(t("RejectError"))

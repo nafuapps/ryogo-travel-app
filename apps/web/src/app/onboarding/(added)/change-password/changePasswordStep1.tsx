@@ -15,13 +15,16 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
+import { useTransition } from "react"
 
 export function ChangePasswordStep1(props: {
   userId: string
+  agencyId: string
   role: UserRolesEnum
 }) {
   const t = useTranslations("Onboarding.ChangePasswordPage.Step1")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const step1Schema = z
     .object({
@@ -53,29 +56,32 @@ export function ChangePasswordStep1(props: {
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    //Change password in DB
-    const result = await changePasswordAction(
-      props.userId,
-      data.oldPassword,
-      data.newPassword,
-      true,
-    )
-    if (result) {
-      //If success, redirect
-      toast.success(t("Success"))
-      if (props.role === UserRolesEnum.DRIVER) {
-        router.replace("/rider")
+    startTransition(async () => {
+      //Change password in DB
+      const result = await changePasswordAction(
+        props.userId,
+        props.agencyId,
+        data.oldPassword,
+        data.newPassword,
+        true,
+      )
+      if (result) {
+        //If success, redirect
+        toast.success(t("Success"))
+        if (props.role === UserRolesEnum.DRIVER) {
+          router.replace("/rider")
+        } else {
+          router.replace("/dashboard")
+        }
       } else {
-        router.replace("/dashboard")
+        //If failed, show error
+        formData.setError("oldPassword", {
+          type: "manual",
+          message: t("APIError"),
+        })
+        // formData.reset();
       }
-    } else {
-      //If failed, show error
-      formData.setError("oldPassword", {
-        type: "manual",
-        message: t("APIError"),
-      })
-      // formData.reset();
-    }
+    })
   }
 
   return (
@@ -108,11 +114,9 @@ export function ChangePasswordStep1(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step1Actions">
-          <OnboardingStepPrimaryAction
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          <OnboardingStepPrimaryAction disabled={isPending}>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
         </OnboardingStepActions>
       </OnboardingStepForm>

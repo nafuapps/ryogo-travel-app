@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { modifyDriverLeaveAction } from "../../../../../../actions/drivers/modifyDriverLeaveAction"
+import { modifyDriverLeaveAction } from "@/app/actions/drivers/modifyDriverLeaveAction"
 import { Form } from "@/components/ui/form"
 import {
   DashboardDatePicker,
@@ -18,6 +18,7 @@ import {
 import { pageClassName } from "@/components/page/pageCommons"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
+import { useTransition } from "react"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -26,6 +27,7 @@ export default function ModifyDriverLeavePageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyDriverLeave")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const modifyDriverleaveSchema = z
     .object({
@@ -60,21 +62,22 @@ export default function ModifyDriverLeavePageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyDriverLeaveType) {
-    console.log(values)
-    const modifyLeave: Partial<InsertDriverLeaveType> = {
-      startDate: values.startDate,
-      endDate: values.endDate,
-      isCompleted: values.isCompleted,
-      remarks: values.remarks,
-    }
-    const modifiedLeave = await modifyDriverLeaveAction(leave.id, modifyLeave)
-    if (modifiedLeave) {
-      router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)
-      toast.success(t("Success"))
-    } else {
-      router.back()
-      toast.error(t("Error"))
-    }
+    startTransition(async () => {
+      const modifyLeave: Partial<InsertDriverLeaveType> = {
+        startDate: values.startDate,
+        endDate: values.endDate,
+        isCompleted: values.isCompleted,
+        remarks: values.remarks,
+      }
+      const modifiedLeave = await modifyDriverLeaveAction(leave.id, modifyLeave)
+      if (modifiedLeave) {
+        router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
+    })
   }
   return (
     <div id="ModifyDriverLeavePage" className={pageClassName}>
@@ -106,17 +109,17 @@ export default function ModifyDriverLeavePageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"lg"}
             type="button"
             onClick={() => router.back()}
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
             {t("Back")}
           </Button>

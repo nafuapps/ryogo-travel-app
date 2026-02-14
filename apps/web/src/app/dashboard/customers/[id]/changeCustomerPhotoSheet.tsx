@@ -25,8 +25,10 @@ import { useRouter } from "next/navigation"
 
 export default function ChangeCustomerPhotoSheet({
   customerId,
+  agencyId,
 }: {
   customerId: string
+  agencyId: string
 }) {
   const t = useTranslations("Dashboard.CustomerDetails.ChangePhoto")
   const [isPending, startTransition] = useTransition()
@@ -62,7 +64,13 @@ export default function ChangeCustomerPhotoSheet({
 
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      if (await changeCustomerPhotoAction(customerId, data.customerPhotos)) {
+      if (
+        await changeCustomerPhotoAction(
+          customerId,
+          data.customerPhotos,
+          agencyId,
+        )
+      ) {
         toast.success(t("Success"))
         router.refresh()
       } else {

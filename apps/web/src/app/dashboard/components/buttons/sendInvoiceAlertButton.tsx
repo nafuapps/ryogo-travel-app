@@ -10,6 +10,8 @@ import { Spinner } from "@/components/ui/spinner"
 
 type SendInvoiceAlertButtonProps = {
   bookingId: string
+  agencyId: string
+  assignedUserId: string
 }
 export default function SendInvoiceAlertButton(
   props: SendInvoiceAlertButtonProps,
@@ -23,7 +25,13 @@ export default function SendInvoiceAlertButton(
   // Send invoice to customer over whatsapp
   async function sendInvoice() {
     startSendTransition(async () => {
-      if (await sendInvoiceAction(props.bookingId)) {
+      if (
+        await sendInvoiceAction(
+          props.bookingId,
+          props.agencyId,
+          props.assignedUserId,
+        )
+      ) {
         toast.success(t("Success"))
         setInvoiceSent(true)
       } else {

@@ -19,18 +19,22 @@ import z from "zod"
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { addExpenseAction } from "@/app/actions/expenses/addExpenseAction"
+import { useTransition } from "react"
 
 export default function RiderAddExpensePageComponent({
   bookingId,
   userId,
   agencyId,
+  assignedUserId,
 }: {
   bookingId: string
   userId: string
   agencyId: string
+  assignedUserId: string
 }) {
   const t = useTranslations("Rider.AddRiderExpense")
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const newExpenseSchema = z.object({
     type: z.enum(ExpenseTypesEnum).nonoptional(t("Field1.Error1")),
@@ -75,19 +79,23 @@ export default function RiderAddExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: NewExpenseType) {
-    const addSuccess = await addExpenseAction({
-      agencyId,
-      bookingId,
-      userId,
-      ...values,
+    startTransition(async () => {
+      if (
+        await addExpenseAction({
+          agencyId,
+          bookingId,
+          userId,
+          assignedUserId,
+          ...values,
+        })
+      ) {
+        toast.success(t("Success"))
+        router.replace(`/rider/myBookings/${bookingId}`)
+      } else {
+        toast.error(t("Error"))
+        router.back()
+      }
     })
-    if (addSuccess) {
-      toast.success(t("Success"))
-      router.replace(`/rider/myBookings/${bookingId}`)
-    } else {
-      toast.error(t("Error"))
-      router.back()
-    }
   }
 
   return (
@@ -127,16 +135,16 @@ export default function RiderAddExpensePageComponent({
             variant={"default"}
             size={"lg"}
             type="submit"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"outline"}
             size={"default"}
             type="button"
-            disabled={formData.formState.isSubmitting}
+            disabled={isPending}
             onClick={() => router.back()}
           >
             {t("CancelCTA")}

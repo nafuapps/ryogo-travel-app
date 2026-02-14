@@ -16,12 +16,10 @@ import BookingPriceItem from "@/app/dashboard/components/bookings/bookingPriceIt
 import BookingSection from "@/app/dashboard/components/bookings/bookingSection"
 
 export default async function BookingDetailsPageComponent({
-  bookingId,
   bookingDetails,
   isOwner,
   isAssignedUser,
 }: {
-  bookingId: string
   bookingDetails: NonNullable<FindBookingDetailsByIdType>
   isOwner: boolean
   isAssignedUser: boolean
@@ -30,7 +28,7 @@ export default async function BookingDetailsPageComponent({
 
   return (
     <div id="BookingDetailsPage" className={pageClassName}>
-      <BookingDetailHeaderTabs id={bookingId} selectedTab="Details" />
+      <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Details" />
       <div
         id="BookingDetailsInfo"
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
@@ -59,7 +57,7 @@ export default async function BookingDetailsPageComponent({
               className="sm:col-span-2 xl:col-span-3"
             >
               <Link
-                href={`/dashboard/bookings/${bookingId}/assign-user`}
+                href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
                 className="w-full"
               >
                 {t("AssignAgent")}
@@ -201,7 +199,7 @@ export default async function BookingDetailsPageComponent({
               className="xl:col-span-3"
             >
               <Link
-                href={`/dashboard/bookings/${bookingId}/assign-vehicle`}
+                href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
                 className="w-full"
               >
                 {bookingDetails.assignedVehicle
@@ -229,7 +227,7 @@ export default async function BookingDetailsPageComponent({
               className="xl:col-span-3"
             >
               <Link
-                href={`/dashboard/bookings/${bookingId}/assign-driver`}
+                href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
                 className="w-full"
               >
                 {bookingDetails.assignedDriver
@@ -284,7 +282,9 @@ export default async function BookingDetailsPageComponent({
               bookingDetails.status === BookingStatusEnum.COMPLETED &&
                 !bookingDetails.isReconciled &&
                 isOwner && (
-                  <Link href={`/dashboard/bookings/${bookingId}/reconcile`}>
+                  <Link
+                    href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}
+                  >
                     <Button variant={"default"} className="w-full">
                       {t("Reconcile")}
                     </Button>
@@ -294,13 +294,21 @@ export default async function BookingDetailsPageComponent({
             {
               //Invoice can be sent for a completed booking only
               bookingDetails.status === BookingStatusEnum.COMPLETED && (
-                <SendInvoiceAlertButton bookingId={bookingId} />
+                <SendInvoiceAlertButton
+                  bookingId={bookingDetails.id}
+                  agencyId={bookingDetails.agencyId}
+                  assignedUserId={bookingDetails.assignedUserId}
+                />
               )
             }
             {
               //Only confirmed booking can be cancelled here
               bookingDetails.status === BookingStatusEnum.CONFIRMED && (
-                <CancelBookingAlertButton bookingId={bookingId} />
+                <CancelBookingAlertButton
+                  bookingId={bookingDetails.id}
+                  agencyId={bookingDetails.agencyId}
+                  assignedUserId={bookingDetails.assignedUserId}
+                />
               )
             }
           </div>

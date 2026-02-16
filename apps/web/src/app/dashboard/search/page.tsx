@@ -20,11 +20,7 @@ export default async function SearchPage() {
   return (
     <div className={mainClassName}>
       <DashboardHeader pathName={"/dashboard/search"} />
-      <SearchPageComponent
-        agencyId={currentUser.agencyId}
-        currentUserId={currentUser.userId}
-        searchData={searchData}
-      />
+      <SearchPageComponent searchData={searchData} />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { getRequestConfig } from "next-intl/server"
-import { resources } from "@ryogo-travel-app/i18n"
 import { cookies } from "next/headers"
+import { resources } from "./resources"
 
 export default getRequestConfig(async () => {
   const store = await cookies()

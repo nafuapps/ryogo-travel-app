@@ -1,6 +1,12 @@
 "use client"
 
-import { PGrey, H5Grey, PBold, Caption, PRed } from "@/components/typography"
+import {
+  SmallGrey,
+  H5Grey,
+  PBold,
+  Caption,
+  PRed,
+} from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -50,7 +56,7 @@ export default function UpcomingBookingsItemComponent({
       >
         <div className={sectionHeaderClassName}>
           <LucideClock className={iconClassName} />
-          <PGrey>{t("Title")}</PGrey>
+          <SmallGrey>{t("Title")}</SmallGrey>
           <H5Grey>{trips.length}</H5Grey>
         </div>
         <Select

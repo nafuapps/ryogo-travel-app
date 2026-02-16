@@ -25,6 +25,57 @@ export const bookingRepository = {
       )
   },
 
+  async readBookingsSearchData(agencyId: string, queryStartDate: Date) {
+    return await db.query.bookings.findMany({
+      where: and(
+        gte(bookings.createdAt, queryStartDate),
+        eq(bookings.agencyId, agencyId),
+      ),
+      with: {
+        source: {
+          columns: {
+            city: true,
+            state: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+            state: true,
+          },
+        },
+        assignedDriver: {
+          columns: {
+            name: true,
+            phone: true,
+          },
+        },
+        assignedUser: {
+          columns: {
+            name: true,
+            phone: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        bookedByUser: {
+          columns: {
+            name: true,
+            phone: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+            phone: true,
+          },
+        },
+      },
+    })
+  },
   async readBookingsByStatusCreatedDateRange(
     agencyId: string,
     queryStartDate: Date,

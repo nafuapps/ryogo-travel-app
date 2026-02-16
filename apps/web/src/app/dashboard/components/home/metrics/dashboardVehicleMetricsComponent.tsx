@@ -1,4 +1,4 @@
-import { H4, H1, CaptionGrey, PGrey } from "@/components/typography"
+import { H4, H1, CaptionGrey, SmallGrey } from "@/components/typography"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { LucideCar } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -50,18 +50,20 @@ export default async function DashboardVehicleMetricsComponent({
           className={metricHeaderClassName}
         >
           <LucideCar className={iconClassName} />
-          <PGrey>{t("Title")}</PGrey>
+          <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div className={metricMainClassName}>
           <H1>{totalVehicles}</H1>
-          <CaptionGrey>
-            {(onTripVehicles / totalVehicles).toLocaleString("en-IN", {
-              style: "percent",
-              maximumFractionDigits: 1,
-            }) +
-              " " +
-              t("Rate")}
-          </CaptionGrey>
+          {totalVehicles !== 0 && (
+            <CaptionGrey>
+              {(onTripVehicles / totalVehicles).toLocaleString("en-IN", {
+                style: "percent",
+                maximumFractionDigits: 1,
+              }) +
+                " " +
+                t("Rate")}
+            </CaptionGrey>
+          )}
         </div>
       </div>
       <div

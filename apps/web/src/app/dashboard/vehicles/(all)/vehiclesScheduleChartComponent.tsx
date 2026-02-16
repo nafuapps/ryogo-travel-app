@@ -1,7 +1,7 @@
 "use client"
 
 import {
-  PGrey,
+  SmallGrey,
   H5Grey,
   Caption,
   CaptionGrey,
@@ -66,7 +66,7 @@ export default function VehiclesScheduleChartComponent({
       >
         <div className={sectionHeaderClassName}>
           <LucideCalendarDays className={iconClassName} />
-          <PGrey>{t("Title")}</PGrey>
+          <SmallGrey>{t("Title")}</SmallGrey>
           <H5Grey>{chartData.length}</H5Grey>
         </div>
         <Select

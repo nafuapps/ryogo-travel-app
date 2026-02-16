@@ -7,6 +7,8 @@ import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
 
+const BOOKINGS_SEARCH_DAYS = 365
+
 export const agencyServices = {
   //Find all agencies
   async findAllAgencies() {
@@ -54,24 +56,19 @@ export const agencyServices = {
   },
 
   async findAgencySearchData(agencyId: string) {
-    const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
-    const drivers = await driverRepository.readDriversByAgencyId(agencyId)
-    const agents = await userRepository.readUserByRolesAgencyId(agencyId, [
-      UserRolesEnum.AGENT,
-    ])
-
-    const startDate = new Date(new Date().getTime() - 60 * 24 * 60 * 60 * 1000)
-    const bookings = await bookingRepository.readAllBookingsByAgencyId(
+    const vehicles = await vehicleRepository.readVehiclesSearchData(agencyId)
+    const drivers = await driverRepository.readDriversSearchData(agencyId)
+    const bookings = await bookingRepository.readBookingsSearchData(
       agencyId,
-      startDate,
+      new Date(
+        new Date().getTime() - BOOKINGS_SEARCH_DAYS * 24 * 60 * 60 * 1000,
+      ),
     )
-    const customers =
-      await customerRepository.readAllCustomersByAgencyId(agencyId)
+    const customers = await customerRepository.readCustomersSearchData(agencyId)
 
     return {
       vehicles,
       drivers,
-      agents,
       customers,
       bookings,
     }

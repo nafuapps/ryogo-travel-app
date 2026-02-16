@@ -1,7 +1,12 @@
-import { PGrey } from "@/components/typography"
+import { H5Grey, SmallGrey } from "@/components/typography"
 import DashboardOngoingTripComponent from "./dashboardOngoingTripComponent"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import {
+  iconClassName,
+  sectionHeaderClassName,
+} from "@/components/page/pageCommons"
+import { LucideRoute } from "lucide-react"
 
 export default async function DashboardOngoingTripSection({
   agencyId,
@@ -17,7 +22,11 @@ export default async function DashboardOngoingTripSection({
       id="DashboardOngoingTrips"
       className="flex flex-col w-full gap-3 lg:gap-4 bg-white shadow rounded-lg p-4 lg:p-5"
     >
-      <PGrey>{t("Title") + " (" + ongoingTrips.length + ")"}</PGrey>
+      <div id="OngoingBookingsHeader" className={sectionHeaderClassName}>
+        <LucideRoute className={iconClassName} />
+        <SmallGrey>{t("Title")}</SmallGrey>
+        <H5Grey>{ongoingTrips.length}</H5Grey>
+      </div>
       <div className="grid flex-wrap gap-2 lg:gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {ongoingTrips.map((trip, index) => (
           <DashboardOngoingTripComponent key={index} {...trip} />

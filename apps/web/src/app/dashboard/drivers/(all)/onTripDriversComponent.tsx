@@ -3,7 +3,7 @@ import {
   CaptionBold,
   H5Grey,
   PBold,
-  PGrey,
+  SmallGrey,
 } from "@/components/typography"
 import {
   FindDriversOnTripType,
@@ -33,7 +33,7 @@ export default async function OnTripDriversComponent({
     <div id="OnTripDriversSection" className={sectionClassName}>
       <div id="OnTripDriversHeader" className={sectionHeaderClassName}>
         <LucideRoute className={iconClassName} />
-        <PGrey>{t("Title")}</PGrey>
+        <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{onTripDrivers.length}</H5Grey>
       </div>
       {onTripDrivers.map((driver) => (

@@ -3,7 +3,7 @@ import {
   CaptionBold,
   H5Grey,
   PBold,
-  PGrey,
+  SmallGrey,
 } from "@/components/typography"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 import { LucideRoute } from "lucide-react"
@@ -28,7 +28,7 @@ export default async function OngoingBookingsComponent({
     <div id="OngoingBookingsSection" className={sectionClassName}>
       <div id="OngoingBookingsHeader" className={sectionHeaderClassName}>
         <LucideRoute className={iconClassName} />
-        <PGrey>{t("Title")}</PGrey>
+        <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{ongoingTrips.length}</H5Grey>
       </div>
       {ongoingTrips.map((trip) => (

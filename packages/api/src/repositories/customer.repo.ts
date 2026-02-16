@@ -4,10 +4,26 @@ import {
   CustomerStatusEnum,
   InsertCustomerType,
 } from "@ryogo-travel-app/db/schema"
-import { eq, inArray, and } from "drizzle-orm"
+import { eq, inArray, and, not } from "drizzle-orm"
 
 export const customerRepository = {
   async readAllCustomersByAgencyId(agencyId: string) {
+    return await db.query.customers.findMany({
+      where: and(
+        eq(customers.agencyId, agencyId),
+        not(eq(customers.status, CustomerStatusEnum.SUSPENDED)),
+      ),
+      with: {
+        location: {
+          columns: {
+            city: true,
+            state: true,
+          },
+        },
+      },
+    })
+  },
+  async readCustomersSearchData(agencyId: string) {
     return await db.query.customers.findMany({
       where: and(
         eq(customers.agencyId, agencyId),
@@ -26,7 +42,6 @@ export const customerRepository = {
       },
     })
   },
-
   async readCustomerByPhoneInAgency(phone: string, agencyId: string) {
     return await db.query.customers.findMany({
       where: and(eq(customers.phone, phone), eq(customers.agencyId, agencyId)),

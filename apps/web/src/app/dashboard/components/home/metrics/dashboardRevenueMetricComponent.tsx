@@ -1,4 +1,4 @@
-import { H4, CaptionGrey, H3, H5, PGrey } from "@/components/typography"
+import { H4, CaptionGrey, H3, H5, SmallGrey } from "@/components/typography"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import {
@@ -90,7 +90,7 @@ export default async function DashboardRevenueMetricsComponent({
           className={metricHeaderClassName}
         >
           <LucideBadgeIndianRupee className={iconClassName} />
-          <PGrey>{t("Title")}</PGrey>
+          <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div
           id="dashboardRevenueMetricsConfirmed"
@@ -103,19 +103,21 @@ export default async function DashboardRevenueMetricsComponent({
               minimumFractionDigits: 0,
             })}
           </H3>
-          <div className="flex flex-col lg:gap-0.5 items-center text-center">
-            <div className="flex flex-row gap-1 item-center">
-              {icon}
-              <CaptionGrey>
-                {revenueChange.toLocaleString("en-IN", {
-                  style: "percent",
-                  maximumFractionDigits: 1,
-                })}
-              </CaptionGrey>
-              <CaptionGrey>{more ? t("More") : t("Less")}</CaptionGrey>
+          {revenueWeeklyAvg !== 0 && (
+            <div className="flex flex-col lg:gap-0.5 items-center text-center">
+              <div className="flex flex-row gap-1 item-center">
+                {icon}
+                <CaptionGrey>
+                  {revenueChange.toLocaleString("en-IN", {
+                    style: "percent",
+                    maximumFractionDigits: 1,
+                  })}
+                </CaptionGrey>
+                <CaptionGrey>{more ? t("More") : t("Less")}</CaptionGrey>
+              </div>
+              <CaptionGrey>{t("ThanAvg")}</CaptionGrey>
             </div>
-            <CaptionGrey>{t("ThanAvg")}</CaptionGrey>
-          </div>
+          )}
         </div>
       </div>
       <div

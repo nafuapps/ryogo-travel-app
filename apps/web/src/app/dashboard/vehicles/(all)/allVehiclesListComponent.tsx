@@ -1,5 +1,5 @@
 import {
-  PGrey,
+  SmallGrey,
   H5Grey,
   Caption,
   PBold,
@@ -46,7 +46,7 @@ export default async function AllVehiclesListComponent({
     <div id="AllVehiclesSection" className={sectionClassName}>
       <div id="AllVehiclesHeader" className={sectionHeaderClassName}>
         <LucideRows3 className={iconClassName} />
-        <PGrey>{t("Title")}</PGrey>
+        <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allVehicles.length}</H5Grey>
       </div>
       {allVehicles.map((vehicle) => (

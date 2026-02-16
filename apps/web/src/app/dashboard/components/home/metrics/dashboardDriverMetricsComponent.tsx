@@ -1,4 +1,4 @@
-import { H4, CaptionGrey, H1, PGrey } from "@/components/typography"
+import { H4, CaptionGrey, H1, SmallGrey } from "@/components/typography"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { LucideLifeBuoy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -50,18 +50,20 @@ export default async function DashboardDriverMetricsComponent({
           className={metricHeaderClassName}
         >
           <LucideLifeBuoy className={iconClassName} />
-          <PGrey>{t("Title")}</PGrey>
+          <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div className={metricMainClassName}>
           <H1>{totalDrivers}</H1>
-          <CaptionGrey>
-            {(onTripDrivers / totalDrivers).toLocaleString("en-IN", {
-              style: "percent",
-              maximumFractionDigits: 1,
-            }) +
-              " " +
-              t("Rate")}
-          </CaptionGrey>
+          {totalDrivers !== 0 && (
+            <CaptionGrey>
+              {(onTripDrivers / totalDrivers).toLocaleString("en-IN", {
+                style: "percent",
+                maximumFractionDigits: 1,
+              }) +
+                " " +
+                t("Rate")}
+            </CaptionGrey>
+          )}
         </div>
       </div>
       <div

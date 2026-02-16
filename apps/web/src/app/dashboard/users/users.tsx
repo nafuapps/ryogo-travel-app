@@ -1,5 +1,5 @@
 import {
-  PGrey,
+  SmallGrey,
   H5Grey,
   Caption,
   CaptionBold,
@@ -45,7 +45,7 @@ export default async function UsersPageComponent({
       <div id="OwnersSection" className={sectionClassName}>
         <div id="OwnersHeader" className={sectionHeaderClassName}>
           <LucideRows3 className={iconClassName} />
-          <PGrey>{t("Owners.Title")}</PGrey>
+          <SmallGrey>{t("Owners.Title")}</SmallGrey>
           <H5Grey>{owners.length}</H5Grey>
         </div>
         {owners.map((user) => (
@@ -55,7 +55,7 @@ export default async function UsersPageComponent({
       <div id="AgentsSection" className={sectionClassName}>
         <div id="AgentsHeader" className={sectionHeaderClassName}>
           <LucideRows3 className={iconClassName} />
-          <PGrey>{t("Agents.Title")}</PGrey>
+          <SmallGrey>{t("Agents.Title")}</SmallGrey>
           <H5Grey>{agents.length}</H5Grey>
         </div>
         <Link href={`/dashboard/users/new`} className="min-w-1/2 self-center">
@@ -70,7 +70,7 @@ export default async function UsersPageComponent({
       <div id="DriversSection" className={sectionClassName}>
         <div id="DriversHeader" className={sectionHeaderClassName}>
           <LucideRows3 className={iconClassName} />
-          <PGrey>{t("Drivers.Title")}</PGrey>
+          <SmallGrey>{t("Drivers.Title")}</SmallGrey>
           <H5Grey>{drivers.length}</H5Grey>
         </div>
         <Link href={`/dashboard/drivers/new`} className="min-w-1/2 self-center">

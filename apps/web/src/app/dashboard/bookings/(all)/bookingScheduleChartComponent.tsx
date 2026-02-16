@@ -9,7 +9,7 @@ import {
   sectionHeaderClassName,
 } from "@/components/page/pageCommons"
 import {
-  PGrey,
+  SmallGrey,
   H5Grey,
   CaptionGrey,
   Caption,
@@ -64,7 +64,7 @@ export default function BookingScheduleChartComponent({
       >
         <div className={sectionHeaderClassName}>
           <LucideCalendarDays className={iconClassName} />
-          <PGrey>{t("Title")}</PGrey>
+          <SmallGrey>{t("Title")}</SmallGrey>
           <H5Grey>{chartData.length}</H5Grey>
         </div>
         <Select

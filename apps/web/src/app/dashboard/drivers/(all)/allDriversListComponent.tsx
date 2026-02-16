@@ -1,5 +1,5 @@
 import {
-  PGrey,
+  SmallGrey,
   H5Grey,
   Caption,
   PBold,
@@ -37,7 +37,7 @@ export default async function AllDriversListComponent({
     <div id="AllDriversSection" className={sectionClassName}>
       <div id="AllDriversHeader" className={sectionHeaderClassName}>
         <LucideRows3 className={iconClassName} />
-        <PGrey>{t("Title")}</PGrey>
+        <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allDrivers.length}</H5Grey>
       </div>
       {allDrivers.map((driver) => (

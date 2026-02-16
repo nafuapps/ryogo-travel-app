@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { CaptionGrey, H4, H1, PGrey } from "@/components/typography"
+import { CaptionGrey, H4, H1, SmallGrey } from "@/components/typography"
 import {
   LucideTrendingUp,
   LucideTrendingDown,
@@ -84,26 +84,28 @@ export default async function DashboardBookingMetricsComponent({
           className={metricHeaderClassName}
         >
           <LucideTickets className={iconClassName} />
-          <PGrey>{t("Title")}</PGrey>
+          <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div
           id="dashboardBookingMetricsConfirmed"
           className={metricMainClassName}
         >
           <H1>{confirmed24HrsCount}</H1>
-          <div className="flex flex-col lg:gap-0.5 items-center text-center">
-            <div className="flex flex-row gap-1 item-center">
-              {icon}
-              <CaptionGrey>
-                {createdChange.toLocaleString("en-IN", {
-                  style: "percent",
-                  maximumFractionDigits: 1,
-                })}
-              </CaptionGrey>
-              <CaptionGrey>{more ? t("More") : t("Less")}</CaptionGrey>
+          {confirmedWeeklyAvg !== 0 && (
+            <div className="flex flex-col lg:gap-0.5 items-center text-center">
+              <div className="flex flex-row gap-1 item-center">
+                {icon}
+                <CaptionGrey>
+                  {createdChange.toLocaleString("en-IN", {
+                    style: "percent",
+                    maximumFractionDigits: 1,
+                  })}
+                </CaptionGrey>
+                <CaptionGrey>{more ? t("More") : t("Less")}</CaptionGrey>
+              </div>
+              <CaptionGrey>{t("ThanAvg")}</CaptionGrey>
             </div>
-            <CaptionGrey>{t("ThanAvg")}</CaptionGrey>
-          </div>
+          )}
         </div>
       </div>
       <div

@@ -2508,6 +2508,11 @@
         "Error1":"Enter atleast 3 characters to search",
         "Error2":"Enter less than 20 characters for search"
       },
+      "NoBookingResult":"No matching bookings were found",
+      "NoDriverResult":"No matching drivers were found",
+      "NoVehicleResult":"No matching vehicles were found",
+      "NoCustomerResult":"No matching customers were found",
+      "Photo":"View photo",
       "Clear":"Clear",
       "Search":"Search"
     },

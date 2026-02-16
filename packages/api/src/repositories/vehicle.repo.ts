@@ -6,7 +6,7 @@ import {
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, notInArray, inArray, or, gte, lte } from "drizzle-orm"
+import { eq, and, notInArray, inArray, or, gte, lte, not } from "drizzle-orm"
 
 export const vehicleRepository = {
   //Get vehicle by id
@@ -22,6 +22,16 @@ export const vehicleRepository = {
       .select()
       .from(vehicles)
       .where(eq(vehicles.agencyId, agencyId))
+  },
+
+  //Get vehicles search data
+  async readVehiclesSearchData(agencyId: string) {
+    return await db.query.vehicles.findMany({
+      where: and(
+        eq(vehicles.agencyId, agencyId),
+        not(eq(vehicles.status, VehicleStatusEnum.SUSPENDED)),
+      ),
+    })
   },
 
   //Get all vehicles data for a new booking in an agency

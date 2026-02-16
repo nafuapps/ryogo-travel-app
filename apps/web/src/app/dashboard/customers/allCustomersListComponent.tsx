@@ -1,7 +1,7 @@
 "use client"
 
 import {
-  PGrey,
+  SmallGrey,
   H5Grey,
   Caption,
   PBold,
@@ -61,7 +61,7 @@ export default function AllCustomersListComponent({
     <div id="AllCustomersSection" className={sectionClassName}>
       <div id="AllCustomersHeader" className={sectionHeaderClassName}>
         <LucideRows3 className={iconClassName} />
-        <PGrey>{t("Title")}</PGrey>
+        <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allCustomers.length}</H5Grey>
       </div>
       <Link href={`/dashboard/customers/new`} className="min-w-1/2 self-center">

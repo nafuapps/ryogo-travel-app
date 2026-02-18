@@ -3,6 +3,7 @@
 import {
   DashboardFileInput,
   DashboardInput,
+  DashboardRating,
   DashboardTextarea,
 } from "@/components/form/dashboardFormFields"
 import { Button } from "@/components/ui/button"
@@ -29,6 +30,8 @@ import { endTripAction } from "@/app/actions/bookings/endTripAction"
 import Link from "next/link"
 import { UrlObject } from "url"
 
+const TOTAL_STARS = 5
+
 export default function EndTripSheet({
   booking,
 }: {
@@ -39,6 +42,9 @@ export default function EndTripSheet({
   const router = useRouter()
   const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
   const [open, setOpen] = useState(false)
+
+  const [customerRating, setCustomerRating] = useState(0)
+  const [bookingRating, setBookingRating] = useState(0)
 
   const schema = z.object({
     odometerReading: z.coerce
@@ -94,9 +100,18 @@ export default function EndTripSheet({
           bookingId: booking.id,
           driverId: driverId,
           vehicleId: vehicleId,
+          customerId: booking.customerId,
           odometerReading: data.odometerReading,
           remarks: data.remarks,
           tripLogPhoto: data.tripLogPhoto,
+          customerRating:
+            customerRating > 0 && customerRating <= TOTAL_STARS
+              ? customerRating
+              : undefined,
+          bookingRating:
+            bookingRating > 0 && bookingRating <= TOTAL_STARS
+              ? bookingRating
+              : undefined,
         })
       ) {
         router.refresh()
@@ -121,28 +136,44 @@ export default function EndTripSheet({
           <SheetDescription>{t("Warning")}</SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <form id="endTrip" onSubmit={formData.handleSubmit(onSubmit)}>
-            <div className="px-4 lg:px-5 gap-2 lg:gap-3">
-              <DashboardInput
-                name={"odometerReading"}
-                type="tel"
-                label={t("Field1.Title")}
-                placeholder={t("Field1.Placeholder")}
-                description={t("Field1.Description")}
-              />
-              <DashboardFileInput
-                name={"tripLogPhoto"}
-                register={formData.register("tripLogPhoto")}
-                label={t("Field2.Title")}
-                placeholder={t("Field2.Placeholder")}
-                description={t("Field2.Description")}
-              />
-              <DashboardTextarea
-                name="remarks"
-                label={t("Field3.Title")}
-                placeholder={t("Field3.Placeholder")}
-              />
-            </div>
+          <form
+            id="endTrip"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
+          >
+            <DashboardInput
+              name={"odometerReading"}
+              type="tel"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <DashboardFileInput
+              name={"tripLogPhoto"}
+              register={formData.register("tripLogPhoto")}
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
+            />
+            <DashboardTextarea
+              name="remarks"
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+            />
+            <DashboardRating
+              name="customerRating"
+              label={t("Field4.Title")}
+              selectedStars={customerRating}
+              setSelectedStars={setCustomerRating}
+              totalStars={TOTAL_STARS}
+            />
+            <DashboardRating
+              name="bookingRating"
+              label={t("Field5.Title")}
+              selectedStars={bookingRating}
+              setSelectedStars={setBookingRating}
+              totalStars={TOTAL_STARS}
+            />
           </form>
         </Form>
         <SheetFooter>

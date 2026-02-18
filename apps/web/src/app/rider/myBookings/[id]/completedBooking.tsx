@@ -35,7 +35,12 @@ export default async function RiderMyCompletedBookingPageComponent({
           <SmallBold>{t("Expenses")}</SmallBold>
           {booking.expenses.map((e) => {
             return (
-              <RiderExpenseItem key={e.id} expense={e} bookingId={booking.id} />
+              <RiderExpenseItem
+                key={e.id}
+                expense={e}
+                bookingId={booking.id}
+                canModifyExpense={false}
+              />
             )
           })}
         </div>

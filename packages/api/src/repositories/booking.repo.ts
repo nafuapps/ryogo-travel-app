@@ -2,6 +2,7 @@ import { db } from "@ryogo-travel-app/db"
 import {
   bookings,
   BookingStatusEnum,
+  customers,
   drivers,
   DriverStatusEnum,
   InsertBookingType,
@@ -10,7 +11,7 @@ import {
   vehicles,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, or, gte, lte, inArray } from "drizzle-orm"
+import { eq, and, or, gte, lte, inArray, sql } from "drizzle-orm"
 
 export const bookingRepository = {
   async readAllBookingsByAgencyId(agencyId: string, queryStartDate: Date) {
@@ -1121,12 +1122,16 @@ export const bookingRepository = {
     bookingId: string,
     driverId: string,
     vehicleId: string,
+    customerId: string,
+    customerRating?: number,
+    bookingRating?: number,
   ) {
     return await db.transaction(async (tx) => {
       await tx
         .update(bookings)
         .set({
           status: BookingStatusEnum.COMPLETED,
+          ratingByDriver: bookingRating,
         })
         .where(eq(bookings.id, bookingId))
       await tx
@@ -1141,7 +1146,14 @@ export const bookingRepository = {
           status: VehicleStatusEnum.AVAILABLE,
         })
         .where(eq(vehicles.id, vehicleId))
-
+      if (customerRating) {
+        await tx
+          .update(customers)
+          .set({
+            driverRatings: sql`array_append(${customers.driverRatings}, ${customerRating})`,
+          })
+          .where(eq(customers.id, customerId))
+      }
       return await tx
         .select({ id: bookings.id, status: bookings.status })
         .from(bookings)

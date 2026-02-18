@@ -11,10 +11,13 @@ export async function endTripAction(data: {
   bookingId: string
   vehicleId: string
   agencyId: string
+  customerId: string
   odometerReading: number
   remarks?: string
   latLong?: string
   tripLogPhoto?: FileList
+  customerRating?: number
+  bookingRating?: number
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -30,6 +33,9 @@ export async function endTripAction(data: {
     data.bookingId,
     data.driverId,
     data.vehicleId,
+    data.customerId,
+    data.customerRating,
+    data.bookingRating,
   )
   if (!bookingChanged) return
 

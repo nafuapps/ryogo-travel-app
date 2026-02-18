@@ -135,28 +135,30 @@ export default function MidTripSheet({
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <form id="midTrip" onSubmit={formData.handleSubmit(onSubmit)}>
-            <div className="px-4 lg:px-5 gap-2 lg:gap-3">
-              <DashboardInput
-                name={"odometerReading"}
-                type="tel"
-                label={t("Field1.Title")}
-                placeholder={t("Field1.Placeholder")}
-                description={t("Field1.Description")}
-              />
-              <DashboardFileInput
-                name={"tripLogPhoto"}
-                register={formData.register("tripLogPhoto")}
-                label={t("Field2.Title")}
-                placeholder={t("Field2.Placeholder")}
-                description={t("Field2.Description", { type: type })}
-              />
-              <DashboardTextarea
-                name="remarks"
-                label={t("Field3.Title")}
-                placeholder={t("Field3.Placeholder")}
-              />
-            </div>
+          <form
+            id="midTrip"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
+          >
+            <DashboardInput
+              name={"odometerReading"}
+              type="tel"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <DashboardFileInput
+              name={"tripLogPhoto"}
+              register={formData.register("tripLogPhoto")}
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description", { type: type })}
+            />
+            <DashboardTextarea
+              name="remarks"
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+            />
           </form>
         </Form>
         <SheetFooter>

@@ -26,20 +26,17 @@ import { format } from "date-fns"
 import { UrlObject } from "url"
 import Image from "next/image"
 import Link from "next/link"
-import { redirect, RedirectType } from "next/navigation"
 
 export default async function RiderExpenseItem({
   expense,
   bookingId,
+  canModifyExpense,
 }: {
   expense: NonNullable<FindBookingDetailsByIdType>["expenses"][number]
   bookingId: string
+  canModifyExpense: boolean
 }) {
   const t = await getTranslations("Rider.MyBooking.Expense")
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   let fileUrl = ""
   if (expense.expensePhotoUrl) {
@@ -74,22 +71,20 @@ export default async function RiderExpenseItem({
           <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
             <H4>{expense.amount}</H4>
           </div>
-          <div className="flex flex-row gap-2 lg:gap-3">
-            {expense.addedByUser.id === currentUser.userId && (
-              <Link
-                href={
-                  `/rider/myBookings/${bookingId}/modify-expense/${expense.id}` as unknown as UrlObject
-                }
-              >
-                <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-                  <div className="hidden lg:flex">
-                    <CaptionGrey>{t("Modify")}</CaptionGrey>
-                  </div>
-                  <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+          {canModifyExpense && (
+            <Link
+              href={
+                `/rider/myBookings/${bookingId}/modify-expense/${expense.id}` as unknown as UrlObject
+              }
+            >
+              <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
+                <div className="hidden lg:flex">
+                  <CaptionGrey>{t("Modify")}</CaptionGrey>
                 </div>
-              </Link>
-            )}
-          </div>
+                <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+              </div>
+            </Link>
+          )}
         </div>
       </div>
       {expense.expensePhotoUrl && (

@@ -49,13 +49,11 @@ export default async function RiderTripLogItem({
           <Caption>{format(tripLog.createdAt, "dd MMM hh:mm aaa")}</Caption>
           <Small>{tripLog.odometerReading + t("Km")}</Small>
           <CaptionGrey>{tripLog.latLong}</CaptionGrey>
-        </div>
-        <div className="flex flex-col gap-1.5 lg:gap-2 w-full">
           {tripLog.remarks && <Caption>{tripLog.remarks}</Caption>}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
-          {getTripLogIcon(tripLog.type)}
           <CaptionBold>{tripLog.type.toUpperCase()}</CaptionBold>
+          {getTripLogIcon(tripLog.type)}
         </div>
       </div>
       {tripLog.tripLogPhotoUrl && (

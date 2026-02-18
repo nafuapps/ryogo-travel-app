@@ -183,9 +183,9 @@ export async function OngoingBookingComponent({
           </div>
         )}
       </div>
-      <div className="bg-slate-600 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 p-3 lg:p-4">
+      <div className="bg-slate-600 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
         <SmallLight>{t("Continue")}</SmallLight>
-        <LucideChevronRight className="size-5 lg:size-6 text-slate-100" />
+        <LucideChevronRight className="size-5 lg:size-6 text-slate-200" />
       </div>
     </Link>
   )
@@ -232,7 +232,7 @@ export async function UpcomingBookingComponent({
         </div>
       </div>
       {canStart && (
-        <div className="bg-slate-200 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 p-3 lg:p-4">
+        <div className="bg-slate-200 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
           <Small>{t("Start")}</Small>
           <LucideChevronRight className="size-5 lg:size-6 text-slate-700" />
         </div>

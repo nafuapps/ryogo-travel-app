@@ -2785,6 +2785,12 @@
           "Placeholder": "Enter any remarks regarding this trip",
           "Error1": "Remarks must be less than 300 characters"
         },
+        "Field4":{
+          "Title":"Rate customer (optional)"
+        },
+        "Field5":{
+          "Title":"Rate this booking (optional)"
+        },
         "End": "Confirm and End Trip",
         "Close": "Cancel",
         "Loading": "Loading",
@@ -2821,7 +2827,7 @@
         "Error": "Cannot mark {type} now.. please try again later"
       },
       "TripLog":{
-        "Km":"Km",
+        "Km":" Km",
         "Proof":" View Attachment"
       },
       "Expense":{

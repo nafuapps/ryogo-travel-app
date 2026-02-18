@@ -29,14 +29,15 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover"
-import { CalendarIcon } from "lucide-react"
-import React from "react"
+import { CalendarIcon, LucideStar } from "lucide-react"
+import React, { Dispatch, SetStateAction } from "react"
 import { UseFormRegisterReturn } from "react-hook-form"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { Label } from "../ui/label"
+import { InputGroup, InputGroupAddon } from "../ui/input-group"
 
 type DashboardInputProps = {
   name: string
@@ -424,6 +425,48 @@ export function DashboardTimePicker(props: DashboardTimePickerProps) {
             <Caption>{props.description}</Caption>
           </FormDescription>
           <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+export function DashboardRating(props: {
+  name: string
+  label: string
+  selectedStars: number
+  setSelectedStars: Dispatch<SetStateAction<number>>
+  totalStars: number
+  disabled?: boolean
+}) {
+  return (
+    <FormField
+      name={props.name}
+      disabled={props.disabled}
+      render={({}) => (
+        <FormItem className="flex flex-row justify-between items-center gap-1 lg:gap-1.5 w-full">
+          <FormLabel>
+            {props.disabled ? (
+              <SmallGrey>{props.label}</SmallGrey>
+            ) : (
+              <SmallBold>{props.label}</SmallBold>
+            )}
+          </FormLabel>
+          <div className="flex flex-row gap-2 lg:gap-3 items-center">
+            {Array.from({ length: props.totalStars }).map((s, index) => {
+              return (
+                <LucideStar
+                  key={index + 1}
+                  className={`size-5 lg:size-6 ${props.selectedStars > index ? "text-amber-300 fill-amber-300" : "text-slate-400"}`}
+                  onClick={
+                    props.selectedStars !== index + 1
+                      ? () => props.setSelectedStars(index + 1)
+                      : () => props.setSelectedStars(0)
+                  }
+                />
+              )
+            })}
+          </div>
         </FormItem>
       )}
     />

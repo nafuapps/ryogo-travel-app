@@ -15,6 +15,8 @@ import { SmallBold } from "@/components/typography"
 import { UrlObject } from "url"
 import RiderExpenseItem from "./riderExpenseItem"
 import RiderTripLogItem from "./riderTripLogItem"
+import { getCurrentUser } from "@/lib/auth"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -22,6 +24,11 @@ export default async function RiderMyOngoingBookingPageComponent({
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const t = await getTranslations("Rider.MyBooking")
+
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
   const nextStep = getNextStep(booking.type, booking.endDate, booking.tripLogs)
 
@@ -58,7 +65,12 @@ export default async function RiderMyOngoingBookingPageComponent({
         </Link>
         {booking.expenses.map((e) => {
           return (
-            <RiderExpenseItem key={e.id} expense={e} bookingId={booking.id} />
+            <RiderExpenseItem
+              key={e.id}
+              expense={e}
+              bookingId={booking.id}
+              canModifyExpense={currentUser.userId === e.addedByUserId}
+            />
           )
         })}
       </div>

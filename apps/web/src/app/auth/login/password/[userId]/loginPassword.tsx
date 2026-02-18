@@ -23,7 +23,6 @@ import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useTransition } from "react"
-// import { LOGIN_PASSWORD_ERROR } from "@ryogo-travel-app/api/services/user.services"
 
 // TODO: Add a feature to show the user had recently reset password
 
@@ -106,7 +105,12 @@ export default function LoginPasswordPageComponent({
             )}
           />
           <div id="LoginPasswordActions" className="flex flex-col gap-4 w-full">
-            <Button variant={"default"} size={"lg"} disabled={isPending}>
+            <Button
+              variant={"default"}
+              type="submit"
+              size={"lg"}
+              disabled={isPending}
+            >
               {isPending && <Spinner />}
               {isPending ? t("Loading") : t("PrimaryCTA")}
             </Button>
@@ -119,7 +123,7 @@ export default function LoginPasswordPageComponent({
             >
               {t("Back")}
             </Button>
-            <Button variant={"outline"}>
+            <Button variant={"outline"} type="button">
               <Link href={`/auth/forgot-password/confirm-email/${userId}`}>
                 {t("ForgotCTA")}
               </Link>

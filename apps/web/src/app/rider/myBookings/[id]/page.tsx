@@ -24,7 +24,7 @@ export default async function MyBookingPage({
   if (
     !bookingDetails ||
     !bookingDetails.assignedDriverId ||
-    bookingDetails.assignedVehicleId
+    !bookingDetails.assignedVehicleId
   ) {
     redirect("/rider/myBookings", RedirectType.replace)
   }

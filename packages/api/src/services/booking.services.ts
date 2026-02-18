@@ -424,6 +424,9 @@ export const bookingServices = {
     bookingId: string,
     driverId: string,
     vehicleId: string,
+    customerId: string,
+    customerRating?: number,
+    bookingRating?: number,
   ) {
     //Check if the booking is in progress
     const bookingStatus = await this.findBookingStatusById(bookingId)
@@ -449,6 +452,9 @@ export const bookingServices = {
       bookingId,
       driverId,
       vehicleId,
+      customerId,
+      customerRating,
+      bookingRating,
     )
     if (!booking[0] || booking[0].status !== BookingStatusEnum.COMPLETED) {
       return

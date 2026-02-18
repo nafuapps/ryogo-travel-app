@@ -20,8 +20,8 @@ import { H2, H5, PGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
-import { resetUserPasswordAction } from "@/app/actions/users/resetUserPasswordAction"
 import { useTransition } from "react"
+import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
 
 export default function ConfirmEmailPageComponent({
   userId,
@@ -42,24 +42,24 @@ export default function ConfirmEmailPageComponent({
   })
 
   type FormFields = z.infer<typeof formSchema>
-  // For managing form data and validation
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
   })
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    if (data.email !== currentEmail) {
+    if (data.email.toLowerCase().trim() !== currentEmail.toLowerCase().trim()) {
       methods.setError("email", { type: "manual", message: t("APIError") })
+    } else {
+      startTransition(async () => {
+        if (await forgotPasswordAction(userId)) {
+          toast.success(t("Success"))
+        } else {
+          toast.error(t("Error"))
+        }
+        router.replace("/auth/login")
+      })
     }
-    startTransition(async () => {
-      if (await resetUserPasswordAction(userId, agencyId)) {
-        toast.success(t("Success"))
-      } else {
-        toast.error(t("Error"))
-      }
-      router.replace("/auth/login")
-    })
   }
 
   return (

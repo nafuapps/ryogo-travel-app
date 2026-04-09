@@ -2,13 +2,13 @@
 
 import { redirect, RedirectType } from "next/navigation"
 import { UserRegex } from "@/lib/regex"
-import ConfirmEmailPageComponent from "./confirmEmail"
+import ForgotPasswordPageComponent from "./forgotPassword"
 import { Metadata } from "next"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export const metadata: Metadata = {
-  title: "Confirm Email Page | RyoGo",
-  description: "Comfirm Email page for RyoGo Travel App",
+  title: "Forgot Password Page | RyoGo",
+  description: "Forgot Password page for RyoGo Travel App",
 }
 
 export default async function ConfirmEmailPage({
@@ -28,10 +28,6 @@ export default async function ConfirmEmailPage({
   }
 
   return (
-    <ConfirmEmailPageComponent
-      userId={userId}
-      currentEmail={user.email}
-      agencyId={user.agencyId}
-    />
+    <ForgotPasswordPageComponent userId={userId} currentEmail={user.email} />
   )
 }

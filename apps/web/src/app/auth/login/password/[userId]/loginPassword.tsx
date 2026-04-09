@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,7 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { H2, H5 } from "@/components/typography"
+import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
@@ -76,21 +75,24 @@ export default function LoginPasswordPageComponent({
   }
 
   return (
-    <div id="LoginPasswordPage" className="gap-4 w-full h-full">
+    <div
+      id="LoginPasswordPage"
+      className="flex flex-col justify-center w-full rounded-lg shadow bg-white p-6 md:p-8"
+    >
       <Form {...methods}>
         <form
           id="LoginPasswordForm"
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col justify-between  h-full"
+          className="flex flex-col justify-between gap-4 md:gap-6 h-full"
         >
-          <H2>{t("PageTitle")}</H2>
+          <H4>{t("PageTitle")}</H4>
           <FormField
             control={methods.control}
             name={"password"}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <H5>{t("Input.Title")}</H5>
+                  <SmallGrey>{t("Input.Title")}</SmallGrey>
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -99,7 +101,6 @@ export default function LoginPasswordPageComponent({
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>{t("Input.Description")}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -121,10 +122,10 @@ export default function LoginPasswordPageComponent({
                 router.back()
               }}
             >
-              {t("Back")}
+              <CaptionGrey>{t("Back")}</CaptionGrey>
             </Button>
-            <Button variant={"outline"} type="button">
-              <Link href={`/auth/forgot-password/confirm-email/${userId}`}>
+            <Button variant={"link"} type="button">
+              <Link href={`/auth/login/forgot-password/${userId}`}>
                 {t("ForgotCTA")}
               </Link>
             </Button>

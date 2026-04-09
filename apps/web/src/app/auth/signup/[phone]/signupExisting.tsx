@@ -1,6 +1,6 @@
 //Existing Account page
 import { Button } from "@/components/ui/button"
-import { CaptionGrey, H2, P } from "@/components/typography"
+import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import Link from "next/link"
 import { AccountCard } from "@/app/auth/components/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
@@ -28,11 +28,17 @@ export default async function SignupExistingPageComponent({
   return (
     <div
       id="SignupExistingPage"
-      className="gap-4 w-full h-full flex flex-col justify-between"
+      className="flex flex-col justify-center gap-3 md:gap-4 w-full max-h-2/3 rounded-lg shadow bg-white p-6 md:p-8"
     >
-      <H2>{t("PageTitle")}</H2>
-      <div className="flex flex-col gap-3 lg:gap-4 p-1 overflow-y-scroll no-scrollbar">
-        <P>{hasOwnerAccount ? t("InfoYes") : t("InfoNo")}</P>
+      <H4>{t("PageTitle")}</H4>
+      <SmallGrey>
+        {hasOwnerAccount
+          ? t("InfoYes")
+          : t("InfoNo", { count: accounts.length })}
+      </SmallGrey>
+      <div
+        className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : "lg:grid-cols-1"} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
+      >
         {accounts.length > 0 &&
           accounts.map((item, index) => (
             <AccountCard key={index} account={item} />
@@ -43,7 +49,7 @@ export default async function SignupExistingPageComponent({
           <>
             <Button variant={"secondary"} size={"lg"}>
               <Link href="mailto:nafuapps@gmail.com">
-                {t("SecondaryCTAYes")}
+                <CaptionGrey>{t("SecondaryCTAYes")}</CaptionGrey>
               </Link>
             </Button>
             <CaptionGrey> {t("Description")}</CaptionGrey>
@@ -54,7 +60,9 @@ export default async function SignupExistingPageComponent({
             size={"lg"}
             disabled={accounts.length < 1}
           >
-            <Link href={"/onboarding"}>{t("SecondaryCTANo")}</Link>
+            <Link href={"/onboarding"}>
+              <CaptionGrey>{t("SecondaryCTANo")}</CaptionGrey>
+            </Link>
           </Button>
         )}
       </div>

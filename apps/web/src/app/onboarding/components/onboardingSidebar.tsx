@@ -1,16 +1,25 @@
-import { H3Grey, H5, H5Grey, SmallGrey } from "@/components/typography";
-import { Sidebar, useSidebar } from "@/components/ui/sidebar";
-import { Skeleton } from "@/components/ui/skeleton";
-import { LucideCheck } from "lucide-react";
-import { useTranslations } from "next-intl";
+import {
+  Caption,
+  CaptionGrey,
+  H3Grey,
+  H5,
+  H5Grey,
+  PBold,
+  PGrey,
+  SmallGrey,
+} from "@/components/typography"
+import { Sidebar, useSidebar } from "@/components/ui/sidebar"
+import Image from "next/image"
+import { LucideCheck } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export default function OnboardingSidebar({
   currentProcess,
 }: {
-  currentProcess: number;
+  currentProcess: number
 }) {
-  const t = useTranslations("Onboarding.Sidebar");
-  const { isMobile } = useSidebar();
+  const t = useTranslations("Onboarding.Sidebar")
+  const { isMobile } = useSidebar()
 
   const items = [
     {
@@ -29,56 +38,65 @@ export default function OnboardingSidebar({
       title: t("Step4.Title"),
       description: t("Step4.Description"),
     },
-  ];
-  // TODO: Add Logo
+  ]
   return (
     <Sidebar side="right" collapsible={isMobile ? "offcanvas" : "none"}>
       <div
         id="OnboardingSidebarSection"
-        className="w-full flex px-8 py-10 md:p-12 lg:p-16 h-full flex-col gap-8 lg:gap-10 bg-slate-50"
+        className="w-full flex px-8 py-10 md:px-10 md:py-12 h-full flex-col gap-8 lg:gap-10 bg-slate-50"
       >
-        {/* TODO: Add Logo */}
-        <Skeleton className="w-72 h-14 lg:w-80 lg:h-16 bg-slate-200" />
         <H3Grey>{t("Heading")}</H3Grey>
         <div
           id="OnboardingSidebarSteps"
-          className="flex flex-col items-start gap-6 lg:gap-8"
+          className="flex flex-col items-start gap-2 lg:gap-3"
         >
           {items.map((item, index) => (
             <div
               key={index}
-              className="flex flex-row gap-3 md:gap-4 items-start"
+              className="flex flex-row gap-2 md:gap-3 items-start"
             >
-              <div
-                className={`rounded-full border-4 
+              <div className={`flex flex-col gap-2 md:gap-3 items-center`}>
+                <div
+                  className={`rounded-full
           ${
             currentProcess > index
-              ? "bg-slate-950 border-slate-950"
+              ? "bg-slate-950  text-slate-50 shadow"
               : currentProcess === index
-              ? "bg-white border-slate-950"
-              : "bg-white border-slate-300 text-slate-400"
-          } flex shrink-0 justify-center items-center w-10 h-10 lg:w-12 lg:h-12`}
-              >
-                <H5>
-                  {currentProcess > index ? (
-                    <LucideCheck className="w-5 h-5 lg:w-7 lg:h-7 text-white" />
-                  ) : (
-                    index + 1
-                  )}
-                </H5>
+                ? "bg-white text-slate-950 shadow"
+                : "bg-slate-100 text-slate-400"
+          } flex shrink-0 justify-center items-center size-8 lg:size-10`}
+                >
+                  <H5>
+                    {currentProcess > index ? (
+                      <LucideCheck className="size-4 lg:size-5" />
+                    ) : (
+                      index + 1
+                    )}
+                  </H5>
+                </div>
+                {index < 3 && (
+                  <div className="w-0.5 h-5 md:h-6 bg-slate-200 rounded-full"></div>
+                )}
               </div>
               <div className="flex flex-col items-start">
                 {currentProcess >= index ? (
-                  <H5>{item.title}</H5>
+                  <PBold>{item.title}</PBold>
                 ) : (
-                  <H5Grey>{item.title}</H5Grey>
+                  <PGrey>{item.title}</PGrey>
                 )}
-                <SmallGrey>{item.description}</SmallGrey>
+                {currentProcess >= index ? (
+                  <Caption>{item.description}</Caption>
+                ) : (
+                  <CaptionGrey>{item.description}</CaptionGrey>
+                )}
               </div>
             </div>
           ))}
         </div>
+        <div className="mt-auto flex relative w-32 lg:w-40 aspect-2/1">
+          <Image src="/logo.png" fill={true} alt={t("Logo")} />
+        </div>
       </div>
     </Sidebar>
-  );
+  )
 }

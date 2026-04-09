@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,7 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { H2, H5 } from "@/components/typography"
+import { H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import { LoginAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
@@ -70,21 +69,24 @@ export default function LoginPageComponent() {
   }
 
   return (
-    <div id="LoginPage" className="gap-4 w-full h-full">
+    <div
+      id="LoginPage"
+      className="flex flex-col justify-center w-full rounded-lg bg-white shadow p-6 md:p-8"
+    >
       <Form {...methods}>
         <form
           id="LoginForm"
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col justify-between w-full h-full"
+          className="flex flex-col justify-between gap-4 md:gap-6 w-full"
         >
-          <H2>{t("PageTitle")}</H2>
+          <H4>{t("PageTitle")}</H4>
           <FormField
             control={methods.control}
             name={"phoneNumber"}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <H5>{t("Input.Title")}</H5>
+                  <SmallGrey>{t("Input.Title")}</SmallGrey>
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -93,7 +95,6 @@ export default function LoginPageComponent() {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>{t("Input.Description")}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

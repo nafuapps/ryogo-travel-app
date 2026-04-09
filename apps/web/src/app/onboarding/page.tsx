@@ -1,15 +1,26 @@
 //Onboarding home page
 
-import { H2, H4, P, PGrey, Small } from "@/components/typography"
+import { H2, PBold, SmallGrey } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { LucideFootprints, LucideListCheck } from "lucide-react"
+import {
+  Building2,
+  Camera,
+  Car,
+  FileText,
+  FingerprintPattern,
+  IdCard,
+  LifeBuoy,
+  UserKey,
+} from "lucide-react"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { redirect, RedirectType } from "next/navigation"
+import Image from "next/image"
+import OnboardingHomeStepItem from "./components/onboardingHomeStepItem"
+import OnboardingHomeDocumentItem from "./components/onboardingHomeDocumentItem"
 
 export const metadata: Metadata = {
   title: "Onboarding Page | RyoGo",
@@ -30,75 +41,66 @@ export default async function OnboardingHomePage() {
   return (
     <div
       id="OnboardingHomePage"
-      className="bg-white w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 lg:p-16 py-10 md:py-12 gap-8 lg:gap-10"
+      className="bg-slate-50 w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 lg:p-16 py-10 md:py-12 gap-8 lg:gap-10"
     >
       <div
         id="OnboardingHomeHeader"
-        className="flex flex-col w-full items-center text-center"
+        className="flex flex-col w-full items-center text-center gap-3"
       >
-        {/* TODO: Add Logo*/}
+        <div className="md:flex relative md:w-32 lg:w-40 aspect-2/1">
+          <Image src="/logo.png" fill={true} alt={t("Logo")} />
+        </div>
         <H2>{t("Header.Title")}</H2>
-        <P>{t("Header.Description")}</P>
+        <SmallGrey>{t("Header.Description")}</SmallGrey>
       </div>
       <div
         id="OnboardingHomeBody"
-        className="flex flex-col md:flex-row w-full h-full gap-8 md:gap-12"
+        className="flex flex-col md:flex-row w-full h-full gap-6 md:gap-8"
       >
         <div
           id="OnboardingHomeSteps"
-          className="border-slate-200 border rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
+          className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
         >
-          <div className="flex flex-row gap-3 md:gap-4 justify-start items-center">
-            <div className="bg-slate-100 rounded-full w-10 h-10 md:w-12 md:h-12 flex justify-center items-center">
-              <LucideFootprints className="w-5 h-5 md:w-7 md:h-7" />
-            </div>
-            <H4>{t("BodySteps.Title")}</H4>
+          <PBold>{t("BodySteps.Title")}</PBold>
+          <div className="flex flex-col">
+            <OnboardingHomeStepItem
+              label={t("BodySteps.Step1")}
+              icon={FingerprintPattern}
+            />
+            <OnboardingHomeStepItem label={t("BodySteps.Step2")} icon={Car} />
+            <OnboardingHomeStepItem
+              label={t("BodySteps.Step3")}
+              icon={LifeBuoy}
+            />
+            <OnboardingHomeStepItem
+              label={t("BodySteps.Step4")}
+              icon={UserKey}
+            />
           </div>
-          <PGrey>{t("BodySteps.Description")}</PGrey>
-          <ol className="flex flex-col gap-2 md:gap-3">
-            <li>
-              <Small>{t("BodySteps.Step1")}</Small>
-            </li>
-            <li>
-              <Small>{t("BodySteps.Step2")}</Small>
-            </li>
-            <li>
-              <Small>{t("BodySteps.Step3")}</Small>
-            </li>
-            <li>
-              <Small>{t("BodySteps.Step4")}</Small>
-            </li>
-          </ol>
         </div>
         <div
           id="OnboardingHomeChecklist"
-          className="border-slate-200 border rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
+          className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
         >
-          <div className="flex flex-row gap-3 md:gap-4 justify-start items-center">
-            <div className="bg-slate-100 rounded-full w-10 h-10 md:w-12 md:h-12 flex justify-center items-center">
-              <LucideListCheck className="w-5 h-5 md:w-7 md:h-7" />
-            </div>
-            <H4>{t("BodyChecklist.Title")}</H4>
+          <PBold>{t("BodyChecklist.Title")}</PBold>
+          <div className="flex flex-col gap-2 md:gap-3">
+            <OnboardingHomeDocumentItem
+              label={t("BodyChecklist.Item1")}
+              icon={Building2}
+            />
+            <OnboardingHomeDocumentItem
+              label={t("BodyChecklist.Item2")}
+              icon={Camera}
+            />
+            <OnboardingHomeDocumentItem
+              label={t("BodyChecklist.Item3")}
+              icon={FileText}
+            />
+            <OnboardingHomeDocumentItem
+              label={t("BodyChecklist.Item4")}
+              icon={IdCard}
+            />
           </div>
-          <PGrey>{t("BodyChecklist.Description")}</PGrey>
-          <ul className="flex flex-col gap-2 md:gap-3">
-            <li className="flex gap-2 md:gap-3 items-center">
-              <Checkbox />
-              <Small>{t("BodyChecklist.Item1")}</Small>
-            </li>
-            <li className="flex gap-2 md:gap-3 items-center">
-              <Checkbox />
-              <Small>{t("BodyChecklist.Item2")}</Small>
-            </li>
-            <li className="flex gap-2 md:gap-3 items-center">
-              <Checkbox />
-              <Small>{t("BodyChecklist.Item3")}</Small>
-            </li>
-            <li className="flex gap-2 md:gap-3 items-center">
-              <Checkbox />
-              <Small>{t("BodyChecklist.Item4")}</Small>
-            </li>
-          </ul>
         </div>
       </div>
       <div id="OnboardingHomeFooter" className="w-full md:w-1/2">

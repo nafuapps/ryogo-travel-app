@@ -16,23 +16,21 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { H2, H5, PGrey } from "@/components/typography"
+import { H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 import { useTransition } from "react"
 import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
 
-export default function ConfirmEmailPageComponent({
+export default function ForgotPasswordPageComponent({
   userId,
-  agencyId,
   currentEmail,
 }: {
   userId: string
-  agencyId: string
   currentEmail: string
 }) {
-  const t = useTranslations("Auth.ForgotPasswordPage.Step2")
+  const t = useTranslations("Auth.LoginPage.ForgotPassword")
 
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -63,22 +61,24 @@ export default function ConfirmEmailPageComponent({
   }
 
   return (
-    <div id="ConfirmEmailPage" className="gap-4 w-full h-full">
+    <div
+      id="ForgotPasswordPage"
+      className="flex flex-col justify-center w-full rounded-lg shadow bg-white p-6 md:p-8"
+    >
       <Form {...methods}>
         <form
-          id="ConfirmEmailForm"
+          id="ForgorPasswordForm"
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col justify-between  h-full"
+          className="flex flex-col justify-between gap-4 md:gap-6 h-full"
         >
-          <H2>{t("PageTitle")}</H2>
+          <H4>{t("PageTitle")}</H4>
           <FormField
             control={methods.control}
             name={"email"}
             render={({ field }) => (
               <FormItem>
-                <PGrey>{t("Info")}</PGrey>
                 <FormLabel>
-                  <H5>{t("Input.Title")}</H5>
+                  <SmallGrey>{t("Info")}</SmallGrey>
                 </FormLabel>
                 <FormControl>
                   <Input

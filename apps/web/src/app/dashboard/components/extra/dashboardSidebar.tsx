@@ -101,11 +101,7 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       className="h-full"
     >
       <SidebarHeader className="my-4">
-        <SidebarLogoItem
-          open={sidebarOpen}
-          title={t("Title")}
-          subtitle={t("Subtitle")}
-        />
+        <SidebarLogoItem open={sidebarOpen} logo={t("Logo")} />
       </SidebarHeader>
       <SidebarContent className="px-2 my-4">
         {contentItems.map((item) =>

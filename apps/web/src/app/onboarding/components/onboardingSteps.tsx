@@ -1,4 +1,4 @@
-import { FormEventHandler } from "react";
+import { SubmitEventHandler } from "react"
 import {
   formClassName,
   contentClassName,
@@ -10,88 +10,88 @@ import {
   iconContainerClassName,
   lucideIconClassName,
   headerTopLineClassName,
-} from "./commonClassNames";
-import { Button } from "@/components/ui/button";
-import { LucideCheck } from "lucide-react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+} from "./commonClassNames"
+import { Button } from "@/components/ui/button"
+import { LucideCheck } from "lucide-react"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export type OnboardingStepPageProps = {
-  pageId: string;
-  children: React.ReactNode;
-};
+  pageId: string
+  children: React.ReactNode
+}
 
 export function OnboardingStepPage(props: OnboardingStepPageProps) {
   return (
     <div id={props.pageId} className={pageClassName}>
       {props.children}
     </div>
-  );
+  )
 }
 
 export type OnboardingStepHeaderProps = {
-  headerId: string;
-  children: React.ReactNode;
-};
+  headerId: string
+  children: React.ReactNode
+}
 
 export function OnboardingStepHeader(props: OnboardingStepHeaderProps) {
   return (
     <div id={props.headerId} className={headerClassName}>
       {props.children}
     </div>
-  );
+  )
 }
 
 export type OnboardingStepHeaderTopLineProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 export function OnboardingStepHeaderTopLine(
-  props: OnboardingStepHeaderTopLineProps
+  props: OnboardingStepHeaderTopLineProps,
 ) {
   return (
     <div className={headerTopLineClassName}>
       {props.children}
       <SidebarTrigger className="md:hidden" />
     </div>
-  );
+  )
 }
 
 export type OnboardingStepFormProps = {
-  formId: string;
-  submit: FormEventHandler<HTMLFormElement> | undefined;
-  children: React.ReactNode;
-};
+  formId: string
+  submit: SubmitEventHandler<HTMLFormElement> | undefined
+  children: React.ReactNode
+}
 
 export function OnboardingStepForm(props: OnboardingStepFormProps) {
   return (
     <form id={props.formId} onSubmit={props.submit} className={formClassName}>
       {props.children}
     </form>
-  );
+  )
 }
 
 export type OnboardingStepFinishProps = {
-  formId: string;
-  children: React.ReactNode;
-};
+  formId: string
+  children: React.ReactNode
+}
 
 export function OnboardingStepFinishForm(props: OnboardingStepFinishProps) {
   return (
     <div id={props.formId} className={formClassName}>
       {props.children}
     </div>
-  );
+  )
 }
 
 export type OnboardingStepContentProps = {
-  contentId: string;
-  children: React.ReactNode;
-};
+  contentId: string
+  children: React.ReactNode
+}
 export function OnboardingStepContent(props: OnboardingStepContentProps) {
   return (
     <div id={props.contentId} className={contentClassName}>
       {props.children}
     </div>
-  );
+  )
 }
 
 export function OnboardingStepFinishContent(props: OnboardingStepContentProps) {
@@ -99,27 +99,27 @@ export function OnboardingStepFinishContent(props: OnboardingStepContentProps) {
     <div id={props.contentId} className={successContentClassName}>
       {props.children}
     </div>
-  );
+  )
 }
 
 export type OnboardingStepActionsProps = {
-  actionsId: string;
-  children: React.ReactNode;
-};
+  actionsId: string
+  children: React.ReactNode
+}
 export function OnboardingStepActions(props: OnboardingStepActionsProps) {
   return (
     <div id={props.actionsId} className={actionsClassName}>
       {props.children}
     </div>
-  );
+  )
 }
 
 export type OnboardingStepPrimaryActionProps = {
-  children: React.ReactNode;
-  disabled: boolean;
-};
+  children: React.ReactNode
+  disabled: boolean
+}
 export function OnboardingStepPrimaryAction(
-  props: OnboardingStepPrimaryActionProps
+  props: OnboardingStepPrimaryActionProps,
 ) {
   return (
     <Button
@@ -131,16 +131,16 @@ export function OnboardingStepPrimaryAction(
     >
       {props.children}
     </Button>
-  );
+  )
 }
 
 export type OnboardingStepSecondaryActionProps = {
-  children: React.ReactNode;
-  disabled: boolean;
-  onClick: () => void;
-};
+  children: React.ReactNode
+  disabled: boolean
+  onClick: () => void
+}
 export function OnboardingStepSecondaryAction(
-  props: OnboardingStepSecondaryActionProps
+  props: OnboardingStepSecondaryActionProps,
 ) {
   return (
     <Button
@@ -152,16 +152,16 @@ export function OnboardingStepSecondaryAction(
     >
       {props.children}
     </Button>
-  );
+  )
 }
 
 export type OnboardingSuccessIconProps = {
-  iconId: string;
-};
+  iconId: string
+}
 export function OnboardingSuccessIcon(props: OnboardingSuccessIconProps) {
   return (
     <div id={props.iconId} className={iconContainerClassName}>
       <LucideCheck className={lucideIconClassName} />
     </div>
-  );
+  )
 }

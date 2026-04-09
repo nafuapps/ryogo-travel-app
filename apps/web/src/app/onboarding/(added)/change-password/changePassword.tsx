@@ -8,7 +8,7 @@ import {
   OnboardingStepPage,
 } from "@/app/onboarding/components/onboardingSteps"
 import { ChangePasswordStep1 } from "./changePasswordStep1"
-import { Skeleton } from "@/components/ui/skeleton"
+import Image from "next/image"
 import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
@@ -44,8 +44,9 @@ export default function ChangePasswordPageComponent(
             id="SidebarSection"
             className="w-full flex px-8 py-10 md:p-12 lg:p-16 h-full flex-col items-center justify-center gap-8 lg:gap-10 bg-slate-50"
           >
-            {/* TODO: Add Logo */}
-            <Skeleton className="w-72 h-14 lg:w-80 lg:h-16 bg-slate-200" />
+            <div className="md:flex relative md:w-72 lg:w-80 aspect-2/1">
+              <Image src="/logo.png" fill={true} alt={t("Logo")} />
+            </div>
           </div>
         </SidebarContent>
       </Sidebar>

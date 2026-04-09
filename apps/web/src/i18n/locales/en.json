@@ -1,18 +1,14 @@
 {
   "Auth": {
-    "Sidebar": {
-      "TitleLogin": "Don't have an account yet? Join now!",
-      "TitleSignup": "Already have an account?",
-      "CTALogin": "Sign up",
-      "CTASignup": "Go to Login"
-    },
     "LoginPage": {
+      "Logo":"RyoGo Logo",
+      "SignupTitle":"Don't have an account yet?",
+      "SignupCTA":"Join Now",
       "Step1": {
         "PageTitle": "Login",
         "Input": {
-          "Title": "Enter phone number",
-          "Placeholder": "9876543210",
-          "Description": "Provide your phone number to proceed"
+          "Title": "Enter your phone number",
+          "Placeholder": "9876543210"
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
@@ -21,14 +17,14 @@
         "APIError": "Phone number not registered"
       },
       "Step2": {
-        "PageTitle": "Login",
-        "Info": "Select an account for login:",
+        "PageTitle": "Welcome back!",
+        "Info": "Select the account you want to log into:",
         "SecondaryCTA": "Back"
       },
       "Step3": {
-        "PageTitle": "Login",
+        "PageTitle": "Log into your account",
         "Input": {
-          "Title": "Enter password",
+          "Title": "Enter your password",
           "Placeholder": "********",
           "Description": "Provide your password to safely login"
         },
@@ -39,53 +35,14 @@
         "Error1": "Password must be at least 8 characters",
         "APIError1": "Password does not match",
         "APIError2": "User does not exist.. Try logging in with a different phone number"
-      }
-    },
-    "SignupPage": {
-      "Step1": {
-        "PageTitle": "Signup",
-        "Info": "You have decided to sign up with RyoGo.. Great choice!",
-        "Input": {
-          "Title": "Enter phone number",
-          "Placeholder": "9876543210",
-          "Description": "Provide your phone number to proceed"
-        },
-        "PrimaryCTA": "Continue",
-        "Loading": "Loading",
-        "Error1": "Phone number must be 10 digits",
-        "Error2": "Phone number must be numeric"
       },
-      "Step2": {
-        "PageTitle": "Signup",
-        "InfoYes": "You already have an owner account with us:",
-        "InfoNo": "You already have some accounts with us:",
-        "SecondaryCTANo": "Create another account",
-        "SecondaryCTAYes": "Contact support",
-        "Description": "To create more accounts, you will need to contact our support team."
-      }
-    },
-    "ForgotPasswordPage": {
-      "Step1": {
-        "PageTitle": "Forgot Password?",
-        "Info": "Don't worry.. we will get you a new password.",
-        "Input": {
-          "Title": "Enter phone number",
-          "Placeholder": "9876543210",
-          "Description": "Confirm your phone number to proceed"
-        },
-        "PrimaryCTA": "Continue",
-        "Loading": "Loading",
-        "Error1": "Phone number must be 10 digits",
-        "Error2": "Phone number must be numeric",
-        "APIError": "Phone number not found"
-      },
-      "Step2": {
+      "ForgotPassword": {
         "PageTitle": "Forgot password?",
-        "Info": "Don't worry..  We will get you a new password!",
+        "Info": "Don't worry..  Enter your email address",
         "Input": {
           "Title": "Enter email address",
           "Placeholder": "abcd@gmail.com",
-          "Description": "Provide your registered email address to confirm your identity and get a new password"
+          "Description": "We will confirm your identity and send you a new password"
         },
         "PrimaryCTA": "Reset Password",
         "Loading": "Loading",
@@ -95,29 +52,53 @@
         "Success": "Password reset email sent.. check your inbox for new password!",
         "Error": "Cannot reset password.. Try again later!"
       }
+    },
+    "SignupPage": {
+      "Logo":"RyoGo Logo",
+      "LoginTitle":"Already have an account?",
+      "LoginCTA":"Login Now",
+      "Step1": {
+        "PageTitle": "Welcome!",
+        "Info": "You have decided to sign up with RyoGo.. Great choice!",
+        "Input": {
+          "Title": "Signup with your phone number",
+          "Placeholder": "9876543210"
+        },
+        "PrimaryCTA": "Create account",
+        "Loading": "Loading",
+        "Error1": "Phone number must be 10 digits",
+        "Error2": "Phone number must be numeric"
+      },
+      "Step2": {
+        "PageTitle": "Hold on!",
+        "InfoYes": "You already have an owner account with us:",
+        "InfoNo": "You already have {count} account(s) with us:",
+        "SecondaryCTANo": "Create another account",
+        "SecondaryCTAYes": "Contact support",
+        "Description": "To create more accounts, you will need to contact our support team."
+      }
     }
   },
   "Onboarding": {
     "HomePage": {
+      "Logo":"RyoGo Logo",
       "Header": {
-        "Title": "Welcome!",
-        "Description": "Let's get you onboard in 4 easy steps.. and in less than 10 minutes"
+        "Title": "Welcome to RyoGo!",
+        "Description": "Let's get your account set up in just a few minutes"
       },
       "BodySteps": {
-        "Title": "Onboarding steps",
-        "Description": "This is what we will be doing next:",
-        "Step1": "1. Create an account for your agency",
+        "Title": "Onboarding Journey",
+        "Step1": "1. Create an owner account for your agency",
         "Step2": "2. Add a vehicle",
         "Step3": "3. Add a driver",
         "Step4": "4. Add an agent (optional)"
       },
       "BodyChecklist": {
-        "Title": "Onboarding checklist",
-        "Description": "Keep these ready for uploading:",
+        "Title": "Document checklist",
         "Item1": "Your business logo (optional)",
-        "Item2": "Photo of the vehicle (where you can see number plate)",
+        "Item2": "Photo of the vehicle (with visible number plate)",
         "Item3": "Document photos of vehicle RC, Insurance policy and PUC certificate",
-        "Item4": "Driver's license photocopy"
+        "Item4": "Driver's license"
       },
       "Footer": {
         "PrimaryCTA": "Get Started"
@@ -611,6 +592,7 @@
       }
     },
     "ChangePasswordPage": {
+      "Logo":"RyoGo Logo",
       "Title": "Welcome!",
       "Subtitle": "It seems like you are logging in for the first time! Please set a new password to secure your account.",
       "Step1": {
@@ -644,29 +626,29 @@
       }
     },
     "Sidebar": {
-      "Heading": "Setting up your account",
+      "Logo":"RyoGo Logo",
+      "Heading": "Setting up your agency account",
       "Step1": {
         "Title": "Create Account",
-        "Description": "Create an owner account for you"
+        "Description": "Create owner account and agency profile"
       },
       "Step2": {
         "Title": "Add Vehicle",
-        "Description": "Add a vehicle to your agency"
+        "Description": "Register a vehicle in your agency"
       },
       "Step3": {
         "Title": "Add Driver",
-        "Description": "Add a driver to your agency"
+        "Description": "Onboard a driver in your agency"
       },
       "Step4": {
         "Title": "Add Agent",
-        "Description": "Add an agent to run day-to-day operations (optional)"
+        "Description": "Add an agent to run daily operations (optional)"
       }
     }
   },
   "Dashboard": {
     "Sidebar": {
-      "Title": "RyoGo",
-      "Subtitle": "Your Travel Agency App",
+      "Logo":"RyoGo Logo",
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicles": "Vehicles",
@@ -2669,8 +2651,7 @@
   },
   "Rider": {
     "Sidebar": {
-      "Title": "RyoGo",
-      "Subtitle": "Your Travel Agency App",
+      "Logo":"RyoGo Logo",
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicle": "Vehicle",

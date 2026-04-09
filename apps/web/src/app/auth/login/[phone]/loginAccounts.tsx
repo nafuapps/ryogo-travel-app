@@ -1,4 +1,4 @@
-import { H2, P } from "@/components/typography"
+import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import { AccountCard } from "@/app/auth/components/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
@@ -15,18 +15,20 @@ export default async function LoginAccountsPageComponent({
   return (
     <div
       id="LoginAccountsPage"
-      className="gap-4 flex flex-col justify-between w-full h-full"
+      className="flex flex-col justify-center w-full gap-3 lg:gap-4 max-h-2/3 rounded-lg shadow bg-white p-6 md:p-8"
     >
-      <H2>{t("PageTitle")}</H2>
-      <div className="flex flex-col gap-3 lg:gap-4 p-1 overflow-y-scroll no-scrollbar">
-        <P>{t("Info")}</P>
+      <H4>{t("PageTitle")}</H4>
+      <SmallGrey>{t("Info")}</SmallGrey>
+      <div
+        className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : "lg:grid-cols-1"} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
+      >
         {accounts.map((account) => (
           <AccountCard key={account.id} account={account} />
         ))}
       </div>
       <Link href={"/auth/login"}>
         <Button variant={"secondary"} size={"lg"} className="w-full">
-          {t("SecondaryCTA")}
+          <CaptionGrey>{t("SecondaryCTA")}</CaptionGrey>
         </Button>
       </Link>
     </div>

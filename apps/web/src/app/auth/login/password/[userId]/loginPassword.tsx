@@ -124,9 +124,9 @@ export default function LoginPasswordPageComponent({
             >
               <CaptionGrey>{t("Back")}</CaptionGrey>
             </Button>
-            <Button variant={"link"} type="button">
+            <Button variant={"link"} type="button" size="sm">
               <Link href={`/auth/login/forgot-password/${userId}`}>
-                {t("ForgotCTA")}
+                <CaptionGrey>{t("ForgotCTA")}</CaptionGrey>
               </Link>
             </Button>
           </div>

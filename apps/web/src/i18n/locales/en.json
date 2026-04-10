@@ -2,8 +2,8 @@
   "Auth": {
     "LoginPage": {
       "Logo":"RyoGo Logo",
-      "SignupTitle":"Don't have an account yet?",
-      "SignupCTA":"Join Now",
+      "SignupTitle":"Want to create a new agency account?",
+      "SignupCTA":"Sign up for free",
       "Step1": {
         "PageTitle": "Login",
         "Input": {
@@ -58,24 +58,24 @@
       "LoginTitle":"Already have an account?",
       "LoginCTA":"Login Now",
       "Step1": {
-        "PageTitle": "Welcome!",
-        "Info": "You have decided to sign up with RyoGo.. Great choice!",
+        "PageTitle": "Welcome to RyoGo!",
         "Input": {
-          "Title": "Signup with your phone number",
+          "Title": "Enter your phone number to sign up",
           "Placeholder": "9876543210"
         },
-        "PrimaryCTA": "Create account",
+        "PrimaryCTA": "Create agency account",
         "Loading": "Loading",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric"
       },
       "Step2": {
-        "PageTitle": "Hold on!",
-        "InfoYes": "You already have an owner account with us:",
+        "PageTitle": "Hello, there!",
+        "InfoYes": "You already have an agency account with us:",
         "InfoNo": "You already have {count} account(s) with us:",
-        "SecondaryCTANo": "Create another account",
+        "SecondaryCTANo": "Create a new agency account",
         "SecondaryCTAYes": "Contact support",
-        "Description": "To create more accounts, you will need to contact our support team."
+        "BackCTA": "Back",
+        "Description": "To create more agency accounts, contact our support team."
       }
     }
   },
@@ -84,13 +84,13 @@
       "Logo":"RyoGo Logo",
       "Header": {
         "Title": "Welcome to RyoGo!",
-        "Description": "Let's get your account set up in just a few minutes"
+        "Description": "Let's get your agency account set up in just a few minutes"
       },
       "BodySteps": {
         "Title": "Onboarding Journey",
         "Step1": "1. Create an owner account for your agency",
-        "Step2": "2. Add a vehicle",
-        "Step3": "3. Add a driver",
+        "Step2": "2. Register a vehicle",
+        "Step3": "3. Onboard a driver",
         "Step4": "4. Add an agent (optional)"
       },
       "BodyChecklist": {

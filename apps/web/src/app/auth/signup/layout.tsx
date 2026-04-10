@@ -29,20 +29,12 @@ export default async function AuthLayout({
     <section id="SignupLayout" className="flex flex-row w-screen h-dvh">
       <div
         id="SignupMainSection"
-        className="flex flex-col gap-3 md:gap-4 justify-between items-center bg-slate-50 w-full md:w-1/2 p-6 md:p-8 lg:p-10"
+        className="flex flex-col gap-12 md:gap-16 justify-start items-center bg-slate-50 w-full md:w-1/2 p-6 md:p-8 lg:p-10"
       >
         <div className="relative w-40 md:w-48 aspect-2/1">
           <Image src="/logo.png" fill={true} alt={t("Logo")} />
         </div>
         {children}
-        <div className="flex flex-col items-center gap-2 md:gap-3">
-          <CaptionGrey>{t("LoginTitle")}</CaptionGrey>
-          <Button variant="outline" size="lg">
-            <Link href={"/auth/login"}>
-              <CaptionGrey>{t("LoginCTA")}</CaptionGrey>
-            </Link>
-          </Button>
-        </div>
       </div>
       <div id="SignupSideSection" className="md:flex md:w-1/2 relative hidden">
         <Image

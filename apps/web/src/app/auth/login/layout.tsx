@@ -2,12 +2,9 @@
 
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 import Image from "next/image"
-import { CaptionGrey } from "@/components/typography"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { getTranslations } from "next-intl/server"
 
 export default async function AuthLayout({
   children,
@@ -37,20 +34,12 @@ export default async function AuthLayout({
       </div>
       <div
         id="LoginMainSection"
-        className="flex flex-col gap-3 md:gap-4 justify-between items-center bg-slate-50 w-full md:w-1/2 p-6 md:p-8 lg:p-10"
+        className="flex flex-col gap-12 md:gap-16 h-full items-center justify-start bg-slate-50 w-full md:w-1/2 p-6 md:p-8 lg:p-10"
       >
         <div className="relative w-40 md:w-48 aspect-2/1">
           <Image src="/logo.png" fill={true} alt={t("Logo")} />
         </div>
         {children}
-        <div className="flex flex-col items-center gap-2 md:gap-3">
-          <CaptionGrey>{t("SignupTitle")}</CaptionGrey>
-          <Button variant="outline" size="lg">
-            <Link href={"/auth/signup"}>
-              <CaptionGrey>{t("SignupCTA")}</CaptionGrey>
-            </Link>
-          </Button>
-        </div>
       </div>
     </section>
   )

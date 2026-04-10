@@ -37,7 +37,7 @@ export default async function SignupExistingPageComponent({
           : t("InfoNo", { count: accounts.length })}
       </SmallGrey>
       <div
-        className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : "lg:grid-cols-1"} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
+        className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : ""} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
       >
         {accounts.length > 0 &&
           accounts.map((item, index) => (
@@ -45,9 +45,14 @@ export default async function SignupExistingPageComponent({
           ))}
       </div>
       <div id="SignupExistingActions" className="flex flex-col gap-4 w-full">
+        <Link href={"/auth/signup"}>
+          <Button variant={"secondary"} size={"lg"} className="w-full">
+            <CaptionGrey>{t("BackCTA")}</CaptionGrey>
+          </Button>
+        </Link>
         {hasOwnerAccount ? (
           <>
-            <Button variant={"secondary"} size={"lg"}>
+            <Button variant={"outline"} size={"lg"}>
               <Link href="mailto:nafuapps@gmail.com">
                 <CaptionGrey>{t("SecondaryCTAYes")}</CaptionGrey>
               </Link>
@@ -56,7 +61,7 @@ export default async function SignupExistingPageComponent({
           </>
         ) : (
           <Button
-            variant={"secondary"}
+            variant={"outline"}
             size={"lg"}
             disabled={accounts.length < 1}
           >

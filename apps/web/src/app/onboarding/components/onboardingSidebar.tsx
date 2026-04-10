@@ -93,7 +93,7 @@ export default function OnboardingSidebar({
             </div>
           ))}
         </div>
-        <div className="mt-auto flex relative w-32 lg:w-40 aspect-2/1">
+        <div className="mt-auto flex relative w-40 md:w-48 aspect-2/1">
           <Image src="/logo.png" fill={true} alt={t("Logo")} />
         </div>
       </div>

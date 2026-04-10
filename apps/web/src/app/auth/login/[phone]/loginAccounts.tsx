@@ -15,12 +15,12 @@ export default async function LoginAccountsPageComponent({
   return (
     <div
       id="LoginAccountsPage"
-      className="flex flex-col justify-center w-full gap-3 lg:gap-4 max-h-2/3 rounded-lg shadow bg-white p-6 md:p-8"
+      className="flex flex-col justify-center w-full gap-3 lg:gap-4 max-h-full rounded-lg shadow bg-white p-6 md:p-8"
     >
       <H4>{t("PageTitle")}</H4>
       <SmallGrey>{t("Info")}</SmallGrey>
       <div
-        className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : "lg:grid-cols-1"} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
+        className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : ""} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
       >
         {accounts.map((account) => (
           <AccountCard key={account.id} account={account} />

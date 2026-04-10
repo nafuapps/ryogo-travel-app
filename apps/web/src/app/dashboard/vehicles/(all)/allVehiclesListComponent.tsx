@@ -80,7 +80,7 @@ async function AllVehiclesItemComponent({
                 src={getFileUrl(vehicle.vehiclePhotoUrl)}
                 alt={t("Photo") + " " + vehicle.vehicleNumber}
                 fill
-                sizes="(max-width: 768px) 40px,48px"
+                sizes="(max-width: 1024px) 40px,48px"
               />
             </div>
           ) : (

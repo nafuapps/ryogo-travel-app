@@ -18,9 +18,9 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { redirect, RedirectType } from "next/navigation"
-import Image from "next/image"
 import OnboardingHomeStepItem from "./components/onboardingHomeStepItem"
 import OnboardingHomeDocumentItem from "./components/onboardingHomeDocumentItem"
+import RyoGoLogo from "@/components/logo"
 
 export const metadata: Metadata = {
   title: "Onboarding Page | RyoGo",
@@ -41,17 +41,22 @@ export default async function OnboardingHomePage() {
   return (
     <div
       id="OnboardingHomePage"
-      className="bg-slate-50 w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 lg:p-16 py-10 md:py-12 gap-8 lg:gap-10"
+      className="bg-slate-50 w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 lg:p-16 py-8 md:py-12 gap-6 lg:gap-8"
     >
       <div
         id="OnboardingHomeHeader"
         className="flex flex-col w-full items-center text-center gap-3"
       >
-        <div className="md:flex relative md:w-32 lg:w-40 aspect-2/1">
-          <Image src="/logo.png" fill={true} alt={t("Logo")} />
-        </div>
+        <RyoGoLogo />
         <H2>{t("Header.Title")}</H2>
         <SmallGrey>{t("Header.Description")}</SmallGrey>
+      </div>
+      <div id="OnboardingHomeFooter" className="w-full md:w-1/2">
+        <Button variant={"default"} size={"lg"} className="w-full">
+          <Link href="/onboarding/create-account">
+            {t("Footer.PrimaryCTA")}
+          </Link>
+        </Button>
       </div>
       <div
         id="OnboardingHomeBody"
@@ -102,13 +107,6 @@ export default async function OnboardingHomePage() {
             />
           </div>
         </div>
-      </div>
-      <div id="OnboardingHomeFooter" className="w-full md:w-1/2">
-        <Button variant={"default"} size={"lg"} className="w-full">
-          <Link href="/onboarding/create-account">
-            {t("Footer.PrimaryCTA")}
-          </Link>
-        </Button>
       </div>
     </div>
   )

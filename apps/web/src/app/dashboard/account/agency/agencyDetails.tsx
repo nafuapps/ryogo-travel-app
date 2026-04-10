@@ -53,7 +53,7 @@ export default async function AgencyDetailsPageComponent({
                     src={getFileUrl(agency.logoUrl)}
                     alt={t("Photo")}
                     fill
-                    sizes="(max-width: 768px) 112px,128px"
+                    sizes="(max-width: 1024px) 112px,128px"
                   />
                 </div>
               ) : (

@@ -105,7 +105,7 @@ async function AllUsersItemComponent({
                 src={getFileUrl(user.photoUrl)}
                 alt={t("Photo") + " " + user.id}
                 fill
-                sizes="(max-width: 768px) 40px,48px"
+                sizes="(max-width: 1024px) 40px,48px"
               />
             </div>
           ) : (

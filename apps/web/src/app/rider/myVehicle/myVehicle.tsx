@@ -61,7 +61,7 @@ export default async function RiderMyVehiclePageComponent({
                     src={getFileUrl(vehicle.vehiclePhotoUrl)}
                     alt={t("Photo")}
                     fill
-                    sizes="(max-width: 768px) 112px,128px"
+                    sizes="(max-width: 1024px) 112px,128px"
                   />
                 </div>
               ) : (
@@ -127,6 +127,7 @@ export default async function RiderMyVehiclePageComponent({
                     alt={t("InsurancePhoto")}
                     fill
                     className="object-contain"
+                    sizes="(max-width: 1024px) 40px,48px"
                   />
                 </DialogTrigger>
                 <DialogContent className="size-10/12">
@@ -139,6 +140,7 @@ export default async function RiderMyVehiclePageComponent({
                     alt={t("InsurancePhoto")}
                     fill
                     className="object-contain"
+                    sizes="5/6"
                   />
                 </DialogContent>
               </Dialog>
@@ -167,6 +169,7 @@ export default async function RiderMyVehiclePageComponent({
                     alt={t("PUCPhoto")}
                     fill
                     className="object-contain"
+                    sizes="(max-width: 1024px) 40px,48px"
                   />
                 </DialogTrigger>
                 <DialogContent className="size-10/12">
@@ -179,6 +182,7 @@ export default async function RiderMyVehiclePageComponent({
                     alt={t("PUCPhoto")}
                     fill
                     className="object-contain"
+                    sizes="5/6"
                   />
                 </DialogContent>
               </Dialog>
@@ -207,6 +211,7 @@ export default async function RiderMyVehiclePageComponent({
                     alt={t("RCPhoto")}
                     fill
                     className="object-contain"
+                    sizes="(max-width: 1024px) 40px,48px"
                   />
                 </DialogTrigger>
                 <DialogContent className="size-10/12">
@@ -219,6 +224,7 @@ export default async function RiderMyVehiclePageComponent({
                     alt={t("RCPhoto")}
                     fill
                     className="object-contain"
+                    sizes="5/6"
                   />
                 </DialogContent>
               </Dialog>

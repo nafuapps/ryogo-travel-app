@@ -120,6 +120,7 @@ export default async function TransactionItem({
                 alt={t("Proof")}
                 fill
                 className="object-contain"
+                sizes="5/6"
               />
             </DialogContent>
           </Dialog>

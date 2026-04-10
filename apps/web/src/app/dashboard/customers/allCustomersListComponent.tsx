@@ -124,7 +124,7 @@ function AllCustomersItemComponent({
                 src={getFileUrl(customer.photoUrl)}
                 alt={t("Photo") + " " + customer.id}
                 fill
-                sizes="(max-width: 768px) 40px,48px"
+                sizes="(max-width: 1024px) 40px,48px"
               />
             </div>
           ) : (

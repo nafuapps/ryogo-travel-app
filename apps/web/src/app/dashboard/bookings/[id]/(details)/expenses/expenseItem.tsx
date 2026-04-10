@@ -114,6 +114,7 @@ export default async function ExpenseItem({
                 alt={t("Proof")}
                 fill
                 className="object-contain"
+                sizes="5/6"
               />
             </DialogContent>
           </Dialog>

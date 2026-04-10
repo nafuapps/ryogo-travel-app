@@ -78,6 +78,7 @@ export default async function TripLogItem({
                 alt={t("Proof")}
                 fill
                 className="object-contain"
+                sizes="5/6"
               />
             </DialogContent>
           </Dialog>

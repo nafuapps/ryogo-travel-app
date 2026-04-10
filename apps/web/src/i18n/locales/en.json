@@ -54,7 +54,6 @@
       }
     },
     "SignupPage": {
-      "Logo":"RyoGo Logo",
       "LoginTitle":"Already have an account?",
       "LoginCTA":"Login Now",
       "Step1": {
@@ -648,7 +647,6 @@
   },
   "Dashboard": {
     "Sidebar": {
-      "Logo":"RyoGo Logo",
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicles": "Vehicles",
@@ -2651,7 +2649,6 @@
   },
   "Rider": {
     "Sidebar": {
-      "Logo":"RyoGo Logo",
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicle": "Vehicle",

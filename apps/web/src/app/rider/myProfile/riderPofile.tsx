@@ -39,7 +39,7 @@ export default async function RiderProfilePageComponent({
                     src={getFileUrl(driverDetails.user.photoUrl)}
                     alt={t("Photo")}
                     fill
-                    sizes="(max-width: 768px) 112px,128px"
+                    sizes="(max-width: 1024px) 112px,128px"
                   />
                 </div>
               ) : (

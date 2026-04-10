@@ -22,7 +22,7 @@ export default function ExistingCutomerCard({
             src={getFileUrl(existingCustomer.photoUrl)}
             alt={t("Photo") + " " + existingCustomer.id}
             fill
-            sizes="(max-width: 768px) 24px,32px"
+            sizes="(max-width: 1024px) 24px,32px"
           />
         </div>
       ) : (

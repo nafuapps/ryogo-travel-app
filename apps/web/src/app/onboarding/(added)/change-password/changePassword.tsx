@@ -8,9 +8,9 @@ import {
   OnboardingStepPage,
 } from "@/app/onboarding/components/onboardingSteps"
 import { ChangePasswordStep1 } from "./changePasswordStep1"
-import Image from "next/image"
 import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import RyoGoLogo from "@/components/logo"
 
 type ChangePasswordPageComponentProps = {
   userId: string
@@ -26,7 +26,7 @@ export default function ChangePasswordPageComponent(
   return (
     <>
       <OnboardingStepPage pageId="ChangePassword">
-        <OnboardingStepHeader headerId="AddAgentHeader">
+        <OnboardingStepHeader headerId="ChangePasswordHeader">
           <OnboardingStepHeaderTopLine>
             <H2>{t("Title")}</H2>
           </OnboardingStepHeaderTopLine>
@@ -44,9 +44,7 @@ export default function ChangePasswordPageComponent(
             id="SidebarSection"
             className="w-full flex px-8 py-10 md:p-12 lg:p-16 h-full flex-col items-center justify-center gap-8 lg:gap-10 bg-slate-50"
           >
-            <div className="md:flex relative md:w-72 lg:w-80 aspect-2/1">
-              <Image src="/logo.png" fill={true} alt={t("Logo")} />
-            </div>
+            <RyoGoLogo />
           </div>
         </SidebarContent>
       </Sidebar>

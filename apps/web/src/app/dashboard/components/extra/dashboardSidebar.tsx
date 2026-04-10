@@ -20,9 +20,9 @@ import {
   LucideSearch,
 } from "lucide-react"
 import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
-import { SidebarLogoItem } from "@/components/sidebar/sidebarLogoItem"
 import { MenuItemType } from "@/components/sidebar/sidebarCommon"
 import { usePathname } from "next/navigation"
+import { RyoGoSidebarLogo } from "@/components/logo"
 
 export default function DashboardSidebar(props: { isOwner: boolean }) {
   const { isMobile, open, openMobile } = useSidebar()
@@ -100,8 +100,8 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       collapsible={isMobile ? "offcanvas" : "icon"}
       className="h-full"
     >
-      <SidebarHeader className="my-4">
-        <SidebarLogoItem open={sidebarOpen} logo={t("Logo")} />
+      <SidebarHeader className="my-4 items-center">
+        <RyoGoSidebarLogo open={sidebarOpen} />
       </SidebarHeader>
       <SidebarContent className="px-2 my-4">
         {contentItems.map((item) =>

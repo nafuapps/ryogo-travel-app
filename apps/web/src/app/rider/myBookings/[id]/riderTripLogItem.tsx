@@ -72,6 +72,7 @@ export default async function RiderTripLogItem({
                 alt={t("Proof")}
                 fill
                 className="object-contain"
+                sizes="5/6"
               />
             </DialogContent>
           </Dialog>

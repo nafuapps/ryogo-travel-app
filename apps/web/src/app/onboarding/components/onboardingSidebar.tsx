@@ -3,15 +3,13 @@ import {
   CaptionGrey,
   H3Grey,
   H5,
-  H5Grey,
   PBold,
   PGrey,
-  SmallGrey,
 } from "@/components/typography"
 import { Sidebar, useSidebar } from "@/components/ui/sidebar"
-import Image from "next/image"
 import { LucideCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
+import RyoGoLogo from "@/components/logo"
 
 export default function OnboardingSidebar({
   currentProcess,
@@ -62,7 +60,7 @@ export default function OnboardingSidebar({
             currentProcess > index
               ? "bg-slate-950  text-slate-50 shadow"
               : currentProcess === index
-                ? "bg-white text-slate-950 shadow"
+                ? "bg-white text-slate-950 border-2 border-slate-950 shadow"
                 : "bg-slate-100 text-slate-400"
           } flex shrink-0 justify-center items-center size-8 lg:size-10`}
                 >
@@ -75,7 +73,7 @@ export default function OnboardingSidebar({
                   </H5>
                 </div>
                 {index < 3 && (
-                  <div className="w-0.5 h-5 md:h-6 bg-slate-200 rounded-full"></div>
+                  <div className="w-0.5 h-8 bg-slate-200 rounded-full"></div>
                 )}
               </div>
               <div className="flex flex-col items-start">
@@ -93,8 +91,8 @@ export default function OnboardingSidebar({
             </div>
           ))}
         </div>
-        <div className="mt-auto flex relative w-40 md:w-48 aspect-2/1">
-          <Image src="/logo.png" fill={true} alt={t("Logo")} />
+        <div className="mt-auto flex">
+          <RyoGoLogo />
         </div>
       </div>
     </Sidebar>

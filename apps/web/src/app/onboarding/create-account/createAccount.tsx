@@ -121,7 +121,7 @@ export default function CreateAccountPageComponent({
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>
-      <OnboardingSidebar currentProcess={isLastStep ? 1 : 0} />
+      <OnboardingSidebar currentProcess={0} isLastStep={isLastStep} />
     </>
   )
 }

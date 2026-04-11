@@ -49,7 +49,7 @@ export async function createOwnerAccountAction(
   sendEmail(
     [user.email],
     "Welcome to RyoGo",
-    OnboardOwnerEmailTemplate({ name: user.name }),
+    OnboardOwnerEmailTemplate({ name: user.name, code: user.code }),
   )
 
   return user

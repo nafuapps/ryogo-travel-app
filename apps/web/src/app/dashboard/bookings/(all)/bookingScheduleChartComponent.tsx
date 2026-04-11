@@ -138,7 +138,6 @@ export default function BookingScheduleChartComponent({
                 (booking.endDate.getTime() - chartStartDate.getTime()) /
                   millisecondsPerDay,
               ) + 2
-            console.log(dayIndexStart, dayIndexEnd)
             //Check if booking is assigned
             const isVehicleAssigned = booking.vehicle ? true : false
             const isDriverAssigned = booking.driver ? true : false

@@ -112,7 +112,7 @@ export default function AddDriverPageComponent(
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>
-      <OnboardingSidebar currentProcess={isLastStep ? 3 : 2} />
+      <OnboardingSidebar currentProcess={3} isLastStep={isLastStep} />
     </>
   )
 }

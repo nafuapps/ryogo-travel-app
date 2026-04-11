@@ -23,6 +23,7 @@ import { transactionRepository } from "../repositories/transaction.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
+import crypto from "crypto"
 
 const TRIAL_DAYS = 30
 
@@ -30,6 +31,11 @@ export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
   return hash
+}
+
+export function generateVerificationCode() {
+  // Generates a random integer between 100,000 and 999,999 inclusive
+  return crypto.randomInt(100000, 1000000).toString()
 }
 
 export function generateNewPassword() {
@@ -226,6 +232,7 @@ export const userServices = {
       userRole: UserRolesEnum.OWNER,
       status: UserStatusEnum.NEW,
       password: passwordHash,
+      verificationCode: generateVerificationCode(),
     }
 
     //Step7: Create the owner user
@@ -240,6 +247,7 @@ export const userServices = {
       password: data.owner.password,
       email: owner[0].email,
       name: owner[0].name,
+      code: owner[0].code,
     }
   },
 
@@ -281,6 +289,7 @@ export const userServices = {
       status: UserStatusEnum.NEW,
       agencyId: agencyId,
       password: passwordHash,
+      verificationCode: generateVerificationCode(),
     })
     if (!newUser[0]) {
       return
@@ -290,6 +299,7 @@ export const userServices = {
       password: newPassword,
       email: newUser[0].email,
       name: newUser[0].name,
+      code: newUser[0].code,
     }
   },
 
@@ -330,6 +340,7 @@ export const userServices = {
       status: UserStatusEnum.NEW,
       agencyId: agencyId,
       password: passwordHash,
+      verificationCode: generateVerificationCode(),
     })
     if (!newUser[0]) {
       return
@@ -358,6 +369,7 @@ export const userServices = {
       name: newUser[0].name,
       password: newPassword,
       email: newUser[0].email,
+      code: newUser[0].code,
     }
   },
 
@@ -549,6 +561,32 @@ export const userServices = {
       await driverRepository.updateStatusByUserId(id, DriverStatusEnum.INACTIVE)
     }
     return user[0]
+  },
+
+  //Verify user with code
+  async verifyUser(userId: string, code: string) {
+    const user = await userRepository.readUserById(userId)
+    if (!user) return
+    if (user.verificationCode !== code) {
+      return
+    }
+    const verifiedUser = await userRepository.updateVerificationStatus(userId)
+    return verifiedUser[0]
+  },
+
+  //Regenerate verification code
+  async regenerateVerificationCode(userId: string) {
+    const user = await userRepository.readUserById(userId)
+    if (!user) return
+    //Already verified - not need to regenerate code
+    if (user.isVerified) {
+      return
+    }
+    const updatedUser = await userRepository.updateVerificationCode(
+      userId,
+      generateVerificationCode(),
+    )
+    return updatedUser[0]
   },
 }
 

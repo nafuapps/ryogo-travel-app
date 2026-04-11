@@ -37,7 +37,6 @@ export default async function ModifyTransactionPage({
     (user.userRole !== UserRolesEnum.OWNER &&
       user.userId !== bookingDetails.assignedUserId)
   ) {
-    console.log({ user })
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
   }
 

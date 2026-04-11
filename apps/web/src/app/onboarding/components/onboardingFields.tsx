@@ -255,6 +255,7 @@ type OnboardingDatePickerProps = {
   label: string
   placeholder: string
   description: string
+  pastAllowed?: boolean
 }
 export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
   return (
@@ -289,8 +290,15 @@ export function OnboardingDatePicker(props: OnboardingDatePickerProps) {
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
-                disabled={(date) => date < new Date()}
+                disabled={
+                  //If past allowed, disable dates before 2025, else disable dates before today
+                  props.pastAllowed
+                    ? { before: new Date(2025, 1, 1) }
+                    : { before: new Date() }
+                }
                 captionLayout="dropdown"
+                reverseYears
+                endMonth={new Date(2040, 0)}
               />
             </PopoverContent>
           </Popover>

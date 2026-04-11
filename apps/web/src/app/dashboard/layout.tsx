@@ -31,7 +31,10 @@ export default async function DashboardLayout({
   //New user
   if (currentUser.status === UserStatusEnum.NEW) {
     if (currentUser.userRole === UserRolesEnum.OWNER) {
-      //If owner, go to vehicle onboarding
+      if (!currentUser.isVerified) {
+        redirect("/onboarding/verify-account", RedirectType.replace)
+      }
+      //If verified owner, go to vehicle onboarding
       redirect("/onboarding/add-vehicle", RedirectType.replace)
     }
     //Else, go to change-password

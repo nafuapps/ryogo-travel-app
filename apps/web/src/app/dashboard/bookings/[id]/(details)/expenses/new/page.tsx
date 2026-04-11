@@ -28,7 +28,6 @@ export default async function NewExpensePage({
     user.userRole !== UserRolesEnum.OWNER &&
     user.userId !== bookingDetails.assignedUserId
   ) {
-    console.log({ user })
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
   }
 

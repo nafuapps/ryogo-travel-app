@@ -15,6 +15,9 @@ export default async function sendEmail(
     react: element,
   })
 
+  if (data) {
+    console.log(data)
+  }
   if (error) {
     console.log(error)
   }

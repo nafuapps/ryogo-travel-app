@@ -15,14 +15,18 @@ export default async function ChangePasswordPage() {
   // Owner
   if (currentUser.userRole === UserRolesEnum.OWNER) {
     if (currentUser.status === UserStatusEnum.NEW) {
-      //If new owner, go to vehicle onboarding
+      //Owner not verified
+      if (!currentUser.isVerified) {
+        redirect("/onboarding/verify-account", RedirectType.replace)
+      }
+      //Verified new owner, go to vehicle onboarding
       redirect("/onboarding/add-vehicle", RedirectType.replace)
     }
-    // Old owner, go to dashboard
+    //Activated owner, go to dashboard
     redirect("/dashboard", RedirectType.replace)
   }
 
-  // Old user
+  // Activated user
   if (currentUser.status !== UserStatusEnum.NEW) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
       //If driver, go to rider

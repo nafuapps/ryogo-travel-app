@@ -183,7 +183,11 @@ export const users = pgTable(
     email: varchar("email", { length: 60 }).notNull(),
     password: text("password").notNull(),
     photoUrl: text("photo_url"),
-    isAdmin: boolean().default(false),
+    isAdmin: boolean().default(false).notNull(),
+    isVerified: boolean().default(false).notNull(),
+    verificationCode: varchar("verification_code", { length: 6 })
+      .notNull()
+      .default("123456"),
     prefersDarkTheme: boolean().default(false),
     languagePref: userLangs().notNull().default(UserLangEnum.ENGLISH),
     userRole: userRoles().notNull().default(UserRolesEnum.AGENT),

@@ -174,10 +174,12 @@ export const userRepository = {
 
   //Create user
   async createUser(data: InsertUserType) {
-    return await db
-      .insert(users)
-      .values(data)
-      .returning({ id: users.id, email: users.email, name: users.email })
+    return await db.insert(users).values(data).returning({
+      id: users.id,
+      email: users.email,
+      name: users.email,
+      code: users.verificationCode,
+    })
   },
 
   // Update user's last login time
@@ -266,6 +268,29 @@ export const userRepository = {
       .set({ status: status })
       .where(eq(users.id, userId))
       .returning({ id: users.id, status: users.status })
+  },
+
+  //Update user verification status
+  async updateVerificationStatus(userId: string) {
+    return await db
+      .update(users)
+      .set({ isVerified: true })
+      .where(eq(users.id, userId))
+      .returning({ id: users.id, isVerified: users.isVerified })
+  },
+
+  //Update user verification code
+  async updateVerificationCode(userId: string, code: string) {
+    return await db
+      .update(users)
+      .set({ verificationCode: code })
+      .where(eq(users.id, userId))
+      .returning({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        code: users.verificationCode,
+      })
   },
 
   //Delete user

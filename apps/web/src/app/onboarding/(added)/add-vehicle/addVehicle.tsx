@@ -120,7 +120,7 @@ export default function AddVehiclePageComponent(
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>
-      <OnboardingSidebar currentProcess={isLastStep ? 2 : 1} />
+      <OnboardingSidebar currentProcess={2} isLastStep={isLastStep} />
     </>
   )
 }

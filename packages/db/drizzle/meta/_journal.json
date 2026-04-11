@@ -155,6 +155,13 @@
       "when": 1768892425871,
       "tag": "0021_magical_unus",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1775914341055,
+      "tag": "0022_careful_nightcrawler",
+      "breakpoints": true
     }
   ]
 }

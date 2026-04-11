@@ -88,9 +88,10 @@
       "BodySteps": {
         "Title": "Onboarding Journey",
         "Step1": "1. Create an owner account for your agency",
-        "Step2": "2. Register a vehicle",
-        "Step3": "3. Onboard a driver",
-        "Step4": "4. Add an agent (optional)"
+        "Step2": "2. Verify your account",
+        "Step3": "3. Register a vehicle",
+        "Step4": "4. Onboard a driver",
+        "Step5": "5. Add an agent (optional)"
       },
       "BodyChecklist": {
         "Title": "Document checklist",
@@ -241,6 +242,32 @@
       "Finish": {
         "Title": "Congratulations!",
         "Subtitle": "Your account has been created successfully",
+        "Description1": "We have sent a 6-digit verification code to your provided email address",
+        "PrimaryCTA": "Verify Account"
+      }
+    },
+    "VerifyAccountPage":{
+      "Title": "Verify Account",
+      "Description": "Step {step} of {total}",
+      "Step1": {
+        "Field1": {
+          "Title": "Enter verification code",
+          "Placeholder": "******",
+          "Description": "Provide the 6-digit code sent to your email",
+          "Error1": "Code must be 6 characters"
+        },
+        "PrimaryCTA": "Continue",
+        "SecondaryCTA": "Resend Code",
+        "Timeout": "Wait 5 minutes to resend code",
+        "VerifySuccess": "Code verified!",
+        "Loading": "Loading",
+        "APIError": "Code does not match",
+        "ResendError": "Cannot resend code.. try again later",
+        "ResendSuccess": "New verification code has been sent to your email"
+      },
+      "Finish": {
+        "Title": "Great!",
+        "Subtitle": "Your account has been verified",
         "Description1": "Next, let's add a vehicle to your account.",
         "Description2": "(For now, we will add just 1 vehicle. You can add more later.)",
         "PrimaryCTA": "Add Vehicle"
@@ -632,14 +659,18 @@
         "Description": "Create owner account and agency profile"
       },
       "Step2": {
+        "Title": "Verify Account",
+        "Description": "Authenticate your email address"
+      },
+      "Step3": {
         "Title": "Add Vehicle",
         "Description": "Register a vehicle in your agency"
       },
-      "Step3": {
+      "Step4": {
         "Title": "Add Driver",
         "Description": "Onboard a driver in your agency"
       },
-      "Step4": {
+      "Step5": {
         "Title": "Add Agent",
         "Description": "Add an agent to run daily operations (optional)"
       }

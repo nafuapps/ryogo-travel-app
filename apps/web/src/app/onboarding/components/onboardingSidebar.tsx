@@ -13,8 +13,10 @@ import RyoGoLogo from "@/components/logo"
 
 export default function OnboardingSidebar({
   currentProcess,
+  isLastStep,
 }: {
   currentProcess: number
+  isLastStep: boolean
 }) {
   const t = useTranslations("Onboarding.Sidebar")
   const { isMobile } = useSidebar()
@@ -35,6 +37,10 @@ export default function OnboardingSidebar({
     {
       title: t("Step4.Title"),
       description: t("Step4.Description"),
+    },
+    {
+      title: t("Step5.Title"),
+      description: t("Step5.Description"),
     },
   ]
   return (
@@ -57,7 +63,7 @@ export default function OnboardingSidebar({
                 <div
                   className={`rounded-full
           ${
-            currentProcess > index
+            currentProcess > index || (currentProcess === index && isLastStep)
               ? "bg-slate-950  text-slate-50 shadow"
               : currentProcess === index
                 ? "bg-white text-slate-950 border-2 border-slate-950 shadow"
@@ -65,14 +71,15 @@ export default function OnboardingSidebar({
           } flex shrink-0 justify-center items-center size-8 lg:size-10`}
                 >
                   <H5>
-                    {currentProcess > index ? (
+                    {currentProcess > index ||
+                    (currentProcess === index && isLastStep) ? (
                       <LucideCheck className="size-4 lg:size-5" />
                     ) : (
                       index + 1
                     )}
                   </H5>
                 </div>
-                {index < 3 && (
+                {index < items.length - 1 && (
                   <div className="w-0.5 h-8 bg-slate-200 rounded-full"></div>
                 )}
               </div>

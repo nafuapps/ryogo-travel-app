@@ -36,6 +36,11 @@ export default async function AddAgentPage() {
     redirect("/dashboard", RedirectType.replace)
   }
 
+  //Owner not verified
+  if (!currentUser.isVerified) {
+    redirect("/onboarding/verify-account", RedirectType.replace)
+  }
+
   //Check for Onboarding flow
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
   if (agencyData.vehicles.length < 1) {

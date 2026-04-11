@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
+  AtSign,
   Building2,
   Camera,
   Car,
@@ -70,15 +71,19 @@ export default async function OnboardingHomePage() {
           <div className="flex flex-col">
             <OnboardingHomeStepItem
               label={t("BodySteps.Step1")}
+              icon={AtSign}
+            />
+            <OnboardingHomeStepItem
+              label={t("BodySteps.Step2")}
               icon={FingerprintPattern}
             />
-            <OnboardingHomeStepItem label={t("BodySteps.Step2")} icon={Car} />
+            <OnboardingHomeStepItem label={t("BodySteps.Step3")} icon={Car} />
             <OnboardingHomeStepItem
-              label={t("BodySteps.Step3")}
+              label={t("BodySteps.Step4")}
               icon={LifeBuoy}
             />
             <OnboardingHomeStepItem
-              label={t("BodySteps.Step4")}
+              label={t("BodySteps.Step5")}
               icon={UserKey}
             />
           </div>

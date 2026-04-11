@@ -7,7 +7,7 @@ export function AddAgentEmailTemplate({ name, password }: EmailTemplateProps) {
   return (
     <div>
       <h1>Welcome, {name}!</h1>
-      <h5>Your password has been reset. Your new password is: {password}!</h5>
+      <h5>Your new password is: {password}!</h5>
     </div>
   )
 }

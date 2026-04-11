@@ -34,10 +34,15 @@ export default async function AddVehiclePage() {
     redirect("/dashboard", RedirectType.replace)
   }
 
-  //Owner
+  //Activated Owner
   if (currentUser.status !== UserStatusEnum.NEW) {
     //If not new, go to dashboard
     redirect("/dashboard", RedirectType.replace)
+  }
+
+  //Owner not verified
+  if (!currentUser.isVerified) {
+    redirect("/onboarding/verify-account", RedirectType.replace)
   }
 
   //Check for Onboarding flow

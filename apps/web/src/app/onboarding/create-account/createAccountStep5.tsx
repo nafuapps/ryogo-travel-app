@@ -28,7 +28,7 @@ export function CreateAccountConfirm(props: {
   const [isPending, startTransition] = useTransition()
 
   const formData = useForm<CreateOwnerAccountRequestType>()
-  //Submit actions
+
   const onSubmit = async () => {
     startTransition(async () => {
       // Create Agency and Owner Account

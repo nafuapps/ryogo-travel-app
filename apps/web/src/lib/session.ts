@@ -24,6 +24,7 @@ export type SessionPayload = {
   userRole: UserRolesEnum
   phone: string
   isAdmin: boolean
+  isVerified: boolean
   status: UserStatusEnum
   expiresAt: Date
 }
@@ -84,6 +85,7 @@ export async function createWebSession(user: SelectUserType) {
     userId: sessionData[0].userId,
     agencyId: user.agencyId,
     isAdmin: user.isAdmin ?? false,
+    isVerified: user.isVerified ?? false,
     userRole: user.userRole,
     phone: user.phone,
     status: user.status,
@@ -98,7 +100,6 @@ export async function createWebSession(user: SelectUserType) {
     secure: true,
     expires: expiresAt,
     sameSite: "lax",
-    path: "/",
   })
 
   //4. Also set locale cookie
@@ -146,7 +147,6 @@ export async function updateWebSession() {
     secure: true,
     expires: expires,
     sameSite: "lax",
-    path: "/",
   })
 }
 
@@ -173,7 +173,32 @@ export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
     secure: true,
     expires: new Date(Date.now() + SESSION_COOKIE_EXPIRATION),
     sameSite: "lax",
-    path: "/",
+  })
+}
+
+//Update user verification status in session
+export async function updateVerificationStatus(isVerified: boolean) {
+  // 1. Get session from cookie
+  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
+  const payload = (await decrypt(session)) as SessionPayload | undefined
+
+  if (!session || !payload) {
+    return
+  }
+
+  // 2. Update verification status in payload
+  const newSession = await encrypt({
+    ...payload,
+    isVerified: isVerified,
+  })
+
+  // 4. Update session expiry in cookie
+  const cookieStore = await cookies()
+  cookieStore.set(SESSION_COOKIE_NAME, newSession, {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(Date.now() + SESSION_COOKIE_EXPIRATION),
+    sameSite: "lax",
   })
 }
 

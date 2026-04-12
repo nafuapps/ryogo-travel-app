@@ -22,6 +22,9 @@ export default async function SignupExistingPage({
     redirect("/auth/signup", RedirectType.replace)
   }
   const accounts = await userServices.findUserAccountsByPhone(phone)
+  if (accounts.length < 1) {
+    redirect("/auth/signup", RedirectType.replace)
+  }
 
   return <SignupExistingPageComponent accounts={accounts} />
 }

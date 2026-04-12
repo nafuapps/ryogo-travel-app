@@ -3,7 +3,7 @@
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 import DashboardSidebar from "./components/extra/dashboardSidebar"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
@@ -20,6 +20,11 @@ export default async function DashboardLayout({
   // Redirect to auth if the user is not authenticated
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
+  }
+
+  //If suspended, logout user
+  if (currentUser.status === UserStatusEnum.SUSPENDED) {
+    await logout()
   }
 
   //Driver

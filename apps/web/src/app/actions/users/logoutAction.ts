@@ -8,9 +8,6 @@ export async function logoutAction() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const user = await logout()
-  if (!user) {
-    return
-  }
+  await logout()
   redirect("/auth/login", RedirectType.replace)
 }

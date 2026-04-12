@@ -184,7 +184,7 @@ export const users = pgTable(
     password: text("password").notNull(),
     photoUrl: text("photo_url"),
     isAdmin: boolean().default(false).notNull(),
-    isVerified: boolean().default(false).notNull(),
+    isVerified: boolean().default(false).notNull(), //To verify owner's email during onboarding
     verificationCode: varchar("verification_code", { length: 6 })
       .notNull()
       .default("123456"),

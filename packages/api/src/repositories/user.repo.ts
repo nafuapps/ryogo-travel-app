@@ -6,8 +6,6 @@ import {
   UserStatusEnum,
   BookingStatusEnum,
   UserLangEnum,
-  InsertAgencyType,
-  agencies,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, inArray, not } from "drizzle-orm"
 
@@ -155,18 +153,22 @@ export const userRepository = {
         userRole: true,
         agencyId: true,
       },
-      where: eq(users.phone, phone),
+      where: and(
+        eq(users.phone, phone),
+        not(eq(users.status, UserStatusEnum.SUSPENDED)),
+      ),
       with: {
         agency: { columns: { businessName: true } },
       },
     })
   },
 
-  //Get users with agency data by roles and phone number
+  //Get not suspended users with phone number
   async readUsersWithPhone(phone: string) {
     return await db.query.users.findMany({
       columns: {
         id: true,
+        status: true,
       },
       where: eq(users.phone, phone),
     })

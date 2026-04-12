@@ -21,6 +21,8 @@ export default async function LoginAccountsPage({
   }
 
   const accounts = await userServices.findUserAccountsByPhone(phone)
-
+  if (accounts.length < 1) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   return <LoginAccountsPageComponent accounts={accounts} />
 }

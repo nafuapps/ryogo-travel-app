@@ -24,6 +24,7 @@ import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
+import { sessionRepository } from "../repositories/session.repo"
 
 const TRIAL_DAYS = 30
 
@@ -384,6 +385,12 @@ export const userServices = {
       }
     }
 
+    if (userFound.status === UserStatusEnum.SUSPENDED) {
+      return {
+        error: "userSuspended",
+      }
+    }
+
     //Step2: Check password
     const valid = await bcrypt.compare(password, userFound.password)
     if (!valid) {
@@ -399,7 +406,11 @@ export const userServices = {
   },
 
   //Logout in DB
-  async checkLogoutInDB(userId: string) {
+  async logOutInDB(userId: string, sessionId: string) {
+    const sessionDeleted = await sessionRepository.deleteSession(sessionId)
+    if (!sessionDeleted) {
+      return
+    }
     return await userRepository.updateLastLogout(userId, new Date())
   },
 
@@ -451,7 +462,7 @@ export const userServices = {
     //Step2: Match old password
     const valid = await bcrypt.compare(oldPassword, userFound.password)
     if (!valid) {
-      return null
+      return
     }
 
     //Step3: Set a new password

@@ -6,6 +6,7 @@ import {
   UserRolesEnum,
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 const secretKey = process.env.AUTH_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -66,7 +67,6 @@ export async function getWebSession() {
 //Create session both in cookie and database
 export async function createWebSession(user: SelectUserType) {
   const expiresAt = new Date(Date.now() + SESSION_COOKIE_EXPIRATION)
-  // const token = randomBytes(32).toString("hex");
   const token = crypto.randomUUID()
 
   // 1. Create a session in the database
@@ -202,7 +202,7 @@ export async function updateVerificationStatus(isVerified: boolean) {
   })
 }
 
-//Delete session both from cookie and database
+//Delete session both from db and cookie
 export async function deleteWebSession() {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
@@ -212,7 +212,7 @@ export async function deleteWebSession() {
   if (!payload) return
 
   // 2. Delete session from database
-  sessionRepository.deleteSession(payload.sessionId)
+  await userServices.logOutInDB(payload.userId, payload.sessionId)
 
   // 3. Delete session from cookie
   const cookieStore = await cookies()

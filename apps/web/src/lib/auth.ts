@@ -46,14 +46,5 @@ export async function login(userId: string, password: string) {
 
 // Logout user - Delete session and log last logout time in DB
 export async function logout() {
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return
-
-  const payload = (await decrypt(session)) as SessionPayload | undefined
-  if (!payload) return
-
-  const user = await userServices.checkLogoutInDB(payload.userId)
-  if (!user) return
   await deleteWebSession()
-  return user
 }

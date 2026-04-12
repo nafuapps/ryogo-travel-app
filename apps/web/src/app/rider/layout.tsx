@@ -2,9 +2,8 @@
 
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
-import RiderHeader from "./components/riderHeader"
 import RiderSidebar from "./components/riderSidebar"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
@@ -21,6 +20,11 @@ export default async function RiderLayout({
   //If no user logged in, go to login page
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
+  }
+
+  //If suspended, logout user
+  if (currentUser.status === UserStatusEnum.SUSPENDED) {
+    await logout()
   }
 
   //If not driver, go to dashboard

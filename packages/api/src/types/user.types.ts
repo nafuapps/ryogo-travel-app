@@ -1,15 +1,5 @@
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
-// /api/auth/login (POST)
-export type LoginAPIResponseType = {
-  id: string
-}[]
-
-// /api/auth/signup (POST)
-export type SignupAPIResponseType = {
-  id: string
-}[]
-
 export type CreateOwnerAccountRequestType = {
   agency: {
     businessEmail: string

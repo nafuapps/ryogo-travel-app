@@ -19,8 +19,9 @@ import { H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
-import { SignupAPIResponseType } from "@ryogo-travel-app/api/types/user.types"
 import { useTransition } from "react"
+import { FindUsersByPhoneType } from "@ryogo-travel-app/api/services/user.services"
+import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -46,13 +47,15 @@ export default function SignupPageComponent() {
   //Submit actions
   const onSubmit = async (data: FormFields) => {
     startTransition(async () => {
-      const users = await apiClient<SignupAPIResponseType>(
+      const users = await apiClient<FindUsersByPhoneType>(
         `/api/auth/signup?phone=${data.phoneNumber}`,
         {
           method: "GET",
         },
       )
-      if (users.length > 0) {
+      if (
+        users.filter((u) => u.status !== UserStatusEnum.SUSPENDED).length > 0
+      ) {
         // If found, go to existing account page
         router.push(`/auth/signup/${data.phoneNumber}`)
       } else {

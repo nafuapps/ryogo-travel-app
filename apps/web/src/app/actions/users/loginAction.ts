@@ -11,6 +11,5 @@ export async function loginAction(userId: string, password: string) {
     }
     redirect("/dashboard", RedirectType.replace)
   }
-  const loginStatus = await login(userId, password)
-  return loginStatus
+  return await login(userId, password)
 }

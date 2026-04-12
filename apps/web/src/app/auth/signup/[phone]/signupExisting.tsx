@@ -19,11 +19,11 @@ export default async function SignupExistingPageComponent({
 }: {
   accounts: FindUserAccountsByPhoneType
 }) {
+  const t = await getTranslations("Auth.SignupPage.Step2")
+
   const hasOwnerAccount = accounts.some(
     (p) => p.userRole === UserRolesEnum.OWNER,
   )
-
-  const t = await getTranslations("Auth.SignupPage.Step2")
 
   return (
     <div
@@ -39,10 +39,9 @@ export default async function SignupExistingPageComponent({
       <div
         className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : ""} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
       >
-        {accounts.length > 0 &&
-          accounts.map((item, index) => (
-            <AccountCard key={index} account={item} />
-          ))}
+        {accounts.map((item, index) => (
+          <AccountCard key={index} account={item} />
+        ))}
       </div>
       <div id="SignupExistingActions" className="flex flex-col gap-4 w-full">
         <Link href={"/auth/signup"}>
@@ -60,11 +59,7 @@ export default async function SignupExistingPageComponent({
             <CaptionGrey> {t("Description")}</CaptionGrey>
           </>
         ) : (
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            disabled={accounts.length < 1}
-          >
+          <Button variant={"outline"} size={"lg"}>
             <Link href={"/onboarding"}>
               <CaptionGrey>{t("SecondaryCTANo")}</CaptionGrey>
             </Link>

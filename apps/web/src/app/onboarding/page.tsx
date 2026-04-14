@@ -1,6 +1,6 @@
 //Onboarding home page
 
-import { H2, PBold, SmallGrey } from "@/components/typography"
+import { H2Brand, PBold, SmallGrey } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -49,7 +49,7 @@ export default async function OnboardingHomePage() {
         className="flex flex-col w-full items-center text-center gap-3"
       >
         <RyoGoLogo />
-        <H2>{t("Header.Title")}</H2>
+        <H2Brand>{t("Header.Title")}</H2Brand>
         <SmallGrey>{t("Header.Description")}</SmallGrey>
       </div>
       <div id="OnboardingHomeFooter" className="w-full md:w-1/2">

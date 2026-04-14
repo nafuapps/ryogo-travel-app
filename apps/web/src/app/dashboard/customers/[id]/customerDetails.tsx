@@ -45,6 +45,7 @@ export default async function CustomerDetailsPageComponent({
               {customer.photoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image
+                    loading="eager"
                     src={getFileUrl(customer.photoUrl)}
                     alt={t("Photo")}
                     fill

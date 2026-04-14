@@ -477,7 +477,7 @@ export const getRyogoScoreClassName = (totalScore: number): string => {
           ? "bg-yellow-300"
           : totalScore < BestTotalScore
             ? "bg-green-300"
-            : "bg-cyan-300"
+            : "bg-sky-300"
   }`
 }
 

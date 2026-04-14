@@ -116,6 +116,7 @@ export default async function TransactionItem({
                 <DialogDescription></DialogDescription>
               </DialogHeader>
               <Image
+                loading="eager"
                 src={fileUrl}
                 alt={t("Proof")}
                 fill

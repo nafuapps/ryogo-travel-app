@@ -110,6 +110,7 @@ export default async function ExpenseItem({
                 <DialogDescription></DialogDescription>
               </DialogHeader>
               <Image
+                loading="eager"
                 src={fileUrl}
                 alt={t("Proof")}
                 fill

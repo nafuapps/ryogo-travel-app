@@ -68,6 +68,7 @@ export default async function RiderTripLogItem({
                 <DialogDescription></DialogDescription>
               </DialogHeader>
               <Image
+                loading="eager"
                 src={fileUrl}
                 alt={t("Proof")}
                 fill
@@ -99,7 +100,7 @@ function getTripLogIcon(type: TripLogTypesEnum) {
       )
     case TripLogTypesEnum.PICKUP:
       return (
-        <div className="flex size-7 lg:size-8 bg-indigo-100 rounded-full items-center justify-center">
+        <div className="flex size-7 lg:size-8 bg-sky-100 rounded-full items-center justify-center">
           <LucideHandshake className={className} />
         </div>
       )

@@ -14,6 +14,34 @@ export default function RyoGoLogo() {
   )
 }
 
+export function RyoGoLightLogo() {
+  return (
+    <div className="relative w-28 md:w-32 aspect-2/1">
+      <Image
+        loading="eager"
+        src="/logoLight.png"
+        fill
+        alt={"Logo for Ryogo - Travel Agency App"}
+        sizes="(max-width: 768px) 112px, 128px"
+      />
+    </div>
+  )
+}
+
+export function RyoGoLandingLogo(props: { alt: string }) {
+  return (
+    <div className="relative w-16 md:w-20 aspect-2/1">
+      <Image
+        loading="eager"
+        src="/logo.png"
+        fill
+        alt={props.alt}
+        sizes="(max-width: 768px) 64px, 80px"
+      />
+    </div>
+  )
+}
+
 interface RyogoSidebarLogoProps {
   open: boolean
 }

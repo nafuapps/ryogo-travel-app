@@ -7,9 +7,10 @@ import {
 } from "./session"
 import { cookies } from "next/headers"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { cache } from "react"
 
 // Get current user from session
-export async function getCurrentUser() {
+export const getCurrentUser = cache(async () => {
   // S1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
   if (!session) return
@@ -20,7 +21,7 @@ export async function getCurrentUser() {
 
   // S3: Return payload as current user data
   return payload
-}
+})
 
 // Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {

@@ -1,8 +1,13 @@
 //(Landing) Features page
 
-import {useTranslations} from 'next-intl';
- 
-export default function FeaturesPage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+import Footer from "../components/footer"
+import Navbar from "../components/nav"
+
+export default async function FeaturesPage() {
+  return (
+    <div className="flex flex-col h-full">
+      <Navbar selected="features" />
+      <Footer />
+    </div>
+  )
 }

@@ -36,6 +36,7 @@ export default async function RiderProfilePageComponent({
               {driverDetails.user.photoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image
+                    loading="eager"
                     src={getFileUrl(driverDetails.user.photoUrl)}
                     alt={t("Photo")}
                     fill

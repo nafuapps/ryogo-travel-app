@@ -1,8 +1,13 @@
-//(Landing) Pricing page
+import Footer from "../components/footer"
+import Navbar from "../components/nav"
+import PricingSection from "../components/pricing"
 
-import {useTranslations} from 'next-intl';
- 
 export default function PricingPage() {
-  const t = useTranslations('Landing');
-  return <h1>{t('title')}</h1>;
+  return (
+    <div className="flex flex-col h-full">
+      <Navbar selected="pricing" />
+      <PricingSection />
+      <Footer />
+    </div>
+  )
 }

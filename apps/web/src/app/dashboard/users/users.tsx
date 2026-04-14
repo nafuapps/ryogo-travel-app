@@ -102,6 +102,7 @@ async function AllUsersItemComponent({
           {user.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
+                loading="eager"
                 src={getFileUrl(user.photoUrl)}
                 alt={t("Photo") + " " + user.id}
                 fill

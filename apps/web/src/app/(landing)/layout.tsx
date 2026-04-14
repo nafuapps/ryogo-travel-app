@@ -4,8 +4,9 @@ import type { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
-  title: "RyoGo Travel Agency App",
-  description: "RyoGo is a travel agency app",
+  title: "RyoGo - Modern Travel Planning & Booking",
+  description:
+    "Your all-in-one platform for seamless travel planning, booking, and management.",
 }
 
 export default async function RootLayout({
@@ -23,5 +24,5 @@ export default async function RootLayout({
     redirect("/dashboard", RedirectType.replace)
   }
 
-  return children
+  return <main className="bg-white w-full min-h-dvh">{children}</main>
 }

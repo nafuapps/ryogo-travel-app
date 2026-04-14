@@ -43,6 +43,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
               {agency.logoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image
+                    loading="eager"
                     src={getFileUrl(agency.logoUrl)}
                     alt={t("Photo")}
                     fill

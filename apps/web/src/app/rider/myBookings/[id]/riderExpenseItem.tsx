@@ -99,6 +99,7 @@ export default async function RiderExpenseItem({
                 <DialogDescription></DialogDescription>
               </DialogHeader>
               <Image
+                loading="eager"
                 src={fileUrl}
                 alt={t("Proof")}
                 fill

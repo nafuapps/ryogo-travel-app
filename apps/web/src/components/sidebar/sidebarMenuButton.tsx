@@ -1,4 +1,4 @@
-import { P } from "@/components/typography"
+import { P, PLight } from "@/components/typography"
 import {
   TooltipContent,
   TooltipTrigger,
@@ -25,10 +25,10 @@ const menuButtonClassName =
   "flex flex-row gap-3 items-center justify-start rounded-lg hover:bg-slate-200 text-slate-600 w-full px-2 py-2"
 
 const activeMenuButtonClassName =
-  "flex flex-row gap-3 items-center justify-start rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-100 w-full px-2 py-2"
+  "flex flex-row gap-3 items-center justify-start rounded-lg bg-sky-700 hover:bg-sky-700/90 text-sky-50 w-full px-2 py-2"
 
 const iconClassName = "size-8 stroke-1 aspect-square text-slate-500"
-const activeIconClassName = "size-8 aspect-square text-slate-100 stroke-1"
+const activeIconClassName = "size-8 aspect-square text-slate-50 stroke-1"
 
 export function MenuButton(props: MenuButtonProps) {
   const { setOpenMobile } = useSidebar()
@@ -45,7 +45,12 @@ export function MenuButton(props: MenuButtonProps) {
             <props.icon
               className={props.active ? activeIconClassName : iconClassName}
             />
-            {props.open && <P>{props.title}</P>}
+            {props.open &&
+              (props.active ? (
+                <PLight>{props.title}</PLight>
+              ) : (
+                <P>{props.title}</P>
+              ))}
           </div>
         </TooltipTrigger>
         {!props.open && <TooltipContent>{props.title}</TooltipContent>}

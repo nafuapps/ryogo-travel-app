@@ -121,6 +121,7 @@ function AllCustomersItemComponent({
           {customer.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
+                loading="eager"
                 src={getFileUrl(customer.photoUrl)}
                 alt={t("Photo") + " " + customer.id}
                 fill

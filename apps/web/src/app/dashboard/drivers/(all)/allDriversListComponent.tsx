@@ -68,6 +68,7 @@ async function AllDriversItemComponent({
           {driver.user.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
+                loading="eager"
                 src={getFileUrl(driver.user.photoUrl)}
                 alt={t("Photo") + " " + driver.id}
                 fill

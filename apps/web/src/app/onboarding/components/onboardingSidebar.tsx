@@ -3,7 +3,10 @@ import {
   CaptionGrey,
   H3Grey,
   H5,
+  H5Brand,
+  H5Grey,
   PBold,
+  PBrand,
   PGrey,
 } from "@/components/typography"
 import { Sidebar, useSidebar } from "@/components/ui/sidebar"
@@ -64,28 +67,30 @@ export default function OnboardingSidebar({
                   className={`rounded-full
           ${
             currentProcess > index || (currentProcess === index && isLastStep)
-              ? "bg-slate-950  text-slate-50 shadow"
+              ? "bg-sky-950 shadow"
               : currentProcess === index
-                ? "bg-white text-slate-950 border-2 border-slate-950 shadow"
-                : "bg-slate-100 text-slate-400"
+                ? "bg-white border-2 border-sky-700 shadow"
+                : "bg-slate-100"
           } flex shrink-0 justify-center items-center size-8 lg:size-10`}
                 >
-                  <H5>
-                    {currentProcess > index ||
-                    (currentProcess === index && isLastStep) ? (
-                      <LucideCheck className="size-4 lg:size-5" />
-                    ) : (
-                      index + 1
-                    )}
-                  </H5>
+                  {currentProcess > index ||
+                  (currentProcess === index && isLastStep) ? (
+                    <LucideCheck className="size-4 lg:size-5 text-sky-50" />
+                  ) : currentProcess === index ? (
+                    <H5Brand>{index + 1}</H5Brand>
+                  ) : (
+                    <H5Grey>{index + 1}</H5Grey>
+                  )}
                 </div>
                 {index < items.length - 1 && (
-                  <div className="w-0.5 h-8 bg-slate-200 rounded-full"></div>
+                  <div
+                    className={`w-0.5 h-8 ${currentProcess > index ? "bg-sky-700" : "bg-slate-200"} rounded-full`}
+                  ></div>
                 )}
               </div>
               <div className="flex flex-col items-start">
                 {currentProcess >= index ? (
-                  <PBold>{item.title}</PBold>
+                  <PBrand>{item.title}</PBrand>
                 ) : (
                   <PGrey>{item.title}</PGrey>
                 )}

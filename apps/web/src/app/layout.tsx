@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { Toaster } from "@/components/ui/sonner"
 
 const notoSans = Noto_Sans({
-  subsets: ["latin"],
+  subsets: ["latin", "devanagari"],
 })
 
 export const metadata: Metadata = {
@@ -19,8 +19,8 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${notoSans} antialiased`}>
+    <html lang="en" className={notoSans.className}>
+      <body className={` antialiased`}>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <Toaster position="top-center" richColors />
       </body>

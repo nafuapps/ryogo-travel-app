@@ -77,6 +77,7 @@ async function AllVehiclesItemComponent({
           {vehicle.vehiclePhotoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
+                loading="eager"
                 src={getFileUrl(vehicle.vehiclePhotoUrl)}
                 alt={t("Photo") + " " + vehicle.vehicleNumber}
                 fill

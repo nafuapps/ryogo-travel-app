@@ -455,6 +455,7 @@ function DriverSearchResultItem({
           {driver.user.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
+                loading="eager"
                 src={getFileUrl(driver.user.photoUrl)}
                 alt={t("Photo") + " " + driver.id}
                 fill
@@ -513,6 +514,7 @@ function CustomerSearchResultItem({
           {customer.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
+                loading="eager"
                 src={getFileUrl(customer.photoUrl)}
                 alt={t("Photo") + " " + customer.id}
                 fill
@@ -561,6 +563,7 @@ function VehicleSearchResultItem({
           {vehicle.vehiclePhotoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
+                loading="eager"
                 src={getFileUrl(vehicle.vehiclePhotoUrl)}
                 alt={t("Photo") + " " + vehicle.vehicleNumber}
                 fill

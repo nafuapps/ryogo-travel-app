@@ -3040,6 +3040,61 @@
     }
   },
   "Landing": {
-    "title": "Hello!"
+    "Navbar":{
+      "Logo":"Logo for Ryogo - Travel Agency App",
+      "Features":"Features",
+      "Pricing":"Pricing",
+      "Resources":"Resources",
+      "HowItWorks":"How It Works",
+      "Login":"Login",
+      "Signup":"Sign up"
+    },
+    "Footer":{
+      "LogoCaption":"Revolutionizing hassle-free travel agency planning countrywide",
+      "Product":{
+        "Title":"Product",
+        "Features":"Features",
+        "Pricing":"Pricing",
+        "HowItWorks":"How It Works",
+        "Resources":"Resources"
+      },
+      "Support":{
+        "Title":"Support",
+        "Customer":"Customer Support",
+        "FAQ":"FAQ",
+        "Email":"Email Us"
+      },
+      "Social":{
+        "Title":"Social Media",
+        "Facebook":"Facebook",
+        "Instagram":"Instagram",
+        "YouTube":"YouTube",
+        "LinkedIn":"LinkedIn"
+      },
+      "Copyright":"Copyright @ 2026 RyoGo Travel Agency App",
+      "Developer":"Designed & Developed by NaFu Apps"
+    },
+    "Home":{
+      "Hero":{
+        "Title1":"Stop Everyday Chaos.",
+        "Title2":"Start Growing Your Agency",
+        "Subtitle":"RyoGo is an all-in-one app for Indian travel agencies to manage bookings, fleet, drivers, and daily operations with zero paperwork and hassle",
+        "PrimaryCTA":"Get Started For Free",
+        "SecondaryCTA":"Watch Demo"
+      },
+      "CTA":{
+        "Title":"Ready to grow your agency business?",
+        "Subtitle":"Join hundreds of Indian travel agencies automating their daily workflows. Sign up today to get a free 2-month trial",
+        "PrimaryCTA":"Create Agency Account",
+        "SecondaryCTA":"Explore More",
+        "Prop1":"Free account",
+        "Prop2":"No credit card required",
+        "Prop3":"Start booking in minutes"
+      }
+    },
+    "Features":{},
+    "Pricing":{},
+    "HowItWorks":{},
+    "Resources":{}
   }
 }

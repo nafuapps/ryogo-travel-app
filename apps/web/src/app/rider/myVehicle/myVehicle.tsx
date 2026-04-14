@@ -58,6 +58,7 @@ export default async function RiderMyVehiclePageComponent({
               {vehicle.vehiclePhotoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image
+                    loading="eager"
                     src={getFileUrl(vehicle.vehiclePhotoUrl)}
                     alt={t("Photo")}
                     fill
@@ -123,6 +124,7 @@ export default async function RiderMyVehiclePageComponent({
               <Dialog>
                 <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
                   <Image
+                    loading="eager"
                     src={getFileUrl(vehicle.insurancePhotoUrl)}
                     alt={t("InsurancePhoto")}
                     fill
@@ -136,6 +138,7 @@ export default async function RiderMyVehiclePageComponent({
                     <DialogDescription></DialogDescription>
                   </DialogHeader>
                   <Image
+                    loading="eager"
                     src={getFileUrl(vehicle.insurancePhotoUrl)}
                     alt={t("InsurancePhoto")}
                     fill
@@ -165,6 +168,7 @@ export default async function RiderMyVehiclePageComponent({
               <Dialog>
                 <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
                   <Image
+                    loading="eager"
                     src={getFileUrl(vehicle.pucPhotoUrl)}
                     alt={t("PUCPhoto")}
                     fill
@@ -178,6 +182,7 @@ export default async function RiderMyVehiclePageComponent({
                     <DialogDescription></DialogDescription>
                   </DialogHeader>
                   <Image
+                    loading="eager"
                     src={getFileUrl(vehicle.pucPhotoUrl)}
                     alt={t("PUCPhoto")}
                     fill
@@ -207,6 +212,7 @@ export default async function RiderMyVehiclePageComponent({
               <Dialog>
                 <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
                   <Image
+                    loading="eager"
                     src={getFileUrl(vehicle.rcPhotoUrl)}
                     alt={t("RCPhoto")}
                     fill
@@ -220,6 +226,7 @@ export default async function RiderMyVehiclePageComponent({
                     <DialogDescription></DialogDescription>
                   </DialogHeader>
                   <Image
+                    loading="eager"
                     src={getFileUrl(vehicle.rcPhotoUrl)}
                     alt={t("RCPhoto")}
                     fill

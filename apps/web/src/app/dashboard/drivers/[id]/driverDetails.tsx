@@ -56,6 +56,7 @@ export default async function DriverDetailsPageComponent({
               {driver.user.photoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image
+                    loading="eager"
                     src={getFileUrl(driver.user.photoUrl)}
                     alt={t("Photo")}
                     fill
@@ -123,6 +124,7 @@ export default async function DriverDetailsPageComponent({
               <Dialog>
                 <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
                   <Image
+                    loading="eager"
                     src={getFileUrl(driver.licensePhotoUrl)}
                     alt={t("LicensePhoto")}
                     fill
@@ -136,6 +138,7 @@ export default async function DriverDetailsPageComponent({
                     <DialogDescription></DialogDescription>
                   </DialogHeader>
                   <Image
+                    loading="eager"
                     src={getFileUrl(driver.licensePhotoUrl)}
                     alt={t("LicensePhoto")}
                     fill

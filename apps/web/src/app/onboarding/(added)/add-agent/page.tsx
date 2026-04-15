@@ -9,8 +9,9 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
-  title: "Add Agent Page | RyoGo",
-  description: "Add Agent page for RyoGo Travel App",
+  title: "Onboarding Add Agent - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
 
 export default async function AddAgentPage() {

@@ -6,7 +6,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import Image from "next/image"
 import RyoGoLogo from "@/components/logo"
 
-export default async function AuthLayout({
+export default async function SignupLayout({
   children,
 }: {
   children: React.ReactNode

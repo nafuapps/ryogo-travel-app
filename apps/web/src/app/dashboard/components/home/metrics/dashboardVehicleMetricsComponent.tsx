@@ -1,14 +1,14 @@
-import { H4, H1, CaptionGrey, SmallGrey } from "@/components/typography"
+import { H4, H2, CaptionGrey, SmallGrey } from "@/components/typography"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { LucideCar } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
   metricsClassName,
-  metricFirstColClassName,
+  metricFirstRowClassName,
   metricMainClassName,
   metricHeaderClassName,
   metricItem1ClassName,
-  metricSecondColClassName,
+  metricSecondRowClassName,
   metricItem4ClassName,
   metricItem3ClassName,
   metricItem2ClassName,
@@ -43,7 +43,7 @@ export default async function DashboardVehicleMetricsComponent({
     <div id="dashboardVehicleMetrics" className={metricsClassName}>
       <div
         id="dashboardVehicleMetricsFirstCol"
-        className={metricFirstColClassName}
+        className={metricFirstRowClassName}
       >
         <div
           id="dashboardVehicleMetricsHeader"
@@ -53,7 +53,7 @@ export default async function DashboardVehicleMetricsComponent({
           <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div className={metricMainClassName}>
-          <H1>{totalVehicles}</H1>
+          <H2>{totalVehicles}</H2>
           {totalVehicles !== 0 && (
             <CaptionGrey>
               {(onTripVehicles / totalVehicles).toLocaleString("en-IN", {
@@ -68,7 +68,7 @@ export default async function DashboardVehicleMetricsComponent({
       </div>
       <div
         id="dashboardVehicleMetricsSecondCol"
-        className={metricSecondColClassName}
+        className={metricSecondRowClassName}
       >
         <div
           id="dashboardVehicleMetricsAvailable"

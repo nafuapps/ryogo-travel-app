@@ -10,14 +10,14 @@ import { getTranslations } from "next-intl/server"
 import {
   boldIconClassName,
   iconClassName,
-  metricFirstColClassName,
+  metricFirstRowClassName,
   metricHeaderClassName,
   metricItem1ClassName,
   metricItem2ClassName,
   metricItem3ClassName,
   metricMainClassName,
   metricsClassName,
-  metricSecondColClassName,
+  metricSecondRowClassName,
 } from "./dashboardMetricsCommons"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 
@@ -83,7 +83,7 @@ export default async function DashboardRevenueMetricsComponent({
     <div id="dashboardRevenueMetrics" className={metricsClassName}>
       <div
         id="dashboardRevenueMetricsFirstCol"
-        className={metricFirstColClassName}
+        className={metricFirstRowClassName}
       >
         <div
           id="dashboardRevenueMetricsHeader"
@@ -122,7 +122,7 @@ export default async function DashboardRevenueMetricsComponent({
       </div>
       <div
         id="dashboardRevenueMetricsSecondCol"
-        className={metricSecondColClassName}
+        className={metricSecondRowClassName}
       >
         <div id="dashboardRevenueMetricsLeads" className={metricItem1ClassName}>
           <H5>
@@ -152,10 +152,12 @@ export default async function DashboardRevenueMetricsComponent({
           className={metricItem3ClassName + " col-span-2"}
         >
           <H4>
-            {avgCommisionRateThisWeek.toLocaleString("en-IN", {
-              style: "percent",
-              minimumFractionDigits: 1,
-            })}
+            {revenueBookingsThisWeek.length == 0
+              ? "-"
+              : avgCommisionRateThisWeek.toLocaleString("en-IN", {
+                  style: "percent",
+                  minimumFractionDigits: 1,
+                })}
           </H4>
           <CaptionGrey>{t("Commission")}</CaptionGrey>
         </div>

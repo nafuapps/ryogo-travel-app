@@ -37,9 +37,9 @@ export default function Navbar(props: NavbarProps) {
   ]
 
   return (
-    <nav className="bg-white shadow-sm w-full sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-12 md:h-16 w-full">
+    <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
+      <div className="w-full lg:max-w-5xl bg-white opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
+        <div className="flex justify-between items-center h-12 md:h-14 lg:h-16 w-full">
           {/* Logo */}
           <Link href="/">
             <RyoGoLandingLogo alt={t("Logo")} />
@@ -51,7 +51,7 @@ export default function Navbar(props: NavbarProps) {
               <Link
                 key={link.id}
                 href={link.href}
-                className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} font-semibold transition`}
+                className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} text-sm lg:text-base font-semibold transition`}
               >
                 {link.label}
               </Link>
@@ -70,7 +70,7 @@ export default function Navbar(props: NavbarProps) {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden"
+            className="md:hidden text-sky-700"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -86,7 +86,7 @@ export default function Navbar(props: NavbarProps) {
                 <Link
                   key={link.id}
                   href={link.href}
-                  className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} px-2 font-semibold transition`}
+                  className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} text-sm px-2 font-semibold transition`}
                   onClick={() => setIsOpen(false)}
                 >
                   {link.label}

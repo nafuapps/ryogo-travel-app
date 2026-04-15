@@ -1,11 +1,18 @@
 //Modify Vehicle repair page
 
-import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { mainClassName } from "@/components/page/pageCommons"
 import ModifyVehicleRepairPageComponent from "./modifyVehicleRepair"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { VehicleRepairRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Modify Vehicle Repair - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function ModifyVehicleRepairPage({
   params,

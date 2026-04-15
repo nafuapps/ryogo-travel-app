@@ -7,6 +7,13 @@ import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "../../components/riderHeader"
 import MyProfileDetailHeaderTabs from "../myProfileHeaderTabs"
 import MyProfileSettingsPageComponent from "./settings"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "My Settings - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function MyProfileSettingsPage() {
   const user = await getCurrentUser()

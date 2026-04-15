@@ -2,18 +2,18 @@
   "Auth": {
     "LoginPage": {
       "Logo":"RyoGo Logo",
-      "SignupTitle":"Want to create a new agency account?",
+      "SignupTitle":"Want to create a new account for your agency?",
       "SignupCTA":"Sign up for free",
       "Step1": {
-        "PageTitle": "Login",
+        "PageTitle": "Login your RyoGo account",
         "Input": {
-          "Title": "Enter your phone number",
+          "Title": "Enter phone number",
           "Placeholder": "9876543210"
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
         "Error1": "Phone number must be 10 digits",
-        "Error2": "Phone number must be numeric",
+        "Error2": "Phone number must be numeric and without spaces",
         "APIError": "Phone number not registered"
       },
       "Step2": {
@@ -24,7 +24,7 @@
       "Step3": {
         "PageTitle": "Log into your account",
         "Input": {
-          "Title": "Enter your password",
+          "Title": "Enter password",
           "Placeholder": "********",
           "Description": "Provide your password to safely login"
         },
@@ -3078,7 +3078,7 @@
       "Hero":{
         "Title1":"Stop Everyday Chaos.",
         "Title2":"Start Growing Your Agency",
-        "Subtitle":"RyoGo is an all-in-one app for Indian travel agencies to manage bookings, fleet, drivers, and daily operations with zero paperwork and hassle",
+        "Subtitle":"RyoGo is an all-in-one app for Indian travel agencies to manage bookings, fleet, drivers, and daily operations with zero paperwork or hassle",
         "PrimaryCTA":"Get Started For Free",
         "SecondaryCTA":"Watch Demo"
       },

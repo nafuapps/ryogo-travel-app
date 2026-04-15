@@ -1,10 +1,17 @@
 //Drivers/id/modify page (only accessible by owner)
 
-import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { mainClassName } from "@/components/page/pageCommons"
 import ModifyDriverPageComponent from "./modifyDriver"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Modify Driver - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function ModifyDriverPage({
   params,

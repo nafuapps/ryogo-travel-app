@@ -2,11 +2,18 @@
 
 import { mainClassName } from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import DashboardHeader from "../../../components/extra/dashboardHeader"
+import DashboardHeader from "../../../components/common/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import UserAssignedPageComponent from "./userAssignedBookings"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "User Assigned Bookings - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function UserDetailsPage({
   params,

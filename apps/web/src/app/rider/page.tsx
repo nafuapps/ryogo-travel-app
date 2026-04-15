@@ -6,6 +6,13 @@ import RiderHomePageComponent from "./riderHome"
 import { redirect, RedirectType } from "next/navigation"
 import { getCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Rider Home - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function RiderHomePage() {
   const currentUser = await getCurrentUser()

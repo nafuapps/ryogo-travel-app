@@ -7,6 +7,13 @@ import RiderAddExpensePageComponent from "./riderAddExpense"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import RiderHeader from "@/app/rider/components/riderHeader"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Add Expense - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function RiderAddExpensePage({
   params,

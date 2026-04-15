@@ -6,7 +6,7 @@ import { redirect, RedirectType } from "next/navigation"
 import Image from "next/image"
 import RyoGoLogo from "@/components/logo"
 
-export default async function AuthLayout({
+export default async function LoginLayout({
   children,
 }: {
   children: React.ReactNode

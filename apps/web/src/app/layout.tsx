@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import { Noto_Sans } from "next/font/google"
 import "./globals.css"
 import { NextIntlClientProvider } from "next-intl"
@@ -7,11 +6,6 @@ import { Toaster } from "@/components/ui/sonner"
 const notoSans = Noto_Sans({
   subsets: ["latin", "devanagari"],
 })
-
-export const metadata: Metadata = {
-  title: "RyoGo Travel Agency App",
-  description: "RyoGo is an app for travel agencies to manage their operations",
-}
 
 export default async function RootLayout({
   children,

@@ -12,6 +12,13 @@ import RiderMyCompletedBookingPageComponent from "./completedBooking"
 import RiderMyOngoingBookingPageComponent from "./currentBooking"
 import RiderMyUpcomingBookingPageComponent from "./upcomingBooking"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Booking Details - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function MyBookingPage({
   params,

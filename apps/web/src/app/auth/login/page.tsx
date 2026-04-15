@@ -7,9 +7,11 @@ import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 
 export const metadata: Metadata = {
-  title: "Login Page | RyoGo",
-  description: "Login page for RyoGo Travel App",
+  title: "Login - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
+
 export default async function LoginPage() {
   const t = await getTranslations("Auth.LoginPage")
   return (

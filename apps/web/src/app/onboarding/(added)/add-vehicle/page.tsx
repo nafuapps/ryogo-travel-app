@@ -8,8 +8,9 @@ import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
-  title: "Add Vehicle Page | RyoGo",
-  description: "Add Vehicle page for RyoGo Travel App",
+  title: "Onboarding Add Vehicle - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
 
 export default async function AddVehiclePage() {

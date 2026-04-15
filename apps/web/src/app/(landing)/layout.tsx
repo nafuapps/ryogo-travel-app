@@ -1,15 +1,8 @@
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import type { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
 
-export const metadata: Metadata = {
-  title: "RyoGo - Modern Travel Planning & Booking",
-  description:
-    "Your all-in-one platform for seamless travel planning, booking, and management.",
-}
-
-export default async function RootLayout({
+export default async function LandingLayout({
   children,
 }: {
   children: React.ReactNode

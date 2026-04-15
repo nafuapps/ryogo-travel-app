@@ -1,11 +1,18 @@
 //Users/id/modify page (only accessible to owner)
 
-import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { mainClassName } from "@/components/page/pageCommons"
 import ChangeUserPhonePageComponent from "./changeUserPhone"
 import { getCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Change User Phone - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function ChangeUserPhonePage({
   params,

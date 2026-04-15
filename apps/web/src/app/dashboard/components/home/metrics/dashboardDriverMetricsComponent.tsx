@@ -1,9 +1,9 @@
-import { H4, CaptionGrey, H1, SmallGrey } from "@/components/typography"
+import { H4, CaptionGrey, SmallGrey, H2 } from "@/components/typography"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { LucideLifeBuoy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
-  metricFirstColClassName,
+  metricFirstRowClassName,
   metricHeaderClassName,
   metricItem1ClassName,
   metricItem2ClassName,
@@ -11,7 +11,7 @@ import {
   metricItem4ClassName,
   metricMainClassName,
   metricsClassName,
-  metricSecondColClassName,
+  metricSecondRowClassName,
   iconClassName,
 } from "./dashboardMetricsCommons"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -43,7 +43,7 @@ export default async function DashboardDriverMetricsComponent({
     <div id="dashboardDriverMetrics" className={metricsClassName}>
       <div
         id="dashboardDriverMetricsFirstCol"
-        className={metricFirstColClassName}
+        className={metricFirstRowClassName}
       >
         <div
           id="dashboardVehicleMetricsHeader"
@@ -53,7 +53,7 @@ export default async function DashboardDriverMetricsComponent({
           <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div className={metricMainClassName}>
-          <H1>{totalDrivers}</H1>
+          <H2>{totalDrivers}</H2>
           {totalDrivers !== 0 && (
             <CaptionGrey>
               {(onTripDrivers / totalDrivers).toLocaleString("en-IN", {
@@ -68,7 +68,7 @@ export default async function DashboardDriverMetricsComponent({
       </div>
       <div
         id="dashboardDriverMetricsSecondCol"
-        className={metricSecondColClassName}
+        className={metricSecondRowClassName}
       >
         <div
           id="dashboardDriverMetricsAvailable"

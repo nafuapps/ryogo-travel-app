@@ -24,8 +24,9 @@ import OnboardingHomeDocumentItem from "./components/onboardingHomeDocumentItem"
 import RyoGoLogo from "@/components/logo"
 
 export const metadata: Metadata = {
-  title: "Onboarding Page | RyoGo",
-  description: "Onboarding page for RyoGo Travel App",
+  title: "Onboarding - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
 
 export default async function OnboardingHomePage() {

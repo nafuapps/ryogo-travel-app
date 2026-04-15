@@ -1,6 +1,6 @@
 export function H1({ children }: { children: React.ReactNode }) {
   return (
-    <h1 className="text-4xl font-bold lg:text-5xl text-slate-800">
+    <h1 className="text-3xl font-medium md:text-4xl lg:text-5xl text-slate-800">
       {children}
     </h1>
   )
@@ -8,13 +8,23 @@ export function H1({ children }: { children: React.ReactNode }) {
 
 export function H1Brand({ children }: { children: React.ReactNode }) {
   return (
-    <h1 className="text-4xl font-bold lg:text-5xl text-sky-700">{children}</h1>
+    <h1 className="text-3xl font-medium md:text-4xl lg:text-5xl text-sky-700">
+      {children}
+    </h1>
+  )
+}
+
+export function H1Light({ children }: { children: React.ReactNode }) {
+  return (
+    <h1 className="text-3xl font-medium md:text-4xl lg:text-5xl text-white">
+      {children}
+    </h1>
   )
 }
 
 export function H2({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-3xl font-bold lg:text-4xl text-slate-800">
+    <h2 className="text-2xl md:text-3xl font-bold lg:text-4xl text-slate-800">
       {children}
     </h2>
   )
@@ -22,19 +32,23 @@ export function H2({ children }: { children: React.ReactNode }) {
 
 export function H2Light({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-3xl font-bold lg:text-4xl text-white">{children}</h2>
+    <h2 className="text-2xl md:text-3xl font-bold lg:text-4xl text-white">
+      {children}
+    </h2>
   )
 }
 
 export function H2Brand({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-3xl font-bold lg:text-4xl text-sky-700">{children}</h2>
+    <h2 className="text-2xl md:text-3xl font-bold lg:text-4xl text-sky-700">
+      {children}
+    </h2>
   )
 }
 
 export function H3({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-2xl font-semibold lg:text-3xl text-slate-800">
+    <h3 className="text-xl md:text-2xl font-semibold lg:text-3xl text-slate-800">
       {children}
     </h3>
   )
@@ -42,7 +56,7 @@ export function H3({ children }: { children: React.ReactNode }) {
 
 export function H3Brand({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-2xl font-semibold lg:text-3xl text-sky-700">
+    <h3 className="text-xl md:text-2xl font-semibold lg:text-3xl text-sky-700">
       {children}
     </h3>
   )
@@ -50,7 +64,7 @@ export function H3Brand({ children }: { children: React.ReactNode }) {
 
 export function H3Grey({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-2xl font-medium lg:text-3xl text-slate-500">
+    <h3 className="text-xl md:text-2xl font-medium lg:text-3xl text-slate-500">
       {children}
     </h3>
   )

@@ -1,12 +1,19 @@
 //Customers/id/modify page
 
-import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { mainClassName } from "@/components/page/pageCommons"
 import ModifyCustomerPageComponent from "./modifyCustomer"
 import { getCurrentUser } from "@/lib/auth"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Modify Customer - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function ModifyCustomerPage({
   params,

@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { CaptionGrey, H4, H1, SmallGrey } from "@/components/typography"
+import { CaptionGrey, H4, SmallGrey, H2 } from "@/components/typography"
 import {
   LucideTrendingUp,
   LucideTrendingDown,
@@ -8,11 +8,11 @@ import {
 } from "lucide-react"
 import {
   metricsClassName,
-  metricFirstColClassName,
+  metricFirstRowClassName,
   metricHeaderClassName,
   metricMainClassName,
   metricItem1ClassName,
-  metricSecondColClassName,
+  metricSecondRowClassName,
   metricItem2ClassName,
   metricItem3ClassName,
   metricItem4ClassName,
@@ -77,7 +77,7 @@ export default async function DashboardBookingMetricsComponent({
     <div id="dashboardBookingMetrics" className={metricsClassName}>
       <div
         id="dashboardBookingMetricsFirstCol"
-        className={metricFirstColClassName}
+        className={metricFirstRowClassName}
       >
         <div
           id="dashboardBookingMetricsHeader"
@@ -90,7 +90,7 @@ export default async function DashboardBookingMetricsComponent({
           id="dashboardBookingMetricsConfirmed"
           className={metricMainClassName}
         >
-          <H1>{confirmed24HrsCount}</H1>
+          <H2>{confirmed24HrsCount}</H2>
           {confirmedWeeklyAvg !== 0 && (
             <div className="flex flex-col lg:gap-0.5 items-center text-center">
               <div className="flex flex-row gap-1 item-center">
@@ -110,7 +110,7 @@ export default async function DashboardBookingMetricsComponent({
       </div>
       <div
         id="dashboardBookingMetricsSecondCol"
-        className={metricSecondColClassName}
+        className={metricSecondRowClassName}
       >
         <div id="dashboardBookingMetricsLeads" className={metricItem1ClassName}>
           <H4>{leadCount}</H4>

@@ -2,10 +2,11 @@
 
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
-import DashboardSidebar from "./components/extra/dashboardSidebar"
+import DashboardSidebar from "./components/common/dashboardSidebar"
 import { getCurrentUser, logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import CommandCenter from "@/components/command/commandCenter"
 
 export default async function DashboardLayout({
   children,
@@ -67,6 +68,7 @@ export default async function DashboardLayout({
           className="flex flex-row w-full h-dvh"
         >
           {children}
+          <CommandCenter />
         </section>
       </main>
     </SidebarProvider>

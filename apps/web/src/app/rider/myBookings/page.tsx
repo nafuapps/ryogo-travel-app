@@ -6,6 +6,13 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "../components/riderHeader"
 import RiderMyBookingsPageComponent from "./myBookings"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "My Bookings - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function MyBookingsPage() {
   const currentUser = await getCurrentUser()

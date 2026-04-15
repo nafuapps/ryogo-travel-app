@@ -6,8 +6,9 @@ import { redirect, RedirectType } from "next/navigation"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export const metadata: Metadata = {
-  title: "Login Accounts Page | RyoGo",
-  description: "Login Accounts page for RyoGo Travel App",
+  title: "Login Accounts - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
 
 export default async function LoginAccountsPage({

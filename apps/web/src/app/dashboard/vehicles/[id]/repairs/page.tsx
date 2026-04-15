@@ -1,12 +1,19 @@
 //Vehicle Repairs page
 
-import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { mainClassName } from "@/components/page/pageCommons"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import AllVehicleRepairsPageComponent from "./allVehicleRepairs"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Vehicle Repairs - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function AllVehicleRepairsPage({
   params,

@@ -8,8 +8,9 @@ import VerifyAccountPageComponent from "./verifyAccount"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export const metadata: Metadata = {
-  title: "Verify Owner Account Page | RyoGo",
-  description: "Verify Owner Account page for RyoGo Travel App",
+  title: "Onboarding Verify Account - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
 
 export default async function VerifyAccountPage() {

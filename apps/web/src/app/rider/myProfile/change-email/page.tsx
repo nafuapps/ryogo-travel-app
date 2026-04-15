@@ -6,6 +6,13 @@ import { redirect, RedirectType } from "next/navigation"
 import { mainClassName } from "@/components/page/pageCommons"
 import ChangeEmailMyProfileComponent from "./changeEmail"
 import RiderHeader from "../../components/riderHeader"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Change Email - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function ChangeEmailMyProfilePage() {
   const user = await getCurrentUser()

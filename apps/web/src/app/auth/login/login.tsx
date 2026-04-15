@@ -45,6 +45,9 @@ export default function LoginPageComponent() {
 
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      phoneNumber: "",
+    },
   })
 
   //Submit actions

@@ -3,7 +3,7 @@
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 
-export default async function OnboardingHomeLayout({
+export default async function OnboardingLayout({
   children,
 }: {
   children: React.ReactNode

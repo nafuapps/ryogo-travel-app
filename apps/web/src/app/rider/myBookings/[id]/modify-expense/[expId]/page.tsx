@@ -10,6 +10,13 @@ import { ExpenseRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Modify Expense - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function RiderModifyExpensePage({
   params,

@@ -30,13 +30,13 @@ export function RyoGoLightLogo() {
 
 export function RyoGoLandingLogo(props: { alt: string }) {
   return (
-    <div className="relative w-16 md:w-20 aspect-2/1">
+    <div className="relative w-16 md:w-18 lg:w-20 aspect-2/1">
       <Image
         loading="eager"
         src="/logo.png"
         fill
         alt={props.alt}
-        sizes="(max-width: 768px) 64px, 80px"
+        sizes="(max-width: 768px) 64px, (max-width: 1024px) 72px, 80px"
       />
     </div>
   )

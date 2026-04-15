@@ -4,9 +4,16 @@ import VehicleDetailsPageComponent from "./vehicleDetails"
 import { mainClassName } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import DashboardHeader from "../../components/extra/dashboardHeader"
+import DashboardHeader from "../../components/common/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Vehicle Details - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function VehicleDetailsPage({
   params,

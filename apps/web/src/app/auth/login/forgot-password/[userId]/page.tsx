@@ -7,8 +7,9 @@ import { Metadata } from "next"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export const metadata: Metadata = {
-  title: "Forgot Password Page | RyoGo",
-  description: "Forgot Password page for RyoGo Travel App",
+  title: "Forgot Password - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
 
 export default async function ConfirmEmailPage({

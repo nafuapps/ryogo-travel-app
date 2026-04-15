@@ -8,9 +8,11 @@ import { getTranslations } from "next-intl/server"
 import { CaptionGrey } from "@/components/typography"
 
 export const metadata: Metadata = {
-  title: "Signup Page | RyoGo",
-  description: "Signup page for RyoGo Travel App",
+  title: "Signup - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
 }
+
 export default async function SignupPage() {
   const t = await getTranslations("Auth.SignupPage")
 

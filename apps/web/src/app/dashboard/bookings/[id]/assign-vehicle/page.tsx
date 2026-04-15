@@ -7,9 +7,16 @@ import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { mainClassName } from "@/components/page/pageCommons"
-import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import AssignVehiclePageComponent from "./assignVehicle"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Assign Vehicle - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function AssignVehicleBookingPage({
   params,

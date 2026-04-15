@@ -34,7 +34,6 @@ export default async function BookingDetailsPageComponent({
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
       >
         <BookingSection sectionTitle={t("BookingInfo")}>
-          <BookingItem title={t("BookingId")} value={bookingDetails.id} />
           <BookingItem
             title={t("Created")}
             value={format(bookingDetails.createdAt, "dd MMM hh:mm aaa")}

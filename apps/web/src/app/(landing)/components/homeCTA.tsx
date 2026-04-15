@@ -9,10 +9,10 @@ import { Check } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
-export default async function CTASection() {
+export default async function HomeCTASection() {
   const t = await getTranslations("Landing.Home.CTA")
   return (
-    <section className="py-16 md:py-20 lg:py-24 px-4 md:px-6 lg:px-8 bg-linear-to-b from-sky-700 to-sky-900">
+    <section className="py-16 md:py-20 lg:py-24 px-4 md:px-6 lg:px-8 bg-linear-to-b from-sky-600 to-sky-900">
       <div className="max-w-4xl flex flex-col items-center justify-center mx-auto gap-4 md:gap-5 lg:gap-6 text-center">
         <H2Light>{t("Title")}</H2Light>
         <SmallLight>{t("Subtitle")}</SmallLight>

@@ -5,11 +5,18 @@ import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
-import DashboardHeader from "@/app/dashboard/components/extra/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { mainClassName } from "@/components/page/pageCommons"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import AssignUserPageComponent from "./assignUser"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Assign User - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function AssignUserBookingPage({
   params,

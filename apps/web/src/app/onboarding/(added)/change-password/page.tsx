@@ -4,6 +4,13 @@ import { getCurrentUser } from "@/lib/auth"
 import ChangePasswordPageComponent from "./changePassword"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Change Password - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function ChangePasswordPage() {
   const currentUser = await getCurrentUser()

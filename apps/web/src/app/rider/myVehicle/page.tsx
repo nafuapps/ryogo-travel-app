@@ -7,6 +7,13 @@ import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "../components/riderHeader"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import RiderMyVehiclePageComponent from "./myVehicle"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "My Vehicle - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function MyVehiclePage() {
   const currentUser = await getCurrentUser()

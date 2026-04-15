@@ -2,8 +2,15 @@
 
 import { mainClassName } from "@/components/page/pageCommons"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import DashboardHeader from "../../../components/extra/dashboardHeader"
+import DashboardHeader from "../../../components/common/dashboardHeader"
 import VehicleCompletedBookingsPageComponent from "./vehicleCompletedBookings"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Vehicle Completed Bookings - RyoGo Travel Agency App",
+  description:
+    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+}
 
 export default async function VehicleCompletedBookingsPage({
   params,

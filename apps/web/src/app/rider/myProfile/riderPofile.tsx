@@ -13,6 +13,7 @@ import LogoutAlertButton from "@/app/dashboard/components/buttons/logoutAlertBut
 import { getDriverStatusColor } from "@/app/dashboard/components/drivers/driverCommon"
 import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
+import { DriverStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function RiderProfilePageComponent({
   driverDetails,
@@ -58,12 +59,7 @@ export default async function RiderProfilePageComponent({
               <Caption>
                 {moment(driverDetails.createdAt).format("DD MMM YYYY")}
               </Caption>
-
-              <div
-                className={`flex items-center justify-center ${bgColor} rounded-full gap-1 lg:gap-1.5 px-3 py-1.5 lg:px-6 lg:py-2`}
-              >
-                <Caption>{driverDetails.status.toUpperCase()}</Caption>
-              </div>
+              <DriverStatusPill status={driverDetails.status} />
             </div>
           </div>
           <ChangeUserNameSheet

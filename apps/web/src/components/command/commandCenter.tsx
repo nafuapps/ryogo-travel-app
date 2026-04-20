@@ -5,7 +5,6 @@ import { useState } from "react"
 import { Button } from "../ui/button"
 import useCommandCenter from "./useCommandCenter"
 import { CaptionBrand } from "../typography"
-// import { motion, AnimatePresence } from "framer-motion";
 
 export default function CommandCenter() {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,7 +14,7 @@ export default function CommandCenter() {
   return (
     <div className="fixed bottom-8 right-0 px-4 md:px-6 lg:px-8 z-10 max-w-2xl">
       <div className="bg-sky-700 shadow-xl rounded-xl overflow-hidden p-2">
-        {/* Contextual Quick Actions */}
+        {/*  Quick Actions */}
         {isOpen && (
           <div className="border-b border-sky-200 pb-2 flex flex-row flex-wrap gap-2">
             {commands.map((c) => {
@@ -31,7 +30,7 @@ export default function CommandCenter() {
           </div>
         )}
 
-        {/* Search / Action Bar */}
+        {/* Search Bar */}
         <div className={`flex items-center ${isOpen ? "pt-2" : ""} gap-2`}>
           {isOpen && (
             <div className="flex-1 flex items-center bg-slate-50 rounded-lg px-3 py-2">

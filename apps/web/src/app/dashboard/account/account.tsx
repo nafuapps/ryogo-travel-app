@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import LogoutAlertButton from "../components/buttons/logoutAlertButton"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
+import { UserStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function AccountPageComponent({
   userDetails,
@@ -58,12 +59,7 @@ export default async function AccountPageComponent({
               <Caption>
                 {moment(userDetails.createdAt).format("DD MMM YYYY")}
               </Caption>
-
-              <div
-                className={`flex items-center justify-center ${bgColor} rounded-full gap-1 lg:gap-1.5 px-3 py-1.5 lg:px-6 lg:py-2`}
-              >
-                <Caption>{userDetails.status.toUpperCase()}</Caption>
-              </div>
+              <UserStatusPill status={userDetails.status} />
             </div>
           </div>
           <ChangeUserNameSheet

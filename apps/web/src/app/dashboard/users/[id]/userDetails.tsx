@@ -16,6 +16,7 @@ import ActivateUserAlertButton from "../../components/buttons/activateUserAlertB
 import ResetUserPasswordAlertButton from "../../components/buttons/resetUserPasswordAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
+import { UserStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -55,12 +56,7 @@ export default async function UserDetailsPageComponent({
             <Caption>{user.phone}</Caption>
             <Caption>{user.email}</Caption>
             <Caption>{moment(user.createdAt).format("DD MMM YYYY")}</Caption>
-
-            <div
-              className={`flex items-center justify-center ${bgColor} rounded-full gap-1 lg:gap-1.5 px-3 py-1.5 lg:px-6 lg:py-2`}
-            >
-              <Caption>{user.status.toUpperCase()}</Caption>
-            </div>
+            <UserStatusPill status={user.status} />
           </div>
         </div>
         <div id="UserActions" className="flex flex-col gap-2 lg:gap-3">

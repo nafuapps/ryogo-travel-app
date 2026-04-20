@@ -24,6 +24,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { getDriverStatusColor } from "../../components/drivers/driverCommon"
 import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
+import { DriverStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -43,7 +44,10 @@ export default async function AllDriversListComponent({
       {allDrivers.map((driver) => (
         <AllDriversItemComponent key={driver.id} driver={driver} />
       ))}
-      <Link href={`/dashboard/drivers/new`} className="min-w-1/2 self-center">
+      <Link
+        href={`/dashboard/drivers/new`}
+        className="w-full md:w-1/2 self-center"
+      >
         <Button variant={"default"} className="w-full">
           {t("AddDriver")}
         </Button>
@@ -100,11 +104,7 @@ async function AllDriversItemComponent({
           </PBold>
         </div>
         <div className={gridItemClassName}>
-          <div
-            className={`flex justify-center items-center rounded-full ${bgColor} px-2 py-1.5 lg:px-3 lg:py-2`}
-          >
-            <CaptionBold>{driver.status.toUpperCase()}</CaptionBold>
-          </div>
+          <DriverStatusPill status={driver.status} />
         </div>
       </div>
     </Link>

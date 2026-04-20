@@ -1,9 +1,9 @@
 import { gridClassName, gridItemClassName } from "@/components/page/pageCommons"
+import { TripLogStatusPill } from "@/components/statusPills/statusPills"
 import {
   SmallBold,
   CaptionGrey,
   P,
-  CaptionBold,
   CaptionLight,
   PBold,
   SmallLight,
@@ -177,9 +177,7 @@ export async function OngoingBookingComponent({
         </div>
         {booking.status && (
           <div className={gridItemClassName}>
-            <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-              <CaptionBold>{booking.status.toUpperCase()}</CaptionBold>
-            </div>
+            <TripLogStatusPill status={booking.status} />
           </div>
         )}
       </div>

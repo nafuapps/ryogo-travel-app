@@ -152,6 +152,7 @@ export const userRepository = {
         name: true,
         userRole: true,
         agencyId: true,
+        photoUrl: true,
       },
       where: and(
         eq(users.phone, phone),

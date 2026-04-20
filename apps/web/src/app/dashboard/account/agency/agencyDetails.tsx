@@ -1,3 +1,4 @@
+import { AgencyStatusPill } from "@/components/statusPills/statusPills"
 import AccountDetailHeaderTabs from "../accountDetailHeaderTabs"
 import { pageClassName } from "@/components/page/pageCommons"
 import {
@@ -28,13 +29,6 @@ export default async function AgencyDetailsPageComponent({
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.AccountAgency")
-
-  const bgColor =
-    agency.status === AgencyStatusEnum.ACTIVE
-      ? " bg-green-100 "
-      : agency.status === AgencyStatusEnum.EXPIRED
-        ? " bg-red-100 "
-        : " bg-slate-100 "
 
   return (
     <div id="AccountAgencyPage" className={pageClassName}>
@@ -72,12 +66,7 @@ export default async function AgencyDetailsPageComponent({
               <Caption>
                 {moment(agency.createdAt).format("DD MMM YYYY")}
               </Caption>
-
-              <div
-                className={`flex items-center justify-center ${bgColor} rounded-full gap-1 lg:gap-1.5 px-3 py-1.5 lg:px-6 lg:py-2`}
-              >
-                <Caption>{agency.status.toUpperCase()}</Caption>
-              </div>
+              <AgencyStatusPill status={agency.status} />
             </div>
           </div>
         </div>

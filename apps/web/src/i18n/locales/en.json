@@ -811,11 +811,7 @@
       },
       "Schedule": {
         "Title": "Schedule",
-        "7Days": "Next 7 Days",
-        "14Days": "Next 14 Days",
-        "NotAssigned": "Not Assigned",
-        "ViewDetails": "View Details",
-        "Assign": "Assign"
+        "Photo":"Customer photo"
       },
       "Leads": {
         "Title": "Leads",
@@ -1398,10 +1394,9 @@
       },
       "Schedule": {
         "Title": "Schedule",
-        "7Days": "Next 7 Days",
-        "14Days": "Next 14 Days",
-        "ViewDetails": "View Details",
-        "Vehicle": "Vehicle"
+       
+        "Vehicle": "Vehicle",
+        "Photo":"Vehicle photo"
       },
       "History": {}
     },
@@ -1845,7 +1840,8 @@
         "7Days": "Next 7 Days",
         "14Days": "Next 14 Days",
         "ViewDetails": "View Details",
-        "Driver": "Driver"
+        "Driver": "Driver",
+        "Photo":"Driver photo"
       },
       "History": {}
     },
@@ -2676,6 +2672,28 @@
         "NoCTA": "No",
         "YesCTA": "Yes, logout"
       }
+    },
+    "Schedule":{
+      "Header":{
+        "7Days":"Next 7 Days",
+        "14Days":"Next 14 Days"
+      }
+    },
+    "PopoverCards":{
+      "Booking":{
+        "NotAssigned": "Not Assigned",
+        "ViewDetails": "View Details",
+        "Assign": "Assign"
+      },
+      "AssignedBooking":{
+        "ViewDetails": "View Details"
+      },
+      "Repair":{
+        "ViewDetails": "View Details"
+      },
+      "Leave":{
+        "ViewDetails": "View Details"
+      }
     }
   },
   "Rider": {
@@ -2753,11 +2771,12 @@
           "Error5": "Odometer must be a positive number"
         },
         "Field2": {
-          "Title": "Upload Trip photo (optional)",
+          "Title": "Upload Odometer photo",
           "Placeholder": "UPLOAD",
           "Description": "Upload trip start photo",
           "Error1": "File size should be less than 1MB",
-          "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
+          "Error3": "Trip start photo is required"
         },
         "Field3": {
           "Title": "Remarks (optional)",
@@ -2783,11 +2802,13 @@
           "Error5": "Odometer must be a positive number"
         },
         "Field2": {
-          "Title": "Upload Trip photo (optional)",
+          "Title": "Upload Odometer photo",
           "Placeholder": "UPLOAD",
           "Description": "Upload trip end photo",
           "Error1": "File size should be less than 1MB",
-          "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
+          "Error3": "Trip end photo is required"
+
         },
         "Field3": {
           "Title": "Remarks (optional)",
@@ -2795,10 +2816,10 @@
           "Error1": "Remarks must be less than 300 characters"
         },
         "Field4":{
-          "Title":"Rate customer (optional)"
+          "Title":"Rate customer"
         },
         "Field5":{
-          "Title":"Rate this booking (optional)"
+          "Title":"Rate booking experience"
         },
         "End": "Confirm and End Trip",
         "Close": "Cancel",
@@ -2823,7 +2844,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload trip {type} photo",
           "Error1": "File size should be less than 1MB",
-          "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png)"
         },
         "Field3": {
           "Title": "Remarks (optional)",

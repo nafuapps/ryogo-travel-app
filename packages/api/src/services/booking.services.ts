@@ -111,7 +111,7 @@ export const bookingServices = {
         driver: booking.assignedDriver?.name,
         customerName: booking.customer.name,
         bookingId: booking.id,
-        status: booking.tripLogs[0]?.type.toString(),
+        status: booking.tripLogs[0]?.type,
       }
     })
   },
@@ -185,6 +185,7 @@ export const bookingServices = {
         vehicle: booking.assignedVehicle?.vehicleNumber,
         driver: booking.assignedDriver?.name,
         customerName: booking.customer?.name,
+        customerPhotoUrl: booking.customer?.photoUrl,
         bookingId: booking.id,
         startDate: booking.startDate,
         endDate: booking.endDate,

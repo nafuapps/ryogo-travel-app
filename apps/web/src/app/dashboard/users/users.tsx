@@ -26,6 +26,7 @@ import { getUserStatusColor } from "../components/users/userCommon"
 import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import moment from "moment"
+import { UserStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function UsersPageComponent({
   agencyId,
@@ -122,11 +123,7 @@ async function AllUsersItemComponent({
           <PBold>{moment(user.createdAt).format("DD MMM YYYY")}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <div
-            className={`flex justify-center items-center rounded-full ${bgColor} px-2 py-1.5 lg:px-3 lg:py-2`}
-          >
-            <CaptionBold>{user.status.toUpperCase()}</CaptionBold>
-          </div>
+          <UserStatusPill status={user.status} />
         </div>
       </div>
     </Link>

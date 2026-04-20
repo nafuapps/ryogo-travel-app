@@ -17,6 +17,7 @@ import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { getCombinedDateTime } from "@/lib/utils"
+import { TripLogStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function DriverAssignedBookingsPageComponent({
   bookings,
@@ -72,9 +73,7 @@ function OngoingBookingComponent(
         </div>
         {props.status && (
           <div className={gridItemClassName}>
-            <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-              <CaptionBold>{props.status.toUpperCase()}</CaptionBold>
-            </div>
+            <TripLogStatusPill status={props.status} />
           </div>
         )}
       </div>

@@ -40,6 +40,12 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getCustomerStatusColor } from "../components/customers/customerCommon"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
+import {
+  BookingStatusPill,
+  CustomerStatusPill,
+  DriverStatusPill,
+  VehicleStatusPill,
+} from "@/components/statusPills/statusPills"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -432,9 +438,7 @@ function BookingSearchResultItem({
           <Small>{booking.assignedDriver?.name}</Small>
         </div>
         <div className={gridItemClassName}>
-          <div className="flex justify-center items-center rounded-full bg-slate-200 px-2 py-1.5 lg:px-3 lg:py-2">
-            <CaptionBold>{booking.status.toUpperCase()}</CaptionBold>
-          </div>
+          <BookingStatusPill status={booking.status} />
         </div>
       </div>
     </Link>
@@ -487,11 +491,7 @@ function DriverSearchResultItem({
           <CaptionGrey>{driver.licenseNumber}</CaptionGrey>
         </div>
         <div className={gridItemClassName}>
-          <div
-            className={`flex justify-center items-center rounded-full ${bgColor} px-2 py-1.5 lg:px-3 lg:py-2`}
-          >
-            <CaptionBold>{driver.status.toUpperCase()}</CaptionBold>
-          </div>
+          <DriverStatusPill status={driver.status} />
         </div>
       </div>
     </Link>
@@ -536,11 +536,7 @@ function CustomerSearchResultItem({
           <Small>{customer.location.city}</Small>
         </div>
         <div className={gridItemClassName}>
-          <div
-            className={`flex justify-center items-center rounded-full ${bgColor} px-2 py-1.5 lg:px-3 lg:py-2`}
-          >
-            <CaptionBold>{customer.status.toUpperCase()}</CaptionBold>
-          </div>
+          <CustomerStatusPill status={customer.status} />
         </div>
       </div>
     </Link>
@@ -585,11 +581,7 @@ function VehicleSearchResultItem({
           <Small>{vehicle.type.toUpperCase()}</Small>
         </div>
         <div className={gridItemClassName}>
-          <div
-            className={`flex justify-center items-center rounded-full ${bgColor} px-2 py-1.5 lg:px-3 lg:py-2`}
-          >
-            <CaptionBold>{vehicle.status.toUpperCase()}</CaptionBold>
-          </div>
+          <VehicleStatusPill status={vehicle.status} />
         </div>
       </div>
     </Link>

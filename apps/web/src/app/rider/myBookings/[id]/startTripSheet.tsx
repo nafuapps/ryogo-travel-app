@@ -50,11 +50,12 @@ export default function StartTripSheet({
     tripLogPhoto: z
       .instanceof(FileList)
       .refine((file) => {
-        if (file.length < 1) return true
+        return file.length > 0
+      }, t("Field2.Error3"))
+      .refine((file) => {
         return file[0] && file[0].size < 1000000
       }, t("Field2.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
         return (
           file[0] &&
           [
@@ -63,11 +64,10 @@ export default function StartTripSheet({
             "image/jpg",
             "image/bmp",
             "image/webp",
-            "application/pdf",
           ].includes(file[0].type)
         )
       }, t("Field2.Error2"))
-      .optional(),
+      .nonoptional(t("Field2.Error3")),
     remarks: z.string().optional(),
   })
 

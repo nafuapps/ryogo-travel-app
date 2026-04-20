@@ -22,6 +22,7 @@ import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateCustomerAlertButton from "../../components/buttons/inactivateCustomerAlertButton"
 import ActivateCustomerAlertButton from "../../components/buttons/activateCustomerAlertButton"
 import ChangeCustomerPhotoSheet from "./changeCustomerPhotoSheet"
+import { CustomerStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -83,11 +84,7 @@ export default async function CustomerDetailsPageComponent({
                   </SmallGrey>
                 </div>
               )}
-              <div
-                className={`flex items-center justify-center ${bgColor} rounded-full gap-1 lg:gap-1.5 px-3 py-1.5 lg:px-6 lg:py-2`}
-              >
-                <Caption>{customer.status.toUpperCase()}</Caption>
-              </div>
+              <CustomerStatusPill status={customer.status} />
             </div>
           </div>
         </CustomerSection>

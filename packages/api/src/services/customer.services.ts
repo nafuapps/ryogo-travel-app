@@ -34,7 +34,7 @@ export const customerServices = {
         startDate: booking.startDate,
         startTime: booking.startTime,
         endDate: booking.endDate,
-        status: booking.tripLogs[0]?.type.toString(),
+        status: booking.tripLogs[0]?.type,
       }
     })
   },

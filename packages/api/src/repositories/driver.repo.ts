@@ -191,6 +191,11 @@ export const driverRepository = {
         notInArray(drivers.status, [DriverStatusEnum.SUSPENDED]),
       ),
       with: {
+        user: {
+          columns: {
+            photoUrl: true,
+          },
+        },
         assignedBookings: {
           columns: {
             id: true,

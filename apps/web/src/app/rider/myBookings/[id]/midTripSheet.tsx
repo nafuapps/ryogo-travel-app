@@ -77,7 +77,6 @@ export default function MidTripSheet({
             "image/jpg",
             "image/bmp",
             "image/webp",
-            "application/pdf",
           ].includes(file[0].type)
         )
       }, t("Field2.Error2"))

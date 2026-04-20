@@ -29,6 +29,7 @@ import { useState } from "react"
 import { PhoneRegex } from "@/lib/regex"
 import { PaginationControls } from "@/components/pagination/paginationControls"
 import { usePagination } from "@/hooks/usePagination"
+import { CustomerStatusPill } from "@/components/statusPills/statusPills"
 
 const CUSTOMERS_PER_PAGE = 20
 
@@ -141,11 +142,7 @@ function AllCustomersItemComponent({
           <PBold>{customer.location.city}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <div
-            className={`flex justify-center items-center rounded-full ${bgColor} px-2 py-1.5 lg:px-3 lg:py-2`}
-          >
-            <CaptionBold>{customer.status.toUpperCase()}</CaptionBold>
-          </div>
+          <CustomerStatusPill status={customer.status} />
         </div>
       </div>
     </Link>

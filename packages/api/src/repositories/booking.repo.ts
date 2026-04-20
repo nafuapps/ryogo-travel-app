@@ -758,6 +758,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            photoUrl: true,
           },
         },
         source: {

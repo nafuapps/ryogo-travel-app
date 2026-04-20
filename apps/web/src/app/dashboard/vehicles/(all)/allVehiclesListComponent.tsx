@@ -33,6 +33,7 @@ import {
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { Button } from "@/components/ui/button"
+import { VehicleStatusPill } from "@/components/statusPills/statusPills"
 
 export default async function AllVehiclesListComponent({
   agencyId,
@@ -52,7 +53,10 @@ export default async function AllVehiclesListComponent({
       {allVehicles.map((vehicle) => (
         <AllVehiclesItemComponent key={vehicle.id} vehicle={vehicle} />
       ))}
-      <Link href={`/dashboard/vehicles/new`} className="min-w-1/2 self-center">
+      <Link
+        href={`/dashboard/vehicles/new`}
+        className="w-full md:w-1/2 self-center"
+      >
         <Button variant={"default"} className="w-full">
           {t("AddVehicle")}
         </Button>
@@ -97,11 +101,7 @@ async function AllVehiclesItemComponent({
           <PBold>{t("RatePerKm", { rate: vehicle.defaultRatePerKm })}</PBold>
         </div>
         <div className={gridItemClassName}>
-          <div
-            className={`flex justify-center items-center rounded-full ${bgColor} px-2 py-1.5 lg:px-3 lg:py-2`}
-          >
-            <CaptionBold>{vehicle.status.toUpperCase()}</CaptionBold>
-          </div>
+          <VehicleStatusPill status={vehicle.status} />
         </div>
       </div>
     </Link>

@@ -33,6 +33,7 @@ import ActivateVehicleAlertButton from "../../components/buttons/activateVehicle
 import InactivateVehicleAlertButton from "../../components/buttons/inactivateVehicleAlertButton"
 import Link from "next/link"
 import ChangeVehiclePhotoSheet from "./changeVehiclePhotoSheet"
+import { VehicleStatusPill } from "@/components/statusPills/statusPills"
 
 //TODO: Add vehicle schedule chart
 
@@ -103,11 +104,7 @@ export default async function VehicleDetailsPageComponent({
                     </SmallGrey>
                   </div>
                 )}
-              <div
-                className={`flex items-center justify-center ${bgColor} rounded-full gap-1 lg:gap-1.5 px-3 py-1.5 lg:px-6 lg:py-2`}
-              >
-                <Caption>{vehicle.status.toUpperCase()}</Caption>
-              </div>
+              <VehicleStatusPill status={vehicle.status} />
             </div>
           </div>
         </VehicleSection>

@@ -31,6 +31,7 @@ import ActivateDriverAlertButton from "../../components/buttons/activateDriverAl
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import ChangeDriverPhotoSheet from "./changeDriverPhotoSheet"
 import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
+import { DriverStatusPill } from "@/components/statusPills/statusPills"
 
 //TODO: Add driver schedule chart
 
@@ -94,11 +95,7 @@ export default async function DriverDetailsPageComponent({
                   </SmallGrey>
                 </div>
               )}
-              <div
-                className={`flex items-center justify-center ${bgColor} rounded-full gap-1 lg:gap-1.5 px-3 py-1.5 lg:px-6 lg:py-2`}
-              >
-                <Caption>{driver.status.toUpperCase()}</Caption>
-              </div>
+              <DriverStatusPill status={driver.status} />
             </div>
           </div>
         </DriverSection>

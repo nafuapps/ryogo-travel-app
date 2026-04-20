@@ -151,7 +151,7 @@ export function RepairPopoverCard(
 export function LeavePopoverCard(
   props: FindDriversScheduleNextDaysType[number]["driverLeaves"][number],
 ) {
-  const t = useTranslations("Dashboard.Drivers.Schedule")
+  const t = useTranslations("Dashboard.PopoverCards.Leave")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
       <div className="flex flex-col gap-1 items-start">

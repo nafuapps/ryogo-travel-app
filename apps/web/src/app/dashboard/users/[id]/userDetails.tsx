@@ -7,7 +7,6 @@ import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideUser } from "lucide-react"
 import moment from "moment"
-import { getUserStatusColor } from "../../components/users/userCommon"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -24,8 +23,6 @@ export default async function UserDetailsPageComponent({
   user: NonNullable<FindUserDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.UserDetails")
-
-  const bgColor = getUserStatusColor(user.status)
 
   return (
     <div id="UserDetailsPage" className={pageClassName}>

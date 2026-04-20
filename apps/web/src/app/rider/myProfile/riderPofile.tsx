@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import MyProfileDetailHeaderTabs from "./myProfileHeaderTabs"
 import LogoutAlertButton from "@/app/dashboard/components/buttons/logoutAlertButton"
-import { getDriverStatusColor } from "@/app/dashboard/components/drivers/driverCommon"
 import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
@@ -21,8 +20,6 @@ export default async function RiderProfilePageComponent({
   driverDetails: NonNullable<FindDriverByUserIdType>
 }) {
   const t = await getTranslations("Rider.MyProfile")
-
-  const bgColor = getDriverStatusColor(driverDetails.status)
 
   return (
     <div id="RiderProfilePage" className={pageClassName}>

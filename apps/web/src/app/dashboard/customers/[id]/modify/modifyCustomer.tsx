@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import { useEffect, useRef, useTransition } from "react"
+import { useEffect, useTransition } from "react"
 import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
@@ -91,18 +91,13 @@ export default function ModifyCustomerPageComponent({
   const cityOptions = selectedState
     ? (data[selectedState] ?? [t("Field6.Title")])
     : []
-  const setValue = formData.setValue
-
-  const isFirstRender = useRef(true)
 
   useEffect(() => {
-    // Skip on the initial render of the component
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    if (selectedState === customer.location.state) {
       return
     }
-    setValue("city", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState, setValue])
+    formData.setValue("city", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedState])
 
   return (
     <div id="ModifyCustomer" className={pageClassName}>

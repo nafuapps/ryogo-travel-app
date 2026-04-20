@@ -33,7 +33,7 @@ export default async function AllVehicleRepairsPageComponent({
       >
         <Link
           href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
-          className="min-w-1/2 self-center"
+          className="w-full md:w-1/2 self-center"
         >
           <Button variant={"default"} className="w-full">
             {t("AddRepair")}

@@ -1,10 +1,4 @@
-import {
-  SmallGrey,
-  H5Grey,
-  Caption,
-  CaptionBold,
-  PBold,
-} from "@/components/typography"
+import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
 import {
   FindAllUsersInAgencyType,
   userServices,
@@ -22,7 +16,6 @@ import {
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { getUserStatusColor } from "../components/users/userCommon"
 import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import moment from "moment"
@@ -93,8 +86,6 @@ async function AllUsersItemComponent({
   user: FindAllUsersInAgencyType[number]
 }) {
   const t = await getTranslations("Dashboard.Users")
-
-  const bgColor = getUserStatusColor(user.status)
 
   return (
     <Link href={`/dashboard/users/${user.id}`}>

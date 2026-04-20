@@ -15,7 +15,6 @@ import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideStar, LucideUser } from "lucide-react"
 import moment from "moment"
-import { getCustomerStatusColor } from "../../components/customers/customerCommon"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -30,8 +29,6 @@ export default async function CustomerDetailsPageComponent({
   customer: NonNullable<FindCustomerDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.CustomerDetails")
-
-  const bgColor = getCustomerStatusColor(customer.status)
 
   return (
     <div id="CustomerDetailsPage" className={pageClassName}>

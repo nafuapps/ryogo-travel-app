@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { format } from "date-fns"
-import { LucideCheckCircle } from "lucide-react"
+import { CheckCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
@@ -46,7 +46,7 @@ export default function CompletedBookingsItemComponent({
         className="flex flex-row justify-between items-center"
       >
         <div className={sectionHeaderClassName}>
-          <LucideCheckCircle className={iconClassName} />
+          <CheckCheck className={iconClassName} />
           <SmallGrey>{t("Title")}</SmallGrey>
           <H5Grey>{trips.length}</H5Grey>
         </div>

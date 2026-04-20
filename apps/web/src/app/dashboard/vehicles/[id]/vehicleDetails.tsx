@@ -2,10 +2,7 @@ import { pageClassName } from "@/components/page/pageCommons"
 import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import VehicleDetailHeaderTabs from "./vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
-import {
-  getVehicleIcon,
-  getVehicleStatusColor,
-} from "../../components/vehicles/vehicleCommon"
+import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideStar } from "lucide-react"
@@ -43,9 +40,7 @@ export default async function VehicleDetailsPageComponent({
   vehicle: NonNullable<FindVehicleDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.VehicleDetails")
-
-  const bgColor = getVehicleStatusColor(vehicle.status)
-  const IconComponent = getVehicleIcon({ vehicleType: vehicle.type })
+  const IconComponent = getVehicleIcon(vehicle.type)
   return (
     <div id="VehicleDetailsPage" className={pageClassName}>
       <VehicleDetailHeaderTabs selectedTab={"Details"} id={vehicle.id} />

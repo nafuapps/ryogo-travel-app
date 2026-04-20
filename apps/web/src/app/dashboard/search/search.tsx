@@ -12,12 +12,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group"
-import {
-  Caption,
-  CaptionBold,
-  CaptionGrey,
-  Small,
-} from "@/components/typography"
+import { Caption, CaptionGrey, Small } from "@/components/typography"
 import {
   gridClassName,
   gridItemClassName,
@@ -34,10 +29,7 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { getVehicleIcon } from "../components/vehicles/vehicleCommon"
-import { getDriverStatusColor } from "../components/drivers/driverCommon"
-import { getVehicleStatusColor } from "../components/vehicles/vehicleCommon"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { getCustomerStatusColor } from "../components/customers/customerCommon"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
 import {
@@ -451,7 +443,6 @@ function DriverSearchResultItem({
   driver: FindAgencySearchDataType["drivers"][number]
 }) {
   const t = useTranslations("Dashboard.Drivers.All")
-  const bgColor = getDriverStatusColor(driver.status)
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
       <div className={gridClassName}>
@@ -478,7 +469,7 @@ function DriverSearchResultItem({
         <div className={gridItemClassName}>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
-              const IconComponent = getVehicleIcon({ vehicleType: v })
+              const IconComponent = getVehicleIcon(v)
               return (
                 <IconComponent
                   key={v}
@@ -504,8 +495,6 @@ function CustomerSearchResultItem({
   customer: FindAgencySearchDataType["customers"][number]
 }) {
   const t = useTranslations("Dashboard.Customers.All")
-
-  const bgColor = getCustomerStatusColor(customer.status)
 
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
@@ -549,8 +538,7 @@ function VehicleSearchResultItem({
   vehicle: FindAgencySearchDataType["vehicles"][number]
 }) {
   const t = useTranslations("Dashboard.Vehicles.All")
-  const IconComponent = getVehicleIcon({ vehicleType: vehicle.type })
-  const bgColor = getVehicleStatusColor(vehicle.status)
+  const IconComponent = getVehicleIcon(vehicle.type)
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>

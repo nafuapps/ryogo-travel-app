@@ -44,7 +44,7 @@ export default async function RiderMyVehiclePageComponent({
     )
   }
 
-  const IconComponent = getVehicleIcon({ vehicleType: vehicle.type })
+  const IconComponent = getVehicleIcon(vehicle.type)
 
   return (
     <div id="VehicleDetailsPage" className={pageClassName}>

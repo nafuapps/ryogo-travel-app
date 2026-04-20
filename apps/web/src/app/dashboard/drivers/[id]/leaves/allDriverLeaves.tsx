@@ -32,7 +32,7 @@ export default async function AllDriverLeavesPageComponent({
       >
         <Link
           href={`/dashboard/drivers/${driverId}/leaves/new`}
-          className="min-w-1/2 self-center"
+          className="md:w-1/2 w-full self-center"
         >
           <Button variant={"default"} className="w-full">
             {t("AddLeave")}

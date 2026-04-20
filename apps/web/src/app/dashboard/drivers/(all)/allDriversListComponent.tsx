@@ -1,10 +1,4 @@
-import {
-  SmallGrey,
-  H5Grey,
-  Caption,
-  PBold,
-  CaptionBold,
-} from "@/components/typography"
+import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
 import {
   FindDriversByAgencyType,
   driverServices,
@@ -22,7 +16,6 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { getDriverStatusColor } from "../../components/drivers/driverCommon"
 import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 
@@ -63,8 +56,6 @@ async function AllDriversItemComponent({
 }) {
   const t = await getTranslations("Dashboard.Drivers.All")
 
-  const bgColor = getDriverStatusColor(driver.status)
-
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
       <div className={gridClassName}>
@@ -90,7 +81,7 @@ async function AllDriversItemComponent({
         <div className={gridItemClassName}>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
-              const IconComponent = getVehicleIcon({ vehicleType: v })
+              const IconComponent = getVehicleIcon(v)
               return (
                 <IconComponent
                   key={v}

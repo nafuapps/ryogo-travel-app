@@ -178,7 +178,7 @@ export function DashboardScheduleItemGrid({
 }) {
   return (
     <div
-      className="grow grid grid-cols-1 lg:grid-rows-1 gap-0.5 
+      className="grow grid grid-cols-1 lg:grid-rows-1 gap-0.5 p-0.5
                   grid-rows-[repeat(var(--items),1fr)] lg:grid-cols-[repeat(var(--items),1fr)]"
       style={
         {
@@ -192,13 +192,11 @@ export function DashboardScheduleItemGrid({
 }
 
 export function getStartEndIndex(startDate: Date, endDate: Date) {
-  const chartStartDate = new Date()
+  const chartStartTime = new Date().getTime()
   return {
     startIndex:
-      Math.ceil((startDate.getTime() - chartStartDate.getTime()) / 86400000) +
-      2,
-    endIndex:
-      Math.ceil((endDate.getTime() - chartStartDate.getTime()) / 86400000) + 3,
+      Math.ceil((startDate.getTime() - chartStartTime) / 86400000) + 1,
+    endIndex: Math.ceil((endDate.getTime() - chartStartTime) / 86400000) + 2,
   }
 }
 
@@ -222,13 +220,13 @@ export function DashboardScheduleItemBar({
     <Popover>
       <PopoverTrigger asChild>
         <div
-          className={`flex flex-row p-1 ${addedClass} rounded-lg ${
-            endIndex > selectedDays
-              ? "rounded-b-none lg:rounded-bl-lg lg:rounded-r-none"
+          className={`flex flex-row p-1 ${addedClass} rounded-2xl ${
+            endIndex > selectedDays + 1
+              ? "rounded-b-none lg:rounded-bl-2xl lg:rounded-r-none"
               : ""
           } ${
             startIndex < 1
-              ? "rounded-t-none lg:rounded-tr-lg lg:rounded-l-none"
+              ? "rounded-t-none lg:rounded-tr-2xl lg:rounded-l-none"
               : ""
           } justify-center items-center min-w-0
                     col-start-1
@@ -246,8 +244,8 @@ export function DashboardScheduleItemBar({
               "--endIndex":
                 endIndex < 2
                   ? 2
-                  : endIndex > selectedDays
-                    ? selectedDays
+                  : endIndex > selectedDays + 1
+                    ? selectedDays + 1
                     : endIndex,
             } as React.CSSProperties
           }

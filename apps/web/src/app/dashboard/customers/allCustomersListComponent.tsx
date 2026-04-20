@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  SmallGrey,
-  H5Grey,
-  Caption,
-  PBold,
-  CaptionBold,
-} from "@/components/typography"
+import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { LucideRows3, LucideUser } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -21,7 +15,6 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { getCustomerStatusColor } from "../components/customers/customerCommon"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/components/ui/field"
 import { ButtonGroup } from "@/components/ui/button-group"
@@ -112,8 +105,6 @@ function AllCustomersItemComponent({
   customer: FindCustomersInAgencyType[number]
 }) {
   const t = useTranslations("Dashboard.Customers.All")
-
-  const bgColor = getCustomerStatusColor(customer.status)
 
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>

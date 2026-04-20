@@ -23,7 +23,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { getDriverStatusColor } from "../../components/drivers/driverCommon"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import InactivateDriverAlertButton from "../../components/buttons/inactivateDriverAlertButton"
@@ -41,8 +40,6 @@ export default async function DriverDetailsPageComponent({
   driver: NonNullable<FindDriverDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.DriverDetails")
-
-  const bgColor = getDriverStatusColor(driver.status)
 
   return (
     <div id="DriverDetailsPage" className={pageClassName}>
@@ -156,7 +153,7 @@ export default async function DriverDetailsPageComponent({
             </PBold>
             <div className="flex flex-row gap-1 lg:gap-1.5">
               {driver.canDriveVehicleTypes.map((v) => {
-                const IconComponent = getVehicleIcon({ vehicleType: v })
+                const IconComponent = getVehicleIcon(v)
                 return (
                   <IconComponent
                     key={v}

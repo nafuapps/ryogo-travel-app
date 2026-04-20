@@ -1394,8 +1394,6 @@
       },
       "Schedule": {
         "Title": "Schedule",
-       
-        "Vehicle": "Vehicle",
         "Photo":"Vehicle photo"
       },
       "History": {}
@@ -1837,10 +1835,6 @@
       },
       "Schedule": {
         "Title": "Schedule",
-        "7Days": "Next 7 Days",
-        "14Days": "Next 14 Days",
-        "ViewDetails": "View Details",
-        "Driver": "Driver",
         "Photo":"Driver photo"
       },
       "History": {}
@@ -2319,7 +2313,7 @@
       "Photo": "View logo",
       "SubscriptionInfo": "Subscription info",
       "ValidTill": "Expires on: ",
-      "EditDetails": "Edit Basic Details",
+      "EditDetails": "Edit Agency Details",
       "ChangeEmail": {
         "Title": "Change Email",
         "Field1": {
@@ -3039,6 +3033,7 @@
   "Sheets": {
     "ChangeName": {
       "Title": "Change Name",
+      "InputTitle": "Enter User Name",
       "Placeholder": "Raj Sharma",
       "Error1": "Name must be atleast 5 characters",
       "Error2": "Name must be less than 30 characters",

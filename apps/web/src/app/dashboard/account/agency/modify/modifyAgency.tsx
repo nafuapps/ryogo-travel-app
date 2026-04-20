@@ -11,7 +11,7 @@ import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { useTranslations } from "next-intl"
-import { useRef, useEffect, useTransition } from "react"
+import { useEffect, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
@@ -113,18 +113,13 @@ export default function ModifyAgencyPageForm({
   const cityOptions = selectedState
     ? (data[selectedState] ?? [t("Field6.Title")])
     : []
-  const setValue = formData.setValue
-
-  const isFirstRender = useRef(true)
 
   useEffect(() => {
-    // Skip on the initial render of the component
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    if (selectedState === agency.location.state) {
       return
     }
-    setValue("agencyCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState, setValue])
+    formData.setValue("agencyCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedState])
 
   return (
     <div id="ModifyAgencyPage" className={pageClassName}>

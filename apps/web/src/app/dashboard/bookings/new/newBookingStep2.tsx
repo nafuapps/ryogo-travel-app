@@ -7,7 +7,7 @@ import {
 } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
@@ -165,25 +165,24 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
     t("Field4.Placeholder"),
   ]
 
-  const isFirstRender = useRef(true)
-  const setValue = form.setValue
-
   useEffect(() => {
-    // Skip on the initial render of the component
-    if (isFirstRender.current) {
+    if (
+      selectedDestinationState ===
+      props.newBookingFormData.tripDestinationLocationState
+    ) {
       return
     }
-    setValue("tripDestinationLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedDestinationState, setValue])
+    form.setValue("tripDestinationLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedDestinationState])
 
   useEffect(() => {
-    // Skip on the initial render of the component
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    if (
+      selectedSourceState === props.newBookingFormData.tripSourceLocationState
+    ) {
       return
     }
-    setValue("tripSourceLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedSourceState, setValue])
+    form.setValue("tripSourceLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedSourceState])
 
   return (
     <div id="TripSection" className={newBookingSectionClassName}>

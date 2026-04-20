@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction, useRef, useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
@@ -96,18 +96,13 @@ export function CreateAccountStep3(props: {
   const cityOptions = selectedState
     ? (data[selectedState] ?? [t("Field4.Title")])
     : []
-  const setValue = formData.setValue
-
-  const isFirstRender = useRef(true)
 
   useEffect(() => {
-    // Skip on the initial render of the component
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    if (selectedState === props.finalData.agency.agencyState) {
       return
     }
-    setValue("agencyCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState, setValue])
+    formData.setValue("agencyCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedState])
 
   return (
     <Form {...formData}>

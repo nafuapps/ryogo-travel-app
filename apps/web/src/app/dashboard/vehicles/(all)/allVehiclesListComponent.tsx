@@ -1,10 +1,4 @@
-import {
-  SmallGrey,
-  H5Grey,
-  Caption,
-  PBold,
-  CaptionBold,
-} from "@/components/typography"
+import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
 import {
   FindVehiclesByAgencyType,
   vehicleServices,
@@ -28,12 +22,10 @@ import {
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
-import {
-  VehicleStatusEnum,
-  VehicleTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Button } from "@/components/ui/button"
 import { VehicleStatusPill } from "@/components/statusPills/statusPills"
+import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 
 export default async function AllVehiclesListComponent({
   agencyId,
@@ -71,8 +63,7 @@ async function AllVehiclesItemComponent({
   vehicle: FindVehiclesByAgencyType[number]
 }) {
   const t = await getTranslations("Dashboard.Vehicles.All")
-
-  const bgColor = getVehicleStatusColor(vehicle.status)
+  const IconComponent = getVehicleIcon(vehicle.type)
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
@@ -89,7 +80,7 @@ async function AllVehiclesItemComponent({
               />
             </div>
           ) : (
-            getVehicleIcon(vehicle.type)
+            <IconComponent className="size-8 lg:size-10 text-slate-400" />
           )}
         </div>
         <div className={gridItemClassName}>
@@ -106,34 +97,4 @@ async function AllVehiclesItemComponent({
       </div>
     </Link>
   )
-}
-
-const getVehicleStatusColor = (status: VehicleStatusEnum) => {
-  if (status === VehicleStatusEnum.AVAILABLE) {
-    return "bg-green-200"
-  }
-  if (status === VehicleStatusEnum.REPAIR) {
-    return "bg-yellow-200"
-  }
-  if (status === VehicleStatusEnum.INACTIVE) {
-    return "bg-red-200"
-  }
-  return "bg-slate-200"
-}
-
-const getVehicleIcon = (vehicleType: VehicleTypesEnum) => {
-  const className = "size-8 lg:size-10 text-slate-400"
-  if (vehicleType === VehicleTypesEnum.TRUCK) {
-    return <LucideTruck className={className} />
-  }
-  if (vehicleType === VehicleTypesEnum.BUS) {
-    return <LucideBus className={className} />
-  }
-  if (vehicleType === VehicleTypesEnum.CAR) {
-    return <LucideCar className={className} />
-  }
-  if (vehicleType === VehicleTypesEnum.BIKE) {
-    return <LucideMotorbike className={className} />
-  }
-  return <LucideTractor className={className} />
 }

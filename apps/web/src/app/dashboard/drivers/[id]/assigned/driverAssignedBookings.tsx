@@ -6,13 +6,7 @@ import {
   gridItemClassName,
   pageClassName,
 } from "@/components/page/pageCommons"
-import {
-  Caption,
-  CaptionBold,
-  CaptionGrey,
-  PBold,
-  PRed,
-} from "@/components/typography"
+import { Caption, CaptionGrey, PBold, PRed } from "@/components/typography"
 import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"

@@ -7,7 +7,6 @@ import { getTranslations } from "next-intl/server"
 import { LucideUser } from "lucide-react"
 import { H4, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
-import { getUserStatusColor } from "../components/users/userCommon"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import LogoutAlertButton from "../components/buttons/logoutAlertButton"
@@ -21,8 +20,6 @@ export default async function AccountPageComponent({
   userDetails: NonNullable<FindUserDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.Account")
-
-  const bgColor = getUserStatusColor(userDetails.status)
 
   return (
     <div id="AccountPage" className={pageClassName}>

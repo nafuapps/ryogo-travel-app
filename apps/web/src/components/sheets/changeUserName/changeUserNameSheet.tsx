@@ -80,7 +80,7 @@ export default function ChangeUserNameSheet({
               <DashboardInput
                 name={"name"}
                 type="text"
-                label={t("Title")}
+                label={t("InputTitle")}
                 placeholder={t("Placeholder")}
               />
             </div>

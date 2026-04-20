@@ -1,7 +1,7 @@
 import { CaptionGrey, H4, Small, SmallGrey } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
@@ -54,22 +54,12 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     customerPhone: PhoneRegex,
     newCustomerName: z
       .string()
+      .optional()
       .refine((s) => {
-        return existingCustomer || s.length >= 5
-      }, t("Field2.Error1"))
-      .optional(),
-    newCustomerState: z
-      .string()
-      .refine((s) => {
-        return existingCustomer || s !== ""
-      }, t("Field3.Error1"))
-      .optional(),
-    newCustomerCity: z
-      .string()
-      .refine((s) => {
-        return existingCustomer || s !== ""
-      }, t("Field4.Error1"))
-      .optional(),
+        return existingCustomer || (s && s.length >= 5)
+      }, t("Field2.Error1")),
+    newCustomerState: z.string().optional(),
+    newCustomerCity: z.string().optional(),
   })
 
   type Step1Type = z.infer<typeof step1Schema>
@@ -87,6 +77,27 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
 
   //Form submit
   function onSubmit(values: Step1Type) {
+    if (!existingCustomer) {
+      if (!values.newCustomerState) {
+        form.setError("newCustomerState", {
+          type: "manual",
+          message: t("Field3.Error1"),
+        })
+        return
+      } else {
+        form.clearErrors("newCustomerState")
+      }
+      if (!values.newCustomerCity) {
+        form.setError("newCustomerCity", {
+          type: "manual",
+          message: t("Field4.Error1"),
+        })
+        return
+      } else {
+        form.clearErrors("newCustomerCity")
+      }
+    }
+
     props.setNewBookingFormData({
       ...props.newBookingFormData,
       customerPhone: values.customerPhone,
@@ -107,6 +118,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       })
       return
     }
+    form.clearErrors("customerPhone")
     const foundCustomer = props.customers.find(
       (c) => c.phone === form.getValues("customerPhone"),
     )
@@ -123,18 +135,13 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
   const cityOptions = selectedState
     ? (data[selectedState] ?? [t("Field4.Title")])
     : [t("Field4.Title")]
-  const setValue = form.setValue
-
-  const isFirstRender = useRef(true)
 
   useEffect(() => {
-    // Skip on the initial render of the component
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    if (selectedState === props.newBookingFormData.newCustomerLocationState) {
       return
     }
-    setValue("newCustomerCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState, setValue])
+    form.setValue("newCustomerCity", "") // Reset the city dropdown's value when the state dropdown changes
+  }, [selectedState])
 
   return (
     <div id="CustomerSection" className={newBookingSectionClassName}>

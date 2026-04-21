@@ -17,6 +17,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { changeUserPhoneAction } from "@/app/actions/users/changeUserPhoneAction"
 import { useTransition } from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ChangeUserPhonePageComponent({
   user,
@@ -75,37 +76,39 @@ export default function ChangeUserPhonePageComponent({
   return (
     <div id="ChangeUserPhonePage" className={pageClassName}>
       <Form {...formData}>
-        <form
-          id="ChangeUserPhoneForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-        >
-          <DashboardInput
-            name={"newPhone"}
-            type="tel"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
+        <ScrollArea>
+          <form
+            id="ChangeUserPhoneForm"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
           >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+            <DashboardInput
+              name={"newPhone"}
+              type="tel"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              size={"lg"}
+              type="button"
+              onClick={() => router.back()}
+              disabled={isPending}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

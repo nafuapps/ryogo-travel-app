@@ -20,6 +20,7 @@ import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { Button } from "@/components/ui/button"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function NewDriverStep1(props: {
   onNext: () => void
@@ -119,51 +120,53 @@ export function NewDriverStep1(props: {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
-        <form
-          id="Step1Form"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="Step1Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
-              name={"driverName"}
-              type="text"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <DashboardInput
-              name={"driverPhone"}
-              type="tel"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-            />
-            <DashboardInput
-              name={"driverEmail"}
-              type="email"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-            <DashboardFileInput
-              name={"agenctPhotos"}
-              register={formData.register("driverPhotos")}
-              label={t("Field4.Title")}
-              placeholder={t("Field4.Placeholder")}
-              description={t("Field4.Description")}
-            />
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
+        <ScrollArea>
+          <form
+            id="Step1Form"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-        </form>
+            <div id="Step1Fields" className="flex flex-col gap-3 lg:gap-4">
+              <DashboardInput
+                name={"driverName"}
+                type="text"
+                label={t("Field1.Title")}
+                placeholder={t("Field1.Placeholder")}
+                description={t("Field1.Description")}
+              />
+              <DashboardInput
+                name={"driverPhone"}
+                type="tel"
+                label={t("Field2.Title")}
+                placeholder={t("Field2.Placeholder")}
+                description={t("Field2.Description")}
+              />
+              <DashboardInput
+                name={"driverEmail"}
+                type="email"
+                label={t("Field3.Title")}
+                placeholder={t("Field3.Placeholder")}
+                description={t("Field3.Description")}
+              />
+              <DashboardFileInput
+                name={"agenctPhotos"}
+                register={formData.register("driverPhotos")}
+                label={t("Field4.Title")}
+                placeholder={t("Field4.Placeholder")}
+                description={t("Field4.Description")}
+              />
+            </div>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

@@ -22,6 +22,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserNameAction } from "@/app/actions/users/changeUserNameAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ChangeUserNameSheet({
   userId,
@@ -75,16 +76,18 @@ export default function ChangeUserNameSheet({
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <form id="changeName" onSubmit={formData.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <DashboardInput
-                name={"name"}
-                type="text"
-                label={t("InputTitle")}
-                placeholder={t("Placeholder")}
-              />
-            </div>
-          </form>
+          <ScrollArea>
+            <form id="changeName" onSubmit={formData.handleSubmit(onSubmit)}>
+              <div className="p-4 lg:p-5">
+                <DashboardInput
+                  name={"name"}
+                  type="text"
+                  label={t("InputTitle")}
+                  placeholder={t("Placeholder")}
+                />
+              </div>
+            </form>
+          </ScrollArea>
         </Form>
         <SheetFooter>
           <SheetClose asChild>

@@ -22,6 +22,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useTransition } from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 // TODO: Add a feature to show the user had recently reset password
 
@@ -80,57 +81,62 @@ export default function LoginPasswordPageComponent({
       className="flex flex-col justify-center w-full rounded-lg shadow bg-white p-6 md:p-8"
     >
       <Form {...methods}>
-        <form
-          id="LoginPasswordForm"
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col justify-between gap-4 md:gap-6 h-full"
-        >
-          <H4>{t("PageTitle")}</H4>
-          <FormField
-            control={methods.control}
-            name={"password"}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  <SmallGrey>{t("Input.Title")}</SmallGrey>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder={t("Input.Placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div id="LoginPasswordActions" className="flex flex-col gap-4 w-full">
-            <Button
-              variant={"default"}
-              type="submit"
-              size={"lg"}
-              disabled={isPending}
+        <ScrollArea>
+          <form
+            id="LoginPasswordForm"
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="flex flex-col justify-between gap-4 md:gap-6 h-full"
+          >
+            <H4>{t("PageTitle")}</H4>
+            <FormField
+              control={methods.control}
+              name={"password"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    <SmallGrey>{t("Input.Title")}</SmallGrey>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder={t("Input.Placeholder")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div
+              id="LoginPasswordActions"
+              className="flex flex-col gap-4 w-full"
             >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"secondary"}
-              type="button"
-              onClick={() => {
-                router.back()
-              }}
-            >
-              <CaptionGrey>{t("Back")}</CaptionGrey>
-            </Button>
-            <Button variant={"link"} type="button" size="sm">
-              <Link href={`/auth/login/forgot-password/${userId}`}>
-                <CaptionGrey>{t("ForgotCTA")}</CaptionGrey>
-              </Link>
-            </Button>
-          </div>
-        </form>
+              <Button
+                variant={"default"}
+                type="submit"
+                size={"lg"}
+                disabled={isPending}
+              >
+                {isPending && <Spinner />}
+                {isPending ? t("Loading") : t("PrimaryCTA")}
+              </Button>
+              <Button
+                variant={"secondary"}
+                type="button"
+                onClick={() => {
+                  router.back()
+                }}
+              >
+                <CaptionGrey>{t("Back")}</CaptionGrey>
+              </Button>
+              <Button variant={"link"} type="button" size="sm">
+                <Link href={`/auth/login/forgot-password/${userId}`}>
+                  <CaptionGrey>{t("ForgotCTA")}</CaptionGrey>
+                </Link>
+              </Button>
+            </div>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

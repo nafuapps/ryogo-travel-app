@@ -20,6 +20,7 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function NewDriverStep2(props: {
   onNext: () => void
@@ -97,52 +98,54 @@ export function NewDriverStep2(props: {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
-        <form
-          id="Step2Form"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="Step2Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
-              name={"licenseNumber"}
-              type="text"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <DashboardDatePicker
-              name="licenseExpiresOn"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-            />
-            <DashboardFileInput
-              name={"licensePhotos"}
-              register={formData.register("licensePhotos")}
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
+        <ScrollArea>
+          <form
+            id="Step2Form"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+            <div id="Step2Fields" className="flex flex-col gap-3 lg:gap-4">
+              <DashboardInput
+                name={"licenseNumber"}
+                type="text"
+                label={t("Field1.Title")}
+                placeholder={t("Field1.Placeholder")}
+                description={t("Field1.Description")}
+              />
+              <DashboardDatePicker
+                name="licenseExpiresOn"
+                label={t("Field2.Title")}
+                placeholder={t("Field2.Placeholder")}
+                description={t("Field2.Description")}
+              />
+              <DashboardFileInput
+                name={"licensePhotos"}
+                register={formData.register("licensePhotos")}
+                label={t("Field3.Title")}
+                placeholder={t("Field3.Placeholder")}
+                description={t("Field3.Description")}
+              />
+            </div>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={formData.formState.isSubmitting}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

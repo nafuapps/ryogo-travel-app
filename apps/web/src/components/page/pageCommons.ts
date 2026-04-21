@@ -11,3 +11,5 @@ export const gridClassName =
 export const gridItemClassName =
   "flex flex-col gap-0.5 lg:gap-1 items-start sm:items-center justify-center"
 export const iconClassName = "size-5 lg:size-6 stroke-1 text-slate-500"
+
+export const linkClassName = "w-full"

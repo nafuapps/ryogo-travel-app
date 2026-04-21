@@ -12,7 +12,12 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group"
-import { Caption, CaptionGrey, Small } from "@/components/typography"
+import {
+  Caption,
+  CaptionBold,
+  CaptionGrey,
+  Small,
+} from "@/components/typography"
 import {
   gridClassName,
   gridItemClassName,
@@ -38,6 +43,7 @@ import {
   DriverStatusPill,
   VehicleStatusPill,
 } from "@/components/statusPills/statusPills"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -262,45 +268,47 @@ export default function SearchPageComponent({
           />
         </div>
         <Form {...formData}>
-          <form
-            id="SearchForm"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="w-full"
-          >
-            <FormField
-              name={"searchTerm"}
-              render={({ field }) => (
-                <FormItem>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <LucideSearch className="size-4 lg:size-5 text-slate-400" />
-                    </InputGroupAddon>
-                    <InputGroupInput
-                      placeholder={t("Field1.Placeholder")}
-                      {...field}
-                    />
-                    <Button
-                      variant="link"
-                      aria-label="Clear"
-                      onClick={() => formData.setValue("searchTerm", "")}
-                      disabled={formData.getValues("searchTerm") === ""}
-                    >
-                      <CaptionGrey>{t("Clear")}</CaptionGrey>
-                    </Button>
-                    <Button
-                      type="submit"
-                      variant="default"
-                      aria-label="Search"
-                      disabled={formData.getValues("searchTerm").length < 3}
-                    >
-                      {t("Search")}
-                    </Button>
-                  </InputGroup>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
+          <ScrollArea>
+            <form
+              id="SearchForm"
+              onSubmit={formData.handleSubmit(onSubmit)}
+              className="w-full"
+            >
+              <FormField
+                name={"searchTerm"}
+                render={({ field }) => (
+                  <FormItem>
+                    <InputGroup>
+                      <InputGroupAddon>
+                        <LucideSearch className="size-4 lg:size-5 text-slate-400" />
+                      </InputGroupAddon>
+                      <InputGroupInput
+                        placeholder={t("Field1.Placeholder")}
+                        {...field}
+                      />
+                      <Button
+                        variant="link"
+                        aria-label="Clear"
+                        onClick={() => formData.setValue("searchTerm", "")}
+                        disabled={formData.getValues("searchTerm") === ""}
+                      >
+                        <CaptionGrey>{t("Clear")}</CaptionGrey>
+                      </Button>
+                      <Button
+                        type="submit"
+                        variant="default"
+                        aria-label="Search"
+                        disabled={formData.getValues("searchTerm").length < 3}
+                      >
+                        {t("Search")}
+                      </Button>
+                    </InputGroup>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+          </ScrollArea>
         </Form>
         {recentSearches && recentSearches.length > 0 && (
           <div
@@ -331,45 +339,65 @@ export default function SearchPageComponent({
           className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
         >
           {searchResultType === SearchTypeEnum.Bookings ? (
-            bookingSearchResultSet.length > 0 ? (
-              // Paginated booking search result
-              <>
-                {currentItems.map((b) => {
-                  return <BookingSearchResultItem key={b.id} booking={b} />
+            // Paginated booking search result
+            <>
+              <CaptionBold>
+                {t("ResultsFound", {
+                  count: bookingSearchResultSet.length,
+                  type: "booking",
                 })}
-                <div className="mt-4">
-                  <PaginationControls
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                  />
-                </div>
-              </>
-            ) : (
-              <Small>{t("NoBookingResult")}</Small>
-            )
+              </CaptionBold>
+              {bookingSearchResultSet.length > 0 && (
+                <>
+                  {currentItems.map((b) => {
+                    return <BookingSearchResultItem key={b.id} booking={b} />
+                  })}
+                  <div className="mt-4">
+                    <PaginationControls
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  </div>
+                </>
+              )}
+            </>
           ) : searchResultType === SearchTypeEnum.Customers ? (
-            customerSearchResultSet.length > 0 ? (
-              customerSearchResultSet.map((c) => {
+            <>
+              <CaptionBold>
+                {t("ResultsFound", {
+                  count: customerSearchResultSet.length,
+                  type: "customer",
+                })}
+              </CaptionBold>
+              {customerSearchResultSet.map((c) => {
                 return <CustomerSearchResultItem key={c.id} customer={c} />
-              })
-            ) : (
-              <Small>{t("NoCustomerResult")}</Small>
-            )
+              })}
+            </>
           ) : searchResultType === SearchTypeEnum.Vehicles ? (
-            vehicleSearchResultSet.length > 0 ? (
-              vehicleSearchResultSet.map((v) => {
+            <>
+              <CaptionBold>
+                {t("ResultsFound", {
+                  count: vehicleSearchResultSet.length,
+                  type: "vehicle",
+                })}
+              </CaptionBold>
+              {vehicleSearchResultSet.map((v) => {
                 return <VehicleSearchResultItem key={v.id} vehicle={v} />
-              })
-            ) : (
-              <Small>{t("NoVehicleResult")}</Small>
-            )
-          ) : driverSearchResultSet.length > 0 ? (
-            driverSearchResultSet.map((d) => {
-              return <DriverSearchResultItem key={d.id} driver={d} />
-            })
+              })}
+            </>
           ) : (
-            <Small>{t("NoDriverResult")}</Small>
+            <>
+              <CaptionBold>
+                {t("ResultsFound", {
+                  count: driverSearchResultSet.length,
+                  type: "driver",
+                })}
+              </CaptionBold>
+              {driverSearchResultSet.map((d) => {
+                return <DriverSearchResultItem key={d.id} driver={d} />
+              })}
+            </>
           )}
         </div>
       )}

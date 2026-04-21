@@ -22,6 +22,7 @@ import NewBookingDriverTile from "./newBookingDriverTile"
 import { Separator } from "@/components/ui/separator"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -60,13 +61,13 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
       assignedDriverId: values.assignedDriverId,
       assignedVehicleId: values.assignedVehicleId,
       selectedAcChargePerDay: props.vehicles.find(
-        (vehicle) => vehicle.id === values.assignedVehicleId
+        (vehicle) => vehicle.id === values.assignedVehicleId,
       )?.defaultAcChargePerDay,
       selectedRatePerKm: props.vehicles.find(
-        (vehicle) => vehicle.id === values.assignedVehicleId
+        (vehicle) => vehicle.id === values.assignedVehicleId,
       )?.defaultRatePerKm,
       selectedAllowancePerDay: props.drivers.find(
-        (driver) => driver.id === values.assignedDriverId
+        (driver) => driver.id === values.assignedDriverId,
       )?.defaultAllowancePerDay,
     })
     props.onNext()
@@ -83,63 +84,66 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <form
-          id="Step3Form"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <PBold>{t("Vehicle.Title")}</PBold>
-          <div
-            id="vehicleAssignment"
-            className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+        <ScrollArea>
+          <form
+            id="Step3Form"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
           >
-            {props.vehicles
-              .sort(
-                (a, b) => a.assignedBookings.length - b.assignedBookings.length
-              )
-              .map((vehicle, index) => (
-                <NewBookingVehicleTile
+            <PBold>{t("Vehicle.Title")}</PBold>
+            <div
+              id="vehicleAssignment"
+              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+            >
+              {props.vehicles
+                .sort(
+                  (a, b) =>
+                    a.assignedBookings.length - b.assignedBookings.length,
+                )
+                .map((vehicle, index) => (
+                  <NewBookingVehicleTile
+                    key={index}
+                    vehicleData={vehicle}
+                    newBookingFormData={props.newBookingFormData}
+                    setValue={form.setValue}
+                  />
+                ))}
+            </div>
+            <Separator />
+            <PBold>{t("Driver.Title")}</PBold>
+            <div
+              id="driverAssignment"
+              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+            >
+              {props.drivers.map((driver, index) => (
+                <NewBookingDriverTile
                   key={index}
-                  vehicleData={vehicle}
+                  driverData={driver}
                   newBookingFormData={props.newBookingFormData}
                   setValue={form.setValue}
                 />
               ))}
-          </div>
-          <Separator />
-          <PBold>{t("Driver.Title")}</PBold>
-          <div
-            id="driverAssignment"
-            className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-          >
-            {props.drivers.map((driver, index) => (
-              <NewBookingDriverTile
-                key={index}
-                driverData={driver}
-                newBookingFormData={props.newBookingFormData}
-                setValue={form.setValue}
-              />
-            ))}
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={form.formState.isSubmitting}
-          >
-            {t("Back")}
-          </Button>
-        </form>
+            </div>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={form.formState.isSubmitting}
+            >
+              {t("Back")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

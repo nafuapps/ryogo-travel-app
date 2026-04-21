@@ -1,3 +1,5 @@
+"use client"
+
 import {
   headerButtonClassName,
   headerClassName,
@@ -15,11 +17,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { LucideTarget } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 
-export default async function RiderHeader({ pathName }: { pathName: string }) {
-  const t = await getTranslations("Rider.Header")
+export default function RiderHeader({ pathName }: { pathName: string }) {
+  const t = useTranslations("Rider.Header")
 
   const titleKey = ("Title." + pathName || "Title./rider") as Parameters<
     typeof t

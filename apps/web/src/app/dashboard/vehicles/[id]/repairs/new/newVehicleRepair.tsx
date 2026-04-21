@@ -19,6 +19,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { newVehicleRepairAction } from "@/app/actions/vehicles/newVehicleRepairAction"
 import { useTransition } from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function NewVehicleRepairPageComponent({
   userId,
@@ -94,54 +95,56 @@ export default function NewVehicleRepairPageComponent({
   return (
     <div id="NewVehicleRepairPage" className={pageClassName}>
       <Form {...formData}>
-        <form
-          onSubmit={formData.handleSubmit(onSubmit)}
-          id="newVehicleRepairForm"
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-        >
-          <DashboardDatePicker
-            name="startDate"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            pastAllowed
-          />
-          <DashboardDatePicker
-            name="endDate"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            pastAllowed
-          />
-          <DashboardSwitch label={t("Field3.Title")} name="isCompleted" />
-          <DashboardTextarea
-            name="remarks"
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-          />
-          <DashboardInput
-            name={"cost"}
-            type="tel"
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
+        <ScrollArea>
+          <form
+            onSubmit={formData.handleSubmit(onSubmit)}
+            id="newVehicleRepairForm"
+            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
           >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("Back")}
-          </Button>
-        </form>
+            <DashboardDatePicker
+              name="startDate"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              pastAllowed
+            />
+            <DashboardDatePicker
+              name="endDate"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              pastAllowed
+            />
+            <DashboardSwitch label={t("Field3.Title")} name="isCompleted" />
+            <DashboardTextarea
+              name="remarks"
+              label={t("Field4.Title")}
+              placeholder={t("Field4.Placeholder")}
+            />
+            <DashboardInput
+              name={"cost"}
+              type="tel"
+              label={t("Field5.Title")}
+              placeholder={t("Field5.Placeholder")}
+            />
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={() => router.back()}
+              disabled={isPending}
+            >
+              {t("Back")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

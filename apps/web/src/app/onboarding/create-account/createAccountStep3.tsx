@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
@@ -97,13 +97,6 @@ export function CreateAccountStep3(props: {
     ? (data[selectedState] ?? [t("Field4.Title")])
     : []
 
-  useEffect(() => {
-    if (selectedState === props.finalData.agency.agencyState) {
-      return
-    }
-    formData.setValue("agencyCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState])
-
   return (
     <Form {...formData}>
       <OnboardingStepForm
@@ -131,6 +124,9 @@ export function CreateAccountStep3(props: {
             title={t("Field3.Title")}
             array={getArrayValueDisplayPairs(data)}
             placeholder={t("Field3.Title")}
+            resetField={() => {
+              formData.setValue("agencyCity", "")
+            }}
           />
           <OnboardingSelect
             name={"agencyCity"}

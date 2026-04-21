@@ -7,7 +7,7 @@ import {
 } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
@@ -41,6 +41,7 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 type NewBookingStep2Props = {
   onNext: () => void
@@ -164,26 +165,6 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
   const destinationCityOptions = data[selectedDestinationState] ?? [
     t("Field4.Placeholder"),
   ]
-
-  useEffect(() => {
-    if (
-      selectedDestinationState ===
-      props.newBookingFormData.tripDestinationLocationState
-    ) {
-      return
-    }
-    form.setValue("tripDestinationLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedDestinationState])
-
-  useEffect(() => {
-    if (
-      selectedSourceState === props.newBookingFormData.tripSourceLocationState
-    ) {
-      return
-    }
-    form.setValue("tripSourceLocationCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedSourceState])
-
   return (
     <div id="TripSection" className={newBookingSectionClassName}>
       <div id="TripHeader" className={newBookingHeaderClassName}>
@@ -195,147 +176,158 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <form
-          id="Step2Form"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div
-            id="routeSelection"
-            className="flex flex-col lg:flex-row gap-3 lg:gap-4"
+        <ScrollArea>
+          <form
+            id="Step2Form"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
           >
             <div
-              id="tripSource"
-              className="flex flex-col w-full gap-1 lg:gap-1.5"
+              id="routeSelection"
+              className="flex flex-col lg:flex-row gap-3 lg:gap-4"
             >
-              <DashboardSelect
-                name="tripSourceLocationState"
-                title={t("Field1.Title")}
-                array={getArrayValueDisplayPairs(stateCityData)}
-                register={form.register("tripSourceLocationState")}
-                placeholder={t("Field1.Placeholder")}
+              <div
+                id="tripSource"
+                className="flex flex-col w-full gap-1 lg:gap-1.5"
+              >
+                <DashboardSelect
+                  name="tripSourceLocationState"
+                  title={t("Field1.Title")}
+                  array={getArrayValueDisplayPairs(stateCityData)}
+                  register={form.register("tripSourceLocationState")}
+                  placeholder={t("Field1.Placeholder")}
+                  resetField={() => {
+                    form.setValue("tripSourceLocationCity", "")
+                  }}
+                />
+                <DashboardSelect
+                  name="tripSourceLocationCity"
+                  array={getStringValueDisplayPairs(sourceCityOptions)}
+                  register={form.register("tripSourceLocationCity")}
+                  placeholder={t("Field2.Placeholder")}
+                />
+              </div>
+              <div
+                id="tripDestination"
+                className="flex flex-col w-full gap-1 lg:gap-1.5"
+              >
+                <DashboardSelect
+                  name="tripDestinationLocationState"
+                  title={t("Field3.Title")}
+                  array={getArrayValueDisplayPairs(stateCityData)}
+                  register={form.register("tripDestinationLocationState")}
+                  placeholder={t("Field3.Placeholder")}
+                  resetField={() => {
+                    form.setValue("tripDestinationLocationCity", "")
+                  }}
+                />
+                <DashboardSelect
+                  name="tripDestinationLocationCity"
+                  array={getStringValueDisplayPairs(destinationCityOptions)}
+                  register={form.register("tripDestinationLocationCity")}
+                  placeholder={t("Field4.Placeholder")}
+                />
+              </div>
+            </div>
+            <div id="typeSelection" className="flex flex-col gap-2 lg:gap-3">
+              <PBold>{t("Field8.Title")}</PBold>
+              <div className="flex flex-row gap-2 lg:gap-3">
+                <div
+                  id={BookingTypeEnum.OneWay}
+                  onClick={() => {
+                    setSelectedTripType(BookingTypeEnum.OneWay)
+                    form.setValue(
+                      "tripEndDate",
+                      form.getValues("tripStartDate"),
+                    )
+                  }}
+                  className={getTripTypeClassName(
+                    selectedTripType === BookingTypeEnum.OneWay,
+                  )}
+                >
+                  <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
+                  <SmallBold>{t("Field8.OneWay")}</SmallBold>
+                  <CaptionGrey>{t("Field8.OneWayDesc")}</CaptionGrey>
+                </div>
+                <div
+                  id={BookingTypeEnum.Round}
+                  onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
+                  className={getTripTypeClassName(
+                    selectedTripType === BookingTypeEnum.Round,
+                  )}
+                >
+                  <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
+                  <SmallBold>{t("Field8.RoundTrip")}</SmallBold>
+                  <CaptionGrey>{t("Field8.RoundTripDesc")}</CaptionGrey>
+                </div>
+                <div
+                  id={BookingTypeEnum.MultiDay}
+                  onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
+                  className={getTripTypeClassName(
+                    selectedTripType === BookingTypeEnum.MultiDay,
+                  )}
+                >
+                  <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
+                  <SmallBold>{t("Field8.MultiDay")}</SmallBold>
+                  <CaptionGrey>{t("Field8.MultiDayDesc")}</CaptionGrey>
+                </div>
+              </div>
+            </div>
+            <div
+              id="dateSelection"
+              className="flex flex-col lg:flex-row gap-2 lg:gap-3"
+            >
+              <DashboardDatePicker
+                name="tripStartDate"
+                label={t("Field5.Title")}
+                description=""
+                placeholder=""
               />
-              <DashboardSelect
-                name="tripSourceLocationCity"
-                array={getStringValueDisplayPairs(sourceCityOptions)}
-                register={form.register("tripSourceLocationCity")}
-                placeholder={t("Field2.Placeholder")}
+              <DashboardDatePicker
+                name="tripEndDate"
+                label={t("Field6.Title")}
+                description=""
+                placeholder=""
+                disabled={selectedTripType === BookingTypeEnum.OneWay}
               />
             </div>
             <div
-              id="tripDestination"
-              className="flex flex-col w-full gap-1 lg:gap-1.5"
+              id="passengerPreference"
+              className="flex flex-col gap-2 lg:gap-3 w-full"
             >
-              <DashboardSelect
-                name="tripDestinationLocationState"
-                title={t("Field3.Title")}
-                array={getArrayValueDisplayPairs(stateCityData)}
-                register={form.register("tripDestinationLocationState")}
-                placeholder={t("Field3.Placeholder")}
+              <DashboardInput
+                name="tripPassengers"
+                label={t("Field7.Title")}
+                placeholder={t("Field7.Placeholder")}
+                type="tel"
               />
-              <DashboardSelect
-                name="tripDestinationLocationCity"
-                array={getStringValueDisplayPairs(destinationCityOptions)}
-                register={form.register("tripDestinationLocationCity")}
-                placeholder={t("Field4.Placeholder")}
+              <DashboardSwitch label={t("Field9.Title")} name="tripNeedsAC" />
+              <DashboardTextarea
+                name="tripRemarks"
+                label={t("Field10.Title")}
+                placeholder={t("Field10.Placeholder")}
               />
             </div>
-          </div>
-          <div id="typeSelection" className="flex flex-col gap-2 lg:gap-3">
-            <PBold>{t("Field8.Title")}</PBold>
-            <div className="flex flex-row gap-2 lg:gap-3">
-              <div
-                id={BookingTypeEnum.OneWay}
-                onClick={() => {
-                  setSelectedTripType(BookingTypeEnum.OneWay)
-                  form.setValue("tripEndDate", form.getValues("tripStartDate"))
-                }}
-                className={getTripTypeClassName(
-                  selectedTripType === BookingTypeEnum.OneWay,
-                )}
-              >
-                <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                <SmallBold>{t("Field8.OneWay")}</SmallBold>
-                <CaptionGrey>{t("Field8.OneWayDesc")}</CaptionGrey>
-              </div>
-              <div
-                id={BookingTypeEnum.Round}
-                onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
-                className={getTripTypeClassName(
-                  selectedTripType === BookingTypeEnum.Round,
-                )}
-              >
-                <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                <SmallBold>{t("Field8.RoundTrip")}</SmallBold>
-                <CaptionGrey>{t("Field8.RoundTripDesc")}</CaptionGrey>
-              </div>
-              <div
-                id={BookingTypeEnum.MultiDay}
-                onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
-                className={getTripTypeClassName(
-                  selectedTripType === BookingTypeEnum.MultiDay,
-                )}
-              >
-                <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                <SmallBold>{t("Field8.MultiDay")}</SmallBold>
-                <CaptionGrey>{t("Field8.MultiDayDesc")}</CaptionGrey>
-              </div>
-            </div>
-          </div>
-          <div
-            id="dateSelection"
-            className="flex flex-col lg:flex-row gap-2 lg:gap-3"
-          >
-            <DashboardDatePicker
-              name="tripStartDate"
-              label={t("Field5.Title")}
-              description=""
-              placeholder=""
-            />
-            <DashboardDatePicker
-              name="tripEndDate"
-              label={t("Field6.Title")}
-              description=""
-              placeholder=""
-              disabled={selectedTripType === BookingTypeEnum.OneWay}
-            />
-          </div>
-          <div
-            id="passengerPreference"
-            className="flex flex-col gap-2 lg:gap-3 w-full"
-          >
-            <DashboardInput
-              name="tripPassengers"
-              label={t("Field7.Title")}
-              placeholder={t("Field7.Placeholder")}
-              type="tel"
-            />
-            <DashboardSwitch label={t("Field9.Title")} name="tripNeedsAC" />
-            <DashboardTextarea
-              name="tripRemarks"
-              label={t("Field10.Title")}
-              placeholder={t("Field10.Placeholder")}
-            />
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={form.formState.isSubmitting}
-          >
-            {t("Back")}
-          </Button>
-        </form>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={form.formState.isSubmitting}
+            >
+              {t("Back")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

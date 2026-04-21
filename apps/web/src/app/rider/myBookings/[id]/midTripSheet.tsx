@@ -28,6 +28,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { midTripAction } from "@/app/actions/bookings/midTripAction"
 import { useLocation } from "@/hooks/useLocation"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function MidTripSheet({
   booking,
@@ -134,31 +135,34 @@ export default function MidTripSheet({
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <form
-            id="midTrip"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
-          >
-            <DashboardInput
-              name={"odometerReading"}
-              type="tel"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <DashboardFileInput
-              name={"tripLogPhoto"}
-              register={formData.register("tripLogPhoto")}
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description", { type: type })}
-            />
-            <DashboardTextarea
-              name="remarks"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-            />
-          </form>
+          <ScrollArea>
+            {" "}
+            <form
+              id="midTrip"
+              onSubmit={formData.handleSubmit(onSubmit)}
+              className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
+            >
+              <DashboardInput
+                name={"odometerReading"}
+                type="tel"
+                label={t("Field1.Title")}
+                placeholder={t("Field1.Placeholder")}
+                description={t("Field1.Description")}
+              />
+              <DashboardFileInput
+                name={"tripLogPhoto"}
+                register={formData.register("tripLogPhoto")}
+                label={t("Field2.Title")}
+                placeholder={t("Field2.Placeholder")}
+                description={t("Field2.Description", { type: type })}
+              />
+              <DashboardTextarea
+                name="remarks"
+                label={t("Field3.Title")}
+                placeholder={t("Field3.Placeholder")}
+              />
+            </form>
+          </ScrollArea>
         </Form>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="midTrip">

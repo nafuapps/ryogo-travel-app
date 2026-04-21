@@ -1,7 +1,7 @@
 import { CaptionGrey, H4, Small, SmallGrey } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
@@ -30,6 +30,7 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 type NewBookingStep1Props = {
   onNext: () => void
@@ -58,8 +59,18 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
       .refine((s) => {
         return existingCustomer || (s && s.length >= 5)
       }, t("Field2.Error1")),
-    newCustomerState: z.string().optional(),
-    newCustomerCity: z.string().optional(),
+    newCustomerState: z
+      .string()
+      .optional()
+      .refine((s) => {
+        return existingCustomer || (s && s?.length > 0)
+      }, t("Field3.Error1")),
+    newCustomerCity: z
+      .string()
+      .optional()
+      .refine((s) => {
+        return existingCustomer || (s && s?.length > 0)
+      }, t("Field4.Error1")),
   })
 
   type Step1Type = z.infer<typeof step1Schema>
@@ -77,27 +88,6 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
 
   //Form submit
   function onSubmit(values: Step1Type) {
-    if (!existingCustomer) {
-      if (!values.newCustomerState) {
-        form.setError("newCustomerState", {
-          type: "manual",
-          message: t("Field3.Error1"),
-        })
-        return
-      } else {
-        form.clearErrors("newCustomerState")
-      }
-      if (!values.newCustomerCity) {
-        form.setError("newCustomerCity", {
-          type: "manual",
-          message: t("Field4.Error1"),
-        })
-        return
-      } else {
-        form.clearErrors("newCustomerCity")
-      }
-    }
-
     props.setNewBookingFormData({
       ...props.newBookingFormData,
       customerPhone: values.customerPhone,
@@ -134,14 +124,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
   const selectedState = form.watch("newCustomerState")
   const cityOptions = selectedState
     ? (data[selectedState] ?? [t("Field4.Title")])
-    : [t("Field4.Title")]
-
-  useEffect(() => {
-    if (selectedState === props.newBookingFormData.newCustomerLocationState) {
-      return
-    }
-    form.setValue("newCustomerCity", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState])
+    : []
 
   return (
     <div id="CustomerSection" className={newBookingSectionClassName}>
@@ -154,71 +137,76 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <form
-          id="Step1Form"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="FindCustomer" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
-              name="customerPhone"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              type="tel"
-            />
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              type="button"
-              onClick={findCustomer}
-              className="flex flex-row justify-center items-center gap-4 w-full"
-            >
-              {t("FindCTA")}
-            </Button>
-            {existingCustomer && (
-              <ExistingCutomerCard existingCustomer={existingCustomer} />
-            )}
-          </div>
-          {customerNotFound && (
-            <div id="NewCustomer" className="flex flex-col gap-3 lg:gap-4">
-              <Alert>
-                <LucideInfo className="size-8 lg:size-10 text-amber-300" />
-                <Small>{t("CustomerNotFound")}</Small>
-              </Alert>
+        <ScrollArea>
+          <form
+            id="Step1Form"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
+          >
+            <div id="FindCustomer" className="flex flex-col gap-3 lg:gap-4">
               <DashboardInput
-                name={"newCustomerName"}
-                type="text"
-                label={t("Field2.Title")}
-                placeholder={t("Field2.Placeholder")}
+                name="customerPhone"
+                label={t("Field1.Title")}
+                placeholder={t("Field1.Placeholder")}
+                type="tel"
               />
-              <DashboardSelect
-                name={"newCustomerState"}
-                register={form.register("newCustomerState")}
-                title={t("Field3.Title")}
-                array={getArrayValueDisplayPairs(data)}
-                placeholder={t("Field3.Title")}
-              />
-              <DashboardSelect
-                name={"newCustomerCity"}
-                register={form.register("newCustomerCity")}
-                title={t("Field4.Title")}
-                array={getStringValueDisplayPairs(cityOptions)}
-                placeholder={t("Field4.Title")}
-              />
+              <Button
+                variant={"outline"}
+                size={"lg"}
+                type="button"
+                onClick={findCustomer}
+                className="flex flex-row justify-center items-center gap-4 w-full"
+              >
+                {t("FindCTA")}
+              </Button>
+              {existingCustomer && (
+                <ExistingCutomerCard existingCustomer={existingCustomer} />
+              )}
             </div>
-          )}
-          {(existingCustomer || customerNotFound) && (
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting && <Spinner />}
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-          )}
-        </form>
+            {customerNotFound && (
+              <div id="NewCustomer" className="flex flex-col gap-3 lg:gap-4">
+                <Alert>
+                  <LucideInfo className="size-8 lg:size-10 text-amber-300" />
+                  <Small>{t("CustomerNotFound")}</Small>
+                </Alert>
+                <DashboardInput
+                  name={"newCustomerName"}
+                  type="text"
+                  label={t("Field2.Title")}
+                  placeholder={t("Field2.Placeholder")}
+                />
+                <DashboardSelect
+                  name={"newCustomerState"}
+                  register={form.register("newCustomerState")}
+                  title={t("Field3.Title")}
+                  array={getArrayValueDisplayPairs(data)}
+                  placeholder={t("Field3.Title")}
+                  resetField={() => {
+                    form.setValue("newCustomerCity", "")
+                  }}
+                />
+                <DashboardSelect
+                  name={"newCustomerCity"}
+                  register={form.register("newCustomerCity")}
+                  title={t("Field4.Title")}
+                  array={getStringValueDisplayPairs(cityOptions)}
+                  placeholder={t("Field4.Title")}
+                />
+              </div>
+            )}
+            {(existingCustomer || customerNotFound) && (
+              <Button
+                variant={"default"}
+                size={"lg"}
+                type="submit"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting && <Spinner />}
+                {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+              </Button>
+            )}
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

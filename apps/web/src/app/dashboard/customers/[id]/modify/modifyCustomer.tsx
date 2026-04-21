@@ -18,11 +18,12 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import { useEffect, useTransition } from "react"
+import { useTransition } from "react"
 import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ModifyCustomerPageComponent({
   customer,
@@ -92,78 +93,76 @@ export default function ModifyCustomerPageComponent({
     ? (data[selectedState] ?? [t("Field6.Title")])
     : []
 
-  useEffect(() => {
-    if (selectedState === customer.location.state) {
-      return
-    }
-    formData.setValue("city", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState])
-
   return (
     <div id="ModifyCustomer" className={pageClassName}>
       <Form {...formData}>
-        <form
-          id="ModifyCustomerForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-        >
-          <DashboardInput
-            name={"name"}
-            type="text"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <DashboardInput
-            name={"email"}
-            type="email"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <DashboardTextarea
-            name={"address"}
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-          />
-          <DashboardTextarea
-            name="remarks"
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-          />
-          <DashboardSelect
-            name={"state"}
-            register={formData.register("state")}
-            title={t("Field5.Title")}
-            array={getArrayValueDisplayPairs(data)}
-            placeholder={t("Field5.Title")}
-          />
-          <DashboardSelect
-            name={"city"}
-            register={formData.register("city")}
-            title={t("Field6.Title")}
-            array={getStringValueDisplayPairs(cityOptions)}
-            placeholder={t("Field6.Title")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
+        <ScrollArea>
+          <form
+            id="ModifyCustomerForm"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
           >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+            <DashboardInput
+              name={"name"}
+              type="text"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <DashboardInput
+              name={"email"}
+              type="email"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
+            />
+            <DashboardTextarea
+              name={"address"}
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+            />
+            <DashboardTextarea
+              name="remarks"
+              label={t("Field4.Title")}
+              placeholder={t("Field4.Placeholder")}
+            />
+            <DashboardSelect
+              name={"state"}
+              register={formData.register("state")}
+              title={t("Field5.Title")}
+              array={getArrayValueDisplayPairs(data)}
+              placeholder={t("Field5.Title")}
+              resetField={() => {
+                formData.setValue("city", "")
+              }}
+            />
+            <DashboardSelect
+              name={"city"}
+              register={formData.register("city")}
+              title={t("Field6.Title")}
+              array={getStringValueDisplayPairs(cityOptions)}
+              placeholder={t("Field6.Title")}
+            />
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              size={"lg"}
+              type="button"
+              onClick={() => router.back()}
+              disabled={isPending}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

@@ -1,3 +1,5 @@
+"use client"
+
 import {
   headerButtonClassName,
   headerClassName,
@@ -16,10 +18,10 @@ import {
 } from "@/components/ui/tooltip"
 import { LucidePlus, LucideTarget } from "lucide-react"
 import Link from "next/link"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 
-export default async function DashboardHeader(props: { pathName: string }) {
-  const t = await getTranslations("Dashboard.Header")
+export default function DashboardHeader(props: { pathName: string }) {
+  const t = useTranslations("Dashboard.Header")
 
   const titleKey = ("Title." + props.pathName ||
     "Title./dashboard") as Parameters<typeof t>[0]

@@ -37,7 +37,6 @@ import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { Label } from "../ui/label"
-import { InputGroup, InputGroupAddon } from "../ui/input-group"
 
 type DashboardInputProps = {
   name: string
@@ -147,6 +146,7 @@ type DashboardSelectProps = {
   array: { value: string; display: string }[]
   placeholder: string
   register: UseFormRegisterReturn<string>
+  resetField?: () => void
 }
 export function DashboardSelect(props: DashboardSelectProps) {
   return (
@@ -159,7 +159,10 @@ export function DashboardSelect(props: DashboardSelectProps) {
           </FormLabel>
           <Select
             {...props.register}
-            onValueChange={field.onChange}
+            onValueChange={(value) => {
+              field.onChange(value)
+              props.resetField && props.resetField()
+            }}
             defaultValue={field.value}
           >
             <FormControl>

@@ -16,6 +16,7 @@ import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import { useTransition } from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -79,99 +80,101 @@ export function NewVehicleConfirm(props: {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
-        <form
-          id="ConfirmForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
-            <ConfirmValues
-              name={t("VehicleNumber")}
-              value={props.newVehicleFormData.data.vehicleNumber}
-            />
-            <ConfirmValues
-              name={t("Type")}
-              value={props.newVehicleFormData.data.type}
-            />
-            <ConfirmValues
-              name={t("Brand")}
-              value={props.newVehicleFormData.data.brand}
-            />
-            <ConfirmValues
-              name={t("Model")}
-              value={props.newVehicleFormData.data.model}
-            />
-            <ConfirmValues
-              name={t("Color")}
-              value={props.newVehicleFormData.data.color}
-            />
-            {props.newVehicleFormData.data.capacity && (
+        <ScrollArea>
+          <form
+            id="ConfirmForm"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
+          >
+            <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
               <ConfirmValues
-                name={t("Capacity")}
-                value={`${props.newVehicleFormData.data.capacity}`}
+                name={t("VehicleNumber")}
+                value={props.newVehicleFormData.data.vehicleNumber}
               />
-            )}
-            {props.newVehicleFormData.data.odometerReading && (
               <ConfirmValues
-                name={t("OdometerReading")}
-                value={`${props.newVehicleFormData.data.odometerReading}`}
+                name={t("Type")}
+                value={props.newVehicleFormData.data.type}
               />
-            )}
-            {props.newVehicleFormData.data.insuranceExpiresOn && (
               <ConfirmValues
-                name={t("InsuranceExpiresOn")}
-                value={props.newVehicleFormData.data.insuranceExpiresOn.toDateString()}
+                name={t("Brand")}
+                value={props.newVehicleFormData.data.brand}
               />
-            )}
-            {props.newVehicleFormData.data.pucExpiresOn && (
               <ConfirmValues
-                name={t("PUCExpiresOn")}
-                value={props.newVehicleFormData.data.pucExpiresOn.toDateString()}
+                name={t("Model")}
+                value={props.newVehicleFormData.data.model}
               />
-            )}
-            {props.newVehicleFormData.data.rcExpiresOn && (
               <ConfirmValues
-                name={t("RCExpiresOn")}
-                value={props.newVehicleFormData.data.rcExpiresOn.toDateString()}
+                name={t("Color")}
+                value={props.newVehicleFormData.data.color}
               />
-            )}
-            {props.newVehicleFormData.data.defaultRatePerKm && (
-              <ConfirmValues
-                name={t("RatePerKm")}
-                value={`${props.newVehicleFormData.data.defaultRatePerKm}`}
-              />
-            )}
-            <ConfirmValues
-              name={t("HasAC")}
-              value={props.newVehicleFormData.data.hasAC ? "Yes" : "No"}
-            />
-            {props.newVehicleFormData.data.hasAC &&
-              props.newVehicleFormData.data.defaultAcChargePerDay && (
+              {props.newVehicleFormData.data.capacity && (
                 <ConfirmValues
-                  name={t("ACChagePerDay")}
-                  value={`${props.newVehicleFormData.data.defaultAcChargePerDay}`}
+                  name={t("Capacity")}
+                  value={`${props.newVehicleFormData.data.capacity}`}
                 />
               )}
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+              {props.newVehicleFormData.data.odometerReading && (
+                <ConfirmValues
+                  name={t("OdometerReading")}
+                  value={`${props.newVehicleFormData.data.odometerReading}`}
+                />
+              )}
+              {props.newVehicleFormData.data.insuranceExpiresOn && (
+                <ConfirmValues
+                  name={t("InsuranceExpiresOn")}
+                  value={props.newVehicleFormData.data.insuranceExpiresOn.toDateString()}
+                />
+              )}
+              {props.newVehicleFormData.data.pucExpiresOn && (
+                <ConfirmValues
+                  name={t("PUCExpiresOn")}
+                  value={props.newVehicleFormData.data.pucExpiresOn.toDateString()}
+                />
+              )}
+              {props.newVehicleFormData.data.rcExpiresOn && (
+                <ConfirmValues
+                  name={t("RCExpiresOn")}
+                  value={props.newVehicleFormData.data.rcExpiresOn.toDateString()}
+                />
+              )}
+              {props.newVehicleFormData.data.defaultRatePerKm && (
+                <ConfirmValues
+                  name={t("RatePerKm")}
+                  value={`${props.newVehicleFormData.data.defaultRatePerKm}`}
+                />
+              )}
+              <ConfirmValues
+                name={t("HasAC")}
+                value={props.newVehicleFormData.data.hasAC ? "Yes" : "No"}
+              />
+              {props.newVehicleFormData.data.hasAC &&
+                props.newVehicleFormData.data.defaultAcChargePerDay && (
+                  <ConfirmValues
+                    name={t("ACChagePerDay")}
+                    value={`${props.newVehicleFormData.data.defaultAcChargePerDay}`}
+                  />
+                )}
+            </div>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={isPending}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

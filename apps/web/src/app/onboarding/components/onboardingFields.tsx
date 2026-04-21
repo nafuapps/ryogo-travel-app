@@ -131,6 +131,7 @@ type OnboardingSelectProps = {
   array: { value: string; display: string }[]
   placeholder: string
   register: UseFormRegisterReturn<string>
+  resetField?: () => void
 }
 export function OnboardingSelect(props: OnboardingSelectProps) {
   return (
@@ -143,7 +144,10 @@ export function OnboardingSelect(props: OnboardingSelectProps) {
           </FormLabel>
           <Select
             {...props.register}
-            onValueChange={field.onChange}
+            onValueChange={(value) => {
+              field.onChange(value)
+              props.resetField && props.resetField()
+            }}
             defaultValue={field.value}
           >
             <FormControl>

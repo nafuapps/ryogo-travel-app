@@ -45,9 +45,9 @@ export default async function RiderLayout({
       defaultOpen={defaultOpen}
       style={
         {
-          "--sidebar-width": "261px",
+          "--sidebar-width": "241px",
+          "--sidebar-width-mobile": "241px",
           "--sidebar-width-icon": "65px",
-          "--sidebar-width-mobile": "261px",
         } as React.CSSProperties
       }
     >

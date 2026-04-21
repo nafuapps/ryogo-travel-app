@@ -18,10 +18,11 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import { useEffect, useTransition } from "react"
+import { useTransition } from "react"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function NewCustomerForm({
   agencyId,
@@ -126,92 +127,90 @@ export default function NewCustomerForm({
     ? (data[selectedState] ?? [t("Field8.Title")])
     : []
 
-  useEffect(() => {
-    if (selectedState === agencyLocation.state) {
-      return
-    }
-    formData.setValue("city", "") // Reset the city dropdown's value when the state dropdown changes
-  }, [selectedState])
-
   return (
     <div id="NewCustomerPage" className={pageClassName}>
       <Form {...formData}>
-        <form
-          onSubmit={formData.handleSubmit(onSubmit)}
-          id="newCustomerForm"
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-        >
-          <DashboardInput
-            name={"name"}
-            type="text"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <DashboardInput
-            name={"phone"}
-            type="tel"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <DashboardInput
-            name={"email"}
-            type="email"
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-          />
-          <DashboardFileInput
-            name={"photo"}
-            register={formData.register("photo")}
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
-          />
-          <DashboardTextarea
-            name={"address"}
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-          />
-          <DashboardTextarea
-            name="remarks"
-            label={t("Field6.Title")}
-            placeholder={t("Field6.Placeholder")}
-          />
-          <DashboardSelect
-            name={"state"}
-            register={formData.register("state")}
-            title={t("Field7.Title")}
-            array={getArrayValueDisplayPairs(data)}
-            placeholder={t("Field7.Title")}
-          />
-          <DashboardSelect
-            name={"city"}
-            register={formData.register("city")}
-            title={t("Field8.Title")}
-            array={getArrayValueDisplayPairs(cityOptions)}
-            placeholder={t("Field8.Title")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
+        <ScrollArea>
+          <form
+            onSubmit={formData.handleSubmit(onSubmit)}
+            id="newCustomerForm"
+            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
           >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"default"}
-            type="button"
-            disabled={isPending}
-            onClick={() => router.back()}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+            <DashboardInput
+              name={"name"}
+              type="text"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <DashboardInput
+              name={"phone"}
+              type="tel"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
+            />
+            <DashboardInput
+              name={"email"}
+              type="email"
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+              description={t("Field3.Description")}
+            />
+            <DashboardFileInput
+              name={"photo"}
+              register={formData.register("photo")}
+              label={t("Field4.Title")}
+              placeholder={t("Field4.Placeholder")}
+              description={t("Field4.Description")}
+            />
+            <DashboardTextarea
+              name={"address"}
+              label={t("Field5.Title")}
+              placeholder={t("Field5.Placeholder")}
+            />
+            <DashboardTextarea
+              name="remarks"
+              label={t("Field6.Title")}
+              placeholder={t("Field6.Placeholder")}
+            />
+            <DashboardSelect
+              name={"state"}
+              register={formData.register("state")}
+              title={t("Field7.Title")}
+              array={getArrayValueDisplayPairs(data)}
+              placeholder={t("Field7.Title")}
+              resetField={() => {
+                formData.setValue("city", "")
+              }}
+            />
+            <DashboardSelect
+              name={"city"}
+              register={formData.register("city")}
+              title={t("Field8.Title")}
+              array={getArrayValueDisplayPairs(cityOptions)}
+              placeholder={t("Field8.Title")}
+            />
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"default"}
+              type="button"
+              disabled={isPending}
+              onClick={() => router.back()}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

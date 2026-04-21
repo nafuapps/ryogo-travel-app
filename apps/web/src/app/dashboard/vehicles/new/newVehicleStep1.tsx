@@ -22,6 +22,7 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function NewVehicleStep1(props: {
   onNext: () => void
@@ -94,58 +95,60 @@ export function NewVehicleStep1(props: {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
-        <form
-          id="Step1Form"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="Step1Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
-              name={"vehicleNumber"}
-              type="text"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <DashboardSelect
-              name={"type"}
-              register={formData.register("type")}
-              array={getEnumValueDisplayPairs(VehicleTypesEnum)}
-              title={t("Field2.Title")}
-              placeholder={t("Field2.Title")}
-            />
-            <DashboardInput
-              name={"brand"}
-              type="text"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-            <DashboardInput
-              name={"color"}
-              type="text"
-              label={t("Field4.Title")}
-              placeholder={t("Field4.Placeholder")}
-              description={t("Field4.Description")}
-            />
-            <DashboardInput
-              name={"model"}
-              type="text"
-              label={t("Field5.Title")}
-              placeholder={t("Field5.Placeholder")}
-              description={t("Field5.Description")}
-            />
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
+        <ScrollArea>
+          <form
+            id="Step1Form"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-        </form>
+            <div id="Step1Fields" className="flex flex-col gap-3 lg:gap-4">
+              <DashboardInput
+                name={"vehicleNumber"}
+                type="text"
+                label={t("Field1.Title")}
+                placeholder={t("Field1.Placeholder")}
+                description={t("Field1.Description")}
+              />
+              <DashboardSelect
+                name={"type"}
+                register={formData.register("type")}
+                array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+                title={t("Field2.Title")}
+                placeholder={t("Field2.Title")}
+              />
+              <DashboardInput
+                name={"brand"}
+                type="text"
+                label={t("Field3.Title")}
+                placeholder={t("Field3.Placeholder")}
+                description={t("Field3.Description")}
+              />
+              <DashboardInput
+                name={"color"}
+                type="text"
+                label={t("Field4.Title")}
+                placeholder={t("Field4.Placeholder")}
+                description={t("Field4.Description")}
+              />
+              <DashboardInput
+                name={"model"}
+                type="text"
+                label={t("Field5.Title")}
+                placeholder={t("Field5.Placeholder")}
+                description={t("Field5.Description")}
+              />
+            </div>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

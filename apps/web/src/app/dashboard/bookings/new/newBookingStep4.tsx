@@ -20,6 +20,7 @@ import { useCallback, useEffect } from "react"
 import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import NewBookingTripInfo from "./newBookingTripInfo"
 import { FindOrCreateRouteByLocationsType } from "@ryogo-travel-app/api/services/route.services"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const getRoute = async (data: NewBookingFormDataType) => {
   const route = await apiClient<FindOrCreateRouteByLocationsType>(
@@ -141,68 +142,70 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <form
-          id="Step4Form"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <NewBookingTripInfo {...props.newBookingFormData} />
-          <DashboardInput
-            name="selectedDistance"
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-            description={t("Field5.Description")}
-            type="tel"
-            disabled={props.newBookingFormData.routeId ? true : false}
-          />
-          <DashboardInput
-            name="selectedRatePerKm"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-            type="tel"
-          />
-          <DashboardInput
-            name="selectedAllowancePerDay"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-            type="tel"
-          />
-          <DashboardInput
-            name="selectedAcChargePerDay"
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-            type="tel"
-            disabled={props.newBookingFormData.tripNeedsAC === false}
-          />
-          <DashboardInput
-            name="selectedCommissionRate"
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
-            type="tel"
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
+        <ScrollArea>
+          <form
+            id="Step4Form"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
           >
-            {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={form.formState.isSubmitting}
-          >
-            {t("Back")}
-          </Button>
-        </form>
+            <NewBookingTripInfo {...props.newBookingFormData} />
+            <DashboardInput
+              name="selectedDistance"
+              label={t("Field5.Title")}
+              placeholder={t("Field5.Placeholder")}
+              description={t("Field5.Description")}
+              type="tel"
+              disabled={props.newBookingFormData.routeId ? true : false}
+            />
+            <DashboardInput
+              name="selectedRatePerKm"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+              type="tel"
+            />
+            <DashboardInput
+              name="selectedAllowancePerDay"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
+              type="tel"
+            />
+            <DashboardInput
+              name="selectedAcChargePerDay"
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+              description={t("Field3.Description")}
+              type="tel"
+              disabled={props.newBookingFormData.tripNeedsAC === false}
+            />
+            <DashboardInput
+              name="selectedCommissionRate"
+              label={t("Field4.Title")}
+              placeholder={t("Field4.Placeholder")}
+              description={t("Field4.Description")}
+              type="tel"
+            />
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={form.formState.isSubmitting}
+            >
+              {t("Back")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

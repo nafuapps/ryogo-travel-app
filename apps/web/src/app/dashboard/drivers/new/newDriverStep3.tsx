@@ -22,6 +22,7 @@ import {
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function NewDriverStep3(props: {
   onNext: () => void
@@ -81,50 +82,52 @@ export function NewDriverStep3(props: {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
-        <form
-          id="Step3Form"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="Step3Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardTextarea
-              name={"driverAddress"}
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-            />
-            <DashboardMultipleCheckbox
-              array={getEnumValueDisplayPairs(VehicleTypesEnum)}
-              name={"canDriveVehicleTypes"}
-              label={t("Field2.Title")}
-              register={formData.register("canDriveVehicleTypes")}
-            />
-            <DashboardInput
-              name={"defaultAllowancePerDay"}
-              type="tel"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
+        <ScrollArea>
+          <form
+            id="Step3Form"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
           >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+            <div id="Step3Fields" className="flex flex-col gap-3 lg:gap-4">
+              <DashboardTextarea
+                name={"driverAddress"}
+                label={t("Field1.Title")}
+                placeholder={t("Field1.Placeholder")}
+              />
+              <DashboardMultipleCheckbox
+                array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+                name={"canDriveVehicleTypes"}
+                label={t("Field2.Title")}
+                register={formData.register("canDriveVehicleTypes")}
+              />
+              <DashboardInput
+                name={"defaultAllowancePerDay"}
+                type="tel"
+                label={t("Field3.Title")}
+                placeholder={t("Field3.Placeholder")}
+                description={t("Field3.Description")}
+              />
+            </div>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={formData.formState.isSubmitting}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

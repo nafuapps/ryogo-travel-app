@@ -18,6 +18,7 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
 import { useTransition } from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function MyProfileSettingsPageComponent({
   userDetails,
@@ -69,38 +70,40 @@ export default function MyProfileSettingsPageComponent({
       className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
     >
       <Form {...formData}>
-        <form
-          id="ChangePreferencesForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-        >
-          <DashboardSwitch label={t("Field1.Title")} name="dark" />
-          <DashboardSelect
-            name={"lang"}
-            register={formData.register("lang")}
-            array={languages}
-            title={t("Field2.Title")}
-            placeholder={t("Field2.Title")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
+        <ScrollArea>
+          <form
+            id="ChangePreferencesForm"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
           >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+            <DashboardSwitch label={t("Field1.Title")} name="dark" />
+            <DashboardSelect
+              name={"lang"}
+              register={formData.register("lang")}
+              array={languages}
+              title={t("Field2.Title")}
+              placeholder={t("Field2.Title")}
+            />
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              size={"lg"}
+              type="button"
+              onClick={() => router.back()}
+              disabled={isPending}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

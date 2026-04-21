@@ -16,6 +16,7 @@ import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import { useTransition } from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -72,70 +73,72 @@ export function NewDriverConfirm(props: {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
-        <form
-          id="ConfirmForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
-            <ConfirmValues
-              name={t("DriverName")}
-              value={props.newDriverFormData.data.name}
-            />
-            <ConfirmValues
-              name={t("DriverPhone")}
-              value={props.newDriverFormData.data.phone}
-            />
-            <ConfirmValues
-              name={t("DriverEmail")}
-              value={props.newDriverFormData.data.email}
-            />
-            <ConfirmValues
-              name={t("LicenseNumber")}
-              value={props.newDriverFormData.data.licenseNumber}
-            />
-            {props.newDriverFormData.data.licenseExpiresOn && (
+        <ScrollArea>
+          <form
+            id="ConfirmForm"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className={newBookingFormClassName}
+          >
+            <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
               <ConfirmValues
-                name={t("LicenseExpiresOn")}
-                value={props.newDriverFormData.data.licenseExpiresOn.toDateString()}
+                name={t("DriverName")}
+                value={props.newDriverFormData.data.name}
               />
-            )}
-            <ConfirmValues
-              name={t("DriverAddress")}
-              value={props.newDriverFormData.data.address}
-            />
-            <ConfirmValues
-              name={t("CanDriveVehicleTypes")}
-              value={props.newDriverFormData.data.canDriveVehicleTypes.join(
-                ", ",
+              <ConfirmValues
+                name={t("DriverPhone")}
+                value={props.newDriverFormData.data.phone}
+              />
+              <ConfirmValues
+                name={t("DriverEmail")}
+                value={props.newDriverFormData.data.email}
+              />
+              <ConfirmValues
+                name={t("LicenseNumber")}
+                value={props.newDriverFormData.data.licenseNumber}
+              />
+              {props.newDriverFormData.data.licenseExpiresOn && (
+                <ConfirmValues
+                  name={t("LicenseExpiresOn")}
+                  value={props.newDriverFormData.data.licenseExpiresOn.toDateString()}
+                />
               )}
-            />
-            {props.newDriverFormData.data.defaultAllowancePerDay && (
               <ConfirmValues
-                name={t("DefaultAllowancePerDay")}
-                value={`${props.newDriverFormData.data.defaultAllowancePerDay}`}
+                name={t("DriverAddress")}
+                value={props.newDriverFormData.data.address}
               />
-            )}
-          </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
+              <ConfirmValues
+                name={t("CanDriveVehicleTypes")}
+                value={props.newDriverFormData.data.canDriveVehicleTypes.join(
+                  ", ",
+                )}
+              />
+              {props.newDriverFormData.data.defaultAllowancePerDay && (
+                <ConfirmValues
+                  name={t("DefaultAllowancePerDay")}
+                  value={`${props.newDriverFormData.data.defaultAllowancePerDay}`}
+                />
+              )}
+            </div>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={isPending}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </form>
+        </ScrollArea>
       </Form>
     </div>
   )

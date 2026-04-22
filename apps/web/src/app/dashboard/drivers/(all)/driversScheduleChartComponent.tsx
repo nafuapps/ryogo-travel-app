@@ -75,9 +75,12 @@ export default function DriversScheduleChartComponent({
                         id={b.id}
                         selectedDays={selectedDays}
                         addedClass={
-                          b.status === BookingStatusEnum.IN_PROGRESS
-                            ? "bg-green-200 hover:bg-green-300"
-                            : "bg-slate-200 hover:bg-slate-300"
+                          b.status === BookingStatusEnum.CONFIRMED &&
+                          b.startDate < new Date()
+                            ? "bg-red-200 hover:bg-red-300"
+                            : b.status === BookingStatusEnum.IN_PROGRESS
+                              ? "bg-green-200 hover:bg-green-300"
+                              : "bg-slate-200 hover:bg-slate-300"
                         }
                       >
                         <AssignedBookingPopoverCard {...b} />

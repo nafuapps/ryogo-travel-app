@@ -14,7 +14,9 @@ import moment from "moment"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 
-export function BookingPopoverCard(props: FindScheduleNextDaysType[number]) {
+export function OngoingBookingPopoverCard(
+  props: FindScheduleNextDaysType[number],
+) {
   const t = useTranslations("Dashboard.PopoverCards.Booking")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">

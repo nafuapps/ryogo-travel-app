@@ -24,14 +24,8 @@ export type CreateNewBookingRequestType = {
   assignedVehicleId?: string
   assignedDriverId?: string
   selectedDistance: number
-  totalDistance: number
   selectedRatePerKm: number
-  totalVehicleRate: number
   selectedAcChargePerDay: number
-  totalAcCharge: number
   selectedAllowancePerDay: number
-  totalDriverAllowance: number
   selectedCommissionRate: number
-  totalCommission: number
-  finalAmount: number
 }

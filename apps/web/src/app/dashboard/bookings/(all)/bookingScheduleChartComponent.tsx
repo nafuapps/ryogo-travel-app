@@ -15,7 +15,7 @@ import DashboardScheduleDayAxis, {
   DashboardScheduleItemGrid,
 } from "../../components/common/dashboardSchedule"
 import { LucideUser } from "lucide-react"
-import { BookingPopoverCard } from "../../components/common/dashboardPopoverCards"
+import { OngoingBookingPopoverCard } from "../../components/common/dashboardPopoverCards"
 
 export default function BookingScheduleChartComponent({
   bookings14Days,
@@ -66,7 +66,7 @@ export default function BookingScheduleChartComponent({
                         : "bg-red-200 hover:bg-red-300"
                     }
                   >
-                    <BookingPopoverCard {...b} />
+                    <OngoingBookingPopoverCard {...b} />
                   </DashboardScheduleItemBar>
                 </DashboardScheduleItemGrid>
               </DashboardScheduleItem>

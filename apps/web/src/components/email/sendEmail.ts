@@ -9,7 +9,7 @@ export default async function sendEmail(
   const resend = new Resend(process.env.RESEND_API_KEY)
 
   const { data, error } = await resend.emails.send({
-    from: "RyoGo Support<ryogo.in@gmail.com>",
+    from: "RyoGo Support<ryogo.support@nafuapps.in>",
     to: receipientEmail,
     subject: subject,
     react: element,

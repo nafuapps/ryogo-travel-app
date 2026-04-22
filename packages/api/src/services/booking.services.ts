@@ -1,5 +1,6 @@
 import {
   BookingStatusEnum,
+  BookingTypeEnum,
   DriverStatusEnum,
   InsertBookingType,
   VehicleStatusEnum,
@@ -322,6 +323,8 @@ export const bookingServices = {
       routeId = newRoute.id
     }
 
+    const finalPrice = this.getFinalPrice(data)
+
     //Step4: Prepare data
     const newBookingData: InsertBookingType = {
       agencyId: data.agencyId,
@@ -341,16 +344,16 @@ export const bookingServices = {
       passengers: data.tripPassengers,
       needsAc: data.tripNeedsAC,
       citydistance: data.selectedDistance,
-      totalDistance: data.totalDistance,
+      totalDistance: finalPrice.totalDistance,
       acChargePerDay: data.selectedAcChargePerDay,
-      totalAcCharge: data.totalAcCharge,
+      totalAcCharge: finalPrice.totalAcCharge,
       ratePerKm: data.selectedRatePerKm,
-      totalVehicleRate: data.totalVehicleRate,
+      totalVehicleRate: finalPrice.totalVehicleRate,
       allowancePerDay: data.selectedAllowancePerDay,
-      totalDriverAllowance: data.totalDriverAllowance,
+      totalDriverAllowance: finalPrice.totalDriverAllowance,
       commissionRate: data.selectedCommissionRate,
-      totalCommission: data.totalCommission,
-      totalAmount: data.finalAmount,
+      totalCommission: finalPrice.totalCommission,
+      totalAmount: finalPrice.totalAmount,
     }
 
     //Step5: Create a new booking
@@ -504,6 +507,60 @@ export const bookingServices = {
   // TODO: Send booking invoice to customer over whatsapp
   async sendInvoice(id: string) {
     return true
+  },
+
+  getFinalPrice(data: CreateNewBookingRequestType) {
+    const days =
+      Math.ceil(
+        (data.tripEndDate.getTime() - data.tripStartDate.getTime()) / 86400000,
+      ) + 1
+    const commissionRate = data.selectedCommissionRate
+
+    let totalDistance = data.selectedDistance
+    let totalAllowanceDays = 1
+
+    if (data.tripType === BookingTypeEnum.Round) {
+      //For round trip, double the vehicle rental
+      totalDistance *= 2
+      if (days > 1) {
+        //For round trip, double the driver allowance if not returning same day
+        totalAllowanceDays *= 2
+      } else {
+        totalAllowanceDays = 1.5
+      }
+    } else if (data.tripType === BookingTypeEnum.MultiDay) {
+      //For multi day trip, include intermediate tour days @ X(50) km
+      totalDistance = totalDistance * 2 + (days - 2) * 50
+      //For multi day trip, driver allowance is for each day
+      totalAllowanceDays *= days
+    }
+
+    const totalAcCharge =
+      data.tripNeedsAC && data.selectedAcChargePerDay
+        ? Math.round(data.selectedAcChargePerDay * totalAllowanceDays)
+        : 0
+
+    const totalVehicleRate = Math.round(totalDistance * data.selectedRatePerKm!)
+    const totalDriverAllowance = data.selectedAllowancePerDay
+      ? Math.round(totalAllowanceDays * data.selectedAllowancePerDay)
+      : 0
+
+    const netPrice = totalVehicleRate + totalDriverAllowance + totalAcCharge
+
+    const totalCommission = Math.round((netPrice * commissionRate) / 100)
+
+    const totalAmount = netPrice + totalCommission
+
+    return {
+      totalVehicleRate,
+      totalDistance,
+      totalDriverAllowance,
+      totalAcCharge,
+      totalCommission,
+      totalAmount,
+      totalAllowanceDays,
+      days,
+    }
   },
 }
 

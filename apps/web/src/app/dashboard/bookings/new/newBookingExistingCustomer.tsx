@@ -14,10 +14,10 @@ export default function ExistingCutomerCard({
   return (
     <div
       id="ExistingCustomer"
-      className="flex flex-row gap-3 lg:gap-4 bg-white border border-slate-100 rounded-lg p-3 lg:p-4"
+      className="flex flex-row gap-3 lg:gap-4 bg-white border-2 border-sky-700 rounded-lg p-3 lg:p-4"
     >
       {existingCustomer.photoUrl ? (
-        <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
+        <div className="relative size-10 lg:size-12 rounded-full overflow-hidden">
           <Image
             loading="eager"
             src={getFileUrl(existingCustomer.photoUrl)}

@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
+  newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
   newBookingHeaderClassName,
@@ -48,7 +49,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
     selectedRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
       .min(1, t("Field1.Error2"))
-      .max(50, t("Field1.Error3"))
+      .max(100, t("Field1.Error3"))
       .positive(t("Field1.Error4"))
       .multipleOf(1, t("Field1.Error5"))
       .nonoptional(),
@@ -76,7 +77,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
     selectedDistance: z.coerce
       .number<number>(t("Field5.Error1"))
       .min(1, t("Field5.Error2"))
-      .max(3000, t("Field5.Error3"))
+      .max(5000, t("Field5.Error3"))
       .positive(t("Field5.Error4"))
       .multipleOf(1, t("Field5.Error5"))
       .nonoptional(),
@@ -97,7 +98,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
   })
 
   const setValue = form.setValue
-  const fetchData = useCallback(async () => {
+  const fetchRouteData = useCallback(async () => {
     if (!props.newBookingFormData.routeId) {
       getRoute(props.newBookingFormData).then((res) => {
         if (res) {
@@ -115,8 +116,8 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
   }, [props, setValue])
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    fetchRouteData()
+  }, [fetchRouteData])
 
   //Form submit
   function onSubmit(values: Step4Type) {
@@ -149,43 +150,45 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
             className={newBookingFormClassName}
           >
             <NewBookingTripInfo {...props.newBookingFormData} />
-            <DashboardInput
-              name="selectedDistance"
-              label={t("Field5.Title")}
-              placeholder={t("Field5.Placeholder")}
-              description={t("Field5.Description")}
-              type="tel"
-              disabled={props.newBookingFormData.routeId ? true : false}
-            />
-            <DashboardInput
-              name="selectedRatePerKm"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-              type="tel"
-            />
-            <DashboardInput
-              name="selectedAllowancePerDay"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-              type="tel"
-            />
-            <DashboardInput
-              name="selectedAcChargePerDay"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-              type="tel"
-              disabled={props.newBookingFormData.tripNeedsAC === false}
-            />
-            <DashboardInput
-              name="selectedCommissionRate"
-              label={t("Field4.Title")}
-              placeholder={t("Field4.Placeholder")}
-              description={t("Field4.Description")}
-              type="tel"
-            />
+            <div className={newBookingFormBlockClassName}>
+              <DashboardInput
+                name="selectedDistance"
+                label={t("Field5.Title")}
+                placeholder={t("Field5.Placeholder")}
+                description={t("Field5.Description")}
+                type="tel"
+                disabled={props.newBookingFormData.routeId ? true : false}
+              />
+              <DashboardInput
+                name="selectedRatePerKm"
+                label={t("Field1.Title")}
+                placeholder={t("Field1.Placeholder")}
+                description={t("Field1.Description")}
+                type="tel"
+              />
+              <DashboardInput
+                name="selectedAllowancePerDay"
+                label={t("Field2.Title")}
+                placeholder={t("Field2.Placeholder")}
+                description={t("Field2.Description")}
+                type="tel"
+              />
+              <DashboardInput
+                name="selectedAcChargePerDay"
+                label={t("Field3.Title")}
+                placeholder={t("Field3.Placeholder")}
+                description={t("Field3.Description")}
+                type="tel"
+                disabled={props.newBookingFormData.tripNeedsAC === false}
+              />
+              <DashboardInput
+                name="selectedCommissionRate"
+                label={t("Field4.Title")}
+                placeholder={t("Field4.Placeholder")}
+                description={t("Field4.Description")}
+                type="tel"
+              />
+            </div>
             <Button
               variant={"default"}
               size={"lg"}

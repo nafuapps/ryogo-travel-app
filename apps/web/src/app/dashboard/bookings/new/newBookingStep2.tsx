@@ -1,4 +1,5 @@
 import {
+  CaptionBold,
   CaptionGrey,
   H4,
   PBold,
@@ -12,6 +13,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import {
   getTripTypeClassName,
+  newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
   newBookingHeaderClassName,
@@ -182,10 +184,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
             onSubmit={form.handleSubmit(onSubmit)}
             className={newBookingFormClassName}
           >
-            <div
-              id="routeSelection"
-              className="flex flex-col lg:flex-row gap-3 lg:gap-4"
-            >
+            <div id="routeSelection" className={newBookingFormBlockClassName}>
               <div
                 id="tripSource"
                 className="flex flex-col w-full gap-1 lg:gap-1.5"
@@ -229,8 +228,8 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                 />
               </div>
             </div>
-            <div id="typeSelection" className="flex flex-col gap-2 lg:gap-3">
-              <PBold>{t("Field8.Title")}</PBold>
+            <div id="typeSelection" className={newBookingFormBlockClassName}>
+              <SmallBold>{t("Field8.Title")}</SmallBold>
               <div className="flex flex-row gap-2 lg:gap-3">
                 <div
                   id={BookingTypeEnum.OneWay}
@@ -246,7 +245,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                   )}
                 >
                   <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                  <SmallBold>{t("Field8.OneWay")}</SmallBold>
+                  <CaptionBold>{t("Field8.OneWay")}</CaptionBold>
                   <CaptionGrey>{t("Field8.OneWayDesc")}</CaptionGrey>
                 </div>
                 <div
@@ -257,7 +256,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                   )}
                 >
                   <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                  <SmallBold>{t("Field8.RoundTrip")}</SmallBold>
+                  <CaptionBold>{t("Field8.RoundTrip")}</CaptionBold>
                   <CaptionGrey>{t("Field8.RoundTripDesc")}</CaptionGrey>
                 </div>
                 <div
@@ -268,15 +267,12 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                   )}
                 >
                   <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                  <SmallBold>{t("Field8.MultiDay")}</SmallBold>
+                  <CaptionBold>{t("Field8.MultiDay")}</CaptionBold>
                   <CaptionGrey>{t("Field8.MultiDayDesc")}</CaptionGrey>
                 </div>
               </div>
             </div>
-            <div
-              id="dateSelection"
-              className="flex flex-col lg:flex-row gap-2 lg:gap-3"
-            >
+            <div id="dateSelection" className={newBookingFormBlockClassName}>
               <DashboardDatePicker
                 name="tripStartDate"
                 label={t("Field5.Title")}
@@ -293,7 +289,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
             </div>
             <div
               id="passengerPreference"
-              className="flex flex-col gap-2 lg:gap-3 w-full"
+              className={newBookingFormBlockClassName}
             >
               <DashboardInput
                 name="tripPassengers"

@@ -637,8 +637,8 @@ export const bookings = pgTable(
     passengers: integer("passengers").notNull().default(1), //0 means its a non-passenger (truck) trip
     needsAc: boolean("needs_ac").notNull().default(true),
     remarks: text("remarks"),
-    citydistance: integer("city_distance").notNull().default(0), // in kilometers (distance between cities)
-    totalDistance: integer("total_distance").notNull().default(0), // in kilometers (total distance of the trip)
+    citydistance: integer("city_distance").notNull().default(1), // in kilometers (distance between cities)
+    totalDistance: integer("total_distance").notNull().default(1), // in kilometers (total distance of the trip)
     acChargePerDay: integer("ac_charge_per_day").notNull().default(0), // in currency
     totalAcCharge: integer("total_ac_charge").notNull().default(0), // in currency
     ratePerKm: integer("rate_per_km").notNull().default(18), // in currency
@@ -653,31 +653,42 @@ export const bookings = pgTable(
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
     isReconciled: boolean("is_reconciled").notNull().default(false),
+    quoteSentOn: timestamp("quote_sent_on", { withTimezone: true }),
+    quoteUrl: text("quote_url"),
+    invoiceSentOn: timestamp("invoice_sent_on", { withTimezone: true }),
+    invoiceUrl: text("invoice_url"),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
     ...timestamps,
   },
   (t) => [
     check(
-      "commission_rate >= 0 AND commission_rate <= 100",
+      "commission_rate >= 0 and <= 100",
       sql`${t.commissionRate} >= 0 AND ${t.commissionRate} <= 100`,
     ),
     check(
-      "passengers >= 0 and < 100",
-      sql`${t.passengers} >= 0 AND ${t.passengers} < 100`,
-    ),
-    check("ac charge per day  < 10000", sql`${t.acChargePerDay} < 10000`),
-    check(
-      "rate per km > 0 and < 100",
-      sql`${t.ratePerKm} > 0 AND ${t.ratePerKm} < 100`,
+      "distance >= 1 and <= 5000",
+      sql`${t.citydistance} >= 1 AND ${t.citydistance} <= 5000`,
     ),
     check(
-      "allowance >= 0 and allowance < 10000",
-      sql`${t.allowancePerDay} >= 0 AND ${t.allowancePerDay} < 10000`,
+      "passengers >= 0 and <= 100",
+      sql`${t.passengers} >= 0 AND ${t.passengers} <= 100`,
+    ),
+    check(
+      "ac charge per day >=0 and <= 10000",
+      sql`${t.acChargePerDay} >= 0 AND ${t.acChargePerDay} <= 10000`,
+    ),
+    check(
+      "rate per km >= 1 and <= 100",
+      sql`${t.ratePerKm} >= 1 AND ${t.ratePerKm} <= 100`,
+    ),
+    check(
+      "allowance >= 0 and allowance <= 10000",
+      sql`${t.allowancePerDay} >= 0 AND ${t.allowancePerDay} <= 10000`,
     ),
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
     check(
-      "total_amount > 0 and < 1000000",
-      sql`${t.totalAmount} > 0 AND ${t.totalAmount} < 1000000`,
+      "total_amount >= 1 and <= 1000000",
+      sql`${t.totalAmount} >= 1 AND ${t.totalAmount} <= 1000000`,
     ),
     check(
       "driver rating >=1 and rating <=5",

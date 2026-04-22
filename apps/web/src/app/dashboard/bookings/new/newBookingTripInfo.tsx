@@ -1,5 +1,5 @@
-import { PBold, CaptionGrey, SmallGrey } from "@/components/typography";
-import { LucideCalendarDays, LucideUsers } from "lucide-react";
+import { PBold, CaptionGrey, SmallGrey } from "@/components/typography"
+import { LucideCalendarDays, LucideUsers } from "lucide-react"
 import {
   tileHeaderLeftClassName,
   tileHeaderRightClassName,
@@ -7,19 +7,19 @@ import {
   getTripDuration,
   getTripTypeIcon,
   newBookingTripInfoTagClassName,
-} from "./newBookingCommon";
-import { IconTextTag } from "./newBookingTileTag";
-import { useTranslations } from "next-intl";
-import { format } from "date-fns";
+} from "./newBookingCommon"
+import { IconTextTag } from "./newBookingTileTag"
+import { useTranslations } from "next-intl"
+import { format } from "date-fns"
 
 export default function NewBookingTripInfo(props: NewBookingFormDataType) {
-  const t = useTranslations("Dashboard.NewBooking.Form");
-  const duration = getTripDuration(props.tripStartDate, props.tripEndDate);
+  const t = useTranslations("Dashboard.NewBooking.Form")
+  const duration = getTripDuration(props.tripStartDate, props.tripEndDate)
   return (
     <div id="tripInfo" className="flex flex-col">
       <div
         id="tripHeader"
-        className="flex flex-row justify-between items-center p-2 lg:p-3 rounded-t-lg  border-t border-l border-r border-slate-200"
+        className="flex flex-row bg-white justify-between items-center p-3 lg:p-4 rounded-t-lg"
       >
         <div id="tripSource" className={tileHeaderLeftClassName}>
           <PBold>{props.tripSourceLocationCity}</PBold>
@@ -44,7 +44,7 @@ export default function NewBookingTripInfo(props: NewBookingFormDataType) {
       </div>
       <div
         id="tripFooter"
-        className="bg-slate-50 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg border-b border-l border-r border-slate-200"
+        className="bg-slate-200 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
       >
         <div className={newBookingTripInfoTagClassName}>
           <IconTextTag
@@ -66,5 +66,5 @@ export default function NewBookingTripInfo(props: NewBookingFormDataType) {
         </div>
       </div>
     </div>
-  );
+  )
 }

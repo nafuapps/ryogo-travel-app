@@ -12,6 +12,7 @@ import {
   newBookingSectionClassName,
   Step3Type,
   NewBookingTotalSteps,
+  newBookingFormBlockClassName,
 } from "./newBookingCommon"
 import NewBookingStepsTracker from "./newBookingStepsTracker"
 import { Form } from "@/components/ui/form"
@@ -90,39 +91,42 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
             onSubmit={form.handleSubmit(onSubmit)}
             className={newBookingFormClassName}
           >
-            <PBold>{t("Vehicle.Title")}</PBold>
-            <div
-              id="vehicleAssignment"
-              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-            >
-              {props.vehicles
-                .sort(
-                  (a, b) =>
-                    a.assignedBookings.length - b.assignedBookings.length,
-                )
-                .map((vehicle, index) => (
-                  <NewBookingVehicleTile
+            <div className={newBookingFormBlockClassName}>
+              <PBold>{t("Vehicle.Title")}</PBold>
+              <div
+                id="vehicleAssignment"
+                className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+              >
+                {props.vehicles
+                  .sort(
+                    (a, b) =>
+                      a.assignedBookings.length - b.assignedBookings.length,
+                  )
+                  .map((vehicle, index) => (
+                    <NewBookingVehicleTile
+                      key={index}
+                      vehicleData={vehicle}
+                      newBookingFormData={props.newBookingFormData}
+                      setValue={form.setValue}
+                    />
+                  ))}
+              </div>
+            </div>
+            <div className={newBookingFormBlockClassName}>
+              <PBold>{t("Driver.Title")}</PBold>
+              <div
+                id="driverAssignment"
+                className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+              >
+                {props.drivers.map((driver, index) => (
+                  <NewBookingDriverTile
                     key={index}
-                    vehicleData={vehicle}
+                    driverData={driver}
                     newBookingFormData={props.newBookingFormData}
                     setValue={form.setValue}
                   />
                 ))}
-            </div>
-            <Separator />
-            <PBold>{t("Driver.Title")}</PBold>
-            <div
-              id="driverAssignment"
-              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-            >
-              {props.drivers.map((driver, index) => (
-                <NewBookingDriverTile
-                  key={index}
-                  driverData={driver}
-                  newBookingFormData={props.newBookingFormData}
-                  setValue={form.setValue}
-                />
-              ))}
+              </div>
             </div>
             <Button
               variant={"default"}

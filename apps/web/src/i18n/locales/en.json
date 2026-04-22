@@ -827,7 +827,7 @@
         "Step1": {
           "Title": "Customer information",
           "Subtitle": "Step 1 of 5",
-          "Description": "Find existing customer by phone number or create a new one",
+          "Description": "Find customer by phone number or add a new customer",
           "Field1": {
             "Title": "Enter customer phone number",
             "Placeholder": "9876543210",
@@ -855,7 +855,7 @@
         "Step2": {
           "Title": "Trip details",
           "Subtitle": "Step 2 of 5",
-          "Description": "Capture information provided by the customer",
+          "Description": "Capture customer's trip preferences",
           "Field1": {
             "Title": "From ",
             "Placeholder": "Select starting state",
@@ -926,7 +926,7 @@
             "Seats": " {count, plural, =1 {seat} other {seats}}",
             "AC": "AC",
             "Booked": "Booked",
-            "RepairScheduled": "In Service",
+            "RepairScheduled": "In Repair",
             "Available": "Available",
             "PerKm": "/Km"
           },
@@ -992,7 +992,7 @@
             "Description": "What is the distance between these 2 cities?",
             "Error1": "Distance must be a number",
             "Error2": "Distance must be atleast 1",
-            "Error3": "Distance must be less than 3000",
+            "Error3": "Distance must be less than 5000",
             "Error4": "Distance cannot be in decimals",
             "Error5": "Distance must be a positive number"
           },

@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
+  newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
   newBookingHeaderClassName,
@@ -21,7 +22,7 @@ import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import stateCityData from "@/lib/states_cities.json"
-import { LucideInfo } from "lucide-react"
+import { Info, LucideInfo } from "lucide-react"
 import { PhoneRegex } from "@/lib/regex"
 import { Alert } from "@/components/ui/alert"
 import ExistingCutomerCard from "./newBookingExistingCustomer"
@@ -143,7 +144,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
             onSubmit={form.handleSubmit(onSubmit)}
             className={newBookingFormClassName}
           >
-            <div id="FindCustomer" className="flex flex-col gap-3 lg:gap-4">
+            <div id="FindCustomer" className={newBookingFormBlockClassName}>
               <DashboardInput
                 name="customerPhone"
                 label={t("Field1.Title")}
@@ -164,9 +165,9 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
               )}
             </div>
             {customerNotFound && (
-              <div id="NewCustomer" className="flex flex-col gap-3 lg:gap-4">
+              <div id="NewCustomer" className={newBookingFormBlockClassName}>
                 <Alert>
-                  <LucideInfo className="size-8 lg:size-10 text-amber-300" />
+                  <Info className="size-4 lg:size-5 text-amber-300" />
                   <Small>{t("CustomerNotFound")}</Small>
                 </Alert>
                 <DashboardInput

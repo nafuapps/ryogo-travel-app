@@ -16,6 +16,7 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
   ) {
     return
   }
+
   const booking = await bookingServices.addNewBooking(data)
   if (!booking) return
   return booking

@@ -1,7 +1,9 @@
-//Modify Driver leave page
-
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import ModifyDriverLeavePageComponent from "./modifyDriverLeave"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { DriverLeaveRegex } from "@/lib/regex"
@@ -9,9 +11,8 @@ import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Modify Driver Leave - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Modify Driver Leave - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ModifyDriverLeavePage({

@@ -1,15 +1,15 @@
 //New agent loggin in for the first time or existing user resetting password
 
 import { getCurrentUser } from "@/lib/auth"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ChangePasswordPageComponent from "./changePassword"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Change Password - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Change Password - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ChangePasswordPage() {

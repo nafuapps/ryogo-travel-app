@@ -5,11 +5,11 @@ import { CaptionGrey } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 
 export const metadata: Metadata = {
-  title: "Login - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Login - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function LoginPage() {

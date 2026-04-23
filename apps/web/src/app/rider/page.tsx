@@ -1,6 +1,10 @@
 //Rider home page
 
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import RiderHeader from "./components/riderHeader"
 import RiderHomePageComponent from "./riderHome"
 import { redirect, RedirectType } from "next/navigation"
@@ -9,9 +13,8 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Rider Home - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Rider Home - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function RiderHomePage() {

@@ -4,14 +4,17 @@ import { getCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "../../components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import ChangeEmailAccountComponent from "./changeEmail"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Change Email - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Change Email - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ChangeEmailAccountPage() {

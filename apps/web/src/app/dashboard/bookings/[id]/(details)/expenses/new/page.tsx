@@ -1,6 +1,8 @@
-//Bookings/id/expenses/new page
-
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import NewExpensePageComponent from "./newExpense"
 import { getCurrentUser } from "@/lib/auth"
@@ -10,9 +12,8 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "New Booking Expense - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `New Booking Expense - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function NewExpensePage({

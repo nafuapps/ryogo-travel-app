@@ -1,6 +1,9 @@
-//Settings for user account
-
-import { mainClassName, pageClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import DashboardHeader from "../../components/common/dashboardHeader"
 import AccountSettingsPageComponent from "./settings"
@@ -10,9 +13,8 @@ import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Settings - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Settings - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function AccountSettingsPage() {

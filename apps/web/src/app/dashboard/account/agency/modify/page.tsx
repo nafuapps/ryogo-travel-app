@@ -2,7 +2,11 @@
 
 import ModifyAgencyPageForm from "./modifyAgency"
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -10,9 +14,8 @@ import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
-  title: "Modify Agency - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Modify Agency - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ModifyAgencyPage() {

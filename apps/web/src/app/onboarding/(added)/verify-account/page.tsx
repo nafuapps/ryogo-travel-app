@@ -1,6 +1,7 @@
 //(Onboarding) Add vehicle page
 
 import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -8,9 +9,8 @@ import VerifyAccountPageComponent from "./verifyAccount"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export const metadata: Metadata = {
-  title: "Onboarding Verify Account - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Onboarding Verify Account - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function VerifyAccountPage() {

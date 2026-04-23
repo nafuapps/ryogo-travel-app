@@ -1,6 +1,7 @@
 //(Onboarding) Add agent page
 
 import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import AddAgentPageComponent from "./addAgent"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
@@ -9,9 +10,8 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
-  title: "Onboarding Add Agent - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Onboarding Add Agent - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function AddAgentPage() {

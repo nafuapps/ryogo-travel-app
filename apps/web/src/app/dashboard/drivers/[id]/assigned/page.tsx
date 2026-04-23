@@ -1,15 +1,16 @@
-//Drivers/id/assigned bookings page
-
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import DashboardHeader from "../../../components/common/dashboardHeader"
 import DriverAssignedBookingsPageComponent from "./driverAssignedBookings"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Driver Assigned Bookings - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Driver Assigned Bookings - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function DriverAssignedBookingsPage({

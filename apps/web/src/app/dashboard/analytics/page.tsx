@@ -1,12 +1,12 @@
 //Analytics page (only accessible by owner)
 
 import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { useTranslations } from "next-intl"
 
 export const metadata: Metadata = {
-  title: "Analytics - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Analytics - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default function AnalyticsPage() {

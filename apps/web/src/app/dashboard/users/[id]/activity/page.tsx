@@ -1,6 +1,8 @@
-//Users/id/activity  page
-
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import DashboardHeader from "../../../components/common/dashboardHeader"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
@@ -11,9 +13,8 @@ import DriverActivityPageComponent from "./driverActivity"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "User Activity - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `User Activity - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function UserActivityPage({

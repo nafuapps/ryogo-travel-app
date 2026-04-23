@@ -1,6 +1,8 @@
-//All Customers page
-
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "../components/common/dashboardHeader"
@@ -8,9 +10,8 @@ import CustomersPageComponent from "../customers/customers"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Customers - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Customers - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function AllCustomersPage() {

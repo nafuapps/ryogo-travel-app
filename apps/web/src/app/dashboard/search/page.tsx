@@ -1,17 +1,18 @@
-//Search page
-
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "../components/common/dashboardHeader"
 import SearchPageComponent from "./search"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Search - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Search - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function SearchPage() {

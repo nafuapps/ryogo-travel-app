@@ -1,6 +1,10 @@
 //Users/new page (only accessible to owner)
 
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "../../components/common/dashboardHeader"
@@ -8,9 +12,8 @@ import NewAgentPageComponent from "./newAgent"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "New User - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `New User - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function NewUserPage() {

@@ -6,15 +6,18 @@ import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { BookingRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Confirm Booking - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Confirm Booking - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ConfirmBookingPage({

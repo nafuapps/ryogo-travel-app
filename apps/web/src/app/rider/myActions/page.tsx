@@ -1,11 +1,11 @@
 //Rider My actions home page
 
 import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 
 export const metadata: Metadata = {
-  title: "My Actions - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `My Actions - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function MyActionsPage() {

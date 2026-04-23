@@ -1,6 +1,8 @@
-//MyBookings/[id]/Add-expense page
-
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
 import RiderAddExpensePageComponent from "./riderAddExpense"
@@ -10,9 +12,8 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Add Expense - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Add Expense - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function RiderAddExpensePage({

@@ -1,6 +1,10 @@
 //Account/agency details page
 
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import MyProfileAgencyDetailsPageComponent from "./myProfileAgencyDetails"
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
@@ -11,9 +15,8 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "My Agency - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `My Agency - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function MyProfileAgencyDetailsPage() {

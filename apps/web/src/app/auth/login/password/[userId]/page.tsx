@@ -4,11 +4,11 @@ import { Metadata } from "next"
 import LoginPasswordPageComponent from "./loginPassword"
 import { UserRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 
 export const metadata: Metadata = {
-  title: "Login with Password - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Login with Password - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function LoginPasswordPage({

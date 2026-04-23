@@ -1,7 +1,11 @@
 //Account/Agency/change-email page (only accessible to owner)
 
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import ChangeAgencyEmailPageComponent from "./changeAgencyEmail"
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
@@ -10,9 +14,8 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Change Agency Email - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Change Agency Email - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ChangeAgencyEmailPage() {

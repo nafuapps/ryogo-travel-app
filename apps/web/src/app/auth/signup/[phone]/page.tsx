@@ -4,11 +4,11 @@ import { PhoneRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
 import SignupExistingPageComponent from "./signupExisting"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 
 export const metadata: Metadata = {
-  title: "Signup Accounts - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Signup Accounts - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function SignupExistingPage({

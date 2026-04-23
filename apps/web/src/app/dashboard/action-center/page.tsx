@@ -1,12 +1,12 @@
 //Action_center page
 
 import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { useTranslations } from "next-intl"
 
 export const metadata: Metadata = {
-  title: "Action Center - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Action Center - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default function ActionCenterPage() {

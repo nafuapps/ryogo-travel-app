@@ -1,6 +1,10 @@
 //MyBooking/[id] page
 
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "../../components/riderHeader"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -15,9 +19,8 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Booking Details - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Booking Details - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function MyBookingPage({

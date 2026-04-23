@@ -1,7 +1,9 @@
-//Bookings/id/expenses/modify page
-
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
@@ -12,9 +14,8 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Modify Booking Expense - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Modify Booking Expense - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ModifyExpensePage({

@@ -1,16 +1,17 @@
-//Vehicles/id/modify page
-
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import ModifyVehiclePageComponent from "./modifyVehicle"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Modify Vehicle - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Modify Vehicle - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ModifyVehiclePage({

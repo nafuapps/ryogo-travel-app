@@ -1,7 +1,11 @@
 //Account/agency/change-phone page (only accessible to owner)
 
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
@@ -10,9 +14,8 @@ import ChangeAgencyPhonePageComponent from "./changeAgencyPhone"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Change Agency Phone - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Change Agency Phone - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ChangeAgencyPhonePage() {

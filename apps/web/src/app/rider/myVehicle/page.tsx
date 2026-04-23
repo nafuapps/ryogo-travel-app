@@ -1,6 +1,8 @@
-//MyVehicle home page
-
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
@@ -10,9 +12,8 @@ import RiderMyVehiclePageComponent from "./myVehicle"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "My Vehicle - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `My Vehicle - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function MyVehiclePage() {

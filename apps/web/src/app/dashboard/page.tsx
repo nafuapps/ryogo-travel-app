@@ -1,16 +1,19 @@
 //Dashboard home page
 
-import { mainClassName } from "@/components/page/pageCommons"
-import DashboardHomePageComponent from "./dashboardHome"
-import DashboardHeader from "./components/common/dashboardHeader"
+import {
+  mainClassName,
+  pageTitle,
+  pageDescription,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import DashboardHeader from "./components/common/dashboardHeader"
+import DashboardHomePageComponent from "./dashboardHome"
 
 export const metadata: Metadata = {
-  title: "Dashboard - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Dashboard - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function DashboardHomePage() {

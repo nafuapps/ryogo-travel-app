@@ -1,7 +1,11 @@
 //Bookings/id/reconcile page (only accessible to owner)
 
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
-import { mainClassName } from "@/components/page/pageCommons"
+import {
+  mainClassName,
+  pageDescription,
+  pageTitle,
+} from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { BookingRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -11,9 +15,8 @@ import ReconcileBookingPageComponent from "./reconcileBooking"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Reconcile Booking - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Reconcile Booking - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function ReconcileBookingPage({

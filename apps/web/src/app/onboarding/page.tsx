@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { redirect, RedirectType } from "next/navigation"
 import OnboardingHomeStepItem from "./components/onboardingHomeStepItem"
@@ -24,9 +25,8 @@ import OnboardingHomeDocumentItem from "./components/onboardingHomeDocumentItem"
 import RyoGoLogo from "@/components/logo"
 
 export const metadata: Metadata = {
-  title: "Onboarding - RyoGo Travel Agency App",
-  description:
-    "RyoGo is an app for Indian travel agencies to automate their daily operations",
+  title: `Onboarding - ${pageTitle}`,
+  description: pageDescription,
 }
 
 export default async function OnboardingHomePage() {

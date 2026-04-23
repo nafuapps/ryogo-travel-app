@@ -3,7 +3,7 @@ import {
   FindDriversByAgencyType,
   driverServices,
 } from "@ryogo-travel-app/api/services/driver.services"
-import { LucideRows3, LucideUser } from "lucide-react"
+import { LucideRows3, LucideUser, Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
   gridClassName,
@@ -33,18 +33,16 @@ export default async function AllDriversListComponent({
         <LucideRows3 className={iconClassName} />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allDrivers.length}</H5Grey>
+        <Link href={`/dashboard/drivers/new`} className="ml-auto">
+          <Button variant={"outline"}>
+            <Plus className="size-4 md:size-5 text-slate-700" />
+            {t("AddDriver")}
+          </Button>
+        </Link>
       </div>
       {allDrivers.map((driver) => (
         <AllDriversItemComponent key={driver.id} driver={driver} />
       ))}
-      <Link
-        href={`/dashboard/drivers/new`}
-        className="w-full md:w-1/2 self-center"
-      >
-        <Button variant={"default"} className="w-full">
-          {t("AddDriver")}
-        </Button>
-      </Link>
     </div>
   )
 }

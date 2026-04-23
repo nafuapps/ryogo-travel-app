@@ -20,7 +20,6 @@ import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { addExpenseAction } from "@/app/actions/expenses/addExpenseAction"
 import { useTransition } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function RiderAddExpensePageComponent({
   bookingId,
@@ -102,57 +101,55 @@ export default function RiderAddExpensePageComponent({
   return (
     <div id="NewExpensePage" className={pageClassName}>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            onSubmit={formData.handleSubmit(onSubmit)}
-            id="newExpenseForm"
-            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        <form
+          onSubmit={formData.handleSubmit(onSubmit)}
+          id="newExpenseForm"
+          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          <DashboardSelect
+            name="type"
+            title={t("Field1.Title")}
+            register={formData.register("type")}
+            array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
+            placeholder={t("Field1.Description")}
+          />
+          <DashboardInput
+            name="amount"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            type="tel"
+          />
+          <DashboardTextarea
+            name="remarks"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+          />
+          <DashboardFileInput
+            name={"expensePhoto"}
+            register={formData.register("expensePhoto")}
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+            description={t("Field4.Description")}
+          />
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
           >
-            <DashboardSelect
-              name="type"
-              title={t("Field1.Title")}
-              register={formData.register("type")}
-              array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
-              placeholder={t("Field1.Description")}
-            />
-            <DashboardInput
-              name="amount"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              type="tel"
-            />
-            <DashboardTextarea
-              name="remarks"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-            />
-            <DashboardFileInput
-              name={"expensePhoto"}
-              register={formData.register("expensePhoto")}
-              label={t("Field4.Title")}
-              placeholder={t("Field4.Placeholder")}
-              description={t("Field4.Description")}
-            />
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"default"}
-              type="button"
-              disabled={isPending}
-              onClick={() => router.back()}
-            >
-              {t("CancelCTA")}
-            </Button>
-          </form>
-        </ScrollArea>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"default"}
+            type="button"
+            disabled={isPending}
+            onClick={() => router.back()}
+          >
+            {t("CancelCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

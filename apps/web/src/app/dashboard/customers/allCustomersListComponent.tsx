@@ -2,7 +2,7 @@
 
 import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { LucideRows3, LucideUser } from "lucide-react"
+import { LucideRows3, LucideUser, Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import {
   gridClassName,
@@ -47,7 +47,21 @@ export default function AllCustomersListComponent({
     } else if (PhoneRegex.safeParse(term).success) {
       setDisplayedCustomers(allCustomers.filter((c) => c.phone === term))
     } else {
-      setDisplayedCustomers(allCustomers.filter((c) => c.name.includes(term)))
+      setDisplayedCustomers(
+        allCustomers.filter((c) => {
+          const upperTerm = term.toUpperCase()
+          return (
+            c.location.city.toUpperCase().includes(upperTerm) ||
+            c.location.state.toUpperCase().includes(upperTerm) ||
+            c.name.toUpperCase().includes(upperTerm) ||
+            c.phone.toUpperCase().includes(upperTerm) ||
+            c.remarks?.toUpperCase().includes(upperTerm) ||
+            c.address?.toUpperCase().includes(upperTerm) ||
+            c.email?.toUpperCase().includes(upperTerm) ||
+            c.status.toUpperCase().includes(upperTerm)
+          )
+        }),
+      )
     }
   }
 
@@ -57,12 +71,13 @@ export default function AllCustomersListComponent({
         <LucideRows3 className={iconClassName} />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allCustomers.length}</H5Grey>
+        <Link href={`/dashboard/customers/new`} className="ml-auto">
+          <Button variant={"outline"}>
+            <Plus className="size-4 md:size-5 text-slate-700" />
+            {t("AddCustomer")}
+          </Button>
+        </Link>
       </div>
-      <Link href={`/dashboard/customers/new`} className="min-w-1/2 self-center">
-        <Button variant={"default"} className="w-full">
-          {t("AddCustomer")}
-        </Button>
-      </Link>
       <Field>
         <ButtonGroup>
           <Input

@@ -20,10 +20,8 @@ import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import NewBookingVehicleTile from "./newBookingVehicleTile"
 import NewBookingDriverTile from "./newBookingDriverTile"
-import { Separator } from "@/components/ui/separator"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -85,69 +83,67 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <ScrollArea>
-          <form
-            id="Step3Form"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className={newBookingFormClassName}
-          >
-            <div className={newBookingFormBlockClassName}>
-              <PBold>{t("Vehicle.Title")}</PBold>
-              <div
-                id="vehicleAssignment"
-                className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-              >
-                {props.vehicles
-                  .sort(
-                    (a, b) =>
-                      a.assignedBookings.length - b.assignedBookings.length,
-                  )
-                  .map((vehicle, index) => (
-                    <NewBookingVehicleTile
-                      key={index}
-                      vehicleData={vehicle}
-                      newBookingFormData={props.newBookingFormData}
-                      setValue={form.setValue}
-                    />
-                  ))}
-              </div>
-            </div>
-            <div className={newBookingFormBlockClassName}>
-              <PBold>{t("Driver.Title")}</PBold>
-              <div
-                id="driverAssignment"
-                className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-              >
-                {props.drivers.map((driver, index) => (
-                  <NewBookingDriverTile
+        <form
+          id="Step3Form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={newBookingFormClassName}
+        >
+          <div className={newBookingFormBlockClassName}>
+            <PBold>{t("Vehicle.Title")}</PBold>
+            <div
+              id="vehicleAssignment"
+              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+            >
+              {props.vehicles
+                .sort(
+                  (a, b) =>
+                    a.assignedBookings.length - b.assignedBookings.length,
+                )
+                .map((vehicle, index) => (
+                  <NewBookingVehicleTile
                     key={index}
-                    driverData={driver}
+                    vehicleData={vehicle}
                     newBookingFormData={props.newBookingFormData}
                     setValue={form.setValue}
                   />
                 ))}
-              </div>
             </div>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={form.formState.isSubmitting}
+          </div>
+          <div className={newBookingFormBlockClassName}>
+            <PBold>{t("Driver.Title")}</PBold>
+            <div
+              id="driverAssignment"
+              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
             >
-              {form.formState.isSubmitting && <Spinner />}
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              type="button"
-              onClick={props.onPrev}
-              disabled={form.formState.isSubmitting}
-            >
-              {t("Back")}
-            </Button>
-          </form>
-        </ScrollArea>
+              {props.drivers.map((driver, index) => (
+                <NewBookingDriverTile
+                  key={index}
+                  driverData={driver}
+                  newBookingFormData={props.newBookingFormData}
+                  setValue={form.setValue}
+                />
+              ))}
+            </div>
+          </div>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting && <Spinner />}
+            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={props.onPrev}
+            disabled={form.formState.isSubmitting}
+          >
+            {t("Back")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

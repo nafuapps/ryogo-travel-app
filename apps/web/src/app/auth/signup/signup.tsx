@@ -22,7 +22,6 @@ import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import { useTransition } from "react"
 import { FindUsersByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -72,40 +71,38 @@ export default function SignupPageComponent() {
       className="flex flex-col justify-center w-full rounded-lg shadow bg-white p-6 md:p-8"
     >
       <Form {...methods}>
-        <ScrollArea>
-          <form
-            id="SignupForm"
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="flex flex-col justify-between gap-4 md:gap-6"
-          >
-            <H4>{t("PageTitle")}</H4>
-            <FormField
-              control={methods.control}
-              name={"phoneNumber"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    <SmallGrey>{t("Input.Title")}</SmallGrey>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="tel"
-                      placeholder={t("Input.Placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div id="SignupActions" className="flex flex-col gap-4 w-full">
-              <Button variant={"default"} size={"lg"} disabled={isPending}>
-                {isPending && <Spinner />}
-                {isPending ? t("Loading") : t("PrimaryCTA")}
-              </Button>
-            </div>
-          </form>
-        </ScrollArea>
+        <form
+          id="SignupForm"
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="flex flex-col justify-between gap-4 md:gap-6"
+        >
+          <H4>{t("PageTitle")}</H4>
+          <FormField
+            control={methods.control}
+            name={"phoneNumber"}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <SmallGrey>{t("Input.Title")}</SmallGrey>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="tel"
+                    placeholder={t("Input.Placeholder")}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div id="SignupActions" className="flex flex-col gap-4 w-full">
+            <Button variant={"default"} size={"lg"} disabled={isPending}>
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+          </div>
+        </form>
       </Form>
     </div>
   )

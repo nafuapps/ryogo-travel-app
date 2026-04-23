@@ -14,7 +14,12 @@ import {
 import { Button } from "@/components/ui/button"
 import { LucideCheck } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { ScrollArea } from "@/components/ui/scroll-area"
+
+export const CreateAccountTotalSteps = 5
+export const VerifyAccountTotalSteps = 1
+export const AddVehicleTotalSteps = 5
+export const AddDriverTotalSteps = 4
+export const AddAgentTotalSteps = 2
 
 export type OnboardingStepPageProps = {
   pageId: string
@@ -64,11 +69,9 @@ export type OnboardingStepFormProps = {
 
 export function OnboardingStepForm(props: OnboardingStepFormProps) {
   return (
-    <ScrollArea>
-      <form id={props.formId} onSubmit={props.submit} className={formClassName}>
-        {props.children}
-      </form>
-    </ScrollArea>
+    <form id={props.formId} onSubmit={props.submit} className={formClassName}>
+      {props.children}
+    </form>
   )
 }
 

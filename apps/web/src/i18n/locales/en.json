@@ -258,12 +258,14 @@
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Resend Code",
-        "Timeout": "Wait 5 minutes to resend code",
+        "Timeout": "Wait {difference} minutes to resend code",
         "VerifySuccess": "Code verified!",
-        "Loading": "Loading",
+        "Loading": "Loading..",
+        "Sending": "Sending code..",
         "APIError": "Code does not match",
         "ResendError": "Cannot resend code.. try again later",
-        "ResendSuccess": "New verification code has been sent to your email"
+        "ResendSuccess": "New verification code has been sent to your email",
+        "Help":"Not able to receive code? Please contact our support team."
       },
       "Finish": {
         "Title": "Great!",
@@ -653,7 +655,8 @@
     },
     "Sidebar": {
       "Logo":"RyoGo Logo",
-      "Heading": "Setting up your agency account",
+      "Heading": "Setting up your account",
+      "NumberSteps":"{number, plural, =1 {[1 step]} other {[# steps]}}",
       "Step1": {
         "Title": "Create Account",
         "Description": "Create owner account and agency profile"
@@ -736,7 +739,7 @@
         "/dashboard/drivers/[id]/leaves/modify": "Modify Leave",
         "/dashboard/search": "Search",
         "/dashboard/users": "Users",
-        "/dashboard/users/new": "New User",
+        "/dashboard/users/new": "New Agent",
         "/dashboard/users/[id]": "User Details",
         "/dashboard/users/[id]/change-email": "Change User Email",
         "/dashboard/users/[id]/change-phone": "Change User Phone",
@@ -1580,7 +1583,7 @@
         "RatePerKm": "Vehicle Charge Per Km",
         "HasAC": "Has AC?",
         "ACChagePerDay": "AC Charge Per Day",
-        "PrimaryCTA": "Confirm and Submit",
+        "PrimaryCTA": "Confirm and Add Vehicle",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
         "APISuccess": "Vehicle added successfully!",
@@ -1950,7 +1953,7 @@
         "DriverAddress": "Address",
         "CanDriveVehicleTypes": "Can Drive",
         "DefaultAllowancePerDay": "Allowance Per Day",
-        "PrimaryCTA": "Confirm and Add",
+        "PrimaryCTA": "Confirm and Add Driver",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
         "APIError": "Driver could not be added.. please try again",
@@ -2158,7 +2161,7 @@
       "APIError": "Customer with this phone is already added.. try another phone number",
       "Success": "Customer added successfully!",
       "Error": "Cannot add customer.. Try again later!",
-      "PrimaryCTA": "Save changes",
+      "PrimaryCTA": "Confirm and Add Customer",
       "Loading": "Loading..",
       "SecondaryCTA": "Back"
     },
@@ -2482,7 +2485,7 @@
         "Error1": "Image file size should be less than 1MB",
         "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
-      "PrimaryCTA": "Continue",
+      "PrimaryCTA": "Confirm and Add Agent",
       "Loading": "Loading",
       "SecondaryCTA": "Back",
       "APIError1": "Agent with this phone already added .. try adding with a different phone",

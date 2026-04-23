@@ -26,9 +26,9 @@ export default async function BookingExpensesPageComponent({
       {canCreateExpense && (
         <Link
           href={`/dashboard/bookings/${bookingId}/expenses/new`}
-          className="min-w-1/2 self-center"
+          className="w-full md:w-1/2 self-center"
         >
-          <Button variant={"default"} className="w-full">
+          <Button variant={"outline"} className="w-full">
             {t("AddExpense")}
           </Button>
         </Link>

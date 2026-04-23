@@ -16,10 +16,13 @@ import { useTransition } from "react"
 import { toast } from "sonner"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { resendCodeAction } from "@/app/actions/users/resendCodeAction"
+import { CaptionGrey } from "@/components/typography"
+
+const TimeoutMinutes = 5
 
 export function VerifyAccountStep1(props: {
   onNext: () => void
-  canResend: boolean
+  resendDifference: number
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage.Step1")
   const [isPending, startTransition] = useTransition()
@@ -79,10 +82,17 @@ export function VerifyAccountStep1(props: {
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction
             onClick={resendCode}
-            disabled={isPending || !props.canResend}
+            disabled={isPending || props.resendDifference < TimeoutMinutes}
           >
-            {props.canResend ? t("SecondaryCTA") : t("Timeout")}
+            {isPending
+              ? t("Sending")
+              : props.resendDifference >= TimeoutMinutes
+                ? t("SecondaryCTA")
+                : t("Timeout", {
+                    difference: TimeoutMinutes - props.resendDifference,
+                  })}
           </OnboardingStepSecondaryAction>
+          <CaptionGrey>{t("Help")}</CaptionGrey>
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

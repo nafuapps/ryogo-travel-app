@@ -11,11 +11,9 @@ import { Form } from "@/components/ui/form"
 import { DashboardInput } from "@/components/form/dashboardFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
-
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeEmailAction } from "@/app/actions/users/changeEmailAction"
 import { useTransition } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ChangeEmailAccountComponent({
   usersWithPhoneRole,
@@ -95,47 +93,45 @@ export default function ChangeEmailAccountComponent({
   return (
     <div id="ChangePassword" className={pageClassName}>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            id="ChangePasswordForm"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-          >
-            <DashboardInput
-              name={"password"}
-              type="password"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <DashboardInput
-              name={"newEmail"}
-              type="email"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-            />
+        <form
+          id="ChangePasswordForm"
+          onSubmit={formData.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          <DashboardInput
+            name={"password"}
+            type="password"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <DashboardInput
+            name={"newEmail"}
+            type="email"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
 
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"secondary"}
-              size={"lg"}
-              type="button"
-              onClick={() => router.back()}
-              disabled={isPending}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </form>
-        </ScrollArea>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"secondary"}
+            size={"lg"}
+            type="button"
+            onClick={() => router.back()}
+            disabled={isPending}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

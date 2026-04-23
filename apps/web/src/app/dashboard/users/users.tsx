@@ -4,7 +4,7 @@ import {
   userServices,
 } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { LucideRows3, LucideUser } from "lucide-react"
+import { LucideRows3, LucideUser, Plus } from "lucide-react"
 import {
   sectionClassName,
   sectionHeaderClassName,
@@ -51,12 +51,13 @@ export default async function UsersPageComponent({
           <LucideRows3 className={iconClassName} />
           <SmallGrey>{t("Agents.Title")}</SmallGrey>
           <H5Grey>{agents.length}</H5Grey>
+          <Link href={`/dashboard/users/new`} className="ml-auto">
+            <Button variant={"outline"}>
+              <Plus className="size-4 md:size-5 text-slate-700" />
+              {t("Agents.AddAgent")}
+            </Button>
+          </Link>
         </div>
-        <Link href={`/dashboard/users/new`} className="min-w-1/2 self-center">
-          <Button variant={"default"} className="w-full">
-            {t("Agents.AddAgent")}
-          </Button>
-        </Link>
         {agents.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}
@@ -66,12 +67,13 @@ export default async function UsersPageComponent({
           <LucideRows3 className={iconClassName} />
           <SmallGrey>{t("Drivers.Title")}</SmallGrey>
           <H5Grey>{drivers.length}</H5Grey>
+          <Link href={`/dashboard/drivers/new`} className="ml-auto">
+            <Button variant={"outline"}>
+              <Plus className="size-4 md:size-5 text-slate-700" />
+              {t("Drivers.AddDriver")}
+            </Button>
+          </Link>
         </div>
-        <Link href={`/dashboard/drivers/new`} className="min-w-1/2 self-center">
-          <Button variant={"default"} className="w-full">
-            {t("Drivers.AddDriver")}
-          </Button>
-        </Link>
         {drivers.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}

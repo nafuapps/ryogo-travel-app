@@ -22,7 +22,6 @@ import z from "zod"
 import { changeCustomerPhotoAction } from "@/app/actions/customers/changeCustomerPhotoAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ChangeCustomerPhotoSheet({
   customerId,
@@ -91,18 +90,16 @@ export default function ChangeCustomerPhotoSheet({
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <ScrollArea>
-            <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
-              <div className="p-4 lg:p-5">
-                <DashboardFileInput
-                  name={"customerPhotos"}
-                  register={formData.register("customerPhotos")}
-                  label={t("Title")}
-                  placeholder={t("Placeholder")}
-                />
-              </div>
-            </form>
-          </ScrollArea>
+          <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
+            <div className="p-4 lg:p-5">
+              <DashboardFileInput
+                name={"customerPhotos"}
+                register={formData.register("customerPhotos")}
+                label={t("Title")}
+                placeholder={t("Placeholder")}
+              />
+            </div>
+          </form>
         </Form>
         <SheetFooter>
           <SheetClose asChild>

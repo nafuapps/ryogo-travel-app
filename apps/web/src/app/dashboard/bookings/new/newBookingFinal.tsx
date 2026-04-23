@@ -39,7 +39,6 @@ import { Alert } from "@/components/ui/alert"
 import NewBookingTripInfo from "./newBookingTripInfo"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -120,100 +119,93 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <ScrollArea>
-          <form
-            id="FinalForm"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className={newBookingFormClassName}
-          >
-            <NewBookingTripInfo {...props.newBookingFormData} />
-            <div className={newBookingFormBlockClassName}>
-              <div id="finalRate" className={newBookingLineItemClassName}>
-                <BigIconTextTag icon={LucideCar} text={t("VehicleCharge")} />
-                <div className={newBookingLineSubtitleClassName}>
-                  <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
-                  <CaptionGrey>
-                    {t("VehicleSubtitle", {
-                      charge: props.newBookingFormData.selectedRatePerKm!,
-                      distance: finalAmount.totalDistance,
-                    })}
-                  </CaptionGrey>
-                </div>
+        <form
+          id="FinalForm"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={newBookingFormClassName}
+        >
+          <NewBookingTripInfo {...props.newBookingFormData} />
+          <div className={newBookingFormBlockClassName}>
+            <div id="finalRate" className={newBookingLineItemClassName}>
+              <BigIconTextTag icon={LucideCar} text={t("VehicleCharge")} />
+              <div className={newBookingLineSubtitleClassName}>
+                <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
+                <CaptionGrey>
+                  {t("VehicleSubtitle", {
+                    charge: props.newBookingFormData.selectedRatePerKm!,
+                    distance: finalAmount.totalDistance,
+                  })}
+                </CaptionGrey>
               </div>
-              {props.newBookingFormData.tripNeedsAC && (
-                <div id="finalAC" className={newBookingLineItemClassName}>
-                  <BigIconTextTag icon={LucideAirVent} text={t("ACCharge")} />
-                  <div className={newBookingLineSubtitleClassName}>
-                    <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
-                    <CaptionGrey>
-                      {t("ACSubtitle", {
-                        ac: props.newBookingFormData.selectedAcChargePerDay!,
-                        days: finalAmount.days,
-                      })}
-                    </CaptionGrey>
-                  </div>
-                </div>
-              )}
-              <div id="finalAllowance" className={newBookingLineItemClassName}>
-                <BigIconTextTag
-                  icon={LucideIdCard}
-                  text={t("DriverAllowance")}
-                />
+            </div>
+            {props.newBookingFormData.tripNeedsAC && (
+              <div id="finalAC" className={newBookingLineItemClassName}>
+                <BigIconTextTag icon={LucideAirVent} text={t("ACCharge")} />
                 <div className={newBookingLineSubtitleClassName}>
-                  <SmallBold>
-                    {"₹" + finalAmount.totalDriverAllowance}
-                  </SmallBold>
+                  <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
                   <CaptionGrey>
-                    {t("DriverSubtitle", {
-                      allowance:
-                        props.newBookingFormData.selectedAllowancePerDay!,
+                    {t("ACSubtitle", {
+                      ac: props.newBookingFormData.selectedAcChargePerDay!,
                       days: finalAmount.days,
                     })}
                   </CaptionGrey>
                 </div>
               </div>
-              <div id="finalCommission" className={newBookingLineItemClassName}>
-                <BigIconTextTag
-                  icon={LucideCirclePercent}
-                  text={t("Commission")}
-                />
-                <div className={newBookingLineSubtitleClassName}>
-                  <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
-                  <CaptionGrey>
-                    {props.newBookingFormData.selectedCommissionRate + "%"}
-                  </CaptionGrey>
-                </div>
+            )}
+            <div id="finalAllowance" className={newBookingLineItemClassName}>
+              <BigIconTextTag icon={LucideIdCard} text={t("DriverAllowance")} />
+              <div className={newBookingLineSubtitleClassName}>
+                <SmallBold>{"₹" + finalAmount.totalDriverAllowance}</SmallBold>
+                <CaptionGrey>
+                  {t("DriverSubtitle", {
+                    allowance:
+                      props.newBookingFormData.selectedAllowancePerDay!,
+                    days: finalAmount.days,
+                  })}
+                </CaptionGrey>
               </div>
             </div>
-            <div id="finalPrice" className={newBookingLineItemClassName}>
-              <H5>{t("TotalAmount")}</H5>
-              <H4>{"₹" + finalAmount.totalAmount}</H4>
+            <div id="finalCommission" className={newBookingLineItemClassName}>
+              <BigIconTextTag
+                icon={LucideCirclePercent}
+                text={t("Commission")}
+              />
+              <div className={newBookingLineSubtitleClassName}>
+                <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
+                <CaptionGrey>
+                  {props.newBookingFormData.selectedCommissionRate + "%"}
+                </CaptionGrey>
+              </div>
             </div>
+          </div>
+          <div id="finalPrice" className={newBookingLineItemClassName}>
+            <H5>{t("TotalAmount")}</H5>
+            <H4>{"₹" + finalAmount.totalAmount}</H4>
+          </div>
 
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              type="button"
-              onClick={props.onPrev}
-              disabled={isPending}
-            >
-              {t("Back")}
-            </Button>
-            <Alert>
-              <LucideInfo className="size-8 lg:size-10 text-amber-300" />
-              <Small>{t("CreateInfo")}</Small>
-            </Alert>
-          </form>
-        </ScrollArea>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={props.onPrev}
+            disabled={isPending}
+          >
+            {t("Back")}
+          </Button>
+          <Alert>
+            <LucideInfo className="size-8 lg:size-10 text-amber-300" />
+            <Small>{t("CreateInfo")}</Small>
+          </Alert>
+        </form>
       </Form>
     </div>
   )

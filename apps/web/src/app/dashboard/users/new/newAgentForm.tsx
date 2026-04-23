@@ -18,7 +18,6 @@ import z from "zod"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { useTransition } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function NewAgentForm({
   agencyId,
@@ -114,60 +113,58 @@ export default function NewAgentForm({
   return (
     <div id="NewAgentPage" className={pageClassName}>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            onSubmit={formData.handleSubmit(onSubmit)}
-            id="newAgentForm"
-            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        <form
+          onSubmit={formData.handleSubmit(onSubmit)}
+          id="newAgentForm"
+          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          <DashboardInput
+            name={"agentName"}
+            type="text"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <DashboardInput
+            name={"agentPhone"}
+            type="tel"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+          <DashboardInput
+            name={"agentEmail"}
+            type="email"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+          <DashboardFileInput
+            name={"agenctPhotos"}
+            register={formData.register("agentPhotos")}
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+            description={t("Field4.Description")}
+          />
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
           >
-            <DashboardInput
-              name={"agentName"}
-              type="text"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <DashboardInput
-              name={"agentPhone"}
-              type="tel"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-            />
-            <DashboardInput
-              name={"agentEmail"}
-              type="email"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-            <DashboardFileInput
-              name={"agenctPhotos"}
-              register={formData.register("agentPhotos")}
-              label={t("Field4.Title")}
-              placeholder={t("Field4.Placeholder")}
-              description={t("Field4.Description")}
-            />
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"default"}
-              type="button"
-              disabled={isPending}
-              onClick={() => router.back()}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </form>
-        </ScrollArea>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"default"}
+            type="button"
+            disabled={isPending}
+            onClick={() => router.back()}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

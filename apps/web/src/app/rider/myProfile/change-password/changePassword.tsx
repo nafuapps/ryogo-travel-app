@@ -13,7 +13,6 @@ import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
 import { useTransition } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ChangePasswordMyProfileComponent({
   userId,
@@ -86,53 +85,51 @@ export default function ChangePasswordMyProfileComponent({
   return (
     <div id="ChangePassword" className={pageClassName}>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            id="ChangePasswordForm"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        <form
+          id="ChangePasswordForm"
+          onSubmit={formData.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          <DashboardInput
+            name={"oldPassword"}
+            type="password"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <DashboardInput
+            name={"newPassword"}
+            type="password"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+          <DashboardInput
+            name={"confirmPassword"}
+            type="password"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
           >
-            <DashboardInput
-              name={"oldPassword"}
-              type="password"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <DashboardInput
-              name={"newPassword"}
-              type="password"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-            />
-            <DashboardInput
-              name={"confirmPassword"}
-              type="password"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"secondary"}
-              size={"lg"}
-              type="button"
-              onClick={() => router.back()}
-              disabled={isPending}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </form>
-        </ScrollArea>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"secondary"}
+            size={"lg"}
+            type="button"
+            onClick={() => router.back()}
+            disabled={isPending}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

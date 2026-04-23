@@ -22,7 +22,6 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserPhotoAction } from "@/app/actions/users/changeUserPhotoAction"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ChangeDriverPhotoSheet({
   userId,
@@ -85,18 +84,16 @@ export default function ChangeDriverPhotoSheet({
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <ScrollArea>
-            <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
-              <div className="p-4 lg:p-5">
-                <DashboardFileInput
-                  name={"driverPhotos"}
-                  register={formData.register("driverPhotos")}
-                  label={t("Title")}
-                  placeholder={t("Placeholder")}
-                />
-              </div>
-            </form>
-          </ScrollArea>
+          <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
+            <div className="p-4 lg:p-5">
+              <DashboardFileInput
+                name={"driverPhotos"}
+                register={formData.register("driverPhotos")}
+                label={t("Title")}
+                placeholder={t("Placeholder")}
+              />
+            </div>
+          </form>
         </Form>
         <SheetFooter>
           <SheetClose asChild>

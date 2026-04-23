@@ -27,9 +27,9 @@ export default async function BookingTransactionsPageComponent({
       {canCreateTransaction && (
         <Link
           href={`/dashboard/bookings/${bookingId}/transactions/new`}
-          className="min-w-1/2 self-center"
+          className="w-full md:w-1/2 self-center"
         >
-          <Button variant={"default"} className="w-full">
+          <Button variant={"outline"} className="w-full">
             {t("AddTransaction")}
           </Button>
         </Link>

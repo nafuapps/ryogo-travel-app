@@ -20,7 +20,6 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function NewVehicleStep2(props: {
   onNext: () => void
@@ -128,72 +127,70 @@ export function NewVehicleStep2(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={4} current={1} />
+        <NewBookingStepsTracker total={5} current={1} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            id="Step2Form"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className={newBookingFormClassName}
+        <form
+          id="Step2Form"
+          onSubmit={formData.handleSubmit(onSubmit)}
+          className={newBookingFormClassName}
+        >
+          <div id="Step2Fields" className="flex flex-col gap-3 lg:gap-4">
+            <DashboardInput
+              name={"capacity"}
+              type="tel"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <DashboardInput
+              name={"odometerReading"}
+              type="tel"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
+            />
+            <DashboardFileInput
+              name={"rcPhotos"}
+              register={formData.register("rcPhotos")}
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+              description={t("Field3.Description")}
+            />
+            <DashboardFileInput
+              name={"vehiclePhotos"}
+              register={formData.register("vehiclePhotos")}
+              label={t("Field4.Title")}
+              placeholder={t("Field4.Placeholder")}
+              description={t("Field4.Description")}
+            />
+            <DashboardDatePicker
+              name="rcExpiresOn"
+              label={t("Field5.Title")}
+              placeholder={t("Field5.Placeholder")}
+              description={t("Field5.Description")}
+            />
+          </div>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={formData.formState.isSubmitting}
           >
-            <div id="Step2Fields" className="flex flex-col gap-3 lg:gap-4">
-              <DashboardInput
-                name={"capacity"}
-                type="tel"
-                label={t("Field1.Title")}
-                placeholder={t("Field1.Placeholder")}
-                description={t("Field1.Description")}
-              />
-              <DashboardInput
-                name={"odometerReading"}
-                type="tel"
-                label={t("Field2.Title")}
-                placeholder={t("Field2.Placeholder")}
-                description={t("Field2.Description")}
-              />
-              <DashboardFileInput
-                name={"rcPhotos"}
-                register={formData.register("rcPhotos")}
-                label={t("Field3.Title")}
-                placeholder={t("Field3.Placeholder")}
-                description={t("Field3.Description")}
-              />
-              <DashboardFileInput
-                name={"vehiclePhotos"}
-                register={formData.register("vehiclePhotos")}
-                label={t("Field4.Title")}
-                placeholder={t("Field4.Placeholder")}
-                description={t("Field4.Description")}
-              />
-              <DashboardDatePicker
-                name="rcExpiresOn"
-                label={t("Field5.Title")}
-                placeholder={t("Field5.Placeholder")}
-                description={t("Field5.Description")}
-              />
-            </div>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={formData.formState.isSubmitting}
-            >
-              {formData.formState.isSubmitting && <Spinner />}
-              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"secondary"}
-              size={"lg"}
-              type="button"
-              onClick={props.onPrev}
-              disabled={formData.formState.isSubmitting}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </form>
-        </ScrollArea>
+            {formData.formState.isSubmitting && <Spinner />}
+            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"secondary"}
+            size={"lg"}
+            type="button"
+            onClick={props.onPrev}
+            disabled={formData.formState.isSubmitting}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

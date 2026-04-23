@@ -43,7 +43,6 @@ import {
   DriverStatusPill,
   VehicleStatusPill,
 } from "@/components/statusPills/statusPills"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -268,47 +267,45 @@ export default function SearchPageComponent({
           />
         </div>
         <Form {...formData}>
-          <ScrollArea>
-            <form
-              id="SearchForm"
-              onSubmit={formData.handleSubmit(onSubmit)}
-              className="w-full"
-            >
-              <FormField
-                name={"searchTerm"}
-                render={({ field }) => (
-                  <FormItem>
-                    <InputGroup>
-                      <InputGroupAddon>
-                        <LucideSearch className="size-4 lg:size-5 text-slate-400" />
-                      </InputGroupAddon>
-                      <InputGroupInput
-                        placeholder={t("Field1.Placeholder")}
-                        {...field}
-                      />
-                      <Button
-                        variant="link"
-                        aria-label="Clear"
-                        onClick={() => formData.setValue("searchTerm", "")}
-                        disabled={formData.getValues("searchTerm") === ""}
-                      >
-                        <CaptionGrey>{t("Clear")}</CaptionGrey>
-                      </Button>
-                      <Button
-                        type="submit"
-                        variant="default"
-                        aria-label="Search"
-                        disabled={formData.getValues("searchTerm").length < 3}
-                      >
-                        {t("Search")}
-                      </Button>
-                    </InputGroup>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </form>
-          </ScrollArea>
+          <form
+            id="SearchForm"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className="w-full"
+          >
+            <FormField
+              name={"searchTerm"}
+              render={({ field }) => (
+                <FormItem>
+                  <InputGroup>
+                    <InputGroupAddon>
+                      <LucideSearch className="size-4 lg:size-5 text-slate-400" />
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      placeholder={t("Field1.Placeholder")}
+                      {...field}
+                    />
+                    <Button
+                      variant="link"
+                      aria-label="Clear"
+                      onClick={() => formData.setValue("searchTerm", "")}
+                      disabled={formData.getValues("searchTerm") === ""}
+                    >
+                      <CaptionGrey>{t("Clear")}</CaptionGrey>
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="default"
+                      aria-label="Search"
+                      disabled={formData.getValues("searchTerm").length < 3}
+                    >
+                      {t("Search")}
+                    </Button>
+                  </InputGroup>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
         </Form>
         {recentSearches && recentSearches.length > 0 && (
           <div

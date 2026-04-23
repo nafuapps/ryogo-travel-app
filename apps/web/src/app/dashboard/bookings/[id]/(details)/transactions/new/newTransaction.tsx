@@ -25,7 +25,6 @@ import { addTransactionAction } from "@/app/actions/transactions/addTransactionA
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -110,72 +109,70 @@ export default function NewTransactionPageComponent({
   return (
     <div id="NewTransactionPage" className={pageClassName}>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            onSubmit={formData.handleSubmit(onSubmit)}
-            id="newTransactionForm"
-            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        <form
+          onSubmit={formData.handleSubmit(onSubmit)}
+          id="newTransactionForm"
+          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          <DashboardRadio
+            name="type"
+            title={t("Field1.Title")}
+            register={formData.register("type")}
+            defaultValue={TransactionTypesEnum.CREDIT}
+            array={getEnumValueDisplayPairs(TransactionTypesEnum)}
+            description={t("Field1.Description")}
+          />
+          <DashboardInput
+            name="amount"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            type="tel"
+          />
+          <DashboardSelect
+            name="mode"
+            register={formData.register("mode")}
+            title={t("Field3.Title")}
+            array={getEnumValueDisplayPairs(TransactionModesEnum)}
+            placeholder={t("Field3.Placeholder")}
+          />
+          <DashboardSelect
+            name="otherParty"
+            register={formData.register("otherParty")}
+            title={t("Field4.Title")}
+            array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
+            placeholder={t("Field4.Placeholder")}
+          />
+          <DashboardTextarea
+            name="remarks"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+          />
+          <DashboardFileInput
+            name={"txnPhoto"}
+            register={formData.register("txnPhoto")}
+            label={t("Field6.Title")}
+            placeholder={t("Field6.Placeholder")}
+            description={t("Field6.Description")}
+          />
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
           >
-            <DashboardRadio
-              name="type"
-              title={t("Field1.Title")}
-              register={formData.register("type")}
-              defaultValue={TransactionTypesEnum.CREDIT}
-              array={getEnumValueDisplayPairs(TransactionTypesEnum)}
-              description={t("Field1.Description")}
-            />
-            <DashboardInput
-              name="amount"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              type="tel"
-            />
-            <DashboardSelect
-              name="mode"
-              register={formData.register("mode")}
-              title={t("Field3.Title")}
-              array={getEnumValueDisplayPairs(TransactionModesEnum)}
-              placeholder={t("Field3.Placeholder")}
-            />
-            <DashboardSelect
-              name="otherParty"
-              register={formData.register("otherParty")}
-              title={t("Field4.Title")}
-              array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
-              placeholder={t("Field4.Placeholder")}
-            />
-            <DashboardTextarea
-              name="remarks"
-              label={t("Field5.Title")}
-              placeholder={t("Field5.Placeholder")}
-            />
-            <DashboardFileInput
-              name={"txnPhoto"}
-              register={formData.register("txnPhoto")}
-              label={t("Field6.Title")}
-              placeholder={t("Field6.Placeholder")}
-              description={t("Field6.Description")}
-            />
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"default"}
-              type="button"
-              disabled={isPending}
-              onClick={() => router.back()}
-            >
-              {t("CancelCTA")}
-            </Button>
-          </form>
-        </ScrollArea>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"default"}
+            type="button"
+            disabled={isPending}
+            onClick={() => router.back()}
+          >
+            {t("CancelCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

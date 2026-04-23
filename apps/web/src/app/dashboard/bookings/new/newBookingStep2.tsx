@@ -2,7 +2,6 @@ import {
   CaptionBold,
   CaptionGrey,
   H4,
-  PBold,
   SmallBold,
   SmallGrey,
 } from "@/components/typography"

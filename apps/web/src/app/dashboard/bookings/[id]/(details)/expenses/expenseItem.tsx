@@ -64,10 +64,7 @@ export default async function ExpenseItem({
           <CaptionGrey>
             {format(expense.createdAt, "dd MMM hh:mm aaa")}
           </CaptionGrey>
-          <CaptionGrey>
-            {expense.addedByUser.name} (
-            {expense.addedByUser.userRole.toUpperCase()})
-          </CaptionGrey>
+          <CaptionGrey>{expense.addedByUser.name}</CaptionGrey>
         </div>
         <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
           <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">

@@ -9,6 +9,7 @@ import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "@/app/onboarding/components/stepsTracker"
 import { useState } from "react"
 import {
+  AddDriverTotalSteps,
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
@@ -21,8 +22,6 @@ import { AddDriverConfirm } from "./addDriverStep4"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-
-const TotalSteps = 4
 
 type AddDriverPageComponentProps = {
   agencyId: string
@@ -96,16 +95,19 @@ export default function AddDriverPageComponent(
   return (
     <>
       <OnboardingStepPage pageId="AddDriverPage">
-        {currentStepIndex < TotalSteps && (
+        {currentStepIndex < AddDriverTotalSteps && (
           <OnboardingStepHeader headerId="AddDriverHeader">
             <OnboardingStepHeaderTopLine>
               <H2>{t("Title")}</H2>
             </OnboardingStepHeaderTopLine>
-            <StepsTracker total={TotalSteps} current={currentStepIndex} />
+            <StepsTracker
+              total={AddDriverTotalSteps}
+              current={currentStepIndex}
+            />
             <CaptionGrey>
               {t("Description", {
                 step: currentStepIndex + 1,
-                total: TotalSteps,
+                total: AddDriverTotalSteps,
               })}
             </CaptionGrey>
           </OnboardingStepHeader>

@@ -22,7 +22,7 @@ export default async function NewUserPage() {
   const agencyId = currentUser.agencyId
   return (
     <div className={mainClassName}>
-      <DashboardHeader pathName={"/dashboard/users"} />
+      <DashboardHeader pathName={"/dashboard/users/new"} />
       <NewAgentPageComponent agencyId={agencyId} />
     </div>
   )

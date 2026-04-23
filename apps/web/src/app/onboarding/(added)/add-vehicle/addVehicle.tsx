@@ -9,6 +9,7 @@ import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "@/app/onboarding/components/stepsTracker"
 import { useState } from "react"
 import {
+  AddVehicleTotalSteps,
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
@@ -21,8 +22,6 @@ import { AddVehicleStep4 } from "./addVehicleStep4"
 import { AddVehicleConfirm } from "./addVehicleStep5"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-
-const TotalSteps = 5
 
 type AddVehiclePageComponentProps = {
   agencyId: string
@@ -104,16 +103,19 @@ export default function AddVehiclePageComponent(
   return (
     <>
       <OnboardingStepPage pageId="AddVehiclePage">
-        {currentStepIndex < TotalSteps && (
+        {currentStepIndex < AddVehicleTotalSteps && (
           <OnboardingStepHeader headerId="AddVehicleHeader">
             <OnboardingStepHeaderTopLine>
               <H2>{t("Title")}</H2>
             </OnboardingStepHeaderTopLine>
-            <StepsTracker total={TotalSteps} current={currentStepIndex} />
+            <StepsTracker
+              total={AddVehicleTotalSteps}
+              current={currentStepIndex}
+            />
             <CaptionGrey>
               {t("Description", {
                 step: currentStepIndex + 1,
-                total: TotalSteps,
+                total: AddVehicleTotalSteps,
               })}
             </CaptionGrey>
           </OnboardingStepHeader>

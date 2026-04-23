@@ -17,7 +17,6 @@ import { toast } from "sonner"
 import z from "zod"
 import { changeAgencyEmailAction } from "@/app/actions/agencies/changeAgencyEmailAction"
 import { useTransition } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ChangeAgencyEmailPageComponent({
   agency,
@@ -75,39 +74,37 @@ export default function ChangeAgencyEmailPageComponent({
   return (
     <div id="ChangeAgencyEmailPage" className={pageClassName}>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            id="ChangeAgencyEmailForm"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        <form
+          id="ChangeAgencyEmailForm"
+          onSubmit={formData.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          <DashboardInput
+            name={"newEmail"}
+            type="email"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
           >
-            <DashboardInput
-              name={"newEmail"}
-              type="email"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"secondary"}
-              size={"lg"}
-              type="button"
-              onClick={() => router.back()}
-              disabled={isPending}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </form>{" "}
-        </ScrollArea>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"secondary"}
+            size={"lg"}
+            type="button"
+            onClick={() => router.back()}
+            disabled={isPending}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

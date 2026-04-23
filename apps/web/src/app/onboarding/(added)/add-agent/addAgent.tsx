@@ -9,6 +9,7 @@ import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "@/app/onboarding/components/stepsTracker"
 import { useState } from "react"
 import {
+  AddAgentTotalSteps,
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
@@ -19,8 +20,6 @@ import { AddAgentConfirm } from "./addAgentStep2"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-
-const TotalSteps = 2
 
 type AddAgentPageComponentProps = {
   agencyId: string
@@ -74,16 +73,19 @@ export default function AddAgentPageComponent(
   return (
     <>
       <OnboardingStepPage pageId="AddAgentPage">
-        {currentStepIndex < TotalSteps && (
+        {currentStepIndex < AddAgentTotalSteps && (
           <OnboardingStepHeader headerId="AddAgentHeader">
             <OnboardingStepHeaderTopLine>
               <H2>{t("Title")}</H2>
             </OnboardingStepHeaderTopLine>
-            <StepsTracker total={TotalSteps} current={currentStepIndex} />
+            <StepsTracker
+              total={AddAgentTotalSteps}
+              current={currentStepIndex}
+            />
             <CaptionGrey>
               {t("Description", {
                 step: currentStepIndex + 1,
-                total: TotalSteps,
+                total: AddAgentTotalSteps,
               })}
             </CaptionGrey>
           </OnboardingStepHeader>

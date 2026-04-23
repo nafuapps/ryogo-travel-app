@@ -45,6 +45,7 @@ export default async function VerifyAccountPage() {
   if (currentUser.isVerified) {
     redirect("/onboarding/add-vehicle", RedirectType.replace)
   }
+
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
   return <VerifyAccountPageComponent updatedAt={userDetails?.updatedAt} />
 }

@@ -11,12 +11,13 @@ import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
+  VerifyAccountTotalSteps,
 } from "@/app/onboarding/components/onboardingSteps"
 import { VerifyAccountStep1 } from "./verifyAccountStep1"
 import { VerifyAccountFinish } from "./verifyAccountFinish"
 import { differenceInMinutes } from "date-fns"
-
-const TotalSteps = 1
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 type VerifyAccountPageComponentProps = {
   updatedAt?: Date
@@ -25,38 +26,48 @@ export default function VerifyAccountPageComponent(
   props: VerifyAccountPageComponentProps,
 ) {
   const t = useTranslations("Onboarding.VerifyAccountPage")
+  const router = useRouter()
 
   const nextStepHandler = () => {
     nextStep()
   }
 
-  const { currentStepIndex, isLastStep, nextStep, prevStep, steps } =
-    useMultiStepForm([
-      <VerifyAccountStep1
-        key={0}
-        onNext={nextStepHandler}
-        canResend={
-          props.updatedAt
-            ? differenceInMinutes(new Date(), props.updatedAt) > 5
-            : true
-        }
-      />,
-      <VerifyAccountFinish key={1} />,
-    ])
+  //Refresh page to check if the resend timer is up
+  useEffect(() => {
+    const interval = setInterval(() => {
+      router.refresh()
+    }, 60000) // 60,000ms = 1 minute
+
+    return () => clearInterval(interval) // Cleanup on unmount
+  }, [router])
+
+  const { currentStepIndex, isLastStep, nextStep, steps } = useMultiStepForm([
+    <VerifyAccountStep1
+      key={0}
+      onNext={nextStepHandler}
+      resendDifference={
+        props.updatedAt ? differenceInMinutes(new Date(), props.updatedAt) : 999
+      }
+    />,
+    <VerifyAccountFinish key={1} />,
+  ])
 
   return (
     <>
       <OnboardingStepPage pageId="VerifyAccountPage">
-        {currentStepIndex < TotalSteps && (
+        {currentStepIndex < VerifyAccountTotalSteps && (
           <OnboardingStepHeader headerId="VerifyAccountHeader">
             <OnboardingStepHeaderTopLine>
               <H2>{t("Title")}</H2>
             </OnboardingStepHeaderTopLine>
-            <StepsTracker total={TotalSteps} current={currentStepIndex} />
+            <StepsTracker
+              total={VerifyAccountTotalSteps}
+              current={currentStepIndex}
+            />
             <CaptionGrey>
               {t("Description", {
                 step: currentStepIndex + 1,
-                total: TotalSteps,
+                total: VerifyAccountTotalSteps,
               })}
             </CaptionGrey>
           </OnboardingStepHeader>

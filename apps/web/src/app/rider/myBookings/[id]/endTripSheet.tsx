@@ -29,7 +29,6 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { endTripAction } from "@/app/actions/bookings/endTripAction"
 import Link from "next/link"
 import { UrlObject } from "url"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 const TOTAL_STARS = 5
 
@@ -137,47 +136,45 @@ export default function EndTripSheet({
           <SheetDescription>{t("Warning")}</SheetDescription>
         </SheetHeader>
         <Form {...formData}>
-          <ScrollArea>
-            <form
-              id="endTrip"
-              onSubmit={formData.handleSubmit(onSubmit)}
-              className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
-            >
-              <DashboardInput
-                name={"odometerReading"}
-                type="tel"
-                label={t("Field1.Title")}
-                placeholder={t("Field1.Placeholder")}
-                description={t("Field1.Description")}
-              />
-              <DashboardFileInput
-                name={"tripLogPhoto"}
-                register={formData.register("tripLogPhoto")}
-                label={t("Field2.Title")}
-                placeholder={t("Field2.Placeholder")}
-                description={t("Field2.Description")}
-              />
-              <DashboardTextarea
-                name="remarks"
-                label={t("Field3.Title")}
-                placeholder={t("Field3.Placeholder")}
-              />
-              <DashboardRating
-                name="customerRating"
-                label={t("Field4.Title")}
-                selectedStars={customerRating}
-                setSelectedStars={setCustomerRating}
-                totalStars={TOTAL_STARS}
-              />
-              <DashboardRating
-                name="bookingRating"
-                label={t("Field5.Title")}
-                selectedStars={bookingRating}
-                setSelectedStars={setBookingRating}
-                totalStars={TOTAL_STARS}
-              />
-            </form>
-          </ScrollArea>
+          <form
+            id="endTrip"
+            onSubmit={formData.handleSubmit(onSubmit)}
+            className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
+          >
+            <DashboardInput
+              name={"odometerReading"}
+              type="tel"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <DashboardFileInput
+              name={"tripLogPhoto"}
+              register={formData.register("tripLogPhoto")}
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
+            />
+            <DashboardTextarea
+              name="remarks"
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+            />
+            <DashboardRating
+              name="customerRating"
+              label={t("Field4.Title")}
+              selectedStars={customerRating}
+              setSelectedStars={setCustomerRating}
+              totalStars={TOTAL_STARS}
+            />
+            <DashboardRating
+              name="bookingRating"
+              label={t("Field5.Title")}
+              selectedStars={bookingRating}
+              setSelectedStars={setBookingRating}
+              totalStars={TOTAL_STARS}
+            />
+          </form>
         </Form>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="endTrip">

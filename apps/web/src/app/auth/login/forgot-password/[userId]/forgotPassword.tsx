@@ -22,7 +22,6 @@ import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 import { useTransition } from "react"
 import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ForgotPasswordPageComponent({
   userId,
@@ -67,53 +66,48 @@ export default function ForgotPasswordPageComponent({
       className="flex flex-col justify-center w-full rounded-lg shadow bg-white p-6 md:p-8"
     >
       <Form {...methods}>
-        <ScrollArea>
-          <form
-            id="ForgorPasswordForm"
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="flex flex-col justify-between gap-4 md:gap-6 h-full"
-          >
-            <H4>{t("PageTitle")}</H4>
-            <FormField
-              control={methods.control}
-              name={"email"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    <SmallGrey>{t("Info")}</SmallGrey>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder={t("Input.Placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>{t("Input.Description")}</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div
-              id="ConfirmEmailActions"
-              className="flex flex-col gap-4 w-full"
+        <form
+          id="ForgorPasswordForm"
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="flex flex-col justify-between gap-4 md:gap-6 h-full"
+        >
+          <H4>{t("PageTitle")}</H4>
+          <FormField
+            control={methods.control}
+            name={"email"}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <SmallGrey>{t("Info")}</SmallGrey>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder={t("Input.Placeholder")}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>{t("Input.Description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div id="ConfirmEmailActions" className="flex flex-col gap-4 w-full">
+            <Button variant={"default"} size={"lg"} disabled={isPending}>
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"secondary"}
+              type="button"
+              onClick={() => {
+                router.back()
+              }}
             >
-              <Button variant={"default"} size={"lg"} disabled={isPending}>
-                {isPending && <Spinner />}
-                {isPending ? t("Loading") : t("PrimaryCTA")}
-              </Button>
-              <Button
-                variant={"secondary"}
-                type="button"
-                onClick={() => {
-                  router.back()
-                }}
-              >
-                {t("Back")}
-              </Button>
-            </div>
-          </form>
-        </ScrollArea>
+              {t("Back")}
+            </Button>
+          </div>
+        </form>
       </Form>
     </div>
   )

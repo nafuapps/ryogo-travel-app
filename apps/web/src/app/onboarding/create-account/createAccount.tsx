@@ -15,6 +15,7 @@ import { CreateAccountStep4 } from "./createAccountStep4"
 import { CreateAccountConfirm } from "./createAccountStep5"
 import { useState } from "react"
 import {
+  CreateAccountTotalSteps,
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
@@ -22,8 +23,6 @@ import {
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-
-const TotalSteps = 5
 
 export default function CreateAccountPageComponent({
   allOwners,
@@ -105,16 +104,19 @@ export default function CreateAccountPageComponent({
   return (
     <>
       <OnboardingStepPage pageId="CreateAccountPage">
-        {currentStepIndex < TotalSteps && (
+        {currentStepIndex < CreateAccountTotalSteps && (
           <OnboardingStepHeader headerId="CreateAccountHeader">
             <OnboardingStepHeaderTopLine>
               <H2>{t("Title")}</H2>
             </OnboardingStepHeaderTopLine>
-            <StepsTracker total={TotalSteps} current={currentStepIndex} />
+            <StepsTracker
+              total={CreateAccountTotalSteps}
+              current={currentStepIndex}
+            />
             <CaptionGrey>
               {t("Description", {
                 step: currentStepIndex + 1,
-                total: TotalSteps,
+                total: CreateAccountTotalSteps,
               })}
             </CaptionGrey>
           </OnboardingStepHeader>

@@ -28,18 +28,13 @@ import BookingItem from "@/app/dashboard/components/bookings/bookingItem"
 import BookingSection from "@/app/dashboard/components/bookings/bookingSection"
 import BookingPriceItem from "@/app/dashboard/components/bookings/bookingPriceItem"
 import {
-  ArrowLeftRight,
   BriefcaseBusiness,
   CalendarCheck,
-  Car,
   Contact,
-  IdCard,
   LifeBuoy,
   ReceiptIndianRupee,
   Route,
-  SquareArrowOutUpRight,
 } from "lucide-react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ConfirmBookingPageComponent({
   booking,
@@ -159,52 +154,50 @@ export default function ConfirmBookingPageComponent({
         </BookingSection>
         <BookingSection sectionTitle={t("ConfirmInfo")} icon={CalendarCheck}>
           <Form {...form}>
-            <ScrollArea>
-              <form
-                onSubmit={form.handleSubmit(confirm)}
-                className="flex flex-col gap-2 lg:gap-3"
-              >
-                <DashboardTextarea
-                  name="pickupAddress"
-                  label={t("PickupAddress")}
-                  placeholder={t("PickupAddressPlaceholder")}
-                />
-                <DashboardCheckbox
-                  register={form.register("sameAsCustomerAddress")}
-                  name={"sameAsCustomerAddress"}
-                  label={t("SameAsCustomerAddress")}
-                />
-                <DashboardTextarea
-                  name="dropAddress"
-                  label={t("DropAddress")}
-                  placeholder={t("DropAddressPlaceholder")}
-                />
-                <DashboardTimePicker name="startTime" label={t("PickupTime")} />
-                {(isOwner || isAssignedUser) && (
-                  <>
-                    <BookingAlertDialog
-                      title={t("Confirm.Title")}
-                      desc={t("Confirm.Desc")}
-                      noCTA={t("Confirm.NoCTA")}
-                      labelChild={
-                        <Button variant={"default"} className="w-full">
-                          {t("Confirm.Label")}
-                        </Button>
-                      }
-                    >
-                      <Button
-                        onClick={() => form.handleSubmit(confirm)()}
-                        variant={"default"}
-                        disabled={isConfirmPending}
-                      >
-                        {isConfirmPending && <Spinner />}
-                        {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
+            <form
+              onSubmit={form.handleSubmit(confirm)}
+              className="flex flex-col gap-2 lg:gap-3"
+            >
+              <DashboardTextarea
+                name="pickupAddress"
+                label={t("PickupAddress")}
+                placeholder={t("PickupAddressPlaceholder")}
+              />
+              <DashboardCheckbox
+                register={form.register("sameAsCustomerAddress")}
+                name={"sameAsCustomerAddress"}
+                label={t("SameAsCustomerAddress")}
+              />
+              <DashboardTextarea
+                name="dropAddress"
+                label={t("DropAddress")}
+                placeholder={t("DropAddressPlaceholder")}
+              />
+              <DashboardTimePicker name="startTime" label={t("PickupTime")} />
+              {(isOwner || isAssignedUser) && (
+                <>
+                  <BookingAlertDialog
+                    title={t("Confirm.Title")}
+                    desc={t("Confirm.Desc")}
+                    noCTA={t("Confirm.NoCTA")}
+                    labelChild={
+                      <Button variant={"default"} className="w-full">
+                        {t("Confirm.Label")}
                       </Button>
-                    </BookingAlertDialog>
-                  </>
-                )}
-              </form>
-            </ScrollArea>
+                    }
+                  >
+                    <Button
+                      onClick={() => form.handleSubmit(confirm)()}
+                      variant={"default"}
+                      disabled={isConfirmPending}
+                    >
+                      {isConfirmPending && <Spinner />}
+                      {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
+                    </Button>
+                  </BookingAlertDialog>
+                </>
+              )}
+            </form>
           </Form>
         </BookingSection>
         <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>

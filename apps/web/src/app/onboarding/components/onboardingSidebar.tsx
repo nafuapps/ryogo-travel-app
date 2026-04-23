@@ -2,10 +2,9 @@ import {
   Caption,
   CaptionGrey,
   H3Grey,
-  H5,
   H5Brand,
   H5Grey,
-  PBold,
+  P,
   PBrand,
   PGrey,
 } from "@/components/typography"
@@ -13,6 +12,13 @@ import { Sidebar, useSidebar } from "@/components/ui/sidebar"
 import { LucideCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import RyoGoLogo from "@/components/logo"
+import {
+  AddAgentTotalSteps,
+  AddDriverTotalSteps,
+  AddVehicleTotalSteps,
+  CreateAccountTotalSteps,
+  VerifyAccountTotalSteps,
+} from "./onboardingSteps"
 
 export default function OnboardingSidebar({
   currentProcess,
@@ -28,22 +34,27 @@ export default function OnboardingSidebar({
     {
       title: t("Step1.Title"),
       description: t("Step1.Description"),
+      steps: t("NumberSteps", { number: CreateAccountTotalSteps }),
     },
     {
       title: t("Step2.Title"),
       description: t("Step2.Description"),
+      steps: t("NumberSteps", { number: VerifyAccountTotalSteps }),
     },
     {
       title: t("Step3.Title"),
       description: t("Step3.Description"),
+      steps: t("NumberSteps", { number: AddVehicleTotalSteps }),
     },
     {
       title: t("Step4.Title"),
       description: t("Step4.Description"),
+      steps: t("NumberSteps", { number: AddDriverTotalSteps }),
     },
     {
       title: t("Step5.Title"),
       description: t("Step5.Description"),
+      steps: t("NumberSteps", { number: AddAgentTotalSteps }),
     },
   ]
   return (
@@ -84,12 +95,14 @@ export default function OnboardingSidebar({
                 </div>
                 {index < items.length - 1 && (
                   <div
-                    className={`w-0.5 h-8 ${currentProcess > index ? "bg-sky-700" : "bg-slate-200"} rounded-full`}
+                    className={`w-0.5 h-10 ${currentProcess > index ? "bg-sky-700" : "bg-slate-200"} rounded-full`}
                   ></div>
                 )}
               </div>
               <div className="flex flex-col items-start">
-                {currentProcess >= index ? (
+                {currentProcess > index ? (
+                  <P>{item.title}</P>
+                ) : currentProcess === index ? (
                   <PBrand>{item.title}</PBrand>
                 ) : (
                   <PGrey>{item.title}</PGrey>
@@ -98,6 +111,11 @@ export default function OnboardingSidebar({
                   <Caption>{item.description}</Caption>
                 ) : (
                   <CaptionGrey>{item.description}</CaptionGrey>
+                )}
+                {currentProcess >= index ? (
+                  <Caption>{item.steps}</Caption>
+                ) : (
+                  <CaptionGrey>{item.steps}</CaptionGrey>
                 )}
               </div>
             </div>

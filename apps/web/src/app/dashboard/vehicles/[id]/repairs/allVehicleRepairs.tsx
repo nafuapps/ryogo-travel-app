@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server"
 import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import Link from "next/link"
 import { UrlObject } from "url"
-import { LucidePencil } from "lucide-react"
+import { LucidePencil, Plus } from "lucide-react"
 import { gridItemClassName, pageClassName } from "@/components/page/pageCommons"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
@@ -35,7 +35,8 @@ export default async function AllVehicleRepairsPageComponent({
           href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
           className="w-full md:w-1/2 self-center"
         >
-          <Button variant={"default"} className="w-full">
+          <Button variant={"outline"} className="w-full">
+            <Plus className="size-4 md:size-5 text-slate-700" />
             {t("AddRepair")}
           </Button>
         </Link>

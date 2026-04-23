@@ -11,7 +11,6 @@ import {
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Spinner } from "@/components/ui/spinner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -117,70 +116,68 @@ export default function ModifyDriverPageComponent({
   return (
     <div id="ModifyDriver" className={pageClassName}>
       <Form {...formData}>
-        <ScrollArea>
-          <form
-            id="ModifyDriverForm"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        <form
+          id="ModifyDriverForm"
+          onSubmit={formData.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          <DashboardTextarea
+            name={"address"}
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+          />
+          <DashboardMultipleCheckbox
+            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+            name={"canDriveVehicleTypes"}
+            label={t("Field2.Title")}
+            register={formData.register("canDriveVehicleTypes")}
+          />
+          <DashboardInput
+            name={"defaultAllowancePerDay"}
+            type="tel"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+          <DashboardInput
+            name={"licenseNumber"}
+            type="text"
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+            description={t("Field4.Description")}
+          />
+          <DashboardDatePicker
+            name="licenseExpiresOn"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+            description={t("Field5.Description")}
+          />
+          <DashboardFileInput
+            name={"licensePhotos"}
+            register={formData.register("licensePhotos")}
+            label={t("Field6.Title")}
+            placeholder={t("Field6.Placeholder")}
+            description={t("Field6.Description")}
+          />
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
           >
-            <DashboardTextarea
-              name={"address"}
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-            />
-            <DashboardMultipleCheckbox
-              array={getEnumValueDisplayPairs(VehicleTypesEnum)}
-              name={"canDriveVehicleTypes"}
-              label={t("Field2.Title")}
-              register={formData.register("canDriveVehicleTypes")}
-            />
-            <DashboardInput
-              name={"defaultAllowancePerDay"}
-              type="tel"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-            <DashboardInput
-              name={"licenseNumber"}
-              type="text"
-              label={t("Field4.Title")}
-              placeholder={t("Field4.Placeholder")}
-              description={t("Field4.Description")}
-            />
-            <DashboardDatePicker
-              name="licenseExpiresOn"
-              label={t("Field5.Title")}
-              placeholder={t("Field5.Placeholder")}
-              description={t("Field5.Description")}
-            />
-            <DashboardFileInput
-              name={"licensePhotos"}
-              register={formData.register("licensePhotos")}
-              label={t("Field6.Title")}
-              placeholder={t("Field6.Placeholder")}
-              description={t("Field6.Description")}
-            />
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"secondary"}
-              size={"lg"}
-              type="button"
-              onClick={() => router.back()}
-              disabled={isPending}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </form>
-        </ScrollArea>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"secondary"}
+            size={"lg"}
+            type="button"
+            onClick={() => router.back()}
+            disabled={isPending}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </form>
       </Form>
     </div>
   )

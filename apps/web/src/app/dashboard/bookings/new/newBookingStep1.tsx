@@ -22,7 +22,7 @@ import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import stateCityData from "@/lib/states_cities.json"
-import { Info, LucideInfo } from "lucide-react"
+import { Info } from "lucide-react"
 import { PhoneRegex } from "@/lib/regex"
 import { Alert } from "@/components/ui/alert"
 import ExistingCutomerCard from "./newBookingExistingCustomer"
@@ -31,7 +31,6 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 type NewBookingStep1Props = {
   onNext: () => void
@@ -138,76 +137,74 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <ScrollArea>
-          <form
-            id="Step1Form"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className={newBookingFormClassName}
-          >
-            <div id="FindCustomer" className={newBookingFormBlockClassName}>
+        <form
+          id="Step1Form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={newBookingFormClassName}
+        >
+          <div id="FindCustomer" className={newBookingFormBlockClassName}>
+            <DashboardInput
+              name="customerPhone"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              type="tel"
+            />
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={findCustomer}
+              className="flex flex-row justify-center items-center gap-4 w-full"
+            >
+              {t("FindCTA")}
+            </Button>
+            {existingCustomer && (
+              <ExistingCutomerCard existingCustomer={existingCustomer} />
+            )}
+          </div>
+          {customerNotFound && (
+            <div id="NewCustomer" className={newBookingFormBlockClassName}>
+              <Alert>
+                <Info className="size-4 lg:size-5 text-amber-300" />
+                <Small>{t("CustomerNotFound")}</Small>
+              </Alert>
               <DashboardInput
-                name="customerPhone"
-                label={t("Field1.Title")}
-                placeholder={t("Field1.Placeholder")}
-                type="tel"
+                name={"newCustomerName"}
+                type="text"
+                label={t("Field2.Title")}
+                placeholder={t("Field2.Placeholder")}
               />
-              <Button
-                variant={"outline"}
-                size={"lg"}
-                type="button"
-                onClick={findCustomer}
-                className="flex flex-row justify-center items-center gap-4 w-full"
-              >
-                {t("FindCTA")}
-              </Button>
-              {existingCustomer && (
-                <ExistingCutomerCard existingCustomer={existingCustomer} />
-              )}
+              <DashboardSelect
+                name={"newCustomerState"}
+                register={form.register("newCustomerState")}
+                title={t("Field3.Title")}
+                array={getArrayValueDisplayPairs(data)}
+                placeholder={t("Field3.Title")}
+                resetField={() => {
+                  form.setValue("newCustomerCity", "")
+                }}
+              />
+              <DashboardSelect
+                name={"newCustomerCity"}
+                register={form.register("newCustomerCity")}
+                title={t("Field4.Title")}
+                array={getStringValueDisplayPairs(cityOptions)}
+                placeholder={t("Field4.Title")}
+              />
             </div>
-            {customerNotFound && (
-              <div id="NewCustomer" className={newBookingFormBlockClassName}>
-                <Alert>
-                  <Info className="size-4 lg:size-5 text-amber-300" />
-                  <Small>{t("CustomerNotFound")}</Small>
-                </Alert>
-                <DashboardInput
-                  name={"newCustomerName"}
-                  type="text"
-                  label={t("Field2.Title")}
-                  placeholder={t("Field2.Placeholder")}
-                />
-                <DashboardSelect
-                  name={"newCustomerState"}
-                  register={form.register("newCustomerState")}
-                  title={t("Field3.Title")}
-                  array={getArrayValueDisplayPairs(data)}
-                  placeholder={t("Field3.Title")}
-                  resetField={() => {
-                    form.setValue("newCustomerCity", "")
-                  }}
-                />
-                <DashboardSelect
-                  name={"newCustomerCity"}
-                  register={form.register("newCustomerCity")}
-                  title={t("Field4.Title")}
-                  array={getStringValueDisplayPairs(cityOptions)}
-                  placeholder={t("Field4.Title")}
-                />
-              </div>
-            )}
-            {(existingCustomer || customerNotFound) && (
-              <Button
-                variant={"default"}
-                size={"lg"}
-                type="submit"
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting && <Spinner />}
-                {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-              </Button>
-            )}
-          </form>
-        </ScrollArea>
+          )}
+          {(existingCustomer || customerNotFound) && (
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+          )}
+        </form>
       </Form>
     </div>
   )

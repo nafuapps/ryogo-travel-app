@@ -2551,8 +2551,7 @@
         "Success": "Quote sent to the customer!",
         "Error": "Cannot send quote.. Try again later!",
         "Loading": "Loading..",
-        "YesCTA": "Yes, Send",
-        "QuoteSent": "Quote Sent!"
+        "YesCTA": "Yes, Send"
       },
       "DeleteTransaction": {
         "Label": "Delete Transaction",
@@ -2693,6 +2692,7 @@
         "ViewDetails": "View Details"
       }
     }
+    
   },
   "Rider": {
     "Sidebar": {

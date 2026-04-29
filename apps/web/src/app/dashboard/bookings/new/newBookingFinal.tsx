@@ -8,7 +8,6 @@ import {
 } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
-  getFinalPrice,
   newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
@@ -39,6 +38,7 @@ import { Alert } from "@/components/ui/alert"
 import NewBookingTripInfo from "./newBookingTripInfo"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
+import { getEstimatedTotalPrice } from "@/lib/utils"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -54,7 +54,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
   const form = useForm<NewBookingFormDataType>()
 
   //Calculate estimated final price to show (actual price is calculated in server when booking is created)
-  const finalAmount = getFinalPrice(props.newBookingFormData)
+  const finalAmount = getEstimatedTotalPrice(props.newBookingFormData)
 
   //Final form submit to create a new booking
   const onSubmit = async () => {

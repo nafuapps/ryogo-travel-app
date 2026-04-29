@@ -1,8 +1,8 @@
 import {
   BookingStatusEnum,
-  BookingTypeEnum,
   DriverStatusEnum,
   InsertBookingType,
+  TripLogTypesEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
@@ -16,6 +16,7 @@ import { tripLogRepository } from "../repositories/tripLog.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
+import { getEstimatedTotalPrice, getFinalTotalPrice } from "@/lib/utils"
 
 export const bookingServices = {
   //Bookings dashboard
@@ -323,7 +324,7 @@ export const bookingServices = {
       routeId = newRoute.id
     }
 
-    const finalPrice = this.getFinalPrice(data)
+    const finalPrice = getEstimatedTotalPrice(data)
 
     //Step4: Prepare data
     const newBookingData: InsertBookingType = {
@@ -346,9 +347,9 @@ export const bookingServices = {
       citydistance: data.selectedDistance,
       totalDistance: finalPrice.totalDistance,
       acChargePerDay: data.selectedAcChargePerDay,
-      totalAcCharge: finalPrice.totalAcCharge,
+      totalAcCharge: finalPrice.totalAcPrice,
       ratePerKm: data.selectedRatePerKm,
-      totalVehicleRate: finalPrice.totalVehicleRate,
+      totalVehicleRate: finalPrice.totalVehiclePrice,
       allowancePerDay: data.selectedAllowancePerDay,
       totalDriverAllowance: finalPrice.totalDriverAllowance,
       commissionRate: data.selectedCommissionRate,
@@ -421,6 +422,53 @@ export const bookingServices = {
       return
     }
     return booking[0]
+  },
+
+  //Update booking values on trip completion like total distance, total amount etc
+  async updateBookingCompletedValues(bookingId: string) {
+    const booking = await bookingRepository.readBookingDetailsById(bookingId)
+    if (!booking) return
+
+    const logs = await tripLogRepository.readTripLogsByBookingId(bookingId)
+    const startLog = logs.find(
+      (log) => log.type === TripLogTypesEnum.START_TRIP,
+    )
+    const endLog = logs.find((log) => log.type === TripLogTypesEnum.END_TRIP)
+    if (!startLog || !endLog) return
+
+    const startDate = startLog.createdAt
+    const endDate = endLog.createdAt
+
+    //Get actual distance from trip log odometer readings
+    const actualDistance = Math.max(
+      endLog.odometerReading - startLog.odometerReading,
+      booking.totalDistance * 0.8,
+    )
+
+    //Calculate final total price based on actual distance and trip duration for driver allowance and ac charge
+    const finalTotals = getFinalTotalPrice(
+      booking.type,
+      startDate,
+      endDate,
+      booking.ratePerKm,
+      booking.acChargePerDay,
+      booking.commissionRate,
+      booking.allowancePerDay,
+      actualDistance,
+    )
+
+    //Update actuals in DB
+    await bookingRepository.updateBookingTotals(
+      bookingId,
+      startDate,
+      endDate,
+      actualDistance,
+      finalTotals.totalVehiclePrice,
+      finalTotals.totalACPrice,
+      finalTotals.totalDriverAllowance,
+      finalTotals.totalCommission,
+      finalTotals.totalAmount,
+    )
   },
 
   //End booking to mark it completed
@@ -499,68 +547,20 @@ export const bookingServices = {
     return updatedBooking[0]
   },
 
-  // TODO: Send booking quote to customer over whatsapp
+  async addQuote(id: string, url: string) {
+    return bookingRepository.updateQuoteUrl(id, url)
+  },
+
   async sendQuote(id: string) {
-    return true
+    return bookingRepository.updateQuoteSent(id)
   },
 
-  // TODO: Send booking invoice to customer over whatsapp
+  async addInvoice(id: string, url: string) {
+    return bookingRepository.updateInvoiceUrl(id, url)
+  },
+
   async sendInvoice(id: string) {
-    return true
-  },
-
-  getFinalPrice(data: CreateNewBookingRequestType) {
-    const days =
-      Math.ceil(
-        (data.tripEndDate.getTime() - data.tripStartDate.getTime()) / 86400000,
-      ) + 1
-    const commissionRate = data.selectedCommissionRate
-
-    let totalDistance = data.selectedDistance
-    let totalAllowanceDays = 1
-
-    if (data.tripType === BookingTypeEnum.Round) {
-      //For round trip, double the vehicle rental
-      totalDistance *= 2
-      if (days > 1) {
-        //For round trip, double the driver allowance if not returning same day
-        totalAllowanceDays *= 2
-      } else {
-        totalAllowanceDays = 1.5
-      }
-    } else if (data.tripType === BookingTypeEnum.MultiDay) {
-      //For multi day trip, include intermediate tour days @ X(50) km
-      totalDistance = totalDistance * 2 + (days - 2) * 50
-      //For multi day trip, driver allowance is for each day
-      totalAllowanceDays *= days
-    }
-
-    const totalAcCharge =
-      data.tripNeedsAC && data.selectedAcChargePerDay
-        ? Math.round(data.selectedAcChargePerDay * totalAllowanceDays)
-        : 0
-
-    const totalVehicleRate = Math.round(totalDistance * data.selectedRatePerKm!)
-    const totalDriverAllowance = data.selectedAllowancePerDay
-      ? Math.round(totalAllowanceDays * data.selectedAllowancePerDay)
-      : 0
-
-    const netPrice = totalVehicleRate + totalDriverAllowance + totalAcCharge
-
-    const totalCommission = Math.round((netPrice * commissionRate) / 100)
-
-    const totalAmount = netPrice + totalCommission
-
-    return {
-      totalVehicleRate,
-      totalDistance,
-      totalDriverAllowance,
-      totalAcCharge,
-      totalCommission,
-      totalAmount,
-      totalAllowanceDays,
-      days,
-    }
+    return bookingRepository.updateInvoiceSent(id)
   },
 }
 

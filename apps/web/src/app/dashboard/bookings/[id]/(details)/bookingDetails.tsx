@@ -19,6 +19,7 @@ import {
   ReceiptIndianRupee,
   Route,
 } from "lucide-react"
+// import BookingPDFViewer from "./bookingPDFViewer"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -218,10 +219,10 @@ export default async function BookingDetailsPageComponent({
                 : "-"
             }
           />
-          <Button
-            variant={bookingDetails.assignedVehicle ? "outline" : "default"}
-          >
-            {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
+          {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
+            <Button
+              variant={bookingDetails.assignedVehicle ? "outline" : "default"}
+            >
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
                 className={linkClassName}
@@ -230,15 +231,19 @@ export default async function BookingDetailsPageComponent({
                   ? t("ChangeVehicle")
                   : t("AssignVehicle")}
               </Link>
-            ) : (
-              <Link
-                href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
-                className={linkClassName}
-              >
-                {t("ViewVehicleDetails")}
-              </Link>
-            )}
-          </Button>
+            </Button>
+          ) : (
+            bookingDetails.assignedVehicle && (
+              <Button variant={"outline"}>
+                <Link
+                  href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
+                  className={linkClassName}
+                >
+                  {t("ViewVehicleDetails")}
+                </Link>
+              </Button>
+            )
+          )}
           <BookingItem
             title={t("AssignDriver")}
             value={
@@ -247,10 +252,10 @@ export default async function BookingDetailsPageComponent({
                 : "-"
             }
           />
-          <Button
-            variant={bookingDetails.assignedDriver ? "outline" : "default"}
-          >
-            {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
+          {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
+            <Button
+              variant={bookingDetails.assignedDriver ? "outline" : "default"}
+            >
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
                 className={linkClassName}
@@ -259,15 +264,19 @@ export default async function BookingDetailsPageComponent({
                   ? t("ChangeDriver")
                   : t("AssignDriver")}
               </Link>
-            ) : (
-              <Link
-                href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
-                className={linkClassName}
-              >
-                {t("ViewDriverDetails")}
-              </Link>
-            )}
-          </Button>
+            </Button>
+          ) : (
+            bookingDetails.assignedDriver && (
+              <Button variant={"outline"}>
+                <Link
+                  href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
+                  className={linkClassName}
+                >
+                  {t("ViewDriverDetails")}
+                </Link>
+              </Button>
+            )
+          )}
         </BookingSection>
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>
           <BookingPriceItem
@@ -312,9 +321,11 @@ export default async function BookingDetailsPageComponent({
                 bookingId={bookingDetails.id}
                 agencyId={bookingDetails.agencyId}
                 assignedUserId={bookingDetails.assignedUserId}
+                invoiceSentOn={bookingDetails.invoiceSentOn}
               />
             )}
         </BookingSection>
+        {/* <BookingPDFViewer booking={bookingDetails} /> */}
       </div>
     </div>
   )

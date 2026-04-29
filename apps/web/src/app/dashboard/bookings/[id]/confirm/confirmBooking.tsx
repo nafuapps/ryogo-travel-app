@@ -1,29 +1,11 @@
-"use client"
-
 import { linkClassName, pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { useTranslations } from "next-intl"
-import z from "zod"
-import { confirmBookingAction } from "@/app/actions/bookings/confirmBookingAction"
-import { useEffect, useTransition } from "react"
-import { Spinner } from "@/components/ui/spinner"
-import {
-  DashboardCheckbox,
-  DashboardTextarea,
-  DashboardTimePicker,
-} from "@/components/form/dashboardFormFields"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form } from "@/components/ui/form"
 import Link from "next/link"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 import moment from "moment"
 import { format } from "date-fns"
 import CancelBookingAlertButton from "@/app/dashboard/components/buttons/cancelBookingAlertButton"
 import SendQuoteAlertButton from "@/app/dashboard/components/buttons/sendQuoteAlertButton"
-import BookingAlertDialog from "@/app/dashboard/components/buttons/bookingAlertDialog"
 import BookingItem from "@/app/dashboard/components/bookings/bookingItem"
 import BookingSection from "@/app/dashboard/components/bookings/bookingSection"
 import BookingPriceItem from "@/app/dashboard/components/bookings/bookingPriceItem"
@@ -35,8 +17,12 @@ import {
   ReceiptIndianRupee,
   Route,
 } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import ConfirmBookingForm from "./confirmBookingForm"
+// import { PDFViewer } from "@react-pdf/renderer"
+// import { QuoteDocument } from "@/components/pdf/getQuotePDF"
 
-export default function ConfirmBookingPageComponent({
+export default async function ConfirmBookingPageComponent({
   booking,
   isOwner,
   isAssignedUser,
@@ -45,71 +31,7 @@ export default function ConfirmBookingPageComponent({
   isOwner: boolean
   isAssignedUser: boolean
 }) {
-  const t = useTranslations("Dashboard.ConfirmBooking")
-  const router = useRouter()
-
-  const [isConfirmPending, startConfirmTransition] = useTransition()
-
-  const confirmBookingSchema = z.object({
-    pickupAddress: z
-      .string()
-      .min(10, t("AddressError1"))
-      .max(300, t("AddressError2")),
-    sameAsCustomerAddress: z.boolean(),
-    dropAddress: z
-      .string()
-      .min(10, t("AddressError1"))
-      .max(300, t("AddressError2")),
-    startTime: z.iso.time(t("PickupTimeError")).nonempty(t("PickupTimeError")),
-  })
-  type ConfirmBookingType = z.infer<typeof confirmBookingSchema>
-
-  const form = useForm<ConfirmBookingType>({
-    resolver: zodResolver(confirmBookingSchema),
-    defaultValues: {
-      pickupAddress: "",
-      sameAsCustomerAddress: false,
-      dropAddress: "",
-    },
-  })
-
-  //Confirm booking
-  async function confirm(values: ConfirmBookingType) {
-    startConfirmTransition(async () => {
-      const confirmedBooking = await confirmBookingAction(
-        booking.id,
-        booking.agencyId,
-        booking.assignedUserId,
-        values.startTime,
-        values.pickupAddress,
-        values.dropAddress,
-        booking.customer.address ? false : true,
-        booking.customer.id,
-      )
-      if (confirmedBooking) {
-        toast.success(t("ConfirmSuccess"))
-        router.replace(`/dashboard/bookings/${booking.id}`)
-      } else {
-        toast.error(t("ConfirmError"))
-      }
-    })
-  }
-
-  const setValue = form.setValue
-  // Watch the checkbox and the source input field
-  const pickupAddressCopySelection = form.watch("sameAsCustomerAddress")
-  const pickupAddressSourceValue = booking.customer.address
-
-  useEffect(() => {
-    if (!pickupAddressSourceValue) return
-    if (pickupAddressCopySelection) {
-      // If the checkbox is checked, set the target input's value
-      setValue("pickupAddress", pickupAddressSourceValue)
-    } else {
-      // Optionally, clear the target input if unchecked
-      setValue("pickupAddress", "")
-    }
-  }, [pickupAddressCopySelection, pickupAddressSourceValue, setValue])
+  const t = await getTranslations("Dashboard.ConfirmBooking")
 
   return (
     <div id="ConfirmBookingPage" className={pageClassName}>
@@ -153,52 +75,10 @@ export default function ConfirmBookingPageComponent({
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("ConfirmInfo")} icon={CalendarCheck}>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(confirm)}
-              className="flex flex-col gap-2 lg:gap-3"
-            >
-              <DashboardTextarea
-                name="pickupAddress"
-                label={t("PickupAddress")}
-                placeholder={t("PickupAddressPlaceholder")}
-              />
-              <DashboardCheckbox
-                register={form.register("sameAsCustomerAddress")}
-                name={"sameAsCustomerAddress"}
-                label={t("SameAsCustomerAddress")}
-              />
-              <DashboardTextarea
-                name="dropAddress"
-                label={t("DropAddress")}
-                placeholder={t("DropAddressPlaceholder")}
-              />
-              <DashboardTimePicker name="startTime" label={t("PickupTime")} />
-              {(isOwner || isAssignedUser) && (
-                <>
-                  <BookingAlertDialog
-                    title={t("Confirm.Title")}
-                    desc={t("Confirm.Desc")}
-                    noCTA={t("Confirm.NoCTA")}
-                    labelChild={
-                      <Button variant={"default"} className="w-full">
-                        {t("Confirm.Label")}
-                      </Button>
-                    }
-                  >
-                    <Button
-                      onClick={() => form.handleSubmit(confirm)()}
-                      variant={"default"}
-                      disabled={isConfirmPending}
-                    >
-                      {isConfirmPending && <Spinner />}
-                      {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
-                    </Button>
-                  </BookingAlertDialog>
-                </>
-              )}
-            </form>
-          </Form>
+          <ConfirmBookingForm
+            booking={booking}
+            canConfirm={isOwner || isAssignedUser}
+          />
         </BookingSection>
         <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
           <BookingItem
@@ -336,9 +216,13 @@ export default function ConfirmBookingPageComponent({
               bookingId={booking.id}
               agencyId={booking.agencyId}
               assignedUserId={booking.assignedUserId}
+              quoteSentOn={booking.quoteSentOn}
             />
           )}
         </BookingSection>
+        {/* <PDFViewer className="lg:col-span-2 w-full h-screen">
+          <QuoteDocument booking={booking} />
+        </PDFViewer> */}
       </div>
     </div>
   )

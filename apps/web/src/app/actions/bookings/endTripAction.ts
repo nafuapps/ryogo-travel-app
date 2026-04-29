@@ -28,17 +28,6 @@ export async function endTripAction(data: {
     return
   }
 
-  //Change Booking, Driver and vehicle status to Completed
-  const bookingChanged = await bookingServices.changeBookingToCompleted(
-    data.bookingId,
-    data.driverId,
-    data.vehicleId,
-    data.customerId,
-    data.customerRating,
-    data.bookingRating,
-  )
-  if (!bookingChanged) return
-
   // Create End Trip Log
   const newTripLog = await tripLogServices.addTripLog({
     driverId: data.driverId,
@@ -67,5 +56,20 @@ export async function endTripAction(data: {
       uploadedFile.path,
     )
   }
+
+  //Change Booking, Driver and vehicle status to Completed
+  const bookingChanged = await bookingServices.changeBookingToCompleted(
+    data.bookingId,
+    data.driverId,
+    data.vehicleId,
+    data.customerId,
+    data.customerRating,
+    data.bookingRating,
+  )
+  if (!bookingChanged) return
+
+  //Update final total price and other values based on trip logs
+  await bookingServices.updateBookingCompletedValues(data.bookingId)
+
   return newTripLog
 }

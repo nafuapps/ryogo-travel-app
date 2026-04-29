@@ -4,17 +4,18 @@ import {
   tileHeaderLeftClassName,
   tileHeaderRightClassName,
   NewBookingFormDataType,
-  getTripDuration,
   getTripTypeIcon,
   newBookingTripInfoTagClassName,
 } from "./newBookingCommon"
 import { IconTextTag } from "./newBookingTileTag"
 import { useTranslations } from "next-intl"
 import { format } from "date-fns"
+import { getDuration } from "@/lib/utils"
 
 export default function NewBookingTripInfo(props: NewBookingFormDataType) {
   const t = useTranslations("Dashboard.NewBooking.Form")
-  const duration = getTripDuration(props.tripStartDate, props.tripEndDate)
+  const duration = getDuration(props.tripStartDate, props.tripEndDate)
+
   return (
     <div id="tripInfo" className="flex flex-col">
       <div

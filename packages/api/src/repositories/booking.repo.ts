@@ -862,6 +862,11 @@ export const bookingRepository = {
         agency: {
           columns: {
             id: true,
+            businessName: true,
+            businessPhone: true,
+            businessEmail: true,
+            businessAddress: true,
+            logoUrl: true,
           },
         },
         assignedUser: {
@@ -869,18 +874,22 @@ export const bookingRepository = {
             id: true,
             userRole: true,
             name: true,
+            phone: true,
           },
         },
         assignedDriver: {
           columns: {
             id: true,
             name: true,
+            phone: true,
           },
         },
         assignedVehicle: {
           columns: {
             id: true,
             vehicleNumber: true,
+            brand: true,
+            model: true,
           },
         },
         bookedByUser: {
@@ -953,6 +962,11 @@ export const bookingRepository = {
         agency: {
           columns: {
             id: true,
+            businessName: true,
+            businessPhone: true,
+            businessEmail: true,
+            businessAddress: true,
+            logoUrl: true,
           },
         },
         assignedUser: {
@@ -960,12 +974,14 @@ export const bookingRepository = {
             id: true,
             userRole: true,
             name: true,
+            phone: true,
           },
         },
         assignedDriver: {
           columns: {
             id: true,
             name: true,
+            phone: true,
           },
         },
         assignedVehicle: {
@@ -973,6 +989,8 @@ export const bookingRepository = {
             id: true,
             vehicleNumber: true,
             odometerReading: true,
+            brand: true,
+            model: true,
           },
         },
         bookedByUser: {
@@ -1226,5 +1244,87 @@ export const bookingRepository = {
       })
       .where(eq(bookings.id, bookingId))
       .returning({ id: bookings.id, assignedUserId: bookings.assignedUserId })
+  },
+
+  async updateQuoteUrl(id: string, url: string) {
+    return await db
+      .update(bookings)
+      .set({
+        quoteSentOn: new Date(),
+        quoteUrl: url,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        quoteSent: bookings.quoteSentOn,
+        quoteUrl: bookings.quoteUrl,
+      })
+  },
+
+  async updateQuoteSent(id: string) {
+    return await db
+      .update(bookings)
+      .set({
+        quoteSentOn: new Date(),
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        quoteSent: bookings.quoteSentOn,
+      })
+  },
+
+  async updateInvoiceUrl(id: string, url: string) {
+    return await db
+      .update(bookings)
+      .set({
+        invoiceSentOn: new Date(),
+        invoiceUrl: url,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        invoiceSent: bookings.invoiceSentOn,
+        invoiceUrl: bookings.invoiceUrl,
+      })
+  },
+
+  async updateInvoiceSent(id: string) {
+    return await db
+      .update(bookings)
+      .set({
+        invoiceSentOn: new Date(),
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        invoiceSentOn: bookings.invoiceSentOn,
+      })
+  },
+
+  async updateBookingTotals(
+    bookingId: string,
+    startDate: Date,
+    endDate: Date,
+    totalDistance: number,
+    totalVehicleRate: number,
+    totalAcCharge: number,
+    totalDriverAllowance: number,
+    totalCommission: number,
+    totalAmount: number,
+  ) {
+    return await db
+      .update(bookings)
+      .set({
+        startDate,
+        endDate,
+        totalDistance,
+        totalVehicleRate,
+        totalAcCharge,
+        totalDriverAllowance,
+        totalCommission,
+        totalAmount,
+      })
+      .where(eq(bookings.id, bookingId))
   },
 }

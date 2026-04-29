@@ -1,4 +1,4 @@
-import { CaptionGrey, PBold } from "@/components/typography"
+import { CaptionGrey, SmallBold } from "@/components/typography"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { LucideChevronRight } from "lucide-react"
 import Link from "next/link"
@@ -12,20 +12,22 @@ export const AccountCard = ({
 }) => {
   return (
     <Link href={`/auth/login/password/${account.id}`}>
-      <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-100 rounded-lg hover:bg-slate-50 p-4 lg:p-5">
+      <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-100 rounded-lg hover:bg-slate-50 p-3 lg:p-4">
         <div className="flex flex-col justify-between gap-1 lg:gap-2 items-start">
-          {account.photoUrl && (
-            <div className="relative size-7 lg:size-8 rounded-full overflow-hidden">
-              <Image
-                loading="eager"
-                src={getFileUrl(account.photoUrl)}
-                alt={"Account Photo"}
-                fill
-                sizes="(max-width: 1024px) 28px,32px"
-              />
-            </div>
-          )}
-          <PBold>{account.name}</PBold>
+          <div className="flex items-center gap-2 lg:gap-3">
+            {account.photoUrl && (
+              <div className="relative size-7 lg:size-8 rounded-full overflow-hidden">
+                <Image
+                  loading="eager"
+                  src={getFileUrl(account.photoUrl)}
+                  alt={"Account Photo"}
+                  fill
+                  sizes="(max-width: 1024px) 28px,32px"
+                />
+              </div>
+            )}
+            <SmallBold>{account.name}</SmallBold>
+          </div>
           <CaptionGrey>{account.agency.businessName}</CaptionGrey>
         </div>
         <div className="flex flex-col justify-between gap-2 lg:gap-3 items-end">

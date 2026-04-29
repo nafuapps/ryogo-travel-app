@@ -381,61 +381,6 @@ export const getVehicleTypeIcon = (vehicleType: VehicleTypesEnum) => {
   return LucideTractor
 }
 
-export const getTripDuration = (startDate: Date, endDate: Date) => {
-  return Math.ceil((endDate.getTime() - startDate.getTime()) / 86400000) + 1
-}
-
-export const getFinalPrice = (data: NewBookingFormDataType) => {
-  const days = getTripDuration(data.tripStartDate, data.tripEndDate)
-  const commissionRate = data.selectedCommissionRate ?? 0
-
-  let totalDistance = data.selectedDistance!
-  let totalAllowanceDays = 1
-
-  if (data.tripType === BookingTypeEnum.Round) {
-    //For round trip, double the vehicle rental
-    totalDistance *= 2
-    if (days > 1) {
-      //For round trip, double the driver allowance if not returning same day
-      totalAllowanceDays *= 2
-    } else {
-      totalAllowanceDays = 1.5
-    }
-  } else if (data.tripType === BookingTypeEnum.MultiDay) {
-    //For multi day trip, include intermediate tour days @ X(50) km
-    totalDistance = totalDistance * 2 + (days - 2) * 50
-    //For multi day trip, driver allowance is for each day
-    totalAllowanceDays *= days
-  }
-
-  const totalAcPrice =
-    data.tripNeedsAC && data.selectedAcChargePerDay
-      ? Math.round(data.selectedAcChargePerDay * totalAllowanceDays)
-      : 0
-
-  const totalVehiclePrice = Math.round(totalDistance * data.selectedRatePerKm!)
-  const totalDriverAllowance = data.selectedAllowancePerDay
-    ? Math.round(totalAllowanceDays * data.selectedAllowancePerDay)
-    : 0
-
-  const netPrice = totalVehiclePrice + totalDriverAllowance + totalAcPrice
-
-  const totalCommission = Math.round((netPrice * commissionRate) / 100)
-
-  const totalAmount = netPrice + totalCommission
-
-  return {
-    totalVehiclePrice,
-    totalDistance,
-    totalDriverAllowance,
-    totalAcPrice,
-    totalCommission,
-    totalAmount,
-    totalAllowanceDays,
-    days,
-  }
-}
-
 export const getCanDriveIcons = (canDrive: VehicleTypesEnum[]) => {
   const icons: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>

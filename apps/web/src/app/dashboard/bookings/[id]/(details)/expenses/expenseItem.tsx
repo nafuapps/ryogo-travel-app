@@ -1,14 +1,5 @@
 import { CaptionGrey, H4, Caption, SmallBold } from "@/components/typography"
-import {
-  LucideFuel,
-  LucideParkingSquare,
-  LucideWrench,
-  LucideAirVent,
-  LucidePizza,
-  LucideTicket,
-  LucideBanknote,
-  LucidePencil,
-} from "lucide-react"
+import { LucidePencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
 import Image from "next/image"
@@ -24,8 +15,8 @@ import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/book
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
 import { ExpenseApprovalButton } from "./expenseApprovalButton"
+import getExpenseIcon from "@/components/common/expenseIcon"
 
 export default async function ExpenseItem({
   expense,
@@ -40,10 +31,6 @@ export default async function ExpenseItem({
   const id = expense.bookingId
 
   const expId = expense.id
-  let fileUrl = ""
-  if (expense.expensePhotoUrl) {
-    fileUrl = getFileUrl(expense.expensePhotoUrl)
-  }
 
   return (
     <div className="flex flex-col">
@@ -108,7 +95,7 @@ export default async function ExpenseItem({
               </DialogHeader>
               <Image
                 loading="eager"
-                src={fileUrl}
+                src={getFileUrl(expense.expensePhotoUrl)}
                 alt={t("Proof")}
                 fill
                 className="object-contain"
@@ -120,26 +107,4 @@ export default async function ExpenseItem({
       )}
     </div>
   )
-}
-
-const getExpenseIcon = (type: ExpenseTypesEnum) => {
-  const className = "size-4 lg:size-5 text-slate-500"
-  switch (type) {
-    case ExpenseTypesEnum.FOOD:
-      return <LucidePizza className={className} />
-    case ExpenseTypesEnum.FUEL:
-      return <LucideFuel className={className} />
-    case ExpenseTypesEnum.PARKING:
-      return <LucideParkingSquare className={className} />
-    case ExpenseTypesEnum.MAINTENANCE:
-      return <LucideWrench className={className} />
-    case ExpenseTypesEnum.AC:
-      return <LucideAirVent className={className} />
-    case ExpenseTypesEnum.TOLL:
-      return <LucideTicket className={className} />
-    case ExpenseTypesEnum.OTHER:
-      return <LucideBanknote className={className} />
-    default:
-      return <LucideBanknote className={className} />
-  }
 }

@@ -42,7 +42,6 @@ export default function SendQuoteAlertButton(props: SendQuoteAlertButtonProps) {
           props.bookingId,
           props.agencyId,
           props.assignedUserId,
-          !props.quoteSentOn,
         )
       ) {
         toast.success(t("Success"))

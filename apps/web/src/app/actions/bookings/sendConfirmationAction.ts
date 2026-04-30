@@ -7,15 +7,10 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 
-export async function confirmBookingAction(
+export async function sendConfirmationAction(
   id: string,
   agencyId: string,
   assignedUserId: string,
-  startTime: string,
-  pickupAddress: string,
-  dropAddress?: string,
-  updateCustomerAddress?: boolean,
-  customerId?: string,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -27,30 +22,29 @@ export async function confirmBookingAction(
     return
   }
 
-  const confirmedBooking = await bookingServices.confirmBooking(
-    id,
-    startTime,
-    pickupAddress,
-    dropAddress,
-    updateCustomerAddress,
-    customerId,
-  )
-  if (!confirmedBooking) return
-
-  //Get booking details
+  //Get lead booking details
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
   if (!bookingDetails) return
 
-  //Generate confirmation pdf file
-  const confirmationFile = await getBookingConfirmationPDF(bookingDetails)
+  let confirmationUrl = bookingDetails.confirmationUrl
 
-  //Upload file and get storage url
-  const confirmationUrl = await uploadPDFBlob(
-    confirmationFile,
-    generateBookingConfirmationName(id),
-  )
+  if (!confirmationUrl) {
+    //If no url, generate confirmation pdf file
+    const confirmationFile = await getBookingConfirmationPDF(bookingDetails)
 
-  //TODO: Send booking confirmation pdf to customer over whatsapp
+    //Upload file and get storage url
+    confirmationUrl = (
+      await uploadPDFBlob(confirmationFile, generateBookingConfirmationName(id))
+    ).path
 
-  return confirmedBooking
+    //Update confirmation url in DB
+    await bookingServices.addConfirmationUrl(id, confirmationUrl)
+  } else {
+    //Else, just update confirmation sent time
+    await bookingServices.changeConfirmationSent(id)
+  }
+
+  //TODO: Send confirmation pdf to customer over whatsapp
+
+  return confirmationUrl
 }

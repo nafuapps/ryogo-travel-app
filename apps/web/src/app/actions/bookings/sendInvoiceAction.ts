@@ -11,7 +11,6 @@ export async function sendInvoiceAction(
   id: string,
   agencyId: string,
   assignedUserId: string,
-  generateInvoice: boolean,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -23,27 +22,29 @@ export async function sendInvoiceAction(
     return
   }
 
-  if (!generateInvoice) {
-    //TODO: Send invoice to customer over whatsapp
-    //Update invoice sent in DB
-    return await bookingServices.sendInvoice(id)
-  }
-
   //Get booking details
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
   if (!bookingDetails) return
 
-  //Generate invoice pdf file
-  const invoiceFile = await getInvoicePDF(bookingDetails)
+  let invoiceUrl = bookingDetails.invoiceUrl
 
-  //Upload file and get storage url
-  const invoiceUrl = await uploadPDFBlob(
-    invoiceFile,
-    generateBookingInvoiceName(id),
-  )
+  if (!invoiceUrl) {
+    //If no invoice url exists, generate invoice pdf file
+    const invoiceFile = await getInvoicePDF(bookingDetails)
 
-  //TODO: Send invoice to customer over whatsapp
+    //Upload file and get storage url
+    invoiceUrl = (
+      await uploadPDFBlob(invoiceFile, generateBookingInvoiceName(id))
+    ).path
 
-  //Update invoice url in DB
-  return await bookingServices.addInvoice(id, invoiceUrl.path)
+    //Update invoice url in DB
+    await bookingServices.addInvoiceUrl(id, invoiceUrl)
+  } else {
+    //Else, just update invoice sent time
+    await bookingServices.changeInvoiceSent(id)
+  }
+
+  //TODO: Send invoice pdf to customer over whatsapp
+
+  return invoiceUrl
 }

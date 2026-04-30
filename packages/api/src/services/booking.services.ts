@@ -362,12 +362,12 @@ export const bookingServices = {
     return newBooking[0]
   },
 
-  //Confirm a booking lead
+  //Confirm a booking
   async confirmBooking(
     bookingId: string,
     startTime: string,
     pickupAddress: string,
-    dropAddress: string,
+    dropAddress?: string,
     updateCustomerAddress?: boolean,
     customerId?: string,
   ) {
@@ -547,19 +547,27 @@ export const bookingServices = {
     return updatedBooking[0]
   },
 
-  async addQuote(id: string, url: string) {
+  async addQuoteUrl(id: string, url: string) {
     return bookingRepository.updateQuoteUrl(id, url)
   },
 
-  async sendQuote(id: string) {
+  async changeQuoteSent(id: string) {
     return bookingRepository.updateQuoteSent(id)
   },
 
-  async addInvoice(id: string, url: string) {
+  async addConfirmationUrl(id: string, url: string) {
+    return bookingRepository.updateConfirmationUrl(id, url)
+  },
+
+  async changeConfirmationSent(id: string) {
+    return bookingRepository.updateConfirmationSent(id)
+  },
+
+  async addInvoiceUrl(id: string, url: string) {
     return bookingRepository.updateInvoiceUrl(id, url)
   },
 
-  async sendInvoice(id: string) {
+  async changeInvoiceSent(id: string) {
     return bookingRepository.updateInvoiceSent(id)
   },
 }

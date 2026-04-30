@@ -5,146 +5,15 @@ import ReactPDF, {
   Image,
   Text,
   View,
-  StyleSheet,
 } from "@react-pdf/renderer"
-import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { styles } from "./commonStyles"
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    gap: 20,
-    padding: 32,
-  },
-  header: { flexDirection: "row", justifyContent: "space-between", gap: 4 },
-  headerLeft: { flexDirection: "column", gap: 4 },
-  agencyLogo: {
-    height: 64,
-    width: 64,
-    objectFit: "contain",
-  },
-  headerRight: {
-    flexDirection: "column",
-    gap: 2,
-    alignItems: "flex-end",
-    marginLeft: "auto",
-  },
-  bookingDetails: { flexDirection: "column", gap: 8 },
-  detailsSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 16,
-  },
-  tripDetails: {
-    flexDirection: "column",
-  },
-  tripLocation: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    border: "1px solid #ddd",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    padding: 12,
-    gap: 16,
-  },
-  tripSource: {
-    gap: 2,
-  },
-  tripDestination: {
-    gap: 2,
-    alignItems: "flex-end",
-  },
-  tripFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 16,
-    backgroundColor: "#ddd",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-  },
-
-  pricingTable: {
-    flexDirection: "column",
-  },
-  tableHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 8,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    backgroundColor: "#ddd",
-  },
-  tableRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 8,
-    border: "1px solid #ddd",
-    backgroundColor: "#fff",
-  },
-  tableFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 8,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    backgroundColor: "#ddd",
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 16,
-    alignItems: "flex-end",
-  },
-  ryoGoLogo: {
-    height: 40,
-  },
-  booked: {
-    flexDirection: "column",
-    alignItems: "flex-end",
-    gap: 2,
-  },
-  divider: {
-    height: 1,
-    width: "100%",
-    backgroundColor: "#ddd",
-  },
-  terms: {
-    flexDirection: "column",
-    gap: 2,
-  },
-  h1: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  h2: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  p: {
-    fontSize: 12,
-  },
-  pBold: {
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  caption: {
-    fontSize: 10,
-  },
-  captionLight: {
-    fontSize: 10,
-    fontWeight: "light",
-    color: "#666",
-  },
-})
-
-export function QuoteDocument({
+export function BookingConfirmationDocument({
   booking,
 }: {
-  booking: NonNullable<FindLeadBookingByIdType>
+  booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const agencyLogoUrl = booking.agency.logoUrl
   return (
@@ -167,12 +36,12 @@ export function QuoteDocument({
           </View>
           <View id="headerRight" style={styles.headerRight}>
             <Text style={styles.h1}>BOOKING</Text>
-            <Text style={styles.h1}>QUOTATION</Text>
+            <Text style={styles.h1}>CONFIRMATION</Text>
           </View>
         </View>
         <View id="bookingDetails" style={styles.bookingDetails}>
           <View id="Date" style={styles.detailsSection}>
-            <Text style={styles.pBold}>Quote Date: </Text>
+            <Text style={styles.pBold}>Booking Date: </Text>
             <Text style={styles.p}>
               {booking.createdAt.toLocaleDateString()}
             </Text>
@@ -228,6 +97,9 @@ export function QuoteDocument({
             </View>
           )}
         </View>
+        <Text style={styles.p}>
+          Congratulations! Your booking has been confirmed.
+        </Text>
         <View id="TripDetails" style={styles.tripDetails}>
           <View id="TripHeader" style={styles.tripLocation}>
             <View id="From" style={styles.tripSource}>
@@ -282,7 +154,10 @@ export function QuoteDocument({
           </View>
         </View>
         <View id="footer" style={styles.footer}>
-          <Image src={"/logo.png"} style={styles.ryoGoLogo}></Image>
+          <View id="PoweredBy" style={styles.powered}>
+            <Text style={styles.caption}>Powered by RyoGo</Text>
+            <Image src={"/logo.png"} style={styles.ryoGoLogo}></Image>
+          </View>
           <View id="BookedBy" style={styles.booked}>
             <Text style={styles.pBold}>{booking.assignedUser.name}</Text>
             <Text style={styles.p}>{booking.assignedUser.phone}</Text>
@@ -295,25 +170,24 @@ export function QuoteDocument({
         <View id="terms" style={styles.terms}>
           <Text style={styles.pBold}>Terms and Conditions:</Text>
           <Text style={styles.caption}>
-            1. This quotation auto-generated on behalf of the aforementioned
-            agency and is valid for 30 days from the date of issue.
+            1. This booking confirmation is auto-generated on behalf of the
+            aforementioned agency. Any descrepancies or issues regarding the
+            booking details should be reported to the agency within 24 hours of
+            receiving this confirmation.
           </Text>
           <Text style={styles.caption}>
-            2. The assigned vehicle and driver is subject to availability and
-            may change at the time of booking confirmation.
+            2. The prices quoted above are an estimate and are based on the
+            details provided and may change if there are any changes in the trip
+            details or requirements.
           </Text>
           <Text style={styles.caption}>
-            3. The quoted price is based on the details provided and may change
-            if there are any changes in the trip details or requirements.
-          </Text>
-          <Text style={styles.caption}>
-            4. A final invoice will be provided at the end of the trip with the
+            3. A final invoice will be provided at the end of the trip with the
             actual charges based on the services used and additional expenses
-            incurred like fuel, parking or toll, etc.
+            incurred during the trip like fuel, parking, toll, etc.
           </Text>
           <Text style={styles.caption}>
             {
-              "5. Cancellation and refund policies apply as per the agency's terms and conditions."
+              "4. Cancellation and refund policies apply as per the agency's terms and conditions."
             }
           </Text>
         </View>
@@ -322,8 +196,10 @@ export function QuoteDocument({
   )
 }
 
-export default async function getQuotePDF(
-  bookingDetails: NonNullable<FindLeadBookingByIdType>,
+export default async function getBookingConfirmationPDF(
+  bookingDetails: NonNullable<FindBookingDetailsByIdType>,
 ) {
-  return await ReactPDF.pdf(<QuoteDocument booking={bookingDetails} />).toBlob()
+  return await ReactPDF.pdf(
+    <BookingConfirmationDocument booking={bookingDetails} />,
+  ).toBlob()
 }

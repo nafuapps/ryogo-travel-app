@@ -1085,7 +1085,7 @@ export const bookingRepository = {
     id: string,
     startTime: string,
     pickupAddress: string,
-    dropAddress: string,
+    dropAddress?: string,
   ) {
     return await db
       .update(bookings)
@@ -1271,6 +1271,34 @@ export const bookingRepository = {
       .returning({
         id: bookings.id,
         quoteSent: bookings.quoteSentOn,
+      })
+  },
+
+  async updateConfirmationUrl(id: string, url: string) {
+    return await db
+      .update(bookings)
+      .set({
+        confirmationSentOn: new Date(),
+        confirmationUrl: url,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        confirmationSent: bookings.confirmationSentOn,
+        confirmationUrl: bookings.confirmationUrl,
+      })
+  },
+
+  async updateConfirmationSent(id: string) {
+    return await db
+      .update(bookings)
+      .set({
+        confirmationSentOn: new Date(),
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        confirmationSent: bookings.confirmationSentOn,
       })
   },
 

@@ -169,6 +169,13 @@
       "when": 1776861585657,
       "tag": "0023_marvelous_microbe",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1777552603137,
+      "tag": "0024_fresh_wrecking_crew",
+      "breakpoints": true
     }
   ]
 }

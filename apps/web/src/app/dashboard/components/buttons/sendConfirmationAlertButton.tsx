@@ -4,32 +4,32 @@ import { useTranslations } from "next-intl"
 import BookingAlertDialog from "./bookingAlertDialog"
 import { Button } from "@/components/ui/button"
 import { useEffect, useTransition } from "react"
-import { sendInvoiceAction } from "@/app/actions/bookings/sendInvoiceAction"
 import { toast } from "sonner"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { differenceInMinutes } from "date-fns"
+import { sendConfirmationAction } from "@/app/actions/bookings/sendConfirmationAction"
 
-type SendInvoiceAlertButtonProps = {
+type SendConfirmationAlertButtonProps = {
   bookingId: string
   agencyId: string
   assignedUserId: string
-  invoiceSentOn: Date | null
+  confirmationSentOn: Date | null
 }
-export default function SendInvoiceAlertButton(
-  props: SendInvoiceAlertButtonProps,
+export default function SendConfirmationAlertButton(
+  props: SendConfirmationAlertButtonProps,
 ) {
-  const t = useTranslations("Dashboard.Buttons.SendInvoice")
+  const t = useTranslations("Dashboard.Buttons.SendConfirmation")
   const router = useRouter()
 
   const [isSendPending, startSendTransition] = useTransition()
 
-  //Can send invoice if either not sent before or sent more than 10 minutes ago
-  const canSendInvoice =
-    !props.invoiceSentOn ||
-    differenceInMinutes(new Date(), props.invoiceSentOn) > 10
+  //Can send confirmation if either not sent before or sent more than 10 minutes ago
+  const canSendConfirmation =
+    !props.confirmationSentOn ||
+    differenceInMinutes(new Date(), props.confirmationSentOn) > 10
 
-  //Refresh page every 1 minute to check if the send invoice timer is up
+  //Refresh page every 1 minute to check if the send confirmation timer is up
   useEffect(() => {
     const interval = setInterval(() => {
       router.refresh()
@@ -37,11 +37,11 @@ export default function SendInvoiceAlertButton(
     return () => clearInterval(interval) // Cleanup on unmount
   }, [router])
 
-  // Send invoice to customer over whatsapp
-  async function sendInvoice() {
+  // Send confirmation to customer over whatsapp
+  async function sendConfirmation() {
     startSendTransition(async () => {
       if (
-        await sendInvoiceAction(
+        await sendConfirmationAction(
           props.bookingId,
           props.agencyId,
           props.assignedUserId,
@@ -61,14 +61,14 @@ export default function SendInvoiceAlertButton(
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button variant={"outline"} disabled={!canSendInvoice}>
+        <Button variant={"outline"} disabled={!canSendConfirmation}>
           {t("Label")}
         </Button>
       }
     >
       <Button
         variant={"default"}
-        onClick={sendInvoice}
+        onClick={sendConfirmation}
         disabled={isSendPending}
       >
         {isSendPending && <Spinner />}

@@ -8,6 +8,7 @@ export async function cancelBookingAction(
   id: string,
   agencyId: string,
   assignedUserId: string,
+  notifyCustomer = false,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -20,5 +21,11 @@ export async function cancelBookingAction(
   }
 
   const canceledBooking = await bookingServices.cancelBooking(id)
+  if (!canceledBooking) return
+
+  if (notifyCustomer) {
+    //TODO: Send booking cancellation pdf to customer over whatsapp
+  }
+
   return canceledBooking
 }

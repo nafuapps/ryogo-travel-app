@@ -40,7 +40,8 @@ export default function ConfirmBookingForm({
     dropAddress: z
       .string()
       .min(10, t("AddressError1"))
-      .max(300, t("AddressError2")),
+      .max(300, t("AddressError2"))
+      .optional(),
     startTime: z.iso.time(t("PickupTimeError")).nonempty(t("PickupTimeError")),
   })
   type ConfirmBookingType = z.infer<typeof confirmBookingSchema>
@@ -50,7 +51,6 @@ export default function ConfirmBookingForm({
     defaultValues: {
       pickupAddress: "",
       sameAsCustomerAddress: false,
-      dropAddress: "",
     },
   })
 

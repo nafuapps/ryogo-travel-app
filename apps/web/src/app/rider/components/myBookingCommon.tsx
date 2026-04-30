@@ -309,7 +309,7 @@ export async function BookingCommonInfo({
         {booking.pickupAddress && (
           <BookingItem
             title={t("PickupAddress")}
-            value={booking.pickupAddress!}
+            value={booking.pickupAddress}
           />
         )}
         {booking.startTime && (
@@ -319,7 +319,7 @@ export async function BookingCommonInfo({
           />
         )}
         {booking.dropAddress && (
-          <BookingItem title={t("DropAddress")} value={booking.dropAddress!} />
+          <BookingItem title={t("DropAddress")} value={booking.dropAddress} />
         )}
         <BookingItem
           title={t("EndDate")}
@@ -343,7 +343,7 @@ export async function BookingCommonInfo({
           value={booking.needsAc ? t("Yes") : t("No")}
         />
         {booking.remarks && (
-          <BookingItem title={t("Remarks")} value={booking.remarks!} />
+          <BookingItem title={t("Remarks")} value={booking.remarks} />
         )}
       </BookingSection>
     </div>

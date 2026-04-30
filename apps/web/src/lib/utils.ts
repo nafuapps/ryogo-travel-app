@@ -121,6 +121,10 @@ export function generateBookingQuoteName(bookingId: string) {
   return `bookings/${bookingId}/quotes/${bookingId}-quote-${Date.now()}.pdf`
 }
 
+export function generateBookingConfirmationName(bookingId: string) {
+  return `bookings/${bookingId}/confirmations/${bookingId}-confirmation-${Date.now()}.pdf`
+}
+
 export function generateBookingInvoiceName(bookingId: string) {
   return `bookings/${bookingId}/invoices/${bookingId}-invoice-${Date.now()}.pdf`
 }

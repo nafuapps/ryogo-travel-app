@@ -1074,7 +1074,7 @@
       "PickupAddressPlaceholder": "Provide source address for pickup",
       "SameAsCustomerAddress": "Same as customer address",
       "DropAddress": "Drop address",
-      "DropAddressPlaceholder": "Provide destination address",
+      "DropAddressPlaceholder": "Provide destination address (optional)",
       "PickupTime": "Pickup Time",
       "PickupTimeError": "Pickup Time is required",
       "Loading": "Loading..",
@@ -2550,6 +2550,16 @@
         "NoCTA": "No",
         "Success": "Quote sent to the customer!",
         "Error": "Cannot send quote.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Send"
+      },
+      "SendConfirmation": {
+        "Label": "Send Confirmation to Customer",
+        "Title": "Are you sure you want to send booking confirmation to customer?",
+        "Desc": "If you have sent a booking confirmation already, refrain from sending it again.. It might look like spam to the customer",
+        "NoCTA": "No",
+        "Success": "Booking confirmation sent to the customer!",
+        "Error": "Cannot send booking confirmation.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Send"
       },

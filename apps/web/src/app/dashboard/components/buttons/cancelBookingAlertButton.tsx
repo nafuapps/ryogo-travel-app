@@ -13,6 +13,7 @@ type CancelBookingAlertButtonProps = {
   bookingId: string
   agencyId: string
   assignedUserId: string
+  notifyCustomer?: boolean
 }
 export default function CancelBookingAlertButton(
   props: CancelBookingAlertButtonProps,
@@ -30,6 +31,7 @@ export default function CancelBookingAlertButton(
           props.bookingId,
           props.agencyId,
           props.assignedUserId,
+          props.notifyCustomer,
         )
       ) {
         toast.success(t("Success"))

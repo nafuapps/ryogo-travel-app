@@ -19,6 +19,7 @@ import {
   ReceiptIndianRupee,
   Route,
 } from "lucide-react"
+import SendConfirmationAlertButton from "@/app/dashboard/components/buttons/sendConfirmationAlertButton"
 // import BookingPDFViewer from "./bookingPDFViewer"
 
 export default async function BookingDetailsPageComponent({
@@ -93,6 +94,7 @@ export default async function BookingDetailsPageComponent({
                     bookingId={bookingDetails.id}
                     agencyId={bookingDetails.agencyId}
                     assignedUserId={bookingDetails.assignedUserId}
+                    notifyCustomer={true}
                   />
                 )
               }
@@ -189,13 +191,13 @@ export default async function BookingDetailsPageComponent({
           {bookingDetails.pickupAddress && (
             <BookingItem
               title={t("PickupAddress")}
-              value={bookingDetails.pickupAddress!}
+              value={bookingDetails.pickupAddress}
             />
           )}
           {bookingDetails.dropAddress && (
             <BookingItem
               title={t("DropAddress")}
-              value={bookingDetails.dropAddress!}
+              value={bookingDetails.dropAddress}
             />
           )}
           {bookingDetails.startTime && (
@@ -207,7 +209,7 @@ export default async function BookingDetailsPageComponent({
             />
           )}
           {bookingDetails.remarks && (
-            <BookingItem title={t("Remarks")} value={bookingDetails.remarks!} />
+            <BookingItem title={t("Remarks")} value={bookingDetails.remarks} />
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("AssignmentInfo")} icon={LifeBuoy}>
@@ -322,6 +324,16 @@ export default async function BookingDetailsPageComponent({
                 agencyId={bookingDetails.agencyId}
                 assignedUserId={bookingDetails.assignedUserId}
                 invoiceSentOn={bookingDetails.invoiceSentOn}
+              />
+            )}
+          {(isOwner || isAssignedUser) &&
+            //Confirmation can be sent for a confirmed booking only
+            bookingDetails.status === BookingStatusEnum.CONFIRMED && (
+              <SendConfirmationAlertButton
+                bookingId={bookingDetails.id}
+                agencyId={bookingDetails.agencyId}
+                assignedUserId={bookingDetails.assignedUserId}
+                confirmationSentOn={bookingDetails.confirmationSentOn}
               />
             )}
         </BookingSection>

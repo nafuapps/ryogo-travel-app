@@ -2,29 +2,20 @@
 import ReactPDF, {
   Document,
   Page,
+  Image,
   Text,
   View,
-  Image,
 } from "@react-pdf/renderer"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 
-export function InvoiceDocument({
+export function LeadQuoteDocument({
   booking,
 }: {
-  booking: NonNullable<FindBookingDetailsByIdType>
+  booking: NonNullable<FindLeadBookingByIdType>
 }) {
   const agencyLogoUrl = booking.agency.logoUrl
-
-  //Calculate expenses amount
-  const expensesAmount = booking.expenses
-    .filter((exp) => exp.isApproved)
-    .reduce((acc, expense) => acc + expense.amount, 0)
-
-  //Calculate final total amount for the invoice
-  const totalAmount = booking.totalAmount + expensesAmount
-
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -45,14 +36,14 @@ export function InvoiceDocument({
           </View>
           <View id="headerRight" style={styles.headerRight}>
             <Text style={styles.h1}>BOOKING</Text>
-            <Text style={styles.h1}>INVOICE</Text>
+            <Text style={styles.h1}>QUOTATION</Text>
           </View>
         </View>
         <View id="bookingDetails" style={styles.bookingDetails}>
           <View id="Date" style={styles.detailsSection}>
-            <Text style={styles.pBold}>Invoice Date: </Text>
+            <Text style={styles.pBold}>Quote Date: </Text>
             <Text style={styles.p}>
-              {booking.updatedAt.toLocaleDateString()}
+              {booking.createdAt.toLocaleDateString()}
             </Text>
           </View>
           <View id="BookingID" style={styles.detailsSection}>
@@ -75,9 +66,15 @@ export function InvoiceDocument({
                 booking.customer.location.state}
             </Text>
           </View>
+          {booking.remarks && (
+            <View id="Remarks" style={styles.detailsSection}>
+              <Text style={styles.pBold}>Remarks: </Text>
+              <Text style={styles.p}>{booking.customer.remarks}</Text>
+            </View>
+          )}
           {booking.assignedVehicle && (
             <View id="Vehicle" style={styles.detailsSection}>
-              <Text style={styles.pBold}>Vehicle: </Text>
+              <Text style={styles.pBold}>Assigned Vehicle: </Text>
               <View style={styles.tripDestination}>
                 <Text style={styles.p}>
                   {booking.assignedVehicle.vehicleNumber}
@@ -92,7 +89,7 @@ export function InvoiceDocument({
           )}
           {booking.assignedDriver && (
             <View id="Driver" style={styles.detailsSection}>
-              <Text style={styles.pBold}>Driver: </Text>
+              <Text style={styles.pBold}>Assigned Driver: </Text>
               <View style={styles.tripDestination}>
                 <Text style={styles.p}>{booking.assignedDriver.name}</Text>
                 <Text style={styles.p}>{booking.assignedDriver.phone}</Text>
@@ -107,7 +104,7 @@ export function InvoiceDocument({
               <Text style={styles.p}>{booking.source.state}</Text>
             </View>
             <Text style={styles.captionLight}>
-              -- {booking.totalDistance} Km --
+              -- {booking.citydistance} Km --
             </Text>
             <View id="To" style={styles.tripDestination}>
               <Text style={styles.h2}>{booking.destination.city}</Text>
@@ -148,13 +145,9 @@ export function InvoiceDocument({
             <Text style={styles.p}>Service charge</Text>
             <Text style={styles.p}>{booking.totalCommission.toFixed(2)}</Text>
           </View>
-          <View id="ExpensesRow" style={styles.tableRow}>
-            <Text style={styles.p}>Trip Expenses</Text>
-            <Text style={styles.p}>{expensesAmount.toFixed(2)}</Text>
-          </View>
           <View id="tableFooter" style={styles.tableFooter}>
-            <Text style={styles.pBold}>Final Amount</Text>
-            <Text style={styles.pBold}>{totalAmount.toFixed(2)}</Text>
+            <Text style={styles.pBold}>Estimated Amount</Text>
+            <Text style={styles.pBold}>{booking.totalAmount.toFixed(2)}</Text>
           </View>
         </View>
         <View id="footer" style={styles.footer}>
@@ -174,16 +167,22 @@ export function InvoiceDocument({
         <View id="terms" style={styles.terms}>
           <Text style={styles.pBold}>Terms and Conditions:</Text>
           <Text style={styles.caption}>
-            1. This invoice is auto generated based on the booking details
-            provided by the aforementioned agency.
+            1. This quotation is auto-generated on behalf of the aforementioned
+            agency and is valid for 30 days from the date of issue.
           </Text>
           <Text style={styles.caption}>
-            2. For any invoice related queries, please contact the agency.
+            2. The assigned vehicle and driver is subject to availability and
+            may change at the time of booking confirmation.
           </Text>
           <Text style={styles.caption}>
-            {
-              "3. Cancellation and refund policies apply as per the agency's terms and conditions."
-            }
+            3. The prices quoted above are an estimate and are based on the
+            details provided and may change if there are any changes in the trip
+            details or requirements.
+          </Text>
+          <Text style={styles.caption}>
+            4. A final invoice will be provided at the end of the trip with the
+            actual charges based on the services used and additional expenses
+            incurred like fuel, parking or toll, etc.
           </Text>
         </View>
       </Page>
@@ -191,10 +190,10 @@ export function InvoiceDocument({
   )
 }
 
-export default async function getInvoicePDF(
-  bookingDetails: NonNullable<FindBookingDetailsByIdType>,
+export default async function getLeadQuotePDF(
+  bookingDetails: NonNullable<FindLeadBookingByIdType>,
 ) {
   return await ReactPDF.pdf(
-    <InvoiceDocument booking={bookingDetails} />,
+    <LeadQuoteDocument booking={bookingDetails} />,
   ).toBlob()
 }

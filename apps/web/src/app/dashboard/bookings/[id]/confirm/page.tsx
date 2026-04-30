@@ -14,6 +14,7 @@ import {
 import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { Metadata } from "next"
+import { differenceInDays } from "date-fns"
 
 export const metadata: Metadata = {
   title: `Confirm Booking - ${pageTitle}`,
@@ -46,8 +47,8 @@ export default async function ConfirmBookingPage({
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
-  //If the lead is old, cancel it automatically
-  if (new Date(booking.endDate) < new Date()) {
+  //If the lead booking is old, cancel it automatically
+  if (differenceInDays(new Date(), booking.endDate) > 1) {
     if (
       await cancelBookingAction(
         booking.id,

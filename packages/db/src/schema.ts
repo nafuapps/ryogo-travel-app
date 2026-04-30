@@ -655,6 +655,10 @@ export const bookings = pgTable(
     isReconciled: boolean("is_reconciled").notNull().default(false),
     quoteSentOn: timestamp("quote_sent_on", { withTimezone: true }),
     quoteUrl: text("quote_url"),
+    confirmationSentOn: timestamp("confirmation_sent_on", {
+      withTimezone: true,
+    }),
+    confirmationUrl: text("confirmation_url"),
     invoiceSentOn: timestamp("invoice_sent_on", { withTimezone: true }),
     invoiceUrl: text("invoice_url"),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),

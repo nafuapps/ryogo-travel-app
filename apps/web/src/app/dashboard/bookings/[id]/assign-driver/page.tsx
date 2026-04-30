@@ -15,6 +15,7 @@ import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
 import AssignDriverPageComponent from "./assignDriver"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
+import { differenceInDays } from "date-fns"
 
 export const metadata: Metadata = {
   title: `Assign Driver - ${pageTitle}`,
@@ -46,7 +47,7 @@ export default async function AssignDriverBookingPage({
   //If it is a lead booking and old, cancel it automatically
   if (
     booking.status === BookingStatusEnum.LEAD &&
-    new Date(booking.endDate) < new Date()
+    differenceInDays(new Date(), booking.endDate) > 1
   ) {
     if (
       await cancelBookingAction(

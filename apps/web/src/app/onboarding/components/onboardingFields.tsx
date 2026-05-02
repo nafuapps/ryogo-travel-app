@@ -30,6 +30,13 @@ import { UseFormRegisterReturn } from "react-hook-form"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
 
 type OnboardingInputProps = {
   name: string
@@ -148,7 +155,7 @@ export function OnboardingSelect(props: OnboardingSelectProps) {
               field.onChange(value)
               props.resetField && props.resetField()
             }}
-            defaultValue={field.value}
+            value={field.value}
           >
             <FormControl>
               <SelectTrigger className="w-full">
@@ -163,6 +170,52 @@ export function OnboardingSelect(props: OnboardingSelectProps) {
               ))}
             </SelectContent>
           </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+type OnboardingComboboxProps = {
+  name: string
+  title: string
+  array: { value: string; display: string }[]
+  placeholder: string
+  register: UseFormRegisterReturn<string>
+  resetField?: () => void
+}
+export function OnboardingCombobox(props: OnboardingComboboxProps) {
+  return (
+    <FormField
+      name={props.name}
+      key={props.name}
+      render={({ field }) => (
+        <FormItem className="w-full">
+          <FormLabel>
+            <PBold>{props.title}</PBold>
+          </FormLabel>
+          <Combobox
+            items={props.array}
+            itemToStringValue={(item) => item.display}
+            {...props.register}
+            onValueChange={(value) => {
+              field.onChange(value)
+              props.resetField && props.resetField()
+            }}
+            value={field.value}
+          >
+            <ComboboxInput placeholder={props.placeholder} />
+            <ComboboxContent>
+              <ComboboxList>
+                {(item) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.display}
+                  </ComboboxItem>
+                )}
+              </ComboboxList>
+            </ComboboxContent>
+          </Combobox>
           <FormMessage />
         </FormItem>
       )}

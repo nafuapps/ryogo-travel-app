@@ -9,6 +9,9 @@ import { toast } from "sonner"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { differenceInMinutes } from "date-fns"
+import { MessageSquareShare } from "lucide-react"
+
+const SEND_INVOICE_TIMEOUT_MINUTES = 60
 
 type SendInvoiceAlertButtonProps = {
   bookingId: string
@@ -24,30 +27,31 @@ export default function SendInvoiceAlertButton(
 
   const [isSendPending, startSendTransition] = useTransition()
 
-  //Can send invoice if either not sent before or sent more than 10 minutes ago
+  //Can send invoice if either not sent before or sent more than X minutes ago
   const canSendInvoice =
     !props.invoiceSentOn ||
-    differenceInMinutes(new Date(), props.invoiceSentOn) > 10
+    differenceInMinutes(new Date(), props.invoiceSentOn) >
+      SEND_INVOICE_TIMEOUT_MINUTES
 
-  //Refresh page every 1 minute to check if the send invoice timer is up
+  //Refresh page every 10 minutes to check if the send invoice timer is up
   useEffect(() => {
     const interval = setInterval(() => {
       router.refresh()
-    }, 60000)
+    }, 600000)
     return () => clearInterval(interval) // Cleanup on unmount
   }, [router])
 
   // Send invoice to customer over whatsapp
   async function sendInvoice() {
     startSendTransition(async () => {
-      if (
-        await sendInvoiceAction(
-          props.bookingId,
-          props.agencyId,
-          props.assignedUserId,
-        )
-      ) {
+      const invoiceMessage = await sendInvoiceAction(
+        props.bookingId,
+        props.agencyId,
+        props.assignedUserId,
+      )
+      if (invoiceMessage) {
         toast.success(t("Success"))
+        window.open(invoiceMessage, "_blank", "noopener,noreferrer")
         router.refresh()
       } else {
         toast.error(t("Error"))
@@ -63,6 +67,7 @@ export default function SendInvoiceAlertButton(
       labelChild={
         <Button variant={"outline"} disabled={!canSendInvoice}>
           {t("Label")}
+          <MessageSquareShare className="size-4 text-slate-700" />
         </Button>
       }
     >

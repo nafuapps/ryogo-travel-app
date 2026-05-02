@@ -1,10 +1,10 @@
 "use client"
 
 import {
-  DashboardSelect,
   DashboardInput,
   DashboardTextarea,
   DashboardFileInput,
+  DashboardCombobox,
 } from "@/components/form/dashboardFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
@@ -122,9 +122,7 @@ export default function NewCustomerForm({
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = formData.watch("state")
-  const cityOptions = selectedState
-    ? (data[selectedState] ?? [t("Field8.Title")])
-    : []
+  const cityOptions = data[selectedState] ?? [t("Field8.Title")]
 
   return (
     <div id="NewCustomerPage" className={pageClassName}>
@@ -172,7 +170,7 @@ export default function NewCustomerForm({
             label={t("Field6.Title")}
             placeholder={t("Field6.Placeholder")}
           />
-          <DashboardSelect
+          <DashboardCombobox
             name={"state"}
             register={formData.register("state")}
             title={t("Field7.Title")}
@@ -182,7 +180,7 @@ export default function NewCustomerForm({
               formData.setValue("city", "")
             }}
           />
-          <DashboardSelect
+          <DashboardCombobox
             name={"city"}
             register={formData.register("city")}
             title={t("Field8.Title")}

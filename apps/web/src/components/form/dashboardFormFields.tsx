@@ -37,6 +37,14 @@ import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { Label } from "../ui/label"
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "../ui/combobox"
 
 type DashboardInputProps = {
   name: string
@@ -163,7 +171,7 @@ export function DashboardSelect(props: DashboardSelectProps) {
               field.onChange(value)
               props.resetField && props.resetField()
             }}
-            defaultValue={field.value}
+            value={field.value}
           >
             <FormControl>
               <SelectTrigger className="w-full">
@@ -178,6 +186,52 @@ export function DashboardSelect(props: DashboardSelectProps) {
               ))}
             </SelectContent>
           </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+type DashboardComboboxProps = {
+  name: string
+  title?: string
+  array: { value: string; display: string }[]
+  placeholder: string
+  register: UseFormRegisterReturn<string>
+  resetField?: () => void
+}
+export function DashboardCombobox(props: DashboardComboboxProps) {
+  return (
+    <FormField
+      name={props.name}
+      key={props.name}
+      render={({ field }) => (
+        <FormItem className="w-full">
+          <FormLabel>
+            <SmallBold>{props.title}</SmallBold>
+          </FormLabel>
+          <Combobox
+            items={props.array}
+            itemToStringValue={(item) => item.display}
+            {...props.register}
+            onValueChange={(value) => {
+              field.onChange(value)
+              props.resetField && props.resetField()
+            }}
+            value={field.value}
+          >
+            <ComboboxInput placeholder={props.placeholder} />
+            <ComboboxContent>
+              <ComboboxList>
+                {(item) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.display}
+                  </ComboboxItem>
+                )}
+              </ComboboxList>
+            </ComboboxContent>
+          </Combobox>
           <FormMessage />
         </FormItem>
       )}

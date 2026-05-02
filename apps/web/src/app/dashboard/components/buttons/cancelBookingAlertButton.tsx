@@ -26,16 +26,22 @@ export default function CancelBookingAlertButton(
   async function cancel() {
     startCancelTransition(async () => {
       //If cancel is successful, show cancel success message and redirect to cancelled booking details
-      if (
-        await cancelBookingAction(
-          props.bookingId,
-          props.agencyId,
-          props.assignedUserId,
-          props.notifyCustomer,
-        )
-      ) {
+      const cancelMessage = await cancelBookingAction(
+        props.bookingId,
+        props.agencyId,
+        props.assignedUserId,
+        props.notifyCustomer,
+      )
+      if (cancelMessage) {
         toast.success(t("Success"))
-        router.replace(`/dashboard/bookings/${props.bookingId}`)
+        if (typeof cancelMessage === "string" && props.notifyCustomer) {
+          //Confirmed booking being cancelled
+          window.open(cancelMessage, "_blank", "noopener,noreferrer")
+          router.refresh()
+        } else {
+          //Lead booking being cancelled
+          router.replace(`/dashboard/bookings/${props.bookingId}`)
+        }
       } else {
         //If cancel is not successful, show error message
         toast.error(t("Error"))

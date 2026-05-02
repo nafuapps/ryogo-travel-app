@@ -16,6 +16,7 @@ import { redirect, RedirectType } from "next/navigation"
 import AssignUserPageComponent from "./assignUser"
 import { Metadata } from "next"
 import { differenceInDays } from "date-fns"
+import { LEAD_CANCEL_TIMEOUT_DAYS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: `Assign User - ${pageTitle}`,
@@ -52,7 +53,7 @@ export default async function AssignUserBookingPage({
   //If it is a lead booking and old, cancel it automatically
   if (
     booking.status === BookingStatusEnum.LEAD &&
-    differenceInDays(new Date(), booking.endDate) > 1
+    differenceInDays(new Date(), booking.endDate) > LEAD_CANCEL_TIMEOUT_DAYS
   ) {
     if (
       await cancelBookingAction(

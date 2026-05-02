@@ -37,6 +37,7 @@ export default function NewBookingForm(props: {
       tripSourceLocationState: props.agencyLocation.state,
       tripSourceLocationCity: props.agencyLocation.city,
       tripDestinationLocationState: props.agencyLocation.state,
+      tripDestinationLocationCity: "",
       tripNeedsAC: true,
       tripPassengers: 1,
       tripType: BookingTypeEnum.OneWay,

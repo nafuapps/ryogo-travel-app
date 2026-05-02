@@ -19,8 +19,7 @@ import {
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import ConfirmBookingForm from "./confirmBookingForm"
-// import { PDFViewer } from "@react-pdf/renderer"
-// import { QuoteDocument } from "@/components/pdf/getQuotePDF"
+// import LeadPDFViewer from "./leadPDFViewer"
 
 export default async function ConfirmBookingPageComponent({
   booking,
@@ -220,9 +219,7 @@ export default async function ConfirmBookingPageComponent({
             />
           )}
         </BookingSection>
-        {/* <PDFViewer className="lg:col-span-2 w-full h-screen">
-          <QuoteDocument booking={booking} />
-        </PDFViewer> */}
+        {/* <LeadPDFViewer booking={booking} /> */}
       </div>
     </div>
   )

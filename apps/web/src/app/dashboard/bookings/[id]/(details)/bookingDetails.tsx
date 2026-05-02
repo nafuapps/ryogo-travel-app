@@ -20,7 +20,7 @@ import {
   Route,
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/app/dashboard/components/buttons/sendConfirmationAlertButton"
-// import BookingPDFViewer from "./bookingPDFViewer"
+// import InvoicePDFViewer from "./invoicePDFViewer"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -337,7 +337,7 @@ export default async function BookingDetailsPageComponent({
               />
             )}
         </BookingSection>
-        {/* <BookingPDFViewer booking={bookingDetails} /> */}
+        {/* <InvoicePDFViewer booking={bookingDetails} /> */}
       </div>
     </div>
   )

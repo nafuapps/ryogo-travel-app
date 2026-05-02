@@ -2,8 +2,8 @@
 
 import { modifyCustomerAction } from "@/app/actions/customers/modifyCustomerAction"
 import {
+  DashboardCombobox,
   DashboardInput,
-  DashboardSelect,
   DashboardTextarea,
 } from "@/components/form/dashboardFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
@@ -88,9 +88,7 @@ export default function ModifyCustomerPageComponent({
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = formData.watch("state")
-  const cityOptions = selectedState
-    ? (data[selectedState] ?? [t("Field6.Title")])
-    : []
+  const cityOptions = data[selectedState] ?? [t("Field6.Title")]
 
   return (
     <div id="ModifyCustomer" className={pageClassName}>
@@ -124,7 +122,7 @@ export default function ModifyCustomerPageComponent({
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
           />
-          <DashboardSelect
+          <DashboardCombobox
             name={"state"}
             register={formData.register("state")}
             title={t("Field5.Title")}
@@ -134,7 +132,7 @@ export default function ModifyCustomerPageComponent({
               formData.setValue("city", "")
             }}
           />
-          <DashboardSelect
+          <DashboardCombobox
             name={"city"}
             register={formData.register("city")}
             title={t("Field6.Title")}

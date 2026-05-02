@@ -9,6 +9,9 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { differenceInMinutes } from "date-fns"
 import { sendConfirmationAction } from "@/app/actions/bookings/sendConfirmationAction"
+import { MessageSquareShare } from "lucide-react"
+
+const SEND_CONFIRMATION_TIMEOUT_MINUTES = 60
 
 type SendConfirmationAlertButtonProps = {
   bookingId: string
@@ -24,30 +27,31 @@ export default function SendConfirmationAlertButton(
 
   const [isSendPending, startSendTransition] = useTransition()
 
-  //Can send confirmation if either not sent before or sent more than 10 minutes ago
+  //Can send confirmation if either not sent before or sent more than X minutes ago
   const canSendConfirmation =
     !props.confirmationSentOn ||
-    differenceInMinutes(new Date(), props.confirmationSentOn) > 10
+    differenceInMinutes(new Date(), props.confirmationSentOn) >
+      SEND_CONFIRMATION_TIMEOUT_MINUTES
 
-  //Refresh page every 1 minute to check if the send confirmation timer is up
+  //Refresh page every 10 minutes to check if the send confirmation timer is up
   useEffect(() => {
     const interval = setInterval(() => {
       router.refresh()
-    }, 60000)
+    }, 600000)
     return () => clearInterval(interval) // Cleanup on unmount
   }, [router])
 
   // Send confirmation to customer over whatsapp
   async function sendConfirmation() {
     startSendTransition(async () => {
-      if (
-        await sendConfirmationAction(
-          props.bookingId,
-          props.agencyId,
-          props.assignedUserId,
-        )
-      ) {
+      const confirmationMessage = await sendConfirmationAction(
+        props.bookingId,
+        props.agencyId,
+        props.assignedUserId,
+      )
+      if (confirmationMessage) {
         toast.success(t("Success"))
+        window.open(confirmationMessage, "_blank", "noopener,noreferrer")
         router.refresh()
       } else {
         toast.error(t("Error"))
@@ -63,6 +67,7 @@ export default function SendConfirmationAlertButton(
       labelChild={
         <Button variant={"outline"} disabled={!canSendConfirmation}>
           {t("Label")}
+          <MessageSquareShare className="size-4 text-slate-700" />
         </Button>
       }
     >

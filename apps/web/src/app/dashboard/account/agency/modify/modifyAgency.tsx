@@ -1,9 +1,9 @@
 "use client"
 
 import {
+  DashboardCombobox,
   DashboardFileInput,
   DashboardInput,
-  DashboardSelect,
   DashboardTextarea,
 } from "@/components/form/dashboardFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
@@ -110,9 +110,7 @@ export default function ModifyAgencyPageForm({
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = formData.watch("agencyState")
-  const cityOptions = selectedState
-    ? (data[selectedState] ?? [t("Field6.Title")])
-    : []
+  const cityOptions = data[selectedState] ?? [t("Field6.Title")]
 
   return (
     <div id="ModifyAgencyPage" className={pageClassName}>
@@ -148,7 +146,7 @@ export default function ModifyAgencyPageForm({
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
-          <DashboardSelect
+          <DashboardCombobox
             name={"agencyState"}
             register={formData.register("agencyState")}
             title={t("Field5.Title")}
@@ -158,7 +156,7 @@ export default function ModifyAgencyPageForm({
               formData.setValue("agencyCity", "")
             }}
           />
-          <DashboardSelect
+          <DashboardCombobox
             name={"agencyCity"}
             register={formData.register("agencyCity")}
             title={t("Field6.Title")}

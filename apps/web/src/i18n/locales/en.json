@@ -2701,8 +2701,14 @@
       "Leave":{
         "ViewDetails": "View Details"
       }
+    },
+    "Whatsapp":{
+      "Cancellation":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* for *{startDate}* has been cancelled. For any queries, contact us at *{agencyPhone}*.",
+      "Confirmation":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. Your driver is *{driverName}* and vehicle is *{vehicleNumber}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
+      "ConfirmationWithoutDriverVehicle":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
+      "Invoice":"Hello *{customerName}*, your trip from *{source}* to *{destination}* for *{startDate}* has been successfully completed. We hope you had a safe and enjoyable journey. Your invoice is ready for booking *#{bookingId}*. Thank you for choosing our service. For any queries, contact us at *{agencyPhone}*. You can download and view the detailed invoice here: {invoiceLink}",
+      "Quote":"Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}"
     }
-    
   },
   "Rider": {
     "Sidebar": {

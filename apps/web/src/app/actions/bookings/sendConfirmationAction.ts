@@ -1,11 +1,12 @@
 "use server"
 
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
+import getConfirmationMessage from "@/components/whatsapp/getConfirmationMessage"
 import { getCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 
 export async function sendConfirmationAction(
   id: string,
@@ -24,7 +25,7 @@ export async function sendConfirmationAction(
 
   //Get lead booking details
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
-  if (!bookingDetails) return
+  if (!bookingDetails || !bookingDetails.startTime) return
 
   let confirmationUrl = bookingDetails.confirmationUrl
 
@@ -36,6 +37,7 @@ export async function sendConfirmationAction(
     confirmationUrl = (
       await uploadPDFBlob(confirmationFile, generateBookingConfirmationName(id))
     ).path
+    if (!confirmationUrl) return
 
     //Update confirmation url in DB
     await bookingServices.addConfirmationUrl(id, confirmationUrl)
@@ -44,7 +46,19 @@ export async function sendConfirmationAction(
     await bookingServices.changeConfirmationSent(id)
   }
 
-  //TODO: Send confirmation pdf to customer over whatsapp
-
-  return confirmationUrl
+  //Send confirmation pdf to customer over whatsapp
+  const confirmationMessage = await getConfirmationMessage(
+    bookingDetails.customer.phone,
+    bookingDetails.customer.name,
+    bookingDetails.id,
+    bookingDetails.source.city,
+    bookingDetails.destination.city,
+    bookingDetails.startDate.toLocaleDateString(),
+    bookingDetails.startTime,
+    bookingDetails.assignedUser.phone,
+    getFileUrl(confirmationUrl),
+    bookingDetails.assignedDriver?.name,
+    bookingDetails.assignedVehicle?.vehicleNumber,
+  )
+  return confirmationMessage
 }

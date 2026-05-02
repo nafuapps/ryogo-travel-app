@@ -146,7 +146,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                   <CaptionGrey>
                     {t("ACSubtitle", {
                       ac: props.newBookingFormData.selectedAcChargePerDay!,
-                      days: finalAmount.days,
+                      days: finalAmount.totalAllowanceDays,
                     })}
                   </CaptionGrey>
                 </div>
@@ -160,7 +160,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                   {t("DriverSubtitle", {
                     allowance:
                       props.newBookingFormData.selectedAllowancePerDay!,
-                    days: finalAmount.days,
+                    days: finalAmount.totalAllowanceDays,
                   })}
                 </CaptionGrey>
               </div>

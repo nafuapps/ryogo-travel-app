@@ -15,8 +15,8 @@ import {
 } from "./newBookingCommon"
 import NewBookingStepsTracker from "./newBookingStepsTracker"
 import {
+  DashboardCombobox,
   DashboardInput,
-  DashboardSelect,
 } from "@/components/form/dashboardFormFields"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
@@ -174,7 +174,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
                 label={t("Field2.Title")}
                 placeholder={t("Field2.Placeholder")}
               />
-              <DashboardSelect
+              <DashboardCombobox
                 name={"newCustomerState"}
                 register={form.register("newCustomerState")}
                 title={t("Field3.Title")}
@@ -184,7 +184,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
                   form.setValue("newCustomerCity", "")
                 }}
               />
-              <DashboardSelect
+              <DashboardCombobox
                 name={"newCustomerCity"}
                 register={form.register("newCustomerCity")}
                 title={t("Field4.Title")}

@@ -3,7 +3,7 @@
 import { PDFViewer } from "@react-pdf/renderer"
 import { InvoiceDocument } from "@/components/pdf/getInvoicePDF"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-export default function BookingPDFViewer({
+export default function InvoicePDFViewer({
   booking,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>

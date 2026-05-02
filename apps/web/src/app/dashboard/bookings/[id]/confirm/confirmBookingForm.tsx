@@ -57,7 +57,7 @@ export default function ConfirmBookingForm({
   //Confirm booking
   async function confirm(values: ConfirmBookingType) {
     startConfirmTransition(async () => {
-      const confirmedBooking = await confirmBookingAction(
+      const confirmedBookingMessage = await confirmBookingAction(
         booking.id,
         booking.agencyId,
         booking.assignedUserId,
@@ -67,8 +67,9 @@ export default function ConfirmBookingForm({
         booking.customer.address ? false : true,
         booking.customer.id,
       )
-      if (confirmedBooking) {
+      if (confirmedBookingMessage) {
         toast.success(t("ConfirmSuccess"))
+        window.open(confirmedBookingMessage, "_blank", "noopener,noreferrer")
         router.replace(`/dashboard/bookings/${booking.id}`)
       } else {
         toast.error(t("ConfirmError"))
@@ -77,7 +78,6 @@ export default function ConfirmBookingForm({
   }
 
   const setValue = form.setValue
-  // Watch the checkbox and the source input field
   // eslint-disable-next-line react-hooks/incompatible-library
   const pickupAddressCopySelection = form.watch("sameAsCustomerAddress")
   const pickupAddressSourceValue = booking.customer.address
@@ -88,7 +88,7 @@ export default function ConfirmBookingForm({
       // If the checkbox is checked, set the target input's value
       setValue("pickupAddress", pickupAddressSourceValue)
     } else {
-      // Optionally, clear the target input if unchecked
+      // Clear the target input if unchecked
       setValue("pickupAddress", "")
     }
   }, [pickupAddressCopySelection, pickupAddressSourceValue, setValue])

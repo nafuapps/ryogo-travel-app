@@ -56,7 +56,6 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
   },
-
   pricingTable: {
     flexDirection: "column",
   },
@@ -92,7 +91,7 @@ export const styles = StyleSheet.create({
   powered: {
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: 2,
+    gap: 4,
   },
   ryoGoLogo: {
     height: 32,

@@ -1,11 +1,12 @@
 "use server"
 
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
+import getQuoteMessage from "@/components/whatsapp/getQuoteMessage"
 import { getCurrentUser } from "@/lib/auth"
 import { generateBookingQuoteName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 
 export async function sendQuoteAction(
   id: string,
@@ -35,15 +36,27 @@ export async function sendQuoteAction(
     //Upload file and get storage url
     quoteUrl = (await uploadPDFBlob(quoteFile, generateBookingQuoteName(id)))
       .path
+    if (!quoteUrl) return
 
     //Update quote url in DB
     await bookingServices.addQuoteUrl(id, quoteUrl)
   } else {
-    //Else, just update quote sent time
+    //Else, just update quote sent time in DB
     await bookingServices.changeQuoteSent(id)
   }
 
-  //TODO: Send quote pdf to customer over whatsapp
+  //Send quote pdf to customer over whatsapp
+  const quoteMessage = await getQuoteMessage(
+    bookingDetails.customer.phone,
+    bookingDetails.customer.name,
+    bookingDetails.id,
+    bookingDetails.source.city,
+    bookingDetails.destination.city,
+    bookingDetails.totalAmount.toString(),
+    bookingDetails.startDate.toLocaleDateString(),
+    bookingDetails.assignedUser.phone,
+    getFileUrl(quoteUrl),
+  )
 
-  return quoteUrl
+  return quoteMessage
 }

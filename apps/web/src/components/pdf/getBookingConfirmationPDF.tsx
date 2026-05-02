@@ -155,7 +155,7 @@ export function BookingConfirmationDocument({
         </View>
         <View id="footer" style={styles.footer}>
           <View id="PoweredBy" style={styles.powered}>
-            <Text style={styles.caption}>Powered by RyoGo</Text>
+            <Text style={styles.caption}>Powered by</Text>
             <Image src={"/logo.png"} style={styles.ryoGoLogo}></Image>
           </View>
           <View id="BookedBy" style={styles.booked}>

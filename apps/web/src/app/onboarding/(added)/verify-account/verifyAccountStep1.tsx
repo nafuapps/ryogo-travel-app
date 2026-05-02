@@ -18,7 +18,7 @@ import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { resendCodeAction } from "@/app/actions/users/resendCodeAction"
 import { CaptionGrey } from "@/components/typography"
 
-const TimeoutMinutes = 5
+const RESEND_TIMEOUT_MINUTES = 5
 
 export function VerifyAccountStep1(props: {
   onNext: () => void
@@ -82,14 +82,16 @@ export function VerifyAccountStep1(props: {
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction
             onClick={resendCode}
-            disabled={isPending || props.resendDifference < TimeoutMinutes}
+            disabled={
+              isPending || props.resendDifference < RESEND_TIMEOUT_MINUTES
+            }
           >
             {isPending
               ? t("Sending")
-              : props.resendDifference >= TimeoutMinutes
+              : props.resendDifference >= RESEND_TIMEOUT_MINUTES
                 ? t("SecondaryCTA")
                 : t("Timeout", {
-                    difference: TimeoutMinutes - props.resendDifference,
+                    difference: RESEND_TIMEOUT_MINUTES - props.resendDifference,
                   })}
           </OnboardingStepSecondaryAction>
           <CaptionGrey>{t("Help")}</CaptionGrey>

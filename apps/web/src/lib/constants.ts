@@ -1,0 +1,1 @@
+export const LEAD_CANCEL_TIMEOUT_DAYS = 1

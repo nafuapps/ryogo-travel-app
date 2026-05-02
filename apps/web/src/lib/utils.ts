@@ -133,14 +133,14 @@ export function getDuration(startDate: Date, endDate: Date) {
   return differenceInDays(startOfDay(endDate), startOfDay(startDate)) + 1
 }
 
-function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
+export function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
   if (tripType === BookingTypeEnum.Round) {
     if (days > 1) {
       //For round trip, double the driver allowance if not returning same day
       return 2
     } else {
-      //If returning same day, give 1.5 days allowance
-      return 1.5
+      //If returning same day, give 1 day allowance
+      return 1
     }
   }
   if (tripType === BookingTypeEnum.MultiDay) {
@@ -204,7 +204,6 @@ export function getEstimatedTotalPrice(
     totalCommission,
     totalAmount,
     totalAllowanceDays,
-    days,
   }
 }
 

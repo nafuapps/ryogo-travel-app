@@ -1,5 +1,6 @@
 "use server"
 
+import getCancellationMessage from "@/components/whatsapp/getCancellationMessage"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -24,7 +25,20 @@ export async function cancelBookingAction(
   if (!canceledBooking) return
 
   if (notifyCustomer) {
-    //TODO: Send booking cancellation pdf to customer over whatsapp
+    const bookingDetails = await bookingServices.findBookingDetailsById(id)
+    if (!bookingDetails) return
+
+    //Send booking cancellation pdf to customer over whatsapp
+    const cancelMessage = await getCancellationMessage(
+      bookingDetails.customer.phone,
+      bookingDetails.customer.name,
+      bookingDetails.id,
+      bookingDetails.source.city,
+      bookingDetails.destination.city,
+      bookingDetails.startDate.toLocaleDateString(),
+      bookingDetails.assignedUser.phone,
+    )
+    return cancelMessage
   }
 
   return canceledBooking

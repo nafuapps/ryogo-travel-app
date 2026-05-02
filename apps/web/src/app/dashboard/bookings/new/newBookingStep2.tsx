@@ -24,9 +24,9 @@ import stateCityData from "@/lib/states_cities.json"
 import NewBookingStepsTracker from "./newBookingStepsTracker"
 import { Form } from "@/components/ui/form"
 import {
+  DashboardCombobox,
   DashboardDatePicker,
   DashboardInput,
-  DashboardSelect,
   DashboardSwitch,
   DashboardTextarea,
 } from "@/components/form/dashboardFormFields"
@@ -43,6 +43,7 @@ import {
   getStringValueDisplayPairs,
 } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { getRouteAction } from "@/app/actions/routes/getRouteAction"
 
 type NewBookingStep2Props = {
   onNext: () => void
@@ -136,31 +137,72 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
   })
 
   //Form submit
-  function onSubmit(values: Step2Type) {
-    props.setNewBookingFormData({
-      ...props.newBookingFormData,
-      tripSourceLocationState: values.tripSourceLocationState,
-      tripSourceLocationCity: values.tripSourceLocationCity,
-      tripDestinationLocationState: values.tripDestinationLocationState,
-      tripDestinationLocationCity: values.tripDestinationLocationCity,
-      tripType: selectedTripType,
-      tripStartDate: values.tripStartDate,
-      tripEndDate:
-        selectedTripType === BookingTypeEnum.OneWay
-          ? values.tripStartDate
-          : values.tripEndDate,
-      tripPassengers: values.tripPassengers,
-      tripNeedsAC: values.tripNeedsAC,
-    })
+  async function onSubmit(values: Step2Type) {
+    let newRoute
+    if (
+      values.tripDestinationLocationCity !==
+        props.newBookingFormData.tripDestinationLocationCity ||
+      values.tripDestinationLocationState !==
+        props.newBookingFormData.tripDestinationLocationState ||
+      values.tripSourceLocationCity !==
+        props.newBookingFormData.tripSourceLocationCity ||
+      values.tripSourceLocationState !==
+        props.newBookingFormData.tripSourceLocationState
+    ) {
+      //If route info has changed, fetch route data
+      newRoute = await getRouteAction(
+        values.tripSourceLocationCity,
+        values.tripSourceLocationState,
+        values.tripDestinationLocationCity,
+        values.tripDestinationLocationState,
+      )
+    }
+    if (newRoute) {
+      props.setNewBookingFormData({
+        ...props.newBookingFormData,
+        tripSourceLocationState: values.tripSourceLocationState,
+        tripSourceLocationCity: values.tripSourceLocationCity,
+        tripDestinationLocationState: values.tripDestinationLocationState,
+        tripDestinationLocationCity: values.tripDestinationLocationCity,
+        tripType: selectedTripType,
+        tripStartDate: values.tripStartDate,
+        tripEndDate:
+          selectedTripType === BookingTypeEnum.OneWay
+            ? values.tripStartDate
+            : values.tripEndDate,
+        tripPassengers: values.tripPassengers,
+        tripNeedsAC: values.tripNeedsAC,
+        routeId: newRoute.id,
+        sourceId: newRoute.sourceId,
+        destinationId: newRoute.destinationId,
+        selectedDistance: newRoute.distance,
+      })
+    } else {
+      props.setNewBookingFormData({
+        ...props.newBookingFormData,
+        tripSourceLocationState: values.tripSourceLocationState,
+        tripSourceLocationCity: values.tripSourceLocationCity,
+        tripDestinationLocationState: values.tripDestinationLocationState,
+        tripDestinationLocationCity: values.tripDestinationLocationCity,
+        tripType: selectedTripType,
+        tripStartDate: values.tripStartDate,
+        tripEndDate:
+          selectedTripType === BookingTypeEnum.OneWay
+            ? values.tripStartDate
+            : values.tripEndDate,
+        tripPassengers: values.tripPassengers,
+        tripNeedsAC: values.tripNeedsAC,
+      })
+    }
     props.onNext()
   }
 
   const data: Record<string, string[]> = stateCityData
 
   const selectedSourceState = form.watch("tripSourceLocationState")
-  const sourceCityOptions = selectedSourceState
-    ? (data[selectedSourceState] ?? [t("Field2.Placeholder")])
-    : []
+  const sourceCityOptions = data[selectedSourceState] ?? [
+    t("Field2.Placeholder"),
+  ]
 
   const selectedDestinationState = form.watch("tripDestinationLocationState")
   const destinationCityOptions = data[selectedDestinationState] ?? [
@@ -188,7 +230,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                 id="tripSource"
                 className="flex flex-col w-full gap-1 lg:gap-1.5"
               >
-                <DashboardSelect
+                <DashboardCombobox
                   name="tripSourceLocationState"
                   title={t("Field1.Title")}
                   array={getArrayValueDisplayPairs(stateCityData)}
@@ -198,7 +240,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                     form.setValue("tripSourceLocationCity", "")
                   }}
                 />
-                <DashboardSelect
+                <DashboardCombobox
                   name="tripSourceLocationCity"
                   array={getStringValueDisplayPairs(sourceCityOptions)}
                   register={form.register("tripSourceLocationCity")}
@@ -209,7 +251,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                 id="tripDestination"
                 className="flex flex-col w-full gap-1 lg:gap-1.5"
               >
-                <DashboardSelect
+                <DashboardCombobox
                   name="tripDestinationLocationState"
                   title={t("Field3.Title")}
                   array={getArrayValueDisplayPairs(stateCityData)}
@@ -219,7 +261,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
                     form.setValue("tripDestinationLocationCity", "")
                   }}
                 />
-                <DashboardSelect
+                <DashboardCombobox
                   name="tripDestinationLocationCity"
                   array={getStringValueDisplayPairs(destinationCityOptions)}
                   register={form.register("tripDestinationLocationCity")}

@@ -5,9 +5,9 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
+  OnboardingCombobox,
   OnboardingFileInput,
   OnboardingInput,
-  OnboardingSelect,
 } from "../components/onboardingFields"
 import {
   OnboardingStepForm,
@@ -93,9 +93,7 @@ export function CreateAccountStep3(props: {
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = formData.watch("agencyState")
-  const cityOptions = selectedState
-    ? (data[selectedState] ?? [t("Field4.Title")])
-    : []
+  const cityOptions = data[selectedState] ?? [t("Field4.Title")]
 
   return (
     <Form {...formData}>
@@ -118,7 +116,7 @@ export function CreateAccountStep3(props: {
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <OnboardingSelect
+          <OnboardingCombobox
             name={"agencyState"}
             register={formData.register("agencyState")}
             title={t("Field3.Title")}
@@ -128,7 +126,7 @@ export function CreateAccountStep3(props: {
               formData.setValue("agencyCity", "")
             }}
           />
-          <OnboardingSelect
+          <OnboardingCombobox
             name={"agencyCity"}
             register={formData.register("agencyCity")}
             title={t("Field4.Title")}

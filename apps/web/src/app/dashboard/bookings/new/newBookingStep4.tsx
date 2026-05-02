@@ -17,20 +17,7 @@ import { Form } from "@/components/ui/form"
 import { DashboardInput } from "@/components/form/dashboardFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import { useCallback, useEffect } from "react"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import NewBookingTripInfo from "./newBookingTripInfo"
-import { FindOrCreateRouteByLocationsType } from "@ryogo-travel-app/api/services/route.services"
-
-const getRoute = async (data: NewBookingFormDataType) => {
-  const route = await apiClient<FindOrCreateRouteByLocationsType>(
-    `/api/new-booking/get-route?sourceCity=${data.tripSourceLocationCity}&sourceState=${data.tripSourceLocationState}&destinationCity=${data.tripDestinationLocationCity}&destinationState=${data.tripDestinationLocationState}`,
-    {
-      method: "GET",
-    },
-  )
-  return route
-}
 
 type NewBookingStep4Props = {
   onNext: () => void
@@ -95,28 +82,6 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
       selectedDistance: props.newBookingFormData.selectedDistance,
     },
   })
-
-  const setValue = form.setValue
-  const fetchRouteData = useCallback(async () => {
-    if (!props.newBookingFormData.routeId) {
-      getRoute(props.newBookingFormData).then((res) => {
-        if (res) {
-          props.setNewBookingFormData({
-            ...props.newBookingFormData,
-            routeId: res.id,
-            sourceId: res.sourceId,
-            destinationId: res.destinationId,
-            selectedDistance: res.distance,
-          })
-          setValue("selectedDistance", res.distance)
-        }
-      })
-    }
-  }, [props, setValue])
-
-  useEffect(() => {
-    fetchRouteData()
-  }, [fetchRouteData])
 
   //Form submit
   function onSubmit(values: Step4Type) {

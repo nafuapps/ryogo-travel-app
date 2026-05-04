@@ -1,3 +1,5 @@
+"use client"
+
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"

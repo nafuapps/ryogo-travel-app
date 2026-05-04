@@ -3,7 +3,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "../../components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import AccountHelpPageComponent from "./help"
 import { Metadata } from "next"
 

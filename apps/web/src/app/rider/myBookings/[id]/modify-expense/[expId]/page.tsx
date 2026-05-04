@@ -6,7 +6,7 @@ import {
 import { getCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
-import RiderHeader from "@/app/rider/components/riderHeader"
+import RiderHeader from "@/components/header/riderHeader"
 import RiderModifyExpensePageComponent from "./riderModifyExpense"
 import { ExpenseRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"

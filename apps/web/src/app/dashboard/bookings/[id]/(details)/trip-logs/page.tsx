@@ -4,7 +4,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingTripLogsPageComponent from "./bookingTripLogs"
 import { Metadata } from "next"
 

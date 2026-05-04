@@ -1,6 +1,6 @@
 //Account page
 
-import DashboardHeader from "../components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

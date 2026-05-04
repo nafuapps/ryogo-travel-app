@@ -2,7 +2,7 @@
 
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
-import RiderSidebar from "./components/riderSidebar"
+import RiderSidebar from "@/components/sidebar/riderSidebar"
 import { getCurrentUser, logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"

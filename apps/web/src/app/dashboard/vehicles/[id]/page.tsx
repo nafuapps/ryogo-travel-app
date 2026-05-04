@@ -8,7 +8,7 @@ import {
 } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import DashboardHeader from "../../components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"

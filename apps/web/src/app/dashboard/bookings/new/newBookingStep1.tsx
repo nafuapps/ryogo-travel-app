@@ -1,8 +1,10 @@
+"use client"
+
 import { CaptionGrey, H4, Small, SmallGrey } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import {
   newBookingActionBlockClassName,
@@ -119,7 +121,10 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
   }
 
   const data: Record<string, string[]> = stateCityData
-  const selectedState = form.watch("newCustomerState")
+  const selectedState = useWatch({
+    name: "newCustomerState",
+    control: form.control,
+  })
   const cityOptions = selectedState
     ? (data[selectedState] ?? [t("Field4.Title")])
     : []

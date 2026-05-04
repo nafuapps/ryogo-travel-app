@@ -1,3 +1,5 @@
+"use client"
+
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -7,7 +9,7 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/app/onboarding/components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { H3Grey } from "@/components/typography"
 import ConfirmValues from "@/components/form/confirmValues"

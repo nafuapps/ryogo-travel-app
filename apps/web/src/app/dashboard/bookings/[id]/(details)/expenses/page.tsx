@@ -4,7 +4,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingExpensesPageComponent from "./bookingExpenses"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"

@@ -7,7 +7,7 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
 import RiderAddExpensePageComponent from "./riderAddExpense"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import RiderHeader from "@/app/rider/components/riderHeader"
+import RiderHeader from "@/components/header/riderHeader"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { Metadata } from "next"
 

@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/immutability */
-//(Onboarding) Add vehicle page
 "use client"
 
 import { useTranslations } from "next-intl"
-import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
+import OnboardingSidebar from "@/components/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { CaptionGrey, H2 } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
@@ -13,7 +12,7 @@ import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "@/app/onboarding/components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import { AddVehicleStep1 } from "./addVehicleStep1"
 import { AddVehicleFinish } from "./addVehicleFinish"
 import { AddVehicleStep2 } from "./addVehicleStep2"

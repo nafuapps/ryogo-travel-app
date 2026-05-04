@@ -5,7 +5,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
-import DashboardHeader from "../../components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import AccountSettingsPageComponent from "./settings"
 import AccountDetailHeaderTabs from "../accountDetailHeaderTabs"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"

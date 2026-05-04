@@ -1,7 +1,7 @@
 import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import { BookingCommonInfo } from "@/app/rider/components/riderBookingCommon"
+import { BookingCommonInfo } from "@/components/rider/riderBookingCommon"
 import { SmallBold } from "@/components/typography"
 import RiderExpenseItem from "./riderExpenseItem"
 import RiderTripLogItem from "./riderTripLogItem"

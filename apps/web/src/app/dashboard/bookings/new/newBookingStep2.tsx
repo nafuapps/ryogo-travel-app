@@ -1,3 +1,5 @@
+"use client"
+
 import {
   CaptionBold,
   CaptionGrey,
@@ -8,7 +10,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import {
   getTripTypeClassName,
@@ -199,12 +201,18 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
 
   const data: Record<string, string[]> = stateCityData
 
-  const selectedSourceState = form.watch("tripSourceLocationState")
+  const selectedSourceState = useWatch({
+    name: "tripSourceLocationState",
+    control: form.control,
+  })
   const sourceCityOptions = data[selectedSourceState] ?? [
     t("Field2.Placeholder"),
   ]
 
-  const selectedDestinationState = form.watch("tripDestinationLocationState")
+  const selectedDestinationState = useWatch({
+    name: "tripDestinationLocationState",
+    control: form.control,
+  })
   const destinationCityOptions = data[selectedDestinationState] ?? [
     t("Field4.Placeholder"),
   ]

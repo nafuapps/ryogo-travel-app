@@ -1,8 +1,10 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import {
@@ -11,7 +13,7 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/app/onboarding/components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
@@ -49,6 +51,11 @@ export function AddVehicleStep4(props: {
     },
   })
 
+  const acWatch = useWatch({
+    name: "hasAC",
+    control: formData.control,
+  })
+
   //Submit actions
   const onSubmit = (data: Step4Type) => {
     props.updateFinalData({
@@ -83,7 +90,7 @@ export function AddVehicleStep4(props: {
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
-            disabled={!formData.watch("hasAC")}
+            disabled={!acWatch}
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step4Actions">

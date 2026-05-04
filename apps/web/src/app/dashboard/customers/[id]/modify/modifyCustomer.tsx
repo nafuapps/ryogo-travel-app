@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
@@ -87,7 +87,10 @@ export default function ModifyCustomerPageComponent({
   }
 
   const data: Record<string, string[]> = stateCityData
-  const selectedState = formData.watch("state")
+  const selectedState = useWatch({
+    name: "state",
+    control: formData.control,
+  })
   const cityOptions = data[selectedState] ?? [t("Field6.Title")]
 
   return (

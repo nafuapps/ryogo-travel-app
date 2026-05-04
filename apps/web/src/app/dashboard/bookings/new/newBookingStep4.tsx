@@ -1,3 +1,5 @@
+"use client"
+
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"

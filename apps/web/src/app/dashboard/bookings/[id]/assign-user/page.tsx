@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

@@ -5,7 +5,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"

@@ -4,7 +4,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import BookingsPageComponent from "./bookings"
-import DashboardHeader from "../components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"

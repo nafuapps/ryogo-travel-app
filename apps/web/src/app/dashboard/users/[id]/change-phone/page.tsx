@@ -1,6 +1,6 @@
 //Users/id/modify page (only accessible to owner)
 
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

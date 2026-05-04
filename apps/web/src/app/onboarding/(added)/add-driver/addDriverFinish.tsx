@@ -7,14 +7,12 @@ import {
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/app/onboarding/components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export function AddDriverFinish(props: { finalData: AddDriverRequestType }) {
   const t = useTranslations("Onboarding.AddDriverPage.Finish")
-  const router = useRouter()
 
   return (
     <OnboardingStepFinishForm formId="Step6Form">
@@ -30,13 +28,8 @@ export function AddDriverFinish(props: { finalData: AddDriverRequestType }) {
         <OnboardingStepPrimaryAction disabled={false}>
           <Link href="/onboarding/add-agent">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>
-        <OnboardingStepSecondaryAction
-          onClick={() => {
-            router.replace("/dashboard")
-          }}
-          disabled={false}
-        >
-          {t("SecondaryCTA")}
+        <OnboardingStepSecondaryAction disabled={false}>
+          <Link href="/dashboard">{t("SecondaryCTA")}</Link>
         </OnboardingStepSecondaryAction>
       </OnboardingStepActions>
     </OnboardingStepFinishForm>

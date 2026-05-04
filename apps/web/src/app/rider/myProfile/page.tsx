@@ -7,7 +7,7 @@ import {
 } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import RiderHeader from "../components/riderHeader"
+import RiderHeader from "@/components/header/riderHeader"
 import RiderProfilePageComponent from "./riderPofile"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"

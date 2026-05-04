@@ -1,8 +1,10 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction, useEffect } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import {
   RyogoInput,
@@ -17,7 +19,7 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "../components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -76,10 +78,16 @@ export function CreateAccountStep2(props: {
 
   const setValue = formData.setValue
   // Watch the checkbox and the source input field
-  const phoneCopySelection = formData.watch("sameAsOwnerPhone")
+  const phoneCopySelection = useWatch({
+    name: "sameAsOwnerPhone",
+    control: formData.control,
+  })
   const phoneSourceValue = props.finalData.owner.phone
 
-  const emailCopySelection = formData.watch("sameAsOwnerEmail")
+  const emailCopySelection = useWatch({
+    name: "sameAsOwnerEmail",
+    control: formData.control,
+  })
   const emailSourceValue = props.finalData.owner.email
 
   useEffect(() => {

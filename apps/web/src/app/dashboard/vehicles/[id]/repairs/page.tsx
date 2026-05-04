@@ -1,6 +1,6 @@
 //Vehicle Repairs page
 
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

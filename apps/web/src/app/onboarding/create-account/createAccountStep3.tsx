@@ -1,8 +1,10 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import {
   RyogoCombobox,
@@ -15,7 +17,7 @@ import {
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "../components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import stateCityData from "@/lib/states_cities.json"
 import { Form } from "@/components/ui/form"
 import {
@@ -92,7 +94,10 @@ export function CreateAccountStep3(props: {
   }
 
   const data: Record<string, string[]> = stateCityData
-  const selectedState = formData.watch("agencyState")
+  const selectedState = useWatch({
+    name: "agencyState",
+    control: formData.control,
+  })
   const cityOptions = data[selectedState] ?? [t("Field4.Title")]
 
   return (

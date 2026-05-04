@@ -8,7 +8,7 @@ import {
 import { getCurrentUser } from "@/lib/auth"
 import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
-import DashboardHeader from "./components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import DashboardHomePageComponent from "./dashboardHome"
 
 export const metadata: Metadata = {

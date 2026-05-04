@@ -1,9 +1,9 @@
 import { pageClassName } from "@/components/page/pageCommons"
-import DashboardBookingMetricsComponent from "./components/home/metrics/dashboardBookingMetricsComponent"
-import DashboardDriverMetricsComponent from "./components/home/metrics/dashboardDriverMetricsComponent"
-import DashboardRevenueMetricsComponent from "./components/home/metrics/dashboardRevenueMetricComponent"
-import DashboardVehicleMetricsComponent from "./components/home/metrics/dashboardVehicleMetricsComponent"
-import DashboardOngoingTripSection from "./components/home/ongoingTrips/dashboardOngoingTripSection"
+import DashboardBookingMetricsComponent from "@/components/dashboard/home/metrics/dashboardBookingMetricsComponent"
+import DashboardDriverMetricsComponent from "@/components/dashboard/home/metrics/dashboardDriverMetricsComponent"
+import DashboardRevenueMetricsComponent from "@/components/dashboard/home/metrics/dashboardRevenueMetricComponent"
+import DashboardVehicleMetricsComponent from "@/components/dashboard/home/metrics/dashboardVehicleMetricsComponent"
+import DashboardOngoingTripSection from "@/components/dashboard/home/ongoingTrips/dashboardOngoingTripSection"
 
 /*
  * Bookings - Confirmed (Lead, In progress, Completed, Cancelled)

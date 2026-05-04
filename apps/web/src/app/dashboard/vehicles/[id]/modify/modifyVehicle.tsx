@@ -2,7 +2,7 @@
 
 import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
@@ -160,6 +160,11 @@ export default function ModifyVehiclePageComponent({
     },
   })
 
+  const acWatch = useWatch({
+    name: "hasAC",
+    control: formData.control,
+  })
+
   //Submit actions
   async function onSubmit(data: ModifyVehicleType) {
     startTransition(async () => {
@@ -299,7 +304,7 @@ export default function ModifyVehiclePageComponent({
               label={t("Field15.Title")}
               placeholder={t("Field15.Placeholder")}
               description={t("Field15.Description")}
-              disabled={!formData.watch("hasAC")}
+              disabled={!acWatch}
             />
             <Button
               variant={"default"}

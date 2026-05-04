@@ -3,7 +3,7 @@
 import { getCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
-import DashboardHeader from "../../components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

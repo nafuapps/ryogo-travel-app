@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { useTranslations } from "next-intl"
 import { useTransition } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
 import {
@@ -109,7 +109,10 @@ export default function ModifyAgencyPageForm({
   }
 
   const data: Record<string, string[]> = stateCityData
-  const selectedState = formData.watch("agencyState")
+  const selectedState = useWatch({
+    name: "agencyState",
+    control: formData.control,
+  })
   const cityOptions = data[selectedState] ?? [t("Field6.Title")]
 
   return (

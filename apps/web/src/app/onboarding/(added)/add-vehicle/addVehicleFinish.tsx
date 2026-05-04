@@ -1,15 +1,15 @@
-import { H3, H5, P, CaptionGrey } from "@/components/typography";
-import { useTranslations } from "next-intl";
+import { H3, H5, P, CaptionGrey } from "@/components/typography"
+import { useTranslations } from "next-intl"
 import {
   OnboardingStepFinishContent,
   OnboardingStepActions,
   OnboardingStepFinishForm,
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps";
-import Link from "next/link";
+} from "@/components/onboarding/onboardingSteps"
+import Link from "next/link"
 export function AddVehicleFinish() {
-  const t = useTranslations("Onboarding.AddVehiclePage.Finish");
+  const t = useTranslations("Onboarding.AddVehiclePage.Finish")
 
   return (
     <OnboardingStepFinishForm formId="Step6Form">
@@ -26,5 +26,5 @@ export function AddVehicleFinish() {
         </OnboardingStepPrimaryAction>
       </OnboardingStepActions>
     </OnboardingStepFinishForm>
-  );
+  )
 }

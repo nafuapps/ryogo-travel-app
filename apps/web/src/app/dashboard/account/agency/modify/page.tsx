@@ -1,7 +1,7 @@
 //Account/agency/modify page (only accessible by owner)
 
 import ModifyAgencyPageForm from "./modifyAgency"
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

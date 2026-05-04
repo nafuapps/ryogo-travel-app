@@ -6,7 +6,7 @@ import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "@/app/onboarding/components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import { ChangePasswordStep1 } from "./changePasswordStep1"
 import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"

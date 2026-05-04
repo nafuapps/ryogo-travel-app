@@ -1,8 +1,10 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
@@ -54,6 +56,11 @@ export function NewVehicleStep4(props: {
     },
   })
 
+  const acWatch = useWatch({
+    name: "hasAC",
+    control: formData.control,
+  })
+
   //Submit actions
   const onSubmit = (data: Step4Type) => {
     props.setNewVehicleFormData({
@@ -99,7 +106,7 @@ export function NewVehicleStep4(props: {
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
-              disabled={!formData.watch("hasAC")}
+              disabled={!acWatch}
             />
           </div>
           <div id="FormActions" className={newBookingActionBlockClassName}>

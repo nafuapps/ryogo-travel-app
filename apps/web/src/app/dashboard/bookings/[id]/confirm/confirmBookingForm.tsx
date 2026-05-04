@@ -15,7 +15,7 @@ import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useEffect, useTransition } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 
@@ -78,8 +78,10 @@ export default function ConfirmBookingForm({
   }
 
   const setValue = form.setValue
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const pickupAddressCopySelection = form.watch("sameAsCustomerAddress")
+  const pickupAddressCopySelection = useWatch({
+    name: "sameAsCustomerAddress",
+    control: form.control,
+  })
   const pickupAddressSourceValue = booking.customer.address
 
   useEffect(() => {

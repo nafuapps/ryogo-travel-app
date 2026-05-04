@@ -9,7 +9,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import ChangeEmailMyProfileComponent from "./changeEmail"
-import RiderHeader from "../../components/riderHeader"
+import RiderHeader from "@/components/header/riderHeader"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {

@@ -1,3 +1,5 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
@@ -15,7 +17,7 @@ import {
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "@/app/onboarding/components/onboardingSteps"
+} from "@/components/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 

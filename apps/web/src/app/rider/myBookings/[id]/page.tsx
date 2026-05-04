@@ -6,7 +6,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import { redirect, RedirectType } from "next/navigation"
-import RiderHeader from "../../components/riderHeader"
+import RiderHeader from "@/components/header/riderHeader"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {
   BookingStatusEnum,

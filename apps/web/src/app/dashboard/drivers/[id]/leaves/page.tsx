@@ -1,6 +1,6 @@
 //Driver Leaves page
 
-import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import AllDriverLeavesPageComponent from "./allDriverLeaves"
 import {

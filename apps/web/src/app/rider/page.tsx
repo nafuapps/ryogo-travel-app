@@ -5,7 +5,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import RiderHeader from "./components/riderHeader"
+import RiderHeader from "@/components/header/riderHeader"
 import RiderHomePageComponent from "./riderHome"
 import { redirect, RedirectType } from "next/navigation"
 import { getCurrentUser } from "@/lib/auth"

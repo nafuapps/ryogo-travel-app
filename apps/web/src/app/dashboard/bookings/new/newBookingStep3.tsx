@@ -1,3 +1,5 @@
+"use client"
+
 import { H4, PBold, SmallGrey, Caption } from "@/components/typography"
 import { DriverRegex, VehicleRegex } from "@/lib/regex"
 import { zodResolver } from "@hookform/resolvers/zod"

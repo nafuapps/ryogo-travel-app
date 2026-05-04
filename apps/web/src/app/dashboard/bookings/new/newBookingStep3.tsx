@@ -7,24 +7,25 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
-  newBookingFormClassName,
   NewBookingFormDataType,
-  newBookingHeaderClassName,
-  newBookingHeaderLineClassName,
   Step3Type,
   NewBookingTotalSteps,
-  newBookingFormBlockClassName,
-  newBookingActionBlockClassName,
 } from "./newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
-import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import NewBookingVehicleTile from "./newBookingVehicleTile"
 import NewBookingDriverTile from "./newBookingDriverTile"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { NewStepWrapper } from "@/components/page/pageWrappers"
+import {
+  NewFormActionWrapper,
+  NewFormContentWrapper,
+  NewFormWrapper,
+  NewStepHeaderWrapper,
+  NewStepTitleWrapper,
+  NewStepWrapper,
+} from "@/components/page/pageWrappers"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -77,79 +78,76 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
 
   return (
     <NewStepWrapper id="AssignmentStep">
-      <div id="AssignmentHeader" className={newBookingHeaderClassName}>
-        <div className={newBookingHeaderLineClassName}>
+      <NewStepHeaderWrapper>
+        <NewStepTitleWrapper>
           <H4>{t("Title")}</H4>
           <Caption>{t("Subtitle")}</Caption>
-        </div>
+        </NewStepTitleWrapper>
         <StepsTracker total={NewBookingTotalSteps} current={2} />
         <SmallGrey>{t("Description")}</SmallGrey>
-      </div>
-      <Form {...form}>
-        <form
-          id="Step3Form"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="ChooseVehicle" className={newBookingFormBlockClassName}>
-            <PBold>{t("Vehicle.Title")}</PBold>
-            <div
-              id="vehicleAssignment"
-              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-            >
-              {props.vehicles
-                .sort(
-                  (a, b) =>
-                    a.assignedBookings.length - b.assignedBookings.length,
-                )
-                .map((vehicle, index) => (
-                  <NewBookingVehicleTile
-                    key={index}
-                    vehicleData={vehicle}
-                    newBookingFormData={props.newBookingFormData}
-                    setValue={form.setValue}
-                  />
-                ))}
-            </div>
-          </div>
-          <div id="ChooseDriver" className={newBookingFormBlockClassName}>
-            <PBold>{t("Driver.Title")}</PBold>
-            <div
-              id="driverAssignment"
-              className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-            >
-              {props.drivers.map((driver, index) => (
-                <NewBookingDriverTile
+      </NewStepHeaderWrapper>
+      <NewFormWrapper<Step3Type>
+        id="Step3Form"
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <NewFormContentWrapper>
+          <PBold>{t("Vehicle.Title")}</PBold>
+          <div
+            id="vehicleAssignment"
+            className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+          >
+            {props.vehicles
+              .sort(
+                (a, b) => a.assignedBookings.length - b.assignedBookings.length,
+              )
+              .map((vehicle, index) => (
+                <NewBookingVehicleTile
                   key={index}
-                  driverData={driver}
+                  vehicleData={vehicle}
                   newBookingFormData={props.newBookingFormData}
                   setValue={form.setValue}
                 />
               ))}
-            </div>
           </div>
-          <div id="NewBookingAction" className={newBookingActionBlockClassName}>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting && <Spinner />}
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              type="button"
-              onClick={props.onPrev}
-              disabled={form.formState.isSubmitting}
-            >
-              {t("Back")}
-            </Button>
+        </NewFormContentWrapper>
+        <NewFormContentWrapper>
+          <PBold>{t("Driver.Title")}</PBold>
+          <div
+            id="driverAssignment"
+            className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
+          >
+            {props.drivers.map((driver, index) => (
+              <NewBookingDriverTile
+                key={index}
+                driverData={driver}
+                newBookingFormData={props.newBookingFormData}
+                setValue={form.setValue}
+              />
+            ))}
           </div>
-        </form>
-      </Form>
+        </NewFormContentWrapper>
+        <NewFormActionWrapper>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting && <Spinner />}
+            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={props.onPrev}
+            disabled={form.formState.isSubmitting}
+          >
+            {t("Back")}
+          </Button>
+        </NewFormActionWrapper>
+      </NewFormWrapper>
     </NewStepWrapper>
   )
 }

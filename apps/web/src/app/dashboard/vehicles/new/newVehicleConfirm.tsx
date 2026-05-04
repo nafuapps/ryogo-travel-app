@@ -3,24 +3,23 @@
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { Form } from "@/components/ui/form"
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import {
-  newBookingHeaderClassName,
-  newBookingHeaderLineClassName,
-  newBookingFormClassName,
-  newBookingFormBlockClassName,
-  newBookingActionBlockClassName,
-} from "../../bookings/new/newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import { useTransition } from "react"
 import ConfirmValues from "@/components/form/confirmValues"
-import { NewStepWrapper } from "@/components/page/pageWrappers"
+import {
+  NewFormActionWrapper,
+  NewFormContentWrapper,
+  NewFormWrapper,
+  NewStepHeaderWrapper,
+  NewStepTitleWrapper,
+  NewStepWrapper,
+} from "@/components/page/pageWrappers"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -75,111 +74,109 @@ export function NewVehicleConfirm(props: {
   }
   return (
     <NewStepWrapper id="NewVehicleConfirm">
-      <div id="Header" className={newBookingHeaderClassName}>
-        <div className={newBookingHeaderLineClassName}>
+      <NewStepHeaderWrapper>
+        <NewStepTitleWrapper>
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
-        </div>
+        </NewStepTitleWrapper>
         <StepsTracker total={5} current={4} />
         <SmallGrey>{t("Description")}</SmallGrey>
-      </div>
-      <Form {...formData}>
-        <form
-          id="ConfirmForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="ConfirmFields" className={newBookingFormBlockClassName}>
+      </NewStepHeaderWrapper>
+      <NewFormWrapper<AddVehicleRequestType>
+        id="ConfirmForm"
+        form={formData}
+        onSubmit={formData.handleSubmit(onSubmit)}
+      >
+        <NewFormContentWrapper>
+          <ConfirmValues
+            name={t("VehicleNumber")}
+            value={props.newVehicleFormData.data.vehicleNumber}
+          />
+          <ConfirmValues
+            name={t("Type")}
+            value={props.newVehicleFormData.data.type}
+          />
+          <ConfirmValues
+            name={t("Brand")}
+            value={props.newVehicleFormData.data.brand}
+          />
+          <ConfirmValues
+            name={t("Model")}
+            value={props.newVehicleFormData.data.model}
+          />
+          <ConfirmValues
+            name={t("Color")}
+            value={props.newVehicleFormData.data.color}
+          />
+          {props.newVehicleFormData.data.capacity && (
             <ConfirmValues
-              name={t("VehicleNumber")}
-              value={props.newVehicleFormData.data.vehicleNumber}
+              name={t("Capacity")}
+              value={`${props.newVehicleFormData.data.capacity}`}
             />
+          )}
+          {props.newVehicleFormData.data.odometerReading && (
             <ConfirmValues
-              name={t("Type")}
-              value={props.newVehicleFormData.data.type}
+              name={t("OdometerReading")}
+              value={`${props.newVehicleFormData.data.odometerReading}`}
             />
+          )}
+          {props.newVehicleFormData.data.insuranceExpiresOn && (
             <ConfirmValues
-              name={t("Brand")}
-              value={props.newVehicleFormData.data.brand}
+              name={t("InsuranceExpiresOn")}
+              value={props.newVehicleFormData.data.insuranceExpiresOn.toDateString()}
             />
+          )}
+          {props.newVehicleFormData.data.pucExpiresOn && (
             <ConfirmValues
-              name={t("Model")}
-              value={props.newVehicleFormData.data.model}
+              name={t("PUCExpiresOn")}
+              value={props.newVehicleFormData.data.pucExpiresOn.toDateString()}
             />
+          )}
+          {props.newVehicleFormData.data.rcExpiresOn && (
             <ConfirmValues
-              name={t("Color")}
-              value={props.newVehicleFormData.data.color}
+              name={t("RCExpiresOn")}
+              value={props.newVehicleFormData.data.rcExpiresOn.toDateString()}
             />
-            {props.newVehicleFormData.data.capacity && (
+          )}
+          {props.newVehicleFormData.data.defaultRatePerKm && (
+            <ConfirmValues
+              name={t("RatePerKm")}
+              value={`${props.newVehicleFormData.data.defaultRatePerKm}`}
+            />
+          )}
+          <ConfirmValues
+            name={t("HasAC")}
+            value={props.newVehicleFormData.data.hasAC ? "Yes" : "No"}
+          />
+          {props.newVehicleFormData.data.hasAC &&
+            props.newVehicleFormData.data.defaultAcChargePerDay && (
               <ConfirmValues
-                name={t("Capacity")}
-                value={`${props.newVehicleFormData.data.capacity}`}
+                name={t("ACChagePerDay")}
+                value={`${props.newVehicleFormData.data.defaultAcChargePerDay}`}
               />
             )}
-            {props.newVehicleFormData.data.odometerReading && (
-              <ConfirmValues
-                name={t("OdometerReading")}
-                value={`${props.newVehicleFormData.data.odometerReading}`}
-              />
-            )}
-            {props.newVehicleFormData.data.insuranceExpiresOn && (
-              <ConfirmValues
-                name={t("InsuranceExpiresOn")}
-                value={props.newVehicleFormData.data.insuranceExpiresOn.toDateString()}
-              />
-            )}
-            {props.newVehicleFormData.data.pucExpiresOn && (
-              <ConfirmValues
-                name={t("PUCExpiresOn")}
-                value={props.newVehicleFormData.data.pucExpiresOn.toDateString()}
-              />
-            )}
-            {props.newVehicleFormData.data.rcExpiresOn && (
-              <ConfirmValues
-                name={t("RCExpiresOn")}
-                value={props.newVehicleFormData.data.rcExpiresOn.toDateString()}
-              />
-            )}
-            {props.newVehicleFormData.data.defaultRatePerKm && (
-              <ConfirmValues
-                name={t("RatePerKm")}
-                value={`${props.newVehicleFormData.data.defaultRatePerKm}`}
-              />
-            )}
-            <ConfirmValues
-              name={t("HasAC")}
-              value={props.newVehicleFormData.data.hasAC ? "Yes" : "No"}
-            />
-            {props.newVehicleFormData.data.hasAC &&
-              props.newVehicleFormData.data.defaultAcChargePerDay && (
-                <ConfirmValues
-                  name={t("ACChagePerDay")}
-                  value={`${props.newVehicleFormData.data.defaultAcChargePerDay}`}
-                />
-              )}
-          </div>
-          <div id="FormActions" className={newBookingActionBlockClassName}>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              type="button"
-              onClick={props.onPrev}
-              disabled={isPending}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </div>
-        </form>
-      </Form>
+        </NewFormContentWrapper>
+        <NewFormActionWrapper>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={props.onPrev}
+            disabled={isPending}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </NewFormActionWrapper>
+      </NewFormWrapper>
     </NewStepWrapper>
   )
 }

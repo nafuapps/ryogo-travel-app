@@ -16,8 +16,6 @@ import {
   getExpiryScore,
   getAllowanceScore,
   getCanDriveScore,
-  getRyogoScoreClassName,
-  getTileClassName,
   getDriverTotalScore,
   getCanDriveIcons,
 } from "./newBookingCommon"
@@ -31,6 +29,10 @@ import {
   LucidePhone,
 } from "lucide-react"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
+import {
+  AssignTileWrapper,
+  RyoGoScoreWrapper,
+} from "@/components/page/pageWrappers"
 
 type NewBookingDriverTileProps = {
   driverData: FindDriversByAgencyType[number]
@@ -107,8 +109,8 @@ export default function NewBookingDriverTile({
   })
 
   return (
-    <div
-      className={getTileClassName(assignedDriverIdWatch === driverData.id)}
+    <AssignTileWrapper
+      selected={assignedDriverIdWatch === driverData.id}
       onClick={() =>
         setValue(
           "assignedDriverId",
@@ -131,10 +133,7 @@ export default function NewBookingDriverTile({
         </div>
       </div>
       <div className={tileRightClassName}>
-        <div className={getRyogoScoreClassName(totalScore)}>
-          <Caption>{t("Score")}</Caption>
-          <H2>{totalScore.toFixed(0)}</H2>
-        </div>
+        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <div className={tileStatusClassName}>
           {isBooked ? (
             <LucideTicketX className={tileRedIconClassName} />
@@ -148,6 +147,6 @@ export default function NewBookingDriverTile({
           </Caption>
         </div>
       </div>
-    </div>
+    </AssignTileWrapper>
   )
 }

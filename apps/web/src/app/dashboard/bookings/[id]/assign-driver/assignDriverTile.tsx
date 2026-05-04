@@ -17,8 +17,6 @@ import {
   getDriverTotalScore,
   getExpiryScore,
   getOverlapScore,
-  getRyogoScoreClassName,
-  getTileClassName,
   NoOverlapScore,
   tileFooterClassName,
   tileGreenIconClassName,
@@ -29,6 +27,10 @@ import {
   tileStatusClassName,
 } from "../../new/newBookingCommon"
 import { IconTextTag, IconsTag } from "../../new/newBookingTileTag"
+import {
+  AssignTileWrapper,
+  RyoGoScoreWrapper,
+} from "@/components/page/pageWrappers"
 
 type AssignDriverTileProps = {
   driverData: FindDriversByAgencyType[number]
@@ -111,8 +113,8 @@ export default function AssignDriverTile({
   })
 
   return (
-    <div
-      className={getTileClassName(selectedDriverId === driverData.id)}
+    <AssignTileWrapper
+      selected={selectedDriverId === driverData.id}
       onClick={() =>
         setSelectedDriverId(
           selectedDriverId === driverData.id ? null : driverData.id,
@@ -134,10 +136,7 @@ export default function AssignDriverTile({
         </div>
       </div>
       <div className={tileRightClassName}>
-        <div className={getRyogoScoreClassName(totalScore)}>
-          <Caption>{t("Score")}</Caption>
-          <H2>{totalScore.toFixed(0)}</H2>
-        </div>
+        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <div className={tileStatusClassName}>
           {isCurrentlyAssigned ? (
             <></>
@@ -159,6 +158,6 @@ export default function AssignDriverTile({
           </Caption>
         </div>
       </div>
-    </div>
+    </AssignTileWrapper>
   )
 }

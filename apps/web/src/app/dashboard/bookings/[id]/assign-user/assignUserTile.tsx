@@ -14,8 +14,6 @@ import {
   getUserTotalScore,
   getUserRoleScore,
   getOverlapScore,
-  getRyogoScoreClassName,
-  getTileClassName,
   NoOverlapScore,
   tileFooterClassName,
   tileGreenIconClassName,
@@ -26,6 +24,10 @@ import {
   tileStatusClassName,
 } from "../../new/newBookingCommon"
 import { IconTextTag } from "../../new/newBookingTileTag"
+import {
+  AssignTileWrapper,
+  RyoGoScoreWrapper,
+} from "@/components/page/pageWrappers"
 
 type AssignUserTileProps = {
   userData: FindOwnerAndAgentsByAgencyType[number]
@@ -77,8 +79,8 @@ export default function AssignUserTile({
   })
 
   return (
-    <div
-      className={getTileClassName(selectedUserId === userData.id)}
+    <AssignTileWrapper
+      selected={selectedUserId === userData.id}
       onClick={() =>
         setSelectedUserId(selectedUserId === userData.id ? null : userData.id)
       }
@@ -98,10 +100,7 @@ export default function AssignUserTile({
         </div>
       </div>
       <div className={tileRightClassName}>
-        <div className={getRyogoScoreClassName(totalScore)}>
-          <Caption>{t("Score")}</Caption>
-          <H2>{totalScore.toFixed(0)}</H2>
-        </div>
+        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <div className={tileStatusClassName}>
           {isCurrentlyAssigned ? (
             <></>
@@ -119,6 +118,6 @@ export default function AssignUserTile({
           </Caption>
         </div>
       </div>
-    </div>
+    </AssignTileWrapper>
   )
 }

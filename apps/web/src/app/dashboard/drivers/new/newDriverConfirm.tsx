@@ -3,24 +3,23 @@
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { Form } from "@/components/ui/form"
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import {
-  newBookingHeaderClassName,
-  newBookingHeaderLineClassName,
-  newBookingFormClassName,
-  newBookingFormBlockClassName,
-  newBookingActionBlockClassName,
-} from "../../bookings/new/newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import { useTransition } from "react"
 import ConfirmValues from "@/components/form/confirmValues"
-import { NewStepWrapper } from "@/components/page/pageWrappers"
+import {
+  NewFormActionWrapper,
+  NewFormContentWrapper,
+  NewStepHeaderWrapper,
+  NewStepTitleWrapper,
+  NewStepWrapper,
+} from "@/components/page/pageWrappers"
+import { NewFormWrapper } from "@/components/page/pageWrappers"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -68,82 +67,78 @@ export function NewDriverConfirm(props: {
   }
   return (
     <NewStepWrapper id="NewDriverConfirmStep">
-      <div id="Header" className={newBookingHeaderClassName}>
-        <div className={newBookingHeaderLineClassName}>
+      <NewStepHeaderWrapper>
+        <NewStepTitleWrapper>
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
-        </div>
+        </NewStepTitleWrapper>
         <StepsTracker total={4} current={3} />
         <SmallGrey>{t("Description")}</SmallGrey>
-      </div>
-      <Form {...formData}>
-        <form
-          id="ConfirmForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="ConfirmFields" className={newBookingFormBlockClassName}>
+      </NewStepHeaderWrapper>
+      <NewFormWrapper<AddDriverRequestType>
+        id="ConfirmForm"
+        form={formData}
+        onSubmit={formData.handleSubmit(onSubmit)}
+      >
+        <NewFormContentWrapper>
+          <ConfirmValues
+            name={t("DriverName")}
+            value={props.newDriverFormData.data.name}
+          />
+          <ConfirmValues
+            name={t("DriverPhone")}
+            value={props.newDriverFormData.data.phone}
+          />
+          <ConfirmValues
+            name={t("DriverEmail")}
+            value={props.newDriverFormData.data.email}
+          />
+          <ConfirmValues
+            name={t("LicenseNumber")}
+            value={props.newDriverFormData.data.licenseNumber}
+          />
+          {props.newDriverFormData.data.licenseExpiresOn && (
             <ConfirmValues
-              name={t("DriverName")}
-              value={props.newDriverFormData.data.name}
+              name={t("LicenseExpiresOn")}
+              value={props.newDriverFormData.data.licenseExpiresOn.toDateString()}
             />
+          )}
+          <ConfirmValues
+            name={t("DriverAddress")}
+            value={props.newDriverFormData.data.address}
+          />
+          <ConfirmValues
+            name={t("CanDriveVehicleTypes")}
+            value={props.newDriverFormData.data.canDriveVehicleTypes.join(", ")}
+          />
+          {props.newDriverFormData.data.defaultAllowancePerDay && (
             <ConfirmValues
-              name={t("DriverPhone")}
-              value={props.newDriverFormData.data.phone}
+              name={t("DefaultAllowancePerDay")}
+              value={`${props.newDriverFormData.data.defaultAllowancePerDay}`}
             />
-            <ConfirmValues
-              name={t("DriverEmail")}
-              value={props.newDriverFormData.data.email}
-            />
-            <ConfirmValues
-              name={t("LicenseNumber")}
-              value={props.newDriverFormData.data.licenseNumber}
-            />
-            {props.newDriverFormData.data.licenseExpiresOn && (
-              <ConfirmValues
-                name={t("LicenseExpiresOn")}
-                value={props.newDriverFormData.data.licenseExpiresOn.toDateString()}
-              />
-            )}
-            <ConfirmValues
-              name={t("DriverAddress")}
-              value={props.newDriverFormData.data.address}
-            />
-            <ConfirmValues
-              name={t("CanDriveVehicleTypes")}
-              value={props.newDriverFormData.data.canDriveVehicleTypes.join(
-                ", ",
-              )}
-            />
-            {props.newDriverFormData.data.defaultAllowancePerDay && (
-              <ConfirmValues
-                name={t("DefaultAllowancePerDay")}
-                value={`${props.newDriverFormData.data.defaultAllowancePerDay}`}
-              />
-            )}
-          </div>
-          <div id="FormActions" className={newBookingActionBlockClassName}>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              type="button"
-              onClick={props.onPrev}
-              disabled={isPending}
-            >
-              {t("SecondaryCTA")}
-            </Button>
-          </div>
-        </form>
-      </Form>
+          )}
+        </NewFormContentWrapper>
+        <NewFormActionWrapper>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={props.onPrev}
+            disabled={isPending}
+          >
+            {t("SecondaryCTA")}
+          </Button>
+        </NewFormActionWrapper>
+      </NewFormWrapper>
     </NewStepWrapper>
   )
 }

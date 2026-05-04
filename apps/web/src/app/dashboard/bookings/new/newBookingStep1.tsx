@@ -7,17 +7,11 @@ import { useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import {
-  newBookingActionBlockClassName,
-  newBookingFormBlockClassName,
-  newBookingFormClassName,
   NewBookingFormDataType,
-  newBookingHeaderClassName,
-  newBookingHeaderLineClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
 import { RyogoCombobox, RyogoInput } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import stateCityData from "@/lib/states_cities.json"
@@ -30,7 +24,14 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
-import { NewStepWrapper } from "@/components/page/pageWrappers"
+import {
+  NewFormActionWrapper,
+  NewFormContentWrapper,
+  NewFormWrapper,
+  NewStepHeaderWrapper,
+  NewStepTitleWrapper,
+  NewStepWrapper,
+} from "@/components/page/pageWrappers"
 
 type NewBookingStep1Props = {
   onNext: () => void
@@ -131,89 +132,84 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
 
   return (
     <NewStepWrapper id="CustomerStep">
-      <div id="CustomerHeader" className={newBookingHeaderClassName}>
-        <div className={newBookingHeaderLineClassName}>
+      <NewStepHeaderWrapper>
+        <NewStepTitleWrapper>
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
-        </div>
+        </NewStepTitleWrapper>
         <StepsTracker total={NewBookingTotalSteps} current={0} />
         <SmallGrey>{t("Description")}</SmallGrey>
-      </div>
-      <Form {...form}>
-        <form
-          id="Step1Form"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <div id="FindCustomer" className={newBookingFormBlockClassName}>
+      </NewStepHeaderWrapper>
+      <NewFormWrapper<Step1Type>
+        id="Step1Form"
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <NewFormContentWrapper>
+          <RyogoInput
+            name="customerPhone"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            type="tel"
+          />
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={findCustomer}
+            className="flex flex-row justify-center items-center gap-4 w-full"
+          >
+            {t("FindCTA")}
+          </Button>
+          {existingCustomer && (
+            <ExistingCutomerCard existingCustomer={existingCustomer} />
+          )}
+        </NewFormContentWrapper>
+        {customerNotFound && (
+          <NewFormContentWrapper>
+            <Alert>
+              <Info className="size-4 lg:size-5 text-amber-300" />
+              <Small>{t("CustomerNotFound")}</Small>
+            </Alert>
             <RyogoInput
-              name="customerPhone"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              type="tel"
+              name={"newCustomerName"}
+              type="text"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
             />
+            <RyogoCombobox
+              name={"newCustomerState"}
+              register={form.register("newCustomerState")}
+              title={t("Field3.Title")}
+              array={getArrayValueDisplayPairs(data)}
+              placeholder={t("Field3.Title")}
+              resetField={() => {
+                form.setValue("newCustomerCity", "")
+              }}
+            />
+            <RyogoCombobox
+              name={"newCustomerCity"}
+              register={form.register("newCustomerCity")}
+              title={t("Field4.Title")}
+              array={getStringValueDisplayPairs(cityOptions)}
+              placeholder={t("Field4.Title")}
+            />
+          </NewFormContentWrapper>
+        )}
+        {(existingCustomer || customerNotFound) && (
+          <NewFormActionWrapper>
             <Button
-              variant={"outline"}
+              variant={"default"}
               size={"lg"}
-              type="button"
-              onClick={findCustomer}
-              className="flex flex-row justify-center items-center gap-4 w-full"
+              type="submit"
+              disabled={form.formState.isSubmitting}
             >
-              {t("FindCTA")}
+              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             </Button>
-            {existingCustomer && (
-              <ExistingCutomerCard existingCustomer={existingCustomer} />
-            )}
-          </div>
-          {customerNotFound && (
-            <div id="NewCustomer" className={newBookingFormBlockClassName}>
-              <Alert>
-                <Info className="size-4 lg:size-5 text-amber-300" />
-                <Small>{t("CustomerNotFound")}</Small>
-              </Alert>
-              <RyogoInput
-                name={"newCustomerName"}
-                type="text"
-                label={t("Field2.Title")}
-                placeholder={t("Field2.Placeholder")}
-              />
-              <RyogoCombobox
-                name={"newCustomerState"}
-                register={form.register("newCustomerState")}
-                title={t("Field3.Title")}
-                array={getArrayValueDisplayPairs(data)}
-                placeholder={t("Field3.Title")}
-                resetField={() => {
-                  form.setValue("newCustomerCity", "")
-                }}
-              />
-              <RyogoCombobox
-                name={"newCustomerCity"}
-                register={form.register("newCustomerCity")}
-                title={t("Field4.Title")}
-                array={getStringValueDisplayPairs(cityOptions)}
-                placeholder={t("Field4.Title")}
-              />
-            </div>
-          )}
-          {(existingCustomer || customerNotFound) && (
-            <div
-              id="NewBookingAction"
-              className={newBookingActionBlockClassName}
-            >
-              <Button
-                variant={"default"}
-                size={"lg"}
-                type="submit"
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting && <Spinner />}
-                {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-              </Button>
-            </div>
-          )}
-        </form>
-      </Form>
+          </NewFormActionWrapper>
+        )}
+      </NewFormWrapper>
     </NewStepWrapper>
   )
 }

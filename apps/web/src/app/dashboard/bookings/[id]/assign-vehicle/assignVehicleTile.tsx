@@ -23,14 +23,16 @@ import {
   getExpiryScore,
   getOdometerScore,
   getRatePerKmScore,
-  getRyogoScoreClassName,
-  getTileClassName,
   getVehicleTypeIcon,
   getVehicleTotalScore,
 } from "../../new/newBookingCommon"
 import { IconTextTag } from "../../new/newBookingTileTag"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import {
+  AssignTileWrapper,
+  RyoGoScoreWrapper,
+} from "@/components/page/pageWrappers"
 
 type AssignVehicleTileProps = {
   vehicleData: FindVehiclesByAgencyType[number]
@@ -122,8 +124,8 @@ export default function AssignVehicleTile({
   })
 
   return (
-    <div
-      className={getTileClassName(selectedVehicleId === vehicleData.id)}
+    <AssignTileWrapper
+      selected={selectedVehicleId === vehicleData.id}
       onClick={() =>
         setSelectedVehicleId(
           selectedVehicleId === vehicleData.id ? null : vehicleData.id,
@@ -156,10 +158,7 @@ export default function AssignVehicleTile({
         </div>
       </div>
       <div className={tileRightClassName}>
-        <div className={getRyogoScoreClassName(totalScore)}>
-          <Caption>{t("Score")}</Caption>
-          <H2>{totalScore.toFixed(0)}</H2>
-        </div>
+        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <div className={tileStatusClassName}>
           {isCurrentlyAssigned ? (
             <></>
@@ -181,6 +180,6 @@ export default function AssignVehicleTile({
           </Caption>
         </div>
       </div>
-    </div>
+    </AssignTileWrapper>
   )
 }

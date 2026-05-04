@@ -9,18 +9,10 @@ import {
 } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
-  newBookingActionBlockClassName,
-  newBookingFormBlockClassName,
-  newBookingFormClassName,
   NewBookingFormDataType,
-  newBookingHeaderClassName,
-  newBookingHeaderLineClassName,
-  newBookingLineItemClassName,
-  newBookingLineSubtitleClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
-import { Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -34,7 +26,14 @@ import NewBookingTripInfo from "./newBookingTripInfo"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
 import { getEstimatedTotalPrice } from "@/lib/utils"
-import { NewStepWrapper } from "@/components/page/pageWrappers"
+import {
+  NewFormActionWrapper,
+  NewFormContentWrapper,
+  NewFormWrapper,
+  NewStepHeaderWrapper,
+  NewStepTitleWrapper,
+  NewStepWrapper,
+} from "@/components/page/pageWrappers"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -106,101 +105,116 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
 
   return (
     <NewStepWrapper id="FinalStep">
-      <div id="CostHeader" className={newBookingHeaderClassName}>
-        <div className={newBookingHeaderLineClassName}>
+      <NewStepHeaderWrapper>
+        <NewStepTitleWrapper>
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
-        </div>
+        </NewStepTitleWrapper>
         <StepsTracker total={NewBookingTotalSteps} current={4} />
         <SmallGrey>{t("Description")}</SmallGrey>
-      </div>
-      <Form {...form}>
-        <form
-          id="FinalForm"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={newBookingFormClassName}
-        >
-          <NewBookingTripInfo {...props.newBookingFormData} />
-          <div className={newBookingFormBlockClassName}>
-            <div id="finalRate" className={newBookingLineItemClassName}>
-              <BigIconTextTag icon={Car} text={t("VehicleCharge")} />
-              <div className={newBookingLineSubtitleClassName}>
-                <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
+      </NewStepHeaderWrapper>
+      <NewFormWrapper<NewBookingFormDataType>
+        id="FinalForm"
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <NewBookingTripInfo {...props.newBookingFormData} />
+        <NewFormContentWrapper>
+          <NewFormLineItemWrapper>
+            <BigIconTextTag icon={Car} text={t("VehicleCharge")} />
+            <NewFormLineItemSubtitleWrapper>
+              <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
+              <CaptionGrey>
+                {t("VehicleSubtitle", {
+                  charge: props.newBookingFormData.selectedRatePerKm!,
+                  distance: finalAmount.totalDistance,
+                })}
+              </CaptionGrey>
+            </NewFormLineItemSubtitleWrapper>
+          </NewFormLineItemWrapper>
+          {props.newBookingFormData.tripNeedsAC && (
+            <NewFormLineItemWrapper>
+              <BigIconTextTag icon={AirVent} text={t("ACCharge")} />
+              <NewFormLineItemSubtitleWrapper>
+                <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
                 <CaptionGrey>
-                  {t("VehicleSubtitle", {
-                    charge: props.newBookingFormData.selectedRatePerKm!,
-                    distance: finalAmount.totalDistance,
-                  })}
-                </CaptionGrey>
-              </div>
-            </div>
-            {props.newBookingFormData.tripNeedsAC && (
-              <div id="finalAC" className={newBookingLineItemClassName}>
-                <BigIconTextTag icon={AirVent} text={t("ACCharge")} />
-                <div className={newBookingLineSubtitleClassName}>
-                  <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
-                  <CaptionGrey>
-                    {t("ACSubtitle", {
-                      ac: props.newBookingFormData.selectedAcChargePerDay!,
-                      days: finalAmount.totalAllowanceDays,
-                    })}
-                  </CaptionGrey>
-                </div>
-              </div>
-            )}
-            <div id="finalAllowance" className={newBookingLineItemClassName}>
-              <BigIconTextTag icon={IdCard} text={t("DriverAllowance")} />
-              <div className={newBookingLineSubtitleClassName}>
-                <SmallBold>{"₹" + finalAmount.totalDriverAllowance}</SmallBold>
-                <CaptionGrey>
-                  {t("DriverSubtitle", {
-                    allowance:
-                      props.newBookingFormData.selectedAllowancePerDay!,
+                  {t("ACSubtitle", {
+                    ac: props.newBookingFormData.selectedAcChargePerDay!,
                     days: finalAmount.totalAllowanceDays,
                   })}
                 </CaptionGrey>
-              </div>
-            </div>
-            <div id="finalCommission" className={newBookingLineItemClassName}>
-              <BigIconTextTag icon={CirclePercent} text={t("Commission")} />
-              <div className={newBookingLineSubtitleClassName}>
-                <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
-                <CaptionGrey>
-                  {props.newBookingFormData.selectedCommissionRate + "%"}
-                </CaptionGrey>
-              </div>
-            </div>
-          </div>
-          <div id="finalPrice" className={newBookingLineItemClassName}>
-            <H5>{t("TotalAmount")}</H5>
-            <H4>{"₹" + finalAmount.totalAmount}</H4>
-          </div>
-          <Alert>
-            <Info className="size-5 lg:size-6 text-slate-500" />
-            <CaptionGrey>{t("CreateInfo")}</CaptionGrey>
-          </Alert>
-          <div id="NewBookingAction" className={newBookingActionBlockClassName}>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"outline"}
-              size={"lg"}
-              type="button"
-              onClick={props.onPrev}
-              disabled={isPending}
-            >
-              {t("Back")}
-            </Button>
-          </div>
-        </form>
-      </Form>
+              </NewFormLineItemSubtitleWrapper>
+            </NewFormLineItemWrapper>
+          )}
+          <NewFormLineItemWrapper>
+            <BigIconTextTag icon={IdCard} text={t("DriverAllowance")} />
+            <NewFormLineItemSubtitleWrapper>
+              <SmallBold>{"₹" + finalAmount.totalDriverAllowance}</SmallBold>
+              <CaptionGrey>
+                {t("DriverSubtitle", {
+                  allowance: props.newBookingFormData.selectedAllowancePerDay!,
+                  days: finalAmount.totalAllowanceDays,
+                })}
+              </CaptionGrey>
+            </NewFormLineItemSubtitleWrapper>
+          </NewFormLineItemWrapper>
+          <NewFormLineItemWrapper>
+            <BigIconTextTag icon={CirclePercent} text={t("Commission")} />
+            <NewFormLineItemSubtitleWrapper>
+              <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
+              <CaptionGrey>
+                {props.newBookingFormData.selectedCommissionRate + "%"}
+              </CaptionGrey>
+            </NewFormLineItemSubtitleWrapper>
+          </NewFormLineItemWrapper>
+        </NewFormContentWrapper>
+        <NewFormLineItemWrapper>
+          <H5>{t("TotalAmount")}</H5>
+          <H4>{"₹" + finalAmount.totalAmount}</H4>
+        </NewFormLineItemWrapper>
+        <Alert>
+          <Info className="size-5 lg:size-6 text-slate-500" />
+          <CaptionGrey>{t("CreateInfo")}</CaptionGrey>
+        </Alert>
+        <NewFormActionWrapper>
+          <Button
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={props.onPrev}
+            disabled={isPending}
+          >
+            {t("Back")}
+          </Button>
+        </NewFormActionWrapper>
+      </NewFormWrapper>
     </NewStepWrapper>
+  )
+}
+
+function NewFormLineItemWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-row justify-between items-start gap-2 lg:gap-3">
+      {children}
+    </div>
+  )
+}
+
+function NewFormLineItemSubtitleWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col items-end gap-0.5 lg:gap-1">{children}</div>
   )
 }

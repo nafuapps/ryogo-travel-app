@@ -5,7 +5,6 @@ import {
   tileHeaderRightClassName,
   NewBookingFormDataType,
   getTripTypeIcon,
-  newBookingTripInfoTagClassName,
 } from "./newBookingCommon"
 import { IconTextTag } from "./newBookingTileTag"
 import { useTranslations } from "next-intl"
@@ -47,25 +46,33 @@ export default function NewBookingTripInfo(props: NewBookingFormDataType) {
         id="tripFooter"
         className="bg-slate-200 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
       >
-        <div className={newBookingTripInfoTagClassName}>
+        <TripTagWrapper>
           <IconTextTag
             icon={getTripTypeIcon(props.tripType)}
             text={props.tripType.toUpperCase()}
           />
-        </div>
-        <div className={newBookingTripInfoTagClassName}>
+        </TripTagWrapper>
+        <TripTagWrapper>
           <IconTextTag
             icon={LucideUsers}
             text={props.tripPassengers.toString()}
           />
-        </div>
-        <div className={newBookingTripInfoTagClassName}>
+        </TripTagWrapper>
+        <TripTagWrapper>
           <IconTextTag
             icon={LucideCalendarDays}
             text={duration.toString() + t("Days", { count: duration })}
           />
-        </div>
+        </TripTagWrapper>
       </div>
+    </div>
+  )
+}
+
+function TripTagWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center justify-center px-2 py-1.5 lg:px-3 lg:py-2 border border-slate-300 rounded-lg">
+      {children}
     </div>
   )
 }

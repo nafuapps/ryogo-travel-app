@@ -5,10 +5,10 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
-  OnboardingCombobox,
-  OnboardingFileInput,
-  OnboardingInput,
-} from "../components/onboardingFields"
+  RyogoCombobox,
+  RyogoFileInput,
+  RyogoInput,
+} from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -102,21 +102,21 @@ export function CreateAccountStep3(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step3Content">
-          <OnboardingFileInput
+          <RyogoFileInput
             name={"agencyLogo"}
             register={formData.register("agencyLogo")}
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"commissionRate"}
             type="tel"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <OnboardingCombobox
+          <RyogoCombobox
             name={"agencyState"}
             register={formData.register("agencyState")}
             title={t("Field3.Title")}
@@ -126,7 +126,7 @@ export function CreateAccountStep3(props: {
               formData.setValue("agencyCity", "")
             }}
           />
-          <OnboardingCombobox
+          <RyogoCombobox
             name={"agencyCity"}
             register={formData.register("agencyCity")}
             title={t("Field4.Title")}

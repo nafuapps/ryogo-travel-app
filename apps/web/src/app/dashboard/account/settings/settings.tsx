@@ -1,10 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import {
-  DashboardSelect,
-  DashboardSwitch,
-} from "@/components/form/dashboardFormFields"
+import { RyogoSelect, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -74,8 +71,8 @@ export default function AccountSettingsPageComponent({
           onSubmit={formData.handleSubmit(onSubmit)}
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardSwitch label={t("Field1.Title")} name="dark" />
-          <DashboardSelect
+          <RyogoSwitch label={t("Field1.Title")} name="dark" />
+          <RyogoSelect
             name={"lang"}
             register={formData.register("lang")}
             array={languages}

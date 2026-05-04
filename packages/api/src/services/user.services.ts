@@ -67,8 +67,8 @@ export const userServices = {
     return users
   },
 
-  //Find login users by phone
-  async findUsersByPhone(phone: string) {
+  //Find login valid users by phone
+  async findValidUsersByPhone(phone: string) {
     const users = await userRepository.readUsersWithPhone(phone)
     return users
   },
@@ -642,5 +642,5 @@ export type FindAssignedUserByDriverIdType = Awaited<
 >
 
 export type FindUsersByPhoneType = Awaited<
-  ReturnType<typeof userServices.findUsersByPhone>
+  ReturnType<typeof userServices.findValidUsersByPhone>
 >

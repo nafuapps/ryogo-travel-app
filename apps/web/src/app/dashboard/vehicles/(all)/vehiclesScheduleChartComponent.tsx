@@ -15,11 +15,11 @@ import DashboardScheduleDayAxis, {
   DashboardScheduleItemBar,
   SelectableDays,
   DashboardScheduleItemGrid,
-} from "../../components/common/dashboardSchedule"
+} from "../../components/schedule/dashboardSchedule"
 import {
   AssignedBookingPopoverCard,
   RepairPopoverCard,
-} from "../../components/common/dashboardPopoverCards"
+} from "../../components/schedule/dashboardPopoverCards"
 
 export default function VehiclesScheduleChartComponent({
   vehicleSchedule14Days,

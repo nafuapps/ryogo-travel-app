@@ -6,7 +6,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import DashboardHeader from "../../../components/common/dashboardHeader"
+import DashboardHeader from "../../../components/dashboardHeader"
 import CustomerUpcomingBookingsPageComponent from "./customerUpcomingBookings"
 import { Metadata } from "next"
 

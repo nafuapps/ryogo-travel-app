@@ -4,11 +4,11 @@ import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.
 import Link from "next/link"
 import moment from "moment"
 import { format } from "date-fns"
-import CancelBookingAlertButton from "@/app/dashboard/components/buttons/cancelBookingAlertButton"
-import SendQuoteAlertButton from "@/app/dashboard/components/buttons/sendQuoteAlertButton"
-import BookingItem from "@/app/dashboard/components/bookings/bookingItem"
-import BookingSection from "@/app/dashboard/components/bookings/bookingSection"
-import BookingPriceItem from "@/app/dashboard/components/bookings/bookingPriceItem"
+import CancelBookingAlertButton from "@/components/buttons/cancelBookingAlertButton"
+import SendQuoteAlertButton from "@/components/buttons/sendQuoteAlertButton"
+import BookingItem from "@/components/bookings/bookingItem"
+import BookingSection from "@/components/bookings/bookingSection"
+import BookingPriceItem from "@/components/bookings/bookingPriceItem"
 import {
   BriefcaseBusiness,
   CalendarCheck,

@@ -1,4 +1,4 @@
-import { getVehicleIcon } from "@/app/dashboard/components/vehicles/vehicleCommon"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { pageClassName } from "@/components/page/pageCommons"
 import {
   H4,
@@ -44,8 +44,6 @@ export default async function RiderMyVehiclePageComponent({
     )
   }
 
-  const IconComponent = getVehicleIcon(vehicle.type)
-
   return (
     <div id="VehicleDetailsPage" className={pageClassName}>
       <div
@@ -66,8 +64,7 @@ export default async function RiderMyVehiclePageComponent({
                   />
                 </div>
               ) : (
-                // eslint-disable-next-line react-hooks/static-components
-                <IconComponent className="size-20 lg:size-24 text-slate-400" />
+                getVehicleIcon(vehicle.type, "xl")
               )}
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">

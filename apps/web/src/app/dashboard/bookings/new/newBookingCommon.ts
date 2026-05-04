@@ -441,14 +441,17 @@ export const getTripTypeClassName = (selected: boolean) => {
   }`
 }
 
-export const newBookingSectionClassName = "flex flex-col gap-5 lg:gap-6"
+export const newBookingSectionClassName = "flex flex-col gap-5 lg:gap-6 h-full"
 export const newBookingHeaderClassName = "flex flex-col gap-2 lg:gap-3"
 export const newBookingHeaderLineClassName =
   "flex flex-row justify-between items-end gap-2 lg:gap-3"
-export const newBookingFormClassName = "flex flex-col gap-4 lg:gap-5"
+export const newBookingFormClassName = "flex flex-col gap-4 lg:gap-5 h-full"
 
 export const newBookingFormBlockClassName =
-  "flex flex-col gap-3 lg:gap-4 bg-white rounded-lg shadow p-3 lg:p-4"
+  "flex flex-col relative gap-3 lg:gap-4 bg-white rounded-lg shadow p-3 lg:p-4"
+
+export const newBookingActionBlockClassName =
+  "flex flex-col gap-2 lg:gap-3 pt-3 bg-slate-100 sticky mt-auto shadow border-t-slate-200 bottom-0"
 
 export const newBookingFinalItemClassName =
   "flex flex-row justify-between items-center gap-2 lg:gap-3 p-2 lg:p-3 border border-slate-200 rounded-lg"

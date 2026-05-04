@@ -6,18 +6,17 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import {
-  DashboardInput,
-  DashboardSwitch,
-} from "@/components/form/dashboardFormFields"
+import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
 import {
   newBookingSectionClassName,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingFormClassName,
+  newBookingActionBlockClassName,
+  newBookingFormBlockClassName,
 } from "../../bookings/new/newBookingCommon"
-import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function NewVehicleStep4(props: {
@@ -30,9 +29,9 @@ export function NewVehicleStep4(props: {
   const step4Schema = z.object({
     defaultRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(0, t("Field1.Error2"))
-      .max(50, t("Field1.Error3"))
-      .nonnegative(t("Field1.Error4"))
+      .min(1, t("Field1.Error2"))
+      .max(100, t("Field1.Error3"))
+      .positive(t("Field1.Error4"))
       .multipleOf(1, t("Field1.Error5"))
       .optional(),
     hasAC: z.boolean(),
@@ -76,7 +75,7 @@ export function NewVehicleStep4(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={5} current={3} />
+        <StepsTracker total={5} current={3} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
@@ -85,16 +84,16 @@ export function NewVehicleStep4(props: {
           onSubmit={formData.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div id="Step4Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
+          <div id="Step4Fields" className={newBookingFormBlockClassName}>
+            <RyogoInput
               name={"defaultRatePerKm"}
               type="tel"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
               description={t("Field1.Description")}
             />
-            <DashboardSwitch name={"hasAC"} label={t("Field2.Title")} />
-            <DashboardInput
+            <RyogoSwitch name={"hasAC"} label={t("Field2.Title")} />
+            <RyogoInput
               name={"defaultAcChargePerDay"}
               type="tel"
               label={t("Field3.Title")}
@@ -103,24 +102,26 @@ export function NewVehicleStep4(props: {
               disabled={!formData.watch("hasAC")}
             />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </Button>
+          <div id="FormActions" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={formData.formState.isSubmitting}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

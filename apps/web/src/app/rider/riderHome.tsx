@@ -9,7 +9,7 @@ import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   OngoingBookingComponent,
   UpcomingBookingComponent,
-} from "./components/myBookingCommon"
+} from "./components/riderBookingCommon"
 
 /**
  * TODO: Show important actions

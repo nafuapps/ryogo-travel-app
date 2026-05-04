@@ -2,7 +2,7 @@ import { H3Grey } from "@/components/typography"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import ConfirmValues from "@/app/onboarding/components/confirmValues"
+import ConfirmValues from "@/components/form/confirmValues"
 import {
   OnboardingStepForm,
   OnboardingStepContent,

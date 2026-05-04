@@ -1,6 +1,6 @@
 "use client"
 
-import { DashboardInput } from "@/components/form/dashboardFormFields"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
@@ -77,7 +77,7 @@ export default function ChangeUserNameSheet({
         <Form {...formData}>
           <form id="changeName" onSubmit={formData.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
-              <DashboardInput
+              <RyogoInput
                 name={"name"}
                 type="text"
                 label={t("InputTitle")}

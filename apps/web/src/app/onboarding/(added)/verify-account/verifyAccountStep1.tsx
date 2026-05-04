@@ -3,7 +3,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { OnboardingInput } from "../../components/onboardingFields"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -67,7 +67,7 @@ export function VerifyAccountStep1(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step1Content">
-          <OnboardingInput
+          <RyogoInput
             name={"userEnteredcode"}
             type="userEnteredcode"
             label={t("Field1.Title")}

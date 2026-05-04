@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import moment from "moment"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import CancelBookingAlertButton from "@/app/dashboard/components/buttons/cancelBookingAlertButton"
-import SendInvoiceAlertButton from "@/app/dashboard/components/buttons/sendInvoiceAlertButton"
-import BookingItem from "@/app/dashboard/components/bookings/bookingItem"
-import BookingPriceItem from "@/app/dashboard/components/bookings/bookingPriceItem"
-import BookingSection from "@/app/dashboard/components/bookings/bookingSection"
+import CancelBookingAlertButton from "@/components/buttons/cancelBookingAlertButton"
+import SendInvoiceAlertButton from "@/components/buttons/sendInvoiceAlertButton"
+import BookingItem from "@/components/bookings/bookingItem"
+import BookingPriceItem from "@/components/bookings/bookingPriceItem"
+import BookingSection from "@/components/bookings/bookingSection"
 import {
   BriefcaseBusiness,
   Contact,
@@ -19,7 +19,7 @@ import {
   ReceiptIndianRupee,
   Route,
 } from "lucide-react"
-import SendConfirmationAlertButton from "@/app/dashboard/components/buttons/sendConfirmationAlertButton"
+import SendConfirmationAlertButton from "@/components/buttons/sendConfirmationAlertButton"
 // import InvoicePDFViewer from "./invoicePDFViewer"
 
 export default async function BookingDetailsPageComponent({

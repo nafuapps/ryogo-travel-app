@@ -2,12 +2,12 @@ import {
   CaptionGrey,
   H4,
   H5,
-  Small,
   SmallBold,
   SmallGrey,
 } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
+  newBookingActionBlockClassName,
   newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
@@ -18,7 +18,7 @@ import {
   newBookingSectionClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
-import NewBookingStepsTracker from "./newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
@@ -27,13 +27,7 @@ import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { BigIconTextTag } from "./newBookingTileTag"
-import {
-  LucideAirVent,
-  LucideCar,
-  LucideCirclePercent,
-  LucideIdCard,
-  LucideInfo,
-} from "lucide-react"
+import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
 import NewBookingTripInfo from "./newBookingTripInfo"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
@@ -115,7 +109,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={NewBookingTotalSteps} current={4} />
+        <StepsTracker total={NewBookingTotalSteps} current={4} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
@@ -127,7 +121,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <NewBookingTripInfo {...props.newBookingFormData} />
           <div className={newBookingFormBlockClassName}>
             <div id="finalRate" className={newBookingLineItemClassName}>
-              <BigIconTextTag icon={LucideCar} text={t("VehicleCharge")} />
+              <BigIconTextTag icon={Car} text={t("VehicleCharge")} />
               <div className={newBookingLineSubtitleClassName}>
                 <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
                 <CaptionGrey>
@@ -140,7 +134,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             </div>
             {props.newBookingFormData.tripNeedsAC && (
               <div id="finalAC" className={newBookingLineItemClassName}>
-                <BigIconTextTag icon={LucideAirVent} text={t("ACCharge")} />
+                <BigIconTextTag icon={AirVent} text={t("ACCharge")} />
                 <div className={newBookingLineSubtitleClassName}>
                   <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
                   <CaptionGrey>
@@ -153,7 +147,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </div>
             )}
             <div id="finalAllowance" className={newBookingLineItemClassName}>
-              <BigIconTextTag icon={LucideIdCard} text={t("DriverAllowance")} />
+              <BigIconTextTag icon={IdCard} text={t("DriverAllowance")} />
               <div className={newBookingLineSubtitleClassName}>
                 <SmallBold>{"₹" + finalAmount.totalDriverAllowance}</SmallBold>
                 <CaptionGrey>
@@ -166,10 +160,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </div>
             </div>
             <div id="finalCommission" className={newBookingLineItemClassName}>
-              <BigIconTextTag
-                icon={LucideCirclePercent}
-                text={t("Commission")}
-              />
+              <BigIconTextTag icon={CirclePercent} text={t("Commission")} />
               <div className={newBookingLineSubtitleClassName}>
                 <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
                 <CaptionGrey>
@@ -182,29 +173,30 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             <H5>{t("TotalAmount")}</H5>
             <H4>{"₹" + finalAmount.totalAmount}</H4>
           </div>
-
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={isPending}
-          >
-            {t("Back")}
-          </Button>
           <Alert>
-            <LucideInfo className="size-8 lg:size-10 text-amber-300" />
-            <Small>{t("CreateInfo")}</Small>
+            <Info className="size-5 lg:size-6 text-slate-500" />
+            <CaptionGrey>{t("CreateInfo")}</CaptionGrey>
           </Alert>
+          <div id="NewBookingAction" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={isPending}
+            >
+              {t("Back")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

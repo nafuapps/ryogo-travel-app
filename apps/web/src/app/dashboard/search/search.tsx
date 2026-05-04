@@ -33,7 +33,6 @@ import {
 } from "@/lib/regex"
 import Link from "next/link"
 import Image from "next/image"
-import { getVehicleIcon } from "../components/vehicles/vehicleCommon"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
@@ -43,6 +42,7 @@ import {
   DriverStatusPill,
   VehicleStatusPill,
 } from "@/components/statusPills/statusPills"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -494,13 +494,7 @@ function DriverSearchResultItem({
         <div className={gridItemClassName}>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
-              const IconComponent = getVehicleIcon(v)
-              return (
-                <IconComponent
-                  key={v}
-                  className="text-slate-400 size-5 lg:size-6"
-                />
-              )
+              return getVehicleIcon(v)
             })}
           </div>
           <Caption>{driver.address}</Caption>
@@ -563,7 +557,6 @@ function VehicleSearchResultItem({
   vehicle: FindAgencySearchDataType["vehicles"][number]
 }) {
   const t = useTranslations("Dashboard.Vehicles.All")
-  const IconComponent = getVehicleIcon(vehicle.type)
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
@@ -580,8 +573,7 @@ function VehicleSearchResultItem({
               />
             </div>
           ) : (
-            // eslint-disable-next-line react-hooks/static-components
-            <IconComponent className="text-slate-400 size-5 lg:size-6" />
+            getVehicleIcon(vehicle.type, "md")
           )}
         </div>
         <div className={gridItemClassName}>

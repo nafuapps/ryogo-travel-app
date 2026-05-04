@@ -1,6 +1,6 @@
 //Bookings/id/reconcile page (only accessible to owner)
 
-import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

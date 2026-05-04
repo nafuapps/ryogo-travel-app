@@ -7,10 +7,10 @@ import z from "zod"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import {
-  DashboardInput,
-  DashboardMultipleCheckbox,
-  DashboardTextarea,
-} from "@/components/form/dashboardFormFields"
+  RyogoInput,
+  RyogoMultipleCheckbox,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -18,8 +18,10 @@ import {
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingFormClassName,
+  newBookingFormBlockClassName,
+  newBookingActionBlockClassName,
 } from "../../bookings/new/newBookingCommon"
-import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
@@ -77,7 +79,7 @@ export function NewDriverStep3(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={4} current={2} />
+        <StepsTracker total={4} current={2} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
@@ -86,19 +88,19 @@ export function NewDriverStep3(props: {
           onSubmit={formData.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div id="Step3Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardTextarea
+          <div id="Step3Fields" className={newBookingFormBlockClassName}>
+            <RyogoTextarea
               name={"driverAddress"}
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
             />
-            <DashboardMultipleCheckbox
+            <RyogoMultipleCheckbox
               array={getEnumValueDisplayPairs(VehicleTypesEnum)}
               name={"canDriveVehicleTypes"}
               label={t("Field2.Title")}
               register={formData.register("canDriveVehicleTypes")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"defaultAllowancePerDay"}
               type="tel"
               label={t("Field3.Title")}
@@ -106,24 +108,26 @@ export function NewDriverStep3(props: {
               description={t("Field3.Description")}
             />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </Button>
+          <div id="FormActions" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={formData.formState.isSubmitting}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

@@ -2,7 +2,7 @@
 
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import DashboardHeader from "../../components/common/dashboardHeader"
+import DashboardHeader from "../../components/dashboardHeader"
 import {
   mainClassName,
   pageDescription,

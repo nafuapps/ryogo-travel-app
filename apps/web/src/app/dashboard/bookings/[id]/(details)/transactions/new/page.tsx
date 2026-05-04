@@ -3,7 +3,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
 import NewTransactionPageComponent from "./newTransaction"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"

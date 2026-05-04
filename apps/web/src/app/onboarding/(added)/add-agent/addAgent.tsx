@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/app/onboarding/components/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { CaptionGrey, H2 } from "@/components/typography"
-import StepsTracker from "@/app/onboarding/components/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { useState } from "react"
 import {
   AddAgentTotalSteps,

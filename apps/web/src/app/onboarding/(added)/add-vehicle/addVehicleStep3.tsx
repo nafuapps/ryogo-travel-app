@@ -5,9 +5,9 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
-  OnboardingDatePicker,
-  OnboardingFileInput,
-} from "@/app/onboarding/components/onboardingFields"
+  RyogoDatePicker,
+  RyogoFileInput,
+} from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -114,26 +114,26 @@ export function AddVehicleStep3(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step3Content">
-          <OnboardingDatePicker
+          <RyogoDatePicker
             name="insuranceExpiresOn"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingFileInput
+          <RyogoFileInput
             name={"insurancePhotos"}
             register={formData.register("insurancePhotos")}
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <OnboardingDatePicker
+          <RyogoDatePicker
             name="pucExpiresOn"
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
           />
-          <OnboardingFileInput
+          <RyogoFileInput
             name={"pucPhotos"}
             register={formData.register("pucPhotos")}
             label={t("Field4.Title")}

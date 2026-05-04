@@ -1,11 +1,11 @@
 "use client"
 
 import {
-  DashboardInput,
-  DashboardTextarea,
-  DashboardFileInput,
-  DashboardCombobox,
-} from "@/components/form/dashboardFormFields"
+  RyogoInput,
+  RyogoTextarea,
+  RyogoFileInput,
+  RyogoCombobox,
+} from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -132,45 +132,45 @@ export default function NewCustomerForm({
           id="newCustomerForm"
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardInput
+          <RyogoInput
             name={"name"}
             type="text"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name={"phone"}
             type="tel"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name={"email"}
             type="email"
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
           />
-          <DashboardFileInput
+          <RyogoFileInput
             name={"photo"}
             register={formData.register("photo")}
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name={"address"}
             label={t("Field5.Title")}
             placeholder={t("Field5.Placeholder")}
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name="remarks"
             label={t("Field6.Title")}
             placeholder={t("Field6.Placeholder")}
           />
-          <DashboardCombobox
+          <RyogoCombobox
             name={"state"}
             register={formData.register("state")}
             title={t("Field7.Title")}
@@ -180,7 +180,7 @@ export default function NewCustomerForm({
               formData.setValue("city", "")
             }}
           />
-          <DashboardCombobox
+          <RyogoCombobox
             name={"city"}
             register={formData.register("city")}
             title={t("Field8.Title")}

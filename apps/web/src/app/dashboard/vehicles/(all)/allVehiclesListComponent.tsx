@@ -17,7 +17,7 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { VehicleStatusPill } from "@/components/statusPills/statusPills"
-import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
 
 export default async function AllVehiclesListComponent({
   agencyId,
@@ -53,7 +53,6 @@ async function AllVehiclesItemComponent({
   vehicle: FindVehiclesByAgencyType[number]
 }) {
   const t = await getTranslations("Dashboard.Vehicles.All")
-  const IconComponent = getVehicleIcon(vehicle.type)
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
@@ -70,7 +69,7 @@ async function AllVehiclesItemComponent({
               />
             </div>
           ) : (
-            <IconComponent className="size-8 lg:size-10 text-slate-400" />
+            getVehicleIcon(vehicle.type, "md")
           )}
         </div>
         <div className={gridItemClassName}>

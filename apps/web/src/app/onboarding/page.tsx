@@ -13,6 +13,7 @@ import {
   FingerprintPattern,
   IdCard,
   LifeBuoy,
+  LucideIcon,
   UserKey,
 } from "lucide-react"
 import { Metadata } from "next"
@@ -20,8 +21,6 @@ import { getTranslations } from "next-intl/server"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { redirect, RedirectType } from "next/navigation"
-import OnboardingHomeStepItem from "./components/onboardingHomeStepItem"
-import OnboardingHomeDocumentItem from "./components/onboardingHomeDocumentItem"
 import RyoGoLogo from "@/components/logo"
 
 export const metadata: Metadata = {
@@ -114,6 +113,35 @@ export default async function OnboardingHomePage() {
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function OnboardingHomeDocumentItem(props: {
+  icon: LucideIcon
+  label: string
+}) {
+  return (
+    <div className="flex flex-row gap-3 md:gap-4 justify-start items-center">
+      <div className="bg-sky-700 rounded-lg size-10 md:size-12 flex justify-center items-center shrink-0">
+        <props.icon className="text-sky-50 size-4 md:size-5" />
+      </div>
+      <SmallGrey>{props.label}</SmallGrey>
+    </div>
+  )
+}
+
+function OnboardingHomeStepItem(props: { icon: LucideIcon; label: string }) {
+  return (
+    <div className="flex flex-row gap-3 md:gap-4 justify-start items-center">
+      <div className="flex flex-col items-center">
+        <div className="w-1 h-2 md:h-3 bg-sky-50"></div>
+        <div className="bg-sky-50 rounded-full size-10 md:size-12 flex justify-center items-center shrink-0">
+          <props.icon className="text-sky-700 size-4 md:size-5" />
+        </div>
+        <div className="w-1 h-2 md:h-3 bg-sky-50"></div>
+      </div>
+      <SmallGrey>{props.label}</SmallGrey>
     </div>
   )
 }

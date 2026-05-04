@@ -4,10 +4,7 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import {
-  OnboardingInput,
-  OnboardingSwitch,
-} from "@/app/onboarding/components/onboardingFields"
+import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -72,15 +69,15 @@ export function AddVehicleStep4(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step4Content">
-          <OnboardingInput
+          <RyogoInput
             name={"defaultRatePerKm"}
             type="tel"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingSwitch name={"hasAC"} label={t("Field2.Title")} />
-          <OnboardingInput
+          <RyogoSwitch name={"hasAC"} label={t("Field2.Title")} />
+          <RyogoInput
             name={"defaultAcChargePerDay"}
             type="tel"
             label={t("Field3.Title")}

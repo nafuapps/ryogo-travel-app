@@ -33,7 +33,7 @@ export default async function SignupLayout({
       <div id="SignupSideSection" className="md:flex md:w-1/2 relative hidden">
         <Image
           loading="eager"
-          src={"/signup.png"}
+          src={"/signupBG.png"}
           alt="Signup Page Cover Image"
           className="object-cover"
           fill

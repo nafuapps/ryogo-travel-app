@@ -11,7 +11,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
 import AssignDriverPageComponent from "./assignDriver"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"

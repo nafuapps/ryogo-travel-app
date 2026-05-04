@@ -17,11 +17,9 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
 import { Spinner } from "@/components/ui/spinner"
 import { useTransition } from "react"
-import { FindUsersByPhoneType } from "@ryogo-travel-app/api/services/user.services"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 
 /*
 1. Find user by phone number
@@ -53,15 +51,8 @@ export default function LoginPageComponent() {
   //Submit actions
   const onSubmit = async (data: FormFields) => {
     startTransition(async () => {
-      const users = await apiClient<FindUsersByPhoneType>(
-        `/api/auth/login?phone=${data.phoneNumber}`,
-        {
-          method: "GET",
-        },
-      )
-      if (
-        users.filter((u) => u.status !== UserStatusEnum.SUSPENDED).length > 0
-      ) {
+      const users = await findLoginUsersAction(data.phoneNumber)
+      if (users.length > 0) {
         // If atleast 1 user found, go to accounts page
         router.push(`/auth/login/${data.phoneNumber}`)
       } else {

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
-import { DashboardInput } from "@/components/form/dashboardFormFields"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
@@ -91,21 +91,21 @@ export default function ChangePasswordAccountComponent({
           onSubmit={formData.handleSubmit(onSubmit)}
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardInput
+          <RyogoInput
             name={"oldPassword"}
             type="password"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name={"newPassword"}
             type="password"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name={"confirmPassword"}
             type="password"
             label={t("Field3.Title")}

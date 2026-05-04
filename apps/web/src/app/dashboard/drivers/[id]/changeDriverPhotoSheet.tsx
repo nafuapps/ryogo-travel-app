@@ -1,6 +1,6 @@
 "use client"
 
-import { DashboardFileInput } from "@/components/form/dashboardFormFields"
+import { RyogoFileInput } from "@/components/form/ryogoFormFields"
 import { CaptionGrey } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -86,7 +86,7 @@ export default function ChangeDriverPhotoSheet({
         <Form {...formData}>
           <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
-              <DashboardFileInput
+              <RyogoFileInput
                 name={"driverPhotos"}
                 register={formData.register("driverPhotos")}
                 label={t("Title")}

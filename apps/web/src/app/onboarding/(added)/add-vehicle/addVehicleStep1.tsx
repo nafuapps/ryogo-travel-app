@@ -3,10 +3,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import {
-  OnboardingInput,
-  OnboardingSelect,
-} from "@/app/onboarding/components/onboardingFields"
+import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepActions,
   OnboardingStepContent,
@@ -72,35 +69,35 @@ export function AddVehicleStep1(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step1Content">
-          <OnboardingInput
+          <RyogoInput
             name={"vehicleNumber"}
             type="text"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingSelect
+          <RyogoSelect
             name={"type"}
             register={formData.register("type")}
             array={getEnumValueDisplayPairs(VehicleTypesEnum)}
             title={t("Field2.Title")}
             placeholder={t("Field2.Title")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"brand"}
             type="text"
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"color"}
             type="text"
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"model"}
             type="text"
             label={t("Field5.Title")}

@@ -4,7 +4,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import DashboardHeader from "../../../components/common/dashboardHeader"
+import DashboardHeader from "../../../components/dashboardHeader"
 import VehicleAssignedBookingsPageComponent from "./vehicleAssignedBookings"
 import { Metadata } from "next"
 

@@ -3,7 +3,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "../../components/common/dashboardHeader"
+import DashboardHeader from "../../components/dashboardHeader"
 import NewCustomerPageComponent from "../../customers/new/newCustomer"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"

@@ -1,11 +1,11 @@
 "use client"
 
 import {
-  DashboardCombobox,
-  DashboardFileInput,
-  DashboardInput,
-  DashboardTextarea,
-} from "@/components/form/dashboardFormFields"
+  RyogoCombobox,
+  RyogoFileInput,
+  RyogoInput,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -120,33 +120,33 @@ export default function ModifyAgencyPageForm({
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
           onSubmit={formData.handleSubmit(onSubmit)}
         >
-          <DashboardInput
+          <RyogoInput
             name={"agencyName"}
             type="text"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name={"agencyAddress"}
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
           />
-          <DashboardFileInput
+          <RyogoFileInput
             name={"agencyLogo"}
             register={formData.register("agencyLogo")}
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name={"commissionRate"}
             type="tel"
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
-          <DashboardCombobox
+          <RyogoCombobox
             name={"agencyState"}
             register={formData.register("agencyState")}
             title={t("Field5.Title")}
@@ -156,7 +156,7 @@ export default function ModifyAgencyPageForm({
               formData.setValue("agencyCity", "")
             }}
           />
-          <DashboardCombobox
+          <RyogoCombobox
             name={"agencyCity"}
             register={formData.register("agencyCity")}
             title={t("Field6.Title")}

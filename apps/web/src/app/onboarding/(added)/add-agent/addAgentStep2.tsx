@@ -10,7 +10,7 @@ import {
 } from "@/app/onboarding/components/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { H3Grey } from "@/components/typography"
-import ConfirmValues from "@/app/onboarding/components/confirmValues"
+import ConfirmValues from "@/components/form/confirmValues"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"

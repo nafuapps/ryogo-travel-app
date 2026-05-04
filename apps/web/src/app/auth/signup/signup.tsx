@@ -17,11 +17,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { Spinner } from "@/components/ui/spinner"
-import { apiClient } from "@ryogo-travel-app/api/client/apiClient"
-import { useTransition } from "react"
-import { FindUsersByPhoneType } from "@ryogo-travel-app/api/services/user.services"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -35,7 +30,6 @@ export default function SignupPageComponent() {
   type FormFields = z.infer<typeof formSchema>
 
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const methods = useForm<FormFields>({
     resolver: zodResolver(formSchema),
@@ -46,23 +40,7 @@ export default function SignupPageComponent() {
 
   //Submit actions
   const onSubmit = async (data: FormFields) => {
-    startTransition(async () => {
-      const users = await apiClient<FindUsersByPhoneType>(
-        `/api/auth/signup?phone=${data.phoneNumber}`,
-        {
-          method: "GET",
-        },
-      )
-      if (
-        users.filter((u) => u.status !== UserStatusEnum.SUSPENDED).length > 0
-      ) {
-        // If found, go to existing account page
-        router.push(`/auth/signup/${data.phoneNumber}`)
-      } else {
-        // else, go to onboarding
-        router.push("/onboarding")
-      }
-    })
+    router.push(`/auth/signup/${data.phoneNumber}`)
   }
 
   return (
@@ -97,9 +75,8 @@ export default function SignupPageComponent() {
             )}
           />
           <div id="SignupActions" className="flex flex-col gap-4 w-full">
-            <Button variant={"default"} size={"lg"} disabled={isPending}>
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
+            <Button variant={"default"} size={"lg"}>
+              {t("PrimaryCTA")}
             </Button>
           </div>
         </form>

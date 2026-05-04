@@ -26,7 +26,7 @@ export default async function LoginLayout({
       <div id="LoginSideSection" className="md:flex md:w-1/2 relative hidden">
         <Image
           loading="eager"
-          src={"/login.png"}
+          src={"/loginBG.png"}
           alt="Login Page Cover Image"
           className="object-cover"
           fill

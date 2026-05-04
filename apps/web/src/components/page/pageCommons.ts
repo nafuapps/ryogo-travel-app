@@ -1,7 +1,7 @@
 export const mainClassName =
   "flex flex-col w-full h-lvh bg-slate-100 p-4 lg:p-5"
 export const pageClassName =
-  "w-full flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar pt-3 lg:pt-4"
+  "w-full h-full flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar pt-3 lg:pt-4"
 export const sectionClassName =
   "bg-white rounded-lg flex flex-col gap-2 lg:gap-3 p-3 lg:p-4"
 export const sectionHeaderClassName =

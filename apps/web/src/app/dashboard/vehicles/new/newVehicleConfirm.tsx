@@ -2,7 +2,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
-import { CaptionGrey, H4, P, PBold, SmallGrey } from "@/components/typography"
+import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -11,11 +11,14 @@ import {
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingFormClassName,
+  newBookingFormBlockClassName,
+  newBookingActionBlockClassName,
 } from "../../bookings/new/newBookingCommon"
-import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import { useTransition } from "react"
+import ConfirmValues from "@/components/form/confirmValues"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -75,7 +78,7 @@ export function NewVehicleConfirm(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={5} current={4} />
+        <StepsTracker total={5} current={4} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
@@ -84,7 +87,7 @@ export function NewVehicleConfirm(props: {
           onSubmit={formData.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div id="ConfirmFields" className="flex flex-col gap-3 lg:gap-4">
+          <div id="ConfirmFields" className={newBookingFormBlockClassName}>
             <ConfirmValues
               name={t("VehicleNumber")}
               value={props.newVehicleFormData.data.vehicleNumber}
@@ -153,42 +156,28 @@ export function NewVehicleConfirm(props: {
                 />
               )}
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
+          <div id="FormActions" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending && <Spinner />}
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={isPending}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </div>
         </form>
       </Form>
-    </div>
-  )
-}
-
-type ConfirmValuesProps = {
-  name: string
-  value: string
-}
-
-export default function ConfirmValues({ name, value }: ConfirmValuesProps) {
-  return (
-    <div className="flex flex-row justify-between w-full items-start gap-5 lg:gap-6">
-      <PBold>{name}</PBold>
-      <div className="text-right">
-        <P>{value}</P>
-      </div>
     </div>
   )
 }

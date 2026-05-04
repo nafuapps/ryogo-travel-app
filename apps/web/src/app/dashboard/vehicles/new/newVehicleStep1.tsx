@@ -5,18 +5,17 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
 import { Dispatch, SetStateAction } from "react"
+import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
 import {
-  DashboardInput,
-  DashboardSelect,
-} from "@/components/form/dashboardFormFields"
-import {
+  newBookingActionBlockClassName,
+  newBookingFormBlockClassName,
   newBookingFormClassName,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingSectionClassName,
 } from "../../bookings/new/newBookingCommon"
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
-import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Button } from "@/components/ui/button"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
@@ -90,7 +89,7 @@ export function NewVehicleStep1(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={5} current={0} />
+        <StepsTracker total={5} current={0} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
@@ -99,36 +98,36 @@ export function NewVehicleStep1(props: {
           onSubmit={formData.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div id="Step1Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
+          <div id="Step1Fields" className={newBookingFormBlockClassName}>
+            <RyogoInput
               name={"vehicleNumber"}
               type="text"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
               description={t("Field1.Description")}
             />
-            <DashboardSelect
+            <RyogoSelect
               name={"type"}
               register={formData.register("type")}
               array={getEnumValueDisplayPairs(VehicleTypesEnum)}
               title={t("Field2.Title")}
               placeholder={t("Field2.Title")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"brand"}
               type="text"
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"color"}
               type="text"
               label={t("Field4.Title")}
               placeholder={t("Field4.Placeholder")}
               description={t("Field4.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"model"}
               type="text"
               label={t("Field5.Title")}
@@ -136,15 +135,17 @@ export function NewVehicleStep1(props: {
               description={t("Field5.Description")}
             />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
+          <div id="FormActions" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

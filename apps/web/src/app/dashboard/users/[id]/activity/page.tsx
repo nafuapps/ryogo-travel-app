@@ -4,7 +4,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import DashboardHeader from "../../../components/common/dashboardHeader"
+import DashboardHeader from "../../../components/dashboardHeader"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"

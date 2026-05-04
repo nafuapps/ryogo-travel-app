@@ -8,10 +8,8 @@ import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 /*
-  1. Get user details from DB using phone number
-  2. If no account found, redirect to onboarding
-  3. If no owner account found, show account details and nudge user to login (but also an extra option to create account)
-  4. If some owner account found, show a list and nudge to login (with callout to contact support for creating account)
+  If no owner account found, show account details and nudge user to login (but also an extra option to create account)
+  If some owner account found, show a list and nudge to login (with callout to contact support for creating account)
 */
 
 export default async function SignupExistingPageComponent({

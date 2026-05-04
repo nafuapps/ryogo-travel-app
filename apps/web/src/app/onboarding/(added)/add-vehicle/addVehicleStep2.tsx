@@ -5,10 +5,10 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
-  OnboardingInput,
-  OnboardingFileInput,
-  OnboardingDatePicker,
-} from "@/app/onboarding/components/onboardingFields"
+  RyogoInput,
+  RyogoFileInput,
+  RyogoDatePicker,
+} from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -126,35 +126,35 @@ export function AddVehicleStep2(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step2Content">
-          <OnboardingInput
+          <RyogoInput
             name={"capacity"}
             type="tel"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"odometerReading"}
             type="tel"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <OnboardingFileInput
+          <RyogoFileInput
             name={"rcPhotos"}
             register={formData.register("rcPhotos")}
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
           />
-          <OnboardingFileInput
+          <RyogoFileInput
             name={"vehiclePhotos"}
             register={formData.register("vehiclePhotos")}
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
-          <OnboardingDatePicker
+          <RyogoDatePicker
             name="rcExpiresOn"
             label={t("Field5.Title")}
             placeholder={t("Field5.Placeholder")}

@@ -144,14 +144,6 @@ export function getNextStep(
   return TripLogTypesEnum.START_TRIP
 }
 
-// export function getMaxOdometerReading(
-//   tripLogs: NonNullable<FindBookingDetailsByIdType>["tripLogs"],
-// ) {
-//   return tripLogs.reduce((accumulator, currentValue) => {
-//     return Math.max(accumulator, currentValue.odometerReading)
-//   }, 0)
-// }
-
 export async function OngoingBookingComponent({
   booking,
 }: {

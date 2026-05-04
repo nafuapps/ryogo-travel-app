@@ -1,12 +1,12 @@
 "use client"
 
 import { confirmBookingAction } from "@/app/actions/bookings/confirmBookingAction"
-import BookingAlertDialog from "@/app/dashboard/components/buttons/bookingAlertDialog"
+import BookingAlertDialog from "@/components/buttons/bookingAlertDialog"
 import {
-  DashboardTextarea,
-  DashboardCheckbox,
-  DashboardTimePicker,
-} from "@/components/form/dashboardFormFields"
+  RyogoTextarea,
+  RyogoCheckbox,
+  RyogoTimePicker,
+} from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -99,22 +99,22 @@ export default function ConfirmBookingForm({
         onSubmit={form.handleSubmit(confirm)}
         className="flex flex-col gap-2 lg:gap-3"
       >
-        <DashboardTextarea
+        <RyogoTextarea
           name="pickupAddress"
           label={t("PickupAddress")}
           placeholder={t("PickupAddressPlaceholder")}
         />
-        <DashboardCheckbox
+        <RyogoCheckbox
           register={form.register("sameAsCustomerAddress")}
           name={"sameAsCustomerAddress"}
           label={t("SameAsCustomerAddress")}
         />
-        <DashboardTextarea
+        <RyogoTextarea
           name="dropAddress"
           label={t("DropAddress")}
           placeholder={t("DropAddressPlaceholder")}
         />
-        <DashboardTimePicker name="startTime" label={t("PickupTime")} />
+        <RyogoTimePicker name="startTime" label={t("PickupTime")} />
         {canConfirm && (
           <>
             <BookingAlertDialog

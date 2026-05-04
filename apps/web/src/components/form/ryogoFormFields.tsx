@@ -40,27 +40,24 @@ import { Label } from "../ui/label"
 import {
   Combobox,
   ComboboxContent,
-  ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
 } from "../ui/combobox"
 
-type DashboardInputProps = {
+export function RyogoInput(props: {
   name: string
   label: string
   placeholder: string
   description?: string
   type: React.HTMLInputTypeAttribute | undefined
   disabled?: boolean
-}
-
-export function DashboardInput(props: DashboardInputProps) {
+}) {
   return (
     <FormField
       name={props.name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full relative">
           <FormLabel>
             {props.disabled ? (
               <SmallGrey>{props.label}</SmallGrey>
@@ -88,19 +85,18 @@ export function DashboardInput(props: DashboardInputProps) {
   )
 }
 
-type DashboardFileInputProps = {
+export function RyogoFileInput(props: {
   name: string
   label: string
   placeholder: string
   description?: string
   register: UseFormRegisterReturn<string>
-}
-export function DashboardFileInput(props: DashboardFileInputProps) {
+}) {
   return (
     <FormField
       name={props.name}
       render={() => (
-        <FormItem className="w-full">
+        <FormItem className="w-full relative">
           <FormLabel>
             <SmallBold>{props.label}</SmallBold>
           </FormLabel>
@@ -123,18 +119,16 @@ export function DashboardFileInput(props: DashboardFileInputProps) {
   )
 }
 
-type DashboardTextareaProps = {
+export function RyogoTextarea(props: {
   name: string
   label: string
   placeholder: string
-}
-
-export function DashboardTextarea(props: DashboardTextareaProps) {
+}) {
   return (
     <FormField
       name={props.name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full relative">
           <FormLabel>
             <SmallBold>{props.label}</SmallBold>
           </FormLabel>
@@ -148,20 +142,19 @@ export function DashboardTextarea(props: DashboardTextareaProps) {
   )
 }
 
-type DashboardSelectProps = {
+export function RyogoSelect(props: {
   name: string
   title?: string
   array: { value: string; display: string }[]
   placeholder: string
   register: UseFormRegisterReturn<string>
   resetField?: () => void
-}
-export function DashboardSelect(props: DashboardSelectProps) {
+}) {
   return (
     <FormField
       name={props.name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full relative">
           <FormLabel>
             <SmallBold>{props.title}</SmallBold>
           </FormLabel>
@@ -193,21 +186,20 @@ export function DashboardSelect(props: DashboardSelectProps) {
   )
 }
 
-type DashboardComboboxProps = {
+export function RyogoCombobox(props: {
   name: string
   title?: string
   array: { value: string; display: string }[]
   placeholder: string
   register: UseFormRegisterReturn<string>
   resetField?: () => void
-}
-export function DashboardCombobox(props: DashboardComboboxProps) {
+}) {
   return (
     <FormField
       name={props.name}
       key={props.name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full relative">
           <FormLabel>
             <SmallBold>{props.title}</SmallBold>
           </FormLabel>
@@ -239,20 +231,19 @@ export function DashboardCombobox(props: DashboardComboboxProps) {
   )
 }
 
-type DashboardRadioProps = {
+export function RyogoRadio(props: {
   name: string
   title?: string
   array: { value: string; display: string }[]
   register: UseFormRegisterReturn<string>
   defaultValue: string
   description?: string
-}
-export function DashboardRadio(props: DashboardRadioProps) {
+}) {
   return (
     <FormField
       name={props.name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full relative">
           <FormLabel>
             <SmallBold>{props.title}</SmallBold>
           </FormLabel>
@@ -278,12 +269,11 @@ export function DashboardRadio(props: DashboardRadioProps) {
   )
 }
 
-type DashboardCheckboxProps = {
+export function RyogoCheckbox(props: {
   name: string
   label: string
   register: UseFormRegisterReturn<string>
-}
-export function DashboardCheckbox(props: DashboardCheckboxProps) {
+}) {
   return (
     <FormField
       name={props.name}
@@ -297,7 +287,7 @@ export function DashboardCheckbox(props: DashboardCheckboxProps) {
               />
             </FormControl>
             <FormLabel>
-              <Caption>{props.label}</Caption>
+              <SmallBold>{props.label}</SmallBold>
             </FormLabel>
           </FormItem>
         )
@@ -306,15 +296,12 @@ export function DashboardCheckbox(props: DashboardCheckboxProps) {
   )
 }
 
-type DashboardMultipleCheckboxProps = {
+export function RyogoMultipleCheckbox(props: {
   name: string
   label: string
   array: { value: string; display: string }[]
   register: UseFormRegisterReturn<string>
-}
-export function DashboardMultipleCheckbox(
-  props: DashboardMultipleCheckboxProps,
-) {
+}) {
   return (
     <FormField
       name={props.name}
@@ -362,15 +349,14 @@ export function DashboardMultipleCheckbox(
   )
 }
 
-type DashboardDatePickerProps = {
+export function RyogoDatePicker(props: {
   name: string
   label: string
   placeholder: string
   description?: string
   disabled?: boolean
   pastAllowed?: boolean
-}
-export function DashboardDatePicker(props: DashboardDatePickerProps) {
+}) {
   return (
     <FormField
       name={props.name}
@@ -421,7 +407,7 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
           </Popover>
           {props.description && (
             <FormDescription>
-              <Caption>{props.description}</Caption>
+              <CaptionGrey>{props.description}</CaptionGrey>
             </FormDescription>
           )}
           <FormMessage />
@@ -431,11 +417,7 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
   )
 }
 
-type DashboardSwitchProps = {
-  name: string
-  label: string
-}
-export function DashboardSwitch(props: DashboardSwitchProps) {
+export function RyogoSwitch(props: { name: string; label: string }) {
   return (
     <FormField
       name={props.name}
@@ -453,13 +435,12 @@ export function DashboardSwitch(props: DashboardSwitchProps) {
   )
 }
 
-type DashboardTimePickerProps = {
+export function RyogoTimePicker(props: {
   name: string
   label: string
   description?: string
   disabled?: boolean
-}
-export function DashboardTimePicker(props: DashboardTimePickerProps) {
+}) {
   return (
     <FormField
       name={props.name}
@@ -479,7 +460,7 @@ export function DashboardTimePicker(props: DashboardTimePickerProps) {
             className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
           />
           <FormDescription>
-            <Caption>{props.description}</Caption>
+            <CaptionGrey>{props.description}</CaptionGrey>
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -488,7 +469,7 @@ export function DashboardTimePicker(props: DashboardTimePickerProps) {
   )
 }
 
-export function DashboardRating(props: {
+export function RyogoRating(props: {
   name: string
   label: string
   selectedStars: number

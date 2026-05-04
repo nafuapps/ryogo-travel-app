@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
+  newBookingActionBlockClassName,
   newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
@@ -12,9 +13,9 @@ import {
   newBookingSectionClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
-import NewBookingStepsTracker from "./newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Form } from "@/components/ui/form"
-import { DashboardInput } from "@/components/form/dashboardFormFields"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import NewBookingTripInfo from "./newBookingTripInfo"
@@ -103,7 +104,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={NewBookingTotalSteps} current={3} />
+        <StepsTracker total={NewBookingTotalSteps} current={3} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
@@ -114,7 +115,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
         >
           <NewBookingTripInfo {...props.newBookingFormData} />
           <div className={newBookingFormBlockClassName}>
-            <DashboardInput
+            <RyogoInput
               name="selectedDistance"
               label={t("Field5.Title")}
               placeholder={t("Field5.Placeholder")}
@@ -122,21 +123,21 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
               type="tel"
               disabled={props.newBookingFormData.routeId ? true : false}
             />
-            <DashboardInput
+            <RyogoInput
               name="selectedRatePerKm"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
               description={t("Field1.Description")}
               type="tel"
             />
-            <DashboardInput
+            <RyogoInput
               name="selectedAllowancePerDay"
               label={t("Field2.Title")}
               placeholder={t("Field2.Placeholder")}
               description={t("Field2.Description")}
               type="tel"
             />
-            <DashboardInput
+            <RyogoInput
               name="selectedAcChargePerDay"
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
@@ -144,7 +145,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
               type="tel"
               disabled={props.newBookingFormData.tripNeedsAC === false}
             />
-            <DashboardInput
+            <RyogoInput
               name="selectedCommissionRate"
               label={t("Field4.Title")}
               placeholder={t("Field4.Placeholder")}
@@ -152,24 +153,26 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
               type="tel"
             />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={form.formState.isSubmitting}
-          >
-            {t("Back")}
-          </Button>
+          <div id="NewBookingAction" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={form.formState.isSubmitting}
+            >
+              {t("Back")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

@@ -11,7 +11,7 @@ import {
   pageDescription,
   pageTitle,
 } from "@/components/page/pageCommons"
-import DashboardHeader from "@/app/dashboard/components/common/dashboardHeader"
+import DashboardHeader from "@/app/dashboard/components/dashboardHeader"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { Metadata } from "next"
 import { differenceInDays } from "date-fns"

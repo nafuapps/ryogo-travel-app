@@ -1,12 +1,12 @@
 "use client"
 
 import {
-  DashboardFileInput,
-  DashboardInput,
-  DashboardRadio,
-  DashboardSelect,
-  DashboardTextarea,
-} from "@/components/form/dashboardFormFields"
+  RyogoFileInput,
+  RyogoInput,
+  RyogoRadio,
+  RyogoSelect,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -114,7 +114,7 @@ export default function NewTransactionPageComponent({
           id="newTransactionForm"
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardRadio
+          <RyogoRadio
             name="type"
             title={t("Field1.Title")}
             register={formData.register("type")}
@@ -122,32 +122,32 @@ export default function NewTransactionPageComponent({
             array={getEnumValueDisplayPairs(TransactionTypesEnum)}
             description={t("Field1.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name="amount"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             type="tel"
           />
-          <DashboardSelect
+          <RyogoSelect
             name="mode"
             register={formData.register("mode")}
             title={t("Field3.Title")}
             array={getEnumValueDisplayPairs(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
-          <DashboardSelect
+          <RyogoSelect
             name="otherParty"
             register={formData.register("otherParty")}
             title={t("Field4.Title")}
             array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
             placeholder={t("Field4.Placeholder")}
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name="remarks"
             label={t("Field5.Title")}
             placeholder={t("Field5.Placeholder")}
           />
-          <DashboardFileInput
+          <RyogoFileInput
             name={"txnPhoto"}
             register={formData.register("txnPhoto")}
             label={t("Field6.Title")}

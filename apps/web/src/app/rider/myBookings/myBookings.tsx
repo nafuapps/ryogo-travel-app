@@ -11,7 +11,7 @@ import {
   CompletedBookingComponent,
   OngoingBookingComponent,
   UpcomingBookingComponent,
-} from "../components/myBookingCommon"
+} from "../components/riderBookingCommon"
 
 export default async function RiderMyBookingsPageComponent({
   assignedBookings,

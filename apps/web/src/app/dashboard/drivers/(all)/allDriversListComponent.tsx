@@ -16,8 +16,8 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -79,13 +79,7 @@ async function AllDriversItemComponent({
         <div className={gridItemClassName}>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
-              const IconComponent = getVehicleIcon(v)
-              return (
-                <IconComponent
-                  key={v}
-                  className="text-slate-400 size-5 lg:size-6"
-                />
-              )
+              return getVehicleIcon(v)
             })}
           </div>
           <PBold>

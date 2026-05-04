@@ -1,8 +1,10 @@
-type StepsTrackerProps = {
-  total: number;
-  current: number;
-};
-export default function StepsTracker({ total, current }: StepsTrackerProps) {
+export default function StepsTracker({
+  total,
+  current,
+}: {
+  total: number
+  current: number
+}) {
   return (
     <div className="flex flex-row items-center gap-2 w-full">
       {Array.from({ length: total }, (_, index) => (
@@ -14,5 +16,5 @@ export default function StepsTracker({ total, current }: StepsTrackerProps) {
         />
       ))}
     </div>
-  );
+  )
 }

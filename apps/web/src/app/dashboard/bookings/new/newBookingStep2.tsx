@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import {
   getTripTypeClassName,
+  newBookingActionBlockClassName,
   newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
@@ -21,15 +22,15 @@ import {
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import stateCityData from "@/lib/states_cities.json"
-import NewBookingStepsTracker from "./newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Form } from "@/components/ui/form"
 import {
-  DashboardCombobox,
-  DashboardDatePicker,
-  DashboardInput,
-  DashboardSwitch,
-  DashboardTextarea,
-} from "@/components/form/dashboardFormFields"
+  RyogoCombobox,
+  RyogoDatePicker,
+  RyogoInput,
+  RyogoSwitch,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import {
@@ -42,7 +43,6 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { getRouteAction } from "@/app/actions/routes/getRouteAction"
 
 type NewBookingStep2Props = {
@@ -215,136 +215,133 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={NewBookingTotalSteps} current={1} />
+        <StepsTracker total={NewBookingTotalSteps} current={1} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
-        <ScrollArea>
-          <form
-            id="Step2Form"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className={newBookingFormClassName}
-          >
-            <div id="routeSelection" className={newBookingFormBlockClassName}>
-              <div
-                id="tripSource"
-                className="flex flex-col w-full gap-1 lg:gap-1.5"
-              >
-                <DashboardCombobox
-                  name="tripSourceLocationState"
-                  title={t("Field1.Title")}
-                  array={getArrayValueDisplayPairs(stateCityData)}
-                  register={form.register("tripSourceLocationState")}
-                  placeholder={t("Field1.Placeholder")}
-                  resetField={() => {
-                    form.setValue("tripSourceLocationCity", "")
-                  }}
-                />
-                <DashboardCombobox
-                  name="tripSourceLocationCity"
-                  array={getStringValueDisplayPairs(sourceCityOptions)}
-                  register={form.register("tripSourceLocationCity")}
-                  placeholder={t("Field2.Placeholder")}
-                />
-              </div>
-              <div
-                id="tripDestination"
-                className="flex flex-col w-full gap-1 lg:gap-1.5"
-              >
-                <DashboardCombobox
-                  name="tripDestinationLocationState"
-                  title={t("Field3.Title")}
-                  array={getArrayValueDisplayPairs(stateCityData)}
-                  register={form.register("tripDestinationLocationState")}
-                  placeholder={t("Field3.Placeholder")}
-                  resetField={() => {
-                    form.setValue("tripDestinationLocationCity", "")
-                  }}
-                />
-                <DashboardCombobox
-                  name="tripDestinationLocationCity"
-                  array={getStringValueDisplayPairs(destinationCityOptions)}
-                  register={form.register("tripDestinationLocationCity")}
-                  placeholder={t("Field4.Placeholder")}
-                />
-              </div>
-            </div>
-            <div id="typeSelection" className={newBookingFormBlockClassName}>
-              <SmallBold>{t("Field8.Title")}</SmallBold>
-              <div className="flex flex-row gap-2 lg:gap-3">
-                <div
-                  id={BookingTypeEnum.OneWay}
-                  onClick={() => {
-                    setSelectedTripType(BookingTypeEnum.OneWay)
-                    form.setValue(
-                      "tripEndDate",
-                      form.getValues("tripStartDate"),
-                    )
-                  }}
-                  className={getTripTypeClassName(
-                    selectedTripType === BookingTypeEnum.OneWay,
-                  )}
-                >
-                  <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                  <CaptionBold>{t("Field8.OneWay")}</CaptionBold>
-                  <CaptionGrey>{t("Field8.OneWayDesc")}</CaptionGrey>
-                </div>
-                <div
-                  id={BookingTypeEnum.Round}
-                  onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
-                  className={getTripTypeClassName(
-                    selectedTripType === BookingTypeEnum.Round,
-                  )}
-                >
-                  <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                  <CaptionBold>{t("Field8.RoundTrip")}</CaptionBold>
-                  <CaptionGrey>{t("Field8.RoundTripDesc")}</CaptionGrey>
-                </div>
-                <div
-                  id={BookingTypeEnum.MultiDay}
-                  onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
-                  className={getTripTypeClassName(
-                    selectedTripType === BookingTypeEnum.MultiDay,
-                  )}
-                >
-                  <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
-                  <CaptionBold>{t("Field8.MultiDay")}</CaptionBold>
-                  <CaptionGrey>{t("Field8.MultiDayDesc")}</CaptionGrey>
-                </div>
-              </div>
-            </div>
-            <div id="dateSelection" className={newBookingFormBlockClassName}>
-              <DashboardDatePicker
-                name="tripStartDate"
-                label={t("Field5.Title")}
-                description=""
-                placeholder=""
+        <form
+          id="Step2Form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={newBookingFormClassName}
+        >
+          <div id="routeSelection" className={newBookingFormBlockClassName}>
+            <div
+              id="tripSource"
+              className="flex flex-col w-full gap-1 lg:gap-1.5"
+            >
+              <RyogoCombobox
+                name="tripSourceLocationState"
+                title={t("Field1.Title")}
+                array={getArrayValueDisplayPairs(stateCityData)}
+                register={form.register("tripSourceLocationState")}
+                placeholder={t("Field1.Placeholder")}
+                resetField={() => {
+                  form.setValue("tripSourceLocationCity", "")
+                }}
               />
-              <DashboardDatePicker
-                name="tripEndDate"
-                label={t("Field6.Title")}
-                description=""
-                placeholder=""
-                disabled={selectedTripType === BookingTypeEnum.OneWay}
+              <RyogoCombobox
+                name="tripSourceLocationCity"
+                array={getStringValueDisplayPairs(sourceCityOptions)}
+                register={form.register("tripSourceLocationCity")}
+                placeholder={t("Field2.Placeholder")}
               />
             </div>
             <div
-              id="passengerPreference"
-              className={newBookingFormBlockClassName}
+              id="tripDestination"
+              className="flex flex-col w-full gap-1 lg:gap-1.5"
             >
-              <DashboardInput
-                name="tripPassengers"
-                label={t("Field7.Title")}
-                placeholder={t("Field7.Placeholder")}
-                type="tel"
+              <RyogoCombobox
+                name="tripDestinationLocationState"
+                title={t("Field3.Title")}
+                array={getArrayValueDisplayPairs(stateCityData)}
+                register={form.register("tripDestinationLocationState")}
+                placeholder={t("Field3.Placeholder")}
+                resetField={() => {
+                  form.setValue("tripDestinationLocationCity", "")
+                }}
               />
-              <DashboardSwitch label={t("Field9.Title")} name="tripNeedsAC" />
-              <DashboardTextarea
-                name="tripRemarks"
-                label={t("Field10.Title")}
-                placeholder={t("Field10.Placeholder")}
+              <RyogoCombobox
+                name="tripDestinationLocationCity"
+                array={getStringValueDisplayPairs(destinationCityOptions)}
+                register={form.register("tripDestinationLocationCity")}
+                placeholder={t("Field4.Placeholder")}
               />
             </div>
+          </div>
+          <div id="typeSelection" className={newBookingFormBlockClassName}>
+            <SmallBold>{t("Field8.Title")}</SmallBold>
+            <div className="flex flex-row gap-2 lg:gap-3">
+              <div
+                id={BookingTypeEnum.OneWay}
+                onClick={() => {
+                  setSelectedTripType(BookingTypeEnum.OneWay)
+                  form.setValue("tripEndDate", form.getValues("tripStartDate"))
+                }}
+                className={getTripTypeClassName(
+                  selectedTripType === BookingTypeEnum.OneWay,
+                )}
+              >
+                <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
+                <CaptionBold>{t("Field8.OneWay")}</CaptionBold>
+                <CaptionGrey>{t("Field8.OneWayDesc")}</CaptionGrey>
+              </div>
+              <div
+                id={BookingTypeEnum.Round}
+                onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
+                className={getTripTypeClassName(
+                  selectedTripType === BookingTypeEnum.Round,
+                )}
+              >
+                <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
+                <CaptionBold>{t("Field8.RoundTrip")}</CaptionBold>
+                <CaptionGrey>{t("Field8.RoundTripDesc")}</CaptionGrey>
+              </div>
+              <div
+                id={BookingTypeEnum.MultiDay}
+                onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
+                className={getTripTypeClassName(
+                  selectedTripType === BookingTypeEnum.MultiDay,
+                )}
+              >
+                <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
+                <CaptionBold>{t("Field8.MultiDay")}</CaptionBold>
+                <CaptionGrey>{t("Field8.MultiDayDesc")}</CaptionGrey>
+              </div>
+            </div>
+          </div>
+          <div id="dateSelection" className={newBookingFormBlockClassName}>
+            <RyogoDatePicker
+              name="tripStartDate"
+              label={t("Field5.Title")}
+              description=""
+              placeholder=""
+            />
+            <RyogoDatePicker
+              name="tripEndDate"
+              label={t("Field6.Title")}
+              description=""
+              placeholder=""
+              disabled={selectedTripType === BookingTypeEnum.OneWay}
+            />
+          </div>
+          <div
+            id="passengerPreference"
+            className={newBookingFormBlockClassName}
+          >
+            <RyogoInput
+              name="tripPassengers"
+              label={t("Field7.Title")}
+              placeholder={t("Field7.Placeholder")}
+              type="tel"
+            />
+            <RyogoSwitch label={t("Field9.Title")} name="tripNeedsAC" />
+            <RyogoTextarea
+              name="tripRemarks"
+              label={t("Field10.Title")}
+              placeholder={t("Field10.Placeholder")}
+            />
+          </div>
+          <div id="NewBookingAction" className={newBookingActionBlockClassName}>
             <Button
               variant={"default"}
               size={"lg"}
@@ -363,8 +360,8 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
             >
               {t("Back")}
             </Button>
-          </form>
-        </ScrollArea>
+          </div>
+        </form>
       </Form>
     </div>
   )

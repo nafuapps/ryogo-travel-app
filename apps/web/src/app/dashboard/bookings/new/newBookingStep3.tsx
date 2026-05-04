@@ -13,8 +13,9 @@ import {
   Step3Type,
   NewBookingTotalSteps,
   newBookingFormBlockClassName,
+  newBookingActionBlockClassName,
 } from "./newBookingCommon"
-import NewBookingStepsTracker from "./newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
@@ -79,7 +80,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
           <H4>{t("Title")}</H4>
           <Caption>{t("Subtitle")}</Caption>
         </div>
-        <NewBookingStepsTracker total={NewBookingTotalSteps} current={2} />
+        <StepsTracker total={NewBookingTotalSteps} current={2} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
@@ -88,7 +89,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
           onSubmit={form.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div className={newBookingFormBlockClassName}>
+          <div id="ChooseVehicle" className={newBookingFormBlockClassName}>
             <PBold>{t("Vehicle.Title")}</PBold>
             <div
               id="vehicleAssignment"
@@ -109,7 +110,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
                 ))}
             </div>
           </div>
-          <div className={newBookingFormBlockClassName}>
+          <div id="ChooseDriver" className={newBookingFormBlockClassName}>
             <PBold>{t("Driver.Title")}</PBold>
             <div
               id="driverAssignment"
@@ -125,24 +126,26 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
               ))}
             </div>
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={form.formState.isSubmitting}
-          >
-            {t("Back")}
-          </Button>
+          <div id="NewBookingAction" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && <Spinner />}
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={form.formState.isSubmitting}
+            >
+              {t("Back")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

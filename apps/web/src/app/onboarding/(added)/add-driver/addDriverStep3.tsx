@@ -5,10 +5,10 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
-  OnboardingInput,
-  OnboardingMultipleCheckbox,
-  OnboardingTextarea,
-} from "@/app/onboarding/components/onboardingFields"
+  RyogoInput,
+  RyogoMultipleCheckbox,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -74,18 +74,18 @@ export function AddDriverStep3(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step3Content">
-          <OnboardingTextarea
+          <RyogoTextarea
             name={"driverAddress"}
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
           />
-          <OnboardingMultipleCheckbox
+          <RyogoMultipleCheckbox
             array={getEnumValueDisplayPairs(VehicleTypesEnum)}
             name={"canDriveVehicleTypes"}
             label={t("Field2.Title")}
             register={formData.register("canDriveVehicleTypes")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"defaultAllowancePerDay"}
             type="tel"
             label={t("Field3.Title")}

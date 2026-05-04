@@ -5,11 +5,12 @@ import { Dispatch, SetStateAction, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
-  OnboardingInput,
-  OnboardingCheckbox,
-  OnboardingTextarea,
-  OnboardingFileInput,
-} from "../components/onboardingFields"
+  RyogoInput,
+  RyogoCheckbox,
+  RyogoTextarea,
+  RyogoFileInput,
+} from "@/components/form/ryogoFormFields"
+
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -138,36 +139,36 @@ export function CreateAccountStep2(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step2Content">
-          <OnboardingInput
+          <RyogoInput
             name={"agencyPhone"}
             type="tel"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingCheckbox
+          <RyogoCheckbox
             register={formData.register("sameAsOwnerPhone")}
             name={"sameAsOwnerPhone"}
             label={t("Field1.Checkbox")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"agencyEmail"}
             type="email"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <OnboardingCheckbox
+          <RyogoCheckbox
             register={formData.register("sameAsOwnerEmail")}
             name={"sameAsOwnerEmail"}
             label={t("Field2.Checkbox")}
           />
-          <OnboardingTextarea
+          <RyogoTextarea
             name={"agencyAddress"}
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
           />
-          <OnboardingFileInput
+          <RyogoFileInput
             name={"ownerPhoto"}
             register={formData.register("ownerPhoto")}
             label={t("Field4.Title")}

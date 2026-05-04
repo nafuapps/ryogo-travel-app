@@ -1,6 +1,6 @@
 "use client"
 
-import { DashboardInput } from "@/components/form/dashboardFormFields"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -79,7 +79,7 @@ export default function ChangeAgencyPhonePageComponent({
           onSubmit={formData.handleSubmit(onSubmit)}
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardInput
+          <RyogoInput
             name={"newPhone"}
             type="tel"
             label={t("Field1.Title")}

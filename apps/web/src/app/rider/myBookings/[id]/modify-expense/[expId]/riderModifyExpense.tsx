@@ -1,11 +1,11 @@
 "use client"
 
 import {
-  DashboardInput,
-  DashboardSelect,
-  DashboardTextarea,
-  DashboardFileInput,
-} from "@/components/form/dashboardFormFields"
+  RyogoInput,
+  RyogoSelect,
+  RyogoTextarea,
+  RyogoFileInput,
+} from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -18,7 +18,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
 import { Button } from "@/components/ui/button"
-import DeleteExpenseAlertButton from "@/app/dashboard/components/buttons/deleteExpenseAlertButton"
+import DeleteExpenseAlertButton from "@/components/buttons/deleteExpenseAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 import { useTransition } from "react"
@@ -109,25 +109,25 @@ export default function RiderModifyExpensePageComponent({
           id="modifyExpenseForm"
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardSelect
+          <RyogoSelect
             name="type"
             title={t("Field1.Title")}
             register={formData.register("type")}
             array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
             placeholder={t("Field1.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name="amount"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             type="tel"
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name="remarks"
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
           />
-          <DashboardFileInput
+          <RyogoFileInput
             name={"expensePhoto"}
             register={formData.register("expensePhoto")}
             label={t("Field4.Title")}

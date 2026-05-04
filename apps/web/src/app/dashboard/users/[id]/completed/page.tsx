@@ -4,7 +4,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import DashboardHeader from "../../../components/common/dashboardHeader"
+import DashboardHeader from "../../../components/dashboardHeader"
 import UserCompletedPageComponent from "./userCompletedBookings"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"

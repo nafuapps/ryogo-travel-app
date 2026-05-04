@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import {
+  newBookingActionBlockClassName,
   newBookingFormBlockClassName,
   newBookingFormClassName,
   NewBookingFormDataType,
@@ -13,11 +14,8 @@ import {
   newBookingSectionClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
-import NewBookingStepsTracker from "./newBookingStepsTracker"
-import {
-  DashboardCombobox,
-  DashboardInput,
-} from "@/components/form/dashboardFormFields"
+import StepsTracker from "@/components/form/stepsTracker"
+import { RyogoCombobox, RyogoInput } from "@/components/form/ryogoFormFields"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -133,7 +131,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={NewBookingTotalSteps} current={0} />
+        <StepsTracker total={NewBookingTotalSteps} current={0} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...form}>
@@ -143,7 +141,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
           className={newBookingFormClassName}
         >
           <div id="FindCustomer" className={newBookingFormBlockClassName}>
-            <DashboardInput
+            <RyogoInput
               name="customerPhone"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
@@ -168,13 +166,13 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
                 <Info className="size-4 lg:size-5 text-amber-300" />
                 <Small>{t("CustomerNotFound")}</Small>
               </Alert>
-              <DashboardInput
+              <RyogoInput
                 name={"newCustomerName"}
                 type="text"
                 label={t("Field2.Title")}
                 placeholder={t("Field2.Placeholder")}
               />
-              <DashboardCombobox
+              <RyogoCombobox
                 name={"newCustomerState"}
                 register={form.register("newCustomerState")}
                 title={t("Field3.Title")}
@@ -184,7 +182,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
                   form.setValue("newCustomerCity", "")
                 }}
               />
-              <DashboardCombobox
+              <RyogoCombobox
                 name={"newCustomerCity"}
                 register={form.register("newCustomerCity")}
                 title={t("Field4.Title")}
@@ -194,15 +192,20 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
             </div>
           )}
           {(existingCustomer || customerNotFound) && (
-            <Button
-              variant={"default"}
-              size={"lg"}
-              type="submit"
-              disabled={form.formState.isSubmitting}
+            <div
+              id="NewBookingAction"
+              className={newBookingActionBlockClassName}
             >
-              {form.formState.isSubmitting && <Spinner />}
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </Button>
+              <Button
+                variant={"default"}
+                size={"lg"}
+                type="submit"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting && <Spinner />}
+                {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+              </Button>
+            </div>
           )}
         </form>
       </Form>

@@ -2,10 +2,10 @@
   "Auth": {
     "LoginPage": {
       "Logo":"RyoGo Logo",
-      "SignupTitle":"Want to create a new account for your agency?",
+      "SignupTitle":"Want to create an account for your agency?",
       "SignupCTA":"Sign up for free",
       "Step1": {
-        "PageTitle": "Login your RyoGo account",
+        "PageTitle": "Log into your RyoGo account",
         "Input": {
           "Title": "Enter phone number",
           "Placeholder": "9876543210"
@@ -26,7 +26,7 @@
         "Input": {
           "Title": "Enter password",
           "Placeholder": "********",
-          "Description": "Provide your password to safely login"
+          "Description": "Provide your password to login safely"
         },
         "PrimaryCTA": "Login",
         "Loading": "Loading",
@@ -63,14 +63,13 @@
           "Placeholder": "9876543210"
         },
         "PrimaryCTA": "Create agency account",
-        "Loading": "Loading",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric"
       },
       "Step2": {
-        "PageTitle": "Hello, there!",
+        "PageTitle": "Welcome!",
         "InfoYes": "You already have an agency account with us:",
-        "InfoNo": "You already have {count} account(s) with us:",
+        "InfoNo": "{count, plural, =1 {You already have an account with us:} other {You already have # accounts with us:}}",
         "SecondaryCTANo": "Create a new agency account",
         "SecondaryCTAYes": "Contact support",
         "BackCTA": "Back",
@@ -83,7 +82,7 @@
       "Logo":"RyoGo Logo",
       "Header": {
         "Title": "Welcome to RyoGo!",
-        "Description": "Let's get your agency account set up in just a few minutes"
+        "Description": "Let's get your account set up in just a few minutes"
       },
       "BodySteps": {
         "Title": "Onboarding Journey",
@@ -1015,7 +1014,7 @@
           "ACSubtitle": "(₹{ac} for {days} day)",
           "Commission": "Commission",
           "TotalAmount": "Total Amount",
-          "CreateInfo": "This will create new booking as a lead. You can confirm it on the next page",
+          "CreateInfo": "The booking will be created as a lead. You must confirm it on the next page",
           "Loading": "Loading..",
           "PrimaryCTA": "Create Booking",
           "Back": "Back to edit details",
@@ -1449,7 +1448,7 @@
       "Step2": {
         "Title": "Adding vehicle",
         "Subtitle": "Step 2 of 5",
-        "Description": "Provide document and details of the vehicle",
+        "Description": "Provide vehicle details and RC document",
         "Field1": {
           "Title": "Enter passenger capacity",
           "Placeholder": "4",
@@ -1481,7 +1480,7 @@
         "Field4": {
           "Title": "Vehicle photo",
           "Placeholder": "UPLOAD",
-          "Description": "Upload photos of the vehicle (atleast 1 photo with number plate visible)",
+          "Description": "Upload a photo of the vehicle (with number plate visible)",
           "Error1": "Vehicle photo is required",
           "Error2": "File size should be less than 1MB",
           "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
@@ -1542,7 +1541,7 @@
         "Field1": {
           "Title": "Vehicle charge per Km (in ₹)",
           "Placeholder": "18",
-          "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer. You can always change it later.",
+          "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer. You can change it later.",
           "Error1": "Vehicle Charge must be a number",
           "Error2": "Vehicle Charge must be atleast 0.",
           "Error3": "Vehicle Charge must be less than ₹100",

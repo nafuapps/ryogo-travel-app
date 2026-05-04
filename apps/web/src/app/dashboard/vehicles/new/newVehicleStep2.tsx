@@ -6,10 +6,10 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
 import {
-  DashboardDatePicker,
-  DashboardFileInput,
-  DashboardInput,
-} from "@/components/form/dashboardFormFields"
+  RyogoDatePicker,
+  RyogoFileInput,
+  RyogoInput,
+} from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
 import {
@@ -17,8 +17,10 @@ import {
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingFormClassName,
+  newBookingActionBlockClassName,
+  newBookingFormBlockClassName,
 } from "../../bookings/new/newBookingCommon"
-import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export function NewVehicleStep2(props: {
@@ -127,7 +129,7 @@ export function NewVehicleStep2(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={5} current={1} />
+        <StepsTracker total={5} current={1} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
@@ -136,60 +138,64 @@ export function NewVehicleStep2(props: {
           onSubmit={formData.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div id="Step2Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
+          <div id="Step2VehicleFields" className={newBookingFormBlockClassName}>
+            <RyogoInput
               name={"capacity"}
               type="tel"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
               description={t("Field1.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"odometerReading"}
               type="tel"
               label={t("Field2.Title")}
               placeholder={t("Field2.Placeholder")}
               description={t("Field2.Description")}
             />
-            <DashboardFileInput
-              name={"rcPhotos"}
-              register={formData.register("rcPhotos")}
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-            <DashboardFileInput
+            <RyogoFileInput
               name={"vehiclePhotos"}
               register={formData.register("vehiclePhotos")}
               label={t("Field4.Title")}
               placeholder={t("Field4.Placeholder")}
               description={t("Field4.Description")}
             />
-            <DashboardDatePicker
+          </div>
+          <div id="Step2RCFields" className={newBookingFormBlockClassName}>
+            <RyogoFileInput
+              name={"rcPhotos"}
+              register={formData.register("rcPhotos")}
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+              description={t("Field3.Description")}
+            />
+            <RyogoDatePicker
               name="rcExpiresOn"
               label={t("Field5.Title")}
               placeholder={t("Field5.Placeholder")}
               description={t("Field5.Description")}
             />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={props.onPrev}
-            disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </Button>
+          <div id="FormActions" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+            <Button
+              variant={"outline"}
+              size={"lg"}
+              type="button"
+              onClick={props.onPrev}
+              disabled={formData.formState.isSubmitting}
+            >
+              {t("SecondaryCTA")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

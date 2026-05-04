@@ -2,7 +2,7 @@ import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import StartTripSheet from "./startTripSheet"
-import { BookingCommonInfo } from "../../components/myBookingCommon"
+import { BookingCommonInfo } from "../../components/riderBookingCommon"
 import { SmallBold } from "@/components/typography"
 import RiderExpenseItem from "./riderExpenseItem"
 

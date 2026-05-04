@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { OnboardingInput } from "../components/onboardingFields"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -65,14 +65,14 @@ export function CreateAccountStep4(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step4Content">
-          <OnboardingInput
+          <RyogoInput
             name={"password"}
             type="password"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"confirmPassword"}
             type="password"
             label={t("Field2.Title")}

@@ -2,10 +2,10 @@
 
 import { modifyCustomerAction } from "@/app/actions/customers/modifyCustomerAction"
 import {
-  DashboardCombobox,
-  DashboardInput,
-  DashboardTextarea,
-} from "@/components/form/dashboardFormFields"
+  RyogoCombobox,
+  RyogoInput,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -98,31 +98,31 @@ export default function ModifyCustomerPageComponent({
           onSubmit={formData.handleSubmit(onSubmit)}
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardInput
+          <RyogoInput
             name={"name"}
             type="text"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name={"email"}
             type="email"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name={"address"}
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
           />
-          <DashboardCombobox
+          <RyogoCombobox
             name={"state"}
             register={formData.register("state")}
             title={t("Field5.Title")}
@@ -132,7 +132,7 @@ export default function ModifyCustomerPageComponent({
               formData.setValue("city", "")
             }}
           />
-          <DashboardCombobox
+          <RyogoCombobox
             name={"city"}
             register={formData.register("city")}
             title={t("Field6.Title")}

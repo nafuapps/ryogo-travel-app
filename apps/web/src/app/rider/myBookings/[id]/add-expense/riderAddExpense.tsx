@@ -1,11 +1,11 @@
 "use client"
 
 import {
-  DashboardFileInput,
-  DashboardInput,
-  DashboardSelect,
-  DashboardTextarea,
-} from "@/components/form/dashboardFormFields"
+  RyogoFileInput,
+  RyogoInput,
+  RyogoSelect,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -106,25 +106,25 @@ export default function RiderAddExpensePageComponent({
           id="newExpenseForm"
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardSelect
+          <RyogoSelect
             name="type"
             title={t("Field1.Title")}
             register={formData.register("type")}
             array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
             placeholder={t("Field1.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name="amount"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             type="tel"
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name="remarks"
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
           />
-          <DashboardFileInput
+          <RyogoFileInput
             name={"expensePhoto"}
             register={formData.register("expensePhoto")}
             label={t("Field4.Title")}

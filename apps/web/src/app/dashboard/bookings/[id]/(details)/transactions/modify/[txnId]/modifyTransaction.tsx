@@ -1,12 +1,12 @@
 "use client"
 
 import {
-  DashboardRadio,
-  DashboardInput,
-  DashboardSelect,
-  DashboardTextarea,
-  DashboardFileInput,
-} from "@/components/form/dashboardFormFields"
+  RyogoRadio,
+  RyogoInput,
+  RyogoSelect,
+  RyogoTextarea,
+  RyogoFileInput,
+} from "@/components/form/ryogoFormFields"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { Button } from "@/components/ui/button"
-import DeleteTransactionAlertButton from "@/app/dashboard/components/buttons/deleteTransactionAlertButton"
+import DeleteTransactionAlertButton from "@/components/buttons/deleteTransactionAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
 import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
@@ -119,7 +119,7 @@ export default function ModifyTransactionPageComponent({
           id="modifyTransactionForm"
           className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
         >
-          <DashboardRadio
+          <RyogoRadio
             name="type"
             title={t("Field1.Title")}
             register={formData.register("type")}
@@ -127,32 +127,32 @@ export default function ModifyTransactionPageComponent({
             array={getEnumValueDisplayPairs(TransactionTypesEnum)}
             description={t("Field1.Description")}
           />
-          <DashboardInput
+          <RyogoInput
             name="amount"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             type="tel"
           />
-          <DashboardSelect
+          <RyogoSelect
             name="mode"
             register={formData.register("mode")}
             title={t("Field3.Title")}
             array={getEnumValueDisplayPairs(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
-          <DashboardSelect
+          <RyogoSelect
             name="otherParty"
             register={formData.register("otherParty")}
             title={t("Field4.Title")}
             array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
             placeholder={t("Field4.Placeholder")}
           />
-          <DashboardTextarea
+          <RyogoTextarea
             name="remarks"
             label={t("Field5.Title")}
             placeholder={t("Field5.Placeholder")}
           />
-          <DashboardFileInput
+          <RyogoFileInput
             name={"txnPhoto"}
             register={formData.register("txnPhoto")}
             label={t("Field6.Title")}

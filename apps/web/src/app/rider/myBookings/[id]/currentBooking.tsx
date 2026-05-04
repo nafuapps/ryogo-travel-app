@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server"
 import {
   BookingCommonInfo,
   getNextStep,
-} from "../../components/myBookingCommon"
+} from "../../components/riderBookingCommon"
 import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"

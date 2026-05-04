@@ -14,12 +14,12 @@ import { useRouter } from "next/navigation"
 import { pageClassName } from "@/components/page/pageCommons"
 import { modifyVehicleAction } from "@/app/actions/vehicles/modifyVehicleAction"
 import {
-  DashboardSelect,
-  DashboardInput,
-  DashboardDatePicker,
-  DashboardFileInput,
-  DashboardSwitch,
-} from "@/components/form/dashboardFormFields"
+  RyogoSelect,
+  RyogoInput,
+  RyogoDatePicker,
+  RyogoFileInput,
+  RyogoSwitch,
+} from "@/components/form/ryogoFormFields"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -204,96 +204,96 @@ export default function ModifyVehiclePageComponent({
             onSubmit={formData.handleSubmit(onSubmit)}
             className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
           >
-            <DashboardSelect
+            <RyogoSelect
               name={"type"}
               register={formData.register("type")}
               array={getEnumValueDisplayPairs(VehicleTypesEnum)}
               title={t("Field1.Title")}
               placeholder={t("Field1.Title")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"brand"}
               type="text"
               label={t("Field2.Title")}
               placeholder={t("Field2.Placeholder")}
               description={t("Field2.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"color"}
               type="text"
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"model"}
               type="text"
               label={t("Field4.Title")}
               placeholder={t("Field4.Placeholder")}
               description={t("Field4.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"capacity"}
               type="tel"
               label={t("Field5.Title")}
               placeholder={t("Field5.Placeholder")}
               description={t("Field5.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"odometerReading"}
               type="tel"
               label={t("Field6.Title")}
               placeholder={t("Field6.Placeholder")}
               description={t("Field6.Description")}
             />
-            <DashboardDatePicker
+            <RyogoDatePicker
               name="rcExpiresOn"
               label={t("Field7.Title")}
               placeholder={t("Field7.Placeholder")}
               description={t("Field7.Description")}
             />
-            <DashboardFileInput
+            <RyogoFileInput
               name={"rcPhotos"}
               register={formData.register("rcPhotos")}
               label={t("Field8.Title")}
               placeholder={t("Field8.Placeholder")}
               description={t("Field8.Description")}
             />
-            <DashboardDatePicker
+            <RyogoDatePicker
               name="insuranceExpiresOn"
               label={t("Field9.Title")}
               placeholder={t("Field9.Placeholder")}
               description={t("Field9.Description")}
             />
-            <DashboardFileInput
+            <RyogoFileInput
               name={"insurancePhotos"}
               register={formData.register("insurancePhotos")}
               label={t("Field10.Title")}
               placeholder={t("Field10.Placeholder")}
               description={t("Field10.Description")}
             />
-            <DashboardDatePicker
+            <RyogoDatePicker
               name="pucExpiresOn"
               label={t("Field11.Title")}
               placeholder={t("Field11.Placeholder")}
               description={t("Field11.Description")}
             />
-            <DashboardFileInput
+            <RyogoFileInput
               name={"pucPhotos"}
               register={formData.register("pucPhotos")}
               label={t("Field12.Title")}
               placeholder={t("Field12.Placeholder")}
               description={t("Field12.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"defaultRatePerKm"}
               type="tel"
               label={t("Field13.Title")}
               placeholder={t("Field13.Placeholder")}
               description={t("Field13.Description")}
             />
-            <DashboardSwitch name={"hasAC"} label={t("Field14.Title")} />
-            <DashboardInput
+            <RyogoSwitch name={"hasAC"} label={t("Field14.Title")} />
+            <RyogoInput
               name={"defaultAcChargePerDay"}
               type="tel"
               label={t("Field15.Title")}

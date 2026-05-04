@@ -25,12 +25,12 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import InactivateDriverAlertButton from "../../components/buttons/inactivateDriverAlertButton"
-import ActivateDriverAlertButton from "../../components/buttons/activateDriverAlertButton"
+import InactivateDriverAlertButton from "../../../../components/buttons/inactivateDriverAlertButton"
+import ActivateDriverAlertButton from "../../../../components/buttons/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import ChangeDriverPhotoSheet from "./changeDriverPhotoSheet"
-import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
 
 //TODO: Add driver schedule chart
 
@@ -153,13 +153,7 @@ export default async function DriverDetailsPageComponent({
             </PBold>
             <div className="flex flex-row gap-1 lg:gap-1.5">
               {driver.canDriveVehicleTypes.map((v) => {
-                const IconComponent = getVehicleIcon(v)
-                return (
-                  <IconComponent
-                    key={v}
-                    className="text-slate-400 size-5 lg:size-6"
-                  />
-                )
+                return getVehicleIcon(v)
               })}
             </div>
           </div>

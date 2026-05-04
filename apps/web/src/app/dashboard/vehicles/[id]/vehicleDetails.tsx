@@ -2,7 +2,6 @@ import { pageClassName } from "@/components/page/pageCommons"
 import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import VehicleDetailHeaderTabs from "./vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
-import { getVehicleIcon } from "../../components/vehicles/vehicleCommon"
 import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideStar } from "lucide-react"
@@ -26,11 +25,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import ActivateVehicleAlertButton from "../../components/buttons/activateVehicleAlertButton"
-import InactivateVehicleAlertButton from "../../components/buttons/inactivateVehicleAlertButton"
+import ActivateVehicleAlertButton from "../../../../components/buttons/activateVehicleAlertButton"
+import InactivateVehicleAlertButton from "../../../../components/buttons/inactivateVehicleAlertButton"
 import Link from "next/link"
 import ChangeVehiclePhotoSheet from "./changeVehiclePhotoSheet"
 import { VehicleStatusPill } from "@/components/statusPills/statusPills"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
 
 //TODO: Add vehicle schedule chart
 
@@ -40,7 +40,6 @@ export default async function VehicleDetailsPageComponent({
   vehicle: NonNullable<FindVehicleDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.VehicleDetails")
-  const IconComponent = getVehicleIcon(vehicle.type)
   return (
     <div id="VehicleDetailsPage" className={pageClassName}>
       <VehicleDetailHeaderTabs selectedTab={"Details"} id={vehicle.id} />
@@ -62,8 +61,7 @@ export default async function VehicleDetailsPageComponent({
                   />
                 </div>
               ) : (
-                // eslint-disable-next-line react-hooks/static-components
-                <IconComponent className="size-20 lg:size-24 text-slate-400" />
+                getVehicleIcon(vehicle.type, "xl")
               )}
               <ChangeVehiclePhotoSheet
                 vehicleId={vehicle.id}

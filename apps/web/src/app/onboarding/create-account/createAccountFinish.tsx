@@ -1,4 +1,4 @@
-import { H3, H5, P, CaptionGrey } from "@/components/typography"
+import { H3, H5, P } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepFinishContent,

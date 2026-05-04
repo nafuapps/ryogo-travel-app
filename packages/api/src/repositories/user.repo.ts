@@ -171,7 +171,10 @@ export const userRepository = {
         id: true,
         status: true,
       },
-      where: eq(users.phone, phone),
+      where: and(
+        eq(users.phone, phone),
+        not(eq(users.status, UserStatusEnum.SUSPENDED)),
+      ),
     })
   },
 

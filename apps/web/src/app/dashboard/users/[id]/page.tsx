@@ -6,7 +6,7 @@ import {
   pageTitle,
 } from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import DashboardHeader from "../../components/common/dashboardHeader"
+import DashboardHeader from "../../components/dashboardHeader"
 import UserDetailsPageComponent from "./userDetails"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"

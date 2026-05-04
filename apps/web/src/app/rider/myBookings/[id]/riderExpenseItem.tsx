@@ -15,7 +15,7 @@ import { format } from "date-fns"
 import { UrlObject } from "url"
 import Image from "next/image"
 import Link from "next/link"
-import getExpenseIcon from "@/components/common/expenseIcon"
+import getExpenseIcon from "@/components/icons/expenseIcon"
 
 export default async function RiderExpenseItem({
   expense,

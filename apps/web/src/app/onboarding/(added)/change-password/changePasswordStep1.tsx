@@ -3,7 +3,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { OnboardingInput } from "@/app/onboarding/components/onboardingFields"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -91,21 +91,21 @@ export function ChangePasswordStep1(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step4Content">
-          <OnboardingInput
+          <RyogoInput
             name={"oldPassword"}
             type="password"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"newPassword"}
             type="password"
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
-          <OnboardingInput
+          <RyogoInput
             name={"confirmPassword"}
             type="password"
             label={t("Field3.Title")}

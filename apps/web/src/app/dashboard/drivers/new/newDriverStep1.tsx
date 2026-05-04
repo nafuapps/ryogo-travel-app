@@ -5,18 +5,17 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Form } from "@/components/ui/form"
 import { Dispatch, SetStateAction } from "react"
+import { RyogoFileInput, RyogoInput } from "@/components/form/ryogoFormFields"
 import {
-  DashboardFileInput,
-  DashboardInput,
-} from "@/components/form/dashboardFormFields"
-import {
+  newBookingActionBlockClassName,
+  newBookingFormBlockClassName,
   newBookingFormClassName,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingSectionClassName,
 } from "../../bookings/new/newBookingCommon"
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
-import NewBookingStepsTracker from "../../bookings/new/newBookingStepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Button } from "@/components/ui/button"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -115,7 +114,7 @@ export function NewDriverStep1(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </div>
-        <NewBookingStepsTracker total={4} current={0} />
+        <StepsTracker total={4} current={0} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </div>
       <Form {...formData}>
@@ -124,29 +123,29 @@ export function NewDriverStep1(props: {
           onSubmit={formData.handleSubmit(onSubmit)}
           className={newBookingFormClassName}
         >
-          <div id="Step1Fields" className="flex flex-col gap-3 lg:gap-4">
-            <DashboardInput
+          <div id="Step1Fields" className={newBookingFormBlockClassName}>
+            <RyogoInput
               name={"driverName"}
               type="text"
               label={t("Field1.Title")}
               placeholder={t("Field1.Placeholder")}
               description={t("Field1.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"driverPhone"}
               type="tel"
               label={t("Field2.Title")}
               placeholder={t("Field2.Placeholder")}
               description={t("Field2.Description")}
             />
-            <DashboardInput
+            <RyogoInput
               name={"driverEmail"}
               type="email"
               label={t("Field3.Title")}
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
             />
-            <DashboardFileInput
+            <RyogoFileInput
               name={"agenctPhotos"}
               register={formData.register("driverPhotos")}
               label={t("Field4.Title")}
@@ -154,15 +153,17 @@ export function NewDriverStep1(props: {
               description={t("Field4.Description")}
             />
           </div>
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </Button>
+          <div id="FormActions" className={newBookingActionBlockClassName}>
+            <Button
+              variant={"default"}
+              size={"lg"}
+              type="submit"
+              disabled={formData.formState.isSubmitting}
+            >
+              {formData.formState.isSubmitting && <Spinner />}
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

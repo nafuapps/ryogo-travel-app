@@ -16,11 +16,11 @@ import DashboardScheduleDayAxis, {
   SelectableDays,
   getSelectedDays,
   DashboardScheduleItemGrid,
-} from "../../components/schedule/dashboardSchedule"
+} from "@/components/dashboard/schedule/dashboardSchedule"
 import {
   AssignedBookingPopoverCard,
   LeavePopoverCard,
-} from "../../components/schedule/dashboardPopoverCards"
+} from "@/components/dashboard/schedule/dashboardPopoverCards"
 
 export default function DriversScheduleChartComponent({
   driverSchedule14Days,

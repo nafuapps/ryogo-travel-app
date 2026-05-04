@@ -1,4 +1,3 @@
-import { gridClassName, gridItemClassName } from "@/components/page/pageCommons"
 import { TripLogStatusPill } from "@/components/statusPills/statusPills"
 import {
   SmallBold,
@@ -25,6 +24,7 @@ import { LucideChevronRight } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import { GridItemWrapper, GridWrapper } from "../page/pageWrappers"
 
 export function BookingSection({
   sectionTitle,
@@ -155,22 +155,22 @@ export async function OngoingBookingComponent({
       <div
         className={`grid text-white bg-slate-900 rounded-t-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4 hover:bg-slate-800`}
       >
-        <div className={gridItemClassName}>
+        <GridItemWrapper>
           <CaptionLight>{booking.bookingId}</CaptionLight>
           <PBold>{booking.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CaptionLight>{booking.type.toUpperCase()}</CaptionLight>
           <PBold>{booking.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CaptionLight>{booking.vehicle}</CaptionLight>
           <PBold>{booking.driver}</PBold>
-        </div>
+        </GridItemWrapper>
         {booking.status && (
-          <div className={gridItemClassName}>
+          <GridItemWrapper>
             <TripLogStatusPill status={booking.status} />
-          </div>
+          </GridItemWrapper>
         )}
       </div>
       <div className="bg-slate-600 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
@@ -200,26 +200,26 @@ export async function UpcomingBookingComponent({
       <div
         className={`grid border border-slate-100 ${canStart ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4 hover:bg-slate-100`}
       >
-        <div className={gridItemClassName}>
+        <GridItemWrapper>
           <Caption>{booking.bookingId}</Caption>
           <PBold>{booking.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{booking.type.toUpperCase()}</Caption>
           <PBold>{booking.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{booking.vehicle}</Caption>
           <PBold>{booking.driver}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{format(combinedDateTime, "dd MMM hh:mm aaa")}</Caption>
           {combinedDateTime < new Date() ? (
             <PRed>{moment(combinedDateTime).fromNow()}</PRed>
           ) : (
             <PBold>{moment(combinedDateTime).fromNow()}</PBold>
           )}
-        </div>
+        </GridItemWrapper>
       </div>
       {canStart && (
         <div className="bg-slate-200 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
@@ -238,24 +238,24 @@ export function CompletedBookingComponent({
 }) {
   return (
     <Link href={`/rider/myBookings/${booking.bookingId}`} className="w-full">
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{booking.bookingId}</Caption>
           <PBold>{booking.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{booking.type.toUpperCase()}</Caption>
           <PBold>{booking.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{booking.vehicle}</Caption>
           <PBold>{booking.driver}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{format(booking.updatedAt, "PP")}</Caption>
           <PBold>{moment(booking.updatedAt).fromNow()}</PBold>
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

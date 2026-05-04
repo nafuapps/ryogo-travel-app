@@ -1,9 +1,9 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import DashboardBookingMetricsComponent from "@/components/dashboard/home/metrics/dashboardBookingMetricsComponent"
 import DashboardDriverMetricsComponent from "@/components/dashboard/home/metrics/dashboardDriverMetricsComponent"
 import DashboardRevenueMetricsComponent from "@/components/dashboard/home/metrics/dashboardRevenueMetricComponent"
 import DashboardVehicleMetricsComponent from "@/components/dashboard/home/metrics/dashboardVehicleMetricsComponent"
 import DashboardOngoingTripSection from "@/components/dashboard/home/ongoingTrips/dashboardOngoingTripSection"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 /*
  * Bookings - Confirmed (Lead, In progress, Completed, Cancelled)
@@ -21,7 +21,7 @@ export default function DashboardHomePageComponent({
   agencyId: string
 }) {
   return (
-    <div id="DashboardPage" className={pageClassName}>
+    <PageWrapper id="DashboardPage">
       <div
         id="DashboardMetricsSection"
         className="grid gap-2 lg:gap-3 grid-cols-1 grid-rows-4 sm:grid-cols-2 sm:grid-rows-2 md:grid-cols-1 md:grid-rows-4 lg:grid-cols-2 lg:grid-rows-2 2xl:grid-cols-4 2xl:grid-rows-1"
@@ -32,6 +32,6 @@ export default function DashboardHomePageComponent({
         <DashboardDriverMetricsComponent agencyId={agencyId} />
       </div>
       <DashboardOngoingTripSection agencyId={agencyId} />
-    </div>
+    </PageWrapper>
   )
 }

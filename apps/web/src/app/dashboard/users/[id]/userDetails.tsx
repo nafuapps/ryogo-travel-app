@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import UserDetailHeaderTabs from "./userDetailHeaderTabs"
 import { Caption, H4 } from "@/components/typography"
@@ -10,12 +9,13 @@ import moment from "moment"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import InactivateUserAlertButton from "../../../../components/buttons/inactivateUserAlertButton"
-import ActivateUserAlertButton from "../../../../components/buttons/activateUserAlertButton"
-import ResetUserPasswordAlertButton from "../../../../components/buttons/resetUserPasswordAlertButton"
+import InactivateUserAlertButton from "@/components/buttons/inactivateUserAlertButton"
+import ActivateUserAlertButton from "@/components/buttons/activateUserAlertButton"
+import ResetUserPasswordAlertButton from "@/components/buttons/resetUserPasswordAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -25,7 +25,7 @@ export default async function UserDetailsPageComponent({
   const t = await getTranslations("Dashboard.UserDetails")
 
   return (
-    <div id="UserDetailsPage" className={pageClassName}>
+    <PageWrapper id="UserDetailsPage">
       <UserDetailHeaderTabs selectedTab={"Details"} id={user.id} />
       <div
         id="UserDetailsInfo"
@@ -93,6 +93,6 @@ export default async function UserDetailsPageComponent({
           )}
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

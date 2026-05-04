@@ -15,14 +15,14 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 import moment from "moment"
-import {
-  gridClassName,
-  gridItemClassName,
-  sectionClassName,
-  sectionHeaderClassName,
-  iconClassName,
-} from "@/components/page/pageCommons"
+import { iconClassName } from "@/components/page/pageCommons"
 import { FindCompletedBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 
 export default function CompletedBookingsItemComponent({
   completedBookings7Days,
@@ -40,16 +40,16 @@ export default function CompletedBookingsItemComponent({
     selectedTab === "24hrs" ? completedBookings24Hrs : completedBookings7Days
 
   return (
-    <div id="CompletedBookingsSection" className={sectionClassName}>
+    <SectionWrapper id="CompletedBookingsSection">
       <div
         id="CompletedBookingsHeader"
         className="flex flex-row justify-between items-center"
       >
-        <div className={sectionHeaderClassName}>
+        <SectionHeaderWrapper>
           <CheckCheck className={iconClassName} />
           <SmallGrey>{t("Title")}</SmallGrey>
           <H5Grey>{trips.length}</H5Grey>
-        </div>
+        </SectionHeaderWrapper>
         <Select
           value={selectedTab}
           onValueChange={(value) => setSelectedTab(value)}
@@ -68,7 +68,7 @@ export default function CompletedBookingsItemComponent({
       {trips.map((trip) => (
         <CompletedComponent key={trip.bookingId} {...trip} />
       ))}
-    </div>
+    </SectionWrapper>
   )
 }
 
@@ -77,24 +77,24 @@ function CompletedComponent(
 ) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{props.bookingId}</Caption>
           <PBold>{props.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.type.toUpperCase()}</Caption>
           <PBold>{props.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.vehicle}</Caption>
           <PBold>{props.driver}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{format(props.updatedAt, "PP")}</Caption>
           <PBold>{moment(props.updatedAt).fromNow()}</PBold>
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

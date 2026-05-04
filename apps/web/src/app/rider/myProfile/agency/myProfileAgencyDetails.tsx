@@ -1,15 +1,12 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import {
   H4,
   Caption,
-  CaptionRed,
   SmallBold,
   SmallGrey,
   CaptionGrey,
 } from "@/components/typography"
 import { Separator } from "@radix-ui/react-separator"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideBuilding, LucidePhone } from "lucide-react"
 import moment from "moment"
@@ -19,6 +16,7 @@ import MyProfileDetailHeaderTabs from "../myProfileHeaderTabs"
 import { FindAssignedUserByDriverIdType } from "@ryogo-travel-app/api/services/user.services"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -30,7 +28,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
   const t = await getTranslations("Rider.MyProfileAgency")
 
   return (
-    <div id="MyProfileAgencyPage" className={pageClassName}>
+    <PageWrapper id="RiderMyProfileAgencyPage">
       <MyProfileDetailHeaderTabs selectedTab="Agency" />
       <div
         id="MyProfileAgencyDetailsInfo"
@@ -90,6 +88,6 @@ export default async function MyProfileAgencyDetailsPageComponent({
           </div>
         )}
       </div>
-    </div>
+    </PageWrapper>
   )
 }

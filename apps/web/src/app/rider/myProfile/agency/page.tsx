@@ -1,10 +1,6 @@
 //Account/agency details page
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import MyProfileAgencyDetailsPageComponent from "./myProfileAgencyDetails"
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
@@ -13,6 +9,7 @@ import RiderHeader from "@/components/header/riderHeader"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `My Agency - ${pageTitle}`,
@@ -37,12 +34,12 @@ export default async function MyProfileAgencyDetailsPage() {
   const assignedUser = await userServices.findAssignedUserByDriverId(driver.id)
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/agency"} />
       <MyProfileAgencyDetailsPageComponent
         agency={agency}
         assignedUser={assignedUser}
       />
-    </div>
+    </MainWrapper>
   )
 }

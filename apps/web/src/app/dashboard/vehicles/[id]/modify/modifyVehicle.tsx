@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
-import { pageClassName } from "@/components/page/pageCommons"
 import { modifyVehicleAction } from "@/app/actions/vehicles/modifyVehicleAction"
 import {
   RyogoSelect,
@@ -23,6 +22,7 @@ import {
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -201,7 +201,7 @@ export default function ModifyVehiclePageComponent({
   }
 
   return (
-    <div id="ModifyVehicle" className={pageClassName}>
+    <PageWrapper id="ModifyVehiclePage">
       <Form {...formData}>
         <ScrollArea>
           <form
@@ -327,6 +327,6 @@ export default function ModifyVehiclePageComponent({
           </form>
         </ScrollArea>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

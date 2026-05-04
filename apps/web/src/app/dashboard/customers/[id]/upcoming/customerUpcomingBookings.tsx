@@ -1,24 +1,17 @@
 import { FindCustomerUpcomingBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "../customerDetailHeaderTabs"
 import moment from "moment"
-import {
-  gridClassName,
-  gridItemClassName,
-  pageClassName,
-} from "@/components/page/pageCommons"
-import {
-  Caption,
-  CaptionBold,
-  CaptionGrey,
-  PBold,
-  PRed,
-} from "@/components/typography"
+import { Caption, CaptionGrey, PBold, PRed } from "@/components/typography"
 import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { getCombinedDateTime } from "@/lib/utils"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { TripLogStatusPill } from "@/components/statusPills/statusPills"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  PageWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function CustomerUpcomingBookingsPageComponent({
   bookings,
@@ -31,7 +24,7 @@ export default async function CustomerUpcomingBookingsPageComponent({
   const inProgressBookings = bookings.filter((b) => b.status)
   const upcomingBookings = bookings.filter((b) => !b.status)
   return (
-    <div id="CustomerUpcomingBookingsPage" className={pageClassName}>
+    <PageWrapper id="CustomerUpcomingBookingsPage">
       <CustomerDetailHeaderTabs selectedTab={"Upcoming"} id={id} />
       <div
         id="CustomerUpcomingBookingsList"
@@ -50,7 +43,7 @@ export default async function CustomerUpcomingBookingsPageComponent({
           </>
         )}
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 
@@ -59,25 +52,25 @@ function OngoingBookingComponent(
 ) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{props.bookingId}</Caption>
           <PBold>{props.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.type.toUpperCase()}</Caption>
           <PBold>{props.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.vehicle}</Caption>
           <PBold>{props.driver}</PBold>
-        </div>
+        </GridItemWrapper>
         {props.status && (
-          <div className={gridItemClassName}>
+          <GridItemWrapper>
             <TripLogStatusPill status={props.status} />
-          </div>
+          </GridItemWrapper>
         )}
-      </div>
+      </GridWrapper>
     </Link>
   )
 }
@@ -88,28 +81,28 @@ function UpcomingBookingComponent(
   const combinedDateTime = getCombinedDateTime(props.startDate, props.startTime)
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{props.bookingId}</Caption>
           <PBold>{props.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.type.toUpperCase()}</Caption>
           <PBold>{props.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.vehicle}</Caption>
           <PBold>{props.driver}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{format(combinedDateTime, "dd MMM hh:mm aaa")}</Caption>
           {combinedDateTime < new Date() ? (
             <PRed>{moment(combinedDateTime).fromNow()}</PRed>
           ) : (
             <PBold>{moment(combinedDateTime).fromNow()}</PBold> // <PBold>{startDate.fromNow()}</PBold>
           )}
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

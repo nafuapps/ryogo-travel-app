@@ -1,6 +1,5 @@
 "use client"
 
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { useTranslations } from "next-intl"
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation"
 import { assignVehicleAction } from "@/app/actions/bookings/assignVehicleAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignVehiclePageComponent({
   bookingId,
@@ -55,7 +55,7 @@ export default function AssignVehiclePageComponent({
   }
 
   return (
-    <div id="AssignVehiclePage" className={pageClassName}>
+    <PageWrapper id="AssignVehiclePage">
       <div
         id="AssignVehicleInfo"
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
@@ -89,6 +89,6 @@ export default function AssignVehiclePageComponent({
           {t("CancelCTA")}
         </Button>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

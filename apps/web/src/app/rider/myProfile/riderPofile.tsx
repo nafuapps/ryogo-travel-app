@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
@@ -13,6 +12,7 @@ import LogoutAlertButton from "@/components/buttons/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderProfilePageComponent({
   driverDetails,
@@ -22,7 +22,7 @@ export default async function RiderProfilePageComponent({
   const t = await getTranslations("Rider.MyProfile")
 
   return (
-    <div id="RiderProfilePage" className={pageClassName}>
+    <PageWrapper id="RiderProfilePage">
       <MyProfileDetailHeaderTabs selectedTab={"Details"} />
       <div
         id="AccountDetailsInfo"
@@ -85,6 +85,6 @@ export default async function RiderProfilePageComponent({
           </CaptionGrey>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

@@ -5,9 +5,9 @@ import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import Link from "next/link"
 import { UrlObject } from "url"
 import { LucidePencil, Plus } from "lucide-react"
-import { gridItemClassName, pageClassName } from "@/components/page/pageCommons"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
+import { GridItemWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: User can mark vehicle has gone for repair
 
@@ -25,7 +25,7 @@ export default async function AllVehicleRepairsPageComponent({
   const t = await getTranslations("Dashboard.VehicleRepairs")
 
   return (
-    <div id="VehicleRepairsPage" className={pageClassName}>
+    <PageWrapper id="VehicleRepairsPage">
       <VehicleDetailHeaderTabs selectedTab={"Repairs"} id={vehicleId} />
       <div
         id="VehicleRepairsList"
@@ -49,7 +49,7 @@ export default async function AllVehicleRepairsPageComponent({
           />
         ))}
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 
@@ -67,19 +67,19 @@ async function VehicleRepairComponent({
   const canModify = isOwner || userId === repair.addedByUserId
   return (
     <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
-      <div className={gridItemClassName}>
+      <GridItemWrapper>
         <PBold>
           {moment(repair.startDate).format("DD MMM") +
             " - " +
             moment(repair.endDate).format("DD MMM")}
         </PBold>
         {repair.cost && <CaptionGrey>{"₹" + repair.cost}</CaptionGrey>}
-      </div>
-      <div className={gridItemClassName}>
+      </GridItemWrapper>
+      <GridItemWrapper>
         <Caption>{repair.addedByUser.name}</Caption>
         <CaptionGrey>{repair.remarks}</CaptionGrey>
-      </div>
-      <div className={gridItemClassName}>
+      </GridItemWrapper>
+      <GridItemWrapper>
         {repair.isCompleted ? (
           <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-slate-100">
             <CaptionGrey>{t("Completed")}</CaptionGrey>
@@ -89,8 +89,8 @@ async function VehicleRepairComponent({
             <CaptionGrey>{t("Pending")}</CaptionGrey>
           </div>
         )}
-      </div>
-      <div className={gridItemClassName}>
+      </GridItemWrapper>
+      <GridItemWrapper>
         {canModify && (
           <Link
             href={
@@ -105,7 +105,7 @@ async function VehicleRepairComponent({
             </div>
           </Link>
         )}
-      </div>
+      </GridItemWrapper>
     </div>
   )
 }

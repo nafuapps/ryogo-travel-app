@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { Small } from "@/components/typography"
 import {
   FindDriverAssignedBookingsByIdType,
@@ -12,6 +11,7 @@ import {
   OngoingBookingComponent,
   UpcomingBookingComponent,
 } from "@/components/rider/riderBookingCommon"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyBookingsPageComponent({
   assignedBookings,
@@ -35,7 +35,7 @@ export default async function RiderMyBookingsPageComponent({
     .slice(0, 3)
 
   return (
-    <div id="RiderHomePage" className={pageClassName}>
+    <PageWrapper id="RiderMyBookingsPage">
       {currentBooking && (
         <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
           <Small>{t("Ongoing")}</Small>
@@ -69,6 +69,6 @@ export default async function RiderMyBookingsPageComponent({
           })}
         </div>
       )}
-    </div>
+    </PageWrapper>
   )
 }

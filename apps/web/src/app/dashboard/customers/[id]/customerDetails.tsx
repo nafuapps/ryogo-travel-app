@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "./customerDetailHeaderTabs"
 import {
@@ -18,10 +17,11 @@ import moment from "moment"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
-import InactivateCustomerAlertButton from "../../../../components/buttons/inactivateCustomerAlertButton"
-import ActivateCustomerAlertButton from "../../../../components/buttons/activateCustomerAlertButton"
+import InactivateCustomerAlertButton from "@/components/buttons/inactivateCustomerAlertButton"
+import ActivateCustomerAlertButton from "@/components/buttons/activateCustomerAlertButton"
 import ChangeCustomerPhotoSheet from "./changeCustomerPhotoSheet"
 import { CustomerStatusPill } from "@/components/statusPills/statusPills"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -31,7 +31,7 @@ export default async function CustomerDetailsPageComponent({
   const t = await getTranslations("Dashboard.CustomerDetails")
 
   return (
-    <div id="CustomerDetailsPage" className={pageClassName}>
+    <PageWrapper id="CustomerDetailsPage">
       <CustomerDetailHeaderTabs selectedTab={"Details"} id={customer.id} />
       <div
         id="CustomerDetailsInfo"
@@ -117,7 +117,7 @@ export default async function CustomerDetailsPageComponent({
           )}
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 

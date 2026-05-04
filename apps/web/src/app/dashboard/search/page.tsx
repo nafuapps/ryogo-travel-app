@@ -2,13 +2,10 @@ import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import SearchPageComponent from "./search"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Search - ${pageTitle}`,
@@ -26,9 +23,9 @@ export default async function SearchPage() {
   )
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/search"} />
       <SearchPageComponent searchData={searchData} />
-    </div>
+    </MainWrapper>
   )
 }

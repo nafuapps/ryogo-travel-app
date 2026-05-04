@@ -1,15 +1,12 @@
 //Drivers/id (details) page
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import DriverDetailsPageComponent from "./driverDetails"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Driver Details - ${pageTitle}`,
@@ -28,9 +25,9 @@ export default async function DriverDetailsPage({
     redirect("/dashboard/drivers", RedirectType.replace)
   }
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers/[id]"} />
       <DriverDetailsPageComponent driver={driver} />
-    </div>
+    </MainWrapper>
   )
 }

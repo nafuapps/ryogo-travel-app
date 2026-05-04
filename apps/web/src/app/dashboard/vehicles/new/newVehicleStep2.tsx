@@ -15,7 +15,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
 import {
-  newBookingSectionClassName,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingFormClassName,
@@ -24,6 +23,7 @@ import {
 } from "../../bookings/new/newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 export function NewVehicleStep2(props: {
   onNext: () => void
@@ -125,7 +125,7 @@ export function NewVehicleStep2(props: {
     props.onNext()
   }
   return (
-    <div id="NewVehicleStep2" className={newBookingSectionClassName}>
+    <NewStepWrapper id="NewVehicleStep2">
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -200,6 +200,6 @@ export function NewVehicleStep2(props: {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

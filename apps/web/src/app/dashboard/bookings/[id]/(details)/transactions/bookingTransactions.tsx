@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import BookingDetailHeaderTabs from "../bookingDetailHeaderTabs"
@@ -6,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import TransactionItem from "./transactionItem"
 import { SmallGrey } from "@/components/typography"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingTransactionsPageComponent({
   bookingId,
@@ -22,7 +22,7 @@ export default async function BookingTransactionsPageComponent({
 
   //TODO: Show booking details summary at the top
   return (
-    <div id="BookingTransactionsPage" className={pageClassName}>
+    <PageWrapper id="BookingTransactionsPage">
       <BookingDetailHeaderTabs id={bookingId} selectedTab="Transactions" />
       {canCreateTransaction && (
         <Link
@@ -53,6 +53,6 @@ export default async function BookingTransactionsPageComponent({
           ))}
         </div>
       )}
-    </div>
+    </PageWrapper>
   )
 }

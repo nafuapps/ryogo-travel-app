@@ -1,6 +1,6 @@
-import Footer from "../components/footer"
-import Navbar from "../components/nav"
-import PricingSection from "../components/pricing"
+import Footer from "@/components/landing/footer"
+import Navbar from "@/components/landing/nav"
+import PricingSection from "@/components/landing/pricing"
 
 export default function PricingPage() {
   return (

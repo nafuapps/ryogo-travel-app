@@ -3,14 +3,11 @@
 import { getCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ChangeEmailMyProfileComponent from "./changeEmail"
 import RiderHeader from "@/components/header/riderHeader"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Change Email - ${pageTitle}`,
@@ -27,13 +24,13 @@ export default async function ChangeEmailMyProfilePage() {
     user.userRole,
   )
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/change-email"} />
       <ChangeEmailMyProfileComponent
         usersWithPhoneRole={usersWithPhoneRole}
         userId={user.userId}
         agencyId={user.agencyId}
       />
-    </div>
+    </MainWrapper>
   )
 }

@@ -6,16 +6,13 @@ import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { BookingRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { Metadata } from "next"
 import { differenceInDays } from "date-fns"
 import { LEAD_CANCEL_TIMEOUT_DAYS } from "@/lib/constants"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Confirm Booking - ${pageTitle}`,
@@ -66,13 +63,13 @@ export default async function ConfirmBookingPage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/confirm"} />
       <ConfirmBookingPageComponent
         booking={booking}
         isOwner={user.userRole === UserRolesEnum.OWNER}
         isAssignedUser={booking.assignedUser.id === user.userId}
       />
-    </div>
+    </MainWrapper>
   )
 }

@@ -1,13 +1,10 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import VehiclesPageComponent from "./vehicles"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Vehicles - ${pageTitle}`,
@@ -22,9 +19,9 @@ export default async function AllVehiclesPage() {
   }
   const agencyId = user.agencyId
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles"} />
       <VehiclesPageComponent agencyId={agencyId} />
-    </div>
+    </MainWrapper>
   )
 }

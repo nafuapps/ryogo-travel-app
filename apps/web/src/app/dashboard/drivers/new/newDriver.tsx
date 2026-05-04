@@ -1,4 +1,4 @@
-import { pageClassName } from "@/components/page/pageCommons"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import NewDriverForm from "./newDriverForm"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -15,8 +15,8 @@ export default async function NewDriverPageComponent({
   ])
 
   return (
-    <div id="NewDriverPage" className={pageClassName}>
+    <PageWrapper id="NewDriverPage">
       <NewDriverForm agencyId={agencyId} allDrivers={allDrivers} />
-    </div>
+    </PageWrapper>
   )
 }

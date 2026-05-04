@@ -15,10 +15,10 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -80,7 +80,7 @@ export default function ModifyDriverLeavePageComponent({
     })
   }
   return (
-    <div id="ModifyDriverLeavePage" className={pageClassName}>
+    <PageWrapper id="ModifyDriverLeavePage">
       <Form {...formData}>
         <form
           onSubmit={formData.handleSubmit(onSubmit)}
@@ -125,6 +125,6 @@ export default function ModifyDriverLeavePageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

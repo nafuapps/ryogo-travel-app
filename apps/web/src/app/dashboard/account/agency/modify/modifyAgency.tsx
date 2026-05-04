@@ -6,7 +6,6 @@ import {
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
@@ -25,6 +24,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyAgencyPageForm({
   agency,
@@ -116,7 +116,7 @@ export default function ModifyAgencyPageForm({
   const cityOptions = data[selectedState] ?? [t("Field6.Title")]
 
   return (
-    <div id="ModifyAgencyPage" className={pageClassName}>
+    <PageWrapper id="ModifyAgencyPage">
       <Form {...formData}>
         <form
           id="Form"
@@ -186,6 +186,6 @@ export default function ModifyAgencyPageForm({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

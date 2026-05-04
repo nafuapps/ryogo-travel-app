@@ -1,10 +1,6 @@
 //MyBooking/[id] page
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -17,6 +13,7 @@ import RiderMyOngoingBookingPageComponent from "./currentBooking"
 import RiderMyUpcomingBookingPageComponent from "./upcomingBooking"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Booking Details - ${pageTitle}`,
@@ -49,7 +46,7 @@ export default async function MyBookingPage({
   //Redirect based on booking status
   if (bookingDetails.status === BookingStatusEnum.CONFIRMED) {
     return (
-      <div className={mainClassName}>
+      <MainWrapper>
         <RiderHeader pathName={"/rider/myBookings/[id]"} />
         <RiderMyUpcomingBookingPageComponent
           booking={bookingDetails}
@@ -58,21 +55,21 @@ export default async function MyBookingPage({
             driver.status === DriverStatusEnum.AVAILABLE
           }
         />
-      </div>
+      </MainWrapper>
     )
   }
   if (bookingDetails.status === BookingStatusEnum.IN_PROGRESS) {
     return (
-      <div className={mainClassName}>
+      <MainWrapper>
         <RiderHeader pathName={"/rider/myBookings/[id]"} />
         <RiderMyOngoingBookingPageComponent booking={bookingDetails} />
-      </div>
+      </MainWrapper>
     )
   }
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]"} />
       <RiderMyCompletedBookingPageComponent booking={bookingDetails} />
-    </div>
+    </MainWrapper>
   )
 }

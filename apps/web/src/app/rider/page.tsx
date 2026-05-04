@@ -1,16 +1,13 @@
 //Rider home page
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import RiderHeader from "@/components/header/riderHeader"
 import RiderHomePageComponent from "./riderHome"
 import { redirect, RedirectType } from "next/navigation"
 import { getCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Rider Home - ${pageTitle}`,
@@ -33,12 +30,12 @@ export default async function RiderHomePage() {
   )
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <RiderHeader pathName={"/rider"} />
       <RiderHomePageComponent
         assignedBookings={assignedBookings}
         driver={driver}
       />
-    </div>
+    </MainWrapper>
   )
 }

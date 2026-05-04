@@ -1,4 +1,3 @@
-import { sectionHeaderClassName } from "@/components/page/pageCommons"
 import {
   SmallGrey,
   H5Grey,
@@ -26,6 +25,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
 
 export enum SelectableDays {
   SEVEN = "7Days",
@@ -52,11 +52,11 @@ export function DashboardScheduleHeader({
   const t = useTranslations("Dashboard.Schedule.Header")
   return (
     <div className="flex flex-row justify-between items-center">
-      <div className={sectionHeaderClassName}>
+      <SectionHeaderWrapper>
         <LucideCalendarDays className={iconClassName} />
         <SmallGrey>{title}</SmallGrey>
         <H5Grey>{length}</H5Grey>
-      </div>
+      </SectionHeaderWrapper>
       <Select
         value={selectedTab}
         onValueChange={(value: SelectableDays) => setSelectedTab(value)}

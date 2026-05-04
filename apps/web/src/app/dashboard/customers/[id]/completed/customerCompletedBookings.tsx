@@ -1,8 +1,3 @@
-import {
-  gridClassName,
-  gridItemClassName,
-  pageClassName,
-} from "@/components/page/pageCommons"
 import { FindCustomerCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "../customerDetailHeaderTabs"
 import { Caption, CaptionGrey, PBold } from "@/components/typography"
@@ -10,6 +5,11 @@ import moment from "moment"
 import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  PageWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function CustomerCompletedBookingsPageComponent({
   bookings,
@@ -21,7 +21,7 @@ export default async function CustomerCompletedBookingsPageComponent({
   const t = await getTranslations("Dashboard.CustomerCompletedBookings")
 
   return (
-    <div id="CustomerCompletedBookingsPage" className={pageClassName}>
+    <PageWrapper id="CustomerCompletedBookingsPage">
       <CustomerDetailHeaderTabs selectedTab={"Completed"} id={id} />
       <div
         id="CustomerCompletedBookingsList"
@@ -35,7 +35,7 @@ export default async function CustomerCompletedBookingsPageComponent({
           <CaptionGrey>{t("NoBookings")}</CaptionGrey>
         )}
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 
@@ -44,24 +44,24 @@ function CompletedBookingComponent(
 ) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{props.bookingId}</Caption>
           <PBold>{props.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.type.toUpperCase()}</Caption>
           <PBold>{props.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.vehicle}</Caption>
           <PBold>{props.driver}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{format(props.updatedAt, "PP")}</Caption>
           <PBold>{moment(props.updatedAt).fromNow()}</PBold>
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

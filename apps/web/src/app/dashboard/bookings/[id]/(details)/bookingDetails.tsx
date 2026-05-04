@@ -1,4 +1,4 @@
-import { linkClassName, pageClassName } from "@/components/page/pageCommons"
+import { linkClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import BookingDetailHeaderTabs from "./bookingDetailHeaderTabs"
@@ -20,6 +20,7 @@ import {
   Route,
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/components/buttons/sendConfirmationAlertButton"
+import { PageWrapper } from "@/components/page/pageWrappers"
 // import InvoicePDFViewer from "./invoicePDFViewer"
 
 export default async function BookingDetailsPageComponent({
@@ -34,7 +35,7 @@ export default async function BookingDetailsPageComponent({
   const t = await getTranslations("Dashboard.BookingDetails")
 
   return (
-    <div id="BookingDetailsPage" className={pageClassName}>
+    <PageWrapper id="BookingDetailsPage">
       <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Details" />
       <div
         id="BookingDetailsInfo"
@@ -339,6 +340,6 @@ export default async function BookingDetailsPageComponent({
         </BookingSection>
         {/* <InvoicePDFViewer booking={bookingDetails} /> */}
       </div>
-    </div>
+    </PageWrapper>
   )
 }

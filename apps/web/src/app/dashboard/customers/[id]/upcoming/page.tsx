@@ -1,14 +1,11 @@
 //Customers/id/assigned bookings page
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import CustomerUpcomingBookingsPageComponent from "./customerUpcomingBookings"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Customer Upcoming Bookings - ${pageTitle}`,
@@ -25,9 +22,9 @@ export default async function CustomerUpcomingBookingsPage({
   const bookings = await customerServices.findCustomerUpcomingBookingsById(id)
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers/[id]/upcoming"} />
       <CustomerUpcomingBookingsPageComponent bookings={bookings} id={id} />
-    </div>
+    </MainWrapper>
   )
 }

@@ -20,7 +20,6 @@ import {
   NewBookingFormDataType,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
-  newBookingSectionClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import stateCityData from "@/lib/states_cities.json"
@@ -46,6 +45,7 @@ import {
   getStringValueDisplayPairs,
 } from "@/lib/utils"
 import { getRouteAction } from "@/app/actions/routes/getRouteAction"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 type NewBookingStep2Props = {
   onNext: () => void
@@ -217,7 +217,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
     t("Field4.Placeholder"),
   ]
   return (
-    <div id="TripSection" className={newBookingSectionClassName}>
+    <NewStepWrapper id="TripStep">
       <div id="TripHeader" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -371,6 +371,6 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

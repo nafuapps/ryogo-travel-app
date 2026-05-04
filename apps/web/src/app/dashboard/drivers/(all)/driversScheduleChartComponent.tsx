@@ -2,7 +2,6 @@
 
 import { LucideUser } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { sectionClassName } from "@/components/page/pageCommons"
 import { useState } from "react"
 import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -21,6 +20,7 @@ import {
   AssignedBookingPopoverCard,
   LeavePopoverCard,
 } from "@/components/dashboard/schedule/dashboardPopoverCards"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 
 export default function DriversScheduleChartComponent({
   driverSchedule14Days,
@@ -46,7 +46,7 @@ export default function DriversScheduleChartComponent({
   const selectedDays = getSelectedDays(selectedTab)
 
   return (
-    <div id="DriversScheduleChartSection" className={sectionClassName}>
+    <SectionWrapper id="DriversScheduleChartSection">
       <DashboardScheduleHeader
         length={chartData.length.toString()}
         title={t("Title")}
@@ -107,6 +107,6 @@ export default function DriversScheduleChartComponent({
           })}
         </DashboardScheduleContent>
       </DashboardScheduleChart>
-    </div>
+    </SectionWrapper>
   )
 }

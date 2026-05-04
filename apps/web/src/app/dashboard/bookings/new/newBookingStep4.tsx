@@ -12,7 +12,6 @@ import {
   NewBookingFormDataType,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
-  newBookingSectionClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
@@ -21,6 +20,7 @@ import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import NewBookingTripInfo from "./newBookingTripInfo"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 type NewBookingStep4Props = {
   onNext: () => void
@@ -100,7 +100,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
   }
 
   return (
-    <div id="CostSection" className={newBookingSectionClassName}>
+    <NewStepWrapper id="CostStep">
       <div id="CostHeader" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -177,6 +177,6 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

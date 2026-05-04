@@ -1,15 +1,12 @@
 //Add a new vehicle repair page
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import NewVehicleRepairPageComponent from "./newVehicleRepair"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `New Vehicle Repair - ${pageTitle}`,
@@ -28,13 +25,13 @@ export default async function NewVehicleRepairPage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs/new"} />
       <NewVehicleRepairPageComponent
         userId={user.userId}
         agencyId={user.agencyId}
         vehicleId={id}
       />
-    </div>
+    </MainWrapper>
   )
 }

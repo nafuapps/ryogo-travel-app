@@ -9,10 +9,10 @@ import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangePasswordAccountComponent({
   userId,
@@ -84,7 +84,7 @@ export default function ChangePasswordAccountComponent({
     })
   }
   return (
-    <div id="ChangePassword" className={pageClassName}>
+    <PageWrapper id="ChangePassword">
       <Form {...formData}>
         <form
           id="ChangePasswordForm"
@@ -132,6 +132,6 @@ export default function ChangePasswordAccountComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

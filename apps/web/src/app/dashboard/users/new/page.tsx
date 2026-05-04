@@ -1,15 +1,12 @@
 //Users/new page (only accessible to owner)
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import NewAgentPageComponent from "./newAgent"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `New User - ${pageTitle}`,
@@ -24,9 +21,9 @@ export default async function NewUserPage() {
   }
   const agencyId = currentUser.agencyId
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/new"} />
       <NewAgentPageComponent agencyId={agencyId} />
-    </div>
+    </MainWrapper>
   )
 }

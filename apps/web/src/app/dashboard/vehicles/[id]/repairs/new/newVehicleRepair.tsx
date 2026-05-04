@@ -7,7 +7,6 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -19,6 +18,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { newVehicleRepairAction } from "@/app/actions/vehicles/newVehicleRepairAction"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function NewVehicleRepairPageComponent({
   userId,
@@ -92,7 +92,7 @@ export default function NewVehicleRepairPageComponent({
     })
   }
   return (
-    <div id="NewVehicleRepairPage" className={pageClassName}>
+    <PageWrapper id="NewVehicleRepairPage">
       <Form {...formData}>
         <form
           onSubmit={formData.handleSubmit(onSubmit)}
@@ -143,6 +143,6 @@ export default function NewVehicleRepairPageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

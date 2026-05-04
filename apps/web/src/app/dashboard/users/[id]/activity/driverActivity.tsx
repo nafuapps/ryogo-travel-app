@@ -1,15 +1,15 @@
 import UserDetailHeaderTabs from "../userDetailHeaderTabs"
 import moment from "moment"
-import {
-  gridClassName,
-  gridItemClassName,
-  pageClassName,
-} from "@/components/page/pageCommons"
 import { Caption, PBold, SmallBold } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { FindDriverActivityByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { UrlObject } from "url"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  PageWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function DriverActivityPageComponent({
   activities,
@@ -25,7 +25,7 @@ export default async function DriverActivityPageComponent({
   const className =
     "flex flex-col items-start gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
   return (
-    <div id="UserAssignedBookingsPage" className={pageClassName}>
+    <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {expenses.length > 0 && (
         <div id="ExpensesActivityList" className={className}>
@@ -43,7 +43,7 @@ export default async function DriverActivityPageComponent({
           })}
         </div>
       )}
-    </div>
+    </PageWrapper>
   )
 }
 function ExpenseActivityComponent(
@@ -56,22 +56,22 @@ function ExpenseActivityComponent(
       }
       className="w-full"
     >
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{expense.id}</Caption>
           <PBold>{expense.type.toUpperCase()}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <PBold>{"₹" + expense.amount}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <PBold>{expense.remarks}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{expense.bookingId}</Caption>
           <PBold>{moment(expense.createdAt).fromNow()}</PBold>
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }
@@ -86,23 +86,23 @@ function TripLogActivityComponent(
       }
       className="w-full"
     >
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{tripLog.vehicle.vehicleNumber}</Caption>
           <PBold>{tripLog.driver.name}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{tripLog.odometerReading}</Caption>
           <PBold>{tripLog.type.toUpperCase()}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{tripLog.bookingId}</Caption>
           <PBold>{tripLog.remarks}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <PBold>{moment(tripLog.createdAt).fromNow()}</PBold>
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

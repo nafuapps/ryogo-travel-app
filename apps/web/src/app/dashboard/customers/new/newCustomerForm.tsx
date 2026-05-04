@@ -6,7 +6,6 @@ import {
   RyogoFileInput,
   RyogoCombobox,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -22,6 +21,7 @@ import { useTransition } from "react"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function NewCustomerForm({
   agencyId,
@@ -128,7 +128,7 @@ export default function NewCustomerForm({
   const cityOptions = data[selectedState] ?? [t("Field8.Title")]
 
   return (
-    <div id="NewCustomerPage" className={pageClassName}>
+    <PageWrapper id="NewCustomerPage">
       <Form {...formData}>
         <form
           onSubmit={formData.handleSubmit(onSubmit)}
@@ -210,6 +210,6 @@ export default function NewCustomerForm({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

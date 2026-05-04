@@ -1,11 +1,7 @@
 //Bookings/id/reconcile page (only accessible to owner)
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { BookingRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -13,6 +9,7 @@ import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import ReconcileBookingPageComponent from "./reconcileBooking"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Reconcile Booking - ${pageTitle}`,
@@ -51,9 +48,9 @@ export default async function ReconcileBookingPage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/reconcile"} />
       <ReconcileBookingPageComponent booking={booking} />
-    </div>
+    </MainWrapper>
   )
 }

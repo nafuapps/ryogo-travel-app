@@ -14,7 +14,6 @@ import {
   newBookingFormClassName,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
-  newBookingSectionClassName,
 } from "../../bookings/new/newBookingCommon"
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
@@ -23,6 +22,7 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 export function NewVehicleStep1(props: {
   onNext: () => void
@@ -85,7 +85,7 @@ export function NewVehicleStep1(props: {
   }
 
   return (
-    <div id="NewVehicleStep1" className={newBookingSectionClassName}>
+    <NewStepWrapper id="NewVehicleStep1">
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -150,6 +150,6 @@ export function NewVehicleStep1(props: {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

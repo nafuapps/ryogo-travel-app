@@ -8,7 +8,7 @@ import {
   RyogoDatePicker,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -114,7 +114,7 @@ export default function ModifyDriverPageComponent({
   }
 
   return (
-    <div id="ModifyDriver" className={pageClassName}>
+    <PageWrapper id="ModifyDriver">
       <Form {...formData}>
         <form
           id="ModifyDriverForm"
@@ -179,6 +179,6 @@ export default function ModifyDriverPageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

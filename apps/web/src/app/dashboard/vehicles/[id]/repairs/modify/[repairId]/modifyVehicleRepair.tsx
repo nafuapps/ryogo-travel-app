@@ -7,7 +7,6 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -21,6 +20,7 @@ import { modifyVehicleRepairAction } from "@/app/actions/vehicles/modifyVehicleR
 
 import { FindVehicleRepairByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyVehicleRepairPageComponent({
   repair,
@@ -94,7 +94,7 @@ export default function ModifyVehicleRepairPageComponent({
     })
   }
   return (
-    <div id="ModifyVehicleRepairPage" className={pageClassName}>
+    <PageWrapper id="ModifyVehicleRepairPage">
       <Form {...formData}>
         <form
           onSubmit={formData.handleSubmit(onSubmit)}
@@ -145,6 +145,6 @@ export default function ModifyVehicleRepairPageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

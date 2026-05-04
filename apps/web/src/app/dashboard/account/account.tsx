@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import AccountDetailHeaderTabs from "./accountDetailHeaderTabs"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import Image from "next/image"
@@ -9,10 +8,11 @@ import { H4, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import LogoutAlertButton from "../../../components/buttons/logoutAlertButton"
+import LogoutAlertButton from "@/components/buttons/logoutAlertButton"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhoto/changeUserPhotoSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserName/changeUserNameSheet"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function AccountPageComponent({
   userDetails,
@@ -22,7 +22,7 @@ export default async function AccountPageComponent({
   const t = await getTranslations("Dashboard.Account")
 
   return (
-    <div id="AccountPage" className={pageClassName}>
+    <PageWrapper id="AccountPage">
       <AccountDetailHeaderTabs selectedTab="Details" />
       <div
         id="AccountDetailsInfo"
@@ -85,6 +85,6 @@ export default async function AccountPageComponent({
           </CaptionGrey>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

@@ -5,14 +5,7 @@ import {
 } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { LucideRows3, LucideUser, Plus } from "lucide-react"
-import {
-  sectionClassName,
-  sectionHeaderClassName,
-  iconClassName,
-  gridClassName,
-  gridItemClassName,
-  pageClassName,
-} from "@/components/page/pageCommons"
+import { iconClassName } from "@/components/page/pageCommons"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -20,6 +13,13 @@ import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import moment from "moment"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  PageWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function UsersPageComponent({
   agencyId,
@@ -35,19 +35,19 @@ export default async function UsersPageComponent({
   const drivers = allUsers.filter((u) => u.userRole === UserRolesEnum.DRIVER)
 
   return (
-    <div id="UsersPage" className={pageClassName}>
-      <div id="OwnersSection" className={sectionClassName}>
-        <div id="OwnersHeader" className={sectionHeaderClassName}>
+    <PageWrapper id="UsersPage">
+      <SectionWrapper id="OwnersSection">
+        <SectionHeaderWrapper>
           <LucideRows3 className={iconClassName} />
           <SmallGrey>{t("Owners.Title")}</SmallGrey>
           <H5Grey>{owners.length}</H5Grey>
-        </div>
+        </SectionHeaderWrapper>
         {owners.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}
-      </div>
-      <div id="AgentsSection" className={sectionClassName}>
-        <div id="AgentsHeader" className={sectionHeaderClassName}>
+      </SectionWrapper>
+      <SectionWrapper id="AgentsSection">
+        <SectionHeaderWrapper>
           <LucideRows3 className={iconClassName} />
           <SmallGrey>{t("Agents.Title")}</SmallGrey>
           <H5Grey>{agents.length}</H5Grey>
@@ -57,13 +57,13 @@ export default async function UsersPageComponent({
               {t("Agents.AddAgent")}
             </Button>
           </Link>
-        </div>
+        </SectionHeaderWrapper>
         {agents.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}
-      </div>
-      <div id="DriversSection" className={sectionClassName}>
-        <div id="DriversHeader" className={sectionHeaderClassName}>
+      </SectionWrapper>
+      <SectionWrapper id="DriversSection">
+        <SectionHeaderWrapper>
           <LucideRows3 className={iconClassName} />
           <SmallGrey>{t("Drivers.Title")}</SmallGrey>
           <H5Grey>{drivers.length}</H5Grey>
@@ -73,12 +73,12 @@ export default async function UsersPageComponent({
               {t("Drivers.AddDriver")}
             </Button>
           </Link>
-        </div>
+        </SectionHeaderWrapper>
         {drivers.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}
-      </div>
-    </div>
+      </SectionWrapper>
+    </PageWrapper>
   )
 }
 
@@ -91,8 +91,8 @@ async function AllUsersItemComponent({
 
   return (
     <Link href={`/dashboard/users/${user.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           {user.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
@@ -106,19 +106,19 @@ async function AllUsersItemComponent({
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{user.phone}</Caption>
           <PBold>{user.name}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{user.email}</Caption>
           <PBold>{moment(user.createdAt).format("DD MMM YYYY")}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <UserStatusPill status={user.status} />
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

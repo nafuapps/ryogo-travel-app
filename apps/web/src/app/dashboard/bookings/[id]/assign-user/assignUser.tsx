@@ -1,6 +1,5 @@
 "use client"
 
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignUserPageComponent({
   bookingId,
@@ -50,7 +50,7 @@ export default function AssignUserPageComponent({
   }
 
   return (
-    <div id="AssignUserPage" className={pageClassName}>
+    <PageWrapper id="AssignUserPage">
       <div
         id="AssignUserInfo"
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
@@ -84,6 +84,6 @@ export default function AssignUserPageComponent({
           {t("CancelCTA")}
         </Button>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

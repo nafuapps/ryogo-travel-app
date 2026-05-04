@@ -1,17 +1,14 @@
 //Account/Agency/change-email page (only accessible to owner)
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ChangeAgencyEmailPageComponent from "./changeAgencyEmail"
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Change Agency Email - ${pageTitle}`,
@@ -39,12 +36,12 @@ export default async function ChangeAgencyEmailPage() {
   )
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/agency/change-email"} />
       <ChangeAgencyEmailPageComponent
         agency={agency}
         allAgencies={allAgencies}
       />
-    </div>
+    </MainWrapper>
   )
 }

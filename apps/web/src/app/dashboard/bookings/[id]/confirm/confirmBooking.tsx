@@ -1,4 +1,4 @@
-import { linkClassName, pageClassName } from "@/components/page/pageCommons"
+import { linkClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import Link from "next/link"
@@ -19,6 +19,7 @@ import {
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import ConfirmBookingForm from "./confirmBookingForm"
+import { PageWrapper } from "@/components/page/pageWrappers"
 // import LeadPDFViewer from "./leadPDFViewer"
 
 export default async function ConfirmBookingPageComponent({
@@ -33,7 +34,7 @@ export default async function ConfirmBookingPageComponent({
   const t = await getTranslations("Dashboard.ConfirmBooking")
 
   return (
-    <div id="ConfirmBookingPage" className={pageClassName}>
+    <PageWrapper id="ConfirmBookingPage">
       <div
         id="ConfirmBookingInfo"
         className="grid gap-3 md:gap-4 grid-cols-1 lg:grid-cols-2"
@@ -221,6 +222,6 @@ export default async function ConfirmBookingPageComponent({
         </BookingSection>
         {/* <LeadPDFViewer booking={booking} /> */}
       </div>
-    </div>
+    </PageWrapper>
   )
 }

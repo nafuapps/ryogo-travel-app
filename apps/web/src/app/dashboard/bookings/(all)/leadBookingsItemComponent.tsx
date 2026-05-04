@@ -14,14 +14,14 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 import moment from "moment"
-import {
-  gridClassName,
-  gridItemClassName,
-  sectionClassName,
-  sectionHeaderClassName,
-  iconClassName,
-} from "@/components/page/pageCommons"
+import { iconClassName } from "@/components/page/pageCommons"
 import { FindLeadBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 
 export default function LeadBookingsItemComponent({
   leadBookings7Days,
@@ -38,16 +38,16 @@ export default function LeadBookingsItemComponent({
   const trips = selectedTab === "24hrs" ? leadBookings24Hrs : leadBookings7Days
 
   return (
-    <div id="leadsBookingsSection" className={sectionClassName}>
+    <SectionWrapper id="leadsBookingsSection">
       <div
         id="leadsBookingsHeader"
         className="flex flex-row justify-between items-center"
       >
-        <div className={sectionHeaderClassName}>
+        <SectionHeaderWrapper>
           <LucideBookOpen className={iconClassName} />
           <SmallGrey>{t("Title")}</SmallGrey>
           <H5Grey>{trips.length}</H5Grey>
-        </div>
+        </SectionHeaderWrapper>
         <Select
           value={selectedTab}
           onValueChange={(value) => setSelectedTab(value)}
@@ -66,7 +66,7 @@ export default function LeadBookingsItemComponent({
       {trips.map((trip) => (
         <LeadBookingsComponent key={trip.bookingId} {...trip} />
       ))}
-    </div>
+    </SectionWrapper>
   )
 }
 
@@ -76,16 +76,16 @@ function LeadBookingsComponent(
   const t = useTranslations("Dashboard.Bookings.Leads")
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{props.bookingId}</Caption>
           <PBold>{props.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.type.toUpperCase()}</Caption>
           <PBold>{props.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>
             {props.amount.toLocaleString("en-IN", {
               style: "currency",
@@ -94,12 +94,12 @@ function LeadBookingsComponent(
             })}
           </Caption>
           <PBold>{props.assignedUser}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.passengers + " " + t("Passengers")}</Caption>
           <PBold>{moment(props.createdAt).fromNow()}</PBold>
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

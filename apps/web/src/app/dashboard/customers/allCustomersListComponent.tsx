@@ -4,13 +4,7 @@ import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { LucideRows3, LucideUser, Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
-import {
-  gridClassName,
-  gridItemClassName,
-  iconClassName,
-  sectionClassName,
-  sectionHeaderClassName,
-} from "@/components/page/pageCommons"
+import { iconClassName } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
@@ -23,6 +17,12 @@ import { PhoneRegex } from "@/lib/regex"
 import { PaginationControls } from "@/components/pagination/paginationControls"
 import { usePagination } from "@/hooks/usePagination"
 import { CustomerStatusPill } from "@/components/statusPills/statusPills"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 
 const CUSTOMERS_PER_PAGE = 20
 
@@ -66,8 +66,8 @@ export default function AllCustomersListComponent({
   }
 
   return (
-    <div id="AllCustomersSection" className={sectionClassName}>
-      <div id="AllCustomersHeader" className={sectionHeaderClassName}>
+    <SectionWrapper id="AllCustomersSection">
+      <SectionHeaderWrapper>
         <LucideRows3 className={iconClassName} />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allCustomers.length}</H5Grey>
@@ -77,7 +77,7 @@ export default function AllCustomersListComponent({
             {t("AddCustomer")}
           </Button>
         </Link>
-      </div>
+      </SectionHeaderWrapper>
       <Field>
         <ButtonGroup>
           <Input
@@ -110,7 +110,7 @@ export default function AllCustomersListComponent({
           onPageChange={handlePageChange}
         />
       </div>
-    </div>
+    </SectionWrapper>
   )
 }
 
@@ -123,8 +123,8 @@ function AllCustomersItemComponent({
 
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           {customer.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
@@ -138,19 +138,19 @@ function AllCustomersItemComponent({
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{customer.phone}</Caption>
           <PBold>{customer.name}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{customer.location.state}</Caption>
           <PBold>{customer.location.city}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CustomerStatusPill status={customer.status} />
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

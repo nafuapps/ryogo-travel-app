@@ -1,15 +1,12 @@
 //All Users page (only accesssible by owner)
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import UsersPageComponent from "./users"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Users - ${pageTitle}`,
@@ -24,9 +21,9 @@ export default async function AllUsersPage() {
   }
   const agencyId = currentUser.agencyId
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users"} />
       <UsersPageComponent agencyId={agencyId} />
-    </div>
+    </MainWrapper>
   )
 }

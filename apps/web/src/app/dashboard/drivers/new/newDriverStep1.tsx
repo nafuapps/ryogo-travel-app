@@ -14,13 +14,13 @@ import {
   newBookingFormClassName,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
-  newBookingSectionClassName,
 } from "../../bookings/new/newBookingCommon"
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import { Button } from "@/components/ui/button"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 export function NewDriverStep1(props: {
   onNext: () => void
@@ -110,7 +110,7 @@ export function NewDriverStep1(props: {
   }
 
   return (
-    <div id="NewDriverStep1" className={newBookingSectionClassName}>
+    <NewStepWrapper id="NewDriverStep1">
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -168,6 +168,6 @@ export function NewDriverStep1(props: {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

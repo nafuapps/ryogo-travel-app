@@ -5,7 +5,6 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -18,6 +17,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { newDriverLeaveAction } from "@/app/actions/drivers/newDriverLeaveAction"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function NewDriverLeavePageComponent({
   userId,
@@ -84,7 +84,7 @@ export default function NewDriverLeavePageComponent({
   }
 
   return (
-    <div id="NewDriverLeavePage" className={pageClassName}>
+    <PageWrapper id="NewDriverLeavePage">
       <Form {...formData}>
         <form
           onSubmit={formData.handleSubmit(onSubmit)}
@@ -129,6 +129,6 @@ export default function NewDriverLeavePageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

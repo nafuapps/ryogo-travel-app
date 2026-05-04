@@ -1,5 +1,5 @@
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
-import { AccountCard } from "@/app/auth/components/accountCard"
+import { AccountCard } from "@/components/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"

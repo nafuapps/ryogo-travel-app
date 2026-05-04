@@ -7,7 +7,6 @@ import {
   RyogoSelect,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -25,6 +24,7 @@ import { addTransactionAction } from "@/app/actions/transactions/addTransactionA
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -107,7 +107,7 @@ export default function NewTransactionPageComponent({
   }
 
   return (
-    <div id="NewTransactionPage" className={pageClassName}>
+    <PageWrapper id="NewTransactionPage">
       <Form {...formData}>
         <form
           onSubmit={formData.handleSubmit(onSubmit)}
@@ -174,6 +174,6 @@ export default function NewTransactionPageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

@@ -1,4 +1,4 @@
-import { pageClassName } from "@/components/page/pageCommons"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import NewVehicleForm from "./newVehicleForm"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 
@@ -12,8 +12,8 @@ export default async function NewVehiclePageComponent({
   const vehicles = await vehicleServices.findExistingVehiclesInAgency(agencyId)
 
   return (
-    <div id="NewVehiclePage" className={pageClassName}>
+    <PageWrapper id="NewVehiclePage">
       <NewVehicleForm agencyId={agencyId} existingVehicles={vehicles} />
-    </div>
+    </PageWrapper>
   )
 }

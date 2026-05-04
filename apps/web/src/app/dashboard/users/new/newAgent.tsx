@@ -1,4 +1,4 @@
-import { pageClassName } from "@/components/page/pageCommons"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import NewAgentForm from "./newAgentForm"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -13,8 +13,8 @@ export default async function NewAgentPageComponent({
   const allAgents = await userServices.findAllUsersByRole([UserRolesEnum.AGENT])
 
   return (
-    <div id="UsersPage" className={pageClassName}>
+    <PageWrapper id="NewAgentPage">
       <NewAgentForm allAgents={allAgents} agencyId={agencyId} />
-    </div>
+    </PageWrapper>
   )
 }

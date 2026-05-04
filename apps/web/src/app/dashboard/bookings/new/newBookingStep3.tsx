@@ -11,7 +11,6 @@ import {
   NewBookingFormDataType,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
-  newBookingSectionClassName,
   Step3Type,
   NewBookingTotalSteps,
   newBookingFormBlockClassName,
@@ -25,6 +24,7 @@ import NewBookingVehicleTile from "./newBookingVehicleTile"
 import NewBookingDriverTile from "./newBookingDriverTile"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -76,7 +76,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
   }
 
   return (
-    <div id="AssignmentSection" className={newBookingSectionClassName}>
+    <NewStepWrapper id="AssignmentStep">
       <div id="AssignmentHeader" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -150,6 +150,6 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

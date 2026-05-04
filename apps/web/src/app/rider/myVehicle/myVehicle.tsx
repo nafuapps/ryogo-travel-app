@@ -1,5 +1,5 @@
 import getVehicleIcon from "@/components/icons/vehicleIcon"
-import { pageClassName } from "@/components/page/pageCommons"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import {
   H4,
   PBold,
@@ -33,7 +33,7 @@ export default async function RiderMyVehiclePageComponent({
 
   if (!vehicle) {
     return (
-      <div id="VehicleDetailsPage" className={pageClassName}>
+      <div id="VehicleDetailsPage">
         <div
           id="VehicleDetailsInfo"
           className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5 items-center"
@@ -45,7 +45,7 @@ export default async function RiderMyVehiclePageComponent({
   }
 
   return (
-    <div id="VehicleDetailsPage" className={pageClassName}>
+    <PageWrapper id="RiderVehicleDetailsPage">
       <div
         id="VehicleDetailsInfo"
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
@@ -236,7 +236,7 @@ export default async function RiderMyVehiclePageComponent({
           </div>
         </VehicleSection>
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 

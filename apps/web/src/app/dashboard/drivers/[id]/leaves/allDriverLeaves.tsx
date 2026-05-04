@@ -1,6 +1,5 @@
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "../driverDetailHeaderTabs"
-import { gridItemClassName, pageClassName } from "@/components/page/pageCommons"
 import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
@@ -8,6 +7,7 @@ import Link from "next/link"
 import { UrlObject } from "url"
 import { LucidePencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { GridItemWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: User can mark driver has gone on leave
 
@@ -24,7 +24,7 @@ export default async function AllDriverLeavesPageComponent({
 }) {
   const t = await getTranslations("Dashboard.DriverLeaves")
   return (
-    <div id="DriverLeavesPage" className={pageClassName}>
+    <PageWrapper id="DriverLeavesPage">
       <DriverDetailHeaderTabs selectedTab={"Leaves"} id={driverId} />
       <div
         id="DriverLeavesList"
@@ -47,7 +47,7 @@ export default async function AllDriverLeavesPageComponent({
           />
         ))}
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 
@@ -65,18 +65,18 @@ async function DriverLeaveComponent({
   const canModify = isOwner || userId === leave.addedByUserId
   return (
     <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
-      <div className={gridItemClassName}>
+      <GridItemWrapper>
         <PBold>
           {moment(leave.startDate).format("DD MMM") +
             " - " +
             moment(leave.endDate).format("DD MMM")}
         </PBold>
-      </div>
-      <div className={gridItemClassName}>
+      </GridItemWrapper>
+      <GridItemWrapper>
         <Caption>{leave.addedByUser.name}</Caption>
         <CaptionGrey>{leave.remarks}</CaptionGrey>
-      </div>
-      <div className={gridItemClassName}>
+      </GridItemWrapper>
+      <GridItemWrapper>
         {leave.isCompleted ? (
           <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-slate-100">
             <CaptionGrey>{t("Completed")}</CaptionGrey>
@@ -86,8 +86,8 @@ async function DriverLeaveComponent({
             <CaptionGrey>{t("Pending")}</CaptionGrey>
           </div>
         )}
-      </div>
-      <div className={gridItemClassName}>
+      </GridItemWrapper>
+      <GridItemWrapper>
         {canModify && (
           <Link
             href={
@@ -102,7 +102,7 @@ async function DriverLeaveComponent({
             </div>
           </Link>
         )}
-      </div>
+      </GridItemWrapper>
     </div>
   )
 }

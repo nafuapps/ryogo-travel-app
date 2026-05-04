@@ -6,17 +6,14 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import AssignUserPageComponent from "./assignUser"
 import { Metadata } from "next"
 import { differenceInDays } from "date-fns"
 import { LEAD_CANCEL_TIMEOUT_DAYS } from "@/lib/constants"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Assign User - ${pageTitle}`,
@@ -72,9 +69,9 @@ export default async function AssignUserBookingPage({
   const users = await userServices.findOwnerAndAgentsByAgency(user.agencyId)
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/assign-user"} />
       <AssignUserPageComponent bookingId={id} users={users} booking={booking} />
-    </div>
+    </MainWrapper>
   )
 }

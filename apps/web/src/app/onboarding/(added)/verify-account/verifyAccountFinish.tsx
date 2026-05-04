@@ -1,9 +1,9 @@
 import { H3, H5, P, CaptionGrey } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
-  OnboardingStepFinishContent,
+  OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepFinishForm,
+  OnboardingStepForm,
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
 } from "@/components/onboarding/onboardingSteps"
@@ -12,12 +12,12 @@ export function VerifyAccountFinish() {
   const t = useTranslations("Onboarding.VerifyAccountPage.Finish")
 
   return (
-    <OnboardingStepFinishForm formId="Step2Form">
-      <OnboardingStepFinishContent contentId="Step2Content">
+    <OnboardingStepForm formId="Step2Form">
+      <OnboardingStepContent contentId="Step2Content">
         <OnboardingSuccessIcon iconId="Step2Icon" />
         <H3>{t("Title")}</H3>
         <H5>{t("Subtitle")}</H5>
-      </OnboardingStepFinishContent>
+      </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step2Actions">
         <P>{t("Description1")}</P>
         <CaptionGrey>{t("Description2")}</CaptionGrey>
@@ -25,6 +25,6 @@ export function VerifyAccountFinish() {
           <Link href="/onboarding/add-vehicle">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>
       </OnboardingStepActions>
-    </OnboardingStepFinishForm>
+    </OnboardingStepForm>
   )
 }

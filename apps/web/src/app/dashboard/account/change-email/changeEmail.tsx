@@ -9,11 +9,11 @@ import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeEmailAction } from "@/app/actions/users/changeEmailAction"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeEmailAccountComponent({
   usersWithPhoneRole,
@@ -91,7 +91,7 @@ export default function ChangeEmailAccountComponent({
     }
   }
   return (
-    <div id="ChangePassword" className={pageClassName}>
+    <PageWrapper id="ChangePassword">
       <Form {...formData}>
         <form
           id="ChangePasswordForm"
@@ -133,6 +133,6 @@ export default function ChangeEmailAccountComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

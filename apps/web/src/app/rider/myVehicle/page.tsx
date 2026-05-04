@@ -1,8 +1,4 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
@@ -10,6 +6,7 @@ import RiderHeader from "@/components/header/riderHeader"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import RiderMyVehiclePageComponent from "./myVehicle"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `My Vehicle - ${pageTitle}`,
@@ -32,9 +29,9 @@ export default async function MyVehiclePage() {
   )
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <RiderHeader pathName={"/rider/myVehicle"} />
       <RiderMyVehiclePageComponent vehicle={assignedVehicle} />
-    </div>
+    </MainWrapper>
   )
 }

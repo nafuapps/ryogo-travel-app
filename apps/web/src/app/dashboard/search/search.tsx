@@ -18,11 +18,6 @@ import {
   CaptionGrey,
   Small,
 } from "@/components/typography"
-import {
-  gridClassName,
-  gridItemClassName,
-  pageClassName,
-} from "@/components/page/pageCommons"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { FindAgencySearchDataType } from "@ryogo-travel-app/api/services/agency.services"
 import {
@@ -43,6 +38,11 @@ import {
   VehicleStatusPill,
 } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  PageWrapper,
+} from "@/components/page/pageWrappers"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -236,7 +236,7 @@ export default function SearchPageComponent({
   }
 
   return (
-    <div className={pageClassName}>
+    <PageWrapper id="SearchPage">
       <div
         id="SearchControls"
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
@@ -398,7 +398,7 @@ export default function SearchPageComponent({
           )}
         </div>
       )}
-    </div>
+    </PageWrapper>
   )
 }
 
@@ -439,25 +439,25 @@ function BookingSearchResultItem({
 }) {
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{booking.id}</Caption>
           <Small>{booking.customer.name}</Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{booking.type.toUpperCase()}</Caption>
           <Small>
             {booking.source.city + " - " + booking.destination.city}
           </Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{booking.assignedVehicle?.vehicleNumber}</Caption>
           <Small>{booking.assignedDriver?.name}</Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <BookingStatusPill status={booking.status} />
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }
@@ -470,8 +470,8 @@ function DriverSearchResultItem({
   const t = useTranslations("Dashboard.Drivers.All")
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           {driver.user.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
@@ -485,13 +485,13 @@ function DriverSearchResultItem({
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CaptionGrey>{driver.id}</CaptionGrey>
           <Caption>{driver.phone}</Caption>
           <Small>{driver.name}</Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
               return getVehicleIcon(v)
@@ -499,11 +499,11 @@ function DriverSearchResultItem({
           </div>
           <Caption>{driver.address}</Caption>
           <CaptionGrey>{driver.licenseNumber}</CaptionGrey>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <DriverStatusPill status={driver.status} />
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }
@@ -517,8 +517,8 @@ function CustomerSearchResultItem({
 
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           {customer.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
@@ -532,21 +532,21 @@ function CustomerSearchResultItem({
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CaptionGrey>{customer.id}</CaptionGrey>
           <Caption>{customer.phone}</Caption>
           <Small>{customer.name}</Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           {customer.email && <CaptionGrey>{customer.email}</CaptionGrey>}
           <Caption>{customer.location.state}</Caption>
           <Small>{customer.location.city}</Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CustomerStatusPill status={customer.status} />
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }
@@ -560,8 +560,8 @@ function VehicleSearchResultItem({
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           {vehicle.vehiclePhotoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
@@ -575,20 +575,20 @@ function VehicleSearchResultItem({
           ) : (
             getVehicleIcon(vehicle.type, "md")
           )}
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CaptionGrey>{vehicle.id}</CaptionGrey>
           <Small>{vehicle.vehicleNumber}</Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <CaptionGrey>{vehicle.color}</CaptionGrey>
           <Caption>{vehicle.brand + " " + vehicle.model}</Caption>
           <Small>{vehicle.type.toUpperCase()}</Small>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <VehicleStatusPill status={vehicle.status} />
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

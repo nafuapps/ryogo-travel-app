@@ -1,16 +1,13 @@
 //Users/id/modify page (only accessible to owner)
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ChangeUserPhonePageComponent from "./changeUserPhone"
 import { getCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Change User Phone - ${pageTitle}`,
@@ -39,9 +36,9 @@ export default async function ChangeUserPhonePage({
   const allUsers = await userServices.findAllUsersByRole([user.userRole])
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/change-phone"} />
       <ChangeUserPhonePageComponent user={user} allUsers={allUsers} />
-    </div>
+    </MainWrapper>
   )
 }

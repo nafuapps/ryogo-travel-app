@@ -14,6 +14,15 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [new URL("https://uxlvdjfgmmorufabopzd.supabase.co/**")],
   },
+  async redirects() {
+    return [
+      {
+        source: "/auth",
+        destination: "/auth/login",
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default withNextIntl(nextConfig)

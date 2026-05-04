@@ -1,9 +1,9 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import BookindDetailHeaderTabs from "../bookingDetailHeaderTabs"
 import { SmallGrey } from "@/components/typography"
 import TripLogItem from "./tripLogItem"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingTripLogsPageComponent({
   bookingId,
@@ -15,7 +15,7 @@ export default async function BookingTripLogsPageComponent({
   const t = await getTranslations("Dashboard.BookingTripLogs")
 
   return (
-    <div id="BookingTripLogsPage" className={pageClassName}>
+    <PageWrapper id="BookingTripLogsPage">
       <BookindDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
       {bookingTripLogs.length === 0 ? (
         <div className="w-full text-center">
@@ -31,6 +31,6 @@ export default async function BookingTripLogsPageComponent({
           ))}
         </div>
       )}
-    </div>
+    </PageWrapper>
   )
 }

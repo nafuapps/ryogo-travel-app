@@ -2,7 +2,6 @@
 
 import { LucideCar } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { sectionClassName } from "@/components/page/pageCommons"
 import { useState } from "react"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -20,6 +19,7 @@ import {
   AssignedBookingPopoverCard,
   RepairPopoverCard,
 } from "@/components/dashboard/schedule/dashboardPopoverCards"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 
 export default function VehiclesScheduleChartComponent({
   vehicleSchedule14Days,
@@ -45,7 +45,7 @@ export default function VehiclesScheduleChartComponent({
   const selectedDays: number = selectedTab === SelectableDays.SEVEN ? 7 : 14
 
   return (
-    <div id="VehiclesScheduleChartSection" className={sectionClassName}>
+    <SectionWrapper id="VehiclesScheduleChartSection">
       <DashboardScheduleHeader
         length={chartData.length.toString()}
         title={t("Title")}
@@ -106,6 +106,6 @@ export default function VehiclesScheduleChartComponent({
           })}
         </DashboardScheduleContent>
       </DashboardScheduleChart>
-    </div>
+    </SectionWrapper>
   )
 }

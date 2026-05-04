@@ -441,7 +441,6 @@ export const getTripTypeClassName = (selected: boolean) => {
   }`
 }
 
-export const newBookingSectionClassName = "flex flex-col gap-5 lg:gap-6 h-full"
 export const newBookingHeaderClassName = "flex flex-col gap-2 lg:gap-3"
 export const newBookingHeaderLineClassName =
   "flex flex-row justify-between items-end gap-2 lg:gap-3"

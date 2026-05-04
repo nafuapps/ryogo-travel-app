@@ -1,6 +1,5 @@
 "use client"
 
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignDriverPageComponent({
   bookingId,
@@ -55,7 +55,7 @@ export default function AssignDriverPageComponent({
   }
 
   return (
-    <div id="AssignDriverPage" className={pageClassName}>
+    <PageWrapper id="AssignDriverPage">
       <div
         id="AssignDriverInfo"
         className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
@@ -89,6 +89,6 @@ export default function AssignDriverPageComponent({
           {t("CancelCTA")}
         </Button>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

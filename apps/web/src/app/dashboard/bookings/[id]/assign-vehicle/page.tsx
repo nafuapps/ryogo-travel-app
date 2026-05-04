@@ -6,17 +6,14 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import AssignVehiclePageComponent from "./assignVehicle"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Metadata } from "next"
 import { differenceInDays } from "date-fns"
 import { LEAD_CANCEL_TIMEOUT_DAYS } from "@/lib/constants"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Assign Vehicle - ${pageTitle}`,
@@ -83,13 +80,13 @@ export default async function AssignVehicleBookingPage({
   const vehicles = await vehicleServices.findVehiclesByAgency(user.agencyId)
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/assign-vehicle"} />
       <AssignVehiclePageComponent
         bookingId={id}
         vehicles={vehicles}
         booking={booking}
       />
-    </div>
+    </MainWrapper>
   )
 }

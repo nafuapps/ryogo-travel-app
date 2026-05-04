@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -17,6 +16,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { changeUserEmailAction } from "@/app/actions/users/changeUserEmailAction"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeUserEmailPageComponent({
   user,
@@ -73,7 +73,7 @@ export default function ChangeUserEmailPageComponent({
   }
 
   return (
-    <div id="ChangeUserEmailPage" className={pageClassName}>
+    <PageWrapper id="ChangeUserEmailPage">
       <Form {...formData}>
         <form
           id="ChangeUserEmailForm"
@@ -107,6 +107,6 @@ export default function ChangeUserEmailPageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

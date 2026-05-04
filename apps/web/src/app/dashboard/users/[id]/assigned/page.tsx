@@ -1,8 +1,4 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
@@ -10,6 +6,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import UserAssignedPageComponent from "./userAssignedBookings"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `User Assigned Bookings - ${pageTitle}`,
@@ -34,9 +31,9 @@ export default async function UserDetailsPage({
     bookings = await userServices.findUserAssignedBookingsById(id)
   }
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/assigned"} />
       <UserAssignedPageComponent bookings={bookings} id={id} />
-    </div>
+    </MainWrapper>
   )
 }

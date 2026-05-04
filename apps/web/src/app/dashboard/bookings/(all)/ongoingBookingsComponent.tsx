@@ -3,14 +3,14 @@ import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.ser
 import { LucideRoute } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import {
-  gridClassName,
-  gridItemClassName,
-  sectionClassName,
-  sectionHeaderClassName,
-  iconClassName,
-} from "@/components/page/pageCommons"
+import { iconClassName } from "@/components/page/pageCommons"
 import { TripLogStatusPill } from "@/components/statusPills/statusPills"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function OngoingBookingsComponent({
   ongoingTrips,
@@ -20,41 +20,41 @@ export default async function OngoingBookingsComponent({
   const t = await getTranslations("Dashboard.Bookings.Ongoing")
 
   return (
-    <div id="OngoingBookingsSection" className={sectionClassName}>
-      <div id="OngoingBookingsHeader" className={sectionHeaderClassName}>
+    <SectionWrapper id="OngoingBookingsSection">
+      <SectionHeaderWrapper>
         <LucideRoute className={iconClassName} />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{ongoingTrips.length}</H5Grey>
-      </div>
+      </SectionHeaderWrapper>
       {ongoingTrips.map((trip) => (
         <OngoingComponent key={trip.bookingId} {...trip} />
       ))}
-    </div>
+    </SectionWrapper>
   )
 }
 
 function OngoingComponent(props: NonNullable<FindOngoingTripsType>[number]) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{props.bookingId}</Caption>
           <PBold>{props.customerName}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.type.toUpperCase()}</Caption>
           <PBold>{props.route}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{props.vehicle}</Caption>
           <PBold>{props.driver}</PBold>
-        </div>
+        </GridItemWrapper>
         {props.status && (
-          <div className={gridItemClassName}>
+          <GridItemWrapper>
             <TripLogStatusPill status={props.status} />
-          </div>
+          </GridItemWrapper>
         )}
-      </div>
+      </GridWrapper>
     </Link>
   )
 }

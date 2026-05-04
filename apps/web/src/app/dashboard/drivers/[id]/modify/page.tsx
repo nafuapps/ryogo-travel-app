@@ -1,15 +1,12 @@
 //Drivers/id/modify page (only accessible by owner)
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ModifyDriverPageComponent from "./modifyDriver"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Modify Driver - ${pageTitle}`,
@@ -30,9 +27,9 @@ export default async function ModifyDriverPage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers/[id]/modify"} />
       <ModifyDriverPageComponent driver={driver} />
-    </div>
+    </MainWrapper>
   )
 }

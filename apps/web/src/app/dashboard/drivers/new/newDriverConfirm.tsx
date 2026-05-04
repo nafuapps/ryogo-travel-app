@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
-  newBookingSectionClassName,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
   newBookingFormClassName,
@@ -21,6 +20,7 @@ import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import { useTransition } from "react"
 import ConfirmValues from "@/components/form/confirmValues"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -67,7 +67,7 @@ export function NewDriverConfirm(props: {
     })
   }
   return (
-    <div id="NewDriverConfirm" className={newBookingSectionClassName}>
+    <NewStepWrapper id="NewDriverConfirmStep">
       <div id="Header" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -144,6 +144,6 @@ export function NewDriverConfirm(props: {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

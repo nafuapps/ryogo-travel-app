@@ -1,12 +1,9 @@
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingTripLogsPageComponent from "./bookingTripLogs"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Booking Trip Logs - ${pageTitle}`,
@@ -21,12 +18,12 @@ export default async function BookingDetailsPage({
   const { id } = await params
   const bookingTripLogs = await bookingServices.findBookingTripLogsById(id)
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/trip-logs"} />
       <BookingTripLogsPageComponent
         bookingId={id}
         bookingTripLogs={bookingTripLogs}
       />
-    </div>
+    </MainWrapper>
   )
 }

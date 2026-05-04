@@ -1,14 +1,11 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ModifyDriverLeavePageComponent from "./modifyDriverLeave"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { DriverLeaveRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Modify Driver Leave - ${pageTitle}`,
@@ -36,9 +33,9 @@ export default async function ModifyDriverLeavePage({
   //Can anyone modify leave?
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers/[id]/leaves/modify"} />
       <ModifyDriverLeavePageComponent leave={leave} />
-    </div>
+    </MainWrapper>
   )
 }

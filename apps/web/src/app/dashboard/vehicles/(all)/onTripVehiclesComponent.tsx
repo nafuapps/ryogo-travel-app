@@ -12,15 +12,15 @@ import {
 import { LucideRoute } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import {
-  gridClassName,
-  gridItemClassName,
-  iconClassName,
-  sectionClassName,
-  sectionHeaderClassName,
-} from "@/components/page/pageCommons"
+import { iconClassName } from "@/components/page/pageCommons"
 import moment from "moment"
 import { TripLogStatusPill } from "@/components/statusPills/statusPills"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function OnTripVehiclesComponent({
   agencyId,
@@ -31,16 +31,16 @@ export default async function OnTripVehiclesComponent({
   const onTripVehicles = await vehicleServices.findVehiclesOnTrip(agencyId)
 
   return (
-    <div id="OnTripVehiclesSection" className={sectionClassName}>
-      <div id="OnTripVehiclesHeader" className={sectionHeaderClassName}>
+    <SectionWrapper id="OnTripVehiclesSection">
+      <SectionHeaderWrapper>
         <LucideRoute className={iconClassName} />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{onTripVehicles.length}</H5Grey>
-      </div>
+      </SectionHeaderWrapper>
       {onTripVehicles.map((vehicle) => (
         <OnTripVehicleComponent key={vehicle.id} {...vehicle} />
       ))}
-    </div>
+    </SectionWrapper>
   )
 }
 
@@ -51,18 +51,18 @@ function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
   }
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           <Caption>{props.brand + " " + props.model}</Caption>
           <PBold>{props.vehicleNumber}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{booking.id}</Caption>
           {booking.assignedDriver && (
             <PBold>{booking.assignedDriver.name}</PBold>
           )}
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>
             {moment(booking.startDate).format("DD MMM") +
               " - " +
@@ -71,13 +71,13 @@ function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
           <PBold>
             {booking.source.city + " - " + booking.destination.city}
           </PBold>
-        </div>
+        </GridItemWrapper>
         {booking.tripLogs[0] && (
-          <div className={gridItemClassName}>
+          <GridItemWrapper>
             <TripLogStatusPill status={booking.tripLogs[0].type} />
-          </div>
+          </GridItemWrapper>
         )}
-      </div>
+      </GridWrapper>
     </Link>
   )
 }

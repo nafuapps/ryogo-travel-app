@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import BookindDetailHeaderTabs from "../bookingDetailHeaderTabs"
@@ -6,6 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import ExpenseItem from "./expenseItem"
 import { SmallGrey } from "@/components/typography"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingExpensesPageComponent({
   bookingId,
@@ -21,7 +21,7 @@ export default async function BookingExpensesPageComponent({
   const t = await getTranslations("Dashboard.BookingExpenses")
 
   return (
-    <div id="BookingExpensesPage" className={pageClassName}>
+    <PageWrapper id="BookingExpensesPage">
       <BookindDetailHeaderTabs id={bookingId} selectedTab="Expenses" />
       {canCreateExpense && (
         <Link
@@ -52,6 +52,6 @@ export default async function BookingExpensesPageComponent({
           ))}
         </div>
       )}
-    </div>
+    </PageWrapper>
   )
 }

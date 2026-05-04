@@ -1,8 +1,8 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import OnTripVehiclesComponent from "./(all)/onTripVehiclesComponent"
 import AllVehiclesListComponent from "./(all)/allVehiclesListComponent"
 import VehiclesHistoryComponent from "./(all)/vehiclesHistoryComponent"
 import VehiclesScheduleComponent from "./(all)/vehiclesScheduleComponent"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 /**
  *  Show in progress vehicles
@@ -18,12 +18,12 @@ export default async function VehiclesPageComponent({
   agencyId: string
 }) {
   return (
-    <div id="VehiclesPage" className={pageClassName}>
+    <PageWrapper id="VehiclesPage">
       <OnTripVehiclesComponent agencyId={agencyId} />
       <AllVehiclesListComponent agencyId={agencyId} />
       <VehiclesScheduleComponent agencyId={agencyId} />
       {/* <VehiclesHistoryComponent agencyId={agencyId} /> */}
       {/*<VehicleActionsComponent agencyId={agencyId}/> */}
-    </div>
+    </PageWrapper>
   )
 }

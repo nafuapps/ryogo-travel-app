@@ -17,7 +17,6 @@ import {
   newBookingHeaderLineClassName,
   newBookingLineItemClassName,
   newBookingLineSubtitleClassName,
-  newBookingSectionClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
@@ -35,6 +34,7 @@ import NewBookingTripInfo from "./newBookingTripInfo"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
 import { getEstimatedTotalPrice } from "@/lib/utils"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -105,7 +105,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
   }
 
   return (
-    <div id="FinalSection" className={newBookingSectionClassName}>
+    <NewStepWrapper id="FinalStep">
       <div id="CostHeader" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -201,6 +201,6 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           </div>
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

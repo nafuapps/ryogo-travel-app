@@ -6,7 +6,6 @@ import {
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -23,6 +22,7 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyCustomerPageComponent({
   customer,
@@ -94,7 +94,7 @@ export default function ModifyCustomerPageComponent({
   const cityOptions = data[selectedState] ?? [t("Field6.Title")]
 
   return (
-    <div id="ModifyCustomer" className={pageClassName}>
+    <PageWrapper id="ModifyCustomerPage">
       <Form {...formData}>
         <form
           id="ModifyCustomerForm"
@@ -162,6 +162,6 @@ export default function ModifyCustomerPageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

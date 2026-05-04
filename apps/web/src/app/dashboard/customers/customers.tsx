@@ -1,4 +1,4 @@
-import { pageClassName } from "@/components/page/pageCommons"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import AllCustomersListComponent from "./allCustomersListComponent"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 
@@ -17,8 +17,8 @@ export default async function CustomersPageComponent({
   const allCustomers = await customerServices.findCustomersInAgency(agencyId)
 
   return (
-    <div id="CustomersPage" className={pageClassName}>
+    <PageWrapper id="CustomersPage">
       <AllCustomersListComponent allCustomers={allCustomers} />
-    </div>
+    </PageWrapper>
   )
 }

@@ -1,8 +1,4 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
 import RiderAddExpensePageComponent from "./riderAddExpense"
@@ -10,6 +6,7 @@ import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import RiderHeader from "@/components/header/riderHeader"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Add Expense - ${pageTitle}`,
@@ -40,7 +37,7 @@ export default async function RiderAddExpensePage({
     redirect("/rider/myBookings", RedirectType.replace)
   }
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]/add-expense"} />
       <RiderAddExpensePageComponent
         bookingId={bookingDetails.id}
@@ -48,6 +45,6 @@ export default async function RiderAddExpensePage({
         userId={driver.userId}
         assignedUserId={bookingDetails.assignedUserId}
       />
-    </div>
+    </MainWrapper>
   )
 }

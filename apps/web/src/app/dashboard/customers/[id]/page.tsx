@@ -1,15 +1,12 @@
 //Customers/id/ (details) page
 
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import CustomerDetailsPageComponent from "./customerDetails"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Cusomer Details - ${pageTitle}`,
@@ -29,9 +26,9 @@ export default async function CustomerDetailsPage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers/[id]"} />
       <CustomerDetailsPageComponent customer={customer} />
-    </div>
+    </MainWrapper>
   )
 }

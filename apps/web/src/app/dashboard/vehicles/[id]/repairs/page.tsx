@@ -1,17 +1,14 @@
 //Vehicle Repairs page
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import AllVehicleRepairsPageComponent from "./allVehicleRepairs"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Vehicle Repairs - ${pageTitle}`,
@@ -32,7 +29,7 @@ export default async function AllVehicleRepairsPage({
     await vehicleServices.findAllVehicleRepairsByVehicleId(id)
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs"} />
       <AllVehicleRepairsPageComponent
         repairs={vehicleRepairs}
@@ -40,6 +37,6 @@ export default async function AllVehicleRepairsPage({
         userId={currentUser.userId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
-    </div>
+    </MainWrapper>
   )
 }

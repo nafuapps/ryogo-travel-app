@@ -1,8 +1,4 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import UserCompletedPageComponent from "./userCompletedBookings"
@@ -10,6 +6,7 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `User Completed Bookings - ${pageTitle}`,
@@ -35,9 +32,9 @@ export default async function UserCompletedBookingsPage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/completed"} />
       <UserCompletedPageComponent bookings={bookings} id={id} />
-    </div>
+    </MainWrapper>
   )
 }

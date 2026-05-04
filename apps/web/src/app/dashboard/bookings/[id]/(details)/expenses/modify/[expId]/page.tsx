@@ -1,9 +1,5 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
@@ -12,6 +8,7 @@ import ModifyExpensePageComponent from "./modifyExpense"
 import { ExpenseRegex } from "@/lib/regex"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Modify Booking Expense - ${pageTitle}`,
@@ -49,12 +46,12 @@ export default async function ModifyExpensePage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses/modify"} />
       <ModifyExpensePageComponent
         expenseDetails={expenseDetails}
         assignedUserId={bookingDetails.assignedUserId}
       />
-    </div>
+    </MainWrapper>
   )
 }

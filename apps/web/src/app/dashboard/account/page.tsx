@@ -1,16 +1,13 @@
 //Account page
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import AccountPageComponent from "./account"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Account - ${pageTitle}`,
@@ -30,9 +27,9 @@ export default async function AccountPage() {
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account"} />
       <AccountPageComponent userDetails={userDetails} />
-    </div>
+    </MainWrapper>
   )
 }

@@ -1,15 +1,12 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ModifyCustomerPageComponent from "./modifyCustomer"
 import { getCurrentUser } from "@/lib/auth"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Modify Customer - ${pageTitle}`,
@@ -42,9 +39,9 @@ export default async function ModifyCustomerPage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers/[id]/modify"} />
       <ModifyCustomerPageComponent customer={customer} />
-    </div>
+    </MainWrapper>
   )
 }

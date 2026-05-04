@@ -3,15 +3,12 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import AllDriverLeavesPageComponent from "./allDriverLeaves"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Driver Leaves - ${pageTitle}`,
@@ -31,7 +28,7 @@ export default async function AllDriverLeavesPage({
   const driverLeaves = await driverServices.findAllDriverLeavesByDriverId(id)
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers/[id]/leaves"} />
       <AllDriverLeavesPageComponent
         leaves={driverLeaves}
@@ -39,6 +36,6 @@ export default async function AllDriverLeavesPage({
         userId={currentUser.userId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
-    </div>
+    </MainWrapper>
   )
 }

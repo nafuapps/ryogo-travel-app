@@ -5,19 +5,19 @@ import {
 } from "@ryogo-travel-app/api/services/driver.services"
 import { LucideRows3, LucideUser, Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import {
-  gridClassName,
-  gridItemClassName,
-  iconClassName,
-  sectionClassName,
-  sectionHeaderClassName,
-} from "@/components/page/pageCommons"
+import { iconClassName } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
+import {
+  GridItemWrapper,
+  GridWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -28,8 +28,8 @@ export default async function AllDriversListComponent({
   const allDrivers = await driverServices.findDriversByAgency(agencyId)
 
   return (
-    <div id="AllDriversSection" className={sectionClassName}>
-      <div id="AllDriversHeader" className={sectionHeaderClassName}>
+    <SectionWrapper id="AllDriversSection">
+      <SectionHeaderWrapper>
         <LucideRows3 className={iconClassName} />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allDrivers.length}</H5Grey>
@@ -39,11 +39,11 @@ export default async function AllDriversListComponent({
             {t("AddDriver")}
           </Button>
         </Link>
-      </div>
+      </SectionHeaderWrapper>
       {allDrivers.map((driver) => (
         <AllDriversItemComponent key={driver.id} driver={driver} />
       ))}
-    </div>
+    </SectionWrapper>
   )
 }
 
@@ -56,8 +56,8 @@ async function AllDriversItemComponent({
 
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <div className={gridClassName}>
-        <div className={gridItemClassName}>
+      <GridWrapper>
+        <GridItemWrapper>
           {driver.user.photoUrl ? (
             <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
               <Image
@@ -71,12 +71,12 @@ async function AllDriversItemComponent({
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <Caption>{driver.phone}</Caption>
           <PBold>{driver.name}</PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <div className="flex flex-row gap-1 lg:gap-1.5">
             {driver.canDriveVehicleTypes.map((v) => {
               return getVehicleIcon(v)
@@ -85,11 +85,11 @@ async function AllDriversItemComponent({
           <PBold>
             {t("AllowancePerDay", { allowance: driver.defaultAllowancePerDay })}
           </PBold>
-        </div>
-        <div className={gridItemClassName}>
+        </GridItemWrapper>
+        <GridItemWrapper>
           <DriverStatusPill status={driver.status} />
-        </div>
-      </div>
+        </GridItemWrapper>
+      </GridWrapper>
     </Link>
   )
 }

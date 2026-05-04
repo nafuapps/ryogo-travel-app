@@ -1,8 +1,4 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import NewExpensePageComponent from "./newExpense"
 import { getCurrentUser } from "@/lib/auth"
@@ -10,6 +6,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `New Booking Expense - ${pageTitle}`,
@@ -40,7 +37,7 @@ export default async function NewExpensePage({
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses/new"} />
       <NewExpensePageComponent
         bookingId={id}
@@ -48,6 +45,6 @@ export default async function NewExpensePage({
         agencyId={user.agencyId}
         assignedUserId={bookingDetails.assignedUserId}
       />
-    </div>
+    </MainWrapper>
   )
 }

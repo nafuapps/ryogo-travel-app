@@ -2,7 +2,6 @@
 
 import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { sectionClassName } from "@/components/page/pageCommons"
 import { FindScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import DashboardScheduleDayAxis, {
   DashboardScheduleChart,
@@ -16,6 +15,7 @@ import DashboardScheduleDayAxis, {
 } from "@/components/dashboard/schedule/dashboardSchedule"
 import { LucideUser } from "lucide-react"
 import { OngoingBookingPopoverCard } from "@/components/dashboard/schedule/dashboardPopoverCards"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 
 export default function BookingScheduleChartComponent({
   bookings14Days,
@@ -35,7 +35,7 @@ export default function BookingScheduleChartComponent({
   const selectedDays: number = selectedTab === SelectableDays.SEVEN ? 7 : 14
 
   return (
-    <div id="BookingScheduleSection" className={sectionClassName}>
+    <SectionWrapper id="BookingScheduleSection">
       <DashboardScheduleHeader
         length={chartData.length.toString()}
         title={t("Title")}
@@ -74,6 +74,6 @@ export default function BookingScheduleChartComponent({
           })}
         </DashboardScheduleContent>
       </DashboardScheduleChart>
-    </div>
+    </SectionWrapper>
   )
 }

@@ -1,13 +1,10 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import NewBookingPageComponent from "./newBooking"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `New Booking - ${pageTitle}`,
@@ -20,12 +17,12 @@ export default async function NewBookingPage() {
     redirect("/auth/login", RedirectType.replace)
   }
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/new"} />
       <NewBookingPageComponent
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}
       />
-    </div>
+    </MainWrapper>
   )
 }

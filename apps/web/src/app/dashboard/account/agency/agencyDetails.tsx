@@ -1,6 +1,5 @@
 import { AgencyStatusPill } from "@/components/statusPills/statusPills"
 import AccountDetailHeaderTabs from "../accountDetailHeaderTabs"
-import { pageClassName } from "@/components/page/pageCommons"
 import {
   H4,
   Caption,
@@ -11,13 +10,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { Separator } from "@radix-ui/react-separator"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideBuilding } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Add subscription link when subscription is implemented
 
@@ -31,7 +30,7 @@ export default async function AgencyDetailsPageComponent({
   const t = await getTranslations("Dashboard.AccountAgency")
 
   return (
-    <div id="AccountAgencyPage" className={pageClassName}>
+    <PageWrapper id="AccountAgencyPage">
       <AccountDetailHeaderTabs selectedTab="Agency" />
       <div
         id="AccountAgencyDetailsInfo"
@@ -109,6 +108,6 @@ export default async function AgencyDetailsPageComponent({
           </div>
         )}
       </div>
-    </div>
+    </PageWrapper>
   )
 }

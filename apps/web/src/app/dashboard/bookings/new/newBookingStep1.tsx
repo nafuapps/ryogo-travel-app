@@ -13,7 +13,6 @@ import {
   NewBookingFormDataType,
   newBookingHeaderClassName,
   newBookingHeaderLineClassName,
-  newBookingSectionClassName,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
@@ -31,6 +30,7 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
+import { NewStepWrapper } from "@/components/page/pageWrappers"
 
 type NewBookingStep1Props = {
   onNext: () => void
@@ -130,7 +130,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     : []
 
   return (
-    <div id="CustomerSection" className={newBookingSectionClassName}>
+    <NewStepWrapper id="CustomerStep">
       <div id="CustomerHeader" className={newBookingHeaderClassName}>
         <div className={newBookingHeaderLineClassName}>
           <H4>{t("Title")}</H4>
@@ -214,6 +214,6 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
           )}
         </form>
       </Form>
-    </div>
+    </NewStepWrapper>
   )
 }

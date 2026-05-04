@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "./driverDetailHeaderTabs"
 import {
@@ -25,12 +24,13 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import InactivateDriverAlertButton from "../../../../components/buttons/inactivateDriverAlertButton"
-import ActivateDriverAlertButton from "../../../../components/buttons/activateDriverAlertButton"
+import InactivateDriverAlertButton from "@/components/buttons/inactivateDriverAlertButton"
+import ActivateDriverAlertButton from "@/components/buttons/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import ChangeDriverPhotoSheet from "./changeDriverPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Add driver schedule chart
 
@@ -42,7 +42,7 @@ export default async function DriverDetailsPageComponent({
   const t = await getTranslations("Dashboard.DriverDetails")
 
   return (
-    <div id="DriverDetailsPage" className={pageClassName}>
+    <PageWrapper id="DriverDetailsPage">
       <DriverDetailHeaderTabs selectedTab={"Details"} id={driver.id} />
       <div
         id="DriverDetailsInfo"
@@ -181,7 +181,7 @@ export default async function DriverDetailsPageComponent({
           )}
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 

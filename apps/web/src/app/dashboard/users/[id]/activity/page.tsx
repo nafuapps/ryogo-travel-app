@@ -1,8 +1,4 @@
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
@@ -11,6 +7,7 @@ import { redirect, RedirectType } from "next/navigation"
 import UserActivityPageComponent from "./userActivity"
 import DriverActivityPageComponent from "./driverActivity"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `User Activity - ${pageTitle}`,
@@ -39,17 +36,17 @@ export default async function UserActivityPage({
       driver.id,
     )
     return (
-      <div className={mainClassName}>
+      <MainWrapper>
         <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />
         <DriverActivityPageComponent activities={activities} id={id} />
-      </div>
+      </MainWrapper>
     )
   }
   const activities = await userServices.findUserActivityById(id)
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />
       <UserActivityPageComponent activities={activities} id={id} />
-    </div>
+    </MainWrapper>
   )
 }

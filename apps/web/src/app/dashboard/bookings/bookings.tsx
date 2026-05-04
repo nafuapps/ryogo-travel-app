@@ -1,10 +1,10 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import OngoingBookingsComponent from "./(all)/ongoingBookingsComponent"
 import CompletedBookingsComponent from "./(all)/completedBookingsComponent"
 import UpcomingBookingsComponent from "./(all)/upcomingBookingsComponent"
 import LeadBookingsComponent from "./(all)/leadBookingsComponent"
 import BookingScheduleComponent from "./(all)/bookingScheduleComponent"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 /*
  * Ongoing Bookings
@@ -23,7 +23,7 @@ export default async function BookingsPageComponent({
 }) {
   const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
   return (
-    <div id="BookingsPage" className={pageClassName}>
+    <PageWrapper id="BookingsPage">
       <OngoingBookingsComponent ongoingTrips={ongoingTrips} />
       <CompletedBookingsComponent agencyId={agencyId} />
       <UpcomingBookingsComponent agencyId={agencyId} />
@@ -31,6 +31,6 @@ export default async function BookingsPageComponent({
       <BookingScheduleComponent agencyId={agencyId} />
       {/*<BookingActionsComponent agencyId={agencyId}/> */}
       {/*<BookingsHistoryComponent agencyId={agencyId}/> */}
-    </div>
+    </PageWrapper>
   )
 }

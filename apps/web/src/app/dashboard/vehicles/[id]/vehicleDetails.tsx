@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import VehicleDetailHeaderTabs from "./vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
@@ -25,12 +24,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import ActivateVehicleAlertButton from "../../../../components/buttons/activateVehicleAlertButton"
-import InactivateVehicleAlertButton from "../../../../components/buttons/inactivateVehicleAlertButton"
+import ActivateVehicleAlertButton from "@/components/buttons/activateVehicleAlertButton"
+import InactivateVehicleAlertButton from "@/components/buttons/inactivateVehicleAlertButton"
 import Link from "next/link"
 import ChangeVehiclePhotoSheet from "./changeVehiclePhotoSheet"
 import { VehicleStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Add vehicle schedule chart
 
@@ -41,7 +41,7 @@ export default async function VehicleDetailsPageComponent({
 }) {
   const t = await getTranslations("Dashboard.VehicleDetails")
   return (
-    <div id="VehicleDetailsPage" className={pageClassName}>
+    <PageWrapper id="VehicleDetailsPage">
       <VehicleDetailHeaderTabs selectedTab={"Details"} id={vehicle.id} />
       <div
         id="VehicleDetailsInfo"
@@ -270,7 +270,7 @@ export default async function VehicleDetailsPageComponent({
           )}
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }
 

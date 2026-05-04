@@ -6,7 +6,6 @@ import {
   RyogoTextarea,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,6 +21,7 @@ import DeleteExpenseAlertButton from "@/components/buttons/deleteExpenseAlertBut
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function RiderModifyExpensePageComponent({
   expenseDetails,
@@ -102,7 +102,7 @@ export default function RiderModifyExpensePageComponent({
   }
 
   return (
-    <div id="ModifyExpensePage" className={pageClassName}>
+    <PageWrapper id="RiderModifyExpensePage">
       <Form {...formData}>
         <form
           onSubmit={formData.handleSubmit(onSubmit)}
@@ -160,6 +160,6 @@ export default function RiderModifyExpensePageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

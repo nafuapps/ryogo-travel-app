@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
@@ -17,6 +16,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { changeUserPhoneAction } from "@/app/actions/users/changeUserPhoneAction"
 import { useTransition } from "react"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeUserPhonePageComponent({
   user,
@@ -73,7 +73,7 @@ export default function ChangeUserPhonePageComponent({
   }
 
   return (
-    <div id="ChangeUserPhonePage" className={pageClassName}>
+    <PageWrapper id="ChangeUserPhonePage">
       <Form {...formData}>
         <form
           id="ChangeUserPhoneForm"
@@ -107,6 +107,6 @@ export default function ChangeUserPhonePageComponent({
           </Button>
         </form>
       </Form>
-    </div>
+    </PageWrapper>
   )
 }

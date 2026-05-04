@@ -1,8 +1,8 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import NewCustomerForm from "./newCustomerForm"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function NewCustomerPageComponent({
   agencyId,
@@ -20,13 +20,13 @@ export default async function NewCustomerPageComponent({
   }
 
   return (
-    <div id="NewCustomerPage" className={pageClassName}>
+    <PageWrapper id="NewCustomerPage">
       <NewCustomerForm
         agencyId={agencyId}
         allCustomers={allCustomers}
         userId={userId}
         agencyLocation={agency.location}
       />
-    </div>
+    </PageWrapper>
   )
 }

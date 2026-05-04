@@ -1,14 +1,11 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
-import {
-  mainClassName,
-  pageDescription,
-  pageTitle,
-} from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ModifyVehicleRepairPageComponent from "./modifyVehicleRepair"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { VehicleRepairRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Modify Vehicle Repair - ${pageTitle}`,
@@ -36,9 +33,9 @@ export default async function ModifyVehicleRepairPage({
   //Can anyone modify repair?
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs/modify"} />
       <ModifyVehicleRepairPageComponent repair={repair} />
-    </div>
+    </MainWrapper>
   )
 }

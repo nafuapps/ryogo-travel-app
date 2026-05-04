@@ -1,4 +1,3 @@
-import { pageClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import { BookingCommonInfo } from "@/components/rider/riderBookingCommon"
@@ -7,6 +6,7 @@ import RiderExpenseItem from "./riderExpenseItem"
 import RiderTripLogItem from "./riderTripLogItem"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyCompletedBookingPageComponent({
   booking,
@@ -16,7 +16,7 @@ export default async function RiderMyCompletedBookingPageComponent({
   const t = await getTranslations("Rider.MyBooking")
 
   return (
-    <div id="RiderCompletedBookingPage" className={pageClassName}>
+    <PageWrapper id="RiderCompletedBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={false} />
       <div
         id="CompletedBookingTripLogs"
@@ -50,6 +50,6 @@ export default async function RiderMyCompletedBookingPageComponent({
           {t("Back")}
         </Button>
       </Link>
-    </div>
+    </PageWrapper>
   )
 }

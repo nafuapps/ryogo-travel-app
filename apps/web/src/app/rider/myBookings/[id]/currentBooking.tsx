@@ -4,7 +4,6 @@ import {
   BookingCommonInfo,
   getNextStep,
 } from "@/components/rider/riderBookingCommon"
-import { pageClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -17,6 +16,7 @@ import RiderExpenseItem from "./riderExpenseItem"
 import RiderTripLogItem from "./riderTripLogItem"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
+import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -33,7 +33,7 @@ export default async function RiderMyOngoingBookingPageComponent({
   const nextStep = getNextStep(booking.type, booking.endDate, booking.tripLogs)
 
   return (
-    <div id="RiderCurrentBookingPage" className={pageClassName}>
+    <PageWrapper id="RiderCurrentBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={true} />
       <div
         id="CurrentBookingTripLogs"
@@ -86,6 +86,6 @@ export default async function RiderMyOngoingBookingPageComponent({
           <MidTripSheet booking={booking} tripType={nextStep} />
         )}
       </div>
-    </div>
+    </PageWrapper>
   )
 }

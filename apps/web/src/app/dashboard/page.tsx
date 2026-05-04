@@ -1,15 +1,12 @@
 //Dashboard home page
 
-import {
-  mainClassName,
-  pageTitle,
-  pageDescription,
-} from "@/components/page/pageCommons"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import DashboardHomePageComponent from "./dashboardHome"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Dashboard - ${pageTitle}`,
@@ -23,9 +20,9 @@ export default async function DashboardHomePage() {
   }
 
   return (
-    <div className={mainClassName}>
+    <MainWrapper>
       <DashboardHeader pathName={"/dashboard"} />
       <DashboardHomePageComponent agencyId={currentUser.agencyId} />
-    </div>
+    </MainWrapper>
   )
 }

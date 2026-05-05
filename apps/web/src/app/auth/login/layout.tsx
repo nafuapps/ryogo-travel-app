@@ -5,6 +5,11 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import Image from "next/image"
 import RyoGoLogo from "@/components/logo"
+import {
+  AuthMainWrapper,
+  AuthSideWrapper,
+} from "@/components/auth/authWrappers"
+import { LayoutWrapper } from "@/components/bookings/layout/layoutWrappers"
 
 export default async function LoginLayout({
   children,
@@ -22,8 +27,8 @@ export default async function LoginLayout({
   }
 
   return (
-    <section id="LoginLayout" className="flex flex-row w-screen h-dvh">
-      <div id="LoginSideSection" className="md:flex md:w-1/2 relative hidden">
+    <LayoutWrapper id="LoginLayout">
+      <AuthSideWrapper>
         <Image
           loading="eager"
           src={"/loginBG.png"}
@@ -32,14 +37,11 @@ export default async function LoginLayout({
           fill
           sizes="50vw"
         />
-      </div>
-      <div
-        id="LoginMainSection"
-        className="flex flex-col gap-12 md:gap-16 h-full items-center justify-start bg-slate-50 w-full md:w-1/2 p-6 md:p-8 lg:p-10"
-      >
+      </AuthSideWrapper>
+      <AuthMainWrapper>
         <RyoGoLogo />
         {children}
-      </div>
-    </section>
+      </AuthMainWrapper>
+    </LayoutWrapper>
   )
 }

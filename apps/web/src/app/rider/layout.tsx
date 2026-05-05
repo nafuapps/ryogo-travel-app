@@ -6,6 +6,10 @@ import RiderSidebar from "@/components/sidebar/riderSidebar"
 import { getCurrentUser, logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  LayoutSectionWrapper,
+  LayoutWrapper,
+} from "@/components/bookings/layout/layoutWrappers"
 
 export default async function RiderLayout({
   children,
@@ -51,12 +55,12 @@ export default async function RiderLayout({
         } as React.CSSProperties
       }
     >
-      <main id="RiderLayout" className="flex flex-row w-screen h-dvh">
+      <LayoutWrapper id="RiderLayout">
         <RiderSidebar />
-        <section id="RiderMainSection" className="flex flex-row w-full h-dvh">
+        <LayoutSectionWrapper id="RiderMainSection">
           {children}
-        </section>
-      </main>
+        </LayoutSectionWrapper>
+      </LayoutWrapper>
     </SidebarProvider>
   )
 }

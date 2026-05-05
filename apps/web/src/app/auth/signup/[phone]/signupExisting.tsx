@@ -6,6 +6,11 @@ import { AccountCard } from "@/components/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  AuthAccountsWrapper,
+  AuthActionWrapper,
+  AuthPageWrapper,
+} from "@/components/auth/authWrappers"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
@@ -24,24 +29,19 @@ export default async function SignupExistingPageComponent({
   )
 
   return (
-    <div
-      id="SignupExistingPage"
-      className="flex flex-col justify-center gap-3 md:gap-4 w-full max-h-2/3 rounded-lg shadow bg-white p-6 md:p-8"
-    >
+    <AuthPageWrapper>
       <H4>{t("PageTitle")}</H4>
       <SmallGrey>
         {hasOwnerAccount
           ? t("InfoYes")
           : t("InfoNo", { count: accounts.length })}
       </SmallGrey>
-      <div
-        className={`grid grid-cols-1 ${accounts.length > 3 ? "lg:grid-cols-2" : ""} gap-3 lg:gap-4 overflow-y-scroll no-scrollbar`}
-      >
+      <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((item, index) => (
           <AccountCard key={index} account={item} />
         ))}
-      </div>
-      <div id="SignupExistingActions" className="flex flex-col gap-4 w-full">
+      </AuthAccountsWrapper>
+      <AuthActionWrapper>
         <Link href={"/auth/signup"}>
           <Button variant={"secondary"} size={"lg"} className="w-full">
             <CaptionGrey>{t("BackCTA")}</CaptionGrey>
@@ -63,7 +63,7 @@ export default async function SignupExistingPageComponent({
             </Link>
           </Button>
         )}
-      </div>
-    </div>
+      </AuthActionWrapper>
+    </AuthPageWrapper>
   )
 }

@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -22,6 +21,11 @@ import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useTransition } from "react"
+import {
+  AuthActionWrapper,
+  AuthFormWrapper,
+  AuthPageWrapper,
+} from "@/components/auth/authWrappers"
 
 // TODO: Add a feature to show the user had recently reset password
 
@@ -75,63 +79,58 @@ export default function LoginPasswordPageComponent({
   }
 
   return (
-    <div
-      id="LoginPasswordPage"
-      className="flex flex-col justify-center w-full rounded-lg shadow bg-white p-6 md:p-8"
-    >
-      <Form {...methods}>
-        <form
-          id="LoginPasswordForm"
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col justify-between gap-4 md:gap-6 h-full"
-        >
-          <H4>{t("PageTitle")}</H4>
-          <FormField
-            control={methods.control}
-            name={"password"}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  <SmallGrey>{t("Input.Title")}</SmallGrey>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder={t("Input.Placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div id="LoginPasswordActions" className="flex flex-col gap-4 w-full">
-            <Button
-              variant={"default"}
-              type="submit"
-              size={"lg"}
-              disabled={isPending}
-            >
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-            <Button
-              variant={"secondary"}
-              type="button"
-              onClick={() => {
-                router.back()
-              }}
-            >
-              <CaptionGrey>{t("Back")}</CaptionGrey>
-            </Button>
-            <Button variant={"link"} type="button" size="sm">
-              <Link href={`/auth/login/forgot-password/${userId}`}>
-                <CaptionGrey>{t("ForgotCTA")}</CaptionGrey>
-              </Link>
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <AuthPageWrapper>
+      <AuthFormWrapper<FormFields>
+        id="LoginPasswordForm"
+        onSubmit={methods.handleSubmit(onSubmit)}
+        form={methods}
+      >
+        <H4>{t("PageTitle")}</H4>
+        <FormField
+          control={methods.control}
+          name={"password"}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                <SmallGrey>{t("Input.Title")}</SmallGrey>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder={t("Input.Placeholder")}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <AuthActionWrapper>
+          <Button
+            variant={"default"}
+            type="submit"
+            size={"lg"}
+            disabled={isPending}
+          >
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+          <Button
+            variant={"secondary"}
+            type="button"
+            onClick={() => {
+              router.back()
+            }}
+          >
+            <CaptionGrey>{t("Back")}</CaptionGrey>
+          </Button>
+          <Button variant={"link"} type="button" size="sm">
+            <Link href={`/auth/login/forgot-password/${userId}`}>
+              <CaptionGrey>{t("ForgotCTA")}</CaptionGrey>
+            </Link>
+          </Button>
+        </AuthActionWrapper>
+      </AuthFormWrapper>
+    </AuthPageWrapper>
   )
 }

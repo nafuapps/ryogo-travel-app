@@ -7,6 +7,10 @@ import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { CaptionGrey } from "@/components/typography"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import {
+  AuthFooterWrapper,
+  AuthSectionWrapper,
+} from "@/components/auth/authWrappers"
 
 export const metadata: Metadata = {
   title: `Signup - ${pageTitle}`,
@@ -17,16 +21,16 @@ export default async function SignupPage() {
   const t = await getTranslations("Auth.SignupPage")
 
   return (
-    <div className="flex flex-col gap-6 md:gap-8 w-full h-full items-center justify-between">
+    <AuthSectionWrapper>
       <SignupPageComponent />
-      <div className="flex flex-col items-center gap-2 md:gap-3">
+      <AuthFooterWrapper>
         <CaptionGrey>{t("LoginTitle")}</CaptionGrey>
         <Button variant="outline" size="lg">
           <Link href={"/auth/login"}>
             <CaptionGrey>{t("LoginCTA")}</CaptionGrey>
           </Link>
         </Button>
-      </div>
-    </div>
+      </AuthFooterWrapper>
+    </AuthSectionWrapper>
   )
 }

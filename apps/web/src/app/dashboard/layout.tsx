@@ -7,6 +7,10 @@ import { getCurrentUser, logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import CommandCenter from "@/components/command/commandCenter"
+import {
+  LayoutSectionWrapper,
+  LayoutWrapper,
+} from "@/components/bookings/layout/layoutWrappers"
 
 export default async function DashboardLayout({
   children,
@@ -59,18 +63,15 @@ export default async function DashboardLayout({
         } as React.CSSProperties
       }
     >
-      <main id="DashboardLayout" className="flex flex-row w-screen h-dvh">
+      <LayoutWrapper id="DashboardLayout">
         <DashboardSidebar
           isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         />
-        <section
-          id="DashboardMainSection"
-          className="flex flex-row w-full h-dvh"
-        >
+        <LayoutSectionWrapper id="DashboardMainSection">
           {children}
           <CommandCenter />
-        </section>
-      </main>
+        </LayoutSectionWrapper>
+      </LayoutWrapper>
     </SidebarProvider>
   )
 }

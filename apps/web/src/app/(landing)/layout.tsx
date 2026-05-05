@@ -1,3 +1,4 @@
+import { LayoutWrapper } from "@/components/bookings/layout/layoutWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -17,5 +18,5 @@ export default async function LandingLayout({
     redirect("/dashboard", RedirectType.replace)
   }
 
-  return <main className="bg-white w-full min-h-dvh">{children}</main>
+  return <LayoutWrapper id="LandingLayout">{children}</LayoutWrapper>
 }

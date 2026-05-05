@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -17,6 +16,11 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
+import {
+  AuthActionWrapper,
+  AuthFormWrapper,
+  AuthPageWrapper,
+} from "@/components/auth/authWrappers"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -44,43 +48,38 @@ export default function SignupPageComponent() {
   }
 
   return (
-    <div
-      id="SignupPage"
-      className="flex flex-col justify-center w-full rounded-lg shadow bg-white p-6 md:p-8"
-    >
-      <Form {...methods}>
-        <form
-          id="SignupForm"
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col justify-between gap-4 md:gap-6"
-        >
-          <H4>{t("PageTitle")}</H4>
-          <FormField
-            control={methods.control}
-            name={"phoneNumber"}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  <SmallGrey>{t("Input.Title")}</SmallGrey>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="tel"
-                    placeholder={t("Input.Placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div id="SignupActions" className="flex flex-col gap-4 w-full">
-            <Button variant={"default"} size={"lg"}>
-              {t("PrimaryCTA")}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <AuthPageWrapper>
+      <AuthFormWrapper<FormFields>
+        id="SignupForm"
+        form={methods}
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
+        <H4>{t("PageTitle")}</H4>
+        <FormField
+          control={methods.control}
+          name={"phoneNumber"}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                <SmallGrey>{t("Input.Title")}</SmallGrey>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="tel"
+                  placeholder={t("Input.Placeholder")}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <AuthActionWrapper>
+          <Button variant={"default"} size={"lg"}>
+            {t("PrimaryCTA")}
+          </Button>
+        </AuthActionWrapper>
+      </AuthFormWrapper>
+    </AuthPageWrapper>
   )
 }

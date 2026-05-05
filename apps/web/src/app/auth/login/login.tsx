@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -20,6 +19,11 @@ import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { useTransition } from "react"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
+import {
+  AuthActionWrapper,
+  AuthFormWrapper,
+  AuthPageWrapper,
+} from "@/components/auth/authWrappers"
 
 /*
 1. Find user by phone number
@@ -66,44 +70,39 @@ export default function LoginPageComponent() {
   }
 
   return (
-    <div
-      id="LoginPage"
-      className="flex flex-col justify-center w-full rounded-lg bg-white shadow p-6 md:p-8"
-    >
-      <Form {...methods}>
-        <form
-          id="LoginForm"
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col justify-between gap-4 md:gap-6 w-full"
-        >
-          <H4>{t("PageTitle")}</H4>
-          <FormField
-            control={methods.control}
-            name={"phoneNumber"}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  <SmallGrey>{t("Input.Title")}</SmallGrey>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="tel"
-                    placeholder={t("Input.Placeholder")}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div id="LoginActions" className="flex flex-col gap-4 w-full">
-            <Button variant={"default"} size={"lg"} disabled={isPending}>
-              {isPending && <Spinner />}
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <AuthPageWrapper>
+      <AuthFormWrapper<FormFields>
+        id="LoginForm"
+        form={methods}
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
+        <H4>{t("PageTitle")}</H4>
+        <FormField
+          control={methods.control}
+          name={"phoneNumber"}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                <SmallGrey>{t("Input.Title")}</SmallGrey>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="tel"
+                  placeholder={t("Input.Placeholder")}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <AuthActionWrapper>
+          <Button variant={"default"} size={"lg"} disabled={isPending}>
+            {isPending && <Spinner />}
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </Button>
+        </AuthActionWrapper>
+      </AuthFormWrapper>
+    </AuthPageWrapper>
   )
 }

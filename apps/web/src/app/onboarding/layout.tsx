@@ -1,5 +1,6 @@
 //Layout page for onboarding pages
 
+import { LayoutWrapper } from "@/components/bookings/layout/layoutWrappers"
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 
@@ -20,12 +21,7 @@ export default async function OnboardingLayout({
         } as React.CSSProperties
       }
     >
-      <section
-        id="OnboardingMainLayout"
-        className="flex flex-row w-screen h-dvh"
-      >
-        {children}
-      </section>
+      <LayoutWrapper id="OnboardingLayout">{children}</LayoutWrapper>
     </SidebarProvider>
   )
 }

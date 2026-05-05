@@ -65,9 +65,18 @@ export default function AssignVehiclePageComponent({
           <AssignVehicleTile
             key={index}
             vehicleData={vehicle}
-            booking={booking}
-            selectedVehicleId={selectedVehicleId}
-            setSelectedVehicleId={setSelectedVehicleId}
+            bookingStartDate={booking.startDate}
+            bookingEndDate={booking.endDate}
+            bookingPassengers={booking.passengers}
+            bookingId={booking.id}
+            bookingNeedsAC={booking.needsAc}
+            isCurrentlyAssigned={booking.assignedVehicleId === vehicle.id}
+            selected={selectedVehicleId === vehicle.id}
+            onClick={() =>
+              setSelectedVehicleId(
+                selectedVehicleId === vehicle.id ? null : vehicle.id,
+              )
+            }
           />
         ))}
         <Button

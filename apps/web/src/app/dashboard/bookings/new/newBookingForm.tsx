@@ -8,18 +8,15 @@ import NewBookingStep3 from "./newBookingStep3"
 import NewBookingStep4 from "./newBookingStep4"
 import NewBookingFinal from "./newBookingFinal"
 import { useState } from "react"
-import {
-  NewBookingAgencyLocationType,
-  NewBookingFormDataType,
-} from "./newBookingCommon"
+import { NewBookingFormDataType } from "./newBookingCommon"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
+import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 
 export default function NewBookingForm(props: {
-  agencyId: string
-  agencyLocation: NewBookingAgencyLocationType
+  agency: NonNullable<FindAgencyByIdType>
   vehicles: FindVehiclesByAgencyType
   drivers: FindDriversByAgencyType
   commissionRate: number
@@ -30,13 +27,13 @@ export default function NewBookingForm(props: {
     useState<NewBookingFormDataType>({
       customerPhone: "",
       existingCustomer: undefined,
-      newCustomerLocationState: props.agencyLocation.state,
-      newCustomerLocationCity: props.agencyLocation.city,
+      newCustomerLocationState: props.agency.location.state,
+      newCustomerLocationCity: props.agency.location.city,
       tripStartDate: new Date(),
       tripEndDate: new Date(),
-      tripSourceLocationState: props.agencyLocation.state,
-      tripSourceLocationCity: props.agencyLocation.city,
-      tripDestinationLocationState: props.agencyLocation.state,
+      tripSourceLocationState: props.agency.location.state,
+      tripSourceLocationCity: props.agency.location.city,
+      tripDestinationLocationState: props.agency.location.state,
       tripDestinationLocationCity: "",
       tripNeedsAC: true,
       tripPassengers: 1,
@@ -62,7 +59,7 @@ export default function NewBookingForm(props: {
       onNext={nextStepHandler}
       newBookingFormData={newBookingFormData}
       setNewBookingFormData={setNewBookingFormData}
-      agencyId={props.agencyId}
+      agencyId={props.agency.id}
       customers={props.customers}
     />,
     <NewBookingStep2
@@ -93,7 +90,7 @@ export default function NewBookingForm(props: {
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
       userId={props.userId}
-      agencyId={props.agencyId}
+      agencyId={props.agency.id}
     />,
   ])
 

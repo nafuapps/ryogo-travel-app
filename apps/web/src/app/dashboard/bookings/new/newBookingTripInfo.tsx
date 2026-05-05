@@ -1,15 +1,11 @@
-import { PBold, CaptionGrey, SmallGrey } from "@/components/typography"
-import { LucideCalendarDays, LucideUsers } from "lucide-react"
-import {
-  tileHeaderLeftClassName,
-  tileHeaderRightClassName,
-  NewBookingFormDataType,
-  getTripTypeIcon,
-} from "./newBookingCommon"
-import { IconTextTag } from "./newBookingTileTag"
+import { PBold, CaptionGrey, SmallGrey, Caption } from "@/components/typography"
+import { CalendarDays, Users } from "lucide-react"
+import { NewBookingFormDataType } from "./newBookingCommon"
+import { IconTextTag } from "@/components/tags/IconTextTag"
 import { useTranslations } from "next-intl"
 import { format } from "date-fns"
 import { getDuration } from "@/lib/utils"
+import getTripIcon from "@/components/icons/tripIcon"
 
 export default function NewBookingTripInfo(props: NewBookingFormDataType) {
   const t = useTranslations("Dashboard.NewBooking.Form")
@@ -21,7 +17,7 @@ export default function NewBookingTripInfo(props: NewBookingFormDataType) {
         id="tripHeader"
         className="flex flex-row bg-white justify-between items-center p-3 lg:p-4 rounded-t-lg"
       >
-        <div id="tripSource" className={tileHeaderLeftClassName}>
+        <div className="flex flex-col gap-1 lg:gap-1.5 items-start">
           <PBold>{props.tripSourceLocationCity}</PBold>
           <CaptionGrey>{props.tripSourceLocationState}</CaptionGrey>
           <SmallGrey>{format(props.tripStartDate, "MMM dd")}</SmallGrey>
@@ -36,7 +32,10 @@ export default function NewBookingTripInfo(props: NewBookingFormDataType) {
             <div className="h-0.5 w-4 lg:w-6 bg-slate-200" />
           </div>
         )}
-        <div id="tripDestination" className={tileHeaderRightClassName}>
+        <div
+          id="tripDestination"
+          className="flex flex-col gap-1 lg:gap-1.5 items-end text-end"
+        >
           <PBold>{props.tripDestinationLocationCity}</PBold>
           <CaptionGrey>{props.tripDestinationLocationState}</CaptionGrey>
           <SmallGrey>{format(props.tripEndDate, "MMM dd")}</SmallGrey>
@@ -47,20 +46,17 @@ export default function NewBookingTripInfo(props: NewBookingFormDataType) {
         className="bg-slate-200 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
       >
         <TripTagWrapper>
-          <IconTextTag
-            icon={getTripTypeIcon(props.tripType)}
-            text={props.tripType.toUpperCase()}
-          />
+          <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
+            {getTripIcon(props.tripType)}
+            <Caption>{props.tripType.toUpperCase()}</Caption>
+          </div>
+        </TripTagWrapper>
+        <TripTagWrapper>
+          <IconTextTag icon={Users} text={props.tripPassengers.toString()} />
         </TripTagWrapper>
         <TripTagWrapper>
           <IconTextTag
-            icon={LucideUsers}
-            text={props.tripPassengers.toString()}
-          />
-        </TripTagWrapper>
-        <TripTagWrapper>
-          <IconTextTag
-            icon={LucideCalendarDays}
+            icon={CalendarDays}
             text={duration.toString() + t("Days", { count: duration })}
           />
         </TripTagWrapper>

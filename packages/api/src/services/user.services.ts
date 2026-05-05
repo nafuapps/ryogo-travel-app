@@ -234,6 +234,7 @@ export const userServices = {
       status: UserStatusEnum.NEW,
       password: passwordHash,
       verificationCode: generateVerificationCode(),
+      codeSentAt: new Date(),
     }
 
     //Step7: Create the owner user
@@ -291,6 +292,7 @@ export const userServices = {
       agencyId: agencyId,
       password: passwordHash,
       verificationCode: generateVerificationCode(),
+      codeSentAt: new Date(),
     })
     if (!newUser[0]) {
       return
@@ -342,6 +344,7 @@ export const userServices = {
       agencyId: agencyId,
       password: passwordHash,
       verificationCode: generateVerificationCode(),
+      codeSentAt: new Date(),
     })
     if (!newUser[0]) {
       return
@@ -586,7 +589,7 @@ export const userServices = {
   },
 
   //Regenerate verification code
-  async regenerateVerificationCode(userId: string) {
+  async regenerateCode(userId: string) {
     const user = await userRepository.readUserById(userId)
     if (!user) return
     //Already verified - not need to regenerate code

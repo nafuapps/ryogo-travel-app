@@ -188,6 +188,7 @@ export const users = pgTable(
     verificationCode: varchar("verification_code", { length: 6 })
       .notNull()
       .default("123456"),
+    codeSentAt: timestamp("code_sent_at", { withTimezone: true }),
     prefersDarkTheme: boolean().default(false),
     languagePref: userLangs().notNull().default(UserLangEnum.ENGLISH),
     userRole: userRoles().notNull().default(UserRolesEnum.AGENT),

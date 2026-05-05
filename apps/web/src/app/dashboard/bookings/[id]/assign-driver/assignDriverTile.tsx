@@ -1,58 +1,57 @@
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { PBold, Small, H2, Caption } from "@/components/typography"
+import { PBold, Small, Caption } from "@/components/typography"
 import {
-  LucidePhone,
-  LucideBadgeIndianRupee,
-  LucideTicketX,
-  LucideCalendarX,
-  LucideCheck,
+  Phone,
+  BadgeIndianRupee,
+  TicketX,
+  CalendarX,
+  Check,
+  CheckCheck,
+  LucideIcon,
 } from "lucide-react"
+import { IconTextTag } from "@/components/tags/IconTextTag"
 import {
-  getAllowanceScore,
-  getCanDriveIcons,
-  getCanDriveScore,
-  getDriverStatusScore,
-  getDriverTotalScore,
-  getExpiryScore,
-  getOverlapScore,
-  NoOverlapScore,
-  tileFooterClassName,
-  tileGreenIconClassName,
-  tileHeaderLeftClassName,
-  tileLeftClassName,
-  tileRedIconClassName,
-  tileRightClassName,
-  tileStatusClassName,
-} from "../../new/newBookingCommon"
-import { IconTextTag, IconsTag } from "../../new/newBookingTileTag"
-import {
+  AssignTileContentWrapper,
+  AssignTileFooterWrapper,
+  AssignTileHeaderWrapper,
+  AssignTileScoreWrapper,
+  AssignTileStatusWrapper,
   AssignTileWrapper,
   RyoGoScoreWrapper,
 } from "@/components/page/pageWrappers"
+import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  getExpiryScore,
+  getOverlapScore,
+  NoOverlapScore,
+} from "@/components/bookings/getBookingScore"
 
-type AssignDriverTileProps = {
-  driverData: FindDriversByAgencyType[number]
-  selectedDriverId: string | null
-  setSelectedDriverId: (driverId: string | null) => void
-  booking: NonNullable<FindBookingDetailsByIdType>
-}
 export default function AssignDriverTile({
   driverData,
-  booking,
-  selectedDriverId,
-  setSelectedDriverId,
-}: AssignDriverTileProps) {
+  selected,
+  onClick,
+  bookingStartDate,
+  bookingEndDate,
+  bookingPassengers,
+  bookingId,
+  isCurrentlyAssigned,
+}: {
+  driverData: FindDriversByAgencyType[number]
+  selected: boolean
+  onClick: () => void
+  bookingStartDate: Date
+  bookingEndDate: Date
+  bookingPassengers: number
+  bookingId?: string
+  isCurrentlyAssigned?: boolean
+}) {
   const t = useTranslations("Dashboard.AssignDriver.Tile")
 
-  const isCurrentlyAssigned = booking.assignedDriverId === driverData.id
-
-  const bookingStartDate = new Date(booking.startDate)
-  const bookingEndDate = new Date(booking.endDate)
-
   const bookingOverLapScores = driverData.assignedBookings
-    .filter((b) => b.id !== booking.id)
+    .filter((b) => b.id !== bookingId)
     .map((other) => {
       return getOverlapScore(
         new Date(other.startDate),
@@ -100,7 +99,7 @@ export default function AssignDriverTile({
 
   const canDriveScore = getCanDriveScore(
     driverData.canDriveVehicleTypes,
-    booking.passengers,
+    bookingPassengers,
   )
 
   const totalScore = getDriverTotalScore({
@@ -113,39 +112,32 @@ export default function AssignDriverTile({
   })
 
   return (
-    <AssignTileWrapper
-      selected={selectedDriverId === driverData.id}
-      onClick={() =>
-        setSelectedDriverId(
-          selectedDriverId === driverData.id ? null : driverData.id,
-        )
-      }
-    >
-      <div className={tileLeftClassName}>
-        <div className={tileHeaderLeftClassName}>
+    <AssignTileWrapper selected={selected} onClick={onClick}>
+      <AssignTileContentWrapper>
+        <AssignTileHeaderWrapper>
           <PBold>{driverData.name}</PBold>
           <Small>{driverData.address}</Small>
-          <IconTextTag icon={LucidePhone} text={driverData.phone} />
-        </div>
-        <div className={tileFooterClassName}>
+          <IconTextTag icon={Phone} text={driverData.phone} />
+        </AssignTileHeaderWrapper>
+        <AssignTileFooterWrapper>
           <IconTextTag
-            icon={LucideBadgeIndianRupee}
+            icon={BadgeIndianRupee}
             text={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
           />
           <IconsTag icons={getCanDriveIcons(driverData.canDriveVehicleTypes)} />
-        </div>
-      </div>
-      <div className={tileRightClassName}>
+        </AssignTileFooterWrapper>
+      </AssignTileContentWrapper>
+      <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <div className={tileStatusClassName}>
+        <AssignTileStatusWrapper>
           {isCurrentlyAssigned ? (
-            <></>
+            <RyogoIcon icon={CheckCheck} color="sky" />
           ) : isBooked ? (
-            <LucideTicketX className={tileRedIconClassName} />
+            <RyogoIcon icon={TicketX} color="red" />
           ) : isOnLeave ? (
-            <LucideCalendarX className={tileRedIconClassName} />
+            <RyogoIcon icon={CalendarX} color="red" />
           ) : (
-            <LucideCheck className={tileGreenIconClassName} />
+            <RyogoIcon icon={Check} color="green" />
           )}
           <Caption>
             {isCurrentlyAssigned
@@ -156,8 +148,110 @@ export default function AssignDriverTile({
                   ? t("Leave")
                   : t("Available")}
           </Caption>
-        </div>
-      </div>
+        </AssignTileStatusWrapper>
+      </AssignTileScoreWrapper>
     </AssignTileWrapper>
+  )
+}
+
+export function IconsTag(props: { icons: LucideIcon[] }) {
+  return (
+    <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
+      {props.icons.map((Icon, index) => {
+        return <RyogoIcon key={index} icon={Icon} />
+      })}
+    </div>
+  )
+}
+
+const LowAllowanceScore = 75
+const MediumAllowanceScore = 100
+const HighAllowanceScore = 50
+const VeryHighAllowanceScore = 10
+function getAllowanceScore(allowance: number): number {
+  if (allowance < 500) {
+    return LowAllowanceScore
+  }
+  if (allowance < 1000) {
+    return MediumAllowanceScore
+  }
+  if (allowance < 2000) {
+    return HighAllowanceScore
+  }
+  return VeryHighAllowanceScore
+}
+
+const InactiveScore = 10
+const LeaveScore = 50
+const OnTripScore = 75
+const AvailableScore = 100
+function getDriverStatusScore(status: DriverStatusEnum): number {
+  if (status === DriverStatusEnum.INACTIVE) {
+    return InactiveScore
+  }
+  if (status === DriverStatusEnum.LEAVE) {
+    return LeaveScore
+  }
+  if (status === DriverStatusEnum.ON_TRIP) {
+    return OnTripScore
+  }
+  return AvailableScore
+}
+
+const HighCanDriveScore = 100
+const MediumCanDriveScore = 50
+const LowCanDriveScore = 10
+function getCanDriveScore(
+  canDrive: VehicleTypesEnum[],
+  passengers: number,
+): number {
+  if (passengers < 1) {
+    if (canDrive.includes(VehicleTypesEnum.TRUCK)) {
+      return HighCanDriveScore
+    } else {
+      return LowCanDriveScore
+    }
+  }
+  if (passengers < 2) {
+    if (canDrive.includes(VehicleTypesEnum.BIKE)) {
+      return HighCanDriveScore
+    } else {
+      return LowCanDriveScore
+    }
+  }
+  if (passengers < 7) {
+    if (canDrive.includes(VehicleTypesEnum.CAR)) {
+      return HighCanDriveScore
+    } else {
+      return LowCanDriveScore
+    }
+  }
+  if (canDrive.includes(VehicleTypesEnum.BUS)) {
+    return HighCanDriveScore
+  }
+  return MediumCanDriveScore
+}
+
+const DriverWeightage_Booking = 0.35
+const DriverWeightage_Leave = 0.2
+const DriverWeightage_Status = 0.15
+const DriverWeightage_License = 0.1
+const DriverWeightage_Allowance = 0.1
+const DriverWeightage_CanDrive = 0.1
+const getDriverTotalScore = (data: {
+  bookingScore: number
+  leaveScore: number
+  statusScore: number
+  licenseScore: number
+  allowanceScore: number
+  canDriveScore: number
+}) => {
+  return (
+    data.bookingScore * DriverWeightage_Booking +
+    data.leaveScore * DriverWeightage_Leave +
+    data.statusScore * DriverWeightage_Status +
+    data.licenseScore * DriverWeightage_License +
+    data.allowanceScore * DriverWeightage_Allowance +
+    data.canDriveScore * DriverWeightage_CanDrive
   )
 }

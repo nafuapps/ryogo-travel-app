@@ -10,7 +10,7 @@ export async function resendCodeAction() {
   if (!currentUser) {
     return
   }
-  const user = await userServices.regenerateVerificationCode(currentUser.userId)
+  const user = await userServices.regenerateCode(currentUser.userId)
   if (!user) return
 
   //Send new code to the user

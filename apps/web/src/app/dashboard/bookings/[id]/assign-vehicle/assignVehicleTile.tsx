@@ -1,60 +1,59 @@
-import { PBold, Small, H2, Caption } from "@/components/typography"
+import { PBold, Small, Caption } from "@/components/typography"
 import {
-  LucideArmchair,
-  LucideAirVent,
-  LucideTicketX,
-  LucideWrench,
-  LucideCheck,
-  LucideBadgeIndianRupee,
+  Armchair,
+  AirVent,
+  BadgeIndianRupee,
+  CheckCheck,
+  Wrench,
+  Check,
+  TicketX,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import {
-  getOverlapScore,
-  NoOverlapScore,
-  getCapacityScore,
-  getVehicleStatusScore,
-  tileLeftClassName,
-  tileHeaderLeftClassName,
-  tileFooterClassName,
-  tileStatusClassName,
-  tileRightClassName,
-  tileRedIconClassName,
-  tileGreenIconClassName,
-  getExpiryScore,
-  getOdometerScore,
-  getRatePerKmScore,
-  getVehicleTypeIcon,
-  getVehicleTotalScore,
-} from "../../new/newBookingCommon"
-import { IconTextTag } from "../../new/newBookingTileTag"
+import { IconTextTag } from "@/components/tags/IconTextTag"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import {
+  AssignTileContentWrapper,
+  AssignTileFooterWrapper,
+  AssignTileHeaderWrapper,
+  AssignTileScoreWrapper,
+  AssignTileStatusWrapper,
   AssignTileWrapper,
   RyoGoScoreWrapper,
 } from "@/components/page/pageWrappers"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  getOverlapScore,
+  NoOverlapScore,
+  getExpiryScore,
+} from "@/components/bookings/getBookingScore"
 
-type AssignVehicleTileProps = {
-  vehicleData: FindVehiclesByAgencyType[number]
-  booking: NonNullable<FindBookingDetailsByIdType>
-  selectedVehicleId: string | null
-  setSelectedVehicleId: (vehicleId: string | null) => void
-}
 export default function AssignVehicleTile({
   vehicleData,
-  booking,
-  selectedVehicleId,
-  setSelectedVehicleId,
-}: AssignVehicleTileProps) {
+  selected,
+  onClick,
+  bookingStartDate,
+  bookingEndDate,
+  bookingPassengers,
+  bookingNeedsAC,
+  bookingId,
+  isCurrentlyAssigned,
+}: {
+  vehicleData: FindVehiclesByAgencyType[number]
+  selected: boolean
+  onClick: () => void
+  bookingStartDate: Date
+  bookingEndDate: Date
+  bookingPassengers: number
+  bookingNeedsAC: boolean
+  bookingId?: string
+  isCurrentlyAssigned?: boolean
+}) {
   const t = useTranslations("Dashboard.AssignVehicle.Tile")
 
-  const isCurrentlyAssigned = booking.assignedVehicleId === vehicleData.id
-
-  const bookingStartDate = new Date(booking.startDate)
-  const bookingEndDate = new Date(booking.endDate)
-
   const bookingOverLapScores = vehicleData.assignedBookings
-    .filter((b) => b.id !== booking.id)
+    .filter((b) => b.id !== bookingId)
     .map((other) => {
       return getOverlapScore(
         new Date(other.startDate),
@@ -94,7 +93,7 @@ export default function AssignVehicleTile({
 
   const capacityScore = getCapacityScore(
     vehicleData.capacity,
-    booking.passengers,
+    bookingPassengers,
   )
 
   const statusScore = getVehicleStatusScore(vehicleData.status)
@@ -109,7 +108,7 @@ export default function AssignVehicleTile({
 
   const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm)
 
-  const acScore = vehicleData.hasAC === booking.needsAc ? 4 : 1
+  const acScore = vehicleData.hasAC === bookingNeedsAC ? 4 : 1
 
   const totalScore = getVehicleTotalScore({
     bookingScore,
@@ -119,55 +118,47 @@ export default function AssignVehicleTile({
     acScore,
     insuranceScore,
     pucScore,
+    rcScore,
     odometerScore,
     ratePerKmScore,
   })
 
   return (
-    <AssignTileWrapper
-      selected={selectedVehicleId === vehicleData.id}
-      onClick={() =>
-        setSelectedVehicleId(
-          selectedVehicleId === vehicleData.id ? null : vehicleData.id,
-        )
-      }
-    >
-      <div className={tileLeftClassName}>
-        <div className={tileHeaderLeftClassName}>
+    <AssignTileWrapper selected={selected} onClick={onClick}>
+      <AssignTileContentWrapper>
+        <AssignTileHeaderWrapper>
           <PBold>{vehicleData.vehicleNumber}</PBold>
           <Small>{vehicleData.brand + " " + vehicleData.model}</Small>
+          <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
+            {getVehicleIcon(vehicleData.type)}
+            <Caption>{vehicleData.color}</Caption>
+          </div>
+        </AssignTileHeaderWrapper>
+        <AssignTileFooterWrapper>
           <IconTextTag
-            icon={getVehicleTypeIcon(vehicleData.type)}
-            text={vehicleData.color}
-          />
-        </div>
-        <div className={tileFooterClassName}>
-          <IconTextTag
-            icon={LucideBadgeIndianRupee}
+            icon={BadgeIndianRupee}
             text={vehicleData.defaultRatePerKm.toString() + t("PerKm")}
           />
           <IconTextTag
-            icon={LucideArmchair}
+            icon={Armchair}
             text={
               vehicleData.capacity + t("Seats", { count: vehicleData.capacity })
             }
           />
-          {vehicleData.hasAC && (
-            <IconTextTag icon={LucideAirVent} text={t("AC")} />
-          )}
-        </div>
-      </div>
-      <div className={tileRightClassName}>
+          {vehicleData.hasAC && <IconTextTag icon={AirVent} text={t("AC")} />}
+        </AssignTileFooterWrapper>
+      </AssignTileContentWrapper>
+      <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <div className={tileStatusClassName}>
+        <AssignTileStatusWrapper>
           {isCurrentlyAssigned ? (
-            <></>
+            <RyogoIcon color="sky" icon={CheckCheck} />
           ) : isBooked ? (
-            <LucideTicketX className={tileRedIconClassName} />
+            <RyogoIcon color="red" icon={TicketX} />
           ) : isRepairScheduled ? (
-            <LucideWrench className={tileRedIconClassName} />
+            <RyogoIcon color="red" icon={Wrench} />
           ) : (
-            <LucideCheck className={tileGreenIconClassName} />
+            <RyogoIcon color="green" icon={Check} />
           )}
           <Caption>
             {isCurrentlyAssigned
@@ -178,8 +169,125 @@ export default function AssignVehicleTile({
                   ? t("RepairScheduled")
                   : t("Available")}
           </Caption>
-        </div>
-      </div>
+        </AssignTileStatusWrapper>
+      </AssignTileScoreWrapper>
     </AssignTileWrapper>
+  )
+}
+
+const VeryOldVehicleScore = 10
+const OldVehicleScore = 50
+const MediumOldVehicleScore = 75
+const GoodVehicleScore = 100
+const BrandNewVehicleScore = 75 //Brand new vehicle is not the best
+function getOdometerScore(odoMeter: number): number {
+  if (odoMeter > 100000) {
+    return VeryOldVehicleScore
+  }
+  if (odoMeter > 50000) {
+    return OldVehicleScore
+  }
+  if (odoMeter > 10000) {
+    return MediumOldVehicleScore
+  }
+  if (odoMeter < 1000) {
+    return BrandNewVehicleScore
+  }
+  return GoodVehicleScore
+}
+
+const LowRateScore = 10
+const MediumRateScore = 50
+const HighRateScore = 100
+const VeryHighRateScore = 75 //Expensive is also not good
+function getRatePerKmScore(rate: number): number {
+  if (rate < 10) {
+    return LowRateScore
+  }
+  if (rate < 20) {
+    return MediumRateScore
+  }
+  if (rate < 40) {
+    return HighRateScore
+  }
+  return VeryHighRateScore
+}
+
+const InactiveScore = 10
+const RepairScore = 50
+const OnTripScore = 75
+const AvailableScore = 100
+function getVehicleStatusScore(status: VehicleStatusEnum): number {
+  if (status === VehicleStatusEnum.INACTIVE) {
+    return InactiveScore
+  }
+  if (status === VehicleStatusEnum.REPAIR) {
+    return RepairScore
+  }
+  if (status === VehicleStatusEnum.ON_TRIP) {
+    return OnTripScore
+  }
+  return AvailableScore
+}
+
+const VeryLowCapacityScore = 10
+const LowCapacityScore = 30
+const TooMuchOverCapacityScore = 50
+const OverCapacityScore = 75
+const PerfectCapacityScore = 100
+function getCapacityScore(capacity: number, passengers: number): number {
+  if (capacity < passengers) {
+    //Very low capacity
+    if (capacity < passengers * 0.75) {
+      return VeryLowCapacityScore
+    }
+    //Low capacity
+    return LowCapacityScore
+  }
+  if (capacity > passengers) {
+    //Too much over capacity
+    if (capacity > passengers * 1.25) {
+      return TooMuchOverCapacityScore
+    }
+    //Over capacity
+    return OverCapacityScore
+  }
+  //Perfect capacity
+  return PerfectCapacityScore
+}
+
+const VehicleWeightage_Booking = 0.25
+const VehicleWeightage_Repair = 0.15
+const VehicleWeightage_Capacity = 0.2
+const VehicleWeightage_Status = 0.1
+const VehicleWeightage_AC = 0.05
+const VehicleWeightage_Insurance = 0.05
+const VehicleWeightage_PUC = 0.05
+const VehicleWeightage_RC = 0.05
+const VehicleWeightage_Odometer = 0.05
+const VehicleWeightage_Rate = 0.05
+const getVehicleTotalScore = (data: {
+  bookingScore: number
+  repairScore: number
+  capacityScore: number
+  statusScore: number
+  acScore: number
+  insuranceScore: number
+  pucScore: number
+  rcScore: number
+  odometerScore: number
+  ratePerKmScore: number
+}) => {
+  return (
+    data.bookingScore * VehicleWeightage_Booking +
+    data.repairScore * VehicleWeightage_Repair +
+    data.capacityScore * VehicleWeightage_Capacity +
+    data.statusScore * VehicleWeightage_Status +
+    data.acScore * VehicleWeightage_AC +
+    data.insuranceScore * VehicleWeightage_Insurance +
+    data.pucScore * VehicleWeightage_PUC +
+    data.rcScore * VehicleWeightage_RC +
+    data.odometerScore * VehicleWeightage_Odometer +
+    data.ratePerKmScore * VehicleWeightage_Rate
   )
 }

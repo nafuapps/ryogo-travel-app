@@ -18,7 +18,7 @@ import stateCityData from "@/lib/states_cities.json"
 import { Info } from "lucide-react"
 import { PhoneRegex } from "@/lib/regex"
 import { Alert } from "@/components/ui/alert"
-import ExistingCutomerCard from "./newBookingExistingCustomer"
+import ExistingCutomerCard from "@/components/bookings/newBookingExistingCustomer"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import {
   getArrayValueDisplayPairs,

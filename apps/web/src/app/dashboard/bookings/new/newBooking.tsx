@@ -29,8 +29,7 @@ export default async function NewBookingPageComponent({
   return (
     <PageWrapper id="NewBookingPage">
       <NewBookingForm
-        agencyId={agencyId}
-        agencyLocation={agency.location}
+        agency={agency}
         commissionRate={agency.defaultCommissionRate}
         vehicles={vehicles}
         drivers={drivers}

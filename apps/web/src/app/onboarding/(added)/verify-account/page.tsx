@@ -47,5 +47,5 @@ export default async function VerifyAccountPage() {
   }
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
-  return <VerifyAccountPageComponent updatedAt={userDetails?.updatedAt} />
+  return <VerifyAccountPageComponent codeSentAt={userDetails?.codeSentAt} />
 }

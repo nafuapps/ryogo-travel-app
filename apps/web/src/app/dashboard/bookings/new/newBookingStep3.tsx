@@ -4,18 +4,15 @@ import { H4, PBold, SmallGrey, Caption } from "@/components/typography"
 import { DriverRegex, VehicleRegex } from "@/lib/regex"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import {
   NewBookingFormDataType,
-  Step3Type,
   NewBookingTotalSteps,
 } from "./newBookingCommon"
 import StepsTracker from "@/components/form/stepsTracker"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
-import NewBookingVehicleTile from "./newBookingVehicleTile"
-import NewBookingDriverTile from "./newBookingDriverTile"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import {
@@ -26,6 +23,8 @@ import {
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
+import AssignDriverTile from "../[id]/assign-driver/assignDriverTile"
+import AssignVehicleTile from "../[id]/assign-vehicle/assignVehicleTile"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -46,7 +45,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
     assignedVehicleId: VehicleRegex.optional(),
   })
 
-  // type Step3Type = z.infer<typeof step3Schema>;
+  type Step3Type = z.infer<typeof step3Schema>
 
   //Form init
   const form = useForm<Step3Type>({
@@ -76,6 +75,16 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
     props.onNext()
   }
 
+  const assignedVehicleId = useWatch({
+    name: "assignedVehicleId",
+    control: form.control,
+  })
+
+  const assignedDriverId = useWatch({
+    name: "assignedDriverId",
+    control: form.control,
+  })
+
   return (
     <NewStepWrapper id="AssignmentStep">
       <NewStepHeaderWrapper>
@@ -102,11 +111,15 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
                 (a, b) => a.assignedBookings.length - b.assignedBookings.length,
               )
               .map((vehicle, index) => (
-                <NewBookingVehicleTile
+                <AssignVehicleTile
                   key={index}
                   vehicleData={vehicle}
-                  newBookingFormData={props.newBookingFormData}
-                  setValue={form.setValue}
+                  selected={assignedVehicleId === vehicle.id}
+                  onClick={() => form.setValue("assignedVehicleId", vehicle.id)}
+                  bookingStartDate={props.newBookingFormData.tripStartDate}
+                  bookingEndDate={props.newBookingFormData.tripEndDate}
+                  bookingPassengers={props.newBookingFormData.tripPassengers}
+                  bookingNeedsAC={props.newBookingFormData.tripNeedsAC}
                 />
               ))}
           </div>
@@ -118,11 +131,14 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
             className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
           >
             {props.drivers.map((driver, index) => (
-              <NewBookingDriverTile
+              <AssignDriverTile
                 key={index}
                 driverData={driver}
-                newBookingFormData={props.newBookingFormData}
-                setValue={form.setValue}
+                bookingStartDate={props.newBookingFormData.tripStartDate}
+                bookingEndDate={props.newBookingFormData.tripEndDate}
+                bookingPassengers={props.newBookingFormData.tripPassengers}
+                selected={assignedDriverId === driver.id}
+                onClick={() => form.setValue("assignedDriverId", driver.id)}
               />
             ))}
           </div>

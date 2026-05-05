@@ -65,9 +65,17 @@ export default function AssignDriverPageComponent({
           <AssignDriverTile
             key={index}
             driverData={driver}
-            booking={booking}
-            selectedDriverId={selectedDriverId}
-            setSelectedDriverId={setSelectedDriverId}
+            bookingStartDate={booking.startDate}
+            bookingEndDate={booking.endDate}
+            bookingPassengers={booking.passengers}
+            bookingId={booking.id}
+            isCurrentlyAssigned={booking.assignedDriverId === driver.id}
+            selected={selectedDriverId === driver.id}
+            onClick={() =>
+              setSelectedDriverId(
+                selectedDriverId === driver.id ? null : driver.id,
+              )
+            }
           />
         ))}
         <Button

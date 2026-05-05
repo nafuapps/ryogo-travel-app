@@ -289,7 +289,7 @@ export const userRepository = {
   async updateVerificationCode(userId: string, code: string) {
     return await db
       .update(users)
-      .set({ verificationCode: code })
+      .set({ verificationCode: code, codeSentAt: new Date() })
       .where(eq(users.id, userId))
       .returning({
         id: users.id,

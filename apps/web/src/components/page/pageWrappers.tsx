@@ -181,6 +181,60 @@ export function AssignTileWrapper({
   )
 }
 
+export function AssignTileContentWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col gap-3 lg:gap-4 justify-between h-full overflow-hidden">
+      {children}
+    </div>
+  )
+}
+
+export function AssignTileHeaderWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return <div className="flex flex-col gap-1 lg:gap-1.5">{children}</div>
+}
+
+export function AssignTileFooterWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-row flex-wrap gap-3 lg:gap-4">{children}</div>
+  )
+}
+
+export function AssignTileScoreWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col items-end justify-between gap-3 lg:gap-4 h-full">
+      {children}
+    </div>
+  )
+}
+
+export function AssignTileStatusWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center text-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-full border border-slate-300">
+      {children}
+    </div>
+  )
+}
+
 export const BestTotalScore = 100
 export const GoodTotalScore = 80
 export const MediumTotalScore = 60

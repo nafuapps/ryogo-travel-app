@@ -19,7 +19,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { BigIconTextTag } from "./newBookingTileTag"
+import { IconTextTag } from "@/components/tags/IconTextTag"
 import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
 import NewBookingTripInfo from "./newBookingTripInfo"
@@ -121,7 +121,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         <NewBookingTripInfo {...props.newBookingFormData} />
         <NewFormContentWrapper>
           <NewFormLineItemWrapper>
-            <BigIconTextTag icon={Car} text={t("VehicleCharge")} />
+            <IconTextTag icon={Car} text={t("VehicleCharge")} />
             <NewFormLineItemSubtitleWrapper>
               <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
               <CaptionGrey>
@@ -134,7 +134,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           </NewFormLineItemWrapper>
           {props.newBookingFormData.tripNeedsAC && (
             <NewFormLineItemWrapper>
-              <BigIconTextTag icon={AirVent} text={t("ACCharge")} />
+              <IconTextTag icon={AirVent} text={t("ACCharge")} />
               <NewFormLineItemSubtitleWrapper>
                 <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
                 <CaptionGrey>
@@ -147,7 +147,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             </NewFormLineItemWrapper>
           )}
           <NewFormLineItemWrapper>
-            <BigIconTextTag icon={IdCard} text={t("DriverAllowance")} />
+            <IconTextTag icon={IdCard} text={t("DriverAllowance")} />
             <NewFormLineItemSubtitleWrapper>
               <SmallBold>{"₹" + finalAmount.totalDriverAllowance}</SmallBold>
               <CaptionGrey>
@@ -159,7 +159,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             </NewFormLineItemSubtitleWrapper>
           </NewFormLineItemWrapper>
           <NewFormLineItemWrapper>
-            <BigIconTextTag icon={CirclePercent} text={t("Commission")} />
+            <IconTextTag icon={CirclePercent} text={t("Commission")} />
             <NewFormLineItemSubtitleWrapper>
               <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
               <CaptionGrey>

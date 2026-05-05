@@ -11,15 +11,6 @@ import {
   LucideIcon,
 } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
-import {
-  AssignTileContentWrapper,
-  AssignTileFooterWrapper,
-  AssignTileHeaderWrapper,
-  AssignTileScoreWrapper,
-  AssignTileStatusWrapper,
-  AssignTileWrapper,
-  RyoGoScoreWrapper,
-} from "@/components/page/pageWrappers"
 import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
 import { RyogoIcon } from "@/components/icons/RyogoIcon"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -28,6 +19,15 @@ import {
   getOverlapScore,
   NoOverlapScore,
 } from "@/components/bookings/getBookingScore"
+import {
+  AssignTileWrapper,
+  AssignTileContentWrapper,
+  AssignTileHeaderWrapper,
+  AssignTileFooterWrapper,
+  AssignTileScoreWrapper,
+  RyoGoScoreWrapper,
+  AssignTileStatusWrapper,
+} from "@/components/bookings/assign/assignWrappers"
 
 export default function AssignDriverTile({
   driverData,

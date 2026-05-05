@@ -1,13 +1,13 @@
 import { PBold, CaptionGrey, SmallGrey, Caption } from "@/components/typography"
 import { CalendarDays, Users } from "lucide-react"
-import { NewBookingFormDataType } from "./newBookingCommon"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { useTranslations } from "next-intl"
 import { format } from "date-fns"
 import { getDuration } from "@/lib/utils"
 import getTripIcon from "@/components/icons/tripIcon"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 
-export default function NewBookingTripInfo(props: NewBookingFormDataType) {
+export default function NewBookingTripCard(props: NewBookingFormDataType) {
   const t = useTranslations("Dashboard.NewBooking.Form")
   const duration = getDuration(props.tripStartDate, props.tripEndDate)
 

@@ -6,11 +6,9 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
-import {
-  NewBookingFormDataType,
+import StepsTracker, {
   NewBookingTotalSteps,
-} from "./newBookingCommon"
-import StepsTracker from "@/components/form/stepsTracker"
+} from "@/components/form/stepsTracker"
 import { RyogoCombobox, RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -25,13 +23,16 @@ import {
   getStringValueDisplayPairs,
 } from "@/lib/utils"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
 
 type NewBookingStep1Props = {
   onNext: () => void

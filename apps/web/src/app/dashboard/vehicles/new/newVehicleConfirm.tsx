@@ -7,19 +7,23 @@ import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import StepsTracker from "@/components/form/stepsTracker"
+import StepsTracker, {
+  NewVehicleTotalSteps,
+} from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import { useTransition } from "react"
 import ConfirmValues from "@/components/form/confirmValues"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
 
 export function NewVehicleConfirm(props: {
   onNext: () => void
@@ -79,7 +83,7 @@ export function NewVehicleConfirm(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </NewStepTitleWrapper>
-        <StepsTracker total={5} current={4} />
+        <StepsTracker total={NewVehicleTotalSteps} current={4} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </NewStepHeaderWrapper>
       <NewFormWrapper<AddVehicleRequestType>

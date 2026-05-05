@@ -4,7 +4,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
-import AssignVehicleTile from "./assignVehicleTile"
+import AssignVehicleTile from "@/components/bookings/assign/assignVehicleTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"

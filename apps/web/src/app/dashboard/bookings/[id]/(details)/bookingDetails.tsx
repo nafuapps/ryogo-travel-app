@@ -1,7 +1,7 @@
 import { linkClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookingDetailHeaderTabs from "./bookingDetailHeaderTabs"
+import BookingDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -9,9 +9,9 @@ import moment from "moment"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import CancelBookingAlertButton from "@/components/buttons/cancelBookingAlertButton"
 import SendInvoiceAlertButton from "@/components/buttons/sendInvoiceAlertButton"
-import BookingItem from "@/components/bookings/bookingItem"
-import BookingPriceItem from "@/components/bookings/bookingPriceItem"
-import BookingSection from "@/components/bookings/bookingSection"
+import BookingItem from "@/components/bookings/details/bookingItem"
+import BookingPriceItem from "@/components/bookings/details/bookingPriceItem"
+import BookingSection from "@/components/bookings/details/bookingSection"
 import {
   BriefcaseBusiness,
   Contact,
@@ -21,7 +21,6 @@ import {
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/components/buttons/sendConfirmationAlertButton"
 import { PageWrapper } from "@/components/page/pageWrappers"
-// import InvoicePDFViewer from "./invoicePDFViewer"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,

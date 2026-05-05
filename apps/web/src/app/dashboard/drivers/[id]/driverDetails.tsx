@@ -1,5 +1,5 @@
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "./driverDetailHeaderTabs"
+import DriverDetailHeaderTabs from "@/components/header/driverDetailHeaderTabs"
 import {
   Caption,
   CaptionRed,
@@ -27,7 +27,7 @@ import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import ChangeDriverPhotoSheet from "./changeDriverPhotoSheet"
+import ChangeDriverPhotoSheet from "@/components/sheets/changeDriverPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { PageWrapper } from "@/components/page/pageWrappers"

@@ -1,5 +1,5 @@
 import { FindUserActivityByIdType } from "@ryogo-travel-app/api/services/user.services"
-import UserDetailHeaderTabs from "../userDetailHeaderTabs"
+import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
 import moment from "moment"
 import { Caption, PBold, SmallBold } from "@/components/typography"
 import Link from "next/link"

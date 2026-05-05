@@ -1,5 +1,5 @@
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "../driverDetailHeaderTabs"
+import DriverDetailHeaderTabs from "@/components/header/driverDetailHeaderTabs"
 import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"

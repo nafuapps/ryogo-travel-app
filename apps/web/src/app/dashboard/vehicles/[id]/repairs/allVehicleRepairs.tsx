@@ -1,5 +1,5 @@
 import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import VehicleDetailHeaderTabs from "../vehicleDetailHeaderTabs"
+import VehicleDetailHeaderTabs from "@/components/header/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import Link from "next/link"

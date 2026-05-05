@@ -8,32 +8,35 @@ import {
   SmallGrey,
 } from "@/components/typography"
 import { useTranslations } from "next-intl"
-import {
-  NewBookingFormDataType,
+import StepsTracker, {
   NewBookingTotalSteps,
-} from "./newBookingCommon"
-import StepsTracker from "@/components/form/stepsTracker"
+} from "@/components/form/stepsTracker"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
+import {
+  CreateNewBookingRequestType,
+  NewBookingFormDataType,
+} from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
-import NewBookingTripInfo from "./newBookingTripInfo"
+import NewBookingTripCard from "@/components/bookings/newBookingTripCard"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
 import { getEstimatedTotalPrice } from "@/lib/utils"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -118,7 +121,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewBookingTripInfo {...props.newBookingFormData} />
+        <NewBookingTripCard {...props.newBookingFormData} />
         <NewFormContentWrapper>
           <NewFormLineItemWrapper>
             <IconTextTag icon={Car} text={t("VehicleCharge")} />

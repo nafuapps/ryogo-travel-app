@@ -8,12 +8,12 @@ import NewBookingStep3 from "./newBookingStep3"
 import NewBookingStep4 from "./newBookingStep4"
 import NewBookingFinal from "./newBookingFinal"
 import { useState } from "react"
-import { NewBookingFormDataType } from "./newBookingCommon"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 
 export default function NewBookingForm(props: {
   agency: NonNullable<FindAgencyByIdType>

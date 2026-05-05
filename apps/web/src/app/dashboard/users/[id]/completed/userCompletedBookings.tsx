@@ -4,7 +4,7 @@ import moment from "moment"
 import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
-import UserDetailHeaderTabs from "../userDetailHeaderTabs"
+import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
 import {
   GridItemWrapper,
   GridWrapper,

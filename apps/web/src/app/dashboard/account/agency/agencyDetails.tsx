@@ -1,5 +1,5 @@
 import { AgencyStatusPill } from "@/components/statusPills/statusPills"
-import AccountDetailHeaderTabs from "../accountDetailHeaderTabs"
+import AccountDetailHeaderTabs from "@/components/header/accountDetailHeaderTabs"
 import {
   H4,
   Caption,

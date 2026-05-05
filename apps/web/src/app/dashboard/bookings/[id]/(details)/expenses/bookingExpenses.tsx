@@ -1,9 +1,9 @@
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookindDetailHeaderTabs from "../bookingDetailHeaderTabs"
+import BookindDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import ExpenseItem from "./expenseItem"
+import ExpenseItem from "@/components/bookings/expense/expenseItem"
 import { SmallGrey } from "@/components/typography"
 import { PageWrapper } from "@/components/page/pageWrappers"
 

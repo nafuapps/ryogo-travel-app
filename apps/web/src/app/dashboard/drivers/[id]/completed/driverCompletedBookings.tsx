@@ -1,5 +1,5 @@
 import { FindDriverCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "../driverDetailHeaderTabs"
+import DriverDetailHeaderTabs from "@/components/header/driverDetailHeaderTabs"
 import { Caption, CaptionGrey, PBold } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"

@@ -5,23 +5,24 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import {
-  NewBookingFormDataType,
+import StepsTracker, {
   NewBookingTotalSteps,
-} from "./newBookingCommon"
-import StepsTracker from "@/components/form/stepsTracker"
+} from "@/components/form/stepsTracker"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import NewBookingTripInfo from "./newBookingTripInfo"
+import NewBookingTripCard from "@/components/bookings/newBookingTripCard"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
 
 type NewBookingStep4Props = {
   onNext: () => void
@@ -115,7 +116,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewBookingTripInfo {...props.newBookingFormData} />
+        <NewBookingTripCard {...props.newBookingFormData} />
         <NewFormContentWrapper>
           <RyogoInput
             name="selectedDistance"

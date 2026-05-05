@@ -8,20 +8,24 @@ import z from "zod"
 import { Dispatch, SetStateAction } from "react"
 import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
 import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
+import StepsTracker, {
+  NewVehicleTotalSteps,
+} from "@/components/form/stepsTracker"
 import { Button } from "@/components/ui/button"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
 
 export function NewVehicleStep1(props: {
   onNext: () => void
@@ -90,7 +94,7 @@ export function NewVehicleStep1(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </NewStepTitleWrapper>
-        <StepsTracker total={5} current={0} />
+        <StepsTracker total={NewVehicleTotalSteps} current={0} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step1Type>

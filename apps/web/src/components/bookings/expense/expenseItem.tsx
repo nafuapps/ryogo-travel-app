@@ -15,8 +15,8 @@ import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/book
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ExpenseApprovalButton } from "./expenseApprovalButton"
 import getExpenseIcon from "@/components/icons/expenseIcon"
+import { ExpenseApprovalButton } from "./expenseApprovalButton"
 
 export default async function ExpenseItem({
   expense,

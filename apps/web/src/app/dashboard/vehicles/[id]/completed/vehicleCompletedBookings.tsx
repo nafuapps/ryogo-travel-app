@@ -1,5 +1,5 @@
 import { FindVehicleCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import VehicleDetailHeaderTabs from "../vehicleDetailHeaderTabs"
+import VehicleDetailHeaderTabs from "@/components/header/vehicleDetailHeaderTabs"
 import { Caption, CaptionGrey, PBold } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"

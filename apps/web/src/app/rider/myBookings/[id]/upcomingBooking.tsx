@@ -1,9 +1,9 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import StartTripSheet from "./startTripSheet"
+import StartTripSheet from "@/components/rider/tripSheets/startTripSheet"
 import { BookingCommonInfo } from "@/components/rider/riderBookingCommon"
 import { SmallBold } from "@/components/typography"
-import RiderExpenseItem from "./riderExpenseItem"
+import RiderExpenseItem from "@/components/rider/riderExpenseItem"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyUpcomingBookingPageComponent({

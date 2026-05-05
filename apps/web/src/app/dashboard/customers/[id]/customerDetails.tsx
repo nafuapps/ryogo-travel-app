@@ -1,5 +1,5 @@
 import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
-import CustomerDetailHeaderTabs from "./customerDetailHeaderTabs"
+import CustomerDetailHeaderTabs from "@/components/header/customerDetailHeaderTabs"
 import {
   Caption,
   CaptionGrey,
@@ -19,7 +19,7 @@ import Link from "next/link"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateCustomerAlertButton from "@/components/buttons/inactivateCustomerAlertButton"
 import ActivateCustomerAlertButton from "@/components/buttons/activateCustomerAlertButton"
-import ChangeCustomerPhotoSheet from "./changeCustomerPhotoSheet"
+import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
 import { CustomerStatusPill } from "@/components/statusPills/statusPills"
 import { PageWrapper } from "@/components/page/pageWrappers"
 

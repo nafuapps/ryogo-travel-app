@@ -1,8 +1,8 @@
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookindDetailHeaderTabs from "../bookingDetailHeaderTabs"
+import BookindDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
 import { SmallGrey } from "@/components/typography"
-import TripLogItem from "./tripLogItem"
+import TripLogItem from "@/components/bookings/tripLog/tripLogItem"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingTripLogsPageComponent({

@@ -1,6 +1,6 @@
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookingDetailHeaderTabs from "../bookingDetailHeaderTabs"
+import BookingDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import TransactionItem from "./transactionItem"

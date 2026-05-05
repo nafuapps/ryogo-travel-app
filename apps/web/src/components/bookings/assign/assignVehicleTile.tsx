@@ -12,14 +12,14 @@ import { useTranslations } from "next-intl"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import {
-  AssignTileContentWrapper,
-  AssignTileFooterWrapper,
-  AssignTileHeaderWrapper,
-  AssignTileScoreWrapper,
-  AssignTileStatusWrapper,
   AssignTileWrapper,
+  AssignTileContentWrapper,
+  AssignTileHeaderWrapper,
+  AssignTileFooterWrapper,
+  AssignTileScoreWrapper,
   RyoGoScoreWrapper,
-} from "@/components/page/pageWrappers"
+  AssignTileStatusWrapper,
+} from "@/components/bookings/assign/assignWrappers"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { RyogoIcon } from "@/components/icons/RyogoIcon"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"

@@ -12,14 +12,14 @@ import {
 } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import {
-  AssignTileContentWrapper,
-  AssignTileFooterWrapper,
-  AssignTileHeaderWrapper,
-  AssignTileScoreWrapper,
-  AssignTileStatusWrapper,
   AssignTileWrapper,
+  AssignTileContentWrapper,
+  AssignTileHeaderWrapper,
+  AssignTileFooterWrapper,
+  AssignTileScoreWrapper,
   RyoGoScoreWrapper,
-} from "@/components/page/pageWrappers"
+  AssignTileStatusWrapper,
+} from "@/components/bookings/assign/assignWrappers"
 import { RyogoIcon } from "@/components/icons/RyogoIcon"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {

@@ -7,19 +7,23 @@ import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import StepsTracker from "@/components/form/stepsTracker"
+import StepsTracker, {
+  NewDriverTotalSteps,
+} from "@/components/form/stepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import { useTransition } from "react"
 import ConfirmValues from "@/components/form/confirmValues"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
-import { NewFormWrapper } from "@/components/page/pageWrappers"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -72,7 +76,7 @@ export function NewDriverConfirm(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </NewStepTitleWrapper>
-        <StepsTracker total={4} current={3} />
+        <StepsTracker total={NewDriverTotalSteps} current={3} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </NewStepHeaderWrapper>
       <NewFormWrapper<AddDriverRequestType>

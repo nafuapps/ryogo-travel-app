@@ -1,7 +1,7 @@
 //MyProfile/Help page
 
 import { getTranslations } from "next-intl/server"
-import MyProfileDetailHeaderTabs from "../myProfileHeaderTabs"
+import MyProfileDetailHeaderTabs from "@/components/header/myProfileHeaderTabs"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: MyProfile Help page

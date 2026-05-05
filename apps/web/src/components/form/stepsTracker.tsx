@@ -1,3 +1,8 @@
+export const NewBookingTotalSteps = 5
+export const NewVehicleTotalSteps = 5
+export const NewDriverTotalSteps = 4
+export const NewAgentTotalSteps = 1
+
 export default function StepsTracker({
   total,
   current,

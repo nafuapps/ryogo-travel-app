@@ -13,16 +13,20 @@ import {
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
+import StepsTracker, {
+  NewVehicleTotalSteps,
+} from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
 
 export function NewVehicleStep2(props: {
   onNext: () => void
@@ -130,7 +134,7 @@ export function NewVehicleStep2(props: {
           <H4>{t("Title")}</H4>
           <CaptionGrey>{t("Subtitle")}</CaptionGrey>
         </NewStepTitleWrapper>
-        <StepsTracker total={5} current={1} />
+        <StepsTracker total={NewVehicleTotalSteps} current={1} />
         <SmallGrey>{t("Description")}</SmallGrey>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step2Type>

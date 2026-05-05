@@ -1,5 +1,5 @@
 import { FindCustomerUpcomingBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
-import CustomerDetailHeaderTabs from "../customerDetailHeaderTabs"
+import CustomerDetailHeaderTabs from "@/components/header/customerDetailHeaderTabs"
 import moment from "moment"
 import { Caption, CaptionGrey, PBold, PRed } from "@/components/typography"
 import Link from "next/link"

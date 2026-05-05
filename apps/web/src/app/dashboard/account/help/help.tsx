@@ -1,7 +1,7 @@
 //Account/Help page
 
 import { getTranslations } from "next-intl/server"
-import AccountDetailHeaderTabs from "../accountDetailHeaderTabs"
+import AccountDetailHeaderTabs from "@/components/header/accountDetailHeaderTabs"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Account Help page

@@ -6,25 +6,27 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
-import {
-  NewBookingFormDataType,
+
+import StepsTracker, {
   NewBookingTotalSteps,
-} from "./newBookingCommon"
-import StepsTracker from "@/components/form/stepsTracker"
+} from "@/components/form/stepsTracker"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
 } from "@/components/page/pageWrappers"
-import AssignDriverTile from "../[id]/assign-driver/assignDriverTile"
-import AssignVehicleTile from "../[id]/assign-vehicle/assignVehicleTile"
+import AssignDriverTile from "@/components/bookings/assign/assignDriverTile"
+import AssignVehicleTile from "@/components/bookings/assign/assignVehicleTile"
+import {
+  NewFormWrapper,
+  NewFormContentWrapper,
+  NewFormActionWrapper,
+} from "@/components/form/newFormWrappers"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 
 type NewBookingStep3Props = {
   onNext: () => void

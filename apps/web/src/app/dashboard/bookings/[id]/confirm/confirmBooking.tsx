@@ -6,9 +6,9 @@ import moment from "moment"
 import { format } from "date-fns"
 import CancelBookingAlertButton from "@/components/buttons/cancelBookingAlertButton"
 import SendQuoteAlertButton from "@/components/buttons/sendQuoteAlertButton"
-import BookingItem from "@/components/bookings/bookingItem"
-import BookingSection from "@/components/bookings/bookingSection"
-import BookingPriceItem from "@/components/bookings/bookingPriceItem"
+import BookingItem from "@/components/bookings/details/bookingItem"
+import BookingSection from "@/components/bookings/details/bookingSection"
+import BookingPriceItem from "@/components/bookings/details/bookingPriceItem"
 import {
   BriefcaseBusiness,
   CalendarCheck,
@@ -20,7 +20,6 @@ import {
 import { getTranslations } from "next-intl/server"
 import ConfirmBookingForm from "./confirmBookingForm"
 import { PageWrapper } from "@/components/page/pageWrappers"
-// import LeadPDFViewer from "./leadPDFViewer"
 
 export default async function ConfirmBookingPageComponent({
   booking,

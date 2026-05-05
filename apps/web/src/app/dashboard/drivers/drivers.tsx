@@ -1,7 +1,7 @@
-import OnTripDriversComponent from "./(all)/onTripDriversComponent"
-import AllDriversListComponent from "./(all)/allDriversListComponent"
-import DriversHistoryComponent from "./(all)/driversHistoryComponent"
-import DriversScheduleComponent from "./(all)/driversScheduleComponent"
+import OnTripDriversComponent from "@/components/drivers/home/onTripDriversComponent"
+import AllDriversListComponent from "@/components/drivers/home/allDriversListComponent"
+import DriversHistoryComponent from "@/components/drivers/home/driversHistoryComponent"
+import DriversScheduleComponent from "@/components/drivers/home/driversScheduleComponent"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 /**

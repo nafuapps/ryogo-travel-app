@@ -1,5 +1,7 @@
-import { NewBookingFormDataType } from "@/app/dashboard/bookings/new/newBookingCommon"
-import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
+import {
+  CreateNewBookingRequestType,
+  NewBookingFormDataType,
+} from "@ryogo-travel-app/api/types/booking.types"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
 import { differenceInDays, startOfDay } from "date-fns"

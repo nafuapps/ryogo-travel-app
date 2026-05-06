@@ -21,7 +21,7 @@ import InactivateCustomerAlertButton from "@/components/buttons/inactivateCustom
 import ActivateCustomerAlertButton from "@/components/buttons/activateCustomerAlertButton"
 import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
 import { CustomerStatusPill } from "@/components/statusPills/statusPills"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -33,10 +33,7 @@ export default async function CustomerDetailsPageComponent({
   return (
     <PageWrapper id="CustomerDetailsPage">
       <CustomerDetailHeaderTabs selectedTab={"Details"} id={customer.id} />
-      <div
-        id="CustomerDetailsInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="CustomerDetailsInfo">
         <CustomerSection sectionTitle={t("BasicInfo")}>
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-2 lg:gap-3 items-start">
@@ -116,7 +113,7 @@ export default async function CustomerDetailsPageComponent({
             />
           )}
         </div>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

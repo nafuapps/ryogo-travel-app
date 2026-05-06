@@ -7,12 +7,11 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
-import { Form } from "@/components/ui/form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
 import { useTransition } from "react"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangePasswordAccountComponent({
   userId,
@@ -85,53 +84,51 @@ export default function ChangePasswordAccountComponent({
   }
   return (
     <PageWrapper id="ChangePassword">
-      <Form {...formData}>
-        <form
-          id="ChangePasswordForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+      <FormWrapper<SchemaType>
+        id="ChangePasswordForm"
+        onSubmit={formData.handleSubmit(onSubmit)}
+        form={formData}
+      >
+        <RyogoInput
+          name={"oldPassword"}
+          type="password"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name={"newPassword"}
+          type="password"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+        <RyogoInput
+          name={"confirmPassword"}
+          type="password"
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+          description={t("Field3.Description")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
         >
-          <RyogoInput
-            name={"oldPassword"}
-            type="password"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name={"newPassword"}
-            type="password"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <RyogoInput
-            name={"confirmPassword"}
-            type="password"
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
-      </Form>
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"secondary"}
+          size={"lg"}
+          type="button"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          {t("SecondaryCTA")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

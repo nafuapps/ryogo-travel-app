@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import { assignVehicleAction } from "@/app/actions/bookings/assignVehicleAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignVehiclePageComponent({
   bookingId,
@@ -56,10 +56,7 @@ export default function AssignVehiclePageComponent({
 
   return (
     <PageWrapper id="AssignVehiclePage">
-      <div
-        id="AssignVehicleInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="AssignVehicleInfo">
         <SmallBold>{t("Title")}</SmallBold>
         {vehicles.map((vehicle, index) => (
           <AssignVehicleTile
@@ -97,7 +94,7 @@ export default function AssignVehiclePageComponent({
         >
           {t("CancelCTA")}
         </Button>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

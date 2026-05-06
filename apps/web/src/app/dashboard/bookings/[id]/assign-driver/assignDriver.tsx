@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignDriverPageComponent({
   bookingId,
@@ -56,10 +56,7 @@ export default function AssignDriverPageComponent({
 
   return (
     <PageWrapper id="AssignDriverPage">
-      <div
-        id="AssignDriverInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="AssignDriverInfo">
         <SmallBold>{t("Title")}</SmallBold>
         {drivers.map((driver, index) => (
           <AssignDriverTile
@@ -96,7 +93,7 @@ export default function AssignDriverPageComponent({
         >
           {t("CancelCTA")}
         </Button>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

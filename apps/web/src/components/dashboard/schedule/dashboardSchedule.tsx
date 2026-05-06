@@ -14,7 +14,6 @@ import {
   Select,
 } from "@/components/ui/select"
 import { LucideCalendarDays, LucideIcon } from "lucide-react"
-import { iconClassName } from "../home/metrics/dashboardMetricsCommons"
 import { Dispatch, SetStateAction } from "react"
 import { useTranslations } from "next-intl"
 import moment from "moment"
@@ -26,6 +25,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
+import { iconClassName } from "@/components/page/pageCommons"
 
 export enum SelectableDays {
   SEVEN = "7Days",

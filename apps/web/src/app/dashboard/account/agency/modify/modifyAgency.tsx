@@ -6,7 +6,6 @@ import {
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { useTranslations } from "next-intl"
@@ -24,7 +23,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyAgencyPageForm({
   agency,
@@ -117,75 +116,73 @@ export default function ModifyAgencyPageForm({
 
   return (
     <PageWrapper id="ModifyAgencyPage">
-      <Form {...formData}>
-        <form
-          id="Form"
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-          onSubmit={formData.handleSubmit(onSubmit)}
+      <FormWrapper<SchemaType>
+        id="ModifyAgencyForm"
+        onSubmit={formData.handleSubmit(onSubmit)}
+        form={formData}
+      >
+        <RyogoInput
+          name={"agencyName"}
+          type="text"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoTextarea
+          name={"agencyAddress"}
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+        />
+        <RyogoFileInput
+          name={"agencyLogo"}
+          register={formData.register("agencyLogo")}
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+          description={t("Field3.Description")}
+        />
+        <RyogoInput
+          name={"commissionRate"}
+          type="tel"
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+          description={t("Field4.Description")}
+        />
+        <RyogoCombobox
+          name={"agencyState"}
+          register={formData.register("agencyState")}
+          title={t("Field5.Title")}
+          array={getArrayValueDisplayPairs(data)}
+          placeholder={t("Field5.Title")}
+          resetField={() => {
+            formData.setValue("agencyCity", "")
+          }}
+        />
+        <RyogoCombobox
+          name={"agencyCity"}
+          register={formData.register("agencyCity")}
+          title={t("Field6.Title")}
+          array={getStringValueDisplayPairs(cityOptions)}
+          placeholder={t("Field6.Title")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
         >
-          <RyogoInput
-            name={"agencyName"}
-            type="text"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoTextarea
-            name={"agencyAddress"}
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-          />
-          <RyogoFileInput
-            name={"agencyLogo"}
-            register={formData.register("agencyLogo")}
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-          />
-          <RyogoInput
-            name={"commissionRate"}
-            type="tel"
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
-          />
-          <RyogoCombobox
-            name={"agencyState"}
-            register={formData.register("agencyState")}
-            title={t("Field5.Title")}
-            array={getArrayValueDisplayPairs(data)}
-            placeholder={t("Field5.Title")}
-            resetField={() => {
-              formData.setValue("agencyCity", "")
-            }}
-          />
-          <RyogoCombobox
-            name={"agencyCity"}
-            register={formData.register("agencyCity")}
-            title={t("Field6.Title")}
-            array={getStringValueDisplayPairs(cityOptions)}
-            placeholder={t("Field6.Title")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
-      </Form>
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"secondary"}
+          size={"lg"}
+          type="button"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          {t("SecondaryCTA")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

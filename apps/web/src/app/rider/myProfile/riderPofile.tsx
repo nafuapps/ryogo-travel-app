@@ -12,7 +12,7 @@ import LogoutAlertButton from "@/components/buttons/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderProfilePageComponent({
   driverDetails,
@@ -24,10 +24,7 @@ export default async function RiderProfilePageComponent({
   return (
     <PageWrapper id="RiderProfilePage">
       <MyProfileDetailHeaderTabs selectedTab={"Details"} />
-      <div
-        id="AccountDetailsInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="RiderAccountDetailsInfo">
         <div className="flex flex-col gap-2 lg:gap-3">
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-2 lg:gap-3 items-start">
@@ -84,7 +81,7 @@ export default async function RiderProfilePageComponent({
             })}
           </CaptionGrey>
         </div>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

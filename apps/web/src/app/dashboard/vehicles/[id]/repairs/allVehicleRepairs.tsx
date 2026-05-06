@@ -7,7 +7,11 @@ import { UrlObject } from "url"
 import { LucidePencil, Plus } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
-import { GridItemWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  ContentWrapper,
+  GridItemWrapper,
+  PageWrapper,
+} from "@/components/page/pageWrappers"
 
 //TODO: User can mark vehicle has gone for repair
 
@@ -27,10 +31,7 @@ export default async function AllVehicleRepairsPageComponent({
   return (
     <PageWrapper id="VehicleRepairsPage">
       <VehicleDetailHeaderTabs selectedTab={"Repairs"} id={vehicleId} />
-      <div
-        id="VehicleRepairsList"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="VehicleRepairsList">
         <Link
           href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
           className="w-full md:w-1/2 self-center"
@@ -48,7 +49,7 @@ export default async function AllVehicleRepairsPageComponent({
             userId={userId}
           />
         ))}
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

@@ -16,7 +16,7 @@ import MyProfileDetailHeaderTabs from "@/components/header/myProfileHeaderTabs"
 import { FindAssignedUserByDriverIdType } from "@ryogo-travel-app/api/services/user.services"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -30,10 +30,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
   return (
     <PageWrapper id="RiderMyProfileAgencyPage">
       <MyProfileDetailHeaderTabs selectedTab="Agency" />
-      <div
-        id="MyProfileAgencyDetailsInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="MyProfileAgencyDetailsInfo">
         <div className="flex flex-col gap-2 lg:gap-3">
           <SmallBold>{t("BasicInfo")}</SmallBold>
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
@@ -87,7 +84,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
             </div>
           </div>
         )}
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

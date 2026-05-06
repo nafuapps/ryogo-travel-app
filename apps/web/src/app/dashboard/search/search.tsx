@@ -39,6 +39,7 @@ import {
 } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import {
+  ContentWrapper,
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
@@ -237,10 +238,7 @@ export default function SearchPageComponent({
 
   return (
     <PageWrapper id="SearchPage">
-      <div
-        id="SearchControls"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="SearchControls">
         <div
           id="typeSelection"
           className="flex flex-row items-center gap-1.5 lg:gap-2 w-full flex-wrap"
@@ -329,12 +327,9 @@ export default function SearchPageComponent({
             })}
           </div>
         )}
-      </div>
+      </ContentWrapper>
       {searchResultType && (
-        <div
-          id="SearchResults"
-          className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-        >
+        <ContentWrapper id="SearchResults">
           {searchResultType === SearchTypeEnum.Bookings ? (
             // Paginated booking search result
             <>
@@ -396,7 +391,7 @@ export default function SearchPageComponent({
               })}
             </>
           )}
-        </div>
+        </ContentWrapper>
       )}
     </PageWrapper>
   )

@@ -16,7 +16,7 @@ import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Add subscription link when subscription is implemented
 
@@ -32,10 +32,7 @@ export default async function AgencyDetailsPageComponent({
   return (
     <PageWrapper id="AccountAgencyPage">
       <AccountDetailHeaderTabs selectedTab="Agency" />
-      <div
-        id="AccountAgencyDetailsInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="AccountAgencyDetailsInfo">
         <div className="flex flex-col gap-2 lg:gap-3">
           <SmallBold>{t("BasicInfo")}</SmallBold>
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
@@ -107,7 +104,7 @@ export default async function AgencyDetailsPageComponent({
             </Link>
           </div>
         )}
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

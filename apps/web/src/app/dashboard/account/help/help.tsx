@@ -2,7 +2,7 @@
 
 import { getTranslations } from "next-intl/server"
 import AccountDetailHeaderTabs from "@/components/header/accountDetailHeaderTabs"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Account Help page
 
@@ -12,10 +12,9 @@ export default async function AccountHelpPageComponent() {
   return (
     <PageWrapper id="AccountHelpPage">
       <AccountDetailHeaderTabs selectedTab="Help" />
-      <div
-        id="AccountHelpInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      ></div>
+      <ContentWrapper id="AccountHelpInfo">
+        <></>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

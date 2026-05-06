@@ -15,7 +15,7 @@ import ResetUserPasswordAlertButton from "@/components/buttons/resetUserPassword
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -27,10 +27,7 @@ export default async function UserDetailsPageComponent({
   return (
     <PageWrapper id="UserDetailsPage">
       <UserDetailHeaderTabs selectedTab={"Details"} id={user.id} />
-      <div
-        id="UserDetailsInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="UserDetailsInfo">
         <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
           <div className="flex flex-col gap-2 lg:gap-3 items-start">
             {user.photoUrl ? (
@@ -92,7 +89,7 @@ export default async function UserDetailsPageComponent({
             />
           )}
         </div>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

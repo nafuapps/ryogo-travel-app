@@ -6,7 +6,7 @@ import RiderExpenseItem from "@/components/rider/riderExpenseItem"
 import RiderTripLogItem from "@/components/rider/riderTripLogItem"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyCompletedBookingPageComponent({
   booking,
@@ -18,20 +18,14 @@ export default async function RiderMyCompletedBookingPageComponent({
   return (
     <PageWrapper id="RiderCompletedBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={false} />
-      <div
-        id="CompletedBookingTripLogs"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="CompletedBookingTripLogs">
         <SmallBold>{t("TripLogs")}</SmallBold>
         {booking.tripLogs.map((t) => {
           return <RiderTripLogItem key={t.id} tripLog={t} />
         })}
-      </div>
+      </ContentWrapper>
       {booking.expenses.length > 0 && (
-        <div
-          id="CompletedBookingExpenses"
-          className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-        >
+        <ContentWrapper id="CompletedBookingExpenses">
           <SmallBold>{t("Expenses")}</SmallBold>
           {booking.expenses.map((e) => {
             return (
@@ -43,7 +37,7 @@ export default async function RiderMyCompletedBookingPageComponent({
               />
             )
           })}
-        </div>
+        </ContentWrapper>
       )}
       <Link href="/rider/myBookings">
         <Button variant="default" className="w-full">

@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
 import { SmallBold } from "@/components/typography"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignUserPageComponent({
   bookingId,
@@ -51,10 +51,7 @@ export default function AssignUserPageComponent({
 
   return (
     <PageWrapper id="AssignUserPage">
-      <div
-        id="AssignUserInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="AssignUserInfo">
         <SmallBold>{t("Title")}</SmallBold>
         {users.map((user, index) => (
           <AssignUserTile
@@ -83,7 +80,7 @@ export default function AssignUserPageComponent({
         >
           {t("CancelCTA")}
         </Button>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

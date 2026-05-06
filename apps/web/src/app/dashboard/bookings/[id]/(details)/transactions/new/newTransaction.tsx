@@ -8,7 +8,6 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -24,7 +23,7 @@ import { addTransactionAction } from "@/app/actions/transactions/addTransactionA
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -108,72 +107,70 @@ export default function NewTransactionPageComponent({
 
   return (
     <PageWrapper id="NewTransactionPage">
-      <Form {...formData}>
-        <form
-          onSubmit={formData.handleSubmit(onSubmit)}
-          id="newTransactionForm"
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+      <FormWrapper<NewTransactionType>
+        form={formData}
+        onSubmit={formData.handleSubmit(onSubmit)}
+        id="newTransactionForm"
+      >
+        <RyogoRadio
+          name="type"
+          title={t("Field1.Title")}
+          register={formData.register("type")}
+          defaultValue={TransactionTypesEnum.CREDIT}
+          array={getEnumValueDisplayPairs(TransactionTypesEnum)}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name="amount"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          type="tel"
+        />
+        <RyogoSelect
+          name="mode"
+          register={formData.register("mode")}
+          title={t("Field3.Title")}
+          array={getEnumValueDisplayPairs(TransactionModesEnum)}
+          placeholder={t("Field3.Placeholder")}
+        />
+        <RyogoSelect
+          name="otherParty"
+          register={formData.register("otherParty")}
+          title={t("Field4.Title")}
+          array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
+          placeholder={t("Field4.Placeholder")}
+        />
+        <RyogoTextarea
+          name="remarks"
+          label={t("Field5.Title")}
+          placeholder={t("Field5.Placeholder")}
+        />
+        <RyogoFileInput
+          name={"txnPhoto"}
+          register={formData.register("txnPhoto")}
+          label={t("Field6.Title")}
+          placeholder={t("Field6.Placeholder")}
+          description={t("Field6.Description")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
         >
-          <RyogoRadio
-            name="type"
-            title={t("Field1.Title")}
-            register={formData.register("type")}
-            defaultValue={TransactionTypesEnum.CREDIT}
-            array={getEnumValueDisplayPairs(TransactionTypesEnum)}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name="amount"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            type="tel"
-          />
-          <RyogoSelect
-            name="mode"
-            register={formData.register("mode")}
-            title={t("Field3.Title")}
-            array={getEnumValueDisplayPairs(TransactionModesEnum)}
-            placeholder={t("Field3.Placeholder")}
-          />
-          <RyogoSelect
-            name="otherParty"
-            register={formData.register("otherParty")}
-            title={t("Field4.Title")}
-            array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
-            placeholder={t("Field4.Placeholder")}
-          />
-          <RyogoTextarea
-            name="remarks"
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-          />
-          <RyogoFileInput
-            name={"txnPhoto"}
-            register={formData.register("txnPhoto")}
-            label={t("Field6.Title")}
-            placeholder={t("Field6.Placeholder")}
-            description={t("Field6.Description")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"default"}
-            type="button"
-            disabled={isPending}
-            onClick={() => router.back()}
-          >
-            {t("CancelCTA")}
-          </Button>
-        </form>
-      </Form>
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"outline"}
+          size={"default"}
+          type="button"
+          disabled={isPending}
+          onClick={() => router.back()}
+        >
+          {t("CancelCTA")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

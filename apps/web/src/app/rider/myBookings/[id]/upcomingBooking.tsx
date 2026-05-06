@@ -4,7 +4,7 @@ import StartTripSheet from "@/components/rider/tripSheets/startTripSheet"
 import { BookingCommonInfo } from "@/components/rider/riderBookingCommon"
 import { SmallBold } from "@/components/typography"
 import RiderExpenseItem from "@/components/rider/riderExpenseItem"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyUpcomingBookingPageComponent({
   booking,
@@ -19,10 +19,7 @@ export default async function RiderMyUpcomingBookingPageComponent({
     <PageWrapper id="RiderUpcomingBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={canStartTrip} />
       {booking.expenses.length > 0 && (
-        <div
-          id="UpcomingBookingExpenses"
-          className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-        >
+        <ContentWrapper id="UpcomingBookingExpenses">
           <SmallBold>{t("Expenses")}</SmallBold>
           {booking.expenses.map((e) => {
             return (
@@ -34,7 +31,7 @@ export default async function RiderMyUpcomingBookingPageComponent({
               />
             )
           })}
-        </div>
+        </ContentWrapper>
       )}
       {canStartTrip && (
         <div

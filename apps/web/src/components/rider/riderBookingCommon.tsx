@@ -24,7 +24,11 @@ import { LucideChevronRight } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { GridItemWrapper, GridWrapper } from "../page/pageWrappers"
+import {
+  ContentWrapper,
+  GridItemWrapper,
+  GridWrapper,
+} from "@/components/page/pageWrappers"
 
 export function BookingSection({
   sectionTitle,
@@ -269,10 +273,7 @@ export async function BookingCommonInfo({
 }) {
   const t = await getTranslations("Rider.MyBooking")
   return (
-    <div
-      id="MyBookingInfo"
-      className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-    >
+    <ContentWrapper id="MyBookingInfo">
       <BookingSection sectionTitle={t("BookingInfo")}>
         <BookingItem title={t("BookingId")} value={booking.id} />
         <BookingItem title={t("CustomerName")} value={booking.customer.name} />
@@ -338,6 +339,6 @@ export async function BookingCommonInfo({
           <BookingItem title={t("Remarks")} value={booking.remarks} />
         )}
       </BookingSection>
-    </div>
+    </ContentWrapper>
   )
 }

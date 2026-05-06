@@ -30,7 +30,7 @@ import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import ChangeDriverPhotoSheet from "@/components/sheets/changeDriverPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Add driver schedule chart
 
@@ -44,10 +44,7 @@ export default async function DriverDetailsPageComponent({
   return (
     <PageWrapper id="DriverDetailsPage">
       <DriverDetailHeaderTabs selectedTab={"Details"} id={driver.id} />
-      <div
-        id="DriverDetailsInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="DriverDetailsInfo">
         <DriverSection sectionTitle={t("BasicInfo")}>
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-2 lg:gap-3 items-start">
@@ -180,7 +177,7 @@ export default async function DriverDetailsPageComponent({
             />
           )}
         </div>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

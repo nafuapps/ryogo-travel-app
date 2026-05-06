@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { modifyDriverLeaveAction } from "@/app/actions/drivers/modifyDriverLeaveAction"
-import { Form } from "@/components/ui/form"
 import {
   RyogoDatePicker,
   RyogoSwitch,
@@ -18,7 +17,7 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -81,50 +80,48 @@ export default function ModifyDriverLeavePageComponent({
   }
   return (
     <PageWrapper id="ModifyDriverLeavePage">
-      <Form {...formData}>
-        <form
-          onSubmit={formData.handleSubmit(onSubmit)}
-          id="newDriverLeaveForm"
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+      <FormWrapper<ModifyDriverLeaveType>
+        form={formData}
+        onSubmit={formData.handleSubmit(onSubmit)}
+        id="newDriverLeaveForm"
+      >
+        <RyogoDatePicker
+          name="startDate"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          pastAllowed
+        />
+        <RyogoDatePicker
+          name="endDate"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          pastAllowed
+        />
+        <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
+        <RyogoTextarea
+          name="remarks"
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
         >
-          <RyogoDatePicker
-            name="startDate"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            pastAllowed
-          />
-          <RyogoDatePicker
-            name="endDate"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            pastAllowed
-          />
-          <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
-          <RyogoTextarea
-            name="remarks"
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("Back")}
-          </Button>
-        </form>
-      </Form>
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"outline"}
+          size={"lg"}
+          type="button"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          {t("Back")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

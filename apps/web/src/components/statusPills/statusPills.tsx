@@ -7,7 +7,7 @@ import {
   UserStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { CaptionBold } from "../typography"
+import { CaptionBold } from "@/components/typography"
 
 interface StatusPillProps {
   status: string

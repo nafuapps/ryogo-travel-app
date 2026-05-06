@@ -7,7 +7,11 @@ import Link from "next/link"
 import { UrlObject } from "url"
 import { LucidePencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { GridItemWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  ContentWrapper,
+  GridItemWrapper,
+  PageWrapper,
+} from "@/components/page/pageWrappers"
 
 //TODO: User can mark driver has gone on leave
 
@@ -26,10 +30,7 @@ export default async function AllDriverLeavesPageComponent({
   return (
     <PageWrapper id="DriverLeavesPage">
       <DriverDetailHeaderTabs selectedTab={"Leaves"} id={driverId} />
-      <div
-        id="DriverLeavesList"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="DriverLeavesList">
         <Link
           href={`/dashboard/drivers/${driverId}/leaves/new`}
           className="md:w-1/2 w-full self-center"
@@ -46,7 +47,7 @@ export default async function AllDriverLeavesPageComponent({
             userId={userId}
           />
         ))}
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

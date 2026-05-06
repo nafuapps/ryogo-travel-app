@@ -35,15 +35,15 @@ import { UseFormRegisterReturn } from "react-hook-form"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { Label } from "../ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
 import {
   Combobox,
   ComboboxContent,
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
-} from "../ui/combobox"
+} from "@/components/ui/combobox"
 
 export function RyogoInput(props: {
   name: string

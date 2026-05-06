@@ -30,7 +30,7 @@ import Link from "next/link"
 import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
 import { VehicleStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Add vehicle schedule chart
 
@@ -43,10 +43,7 @@ export default async function VehicleDetailsPageComponent({
   return (
     <PageWrapper id="VehicleDetailsPage">
       <VehicleDetailHeaderTabs selectedTab={"Details"} id={vehicle.id} />
-      <div
-        id="VehicleDetailsInfo"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="VehicleDetailsInfo">
         <VehicleSection sectionTitle={t("BasicInfo")}>
           <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
             <div className="flex flex-col gap-2 lg:gap-3 items-start">
@@ -269,7 +266,7 @@ export default async function VehicleDetailsPageComponent({
             />
           )}
         </div>
-      </div>
+      </ContentWrapper>
     </PageWrapper>
   )
 }

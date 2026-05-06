@@ -7,13 +7,12 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
-import { Form } from "@/components/ui/form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeEmailAction } from "@/app/actions/users/changeEmailAction"
 import { useTransition } from "react"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeEmailAccountComponent({
   usersWithPhoneRole,
@@ -92,47 +91,45 @@ export default function ChangeEmailAccountComponent({
   }
   return (
     <PageWrapper id="ChangePassword">
-      <Form {...formData}>
-        <form
-          id="ChangePasswordForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
-        >
-          <RyogoInput
-            name={"password"}
-            type="password"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name={"newEmail"}
-            type="email"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
+      <FormWrapper<SchemaType>
+        id="ChangePasswordForm"
+        onSubmit={formData.handleSubmit(onSubmit)}
+        form={formData}
+      >
+        <RyogoInput
+          name={"password"}
+          type="password"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name={"newEmail"}
+          type="email"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
 
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
-      </Form>
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
+        >
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"secondary"}
+          size={"lg"}
+          type="button"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          {t("SecondaryCTA")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

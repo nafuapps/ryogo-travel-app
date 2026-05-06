@@ -7,7 +7,6 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
@@ -22,7 +21,7 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyCustomerPageComponent({
   customer,
@@ -95,73 +94,71 @@ export default function ModifyCustomerPageComponent({
 
   return (
     <PageWrapper id="ModifyCustomerPage">
-      <Form {...formData}>
-        <form
-          id="ModifyCustomerForm"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+      <FormWrapper<ModifyCustomerType>
+        form={formData}
+        id="ModifyCustomerForm"
+        onSubmit={formData.handleSubmit(onSubmit)}
+      >
+        <RyogoInput
+          name={"name"}
+          type="text"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name={"email"}
+          type="email"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+        <RyogoTextarea
+          name={"address"}
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+        />
+        <RyogoTextarea
+          name="remarks"
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+        />
+        <RyogoCombobox
+          name={"state"}
+          register={formData.register("state")}
+          title={t("Field5.Title")}
+          array={getArrayValueDisplayPairs(data)}
+          placeholder={t("Field5.Title")}
+          resetField={() => {
+            formData.setValue("city", "")
+          }}
+        />
+        <RyogoCombobox
+          name={"city"}
+          register={formData.register("city")}
+          title={t("Field6.Title")}
+          array={getStringValueDisplayPairs(cityOptions)}
+          placeholder={t("Field6.Title")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
         >
-          <RyogoInput
-            name={"name"}
-            type="text"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name={"email"}
-            type="email"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <RyogoTextarea
-            name={"address"}
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-          />
-          <RyogoTextarea
-            name="remarks"
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-          />
-          <RyogoCombobox
-            name={"state"}
-            register={formData.register("state")}
-            title={t("Field5.Title")}
-            array={getArrayValueDisplayPairs(data)}
-            placeholder={t("Field5.Title")}
-            resetField={() => {
-              formData.setValue("city", "")
-            }}
-          />
-          <RyogoCombobox
-            name={"city"}
-            register={formData.register("city")}
-            title={t("Field6.Title")}
-            array={getStringValueDisplayPairs(cityOptions)}
-            placeholder={t("Field6.Title")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </Button>
-        </form>
-      </Form>
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"secondary"}
+          size={"lg"}
+          type="button"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          {t("SecondaryCTA")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

@@ -2,9 +2,9 @@
 
 import { Search, Zap } from "lucide-react"
 import { useState } from "react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import useCommandCenter from "./useCommandCenter"
-import { CaptionBrand } from "../typography"
+import { CaptionBrand } from "@/components/typography"
 
 export default function CommandCenter() {
   const [isOpen, setIsOpen] = useState(false)

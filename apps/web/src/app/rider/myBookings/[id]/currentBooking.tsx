@@ -16,7 +16,7 @@ import RiderExpenseItem from "@/components/rider/riderExpenseItem"
 import RiderTripLogItem from "@/components/rider/riderTripLogItem"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -35,19 +35,13 @@ export default async function RiderMyOngoingBookingPageComponent({
   return (
     <PageWrapper id="RiderCurrentBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={true} />
-      <div
-        id="CurrentBookingTripLogs"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <ContentWrapper id="CurrentBookingTripLogs">
         <SmallBold>{t("TripLogs")}</SmallBold>
         {booking.tripLogs.map((t) => {
           return <RiderTripLogItem key={t.id} tripLog={t} />
         })}
-      </div>
-      <div
-        id="CurrentBookingExpenses"
-        className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      </ContentWrapper>
+      <ContentWrapper id="CurrentBookingExpenses">
         <SmallBold>{t("Expenses")}</SmallBold>
         <Link
           href={
@@ -73,7 +67,7 @@ export default async function RiderMyOngoingBookingPageComponent({
             />
           )
         })}
-      </div>
+      </ContentWrapper>
       <div
         id="CurrentBookingAction"
         className="sticky bottom-1 lg:bottom-2 w-full bg-white p-1 lg:p-1.5 rounded-lg "

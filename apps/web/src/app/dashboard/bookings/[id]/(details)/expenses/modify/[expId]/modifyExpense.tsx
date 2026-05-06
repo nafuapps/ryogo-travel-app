@@ -6,7 +6,6 @@ import {
   RyogoTextarea,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -21,7 +20,7 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 import { useTransition } from "react"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyExpensePageComponent({
   expenseDetails,
@@ -104,63 +103,61 @@ export default function ModifyExpensePageComponent({
 
   return (
     <PageWrapper id="ModifyExpensePage">
-      <Form {...formData}>
-        <form
-          onSubmit={formData.handleSubmit(onSubmit)}
-          id="modifyExpenseForm"
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+      <FormWrapper<ModifyExpenseType>
+        form={formData}
+        onSubmit={formData.handleSubmit(onSubmit)}
+        id="modifyExpenseForm"
+      >
+        <RyogoSelect
+          name="type"
+          title={t("Field1.Title")}
+          register={formData.register("type")}
+          array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
+          placeholder={t("Field1.Description")}
+        />
+        <RyogoInput
+          name="amount"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          type="tel"
+        />
+        <RyogoTextarea
+          name="remarks"
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+        />
+        <RyogoFileInput
+          name={"expensePhoto"}
+          register={formData.register("expensePhoto")}
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+          description={t("Field4.Description")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
         >
-          <RyogoSelect
-            name="type"
-            title={t("Field1.Title")}
-            register={formData.register("type")}
-            array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
-            placeholder={t("Field1.Description")}
-          />
-          <RyogoInput
-            name="amount"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            type="tel"
-          />
-          <RyogoTextarea
-            name="remarks"
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-          />
-          <RyogoFileInput
-            name={"expensePhoto"}
-            register={formData.register("expensePhoto")}
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <DeleteExpenseAlertButton
-            bookingId={expenseDetails.bookingId}
-            expenseId={expenseDetails.id}
-            agencyId={expenseDetails.agencyId}
-            assignedUserId={assignedUserId}
-          />
-          <Button
-            variant={"outline"}
-            size={"default"}
-            type="button"
-            disabled={isPending}
-            onClick={() => router.back()}
-          >
-            {t("CancelCTA")}
-          </Button>
-        </form>
-      </Form>
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <DeleteExpenseAlertButton
+          bookingId={expenseDetails.bookingId}
+          expenseId={expenseDetails.id}
+          agencyId={expenseDetails.agencyId}
+          assignedUserId={assignedUserId}
+        />
+        <Button
+          variant={"outline"}
+          size={"default"}
+          type="button"
+          disabled={isPending}
+          onClick={() => router.back()}
+        >
+          {t("CancelCTA")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

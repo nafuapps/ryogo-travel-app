@@ -1,3 +1,8 @@
+import { SubmitEventHandler } from "react"
+import { FieldValues, UseFormReturn } from "react-hook-form"
+import { Form } from "@/components/ui/form"
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col w-full h-lvh bg-slate-100 p-4 lg:p-5">
@@ -20,6 +25,49 @@ export function PageWrapper({
     >
       {children}
     </div>
+  )
+}
+
+export function ContentWrapper({
+  id,
+  children,
+}: {
+  id: string
+  children: React.ReactNode
+}) {
+  return (
+    <div
+      id={id}
+      className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
+    >
+      {children}
+    </div>
+  )
+}
+
+export function FormWrapper<T extends FieldValues>({
+  id,
+  form,
+  children,
+  onSubmit,
+}: {
+  id: string
+  form: UseFormReturn<T, any, T>
+  children: React.ReactNode
+  onSubmit: SubmitEventHandler<HTMLFormElement>
+}) {
+  return (
+    <Form {...form}>
+      <ScrollArea>
+        <form
+          id={id}
+          onSubmit={onSubmit}
+          className="flex flex-col gap-4 lg:gap-5 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+        >
+          {children}
+        </form>
+      </ScrollArea>
+    </Form>
   )
 }
 

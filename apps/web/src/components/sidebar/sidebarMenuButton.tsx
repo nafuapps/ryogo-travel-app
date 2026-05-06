@@ -9,7 +9,7 @@ import Link from "next/link"
 import { ForwardRefExoticComponent, RefAttributes } from "react"
 
 import { UrlObject } from "url"
-import { useSidebar } from "../ui/sidebar"
+import { useSidebar } from "@/components/ui/sidebar"
 
 type MenuButtonProps = {
   title: string

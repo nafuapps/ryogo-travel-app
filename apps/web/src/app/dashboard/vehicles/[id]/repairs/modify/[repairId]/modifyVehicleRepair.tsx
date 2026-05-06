@@ -8,7 +8,6 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { InsertVehicleRepairType } from "@ryogo-travel-app/db/schema"
@@ -17,10 +16,9 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { modifyVehicleRepairAction } from "@/app/actions/vehicles/modifyVehicleRepairAction"
-
 import { FindVehicleRepairByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { useTransition } from "react"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyVehicleRepairPageComponent({
   repair,
@@ -95,56 +93,54 @@ export default function ModifyVehicleRepairPageComponent({
   }
   return (
     <PageWrapper id="ModifyVehicleRepairPage">
-      <Form {...formData}>
-        <form
-          onSubmit={formData.handleSubmit(onSubmit)}
-          id="modifyVehicleRepairForm"
-          className="flex flex-col gap-4 lg:gap-4 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+      <FormWrapper<ModifyVehicleRepairType>
+        form={formData}
+        onSubmit={formData.handleSubmit(onSubmit)}
+        id="modifyVehicleRepairForm"
+      >
+        <RyogoDatePicker
+          name="startDate"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          pastAllowed
+        />
+        <RyogoDatePicker
+          name="endDate"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          pastAllowed
+        />
+        <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
+        <RyogoTextarea
+          name="remarks"
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+        />
+        <RyogoInput
+          name={"cost"}
+          type="tel"
+          label={t("Field5.Title")}
+          placeholder={t("Field5.Placeholder")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
         >
-          <RyogoDatePicker
-            name="startDate"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            pastAllowed
-          />
-          <RyogoDatePicker
-            name="endDate"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            pastAllowed
-          />
-          <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
-          <RyogoTextarea
-            name="remarks"
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-          />
-          <RyogoInput
-            name={"cost"}
-            type="tel"
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={() => router.back()}
-            disabled={isPending}
-          >
-            {t("Back")}
-          </Button>
-        </form>
-      </Form>
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"outline"}
+          size={"lg"}
+          type="button"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          {t("Back")}
+        </Button>
+      </FormWrapper>
     </PageWrapper>
   )
 }

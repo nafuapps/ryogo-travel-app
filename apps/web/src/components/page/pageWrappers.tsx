@@ -94,7 +94,7 @@ export function SectionHeaderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-row justify-start items-center my-1 lg:my-1.5 gap-2 lg:gap-3">
+    <div className="flex flex-row items-center my-1 lg:my-1.5 gap-2 lg:gap-3">
       {children}
     </div>
   )

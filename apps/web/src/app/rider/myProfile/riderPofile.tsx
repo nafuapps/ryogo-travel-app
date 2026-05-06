@@ -26,8 +26,8 @@ export default async function RiderProfilePageComponent({
       <MyProfileDetailHeaderTabs selectedTab={"Details"} />
       <ContentWrapper id="RiderAccountDetailsInfo">
         <div className="flex flex-col gap-2 lg:gap-3">
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
-            <div className="flex flex-col gap-2 lg:gap-3 items-start">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
+            <div className="flex flex-col gap-2 lg:gap-3">
               {driverDetails.user.photoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image

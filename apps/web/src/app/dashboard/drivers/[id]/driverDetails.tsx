@@ -46,8 +46,8 @@ export default async function DriverDetailsPageComponent({
       <DriverDetailHeaderTabs selectedTab={"Details"} id={driver.id} />
       <ContentWrapper id="DriverDetailsInfo">
         <DriverSection sectionTitle={t("BasicInfo")}>
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
-            <div className="flex flex-col gap-2 lg:gap-3 items-start">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
+            <div className="flex flex-col gap-2 lg:gap-3">
               {driver.user.photoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image
@@ -95,7 +95,7 @@ export default async function DriverDetailsPageComponent({
         </DriverSection>
         <Separator />
         <DriverSection sectionTitle={t("LicenseInfo")}>
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{driver.licenseNumber}</SmallGrey>
               {driver.licenseExpiresOn &&

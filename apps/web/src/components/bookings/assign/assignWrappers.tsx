@@ -11,7 +11,7 @@ export function AssignTileWrapper({
 }) {
   return (
     <div
-      className={`flex flex-row justify-between items-start gap-2 lg:gap-3 rounded-lg p-3 lg:p-4 border ${
+      className={`flex flex-row justify-between gap-2 lg:gap-3 rounded-lg p-3 lg:p-4 border ${
         selected
           ? "border-sky-700 bg-sky-100"
           : "border-slate-100 hover:bg-slate-50"

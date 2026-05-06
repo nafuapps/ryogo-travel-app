@@ -206,7 +206,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
 
 function NewFormLineItemWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-row justify-between items-start gap-2 lg:gap-3">
+    <div className="flex flex-row justify-between gap-2 lg:gap-3">
       {children}
     </div>
   )

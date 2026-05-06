@@ -10,7 +10,7 @@ export const UserCard = ({
 }) => {
   return (
     <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between bg-sky-50 rounded-lg p-3 lg:p-4">
-      <div className="flex flex-col justify-between gap-1 lg:gap-2 items-start">
+      <div className="flex flex-col justify-between gap-1 lg:gap-2">
         <div className="flex items-center gap-2 lg:gap-3">
           {user.photoUrl && (
             <div className="relative size-7 lg:size-8 rounded-full overflow-hidden">

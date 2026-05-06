@@ -45,8 +45,8 @@ export default async function VehicleDetailsPageComponent({
       <VehicleDetailHeaderTabs selectedTab={"Details"} id={vehicle.id} />
       <ContentWrapper id="VehicleDetailsInfo">
         <VehicleSection sectionTitle={t("BasicInfo")}>
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
-            <div className="flex flex-col gap-2 lg:gap-3 items-start">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
+            <div className="flex flex-col gap-2 lg:gap-3">
               {vehicle.vehiclePhotoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image
@@ -100,7 +100,7 @@ export default async function VehicleDetailsPageComponent({
         </VehicleSection>
         <Separator />
         <VehicleSection sectionTitle={t("PolicyInfo")}>
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{t("Insurance")}</SmallGrey>
               {vehicle.insuranceExpiresOn &&
@@ -145,7 +145,7 @@ export default async function VehicleDetailsPageComponent({
               </Dialog>
             )}
           </div>
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{t("PUC")}</SmallGrey>
               {vehicle.pucExpiresOn && vehicle.pucExpiresOn < new Date() ? (
@@ -189,7 +189,7 @@ export default async function VehicleDetailsPageComponent({
               </Dialog>
             )}
           </div>
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
               <SmallGrey>{t("RC")}</SmallGrey>
               {vehicle.rcExpiresOn && vehicle.rcExpiresOn < new Date() ? (

@@ -22,10 +22,10 @@ type MenuButtonProps = {
 }
 
 const menuButtonClassName =
-  "flex flex-row gap-3 items-center justify-start rounded-lg hover:bg-slate-200 text-slate-600 w-full px-2 py-2"
+  "flex flex-row gap-3 items-center rounded-lg hover:bg-slate-200 text-slate-600 w-full px-2 py-2"
 
 const activeMenuButtonClassName =
-  "flex flex-row gap-3 items-center justify-start rounded-lg bg-sky-700 hover:bg-sky-700/90 text-sky-50 w-full px-2 py-2"
+  "flex flex-row gap-3 items-center rounded-lg bg-sky-700 hover:bg-sky-700/90 text-sky-50 w-full px-2 py-2"
 
 const iconClassName = "size-8 stroke-1 aspect-square text-slate-500"
 const activeIconClassName = "size-8 aspect-square text-slate-50 stroke-1"

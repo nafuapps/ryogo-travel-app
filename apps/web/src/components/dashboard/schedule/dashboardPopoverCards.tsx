@@ -20,7 +20,7 @@ export function OngoingBookingPopoverCard(
   const t = useTranslations("Dashboard.PopoverCards.Booking")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-row justify-between gap-3 lg:gap-4 items-start">
+      <div className="flex flex-row justify-between gap-3 lg:gap-4">
         <div className="flex flex-col gap-1 item-start">
           <CaptionBold>{props.type.toUpperCase()}</CaptionBold>
           <H5>{props.route}</H5>
@@ -34,7 +34,7 @@ export function OngoingBookingPopoverCard(
         </div>
       </div>
       <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
-        <div className="flex flex-col gap-1 items-start">
+        <div className="flex flex-col gap-1">
           <Small>{props.customerName}</Small>
           <CaptionBold>{props.bookingId}</CaptionBold>
         </div>
@@ -83,7 +83,7 @@ export function AssignedBookingPopoverCard(
   const t = useTranslations("Dashboard.PopoverCards.AssignedBooking")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-row justify-between gap-3 lg:gap-4 items-start">
+      <div className="flex flex-row justify-between gap-3 lg:gap-4">
         <div className="flex flex-col gap-1 item-start">
           <CaptionBold>{props.type.toUpperCase()}</CaptionBold>
           <H5>{props.source.city + " - " + props.destination.city}</H5>
@@ -97,7 +97,7 @@ export function AssignedBookingPopoverCard(
         </div>
       </div>
       <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
-        <div className="flex flex-col gap-1 items-start">
+        <div className="flex flex-col gap-1">
           <Small>{props.customer.name}</Small>
           <CaptionBold>{props.id}</CaptionBold>
         </div>
@@ -125,7 +125,7 @@ export function RepairPopoverCard(
   const t = useTranslations("Dashboard.PopoverCards.Repair")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-col gap-1 items-start">
+      <div className="flex flex-col gap-1">
         <Caption>{props.vehicle.vehicleNumber}</Caption>
         <H5>
           {moment(props.startDate).format("DD MMM") +
@@ -133,7 +133,7 @@ export function RepairPopoverCard(
             moment(props.endDate).format("DD MMM")}
         </H5>
       </div>
-      <div className="flex flex-col gap-1 items-start">
+      <div className="flex flex-col gap-1">
         <Small>{props.addedByUser.name}</Small>
         <CaptionBold>{props.id}</CaptionBold>
       </div>
@@ -156,7 +156,7 @@ export function LeavePopoverCard(
   const t = useTranslations("Dashboard.PopoverCards.Leave")
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-col gap-1 items-start">
+      <div className="flex flex-col gap-1">
         <Caption>{props.driver.name}</Caption>
         <H5>
           {moment(props.startDate).format("DD MMM") +
@@ -164,7 +164,7 @@ export function LeavePopoverCard(
             moment(props.endDate).format("DD MMM")}
         </H5>
       </div>
-      <div className="flex flex-col gap-1 items-start">
+      <div className="flex flex-col gap-1">
         <Small>{props.addedByUser.name}</Small>
         <CaptionBold>{props.id}</CaptionBold>
       </div>

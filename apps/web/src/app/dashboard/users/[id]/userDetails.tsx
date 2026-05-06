@@ -28,8 +28,8 @@ export default async function UserDetailsPageComponent({
     <PageWrapper id="UserDetailsPage">
       <UserDetailHeaderTabs selectedTab={"Details"} id={user.id} />
       <ContentWrapper id="UserDetailsInfo">
-        <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
-          <div className="flex flex-col gap-2 lg:gap-3 items-start">
+        <div className="flex flex-row gap-3 lg:gap-4 justify-between">
+          <div className="flex flex-col gap-2 lg:gap-3">
             {user.photoUrl ? (
               <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                 <Image

@@ -35,8 +35,8 @@ export default async function CustomerDetailsPageComponent({
       <CustomerDetailHeaderTabs selectedTab={"Details"} id={customer.id} />
       <ContentWrapper id="CustomerDetailsInfo">
         <CustomerSection sectionTitle={t("BasicInfo")}>
-          <div className="flex flex-row gap-3 lg:gap-4 items-start justify-between">
-            <div className="flex flex-col gap-2 lg:gap-3 items-start">
+          <div className="flex flex-row gap-3 lg:gap-4 justify-between">
+            <div className="flex flex-col gap-2 lg:gap-3">
               {customer.photoUrl ? (
                 <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
                   <Image

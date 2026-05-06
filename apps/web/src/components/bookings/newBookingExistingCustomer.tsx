@@ -31,7 +31,7 @@ export default function ExistingCutomerCard({
           <LucideUserCheck className="text-slate-500 stroke-1 size-6 lg:size-7" />
         </div>
       )}
-      <div className="flex flex-col gap-0.5 lg:gap-1 items-start">
+      <div className="flex flex-col gap-0.5 lg:gap-1">
         <H5>{existingCustomer.name}</H5>
         <SmallGrey>{existingCustomer.remarks}</SmallGrey>
         <CaptionGrey>

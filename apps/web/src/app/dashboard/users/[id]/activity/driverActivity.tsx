@@ -23,7 +23,7 @@ export default async function DriverActivityPageComponent({
   const expenses = activities.expenses
   const tripLogs = activities.tripLogs
   const className =
-    "flex flex-col items-start gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
+    "flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
   return (
     <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />

@@ -66,13 +66,10 @@ export default function OnboardingSidebar({
         <H3Grey>{t("Heading")}</H3Grey>
         <div
           id="OnboardingSidebarSteps"
-          className="flex flex-col items-start gap-2 lg:gap-3"
+          className="flex flex-col gap-2 lg:gap-3"
         >
           {items.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-row gap-2 md:gap-3 items-start"
-            >
+            <div key={index} className="flex flex-row gap-2 md:gap-3">
               <div className={`flex flex-col gap-2 md:gap-3 items-center`}>
                 <div
                   className={`rounded-full
@@ -99,7 +96,7 @@ export default function OnboardingSidebar({
                   ></div>
                 )}
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col">
                 {currentProcess > index ? (
                   <P>{item.title}</P>
                 ) : currentProcess === index ? (

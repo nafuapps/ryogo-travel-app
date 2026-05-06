@@ -1,11 +1,7 @@
 "use server"
 
 import { getCurrentUser } from "@/lib/auth"
-import {
-  updateSessionUserStatus,
-  updateVerificationStatus,
-} from "@/lib/session"
-import { userRepository } from "@ryogo-travel-app/api/repositories/user.repo"
+import { updateSessionUserStatus } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export async function changePasswordAction(

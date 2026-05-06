@@ -3,9 +3,9 @@ import { getTranslations } from "next-intl/server"
 import BookingDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import TransactionItem from "./transactionItem"
 import { SmallGrey } from "@/components/typography"
 import { PageWrapper } from "@/components/page/pageWrappers"
+import TransactionItem from "@/components/bookings/transaction/transactionItem"
 
 export default async function BookingTransactionsPageComponent({
   bookingId,

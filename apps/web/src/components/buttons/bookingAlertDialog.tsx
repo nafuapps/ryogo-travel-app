@@ -12,14 +12,13 @@ import {
 
 import { JSX } from "react"
 
-type BookingAlertDialogType = {
+export default function RyogoAlertDialog(props: {
   title: string
   desc: string
   noCTA: string
   labelChild: JSX.Element
   children: React.ReactNode
-}
-export default function BookingAlertDialog(props: BookingAlertDialogType) {
+}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{props.labelChild}</AlertDialogTrigger>

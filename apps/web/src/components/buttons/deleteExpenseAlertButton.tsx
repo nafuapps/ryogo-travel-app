@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
-import BookingAlertDialog from "./bookingAlertDialog"
+import RyogoAlertDialog from "./bookingAlertDialog"
 
 type DeleteExpenseAlertButtonProps = {
   bookingId: string
@@ -44,7 +44,7 @@ export default function DeleteExpenseAlertButton(
   }
 
   return (
-    <BookingAlertDialog
+    <RyogoAlertDialog
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
@@ -58,6 +58,6 @@ export default function DeleteExpenseAlertButton(
         {isCancelPending && <Spinner />}
         {isCancelPending ? t("Loading") : t("YesCTA")}
       </Button>
-    </BookingAlertDialog>
+    </RyogoAlertDialog>
   )
 }

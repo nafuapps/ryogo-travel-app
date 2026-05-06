@@ -4,10 +4,12 @@ import { resendCodeEmailTemplate } from "@/components/email/resendCodeEmailTempl
 import sendEmail from "@/components/email/sendEmail"
 import { getCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
+//Verify account flow
 export async function resendCodeAction() {
   const currentUser = await getCurrentUser()
-  if (!currentUser) {
+  if (!currentUser || currentUser.userRole !== UserRolesEnum.OWNER) {
     return
   }
   const user = await userServices.regenerateCode(currentUser.userId)
@@ -16,7 +18,7 @@ export async function resendCodeAction() {
   //Send new code to the user
   sendEmail(
     [user.email],
-    "RyoGo Verification Code",
+    "RyoGo Owner Account Verification Code",
     resendCodeEmailTemplate({ name: user.name, code: user.code }),
   )
 

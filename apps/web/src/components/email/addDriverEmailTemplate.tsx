@@ -7,7 +7,9 @@ export function AddDriverEmailTemplate({ name, password }: EmailTemplateProps) {
   return (
     <div>
       <h1>Welcome, {name}!</h1>
-      <h5>Your new password is: {password}!</h5>
+      <h5>
+        Your new password is: <b>{password}</b>
+      </h5>
     </div>
   )
 }

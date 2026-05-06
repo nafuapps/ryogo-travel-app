@@ -5,17 +5,8 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { H4, SmallGrey } from "@/components/typography"
+import { H4Grey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
@@ -26,78 +17,83 @@ import {
   AuthFormWrapper,
   AuthPageWrapper,
 } from "@/components/auth/authWrappers"
+import { differenceInMinutes } from "date-fns"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { UserCard } from "@/components/auth/userCard"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 
-//TODO: Change flow: Send code and verify code with new password setting on step 2
+const CODE_RESEND_MINUTES = 5
 
 export default function ForgotPasswordPageComponent({
-  userId,
-  currentEmail,
+  user,
 }: {
-  userId: string
-  currentEmail: string
+  user: NonNullable<FindUserDetailsByIdType>
 }) {
-  const t = useTranslations("Auth.LoginPage.ForgotPassword")
+  const t = useTranslations("Auth.ForgotPassword.Step1")
 
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+
+  const forgotPasswordLink = `/auth/forgot-password/${user.id}/reset`
+
+  const codeSentRecently = user.codeSentAt
+    ? differenceInMinutes(new Date(), user.codeSentAt) < CODE_RESEND_MINUTES
+    : false
 
   const formSchema = z.object({
     email: z.email(t("Error1")),
   })
 
-  type FormFields = z.infer<typeof formSchema>
-  const methods = useForm<FormFields>({
+  type SchemaType = z.infer<typeof formSchema>
+  const methods = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
   })
 
   //Submit actions
-  const onSubmit = async (data: FormFields) => {
-    if (data.email.toLowerCase().trim() !== currentEmail.toLowerCase().trim()) {
+  const onSubmit = async (data: SchemaType) => {
+    if (data.email.toLowerCase().trim() !== user.email.toLowerCase().trim()) {
       methods.setError("email", { type: "manual", message: t("APIError") })
     } else {
       startTransition(async () => {
-        if (await forgotPasswordAction(userId)) {
+        if (await forgotPasswordAction(user.id, forgotPasswordLink)) {
           toast.success(t("Success"))
+          router.replace(`/auth/forgot-password/${user.id}/reset`)
         } else {
           toast.error(t("Error"))
         }
-        router.replace("/auth/login")
       })
     }
   }
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<FormFields>
+      <AuthFormWrapper<SchemaType>
         id="ForgorPasswordForm"
         onSubmit={methods.handleSubmit(onSubmit)}
         form={methods}
       >
-        <H4>{t("PageTitle")}</H4>
-        <FormField
-          control={methods.control}
+        <H4Grey>{t("PageTitle")}</H4Grey>
+        <UserCard user={user} />
+        <RyogoInput
           name={"email"}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <SmallGrey>{t("Info")}</SmallGrey>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder={t("Input.Placeholder")}
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>{t("Input.Description")}</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="email"
+          label={t("Input.Title")}
+          placeholder={t("Input.Placeholder")}
+          description={t("Input.Description")}
         />
         <AuthActionWrapper>
-          <Button variant={"default"} size={"lg"} disabled={isPending}>
+          {/* Disable CTA if code was sent recently */}
+          <Button
+            variant={"default"}
+            size={"lg"}
+            disabled={isPending || codeSentRecently}
+          >
             {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
+            {isPending
+              ? t("Loading")
+              : codeSentRecently
+                ? t("CodeSentRecently", { count: CODE_RESEND_MINUTES })
+                : t("PrimaryCTA")}
           </Button>
           <Button
             variant={"secondary"}

@@ -104,7 +104,7 @@ export async function createWebSession(user: SelectUserType) {
 
   //4. Also set locale cookie
   cookieStore.set(LOCALE_COOKIE_NAME, user.languagePref, {
-    maxAge: 31536000, // 1 year
+    maxAge: 315360000, // 10 years
     httpOnly: true,
     secure: true,
     sameSite: "lax",
@@ -115,7 +115,7 @@ export async function createWebSession(user: SelectUserType) {
     DARK_MODE_COOKIE_NAME,
     user.prefersDarkTheme ? "true" : "false",
     {
-      maxAge: 31536000, // 1 year
+      maxAge: 315360000, // 10 years
       httpOnly: true,
       secure: true,
       sameSite: "lax",

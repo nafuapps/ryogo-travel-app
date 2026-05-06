@@ -417,7 +417,7 @@ export const userServices = {
     return await userRepository.updateLastLogout(userId, new Date())
   },
 
-  //Reset user password (by owner)
+  //Reset user password (by owner - user details flow)
   async resetUserPassword(userId: string) {
     //Step1: get email
     const emailFound = await userRepository.readUserById(userId)
@@ -449,7 +449,27 @@ export const userServices = {
     }
   },
 
-  // Change password (by user)
+  //Change new password (by user - forgot password flow)
+  async changeNewPassword(userId: string, newPassword: string) {
+    //Step1: Find user with userID
+    const userFound = await userRepository.readUserById(userId)
+    // If no user found, cannot change password
+    if (!userFound) {
+      return
+    }
+
+    //Step2: Set a new password
+    const passwordHash = await generatePasswordHash(newPassword)
+    const newUserData = await userRepository.updatePassword(
+      userId,
+      passwordHash,
+    )
+
+    //Return userId as reset confirmation
+    return newUserData[0]
+  },
+
+  // Change password (by user - account details flow)
   async changeMyPassword(
     userId: string,
     oldPassword: string,
@@ -596,6 +616,16 @@ export const userServices = {
     if (user.isVerified) {
       return
     }
+    const updatedUser = await userRepository.updateVerificationCode(
+      userId,
+      generateVerificationCode(),
+    )
+    return updatedUser[0]
+  },
+
+  async generateAndSendCode(userId: string) {
+    const user = await userRepository.readUserById(userId)
+    if (!user) return
     const updatedUser = await userRepository.updateVerificationCode(
       userId,
       generateVerificationCode(),

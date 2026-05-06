@@ -1,7 +1,7 @@
 "use client"
 
 import { confirmBookingAction } from "@/app/actions/bookings/confirmBookingAction"
-import BookingAlertDialog from "@/components/buttons/bookingAlertDialog"
+import RyogoAlertDialog from "@/components/buttons/bookingAlertDialog"
 import {
   RyogoTextarea,
   RyogoCheckbox,
@@ -119,7 +119,7 @@ export default function ConfirmBookingForm({
         <RyogoTimePicker name="startTime" label={t("PickupTime")} />
         {canConfirm && (
           <>
-            <BookingAlertDialog
+            <RyogoAlertDialog
               title={t("Confirm.Title")}
               desc={t("Confirm.Desc")}
               noCTA={t("Confirm.NoCTA")}
@@ -137,7 +137,7 @@ export default function ConfirmBookingForm({
                 {isConfirmPending && <Spinner />}
                 {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
               </Button>
-            </BookingAlertDialog>
+            </RyogoAlertDialog>
           </>
         )}
       </form>

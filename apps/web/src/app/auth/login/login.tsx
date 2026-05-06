@@ -5,16 +5,8 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { H4, SmallGrey } from "@/components/typography"
+import { H4Grey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { useTransition } from "react"
@@ -24,6 +16,7 @@ import {
   AuthFormWrapper,
   AuthPageWrapper,
 } from "@/components/auth/authWrappers"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 
 /*
 1. Find user by phone number
@@ -33,6 +26,9 @@ import {
 
 export default function LoginPageComponent() {
   const t = useTranslations("Auth.LoginPage.Step1")
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
   const formSchema = z.object({
     phoneNumber: z
       .string()
@@ -40,12 +36,8 @@ export default function LoginPageComponent() {
       .regex(/^[0-9]+$/, t("Error2")),
   })
 
-  type FormFields = z.infer<typeof formSchema>
-
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-
-  const methods = useForm<FormFields>({
+  type SchemaType = z.infer<typeof formSchema>
+  const methods = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       phoneNumber: "",
@@ -53,7 +45,7 @@ export default function LoginPageComponent() {
   })
 
   //Submit actions
-  const onSubmit = async (data: FormFields) => {
+  const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
       const users = await findLoginUsersAction(data.phoneNumber)
       if (users.length > 0) {
@@ -71,30 +63,17 @@ export default function LoginPageComponent() {
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<FormFields>
+      <AuthFormWrapper<SchemaType>
         id="LoginForm"
         form={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <H4>{t("PageTitle")}</H4>
-        <FormField
-          control={methods.control}
+        <H4Grey>{t("PageTitle")}</H4Grey>
+        <RyogoInput
           name={"phoneNumber"}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <SmallGrey>{t("Input.Title")}</SmallGrey>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="tel"
-                  placeholder={t("Input.Placeholder")}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="tel"
+          label={t("Input.Title")}
+          placeholder={t("Input.Placeholder")}
         />
         <AuthActionWrapper>
           <Button variant={"default"} size={"lg"} disabled={isPending}>

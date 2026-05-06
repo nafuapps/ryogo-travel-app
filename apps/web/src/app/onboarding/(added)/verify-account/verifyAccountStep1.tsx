@@ -69,7 +69,7 @@ export function VerifyAccountStep1(props: {
         <OnboardingStepContent contentId="Step1Content">
           <RyogoInput
             name={"userEnteredcode"}
-            type="userEnteredcode"
+            type="tel"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}

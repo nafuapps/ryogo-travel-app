@@ -1,7 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import BookingAlertDialog from "./bookingAlertDialog"
+import RyogoAlertDialog from "./bookingAlertDialog"
 import { Button } from "@/components/ui/button"
 import { useEffect, useTransition } from "react"
 import { sendQuoteAction } from "@/app/actions/bookings/sendQuoteAction"
@@ -57,7 +57,7 @@ export default function SendQuoteAlertButton(props: SendQuoteAlertButtonProps) {
   }
 
   return (
-    <BookingAlertDialog
+    <RyogoAlertDialog
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
@@ -72,6 +72,6 @@ export default function SendQuoteAlertButton(props: SendQuoteAlertButtonProps) {
         {isSendPending && <Spinner />}
         {isSendPending ? t("Loading") : t("YesCTA")}
       </Button>
-    </BookingAlertDialog>
+    </RyogoAlertDialog>
   )
 }

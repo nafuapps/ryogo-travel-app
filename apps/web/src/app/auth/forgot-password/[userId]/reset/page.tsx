@@ -2,17 +2,17 @@
 
 import { redirect, RedirectType } from "next/navigation"
 import { UserRegex } from "@/lib/regex"
-import ForgotPasswordPageComponent from "./forgotPassword"
 import { Metadata } from "next"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import ResetWithCodePageComponent from "./resetWithCode"
 
 export const metadata: Metadata = {
-  title: `Forgot Password - ${pageTitle}`,
+  title: `Reset Password - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function ConfirmEmailPage({
+export default async function VerifyCodePage({
   params,
 }: {
   params: Promise<{ userId: string }>
@@ -29,6 +29,9 @@ export default async function ConfirmEmailPage({
   }
 
   return (
-    <ForgotPasswordPageComponent userId={userId} currentEmail={user.email} />
+    <ResetWithCodePageComponent
+      userId={userId}
+      verificationCode={user.verificationCode}
+    />
   )
 }

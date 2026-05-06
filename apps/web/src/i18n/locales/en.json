@@ -1,11 +1,10 @@
 {
   "Auth": {
     "LoginPage": {
-      "Logo":"RyoGo Logo",
       "SignupTitle":"Want to create an account for your agency?",
       "SignupCTA":"Sign up for free",
       "Step1": {
-        "PageTitle": "Log into your RyoGo account",
+        "PageTitle": "Log into RyoGo",
         "Input": {
           "Title": "Enter phone number",
           "Placeholder": "9876543210"
@@ -24,9 +23,9 @@
       "Step3": {
         "PageTitle": "Log into your account",
         "Input": {
-          "Title": "Enter password",
+          "Title": "Enter your password",
           "Placeholder": "********",
-          "Description": "Provide your password to login safely"
+          "Description": "Provide password to login safely"
         },
         "PrimaryCTA": "Login",
         "Loading": "Loading",
@@ -35,22 +34,57 @@
         "Error1": "Password must be at least 8 characters",
         "APIError1": "Password does not match",
         "APIError2": "User does not exist.. Try logging in with a different phone number"
-      },
-      "ForgotPassword": {
+      }
+    },
+    "ForgotPassword": {
+      "RememberTitle":"Remember your password?",
+      "RememberCTA":"Go to Login",
+      "Step1":{
         "PageTitle": "Forgot password?",
-        "Info": "Don't worry..  Enter your email address",
         "Input": {
-          "Title": "Enter email address",
+          "Title": "Verify your email address",
           "Placeholder": "abcd@gmail.com",
-          "Description": "We will confirm your identity and send you a new password"
+          "Description": "We will confirm your identity and send you a code to set a new password"
         },
-        "PrimaryCTA": "Reset Password",
+        "PrimaryCTA": "Get verification code",
+        "CodeSentRecently":"Wait {count} minutes to resend code",
         "Loading": "Loading",
         "Back": "Back",
         "Error1": "Not a valid email",
         "APIError": "Email address does not match our records",
-        "Success": "Password reset email sent.. check your inbox for new password!",
+        "Success": "Verification code sent.. check your inbox!",
+        "Error": "Cannot send code.. Try again later!"
+      },
+      "Step2":{
+        "PageTitle": "Set a new password",
+        "Field1": {
+          "Title": "Enter verification code",
+          "Placeholder": "123456",
+          "Description": "Provide the verification code sent to your email address",
+          "Error1":"Code must be 6 digits",
+          "Error2":"Code does not match our records"
+        },
+        "Field2": {
+          "Title": "New Password",
+          "Placeholder": "********",
+          "Description": "Choose a new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces"
+        },
+        "Field3": {
+          "Title": "Confirm New Password",
+          "Placeholder": "********",
+          "Description": "Re-enter your new password",
+          "Error1": "Password must be at least 8 characters",
+          "Error2": "Password should not contain spaces",
+          "Error3": "Both passwords do not match"
+        },
+        "PrimaryCTA": "Reset Password and Login",
+        "Loading": "Loading",
+        "DidnotReceiveCode": "Did not receive code?",
+        "Success": "Password reset successfully!",
         "Error": "Cannot reset password.. Try again later!"
+      
       }
     },
     "SignupPage": {

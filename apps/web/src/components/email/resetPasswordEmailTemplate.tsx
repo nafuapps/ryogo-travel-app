@@ -10,7 +10,9 @@ export function ResetPasswordEmailTemplate({
   return (
     <div>
       <h1>Welcome, {name}!</h1>
-      <h5>Your password has been reset. Your new password is: {password}!</h5>
+      <h5>
+        Your password has been reset. Your new password is: <b>{password}</b>
+      </h5>
     </div>
   )
 }

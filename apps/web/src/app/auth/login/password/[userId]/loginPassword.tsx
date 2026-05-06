@@ -5,16 +5,8 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
+import { CaptionGrey, H4Grey } from "@/components/typography"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
@@ -26,33 +18,34 @@ import {
   AuthFormWrapper,
   AuthPageWrapper,
 } from "@/components/auth/authWrappers"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { UserCard } from "@/components/auth/userCard"
 
 // TODO: Add a feature to show the user had recently reset password
 
 export default function LoginPasswordPageComponent({
-  userId,
+  user,
 }: {
-  userId: string
+  user: NonNullable<FindUserDetailsByIdType>
 }) {
   const t = useTranslations("Auth.LoginPage.Step3")
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
   const formSchema = z.object({
     password: z.string().min(8, t("Error1")),
   })
 
-  type FormFields = z.infer<typeof formSchema>
-
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-
-  // For managing form data and validation
-  const methods = useForm<FormFields>({
+  type SchemaType = z.infer<typeof formSchema>
+  const methods = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
   })
 
   //Submit actions
-  const onSubmit = async (data: FormFields) => {
+  const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      const loginResponse = await loginAction(userId, data.password)
+      const loginResponse = await loginAction(user.id, data.password)
       if (loginResponse.error === "passwordNotMatching") {
         // Show password match error
         methods.setError("password", {
@@ -80,30 +73,19 @@ export default function LoginPasswordPageComponent({
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<FormFields>
+      <AuthFormWrapper<SchemaType>
         id="LoginPasswordForm"
         onSubmit={methods.handleSubmit(onSubmit)}
         form={methods}
       >
-        <H4>{t("PageTitle")}</H4>
-        <FormField
-          control={methods.control}
+        <H4Grey>{t("PageTitle")}</H4Grey>
+        <UserCard user={user} />
+        <RyogoInput
           name={"password"}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <SmallGrey>{t("Input.Title")}</SmallGrey>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder={t("Input.Placeholder")}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="password"
+          label={t("Input.Title")}
+          placeholder={t("Input.Placeholder")}
+          description={t("Input.Description")}
         />
         <AuthActionWrapper>
           <Button
@@ -125,7 +107,7 @@ export default function LoginPasswordPageComponent({
             <CaptionGrey>{t("Back")}</CaptionGrey>
           </Button>
           <Button variant={"link"} type="button" size="sm">
-            <Link href={`/auth/login/forgot-password/${userId}`}>
+            <Link href={`/auth/forgot-password/${user.id}`}>
               <CaptionGrey>{t("ForgotCTA")}</CaptionGrey>
             </Link>
           </Button>

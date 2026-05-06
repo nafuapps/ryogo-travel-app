@@ -1,7 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import BookingAlertDialog from "./bookingAlertDialog"
+import RyogoAlertDialog from "./bookingAlertDialog"
 import { Button } from "@/components/ui/button"
 import { useEffect, useTransition } from "react"
 import { sendInvoiceAction } from "@/app/actions/bookings/sendInvoiceAction"
@@ -60,7 +60,7 @@ export default function SendInvoiceAlertButton(
   }
 
   return (
-    <BookingAlertDialog
+    <RyogoAlertDialog
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
@@ -79,6 +79,6 @@ export default function SendInvoiceAlertButton(
         {isSendPending && <Spinner />}
         {isSendPending ? t("Loading") : t("YesCTA")}
       </Button>
-    </BookingAlertDialog>
+    </RyogoAlertDialog>
   )
 }

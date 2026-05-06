@@ -1,6 +1,6 @@
 //Existing Account page
 import { Button } from "@/components/ui/button"
-import { CaptionGrey, H4, SmallGrey } from "@/components/typography"
+import { CaptionGrey, H4Grey, SmallBold } from "@/components/typography"
 import Link from "next/link"
 import { AccountCard } from "@/components/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
@@ -30,12 +30,12 @@ export default async function SignupExistingPageComponent({
 
   return (
     <AuthPageWrapper>
-      <H4>{t("PageTitle")}</H4>
-      <SmallGrey>
+      <H4Grey>{t("PageTitle")}</H4Grey>
+      <SmallBold>
         {hasOwnerAccount
           ? t("InfoYes")
           : t("InfoNo", { count: accounts.length })}
-      </SmallGrey>
+      </SmallBold>
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((item, index) => (
           <AccountCard key={index} account={item} />

@@ -5,25 +5,20 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { H4, SmallGrey } from "@/components/typography"
+import { H4Grey } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import {
   AuthActionWrapper,
   AuthFormWrapper,
   AuthPageWrapper,
 } from "@/components/auth/authWrappers"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
+  const router = useRouter()
+
   const formSchema = z.object({
     phoneNumber: z
       .string()
@@ -31,11 +26,8 @@ export default function SignupPageComponent() {
       .regex(/^[0-9]+$/, t("Error2")),
   })
 
-  type FormFields = z.infer<typeof formSchema>
-
-  const router = useRouter()
-
-  const methods = useForm<FormFields>({
+  type SchemaType = z.infer<typeof formSchema>
+  const methods = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       phoneNumber: "",
@@ -43,36 +35,23 @@ export default function SignupPageComponent() {
   })
 
   //Submit actions
-  const onSubmit = async (data: FormFields) => {
+  const onSubmit = async (data: SchemaType) => {
     router.push(`/auth/signup/${data.phoneNumber}`)
   }
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<FormFields>
+      <AuthFormWrapper<SchemaType>
         id="SignupForm"
         form={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <H4>{t("PageTitle")}</H4>
-        <FormField
-          control={methods.control}
+        <H4Grey>{t("PageTitle")}</H4Grey>
+        <RyogoInput
           name={"phoneNumber"}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <SmallGrey>{t("Input.Title")}</SmallGrey>
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="tel"
-                  placeholder={t("Input.Placeholder")}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="tel"
+          label={t("Input.Title")}
+          placeholder={t("Input.Placeholder")}
         />
         <AuthActionWrapper>
           <Button variant={"default"} size={"lg"}>

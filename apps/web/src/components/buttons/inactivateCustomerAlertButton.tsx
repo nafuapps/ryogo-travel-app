@@ -6,7 +6,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
-import BookingAlertDialog from "./bookingAlertDialog"
+import RyogoAlertDialog from "./bookingAlertDialog"
 import { inactivateCustomerAction } from "@/app/actions/customers/inactivateCustomerAction"
 
 type InactivateCustomerAlertButtonProps = {
@@ -32,7 +32,7 @@ export default function InactivateCustomerAlertButton(
   }
 
   return (
-    <BookingAlertDialog
+    <RyogoAlertDialog
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
@@ -42,6 +42,6 @@ export default function InactivateCustomerAlertButton(
         {isPending && <Spinner />}
         {isPending ? t("Loading") : t("YesCTA")}
       </Button>
-    </BookingAlertDialog>
+    </RyogoAlertDialog>
   )
 }

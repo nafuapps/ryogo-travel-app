@@ -4,8 +4,7 @@ import {
   userServices,
 } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { LucideRows3, LucideUser, Plus } from "lucide-react"
-import { iconClassName } from "@/components/page/pageCommons"
+import { User, Plus, Rows3 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -20,6 +19,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function UsersPageComponent({
   agencyId,
@@ -38,7 +38,7 @@ export default async function UsersPageComponent({
     <PageWrapper id="UsersPage">
       <SectionWrapper id="OwnersSection">
         <SectionHeaderWrapper>
-          <LucideRows3 className={iconClassName} />
+          <RyogoIcon icon={Rows3} size="sm" />
           <SmallGrey>{t("Owners.Title")}</SmallGrey>
           <H5Grey>{owners.length}</H5Grey>
         </SectionHeaderWrapper>
@@ -48,7 +48,7 @@ export default async function UsersPageComponent({
       </SectionWrapper>
       <SectionWrapper id="AgentsSection">
         <SectionHeaderWrapper>
-          <LucideRows3 className={iconClassName} />
+          <RyogoIcon icon={Rows3} size="sm" />
           <SmallGrey>{t("Agents.Title")}</SmallGrey>
           <H5Grey>{agents.length}</H5Grey>
           <Link href={`/dashboard/users/new`} className="ml-auto">
@@ -64,7 +64,7 @@ export default async function UsersPageComponent({
       </SectionWrapper>
       <SectionWrapper id="DriversSection">
         <SectionHeaderWrapper>
-          <LucideRows3 className={iconClassName} />
+          <RyogoIcon icon={Rows3} size="sm" />
           <SmallGrey>{t("Drivers.Title")}</SmallGrey>
           <H5Grey>{drivers.length}</H5Grey>
           <Link href={`/dashboard/drivers/new`} className="ml-auto">
@@ -100,7 +100,7 @@ async function AllUsersItemComponent({
               imageSize="sm"
             />
           ) : (
-            <LucideUser className="size-8 lg:size-10 text-slate-400" />
+            <RyogoIcon icon={User} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

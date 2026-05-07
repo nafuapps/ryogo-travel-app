@@ -2,9 +2,8 @@
 
 import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { LucideRows3, LucideUser, Plus } from "lucide-react"
+import { User, Plus, Rows3 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { iconClassName } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Button } from "@/components/ui/button"
@@ -23,6 +22,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 const CUSTOMERS_PER_PAGE = 20
 
@@ -68,7 +68,7 @@ export default function AllCustomersListComponent({
   return (
     <SectionWrapper id="AllCustomersSection">
       <SectionHeaderWrapper>
-        <LucideRows3 className={iconClassName} />
+        <RyogoIcon icon={Rows3} size="sm" />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allCustomers.length}</H5Grey>
         <Link href={`/dashboard/customers/new`} className="ml-auto">
@@ -132,7 +132,7 @@ function AllCustomersItemComponent({
               imageSize="sm"
             />
           ) : (
-            <LucideUser className="size-8 lg:size-10 text-slate-400" />
+            <RyogoIcon icon={User} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

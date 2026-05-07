@@ -2,7 +2,6 @@ import AccountDetailHeaderTabs from "@/components/header/accountDetailHeaderTabs
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
-import { LucideUser } from "lucide-react"
 import { H4, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
@@ -13,6 +12,8 @@ import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { User } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function AccountPageComponent({
   userDetails,
@@ -35,7 +36,7 @@ export default async function AccountPageComponent({
                   imageSize="lg"
                 />
               ) : (
-                <LucideUser className="size-20 lg:size-24 text-slate-400" />
+                <RyogoIcon icon={User} size="xl" />
               )}
               <ChangeUserPhotoSheet
                 userId={userDetails.id}

@@ -7,10 +7,10 @@ export default function getTripIcon(
   size?: RyogoIconSize,
 ) {
   if (tripType === BookingTypeEnum.OneWay) {
-    return <RyogoIcon icon={ArrowRightFromLine} size={size} />
+    return <RyogoIcon icon={ArrowRightFromLine} size={size ?? "sm"} />
   }
   if (tripType === BookingTypeEnum.Round) {
-    return <RyogoIcon icon={ArrowRightLeft} size={size} />
+    return <RyogoIcon icon={ArrowRightLeft} size={size ?? "sm"} />
   }
-  return <RyogoIcon icon={Waypoints} size={size} />
+  return <RyogoIcon icon={Waypoints} size={size ?? "sm"} />
 }

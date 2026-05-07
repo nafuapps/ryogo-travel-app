@@ -1,9 +1,10 @@
 import { CaptionGrey, SmallBold } from "@/components/typography"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
-import { LucideChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export const AccountCard = ({
   account,
@@ -30,7 +31,7 @@ export const AccountCard = ({
           <div className="flex rounded-full bg-slate-200 px-2 py-1 lg:px-2.5 lg:py-1.5">
             <CaptionGrey>{account.userRole.toUpperCase()}</CaptionGrey>
           </div>
-          <LucideChevronRight className="size-4 md:size-5" />
+          <RyogoIcon icon={ChevronRight} size="sm" />
         </div>
       </div>
     </Link>

@@ -2,7 +2,7 @@ import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehic
 import VehicleDetailHeaderTabs from "@/components/header/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { LucideStar } from "lucide-react"
+import { Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Caption,
@@ -23,6 +23,7 @@ import { VehicleStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 //TODO: Add vehicle schedule chart
 
@@ -46,7 +47,7 @@ export default async function VehicleDetailsPageComponent({
                   imageSize="lg"
                 />
               ) : (
-                getVehicleIcon(vehicle.type, "xl")
+                getVehicleIcon(vehicle.type, "2xl")
               )}
               <ChangeVehiclePhotoSheet
                 vehicleId={vehicle.id}
@@ -68,7 +69,7 @@ export default async function VehicleDetailsPageComponent({
               {vehicle.customerRatings &&
                 vehicle.customerRatings.length > 1 && (
                   <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center">
-                    <LucideStar className="text-slate-900 size-5 lg:size-6" />
+                    <RyogoIcon icon={Star} size="sm" />
                     <PBold>
                       {(
                         vehicle.customerRatings.reduce((a, c) => a + c, 0) /

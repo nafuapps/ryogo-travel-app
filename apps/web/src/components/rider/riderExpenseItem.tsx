@@ -1,13 +1,14 @@
 import { CaptionGrey, SmallBold, H4, Caption } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { LucidePencil } from "lucide-react"
+import { Pencil } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { format } from "date-fns"
 import { UrlObject } from "url"
 import Link from "next/link"
 import getExpenseIcon from "@/components/icons/expenseIcon"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "../icons/RyogoIcon"
 
 export default async function RiderExpenseItem({
   expense,
@@ -58,7 +59,7 @@ export default async function RiderExpenseItem({
                 <div className="hidden lg:flex">
                   <CaptionGrey>{t("Modify")}</CaptionGrey>
                 </div>
-                <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+                <RyogoIcon icon={Pencil} size="sm" />
               </div>
             </Link>
           )}

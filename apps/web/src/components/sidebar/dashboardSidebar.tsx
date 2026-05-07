@@ -9,15 +9,15 @@ import {
 } from "@/components/ui/sidebar"
 import { useTranslations } from "next-intl"
 import {
-  LucideHouse,
-  LucideTickets,
-  LucideCar,
-  LucideIdCard,
-  LucideChartLine,
-  LucideShieldUser,
-  LucideBadgeIndianRupee,
-  LucideUserRoundPen,
-  LucideSearch,
+  House,
+  Tickets,
+  Car,
+  IdCard,
+  ChartLine,
+  ShieldUser,
+  BadgeIndianRupee,
+  UserRoundPen,
+  Search,
 } from "lucide-react"
 import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
 import { MenuItemType } from "@/components/sidebar/sidebarCommon"
@@ -36,43 +36,43 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
     {
       title: t("Home"),
       url: "/dashboard",
-      icon: LucideHouse,
+      icon: House,
       onlyOwner: false,
     },
     {
       title: t("Bookings"),
       url: "/dashboard/bookings",
-      icon: LucideTickets,
+      icon: Tickets,
       onlyOwner: false,
     },
     {
       title: t("Vehicles"),
       url: "/dashboard/vehicles",
-      icon: LucideCar,
+      icon: Car,
       onlyOwner: false,
     },
     {
       title: t("Drivers"),
       url: "/dashboard/drivers",
-      icon: LucideIdCard,
+      icon: IdCard,
       onlyOwner: false,
     },
     {
       title: t("Customers"),
       url: "/dashboard/customers",
-      icon: LucideBadgeIndianRupee,
+      icon: BadgeIndianRupee,
       onlyOwner: false,
     },
     {
       title: t("Users"),
       url: "/dashboard/users",
-      icon: LucideShieldUser,
+      icon: ShieldUser,
       onlyOwner: true,
     },
     {
       title: t("Analytics"),
       url: "/dashboard/analytics",
-      icon: LucideChartLine,
+      icon: ChartLine,
       onlyOwner: true,
     },
   ]
@@ -82,13 +82,13 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
     {
       title: t("Search"),
       url: "/dashboard/search",
-      icon: LucideSearch,
+      icon: Search,
       onlyOwner: false,
     },
     {
       title: t("Account"),
       url: "/dashboard/account",
-      icon: LucideUserRoundPen,
+      icon: UserRoundPen,
       onlyOwner: false,
     },
   ]

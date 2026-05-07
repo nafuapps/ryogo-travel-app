@@ -4,6 +4,5 @@ export const headerClassName =
 export const headerLeftClassName = "flex flex-row gap-2 lg:gap-3 items-center"
 export const headerRightClassName =
   "flex flex-row gap-3 lg:gap-4 justify-end items-center"
-export const headerIconClassName = "size-5 lg:size-6 stroke-1 text-slate-500"
 export const headerTooltipClassName = "block lg:hidden"
 export const headerButtonClassName = "hidden lg:block"

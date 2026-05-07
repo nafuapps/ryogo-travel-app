@@ -5,7 +5,7 @@ import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { LucideHistory, LucideSearch, LucideUser } from "lucide-react"
+import { History, Search, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   InputGroup,
@@ -44,6 +44,7 @@ import {
   PageWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -276,7 +277,7 @@ export default function SearchPageComponent({
                 <FormItem>
                   <InputGroup>
                     <InputGroupAddon>
-                      <LucideSearch className="size-4 lg:size-5 text-slate-400" />
+                      <RyogoIcon icon={Search} size="sm" />
                     </InputGroupAddon>
                     <InputGroupInput
                       placeholder={t("Field1.Placeholder")}
@@ -310,7 +311,7 @@ export default function SearchPageComponent({
             id="recentSearches"
             className="flex flex-row items-center gap-1.5 lg:gap-2 w-full flex-wrap"
           >
-            <LucideHistory className="size-5 lg:size-6 text-slate-400" />
+            <RyogoIcon icon={History} size="sm" />
             {recentSearches?.map((s) => {
               return (
                 <div
@@ -474,7 +475,7 @@ function DriverSearchResultItem({
               imageSize="sm"
             />
           ) : (
-            <LucideUser className="size-8 lg:size-10 text-slate-400" />
+            <RyogoIcon icon={User} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>
@@ -517,7 +518,7 @@ function CustomerSearchResultItem({
               imageSize="sm"
             />
           ) : (
-            <LucideUser className="size-8 lg:size-10 text-slate-400" />
+            <RyogoIcon icon={User} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

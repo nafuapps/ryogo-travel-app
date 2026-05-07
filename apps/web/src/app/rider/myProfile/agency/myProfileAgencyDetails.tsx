@@ -8,7 +8,7 @@ import {
 import { Separator } from "@radix-ui/react-separator"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { LucideBuilding, LucidePhone } from "lucide-react"
+import { Building, Phone } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import MyProfileDetailHeaderTabs from "@/components/header/myProfileHeaderTabs"
@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -42,7 +43,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
                   imageSize="lg"
                 />
               ) : (
-                <LucideBuilding className="size-20 lg:size-24 text-slate-400" />
+                <RyogoIcon icon={Building} size="xl" />
               )}
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
@@ -73,7 +74,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
                   href={`tel:${assignedUser.phone}`}
                   className="w-full gap-2 lg:gap-3 flex flex-row items-center justify-center"
                 >
-                  <LucidePhone className="size-5 lg:size-6 text-slate-500" />
+                  <RyogoIcon icon={Phone} size="sm" />
                   <CaptionGrey>{t("CallAgent")}</CaptionGrey>
                 </Link>
               </Button>

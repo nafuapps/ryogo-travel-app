@@ -8,15 +8,15 @@ export default function getVehicleIcon(
 ) {
   switch (vehicleType) {
     case VehicleTypesEnum.TRUCK:
-      return <RyogoIcon icon={Truck} size={size} />
+      return <RyogoIcon icon={Truck} size={size ?? "sm"} />
     case VehicleTypesEnum.BUS:
-      return <RyogoIcon icon={Bus} size={size} />
+      return <RyogoIcon icon={Bus} size={size ?? "sm"} />
     case VehicleTypesEnum.CAR:
-      return <RyogoIcon icon={Car} size={size} />
+      return <RyogoIcon icon={Car} size={size ?? "sm"} />
     case VehicleTypesEnum.BIKE:
-      return <RyogoIcon icon={Motorbike} size={size} />
+      return <RyogoIcon icon={Motorbike} size={size ?? "sm"} />
     default:
-      return <RyogoIcon icon={Tractor} size={size} />
+      return <RyogoIcon icon={Tractor} size={size ?? "sm"} />
   }
 }
 

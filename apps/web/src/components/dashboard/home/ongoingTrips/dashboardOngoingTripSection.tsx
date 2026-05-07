@@ -2,9 +2,9 @@ import { H5Grey, SmallGrey } from "@/components/typography"
 import DashboardOngoingTripComponent from "./dashboardOngoingTripComponent"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { iconClassName } from "@/components/page/pageCommons"
-import { LucideRoute } from "lucide-react"
+import { Route } from "lucide-react"
 import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function DashboardOngoingTripSection({
   agencyId,
@@ -21,7 +21,7 @@ export default async function DashboardOngoingTripSection({
       className="flex flex-col w-full gap-3 lg:gap-4 bg-white shadow rounded-lg p-4 lg:p-5"
     >
       <SectionHeaderWrapper>
-        <LucideRoute className={iconClassName} />
+        <RyogoIcon icon={Route} size="sm" />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{ongoingTrips.length}</H5Grey>
       </SectionHeaderWrapper>

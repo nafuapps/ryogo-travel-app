@@ -1,6 +1,6 @@
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
-import { LucideUser } from "lucide-react"
+import { User } from "lucide-react"
 import { H4, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
@@ -13,6 +13,7 @@ import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function RiderProfilePageComponent({
   driverDetails,
@@ -35,7 +36,7 @@ export default async function RiderProfilePageComponent({
                   imageSize="lg"
                 />
               ) : (
-                <LucideUser className="size-20 lg:size-24 text-slate-400" />
+                <RyogoIcon icon={User} size="xl" />
               )}
               <ChangeUserPhotoSheet
                 userId={driverDetails.userId}

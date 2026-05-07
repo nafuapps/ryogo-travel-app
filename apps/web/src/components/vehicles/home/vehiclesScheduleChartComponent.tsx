@@ -1,6 +1,6 @@
 "use client"
 
-import { LucideCar } from "lucide-react"
+import { Car } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -59,7 +59,7 @@ export default function VehiclesScheduleChartComponent({
             return (
               <DashboardScheduleItem key={index}>
                 <DashboardScheduleItemID
-                  icon={LucideCar}
+                  icon={Car}
                   imageAlt={t("Photo")}
                   title={vehicle.vehicleNumber}
                   photoUrl={vehicle.vehiclePhotoUrl}

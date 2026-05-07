@@ -9,10 +9,9 @@ import {
   FindVehiclesOnTripType,
   vehicleServices,
 } from "@ryogo-travel-app/api/services/vehicle.services"
-import { LucideRoute } from "lucide-react"
+import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { iconClassName } from "@/components/page/pageCommons"
 import moment from "moment"
 import { TripLogStatusPill } from "@/components/statusPills/statusPills"
 import {
@@ -21,6 +20,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function OnTripVehiclesComponent({
   agencyId,
@@ -33,7 +33,7 @@ export default async function OnTripVehiclesComponent({
   return (
     <SectionWrapper id="OnTripVehiclesSection">
       <SectionHeaderWrapper>
-        <LucideRoute className={iconClassName} />
+        <RyogoIcon icon={Route} size="sm" />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{onTripVehicles.length}</H5Grey>
       </SectionHeaderWrapper>

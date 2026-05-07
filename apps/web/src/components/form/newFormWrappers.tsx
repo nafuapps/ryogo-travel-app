@@ -1,6 +1,6 @@
-import { Form } from "lucide-react"
 import { SubmitEventHandler } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
+import { Form } from "@/components/ui/form"
 
 export function NewFormWrapper<T extends FieldValues>({
   id,

@@ -1,6 +1,6 @@
 "use client"
 
-import { LucideUser } from "lucide-react"
+import { User } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
@@ -60,7 +60,7 @@ export default function DriversScheduleChartComponent({
             return (
               <DashboardScheduleItem key={index}>
                 <DashboardScheduleItemID
-                  icon={LucideUser}
+                  icon={User}
                   imageAlt={t("Photo")}
                   title={driver.name}
                   photoUrl={driver.user.photoUrl}

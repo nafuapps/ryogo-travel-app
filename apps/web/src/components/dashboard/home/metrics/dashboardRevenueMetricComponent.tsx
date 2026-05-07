@@ -1,15 +1,9 @@
 import { H4, CaptionGrey, H3, H5, SmallGrey } from "@/components/typography"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
-import {
-  LucideTrendingUp,
-  LucideTrendingDown,
-  LucideBadgeIndianRupee,
-} from "lucide-react"
+import { TrendingUp, BadgeIndianRupee, TrendingDown } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
-  boldIconClassName,
-  iconClassName,
   metricFirstRowClassName,
   metricHeaderClassName,
   metricItem1ClassName,
@@ -20,6 +14,7 @@ import {
   metricSecondRowClassName,
 } from "./dashboardMetricsCommons"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function DashboardRevenueMetricsComponent({
   agencyId,
@@ -56,9 +51,9 @@ export default async function DashboardRevenueMetricsComponent({
     : (revenueWeeklyAvg - revenue24HrsAmount) / revenueWeeklyAvg
 
   const icon = more ? (
-    <LucideTrendingUp className={boldIconClassName} />
+    <RyogoIcon icon={TrendingUp} size="sm" />
   ) : (
-    <LucideTrendingDown className={boldIconClassName} />
+    <RyogoIcon icon={TrendingDown} size="sm" />
   )
 
   const avgCommisionRateThisWeek =
@@ -89,7 +84,7 @@ export default async function DashboardRevenueMetricsComponent({
           id="dashboardRevenueMetricsHeader"
           className={metricHeaderClassName}
         >
-          <LucideBadgeIndianRupee className={iconClassName} />
+          <RyogoIcon icon={BadgeIndianRupee} size="sm" />
           <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div

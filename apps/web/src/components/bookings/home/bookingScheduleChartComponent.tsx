@@ -13,7 +13,7 @@ import DashboardScheduleDayAxis, {
   DashboardScheduleItemBar,
   DashboardScheduleItemGrid,
 } from "@/components/dashboard/schedule/dashboardSchedule"
-import { LucideUser } from "lucide-react"
+import { User } from "lucide-react"
 import { OngoingBookingPopoverCard } from "@/components/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 
@@ -49,7 +49,7 @@ export default function BookingScheduleChartComponent({
             return (
               <DashboardScheduleItem key={index}>
                 <DashboardScheduleItemID
-                  icon={LucideUser}
+                  icon={User}
                   imageAlt={t("Photo")}
                   title={b.customerName}
                   photoUrl={b.customerPhotoUrl}

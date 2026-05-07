@@ -37,6 +37,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -176,7 +177,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <H4>{"₹" + finalAmount.totalAmount}</H4>
         </NewFormLineItemWrapper>
         <Alert>
-          <Info className="size-5 lg:size-6 text-slate-500" />
+          <RyogoIcon icon={Info} size="sm" />
           <CaptionGrey>{t("CreateInfo")}</CaptionGrey>
         </Alert>
         <NewFormActionWrapper>

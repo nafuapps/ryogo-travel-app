@@ -3,7 +3,6 @@
 import {
   headerButtonClassName,
   headerClassName,
-  headerIconClassName,
   headerLeftClassName,
   headerRightClassName,
   headerTooltipClassName,
@@ -16,9 +15,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { LucideTarget } from "lucide-react"
+import { Target } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default function RiderHeader({ pathName }: { pathName: string }) {
   const t = useTranslations("Rider.Header")
@@ -42,7 +42,7 @@ export default function RiderHeader({ pathName }: { pathName: string }) {
                 <span className={headerButtonClassName}>
                   <CaptionGrey>{t("ActionCenter")}</CaptionGrey>
                 </span>
-                <LucideTarget className={headerIconClassName} />
+                <RyogoIcon icon={Target} size="sm" />
               </Button>
             </TooltipTrigger>
             <TooltipContent className={headerTooltipClassName}>

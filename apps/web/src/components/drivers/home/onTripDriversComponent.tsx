@@ -1,18 +1,11 @@
-import {
-  Caption,
-  CaptionBold,
-  H5Grey,
-  PBold,
-  SmallGrey,
-} from "@/components/typography"
+import { Caption, H5Grey, PBold, SmallGrey } from "@/components/typography"
 import {
   FindDriversOnTripType,
   driverServices,
 } from "@ryogo-travel-app/api/services/driver.services"
-import { LucideRoute } from "lucide-react"
+import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { iconClassName } from "@/components/page/pageCommons"
 import moment from "moment"
 import { TripLogStatusPill } from "@/components/statusPills/statusPills"
 import {
@@ -21,6 +14,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function OnTripDriversComponent({
   agencyId,
@@ -33,7 +27,7 @@ export default async function OnTripDriversComponent({
   return (
     <SectionWrapper id="OnTripDriversSection">
       <SectionHeaderWrapper>
-        <LucideRoute className={iconClassName} />
+        <RyogoIcon icon={Route} size="sm" />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{onTripDrivers.length}</H5Grey>
       </SectionHeaderWrapper>

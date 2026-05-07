@@ -26,9 +26,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import {
-  LucideArrowRightFromLine,
-  LucideArrowRightLeft,
-  LucideWaypoints,
+  ArrowRightFromLine,
+  ArrowRightLeft,
+  Waypoints,
+  LucideIcon,
 } from "lucide-react"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -47,6 +48,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 type NewBookingStep2Props = {
   onNext: () => void
@@ -279,42 +281,36 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
         <NewFormContentWrapper>
           <SmallBold>{t("Field8.Title")}</SmallBold>
           <div className="flex flex-row gap-2 lg:gap-3">
-            <div
-              id={BookingTypeEnum.OneWay}
+            <TripType
+              type={BookingTypeEnum.OneWay}
               onClick={() => {
                 setSelectedTripType(BookingTypeEnum.OneWay)
                 form.setValue("tripEndDate", form.getValues("tripStartDate"))
               }}
-              className={getTripTypeClassName(
-                selectedTripType === BookingTypeEnum.OneWay,
-              )}
-            >
-              <LucideArrowRightFromLine className="size-6 lg:size-7 stroke-1 text-slate-700" />
-              <CaptionBold>{t("Field8.OneWay")}</CaptionBold>
-              <CaptionGrey>{t("Field8.OneWayDesc")}</CaptionGrey>
-            </div>
-            <div
-              id={BookingTypeEnum.Round}
-              onClick={() => setSelectedTripType(BookingTypeEnum.Round)}
-              className={getTripTypeClassName(
-                selectedTripType === BookingTypeEnum.Round,
-              )}
-            >
-              <LucideArrowRightLeft className="size-6 lg:size-7 stroke-1 text-slate-700" />
-              <CaptionBold>{t("Field8.RoundTrip")}</CaptionBold>
-              <CaptionGrey>{t("Field8.RoundTripDesc")}</CaptionGrey>
-            </div>
-            <div
-              id={BookingTypeEnum.MultiDay}
+              selected={selectedTripType === BookingTypeEnum.OneWay}
+              icon={ArrowRightFromLine}
+              title={t("Field8.OneWay")}
+              desc={t("Field8.OneWayDesc")}
+            />
+            <TripType
+              type={BookingTypeEnum.Round}
+              onClick={() => {
+                setSelectedTripType(BookingTypeEnum.Round)
+              }}
+              selected={selectedTripType === BookingTypeEnum.Round}
+              icon={ArrowRightLeft}
+              title={t("Field8.RoundTrip")}
+              desc={t("Field8.RoundTripDesc")}
+            />
+
+            <TripType
+              type={BookingTypeEnum.MultiDay}
               onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
-              className={getTripTypeClassName(
-                selectedTripType === BookingTypeEnum.MultiDay,
-              )}
-            >
-              <LucideWaypoints className="size-6 lg:size-7 stroke-1 text-slate-700" />
-              <CaptionBold>{t("Field8.MultiDay")}</CaptionBold>
-              <CaptionGrey>{t("Field8.MultiDayDesc")}</CaptionGrey>
-            </div>
+              selected={selectedTripType === BookingTypeEnum.MultiDay}
+              icon={Waypoints}
+              title={t("Field8.MultiDay")}
+              desc={t("Field8.MultiDayDesc")}
+            />
           </div>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
@@ -371,10 +367,34 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
   )
 }
 
-function getTripTypeClassName(selected: boolean) {
-  return `flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
-    selected
-      ? "bg-sky-100 border-sky-700"
-      : "border-slate-100 hover:bg-slate-50"
-  }`
+function TripType({
+  type,
+  onClick,
+  selected,
+  title,
+  desc,
+  icon,
+}: {
+  type: BookingTypeEnum
+  onClick: () => void
+  selected: boolean
+  title: string
+  desc: string
+  icon: LucideIcon
+}) {
+  return (
+    <div
+      id={type}
+      onClick={onClick}
+      className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
+        selected
+          ? "bg-sky-100 border-sky-700"
+          : "border-slate-100 hover:bg-slate-50"
+      }`}
+    >
+      <RyogoIcon icon={icon} size="md" />
+      <CaptionBold>{title}</CaptionBold>
+      <CaptionGrey>{desc}</CaptionGrey>
+    </div>
+  )
 }

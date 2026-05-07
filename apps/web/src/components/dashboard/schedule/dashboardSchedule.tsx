@@ -13,7 +13,7 @@ import {
   SelectItem,
   Select,
 } from "@/components/ui/select"
-import { LucideCalendarDays, LucideIcon } from "lucide-react"
+import { CalendarDays, LucideIcon } from "lucide-react"
 import { Dispatch, SetStateAction } from "react"
 import { useTranslations } from "next-intl"
 import moment from "moment"
@@ -24,8 +24,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
-import { iconClassName } from "@/components/page/pageCommons"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export enum SelectableDays {
   SEVEN = "7Days",
@@ -53,7 +53,7 @@ export function DashboardScheduleHeader({
   return (
     <div className="flex flex-row justify-between items-center">
       <SectionHeaderWrapper>
-        <LucideCalendarDays className={iconClassName} />
+        <RyogoIcon icon={CalendarDays} size="sm" />
         <SmallGrey>{title}</SmallGrey>
         <H5Grey>{length}</H5Grey>
       </SectionHeaderWrapper>

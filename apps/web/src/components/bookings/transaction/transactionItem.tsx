@@ -7,7 +7,7 @@ import {
   SmallRed,
 } from "@/components/typography"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
-import { LucideMaximize2, LucideMinimize2, LucidePencil } from "lucide-react"
+import { Maximize2, Minimize2, Pencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
@@ -16,6 +16,7 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function TransactionItem({
   transaction,
@@ -45,11 +46,11 @@ export default async function TransactionItem({
         <div className="flex flex-col gap-1.5 lg:gap-2 min-w-1/5">
           {transaction.type === TransactionTypesEnum.DEBIT ? (
             <div className="flex size-7 lg:size-8 bg-red-100 rounded-full items-center justify-center">
-              <LucideMaximize2 className="size-4 lg:size-5 text-red-400" />
+              <RyogoIcon icon={Maximize2} size="sm" color="red" />
             </div>
           ) : (
             <div className="flex size-7 lg:size-8 bg-green-100 rounded-full items-center justify-center">
-              <LucideMinimize2 className="size-4 lg:size-5 text-green-400" />
+              <RyogoIcon icon={Minimize2} size="sm" color="green" />
             </div>
           )}
           {transaction.type === TransactionTypesEnum.DEBIT ? (
@@ -89,7 +90,7 @@ export default async function TransactionItem({
                   <div className="hidden lg:flex">
                     <CaptionGrey>{t("Modify")}</CaptionGrey>
                   </div>
-                  <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+                  <RyogoIcon icon={Pencil} size="sm" />
                 </div>
               </Link>
             )}

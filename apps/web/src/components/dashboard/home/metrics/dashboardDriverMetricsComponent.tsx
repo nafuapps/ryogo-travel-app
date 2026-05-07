@@ -1,6 +1,6 @@
 import { H4, CaptionGrey, SmallGrey, H2 } from "@/components/typography"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { LucideLifeBuoy } from "lucide-react"
+import { LifeBuoy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
   metricFirstRowClassName,
@@ -12,9 +12,9 @@ import {
   metricMainClassName,
   metricsClassName,
   metricSecondRowClassName,
-  iconClassName,
 } from "./dashboardMetricsCommons"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function DashboardDriverMetricsComponent({
   agencyId,
@@ -49,7 +49,7 @@ export default async function DashboardDriverMetricsComponent({
           id="dashboardVehicleMetricsHeader"
           className={metricHeaderClassName}
         >
-          <LucideLifeBuoy className={iconClassName} />
+          <RyogoIcon icon={LifeBuoy} size="sm" />
           <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div className={metricMainClassName}>

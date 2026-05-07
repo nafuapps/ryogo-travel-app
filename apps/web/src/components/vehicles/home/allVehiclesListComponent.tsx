@@ -3,9 +3,8 @@ import {
   FindVehiclesByAgencyType,
   vehicleServices,
 } from "@ryogo-travel-app/api/services/vehicle.services"
-import { LucideRows3, Plus } from "lucide-react"
+import { Rows3, Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { iconClassName } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Button } from "@/components/ui/button"
@@ -18,6 +17,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function AllVehiclesListComponent({
   agencyId,
@@ -30,7 +30,7 @@ export default async function AllVehiclesListComponent({
   return (
     <SectionWrapper id="AllVehiclesSection">
       <SectionHeaderWrapper>
-        <LucideRows3 className={iconClassName} />
+        <RyogoIcon icon={Rows3} size="sm" />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allVehicles.length}</H5Grey>
         <Link href={`/dashboard/vehicles/new`} className="ml-auto">

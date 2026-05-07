@@ -1,3 +1,4 @@
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
@@ -12,7 +13,7 @@ import {
 import { Separator } from "@radix-ui/react-separator"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { LucideStar } from "lucide-react"
+import { Star } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 
@@ -49,7 +50,7 @@ export default async function RiderMyVehiclePageComponent({
                   imageSize="lg"
                 />
               ) : (
-                getVehicleIcon(vehicle.type, "xl")
+                getVehicleIcon(vehicle.type, "2xl")
               )}
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
@@ -67,7 +68,7 @@ export default async function RiderMyVehiclePageComponent({
               {vehicle.customerRatings &&
                 vehicle.customerRatings.length > 1 && (
                   <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center">
-                    <LucideStar className="text-slate-900 size-5 lg:size-6" />
+                    <RyogoIcon icon={Star} size="sm" />
                     <PBold>
                       {(
                         vehicle.customerRatings.reduce((a, c) => a + c, 0) /

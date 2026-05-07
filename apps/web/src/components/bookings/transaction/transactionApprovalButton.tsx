@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import { CaptionGrey } from "@/components/typography"
-import { LucideCheckCheck, LucideCheck } from "lucide-react"
+import { CheckCheck, Check } from "lucide-react"
 import { useRouter } from "next/navigation"
 import {
   TooltipTrigger,
@@ -11,6 +11,7 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip"
 import { changeTransactionApprovalAction } from "@/app/actions/transactions/changeTransactionApprovalAction"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export function TransactionApprovalButton({
   txnId,
@@ -51,7 +52,7 @@ export function TransactionApprovalButton({
         <div className="hidden lg:flex">
           <CaptionGrey>{t("Approved")}</CaptionGrey>
         </div>
-        {<LucideCheckCheck className="size-4 lg:size-5 text-slate-500" />}
+        <RyogoIcon icon={CheckCheck} size="sm" />
       </TooltipTrigger>
       <TooltipContent>{t("RejectTitle")}</TooltipContent>
     </Tooltip>
@@ -64,7 +65,7 @@ export function TransactionApprovalButton({
         <div className="hidden lg:flex">
           <CaptionGrey>{t("Approve")}</CaptionGrey>
         </div>
-        {<LucideCheck className="size-4 lg:size-5 text-slate-500" />}
+        <RyogoIcon icon={Check} size="sm" />
       </TooltipTrigger>
       <TooltipContent>{t("ApproveTitle")}</TooltipContent>
     </Tooltip>

@@ -10,14 +10,15 @@ import { getTranslations } from "next-intl/server"
 import { format } from "date-fns"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
-  LucidePlay,
-  LucideMapPinCheck,
-  LucideHandshake,
-  LucideFlagTriangleRight,
-  LucideCheckCheck,
-  LucidePin,
+  Play,
+  MapPinCheck,
+  Handshake,
+  FlagTriangleRight,
+  CheckCheck,
+  Pin,
 } from "lucide-react"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function RiderTripLogItem({
   tripLog,
@@ -56,43 +57,30 @@ export default async function RiderTripLogItem({
 }
 
 function getTripLogIcon(type: TripLogTypesEnum) {
-  const className = "size-4 lg:size-5 text-slate-500"
-  switch (type) {
-    case TripLogTypesEnum.START_TRIP:
-      return (
-        <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
-          <LucidePlay className={className} />
-        </div>
-      )
-    case TripLogTypesEnum.ARRIVED:
-      return (
-        <div className="flex size-7 lg:size-8 bg-amber-100 rounded-full items-center justify-center">
-          <LucideMapPinCheck className={className} />
-        </div>
-      )
-    case TripLogTypesEnum.PICKUP:
-      return (
-        <div className="flex size-7 lg:size-8 bg-sky-100 rounded-full items-center justify-center">
-          <LucideHandshake className={className} />
-        </div>
-      )
-    case TripLogTypesEnum.DROP:
-      return (
-        <div className="flex size-7 lg:size-8 bg-green-100 rounded-full items-center justify-center">
-          <LucideFlagTriangleRight className={className} />
-        </div>
-      )
-    case TripLogTypesEnum.END_TRIP:
-      return (
-        <div className="flex size-7 lg:size-8 bg-slate-700 rounded-full items-center justify-center">
-          <LucideCheckCheck className={"size-4 lg:size-5 text-slate-100"} />
-        </div>
-      )
-    default:
-      return (
-        <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
-          <LucidePin className={className} />
-        </div>
-      )
+  let icon = Pin
+  let last = false
+
+  if (type === TripLogTypesEnum.START_TRIP) {
+    icon = Play
   }
+  if (type === TripLogTypesEnum.ARRIVED) {
+    icon = MapPinCheck
+  }
+  if (type === TripLogTypesEnum.PICKUP) {
+    icon = Handshake
+  }
+  if (type === TripLogTypesEnum.DROP) {
+    icon = FlagTriangleRight
+  }
+  if (type === TripLogTypesEnum.END_TRIP) {
+    icon = CheckCheck
+    last = true
+  }
+  return (
+    <div
+      className={`flex size-7 lg:size-8 ${last ? "bg-slate-800" : "bg-slate-100"} rounded-full items-center justify-center`}
+    >
+      <RyogoIcon icon={icon} size="sm" />
+    </div>
+  )
 }

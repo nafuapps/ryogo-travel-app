@@ -1,9 +1,10 @@
 import { H5, SmallGrey, CaptionGrey } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { LucideUserCheck } from "lucide-react"
+import { UserCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default function ExistingCutomerCard({
   existingCustomer,
@@ -24,7 +25,7 @@ export default function ExistingCutomerCard({
         />
       ) : (
         <div className="flex rounded-lg size-10 lg:size-12 bg-slate-100 justify-center items-center">
-          <LucideUserCheck className="text-slate-500 stroke-1 size-6 lg:size-7" />
+          <RyogoIcon icon={UserCheck} size="md" />
         </div>
       )}
       <div className="flex flex-col gap-0.5 lg:gap-1">

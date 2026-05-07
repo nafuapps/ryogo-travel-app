@@ -9,7 +9,7 @@ import {
   PGrey,
 } from "@/components/typography"
 import { Sidebar, useSidebar } from "@/components/ui/sidebar"
-import { LucideCheck } from "lucide-react"
+import { Check } from "lucide-react"
 import { useTranslations } from "next-intl"
 import RyoGoLogo from "@/components/logo"
 import {
@@ -19,6 +19,7 @@ import {
   CreateAccountTotalSteps,
   VerifyAccountTotalSteps,
 } from "./onboardingSteps"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default function OnboardingSidebar({
   currentProcess,
@@ -83,7 +84,7 @@ export default function OnboardingSidebar({
                 >
                   {currentProcess > index ||
                   (currentProcess === index && isLastStep) ? (
-                    <LucideCheck className="size-4 lg:size-5 text-sky-50" />
+                    <RyogoIcon icon={Check} size="sm" />
                   ) : currentProcess === index ? (
                     <H5Brand>{index + 1}</H5Brand>
                   ) : (

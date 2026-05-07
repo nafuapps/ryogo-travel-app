@@ -4,19 +4,16 @@ import {
   TooltipTrigger,
   Tooltip,
 } from "@/components/ui/tooltip"
-import { LucideProps } from "lucide-react"
+import { LucideIcon } from "lucide-react"
 import Link from "next/link"
-import { ForwardRefExoticComponent, RefAttributes } from "react"
-
 import { UrlObject } from "url"
 import { useSidebar } from "@/components/ui/sidebar"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 type MenuButtonProps = {
   title: string
   url: UrlObject | __next_route_internal_types__.RouteImpl<URL>
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >
+  icon: LucideIcon
   open: boolean
   active?: boolean
 }
@@ -26,9 +23,6 @@ const menuButtonClassName =
 
 const activeMenuButtonClassName =
   "flex flex-row gap-3 items-center rounded-lg bg-sky-700 hover:bg-sky-700/90 text-sky-50 w-full px-2 py-2"
-
-const iconClassName = "size-8 stroke-1 aspect-square text-slate-500"
-const activeIconClassName = "size-8 aspect-square text-slate-50 stroke-1"
 
 export function MenuButton(props: MenuButtonProps) {
   const { setOpenMobile } = useSidebar()
@@ -42,8 +36,10 @@ export function MenuButton(props: MenuButtonProps) {
               props.active ? activeMenuButtonClassName : menuButtonClassName
             }
           >
-            <props.icon
-              className={props.active ? activeIconClassName : iconClassName}
+            <RyogoIcon
+              icon={props.icon}
+              color={props.active ? "white" : "slate"}
+              size="md"
             />
             {props.open &&
               (props.active ? (

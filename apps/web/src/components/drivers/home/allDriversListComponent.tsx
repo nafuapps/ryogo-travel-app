@@ -3,9 +3,8 @@ import {
   FindDriversByAgencyType,
   driverServices,
 } from "@ryogo-travel-app/api/services/driver.services"
-import { LucideRows3, LucideUser, Plus } from "lucide-react"
+import { Rows3, User, Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { iconClassName } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Button } from "@/components/ui/button"
@@ -18,6 +17,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -30,7 +30,7 @@ export default async function AllDriversListComponent({
   return (
     <SectionWrapper id="AllDriversSection">
       <SectionHeaderWrapper>
-        <LucideRows3 className={iconClassName} />
+        <RyogoIcon icon={Rows3} size="sm" />
         <SmallGrey>{t("Title")}</SmallGrey>
         <H5Grey>{allDrivers.length}</H5Grey>
         <Link href={`/dashboard/drivers/new`} className="ml-auto">
@@ -65,7 +65,7 @@ async function AllDriversItemComponent({
               imageSize="sm"
             />
           ) : (
-            <LucideUser className="size-8 lg:size-10 text-slate-400" />
+            <RyogoIcon icon={User} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

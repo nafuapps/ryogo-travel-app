@@ -6,18 +6,19 @@ import {
 } from "@/components/typography"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
-  LucideCheckCheck,
-  LucideFlagTriangleRight,
-  LucideHandshake,
-  LucideMapPinCheck,
-  LucidePin,
-  LucidePlay,
+  CheckCheck,
+  FlagTriangleRight,
+  Handshake,
+  MapPinCheck,
+  Pin,
+  Play,
 } from "lucide-react"
 import { format } from "date-fns"
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function TripLogItem({
   tripLog,
@@ -62,19 +63,20 @@ export default async function TripLogItem({
 }
 
 const getTripLogIcon = (type: TripLogTypesEnum) => {
-  const className = "size-4 lg:size-5 text-slate-500"
   switch (type) {
     case TripLogTypesEnum.START_TRIP:
-      return <LucidePlay className={className} />
+      return <RyogoIcon icon={Play} size="sm" />
+
     case TripLogTypesEnum.ARRIVED:
-      return <LucideMapPinCheck className={className} />
+      return <RyogoIcon icon={MapPinCheck} size="sm" />
+
     case TripLogTypesEnum.PICKUP:
-      return <LucideHandshake className={className} />
+      return <RyogoIcon icon={Handshake} size="sm" />
+
     case TripLogTypesEnum.DROP:
-      return <LucideFlagTriangleRight className={className} />
+      return <RyogoIcon icon={FlagTriangleRight} size="sm" />
+
     case TripLogTypesEnum.END_TRIP:
-      return <LucideCheckCheck className={className} />
-    default:
-      return <LucidePin className={className} />
+      return <RyogoIcon icon={CheckCheck} size="sm" />
   }
 }

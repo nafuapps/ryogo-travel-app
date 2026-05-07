@@ -29,7 +29,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover"
-import { CalendarIcon, LucideStar } from "lucide-react"
+import { CalendarIcon, Star } from "lucide-react"
 import React, { Dispatch, SetStateAction } from "react"
 import { UseFormRegisterReturn } from "react-hook-form"
 import { cn } from "@/lib/utils"
@@ -44,6 +44,7 @@ import {
   ComboboxItem,
   ComboboxList,
 } from "@/components/ui/combobox"
+import { RyogoIcon } from "../icons/RyogoIcon"
 
 export function RyogoInput(props: {
   name: string
@@ -491,11 +492,13 @@ export function RyogoRating(props: {
             )}
           </FormLabel>
           <div className="flex flex-row gap-2 lg:gap-3 items-center">
-            {Array.from({ length: props.totalStars }).map((s, index) => {
+            {Array.from({ length: props.totalStars }).map((_, index) => {
               return (
-                <LucideStar
+                <RyogoIcon
                   key={index + 1}
-                  className={`size-5 lg:size-6 ${props.selectedStars > index ? "text-amber-300 fill-amber-300" : "text-slate-400"}`}
+                  icon={Star}
+                  size="sm"
+                  color={`${props.selectedStars > index ? "yellow" : "slate"}`}
                   onClick={
                     props.selectedStars !== index + 1
                       ? () => props.setSelectedStars(index + 1)

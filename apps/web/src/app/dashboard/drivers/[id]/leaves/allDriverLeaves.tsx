@@ -4,14 +4,14 @@ import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { UrlObject } from "url"
-import { LucidePencil } from "lucide-react"
+import { Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   ContentWrapper,
   GridItemWrapper,
   PageWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 //TODO: User can mark driver has gone on leave
 
@@ -91,15 +91,13 @@ async function DriverLeaveComponent({
       <GridItemWrapper>
         {canModify && (
           <Link
-            href={
-              `/dashboard/drivers/${leave.driverId}/leaves/modify/${leave.id}` as unknown as UrlObject
-            }
+            href={`/dashboard/drivers/${leave.driverId}/leaves/modify/${leave.id}`}
           >
             <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
               <div className="hidden lg:flex">
                 <CaptionGrey>{t("Edit")}</CaptionGrey>
               </div>
-              <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+              <RyogoIcon icon={Pencil} size="sm" />
             </div>
           </Link>
         )}

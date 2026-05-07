@@ -131,13 +131,13 @@ export default function AssignDriverTile({
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper>
           {isCurrentlyAssigned ? (
-            <RyogoIcon icon={CheckCheck} color="sky" />
+            <RyogoIcon icon={CheckCheck} size="sm" color="sky" />
           ) : isBooked ? (
-            <RyogoIcon icon={TicketX} color="red" />
+            <RyogoIcon icon={TicketX} size="sm" color="red" />
           ) : isOnLeave ? (
-            <RyogoIcon icon={CalendarX} color="red" />
+            <RyogoIcon icon={CalendarX} size="sm" color="red" />
           ) : (
-            <RyogoIcon icon={Check} color="green" />
+            <RyogoIcon icon={Check} size="sm" color="green" />
           )}
           <Caption>
             {isCurrentlyAssigned
@@ -158,7 +158,7 @@ export function IconsTag(props: { icons: LucideIcon[] }) {
   return (
     <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
       {props.icons.map((Icon, index) => {
-        return <RyogoIcon key={index} icon={Icon} />
+        return <RyogoIcon key={index} icon={Icon} size="sm" />
       })}
     </div>
   )

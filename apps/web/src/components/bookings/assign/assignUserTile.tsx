@@ -98,11 +98,11 @@ export default function AssignUserTile({
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper>
           {isCurrentlyAssigned ? (
-            <RyogoIcon color="sky" icon={CheckCheck} />
+            <RyogoIcon color="sky" icon={CheckCheck} size="sm" />
           ) : isBooked ? (
-            <RyogoIcon color="yellow" icon={TriangleAlertIcon} />
+            <RyogoIcon color="yellow" icon={TriangleAlertIcon} size="sm" />
           ) : (
-            <RyogoIcon color="green" icon={Check} />
+            <RyogoIcon color="green" icon={Check} size="sm" />
           )}
           <Caption>
             {isCurrentlyAssigned

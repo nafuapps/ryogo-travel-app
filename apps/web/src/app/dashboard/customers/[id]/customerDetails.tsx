@@ -11,7 +11,7 @@ import {
 import { getTranslations } from "next-intl/server"
 import { Separator } from "@/components/ui/separator"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { LucideStar, LucideUser } from "lucide-react"
+import { Star, User } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -22,6 +22,7 @@ import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoShe
 import { CustomerStatusPill } from "@/components/statusPills/statusPills"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -44,7 +45,7 @@ export default async function CustomerDetailsPageComponent({
                   imageSize="lg"
                 />
               ) : (
-                <LucideUser className="size-20 lg:size-24 text-slate-400" />
+                <RyogoIcon icon={User} size="xl" />
               )}
               <ChangeCustomerPhotoSheet
                 customerId={customer.id}
@@ -60,7 +61,7 @@ export default async function CustomerDetailsPageComponent({
               </Caption>
               {customer.driverRatings && customer.driverRatings.length > 1 && (
                 <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center">
-                  <LucideStar className="text-slate-900 size-5 lg:size-6" />
+                  <RyogoIcon icon={Star} size="sm" />
                   <PBold>
                     {(
                       customer.driverRatings.reduce((a, c) => a + c, 0) /

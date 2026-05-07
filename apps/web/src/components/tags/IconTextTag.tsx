@@ -11,7 +11,7 @@ export function IconTextTag(props: {
     <div
       className={`flex flex-row ${props.size === "lg" ? "gap-2 lg:gap-3" : "gap-1 lg:gap-1.5"} items-center`}
     >
-      <RyogoIcon icon={props.icon} size={props.size} />
+      <RyogoIcon icon={props.icon} size={props.size ?? "sm"} />
       {props.size === "lg" ? (
         <Caption>{props.text}</Caption>
       ) : (

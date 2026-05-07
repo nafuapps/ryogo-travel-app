@@ -3,7 +3,6 @@
 import {
   headerButtonClassName,
   headerClassName,
-  headerIconClassName,
   headerLeftClassName,
   headerRightClassName,
   headerTooltipClassName,
@@ -16,9 +15,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { LucidePlus, LucideTarget } from "lucide-react"
+import { Plus, Target } from "lucide-react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default function DashboardHeader(props: { pathName: string }) {
   const t = useTranslations("Dashboard.Header")
@@ -39,7 +39,7 @@ export default function DashboardHeader(props: { pathName: string }) {
             <Tooltip disableHoverableContent>
               <TooltipTrigger asChild>
                 <Button variant="outline" size={"default"}>
-                  <LucidePlus className={headerIconClassName} />
+                  <RyogoIcon icon={Plus} size="sm" />
                   <span className={headerButtonClassName}>
                     <CaptionGrey>{t("NewBooking")}</CaptionGrey>
                   </span>
@@ -59,7 +59,7 @@ export default function DashboardHeader(props: { pathName: string }) {
                   <span className={headerButtonClassName}>
                     <CaptionGrey>{t("ActionCenter")}</CaptionGrey>
                   </span>
-                  <LucideTarget className={headerIconClassName} />
+                  <RyogoIcon icon={Target} size="sm" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent className={headerTooltipClassName}>

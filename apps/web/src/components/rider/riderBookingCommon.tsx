@@ -20,7 +20,7 @@ import {
 } from "@ryogo-travel-app/api/services/driver.services"
 import { BookingTypeEnum, TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { format } from "date-fns"
-import { LucideChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -29,6 +29,7 @@ import {
   GridItemWrapper,
   GridWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "../icons/RyogoIcon"
 
 export function BookingSection({
   sectionTitle,
@@ -179,7 +180,7 @@ export async function OngoingBookingComponent({
       </div>
       <div className="bg-slate-600 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
         <SmallLight>{t("Continue")}</SmallLight>
-        <LucideChevronRight className="size-5 lg:size-6 text-slate-200" />
+        <RyogoIcon icon={ChevronRight} size="sm" color="white" />
       </div>
     </Link>
   )
@@ -228,7 +229,7 @@ export async function UpcomingBookingComponent({
       {canStart && (
         <div className="bg-slate-200 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
           <Small>{t("Start")}</Small>
-          <LucideChevronRight className="size-5 lg:size-6 text-slate-700" />
+          <RyogoIcon icon={ChevronRight} size="sm" color="black" />
         </div>
       )}
     </Link>

@@ -2,22 +2,19 @@ import {
   Bell,
   Car,
   DollarSign,
-  LucideProps,
   MapPin,
   MessageSquare,
   Plus,
   Send,
   Tickets,
   UserPlus,
+  LucideIcon,
 } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
-import { ForwardRefExoticComponent, RefAttributes } from "react"
 
 export type CommandType = {
   label: string
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >
+  icon: LucideIcon
   action: (term?: string) => void
 }
 

@@ -23,6 +23,3 @@ export const metricItem3ClassName =
 
 export const metricItem4ClassName =
   "flex flex-col gap-0.5 lg:gap-1 p-1.5 lg:p-2 items-center justify-center border-l"
-
-export const iconClassName = "size-5 lg:size-6 stroke-1 text-slate-500"
-export const boldIconClassName = "size-5 lg:size-6 text-slate-500"

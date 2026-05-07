@@ -1,11 +1,7 @@
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { CaptionGrey, H4, SmallGrey, H2 } from "@/components/typography"
-import {
-  LucideTrendingUp,
-  LucideTrendingDown,
-  LucideTickets,
-} from "lucide-react"
+import { TrendingUp, TrendingDown, Tickets } from "lucide-react"
 import {
   metricsClassName,
   metricFirstRowClassName,
@@ -16,10 +12,9 @@ import {
   metricItem2ClassName,
   metricItem3ClassName,
   metricItem4ClassName,
-  iconClassName,
-  boldIconClassName,
 } from "./dashboardMetricsCommons"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function DashboardBookingMetricsComponent({
   agencyId,
@@ -68,9 +63,9 @@ export default async function DashboardBookingMetricsComponent({
   ).length
 
   const icon = more ? (
-    <LucideTrendingUp className={boldIconClassName} />
+    <RyogoIcon icon={TrendingUp} size="sm" />
   ) : (
-    <LucideTrendingDown className={boldIconClassName} />
+    <RyogoIcon icon={TrendingDown} size="sm" />
   )
 
   return (
@@ -83,7 +78,7 @@ export default async function DashboardBookingMetricsComponent({
           id="dashboardBookingMetricsHeader"
           className={metricHeaderClassName}
         >
-          <LucideTickets className={iconClassName} />
+          <RyogoIcon icon={Tickets} size="sm" />
           <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div

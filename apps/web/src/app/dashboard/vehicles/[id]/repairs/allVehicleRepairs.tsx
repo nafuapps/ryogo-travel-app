@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server"
 import { PBold, Caption, CaptionGrey } from "@/components/typography"
 import Link from "next/link"
 import { UrlObject } from "url"
-import { LucidePencil, Plus } from "lucide-react"
+import { Pencil, Plus } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,6 +12,7 @@ import {
   GridItemWrapper,
   PageWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 //TODO: User can mark vehicle has gone for repair
 
@@ -102,7 +103,7 @@ async function VehicleRepairComponent({
               <div className="hidden lg:flex">
                 <CaptionGrey>{t("Edit")}</CaptionGrey>
               </div>
-              <LucidePencil className="size-4 lg:size-5 text-slate-500" />
+              <RyogoIcon icon={Pencil} size="sm" />
             </div>
           </Link>
         )}

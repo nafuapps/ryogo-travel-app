@@ -15,13 +15,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { LucideClock } from "lucide-react"
+import { Clock } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 import { format } from "date-fns"
 import moment from "moment"
-import { iconClassName } from "@/components/page/pageCommons"
 import { FindUpcomingBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { getCombinedDateTime } from "@/lib/utils"
 import {
@@ -30,6 +29,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default function UpcomingBookingsItemComponent({
   upcomingBookings7Days,
@@ -55,7 +55,7 @@ export default function UpcomingBookingsItemComponent({
         className="flex flex-row justify-between items-center"
       >
         <SectionHeaderWrapper>
-          <LucideClock className={iconClassName} />
+          <RyogoIcon icon={Clock} size="sm" />
           <SmallGrey>{t("Title")}</SmallGrey>
           <H5Grey>{trips.length}</H5Grey>
         </SectionHeaderWrapper>

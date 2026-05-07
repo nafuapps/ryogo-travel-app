@@ -1,6 +1,6 @@
 import { H4, H2, CaptionGrey, SmallGrey } from "@/components/typography"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { LucideCar } from "lucide-react"
+import { Car } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
   metricsClassName,
@@ -12,9 +12,9 @@ import {
   metricItem4ClassName,
   metricItem3ClassName,
   metricItem2ClassName,
-  iconClassName,
 } from "./dashboardMetricsCommons"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export default async function DashboardVehicleMetricsComponent({
   agencyId,
@@ -49,7 +49,7 @@ export default async function DashboardVehicleMetricsComponent({
           id="dashboardVehicleMetricsHeader"
           className={metricHeaderClassName}
         >
-          <LucideCar className={iconClassName} />
+          <RyogoIcon icon={Car} size="sm" />
           <SmallGrey>{t("Title")}</SmallGrey>
         </div>
         <div className={metricMainClassName}>

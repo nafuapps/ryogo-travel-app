@@ -2,21 +2,13 @@ import { CaptionGrey, H4, Caption, SmallBold } from "@/components/typography"
 import { LucidePencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
-import Image from "next/image"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import getExpenseIcon from "@/components/icons/expenseIcon"
 import { ExpenseApprovalButton } from "./expenseApprovalButton"
+import { RyogoChinImage } from "@/components/images/ryogoImage"
 
 export default async function ExpenseItem({
   expense,
@@ -83,27 +75,10 @@ export default async function ExpenseItem({
         </div>
       </div>
       {expense.expensePhotoUrl && (
-        <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">
-          <Dialog>
-            <DialogTrigger className="w-full hover:underline hover:cursor-pointer">
-              <CaptionGrey>{t("Proof")}</CaptionGrey>
-            </DialogTrigger>
-            <DialogContent className="size-10/12">
-              <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription></DialogDescription>
-              </DialogHeader>
-              <Image
-                loading="eager"
-                src={getFileUrl(expense.expensePhotoUrl)}
-                alt={t("Proof")}
-                fill
-                className="object-contain"
-                sizes="5/6"
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
+        <RyogoChinImage
+          src={getFileUrl(expense.expensePhotoUrl)}
+          alt={t("Proof")}
+        />
       )}
     </div>
   )

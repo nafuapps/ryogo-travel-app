@@ -10,7 +10,6 @@ import {
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { Separator } from "@/components/ui/separator"
-import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideStar, LucideUser } from "lucide-react"
 import moment from "moment"
@@ -22,6 +21,7 @@ import ActivateCustomerAlertButton from "@/components/buttons/activateCustomerAl
 import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
 import { CustomerStatusPill } from "@/components/statusPills/statusPills"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -38,15 +38,11 @@ export default async function CustomerDetailsPageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-2 lg:gap-3">
               {customer.photoUrl ? (
-                <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(customer.photoUrl)}
-                    alt={t("Photo")}
-                    fill
-                    sizes="(max-width: 1024px) 112px,128px"
-                  />
-                </div>
+                <RyogoImage
+                  src={getFileUrl(customer.photoUrl)}
+                  alt={t("Photo")}
+                  imageSize="lg"
+                />
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}

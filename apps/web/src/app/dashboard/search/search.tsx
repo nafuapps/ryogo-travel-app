@@ -27,7 +27,6 @@ import {
   VehicleRegex,
 } from "@/lib/regex"
 import Link from "next/link"
-import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
@@ -44,6 +43,7 @@ import {
   GridWrapper,
   PageWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -468,15 +468,11 @@ function DriverSearchResultItem({
       <GridWrapper>
         <GridItemWrapper>
           {driver.user.photoUrl ? (
-            <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
-              <Image
-                loading="eager"
-                src={getFileUrl(driver.user.photoUrl)}
-                alt={t("Photo") + " " + driver.id}
-                fill
-                sizes="(max-width: 1024px) 40px,48px"
-              />
-            </div>
+            <RyogoImage
+              src={getFileUrl(driver.user.photoUrl)}
+              alt={t("Photo") + " " + driver.id}
+              imageSize="sm"
+            />
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}
@@ -515,15 +511,11 @@ function CustomerSearchResultItem({
       <GridWrapper>
         <GridItemWrapper>
           {customer.photoUrl ? (
-            <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
-              <Image
-                loading="eager"
-                src={getFileUrl(customer.photoUrl)}
-                alt={t("Photo") + " " + customer.id}
-                fill
-                sizes="(max-width: 1024px) 40px,48px"
-              />
-            </div>
+            <RyogoImage
+              src={getFileUrl(customer.photoUrl)}
+              alt={t("Photo") + " " + customer.id}
+              imageSize="sm"
+            />
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}
@@ -558,15 +550,11 @@ function VehicleSearchResultItem({
       <GridWrapper>
         <GridItemWrapper>
           {vehicle.vehiclePhotoUrl ? (
-            <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
-              <Image
-                loading="eager"
-                src={getFileUrl(vehicle.vehiclePhotoUrl)}
-                alt={t("Photo") + " " + vehicle.vehicleNumber}
-                fill
-                sizes="(max-width: 1024px) 40px,48px"
-              />
-            </div>
+            <RyogoImage
+              src={getFileUrl(vehicle.vehiclePhotoUrl)}
+              alt={t("Photo") + " " + vehicle.vehicleNumber}
+              imageSize="sm"
+            />
           ) : (
             getVehicleIcon(vehicle.type, "md")
           )}

@@ -10,20 +10,12 @@ import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import { LucideMaximize2, LucideMinimize2, LucidePencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
-import Image from "next/image"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
+import { RyogoChinImage } from "@/components/images/ryogoImage"
 
 export default async function TransactionItem({
   transaction,
@@ -105,27 +97,7 @@ export default async function TransactionItem({
         </div>
       </div>
       {transaction.transactionPhotoUrl && (
-        <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">
-          <Dialog>
-            <DialogTrigger className="w-full hover:underline hover:cursor-pointer">
-              <CaptionGrey>{t("Proof")}</CaptionGrey>
-            </DialogTrigger>
-            <DialogContent className="size-10/12">
-              <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription></DialogDescription>
-              </DialogHeader>
-              <Image
-                loading="eager"
-                src={fileUrl}
-                alt={t("Proof")}
-                fill
-                className="object-contain"
-                sizes="5/6"
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
+        <RyogoChinImage src={fileUrl} alt={t("Proof")} />
       )}
     </div>
   )

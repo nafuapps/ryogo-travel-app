@@ -3,7 +3,7 @@ import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/custom
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideUserCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
-import Image from "next/image"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export default function ExistingCutomerCard({
   existingCustomer,
@@ -17,15 +17,11 @@ export default function ExistingCutomerCard({
       className="flex flex-row gap-3 lg:gap-4 bg-white border-2 border-sky-700 rounded-lg p-3 lg:p-4"
     >
       {existingCustomer.photoUrl ? (
-        <div className="relative size-10 lg:size-12 rounded-full overflow-hidden">
-          <Image
-            loading="eager"
-            src={getFileUrl(existingCustomer.photoUrl)}
-            alt={t("Photo") + " " + existingCustomer.id}
-            fill
-            sizes="(max-width: 1024px) 24px,32px"
-          />
-        </div>
+        <RyogoImage
+          src={getFileUrl(existingCustomer.photoUrl)}
+          alt={t("Photo") + " " + existingCustomer.id}
+          imageSize="sm"
+        />
       ) : (
         <div className="flex rounded-lg size-10 lg:size-12 bg-slate-100 justify-center items-center">
           <LucideUserCheck className="text-slate-500 stroke-1 size-6 lg:size-7" />

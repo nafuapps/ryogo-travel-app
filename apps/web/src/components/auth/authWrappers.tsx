@@ -1,6 +1,7 @@
 import { SubmitEventHandler } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
+import Image from "next/image"
 
 export function AuthMainWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -81,5 +82,18 @@ export function AuthFormWrapper<T extends FieldValues>({
         {children}{" "}
       </form>
     </Form>
+  )
+}
+
+export function AuthImage({ src, alt }: { src: string; alt: string }) {
+  return (
+    <Image
+      loading="eager"
+      src={src}
+      alt={alt}
+      className="object-cover"
+      fill
+      sizes="(min-width: 768px) 50vw"
+    />
   )
 }

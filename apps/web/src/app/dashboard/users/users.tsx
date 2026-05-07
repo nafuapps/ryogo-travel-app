@@ -9,7 +9,6 @@ import { iconClassName } from "@/components/page/pageCommons"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import moment from "moment"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
@@ -20,6 +19,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export default async function UsersPageComponent({
   agencyId,
@@ -94,15 +94,11 @@ async function AllUsersItemComponent({
       <GridWrapper>
         <GridItemWrapper>
           {user.photoUrl ? (
-            <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
-              <Image
-                loading="eager"
-                src={getFileUrl(user.photoUrl)}
-                alt={t("Photo") + " " + user.id}
-                fill
-                sizes="(max-width: 1024px) 40px,48px"
-              />
-            </div>
+            <RyogoImage
+              src={getFileUrl(user.photoUrl)}
+              alt={t("Photo") + " " + user.id}
+              imageSize="sm"
+            />
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}

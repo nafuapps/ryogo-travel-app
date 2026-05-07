@@ -3,7 +3,7 @@ import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user
 import { LucideChevronRight } from "lucide-react"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import Image from "next/image"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export const AccountCard = ({
   account,
@@ -16,15 +16,11 @@ export const AccountCard = ({
         <div className="flex flex-col justify-between gap-1 lg:gap-2">
           <div className="flex items-center gap-2 lg:gap-3">
             {account.photoUrl && (
-              <div className="relative size-7 lg:size-8 rounded-full overflow-hidden">
-                <Image
-                  loading="eager"
-                  src={getFileUrl(account.photoUrl)}
-                  alt={"Account Photo"}
-                  fill
-                  sizes="(max-width: 1024px) 28px,32px"
-                />
-              </div>
+              <RyogoImage
+                src={getFileUrl(account.photoUrl)}
+                alt={"Account Photo"}
+                imageSize="xs"
+              />
             )}
             <SmallBold>{account.name}</SmallBold>
           </div>

@@ -8,7 +8,6 @@ import { getTranslations } from "next-intl/server"
 import { iconClassName } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
@@ -18,6 +17,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -59,15 +59,11 @@ async function AllDriversItemComponent({
       <GridWrapper>
         <GridItemWrapper>
           {driver.user.photoUrl ? (
-            <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
-              <Image
-                loading="eager"
-                src={getFileUrl(driver.user.photoUrl)}
-                alt={t("Photo") + " " + driver.id}
-                fill
-                sizes="(max-width: 1024px) 40px,48px"
-              />
-            </div>
+            <RyogoImage
+              src={getFileUrl(driver.user.photoUrl)}
+              alt={t("Photo") + " " + driver.id}
+              imageSize="sm"
+            />
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}

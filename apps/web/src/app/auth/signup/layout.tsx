@@ -3,9 +3,9 @@
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import Image from "next/image"
 import RyoGoLogo from "@/components/logo"
 import {
+  AuthImage,
   AuthMainWrapper,
   AuthSideWrapper,
 } from "@/components/auth/authWrappers"
@@ -33,14 +33,7 @@ export default async function SignupLayout({
         {children}
       </AuthMainWrapper>
       <AuthSideWrapper>
-        <Image
-          loading="eager"
-          src={"/signupBG.png"}
-          alt="Signup Page Cover Image"
-          className="object-cover"
-          fill
-          sizes="50vw"
-        />
+        <AuthImage src={"/signupBG.png"} alt="Signup Page Cover Image" />
       </AuthSideWrapper>
     </LayoutWrapper>
   )

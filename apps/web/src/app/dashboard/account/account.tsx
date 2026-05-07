@@ -1,6 +1,5 @@
 import AccountDetailHeaderTabs from "@/components/header/accountDetailHeaderTabs"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { LucideUser } from "lucide-react"
@@ -13,6 +12,7 @@ import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export default async function AccountPageComponent({
   userDetails,
@@ -29,15 +29,11 @@ export default async function AccountPageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-2 lg:gap-3">
               {userDetails.photoUrl ? (
-                <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(userDetails.photoUrl)}
-                    alt={t("Photo")}
-                    fill
-                    sizes="(max-width: 1024px) 112px,128px"
-                  />
-                </div>
+                <RyogoImage
+                  src={getFileUrl(userDetails.photoUrl)}
+                  alt={t("Photo")}
+                  imageSize="lg"
+                />
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}

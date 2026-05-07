@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl"
 import { iconClassName } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/components/ui/field"
@@ -23,6 +22,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 const CUSTOMERS_PER_PAGE = 20
 
@@ -126,15 +126,11 @@ function AllCustomersItemComponent({
       <GridWrapper>
         <GridItemWrapper>
           {customer.photoUrl ? (
-            <div className="relative size-10 lg:size-12 rounded-lg overflow-hidden">
-              <Image
-                loading="eager"
-                src={getFileUrl(customer.photoUrl)}
-                alt={t("Photo") + " " + customer.id}
-                fill
-                sizes="(max-width: 1024px) 40px,48px"
-              />
-            </div>
+            <RyogoImage
+              src={getFileUrl(customer.photoUrl)}
+              alt={t("Photo") + " " + customer.id}
+              imageSize="sm"
+            />
           ) : (
             <LucideUser className="size-8 lg:size-10 text-slate-400" />
           )}

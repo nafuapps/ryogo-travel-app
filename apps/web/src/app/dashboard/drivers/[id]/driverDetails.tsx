@@ -10,18 +10,9 @@ import {
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { Separator } from "@/components/ui/separator"
-import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideStar, LucideUser } from "lucide-react"
 import moment from "moment"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/inactivateDriverAlertButton"
@@ -31,6 +22,7 @@ import ChangeDriverPhotoSheet from "@/components/sheets/changeDriverPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 
 //TODO: Add driver schedule chart
 
@@ -49,15 +41,11 @@ export default async function DriverDetailsPageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-2 lg:gap-3">
               {driver.user.photoUrl ? (
-                <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(driver.user.photoUrl)}
-                    alt={t("Photo")}
-                    fill
-                    sizes="(max-width: 1024px) 112px,128px"
-                  />
-                </div>
+                <RyogoImage
+                  src={getFileUrl(driver.user.photoUrl)}
+                  alt={t("Photo")}
+                  imageSize="lg"
+                />
               ) : (
                 <LucideUser className="size-20 lg:size-24 text-slate-400" />
               )}
@@ -112,32 +100,10 @@ export default async function DriverDetailsPageComponent({
               )}
             </div>
             {driver.licensePhotoUrl && (
-              <Dialog>
-                <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(driver.licensePhotoUrl)}
-                    alt={t("LicensePhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 1024px) 40px,48px"
-                  />
-                </DialogTrigger>
-                <DialogContent className="size-10/12">
-                  <DialogHeader>
-                    <DialogTitle></DialogTitle>
-                    <DialogDescription></DialogDescription>
-                  </DialogHeader>
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(driver.licensePhotoUrl)}
-                    alt={t("LicensePhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="5/6"
-                  />
-                </DialogContent>
-              </Dialog>
+              <RyogoDialogImage
+                src={getFileUrl(driver.licensePhotoUrl)}
+                alt={t("LicensePhoto")}
+              />
             )}
           </div>
         </DriverSection>

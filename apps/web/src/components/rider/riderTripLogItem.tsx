@@ -4,19 +4,10 @@ import {
   CaptionBold,
   Caption,
 } from "@/components/typography"
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-  DialogHeader,
-} from "@/components/ui/dialog"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { format } from "date-fns"
-import Image from "next/image"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   LucidePlay,
@@ -26,6 +17,7 @@ import {
   LucideCheckCheck,
   LucidePin,
 } from "lucide-react"
+import { RyogoChinImage } from "@/components/images/ryogoImage"
 
 export default async function RiderTripLogItem({
   tripLog,
@@ -57,27 +49,7 @@ export default async function RiderTripLogItem({
         </div>
       </div>
       {tripLog.tripLogPhotoUrl && (
-        <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">
-          <Dialog>
-            <DialogTrigger className="w-full hover:underline hover:cursor-pointer">
-              <CaptionGrey>{t("Proof")}</CaptionGrey>
-            </DialogTrigger>
-            <DialogContent className="size-10/12">
-              <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription></DialogDescription>
-              </DialogHeader>
-              <Image
-                loading="eager"
-                src={fileUrl}
-                alt={t("Proof")}
-                fill
-                className="object-contain"
-                sizes="5/6"
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
+        <RyogoChinImage src={fileUrl} alt={t("Proof")} />
       )}
     </div>
   )

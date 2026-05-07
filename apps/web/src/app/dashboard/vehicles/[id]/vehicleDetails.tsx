@@ -1,7 +1,6 @@
 import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import VehicleDetailHeaderTabs from "@/components/header/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
-import Image from "next/image"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { LucideStar } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -16,14 +15,6 @@ import {
 import moment from "moment"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Separator } from "@/components/ui/separator"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import ActivateVehicleAlertButton from "@/components/buttons/activateVehicleAlertButton"
 import InactivateVehicleAlertButton from "@/components/buttons/inactivateVehicleAlertButton"
 import Link from "next/link"
@@ -31,6 +22,7 @@ import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet
 import { VehicleStatusPill } from "@/components/statusPills/statusPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 
 //TODO: Add vehicle schedule chart
 
@@ -48,15 +40,11 @@ export default async function VehicleDetailsPageComponent({
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-2 lg:gap-3">
               {vehicle.vehiclePhotoUrl ? (
-                <div className="relative size-28 lg:size-32 rounded-lg overflow-hidden">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(vehicle.vehiclePhotoUrl)}
-                    alt={t("Photo")}
-                    fill
-                    sizes="(max-width: 768px) 112px,128px"
-                  />
-                </div>
+                <RyogoImage
+                  src={getFileUrl(vehicle.vehiclePhotoUrl)}
+                  alt={t("Photo")}
+                  imageSize="lg"
+                />
               ) : (
                 getVehicleIcon(vehicle.type, "xl")
               )}
@@ -117,32 +105,10 @@ export default async function VehicleDetailsPageComponent({
               )}
             </div>
             {vehicle.insurancePhotoUrl && (
-              <Dialog>
-                <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(vehicle.insurancePhotoUrl)}
-                    alt={t("InsurancePhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 1024px) 40px,48px"
-                  />
-                </DialogTrigger>
-                <DialogContent className="size-10/12">
-                  <DialogHeader>
-                    <DialogTitle></DialogTitle>
-                    <DialogDescription></DialogDescription>
-                  </DialogHeader>
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(vehicle.insurancePhotoUrl)}
-                    alt={t("InsurancePhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="5/6"
-                  />
-                </DialogContent>
-              </Dialog>
+              <RyogoDialogImage
+                src={getFileUrl(vehicle.insurancePhotoUrl)}
+                alt={t("InsurancePhoto")}
+              />
             )}
           </div>
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
@@ -161,32 +127,10 @@ export default async function VehicleDetailsPageComponent({
               )}
             </div>
             {vehicle.pucPhotoUrl && (
-              <Dialog>
-                <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(vehicle.pucPhotoUrl)}
-                    alt={t("PUCPhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 1024px) 40px,48px"
-                  />
-                </DialogTrigger>
-                <DialogContent className="size-10/12">
-                  <DialogHeader>
-                    <DialogTitle></DialogTitle>
-                    <DialogDescription></DialogDescription>
-                  </DialogHeader>
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(vehicle.pucPhotoUrl)}
-                    alt={t("PUCPhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="5/6"
-                  />
-                </DialogContent>
-              </Dialog>
+              <RyogoDialogImage
+                src={getFileUrl(vehicle.pucPhotoUrl)}
+                alt={t("PUCPhoto")}
+              />
             )}
           </div>
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
@@ -205,32 +149,10 @@ export default async function VehicleDetailsPageComponent({
               )}
             </div>
             {vehicle.rcPhotoUrl && (
-              <Dialog>
-                <DialogTrigger className="relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500">
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(vehicle.rcPhotoUrl)}
-                    alt={t("RCPhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 1024px) 40px,48px"
-                  />
-                </DialogTrigger>
-                <DialogContent className="size-10/12">
-                  <DialogHeader>
-                    <DialogTitle></DialogTitle>
-                    <DialogDescription></DialogDescription>
-                  </DialogHeader>
-                  <Image
-                    loading="eager"
-                    src={getFileUrl(vehicle.rcPhotoUrl)}
-                    alt={t("RCPhoto")}
-                    fill
-                    className="object-contain"
-                    sizes="5/6"
-                  />
-                </DialogContent>
-              </Dialog>
+              <RyogoDialogImage
+                src={getFileUrl(vehicle.rcPhotoUrl)}
+                alt={t("RCPhoto")}
+              />
             )}
           </div>
         </VehicleSection>

@@ -18,7 +18,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useTranslations } from "next-intl"
 import moment from "moment"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import Image from "next/image"
 import {
   Popover,
   PopoverContent,
@@ -26,6 +25,7 @@ import {
 } from "@/components/ui/popover"
 import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
 import { iconClassName } from "@/components/page/pageCommons"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export enum SelectableDays {
   SEVEN = "7Days",
@@ -152,15 +152,7 @@ export function DashboardScheduleItemID({
   return (
     <div className="flex flex-col p-1 gap-0.5 bg-white justify-center items-center shrink-0 min-w-20 h-16 lg:w-24 text-ellipsis whitespace-nowrap">
       {photoUrl ? (
-        <div className="relative size-7 lg:size-8 rounded-full overflow-hidden">
-          <Image
-            loading="eager"
-            src={getFileUrl(photoUrl)}
-            alt={imageAlt}
-            fill
-            sizes="(max-width: 1024px) 28px,32px"
-          />
-        </div>
+        <RyogoImage src={getFileUrl(photoUrl)} alt={imageAlt} imageSize="xs" />
       ) : (
         <Icon className="size-7 lg:size-8 text-slate-400" />
       )}

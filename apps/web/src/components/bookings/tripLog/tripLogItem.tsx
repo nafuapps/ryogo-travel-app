@@ -14,18 +14,10 @@ import {
   LucidePlay,
 } from "lucide-react"
 import { format } from "date-fns"
-import Image from "next/image"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { RyogoChinImage } from "@/components/images/ryogoImage"
 
 export default async function TripLogItem({
   tripLog,
@@ -63,27 +55,7 @@ export default async function TripLogItem({
         </div>
       </div>
       {tripLog.tripLogPhotoUrl && (
-        <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">
-          <Dialog>
-            <DialogTrigger className="w-full hover:underline hover:cursor-pointer">
-              <CaptionGrey>{t("Proof")}</CaptionGrey>
-            </DialogTrigger>
-            <DialogContent className="size-10/12">
-              <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription></DialogDescription>
-              </DialogHeader>
-              <Image
-                loading="eager"
-                src={fileUrl}
-                alt={t("Proof")}
-                fill
-                className="object-contain"
-                sizes="5/6"
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
+        <RyogoChinImage src={fileUrl} alt={t("Proof")} />
       )}
     </div>
   )

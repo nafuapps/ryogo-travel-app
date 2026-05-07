@@ -1,4 +1,9 @@
-import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
+import {
+  RyogoSmall,
+  RyogoH4,
+  RyogoCaption,
+  RyogoP,
+} from "@/components/typography"
 import {
   FindVehiclesByAgencyType,
   vehicleServices,
@@ -31,8 +36,8 @@ export default async function AllVehiclesListComponent({
     <SectionWrapper id="AllVehiclesSection">
       <SectionHeaderWrapper>
         <RyogoIcon icon={Rows3} size="sm" />
-        <SmallGrey>{t("Title")}</SmallGrey>
-        <H5Grey>{allVehicles.length}</H5Grey>
+        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+        <RyogoH4 color="slate"> {allVehicles.length}</RyogoH4>
         <Link href={`/dashboard/vehicles/new`} className="ml-auto">
           <Button variant={"outline"}>
             <Plus className="size-4 md:size-5 text-slate-700" />
@@ -69,12 +74,19 @@ async function AllVehiclesItemComponent({
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{vehicle.brand + " " + vehicle.model}</Caption>
-          <PBold>{vehicle.vehicleNumber}</PBold>
+          <RyogoCaption color="slate">
+            {vehicle.brand + " " + vehicle.model}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{vehicle.odometerReading + t("Km")}</Caption>
-          <PBold>{t("RatePerKm", { rate: vehicle.defaultRatePerKm })}</PBold>
+          <RyogoCaption color="slate">
+            {vehicle.odometerReading + t("Km")}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <VehicleStatusPill status={vehicle.status} />

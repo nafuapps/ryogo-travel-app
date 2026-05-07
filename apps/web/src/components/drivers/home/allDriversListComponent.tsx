@@ -1,4 +1,9 @@
-import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
+import {
+  RyogoSmall,
+  RyogoH4,
+  RyogoCaption,
+  RyogoP,
+} from "@/components/typography"
 import {
   FindDriversByAgencyType,
   driverServices,
@@ -31,8 +36,8 @@ export default async function AllDriversListComponent({
     <SectionWrapper id="AllDriversSection">
       <SectionHeaderWrapper>
         <RyogoIcon icon={Rows3} size="sm" />
-        <SmallGrey>{t("Title")}</SmallGrey>
-        <H5Grey>{allDrivers.length}</H5Grey>
+        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+        <RyogoH4 color="slate"> {allDrivers.length}</RyogoH4>
         <Link href={`/dashboard/drivers/new`} className="ml-auto">
           <Button variant={"outline"}>
             <Plus className="size-4 md:size-5 text-slate-700" />
@@ -69,8 +74,8 @@ async function AllDriversItemComponent({
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{driver.phone}</Caption>
-          <PBold>{driver.name}</PBold>
+          <RyogoCaption color="slate">{driver.phone}</RyogoCaption>
+          <RyogoP weight="font-bold"> {driver.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <div className="flex flex-row gap-1 lg:gap-1.5">
@@ -78,9 +83,9 @@ async function AllDriversItemComponent({
               return getVehicleIcon(v)
             })}
           </div>
-          <PBold>
+          <RyogoP weight="font-bold">
             {t("AllowancePerDay", { allowance: driver.defaultAllowancePerDay })}
-          </PBold>
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <DriverStatusPill status={driver.status} />

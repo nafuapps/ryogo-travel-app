@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl"
 import { changeExpenseApprovalAction } from "@/app/actions/expenses/changeExpenseApprovalAction"
 import { toast } from "sonner"
-import { CaptionGrey } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { CheckCheck, Check } from "lucide-react"
 import { useRouter } from "next/navigation"
 import {
@@ -57,7 +57,7 @@ export function ExpenseApprovalButton({
         disabled={isPending}
       >
         <div className="hidden lg:flex">
-          <CaptionGrey>{t("Approved")}</CaptionGrey>
+          <RyogoCaption color="light">{t("Approved")}</RyogoCaption>
         </div>
         <RyogoIcon icon={CheckCheck} size="sm" />
       </TooltipTrigger>
@@ -71,7 +71,7 @@ export function ExpenseApprovalButton({
         disabled={isPending}
       >
         <div className="hidden lg:flex">
-          <CaptionGrey>{t("Approve")}</CaptionGrey>
+          <RyogoCaption color="light">{t("Approve")}</RyogoCaption>
         </div>
         <RyogoIcon icon={Check} size="sm" />
       </TooltipTrigger>

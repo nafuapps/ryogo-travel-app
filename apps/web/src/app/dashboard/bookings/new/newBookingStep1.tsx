@@ -1,6 +1,6 @@
 "use client"
 
-import { CaptionGrey, H4, Small, SmallGrey } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -135,11 +135,11 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     <NewStepWrapper id="CustomerStep">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <CaptionGrey>{t("Subtitle")}</CaptionGrey>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewBookingTotalSteps} current={0} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step1Type>
         id="Step1Form"
@@ -170,7 +170,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
           <NewFormContentWrapper>
             <Alert>
               <Info className="size-4 lg:size-5 text-amber-300" />
-              <Small>{t("CustomerNotFound")}</Small>
+              <RyogoSmall>{t("CustomerNotFound")}</RyogoSmall>
             </Alert>
             <RyogoInput
               name={"newCustomerName"}

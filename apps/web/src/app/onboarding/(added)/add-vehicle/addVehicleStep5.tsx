@@ -1,6 +1,6 @@
 "use client"
 
-import { H3Grey } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -72,7 +72,7 @@ export function AddVehicleConfirm(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step5Content">
-          <H3Grey>{t("Title")}</H3Grey>
+          <RyogoH3 color="slate">{t("Title")}</RyogoH3>
           <ConfirmValues
             name={t("VehicleNumber")}
             value={props.finalData.data.vehicleNumber}

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { CaptionGrey, H4Grey } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
@@ -78,7 +78,7 @@ export default function LoginPasswordPageComponent({
         onSubmit={methods.handleSubmit(onSubmit)}
         form={methods}
       >
-        <H4Grey>{t("PageTitle")}</H4Grey>
+        <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
         <UserCard user={user} />
         <RyogoInput
           name={"password"}
@@ -104,11 +104,11 @@ export default function LoginPasswordPageComponent({
               router.back()
             }}
           >
-            <CaptionGrey>{t("Back")}</CaptionGrey>
+            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
           </Button>
           <Button variant={"link"} type="button" size="sm">
             <Link href={`/auth/forgot-password/${user.id}`}>
-              <CaptionGrey>{t("ForgotCTA")}</CaptionGrey>
+              <RyogoCaption color="light">{t("ForgotCTA")}</RyogoCaption>
             </Link>
           </Button>
         </AuthActionWrapper>

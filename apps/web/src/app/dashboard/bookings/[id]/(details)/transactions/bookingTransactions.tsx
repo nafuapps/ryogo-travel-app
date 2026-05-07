@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server"
 import BookingDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { SmallGrey } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import TransactionItem from "@/components/bookings/transaction/transactionItem"
 
@@ -36,7 +36,7 @@ export default async function BookingTransactionsPageComponent({
       )}
       {bookingTransactions.length === 0 ? (
         <div className="w-full text-center">
-          <SmallGrey>{t("NoTransactions")}</SmallGrey>
+          <RyogoSmall color="slate">{t("NoTransactions")}</RyogoSmall>
         </div>
       ) : (
         <div

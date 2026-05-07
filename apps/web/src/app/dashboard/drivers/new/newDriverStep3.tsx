@@ -12,7 +12,7 @@ import {
   RyogoMultipleCheckbox,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
+import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import StepsTracker, {
   NewDriverTotalSteps,
@@ -81,11 +81,11 @@ export function NewDriverStep3(props: {
     <NewStepWrapper id="NewDriverStep3">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <CaptionGrey>{t("Subtitle")}</CaptionGrey>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewDriverTotalSteps} current={2} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step3Type>
         id="Step3Form"

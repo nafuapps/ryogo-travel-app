@@ -1,6 +1,6 @@
 import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
 import moment from "moment"
-import { Caption, CaptionGrey, PBold, PRed } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import Link from "next/link"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
@@ -31,7 +31,7 @@ export default async function UserAssignedPageComponent({
         className="flex flex-col items-center gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
       >
         {bookings.length === 0 ? (
-          <CaptionGrey>{t("NoBookings")}</CaptionGrey>
+          <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (
           <>
             {inProgressBookings.map((trip) => (
@@ -54,16 +54,16 @@ function OngoingBookingComponent(
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.bookingId}</Caption>
-          <PBold>{props.customerName}</PBold>
+          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.type.toUpperCase()}</Caption>
-          <PBold>{props.route}</PBold>
+          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.vehicle}</Caption>
-          <PBold>{props.driver}</PBold>
+          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
         </GridItemWrapper>
         {props.status && (
           <GridItemWrapper>
@@ -83,23 +83,28 @@ function AssignedBookingComponent(
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.bookingId}</Caption>
-          <PBold>{props.customerName}</PBold>
+          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.type.toUpperCase()}</Caption>
-          <PBold>{props.route}</PBold>
+          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.vehicle}</Caption>
-          <PBold>{props.driver}</PBold>
+          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{format(combinedDateTime, "dd MMM hh:mm aaa")}</Caption>
+          <RyogoCaption color="slate">
+            {format(combinedDateTime, "dd MMM hh:mm aaa")}
+          </RyogoCaption>
           {combinedDateTime < new Date() ? (
-            <PRed>{moment(combinedDateTime).fromNow()}</PRed>
+            <RyogoP color="red">{moment(combinedDateTime).fromNow()}</RyogoP>
           ) : (
-            <PBold>{moment(combinedDateTime).fromNow()}</PBold>
+            <RyogoP weight="font-bold">
+              {" "}
+              {moment(combinedDateTime).fromNow()}
+            </RyogoP>
           )}
         </GridItemWrapper>
       </GridWrapper>

@@ -10,7 +10,7 @@ import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import StartTripSheet from "@/components/rider/tripSheets/startTripSheet"
 import EndTripSheet from "@/components/rider/tripSheets/endTripSheet"
 import MidTripSheet from "@/components/rider/tripSheets/midTripSheet"
-import { SmallBold } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { UrlObject } from "url"
 import RiderExpenseItem from "@/components/rider/riderExpenseItem"
 import RiderTripLogItem from "@/components/rider/riderTripLogItem"
@@ -36,13 +36,13 @@ export default async function RiderMyOngoingBookingPageComponent({
     <PageWrapper id="RiderCurrentBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={true} />
       <ContentWrapper id="CurrentBookingTripLogs">
-        <SmallBold>{t("TripLogs")}</SmallBold>
+        <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
         {booking.tripLogs.map((t) => {
           return <RiderTripLogItem key={t.id} tripLog={t} />
         })}
       </ContentWrapper>
       <ContentWrapper id="CurrentBookingExpenses">
-        <SmallBold>{t("Expenses")}</SmallBold>
+        <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
         <Link
           href={
             `/rider/myBookings/${booking.id}/add-expense` as unknown as UrlObject

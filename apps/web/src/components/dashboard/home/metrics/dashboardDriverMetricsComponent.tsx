@@ -1,4 +1,9 @@
-import { H4, CaptionGrey, SmallGrey, H2 } from "@/components/typography"
+import {
+  RyogoH3,
+  RyogoCaption,
+  RyogoSmall,
+  RyogoH2,
+} from "@/components/typography"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { LifeBuoy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -50,19 +55,19 @@ export default async function DashboardDriverMetricsComponent({
           className={metricHeaderClassName}
         >
           <RyogoIcon icon={LifeBuoy} size="sm" />
-          <SmallGrey>{t("Title")}</SmallGrey>
+          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
         </div>
         <div className={metricMainClassName}>
-          <H2>{totalDrivers}</H2>
+          <RyogoH2>{totalDrivers}</RyogoH2>
           {totalDrivers !== 0 && (
-            <CaptionGrey>
+            <RyogoCaption color="light">
               {(onTripDrivers / totalDrivers).toLocaleString("en-IN", {
                 style: "percent",
                 maximumFractionDigits: 1,
               }) +
                 " " +
                 t("Rate")}
-            </CaptionGrey>
+            </RyogoCaption>
           )}
         </div>
       </div>
@@ -74,26 +79,26 @@ export default async function DashboardDriverMetricsComponent({
           id="dashboardDriverMetricsAvailable"
           className={metricItem1ClassName}
         >
-          <H4>{availableDrivers}</H4>
-          <CaptionGrey>{t("Available")}</CaptionGrey>
+          <RyogoH3>{availableDrivers}</RyogoH3>
+          <RyogoCaption color="light">{t("Available")}</RyogoCaption>
         </div>
         <div id="dashboardDriverMetricsInTrip" className={metricItem2ClassName}>
-          <H4>{onTripDrivers}</H4>
-          <CaptionGrey>{t("InTrip")}</CaptionGrey>
+          <RyogoH3>{onTripDrivers}</RyogoH3>
+          <RyogoCaption color="light">{t("InTrip")}</RyogoCaption>
         </div>
         <div
           id="dashboardDriverMetricsCancelled"
           className={metricItem3ClassName}
         >
-          <H4>{inactiveDrivers}</H4>
-          <CaptionGrey>{t("Inactive")}</CaptionGrey>
+          <RyogoH3>{inactiveDrivers}</RyogoH3>
+          <RyogoCaption color="light">{t("Inactive")}</RyogoCaption>
         </div>
         <div
           id="dashboardDriverMetricsCompleted"
           className={metricItem4ClassName}
         >
-          <H4>{leaveDrivers}</H4>
-          <CaptionGrey>{t("Leave")}</CaptionGrey>
+          <RyogoH3>{leaveDrivers}</RyogoH3>
+          <RyogoCaption color="light">{t("Leave")}</RyogoCaption>
         </div>
       </div>
     </div>

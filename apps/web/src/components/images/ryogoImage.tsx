@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { CaptionGrey } from "../typography"
+import { RyogoCaption } from "../typography"
 
 export type RyogoImageSize = "xs" | "sm" | "lg"
 
@@ -33,7 +33,7 @@ export function RyogoImage({
 
 export function RyogoDialogImage({ src, alt }: { src: string; alt: string }) {
   let className =
-    "relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-500"
+    "relative flex justify-center items-center size-10 lg:size-12 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-600"
 
   let sizes = `(max-width: 1024px) 40px,48px`
 
@@ -72,7 +72,7 @@ export function RyogoChinImage({ src, alt }: { src: string; alt: string }) {
     <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">
       <Dialog>
         <DialogTrigger className="w-full hover:underline hover:cursor-pointer">
-          <CaptionGrey>{alt}</CaptionGrey>
+          <RyogoCaption color="light">{alt}</RyogoCaption>
         </DialogTrigger>
         <DialogContent className="size-5/6">
           <DialogHeader>

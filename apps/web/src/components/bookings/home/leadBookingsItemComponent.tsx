@@ -1,6 +1,11 @@
 "use client"
 
-import { SmallGrey, H5Grey, PBold, Caption } from "@/components/typography"
+import {
+  RyogoSmall,
+  RyogoH4,
+  RyogoP,
+  RyogoCaption,
+} from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -45,8 +50,8 @@ export default function LeadBookingsItemComponent({
       >
         <SectionHeaderWrapper>
           <RyogoIcon icon={BookOpen} size="sm" />
-          <SmallGrey>{t("Title")}</SmallGrey>
-          <H5Grey>{trips.length}</H5Grey>
+          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+          <RyogoH4 color="slate"> {trips.length}</RyogoH4>
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
@@ -78,26 +83,31 @@ function LeadBookingsComponent(
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.bookingId}</Caption>
-          <PBold>{props.customerName}</PBold>
+          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.type.toUpperCase()}</Caption>
-          <PBold>{props.route}</PBold>
+          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>
+          <RyogoCaption color="slate">
             {props.amount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
-          </Caption>
-          <PBold>{props.assignedUser}</PBold>
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {props.assignedUser}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.passengers + " " + t("Passengers")}</Caption>
-          <PBold>{moment(props.createdAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">
+            {props.passengers + " " + t("Passengers")}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(props.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>

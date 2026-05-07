@@ -1,11 +1,4 @@
-import {
-  CaptionGrey,
-  H4,
-  Caption,
-  SmallBold,
-  Small,
-  SmallRed,
-} from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Maximize2, Minimize2, Pencil } from "lucide-react"
 import { format } from "date-fns"
@@ -54,23 +47,31 @@ export default async function TransactionItem({
             </div>
           )}
           {transaction.type === TransactionTypesEnum.DEBIT ? (
-            <SmallRed>{transaction.otherParty.toUpperCase()}</SmallRed>
+            <RyogoSmall color="red">
+              {transaction.otherParty.toUpperCase()}
+            </RyogoSmall>
           ) : (
-            <Small>{transaction.otherParty.toUpperCase()}</Small>
+            <RyogoSmall>{transaction.otherParty.toUpperCase()}</RyogoSmall>
           )}
-          <CaptionGrey>{transaction.id}</CaptionGrey>
+          <RyogoCaption color="light">{transaction.id}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-2 lg:gap-3 w-full">
-          <SmallBold>{transaction.mode.toUpperCase()}</SmallBold>
-          {transaction.remarks && <Caption>{transaction.remarks}</Caption>}
-          <CaptionGrey>
+          <RyogoSmall weight="font-bold">
+            {transaction.mode.toUpperCase()}
+          </RyogoSmall>
+          {transaction.remarks && (
+            <RyogoCaption color="slate">{transaction.remarks}</RyogoCaption>
+          )}
+          <RyogoCaption color="light">
             {format(transaction.createdAt, "dd MMM hh:mm aaa")}
-          </CaptionGrey>
-          <CaptionGrey>{transaction.addedByUser.name}</CaptionGrey>
+          </RyogoCaption>
+          <RyogoCaption color="light">
+            {transaction.addedByUser.name}
+          </RyogoCaption>
         </div>
         <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
           <div className="flex gap-2 lg:gap-3 justify-end lg:items-center">
-            <H4>{transaction.amount}</H4>
+            <RyogoH3>{transaction.amount}</RyogoH3>
           </div>
           <div className="flex flex-row gap-2 lg:gap-3">
             {isOwner && (
@@ -88,7 +89,7 @@ export default async function TransactionItem({
               >
                 <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
                   <div className="hidden lg:flex">
-                    <CaptionGrey>{t("Modify")}</CaptionGrey>
+                    <RyogoCaption color="light">{t("Modify")}</RyogoCaption>
                   </div>
                   <RyogoIcon icon={Pencil} size="sm" />
                 </div>

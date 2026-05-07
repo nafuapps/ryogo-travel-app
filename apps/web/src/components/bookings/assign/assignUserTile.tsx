@@ -1,7 +1,7 @@
 import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { PBold, Small, Caption } from "@/components/typography"
+import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   Bolt,
   Check,
@@ -85,8 +85,8 @@ export default function AssignUserTile({
     >
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
-          <PBold>{userData.name}</PBold>
-          <Small>{userData.email}</Small>
+          <RyogoP weight="font-bold"> {userData.name}</RyogoP>
+          <RyogoSmall>{userData.email}</RyogoSmall>
           <IconTextTag icon={Phone} text={userData.phone} />
         </AssignTileHeaderWrapper>
         <AssignTileFooterWrapper>
@@ -98,19 +98,19 @@ export default function AssignUserTile({
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper>
           {isCurrentlyAssigned ? (
-            <RyogoIcon color="sky" icon={CheckCheck} size="sm" />
+            <RyogoIcon color="brand" icon={CheckCheck} size="sm" />
           ) : isBooked ? (
             <RyogoIcon color="yellow" icon={TriangleAlertIcon} size="sm" />
           ) : (
             <RyogoIcon color="green" icon={Check} size="sm" />
           )}
-          <Caption>
+          <RyogoCaption color="slate">
             {isCurrentlyAssigned
               ? t("CurrentlyAssigned")
               : isBooked
                 ? t("Booked")
                 : t("Available")}
-          </Caption>
+          </RyogoCaption>
         </AssignTileStatusWrapper>
       </AssignTileScoreWrapper>
     </AssignTileWrapper>

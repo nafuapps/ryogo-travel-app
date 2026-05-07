@@ -1,4 +1,4 @@
-import { Small, SmallBold } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 
 type ConfirmValuesProps = {
   name: string
@@ -8,9 +8,9 @@ type ConfirmValuesProps = {
 export default function ConfirmValues({ name, value }: ConfirmValuesProps) {
   return (
     <div className="flex flex-row justify-between w-full gap-5 lg:gap-6">
-      <SmallBold>{name}</SmallBold>
+      <RyogoSmall weight="font-bold">{name}</RyogoSmall>
       <div className="text-right">
-        <Small>{value}</Small>
+        <RyogoSmall>{value}</RyogoSmall>
       </div>
     </div>
   )

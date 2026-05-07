@@ -1,4 +1,4 @@
-import { H3, H5, PGrey } from "@/components/typography"
+import { RyogoH3, RyogoH4, RyogoP } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepContent,
@@ -17,9 +17,11 @@ export function AddAgentFinish(props: { finalData: AddAgentRequestType }) {
     <OnboardingStepForm formId="Step6Form">
       <OnboardingStepContent contentId="Step6Content">
         <OnboardingSuccessIcon iconId="Step6Icon" />
-        <H3>{t("Title")}</H3>
-        <H5>{t("Subtitle")}</H5>
-        <PGrey>{t("Email", { email: props.finalData.data.email })}</PGrey>
+        <RyogoH3>{t("Title")}</RyogoH3>
+        <RyogoH4>{t("Subtitle")}</RyogoH4>
+        <RyogoP color="slate">
+          {t("Email", { email: props.finalData.data.email })}
+        </RyogoP>
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step6Actions">
         <OnboardingStepPrimaryAction disabled={false}>

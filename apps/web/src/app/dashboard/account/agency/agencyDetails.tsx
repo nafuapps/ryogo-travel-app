@@ -1,12 +1,6 @@
 import { AgencyStatusPill } from "@/components/statusPills/statusPills"
 import AccountDetailHeaderTabs from "@/components/header/accountDetailHeaderTabs"
-import {
-  H4,
-  Caption,
-  CaptionRed,
-  SmallBold,
-  SmallGrey,
-} from "@/components/typography"
+import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@radix-ui/react-separator"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
@@ -35,7 +29,7 @@ export default async function AgencyDetailsPageComponent({
       <AccountDetailHeaderTabs selectedTab="Agency" />
       <ContentWrapper id="AccountAgencyDetailsInfo">
         <div className="flex flex-col gap-2 lg:gap-3">
-          <SmallBold>{t("BasicInfo")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-2 lg:gap-3">
               {agency.logoUrl ? (
@@ -49,35 +43,39 @@ export default async function AgencyDetailsPageComponent({
               )}
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
-              <H4>{agency.businessName}</H4>
-              <Caption>{agency.businessPhone}</Caption>
-              <Caption>{agency.businessEmail}</Caption>
-              <Caption>{agency.businessAddress}</Caption>
-              <Caption>
+              <RyogoH3>{agency.businessName}</RyogoH3>
+              <RyogoCaption color="slate">{agency.businessPhone}</RyogoCaption>
+              <RyogoCaption color="slate">{agency.businessEmail}</RyogoCaption>
+              <RyogoCaption color="slate">
+                {agency.businessAddress}
+              </RyogoCaption>
+              <RyogoCaption color="slate">
                 {agency.location.city + ", " + agency.location.state}
-              </Caption>
-              <Caption>
+              </RyogoCaption>
+              <RyogoCaption color="slate">
                 {moment(agency.createdAt).format("DD MMM YYYY")}
-              </Caption>
+              </RyogoCaption>
               <AgencyStatusPill status={agency.status} />
             </div>
           </div>
         </div>
         <Separator />
         <div className="flex flex-col gap-2 lg:gap-3">
-          <SmallBold>{t("SubscriptionInfo")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("SubscriptionInfo")}</RyogoSmall>
           <div className="flex flex-col gap-1 lg:gap-1.5">
-            <SmallGrey>{agency.subscriptionPlan.toUpperCase()}</SmallGrey>
+            <RyogoSmall color="slate">
+              {agency.subscriptionPlan.toUpperCase()}
+            </RyogoSmall>
             {agency.subscriptionExpiresOn < new Date() ? (
-              <CaptionRed>
+              <RyogoCaption color="red">
                 {t("ValidTill") +
                   moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}
-              </CaptionRed>
+              </RyogoCaption>
             ) : (
-              <Caption>
+              <RyogoCaption color="slate">
                 {t("ValidTill") +
                   moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}
-              </Caption>
+              </RyogoCaption>
             )}
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import BookindDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
-import { SmallGrey } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import TripLogItem from "@/components/bookings/tripLog/tripLogItem"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
@@ -19,7 +19,7 @@ export default async function BookingTripLogsPageComponent({
       <BookindDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
       {bookingTripLogs.length === 0 ? (
         <div className="w-full text-center">
-          <SmallGrey>{t("NoTripLogs")}</SmallGrey>
+          <RyogoSmall color="slate">{t("NoTripLogs")}</RyogoSmall>
         </div>
       ) : (
         <div

@@ -1,6 +1,11 @@
 "use client"
 
-import { SmallGrey, H5Grey, PBold, Caption } from "@/components/typography"
+import {
+  RyogoSmall,
+  RyogoH4,
+  RyogoP,
+  RyogoCaption,
+} from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -47,8 +52,8 @@ export default function CompletedBookingsItemComponent({
       >
         <SectionHeaderWrapper>
           <RyogoIcon icon={CheckCheck} size="sm" />
-          <SmallGrey>{t("Title")}</SmallGrey>
-          <H5Grey>{trips.length}</H5Grey>
+          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+          <RyogoH4 color="slate"> {trips.length}</RyogoH4>
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
@@ -79,20 +84,25 @@ function CompletedComponent(
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.bookingId}</Caption>
-          <PBold>{props.customerName}</PBold>
+          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.type.toUpperCase()}</Caption>
-          <PBold>{props.route}</PBold>
+          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.vehicle}</Caption>
-          <PBold>{props.driver}</PBold>
+          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{format(props.updatedAt, "PP")}</Caption>
-          <PBold>{moment(props.updatedAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">
+            {format(props.updatedAt, "PP")}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(props.updatedAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>

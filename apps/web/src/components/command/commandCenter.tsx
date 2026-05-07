@@ -4,7 +4,7 @@ import { Search, Zap } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import useCommandCenter from "./useCommandCenter"
-import { CaptionBrand } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 
 export default function CommandCenter() {
   const [isOpen, setIsOpen] = useState(false)
@@ -73,7 +73,7 @@ function QuickActionBtn({
       className="flex bg-white gap-1 items-center justify-center p-2.5 lg:p-3 rounded-lg transition-all hover:bg-sky-50"
     >
       {icon}
-      <CaptionBrand>{label}</CaptionBrand>
+      <RyogoCaption color="brand">{label}</RyogoCaption>
     </button>
   )
 }

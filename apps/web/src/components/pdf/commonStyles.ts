@@ -112,18 +112,18 @@ export const styles = StyleSheet.create({
   },
   h1: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: "font-bold",
   },
   h2: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "font-bold",
   },
   p: {
     fontSize: 12,
   },
   pBold: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: "font-bold",
   },
   caption: {
     fontSize: 10,

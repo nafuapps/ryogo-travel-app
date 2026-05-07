@@ -1,9 +1,4 @@
-import {
-  SmallBold,
-  CaptionGrey,
-  Caption,
-  SmallGrey,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   FormControl,
@@ -61,9 +56,9 @@ export function RyogoInput(props: {
         <FormItem className="w-full relative">
           <FormLabel>
             {props.disabled ? (
-              <SmallGrey>{props.label}</SmallGrey>
+              <RyogoSmall color="slate">{props.label}</RyogoSmall>
             ) : (
-              <SmallBold>{props.label}</SmallBold>
+              <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
             )}
           </FormLabel>
           <FormControl>
@@ -76,7 +71,7 @@ export function RyogoInput(props: {
           </FormControl>
           {props.description && (
             <FormDescription>
-              <CaptionGrey>{props.description}</CaptionGrey>
+              <RyogoCaption color="light">{props.description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -99,7 +94,7 @@ export function RyogoFileInput(props: {
       render={() => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <SmallBold>{props.label}</SmallBold>
+            <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
           </FormLabel>
           <FormControl>
             <Input
@@ -110,7 +105,7 @@ export function RyogoFileInput(props: {
           </FormControl>
           {props.description && (
             <FormDescription>
-              <CaptionGrey>{props.description}</CaptionGrey>
+              <RyogoCaption color="light">{props.description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -131,7 +126,7 @@ export function RyogoTextarea(props: {
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <SmallBold>{props.label}</SmallBold>
+            <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
           </FormLabel>
           <FormControl>
             <Textarea placeholder={props.placeholder} {...field} />
@@ -157,7 +152,7 @@ export function RyogoSelect(props: {
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <SmallBold>{props.title}</SmallBold>
+            <RyogoSmall weight="font-bold">{props.title}</RyogoSmall>
           </FormLabel>
           <Select
             {...props.register}
@@ -202,7 +197,7 @@ export function RyogoCombobox(props: {
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <SmallBold>{props.title}</SmallBold>
+            <RyogoSmall weight="font-bold">{props.title}</RyogoSmall>
           </FormLabel>
           <Combobox
             items={props.array}
@@ -246,7 +241,7 @@ export function RyogoRadio(props: {
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <SmallBold>{props.title}</SmallBold>
+            <RyogoSmall weight="font-bold">{props.title}</RyogoSmall>
           </FormLabel>
           <RadioGroup
             {...props.register}
@@ -261,7 +256,7 @@ export function RyogoRadio(props: {
             ))}
           </RadioGroup>
           <FormDescription>
-            <CaptionGrey>{props.description}</CaptionGrey>
+            <RyogoCaption color="light">{props.description}</RyogoCaption>
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -288,7 +283,7 @@ export function RyogoCheckbox(props: {
               />
             </FormControl>
             <FormLabel>
-              <SmallBold>{props.label}</SmallBold>
+              <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
             </FormLabel>
           </FormItem>
         )
@@ -309,7 +304,7 @@ export function RyogoMultipleCheckbox(props: {
       render={() => (
         <FormItem className="flex flex-col gap-2 lg:gap-3 w-full">
           <FormLabel className="text-base">
-            <SmallBold>{props.label}</SmallBold>
+            <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
           </FormLabel>
           {props.array.map((item) => (
             <FormField
@@ -336,7 +331,7 @@ export function RyogoMultipleCheckbox(props: {
                       />
                     </FormControl>
                     <FormLabel className="text-sm font-normal">
-                      <Caption>{item.display}</Caption>
+                      <RyogoCaption color="slate">{item.display}</RyogoCaption>
                     </FormLabel>
                   </FormItem>
                 )
@@ -365,9 +360,9 @@ export function RyogoDatePicker(props: {
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
             {props.disabled ? (
-              <SmallGrey>{props.label}</SmallGrey>
+              <RyogoSmall color="slate">{props.label}</RyogoSmall>
             ) : (
-              <SmallBold>{props.label}</SmallBold>
+              <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
             )}
           </FormLabel>
           <Popover>
@@ -408,7 +403,7 @@ export function RyogoDatePicker(props: {
           </Popover>
           {props.description && (
             <FormDescription>
-              <CaptionGrey>{props.description}</CaptionGrey>
+              <RyogoCaption color="light">{props.description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -425,7 +420,7 @@ export function RyogoSwitch(props: { name: string; label: string }) {
       render={({ field }) => (
         <FormItem className="flex flex-row items-center justify-between gap-2 lg:gap-3 w-full py-1.5 lg:py-2">
           <FormLabel>
-            <SmallBold>{props.label}</SmallBold>
+            <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
           </FormLabel>
           <FormControl>
             <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -449,9 +444,9 @@ export function RyogoTimePicker(props: {
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
             {props.disabled ? (
-              <SmallGrey>{props.label}</SmallGrey>
+              <RyogoSmall color="slate">{props.label}</RyogoSmall>
             ) : (
-              <SmallBold>{props.label}</SmallBold>
+              <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
             )}
           </FormLabel>
           <Input
@@ -461,7 +456,7 @@ export function RyogoTimePicker(props: {
             className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
           />
           <FormDescription>
-            <CaptionGrey>{props.description}</CaptionGrey>
+            <RyogoCaption color="light">{props.description}</RyogoCaption>
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -486,9 +481,9 @@ export function RyogoRating(props: {
         <FormItem className="flex flex-row justify-between items-center gap-1 lg:gap-1.5 w-full">
           <FormLabel>
             {props.disabled ? (
-              <SmallGrey>{props.label}</SmallGrey>
+              <RyogoSmall color="slate">{props.label}</RyogoSmall>
             ) : (
-              <SmallBold>{props.label}</SmallBold>
+              <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
             )}
           </FormLabel>
           <div className="flex flex-row gap-2 lg:gap-3 items-center">

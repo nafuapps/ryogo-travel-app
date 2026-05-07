@@ -1,5 +1,5 @@
 import { RyogoIcon, RyogoIconSize } from "@/components/icons/RyogoIcon"
-import { Caption, Small } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { LucideIcon } from "lucide-react"
 
 export function IconTextTag(props: {
@@ -13,9 +13,9 @@ export function IconTextTag(props: {
     >
       <RyogoIcon icon={props.icon} size={props.size ?? "sm"} />
       {props.size === "lg" ? (
-        <Caption>{props.text}</Caption>
+        <RyogoCaption color="slate">{props.text}</RyogoCaption>
       ) : (
-        <Small>{props.text}</Small>
+        <RyogoSmall>{props.text}</RyogoSmall>
       )}
     </div>
   )

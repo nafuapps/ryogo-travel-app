@@ -1,7 +1,7 @@
 "use client"
 
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { CaptionGrey } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
@@ -76,7 +76,7 @@ export default function ChangeDriverPhotoSheet({
   return (
     <Sheet>
       <SheetTrigger className="hover:underline">
-        <CaptionGrey>{t("Button")}</CaptionGrey>
+        <RyogoCaption color="light">{t("Button")}</RyogoCaption>
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

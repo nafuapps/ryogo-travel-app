@@ -1,6 +1,6 @@
 import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
 import moment from "moment"
-import { Caption, PBold, SmallBold } from "@/components/typography"
+import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { FindDriverActivityByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
@@ -29,7 +29,7 @@ export default async function DriverActivityPageComponent({
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {expenses.length > 0 && (
         <div id="ExpensesActivityList" className={className}>
-          <SmallBold>{t("Expenses")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
           {expenses.map((expense) => {
             return <ExpenseActivityComponent key={expense.id} {...expense} />
           })}
@@ -37,7 +37,7 @@ export default async function DriverActivityPageComponent({
       )}
       {tripLogs.length > 0 && (
         <div id="TripLogsActivityList" className={className}>
-          <SmallBold>{t("TripLogs")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
           {tripLogs.map((tripLog) => {
             return <TripLogActivityComponent key={tripLog.id} {...tripLog} />
           })}
@@ -58,18 +58,21 @@ function ExpenseActivityComponent(
     >
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{expense.id}</Caption>
-          <PBold>{expense.type.toUpperCase()}</PBold>
+          <RyogoCaption color="slate">{expense.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {expense.type.toUpperCase()}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{"₹" + expense.amount}</PBold>
+          <RyogoP weight="font-bold"> {"₹" + expense.amount}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{expense.remarks}</PBold>
+          <RyogoP weight="font-bold"> {expense.remarks}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{expense.bookingId}</Caption>
-          <PBold>{moment(expense.createdAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">{expense.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(expense.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>
@@ -88,19 +91,24 @@ function TripLogActivityComponent(
     >
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{tripLog.vehicle.vehicleNumber}</Caption>
-          <PBold>{tripLog.driver.name}</PBold>
+          <RyogoCaption color="slate">
+            {tripLog.vehicle.vehicleNumber}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {tripLog.driver.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{tripLog.odometerReading}</Caption>
-          <PBold>{tripLog.type.toUpperCase()}</PBold>
+          <RyogoCaption color="slate">{tripLog.odometerReading}</RyogoCaption>
+          <RyogoP weight="font-bold"> {tripLog.type.toUpperCase()}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{tripLog.bookingId}</Caption>
-          <PBold>{tripLog.remarks}</PBold>
+          <RyogoCaption color="slate">{tripLog.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {tripLog.remarks}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{moment(tripLog.createdAt).fromNow()}</PBold>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(tripLog.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>

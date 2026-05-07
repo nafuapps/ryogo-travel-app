@@ -7,7 +7,7 @@ import {
   UserStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { CaptionBold } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 
 interface StatusPillProps {
   status: string
@@ -18,7 +18,9 @@ export function StatusPill(props: StatusPillProps) {
     <div
       className={`flex rounded-full ${props.bgColor ?? "bg-slate-200"} px-2 py-1.5 lg:px-3 lg:py-2 text-nowrap`}
     >
-      <CaptionBold>{props.status}</CaptionBold>
+      <RyogoCaption color="dark" weight="font-bold">
+        {props.status}
+      </RyogoCaption>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Small } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import {
   FindDriverAssignedBookingsByIdType,
   FindDriverByUserIdType,
@@ -38,13 +38,13 @@ export default async function RiderMyBookingsPageComponent({
     <PageWrapper id="RiderMyBookingsPage">
       {currentBooking && (
         <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
-          <Small>{t("Ongoing")}</Small>
+          <RyogoSmall>{t("Ongoing")}</RyogoSmall>
           <OngoingBookingComponent booking={currentBooking} />
         </div>
       )}
       {upcomingBookings.length > 0 && (
         <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
-          <Small>{t("Upcoming")}</Small>
+          <RyogoSmall>{t("Upcoming")}</RyogoSmall>
           {upcomingBookings.map((b, i) => {
             return (
               <UpcomingBookingComponent
@@ -63,7 +63,7 @@ export default async function RiderMyBookingsPageComponent({
       )}
       {completedBookings.length > 0 && (
         <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
-          <Small>{t("Completed")}</Small>
+          <RyogoSmall>{t("Completed")}</RyogoSmall>
           {completedBookings.map((b) => {
             return <CompletedBookingComponent key={b.bookingId} booking={b} />
           })}

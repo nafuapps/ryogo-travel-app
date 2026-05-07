@@ -1,4 +1,4 @@
-import { CaptionGrey, H4, Caption, SmallBold } from "@/components/typography"
+import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { Pencil } from "lucide-react"
 import { format } from "date-fns"
 import { UrlObject } from "url"
@@ -36,19 +36,23 @@ export default async function ExpenseItem({
           <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
             {getExpenseIcon(expense.type)}
           </div>
-          <CaptionGrey>{expense.id}</CaptionGrey>
+          <RyogoCaption color="light">{expense.id}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-2 lg:gap-3 w-full">
-          <SmallBold>{expense.type.toUpperCase()}</SmallBold>
-          {expense.remarks && <Caption>{expense.remarks}</Caption>}
-          <CaptionGrey>
+          <RyogoSmall weight="font-bold">
+            {expense.type.toUpperCase()}
+          </RyogoSmall>
+          {expense.remarks && (
+            <RyogoCaption color="slate">{expense.remarks}</RyogoCaption>
+          )}
+          <RyogoCaption color="light">
             {format(expense.createdAt, "dd MMM hh:mm aaa")}
-          </CaptionGrey>
-          <CaptionGrey>{expense.addedByUser.name}</CaptionGrey>
+          </RyogoCaption>
+          <RyogoCaption color="light">{expense.addedByUser.name}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
           <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
-            <H4>{expense.amount}</H4>
+            <RyogoH3>{expense.amount}</RyogoH3>
           </div>
           <div className="flex flex-row gap-2 lg:gap-3">
             {canApproveExpense && (
@@ -66,7 +70,7 @@ export default async function ExpenseItem({
               >
                 <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
                   <div className="hidden lg:flex">
-                    <CaptionGrey>{t("Modify")}</CaptionGrey>
+                    <RyogoCaption color="light">{t("Modify")}</RyogoCaption>
                   </div>
                   <RyogoIcon icon={Pencil} size="sm" />
                 </div>

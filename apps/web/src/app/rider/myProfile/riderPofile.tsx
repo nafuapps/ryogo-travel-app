@@ -1,7 +1,7 @@
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { User } from "lucide-react"
-import { H4, Caption, CaptionGrey } from "@/components/typography"
+import { RyogoH3, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -44,12 +44,14 @@ export default async function RiderProfilePageComponent({
               />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
-              <H4>{driverDetails.name}</H4>
-              <Caption>{driverDetails.phone}</Caption>
-              <Caption>{driverDetails.user.email}</Caption>
-              <Caption>
+              <RyogoH3>{driverDetails.name}</RyogoH3>
+              <RyogoCaption color="slate">{driverDetails.phone}</RyogoCaption>
+              <RyogoCaption color="slate">
+                {driverDetails.user.email}
+              </RyogoCaption>
+              <RyogoCaption color="slate">
                 {moment(driverDetails.createdAt).format("DD MMM YYYY")}
-              </Caption>
+              </RyogoCaption>
               <DriverStatusPill status={driverDetails.status} />
             </div>
           </div>
@@ -70,13 +72,13 @@ export default async function RiderProfilePageComponent({
             </Button>
           </Link>
           <LogoutAlertButton />
-          <CaptionGrey>
+          <RyogoCaption color="light">
             {t("LastLogin", {
               loginTime: moment(driverDetails.user.lastLogin).format(
                 "MMMM Do YYYY, h:mm:ss a",
               ),
             })}
-          </CaptionGrey>
+          </RyogoCaption>
         </div>
       </ContentWrapper>
     </PageWrapper>

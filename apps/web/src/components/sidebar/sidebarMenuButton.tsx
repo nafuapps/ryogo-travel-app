@@ -1,4 +1,4 @@
-import { P, PLight } from "@/components/typography"
+import { RyogoP } from "@/components/typography"
 import {
   TooltipContent,
   TooltipTrigger,
@@ -43,9 +43,9 @@ export function MenuButton(props: MenuButtonProps) {
             />
             {props.open &&
               (props.active ? (
-                <PLight>{props.title}</PLight>
+                <RyogoP color="white">{props.title}</RyogoP>
               ) : (
-                <P>{props.title}</P>
+                <RyogoP>{props.title}</RyogoP>
               ))}
           </div>
         </TooltipTrigger>

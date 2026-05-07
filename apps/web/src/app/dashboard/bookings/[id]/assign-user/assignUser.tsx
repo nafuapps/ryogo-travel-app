@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
-import { SmallBold } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignUserPageComponent({
@@ -52,7 +52,7 @@ export default function AssignUserPageComponent({
   return (
     <PageWrapper id="AssignUserPage">
       <ContentWrapper id="AssignUserInfo">
-        <SmallBold>{t("Title")}</SmallBold>
+        <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {users.map((user, index) => (
           <AssignUserTile
             key={index}

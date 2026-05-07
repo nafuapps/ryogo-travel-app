@@ -1,15 +1,5 @@
 import { TripLogStatusPill } from "@/components/statusPills/statusPills"
-import {
-  SmallBold,
-  CaptionGrey,
-  P,
-  CaptionLight,
-  PBold,
-  SmallLight,
-  Caption,
-  PRed,
-  Small,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { getCombinedDateTime } from "@/lib/utils"
@@ -40,7 +30,7 @@ export function BookingSection({
 }) {
   return (
     <div className="flex flex-col gap-2 lg:gap-3">
-      <SmallBold>{sectionTitle}</SmallBold>
+      <RyogoSmall weight="font-bold">{sectionTitle}</RyogoSmall>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-4 items-center">
         {children}
       </div>
@@ -57,8 +47,8 @@ export function BookingItem({
 }) {
   return (
     <div className="flex flex-row sm:flex-col justify-between sm:justify-start items-center sm:items-start gap-2 sm:gap-0.5 lg:gap-1 last:text-end sm:last:text-start">
-      <CaptionGrey>{title}</CaptionGrey>
-      <P>{value}</P>
+      <RyogoCaption color="light">{title}</RyogoCaption>
+      <RyogoP>{value}</RyogoP>
     </div>
   )
 }
@@ -161,16 +151,18 @@ export async function OngoingBookingComponent({
         className={`grid text-white bg-slate-900 rounded-t-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4 hover:bg-slate-800`}
       >
         <GridItemWrapper>
-          <CaptionLight>{booking.bookingId}</CaptionLight>
-          <PBold>{booking.customerName}</PBold>
+          <RyogoCaption color="white">{booking.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <CaptionLight>{booking.type.toUpperCase()}</CaptionLight>
-          <PBold>{booking.route}</PBold>
+          <RyogoCaption color="white">
+            {booking.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <CaptionLight>{booking.vehicle}</CaptionLight>
-          <PBold>{booking.driver}</PBold>
+          <RyogoCaption color="white">{booking.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.driver}</RyogoP>
         </GridItemWrapper>
         {booking.status && (
           <GridItemWrapper>
@@ -179,7 +171,7 @@ export async function OngoingBookingComponent({
         )}
       </div>
       <div className="bg-slate-600 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
-        <SmallLight>{t("Continue")}</SmallLight>
+        <RyogoSmall color="white">{t("Continue")}</RyogoSmall>
         <RyogoIcon icon={ChevronRight} size="sm" color="white" />
       </div>
     </Link>
@@ -206,29 +198,36 @@ export async function UpcomingBookingComponent({
         className={`grid border border-slate-100 ${canStart ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4 hover:bg-slate-100`}
       >
         <GridItemWrapper>
-          <Caption>{booking.bookingId}</Caption>
-          <PBold>{booking.customerName}</PBold>
+          <RyogoCaption color="slate">{booking.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.type.toUpperCase()}</Caption>
-          <PBold>{booking.route}</PBold>
+          <RyogoCaption color="slate">
+            {booking.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.vehicle}</Caption>
-          <PBold>{booking.driver}</PBold>
+          <RyogoCaption color="slate">{booking.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.driver}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{format(combinedDateTime, "dd MMM hh:mm aaa")}</Caption>
+          <RyogoCaption color="slate">
+            {format(combinedDateTime, "dd MMM hh:mm aaa")}
+          </RyogoCaption>
           {combinedDateTime < new Date() ? (
-            <PRed>{moment(combinedDateTime).fromNow()}</PRed>
+            <RyogoP color="red">{moment(combinedDateTime).fromNow()}</RyogoP>
           ) : (
-            <PBold>{moment(combinedDateTime).fromNow()}</PBold>
+            <RyogoP weight="font-bold">
+              {" "}
+              {moment(combinedDateTime).fromNow()}
+            </RyogoP>
           )}
         </GridItemWrapper>
       </div>
       {canStart && (
         <div className="bg-slate-200 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
-          <Small>{t("Start")}</Small>
+          <RyogoSmall>{t("Start")}</RyogoSmall>
           <RyogoIcon icon={ChevronRight} size="sm" color="black" />
         </div>
       )}
@@ -245,20 +244,27 @@ export function CompletedBookingComponent({
     <Link href={`/rider/myBookings/${booking.bookingId}`} className="w-full">
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{booking.bookingId}</Caption>
-          <PBold>{booking.customerName}</PBold>
+          <RyogoCaption color="slate">{booking.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.type.toUpperCase()}</Caption>
-          <PBold>{booking.route}</PBold>
+          <RyogoCaption color="slate">
+            {booking.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.vehicle}</Caption>
-          <PBold>{booking.driver}</PBold>
+          <RyogoCaption color="slate">{booking.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.driver}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{format(booking.updatedAt, "PP")}</Caption>
-          <PBold>{moment(booking.updatedAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">
+            {format(booking.updatedAt, "PP")}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(booking.updatedAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>

@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  CaptionBold,
-  CaptionGrey,
-  H4,
-  SmallBold,
-  SmallGrey,
-} from "@/components/typography"
+import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -223,11 +217,11 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
     <NewStepWrapper id="TripStep">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <CaptionGrey>{t("Subtitle")}</CaptionGrey>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewBookingTotalSteps} current={1} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step2Type>
         id="Step2Form"
@@ -279,7 +273,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           </div>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
-          <SmallBold>{t("Field8.Title")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("Field8.Title")}</RyogoSmall>
           <div className="flex flex-row gap-2 lg:gap-3">
             <TripType
               type={BookingTypeEnum.OneWay}
@@ -393,8 +387,10 @@ function TripType({
       }`}
     >
       <RyogoIcon icon={icon} size="md" />
-      <CaptionBold>{title}</CaptionBold>
-      <CaptionGrey>{desc}</CaptionGrey>
+      <RyogoCaption color="dark" weight="font-bold">
+        {title}
+      </RyogoCaption>
+      <RyogoCaption color="light">{desc}</RyogoCaption>
     </div>
   )
 }

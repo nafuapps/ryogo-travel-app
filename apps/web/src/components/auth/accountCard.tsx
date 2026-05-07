@@ -1,4 +1,4 @@
-import { CaptionGrey, SmallBold } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
@@ -23,13 +23,17 @@ export const AccountCard = ({
                 imageSize="xs"
               />
             )}
-            <SmallBold>{account.name}</SmallBold>
+            <RyogoSmall weight="font-bold">{account.name}</RyogoSmall>
           </div>
-          <CaptionGrey>{account.agency.businessName}</CaptionGrey>
+          <RyogoCaption color="light">
+            {account.agency.businessName}
+          </RyogoCaption>
         </div>
         <div className="flex flex-col justify-between gap-2 lg:gap-3 items-end">
           <div className="flex rounded-full bg-slate-200 px-2 py-1 lg:px-2.5 lg:py-1.5">
-            <CaptionGrey>{account.userRole.toUpperCase()}</CaptionGrey>
+            <RyogoCaption color="light">
+              {account.userRole.toUpperCase()}
+            </RyogoCaption>
           </div>
           <RyogoIcon icon={ChevronRight} size="sm" />
         </div>

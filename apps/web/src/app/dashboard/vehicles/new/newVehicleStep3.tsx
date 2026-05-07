@@ -11,7 +11,7 @@ import {
   RyogoDatePicker,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
+import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import StepsTracker, {
   NewVehicleTotalSteps,
 } from "@/components/form/stepsTracker"
@@ -120,11 +120,11 @@ export function NewVehicleStep3(props: {
     <NewStepWrapper id="NewVehicleStep3">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <CaptionGrey>{t("Subtitle")}</CaptionGrey>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewVehicleTotalSteps} current={2} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step3Type>
         id="Step3Form"

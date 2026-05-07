@@ -5,7 +5,7 @@ import SignupPageComponent from "./signup"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
-import { CaptionGrey } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import {
   AuthFooterWrapper,
@@ -24,10 +24,10 @@ export default async function SignupPage() {
     <AuthSectionWrapper>
       <SignupPageComponent />
       <AuthFooterWrapper>
-        <CaptionGrey>{t("LoginTitle")}</CaptionGrey>
+        <RyogoCaption color="light">{t("LoginTitle")}</RyogoCaption>
         <Button variant="outline" size="lg">
           <Link href={"/auth/login"}>
-            <CaptionGrey>{t("LoginCTA")}</CaptionGrey>
+            <RyogoCaption color="light">{t("LoginCTA")}</RyogoCaption>
           </Link>
         </Button>
       </AuthFooterWrapper>

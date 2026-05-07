@@ -1,4 +1,4 @@
-import { CaptionGrey, Small } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoImage } from "@/components/images/ryogoImage"
@@ -19,13 +19,15 @@ export const UserCard = ({
               imageSize="xs"
             />
           )}
-          <Small>{user.name}</Small>
+          <RyogoSmall>{user.name}</RyogoSmall>
         </div>
-        <CaptionGrey>{user.phone}</CaptionGrey>
+        <RyogoCaption color="light">{user.phone}</RyogoCaption>
       </div>
       <div className="flex flex-col justify-between gap-2 lg:gap-3 items-end">
         <div className="flex rounded-full bg-slate-200 px-2 py-1 lg:px-2.5 lg:py-1.5">
-          <CaptionGrey>{user.userRole.toUpperCase()}</CaptionGrey>
+          <RyogoCaption color="light">
+            {user.userRole.toUpperCase()}
+          </RyogoCaption>
         </div>
       </div>
     </div>

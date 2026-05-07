@@ -5,12 +5,10 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
-  Caption,
-  CaptionRed,
-  H4,
-  PBold,
-  SmallBold,
-  SmallGrey,
+  RyogoCaption,
+  RyogoH3,
+  RyogoP,
+  RyogoSmall,
 } from "@/components/typography"
 import moment from "moment"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -55,32 +53,38 @@ export default async function VehicleDetailsPageComponent({
               />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
-              <H4>{vehicle.vehicleNumber}</H4>
-              <Caption>{vehicle.brand + " " + vehicle.model}</Caption>
-              <Caption>{vehicle.color}</Caption>
-              <Caption>{vehicle.hasAC ? t("AC") : t("NonAC")}</Caption>
-              <Caption>{t("Capacity", { capacity: vehicle.capacity })}</Caption>
-              <Caption>
+              <RyogoH3>{vehicle.vehicleNumber}</RyogoH3>
+              <RyogoCaption color="slate">
+                {vehicle.brand + " " + vehicle.model}
+              </RyogoCaption>
+              <RyogoCaption color="slate">{vehicle.color}</RyogoCaption>
+              <RyogoCaption color="slate">
+                {vehicle.hasAC ? t("AC") : t("NonAC")}
+              </RyogoCaption>
+              <RyogoCaption color="slate">
+                {t("Capacity", { capacity: vehicle.capacity })}
+              </RyogoCaption>
+              <RyogoCaption color="slate">
                 {t("Odometer", { odometer: vehicle.odometerReading })}
-              </Caption>
-              <Caption>
+              </RyogoCaption>
+              <RyogoCaption color="slate">
                 {moment(vehicle.createdAt).format("DD MMM YYYY")}
-              </Caption>
+              </RyogoCaption>
               {vehicle.customerRatings &&
                 vehicle.customerRatings.length > 1 && (
                   <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center">
                     <RyogoIcon icon={Star} size="sm" />
-                    <PBold>
+                    <RyogoP weight="font-bold">
                       {(
                         vehicle.customerRatings.reduce((a, c) => a + c, 0) /
                         vehicle.customerRatings.length
                       ).toFixed(1)}
-                    </PBold>
-                    <SmallGrey>
+                    </RyogoP>
+                    <RyogoSmall color="slate">
                       {t("NumberRatings", {
                         number: vehicle.customerRatings.length,
                       })}
-                    </SmallGrey>
+                    </RyogoSmall>
                   </div>
                 )}
               <VehicleStatusPill status={vehicle.status} />
@@ -91,18 +95,18 @@ export default async function VehicleDetailsPageComponent({
         <VehicleSection sectionTitle={t("PolicyInfo")}>
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
-              <SmallGrey>{t("Insurance")}</SmallGrey>
+              <RyogoSmall color="slate">{t("Insurance")}</RyogoSmall>
               {vehicle.insuranceExpiresOn &&
               vehicle.insuranceExpiresOn < new Date() ? (
-                <CaptionRed>
+                <RyogoCaption color="red">
                   {t("ValidTill") +
                     moment(vehicle.insuranceExpiresOn).format("DD MMM YYYY")}
-                </CaptionRed>
+                </RyogoCaption>
               ) : (
-                <Caption>
+                <RyogoCaption color="slate">
                   {t("ValidTill") +
                     moment(vehicle.insuranceExpiresOn).format("DD MMM YYYY")}
-                </Caption>
+                </RyogoCaption>
               )}
             </div>
             {vehicle.insurancePhotoUrl && (
@@ -114,17 +118,17 @@ export default async function VehicleDetailsPageComponent({
           </div>
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
-              <SmallGrey>{t("PUC")}</SmallGrey>
+              <RyogoSmall color="slate">{t("PUC")}</RyogoSmall>
               {vehicle.pucExpiresOn && vehicle.pucExpiresOn < new Date() ? (
-                <CaptionRed>
+                <RyogoCaption color="red">
                   {t("ValidTill") +
                     moment(vehicle.pucExpiresOn).format("DD MMM YYYY")}
-                </CaptionRed>
+                </RyogoCaption>
               ) : (
-                <Caption>
+                <RyogoCaption color="slate">
                   {t("ValidTill") +
                     moment(vehicle.pucExpiresOn).format("DD MMM YYYY")}
-                </Caption>
+                </RyogoCaption>
               )}
             </div>
             {vehicle.pucPhotoUrl && (
@@ -136,17 +140,17 @@ export default async function VehicleDetailsPageComponent({
           </div>
           <div className="flex flex-row gap-3 lg:gap-4 justify-between">
             <div className="flex flex-col gap-1 lg:gap-1.5">
-              <SmallGrey>{t("RC")}</SmallGrey>
+              <RyogoSmall color="slate">{t("RC")}</RyogoSmall>
               {vehicle.rcExpiresOn && vehicle.rcExpiresOn < new Date() ? (
-                <CaptionRed>
+                <RyogoCaption color="red">
                   {t("ValidTill") +
                     moment(vehicle.rcExpiresOn).format("DD MMM YYYY")}
-                </CaptionRed>
+                </RyogoCaption>
               ) : (
-                <Caption>
+                <RyogoCaption color="slate">
                   {t("ValidTill") +
                     moment(vehicle.rcExpiresOn).format("DD MMM YYYY")}
-                </Caption>
+                </RyogoCaption>
               )}
             </div>
             {vehicle.rcPhotoUrl && (
@@ -161,11 +165,14 @@ export default async function VehicleDetailsPageComponent({
         <VehicleSection sectionTitle={t("AgencyInfo")}>
           <div className="flex flex-col gap-1 lg:gap-1.5">
             {vehicle.hasAC && (
-              <Caption>
+              <RyogoCaption color="slate">
                 {t("ACCharge", { ac: vehicle.defaultAcChargePerDay })}
-              </Caption>
+              </RyogoCaption>
             )}
-            <PBold>{t("RatePerKm", { rate: vehicle.defaultRatePerKm })}</PBold>
+            <RyogoP weight="font-bold">
+              {" "}
+              {t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
+            </RyogoP>
           </div>
         </VehicleSection>
         <Separator />
@@ -201,7 +208,7 @@ type VehicleSectionType = {
 function VehicleSection(props: VehicleSectionType) {
   return (
     <div id={props.sectionTitle} className="flex flex-col gap-2 lg:gap-3">
-      <SmallBold>{props.sectionTitle}</SmallBold>
+      <RyogoSmall weight="font-bold">{props.sectionTitle}</RyogoSmall>
       {props.children}
     </div>
   )

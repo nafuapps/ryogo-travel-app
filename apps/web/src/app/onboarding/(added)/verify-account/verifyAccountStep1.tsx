@@ -16,7 +16,7 @@ import { useTransition } from "react"
 import { toast } from "sonner"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { resendCodeAction } from "@/app/actions/users/resendCodeAction"
-import { CaptionGrey } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 
 const RESEND_TIMEOUT_MINUTES = 5
 
@@ -94,7 +94,7 @@ export function VerifyAccountStep1(props: {
                     difference: RESEND_TIMEOUT_MINUTES - props.resendDifference,
                   })}
           </OnboardingStepSecondaryAction>
-          <CaptionGrey>{t("Help")}</CaptionGrey>
+          <RyogoCaption color="light">{t("Help")}</RyogoCaption>
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

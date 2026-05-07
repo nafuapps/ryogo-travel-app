@@ -1,9 +1,8 @@
 import {
-  Caption,
-  CaptionBold,
-  H5Grey,
-  PBold,
-  SmallGrey,
+  RyogoH4,
+  RyogoP,
+  RyogoSmall,
+  RyogoCaption,
 } from "@/components/typography"
 import {
   FindVehiclesOnTripType,
@@ -34,8 +33,8 @@ export default async function OnTripVehiclesComponent({
     <SectionWrapper id="OnTripVehiclesSection">
       <SectionHeaderWrapper>
         <RyogoIcon icon={Route} size="sm" />
-        <SmallGrey>{t("Title")}</SmallGrey>
-        <H5Grey>{onTripVehicles.length}</H5Grey>
+        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+        <RyogoH4 color="slate"> {onTripVehicles.length}</RyogoH4>
       </SectionHeaderWrapper>
       {onTripVehicles.map((vehicle) => (
         <OnTripVehicleComponent key={vehicle.id} {...vehicle} />
@@ -53,24 +52,26 @@ function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
     <Link href={`/dashboard/bookings/${booking.id}`}>
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.brand + " " + props.model}</Caption>
-          <PBold>{props.vehicleNumber}</PBold>
+          <RyogoCaption color="slate">
+            {props.brand + " " + props.model}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {props.vehicleNumber}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.id}</Caption>
+          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
           {booking.assignedDriver && (
-            <PBold>{booking.assignedDriver.name}</PBold>
+            <RyogoP weight="font-bold"> {booking.assignedDriver.name}</RyogoP>
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>
+          <RyogoCaption color="slate">
             {moment(booking.startDate).format("DD MMM") +
               " - " +
               moment(booking.endDate).format("DD MMM")}
-          </Caption>
-          <PBold>
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
             {booking.source.city + " - " + booking.destination.city}
-          </PBold>
+          </RyogoP>
         </GridItemWrapper>
         {booking.tripLogs[0] && (
           <GridItemWrapper>

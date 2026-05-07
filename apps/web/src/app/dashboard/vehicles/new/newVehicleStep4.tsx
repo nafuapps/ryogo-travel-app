@@ -8,7 +8,7 @@ import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { Button } from "@/components/ui/button"
 import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
-import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
+import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import StepsTracker, {
   NewVehicleTotalSteps,
 } from "@/components/form/stepsTracker"
@@ -82,11 +82,11 @@ export function NewVehicleStep4(props: {
     <NewStepWrapper id="NewVehicleStep4">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <CaptionGrey>{t("Subtitle")}</CaptionGrey>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewVehicleTotalSteps} current={3} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step4Type>
         id="Step4Form"

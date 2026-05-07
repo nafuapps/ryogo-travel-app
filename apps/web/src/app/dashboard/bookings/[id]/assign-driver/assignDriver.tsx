@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
-import { SmallBold } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignDriverPageComponent({
@@ -57,7 +57,7 @@ export default function AssignDriverPageComponent({
   return (
     <PageWrapper id="AssignDriverPage">
       <ContentWrapper id="AssignDriverInfo">
-        <SmallBold>{t("Title")}</SmallBold>
+        <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {drivers.map((driver, index) => (
           <AssignDriverTile
             key={index}

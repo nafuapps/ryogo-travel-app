@@ -12,7 +12,7 @@ import {
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
-import { H4, CaptionGrey, SmallGrey } from "@/components/typography"
+import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import StepsTracker, {
   NewDriverTotalSteps,
 } from "@/components/form/stepsTracker"
@@ -97,11 +97,11 @@ export function NewDriverStep2(props: {
     <NewStepWrapper id="NewDriverStep2">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <CaptionGrey>{t("Subtitle")}</CaptionGrey>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewDriverTotalSteps} current={1} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step2Type>
         id="Step2Form"

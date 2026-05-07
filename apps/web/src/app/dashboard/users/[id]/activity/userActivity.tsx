@@ -1,7 +1,7 @@
 import { FindUserActivityByIdType } from "@ryogo-travel-app/api/services/user.services"
 import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
 import moment from "moment"
-import { Caption, PBold, SmallBold } from "@/components/typography"
+import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { UrlObject } from "url"
@@ -34,7 +34,7 @@ export default async function UserActivityPageComponent({
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {bookings.length > 0 && (
         <div id="BookingActivityList" className={className}>
-          <SmallBold>{t("Bookings")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("Bookings")}</RyogoSmall>
           {bookings.map((booking) => {
             return <BookingActivityComponent key={booking.id} {...booking} />
           })}
@@ -42,7 +42,7 @@ export default async function UserActivityPageComponent({
       )}
       {transactions.length > 0 && (
         <div id="TransactionsActivityList" className={className}>
-          <SmallBold>{t("Transactions")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("Transactions")}</RyogoSmall>
           {transactions.map((transaction) => {
             return (
               <TransactionActivityComponent
@@ -55,7 +55,7 @@ export default async function UserActivityPageComponent({
       )}
       {expenses.length > 0 && (
         <div id="ExpensesActivityList" className={className}>
-          <SmallBold>{t("Expenses")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
           {expenses.map((expense) => {
             return <ExpenseActivityComponent key={expense.id} {...expense} />
           })}
@@ -63,7 +63,7 @@ export default async function UserActivityPageComponent({
       )}
       {customers.length > 0 && (
         <div id="CustomersActivityList" className={className}>
-          <SmallBold>{t("Customers")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("Customers")}</RyogoSmall>
           {customers.map((customer) => {
             return <CustomerActivityComponent key={customer.id} {...customer} />
           })}
@@ -71,7 +71,7 @@ export default async function UserActivityPageComponent({
       )}
       {driverLeaves.length > 0 && (
         <div id="DriverLeavesActivityList" className={className}>
-          <SmallBold>{t("DriverLeaves")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("DriverLeaves")}</RyogoSmall>
           {driverLeaves.map((driverLeave) => {
             return (
               <DriverLeaveActivityComponent
@@ -84,7 +84,7 @@ export default async function UserActivityPageComponent({
       )}
       {vehicleRepairs.length > 0 && (
         <div id="VehicleRepairsActivityList" className={className}>
-          <SmallBold>{t("VehicleRepairs")}</SmallBold>
+          <RyogoSmall weight="font-bold">{t("VehicleRepairs")}</RyogoSmall>
           {vehicleRepairs.map((vehicleRepair) => {
             return (
               <VehicleRepairActivityComponent
@@ -106,22 +106,34 @@ function BookingActivityComponent(
     <Link href={`/dashboard/bookings/${booking.id}`} className="w-full">
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{booking.id}</Caption>
-          <PBold>{booking.customer.name}</PBold>
+          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.customer.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.type.toUpperCase()}</Caption>
-          <PBold>
+          <RyogoCaption color="slate">
+            {booking.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
             {booking.source.city + " - " + booking.destination.city}
-          </PBold>
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.assignedVehicle?.vehicleNumber ?? "-"}</Caption>
-          <PBold>{booking.assignedDriver?.name ?? "-"}</PBold>
+          <RyogoCaption color="slate">
+            {booking.assignedVehicle?.vehicleNumber ?? "-"}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {booking.assignedDriver?.name ?? "-"}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.status.toUpperCase()}</Caption>
-          <PBold>{moment(booking.createdAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">
+            {booking.status.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(booking.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>
@@ -140,20 +152,25 @@ function TransactionActivityComponent(
     >
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{transaction.id}</Caption>
-          <PBold>{transaction.type.toUpperCase()}</PBold>
+          <RyogoCaption color="slate">{transaction.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {transaction.type.toUpperCase()}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{transaction.otherParty}</Caption>
-          <PBold>{"₹" + transaction.amount}</PBold>
+          <RyogoCaption color="slate">{transaction.otherParty}</RyogoCaption>
+          <RyogoP weight="font-bold"> {"₹" + transaction.amount}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{transaction.mode.toUpperCase()}</Caption>
-          <PBold>{transaction.remarks}</PBold>
+          <RyogoCaption color="slate">
+            {transaction.mode.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {transaction.remarks}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{transaction.bookingId}</Caption>
-          <PBold>{moment(transaction.createdAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">{transaction.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(transaction.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>
@@ -172,18 +189,21 @@ function ExpenseActivityComponent(
     >
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{expense.id}</Caption>
-          <PBold>{expense.type.toUpperCase()}</PBold>
+          <RyogoCaption color="slate">{expense.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {expense.type.toUpperCase()}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{"₹" + expense.amount}</PBold>
+          <RyogoP weight="font-bold"> {"₹" + expense.amount}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{expense.remarks}</PBold>
+          <RyogoP weight="font-bold"> {expense.remarks}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{expense.bookingId}</Caption>
-          <PBold>{moment(expense.createdAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">{expense.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(expense.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>
@@ -197,20 +217,23 @@ function CustomerActivityComponent(
     <Link href={`/dashboard/customers/${customer.id}`} className="w-full">
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{customer.id}</Caption>
-          <PBold>{customer.name}</PBold>
+          <RyogoCaption color="slate">{customer.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {customer.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{customer.email}</Caption>
-          <PBold>{customer.phone}</PBold>
+          <RyogoCaption color="slate">{customer.email}</RyogoCaption>
+          <RyogoP weight="font-bold"> {customer.phone}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{customer.location.state}</Caption>
-          <PBold>{customer.location.city}</PBold>
+          <RyogoCaption color="slate">{customer.location.state}</RyogoCaption>
+          <RyogoP weight="font-bold"> {customer.location.city}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{customer.status}</Caption>
-          <PBold>{moment(customer.createdAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">{customer.status}</RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(customer.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>
@@ -228,20 +251,28 @@ async function DriverLeaveActivityComponent(
     >
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{moment(driverLeave.startDate).format("DD MMM")}</Caption>
-          <PBold>{moment(driverLeave.endDate).format("DD MMM")}</PBold>
+          <RyogoCaption color="slate">
+            {moment(driverLeave.startDate).format("DD MMM")}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(driverLeave.endDate).format("DD MMM")}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{driverLeave.driver.name}</PBold>
+          <RyogoP weight="font-bold"> {driverLeave.driver.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>
+          <RyogoCaption color="slate">
             {driverLeave.isCompleted ? t("Completed") : t("Pending")}
-          </Caption>
-          <PBold>{driverLeave.remarks}</PBold>
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {driverLeave.remarks}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{moment(driverLeave.createdAt).fromNow()}</PBold>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(driverLeave.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>
@@ -259,20 +290,31 @@ async function VehicleRepairActivityComponent(
     >
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{moment(vehicleRepair.startDate).format("DD MMM")}</Caption>
-          <PBold>{moment(vehicleRepair.endDate).format("DD MMM")}</PBold>
+          <RyogoCaption color="slate">
+            {moment(vehicleRepair.startDate).format("DD MMM")}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(vehicleRepair.endDate).format("DD MMM")}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{vehicleRepair.vehicle.vehicleNumber}</PBold>
+          <RyogoP weight="font-bold">
+            {" "}
+            {vehicleRepair.vehicle.vehicleNumber}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>
+          <RyogoCaption color="slate">
             {vehicleRepair.isCompleted ? t("Completed") : t("Pending")}
-          </Caption>
-          <PBold>{vehicleRepair.remarks}</PBold>
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {vehicleRepair.remarks}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <PBold>{moment(vehicleRepair.createdAt).fromNow()}</PBold>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(vehicleRepair.createdAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>

@@ -1,6 +1,6 @@
 //Existing Account page
 import { Button } from "@/components/ui/button"
-import { CaptionGrey, H4Grey, SmallBold } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { AccountCard } from "@/components/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
@@ -30,12 +30,12 @@ export default async function SignupExistingPageComponent({
 
   return (
     <AuthPageWrapper>
-      <H4Grey>{t("PageTitle")}</H4Grey>
-      <SmallBold>
+      <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
+      <RyogoSmall weight="font-bold">
         {hasOwnerAccount
           ? t("InfoYes")
           : t("InfoNo", { count: accounts.length })}
-      </SmallBold>
+      </RyogoSmall>
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((item, index) => (
           <AccountCard key={index} account={item} />
@@ -44,22 +44,24 @@ export default async function SignupExistingPageComponent({
       <AuthActionWrapper>
         <Link href={"/auth/signup"}>
           <Button variant={"secondary"} size={"lg"} className="w-full">
-            <CaptionGrey>{t("BackCTA")}</CaptionGrey>
+            <RyogoCaption color="light">{t("BackCTA")}</RyogoCaption>
           </Button>
         </Link>
         {hasOwnerAccount ? (
           <>
             <Button variant={"outline"} size={"lg"}>
               <Link href="mailto:nafuapps@gmail.com">
-                <CaptionGrey>{t("SecondaryCTAYes")}</CaptionGrey>
+                <RyogoCaption color="light">
+                  {t("SecondaryCTAYes")}
+                </RyogoCaption>
               </Link>
             </Button>
-            <CaptionGrey> {t("Description")}</CaptionGrey>
+            <RyogoCaption color="light"> {t("Description")}</RyogoCaption>
           </>
         ) : (
           <Button variant={"outline"} size={"lg"}>
             <Link href={"/onboarding"}>
-              <CaptionGrey>{t("SecondaryCTANo")}</CaptionGrey>
+              <RyogoCaption color="light">{t("SecondaryCTANo")}</RyogoCaption>
             </Link>
           </Button>
         )}

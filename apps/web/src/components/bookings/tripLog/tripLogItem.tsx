@@ -1,9 +1,4 @@
-import {
-  CaptionGrey,
-  Caption,
-  Small,
-  CaptionBold,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   CheckCheck,
@@ -39,20 +34,30 @@ export default async function TripLogItem({
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
         <div className="flex flex-col gap-1.5 lg:gap-2 justify-end w-full">
-          <Small>{format(tripLog.createdAt, "dd MMM hh:mm aaa")}</Small>
-          <Caption>{tripLog.odometerReading + t("Km")}</Caption>
-          <CaptionGrey>{tripLog.latLong}</CaptionGrey>
+          <RyogoSmall>
+            {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
+          </RyogoSmall>
+          <RyogoCaption color="slate">
+            {tripLog.odometerReading + t("Km")}
+          </RyogoCaption>
+          <RyogoCaption color="light">{tripLog.latLong}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 w-full">
-          <Caption>{tripLog.vehicle.vehicleNumber}</Caption>
-          <Caption>{tripLog.driver.name}</Caption>
-          {tripLog.remarks && <Caption>{tripLog.remarks}</Caption>}
+          <RyogoCaption color="slate">
+            {tripLog.vehicle.vehicleNumber}
+          </RyogoCaption>
+          <RyogoCaption color="slate">{tripLog.driver.name}</RyogoCaption>
+          {tripLog.remarks && (
+            <RyogoCaption color="slate">{tripLog.remarks}</RyogoCaption>
+          )}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
           <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
             {getTripLogIcon(tripLog.type)}
           </div>
-          <CaptionBold>{tripLog.type.toUpperCase()}</CaptionBold>
+          <RyogoCaption color="dark" weight="font-bold">
+            {tripLog.type.toUpperCase()}
+          </RyogoCaption>
         </div>
       </div>
       {tripLog.tripLogPhotoUrl && (

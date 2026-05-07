@@ -2,7 +2,7 @@ import AccountDetailHeaderTabs from "@/components/header/accountDetailHeaderTabs
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
-import { H4, Caption, CaptionGrey } from "@/components/typography"
+import { RyogoH3, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -44,12 +44,12 @@ export default async function AccountPageComponent({
               />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
-              <H4>{userDetails.name}</H4>
-              <Caption>{userDetails.phone}</Caption>
-              <Caption>{userDetails.email}</Caption>
-              <Caption>
+              <RyogoH3>{userDetails.name}</RyogoH3>
+              <RyogoCaption color="slate">{userDetails.phone}</RyogoCaption>
+              <RyogoCaption color="slate">{userDetails.email}</RyogoCaption>
+              <RyogoCaption color="slate">
                 {moment(userDetails.createdAt).format("DD MMM YYYY")}
-              </Caption>
+              </RyogoCaption>
               <UserStatusPill status={userDetails.status} />
             </div>
           </div>
@@ -70,13 +70,13 @@ export default async function AccountPageComponent({
             </Button>
           </Link>
           <LogoutAlertButton />
-          <CaptionGrey>
+          <RyogoCaption color="light">
             {t("LastLogin", {
               loginTime: moment(userDetails.lastLogin).format(
                 "MMMM Do YYYY, h:mm:ss a",
               ),
             })}
-          </CaptionGrey>
+          </RyogoCaption>
         </div>
       </ContentWrapper>
     </PageWrapper>

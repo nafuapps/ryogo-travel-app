@@ -1,4 +1,9 @@
-import { H4, CaptionGrey, H3, H5, SmallGrey } from "@/components/typography"
+import {
+  RyogoH3,
+  RyogoH4,
+  RyogoSmall,
+  RyogoCaption,
+} from "@/components/typography"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { TrendingUp, BadgeIndianRupee, TrendingDown } from "lucide-react"
@@ -85,32 +90,34 @@ export default async function DashboardRevenueMetricsComponent({
           className={metricHeaderClassName}
         >
           <RyogoIcon icon={BadgeIndianRupee} size="sm" />
-          <SmallGrey>{t("Title")}</SmallGrey>
+          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
         </div>
         <div
           id="dashboardRevenueMetricsConfirmed"
           className={metricMainClassName}
         >
-          <H3>
+          <RyogoH3>
             {revenue24HrsAmount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
-          </H3>
+          </RyogoH3>
           {revenueWeeklyAvg !== 0 && (
             <div className="flex flex-col lg:gap-0.5 items-center text-center">
               <div className="flex flex-row gap-1 item-center">
                 {icon}
-                <CaptionGrey>
+                <RyogoCaption color="light">
                   {revenueChange.toLocaleString("en-IN", {
                     style: "percent",
                     maximumFractionDigits: 1,
                   })}
-                </CaptionGrey>
-                <CaptionGrey>{more ? t("More") : t("Less")}</CaptionGrey>
+                </RyogoCaption>
+                <RyogoCaption color="light">
+                  {more ? t("More") : t("Less")}
+                </RyogoCaption>
               </div>
-              <CaptionGrey>{t("ThanAvg")}</CaptionGrey>
+              <RyogoCaption color="light">{t("ThanAvg")}</RyogoCaption>
             </div>
           )}
         </div>
@@ -120,41 +127,41 @@ export default async function DashboardRevenueMetricsComponent({
         className={metricSecondRowClassName}
       >
         <div id="dashboardRevenueMetricsLeads" className={metricItem1ClassName}>
-          <H5>
+          <RyogoH4>
             {transactionsInAmount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
-          </H5>
-          <CaptionGrey>{t("In")}</CaptionGrey>
+          </RyogoH4>
+          <RyogoCaption color="light">{t("In")}</RyogoCaption>
         </div>
         <div
           id="dashboardRevenueMetricsInProgress"
           className={metricItem2ClassName}
         >
-          <H5>
+          <RyogoH4>
             {transactionsOutAmount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
-          </H5>
-          <CaptionGrey>{t("Out")}</CaptionGrey>
+          </RyogoH4>
+          <RyogoCaption color="light">{t("Out")}</RyogoCaption>
         </div>
         <div
           id="dashboardRevenueMetricsInProgress"
           className={metricItem3ClassName + " col-span-2"}
         >
-          <H4>
+          <RyogoH3>
             {revenueBookingsThisWeek.length == 0
               ? "-"
               : avgCommisionRateThisWeek.toLocaleString("en-IN", {
                   style: "percent",
                   minimumFractionDigits: 1,
                 })}
-          </H4>
-          <CaptionGrey>{t("Commission")}</CaptionGrey>
+          </RyogoH3>
+          <RyogoCaption color="light">{t("Commission")}</RyogoCaption>
         </div>
       </div>
     </div>

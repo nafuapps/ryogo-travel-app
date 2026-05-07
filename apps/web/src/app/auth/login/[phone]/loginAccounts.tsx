@@ -1,4 +1,4 @@
-import { CaptionGrey, H4Grey, SmallBold } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { AccountCard } from "@/components/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
@@ -19,8 +19,8 @@ export default async function LoginAccountsPageComponent({
 
   return (
     <AuthPageWrapper>
-      <H4Grey>{t("PageTitle")}</H4Grey>
-      <SmallBold>{t("Info")}</SmallBold>
+      <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
+      <RyogoSmall weight="font-bold">{t("Info")}</RyogoSmall>
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((account) => (
           <AccountCard key={account.id} account={account} />
@@ -29,7 +29,7 @@ export default async function LoginAccountsPageComponent({
       <AuthActionWrapper>
         <Link href={"/auth/login"}>
           <Button variant={"secondary"} size={"lg"} className="w-full">
-            <CaptionGrey>{t("SecondaryCTA")}</CaptionGrey>
+            <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
           </Button>
         </Link>
       </AuthActionWrapper>

@@ -1,4 +1,4 @@
-import { PBold, CaptionGrey, SmallGrey, Caption } from "@/components/typography"
+import { RyogoP, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { CalendarDays, Users } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { useTranslations } from "next-intl"
@@ -18,9 +18,13 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
         className="flex flex-row bg-white justify-between items-center p-3 lg:p-4 rounded-t-lg"
       >
         <div className="flex flex-col gap-1 lg:gap-1.5">
-          <PBold>{props.tripSourceLocationCity}</PBold>
-          <CaptionGrey>{props.tripSourceLocationState}</CaptionGrey>
-          <SmallGrey>{format(props.tripStartDate, "MMM dd")}</SmallGrey>
+          <RyogoP weight="font-bold"> {props.tripSourceLocationCity}</RyogoP>
+          <RyogoCaption color="light">
+            {props.tripSourceLocationState}
+          </RyogoCaption>
+          <RyogoSmall color="slate">
+            {format(props.tripStartDate, "MMM dd")}
+          </RyogoSmall>
         </div>
         {props.routeId && (
           <div
@@ -28,7 +32,9 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
             className="flex flex-row items-center justify-center text-center gap-1.5 lg:gap-2"
           >
             <div className="h-0.5 w-4 lg:w-6 bg-slate-200" />
-            <SmallGrey>{props.selectedDistance + t("Km")}</SmallGrey>
+            <RyogoSmall color="slate">
+              {props.selectedDistance + t("Km")}
+            </RyogoSmall>
             <div className="h-0.5 w-4 lg:w-6 bg-slate-200" />
           </div>
         )}
@@ -36,9 +42,16 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
           id="tripDestination"
           className="flex flex-col gap-1 lg:gap-1.5 items-end text-end"
         >
-          <PBold>{props.tripDestinationLocationCity}</PBold>
-          <CaptionGrey>{props.tripDestinationLocationState}</CaptionGrey>
-          <SmallGrey>{format(props.tripEndDate, "MMM dd")}</SmallGrey>
+          <RyogoP weight="font-bold">
+            {" "}
+            {props.tripDestinationLocationCity}
+          </RyogoP>
+          <RyogoCaption color="light">
+            {props.tripDestinationLocationState}
+          </RyogoCaption>
+          <RyogoSmall color="slate">
+            {format(props.tripEndDate, "MMM dd")}
+          </RyogoSmall>
         </div>
       </div>
       <div
@@ -48,7 +61,9 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
         <TripTagWrapper>
           <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
             {getTripIcon(props.tripType)}
-            <Caption>{props.tripType.toUpperCase()}</Caption>
+            <RyogoCaption color="slate">
+              {props.tripType.toUpperCase()}
+            </RyogoCaption>
           </div>
         </TripTagWrapper>
         <TripTagWrapper>

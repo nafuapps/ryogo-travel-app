@@ -46,7 +46,7 @@ export default function Navbar(props: NavbarProps) {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center md:gap-6 lg:gap-8">
+          <div className="hidden md:flex items-center md:gap-8 lg:gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.id}
@@ -81,7 +81,7 @@ export default function Navbar(props: NavbarProps) {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden top-12 pb-4 border-t">
-            <div className="flex flex-col gap-4 pt-4">
+            <div className="flex flex-col gap-6 pt-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.id}

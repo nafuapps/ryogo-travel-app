@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignVehicleAction } from "@/app/actions/bookings/assignVehicleAction"
 import { toast } from "sonner"
-import { SmallBold } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignVehiclePageComponent({
@@ -57,7 +57,7 @@ export default function AssignVehiclePageComponent({
   return (
     <PageWrapper id="AssignVehiclePage">
       <ContentWrapper id="AssignVehicleInfo">
-        <SmallBold>{t("Title")}</SmallBold>
+        <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {vehicles.map((vehicle, index) => (
           <AssignVehicleTile
             key={index}

@@ -1,11 +1,10 @@
 "use client"
 
 import {
-  CaptionGrey,
-  H4,
-  H5,
-  SmallBold,
-  SmallGrey,
+  RyogoH3,
+  RyogoH4,
+  RyogoSmall,
+  RyogoCaption,
 } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import StepsTracker, {
@@ -111,11 +110,11 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
     <NewStepWrapper id="FinalStep">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <CaptionGrey>{t("Subtitle")}</CaptionGrey>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewBookingTotalSteps} current={4} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<NewBookingFormDataType>
         id="FinalForm"
@@ -127,58 +126,66 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <NewFormLineItemWrapper>
             <IconTextTag icon={Car} text={t("VehicleCharge")} />
             <NewFormLineItemSubtitleWrapper>
-              <SmallBold>{"₹" + finalAmount.totalVehiclePrice}</SmallBold>
-              <CaptionGrey>
+              <RyogoSmall weight="font-bold">
+                {"₹" + finalAmount.totalVehiclePrice}
+              </RyogoSmall>
+              <RyogoCaption color="light">
                 {t("VehicleSubtitle", {
                   charge: props.newBookingFormData.selectedRatePerKm!,
                   distance: finalAmount.totalDistance,
                 })}
-              </CaptionGrey>
+              </RyogoCaption>
             </NewFormLineItemSubtitleWrapper>
           </NewFormLineItemWrapper>
           {props.newBookingFormData.tripNeedsAC && (
             <NewFormLineItemWrapper>
               <IconTextTag icon={AirVent} text={t("ACCharge")} />
               <NewFormLineItemSubtitleWrapper>
-                <SmallBold>{"₹" + finalAmount.totalAcPrice}</SmallBold>
-                <CaptionGrey>
+                <RyogoSmall weight="font-bold">
+                  {"₹" + finalAmount.totalAcPrice}
+                </RyogoSmall>
+                <RyogoCaption color="light">
                   {t("ACSubtitle", {
                     ac: props.newBookingFormData.selectedAcChargePerDay!,
                     days: finalAmount.totalAllowanceDays,
                   })}
-                </CaptionGrey>
+                </RyogoCaption>
               </NewFormLineItemSubtitleWrapper>
             </NewFormLineItemWrapper>
           )}
           <NewFormLineItemWrapper>
             <IconTextTag icon={IdCard} text={t("DriverAllowance")} />
             <NewFormLineItemSubtitleWrapper>
-              <SmallBold>{"₹" + finalAmount.totalDriverAllowance}</SmallBold>
-              <CaptionGrey>
+              <RyogoSmall weight="font-bold">
+                {"₹" + finalAmount.totalDriverAllowance}
+              </RyogoSmall>
+              <RyogoCaption color="light">
                 {t("DriverSubtitle", {
                   allowance: props.newBookingFormData.selectedAllowancePerDay!,
                   days: finalAmount.totalAllowanceDays,
                 })}
-              </CaptionGrey>
+              </RyogoCaption>
             </NewFormLineItemSubtitleWrapper>
           </NewFormLineItemWrapper>
           <NewFormLineItemWrapper>
             <IconTextTag icon={CirclePercent} text={t("Commission")} />
             <NewFormLineItemSubtitleWrapper>
-              <SmallBold>{"₹" + finalAmount.totalCommission}</SmallBold>
-              <CaptionGrey>
+              <RyogoSmall weight="font-bold">
+                {"₹" + finalAmount.totalCommission}
+              </RyogoSmall>
+              <RyogoCaption color="light">
                 {props.newBookingFormData.selectedCommissionRate + "%"}
-              </CaptionGrey>
+              </RyogoCaption>
             </NewFormLineItemSubtitleWrapper>
           </NewFormLineItemWrapper>
         </NewFormContentWrapper>
         <NewFormLineItemWrapper>
-          <H5>{t("TotalAmount")}</H5>
-          <H4>{"₹" + finalAmount.totalAmount}</H4>
+          <RyogoH4>{t("TotalAmount")}</RyogoH4>
+          <RyogoH3>{"₹" + finalAmount.totalAmount}</RyogoH3>
         </NewFormLineItemWrapper>
         <Alert>
           <RyogoIcon icon={Info} size="sm" />
-          <CaptionGrey>{t("CreateInfo")}</CaptionGrey>
+          <RyogoCaption color="light">{t("CreateInfo")}</RyogoCaption>
         </Alert>
         <NewFormActionWrapper>
           <Button

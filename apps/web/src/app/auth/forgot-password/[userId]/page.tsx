@@ -10,7 +10,7 @@ import {
   AuthFooterWrapper,
   AuthSectionWrapper,
 } from "@/components/auth/authWrappers"
-import { CaptionGrey } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
@@ -41,10 +41,10 @@ export default async function ConfirmEmailPage({
     <AuthSectionWrapper>
       <ForgotPasswordPageComponent user={user} />
       <AuthFooterWrapper>
-        <CaptionGrey>{t("RememberTitle")}</CaptionGrey>
+        <RyogoCaption color="light">{t("RememberTitle")}</RyogoCaption>
         <Button variant="outline" size="lg">
           <Link href={`/auth/login/password/${userId}`}>
-            <CaptionGrey>{t("RememberCTA")}</CaptionGrey>
+            <RyogoCaption color="light">{t("RememberCTA")}</RyogoCaption>
           </Link>
         </Button>
       </AuthFooterWrapper>

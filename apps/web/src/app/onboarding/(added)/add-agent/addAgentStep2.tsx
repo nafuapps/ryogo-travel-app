@@ -11,7 +11,7 @@ import {
   OnboardingStepSecondaryAction,
 } from "@/components/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import { H3Grey } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import ConfirmValues from "@/components/form/confirmValues"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
@@ -63,7 +63,7 @@ export function AddAgentConfirm(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step2Content">
-          <H3Grey>{t("Title")}</H3Grey>
+          <RyogoH3 color="slate">{t("Title")}</RyogoH3>
           <ConfirmValues
             name={t("AgentName")}
             value={props.finalData.data.name}

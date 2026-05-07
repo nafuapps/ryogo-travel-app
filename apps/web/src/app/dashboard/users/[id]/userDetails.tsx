@@ -1,6 +1,6 @@
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
-import { Caption, H4 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
@@ -43,10 +43,12 @@ export default async function UserDetailsPageComponent({
             <ChangeUserPhotoSheet userId={user.id} agencyId={user.agencyId} />
           </div>
           <div className="flex flex-col gap-2 lg:gap-3 items-end">
-            <H4>{user.name}</H4>
-            <Caption>{user.phone}</Caption>
-            <Caption>{user.email}</Caption>
-            <Caption>{moment(user.createdAt).format("DD MMM YYYY")}</Caption>
+            <RyogoH3>{user.name}</RyogoH3>
+            <RyogoCaption color="slate">{user.phone}</RyogoCaption>
+            <RyogoCaption color="slate">{user.email}</RyogoCaption>
+            <RyogoCaption color="slate">
+              {moment(user.createdAt).format("DD MMM YYYY")}
+            </RyogoCaption>
             <UserStatusPill status={user.status} />
           </div>
         </div>

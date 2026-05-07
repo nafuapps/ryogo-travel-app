@@ -1,4 +1,4 @@
-import { H2, P } from "@/components/typography"
+import { RyogoH2, RyogoP } from "@/components/typography"
 import {
   Card,
   CardContent,
@@ -57,11 +57,11 @@ export default function FeaturesSection() {
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <H2>Why Choose RyoGo?</H2>
-          <P>
+          <RyogoH2>Why Choose RyoGo?</RyogoH2>
+          <RyogoP>
             We offer the best features to make your travel experience smooth and
             enjoyable
-          </P>
+          </RyogoP>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

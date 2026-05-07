@@ -12,12 +12,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group"
-import {
-  Caption,
-  CaptionBold,
-  CaptionGrey,
-  Small,
-} from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { FindAgencySearchDataType } from "@ryogo-travel-app/api/services/agency.services"
 import {
@@ -289,7 +284,7 @@ export default function SearchPageComponent({
                       onClick={() => formData.setValue("searchTerm", "")}
                       disabled={formData.getValues("searchTerm") === ""}
                     >
-                      <CaptionGrey>{t("Clear")}</CaptionGrey>
+                      <RyogoCaption color="light">{t("Clear")}</RyogoCaption>
                     </Button>
                     <Button
                       type="submit"
@@ -322,7 +317,7 @@ export default function SearchPageComponent({
                     handleSearch(s.toUpperCase())
                   }}
                 >
-                  <CaptionGrey>{s}</CaptionGrey>
+                  <RyogoCaption color="light">{s}</RyogoCaption>
                 </div>
               )
             })}
@@ -334,12 +329,12 @@ export default function SearchPageComponent({
           {searchResultType === SearchTypeEnum.Bookings ? (
             // Paginated booking search result
             <>
-              <CaptionBold>
+              <RyogoCaption color="dark" weight="font-bold">
                 {t("ResultsFound", {
                   count: bookingSearchResultSet.length,
                   type: "booking",
                 })}
-              </CaptionBold>
+              </RyogoCaption>
               {bookingSearchResultSet.length > 0 && (
                 <>
                   {currentItems.map((b) => {
@@ -357,36 +352,36 @@ export default function SearchPageComponent({
             </>
           ) : searchResultType === SearchTypeEnum.Customers ? (
             <>
-              <CaptionBold>
+              <RyogoCaption color="dark" weight="font-bold">
                 {t("ResultsFound", {
                   count: customerSearchResultSet.length,
                   type: "customer",
                 })}
-              </CaptionBold>
+              </RyogoCaption>
               {customerSearchResultSet.map((c) => {
                 return <CustomerSearchResultItem key={c.id} customer={c} />
               })}
             </>
           ) : searchResultType === SearchTypeEnum.Vehicles ? (
             <>
-              <CaptionBold>
+              <RyogoCaption color="dark" weight="font-bold">
                 {t("ResultsFound", {
                   count: vehicleSearchResultSet.length,
                   type: "vehicle",
                 })}
-              </CaptionBold>
+              </RyogoCaption>
               {vehicleSearchResultSet.map((v) => {
                 return <VehicleSearchResultItem key={v.id} vehicle={v} />
               })}
             </>
           ) : (
             <>
-              <CaptionBold>
+              <RyogoCaption color="dark" weight="font-bold">
                 {t("ResultsFound", {
                   count: driverSearchResultSet.length,
                   type: "driver",
                 })}
-              </CaptionBold>
+              </RyogoCaption>
               {driverSearchResultSet.map((d) => {
                 return <DriverSearchResultItem key={d.id} driver={d} />
               })}
@@ -423,7 +418,7 @@ function SearchOption({
           : "border-slate-200"
       }`}
     >
-      <Caption>{searchType}</Caption>
+      <RyogoCaption color="slate">{searchType}</RyogoCaption>
     </div>
   )
 }
@@ -437,18 +432,22 @@ function BookingSearchResultItem({
     <Link href={`/dashboard/bookings/${booking.id}`}>
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{booking.id}</Caption>
-          <Small>{booking.customer.name}</Small>
+          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
+          <RyogoSmall>{booking.customer.name}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.type.toUpperCase()}</Caption>
-          <Small>
+          <RyogoCaption color="slate">
+            {booking.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoSmall>
             {booking.source.city + " - " + booking.destination.city}
-          </Small>
+          </RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{booking.assignedVehicle?.vehicleNumber}</Caption>
-          <Small>{booking.assignedDriver?.name}</Small>
+          <RyogoCaption color="slate">
+            {booking.assignedVehicle?.vehicleNumber}
+          </RyogoCaption>
+          <RyogoSmall>{booking.assignedDriver?.name}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
           <BookingStatusPill status={booking.status} />
@@ -479,9 +478,9 @@ function DriverSearchResultItem({
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <CaptionGrey>{driver.id}</CaptionGrey>
-          <Caption>{driver.phone}</Caption>
-          <Small>{driver.name}</Small>
+          <RyogoCaption color="light">{driver.id}</RyogoCaption>
+          <RyogoCaption color="slate">{driver.phone}</RyogoCaption>
+          <RyogoSmall>{driver.name}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
           <div className="flex flex-row gap-1 lg:gap-1.5">
@@ -489,8 +488,8 @@ function DriverSearchResultItem({
               return getVehicleIcon(v)
             })}
           </div>
-          <Caption>{driver.address}</Caption>
-          <CaptionGrey>{driver.licenseNumber}</CaptionGrey>
+          <RyogoCaption color="slate">{driver.address}</RyogoCaption>
+          <RyogoCaption color="light">{driver.licenseNumber}</RyogoCaption>
         </GridItemWrapper>
         <GridItemWrapper>
           <DriverStatusPill status={driver.status} />
@@ -522,14 +521,16 @@ function CustomerSearchResultItem({
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <CaptionGrey>{customer.id}</CaptionGrey>
-          <Caption>{customer.phone}</Caption>
-          <Small>{customer.name}</Small>
+          <RyogoCaption color="light">{customer.id}</RyogoCaption>
+          <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
+          <RyogoSmall>{customer.name}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
-          {customer.email && <CaptionGrey>{customer.email}</CaptionGrey>}
-          <Caption>{customer.location.state}</Caption>
-          <Small>{customer.location.city}</Small>
+          {customer.email && (
+            <RyogoCaption color="light">{customer.email}</RyogoCaption>
+          )}
+          <RyogoCaption color="slate">{customer.location.state}</RyogoCaption>
+          <RyogoSmall>{customer.location.city}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
           <CustomerStatusPill status={customer.status} />
@@ -561,13 +562,15 @@ function VehicleSearchResultItem({
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <CaptionGrey>{vehicle.id}</CaptionGrey>
-          <Small>{vehicle.vehicleNumber}</Small>
+          <RyogoCaption color="light">{vehicle.id}</RyogoCaption>
+          <RyogoSmall>{vehicle.vehicleNumber}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
-          <CaptionGrey>{vehicle.color}</CaptionGrey>
-          <Caption>{vehicle.brand + " " + vehicle.model}</Caption>
-          <Small>{vehicle.type.toUpperCase()}</Small>
+          <RyogoCaption color="light">{vehicle.color}</RyogoCaption>
+          <RyogoCaption color="slate">
+            {vehicle.brand + " " + vehicle.model}
+          </RyogoCaption>
+          <RyogoSmall>{vehicle.type.toUpperCase()}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
           <VehicleStatusPill status={vehicle.status} />

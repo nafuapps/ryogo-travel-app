@@ -1,9 +1,4 @@
-import {
-  Small,
-  CaptionGrey,
-  CaptionBold,
-  Caption,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
@@ -39,13 +34,19 @@ export default async function RiderTripLogItem({
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
         <div className="flex flex-col gap-1.5 lg:gap-2 justify-end w-full">
-          <Caption>{format(tripLog.createdAt, "dd MMM hh:mm aaa")}</Caption>
-          <Small>{tripLog.odometerReading + t("Km")}</Small>
-          <CaptionGrey>{tripLog.latLong}</CaptionGrey>
-          {tripLog.remarks && <Caption>{tripLog.remarks}</Caption>}
+          <RyogoCaption color="slate">
+            {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
+          </RyogoCaption>
+          <RyogoSmall>{tripLog.odometerReading + t("Km")}</RyogoSmall>
+          <RyogoCaption color="light">{tripLog.latLong}</RyogoCaption>
+          {tripLog.remarks && (
+            <RyogoCaption color="slate">{tripLog.remarks}</RyogoCaption>
+          )}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
-          <CaptionBold>{tripLog.type.toUpperCase()}</CaptionBold>
+          <RyogoCaption color="dark" weight="font-bold">
+            {tripLog.type.toUpperCase()}
+          </RyogoCaption>
           {getTripLogIcon(tripLog.type)}
         </div>
       </div>

@@ -2,7 +2,7 @@ import {
   FindDriverAssignedBookingsByIdType,
   FindDriverByUserIdType,
 } from "@ryogo-travel-app/api/services/driver.services"
-import { Small, SmallGrey } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -38,7 +38,7 @@ export default async function RiderHomePageComponent({
     <PageWrapper id="RiderHomePage">
       {assignedBookings.length === 0 ? (
         <div className="flex flex-col items-center">
-          <SmallGrey>{t("NoBooking")}</SmallGrey>
+          <RyogoSmall color="slate">{t("NoBooking")}</RyogoSmall>
         </div>
       ) : (
         <>
@@ -47,7 +47,7 @@ export default async function RiderHomePageComponent({
           )}
           {upcomingBookings.length > 0 && (
             <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
-              <Small>{t("Upcoming")}</Small>
+              <RyogoSmall>{t("Upcoming")}</RyogoSmall>
               {upcomingBookings.map((b, i) => {
                 return (
                   <UpcomingBookingComponent

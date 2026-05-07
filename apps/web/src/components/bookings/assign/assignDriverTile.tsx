@@ -1,6 +1,6 @@
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
-import { PBold, Small, Caption } from "@/components/typography"
+import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   Phone,
   BadgeIndianRupee,
@@ -115,8 +115,8 @@ export default function AssignDriverTile({
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
-          <PBold>{driverData.name}</PBold>
-          <Small>{driverData.address}</Small>
+          <RyogoP weight="font-bold"> {driverData.name}</RyogoP>
+          <RyogoSmall>{driverData.address}</RyogoSmall>
           <IconTextTag icon={Phone} text={driverData.phone} />
         </AssignTileHeaderWrapper>
         <AssignTileFooterWrapper>
@@ -131,7 +131,7 @@ export default function AssignDriverTile({
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper>
           {isCurrentlyAssigned ? (
-            <RyogoIcon icon={CheckCheck} size="sm" color="sky" />
+            <RyogoIcon icon={CheckCheck} size="sm" color="brand" />
           ) : isBooked ? (
             <RyogoIcon icon={TicketX} size="sm" color="red" />
           ) : isOnLeave ? (
@@ -139,7 +139,7 @@ export default function AssignDriverTile({
           ) : (
             <RyogoIcon icon={Check} size="sm" color="green" />
           )}
-          <Caption>
+          <RyogoCaption color="slate">
             {isCurrentlyAssigned
               ? t("CurrentlyAssigned")
               : isBooked
@@ -147,7 +147,7 @@ export default function AssignDriverTile({
                 : isOnLeave
                   ? t("Leave")
                   : t("Available")}
-          </Caption>
+          </RyogoCaption>
         </AssignTileStatusWrapper>
       </AssignTileScoreWrapper>
     </AssignTileWrapper>

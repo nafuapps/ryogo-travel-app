@@ -1,11 +1,10 @@
 "use client"
 
 import {
-  SmallGrey,
-  H5Grey,
-  PBold,
-  Caption,
-  PRed,
+  RyogoSmall,
+  RyogoH4,
+  RyogoP,
+  RyogoCaption,
 } from "@/components/typography"
 import {
   Select,
@@ -56,8 +55,8 @@ export default function UpcomingBookingsItemComponent({
       >
         <SectionHeaderWrapper>
           <RyogoIcon icon={Clock} size="sm" />
-          <SmallGrey>{t("Title")}</SmallGrey>
-          <H5Grey>{trips.length}</H5Grey>
+          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+          <RyogoH4 color="slate"> {trips.length}</RyogoH4>
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
@@ -87,23 +86,28 @@ function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.bookingId}</Caption>
-          <PBold>{props.customerName}</PBold>
+          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.type.toUpperCase()}</Caption>
-          <PBold>{props.route}</PBold>
+          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.vehicle}</Caption>
-          <PBold>{props.driver}</PBold>
+          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{format(props.startDate, "dd MMM hh:mm aaa")}</Caption>
+          <RyogoCaption color="slate">
+            {format(props.startDate, "dd MMM hh:mm aaa")}
+          </RyogoCaption>
           {combinedDateTime < new Date() ? (
-            <PRed>{moment(combinedDateTime).fromNow()}</PRed>
+            <RyogoP color="red">{moment(combinedDateTime).fromNow()}</RyogoP>
           ) : (
-            <PBold>{moment(combinedDateTime).fromNow()}</PBold>
+            <RyogoP weight="font-bold">
+              {" "}
+              {moment(combinedDateTime).fromNow()}
+            </RyogoP>
           )}
         </GridItemWrapper>
       </GridWrapper>

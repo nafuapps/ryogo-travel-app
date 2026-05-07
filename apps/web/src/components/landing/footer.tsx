@@ -1,5 +1,5 @@
 import { RyoGoLightLogo } from "@/components/logo"
-import { CaptionLight, SmallLight } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -13,70 +13,74 @@ export default async function Footer() {
           {/* Brand section */}
           <div className="flex flex-col gap-2 md:gap-3">
             <RyoGoLightLogo />
-            <CaptionLight>{t("LogoCaption")}</CaptionLight>
+            <RyogoCaption color="white">{t("LogoCaption")}</RyogoCaption>
           </div>
 
           {/* Product */}
           <div className="flex flex-col gap-2 md:gap-3">
-            <SmallLight>{t("Product.Title")}</SmallLight>
+            <RyogoSmall color="white">{t("Product.Title")}</RyogoSmall>
             <Link href="/features" className="hover:underline transition">
-              <CaptionLight>{t("Product.Features")}</CaptionLight>
+              <RyogoCaption color="white">{t("Product.Features")}</RyogoCaption>
             </Link>
             <Link href="/pricing" className="hover:underline transition">
-              <CaptionLight>{t("Product.Pricing")}</CaptionLight>
+              <RyogoCaption color="white">{t("Product.Pricing")}</RyogoCaption>
             </Link>
             <Link href="/how-it-works" className="hover:underline transition">
-              <CaptionLight>{t("Product.HowItWorks")}</CaptionLight>
+              <RyogoCaption color="white">
+                {t("Product.HowItWorks")}
+              </RyogoCaption>
             </Link>
             <Link href="/resources" className="hover:underline transition">
-              <CaptionLight>{t("Product.Resources")}</CaptionLight>
+              <RyogoCaption color="white">
+                {t("Product.Resources")}
+              </RyogoCaption>
             </Link>
           </div>
 
           {/* Support */}
           <div className="flex flex-col gap-2 md:gap-3">
-            <SmallLight>{t("Support.Title")}</SmallLight>
+            <RyogoSmall color="white">{t("Support.Title")}</RyogoSmall>
             <Link href="tel:9840774089" className="hover:underline transition">
-              <CaptionLight>{t("Support.Customer")}</CaptionLight>
+              <RyogoCaption color="white">{t("Support.Customer")}</RyogoCaption>
             </Link>
             <Link href="#faq" className="hover:underline transition">
-              <CaptionLight>{t("Support.FAQ")}</CaptionLight>
+              <RyogoCaption color="white">{t("Support.FAQ")}</RyogoCaption>
             </Link>
             <Link
               href="mailto:ryogo.in@gmail.com"
               className="hover:underline transition"
             >
-              <CaptionLight>{t("Support.Email")}</CaptionLight>
+              <RyogoCaption color="white">{t("Support.Email")}</RyogoCaption>
             </Link>
           </div>
 
           {/* Social Media //TODO: Add SM links */}
           <div className="flex flex-col gap-2 md:gap-3">
-            <SmallLight>{t("Social.Title")}</SmallLight>
+            <RyogoSmall color="white">{t("Social.Title")}</RyogoSmall>
             <Link href="/" className="hover:underline transition">
-              <CaptionLight>{t("Social.Facebook")}</CaptionLight>
+              <RyogoCaption color="white">{t("Social.Facebook")}</RyogoCaption>
             </Link>
             <Link href="/" className="hover:underline transition">
-              <CaptionLight>{t("Social.Instagram")}</CaptionLight>
+              <RyogoCaption color="white">{t("Social.Instagram")}</RyogoCaption>
             </Link>
             <Link href="/" className="hover:underline transition">
-              <CaptionLight>{t("Social.LinkedIn")}</CaptionLight>
+              <RyogoCaption color="white">{t("Social.LinkedIn")}</RyogoCaption>
             </Link>
             <Link href="/" className="hover:underline transition">
-              <CaptionLight>{t("Social.YouTube")}</CaptionLight>
+              <RyogoCaption color="white">{t("Social.YouTube")}</RyogoCaption>
             </Link>
           </div>
         </div>
 
         {/* Bottom section */}
         <div className="border-t border-sky-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <CaptionLight>{t("Copyright")}</CaptionLight>
+          <RyogoCaption color="white">{t("Copyright")}</RyogoCaption>
           <Link
             href="https://nafuapps.in"
             target="_blank"
             className="hover:underline transition"
           >
-            <CaptionLight>{t("Developer")}</CaptionLight>
+            <RyogoCaption color="white">{t("Developer")}</RyogoCaption>
           </Link>
         </div>
       </div>

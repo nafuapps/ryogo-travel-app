@@ -1,4 +1,4 @@
-import { Small } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -27,7 +27,7 @@ export default async function MyProfileDetailHeaderTabs(
               props.selectedTab === tab ? "bg-white shadow" : ""
             }`}
           >
-            <Small>{t(tab)}</Small>
+            <RyogoSmall>{t(tab)}</RyogoSmall>
           </div>
         </Link>
       ))}

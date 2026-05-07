@@ -1,6 +1,11 @@
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { CaptionGrey, H4, SmallGrey, H2 } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoH3,
+  RyogoSmall,
+  RyogoH2,
+} from "@/components/typography"
 import { TrendingUp, TrendingDown, Tickets } from "lucide-react"
 import {
   metricsClassName,
@@ -79,26 +84,28 @@ export default async function DashboardBookingMetricsComponent({
           className={metricHeaderClassName}
         >
           <RyogoIcon icon={Tickets} size="sm" />
-          <SmallGrey>{t("Title")}</SmallGrey>
+          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
         </div>
         <div
           id="dashboardBookingMetricsConfirmed"
           className={metricMainClassName}
         >
-          <H2>{confirmed24HrsCount}</H2>
+          <RyogoH2>{confirmed24HrsCount}</RyogoH2>
           {confirmedWeeklyAvg !== 0 && (
             <div className="flex flex-col lg:gap-0.5 items-center text-center">
               <div className="flex flex-row gap-1 item-center">
                 {icon}
-                <CaptionGrey>
+                <RyogoCaption color="light">
                   {createdChange.toLocaleString("en-IN", {
                     style: "percent",
                     maximumFractionDigits: 1,
                   })}
-                </CaptionGrey>
-                <CaptionGrey>{more ? t("More") : t("Less")}</CaptionGrey>
+                </RyogoCaption>
+                <RyogoCaption color="light">
+                  {more ? t("More") : t("Less")}
+                </RyogoCaption>
               </div>
-              <CaptionGrey>{t("ThanAvg")}</CaptionGrey>
+              <RyogoCaption color="light">{t("ThanAvg")}</RyogoCaption>
             </div>
           )}
         </div>
@@ -108,29 +115,29 @@ export default async function DashboardBookingMetricsComponent({
         className={metricSecondRowClassName}
       >
         <div id="dashboardBookingMetricsLeads" className={metricItem1ClassName}>
-          <H4>{leadCount}</H4>
-          <CaptionGrey>{t("Leads")}</CaptionGrey>
+          <RyogoH3>{leadCount}</RyogoH3>
+          <RyogoCaption color="light">{t("Leads")}</RyogoCaption>
         </div>
         <div
           id="dashboardBookingMetricsInProgress"
           className={metricItem2ClassName}
         >
-          <H4>{inProgressCount}</H4>
-          <CaptionGrey>{t("Ongoing")}</CaptionGrey>
+          <RyogoH3>{inProgressCount}</RyogoH3>
+          <RyogoCaption color="light">{t("Ongoing")}</RyogoCaption>
         </div>
         <div
           id="dashboardBookingMetricsCancelled"
           className={metricItem3ClassName}
         >
-          <H4>{cancelledCount}</H4>
-          <CaptionGrey>{t("Cancelled")}</CaptionGrey>
+          <RyogoH3>{cancelledCount}</RyogoH3>
+          <RyogoCaption color="light">{t("Cancelled")}</RyogoCaption>
         </div>
         <div
           id="dashboardBookingMetricsCompleted"
           className={metricItem4ClassName}
         >
-          <H4>{completedCount}</H4>
-          <CaptionGrey>{t("Completed")}</CaptionGrey>
+          <RyogoH3>{completedCount}</RyogoH3>
+          <RyogoCaption color="light">{t("Completed")}</RyogoCaption>
         </div>
       </div>
     </div>

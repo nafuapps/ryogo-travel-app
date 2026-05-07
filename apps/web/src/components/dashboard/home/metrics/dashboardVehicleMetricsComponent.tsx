@@ -1,4 +1,9 @@
-import { H4, H2, CaptionGrey, SmallGrey } from "@/components/typography"
+import {
+  RyogoH3,
+  RyogoH2,
+  RyogoCaption,
+  RyogoSmall,
+} from "@/components/typography"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Car } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -50,19 +55,19 @@ export default async function DashboardVehicleMetricsComponent({
           className={metricHeaderClassName}
         >
           <RyogoIcon icon={Car} size="sm" />
-          <SmallGrey>{t("Title")}</SmallGrey>
+          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
         </div>
         <div className={metricMainClassName}>
-          <H2>{totalVehicles}</H2>
+          <RyogoH2>{totalVehicles}</RyogoH2>
           {totalVehicles !== 0 && (
-            <CaptionGrey>
+            <RyogoCaption color="light">
               {(onTripVehicles / totalVehicles).toLocaleString("en-IN", {
                 style: "percent",
                 maximumFractionDigits: 1,
               }) +
                 " " +
                 t("Rate")}
-            </CaptionGrey>
+            </RyogoCaption>
           )}
         </div>
       </div>
@@ -74,29 +79,29 @@ export default async function DashboardVehicleMetricsComponent({
           id="dashboardVehicleMetricsAvailable"
           className={metricItem1ClassName}
         >
-          <H4>{availableVehicles}</H4>
-          <CaptionGrey>{t("Available")}</CaptionGrey>
+          <RyogoH3>{availableVehicles}</RyogoH3>
+          <RyogoCaption color="light">{t("Available")}</RyogoCaption>
         </div>
         <div
           id="dashboardVehicleMetricsInTrip"
           className={metricItem2ClassName}
         >
-          <H4>{onTripVehicles}</H4>
-          <CaptionGrey>{t("InTrip")}</CaptionGrey>
+          <RyogoH3>{onTripVehicles}</RyogoH3>
+          <RyogoCaption color="light">{t("InTrip")}</RyogoCaption>
         </div>
         <div
           id="dashboardVehicleMetricsCancelled"
           className={metricItem3ClassName}
         >
-          <H4>{inactiveVehicles}</H4>
-          <CaptionGrey>{t("Inactive")}</CaptionGrey>
+          <RyogoH3>{inactiveVehicles}</RyogoH3>
+          <RyogoCaption color="light">{t("Inactive")}</RyogoCaption>
         </div>
         <div
           id="dashboardVehicleMetricsCompleted"
           className={metricItem4ClassName}
         >
-          <H4>{repairVehicles}</H4>
-          <CaptionGrey>{t("Repair")}</CaptionGrey>
+          <RyogoH3>{repairVehicles}</RyogoH3>
+          <RyogoCaption color="light">{t("Repair")}</RyogoCaption>
         </div>
       </div>
     </div>

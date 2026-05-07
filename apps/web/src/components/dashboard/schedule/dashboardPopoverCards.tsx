@@ -1,11 +1,4 @@
-import {
-  CaptionBold,
-  H5,
-  Small,
-  SmallRed,
-  CaptionRed,
-  Caption,
-} from "@/components/typography"
+import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { FindScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
@@ -22,32 +15,38 @@ export function OngoingBookingPopoverCard(
     <div className="flex flex-col gap-3 lg:gap-4">
       <div className="flex flex-row justify-between gap-3 lg:gap-4">
         <div className="flex flex-col gap-1 item-start">
-          <CaptionBold>{props.type.toUpperCase()}</CaptionBold>
-          <H5>{props.route}</H5>
+          <RyogoCaption color="dark" weight="font-bold">
+            {props.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoH4>{props.route}</RyogoH4>
         </div>
         <div className="flex flex-col gap-1 items-end">
-          <Caption>
+          <RyogoCaption color="slate">
             {moment(props.startDate).format("DD MMM") +
               " - " +
               moment(props.endDate).format("DD MMM")}
-          </Caption>
+          </RyogoCaption>
         </div>
       </div>
       <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
         <div className="flex flex-col gap-1">
-          <Small>{props.customerName}</Small>
-          <CaptionBold>{props.bookingId}</CaptionBold>
+          <RyogoSmall>{props.customerName}</RyogoSmall>
+          <RyogoCaption color="dark" weight="font-bold">
+            {props.bookingId}
+          </RyogoCaption>
         </div>
         <div className="flex flex-col gap-1 items-end">
           {props.vehicle ? (
-            <Small>{props.vehicle}</Small>
+            <RyogoSmall>{props.vehicle}</RyogoSmall>
           ) : (
-            <SmallRed>{t("NotAssigned")}</SmallRed>
+            <RyogoSmall color="red">{t("NotAssigned")}</RyogoSmall>
           )}
           {props.driver ? (
-            <CaptionBold>{props.driver}</CaptionBold>
+            <RyogoCaption color="dark" weight="font-bold">
+              {props.driver}
+            </RyogoCaption>
           ) : (
-            <CaptionRed>{t("NotAssigned")}</CaptionRed>
+            <RyogoCaption color="red">{t("NotAssigned")}</RyogoCaption>
           )}
         </div>
       </div>
@@ -85,25 +84,33 @@ export function AssignedBookingPopoverCard(
     <div className="flex flex-col gap-3 lg:gap-4">
       <div className="flex flex-row justify-between gap-3 lg:gap-4">
         <div className="flex flex-col gap-1 item-start">
-          <CaptionBold>{props.type.toUpperCase()}</CaptionBold>
-          <H5>{props.source.city + " - " + props.destination.city}</H5>
+          <RyogoCaption color="dark" weight="font-bold">
+            {props.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoH4>
+            {props.source.city + " - " + props.destination.city}
+          </RyogoH4>
         </div>
         <div className="flex flex-col gap-1 items-end">
-          <Caption>
+          <RyogoCaption color="slate">
             {moment(props.startDate).format("DD MMM") +
               " - " +
               moment(props.endDate).format("DD MMM")}
-          </Caption>
+          </RyogoCaption>
         </div>
       </div>
       <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
         <div className="flex flex-col gap-1">
-          <Small>{props.customer.name}</Small>
-          <CaptionBold>{props.id}</CaptionBold>
+          <RyogoSmall>{props.customer.name}</RyogoSmall>
+          <RyogoCaption color="dark" weight="font-bold">
+            {props.id}
+          </RyogoCaption>
         </div>
         <div className="flex flex-col gap-1 items-end">
-          <Small>{props.assignedVehicle?.vehicleNumber}</Small>
-          <CaptionBold>{props.assignedDriver?.name}</CaptionBold>
+          <RyogoSmall>{props.assignedVehicle?.vehicleNumber}</RyogoSmall>
+          <RyogoCaption color="dark" weight="font-bold">
+            {props.assignedDriver?.name}
+          </RyogoCaption>
         </div>
       </div>
       <Link href={`/dashboard/bookings/${props.id}`}>
@@ -126,16 +133,18 @@ export function RepairPopoverCard(
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
       <div className="flex flex-col gap-1">
-        <Caption>{props.vehicle.vehicleNumber}</Caption>
-        <H5>
+        <RyogoCaption color="slate">{props.vehicle.vehicleNumber}</RyogoCaption>
+        <RyogoH4>
           {moment(props.startDate).format("DD MMM") +
             " - " +
             moment(props.endDate).format("DD MMM")}
-        </H5>
+        </RyogoH4>
       </div>
       <div className="flex flex-col gap-1">
-        <Small>{props.addedByUser.name}</Small>
-        <CaptionBold>{props.id}</CaptionBold>
+        <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
+        <RyogoCaption color="dark" weight="font-bold">
+          {props.id}
+        </RyogoCaption>
       </div>
       <Link href={`/dashboard/vehicles/${props.vehicleId}/repairs`}>
         <Button
@@ -157,16 +166,18 @@ export function LeavePopoverCard(
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
       <div className="flex flex-col gap-1">
-        <Caption>{props.driver.name}</Caption>
-        <H5>
+        <RyogoCaption color="slate">{props.driver.name}</RyogoCaption>
+        <RyogoH4>
           {moment(props.startDate).format("DD MMM") +
             " - " +
             moment(props.endDate).format("DD MMM")}
-        </H5>
+        </RyogoH4>
       </div>
       <div className="flex flex-col gap-1">
-        <Small>{props.addedByUser.name}</Small>
-        <CaptionBold>{props.id}</CaptionBold>
+        <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
+        <RyogoCaption color="dark" weight="font-bold">
+          {props.id}
+        </RyogoCaption>
       </div>
       <Link href={`/dashboard/drivers/${props.driverId}/leaves`}>
         <Button

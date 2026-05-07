@@ -1,12 +1,10 @@
 import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "@/components/header/customerDetailHeaderTabs"
 import {
-  Caption,
-  CaptionGrey,
-  H4,
-  PBold,
-  SmallBold,
-  SmallGrey,
+  RyogoCaption,
+  RyogoH3,
+  RyogoP,
+  RyogoSmall,
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { Separator } from "@/components/ui/separator"
@@ -53,26 +51,26 @@ export default async function CustomerDetailsPageComponent({
               />
             </div>
             <div className="flex flex-col gap-2 lg:gap-3 items-end">
-              <H4>{customer.name}</H4>
-              <Caption>{customer.phone}</Caption>
-              <Caption>{customer.email}</Caption>
-              <Caption>
+              <RyogoH3>{customer.name}</RyogoH3>
+              <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
+              <RyogoCaption color="slate">{customer.email}</RyogoCaption>
+              <RyogoCaption color="slate">
                 {moment(customer.createdAt).format("DD MMM YYYY")}
-              </Caption>
+              </RyogoCaption>
               {customer.driverRatings && customer.driverRatings.length > 1 && (
                 <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center">
                   <RyogoIcon icon={Star} size="sm" />
-                  <PBold>
+                  <RyogoP weight="font-bold">
                     {(
                       customer.driverRatings.reduce((a, c) => a + c, 0) /
                       customer.driverRatings.length
                     ).toFixed(1)}
-                  </PBold>
-                  <SmallGrey>
+                  </RyogoP>
+                  <RyogoSmall color="slate">
                     {t("NumberRatings", {
                       number: customer.driverRatings.length,
                     })}
-                  </SmallGrey>
+                  </RyogoSmall>
                 </div>
               )}
               <CustomerStatusPill status={customer.status} />
@@ -82,12 +80,14 @@ export default async function CustomerDetailsPageComponent({
         <Separator />
         <CustomerSection sectionTitle={t("AgencyInfo")}>
           <div className="flex flex-col gap-1 lg:gap-1.5">
-            <Caption>{customer.address}</Caption>
-            <PBold>
+            <RyogoCaption color="slate">{customer.address}</RyogoCaption>
+            <RyogoP weight="font-bold">
               {customer.location.city + ", " + customer.location.state}
-            </PBold>
-            <Caption>{customer.addedByUser.name}</Caption>
-            <CaptionGrey>{customer.remarks}</CaptionGrey>
+            </RyogoP>
+            <RyogoCaption color="slate">
+              {customer.addedByUser.name}
+            </RyogoCaption>
+            <RyogoCaption color="light">{customer.remarks}</RyogoCaption>
           </div>
         </CustomerSection>
         <Separator />
@@ -122,7 +122,7 @@ type CustomerSectionType = {
 function CustomerSection(props: CustomerSectionType) {
   return (
     <div id={props.sectionTitle} className="flex flex-col gap-2 lg:gap-3">
-      <SmallBold>{props.sectionTitle}</SmallBold>
+      <RyogoSmall weight="font-bold">{props.sectionTitle}</RyogoSmall>
       {props.children}
     </div>
   )

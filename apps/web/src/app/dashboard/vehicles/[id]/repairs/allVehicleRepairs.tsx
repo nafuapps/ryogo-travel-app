@@ -1,7 +1,7 @@
 import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import VehicleDetailHeaderTabs from "@/components/header/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
-import { PBold, Caption, CaptionGrey } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import Link from "next/link"
 import { UrlObject } from "url"
 import { Pencil, Plus } from "lucide-react"
@@ -70,25 +70,27 @@ async function VehicleRepairComponent({
   return (
     <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
       <GridItemWrapper>
-        <PBold>
+        <RyogoP weight="font-bold">
           {moment(repair.startDate).format("DD MMM") +
             " - " +
             moment(repair.endDate).format("DD MMM")}
-        </PBold>
-        {repair.cost && <CaptionGrey>{"₹" + repair.cost}</CaptionGrey>}
+        </RyogoP>
+        {repair.cost && (
+          <RyogoCaption color="light">{"₹" + repair.cost}</RyogoCaption>
+        )}
       </GridItemWrapper>
       <GridItemWrapper>
-        <Caption>{repair.addedByUser.name}</Caption>
-        <CaptionGrey>{repair.remarks}</CaptionGrey>
+        <RyogoCaption color="slate">{repair.addedByUser.name}</RyogoCaption>
+        <RyogoCaption color="light">{repair.remarks}</RyogoCaption>
       </GridItemWrapper>
       <GridItemWrapper>
         {repair.isCompleted ? (
           <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-slate-100">
-            <CaptionGrey>{t("Completed")}</CaptionGrey>
+            <RyogoCaption color="light">{t("Completed")}</RyogoCaption>
           </div>
         ) : (
           <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-amber-100">
-            <CaptionGrey>{t("Pending")}</CaptionGrey>
+            <RyogoCaption color="light">{t("Pending")}</RyogoCaption>
           </div>
         )}
       </GridItemWrapper>
@@ -101,7 +103,7 @@ async function VehicleRepairComponent({
           >
             <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
               <div className="hidden lg:flex">
-                <CaptionGrey>{t("Edit")}</CaptionGrey>
+                <RyogoCaption color="light">{t("Edit")}</RyogoCaption>
               </div>
               <RyogoIcon icon={Pencil} size="sm" />
             </div>

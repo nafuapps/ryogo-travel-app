@@ -1,4 +1,9 @@
-import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
+import {
+  RyogoSmall,
+  RyogoH4,
+  RyogoCaption,
+  RyogoP,
+} from "@/components/typography"
 import {
   FindAllUsersInAgencyType,
   userServices,
@@ -39,8 +44,8 @@ export default async function UsersPageComponent({
       <SectionWrapper id="OwnersSection">
         <SectionHeaderWrapper>
           <RyogoIcon icon={Rows3} size="sm" />
-          <SmallGrey>{t("Owners.Title")}</SmallGrey>
-          <H5Grey>{owners.length}</H5Grey>
+          <RyogoSmall color="slate">{t("Owners.Title")}</RyogoSmall>
+          <RyogoH4 color="slate"> {owners.length}</RyogoH4>
         </SectionHeaderWrapper>
         {owners.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
@@ -49,8 +54,8 @@ export default async function UsersPageComponent({
       <SectionWrapper id="AgentsSection">
         <SectionHeaderWrapper>
           <RyogoIcon icon={Rows3} size="sm" />
-          <SmallGrey>{t("Agents.Title")}</SmallGrey>
-          <H5Grey>{agents.length}</H5Grey>
+          <RyogoSmall color="slate">{t("Agents.Title")}</RyogoSmall>
+          <RyogoH4 color="slate"> {agents.length}</RyogoH4>
           <Link href={`/dashboard/users/new`} className="ml-auto">
             <Button variant={"outline"}>
               <Plus className="size-4 md:size-5 text-slate-700" />
@@ -65,8 +70,8 @@ export default async function UsersPageComponent({
       <SectionWrapper id="DriversSection">
         <SectionHeaderWrapper>
           <RyogoIcon icon={Rows3} size="sm" />
-          <SmallGrey>{t("Drivers.Title")}</SmallGrey>
-          <H5Grey>{drivers.length}</H5Grey>
+          <RyogoSmall color="slate">{t("Drivers.Title")}</RyogoSmall>
+          <RyogoH4 color="slate"> {drivers.length}</RyogoH4>
           <Link href={`/dashboard/drivers/new`} className="ml-auto">
             <Button variant={"outline"}>
               <Plus className="size-4 md:size-5 text-slate-700" />
@@ -104,12 +109,15 @@ async function AllUsersItemComponent({
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{user.phone}</Caption>
-          <PBold>{user.name}</PBold>
+          <RyogoCaption color="slate">{user.phone}</RyogoCaption>
+          <RyogoP weight="font-bold"> {user.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{user.email}</Caption>
-          <PBold>{moment(user.createdAt).format("DD MMM YYYY")}</PBold>
+          <RyogoCaption color="slate">{user.email}</RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(user.createdAt).format("DD MMM YYYY")}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <UserStatusPill status={user.status} />

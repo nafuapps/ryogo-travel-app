@@ -1,10 +1,4 @@
-import {
-  SmallGrey,
-  H5Grey,
-  CaptionGrey,
-  CaptionBold,
-  Caption,
-} from "@/components/typography"
+import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   SelectTrigger,
   SelectValue,
@@ -54,8 +48,8 @@ export function DashboardScheduleHeader({
     <div className="flex flex-row justify-between items-center">
       <SectionHeaderWrapper>
         <RyogoIcon icon={CalendarDays} size="sm" />
-        <SmallGrey>{title}</SmallGrey>
-        <H5Grey>{length}</H5Grey>
+        <RyogoSmall color="slate">{title}</RyogoSmall>
+        <RyogoH4 color="slate"> {length}</RyogoH4>
       </SectionHeaderWrapper>
       <Select
         value={selectedTab}
@@ -103,11 +97,11 @@ export default function DashboardScheduleDayAxis({
           key={index}
           className="flex justify-center bg-white items-center p-1 w-16 lg:w-full min-h-16 lg:h-16"
         >
-          <CaptionGrey>
+          <RyogoCaption color="light">
             {moment(
               new Date(chartStartDate.getTime() + index * 24 * 60 * 60 * 1000),
             ).format("D MMM")}
-          </CaptionGrey>
+          </RyogoCaption>
         </div>
       ))}
     </div>
@@ -156,7 +150,9 @@ export function DashboardScheduleItemID({
       ) : (
         <Icon className="size-7 lg:size-8 text-slate-400" />
       )}
-      <CaptionBold>{title}</CaptionBold>
+      <RyogoCaption color="dark" weight="font-bold">
+        {title}
+      </RyogoCaption>
     </div>
   )
 }
@@ -242,7 +238,7 @@ export function DashboardScheduleItemBar({
             } as React.CSSProperties
           }
         >
-          <Caption>{id}</Caption>
+          <RyogoCaption color="slate">{id}</RyogoCaption>
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-auto">{children}</PopoverContent>

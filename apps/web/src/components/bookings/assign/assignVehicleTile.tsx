@@ -1,4 +1,4 @@
-import { PBold, Small, Caption } from "@/components/typography"
+import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   Armchair,
   AirVent,
@@ -127,11 +127,11 @@ export default function AssignVehicleTile({
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
-          <PBold>{vehicleData.vehicleNumber}</PBold>
-          <Small>{vehicleData.brand + " " + vehicleData.model}</Small>
+          <RyogoP weight="font-bold"> {vehicleData.vehicleNumber}</RyogoP>
+          <RyogoSmall>{vehicleData.brand + " " + vehicleData.model}</RyogoSmall>
           <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
             {getVehicleIcon(vehicleData.type)}
-            <Caption>{vehicleData.color}</Caption>
+            <RyogoCaption color="slate">{vehicleData.color}</RyogoCaption>
           </div>
         </AssignTileHeaderWrapper>
         <AssignTileFooterWrapper>
@@ -152,7 +152,7 @@ export default function AssignVehicleTile({
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper>
           {isCurrentlyAssigned ? (
-            <RyogoIcon color="sky" icon={CheckCheck} size="sm" />
+            <RyogoIcon color="brand" icon={CheckCheck} size="sm" />
           ) : isBooked ? (
             <RyogoIcon color="red" icon={TicketX} size="sm" />
           ) : isRepairScheduled ? (
@@ -160,7 +160,7 @@ export default function AssignVehicleTile({
           ) : (
             <RyogoIcon color="green" icon={Check} size="sm" />
           )}
-          <Caption>
+          <RyogoCaption color="slate">
             {isCurrentlyAssigned
               ? t("CurrentlyAssigned")
               : isBooked
@@ -168,7 +168,7 @@ export default function AssignVehicleTile({
                 : isRepairScheduled
                   ? t("RepairScheduled")
                   : t("Available")}
-          </Caption>
+          </RyogoCaption>
         </AssignTileStatusWrapper>
       </AssignTileScoreWrapper>
     </AssignTileWrapper>

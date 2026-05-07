@@ -1,6 +1,11 @@
 "use client"
 
-import { SmallGrey, H5Grey, Caption, PBold } from "@/components/typography"
+import {
+  RyogoSmall,
+  RyogoH4,
+  RyogoCaption,
+  RyogoP,
+} from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { User, Plus, Rows3 } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -69,8 +74,8 @@ export default function AllCustomersListComponent({
     <SectionWrapper id="AllCustomersSection">
       <SectionHeaderWrapper>
         <RyogoIcon icon={Rows3} size="sm" />
-        <SmallGrey>{t("Title")}</SmallGrey>
-        <H5Grey>{allCustomers.length}</H5Grey>
+        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+        <RyogoH4 color="slate"> {allCustomers.length}</RyogoH4>
         <Link href={`/dashboard/customers/new`} className="ml-auto">
           <Button variant={"outline"}>
             <Plus className="size-4 md:size-5 text-slate-700" />
@@ -136,12 +141,12 @@ function AllCustomersItemComponent({
           )}
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{customer.phone}</Caption>
-          <PBold>{customer.name}</PBold>
+          <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
+          <RyogoP weight="font-bold"> {customer.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{customer.location.state}</Caption>
-          <PBold>{customer.location.city}</PBold>
+          <RyogoCaption color="slate">{customer.location.state}</RyogoCaption>
+          <RyogoP weight="font-bold"> {customer.location.city}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <CustomerStatusPill status={customer.status} />

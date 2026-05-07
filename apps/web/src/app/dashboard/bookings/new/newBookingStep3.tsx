@@ -1,6 +1,11 @@
 "use client"
 
-import { H4, PBold, SmallGrey, Caption } from "@/components/typography"
+import {
+  RyogoH3,
+  RyogoP,
+  RyogoSmall,
+  RyogoCaption,
+} from "@/components/typography"
 import { DriverRegex, VehicleRegex } from "@/lib/regex"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -91,11 +96,11 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
     <NewStepWrapper id="AssignmentStep">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
-          <H4>{t("Title")}</H4>
-          <Caption>{t("Subtitle")}</Caption>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker total={NewBookingTotalSteps} current={2} />
-        <SmallGrey>{t("Description")}</SmallGrey>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step3Type>
         id="Step3Form"
@@ -103,7 +108,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <NewFormContentWrapper>
-          <PBold>{t("Vehicle.Title")}</PBold>
+          <RyogoP weight="font-bold"> {t("Vehicle.Title")}</RyogoP>
           <div
             id="vehicleAssignment"
             className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
@@ -127,7 +132,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
           </div>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
-          <PBold>{t("Driver.Title")}</PBold>
+          <RyogoP weight="font-bold"> {t("Driver.Title")}</RyogoP>
           <div
             id="driverAssignment"
             className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"

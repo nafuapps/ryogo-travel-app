@@ -1,4 +1,4 @@
-import { CaptionGrey, Small } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 
 type BookingItemType = {
   title: string
@@ -7,8 +7,8 @@ type BookingItemType = {
 export default function BookingItem(props: BookingItemType) {
   return (
     <div className="flex flex-col gap-0.5">
-      <CaptionGrey>{props.title}</CaptionGrey>
-      <Small>{props.value}</Small>
+      <RyogoCaption color="light">{props.title}</RyogoCaption>
+      <RyogoSmall>{props.value}</RyogoSmall>
     </div>
   )
 }

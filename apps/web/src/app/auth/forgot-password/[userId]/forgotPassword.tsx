@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { H4Grey } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
@@ -72,7 +72,7 @@ export default function ForgotPasswordPageComponent({
         onSubmit={methods.handleSubmit(onSubmit)}
         form={methods}
       >
-        <H4Grey>{t("PageTitle")}</H4Grey>
+        <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
         <UserCard user={user} />
         <RyogoInput
           name={"email"}

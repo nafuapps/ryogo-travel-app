@@ -4,7 +4,7 @@ import BookindDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import ExpenseItem from "@/components/bookings/expense/expenseItem"
-import { SmallGrey } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingExpensesPageComponent({
@@ -35,7 +35,7 @@ export default async function BookingExpensesPageComponent({
       )}
       {bookingExpenses.length === 0 ? (
         <div className="w-full text-center">
-          <SmallGrey>{t("NoExpenses")}</SmallGrey>
+          <RyogoSmall color="slate">{t("NoExpenses")}</RyogoSmall>
         </div>
       ) : (
         <div

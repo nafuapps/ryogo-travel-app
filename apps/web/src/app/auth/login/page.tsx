@@ -1,7 +1,7 @@
 //Login  page
 import { Metadata } from "next"
 import LoginPageComponent from "./login"
-import { CaptionGrey } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
@@ -22,10 +22,10 @@ export default async function LoginPage() {
     <AuthSectionWrapper>
       <LoginPageComponent />
       <AuthFooterWrapper>
-        <CaptionGrey>{t("SignupTitle")}</CaptionGrey>
+        <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
         <Button variant="outline" size="lg">
           <Link href={"/auth/signup"}>
-            <CaptionGrey>{t("SignupCTA")}</CaptionGrey>
+            <RyogoCaption color="light">{t("SignupCTA")}</RyogoCaption>
           </Link>
         </Button>
       </AuthFooterWrapper>

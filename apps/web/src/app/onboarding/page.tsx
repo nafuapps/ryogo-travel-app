@@ -1,6 +1,6 @@
 //Onboarding home page
 
-import { H2Brand, PBold, SmallGrey } from "@/components/typography"
+import { RyogoH2, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -49,8 +49,8 @@ export default async function OnboardingHomePage() {
         className="flex flex-col w-full items-center text-center gap-3"
       >
         <RyoGoLogo />
-        <H2Brand>{t("Header.Title")}</H2Brand>
-        <SmallGrey>{t("Header.Description")}</SmallGrey>
+        <RyogoH2 color="brand">{t("Header.Title")}</RyogoH2>
+        <RyogoSmall color="slate">{t("Header.Description")}</RyogoSmall>
       </div>
       <div id="OnboardingHomeFooter" className="w-full md:w-1/2">
         <Button variant={"default"} size={"lg"} className="w-full">
@@ -67,7 +67,7 @@ export default async function OnboardingHomePage() {
           id="OnboardingHomeSteps"
           className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
         >
-          <PBold>{t("BodySteps.Title")}</PBold>
+          <RyogoP weight="font-bold"> {t("BodySteps.Title")}</RyogoP>
           <div className="flex flex-col">
             <OnboardingHomeStepItem
               label={t("BodySteps.Step1")}
@@ -92,7 +92,7 @@ export default async function OnboardingHomePage() {
           id="OnboardingHomeChecklist"
           className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
         >
-          <PBold>{t("BodyChecklist.Title")}</PBold>
+          <RyogoP weight="font-bold"> {t("BodyChecklist.Title")}</RyogoP>
           <div className="flex flex-col gap-2 md:gap-3">
             <OnboardingHomeDocumentItem
               label={t("BodyChecklist.Item1")}
@@ -126,7 +126,7 @@ function OnboardingHomeDocumentItem(props: {
       <div className="bg-sky-700 rounded-lg size-10 md:size-12 flex justify-center items-center shrink-0">
         <props.icon className="text-sky-50 size-4 md:size-5" />
       </div>
-      <SmallGrey>{props.label}</SmallGrey>
+      <RyogoSmall color="slate">{props.label}</RyogoSmall>
     </div>
   )
 }
@@ -141,7 +141,7 @@ function OnboardingHomeStepItem(props: { icon: LucideIcon; label: string }) {
         </div>
         <div className="w-1 h-2 md:h-3 bg-sky-50"></div>
       </div>
-      <SmallGrey>{props.label}</SmallGrey>
+      <RyogoSmall color="slate">{props.label}</RyogoSmall>
     </div>
   )
 }

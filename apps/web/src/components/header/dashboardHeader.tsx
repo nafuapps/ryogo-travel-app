@@ -1,24 +1,16 @@
 "use client"
 
 import {
-  headerButtonClassName,
-  headerClassName,
-  headerLeftClassName,
-  headerRightClassName,
-  headerTooltipClassName,
-} from "@/components/header/headerCommon"
-import { CaptionGrey, H5 } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+  HeaderLeftWrapper,
+  HeaderRightWrapper,
+  HeaderWrapper,
+} from "@/components/header/headerWrappers"
+import { RyogoH4 } from "@/components/typography"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { Plus, Target } from "lucide-react"
-import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import HeaderButton from "./headerButton"
+import Link from "next/link"
 
 export default function DashboardHeader(props: { pathName: string }) {
   const t = useTranslations("Dashboard.Header")
@@ -28,47 +20,23 @@ export default function DashboardHeader(props: { pathName: string }) {
   const title = t(titleKey)
 
   return (
-    <div id="DashboardHeader" className={headerClassName}>
-      <div id="HeaderLeft" className={headerLeftClassName}>
+    <HeaderWrapper>
+      <HeaderLeftWrapper>
         <SidebarTrigger />
-        <H5>{title}</H5>
-      </div>
-      <div id="HeaderRight" className={headerRightClassName}>
+        <RyogoH4>{title}</RyogoH4>
+      </HeaderLeftWrapper>
+      <HeaderRightWrapper>
         {props.pathName !== "/dashboard/bookings/new" && (
           <Link href="/dashboard/bookings/new">
-            <Tooltip disableHoverableContent>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size={"default"}>
-                  <RyogoIcon icon={Plus} size="sm" />
-                  <span className={headerButtonClassName}>
-                    <CaptionGrey>{t("NewBooking")}</CaptionGrey>
-                  </span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent className={headerTooltipClassName}>
-                {t("NewBooking")}
-              </TooltipContent>
-            </Tooltip>
+            <HeaderButton label={t("NewBooking")} icon={Plus} />
           </Link>
         )}
         {props.pathName !== "/dashboard/action-center" && (
           <Link href="/dashboard/action-center">
-            <Tooltip disableHoverableContent>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size={"default"}>
-                  <span className={headerButtonClassName}>
-                    <CaptionGrey>{t("ActionCenter")}</CaptionGrey>
-                  </span>
-                  <RyogoIcon icon={Target} size="sm" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent className={headerTooltipClassName}>
-                {t("ActionCenter")}
-              </TooltipContent>
-            </Tooltip>
+            <HeaderButton label={t("ActionCenter")} icon={Target} />
           </Link>
         )}
-      </div>
-    </div>
+      </HeaderRightWrapper>
+    </HeaderWrapper>
   )
 }

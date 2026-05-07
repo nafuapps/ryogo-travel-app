@@ -1,4 +1,9 @@
-import { Caption, H5Grey, PBold, SmallGrey } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoH4,
+  RyogoP,
+  RyogoSmall,
+} from "@/components/typography"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -23,8 +28,8 @@ export default async function OngoingBookingsComponent({
     <SectionWrapper id="OngoingBookingsSection">
       <SectionHeaderWrapper>
         <RyogoIcon icon={Route} size="sm" />
-        <SmallGrey>{t("Title")}</SmallGrey>
-        <H5Grey>{ongoingTrips.length}</H5Grey>
+        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
+        <RyogoH4 color="slate"> {ongoingTrips.length}</RyogoH4>
       </SectionHeaderWrapper>
       {ongoingTrips.map((trip) => (
         <OngoingComponent key={trip.bookingId} {...trip} />
@@ -38,16 +43,16 @@ function OngoingComponent(props: NonNullable<FindOngoingTripsType>[number]) {
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.bookingId}</Caption>
-          <PBold>{props.customerName}</PBold>
+          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.type.toUpperCase()}</Caption>
-          <PBold>{props.route}</PBold>
+          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.vehicle}</Caption>
-          <PBold>{props.driver}</PBold>
+          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
         </GridItemWrapper>
         {props.status && (
           <GridItemWrapper>

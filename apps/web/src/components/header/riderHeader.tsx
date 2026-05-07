@@ -1,24 +1,16 @@
 "use client"
 
 import {
-  headerButtonClassName,
-  headerClassName,
-  headerLeftClassName,
-  headerRightClassName,
-  headerTooltipClassName,
-} from "@/components/header/headerCommon"
-import { CaptionGrey, H5 } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+  HeaderLeftWrapper,
+  HeaderRightWrapper,
+  HeaderWrapper,
+} from "@/components/header/headerWrappers"
+import { RyogoH4 } from "@/components/typography"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { Target } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import HeaderButton from "./headerButton"
 
 export default function RiderHeader({ pathName }: { pathName: string }) {
   const t = useTranslations("Rider.Header")
@@ -29,28 +21,16 @@ export default function RiderHeader({ pathName }: { pathName: string }) {
   const title = t(titleKey)
 
   return (
-    <div id="RiderHeader" className={headerClassName}>
-      <div id="HeaderLeft" className={headerLeftClassName}>
+    <HeaderWrapper>
+      <HeaderLeftWrapper>
         <SidebarTrigger />
-        <H5>{title}</H5>
-      </div>
-      <div id="HeaderRight" className={headerRightClassName}>
+        <RyogoH4>{title}</RyogoH4>
+      </HeaderLeftWrapper>
+      <HeaderRightWrapper>
         <Link href="/rider/myActions">
-          <Tooltip disableHoverableContent>
-            <TooltipTrigger asChild>
-              <Button variant="outline" size={"default"}>
-                <span className={headerButtonClassName}>
-                  <CaptionGrey>{t("ActionCenter")}</CaptionGrey>
-                </span>
-                <RyogoIcon icon={Target} size="sm" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent className={headerTooltipClassName}>
-              {t("ActionCenter")}
-            </TooltipContent>
-          </Tooltip>
+          <HeaderButton label={t("ActionCenter")} icon={Target} />
         </Link>
-      </div>
-    </div>
+      </HeaderRightWrapper>
+    </HeaderWrapper>
   )
 }

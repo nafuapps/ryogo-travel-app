@@ -1,6 +1,6 @@
 import { FindDriverCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "@/components/header/driverDetailHeaderTabs"
-import { Caption, CaptionGrey, PBold } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import { format } from "date-fns"
@@ -32,7 +32,7 @@ export default async function DriverCompletedBookingsPageComponent({
             <CompletedBookingComponent key={trip.bookingId} {...trip} />
           ))
         ) : (
-          <CaptionGrey>{t("NoBookings")}</CaptionGrey>
+          <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         )}
       </div>
     </PageWrapper>
@@ -46,20 +46,25 @@ function CompletedBookingComponent(
     <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
       <GridWrapper>
         <GridItemWrapper>
-          <Caption>{props.bookingId}</Caption>
-          <PBold>{props.customerName}</PBold>
+          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.type.toUpperCase()}</Caption>
-          <PBold>{props.route}</PBold>
+          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{props.vehicle}</Caption>
-          <PBold>{props.driver}</PBold>
+          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
+          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <Caption>{format(props.updatedAt, "PP")}</Caption>
-          <PBold>{moment(props.updatedAt).fromNow()}</PBold>
+          <RyogoCaption color="slate">
+            {format(props.updatedAt, "PP")}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {" "}
+            {moment(props.updatedAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </GridWrapper>
     </Link>

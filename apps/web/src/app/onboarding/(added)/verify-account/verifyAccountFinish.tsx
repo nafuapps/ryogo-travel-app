@@ -1,4 +1,4 @@
-import { H3, H5, P, CaptionGrey } from "@/components/typography"
+import { RyogoH3, RyogoH4, RyogoP, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepContent,
@@ -15,12 +15,12 @@ export function VerifyAccountFinish() {
     <OnboardingStepForm formId="Step2Form">
       <OnboardingStepContent contentId="Step2Content">
         <OnboardingSuccessIcon iconId="Step2Icon" />
-        <H3>{t("Title")}</H3>
-        <H5>{t("Subtitle")}</H5>
+        <RyogoH3>{t("Title")}</RyogoH3>
+        <RyogoH4>{t("Subtitle")}</RyogoH4>
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step2Actions">
-        <P>{t("Description1")}</P>
-        <CaptionGrey>{t("Description2")}</CaptionGrey>
+        <RyogoP>{t("Description1")}</RyogoP>
+        <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
         <OnboardingStepPrimaryAction disabled={false}>
           <Link href="/onboarding/add-vehicle">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>

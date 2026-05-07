@@ -1,4 +1,4 @@
-import { Caption, H2 } from "@/components/typography"
+import { RyogoCaption, RyogoH2 } from "@/components/typography"
 
 export function AssignTileWrapper({
   selected,
@@ -103,8 +103,8 @@ export function RyoGoScoreWrapper({
                 : "bg-sky-300"
       }`}
     >
-      <Caption>{label}</Caption>
-      <H2>{totalScore.toFixed(0)}</H2>
+      <RyogoCaption color="slate">{label}</RyogoCaption>
+      <RyogoH2>{totalScore.toFixed(0)}</RyogoH2>
     </div>
   )
 }

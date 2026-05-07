@@ -1,6 +1,6 @@
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "@/components/header/driverDetailHeaderTabs"
-import { PBold, Caption, CaptionGrey } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -67,24 +67,24 @@ async function DriverLeaveComponent({
   return (
     <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
       <GridItemWrapper>
-        <PBold>
+        <RyogoP weight="font-bold">
           {moment(leave.startDate).format("DD MMM") +
             " - " +
             moment(leave.endDate).format("DD MMM")}
-        </PBold>
+        </RyogoP>
       </GridItemWrapper>
       <GridItemWrapper>
-        <Caption>{leave.addedByUser.name}</Caption>
-        <CaptionGrey>{leave.remarks}</CaptionGrey>
+        <RyogoCaption color="slate">{leave.addedByUser.name}</RyogoCaption>
+        <RyogoCaption color="light">{leave.remarks}</RyogoCaption>
       </GridItemWrapper>
       <GridItemWrapper>
         {leave.isCompleted ? (
           <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-slate-100">
-            <CaptionGrey>{t("Completed")}</CaptionGrey>
+            <RyogoCaption color="light">{t("Completed")}</RyogoCaption>
           </div>
         ) : (
           <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-amber-100">
-            <CaptionGrey>{t("Pending")}</CaptionGrey>
+            <RyogoCaption color="light">{t("Pending")}</RyogoCaption>
           </div>
         )}
       </GridItemWrapper>
@@ -95,7 +95,7 @@ async function DriverLeaveComponent({
           >
             <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
               <div className="hidden lg:flex">
-                <CaptionGrey>{t("Edit")}</CaptionGrey>
+                <RyogoCaption color="light">{t("Edit")}</RyogoCaption>
               </div>
               <RyogoIcon icon={Pencil} size="sm" />
             </div>

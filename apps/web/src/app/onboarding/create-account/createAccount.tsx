@@ -4,7 +4,7 @@
 import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import { CaptionGrey, H2 } from "@/components/typography"
+import { RyogoCaption, RyogoH2 } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import { CreateAccountFinish } from "./createAccountFinish"
 import { CreateAccountStep1 } from "./createAccountStep1"
@@ -106,18 +106,18 @@ export default function CreateAccountPageComponent({
         {currentStepIndex < CreateAccountTotalSteps && (
           <OnboardingStepHeader headerId="CreateAccountHeader">
             <OnboardingStepHeaderTopLine>
-              <H2>{t("Title")}</H2>
+              <RyogoH2>{t("Title")}</RyogoH2>
             </OnboardingStepHeaderTopLine>
             <StepsTracker
               total={CreateAccountTotalSteps}
               current={currentStepIndex}
             />
-            <CaptionGrey>
+            <RyogoCaption color="light">
               {t("Description", {
                 step: currentStepIndex + 1,
                 total: CreateAccountTotalSteps,
               })}
-            </CaptionGrey>
+            </RyogoCaption>
           </OnboardingStepHeader>
         )}
         {steps[currentStepIndex]}

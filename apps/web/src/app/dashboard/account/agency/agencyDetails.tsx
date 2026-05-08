@@ -16,7 +16,7 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 //TODO: Add subscription link when subscription is implemented
 

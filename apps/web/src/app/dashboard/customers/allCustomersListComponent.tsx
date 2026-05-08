@@ -27,7 +27,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 const CUSTOMERS_PER_PAGE = 20
 

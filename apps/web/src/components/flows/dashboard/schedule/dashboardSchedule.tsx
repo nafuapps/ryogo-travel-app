@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/popover"
 import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export enum SelectableDays {
   SEVEN = "7Days",

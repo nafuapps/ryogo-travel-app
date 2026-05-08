@@ -4,14 +4,15 @@ import { RyogoP, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { LeaveStatusPill } from "@/components/statusPills/statusPills"
+import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 
 //TODO: User can mark driver has gone on leave
 
@@ -65,7 +66,7 @@ async function DriverLeaveComponent({
 
   const canModify = isOwner || userId === leave.addedByUserId
   return (
-    <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
+    <GridWrapper>
       <GridItemWrapper>
         <RyogoP weight="font-bold">
           {moment(leave.startDate).format("DD MMM") +
@@ -78,30 +79,20 @@ async function DriverLeaveComponent({
         <RyogoCaption color="light">{leave.remarks}</RyogoCaption>
       </GridItemWrapper>
       <GridItemWrapper>
-        {leave.isCompleted ? (
-          <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-slate-100">
-            <RyogoCaption color="light">{t("Completed")}</RyogoCaption>
-          </div>
-        ) : (
-          <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-amber-100">
-            <RyogoCaption color="light">{t("Pending")}</RyogoCaption>
-          </div>
-        )}
+        <LeaveStatusPill
+          status={leave.isCompleted ? t("Completed") : t("Pending")}
+          completed={leave.isCompleted}
+        />
       </GridItemWrapper>
       <GridItemWrapper>
         {canModify && (
           <Link
             href={`/dashboard/drivers/${leave.driverId}/leaves/modify/${leave.id}`}
           >
-            <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-              <div className="hidden lg:flex">
-                <RyogoCaption color="light">{t("Edit")}</RyogoCaption>
-              </div>
-              <RyogoIcon icon={Pencil} size="sm" />
-            </div>
+            <RyogoIconButton label={t("Edit")} />
           </Link>
         )}
       </GridItemWrapper>
-    </div>
+    </GridWrapper>
   )
 }

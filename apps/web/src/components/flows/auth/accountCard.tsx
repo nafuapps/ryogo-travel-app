@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export const AccountCard = ({
   account,

@@ -44,7 +44,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 type NewBookingStep2Props = {
   onNext: () => void
@@ -271,7 +271,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
         <NewFormContentWrapper>
           <RyogoSmall weight="font-bold">{t("Field8.Title")}</RyogoSmall>
           <SectionRowWrapper>
-            <TripType
+            <TripTypeSelectionCard
               type={BookingTypeEnum.OneWay}
               onClick={() => {
                 setSelectedTripType(BookingTypeEnum.OneWay)
@@ -282,7 +282,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               title={t("Field8.OneWay")}
               desc={t("Field8.OneWayDesc")}
             />
-            <TripType
+            <TripTypeSelectionCard
               type={BookingTypeEnum.Round}
               onClick={() => {
                 setSelectedTripType(BookingTypeEnum.Round)
@@ -293,7 +293,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               desc={t("Field8.RoundTripDesc")}
             />
 
-            <TripType
+            <TripTypeSelectionCard
               type={BookingTypeEnum.MultiDay}
               onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
               selected={selectedTripType === BookingTypeEnum.MultiDay}
@@ -357,7 +357,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
   )
 }
 
-function TripType({
+function TripTypeSelectionCard({
   type,
   onClick,
   selected,

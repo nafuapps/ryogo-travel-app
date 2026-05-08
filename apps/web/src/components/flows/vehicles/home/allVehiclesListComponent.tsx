@@ -22,7 +22,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function AllVehiclesListComponent({
   agencyId,
@@ -84,7 +84,6 @@ async function AllVehiclesItemComponent({
             {vehicle.odometerReading + t("Km")}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
           </RyogoP>
         </GridItemWrapper>

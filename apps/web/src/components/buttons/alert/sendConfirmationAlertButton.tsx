@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { differenceInMinutes } from "date-fns"
 import { sendConfirmationAction } from "@/app/actions/bookings/sendConfirmationAction"
 import { MessageSquareShare } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 const SEND_CONFIRMATION_TIMEOUT_MINUTES = 60
 
@@ -67,7 +68,7 @@ export default function SendConfirmationAlertButton(
       labelChild={
         <Button variant={"outline"} disabled={!canSendConfirmation}>
           {t("Label")}
-          <MessageSquareShare className="size-4 text-slate-700" />
+          <RyogoIcon icon={MessageSquareShare} size="sm" />
         </Button>
       }
     >

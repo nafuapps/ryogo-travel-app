@@ -24,7 +24,7 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 
 export default async function CustomerDetailsPageComponent({

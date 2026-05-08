@@ -20,7 +20,7 @@ import {
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   getOverlapScore,

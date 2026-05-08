@@ -24,7 +24,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function UsersPageComponent({
   agencyId,
@@ -58,7 +58,7 @@ export default async function UsersPageComponent({
           <RyogoH4 color="slate"> {agents.length}</RyogoH4>
           <Link href={`/dashboard/users/new`} className="ml-auto">
             <Button variant={"outline"}>
-              <Plus className="size-4 md:size-5 text-slate-700" />
+              <RyogoIcon icon={Plus} size="sm" />
               {t("Agents.AddAgent")}
             </Button>
           </Link>
@@ -74,7 +74,7 @@ export default async function UsersPageComponent({
           <RyogoH4 color="slate"> {drivers.length}</RyogoH4>
           <Link href={`/dashboard/drivers/new`} className="ml-auto">
             <Button variant={"outline"}>
-              <Plus className="size-4 md:size-5 text-slate-700" />
+              <RyogoIcon icon={Plus} size="sm" />
               {t("Drivers.AddDriver")}
             </Button>
           </Link>
@@ -115,7 +115,6 @@ async function AllUsersItemComponent({
         <GridItemWrapper>
           <RyogoCaption color="slate">{user.email}</RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(user.createdAt).format("DD MMM YYYY")}
           </RyogoP>
         </GridItemWrapper>

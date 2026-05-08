@@ -19,7 +19,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function OnTripDriversComponent({
   agencyId,
@@ -59,7 +59,6 @@ function OnTripDriverComponent(props: FindDriversOnTripType[number]) {
           <RyogoCaption color="slate">{booking.id}</RyogoCaption>
           {booking.assignedVehicle && (
             <RyogoP weight="font-bold">
-              {" "}
               {booking.assignedVehicle.vehicleNumber}
             </RyogoP>
           )}

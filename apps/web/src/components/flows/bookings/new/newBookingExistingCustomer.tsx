@@ -4,7 +4,7 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { UserCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function ExistingCutomerCard({
   existingCustomer,

@@ -1,5 +1,5 @@
 import { Star } from "lucide-react"
-import { RyogoIcon } from "@/components//icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoP, RyogoSmall } from "@/components/typography"
 
 export default function RyogoRatingDisplay({

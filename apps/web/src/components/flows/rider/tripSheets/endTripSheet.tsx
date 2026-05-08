@@ -28,7 +28,6 @@ import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { endTripAction } from "@/app/actions/bookings/endTripAction"
 import Link from "next/link"
-import { UrlObject } from "url"
 
 const TOTAL_STARS = 5
 
@@ -180,11 +179,7 @@ export default function EndTripSheet({
           <Button type="submit" disabled={isPending} form="endTrip">
             {isPending ? t("Loading") : t("End")}
           </Button>
-          <Link
-            href={
-              `/rider/myBookings/${booking.id}/add-expense` as unknown as UrlObject
-            }
-          >
+          <Link href={`/rider/myBookings/${booking.id}/add-expense`}>
             <Button
               type="button"
               variant={"secondary"}

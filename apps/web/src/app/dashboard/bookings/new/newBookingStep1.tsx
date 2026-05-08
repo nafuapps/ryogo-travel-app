@@ -16,7 +16,7 @@ import stateCityData from "@/lib/states_cities.json"
 import { Info } from "lucide-react"
 import { PhoneRegex } from "@/lib/regex"
 import { Alert } from "@/components/ui/alert"
-import ExistingCutomerCard from "@/components/flows/bookings/newBookingExistingCustomer"
+import ExistingCutomerCard from "@/components/flows/bookings/new/newBookingExistingCustomer"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import {
   getArrayValueDisplayPairs,
@@ -31,7 +31,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 type NewBookingStep1Props = {
   onNext: () => void

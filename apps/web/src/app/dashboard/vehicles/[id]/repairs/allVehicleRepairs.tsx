@@ -3,16 +3,18 @@ import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicl
 import { getTranslations } from "next-intl/server"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import Link from "next/link"
-import { UrlObject } from "url"
-import { Pencil, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RepairStatusPill } from "@/components/statusPills/statusPills"
+import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 //TODO: User can mark vehicle has gone for repair
 
@@ -38,7 +40,7 @@ export default async function AllVehicleRepairsPageComponent({
           className="w-full md:w-1/2 self-center"
         >
           <Button variant={"outline"} className="w-full">
-            <Plus className="size-4 md:size-5 text-slate-700" />
+            <RyogoIcon icon={Plus} size="sm" />
             {t("AddRepair")}
           </Button>
         </Link>
@@ -68,7 +70,7 @@ async function VehicleRepairComponent({
 
   const canModify = isOwner || userId === repair.addedByUserId
   return (
-    <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4">
+    <GridWrapper>
       <GridItemWrapper>
         <RyogoP weight="font-bold">
           {moment(repair.startDate).format("DD MMM") +
@@ -84,32 +86,20 @@ async function VehicleRepairComponent({
         <RyogoCaption color="light">{repair.remarks}</RyogoCaption>
       </GridItemWrapper>
       <GridItemWrapper>
-        {repair.isCompleted ? (
-          <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-slate-100">
-            <RyogoCaption color="light">{t("Completed")}</RyogoCaption>
-          </div>
-        ) : (
-          <div className="flex py-2 px-3 lg:py-3 lg:px-4 rounded-full bg-amber-100">
-            <RyogoCaption color="light">{t("Pending")}</RyogoCaption>
-          </div>
-        )}
+        <RepairStatusPill
+          status={repair.isCompleted ? t("Completed") : t("Pending")}
+          completed={repair.isCompleted}
+        />
       </GridItemWrapper>
       <GridItemWrapper>
         {canModify && (
           <Link
-            href={
-              `/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}` as unknown as UrlObject
-            }
+            href={`/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}`}
           >
-            <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-              <div className="hidden lg:flex">
-                <RyogoCaption color="light">{t("Edit")}</RyogoCaption>
-              </div>
-              <RyogoIcon icon={Pencil} size="sm" />
-            </div>
+            <RyogoIconButton label={t("Edit")} />
           </Link>
         )}
       </GridItemWrapper>
-    </div>
+    </GridWrapper>
   )
 }

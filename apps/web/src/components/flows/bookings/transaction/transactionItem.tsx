@@ -1,15 +1,15 @@
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
-import { Maximize2, Minimize2, Pencil } from "lucide-react"
+import { Maximize2, Minimize2 } from "lucide-react"
 import { format } from "date-fns"
-import { UrlObject } from "url"
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 
 export default async function TransactionItem({
   transaction,
@@ -83,16 +83,9 @@ export default async function TransactionItem({
             )}
             {canModifyTransaction && (
               <Link
-                href={
-                  `/dashboard/bookings/${id}/transactions/modify/${txnId}` as unknown as UrlObject
-                }
+                href={`/dashboard/bookings/${id}/transactions/modify/${txnId}`}
               >
-                <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-                  <div className="hidden lg:flex">
-                    <RyogoCaption color="light">{t("Modify")}</RyogoCaption>
-                  </div>
-                  <RyogoIcon icon={Pencil} size="sm" />
-                </div>
+                <RyogoIconButton label={t("Modify")} />
               </Link>
             )}
           </div>

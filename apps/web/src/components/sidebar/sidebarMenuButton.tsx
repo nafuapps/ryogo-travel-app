@@ -8,7 +8,7 @@ import { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { UrlObject } from "url"
 import { useSidebar } from "@/components/ui/sidebar"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 type MenuButtonProps = {
   title: string

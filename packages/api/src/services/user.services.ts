@@ -419,18 +419,17 @@ export const userServices = {
 
   //Reset user password (by owner - user details flow)
   async resetUserPassword(userId: string) {
-    //Step1: get email
-    const emailFound = await userRepository.readUserById(userId)
+    const user = await userRepository.readUserById(userId)
     // If no user found, cannot reset password
-    if (!emailFound) {
+    if (!user) {
       return
     }
 
-    //Step1: Generate a new password
+    //Generate a new password
     const newPassword = generateNewPassword()
     console.log(newPassword)
 
-    //Step3: Store new password in DB
+    //Store new password in DB
     const passwordHash = await generatePasswordHash(newPassword)
     const newUserData = await userRepository.updatePassword(
       userId,
@@ -440,7 +439,7 @@ export const userServices = {
       return
     }
 
-    //Return user details for reset password confirmation
+    //Return user details for reset password confirmation mail
     return {
       id: newUserData[0].id,
       name: newUserData[0].name,

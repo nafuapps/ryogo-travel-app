@@ -1,4 +1,4 @@
-import { RyogoIcon, RyogoIconSize } from "@/components/icons/RyogoIcon"
+import { RyogoIcon, RyogoIconSize } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { LucideIcon } from "lucide-react"
 

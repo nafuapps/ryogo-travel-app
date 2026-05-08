@@ -21,7 +21,7 @@ import {
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   getOverlapScore,

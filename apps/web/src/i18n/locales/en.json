@@ -2777,7 +2777,9 @@
     "MyBookings": {
       "Ongoing": "Ongoing booking",
       "Upcoming": "Upcoming bookings",
-      "Completed": "Completed bookings"
+      "Completed": "Completed bookings",
+      "Continue": "Continue",
+      "Start": "Start Trip"
     },
     "MyBooking": {
       "BookingInfo": "BOOKING INFO",
@@ -2788,7 +2790,7 @@
       "From": "From",
       "To": "To",
       "Distance": "City Distance",
-      "TotalDistance": "Total Distance",
+      "TotalDistance": "Estimated Total Distance",
       "StartDate": "Start Date",
       "EndDate": "End Date",
       "StartTime": "Start Time",
@@ -3059,7 +3061,7 @@
         "Success": "Password updated successfully",
         "APIError": "Password does not match.. please try again"
       },
-      "LastLogin": "Last login at {loginTime}"
+      "LastLogin": "Logged in since {loginTime}"
     },
     "MyProfileAgency": {
       "BasicInfo": "Basic info",

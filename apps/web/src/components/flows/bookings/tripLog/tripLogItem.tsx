@@ -13,7 +13,7 @@ import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/book
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function TripLogItem({
   tripLog,

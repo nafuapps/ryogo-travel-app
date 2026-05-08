@@ -79,7 +79,7 @@ export function AuthFormWrapper<T extends FieldValues>({
         onSubmit={onSubmit}
         className="flex flex-col gap-3 md:gap-4"
       >
-        {children}{" "}
+        {children}
       </form>
     </Form>
   )

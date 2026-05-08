@@ -28,7 +28,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function UpcomingBookingsItemComponent({
   upcomingBookings7Days,
@@ -105,7 +105,6 @@ function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
             <RyogoP color="red">{moment(combinedDateTime).fromNow()}</RyogoP>
           ) : (
             <RyogoP weight="font-bold">
-              {" "}
               {moment(combinedDateTime).fromNow()}
             </RyogoP>
           )}

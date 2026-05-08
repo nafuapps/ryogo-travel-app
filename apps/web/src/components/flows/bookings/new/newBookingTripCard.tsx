@@ -43,7 +43,6 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
           className="flex flex-col gap-1 lg:gap-1.5 items-end text-end"
         >
           <RyogoP weight="font-bold">
-            {" "}
             {props.tripDestinationLocationCity}
           </RyogoP>
           <RyogoCaption color="light">

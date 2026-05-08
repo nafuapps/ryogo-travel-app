@@ -6,12 +6,12 @@ import {
 } from "@ryogo-travel-app/api/services/driver.services"
 import { getTranslations } from "next-intl/server"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
+import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import {
-  CompletedBookingComponent,
-  OngoingBookingComponent,
-  UpcomingBookingComponent,
-} from "@/components/flows/rider/riderBookingCommon"
-import { PageWrapper } from "@/components/page/pageWrappers"
+  CompletedBookingCard,
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/cards/booking/bookingCards"
 
 export default async function RiderMyBookingsPageComponent({
   assignedBookings,
@@ -37,37 +37,43 @@ export default async function RiderMyBookingsPageComponent({
   return (
     <PageWrapper id="RiderMyBookingsPage">
       {currentBooking && (
-        <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
+        <SectionWrapper id="RiderOngoingBooking">
           <RyogoSmall>{t("Ongoing")}</RyogoSmall>
-          <OngoingBookingComponent booking={currentBooking} />
-        </div>
+          <OngoingBookingCard
+            booking={currentBooking}
+            rider
+            startLabel={t("Continue")}
+          />
+        </SectionWrapper>
       )}
       {upcomingBookings.length > 0 && (
-        <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
+        <SectionWrapper id="RiderUpcomingBookings">
           <RyogoSmall>{t("Upcoming")}</RyogoSmall>
           {upcomingBookings.map((b, i) => {
             return (
-              <UpcomingBookingComponent
+              <UpcomingBookingCard
                 key={b.bookingId}
                 booking={b}
+                rider
                 canStart={
                   driver.status === DriverStatusEnum.AVAILABLE &&
                   !currentBooking &&
                   b.startDate <= new Date() &&
                   i === 0
                 }
+                startLabel={t("Start")}
               />
             )
           })}
-        </div>
+        </SectionWrapper>
       )}
       {completedBookings.length > 0 && (
-        <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
+        <SectionWrapper id="RiderCompletedBookings">
           <RyogoSmall>{t("Completed")}</RyogoSmall>
           {completedBookings.map((b) => {
-            return <CompletedBookingComponent key={b.bookingId} booking={b} />
+            return <CompletedBookingCard key={b.bookingId} booking={b} rider />
           })}
-        </div>
+        </SectionWrapper>
       )}
     </PageWrapper>
   )

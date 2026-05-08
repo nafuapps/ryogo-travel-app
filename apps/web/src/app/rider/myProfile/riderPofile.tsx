@@ -18,7 +18,7 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function RiderProfilePageComponent({
   driverDetails,
@@ -59,6 +59,8 @@ export default async function RiderProfilePageComponent({
             <DriverStatusPill status={driverDetails.status} />
           </SectionColWrapper>
         </SectionRowWrapper>
+      </SectionWrapper>
+      <SectionWrapper id="RiderAccountActions">
         <ChangeUserNameSheet
           userId={driverDetails.userId}
           userName={driverDetails.user.name}

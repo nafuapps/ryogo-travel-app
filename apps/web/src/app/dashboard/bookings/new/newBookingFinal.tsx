@@ -22,7 +22,7 @@ import { toast } from "sonner"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
-import NewBookingTripCard from "@/components/flows/bookings/newBookingTripCard"
+import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
 import { getEstimatedTotalPrice } from "@/lib/utils"
@@ -38,7 +38,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 type NewBookingFinalProps = {
   onPrev: () => void

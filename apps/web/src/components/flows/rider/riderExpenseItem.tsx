@@ -1,14 +1,12 @@
 import { RyogoCaption, RyogoSmall, RyogoH3 } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Pencil } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { format } from "date-fns"
-import { UrlObject } from "url"
 import Link from "next/link"
 import getExpenseIcon from "@/components/icons/expenseIcon"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 
 export default async function RiderExpenseItem({
   expense,
@@ -55,16 +53,9 @@ export default async function RiderExpenseItem({
           </div>
           {canModifyExpense && (
             <Link
-              href={
-                `/rider/myBookings/${bookingId}/modify-expense/${expense.id}` as unknown as UrlObject
-              }
+              href={`/rider/myBookings/${bookingId}/modify-expense/${expense.id}`}
             >
-              <div className="flex p-3 lg:pl-4 lg:gap-1 rounded-lg bg-slate-200 justify-center items-center hover:bg-slate-300 lg:cursor-pointer transition">
-                <div className="hidden lg:flex">
-                  <RyogoCaption color="light">{t("Modify")}</RyogoCaption>
-                </div>
-                <RyogoIcon icon={Pencil} size="sm" />
-              </div>
+              <RyogoIconButton label={t("Modify")} />
             </Link>
           )}
         </div>

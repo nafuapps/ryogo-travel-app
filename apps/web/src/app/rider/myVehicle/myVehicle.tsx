@@ -1,4 +1,3 @@
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import {
@@ -8,15 +7,9 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
-import {
-  RyogoH3,
-  RyogoP,
-  RyogoSmall,
-  RyogoCaption,
-} from "@/components/typography"
+import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Star } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 

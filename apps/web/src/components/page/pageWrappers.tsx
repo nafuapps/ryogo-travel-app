@@ -113,9 +113,19 @@ export function SectionHeaderWrapper({
   )
 }
 
-export function GridWrapper({ children }: { children: React.ReactNode }) {
+export function GridWrapper({
+  children,
+  hasChin,
+  highlight,
+}: {
+  children: React.ReactNode
+  hasChin?: boolean
+  highlight?: boolean
+}) {
   return (
-    <div className="grid border border-slate-100 rounded-lg grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4 hover:bg-slate-100">
+    <div
+      className={`grid ${highlight ? "bg-slate-900 hover:bg-slate-800" : "border border-slate-100 hover:bg-slate-100"} ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
+    >
       {children}
     </div>
   )
@@ -124,6 +134,14 @@ export function GridWrapper({ children }: { children: React.ReactNode }) {
 export function GridItemWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5 lg:gap-1 items-start sm:items-center justify-center">
+      {children}
+    </div>
+  )
+}
+
+export function StickyWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 sticky mt-auto shadow border-t-slate-200 bottom-0">
       {children}
     </div>
   )

@@ -10,6 +10,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { differenceInMinutes } from "date-fns"
 import { MessageSquareShare } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 const SEND_INVOICE_TIMEOUT_MINUTES = 60
 
@@ -67,7 +68,7 @@ export default function SendInvoiceAlertButton(
       labelChild={
         <Button variant={"outline"} disabled={!canSendInvoice}>
           {t("Label")}
-          <MessageSquareShare className="size-4 text-slate-700" />
+          <RyogoIcon icon={MessageSquareShare} size="sm" />
         </Button>
       }
     >

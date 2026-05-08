@@ -1,6 +1,6 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import { BookingCommonInfo } from "@/components/flows/rider/riderBookingCommon"
+import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
 import { RyogoSmall } from "@/components/typography"
 import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
 import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
@@ -17,7 +17,7 @@ export default async function RiderMyCompletedBookingPageComponent({
 
   return (
     <PageWrapper id="RiderCompletedBookingPage">
-      <BookingCommonInfo booking={booking} canCallCustomer={false} />
+      <RiderMyBookingDetails booking={booking} canCallCustomer={false} />
       <SectionWrapper id="CompletedBookingTripLogs">
         <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
         {booking.tripLogs.map((t) => {

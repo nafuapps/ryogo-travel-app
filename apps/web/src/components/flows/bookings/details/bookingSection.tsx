@@ -1,9 +1,10 @@
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoSmall } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { LucideIcon } from "lucide-react"
 
 export default function BookingSection({
-  icon: Icon,
+  icon,
   sectionTitle,
   children,
 }: {
@@ -14,7 +15,7 @@ export default function BookingSection({
   return (
     <div className="flex flex-col gap-2 lg:gap-3 rounded-lg bg-white p-4 lg:p-5">
       <div className="flex gap-1.5 lg:gap-2 items-center">
-        <Icon className="size-4 lg:size-5 text-slate-700" />
+        <RyogoIcon icon={icon} size="sm" />
         <RyogoSmall weight="font-bold">{sectionTitle}</RyogoSmall>
       </div>
       <Separator />

@@ -32,7 +32,7 @@ export function NewVehicleStep4(props: {
   const step4Schema = z.object({
     defaultRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(1, t("Field1.Error2"))
+      .min(0, t("Field1.Error2"))
       .max(100, t("Field1.Error3"))
       .positive(t("Field1.Error4"))
       .multipleOf(1, t("Field1.Error5"))

@@ -165,3 +165,21 @@ export function TripLogStatusPill(props: TripLogStatusPillProps) {
 
   return <StatusPill status={props.status.toUpperCase()} bgColor={bgColor} />
 }
+
+interface LeaveStatusPillProps {
+  status: string
+  completed: boolean
+}
+export function LeaveStatusPill(props: LeaveStatusPillProps) {
+  let bgColor = props.completed ? "bg-green-200" : "bg-yellow-200"
+  return <StatusPill status={props.status} bgColor={bgColor} />
+}
+
+interface RepairStatusPillProps {
+  status: string
+  completed: boolean
+}
+export function RepairStatusPill(props: RepairStatusPillProps) {
+  let bgColor = props.completed ? "bg-green-200" : "bg-yellow-200"
+  return <StatusPill status={props.status} bgColor={bgColor} />
+}

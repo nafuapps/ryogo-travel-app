@@ -1,6 +1,6 @@
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { ArrowRightFromLine, ArrowRightLeft, Waypoints } from "lucide-react"
-import { RyogoIcon, RyogoIconSize } from "./RyogoIcon"
+import { RyogoIcon, RyogoIconSize } from "./ryogoIcon"
 
 export default function getTripIcon(
   tripType: BookingTypeEnum,

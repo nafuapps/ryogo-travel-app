@@ -19,7 +19,7 @@ import {
   metricItem2ClassName,
 } from "./dashboardMetricsCommons"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function DashboardVehicleMetricsComponent({
   agencyId,

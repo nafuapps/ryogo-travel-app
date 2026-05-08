@@ -6,7 +6,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { RyogoCaption } from "@/components/typography"
 import { LucideIcon } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function HeaderButton({
   label,

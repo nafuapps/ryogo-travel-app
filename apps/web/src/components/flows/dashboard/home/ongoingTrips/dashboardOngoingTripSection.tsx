@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
 import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function DashboardOngoingTripSection({
   agencyId,

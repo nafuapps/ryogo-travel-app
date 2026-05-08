@@ -25,7 +25,6 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 
 //TODO: Add vehicle schedule chart
@@ -90,7 +89,7 @@ export default async function VehicleDetailsPageComponent({
       <SectionWrapper id="PolicyInfo">
         <RyogoSmall weight="font-bold">{t("PolicyInfo")}</RyogoSmall>
         <SectionRowWrapper>
-          <div className="flex flex-col gap-1 lg:gap-1.5">
+          <SectionColWrapper small>
             <RyogoSmall color="slate">{t("Insurance")}</RyogoSmall>
             {vehicle.insuranceExpiresOn &&
             vehicle.insuranceExpiresOn < new Date() ? (
@@ -104,7 +103,7 @@ export default async function VehicleDetailsPageComponent({
                   moment(vehicle.insuranceExpiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             )}
-          </div>
+          </SectionColWrapper>
           {vehicle.insurancePhotoUrl && (
             <RyogoDialogImage
               src={getFileUrl(vehicle.insurancePhotoUrl)}
@@ -113,7 +112,7 @@ export default async function VehicleDetailsPageComponent({
           )}
         </SectionRowWrapper>
         <SectionRowWrapper>
-          <div className="flex flex-col gap-1 lg:gap-1.5">
+          <SectionColWrapper small>
             <RyogoSmall color="slate">{t("PUC")}</RyogoSmall>
             {vehicle.pucExpiresOn && vehicle.pucExpiresOn < new Date() ? (
               <RyogoCaption color="red">
@@ -126,7 +125,7 @@ export default async function VehicleDetailsPageComponent({
                   moment(vehicle.pucExpiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             )}
-          </div>
+          </SectionColWrapper>
           {vehicle.pucPhotoUrl && (
             <RyogoDialogImage
               src={getFileUrl(vehicle.pucPhotoUrl)}
@@ -135,7 +134,7 @@ export default async function VehicleDetailsPageComponent({
           )}
         </SectionRowWrapper>
         <SectionRowWrapper>
-          <div className="flex flex-col gap-1 lg:gap-1.5">
+          <SectionColWrapper small>
             <RyogoSmall color="slate">{t("RC")}</RyogoSmall>
             {vehicle.rcExpiresOn && vehicle.rcExpiresOn < new Date() ? (
               <RyogoCaption color="red">
@@ -148,7 +147,7 @@ export default async function VehicleDetailsPageComponent({
                   moment(vehicle.rcExpiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             )}
-          </div>
+          </SectionColWrapper>
           {vehicle.rcPhotoUrl && (
             <RyogoDialogImage
               src={getFileUrl(vehicle.rcPhotoUrl)}
@@ -165,13 +164,12 @@ export default async function VehicleDetailsPageComponent({
               {t("ACCharge", { ac: vehicle.defaultAcChargePerDay })}
             </RyogoCaption>
           )}
-          <RyogoP weight="font-bold">
-            {" "}
+          <RyogoSmall>
             {t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
-          </RyogoP>
+          </RyogoSmall>
         </SectionColWrapper>
       </SectionWrapper>
-      <SectionColWrapper>
+      <SectionWrapper id="VehiclActions">
         <Link href={`/dashboard/vehicles/${vehicle.id}/modify`}>
           <Button variant={"outline"} className="w-full">
             {t("EditDetails")}
@@ -190,7 +188,7 @@ export default async function VehicleDetailsPageComponent({
             agencyId={vehicle.agencyId}
           />
         )}
-      </SectionColWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

@@ -1,6 +1,6 @@
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Truck, Bus, Car, Motorbike, Tractor, LucideIcon } from "lucide-react"
-import { RyogoIcon, RyogoIconSize } from "./RyogoIcon"
+import { RyogoIcon, RyogoIconSize } from "./ryogoIcon"
 
 export default function getVehicleIcon(
   vehicleType: VehicleTypesEnum,

@@ -4,11 +4,11 @@ import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { FindDriverActivityByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
-import { UrlObject } from "url"
 import {
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function DriverActivityPageComponent({
@@ -22,26 +22,25 @@ export default async function DriverActivityPageComponent({
 
   const expenses = activities.expenses
   const tripLogs = activities.tripLogs
-  const className =
-    "flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
+
   return (
     <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {expenses.length > 0 && (
-        <div id="ExpensesActivityList" className={className}>
+        <SectionWrapper id="ExpensesActivityList">
           <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
           {expenses.map((expense) => {
             return <ExpenseActivityComponent key={expense.id} {...expense} />
           })}
-        </div>
+        </SectionWrapper>
       )}
       {tripLogs.length > 0 && (
-        <div id="TripLogsActivityList" className={className}>
+        <SectionWrapper id="TripLogsActivityList">
           <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
           {tripLogs.map((tripLog) => {
             return <TripLogActivityComponent key={tripLog.id} {...tripLog} />
           })}
-        </div>
+        </SectionWrapper>
       )}
     </PageWrapper>
   )
@@ -51,9 +50,7 @@ function ExpenseActivityComponent(
 ) {
   return (
     <Link
-      href={
-        `/dashboard/bookings/${expense.bookingId}/expenses` as unknown as UrlObject
-      }
+      href={`/dashboard/bookings/${expense.bookingId}/expenses`}
       className="w-full"
     >
       <GridWrapper>
@@ -70,7 +67,6 @@ function ExpenseActivityComponent(
         <GridItemWrapper>
           <RyogoCaption color="slate">{expense.bookingId}</RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(expense.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
@@ -84,9 +80,7 @@ function TripLogActivityComponent(
 ) {
   return (
     <Link
-      href={
-        `/dashboard/bookings/${tripLog.bookingId}/tripLogs` as unknown as UrlObject
-      }
+      href={`/dashboard/bookings/${tripLog.bookingId}/trip-logs`}
       className="w-full"
     >
       <GridWrapper>
@@ -106,7 +100,6 @@ function TripLogActivityComponent(
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(tripLog.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>

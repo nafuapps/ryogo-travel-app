@@ -4,11 +4,11 @@ import moment from "moment"
 import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
-import { UrlObject } from "url"
 import {
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function UserActivityPageComponent({
@@ -27,21 +27,19 @@ export default async function UserActivityPageComponent({
   const driverLeaves = activities.driverLeaves
   const vehicleRepairs = activities.vehicleRepairs
 
-  const className =
-    "flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
   return (
     <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {bookings.length > 0 && (
-        <div id="BookingActivityList" className={className}>
+        <SectionWrapper id="BookingActivityList">
           <RyogoSmall weight="font-bold">{t("Bookings")}</RyogoSmall>
           {bookings.map((booking) => {
             return <BookingActivityComponent key={booking.id} {...booking} />
           })}
-        </div>
+        </SectionWrapper>
       )}
       {transactions.length > 0 && (
-        <div id="TransactionsActivityList" className={className}>
+        <SectionWrapper id="TransactionsActivityList">
           <RyogoSmall weight="font-bold">{t("Transactions")}</RyogoSmall>
           {transactions.map((transaction) => {
             return (
@@ -51,26 +49,26 @@ export default async function UserActivityPageComponent({
               />
             )
           })}
-        </div>
+        </SectionWrapper>
       )}
       {expenses.length > 0 && (
-        <div id="ExpensesActivityList" className={className}>
+        <SectionWrapper id="ExpensesActivityList">
           <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
           {expenses.map((expense) => {
             return <ExpenseActivityComponent key={expense.id} {...expense} />
           })}
-        </div>
+        </SectionWrapper>
       )}
       {customers.length > 0 && (
-        <div id="CustomersActivityList" className={className}>
+        <SectionWrapper id="CustomersActivityList">
           <RyogoSmall weight="font-bold">{t("Customers")}</RyogoSmall>
           {customers.map((customer) => {
             return <CustomerActivityComponent key={customer.id} {...customer} />
           })}
-        </div>
+        </SectionWrapper>
       )}
       {driverLeaves.length > 0 && (
-        <div id="DriverLeavesActivityList" className={className}>
+        <SectionWrapper id="DriverLeavesActivityList">
           <RyogoSmall weight="font-bold">{t("DriverLeaves")}</RyogoSmall>
           {driverLeaves.map((driverLeave) => {
             return (
@@ -80,10 +78,10 @@ export default async function UserActivityPageComponent({
               />
             )
           })}
-        </div>
+        </SectionWrapper>
       )}
       {vehicleRepairs.length > 0 && (
-        <div id="VehicleRepairsActivityList" className={className}>
+        <SectionWrapper id="VehicleRepairsActivityList">
           <RyogoSmall weight="font-bold">{t("VehicleRepairs")}</RyogoSmall>
           {vehicleRepairs.map((vehicleRepair) => {
             return (
@@ -93,7 +91,7 @@ export default async function UserActivityPageComponent({
               />
             )
           })}
-        </div>
+        </SectionWrapper>
       )}
     </PageWrapper>
   )
@@ -122,7 +120,6 @@ function BookingActivityComponent(
             {booking.assignedVehicle?.vehicleNumber ?? "-"}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {booking.assignedDriver?.name ?? "-"}
           </RyogoP>
         </GridItemWrapper>
@@ -131,7 +128,6 @@ function BookingActivityComponent(
             {booking.status.toUpperCase()}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(booking.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
@@ -145,9 +141,7 @@ function TransactionActivityComponent(
 ) {
   return (
     <Link
-      href={
-        `/dashboard/bookings/${transaction.bookingId}/transactions` as unknown as UrlObject
-      }
+      href={`/dashboard/bookings/${transaction.bookingId}/transactions`}
       className="w-full"
     >
       <GridWrapper>
@@ -168,7 +162,6 @@ function TransactionActivityComponent(
         <GridItemWrapper>
           <RyogoCaption color="slate">{transaction.bookingId}</RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(transaction.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
@@ -182,9 +175,7 @@ function ExpenseActivityComponent(
 ) {
   return (
     <Link
-      href={
-        `/dashboard/bookings/${expense.bookingId}/expenses` as unknown as UrlObject
-      }
+      href={`/dashboard/bookings/${expense.bookingId}/expenses`}
       className="w-full"
     >
       <GridWrapper>
@@ -201,7 +192,6 @@ function ExpenseActivityComponent(
         <GridItemWrapper>
           <RyogoCaption color="slate">{expense.bookingId}</RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(expense.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
@@ -231,7 +221,6 @@ function CustomerActivityComponent(
         <GridItemWrapper>
           <RyogoCaption color="slate">{customer.status}</RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(customer.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
@@ -255,7 +244,6 @@ async function DriverLeaveActivityComponent(
             {moment(driverLeave.startDate).format("DD MMM")}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(driverLeave.endDate).format("DD MMM")}
           </RyogoP>
         </GridItemWrapper>
@@ -270,7 +258,6 @@ async function DriverLeaveActivityComponent(
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(driverLeave.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
@@ -294,13 +281,11 @@ async function VehicleRepairActivityComponent(
             {moment(vehicleRepair.startDate).format("DD MMM")}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(vehicleRepair.endDate).format("DD MMM")}
           </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoP weight="font-bold">
-            {" "}
             {vehicleRepair.vehicle.vehicleNumber}
           </RyogoP>
         </GridItemWrapper>
@@ -312,7 +297,6 @@ async function VehicleRepairActivityComponent(
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(vehicleRepair.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>

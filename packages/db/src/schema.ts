@@ -343,10 +343,13 @@ export const vehicles = pgTable(
       sql`${t.customerRatings} IS NULL OR ${t.customerRatings} <@ ARRAY[1,2,3,4,5]::int[]`,
     ),
     check(
-      "rate per km > 0 and < 100",
-      sql`${t.defaultRatePerKm} > 0 AND ${t.defaultRatePerKm} < 100`,
+      "rate per km >= 0 and < 100",
+      sql`${t.defaultRatePerKm} >= 0 AND ${t.defaultRatePerKm} < 100`,
     ),
-    check("ac charge < 10000", sql`${t.defaultAcChargePerDay} < 10000`),
+    check(
+      "ac charge >= 0 and < 10000",
+      sql`${t.defaultAcChargePerDay} >= 0 AND ${t.defaultAcChargePerDay} < 10000`,
+    ),
     index("vehicles_agency_idx").on(t.agencyId), // to quickly filter all vehicles in an agency
     index("vehicles_agency_status_idx").on(t.status, t.agencyId), // to quickly filter vehicles by status in an agency
     index("vehicles_agency_type_idx").on(t.type, t.agencyId), // to quickly filter vehicles by type in an agency

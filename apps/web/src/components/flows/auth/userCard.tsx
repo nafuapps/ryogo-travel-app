@@ -9,23 +9,20 @@ export const UserCard = ({
   user: NonNullable<FindUserDetailsByIdType>
 }) => {
   return (
-    <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between bg-sky-50 rounded-lg p-3 lg:p-4">
-      <div className="flex flex-col justify-between gap-1 lg:gap-2">
-        <div className="flex items-center gap-2 lg:gap-3">
-          {user.photoUrl && (
-            <RyogoImage
-              src={getFileUrl(user.photoUrl)}
-              alt={"Account Photo"}
-              imageSize="xs"
-            />
-          )}
-          <RyogoSmall>{user.name}</RyogoSmall>
-        </div>
-        <RyogoCaption color="light">{user.phone}</RyogoCaption>
+    <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-50 rounded-lg p-3 lg:p-4">
+      <div className="flex items-center gap-2 lg:gap-3">
+        {user.photoUrl && (
+          <RyogoImage
+            src={getFileUrl(user.photoUrl)}
+            alt={"Account Photo"}
+            imageSize="xs"
+          />
+        )}
+        <RyogoSmall>{user.name}</RyogoSmall>
       </div>
       <div className="flex flex-col justify-between gap-2 lg:gap-3 items-end">
         <div className="flex rounded-full bg-slate-200 px-2 py-1 lg:px-2.5 lg:py-1.5">
-          <RyogoCaption color="light">
+          <RyogoCaption color="slate">
             {user.userRole.toUpperCase()}
           </RyogoCaption>
         </div>

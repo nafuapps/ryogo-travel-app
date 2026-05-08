@@ -26,7 +26,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function LeadBookingsItemComponent({
   leadBookings7Days,
@@ -105,7 +105,6 @@ function LeadBookingsComponent(
             {props.passengers + " " + t("Passengers")}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(props.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>

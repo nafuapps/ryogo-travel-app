@@ -1,10 +1,14 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
-import { BookingCommonInfo } from "@/components/flows/rider/riderBookingCommon"
+import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
 import { RyogoSmall } from "@/components/typography"
 import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
-import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionWrapper,
+  PageWrapper,
+  StickyWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function RiderMyUpcomingBookingPageComponent({
   booking,
@@ -17,7 +21,7 @@ export default async function RiderMyUpcomingBookingPageComponent({
 
   return (
     <PageWrapper id="RiderUpcomingBookingPage">
-      <BookingCommonInfo booking={booking} canCallCustomer={canStartTrip} />
+      <RiderMyBookingDetails booking={booking} canCallCustomer={canStartTrip} />
       {booking.expenses.length > 0 && (
         <SectionWrapper id="UpcomingBookingExpenses">
           <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
@@ -34,12 +38,9 @@ export default async function RiderMyUpcomingBookingPageComponent({
         </SectionWrapper>
       )}
       {canStartTrip && (
-        <div
-          id="UpcomingBookingAction"
-          className="sticky bottom-1 lg:bottom-2 w-full bg-white p-1 lg:p-1.5 rounded-lg "
-        >
+        <StickyWrapper>
           <StartTripSheet booking={booking} />
-        </div>
+        </StickyWrapper>
       )}
     </PageWrapper>
   )

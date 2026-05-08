@@ -8,11 +8,10 @@ import {
   CalendarX,
   Check,
   CheckCheck,
-  LucideIcon,
 } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   getExpiryScore,
@@ -28,6 +27,7 @@ import {
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
+import { IconsList } from "@/components/tags/IconsList"
 
 export default function AssignDriverTile({
   driverData,
@@ -124,7 +124,9 @@ export default function AssignDriverTile({
             icon={BadgeIndianRupee}
             text={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
           />
-          <IconsTag icons={getCanDriveIcons(driverData.canDriveVehicleTypes)} />
+          <IconsList
+            icons={getCanDriveIcons(driverData.canDriveVehicleTypes)}
+          />
         </AssignTileFooterWrapper>
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
@@ -151,16 +153,6 @@ export default function AssignDriverTile({
         </AssignTileStatusWrapper>
       </AssignTileScoreWrapper>
     </AssignTileWrapper>
-  )
-}
-
-export function IconsTag(props: { icons: LucideIcon[] }) {
-  return (
-    <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
-      {props.icons.map((Icon, index) => {
-        return <RyogoIcon key={index} icon={Icon} size="sm" />
-      })}
-    </div>
   )
 }
 

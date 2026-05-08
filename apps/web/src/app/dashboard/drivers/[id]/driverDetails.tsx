@@ -8,7 +8,7 @@ import {
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Star, User } from "lucide-react"
+import { User } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -17,7 +17,7 @@ import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriver
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import ChangeDriverPhotoSheet from "@/components/sheets/changeDriverPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
-import getVehicleIcon from "@/components/icons/vehicleIcon"
+import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,
   PageWrapper,
@@ -25,8 +25,9 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import { IconsList } from "@/components/tags/IconsList"
 
 //TODO: Add driver schedule chart
 
@@ -79,8 +80,8 @@ export default async function DriverDetailsPageComponent({
       </SectionWrapper>
       <SectionWrapper id="LicenseInfo">
         <RyogoSmall weight="font-bold">{t("LicenseInfo")}</RyogoSmall>
-        <SectionColWrapper>
-          <div className="flex flex-col gap-1 lg:gap-1.5">
+        <SectionRowWrapper>
+          <SectionColWrapper small>
             <RyogoSmall color="slate">{driver.licenseNumber}</RyogoSmall>
             {driver.licenseExpiresOn && driver.licenseExpiresOn < new Date() ? (
               <RyogoCaption color="red">
@@ -93,14 +94,14 @@ export default async function DriverDetailsPageComponent({
                   moment(driver.licenseExpiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             )}
-          </div>
+          </SectionColWrapper>
           {driver.licensePhotoUrl && (
             <RyogoDialogImage
               src={getFileUrl(driver.licensePhotoUrl)}
               alt={t("LicensePhoto")}
             />
           )}
-        </SectionColWrapper>
+        </SectionRowWrapper>
       </SectionWrapper>
       <SectionWrapper id="AgencyInfo">
         <RyogoSmall weight="font-bold">{t("AgencyInfo")}</RyogoSmall>
@@ -109,14 +110,10 @@ export default async function DriverDetailsPageComponent({
           <RyogoP weight="font-bold">
             {t("PerDay", { allowance: driver.defaultAllowancePerDay })}
           </RyogoP>
-          <div className="flex flex-row gap-1 lg:gap-1.5">
-            {driver.canDriveVehicleTypes.map((v) => {
-              return getVehicleIcon(v)
-            })}
-          </div>
+          <IconsList icons={getCanDriveIcons(driver.canDriveVehicleTypes)} />
         </SectionColWrapper>
       </SectionWrapper>
-      <SectionColWrapper>
+      <SectionWrapper id="DriverActions">
         <Link href={`/dashboard/drivers/${driver.id}/modify`}>
           <Button variant={"outline"} className="w-full">
             {t("EditDetails")}
@@ -136,7 +133,7 @@ export default async function DriverDetailsPageComponent({
             agencyId={driver.agencyId}
           />
         )}
-      </SectionColWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

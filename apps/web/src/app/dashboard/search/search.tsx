@@ -31,7 +31,9 @@ import {
   DriverStatusPill,
   VehicleStatusPill,
 } from "@/components/statusPills/statusPills"
-import getVehicleIcon from "@/components/icons/vehicleIcon"
+import getVehicleIcon, {
+  getCanDriveIcons,
+} from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,
   GridItemWrapper,
@@ -39,7 +41,8 @@ import {
   PageWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { IconsList } from "@/components/tags/IconsList"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -483,11 +486,7 @@ function DriverSearchResultItem({
           <RyogoSmall>{driver.name}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
-          <div className="flex flex-row gap-1 lg:gap-1.5">
-            {driver.canDriveVehicleTypes.map((v) => {
-              return getVehicleIcon(v)
-            })}
-          </div>
+          <IconsList icons={getCanDriveIcons(driver.canDriveVehicleTypes)} />
           <RyogoCaption color="slate">{driver.address}</RyogoCaption>
           <RyogoCaption color="light">{driver.licenseNumber}</RyogoCaption>
         </GridItemWrapper>

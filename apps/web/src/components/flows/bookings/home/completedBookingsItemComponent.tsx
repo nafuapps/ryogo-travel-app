@@ -27,7 +27,7 @@ import {
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function CompletedBookingsItemComponent({
   completedBookings7Days,
@@ -100,7 +100,6 @@ function CompletedComponent(
             {format(props.updatedAt, "PP")}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {" "}
             {moment(props.updatedAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>

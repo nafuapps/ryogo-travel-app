@@ -13,7 +13,7 @@ import {
   Pin,
 } from "lucide-react"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function RiderTripLogItem({
   tripLog,

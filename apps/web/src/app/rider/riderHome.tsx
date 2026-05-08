@@ -5,11 +5,11 @@ import {
 import { RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import {
-  OngoingBookingComponent,
-  UpcomingBookingComponent,
-} from "@/components/flows/rider/riderBookingCommon"
 import { PageWrapper } from "@/components/page/pageWrappers"
+import {
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/cards/booking/bookingCards"
 
 /**
  * TODO: Show important actions
@@ -43,22 +43,28 @@ export default async function RiderHomePageComponent({
       ) : (
         <>
           {currentBooking && (
-            <OngoingBookingComponent booking={currentBooking} />
+            <OngoingBookingCard
+              booking={currentBooking}
+              rider
+              startLabel={t("Continue")}
+            />
           )}
           {upcomingBookings.length > 0 && (
             <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
               <RyogoSmall>{t("Upcoming")}</RyogoSmall>
               {upcomingBookings.map((b, i) => {
                 return (
-                  <UpcomingBookingComponent
+                  <UpcomingBookingCard
                     key={b.bookingId}
                     booking={b}
+                    rider
                     canStart={
                       driver.status === DriverStatusEnum.AVAILABLE &&
                       !currentBooking &&
                       b.startDate <= new Date() &&
                       i === 0
                     }
+                    startLabel={t("Start")}
                   />
                 )
               })}

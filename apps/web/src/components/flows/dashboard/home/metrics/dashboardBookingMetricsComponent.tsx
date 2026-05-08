@@ -19,7 +19,7 @@ import {
   metricItem4ClassName,
 } from "./dashboardMetricsCommons"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function DashboardBookingMetricsComponent({
   agencyId,

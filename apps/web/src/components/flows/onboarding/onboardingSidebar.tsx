@@ -10,7 +10,7 @@ import {
   CreateAccountTotalSteps,
   VerifyAccountTotalSteps,
 } from "./onboardingSteps"
-import { RyogoIcon } from "@/components/icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function OnboardingSidebar({
   currentProcess,

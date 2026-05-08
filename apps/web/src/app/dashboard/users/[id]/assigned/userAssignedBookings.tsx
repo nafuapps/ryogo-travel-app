@@ -1,18 +1,12 @@
 import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
-import moment from "moment"
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import Link from "next/link"
-import { format } from "date-fns"
+import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { FindUserAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { getCombinedDateTime } from "@/lib/utils"
-import { TripLogStatusPill } from "@/components/statusPills/statusPills"
+import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import {
-  GridItemWrapper,
-  GridWrapper,
-  PageWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/cards/booking/bookingCards"
 
 export default async function UserAssignedPageComponent({
   bookings,
@@ -33,79 +27,14 @@ export default async function UserAssignedPageComponent({
         ) : (
           <>
             {inProgressBookings.map((trip) => (
-              <OngoingBookingComponent key={trip.bookingId} {...trip} />
+              <OngoingBookingCard key={trip.bookingId} booking={trip} />
             ))}
             {assignedBookings.map((trip) => (
-              <AssignedBookingComponent key={trip.bookingId} {...trip} />
+              <UpcomingBookingCard key={trip.bookingId} booking={trip} />
             ))}
           </>
         )}
       </SectionWrapper>
     </PageWrapper>
-  )
-}
-
-function OngoingBookingComponent(
-  props: FindUserAssignedBookingsByIdType[number],
-) {
-  return (
-    <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
-      <GridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.route}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
-        </GridItemWrapper>
-        {props.status && (
-          <GridItemWrapper>
-            <TripLogStatusPill status={props.status} />
-          </GridItemWrapper>
-        )}
-      </GridWrapper>
-    </Link>
-  )
-}
-
-function AssignedBookingComponent(
-  props: FindUserAssignedBookingsByIdType[number],
-) {
-  const combinedDateTime = getCombinedDateTime(props.startDate, props.startTime)
-  return (
-    <Link href={`/dashboard/bookings/${props.bookingId}`} className="w-full">
-      <GridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.route}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {format(combinedDateTime, "dd MMM hh:mm aaa")}
-          </RyogoCaption>
-          {combinedDateTime < new Date() ? (
-            <RyogoP color="red">{moment(combinedDateTime).fromNow()}</RyogoP>
-          ) : (
-            <RyogoP weight="font-bold">
-              {" "}
-              {moment(combinedDateTime).fromNow()}
-            </RyogoP>
-          )}
-        </GridItemWrapper>
-      </GridWrapper>
-    </Link>
   )
 }

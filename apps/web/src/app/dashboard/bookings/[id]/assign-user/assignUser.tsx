@@ -4,14 +4,14 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
-import AssignUserTile from "@/components/bookings/assign/assignUserTile"
+import AssignUserTile from "@/components/flows/bookings/assign/assignUserTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
 import { RyogoSmall } from "@/components/typography"
-import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignUserPageComponent({
   bookingId,
@@ -51,7 +51,7 @@ export default function AssignUserPageComponent({
 
   return (
     <PageWrapper id="AssignUserPage">
-      <ContentWrapper id="AssignUserInfo">
+      <SectionWrapper id="AssignUserInfo">
         <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {users.map((user, index) => (
           <AssignUserTile
@@ -80,7 +80,7 @@ export default function AssignUserPageComponent({
         >
           {t("CancelCTA")}
         </Button>
-      </ContentWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

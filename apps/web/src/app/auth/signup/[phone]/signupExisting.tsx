@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
-import { AccountCard } from "@/components/auth/accountCard"
+import { AccountCard } from "@/components/flows/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -10,7 +10,7 @@ import {
   AuthAccountsWrapper,
   AuthActionWrapper,
   AuthPageWrapper,
-} from "@/components/auth/authWrappers"
+} from "@/components/flows/auth/authWrappers"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)

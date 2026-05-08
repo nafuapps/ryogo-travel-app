@@ -1,8 +1,8 @@
-import OngoingBookingsComponent from "@/components/bookings/home/ongoingBookingsComponent"
-import CompletedBookingsComponent from "@/components/bookings/home/completedBookingsComponent"
-import UpcomingBookingsComponent from "@/components/bookings/home/upcomingBookingsComponent"
-import LeadBookingsComponent from "@/components/bookings/home/leadBookingsComponent"
-import BookingScheduleComponent from "@/components/bookings/home/bookingScheduleComponent"
+import OngoingBookingsComponent from "@/components/flows/bookings/home/ongoingBookingsComponent"
+import CompletedBookingsComponent from "@/components/flows/bookings/home/completedBookingsComponent"
+import UpcomingBookingsComponent from "@/components/flows/bookings/home/upcomingBookingsComponent"
+import LeadBookingsComponent from "@/components/flows/bookings/home/leadBookingsComponent"
+import BookingScheduleComponent from "@/components/flows/bookings/home/bookingScheduleComponent"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { PageWrapper } from "@/components/page/pageWrappers"
 

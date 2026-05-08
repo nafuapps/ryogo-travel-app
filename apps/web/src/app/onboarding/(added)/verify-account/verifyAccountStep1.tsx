@@ -10,7 +10,7 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { useTransition } from "react"
 import { toast } from "sonner"

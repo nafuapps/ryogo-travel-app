@@ -17,7 +17,7 @@ import {
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"

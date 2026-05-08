@@ -2332,7 +2332,7 @@
         "APIError": "Password does not match.. please try again"
       },
       "Logout": "Logout",
-      "LastLogin": "Last login at {loginTime}"
+      "LastLogin": "Logged in since {loginTime}"
     },
     "AccountSettings": {
       "Field1": {
@@ -2355,11 +2355,11 @@
       "ValidTill": "Expires on: ",
       "EditDetails": "Edit Agency Details",
       "ChangeEmail": {
-        "Title": "Change Email",
+        "Title": "Change Agency Email",
         "Field1": {
           "Title": "Enter new business email",
           "Placeholder": "awesometours@gmail.com",
-          "Description": "Provide agency's new email to be used for communication",
+          "Description": "Provide agency's email address to be used for communication",
           "Error1": "Invalid email",
           "Error2": "Email must be less than 60 characters",
           "Error3": "New email cannot be the same as previous email",
@@ -2372,11 +2372,11 @@
         "Error": "Cannot update email.. please try again later"
       },
       "ChangePhone": {
-        "Title": "Change Phone",
+        "Title": "Change Agency Phone",
         "Field1": {
-          "Title": "Enter new phone",
+          "Title": "Enter new business phone",
           "Placeholder": "9876543210",
-          "Description": "Provide agency's new phone number for communication",
+          "Description": "Provide agency's phone number to be used for communication",
           "Error1": "Phone number must be 10 digits",
           "Error2": "New phone cannot be the same as previous phone",
           "Error3": "Another agency has already registered this phone.. try another phone number"

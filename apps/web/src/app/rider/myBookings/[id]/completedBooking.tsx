@@ -1,12 +1,12 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import { BookingCommonInfo } from "@/components/rider/riderBookingCommon"
+import { BookingCommonInfo } from "@/components/flows/rider/riderBookingCommon"
 import { RyogoSmall } from "@/components/typography"
-import RiderExpenseItem from "@/components/rider/riderExpenseItem"
-import RiderTripLogItem from "@/components/rider/riderTripLogItem"
+import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
+import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyCompletedBookingPageComponent({
   booking,
@@ -18,14 +18,14 @@ export default async function RiderMyCompletedBookingPageComponent({
   return (
     <PageWrapper id="RiderCompletedBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={false} />
-      <ContentWrapper id="CompletedBookingTripLogs">
+      <SectionWrapper id="CompletedBookingTripLogs">
         <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
         {booking.tripLogs.map((t) => {
           return <RiderTripLogItem key={t.id} tripLog={t} />
         })}
-      </ContentWrapper>
+      </SectionWrapper>
       {booking.expenses.length > 0 && (
-        <ContentWrapper id="CompletedBookingExpenses">
+        <SectionWrapper id="CompletedBookingExpenses">
           <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
           {booking.expenses.map((e) => {
             return (
@@ -37,7 +37,7 @@ export default async function RiderMyCompletedBookingPageComponent({
               />
             )
           })}
-        </ContentWrapper>
+        </SectionWrapper>
       )}
       <Link href="/rider/myBookings">
         <Button variant="default" className="w-full">

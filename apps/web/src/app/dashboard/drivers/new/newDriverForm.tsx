@@ -72,9 +72,5 @@ export default function NewDriverForm(props: NewDriverFormProps) {
     />,
   ])
 
-  return (
-    <div id="newDriverForm" className="flex flex-col gap-4 w-full h-full">
-      {steps[currentStepIndex]}
-    </div>
-  )
+  return steps[currentStepIndex]
 }

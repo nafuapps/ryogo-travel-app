@@ -4,14 +4,14 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
-import AssignDriverTile from "@/components/bookings/assign/assignDriverTile"
+import AssignDriverTile from "@/components/flows/bookings/assign/assignDriverTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
 import { RyogoSmall } from "@/components/typography"
-import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignDriverPageComponent({
   bookingId,
@@ -56,7 +56,7 @@ export default function AssignDriverPageComponent({
 
   return (
     <PageWrapper id="AssignDriverPage">
-      <ContentWrapper id="AssignDriverInfo">
+      <SectionWrapper id="AssignDriverInfo">
         <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {drivers.map((driver, index) => (
           <AssignDriverTile
@@ -93,7 +93,7 @@ export default function AssignDriverPageComponent({
         >
           {t("CancelCTA")}
         </Button>
-      </ContentWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

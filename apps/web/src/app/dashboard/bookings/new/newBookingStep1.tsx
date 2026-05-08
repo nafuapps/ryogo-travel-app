@@ -16,23 +16,22 @@ import stateCityData from "@/lib/states_cities.json"
 import { Info } from "lucide-react"
 import { PhoneRegex } from "@/lib/regex"
 import { Alert } from "@/components/ui/alert"
-import ExistingCutomerCard from "@/components/bookings/newBookingExistingCustomer"
+import ExistingCutomerCard from "@/components/flows/bookings/newBookingExistingCustomer"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
-} from "@/components/page/pageWrappers"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
-import {
   NewFormWrapper,
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 type NewBookingStep1Props = {
   onNext: () => void
@@ -158,7 +157,6 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
             size={"lg"}
             type="button"
             onClick={findCustomer}
-            className="flex flex-row justify-center items-center gap-4 w-full"
           >
             {t("FindCTA")}
           </Button>
@@ -169,7 +167,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
         {customerNotFound && (
           <NewFormContentWrapper>
             <Alert>
-              <Info className="size-4 lg:size-5 text-amber-300" />
+              <RyogoIcon icon={Info} color="yellow" size="sm" />
               <RyogoSmall>{t("CustomerNotFound")}</RyogoSmall>
             </Alert>
             <RyogoInput

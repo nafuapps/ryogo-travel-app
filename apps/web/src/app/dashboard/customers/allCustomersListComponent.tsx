@@ -78,7 +78,7 @@ export default function AllCustomersListComponent({
         <RyogoH4 color="slate"> {allCustomers.length}</RyogoH4>
         <Link href={`/dashboard/customers/new`} className="ml-auto">
           <Button variant={"outline"}>
-            <Plus className="size-4 md:size-5 text-slate-700" />
+            <RyogoIcon icon={Plus} size="sm" />
             {t("AddCustomer")}
           </Button>
         </Link>

@@ -1,5 +1,5 @@
-import Footer from "@/components/landing/footer"
-import Navbar from "@/components/landing/nav"
+import Footer from "@/components/flows/landing/footer"
+import Navbar from "@/components/flows/landing/nav"
 
 const resources = [
   {

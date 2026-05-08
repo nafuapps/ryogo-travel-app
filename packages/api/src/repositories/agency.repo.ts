@@ -15,6 +15,11 @@ export const agencyRepository = {
   //get agencies by phone
   async readAgenciesByPhone(phone: string) {
     return db.query.agencies.findMany({
+      columns: {
+        id: true,
+        businessPhone: true,
+        businessEmail: true,
+      },
       where: eq(agencies.businessPhone, phone),
     })
   },
@@ -22,6 +27,11 @@ export const agencyRepository = {
   //get agencies by email
   async readAgenciesByEmail(email: string) {
     return db.query.agencies.findMany({
+      columns: {
+        id: true,
+        businessPhone: true,
+        businessEmail: true,
+      },
       where: eq(agencies.businessEmail, email),
     })
   },

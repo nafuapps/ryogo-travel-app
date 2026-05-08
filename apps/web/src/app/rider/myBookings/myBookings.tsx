@@ -10,7 +10,7 @@ import {
   CompletedBookingComponent,
   OngoingBookingComponent,
   UpcomingBookingComponent,
-} from "@/components/rider/riderBookingCommon"
+} from "@/components/flows/rider/riderBookingCommon"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyBookingsPageComponent({

@@ -1,8 +1,8 @@
-import DashboardBookingMetricsComponent from "@/components/dashboard/home/metrics/dashboardBookingMetricsComponent"
-import DashboardDriverMetricsComponent from "@/components/dashboard/home/metrics/dashboardDriverMetricsComponent"
-import DashboardRevenueMetricsComponent from "@/components/dashboard/home/metrics/dashboardRevenueMetricComponent"
-import DashboardVehicleMetricsComponent from "@/components/dashboard/home/metrics/dashboardVehicleMetricsComponent"
-import DashboardOngoingTripSection from "@/components/dashboard/home/ongoingTrips/dashboardOngoingTripSection"
+import DashboardBookingMetricsComponent from "@/components/flows/dashboard/home/metrics/dashboardBookingMetricsComponent"
+import DashboardDriverMetricsComponent from "@/components/flows/dashboard/home/metrics/dashboardDriverMetricsComponent"
+import DashboardRevenueMetricsComponent from "@/components/flows/dashboard/home/metrics/dashboardRevenueMetricComponent"
+import DashboardVehicleMetricsComponent from "@/components/flows/dashboard/home/metrics/dashboardVehicleMetricsComponent"
+import DashboardOngoingTripSection from "@/components/flows/dashboard/home/ongoingTrips/dashboardOngoingTripSection"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 /*

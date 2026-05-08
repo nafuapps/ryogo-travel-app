@@ -1,14 +1,13 @@
-import { linkClassName } from "@/components/page/pageCommons"
 import { Button } from "@/components/ui/button"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import Link from "next/link"
 import moment from "moment"
 import { format } from "date-fns"
-import CancelBookingAlertButton from "@/components/buttons/cancelBookingAlertButton"
-import SendQuoteAlertButton from "@/components/buttons/sendQuoteAlertButton"
-import BookingItem from "@/components/bookings/details/bookingItem"
-import BookingSection from "@/components/bookings/details/bookingSection"
-import BookingPriceItem from "@/components/bookings/details/bookingPriceItem"
+import CancelBookingAlertButton from "@/components/buttons/alert/cancelBookingAlertButton"
+import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
+import BookingItem from "@/components/flows/bookings/details/bookingItem"
+import BookingSection from "@/components/flows/bookings/details/bookingSection"
+import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
 import {
   BriefcaseBusiness,
   CalendarCheck,
@@ -20,6 +19,7 @@ import {
 import { getTranslations } from "next-intl/server"
 import ConfirmBookingForm from "./confirmBookingForm"
 import { PageWrapper } from "@/components/page/pageWrappers"
+import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 
 export default async function ConfirmBookingPageComponent({
   booking,
@@ -34,10 +34,7 @@ export default async function ConfirmBookingPageComponent({
 
   return (
     <PageWrapper id="ConfirmBookingPage">
-      <div
-        id="ConfirmBookingInfo"
-        className="grid gap-3 md:gap-4 grid-cols-1 lg:grid-cols-2"
-      >
+      <BookingGrid>
         <BookingSection
           sectionTitle={t("BookingInfo")}
           icon={BriefcaseBusiness}
@@ -59,7 +56,7 @@ export default async function ConfirmBookingPageComponent({
             <Button variant={"outline"}>
               <Link
                 href={`/dashboard/bookings/${booking.id}/assign-user`}
-                className={linkClassName}
+                className={"w-full"}
               >
                 {t("AssignAgent")}
               </Link>
@@ -111,7 +108,7 @@ export default async function ConfirmBookingPageComponent({
           <Button variant={"outline"}>
             <Link
               href={`/dashboard/customers/${booking.customer.id}`}
-              className={linkClassName}
+              className={"w-full"}
             >
               {t("ViewCustomerDetails")}
             </Link>
@@ -160,7 +157,7 @@ export default async function ConfirmBookingPageComponent({
           <Button variant={booking.assignedVehicle ? "secondary" : "outline"}>
             <Link
               href={`/dashboard/bookings/${booking.id}/assign-vehicle`}
-              className={linkClassName}
+              className={"w-full"}
             >
               {booking.assignedVehicle
                 ? t("ChangeVehicle")
@@ -174,7 +171,7 @@ export default async function ConfirmBookingPageComponent({
           <Button variant={booking.assignedDriver ? "secondary" : "outline"}>
             <Link
               href={`/dashboard/bookings/${booking.id}/assign-driver`}
-              className={linkClassName}
+              className={"w-full"}
             >
               {booking.assignedDriver ? t("ChangeDriver") : t("AssignDriver")}
             </Link>
@@ -220,7 +217,7 @@ export default async function ConfirmBookingPageComponent({
           )}
         </BookingSection>
         {/* <LeadPDFViewer booking={booking} /> */}
-      </div>
+      </BookingGrid>
     </PageWrapper>
   )
 }

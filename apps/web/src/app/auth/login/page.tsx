@@ -9,7 +9,7 @@ import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import {
   AuthFooterWrapper,
   AuthSectionWrapper,
-} from "@/components/auth/authWrappers"
+} from "@/components/flows/auth/authWrappers"
 
 export const metadata: Metadata = {
   title: `Login - ${pageTitle}`,

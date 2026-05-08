@@ -19,7 +19,7 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"

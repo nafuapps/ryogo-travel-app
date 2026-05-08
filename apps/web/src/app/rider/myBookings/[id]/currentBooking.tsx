@@ -3,20 +3,20 @@ import { getTranslations } from "next-intl/server"
 import {
   BookingCommonInfo,
   getNextStep,
-} from "@/components/rider/riderBookingCommon"
+} from "@/components/flows/rider/riderBookingCommon"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import StartTripSheet from "@/components/rider/tripSheets/startTripSheet"
-import EndTripSheet from "@/components/rider/tripSheets/endTripSheet"
-import MidTripSheet from "@/components/rider/tripSheets/midTripSheet"
+import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
+import EndTripSheet from "@/components/flows/rider/tripSheets/endTripSheet"
+import MidTripSheet from "@/components/flows/rider/tripSheets/midTripSheet"
 import { RyogoSmall } from "@/components/typography"
 import { UrlObject } from "url"
-import RiderExpenseItem from "@/components/rider/riderExpenseItem"
-import RiderTripLogItem from "@/components/rider/riderTripLogItem"
+import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
+import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -35,13 +35,13 @@ export default async function RiderMyOngoingBookingPageComponent({
   return (
     <PageWrapper id="RiderCurrentBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={true} />
-      <ContentWrapper id="CurrentBookingTripLogs">
+      <SectionWrapper id="CurrentBookingTripLogs">
         <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
         {booking.tripLogs.map((t) => {
           return <RiderTripLogItem key={t.id} tripLog={t} />
         })}
-      </ContentWrapper>
-      <ContentWrapper id="CurrentBookingExpenses">
+      </SectionWrapper>
+      <SectionWrapper id="CurrentBookingExpenses">
         <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
         <Link
           href={
@@ -67,7 +67,7 @@ export default async function RiderMyOngoingBookingPageComponent({
             />
           )
         })}
-      </ContentWrapper>
+      </SectionWrapper>
       <div
         id="CurrentBookingAction"
         className="sticky bottom-1 lg:bottom-2 w-full bg-white p-1 lg:p-1.5 rounded-lg "

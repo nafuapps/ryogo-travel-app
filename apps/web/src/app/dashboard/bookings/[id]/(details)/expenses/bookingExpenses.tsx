@@ -1,11 +1,11 @@
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookindDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
+import BookindDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import ExpenseItem from "@/components/bookings/expense/expenseItem"
+import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
 import { RyogoSmall } from "@/components/typography"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingExpensesPageComponent({
   bookingId,
@@ -33,25 +33,22 @@ export default async function BookingExpensesPageComponent({
           </Button>
         </Link>
       )}
-      {bookingExpenses.length === 0 ? (
-        <div className="w-full text-center">
+      <SectionColWrapper center>
+        {bookingExpenses.length === 0 ? (
           <RyogoSmall color="slate">{t("NoExpenses")}</RyogoSmall>
-        </div>
-      ) : (
-        <div
-          id="BookingExpensesInfo"
-          className="flex flex-col gap-3 lg:gap-4 w-full"
-        >
-          {bookingExpenses.map((expense) => (
-            <ExpenseItem
-              key={expense.id}
-              expense={expense}
-              canModifyExpense={canCreateExpense}
-              canApproveExpense={canApproveExpense}
-            />
-          ))}
-        </div>
-      )}
+        ) : (
+          bookingExpenses.map((expense) => {
+            return (
+              <ExpenseItem
+                key={expense.id}
+                expense={expense}
+                canModifyExpense={canCreateExpense}
+                canApproveExpense={canApproveExpense}
+              />
+            )
+          })
+        )}
+      </SectionColWrapper>
     </PageWrapper>
   )
 }

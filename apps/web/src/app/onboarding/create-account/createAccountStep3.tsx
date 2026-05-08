@@ -17,7 +17,7 @@ import {
   OnboardingStepActions,
   OnboardingStepSecondaryAction,
   OnboardingStepPrimaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import stateCityData from "@/lib/states_cities.json"
 import { Form } from "@/components/ui/form"
 import {

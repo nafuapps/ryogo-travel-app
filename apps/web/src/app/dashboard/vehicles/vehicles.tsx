@@ -1,7 +1,7 @@
-import OnTripVehiclesComponent from "@/components/vehicles/home/onTripVehiclesComponent"
-import AllVehiclesListComponent from "@/components/vehicles/home/allVehiclesListComponent"
-import VehiclesHistoryComponent from "@/components/vehicles/home/vehiclesHistoryComponent"
-import VehiclesScheduleComponent from "@/components/vehicles/home/vehiclesScheduleComponent"
+import OnTripVehiclesComponent from "@/components/flows/vehicles/home/onTripVehiclesComponent"
+import AllVehiclesListComponent from "@/components/flows/vehicles/home/allVehiclesListComponent"
+import VehiclesHistoryComponent from "@/components/flows/vehicles/home/vehiclesHistoryComponent"
+import VehiclesScheduleComponent from "@/components/flows/vehicles/home/vehiclesScheduleComponent"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 /**

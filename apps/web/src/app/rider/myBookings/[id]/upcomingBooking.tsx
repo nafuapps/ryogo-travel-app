@@ -1,10 +1,10 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import StartTripSheet from "@/components/rider/tripSheets/startTripSheet"
-import { BookingCommonInfo } from "@/components/rider/riderBookingCommon"
+import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
+import { BookingCommonInfo } from "@/components/flows/rider/riderBookingCommon"
 import { RyogoSmall } from "@/components/typography"
-import RiderExpenseItem from "@/components/rider/riderExpenseItem"
-import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
+import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMyUpcomingBookingPageComponent({
   booking,
@@ -19,7 +19,7 @@ export default async function RiderMyUpcomingBookingPageComponent({
     <PageWrapper id="RiderUpcomingBookingPage">
       <BookingCommonInfo booking={booking} canCallCustomer={canStartTrip} />
       {booking.expenses.length > 0 && (
-        <ContentWrapper id="UpcomingBookingExpenses">
+        <SectionWrapper id="UpcomingBookingExpenses">
           <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
           {booking.expenses.map((e) => {
             return (
@@ -31,7 +31,7 @@ export default async function RiderMyUpcomingBookingPageComponent({
               />
             )
           })}
-        </ContentWrapper>
+        </SectionWrapper>
       )}
       {canStartTrip && (
         <div

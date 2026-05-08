@@ -19,17 +19,16 @@ import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
+import AssignDriverTile from "@/components/flows/bookings/assign/assignDriverTile"
+import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
 import {
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
-} from "@/components/page/pageWrappers"
-import AssignDriverTile from "@/components/bookings/assign/assignDriverTile"
-import AssignVehicleTile from "@/components/bookings/assign/assignVehicleTile"
-import {
   NewFormWrapper,
   NewFormContentWrapper,
   NewFormActionWrapper,
+  NewStepGridWrapper,
 } from "@/components/form/newFormWrappers"
 import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 
@@ -109,10 +108,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
       >
         <NewFormContentWrapper>
           <RyogoP weight="font-bold"> {t("Vehicle.Title")}</RyogoP>
-          <div
-            id="vehicleAssignment"
-            className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-          >
+          <NewStepGridWrapper>
             {props.vehicles
               .sort(
                 (a, b) => a.assignedBookings.length - b.assignedBookings.length,
@@ -129,14 +125,11 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
                   bookingNeedsAC={props.newBookingFormData.tripNeedsAC}
                 />
               ))}
-          </div>
+          </NewStepGridWrapper>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
           <RyogoP weight="font-bold"> {t("Driver.Title")}</RyogoP>
-          <div
-            id="driverAssignment"
-            className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3"
-          >
+          <NewStepGridWrapper>
             {props.drivers.map((driver, index) => (
               <AssignDriverTile
                 key={index}
@@ -148,7 +141,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
                 onClick={() => form.setValue("assignedDriverId", driver.id)}
               />
             ))}
-          </div>
+          </NewStepGridWrapper>
         </NewFormContentWrapper>
         <NewFormActionWrapper>
           <Button

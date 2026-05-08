@@ -28,23 +28,6 @@ export function PageWrapper({
   )
 }
 
-export function ContentWrapper({
-  id,
-  children,
-}: {
-  id: string
-  children: React.ReactNode
-}) {
-  return (
-    <div
-      id={id}
-      className="flex flex-col gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-    >
-      {children}
-    </div>
-  )
-}
-
 export function FormWrapper<T extends FieldValues>({
   id,
   form,
@@ -74,14 +57,44 @@ export function FormWrapper<T extends FieldValues>({
 export function SectionWrapper({
   id,
   children,
+  center,
 }: {
   id: string
   children: React.ReactNode
+  center?: boolean
 }) {
   return (
     <div
       id={id}
-      className="bg-white rounded-lg flex flex-col gap-2 lg:gap-3 p-3 lg:p-4"
+      className={`bg-white rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-2 lg:gap-3 p-3 lg:p-4`}
+    >
+      {children}
+    </div>
+  )
+}
+
+export function SectionRowWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-row gap-3 lg:gap-4 justify-between">
+      {children}
+    </div>
+  )
+}
+
+export function SectionColWrapper({
+  children,
+  small,
+  end,
+  center,
+}: {
+  children: React.ReactNode
+  small?: boolean
+  end?: boolean
+  center?: boolean
+}) {
+  return (
+    <div
+      className={`flex flex-col ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""}`}
     >
       {children}
     </div>
@@ -111,43 +124,6 @@ export function GridWrapper({ children }: { children: React.ReactNode }) {
 export function GridItemWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5 lg:gap-1 items-start sm:items-center justify-center">
-      {children}
-    </div>
-  )
-}
-
-export function NewStepWrapper({
-  id,
-  children,
-}: {
-  id: string
-  children: React.ReactNode
-}) {
-  return (
-    <div
-      id={id}
-      className="bg-white rounded-lg flex flex-col gap-2 lg:gap-3 p-3 lg:p-4"
-    >
-      {children}
-    </div>
-  )
-}
-
-export function NewStepHeaderWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return <div className="flex flex-col gap-2 lg:gap-3">{children}</div>
-}
-
-export function NewStepTitleWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-row justify-between items-end gap-2 lg:gap-3">
       {children}
     </div>
   )

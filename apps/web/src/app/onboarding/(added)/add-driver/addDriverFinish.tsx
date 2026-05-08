@@ -7,7 +7,7 @@ import {
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 

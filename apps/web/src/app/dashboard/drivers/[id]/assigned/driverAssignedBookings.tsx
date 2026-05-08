@@ -1,5 +1,5 @@
 import { FindDriverAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "@/components/header/driverDetailHeaderTabs"
+import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import moment from "moment"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import Link from "next/link"
@@ -11,6 +11,7 @@ import {
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function DriverAssignedBookingsPageComponent({
@@ -26,10 +27,7 @@ export default async function DriverAssignedBookingsPageComponent({
   return (
     <PageWrapper id="DriverAssignedBookingsPage">
       <DriverDetailHeaderTabs selectedTab={"Assigned"} id={id} />
-      <div
-        id="DriverAssignedBookingsList"
-        className="flex flex-col items-center gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <SectionWrapper center id="DriverAssignedBookingsList">
         {bookings.length === 0 ? (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (
@@ -42,7 +40,7 @@ export default async function DriverAssignedBookingsPageComponent({
             ))}
           </>
         )}
-      </div>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

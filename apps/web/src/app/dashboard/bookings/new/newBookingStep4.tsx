@@ -11,14 +11,12 @@ import StepsTracker, {
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import NewBookingTripCard from "@/components/bookings/newBookingTripCard"
+import NewBookingTripCard from "@/components/flows/bookings/newBookingTripCard"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
-} from "@/components/page/pageWrappers"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
-import {
   NewFormWrapper,
   NewFormContentWrapper,
   NewFormActionWrapper,

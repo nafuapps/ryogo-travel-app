@@ -1,5 +1,5 @@
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -8,13 +8,18 @@ import moment from "moment"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import InactivateUserAlertButton from "@/components/buttons/inactivateUserAlertButton"
-import ActivateUserAlertButton from "@/components/buttons/activateUserAlertButton"
-import ResetUserPasswordAlertButton from "@/components/buttons/resetUserPasswordAlertButton"
+import InactivateUserAlertButton from "@/components/buttons/alert/inactivateUserAlertButton"
+import ActivateUserAlertButton from "@/components/buttons/alert/activateUserAlertButton"
+import ResetUserPasswordAlertButton from "@/components/buttons/alert/resetUserPasswordAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import { UserStatusPill } from "@/components/statusPills/statusPills"
-import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  SectionColWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
@@ -28,9 +33,9 @@ export default async function UserDetailsPageComponent({
   return (
     <PageWrapper id="UserDetailsPage">
       <UserDetailHeaderTabs selectedTab={"Details"} id={user.id} />
-      <ContentWrapper id="UserDetailsInfo">
-        <div className="flex flex-row gap-3 lg:gap-4 justify-between">
-          <div className="flex flex-col gap-2 lg:gap-3">
+      <SectionWrapper id="UserDetailsInfo">
+        <SectionRowWrapper>
+          <SectionColWrapper>
             {user.photoUrl ? (
               <RyogoImage
                 src={getFileUrl(user.photoUrl)}
@@ -41,8 +46,8 @@ export default async function UserDetailsPageComponent({
               <RyogoIcon icon={User} size="xl" />
             )}
             <ChangeUserPhotoSheet userId={user.id} agencyId={user.agencyId} />
-          </div>
-          <div className="flex flex-col gap-2 lg:gap-3 items-end">
+          </SectionColWrapper>
+          <SectionColWrapper end>
             <RyogoH3>{user.name}</RyogoH3>
             <RyogoCaption color="slate">{user.phone}</RyogoCaption>
             <RyogoCaption color="slate">{user.email}</RyogoCaption>
@@ -50,9 +55,9 @@ export default async function UserDetailsPageComponent({
               {moment(user.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
             <UserStatusPill status={user.status} />
-          </div>
-        </div>
-        <div id="UserActions" className="flex flex-col gap-2 lg:gap-3">
+          </SectionColWrapper>
+        </SectionRowWrapper>
+        <SectionColWrapper>
           <ChangeUserNameSheet
             userId={user.id}
             userName={user.name}
@@ -87,8 +92,8 @@ export default async function UserDetailsPageComponent({
               role={user.userRole}
             />
           )}
-        </div>
-      </ContentWrapper>
+        </SectionColWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

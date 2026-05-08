@@ -16,10 +16,10 @@ import {
   AuthActionWrapper,
   AuthFormWrapper,
   AuthPageWrapper,
-} from "@/components/auth/authWrappers"
+} from "@/components/flows/auth/authWrappers"
 import { differenceInMinutes } from "date-fns"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { UserCard } from "@/components/auth/userCard"
+import { UserCard } from "@/components/flows/auth/userCard"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 
 const CODE_RESEND_MINUTES = 5

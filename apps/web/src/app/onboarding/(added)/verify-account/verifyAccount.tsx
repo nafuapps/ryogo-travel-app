@@ -2,7 +2,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import OnboardingSidebar from "@/components/onboarding/onboardingSidebar"
+import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { RyogoCaption, RyogoH2 } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
@@ -11,7 +11,7 @@ import {
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
   VerifyAccountTotalSteps,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import { VerifyAccountStep1 } from "./verifyAccountStep1"
 import { VerifyAccountFinish } from "./verifyAccountFinish"
 import { differenceInMinutes } from "date-fns"

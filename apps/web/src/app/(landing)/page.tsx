@@ -1,9 +1,9 @@
-import HomeHeroSection from "@/components/landing/homeHero"
-import FeaturesSection from "@/components/landing/features"
-import TestimonialsSection from "@/components/landing/testimonials"
-import HomeCTASection from "@/components/landing/homeCTA"
-import Footer from "@/components/landing/footer"
-import Navbar from "@/components/landing/nav"
+import HomeHeroSection from "@/components/flows/landing/homeHero"
+import FeaturesSection from "@/components/flows/landing/features"
+import TestimonialsSection from "@/components/flows/landing/testimonials"
+import HomeCTASection from "@/components/flows/landing/homeCTA"
+import Footer from "@/components/flows/landing/footer"
+import Navbar from "@/components/flows/landing/nav"
 
 export default async function HomePage() {
   return (

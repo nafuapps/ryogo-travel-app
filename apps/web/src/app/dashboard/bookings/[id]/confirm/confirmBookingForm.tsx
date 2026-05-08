@@ -1,7 +1,7 @@
 "use client"
 
 import { confirmBookingAction } from "@/app/actions/bookings/confirmBookingAction"
-import RyogoAlertDialog from "@/components/buttons/bookingAlertDialog"
+import RyogoAlertDialog from "@/components/buttons/alert/ryogoAlertDialog"
 import {
   RyogoTextarea,
   RyogoCheckbox,

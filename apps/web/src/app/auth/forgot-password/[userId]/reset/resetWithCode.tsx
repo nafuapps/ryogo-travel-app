@@ -15,7 +15,7 @@ import {
   AuthActionWrapper,
   AuthFormWrapper,
   AuthPageWrapper,
-} from "@/components/auth/authWrappers"
+} from "@/components/flows/auth/authWrappers"
 import { setNewPasswordAction } from "@/app/actions/users/setNewPasswordAction"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 

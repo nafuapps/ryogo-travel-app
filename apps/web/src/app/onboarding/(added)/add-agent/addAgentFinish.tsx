@@ -6,7 +6,7 @@ import {
   OnboardingStepForm,
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 

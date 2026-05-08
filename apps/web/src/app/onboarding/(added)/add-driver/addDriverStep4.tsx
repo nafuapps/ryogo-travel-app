@@ -9,7 +9,7 @@ import {
   OnboardingStepActions,
   OnboardingStepPrimaryAction,
   OnboardingStepSecondaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { RyogoH3 } from "@/components/typography"
 import ConfirmValues from "@/components/form/confirmValues"

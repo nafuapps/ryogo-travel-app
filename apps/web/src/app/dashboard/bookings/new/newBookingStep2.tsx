@@ -32,12 +32,14 @@ import {
 } from "@/lib/utils"
 import { getRouteAction } from "@/app/actions/routes/getRouteAction"
 import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
+  SectionColWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
+  NewStepHeaderWrapper,
+  NewStepTitleWrapper,
+  NewStepWrapper,
   NewFormWrapper,
   NewFormContentWrapper,
   NewFormActionWrapper,
@@ -229,10 +231,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <NewFormContentWrapper>
-          <div
-            id="tripSource"
-            className="flex flex-col w-full gap-1 lg:gap-1.5"
-          >
+          <SectionColWrapper small>
             <RyogoCombobox
               name="tripSourceLocationState"
               title={t("Field1.Title")}
@@ -249,11 +248,8 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               register={form.register("tripSourceLocationCity")}
               placeholder={t("Field2.Placeholder")}
             />
-          </div>
-          <div
-            id="tripDestination"
-            className="flex flex-col w-full gap-1 lg:gap-1.5"
-          >
+          </SectionColWrapper>
+          <SectionColWrapper small>
             <RyogoCombobox
               name="tripDestinationLocationState"
               title={t("Field3.Title")}
@@ -270,11 +266,11 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               register={form.register("tripDestinationLocationCity")}
               placeholder={t("Field4.Placeholder")}
             />
-          </div>
+          </SectionColWrapper>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
           <RyogoSmall weight="font-bold">{t("Field8.Title")}</RyogoSmall>
-          <div className="flex flex-row gap-2 lg:gap-3">
+          <SectionRowWrapper>
             <TripType
               type={BookingTypeEnum.OneWay}
               onClick={() => {
@@ -305,7 +301,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               title={t("Field8.MultiDay")}
               desc={t("Field8.MultiDayDesc")}
             />
-          </div>
+          </SectionRowWrapper>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
           <RyogoDatePicker

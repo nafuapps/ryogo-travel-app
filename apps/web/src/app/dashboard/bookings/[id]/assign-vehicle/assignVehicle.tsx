@@ -4,14 +4,14 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
-import AssignVehicleTile from "@/components/bookings/assign/assignVehicleTile"
+import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignVehicleAction } from "@/app/actions/bookings/assignVehicleAction"
 import { toast } from "sonner"
 import { RyogoSmall } from "@/components/typography"
-import { ContentWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function AssignVehiclePageComponent({
   bookingId,
@@ -56,7 +56,7 @@ export default function AssignVehiclePageComponent({
 
   return (
     <PageWrapper id="AssignVehiclePage">
-      <ContentWrapper id="AssignVehicleInfo">
+      <SectionWrapper id="AssignVehicleInfo">
         <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {vehicles.map((vehicle, index) => (
           <AssignVehicleTile
@@ -94,7 +94,7 @@ export default function AssignVehiclePageComponent({
         >
           {t("CancelCTA")}
         </Button>
-      </ContentWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

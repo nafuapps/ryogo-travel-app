@@ -1,17 +1,16 @@
-import { linkClassName } from "@/components/page/pageCommons"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookingDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
+import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import moment from "moment"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import CancelBookingAlertButton from "@/components/buttons/cancelBookingAlertButton"
-import SendInvoiceAlertButton from "@/components/buttons/sendInvoiceAlertButton"
-import BookingItem from "@/components/bookings/details/bookingItem"
-import BookingPriceItem from "@/components/bookings/details/bookingPriceItem"
-import BookingSection from "@/components/bookings/details/bookingSection"
+import CancelBookingAlertButton from "@/components/buttons/alert/cancelBookingAlertButton"
+import SendInvoiceAlertButton from "@/components/buttons/alert/sendInvoiceAlertButton"
+import BookingItem from "@/components/flows/bookings/details/bookingItem"
+import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
+import BookingSection from "@/components/flows/bookings/details/bookingSection"
 import {
   BriefcaseBusiness,
   Contact,
@@ -19,8 +18,9 @@ import {
   ReceiptIndianRupee,
   Route,
 } from "lucide-react"
-import SendConfirmationAlertButton from "@/components/buttons/sendConfirmationAlertButton"
+import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
 import { PageWrapper } from "@/components/page/pageWrappers"
+import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -36,10 +36,7 @@ export default async function BookingDetailsPageComponent({
   return (
     <PageWrapper id="BookingDetailsPage">
       <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Details" />
-      <div
-        id="BookingDetailsInfo"
-        className="grid gap-3 md:gap-4 grid-cols-1 lg:grid-cols-2"
-      >
+      <BookingGrid>
         <BookingSection
           sectionTitle={t("BookingInfo")}
           icon={BriefcaseBusiness}
@@ -60,11 +57,11 @@ export default async function BookingDetailsPageComponent({
             title={t("AssignedTo")}
             value={bookingDetails.assignedUser.name}
           />
-          {isOwner && (
+          {isOwner && bookingDetails.status !== BookingStatusEnum.CANCELLED && (
             <Button variant={"outline"}>
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
-                className={linkClassName}
+                className={"w-full"}
               >
                 {t("AssignAgent")}
               </Link>
@@ -80,7 +77,7 @@ export default async function BookingDetailsPageComponent({
                     <Button variant={"default"}>
                       <Link
                         href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}
-                        className={linkClassName}
+                        className={"w-full"}
                       >
                         {t("Reconcile")}
                       </Link>
@@ -133,21 +130,22 @@ export default async function BookingDetailsPageComponent({
           <Button variant={"outline"}>
             <Link
               href={`/dashboard/customers/${bookingDetails.customer.id}`}
-              className={linkClassName}
+              className={"w-full"}
             >
               {t("ViewCustomerDetails")}
             </Link>
           </Button>
-          {(isOwner || isAssignedUser) && (
-            <Button variant={"secondary"}>
-              <Link
-                href={`tel:${bookingDetails.customer.phone}`}
-                className={linkClassName}
-              >
-                {t("CallCustomer")}
-              </Link>
-            </Button>
-          )}
+          {(isOwner || isAssignedUser) &&
+            bookingDetails.status !== BookingStatusEnum.CANCELLED && (
+              <Button variant={"secondary"}>
+                <Link
+                  href={`tel:${bookingDetails.customer.phone}`}
+                  className={"w-full"}
+                >
+                  {t("CallCustomer")}
+                </Link>
+              </Button>
+            )}
         </BookingSection>
         <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
           <BookingItem
@@ -227,7 +225,7 @@ export default async function BookingDetailsPageComponent({
             >
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
-                className={linkClassName}
+                className={"w-full"}
               >
                 {bookingDetails.assignedVehicle
                   ? t("ChangeVehicle")
@@ -239,7 +237,7 @@ export default async function BookingDetailsPageComponent({
               <Button variant={"outline"}>
                 <Link
                   href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
-                  className={linkClassName}
+                  className={"w-full"}
                 >
                   {t("ViewVehicleDetails")}
                 </Link>
@@ -260,7 +258,7 @@ export default async function BookingDetailsPageComponent({
             >
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
-                className={linkClassName}
+                className={"w-full"}
               >
                 {bookingDetails.assignedDriver
                   ? t("ChangeDriver")
@@ -272,7 +270,7 @@ export default async function BookingDetailsPageComponent({
               <Button variant={"outline"}>
                 <Link
                   href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
-                  className={linkClassName}
+                  className={"w-full"}
                 >
                   {t("ViewDriverDetails")}
                 </Link>
@@ -338,7 +336,7 @@ export default async function BookingDetailsPageComponent({
             )}
         </BookingSection>
         {/* <InvoicePDFViewer booking={bookingDetails} /> */}
-      </div>
+      </BookingGrid>
     </PageWrapper>
   )
 }

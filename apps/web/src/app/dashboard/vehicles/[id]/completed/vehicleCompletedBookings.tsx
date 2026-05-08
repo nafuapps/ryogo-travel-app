@@ -1,5 +1,5 @@
 import { FindVehicleCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import VehicleDetailHeaderTabs from "@/components/header/vehicleDetailHeaderTabs"
+import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
@@ -9,6 +9,7 @@ import {
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function VehicleCompletedBookingsPageComponent({
@@ -23,10 +24,7 @@ export default async function VehicleCompletedBookingsPageComponent({
   return (
     <PageWrapper id="VehicleCompletedBookingsPage">
       <VehicleDetailHeaderTabs selectedTab={"Completed"} id={id} />
-      <div
-        id="VehicleCompletedBookingsList"
-        className="flex flex-col items-center gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <SectionWrapper center id="VehicleCompletedBookingsList">
         {bookings.length > 0 ? (
           bookings.map((trip) => (
             <CompletedBookingComponent key={trip.bookingId} {...trip} />
@@ -34,7 +32,7 @@ export default async function VehicleCompletedBookingsPageComponent({
         ) : (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         )}
-      </div>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

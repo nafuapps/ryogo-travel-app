@@ -6,7 +6,7 @@ import {
   OnboardingStepForm,
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 export function AddVehicleFinish() {
   const t = useTranslations("Onboarding.AddVehiclePage.Finish")

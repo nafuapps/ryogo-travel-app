@@ -1,5 +1,5 @@
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "@/components/header/driverDetailHeaderTabs"
+import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
@@ -7,7 +7,7 @@ import Link from "next/link"
 import { Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
-  ContentWrapper,
+  SectionWrapper,
   GridItemWrapper,
   PageWrapper,
 } from "@/components/page/pageWrappers"
@@ -30,7 +30,7 @@ export default async function AllDriverLeavesPageComponent({
   return (
     <PageWrapper id="DriverLeavesPage">
       <DriverDetailHeaderTabs selectedTab={"Leaves"} id={driverId} />
-      <ContentWrapper id="DriverLeavesList">
+      <SectionWrapper id="DriverLeavesList">
         <Link
           href={`/dashboard/drivers/${driverId}/leaves/new`}
           className="md:w-1/2 w-full self-center"
@@ -47,7 +47,7 @@ export default async function AllDriverLeavesPageComponent({
             userId={userId}
           />
         ))}
-      </ContentWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

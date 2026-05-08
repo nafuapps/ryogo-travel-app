@@ -1,5 +1,11 @@
-import { StyleSheet } from "@react-pdf/renderer"
-
+import { Font, StyleSheet } from "@react-pdf/renderer"
+Font.register({
+  family: "Helvetica",
+  fonts: [
+    { src: "path/to/helvetica.ttf" }, // Normal
+    { src: "path/to/helvetica-bold.ttf", fontWeight: 700 }, // Bold
+  ],
+})
 export const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
@@ -112,25 +118,24 @@ export const styles = StyleSheet.create({
   },
   h1: {
     fontSize: 24,
-    fontWeight: "font-bold",
+    fontWeight: "bold",
   },
   h2: {
     fontSize: 20,
-    fontWeight: "font-bold",
+    fontWeight: "bold",
   },
   p: {
     fontSize: 12,
   },
   pBold: {
     fontSize: 12,
-    fontWeight: "font-bold",
+    fontWeight: "bold",
   },
   caption: {
     fontSize: 10,
   },
   captionLight: {
     fontSize: 10,
-    fontWeight: "light",
     color: "#666",
   },
 })

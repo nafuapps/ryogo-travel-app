@@ -2,7 +2,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import OnboardingSidebar from "@/components/onboarding/onboardingSidebar"
+import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { RyogoCaption, RyogoH2 } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
@@ -12,7 +12,7 @@ import {
   OnboardingStepHeader,
   OnboardingStepHeaderTopLine,
   OnboardingStepPage,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import { AddAgentStep1 } from "./addAgentStep1"
 import { AddAgentFinish } from "./addAgentFinish"
 import { AddAgentConfirm } from "./addAgentStep2"

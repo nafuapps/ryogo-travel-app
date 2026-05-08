@@ -10,7 +10,7 @@ import CommandCenter from "@/components/command/commandCenter"
 import {
   LayoutSectionWrapper,
   LayoutWrapper,
-} from "@/components/bookings/layout/layoutWrappers"
+} from "@/components/layout/layoutWrappers"
 
 export default async function DashboardLayout({
   children,

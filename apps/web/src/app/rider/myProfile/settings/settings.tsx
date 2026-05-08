@@ -14,7 +14,7 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
 import { useTransition } from "react"
-import { ContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
+import { SectionWrapper, FormWrapper } from "@/components/page/pageWrappers"
 
 export default function MyProfileSettingsPageComponent({
   userDetails,
@@ -61,7 +61,7 @@ export default function MyProfileSettingsPageComponent({
 
   const languages = getEnumValueDisplayPairs(UserLangEnum)
   return (
-    <ContentWrapper id="AccountSettingsInfo">
+    <SectionWrapper id="AccountSettingsInfo">
       <FormWrapper<SchemaType>
         form={formData}
         id="ChangePreferencesForm"
@@ -94,6 +94,6 @@ export default function MyProfileSettingsPageComponent({
           {t("SecondaryCTA")}
         </Button>
       </FormWrapper>
-    </ContentWrapper>
+    </SectionWrapper>
   )
 }

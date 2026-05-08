@@ -1,9 +1,9 @@
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookindDetailHeaderTabs from "@/components/header/bookingDetailHeaderTabs"
+import BookindDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import { RyogoSmall } from "@/components/typography"
-import TripLogItem from "@/components/bookings/tripLog/tripLogItem"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import TripLogItem from "@/components/flows/bookings/tripLog/tripLogItem"
+import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingTripLogsPageComponent({
   bookingId,
@@ -17,20 +17,15 @@ export default async function BookingTripLogsPageComponent({
   return (
     <PageWrapper id="BookingTripLogsPage">
       <BookindDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
-      {bookingTripLogs.length === 0 ? (
-        <div className="w-full text-center">
+      <SectionColWrapper center>
+        {bookingTripLogs.length === 0 ? (
           <RyogoSmall color="slate">{t("NoTripLogs")}</RyogoSmall>
-        </div>
-      ) : (
-        <div
-          id="BookingTripLogsInfo"
-          className="flex flex-col gap-3 lg:gap-4 w-full"
-        >
-          {bookingTripLogs.map((tripLog) => (
+        ) : (
+          bookingTripLogs.map((tripLog) => (
             <TripLogItem key={tripLog.id} tripLog={tripLog} />
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </SectionColWrapper>
     </PageWrapper>
   )
 }

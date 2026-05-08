@@ -1,5 +1,5 @@
 import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import VehicleDetailHeaderTabs from "@/components/header/vehicleDetailHeaderTabs"
+import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import Link from "next/link"
@@ -8,7 +8,7 @@ import { Pencil, Plus } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import {
-  ContentWrapper,
+  SectionWrapper,
   GridItemWrapper,
   PageWrapper,
 } from "@/components/page/pageWrappers"
@@ -32,7 +32,7 @@ export default async function AllVehicleRepairsPageComponent({
   return (
     <PageWrapper id="VehicleRepairsPage">
       <VehicleDetailHeaderTabs selectedTab={"Repairs"} id={vehicleId} />
-      <ContentWrapper id="VehicleRepairsList">
+      <SectionWrapper id="VehicleRepairsList">
         <Link
           href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
           className="w-full md:w-1/2 self-center"
@@ -50,7 +50,7 @@ export default async function AllVehicleRepairsPageComponent({
             userId={userId}
           />
         ))}
-      </ContentWrapper>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

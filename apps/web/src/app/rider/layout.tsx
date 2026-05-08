@@ -9,7 +9,7 @@ import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   LayoutSectionWrapper,
   LayoutWrapper,
-} from "@/components/bookings/layout/layoutWrappers"
+} from "@/components/layout/layoutWrappers"
 
 export default async function RiderLayout({
   children,

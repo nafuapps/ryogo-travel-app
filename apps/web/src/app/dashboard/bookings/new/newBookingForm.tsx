@@ -94,9 +94,5 @@ export default function NewBookingForm(props: {
     />,
   ])
 
-  return (
-    <div id="newBookingForm" className="flex flex-col gap-4 w-full h-full">
-      {steps[currentStepIndex]}
-    </div>
-  )
+  return steps[currentStepIndex]
 }

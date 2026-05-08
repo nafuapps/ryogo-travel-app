@@ -9,7 +9,7 @@ import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import {
   AuthFooterWrapper,
   AuthSectionWrapper,
-} from "@/components/auth/authWrappers"
+} from "@/components/flows/auth/authWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"

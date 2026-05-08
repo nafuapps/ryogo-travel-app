@@ -1,4 +1,4 @@
-import { LayoutWrapper } from "@/components/bookings/layout/layoutWrappers"
+import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"

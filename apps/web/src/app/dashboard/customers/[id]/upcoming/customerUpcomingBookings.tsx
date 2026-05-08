@@ -1,5 +1,5 @@
 import { FindCustomerUpcomingBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
-import CustomerDetailHeaderTabs from "@/components/header/customerDetailHeaderTabs"
+import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
 import moment from "moment"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import Link from "next/link"
@@ -11,6 +11,7 @@ import {
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function CustomerUpcomingBookingsPageComponent({
@@ -26,10 +27,7 @@ export default async function CustomerUpcomingBookingsPageComponent({
   return (
     <PageWrapper id="CustomerUpcomingBookingsPage">
       <CustomerDetailHeaderTabs selectedTab={"Upcoming"} id={id} />
-      <div
-        id="CustomerUpcomingBookingsList"
-        className="flex flex-col items-center gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <SectionWrapper center id="CustomerUpcomingBookingsList">
         {bookings.length === 0 ? (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (
@@ -42,7 +40,7 @@ export default async function CustomerUpcomingBookingsPageComponent({
             ))}
           </>
         )}
-      </div>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

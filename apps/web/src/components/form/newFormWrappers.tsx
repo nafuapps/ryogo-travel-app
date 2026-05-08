@@ -49,3 +49,49 @@ export function NewFormActionWrapper({
     </div>
   )
 }
+
+export function NewStepWrapper({
+  id,
+  children,
+}: {
+  id: string
+  children: React.ReactNode
+}) {
+  return (
+    <div id={id} className="flex flex-col gap-4 w-full h-full">
+      {children}
+    </div>
+  )
+}
+
+export function NewStepHeaderWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return <div className="flex flex-col gap-2 lg:gap-3">{children}</div>
+}
+
+export function NewStepTitleWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-row justify-between items-end gap-2 lg:gap-3">
+      {children}
+    </div>
+  )
+}
+
+export function NewStepGridWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3">
+      {children}
+    </div>
+  )
+}

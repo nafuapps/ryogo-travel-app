@@ -39,7 +39,7 @@ import {
   ComboboxItem,
   ComboboxList,
 } from "@/components/ui/combobox"
-import { RyogoIcon } from "../icons/RyogoIcon"
+import { RyogoIcon } from "@/components/icons/RyogoIcon"
 
 export function RyogoInput(props: {
   name: string
@@ -275,7 +275,7 @@ export function RyogoCheckbox(props: {
       name={props.name}
       render={({ field }) => {
         return (
-          <FormItem className="flex flex-row items-end gap-2 lg:gap-3 w-full px-2">
+          <FormItem className="flex flex-row items-center gap-2 lg:gap-3 w-full px-2">
             <FormControl>
               <Checkbox
                 checked={field.value}
@@ -283,7 +283,7 @@ export function RyogoCheckbox(props: {
               />
             </FormControl>
             <FormLabel>
-              <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
+              <RyogoSmall>{props.label}</RyogoSmall>
             </FormLabel>
           </FormItem>
         )
@@ -465,7 +465,7 @@ export function RyogoTimePicker(props: {
   )
 }
 
-export function RyogoRating(props: {
+export function RyogoRatingInput(props: {
   name: string
   label: string
   selectedStars: number

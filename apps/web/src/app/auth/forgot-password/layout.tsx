@@ -8,8 +8,8 @@ import {
   AuthImage,
   AuthMainWrapper,
   AuthSideWrapper,
-} from "@/components/auth/authWrappers"
-import { LayoutWrapper } from "@/components/bookings/layout/layoutWrappers"
+} from "@/components/flows/auth/authWrappers"
+import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 
 export default async function LoginLayout({
   children,

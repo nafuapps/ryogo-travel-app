@@ -1,4 +1,4 @@
-import UserDetailHeaderTabs from "@/components/header/userDetailHeaderTabs"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import moment from "moment"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import Link from "next/link"
@@ -11,6 +11,7 @@ import {
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function UserAssignedPageComponent({
@@ -26,10 +27,7 @@ export default async function UserAssignedPageComponent({
   return (
     <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Assigned"} id={id} />
-      <div
-        id="UserAssignedBookingsList"
-        className="flex flex-col items-center gap-3 lg:gap-4 w-full bg-white rounded-lg p-4 lg:p-5"
-      >
+      <SectionWrapper center id="UserAssignedBookingsList">
         {bookings.length === 0 ? (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (
@@ -42,7 +40,7 @@ export default async function UserAssignedPageComponent({
             ))}
           </>
         )}
-      </div>
+      </SectionWrapper>
     </PageWrapper>
   )
 }

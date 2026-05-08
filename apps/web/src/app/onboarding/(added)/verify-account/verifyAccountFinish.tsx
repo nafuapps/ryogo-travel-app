@@ -6,7 +6,7 @@ import {
   OnboardingStepForm,
   OnboardingSuccessIcon,
   OnboardingStepPrimaryAction,
-} from "@/components/onboarding/onboardingSteps"
+} from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 export function VerifyAccountFinish() {
   const t = useTranslations("Onboarding.VerifyAccountPage.Finish")

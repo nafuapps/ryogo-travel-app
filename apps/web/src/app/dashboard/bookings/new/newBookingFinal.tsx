@@ -22,16 +22,18 @@ import { toast } from "sonner"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
-import NewBookingTripCard from "@/components/bookings/newBookingTripCard"
+import NewBookingTripCard from "@/components/flows/bookings/newBookingTripCard"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
 import { getEstimatedTotalPrice } from "@/lib/utils"
 import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import {
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
   NewStepWrapper,
-} from "@/components/page/pageWrappers"
-import {
   NewFormWrapper,
   NewFormContentWrapper,
   NewFormActionWrapper,
@@ -123,9 +125,9 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
       >
         <NewBookingTripCard {...props.newBookingFormData} />
         <NewFormContentWrapper>
-          <NewFormLineItemWrapper>
+          <SectionRowWrapper>
             <IconTextTag icon={Car} text={t("VehicleCharge")} />
-            <NewFormLineItemSubtitleWrapper>
+            <SectionColWrapper end small>
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalVehiclePrice}
               </RyogoSmall>
@@ -135,12 +137,12 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                   distance: finalAmount.totalDistance,
                 })}
               </RyogoCaption>
-            </NewFormLineItemSubtitleWrapper>
-          </NewFormLineItemWrapper>
+            </SectionColWrapper>
+          </SectionRowWrapper>
           {props.newBookingFormData.tripNeedsAC && (
-            <NewFormLineItemWrapper>
+            <SectionRowWrapper>
               <IconTextTag icon={AirVent} text={t("ACCharge")} />
-              <NewFormLineItemSubtitleWrapper>
+              <SectionColWrapper end small>
                 <RyogoSmall weight="font-bold">
                   {"₹" + finalAmount.totalAcPrice}
                 </RyogoSmall>
@@ -150,12 +152,12 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                     days: finalAmount.totalAllowanceDays,
                   })}
                 </RyogoCaption>
-              </NewFormLineItemSubtitleWrapper>
-            </NewFormLineItemWrapper>
+              </SectionColWrapper>
+            </SectionRowWrapper>
           )}
-          <NewFormLineItemWrapper>
+          <SectionRowWrapper>
             <IconTextTag icon={IdCard} text={t("DriverAllowance")} />
-            <NewFormLineItemSubtitleWrapper>
+            <SectionColWrapper end small>
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalDriverAllowance}
               </RyogoSmall>
@@ -165,24 +167,24 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                   days: finalAmount.totalAllowanceDays,
                 })}
               </RyogoCaption>
-            </NewFormLineItemSubtitleWrapper>
-          </NewFormLineItemWrapper>
-          <NewFormLineItemWrapper>
+            </SectionColWrapper>
+          </SectionRowWrapper>
+          <SectionRowWrapper>
             <IconTextTag icon={CirclePercent} text={t("Commission")} />
-            <NewFormLineItemSubtitleWrapper>
+            <SectionColWrapper end small>
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalCommission}
               </RyogoSmall>
               <RyogoCaption color="light">
                 {props.newBookingFormData.selectedCommissionRate + "%"}
               </RyogoCaption>
-            </NewFormLineItemSubtitleWrapper>
-          </NewFormLineItemWrapper>
+            </SectionColWrapper>
+          </SectionRowWrapper>
         </NewFormContentWrapper>
-        <NewFormLineItemWrapper>
+        <SectionRowWrapper>
           <RyogoH4>{t("TotalAmount")}</RyogoH4>
           <RyogoH3>{"₹" + finalAmount.totalAmount}</RyogoH3>
-        </NewFormLineItemWrapper>
+        </SectionRowWrapper>
         <Alert>
           <RyogoIcon icon={Info} size="sm" />
           <RyogoCaption color="light">{t("CreateInfo")}</RyogoCaption>
@@ -209,23 +211,5 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>
-  )
-}
-
-function NewFormLineItemWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-row justify-between gap-2 lg:gap-3">
-      {children}
-    </div>
-  )
-}
-
-function NewFormLineItemSubtitleWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-col items-end gap-0.5 lg:gap-1">{children}</div>
   )
 }

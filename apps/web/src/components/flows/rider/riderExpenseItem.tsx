@@ -48,7 +48,7 @@ export default async function RiderExpenseItem({
           </RyogoCaption>
         </div>
         <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
-          <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
+          <div className="flex gap-2 lg:gap-3 justify-end lg:items-center">
             <RyogoH3>{expense.amount}</RyogoH3>
           </div>
           {canModifyExpense && (

@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderTripLogItem({
   tripLog,
@@ -21,10 +22,6 @@ export default async function RiderTripLogItem({
   tripLog: NonNullable<FindBookingDetailsByIdType>["tripLogs"][number]
 }) {
   const t = await getTranslations("Rider.MyBooking.TripLog")
-  let fileUrl = ""
-  if (tripLog.tripLogPhotoUrl) {
-    fileUrl = getFileUrl(tripLog.tripLogPhotoUrl)
-  }
 
   return (
     <div className="flex flex-col">
@@ -33,7 +30,7 @@ export default async function RiderTripLogItem({
           tripLog.tripLogPhotoUrl ? "rounded-t-lg" : "rounded-lg"
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
-        <div className="flex flex-col gap-1.5 lg:gap-2 justify-end w-full">
+        <SectionColWrapper end small>
           <RyogoCaption color="slate">
             {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
           </RyogoCaption>
@@ -42,7 +39,7 @@ export default async function RiderTripLogItem({
           {tripLog.remarks && (
             <RyogoCaption color="slate">{tripLog.remarks}</RyogoCaption>
           )}
-        </div>
+        </SectionColWrapper>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
           <RyogoCaption color="dark" weight="font-bold">
             {tripLog.type.toUpperCase()}
@@ -51,7 +48,10 @@ export default async function RiderTripLogItem({
         </div>
       </div>
       {tripLog.tripLogPhotoUrl && (
-        <RyogoChinImage src={fileUrl} alt={t("Proof")} />
+        <RyogoChinImage
+          src={getFileUrl(tripLog.tripLogPhotoUrl)}
+          alt={t("Proof")}
+        />
       )}
     </div>
   )

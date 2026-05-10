@@ -1,6 +1,10 @@
-import { RyogoH2, RyogoSmall } from "@/components/typography"
+import { RyogoH2 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import {
+  DetailsHeaderTabItem,
+  DetailsHeaderTabWrapper,
+} from "@/components/header/headerWrappers"
 
 type UserDetailHeaderTab = "Details" | "Assigned" | "Completed" | "Activity"
 
@@ -23,19 +27,16 @@ export default async function UserDetailHeaderTabs(
   return (
     <div className="flex flex-col md:flex-row justify-between items-center">
       <RyogoH2 color="brand">{props.id}</RyogoH2>
-      <div className="flex rounded bg-slate-300 flex-row gap-1 lg:gap-1.5 p-1 lg:p-1.5 self-center my-2 lg:my-3">
+      <DetailsHeaderTabWrapper>
         {(Object.keys(links) as UserDetailHeaderTab[]).map((tab) => (
           <Link href={links[tab]} key={tab}>
-            <div
-              className={`flex items-center rounded justify-center px-2 py-1 lg:px-3 lg:py-1.5 ${
-                props.selectedTab === tab ? "bg-white shadow" : ""
-              }`}
-            >
-              <RyogoSmall>{t(tab)}</RyogoSmall>
-            </div>
+            <DetailsHeaderTabItem
+              label={t(tab)}
+              selected={props.selectedTab === tab}
+            />
           </Link>
         ))}
-      </div>
+      </DetailsHeaderTabWrapper>
     </div>
   )
 }

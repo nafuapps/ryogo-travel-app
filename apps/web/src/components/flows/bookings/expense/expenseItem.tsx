@@ -19,9 +19,6 @@ export default async function ExpenseItem({
   canApproveExpense: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingExpenses")
-  const id = expense.bookingId
-
-  const expId = expense.id
 
   return (
     <div className="flex flex-col">
@@ -49,19 +46,21 @@ export default async function ExpenseItem({
           <RyogoCaption color="light">{expense.addedByUser.name}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
-          <div className="flexgap-2 lg:gap-3 justify-end lg:items-center">
+          <div className="flex gap-2 lg:gap-3 justify-end lg:items-center">
             <RyogoH3>{expense.amount}</RyogoH3>
           </div>
           <div className="flex flex-row gap-2 lg:gap-3">
             {canApproveExpense && (
               <ExpenseApprovalButton
-                expId={expId}
+                expId={expense.id}
                 isApproved={expense.isApproved}
                 agencyId={expense.agencyId}
               />
             )}
             {canModifyExpense && (
-              <Link href={`/dashboard/bookings/${id}/expenses/modify/${expId}`}>
+              <Link
+                href={`/dashboard/bookings/${expense.bookingId}/expenses/modify/${expense.id}`}
+              >
                 <RyogoIconButton label={t("Modify")} />
               </Link>
             )}

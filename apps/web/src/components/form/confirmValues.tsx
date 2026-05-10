@@ -7,11 +7,9 @@ type ConfirmValuesProps = {
 
 export default function ConfirmValues({ name, value }: ConfirmValuesProps) {
   return (
-    <div className="flex flex-row justify-between w-full gap-5 lg:gap-6">
+    <div className="flex flex-row justify-between w-full gap-3 lg:gap-4 last:text-right">
       <RyogoSmall weight="font-bold">{name}</RyogoSmall>
-      <div className="text-right">
-        <RyogoSmall>{value}</RyogoSmall>
-      </div>
+      <RyogoSmall>{value}</RyogoSmall>
     </div>
   )
 }

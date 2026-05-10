@@ -40,7 +40,7 @@ export default async function AllVehiclesListComponent({
         <RyogoH4 color="slate"> {allVehicles.length}</RyogoH4>
         <Link href={`/dashboard/vehicles/new`} className="ml-auto">
           <Button variant={"outline"}>
-            <Plus className="size-4 md:size-5 text-slate-700" />
+            <RyogoIcon icon={Plus} size="sm" />
             {t("AddVehicle")}
           </Button>
         </Link>

@@ -1,3 +1,4 @@
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH2, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
@@ -30,17 +31,17 @@ export default async function HomeCTASection() {
 
         <div className="flex flex-col md:flex-row gap-3 lg:gap-4 items-center">
           <div className="flex gap-0.5 md:gap-1 items-center">
-            <Check className="text-sky-200 size-3 md:size-4" />
+            <RyogoIcon icon={Check} size="sm" color="white" />
             <RyogoCaption color="white">{t("Prop1")}</RyogoCaption>
           </div>
           <div className="hidden md:flex bg-sky-200 size-1.5 lg:size-2 rounded-full" />
           <div className="flex gap-0.5 md:gap-1 items-center">
-            <Check className="text-sky-200 size-3 md:size-4" />
+            <RyogoIcon icon={Check} size="sm" color="white" />
             <RyogoCaption color="white">{t("Prop2")}</RyogoCaption>
           </div>
           <div className="hidden md:flex bg-sky-200 size-1.5 lg:size-2 rounded-full" />
           <div className="flex gap-0.5 md:gap-1 items-center">
-            <Check className="text-sky-200 size-3 md:size-4" />
+            <RyogoIcon icon={Check} size="sm" color="white" />
             <RyogoCaption color="white">{t("Prop3")}</RyogoCaption>
           </div>
         </div>

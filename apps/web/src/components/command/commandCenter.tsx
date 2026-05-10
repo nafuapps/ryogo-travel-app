@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import useCommandCenter from "./useCommandCenter"
 import { RyogoCaption } from "@/components/typography"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function CommandCenter() {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,7 +22,7 @@ export default function CommandCenter() {
               return (
                 <QuickActionBtn
                   key={c.label}
-                  icon={<c.icon className="size-4 lg:size-5 text-sky-700" />}
+                  icon={<RyogoIcon icon={c.icon} size="sm" color="brand" />}
                   label={c.label}
                   action={c.action}
                 />

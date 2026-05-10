@@ -23,6 +23,11 @@ import { TripLogStatusPill } from "@/components/statusPills/statusPills"
 import { getCombinedDateTime } from "@/lib/utils"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronRight } from "lucide-react"
+import {
+  FindCompletedBookingsPreviousDaysType,
+  FindOngoingTripsType,
+  FindUpcomingBookingsNextDaysType,
+} from "@ryogo-travel-app/api/services/booking.services"
 
 export function CompletedBookingCard({
   booking,
@@ -33,6 +38,7 @@ export function CompletedBookingCard({
     | FindDriverCompletedBookingsByIdType[number]
     | FindVehicleCompletedBookingsByIdType[number]
     | FindUserCompletedBookingsByIdType[number]
+    | FindCompletedBookingsPreviousDaysType[number]
   rider?: boolean
 }) {
   return (
@@ -78,6 +84,7 @@ export function OngoingBookingCard({
     | FindDriverAssignedBookingsByIdType[number]
     | FindVehicleAssignedBookingsByIdType[number]
     | FindUserAssignedBookingsByIdType[number]
+    | FindOngoingTripsType[number]
   rider?: boolean
   startLabel?: string
 }) {
@@ -110,7 +117,6 @@ export function OngoingBookingCard({
             {booking.vehicle}
           </RyogoCaption>
           <RyogoP color={rider ? "white" : "dark"} weight="font-bold">
-            {" "}
             {booking.driver}
           </RyogoP>
         </GridItemWrapper>
@@ -141,6 +147,7 @@ export function UpcomingBookingCard({
     | FindDriverAssignedBookingsByIdType[number]
     | FindVehicleAssignedBookingsByIdType[number]
     | FindUserAssignedBookingsByIdType[number]
+    | FindUpcomingBookingsNextDaysType[number]
   rider?: boolean
   canStart?: boolean
   startLabel?: string

@@ -8,7 +8,7 @@ import {
   Ticket,
   Banknote,
 } from "lucide-react"
-import { RyogoIcon } from "./ryogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function getExpenseIcon(type: ExpenseTypesEnum) {
   switch (type) {

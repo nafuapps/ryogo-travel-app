@@ -61,9 +61,9 @@ export default function BookingScheduleChartComponent({
                     id={b.bookingId}
                     selectedDays={selectedDays}
                     addedClass={
-                      b.driver && b.vehicle
-                        ? "bg-green-200 hover:bg-green-300"
-                        : "bg-red-200 hover:bg-red-300"
+                      !b.driver || !b.vehicle || b.endDate < new Date()
+                        ? "bg-red-200 hover:bg-red-300"
+                        : "bg-slate-200 hover:bg-slate-300"
                     }
                   >
                     <OngoingBookingPopoverCard {...b} />

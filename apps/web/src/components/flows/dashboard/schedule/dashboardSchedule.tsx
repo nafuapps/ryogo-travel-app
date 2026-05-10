@@ -17,7 +17,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionHeaderWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
@@ -45,7 +48,7 @@ export function DashboardScheduleHeader({
 }) {
   const t = useTranslations("Dashboard.Schedule.Header")
   return (
-    <div className="flex flex-row justify-between items-center">
+    <SectionRowWrapper center>
       <SectionHeaderWrapper>
         <RyogoIcon icon={CalendarDays} size="sm" />
         <RyogoSmall color="slate">{title}</RyogoSmall>
@@ -67,7 +70,7 @@ export function DashboardScheduleHeader({
           </SelectGroup>
         </SelectContent>
       </Select>
-    </div>
+    </SectionRowWrapper>
   )
 }
 
@@ -208,14 +211,14 @@ export function DashboardScheduleItemBar({
     <Popover>
       <PopoverTrigger asChild>
         <div
-          className={`flex flex-row p-1 ${addedClass} rounded-2xl ${
+          className={`flex flex-row p-1 ${addedClass} ${
             endIndex > selectedDays + 1
-              ? "rounded-b-none lg:rounded-bl-2xl lg:rounded-r-none"
-              : ""
+              ? "lg:rounded-bl-2xl rounded-b-none lg:rounded-r-none"
+              : "rounded-b-2xl lg:rounded-r-2xl"
           } ${
             startIndex < 1
-              ? "rounded-t-none lg:rounded-tr-2xl lg:rounded-l-none"
-              : ""
+              ? "lg:rounded-tr-2xl rounded-t-none lg:rounded-l-none"
+              : "rounded-t-2xl lg:rounded-l-2xl"
           } justify-center items-center min-w-0
                     col-start-1
                     col-end-2

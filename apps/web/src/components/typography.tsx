@@ -18,7 +18,7 @@ const getTextColor = (color?: RyogoTextColor) => {
     return "text-sky-700"
   }
   if (color === "dark") {
-    return "text-sky-950"
+    return "text-slate-950"
   }
   //default is dark
   return "text-slate-950"

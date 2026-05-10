@@ -314,7 +314,7 @@ export default function SearchPageComponent({
               return (
                 <div
                   key={s}
-                  className="flex items-center justify-center rounded-lg px-2 py-1 lg:px-3 lg:py-1.5 underline bg-slate-100 hover:bg-slate-200 hover:cursor-pointer"
+                  className="flex items-center justify-center rounded-lg px-2 py-1 lg:px-3 lg:py-1.5 underline bg-slate-100 hover:bg-slate-200"
                   onClick={() => {
                     formData.setValue("searchTerm", s)
                     handleSearch(s.toUpperCase())

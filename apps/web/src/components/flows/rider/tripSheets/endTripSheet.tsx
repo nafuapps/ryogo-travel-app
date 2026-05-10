@@ -7,7 +7,6 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetClose,
@@ -28,6 +27,7 @@ import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { endTripAction } from "@/app/actions/bookings/endTripAction"
 import Link from "next/link"
+import TripSheetFormWrapper from "./tripSheetFormWrapper"
 
 const TOTAL_STARS = 5
 
@@ -134,47 +134,45 @@ export default function EndTripSheet({
           <SheetTitle>{t("Title")}</SheetTitle>
           <SheetDescription>{t("Warning")}</SheetDescription>
         </SheetHeader>
-        <Form {...formData}>
-          <form
-            id="endTrip"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
-          >
-            <RyogoInput
-              name={"odometerReading"}
-              type="tel"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <RyogoFileInput
-              name={"tripLogPhoto"}
-              register={formData.register("tripLogPhoto")}
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-            />
-            <RyogoTextarea
-              name="remarks"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-            />
-            <RyogoRatingInput
-              name="customerRating"
-              label={t("Field4.Title")}
-              selectedStars={customerRating}
-              setSelectedStars={setCustomerRating}
-              totalStars={TOTAL_STARS}
-            />
-            <RyogoRatingInput
-              name="bookingRating"
-              label={t("Field5.Title")}
-              selectedStars={bookingRating}
-              setSelectedStars={setBookingRating}
-              totalStars={TOTAL_STARS}
-            />
-          </form>
-        </Form>
+        <TripSheetFormWrapper<SchemaType>
+          id="endTrip"
+          onSubmit={formData.handleSubmit(onSubmit)}
+          form={formData}
+        >
+          <RyogoInput
+            name={"odometerReading"}
+            type="tel"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoFileInput
+            name={"tripLogPhoto"}
+            register={formData.register("tripLogPhoto")}
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+          <RyogoTextarea
+            name="remarks"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+          />
+          <RyogoRatingInput
+            name="customerRating"
+            label={t("Field4.Title")}
+            selectedStars={customerRating}
+            setSelectedStars={setCustomerRating}
+            totalStars={TOTAL_STARS}
+          />
+          <RyogoRatingInput
+            name="bookingRating"
+            label={t("Field5.Title")}
+            selectedStars={bookingRating}
+            setSelectedStars={setBookingRating}
+            totalStars={TOTAL_STARS}
+          />
+        </TripSheetFormWrapper>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="endTrip">
             {isPending ? t("Loading") : t("End")}

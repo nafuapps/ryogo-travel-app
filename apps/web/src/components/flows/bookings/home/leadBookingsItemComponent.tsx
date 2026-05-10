@@ -24,6 +24,7 @@ import {
   GridItemWrapper,
   GridWrapper,
   SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -44,10 +45,7 @@ export default function LeadBookingsItemComponent({
 
   return (
     <SectionWrapper id="leadsBookingsSection">
-      <div
-        id="leadsBookingsHeader"
-        className="flex flex-row justify-between items-center"
-      >
+      <SectionRowWrapper center>
         <SectionHeaderWrapper>
           <RyogoIcon icon={BookOpen} size="sm" />
           <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
@@ -67,7 +65,7 @@ export default function LeadBookingsItemComponent({
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div>
+      </SectionRowWrapper>
       {trips.map((trip) => (
         <LeadBookingsComponent key={trip.bookingId} {...trip} />
       ))}

@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  RyogoSmall,
-  RyogoH4,
-  RyogoP,
-  RyogoCaption,
-} from "@/components/typography"
+import { RyogoSmall, RyogoH4 } from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -14,20 +9,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { format } from "date-fns"
 import { CheckCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import { useState } from "react"
-import moment from "moment"
 import { FindCompletedBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
-  GridItemWrapper,
-  GridWrapper,
   SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { CompletedBookingCard } from "@/components/cards/booking/bookingCards"
 
 export default function CompletedBookingsItemComponent({
   completedBookings7Days,
@@ -46,10 +38,7 @@ export default function CompletedBookingsItemComponent({
 
   return (
     <SectionWrapper id="CompletedBookingsSection">
-      <div
-        id="CompletedBookingsHeader"
-        className="flex flex-row justify-between items-center"
-      >
+      <SectionRowWrapper center>
         <SectionHeaderWrapper>
           <RyogoIcon icon={CheckCheck} size="sm" />
           <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
@@ -69,41 +58,10 @@ export default function CompletedBookingsItemComponent({
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div>
+      </SectionRowWrapper>
       {trips.map((trip) => (
-        <CompletedComponent key={trip.bookingId} {...trip} />
+        <CompletedBookingCard key={trip.bookingId} booking={trip} />
       ))}
     </SectionWrapper>
-  )
-}
-
-function CompletedComponent(
-  props: FindCompletedBookingsPreviousDaysType[number],
-) {
-  return (
-    <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <GridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.route}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {format(props.updatedAt, "PP")}
-          </RyogoCaption>
-          <RyogoP weight="font-bold">
-            {moment(props.updatedAt).fromNow()}
-          </RyogoP>
-        </GridItemWrapper>
-      </GridWrapper>
-    </Link>
   )
 }

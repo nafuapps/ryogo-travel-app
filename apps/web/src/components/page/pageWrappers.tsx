@@ -73,9 +73,19 @@ export function SectionWrapper({
   )
 }
 
-export function SectionRowWrapper({ children }: { children: React.ReactNode }) {
+export function SectionRowWrapper({
+  children,
+  center,
+  end,
+}: {
+  children: React.ReactNode
+  center?: boolean
+  end?: boolean
+}) {
   return (
-    <div className="flex flex-row gap-3 lg:gap-4 justify-between">
+    <div
+      className={`flex flex-row gap-3 lg:gap-4 justify-between ${center ? "items-center" : ""} ${end ? "items-end" : ""}`}
+    >
       {children}
     </div>
   )
@@ -86,15 +96,17 @@ export function SectionColWrapper({
   small,
   end,
   center,
+  justifyBetween,
 }: {
   children: React.ReactNode
   small?: boolean
   end?: boolean
   center?: boolean
+  justifyBetween?: boolean
 }) {
   return (
     <div
-      className={`flex flex-col ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""}`}
+      className={`flex flex-col ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""}`}
     >
       {children}
     </div>

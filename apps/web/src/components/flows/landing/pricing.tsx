@@ -82,7 +82,7 @@ export default function PricingSection() {
             <Card
               key={plan.id}
               className={`flex flex-col relative ${
-                plan.highlighted ? "md:scale-105 border-sky-500 border-2" : ""
+                plan.highlighted ? "md:scale-105 border-sky-500 border" : ""
               }`}
             >
               {plan.highlighted && (

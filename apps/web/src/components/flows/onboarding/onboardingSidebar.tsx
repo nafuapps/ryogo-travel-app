@@ -69,7 +69,7 @@ export default function OnboardingSidebar({
             currentProcess > index || (currentProcess === index && isLastStep)
               ? "bg-sky-950 shadow"
               : currentProcess === index
-                ? "bg-white border-2 border-sky-700 shadow"
+                ? "bg-white border border-sky-700 shadow"
                 : "bg-slate-100"
           } flex shrink-0 justify-center items-center size-8 lg:size-10`}
                 >

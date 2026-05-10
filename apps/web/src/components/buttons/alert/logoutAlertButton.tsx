@@ -1,11 +1,21 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { logoutAction } from "@/app/actions/users/logoutAction"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
+import { useTransition } from "react"
+import { Spinner } from "@/components/ui/spinner"
 
-export default async function LogoutAlertButton() {
-  const t = await getTranslations("Dashboard.Buttons.Logout")
+export default function LogoutAlertButton() {
+  const t = useTranslations("Dashboard.Buttons.Logout")
+  const [isPending, startTransition] = useTransition()
 
+  async function logout() {
+    startTransition(async () => {
+      await logoutAction()
+    })
+  }
   return (
     <RyogoAlertDialog
       title={t("Title")}
@@ -17,11 +27,15 @@ export default async function LogoutAlertButton() {
         </Button>
       }
     >
-      <form action={logoutAction}>
-        <Button variant={"default"} className="w-full">
-          {t("YesCTA")}
-        </Button>
-      </form>
+      <Button
+        variant="destructive"
+        className="w-full"
+        onClick={logout}
+        disabled={isPending}
+      >
+        {isPending && <Spinner />}
+        {t("YesCTA")}
+      </Button>
     </RyogoAlertDialog>
   )
 }

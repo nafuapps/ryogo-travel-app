@@ -3,7 +3,10 @@ import DashboardOngoingTripComponent from "./dashboardOngoingTripComponent"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
-import { SectionHeaderWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionHeaderWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function DashboardOngoingTripSection({
@@ -16,10 +19,7 @@ export default async function DashboardOngoingTripSection({
   const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
 
   return (
-    <div
-      id="DashboardOngoingTrips"
-      className="flex flex-col w-full gap-3 lg:gap-4 bg-white shadow rounded-lg p-4 lg:p-5"
-    >
+    <SectionWrapper id="DashboardOngoingTrips">
       <SectionHeaderWrapper>
         <RyogoIcon icon={Route} size="sm" />
         <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
@@ -30,6 +30,6 @@ export default async function DashboardOngoingTripSection({
           <DashboardOngoingTripComponent key={index} {...trip} />
         ))}
       </div>
-    </div>
+    </SectionWrapper>
   )
 }

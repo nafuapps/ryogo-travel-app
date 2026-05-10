@@ -1,25 +1,17 @@
-import {
-  RyogoH3,
-  RyogoH4,
-  RyogoSmall,
-  RyogoCaption,
-} from "@/components/typography"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { TrendingUp, BadgeIndianRupee, TrendingDown } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
-  metricFirstRowClassName,
-  metricHeaderClassName,
-  metricItem1ClassName,
-  metricItem2ClassName,
-  metricItem3ClassName,
-  metricMainClassName,
-  metricsClassName,
-  metricSecondRowClassName,
-} from "./dashboardMetricsCommons"
+  DashboardMetricGridItem,
+  DashboardMetricGridWrapper,
+  DashboardMetricHeader,
+  DashboardMetricMain,
+  DashboardMetricSubTitle,
+  DashboardMetricTopWrapper,
+  DashboardMetricWrapper,
+} from "./dashboardMetricsWrappers"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function DashboardRevenueMetricsComponent({
   agencyId,
@@ -55,12 +47,6 @@ export default async function DashboardRevenueMetricsComponent({
     ? (revenue24HrsAmount - revenueWeeklyAvg) / revenueWeeklyAvg
     : (revenueWeeklyAvg - revenue24HrsAmount) / revenueWeeklyAvg
 
-  const icon = more ? (
-    <RyogoIcon icon={TrendingUp} size="sm" />
-  ) : (
-    <RyogoIcon icon={TrendingDown} size="sm" />
-  )
-
   const avgCommisionRateThisWeek =
     revenueBookingsThisWeek.reduce((total, booking) => {
       return total + booking.commissionRate
@@ -80,90 +66,63 @@ export default async function DashboardRevenueMetricsComponent({
     }, 0)
 
   return (
-    <div id="dashboardRevenueMetrics" className={metricsClassName}>
-      <div
-        id="dashboardRevenueMetricsFirstCol"
-        className={metricFirstRowClassName}
-      >
-        <div
-          id="dashboardRevenueMetricsHeader"
-          className={metricHeaderClassName}
+    <DashboardMetricWrapper>
+      <DashboardMetricTopWrapper>
+        <DashboardMetricHeader label={t("Title")} icon={BadgeIndianRupee} />
+        <DashboardMetricMain
+          mainValue={revenue24HrsAmount.toLocaleString("en-IN", {
+            style: "currency",
+            currency: "INR",
+            minimumFractionDigits: 0,
+          })}
         >
-          <RyogoIcon icon={BadgeIndianRupee} size="sm" />
-          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        </div>
-        <div
-          id="dashboardRevenueMetricsConfirmed"
-          className={metricMainClassName}
-        >
-          <RyogoH3>
-            {revenue24HrsAmount.toLocaleString("en-IN", {
-              style: "currency",
-              currency: "INR",
-              minimumFractionDigits: 0,
-            })}
-          </RyogoH3>
           {revenueWeeklyAvg !== 0 && (
-            <div className="flex flex-col lg:gap-0.5 items-center text-center">
-              <div className="flex flex-row gap-1 item-center">
-                {icon}
-                <RyogoCaption color="light">
-                  {revenueChange.toLocaleString("en-IN", {
-                    style: "percent",
-                    maximumFractionDigits: 1,
-                  })}
-                </RyogoCaption>
-                <RyogoCaption color="light">
-                  {more ? t("More") : t("Less")}
-                </RyogoCaption>
-              </div>
-              <RyogoCaption color="light">{t("ThanAvg")}</RyogoCaption>
-            </div>
+            <DashboardMetricSubTitle
+              icon={more ? TrendingUp : TrendingDown}
+              subtitle={t("Subtitle", {
+                revenueChange: revenueChange.toLocaleString("en-IN", {
+                  style: "percent",
+                  maximumFractionDigits: 1,
+                }),
+                more: more ? "more" : "less",
+              })}
+            />
           )}
-        </div>
-      </div>
-      <div
-        id="dashboardRevenueMetricsSecondCol"
-        className={metricSecondRowClassName}
-      >
-        <div id="dashboardRevenueMetricsLeads" className={metricItem1ClassName}>
-          <RyogoH4>
-            {transactionsInAmount.toLocaleString("en-IN", {
-              style: "currency",
-              currency: "INR",
-              minimumFractionDigits: 0,
-            })}
-          </RyogoH4>
-          <RyogoCaption color="light">{t("In")}</RyogoCaption>
-        </div>
-        <div
-          id="dashboardRevenueMetricsInProgress"
-          className={metricItem2ClassName}
-        >
-          <RyogoH4>
-            {transactionsOutAmount.toLocaleString("en-IN", {
-              style: "currency",
-              currency: "INR",
-              minimumFractionDigits: 0,
-            })}
-          </RyogoH4>
-          <RyogoCaption color="light">{t("Out")}</RyogoCaption>
-        </div>
-        <div
-          id="dashboardRevenueMetricsInProgress"
-          className={metricItem3ClassName + " col-span-2"}
-        >
-          <RyogoH3>
-            {revenueBookingsThisWeek.length == 0
+        </DashboardMetricMain>
+      </DashboardMetricTopWrapper>
+      <DashboardMetricGridWrapper>
+        <DashboardMetricGridItem
+          label={t("In")}
+          value={transactionsInAmount.toLocaleString("en-IN", {
+            style: "currency",
+            currency: "INR",
+            minimumFractionDigits: 0,
+          })}
+          borderBottom
+        />
+        <DashboardMetricGridItem
+          label={t("Out")}
+          value={transactionsOutAmount.toLocaleString("en-IN", {
+            style: "currency",
+            currency: "INR",
+            minimumFractionDigits: 0,
+          })}
+          borderLeft
+          borderBottom
+        />
+        <DashboardMetricGridItem
+          label={t("Commission")}
+          value={
+            revenueBookingsThisWeek.length == 0
               ? "-"
               : avgCommisionRateThisWeek.toLocaleString("en-IN", {
                   style: "percent",
                   minimumFractionDigits: 1,
-                })}
-          </RyogoH3>
-          <RyogoCaption color="light">{t("Commission")}</RyogoCaption>
-        </div>
-      </div>
-    </div>
+                })
+          }
+          spanTwo
+        />
+      </DashboardMetricGridWrapper>
+    </DashboardMetricWrapper>
   )
 }

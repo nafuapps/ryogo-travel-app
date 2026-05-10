@@ -6,12 +6,12 @@ import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
   AtSign,
-  Building2,
   Camera,
   Car,
   FileText,
   FingerprintPattern,
   IdCard,
+  Image,
   LifeBuoy,
   LucideIcon,
   UserKey,
@@ -22,6 +22,7 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { redirect, RedirectType } from "next/navigation"
 import RyoGoLogo from "@/components/logo"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
@@ -72,6 +73,7 @@ export default async function OnboardingHomePage() {
             <OnboardingHomeStepItem
               label={t("BodySteps.Step1")}
               icon={AtSign}
+              first
             />
             <OnboardingHomeStepItem
               label={t("BodySteps.Step2")}
@@ -85,6 +87,7 @@ export default async function OnboardingHomePage() {
             <OnboardingHomeStepItem
               label={t("BodySteps.Step5")}
               icon={UserKey}
+              last
             />
           </div>
         </div>
@@ -96,7 +99,7 @@ export default async function OnboardingHomePage() {
           <div className="flex flex-col gap-2 md:gap-3">
             <OnboardingHomeDocumentItem
               label={t("BodyChecklist.Item1")}
-              icon={Building2}
+              icon={Image}
             />
             <OnboardingHomeDocumentItem
               label={t("BodyChecklist.Item2")}
@@ -124,22 +127,27 @@ function OnboardingHomeDocumentItem(props: {
   return (
     <div className="flex flex-row gap-3 md:gap-4 items-center">
       <div className="bg-sky-700 rounded-lg size-10 md:size-12 flex justify-center items-center shrink-0">
-        <props.icon className="text-sky-50 size-4 md:size-5" />
+        <RyogoIcon icon={props.icon} size="sm" color="white" />
       </div>
       <RyogoSmall color="slate">{props.label}</RyogoSmall>
     </div>
   )
 }
 
-function OnboardingHomeStepItem(props: { icon: LucideIcon; label: string }) {
+function OnboardingHomeStepItem(props: {
+  icon: LucideIcon
+  label: string
+  first?: boolean
+  last?: boolean
+}) {
   return (
     <div className="flex flex-row gap-3 md:gap-4 items-center">
       <div className="flex flex-col items-center">
-        <div className="w-1 h-2 md:h-3 bg-sky-50"></div>
+        <div className={`w-1 h-2 md:h-3 ${!props.first && `bg-sky-50`}`}></div>
         <div className="bg-sky-50 rounded-full size-10 md:size-12 flex justify-center items-center shrink-0">
-          <props.icon className="text-sky-700 size-4 md:size-5" />
+          <RyogoIcon icon={props.icon} size="sm" color="brand" />
         </div>
-        <div className="w-1 h-2 md:h-3 bg-sky-50"></div>
+        <div className={`w-1 h-2 md:h-3 ${!props.last && `bg-sky-50`}`}></div>
       </div>
       <RyogoSmall color="slate">{props.label}</RyogoSmall>
     </div>

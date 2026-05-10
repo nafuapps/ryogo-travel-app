@@ -6,7 +6,6 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetClose,
@@ -28,6 +27,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { midTripAction } from "@/app/actions/bookings/midTripAction"
 import { useLocation } from "@/hooks/useLocation"
+import TripSheetFormWrapper from "./tripSheetFormWrapper"
 
 export default function MidTripSheet({
   booking,
@@ -133,33 +133,31 @@ export default function MidTripSheet({
           <SheetTitle>{t("Title", { type: type })}</SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <Form {...formData}>
-          <form
-            id="midTrip"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
-          >
-            <RyogoInput
-              name={"odometerReading"}
-              type="tel"
-              label={t("Field1.Title")}
-              placeholder={t("Field1.Placeholder")}
-              description={t("Field1.Description")}
-            />
-            <RyogoFileInput
-              name={"tripLogPhoto"}
-              register={formData.register("tripLogPhoto")}
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description", { type: type })}
-            />
-            <RyogoTextarea
-              name="remarks"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-            />
-          </form>
-        </Form>
+        <TripSheetFormWrapper<SchemaType>
+          id="midTrip"
+          onSubmit={formData.handleSubmit(onSubmit)}
+          form={formData}
+        >
+          <RyogoInput
+            name={"odometerReading"}
+            type="tel"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoFileInput
+            name={"tripLogPhoto"}
+            register={formData.register("tripLogPhoto")}
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description", { type: type })}
+          />
+          <RyogoTextarea
+            name="remarks"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+          />
+        </TripSheetFormWrapper>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="midTrip">
             {isPending ? t("Loading") : t("Mid", { type: type })}

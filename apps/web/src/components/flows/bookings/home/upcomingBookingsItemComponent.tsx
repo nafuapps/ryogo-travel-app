@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  RyogoSmall,
-  RyogoH4,
-  RyogoP,
-  RyogoCaption,
-} from "@/components/typography"
+import { RyogoSmall, RyogoH4 } from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -16,19 +11,15 @@ import {
 } from "@/components/ui/select"
 import { Clock } from "lucide-react"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import { useState } from "react"
-import { format } from "date-fns"
-import moment from "moment"
 import { FindUpcomingBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
-import { getCombinedDateTime } from "@/lib/utils"
 import {
-  GridItemWrapper,
-  GridWrapper,
   SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { UpcomingBookingCard } from "@/components/cards/booking/bookingCards"
 
 export default function UpcomingBookingsItemComponent({
   upcomingBookings7Days,
@@ -49,10 +40,7 @@ export default function UpcomingBookingsItemComponent({
 
   return (
     <SectionWrapper id="UpcomingBookingsSection">
-      <div
-        id="UpcomingBookingsHeader"
-        className="flex flex-row justify-between items-center"
-      >
+      <SectionRowWrapper center>
         <SectionHeaderWrapper>
           <RyogoIcon icon={Clock} size="sm" />
           <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
@@ -72,44 +60,10 @@ export default function UpcomingBookingsItemComponent({
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div>
+      </SectionRowWrapper>
       {trips.map((trip) => (
-        <UpcomingComponent key={trip.bookingId} {...trip} />
+        <UpcomingBookingCard key={trip.bookingId} booking={trip} />
       ))}
     </SectionWrapper>
-  )
-}
-
-function UpcomingComponent(props: FindUpcomingBookingsNextDaysType[number]) {
-  const combinedDateTime = getCombinedDateTime(props.startDate, props.startTime)
-  return (
-    <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <GridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.route}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{props.vehicle}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.driver}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {format(props.startDate, "dd MMM hh:mm aaa")}
-          </RyogoCaption>
-          {combinedDateTime < new Date() ? (
-            <RyogoP color="red">{moment(combinedDateTime).fromNow()}</RyogoP>
-          ) : (
-            <RyogoP weight="font-bold">
-              {moment(combinedDateTime).fromNow()}
-            </RyogoP>
-          )}
-        </GridItemWrapper>
-      </GridWrapper>
-    </Link>
   )
 }

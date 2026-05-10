@@ -71,7 +71,7 @@ export function RyogoChinImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="flex justify-center items-center overflow-hidden bg-slate-200 rounded-b-lg p-1.5 lg:p-2">
       <Dialog>
-        <DialogTrigger className="w-full hover:underline hover:cursor-pointer">
+        <DialogTrigger className="w-full hover:underline">
           <RyogoCaption color="light">{alt}</RyogoCaption>
         </DialogTrigger>
         <DialogContent className="size-5/6">

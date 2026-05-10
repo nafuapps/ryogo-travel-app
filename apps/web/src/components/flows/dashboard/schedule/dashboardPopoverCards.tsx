@@ -1,3 +1,7 @@
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { FindScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
@@ -12,30 +16,30 @@ export function OngoingBookingPopoverCard(
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Booking")
   return (
-    <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-row justify-between gap-3 lg:gap-4">
-        <div className="flex flex-col gap-1 item-start">
+    <SectionColWrapper>
+      <SectionRowWrapper>
+        <SectionColWrapper small>
           <RyogoCaption color="dark" weight="font-bold">
             {props.type.toUpperCase()}
           </RyogoCaption>
           <RyogoH4>{props.route}</RyogoH4>
-        </div>
-        <div className="flex flex-col gap-1 items-end">
+        </SectionColWrapper>
+        <SectionColWrapper small end>
           <RyogoCaption color="slate">
             {moment(props.startDate).format("DD MMM") +
               " - " +
               moment(props.endDate).format("DD MMM")}
           </RyogoCaption>
-        </div>
-      </div>
-      <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
-        <div className="flex flex-col gap-1">
+        </SectionColWrapper>
+      </SectionRowWrapper>
+      <SectionRowWrapper end>
+        <SectionColWrapper small>
           <RyogoSmall>{props.customerName}</RyogoSmall>
           <RyogoCaption color="dark" weight="font-bold">
             {props.bookingId}
           </RyogoCaption>
-        </div>
-        <div className="flex flex-col gap-1 items-end">
+        </SectionColWrapper>
+        <SectionColWrapper small end>
           {props.vehicle ? (
             <RyogoSmall>{props.vehicle}</RyogoSmall>
           ) : (
@@ -48,8 +52,8 @@ export function OngoingBookingPopoverCard(
           ) : (
             <RyogoCaption color="red">{t("NotAssigned")}</RyogoCaption>
           )}
-        </div>
-      </div>
+        </SectionColWrapper>
+      </SectionRowWrapper>
       {(!props.driver || !props.vehicle) && (
         <Link
           href={`/dashboard/bookings/${props.bookingId}/${
@@ -62,15 +66,11 @@ export function OngoingBookingPopoverCard(
         </Link>
       )}
       <Link href={`/dashboard/bookings/${props.bookingId}`}>
-        <Button
-          variant={"secondary"}
-          type="button"
-          className="w-full hover:cursor-pointer"
-        >
+        <Button variant={"secondary"} type="button" className="w-full">
           {t("ViewDetails")}
         </Button>
       </Link>
-    </div>
+    </SectionColWrapper>
   )
 }
 
@@ -81,48 +81,44 @@ export function AssignedBookingPopoverCard(
 ) {
   const t = useTranslations("Dashboard.PopoverCards.AssignedBooking")
   return (
-    <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-row justify-between gap-3 lg:gap-4">
-        <div className="flex flex-col gap-1 item-start">
+    <SectionColWrapper>
+      <SectionRowWrapper>
+        <SectionColWrapper small>
           <RyogoCaption color="dark" weight="font-bold">
             {props.type.toUpperCase()}
           </RyogoCaption>
           <RyogoH4>
             {props.source.city + " - " + props.destination.city}
           </RyogoH4>
-        </div>
-        <div className="flex flex-col gap-1 items-end">
+        </SectionColWrapper>
+        <SectionColWrapper small end>
           <RyogoCaption color="slate">
             {moment(props.startDate).format("DD MMM") +
               " - " +
               moment(props.endDate).format("DD MMM")}
           </RyogoCaption>
-        </div>
-      </div>
-      <div className="flex flex-row justify-between gap-3 lg:gap-4 items-end">
-        <div className="flex flex-col gap-1">
+        </SectionColWrapper>
+      </SectionRowWrapper>
+      <SectionRowWrapper end>
+        <SectionColWrapper small>
           <RyogoSmall>{props.customer.name}</RyogoSmall>
           <RyogoCaption color="dark" weight="font-bold">
             {props.id}
           </RyogoCaption>
-        </div>
-        <div className="flex flex-col gap-1 items-end">
+        </SectionColWrapper>
+        <SectionColWrapper small end>
           <RyogoSmall>{props.assignedVehicle?.vehicleNumber}</RyogoSmall>
           <RyogoCaption color="dark" weight="font-bold">
             {props.assignedDriver?.name}
           </RyogoCaption>
-        </div>
-      </div>
+        </SectionColWrapper>
+      </SectionRowWrapper>
       <Link href={`/dashboard/bookings/${props.id}`}>
-        <Button
-          variant={"secondary"}
-          type="button"
-          className="w-full hover:cursor-pointer"
-        >
+        <Button variant={"secondary"} type="button" className="w-full">
           {t("ViewDetails")}
         </Button>
       </Link>
-    </div>
+    </SectionColWrapper>
   )
 }
 
@@ -131,31 +127,27 @@ export function RepairPopoverCard(
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Repair")
   return (
-    <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-col gap-1">
+    <SectionColWrapper>
+      <SectionColWrapper small>
         <RyogoCaption color="slate">{props.vehicle.vehicleNumber}</RyogoCaption>
         <RyogoH4>
           {moment(props.startDate).format("DD MMM") +
             " - " +
             moment(props.endDate).format("DD MMM")}
         </RyogoH4>
-      </div>
-      <div className="flex flex-col gap-1">
+      </SectionColWrapper>
+      <SectionColWrapper small>
         <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
         <RyogoCaption color="dark" weight="font-bold">
           {props.id}
         </RyogoCaption>
-      </div>
+      </SectionColWrapper>
       <Link href={`/dashboard/vehicles/${props.vehicleId}/repairs`}>
-        <Button
-          variant={"secondary"}
-          type="button"
-          className="w-full hover:cursor-pointer"
-        >
+        <Button variant={"secondary"} type="button" className="w-full">
           {t("ViewDetails")}
         </Button>
       </Link>
-    </div>
+    </SectionColWrapper>
   )
 }
 
@@ -164,30 +156,26 @@ export function LeavePopoverCard(
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Leave")
   return (
-    <div className="flex flex-col gap-3 lg:gap-4">
-      <div className="flex flex-col gap-1">
+    <SectionColWrapper>
+      <SectionColWrapper small>
         <RyogoCaption color="slate">{props.driver.name}</RyogoCaption>
         <RyogoH4>
           {moment(props.startDate).format("DD MMM") +
             " - " +
             moment(props.endDate).format("DD MMM")}
         </RyogoH4>
-      </div>
-      <div className="flex flex-col gap-1">
+      </SectionColWrapper>
+      <SectionColWrapper small>
         <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
         <RyogoCaption color="dark" weight="font-bold">
           {props.id}
         </RyogoCaption>
-      </div>
+      </SectionColWrapper>
       <Link href={`/dashboard/drivers/${props.driverId}/leaves`}>
-        <Button
-          variant={"secondary"}
-          type="button"
-          className="w-full hover:cursor-pointer"
-        >
+        <Button variant={"secondary"} type="button" className="w-full">
           {t("ViewDetails")}
         </Button>
       </Link>
-    </div>
+    </SectionColWrapper>
   )
 }

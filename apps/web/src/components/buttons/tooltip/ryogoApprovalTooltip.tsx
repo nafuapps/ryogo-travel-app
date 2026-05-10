@@ -23,7 +23,7 @@ export default function RyogoApprovalTooltip({
   return (
     <Tooltip disableHoverableContent>
       <TooltipTrigger
-        className={`flex p-3 lg:pl-4 lg:gap-1 rounded-lg justify-center items-center lg:cursor-pointer transition ${
+        className={`flex p-3 lg:pl-4 lg:gap-1 rounded-lg justify-center items-center transition ${
           isApproved
             ? "bg-green-200 hover:bg-red-200"
             : "bg-slate-200 hover:bg-slate-300"

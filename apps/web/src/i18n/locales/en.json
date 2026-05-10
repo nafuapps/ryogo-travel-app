@@ -793,36 +793,31 @@
     "Home": {
       "BookingMetrics": {
         "Title": "BOOKINGS (24H)",
-        "More": "more",
-        "Less": "less",
-        "ThanAvg": "than weekly avg",
+        "Subtitle":"{createdChange} {more} confirmed than weekly avg",
         "Leads": "Leads",
         "Ongoing": "Ongoing",
-        "Confirmed": "Confirmed",
         "Completed": "Completed",
         "Cancelled": "Cancelled"
       },
       "DriverMetrics": {
         "Title": "DRIVERS",
+        "Subtitle": "{rate} utilization rate",
         "Available": "Available",
         "InTrip": "In Trip",
         "Leave": "Leave",
-        "Inactive": "Inactive",
-        "Rate": "utilization rate"
+        "Inactive": "Inactive"
       },
       "VehicleMetrics": {
         "Title": "VEHICLES",
+        "Subtitle": "{rate} utilization rate",
         "Available": "Available",
         "InTrip": "In Trip",
         "Repair": "Repair",
-        "Inactive": "Inactive",
-        "Rate": "utilization rate"
+        "Inactive": "Inactive"
       },
       "RevenueMetrics": {
         "Title": "REVENUE (24H)",
-        "More": "more",
-        "Less": "less",
-        "ThanAvg": "than weekly avg",
+        "Subtitle":"{revenueChange} {more} revenue than weekly avg",
         "In": "Credit",
         "Out": "Debit",
         "Commission": "Avg commission rate"

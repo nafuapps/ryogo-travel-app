@@ -11,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
-
 import StepsTracker, {
   NewBookingTotalSteps,
 } from "@/components/form/stepsTracker"

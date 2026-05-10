@@ -21,6 +21,11 @@ export default async function AddAgentPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   //Not owner
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
     //New users
@@ -60,6 +65,7 @@ export default async function AddAgentPage() {
   return (
     <AddAgentPageComponent
       agencyId={currentUser.agencyId}
+      agencyName={agency.businessName}
       ownerId={currentUser.userId}
       status={currentUser.status}
       allAgents={allAgents}

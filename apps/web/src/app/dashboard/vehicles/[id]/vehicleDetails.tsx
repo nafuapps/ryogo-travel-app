@@ -49,7 +49,7 @@ export default async function VehicleDetailsPageComponent({
                 imageSize="lg"
               />
             ) : (
-              getVehicleIcon(vehicle.type, "2xl")
+              getVehicleIcon(vehicle.type, "xl")
             )}
             <ChangeVehiclePhotoSheet
               vehicleId={vehicle.id}

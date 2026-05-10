@@ -10,9 +10,23 @@ import {
 } from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import getDriverInviteMessage from "@/components/whatsapp/getDriverInviteMessage"
+import { Button } from "@/components/ui/button"
+import { MessageSquareShare } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
-export function AddDriverFinish(props: { finalData: AddDriverRequestType }) {
+export function AddDriverFinish(props: {
+  finalData: AddDriverRequestType
+  agencyName: string
+}) {
   const t = useTranslations("Onboarding.AddDriverPage.Finish")
+
+  const whatsappInviteLink = getDriverInviteMessage(
+    props.finalData.data.phone,
+    props.finalData.data.name,
+    props.agencyName,
+    props.finalData.data.email,
+  )
 
   return (
     <OnboardingStepForm formId="Step6Form">
@@ -30,7 +44,16 @@ export function AddDriverFinish(props: { finalData: AddDriverRequestType }) {
         <OnboardingStepPrimaryAction disabled={false}>
           <Link href="/onboarding/add-agent">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>
-        <OnboardingStepSecondaryAction disabled={false}>
+        <Button
+          variant={"outline"}
+          onClick={() =>
+            window.open(whatsappInviteLink, "_blank", "noreferrer")
+          }
+        >
+          {t("SendInvite")}
+          <RyogoIcon icon={MessageSquareShare} size="sm" />
+        </Button>
+        <OnboardingStepSecondaryAction>
           <Link href="/dashboard">{t("SecondaryCTA")}</Link>
         </OnboardingStepSecondaryAction>
       </OnboardingStepActions>

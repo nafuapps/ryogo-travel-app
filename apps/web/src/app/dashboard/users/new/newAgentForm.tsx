@@ -14,12 +14,15 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
+import GetAgentInviteMessage from "@/components/whatsapp/getAgentInviteMessage"
 
 export default function NewAgentForm({
   agencyId,
+  agencyName,
   allAgents,
 }: {
   agencyId: string
+  agencyName: string
   allAgents: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Dashboard.NewAgent")
@@ -85,6 +88,12 @@ export default function NewAgentForm({
       })
     } else {
       startTransition(async () => {
+        const whatsappInviteLink = GetAgentInviteMessage(
+          values.agentPhone,
+          values.agentName,
+          agencyName,
+          values.agentEmail,
+        )
         const newAgentData: AddAgentRequestType = {
           agencyId: agencyId,
           data: {
@@ -97,6 +106,7 @@ export default function NewAgentForm({
         const createdAgent = await addAgentAction(newAgentData)
         if (createdAgent) {
           toast.success(t("Success"))
+          window.open(whatsappInviteLink, "_blank", "noopener,noreferrer")
           router.replace(`/dashboard/users/${createdAgent.id}`)
         } else {
           toast.error(t("Error"))

@@ -19,6 +19,11 @@ export default async function AddDriverPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   //Not owner
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
     if (currentUser.status === UserStatusEnum.NEW) {
@@ -65,6 +70,7 @@ export default async function AddDriverPage() {
   return (
     <AddDriverPageComponent
       agencyId={currentUser.agencyId}
+      agencyName={agency?.businessName}
       userId={currentUser.userId}
       userStatus={currentUser.status}
       allDrivers={allDrivers}

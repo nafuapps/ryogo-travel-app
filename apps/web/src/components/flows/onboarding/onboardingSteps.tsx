@@ -114,7 +114,7 @@ export function OnboardingStepPrimaryAction(props: {
 
 export type OnboardingStepSecondaryActionProps = {
   children: React.ReactNode
-  disabled: boolean
+  disabled?: boolean
   onClick?: () => void
 }
 export function OnboardingStepSecondaryAction(

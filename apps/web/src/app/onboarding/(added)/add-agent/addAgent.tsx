@@ -22,6 +22,7 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 type AddAgentPageComponentProps = {
   agencyId: string
+  agencyName: string
   ownerId: string
   status: UserStatusEnum
   allAgents: FindAllUsersByRoleType
@@ -66,7 +67,11 @@ export default function AddAgentPageComponent(
         status={props.status}
         ownerId={props.ownerId}
       />,
-      <AddAgentFinish key={2} finalData={finalData} />,
+      <AddAgentFinish
+        key={2}
+        finalData={finalData}
+        agencyName={props.agencyName}
+      />,
     ])
 
   return (

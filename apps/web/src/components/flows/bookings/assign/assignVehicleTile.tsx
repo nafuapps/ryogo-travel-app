@@ -130,7 +130,7 @@ export default function AssignVehicleTile({
           <RyogoP weight="font-bold"> {vehicleData.vehicleNumber}</RyogoP>
           <RyogoSmall>{vehicleData.brand + " " + vehicleData.model}</RyogoSmall>
           <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
-            {getVehicleIcon(vehicleData.type)}
+            {getVehicleIcon(vehicleData.type, "sm")}
             <RyogoCaption color="slate">{vehicleData.color}</RyogoCaption>
           </div>
         </AssignTileHeaderWrapper>

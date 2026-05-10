@@ -24,6 +24,7 @@ import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 type AddDriverPageComponentProps = {
   agencyId: string
+  agencyName: string
   userId: string
   userStatus: UserStatusEnum
   allDrivers: FindAllUsersByRoleType
@@ -88,7 +89,11 @@ export default function AddDriverPageComponent(
         ownerId={props.userId}
         userStatus={props.userStatus}
       />,
-      <AddDriverFinish key={4} finalData={finalData} />,
+      <AddDriverFinish
+        key={4}
+        finalData={finalData}
+        agencyName={props.agencyName}
+      />,
     ])
 
   return (

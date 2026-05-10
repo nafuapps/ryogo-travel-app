@@ -597,7 +597,8 @@
         "Description1": "Finally, we can also add an agent to your account. This step is optional",
         "Description2": "An agent runs your day-to-day operations like taking bookings from customers, assigning drivers, vehicles, etc.",
         "PrimaryCTA": "Add Agent",
-        "SecondaryCTA": "I will do this later"
+        "SendInvite": "Send Invite on Whatsapp",
+        "SecondaryCTA": "Go to Dashboard"
       }
     },
     "AddAgentPage": {
@@ -649,7 +650,9 @@
         "Title": "Congratulations!",
         "Subtitle": "Agent added to your account! You can add more later.",
         "Email": "Also, an email has been sent with the login details to {email}",
-        "PrimaryCTA": "Go to Dashboard"
+        "PrimaryCTA": "Go to Dashboard",
+        "SendInvite": "Send Invite on Whatsapp"
+
       }
     },
     "ChangePasswordPage": {
@@ -2735,7 +2738,9 @@
       "Confirmation":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. Your driver is *{driverName}* and vehicle is *{vehicleNumber}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
       "ConfirmationWithoutDriverVehicle":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
       "Invoice":"Hello *{customerName}*, your trip from *{source}* to *{destination}* for *{startDate}* has been successfully completed. We hope you had a safe and enjoyable journey. Your invoice is ready for booking *#{bookingId}*. Thank you for choosing our service. For any queries, contact us at *{agencyPhone}*. You can download and view the detailed invoice here: {invoiceLink}",
-      "Quote":"Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}"
+      "Quote":"Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}",
+      "DriverInvite":"Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
+      "AgentInvite":"Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}"
     }
   },
   "Rider": {

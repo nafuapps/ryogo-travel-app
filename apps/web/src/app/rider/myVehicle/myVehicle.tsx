@@ -43,7 +43,7 @@ export default async function RiderMyVehiclePageComponent({
                 imageSize="lg"
               />
             ) : (
-              getVehicleIcon(vehicle.type, "2xl")
+              getVehicleIcon(vehicle.type, "xl")
             )}
           </SectionColWrapper>
           <SectionColWrapper end>

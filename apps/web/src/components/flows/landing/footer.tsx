@@ -7,7 +7,7 @@ export default async function Footer() {
   const t = await getTranslations("Landing.Footer")
   return (
     <footer className="bg-sky-950 text-sky-100">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-10 lg:py-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-10 lg:py-12">
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand section */}

@@ -18,5 +18,9 @@ export default async function LandingLayout({
     redirect("/dashboard", RedirectType.replace)
   }
 
-  return <LayoutWrapper id="LandingLayout">{children}</LayoutWrapper>
+  return (
+    <main id="LandingLayout" className="flex flex-col">
+      {children}
+    </main>
+  )
 }

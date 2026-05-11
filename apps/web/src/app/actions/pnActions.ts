@@ -3,16 +3,14 @@
 import webpush from "web-push"
 
 webpush.setVapidDetails(
-  "<mailto:nafuapps@gmail.com>",
+  "mailto:nafuapps@gmail.com",
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
   process.env.VAPID_PRIVATE_KEY!,
 )
 
-import type { PushSubscription as WebPushSubscription } from "web-push"
+let subscription: PushSubscription | null = null
 
-let subscription: WebPushSubscription | null = null
-
-export async function subscribeUserAction(sub: WebPushSubscription) {
+export async function subscribeUserAction(sub: PushSubscription) {
   subscription = sub
   // In a production environment, you would want to store the subscription in a database
   // For example: await db.subscriptions.create({ data: sub })
@@ -33,11 +31,11 @@ export async function sendNotificationAction(message: string) {
 
   try {
     await webpush.sendNotification(
-      subscription,
+      subscription as any,
       JSON.stringify({
         title: "Test Notification",
         body: message,
-        icon: "/icon.png",
+        icon: "/logoPWA.png",
       }),
     )
     return { success: true }

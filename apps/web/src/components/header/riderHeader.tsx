@@ -5,7 +5,7 @@ import {
   HeaderRightWrapper,
   HeaderWrapper,
 } from "@/components/header/headerWrappers"
-import { RyogoH4 } from "@/components/typography"
+import { RyogoP } from "@/components/typography"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Target } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -24,7 +24,7 @@ export default function RiderHeader({ pathName }: { pathName: string }) {
     <HeaderWrapper>
       <HeaderLeftWrapper>
         <SidebarTrigger />
-        <RyogoH4>{title}</RyogoH4>
+        <RyogoP>{title}</RyogoP>
       </HeaderLeftWrapper>
       <HeaderRightWrapper>
         <Link href="/rider/myActions">

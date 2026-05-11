@@ -13,7 +13,7 @@ export default function AccountCard({
 }) {
   return (
     <Link href={`/auth/login/password/${account.id}`}>
-      <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-100 rounded-lg hover:bg-slate-50 p-3 lg:p-4">
+      <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-200 rounded-lg hover:bg-slate-50 p-3 lg:p-4">
         <div className="flex flex-col justify-between gap-1 lg:gap-2">
           <div className="flex items-center gap-2 lg:gap-3">
             {account.photoUrl && (

@@ -99,7 +99,6 @@ export function OngoingBookingCard({
             {booking.bookingId}
           </RyogoCaption>
           <RyogoP color={rider ? "white" : "dark"} weight="font-bold">
-            {" "}
             {booking.customerName}
           </RyogoP>
         </GridItemWrapper>
@@ -108,7 +107,6 @@ export function OngoingBookingCard({
             {booking.type.toUpperCase()}
           </RyogoCaption>
           <RyogoP color={rider ? "white" : "dark"} weight="font-bold">
-            {" "}
             {booking.route}
           </RyogoP>
         </GridItemWrapper>
@@ -174,8 +172,12 @@ export function UpcomingBookingCard({
           <RyogoP weight="font-bold"> {booking.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.vehicle}</RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.driver}</RyogoP>
+          <RyogoCaption color={booking.vehicle ? "slate" : "red"}>
+            {booking.vehicle ?? "-"}
+          </RyogoCaption>
+          <RyogoP weight="font-bold" color={booking.driver ? "dark" : "red"}>
+            {booking.driver ?? "-"}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">

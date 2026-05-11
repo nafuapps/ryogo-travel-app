@@ -1,4 +1,4 @@
-import { RyogoH3, RyogoH4, RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoH4, RyogoP, RyogoCaption } from "@/components/typography"
 import { Sidebar, useSidebar } from "@/components/ui/sidebar"
 import { Check } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -55,7 +55,7 @@ export default function OnboardingSidebar({
         id="OnboardingSidebarSection"
         className="w-full flex px-8 py-10 md:px-10 md:py-12 h-full flex-col gap-8 lg:gap-10 bg-slate-50"
       >
-        <RyogoH3 color="slate">{t("Heading")}</RyogoH3>
+        <RyogoH4 color="slate">{t("Heading")}</RyogoH4>
         <div
           id="OnboardingSidebarSteps"
           className="flex flex-col gap-2 lg:gap-3"

@@ -9,7 +9,7 @@ export default function UserCard({
   user: NonNullable<FindUserDetailsByIdType>
 }) {
   return (
-    <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-50 rounded-lg p-3 lg:p-4">
+    <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-100 rounded-lg p-3 lg:p-4">
       <div className="flex items-center gap-2 lg:gap-3">
         {user.photoUrl && (
           <RyogoImage

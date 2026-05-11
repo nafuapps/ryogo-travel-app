@@ -12,12 +12,12 @@ import { RyogoCaption } from "@/components/typography"
 type StatusPillColor = "slate" | "brand" | "green" | "red" | "yellow"
 
 function getStatusPillColor(color?: StatusPillColor) {
-  if (color === "slate") return "bg-slate-400"
-  if (color === "brand") return "bg-sky-400"
-  if (color === "green") return "bg-green-400"
-  if (color === "red") return "bg-red-400"
-  if (color === "yellow") return "bg-yellow-400"
-  return "bg-slate-400"
+  if (color === "slate") return "bg-slate-700"
+  if (color === "brand") return "bg-sky-700"
+  if (color === "green") return "bg-green-600"
+  if (color === "red") return "bg-red-600"
+  if (color === "yellow") return "bg-yellow-600"
+  return "bg-slate-700"
 }
 
 interface StatusPillProps {
@@ -27,7 +27,7 @@ interface StatusPillProps {
 export function StatusPill(props: StatusPillProps) {
   return (
     <div
-      className={`flex rounded-full ${getStatusPillColor(props.bgColor)} px-2 py-1.5 lg:px-3 lg:py-2 text-nowrap`}
+      className={`flex rounded-full ${getStatusPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 text-nowrap`}
     >
       <RyogoCaption color="white">{props.status}</RyogoCaption>
     </div>

@@ -1,9 +1,4 @@
-import {
-  RyogoH4,
-  RyogoP,
-  RyogoSmall,
-  RyogoCaption,
-} from "@/components/typography"
+import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   FindVehiclesOnTripType,
   vehicleServices,
@@ -34,7 +29,7 @@ export default async function OnTripVehiclesComponent({
       <SectionHeaderWrapper>
         <RyogoIcon icon={Route} size="sm" />
         <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoH4 color="slate"> {onTripVehicles.length}</RyogoH4>
+        <RyogoP color="slate"> {onTripVehicles.length}</RyogoP>
       </SectionHeaderWrapper>
       {onTripVehicles.map((vehicle) => (
         <OnTripVehicleComponent key={vehicle.id} {...vehicle} />

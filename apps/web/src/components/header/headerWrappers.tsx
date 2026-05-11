@@ -1,5 +1,4 @@
 import { RyogoSmall } from "@/components/typography"
-import Link from "next/link"
 
 export function HeaderWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -15,7 +14,7 @@ export function HeaderWrapper({ children }: { children: React.ReactNode }) {
 
 export function HeaderLeftWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className={"flex flex-row gap-2 lg:gap-3 items-center"}>
+    <div className={"flex flex-row gap-1.5 lg:gap-2 items-center"}>
       {children}
     </div>
   )

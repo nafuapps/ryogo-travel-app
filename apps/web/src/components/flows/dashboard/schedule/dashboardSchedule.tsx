@@ -1,4 +1,4 @@
-import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   SelectTrigger,
   SelectValue,
@@ -52,7 +52,7 @@ export function DashboardScheduleHeader({
       <SectionHeaderWrapper>
         <RyogoIcon icon={CalendarDays} size="sm" />
         <RyogoSmall color="slate">{title}</RyogoSmall>
-        <RyogoH4 color="slate"> {length}</RyogoH4>
+        <RyogoP color="slate"> {length}</RyogoP>
       </SectionHeaderWrapper>
       <Select
         value={selectedTab}
@@ -136,7 +136,7 @@ export function DashboardScheduleItem({
 }
 
 export function DashboardScheduleItemID({
-  icon: Icon,
+  icon,
   title,
   imageAlt,
   photoUrl,
@@ -151,9 +151,9 @@ export function DashboardScheduleItemID({
       {photoUrl ? (
         <RyogoImage src={getFileUrl(photoUrl)} alt={imageAlt} imageSize="xs" />
       ) : (
-        <Icon className="size-7 lg:size-8 text-slate-400" />
+        <RyogoIcon icon={icon} size="md" />
       )}
-      <RyogoCaption color="dark" weight="font-bold">
+      <RyogoCaption color="slate" weight="font-bold">
         {title}
       </RyogoCaption>
     </div>

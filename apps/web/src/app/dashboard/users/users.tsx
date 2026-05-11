@@ -1,9 +1,4 @@
-import {
-  RyogoSmall,
-  RyogoH4,
-  RyogoCaption,
-  RyogoP,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import {
   FindAllUsersInAgencyType,
   userServices,
@@ -45,7 +40,7 @@ export default async function UsersPageComponent({
         <SectionHeaderWrapper>
           <RyogoIcon icon={Rows3} size="sm" />
           <RyogoSmall color="slate">{t("Owners.Title")}</RyogoSmall>
-          <RyogoH4 color="slate"> {owners.length}</RyogoH4>
+          <RyogoP color="slate"> {owners.length}</RyogoP>
         </SectionHeaderWrapper>
         {owners.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
@@ -55,7 +50,7 @@ export default async function UsersPageComponent({
         <SectionHeaderWrapper>
           <RyogoIcon icon={Rows3} size="sm" />
           <RyogoSmall color="slate">{t("Agents.Title")}</RyogoSmall>
-          <RyogoH4 color="slate"> {agents.length}</RyogoH4>
+          <RyogoP color="slate"> {agents.length}</RyogoP>
           <Link href={`/dashboard/users/new`} className="ml-auto">
             <Button variant={"outline"}>
               <RyogoIcon icon={Plus} size="sm" />
@@ -71,7 +66,7 @@ export default async function UsersPageComponent({
         <SectionHeaderWrapper>
           <RyogoIcon icon={Rows3} size="sm" />
           <RyogoSmall color="slate">{t("Drivers.Title")}</RyogoSmall>
-          <RyogoH4 color="slate"> {drivers.length}</RyogoH4>
+          <RyogoP color="slate"> {drivers.length}</RyogoP>
           <Link href={`/dashboard/drivers/new`} className="ml-auto">
             <Button variant={"outline"}>
               <RyogoIcon icon={Plus} size="sm" />

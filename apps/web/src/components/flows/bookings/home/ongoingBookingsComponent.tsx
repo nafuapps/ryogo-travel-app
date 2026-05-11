@@ -1,4 +1,4 @@
-import { RyogoH4, RyogoSmall } from "@/components/typography"
+import { RyogoP, RyogoSmall } from "@/components/typography"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -21,7 +21,7 @@ export default async function OngoingBookingsComponent({
       <SectionHeaderWrapper>
         <RyogoIcon icon={Route} size="sm" />
         <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoH4 color="slate"> {ongoingTrips.length}</RyogoH4>
+        <RyogoP color="slate"> {ongoingTrips.length}</RyogoP>
       </SectionHeaderWrapper>
       {ongoingTrips.map((trip) => (
         <OngoingBookingCard key={trip.bookingId} booking={trip} />

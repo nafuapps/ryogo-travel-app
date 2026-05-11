@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoH4, RyogoH2 } from "@/components/typography"
+import { RyogoP, RyogoH2 } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepHeader,
@@ -31,7 +31,7 @@ export default function ChangePasswordPageComponent(
             <RyogoH2>{t("Title")}</RyogoH2>
           </OnboardingStepHeaderTopLine>
         </OnboardingStepHeader>
-        <RyogoH4 color="slate"> {t("Subtitle")}</RyogoH4>
+        <RyogoP color="slate"> {t("Subtitle")}</RyogoP>
         <ChangePasswordStep1
           userId={props.userId}
           role={props.role}

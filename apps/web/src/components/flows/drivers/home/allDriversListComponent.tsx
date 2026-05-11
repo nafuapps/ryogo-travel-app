@@ -1,9 +1,4 @@
-import {
-  RyogoSmall,
-  RyogoH4,
-  RyogoCaption,
-  RyogoP,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import {
   FindDriversByAgencyType,
   driverServices,
@@ -38,7 +33,7 @@ export default async function AllDriversListComponent({
       <SectionHeaderWrapper>
         <RyogoIcon icon={Rows3} size="sm" />
         <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoH4 color="slate"> {allDrivers.length}</RyogoH4>
+        <RyogoP color="slate"> {allDrivers.length}</RyogoP>
         <Link href={`/dashboard/drivers/new`} className="ml-auto">
           <Button variant={"outline"}>
             <RyogoIcon icon={Plus} size="sm" />

@@ -121,7 +121,7 @@ export function SectionHeaderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-row items-center my-1 lg:my-1.5 gap-2 lg:gap-3">
+    <div className="flex flex-row items-center my-0.5 lg:my-1 gap-2 lg:gap-3">
       {children}
     </div>
   )
@@ -147,7 +147,7 @@ export function GridWrapper({
 
 export function GridItemWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-0.5 lg:gap-1 items-start sm:items-center justify-center">
+    <div className="flex flex-col gap-0.5 lg:gap-1 items-start justify-start sm:items-center sm:justify-center">
       {children}
     </div>
   )

@@ -1,4 +1,4 @@
-import { RyogoH3, RyogoH4, RyogoP } from "@/components/typography"
+import { RyogoH3, RyogoP } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepContent,
@@ -32,7 +32,7 @@ export function AddAgentFinish(props: {
       <OnboardingStepContent contentId="Step6Content">
         <OnboardingSuccessIcon iconId="Step6Icon" />
         <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoH4>{t("Subtitle")}</RyogoH4>
+        <RyogoP>{t("Subtitle")}</RyogoP>
         <RyogoP color="slate">
           {t("Email", { email: props.finalData.data.email })}
         </RyogoP>

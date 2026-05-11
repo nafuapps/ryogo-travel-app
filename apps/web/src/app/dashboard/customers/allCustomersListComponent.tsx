@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  RyogoSmall,
-  RyogoH4,
-  RyogoCaption,
-  RyogoP,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { User, Plus, Rows3 } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -75,7 +70,7 @@ export default function AllCustomersListComponent({
       <SectionHeaderWrapper>
         <RyogoIcon icon={Rows3} size="sm" />
         <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoH4 color="slate"> {allCustomers.length}</RyogoH4>
+        <RyogoP color="slate"> {allCustomers.length}</RyogoP>
         <Link href={`/dashboard/customers/new`} className="ml-auto">
           <Button variant={"outline"}>
             <RyogoIcon icon={Plus} size="sm" />

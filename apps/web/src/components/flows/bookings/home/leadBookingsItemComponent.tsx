@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  RyogoSmall,
-  RyogoH4,
-  RyogoP,
-  RyogoCaption,
-} from "@/components/typography"
+import { RyogoSmall, RyogoP, RyogoCaption } from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -49,7 +44,7 @@ export default function LeadBookingsItemComponent({
         <SectionHeaderWrapper>
           <RyogoIcon icon={BookOpen} size="sm" />
           <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-          <RyogoH4 color="slate"> {trips.length}</RyogoH4>
+          <RyogoP color="slate"> {trips.length}</RyogoP>
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}

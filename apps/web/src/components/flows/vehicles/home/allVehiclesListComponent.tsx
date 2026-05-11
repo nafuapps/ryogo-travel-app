@@ -1,9 +1,4 @@
-import {
-  RyogoSmall,
-  RyogoH4,
-  RyogoCaption,
-  RyogoP,
-} from "@/components/typography"
+import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import {
   FindVehiclesByAgencyType,
   vehicleServices,
@@ -37,7 +32,7 @@ export default async function AllVehiclesListComponent({
       <SectionHeaderWrapper>
         <RyogoIcon icon={Rows3} size="sm" />
         <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoH4 color="slate"> {allVehicles.length}</RyogoH4>
+        <RyogoP color="slate"> {allVehicles.length}</RyogoP>
         <Link href={`/dashboard/vehicles/new`} className="ml-auto">
           <Button variant={"outline"}>
             <RyogoIcon icon={Plus} size="sm" />

@@ -1,4 +1,4 @@
-import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoH4, RyogoCaption } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { UserCheck } from "lucide-react"
@@ -31,12 +31,12 @@ export default function ExistingCutomerCard({
       )}
       <SectionColWrapper small>
         <RyogoH4>{existingCustomer.name}</RyogoH4>
-        <RyogoSmall color="slate">{existingCustomer.remarks}</RyogoSmall>
         <RyogoCaption color="light">
           {existingCustomer.location.city +
             ", " +
             existingCustomer.location.state}
         </RyogoCaption>
+        <RyogoCaption color="slate">{existingCustomer.remarks}</RyogoCaption>
       </SectionColWrapper>
     </div>
   )

@@ -7,9 +7,7 @@ import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import StepsTracker, {
-  NewDriverTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import { useTransition } from "react"
@@ -84,7 +82,7 @@ export function NewDriverConfirm(props: {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewDriverTotalSteps} current={3} />
+        <StepsTracker steps={"driver"} current={3} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<AddDriverRequestType>

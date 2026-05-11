@@ -39,7 +39,7 @@ export default async function MyBookingPage({
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
-  //Redirect based on booking status
+  //Render based on booking status
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]"} />

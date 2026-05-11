@@ -4,6 +4,7 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { tripLogRepository } from "../repositories/tripLog.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
+import { sql } from "drizzle-orm"
 
 export const tripLogServices = {
   //Add a trip log
@@ -15,7 +16,8 @@ export const tripLogServices = {
     odometerReading: number
     tripLogType: TripLogTypesEnum
     remarks?: string
-    latLong?: string
+    lat?: number | null
+    long?: number | null
   }) {
     const startTripLog: InsertTripLogType = {
       bookingId: data.bookingId,
@@ -25,7 +27,16 @@ export const tripLogServices = {
       odometerReading: data.odometerReading, // in kilometers
       type: data.tripLogType,
       remarks: data.remarks,
-      latLong: data.latLong,
+      latLong: data.lat && data.long ? `${data.lat},${data.long}` : null,
+      location:
+        data.lat && data.long
+          ? (sql.raw(
+              `ST_SetSRID(ST_MakePoint(${data.long}, ${data.lat}), 4326)`,
+            ) as unknown as {
+              x: number
+              y: number
+            })
+          : undefined,
     }
     const tripLog = await tripLogRepository.createTripLog(startTripLog)
     await vehicleRepository.updateOdometerReading(

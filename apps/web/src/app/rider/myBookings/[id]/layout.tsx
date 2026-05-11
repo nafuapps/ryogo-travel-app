@@ -31,11 +31,10 @@ export default async function RiderMyBookingLayout({
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
-  //Lead or cancelled or unassigned bookings are not accessible
+  //Lead or cancelled or driver unassigned bookings are not accessible
   if (
     !booking ||
     booking.assignedDriverId === null ||
-    booking.assignedVehicleId === null ||
     [BookingStatusEnum.CANCELLED, BookingStatusEnum.LEAD].includes(
       booking.status,
     )

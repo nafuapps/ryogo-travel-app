@@ -1,1 +1,1 @@
-export const LEAD_CANCEL_TIMEOUT_DAYS = 1
+export const OLD_LEAD_CANCEL_DAYS = 1

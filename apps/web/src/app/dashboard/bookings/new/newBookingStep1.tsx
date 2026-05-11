@@ -6,9 +6,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
-import StepsTracker, {
-  NewBookingTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { RyogoCombobox, RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -137,7 +135,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewBookingTotalSteps} current={0} />
+        <StepsTracker steps={"booking"} current={0} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step1Type>

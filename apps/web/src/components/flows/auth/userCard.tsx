@@ -3,11 +3,11 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoImage } from "@/components/images/ryogoImage"
 
-export const UserCard = ({
+export default function UserCard({
   user,
 }: {
   user: NonNullable<FindUserDetailsByIdType>
-}) => {
+}) {
   return (
     <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-50 rounded-lg p-3 lg:p-4">
       <div className="flex items-center gap-2 lg:gap-3">

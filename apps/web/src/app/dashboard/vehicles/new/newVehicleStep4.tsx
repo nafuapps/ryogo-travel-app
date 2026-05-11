@@ -9,9 +9,7 @@ import z from "zod"
 import { Button } from "@/components/ui/button"
 import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
-import StepsTracker, {
-  NewVehicleTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   NewStepHeaderWrapper,
@@ -83,7 +81,7 @@ export function NewVehicleStep4(props: {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewVehicleTotalSteps} current={3} />
+        <StepsTracker steps={"vehicle"} current={3} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step4Type>

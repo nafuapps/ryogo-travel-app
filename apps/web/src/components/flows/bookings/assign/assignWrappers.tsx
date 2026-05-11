@@ -77,10 +77,10 @@ export function AssignTileStatusWrapper({
   )
 }
 
-export const BestTotalScore = 100
-export const GoodTotalScore = 80
-export const MediumTotalScore = 60
-export const BadTotalScore = 30
+const BestTotalScore = 100
+const GoodTotalScore = 80
+const MediumTotalScore = 60
+const BadTotalScore = 30
 
 export function RyoGoScoreWrapper({
   totalScore,

@@ -1,5 +1,5 @@
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import { AccountCard } from "@/components/flows/auth/accountCard"
+import AccountCard from "@/components/flows/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"

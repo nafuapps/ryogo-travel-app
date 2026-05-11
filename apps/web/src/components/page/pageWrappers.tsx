@@ -153,7 +153,11 @@ export function GridItemWrapper({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function StickyWrapper({ children }: { children: React.ReactNode }) {
+export function StickyActionWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 sticky mt-auto shadow border-t-slate-200 bottom-0">
       {children}

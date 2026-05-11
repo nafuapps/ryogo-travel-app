@@ -15,8 +15,11 @@ import { redirect, RedirectType } from "next/navigation"
 import {
   SectionWrapper,
   PageWrapper,
-  StickyWrapper,
+  StickyActionWrapper,
+  SectionHeaderWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { Plus } from "lucide-react"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -42,17 +45,18 @@ export default async function RiderMyOngoingBookingPageComponent({
         })}
       </SectionWrapper>
       <SectionWrapper id="CurrentBookingExpenses">
-        <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
-        <Link href={`/rider/myBookings/${booking.id}/add-expense`}>
-          <Button
-            type="button"
-            variant={"outline"}
-            form="endTrip"
-            className="w-full"
+        <SectionHeaderWrapper>
+          <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
+          <Link
+            href={`/rider/myBookings/${booking.id}/add-expense`}
+            className="ml-auto"
           >
-            {t("AddExpense")}
-          </Button>
-        </Link>
+            <Button variant={"outline"}>
+              <RyogoIcon icon={Plus} size="sm" />
+              {t("AddExpense")}
+            </Button>
+          </Link>
+        </SectionHeaderWrapper>
         {booking.expenses.map((e) => {
           return (
             <RiderExpenseItem
@@ -64,7 +68,7 @@ export default async function RiderMyOngoingBookingPageComponent({
           )
         })}
       </SectionWrapper>
-      <StickyWrapper>
+      <StickyActionWrapper>
         {nextStep === TripLogTypesEnum.START_TRIP ? (
           <StartTripSheet booking={booking} />
         ) : nextStep === TripLogTypesEnum.END_TRIP ? (
@@ -72,7 +76,7 @@ export default async function RiderMyOngoingBookingPageComponent({
         ) : (
           <MidTripSheet booking={booking} tripType={nextStep} />
         )}
-      </StickyWrapper>
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

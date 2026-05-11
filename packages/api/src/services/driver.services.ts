@@ -50,7 +50,8 @@ export const driverServices = {
 
   //Get driver's assigned bookings
   async findDriverAssignedBookingsById(id: string) {
-    const bookings = await bookingRepository.readAssignedBookingsByDriverId(id)
+    const bookings =
+      await bookingRepository.readAllAssignedBookingsByDriverId(id)
 
     return bookings.map((booking) => {
       return {

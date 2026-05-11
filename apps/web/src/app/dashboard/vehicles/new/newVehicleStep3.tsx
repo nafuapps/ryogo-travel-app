@@ -12,9 +12,7 @@ import {
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
-import StepsTracker, {
-  NewVehicleTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   NewStepHeaderWrapper,
@@ -121,7 +119,7 @@ export function NewVehicleStep3(props: {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewVehicleTotalSteps} current={2} />
+        <StepsTracker steps={"vehicle"} current={2} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step3Type>

@@ -109,7 +109,7 @@ export default function CreateAccountPageComponent({
               <RyogoH2>{t("Title")}</RyogoH2>
             </OnboardingStepHeaderTopLine>
             <StepsTracker
-              total={CreateAccountTotalSteps}
+              steps={CreateAccountTotalSteps}
               current={currentStepIndex}
             />
             <RyogoCaption color="light">

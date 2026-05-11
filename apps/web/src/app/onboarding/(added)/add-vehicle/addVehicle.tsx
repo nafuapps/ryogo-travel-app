@@ -108,7 +108,7 @@ export default function AddVehiclePageComponent(
               <RyogoH2>{t("Title")}</RyogoH2>
             </OnboardingStepHeaderTopLine>
             <StepsTracker
-              total={AddVehicleTotalSteps}
+              steps={AddVehicleTotalSteps}
               current={currentStepIndex}
             />
             <RyogoCaption color="light">

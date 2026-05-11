@@ -129,15 +129,16 @@ export const userServices = {
 
   //Get assigned user for a booking by driverId
   async findAssignedUserByDriverId(driverId: string) {
-    const ongoingBooking =
-      await bookingRepository.readOngoingBookingByDriverId(driverId)
+    let booking = await bookingRepository.readOngoingBookingByDriverId(driverId)
 
-    if (!ongoingBooking) {
-      return
+    if (!booking) {
+      booking =
+        await bookingRepository.readFirstAssignedBookingByDriverId(driverId)
+      if (!booking) {
+        return
+      }
     }
-    const assignedUser = userRepository.readUserById(
-      ongoingBooking.assignedUserId,
-    )
+    const assignedUser = userRepository.readUserById(booking.assignedUserId)
     return assignedUser
   },
 

@@ -7,9 +7,6 @@ import {
 } from "@/components/typography"
 import { LucideIcon } from "lucide-react"
 
-export const metricMainClassName =
-  "flex flex-col flex-1 gap-3 lg:gap-4 justify-center"
-
 export function DashboardMetricWrapper({
   children,
 }: {

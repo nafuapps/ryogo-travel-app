@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { startTripAction } from "@/app/actions/bookings/startTripAction"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
+import { useLocation } from "@/hooks/useLocation"
 
 export default function StartTripSheet({
   booking,
@@ -36,6 +37,7 @@ export default function StartTripSheet({
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const latLong = useLocation()
 
   const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
 
@@ -78,14 +80,13 @@ export default function StartTripSheet({
   })
 
   if (!booking.assignedDriverId || !booking.assignedVehicleId) {
-    router.replace("/rider/myBookings")
-    return
+    setOpen(false)
+    return <></>
   }
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId
 
   const onSubmit = async (data: SchemaType) => {
-    //TODO: Get lat long of the device
     startTransition(async () => {
       if (
         await startTripAction({
@@ -96,6 +97,8 @@ export default function StartTripSheet({
           odometerReading: data.odometerReading,
           remarks: data.remarks,
           tripLogPhoto: data.tripLogPhoto,
+          lat: latLong.latitude,
+          long: latLong.longitude,
         })
       ) {
         router.refresh()
@@ -120,7 +123,7 @@ export default function StartTripSheet({
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <TripSheetFormWrapper<SchemaType>
-          id="startTip"
+          id="startTrip"
           onSubmit={formData.handleSubmit(onSubmit)}
           form={formData}
         >

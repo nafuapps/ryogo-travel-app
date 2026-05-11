@@ -105,7 +105,7 @@ export default function AddDriverPageComponent(
               <RyogoH2>{t("Title")}</RyogoH2>
             </OnboardingStepHeaderTopLine>
             <StepsTracker
-              total={AddDriverTotalSteps}
+              steps={AddDriverTotalSteps}
               current={currentStepIndex}
             />
             <RyogoCaption color="light">

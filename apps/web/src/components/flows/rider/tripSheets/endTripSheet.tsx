@@ -28,6 +28,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { endTripAction } from "@/app/actions/bookings/endTripAction"
 import Link from "next/link"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
+import { useLocation } from "@/hooks/useLocation"
 
 const TOTAL_STARS = 5
 
@@ -41,6 +42,7 @@ export default function EndTripSheet({
   const router = useRouter()
   const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
   const [open, setOpen] = useState(false)
+  const latLong = useLocation()
 
   const [customerRating, setCustomerRating] = useState(0)
   const [bookingRating, setBookingRating] = useState(0)
@@ -84,14 +86,13 @@ export default function EndTripSheet({
   })
 
   if (!booking.assignedDriverId || !booking.assignedVehicleId) {
-    router.replace("/rider/myBookings")
-    return
+    setOpen(false)
+    return <></>
   }
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId
 
   const onSubmit = async (data: SchemaType) => {
-    //TODO: Get lat long of the device
     startTransition(async () => {
       if (
         await endTripAction({
@@ -103,6 +104,8 @@ export default function EndTripSheet({
           odometerReading: data.odometerReading,
           remarks: data.remarks,
           tripLogPhoto: data.tripLogPhoto,
+          lat: latLong.latitude,
+          long: latLong.longitude,
           customerRating:
             customerRating > 0 && customerRating <= TOTAL_STARS
               ? customerRating

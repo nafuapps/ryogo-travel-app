@@ -7,9 +7,7 @@ import { useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import StepsTracker, {
-  NewBookingTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import {
   RyogoCombobox,
   RyogoDatePicker,
@@ -222,7 +220,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewBookingTotalSteps} current={1} />
+        <StepsTracker steps={"booking"} current={1} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step2Type>

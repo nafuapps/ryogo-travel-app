@@ -14,7 +14,8 @@ export async function endTripAction(data: {
   customerId: string
   odometerReading: number
   remarks?: string
-  latLong?: string
+  lat?: number | null
+  long?: number | null
   tripLogPhoto?: FileList
   customerRating?: number
   bookingRating?: number
@@ -37,7 +38,8 @@ export async function endTripAction(data: {
     odometerReading: data.odometerReading,
     tripLogType: TripLogTypesEnum.END_TRIP,
     remarks: data.remarks,
-    latLong: data.latLong,
+    lat: data.lat,
+    long: data.long,
   })
   if (!newTripLog) return
 

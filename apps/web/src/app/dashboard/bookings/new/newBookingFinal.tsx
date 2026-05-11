@@ -7,9 +7,7 @@ import {
   RyogoCaption,
 } from "@/components/typography"
 import { useTranslations } from "next-intl"
-import StepsTracker, {
-  NewBookingTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
@@ -115,7 +113,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewBookingTotalSteps} current={4} />
+        <StepsTracker steps={"booking"} current={4} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<NewBookingFormDataType>

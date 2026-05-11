@@ -8,9 +8,7 @@ import z from "zod"
 import { Dispatch, SetStateAction } from "react"
 import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import StepsTracker, {
-  NewVehicleTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Button } from "@/components/ui/button"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
@@ -92,7 +90,7 @@ export function NewVehicleStep1(props: {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewVehicleTotalSteps} current={0} />
+        <StepsTracker steps={"vehicle"} current={0} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step1Type>

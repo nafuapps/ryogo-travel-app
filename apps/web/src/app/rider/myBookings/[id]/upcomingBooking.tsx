@@ -7,7 +7,7 @@ import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
 import {
   SectionWrapper,
   PageWrapper,
-  StickyWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function RiderMyUpcomingBookingPageComponent({
@@ -38,9 +38,9 @@ export default async function RiderMyUpcomingBookingPageComponent({
         </SectionWrapper>
       )}
       {canStartTrip && (
-        <StickyWrapper>
+        <StickyActionWrapper>
           <StartTripSheet booking={booking} />
-        </StickyWrapper>
+        </StickyActionWrapper>
       )}
     </PageWrapper>
   )

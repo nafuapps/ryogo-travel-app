@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
-import { AccountCard } from "@/components/flows/auth/accountCard"
+import AccountCard from "@/components/flows/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"

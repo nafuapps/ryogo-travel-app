@@ -443,7 +443,7 @@ export const bookingRepository = {
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
         lte(bookings.startDate, queryEndDate),
-        gte(bookings.endDate, queryStartDate),
+        // gte(bookings.endDate, queryStartDate), //Even show booking which were supposed to end before start date
       ),
       columns: {
         startDate: true,
@@ -484,7 +484,7 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by vehicle id
-  async readAssignedBookingsByVehicleId(vehicleId: string) {
+  async readAllAssignedBookingsByVehicleId(vehicleId: string) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -540,7 +540,7 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by driver id
-  async readAssignedBookingsByDriverId(driverId: string) {
+  async readAllAssignedBookingsByDriverId(driverId: string) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -602,6 +602,17 @@ export const bookingRepository = {
       where: and(
         eq(bookings.assignedDriverId, driverId),
         eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+      ),
+    })
+  },
+
+  //Read First Assigned booking by driver id
+  async readFirstAssignedBookingByDriverId(driverId: string) {
+    return await db.query.bookings.findFirst({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
+      where: and(
+        eq(bookings.assignedDriverId, driverId),
+        eq(bookings.status, BookingStatusEnum.CONFIRMED),
       ),
     })
   },

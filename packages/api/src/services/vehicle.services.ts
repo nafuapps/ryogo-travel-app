@@ -54,7 +54,8 @@ export const vehicleServices = {
 
   //Get vehicle's assigned bookings
   async findVehicleAssignedBookingsById(id: string) {
-    const bookings = await bookingRepository.readAssignedBookingsByVehicleId(id)
+    const bookings =
+      await bookingRepository.readAllAssignedBookingsByVehicleId(id)
 
     return bookings.map((booking) => {
       return {
@@ -94,14 +95,17 @@ export const vehicleServices = {
 
   //Get assigned vehicle for a booking by driverId
   async findAssignedVehicleByDriverId(driverId: string) {
-    const ongoingBooking =
-      await bookingRepository.readOngoingBookingByDriverId(driverId)
+    let booking = await bookingRepository.readOngoingBookingByDriverId(driverId)
 
-    if (!ongoingBooking || ongoingBooking.assignedVehicleId === null) {
-      return
+    if (!booking || booking.assignedVehicleId === null) {
+      booking =
+        await bookingRepository.readFirstAssignedBookingByDriverId(driverId)
+      if (!booking || booking.assignedVehicleId === null) {
+        return
+      }
     }
     const assignedVehicle = vehicleRepository.readVehicleById(
-      ongoingBooking.assignedVehicleId,
+      booking.assignedVehicleId,
     )
     return assignedVehicle
   },

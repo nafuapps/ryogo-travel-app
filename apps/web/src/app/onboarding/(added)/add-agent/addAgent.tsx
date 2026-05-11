@@ -83,7 +83,7 @@ export default function AddAgentPageComponent(
               <RyogoH2>{t("Title")}</RyogoH2>
             </OnboardingStepHeaderTopLine>
             <StepsTracker
-              total={AddAgentTotalSteps}
+              steps={AddAgentTotalSteps}
               current={currentStepIndex}
             />
             <RyogoCaption color="light">

@@ -6,11 +6,11 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
-export const AccountCard = ({
+export default function AccountCard({
   account,
 }: {
   account: FindUserAccountsByPhoneType[number]
-}) => {
+}) {
   return (
     <Link href={`/auth/login/password/${account.id}`}>
       <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-100 rounded-lg hover:bg-slate-50 p-3 lg:p-4">

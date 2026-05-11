@@ -14,9 +14,7 @@ import {
 } from "@/components/form/ryogoFormFields"
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import StepsTracker, {
-  NewDriverTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import {
@@ -82,7 +80,7 @@ export function NewDriverStep3(props: {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewDriverTotalSteps} current={2} />
+        <StepsTracker steps={"driver"} current={2} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step3Type>

@@ -13,7 +13,8 @@ export async function startTripAction(data: {
   agencyId: string
   odometerReading: number
   remarks?: string
-  latLong?: string
+  lat?: number | null
+  long?: number | null
   tripLogPhoto?: FileList
 }) {
   const currentUser = await getCurrentUser()
@@ -41,7 +42,8 @@ export async function startTripAction(data: {
     odometerReading: data.odometerReading,
     tripLogType: TripLogTypesEnum.START_TRIP,
     remarks: data.remarks,
-    latLong: data.latLong,
+    lat: data.lat,
+    long: data.long,
   })
   if (!newTripLog) return
 

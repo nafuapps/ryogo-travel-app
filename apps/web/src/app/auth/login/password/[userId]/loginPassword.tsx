@@ -20,9 +20,7 @@ import {
 } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { UserCard } from "@/components/flows/auth/userCard"
-
-// TODO: Add a feature to show the user had recently reset password
+import UserCard from "@/components/flows/auth/userCard"
 
 export default function LoginPasswordPageComponent({
   user,

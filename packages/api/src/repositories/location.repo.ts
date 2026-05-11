@@ -27,4 +27,25 @@ export const locationRepository = {
       ),
     )
   },
+
+  async readDistanceBetweenLocationAndTripLog(
+    locationId: string,
+    tripLogId: string,
+  ) {
+    const result = await db.execute(sql`
+        SELECT ST_Distance(
+          l.location::geography,
+          t.location::geography
+        ) / 800 AS distance_km
+        FROM locations l, tripLogs t
+        WHERE l.id = ${locationId} AND t.id = ${tripLogId};
+      `)
+    return Math.round(
+      Number(
+        (result as any)?.rows?.[0]?.distance_km ??
+          (result as any)?.[0]?.distance_km ??
+          0,
+      ),
+    )
+  },
 }

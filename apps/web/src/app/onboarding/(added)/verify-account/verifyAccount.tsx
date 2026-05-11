@@ -59,7 +59,7 @@ export default function VerifyAccountPageComponent(props: {
               <RyogoH2>{t("Title")}</RyogoH2>
             </OnboardingStepHeaderTopLine>
             <StepsTracker
-              total={VerifyAccountTotalSteps}
+              steps={VerifyAccountTotalSteps}
               current={currentStepIndex}
             />
             <RyogoCaption color="light">

@@ -884,6 +884,11 @@ export const tripLogs = pgTable(
     remarks: text("remarks"),
     tripLogPhotoUrl: text("trip_log_photo_url"),
     latLong: varchar("lat_long", { length: 50 }), // "lat,long"
+    location: geometry("location", {
+      type: "point",
+      mode: "xy",
+      srid: 4326,
+    }),
     ...timestamps,
   },
   (t) => [
@@ -895,6 +900,7 @@ export const tripLogs = pgTable(
     index("trip_logs_booking_type_idx").on(t.type, t.bookingId), // to quickly filter trip logs by type in a booking
     index("trip_logs_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter trip logs by vehicle in an agency
     index("trip_logs_agency_driver_idx").on(t.driverId, t.agencyId), // to quickly filter trip logs by driver in an agency
+    index("trip_logs_spatial_index").using("gist", t.location), // A GIST index is crucial for fast spatial queries
   ],
 )
 export const tripLogsRelations = relations(tripLogs, ({ one }) => ({

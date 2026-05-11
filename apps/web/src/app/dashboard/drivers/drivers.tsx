@@ -8,8 +8,8 @@ import { PageWrapper } from "@/components/page/pageWrappers"
  *  Show in progress drivers
  *  Show all drivers list (except suspended)
  *  Driver schedule (7/14 days)
- *  TODO: Driver history
- *  TODO: Driver actions
+   //TODO: Driver history
+   //TODO: Driver actions
  */
 
 export default async function DriversPageComponent({

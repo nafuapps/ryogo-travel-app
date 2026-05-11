@@ -11,9 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
-import StepsTracker, {
-  NewBookingTotalSteps,
-} from "@/components/form/stepsTracker"
+import StepsTracker from "@/components/form/stepsTracker"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -97,7 +95,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
           <RyogoH3>{t("Title")}</RyogoH3>
           <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker total={NewBookingTotalSteps} current={2} />
+        <StepsTracker steps={"booking"} current={2} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       <NewFormWrapper<Step3Type>

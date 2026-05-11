@@ -81,7 +81,7 @@ function getTripLogIcon(type: TripLogTypesEnum) {
     <div
       className={`flex size-7 lg:size-8 ${last ? "bg-slate-800" : "bg-slate-100"} rounded-full items-center justify-center`}
     >
-      <RyogoIcon icon={icon} size="sm" />
+      <RyogoIcon icon={icon} size="sm" color={last ? "white" : "slate"} />
     </div>
   )
 }

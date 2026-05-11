@@ -40,9 +40,7 @@ export default function MidTripSheet({
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const [open, setOpen] = useState(false)
-
   const latLong = useLocation()
-  console.log(latLong)
 
   const type: string =
     tripType === TripLogTypesEnum.ARRIVED
@@ -91,14 +89,13 @@ export default function MidTripSheet({
   })
 
   if (!booking.assignedDriverId || !booking.assignedVehicleId) {
-    router.replace("/rider/myBookings")
-    return
+    setOpen(false)
+    return <></>
   }
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId
 
   const onSubmit = async (data: SchemaType) => {
-    //TODO: Get lat long of the device
     startTransition(async () => {
       if (
         await midTripAction({
@@ -110,6 +107,8 @@ export default function MidTripSheet({
           type: tripType,
           remarks: data.remarks,
           tripLogPhoto: data.tripLogPhoto,
+          lat: latLong.latitude,
+          long: latLong.longitude,
         })
       ) {
         router.refresh()

@@ -9,7 +9,10 @@
         "AUTH_SECRET",
         "SUPABASE_SERVICE_ROLE_KEY",
         "SUPABASE_URL",
-        "SUPABASE_ANON_KEY"
+        "SUPABASE_ANON_KEY",
+        "VAPID_PRIVATE_KEY",
+        "VAPID_PUBLIC_KEY",
+        "RESEND_API_KEY"
       ]
     },
     "check-types": {

@@ -36,7 +36,7 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { getEstimatedTotalPrice } from "@ryogo-travel-app/api/services/booking.services"
+import { getEstimatedTotalPrice } from "@/lib/utils"
 
 type NewBookingFinalProps = {
   onPrev: () => void

@@ -8,8 +8,7 @@ import {
 } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { useTranslations } from "next-intl"
-import { format } from "date-fns"
-import { getDuration } from "@/lib/utils"
+import { differenceInDays, format, startOfDay } from "date-fns"
 import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
@@ -17,7 +16,11 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function NewBookingTripCard(props: NewBookingFormDataType) {
   const t = useTranslations("Dashboard.NewBooking.Form")
-  const duration = getDuration(props.tripStartDate, props.tripEndDate)
+  const duration =
+    differenceInDays(
+      startOfDay(props.tripEndDate),
+      startOfDay(props.tripStartDate),
+    ) + 1
 
   return (
     <div id="tripInfo" className="flex flex-col">

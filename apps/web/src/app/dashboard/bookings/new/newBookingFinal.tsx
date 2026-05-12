@@ -23,7 +23,6 @@ import { Alert } from "@/components/ui/alert"
 import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import { useTransition } from "react"
-import { getEstimatedTotalPrice } from "@/lib/utils"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -37,6 +36,7 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { getEstimatedTotalPrice } from "@ryogo-travel-app/api/services/booking.services"
 
 type NewBookingFinalProps = {
   onPrev: () => void

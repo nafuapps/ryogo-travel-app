@@ -1158,6 +1158,7 @@ export const bookingRepository = {
         .update(bookings)
         .set({
           status: BookingStatusEnum.COMPLETED,
+          completedAt: new Date(),
           ratingByDriver: bookingRating,
         })
         .where(eq(bookings.id, bookingId))

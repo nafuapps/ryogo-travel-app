@@ -120,123 +120,13 @@ export function generateTripLogPhotoPathName(
 }
 
 export function generateBookingQuoteName(bookingId: string) {
-  return `bookings/${bookingId}/quotes/${bookingId}-quote-${Date.now()}.pdf`
+  return `bookings/${bookingId}/quotes/${bookingId}-quote.pdf`
 }
 
 export function generateBookingConfirmationName(bookingId: string) {
-  return `bookings/${bookingId}/confirmations/${bookingId}-confirmation-${Date.now()}.pdf`
+  return `bookings/${bookingId}/confirmations/${bookingId}-confirmation.pdf`
 }
 
 export function generateBookingInvoiceName(bookingId: string) {
-  return `bookings/${bookingId}/invoices/${bookingId}-invoice-${Date.now()}.pdf`
-}
-
-export function getDuration(startDate: Date, endDate: Date) {
-  return differenceInDays(startOfDay(endDate), startOfDay(startDate)) + 1
-}
-
-export function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
-  if (tripType === BookingTypeEnum.Round) {
-    if (days > 1) {
-      //For round trip, double the driver allowance if not returning same day
-      return 2
-    } else {
-      //If returning same day, give 1 day allowance
-      return 1
-    }
-  }
-  if (tripType === BookingTypeEnum.MultiDay) {
-    //For multi day trip, driver allowance is for each day
-    return days
-  }
-  //One way
-  return 1
-}
-
-function getEstimatedTripDistance(
-  tripType: BookingTypeEnum,
-  days: number,
-  distance: number,
-) {
-  if (tripType === BookingTypeEnum.Round) {
-    //For round trip, double the distance
-    return distance * 2
-  } else if (tripType === BookingTypeEnum.MultiDay) {
-    //For multi day trip, include intermediate tour days @ X(50) km
-    return distance * 2 + (days - 2) * 50
-  }
-  //One way
-  return distance
-}
-
-export function getEstimatedTotalPrice(
-  data: NewBookingFormDataType | CreateNewBookingRequestType,
-) {
-  const days = getDuration(data.tripStartDate, data.tripEndDate)
-  const commissionRate = data.selectedCommissionRate ?? 0
-
-  const totalAllowanceDays = getTripAllowanceDays(data.tripType, days)
-  const totalDistance = getEstimatedTripDistance(
-    data.tripType,
-    days,
-    data.selectedDistance!,
-  )
-
-  const totalAcPrice =
-    data.tripNeedsAC && data.selectedAcChargePerDay
-      ? Math.round(data.selectedAcChargePerDay * totalAllowanceDays)
-      : 0
-
-  const totalVehiclePrice = Math.round(totalDistance * data.selectedRatePerKm!)
-  const totalDriverAllowance = data.selectedAllowancePerDay
-    ? Math.round(totalAllowanceDays * data.selectedAllowancePerDay)
-    : 0
-
-  const netPrice = totalVehiclePrice + totalDriverAllowance + totalAcPrice
-
-  const totalCommission = Math.round((netPrice * commissionRate) / 100)
-
-  const totalAmount = netPrice + totalCommission
-
-  return {
-    totalVehiclePrice,
-    totalDistance,
-    totalDriverAllowance,
-    totalAcPrice,
-    totalCommission,
-    totalAmount,
-    totalAllowanceDays,
-  }
-}
-
-export function getFinalTotalPrice(
-  tripType: BookingTypeEnum,
-  startDate: Date,
-  endDate: Date,
-  ratePerKm: number,
-  acChargePerDay: number,
-  commissionRate: number,
-  allowancePerDay: number,
-  actualDistance: number,
-) {
-  const tripAllowanceDays = getTripAllowanceDays(
-    tripType,
-    getDuration(startDate, endDate),
-  )
-
-  const totalVehiclePrice = Math.round(actualDistance * ratePerKm)
-  const totalDriverAllowance = Math.round(tripAllowanceDays * allowancePerDay)
-  const totalACPrice = Math.round(tripAllowanceDays * acChargePerDay)
-
-  const netPrice = totalVehiclePrice + totalDriverAllowance + totalACPrice
-  const totalCommission = Math.round((netPrice * commissionRate) / 100)
-
-  const totalAmount = netPrice + totalCommission
-  return {
-    totalVehiclePrice,
-    totalDriverAllowance,
-    totalACPrice,
-    totalCommission,
-    totalAmount,
-  }
+  return `bookings/${bookingId}/invoices/${bookingId}-invoice.pdf`
 }

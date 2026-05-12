@@ -21,4 +21,5 @@ export default async function sendEmail(
   if (error) {
     console.log(error)
   }
+  return { data, error }
 }

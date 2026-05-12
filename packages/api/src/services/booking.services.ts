@@ -17,6 +17,7 @@ import { transactionRepository } from "../repositories/transaction.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { getEstimatedTotalPrice, getFinalTotalPrice } from "@/lib/utils"
+import { UPDATE_PRICE_DISTANCE_FACTOR } from "../apiConfig"
 
 export const bookingServices = {
   //Bookings dashboard
@@ -82,6 +83,7 @@ export const bookingServices = {
       agencyId,
     )
 
+    //TODO:Fix this for completed
     return bookings.map((booking) => {
       return {
         id: booking.id,
@@ -133,7 +135,7 @@ export const bookingServices = {
     return bookings.map((booking) => {
       return {
         status: booking.status.toString(),
-        updatedAt: booking.updatedAt,
+        updatedAt: booking.completedAt ?? booking.updatedAt,
         type: booking.type.toString(),
         route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,
@@ -146,13 +148,10 @@ export const bookingServices = {
   },
 
   async findUpcomingBookingsNextDays(agencyId: string, days: number = 1) {
-    //Day today
-    const startDate = new Date()
     //Day N days later
     const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
     const bookings = await bookingRepository.readUpcomingBookingsData(
       agencyId,
-      startDate,
       endDate,
     )
     return bookings.map((booking) => {
@@ -171,13 +170,10 @@ export const bookingServices = {
   },
 
   async findBookingsScheduleNextDays(agencyId: string, days: number = 7) {
-    //Day today
-    const startDate = new Date()
     //Day N days later
     const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
     const bookings = await bookingRepository.readBookingsScheduleData(
       agencyId,
-      startDate,
       endDate,
     )
     return bookings.map((booking) => {
@@ -442,7 +438,7 @@ export const bookingServices = {
     //Get actual distance from trip log odometer readings
     const actualDistance = Math.max(
       endLog.odometerReading - startLog.odometerReading,
-      booking.totalDistance * 0.8,
+      booking.totalDistance * UPDATE_PRICE_DISTANCE_FACTOR,
     )
 
     //Calculate final total price based on actual distance and trip duration for driver allowance and ac charge

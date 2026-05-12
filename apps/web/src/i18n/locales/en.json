@@ -741,6 +741,7 @@
         "/dashboard/account/change-password": "Change Password",
         "/dashboard/account/change-email": "Change Email",
         "/dashboard/account/settings": "Settings",
+        "/dashboard/account/subscription": "Subscription",
         "/dashboard/action-center": "Action Center",
         "/dashboard/analytics": "Analytics",
         "/dashboard/bookings": "Bookings",
@@ -855,6 +856,12 @@
       }
     },
     "NewBooking": {
+      "TrialWarning":"You trial plan has ended.",
+      "ExpiredWarning":"Your subscription plan has expired.",
+      "TrialAction":"Please upgrade your subscription plan to create bookings!",
+      "ExpiredAction":"Please renew your subscription plan to create bookings!",
+      "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "Form": {
         "Km": " Km",
         "Days": " {count, plural, =1 {day} other {days}}",
@@ -1437,6 +1444,12 @@
       "History": {}
     },
     "NewVehicle": {
+      "TrialWarning":"You have reached the limit for trial plan.",
+      "ExpiredWarning":"Your subscription plan has expired.",
+      "TrialAction":"Please upgrade your subscription plan to add more vehicles!",
+      "ExpiredAction":"Please renew your subscription plan to add more vehicles!",
+      "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "Step1": {
         "Title": "Adding vehicle",
         "Subtitle": "Step 1 of 5",
@@ -1878,6 +1891,12 @@
       "History": {}
     },
     "NewDriver": {
+      "TrialWarning":"You have reached the limit for trial plan.",
+      "ExpiredWarning":"Your subscription plan has expired.",
+      "TrialAction":"Please upgrade your subscription plan to add more drivers!",
+      "ExpiredAction":"Please renew your subscription plan to add more drivers!",
+      "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "Step1": {
         "Title": "Adding Driver",
         "Subtitle": "Step 1 of 4",
@@ -2351,6 +2370,8 @@
       "Photo": "View logo",
       "SubscriptionInfo": "Subscription info",
       "ValidTill": "Expires on: ",
+       "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "EditDetails": "Edit Agency Details",
       "ChangeEmail": {
         "Title": "Change Agency Email",
@@ -2432,6 +2453,9 @@
       "Error": "Cannot change agency details.. please try again later."
     },
     "AccountHelp": {},
+    "AccountSubscription":{
+
+    },
     "UserDetailsHeaderTabs": {
       "Details": "Details",
       "Assigned": "Assigned",
@@ -2489,6 +2513,12 @@
       }
     },
     "NewAgent": {
+      "TrialWarning":"You have reached the limit for trial plan.",
+      "ExpiredWarning":"Your subscription plan has expired.",
+      "TrialAction":"Please upgrade your subscription plan to add more agents!",
+      "ExpiredAction":"Please renew your subscription plan to add more agents!",
+      "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "Field1": {
         "Title": "Agent name",
         "Placeholder": "Vikram Sharma",

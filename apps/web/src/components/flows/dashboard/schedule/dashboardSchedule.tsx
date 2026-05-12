@@ -22,7 +22,7 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export enum SelectableDays {
   SEVEN = "7Days",
@@ -151,7 +151,7 @@ export function DashboardScheduleItemID({
       {photoUrl ? (
         <RyogoImage src={getFileUrl(photoUrl)} alt={imageAlt} imageSize="xs" />
       ) : (
-        <RyogoIcon icon={icon} size="md" />
+        <RyogoEnclosedIcon icon={icon} size="md" circular />
       )}
       <RyogoCaption color="slate" weight="font-bold">
         {title}

@@ -19,7 +19,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function UsersPageComponent({
   agencyId,
@@ -100,7 +100,7 @@ async function AllUsersItemComponent({
               imageSize="sm"
             />
           ) : (
-            <RyogoIcon icon={User} size="md" />
+            <RyogoEnclosedIcon icon={User} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

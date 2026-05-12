@@ -11,8 +11,7 @@ import { useRouter } from "next/navigation"
 import { differenceInMinutes } from "date-fns"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-
-const SEND_INVOICE_TIMEOUT_MINUTES = 60
+import { SEND_INVOICE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 
 type SendInvoiceAlertButtonProps = {
   bookingId: string

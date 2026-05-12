@@ -13,7 +13,7 @@ import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/book
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 
 export default async function TripLogItem({
   tripLog,
@@ -21,10 +21,6 @@ export default async function TripLogItem({
   tripLog: NonNullable<FindBookingTripLogsByIdType>[0]
 }) {
   const t = await getTranslations("Dashboard.BookingTripLogs")
-  let fileUrl = ""
-  if (tripLog.tripLogPhotoUrl) {
-    fileUrl = getFileUrl(tripLog.tripLogPhotoUrl)
-  }
 
   return (
     <div className="flex flex-col">
@@ -52,16 +48,17 @@ export default async function TripLogItem({
           )}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
-          <div className="flex size-7 lg:size-8 bg-slate-100 rounded-full items-center justify-center">
-            {getTripLogIcon(tripLog.type)}
-          </div>
+          {getTripLogIcon(tripLog.type)}
           <RyogoCaption color="dark" weight="font-bold">
             {tripLog.type.toUpperCase()}
           </RyogoCaption>
         </div>
       </div>
       {tripLog.tripLogPhotoUrl && (
-        <RyogoChinImage src={fileUrl} alt={t("Proof")} />
+        <RyogoChinImage
+          src={getFileUrl(tripLog.tripLogPhotoUrl)}
+          alt={t("Proof")}
+        />
       )}
     </div>
   )
@@ -70,18 +67,20 @@ export default async function TripLogItem({
 const getTripLogIcon = (type: TripLogTypesEnum) => {
   switch (type) {
     case TripLogTypesEnum.START_TRIP:
-      return <RyogoIcon icon={Play} size="sm" />
+      return <RyogoEnclosedIcon icon={Play} size="sm" circular />
 
     case TripLogTypesEnum.ARRIVED:
-      return <RyogoIcon icon={MapPinCheck} size="sm" />
+      return <RyogoEnclosedIcon icon={MapPinCheck} size="sm" circular />
 
     case TripLogTypesEnum.PICKUP:
-      return <RyogoIcon icon={Handshake} size="sm" />
+      return <RyogoEnclosedIcon icon={Handshake} size="sm" circular />
 
     case TripLogTypesEnum.DROP:
-      return <RyogoIcon icon={FlagTriangleRight} size="sm" />
+      return <RyogoEnclosedIcon icon={FlagTriangleRight} size="sm" circular />
 
     case TripLogTypesEnum.END_TRIP:
-      return <RyogoIcon icon={CheckCheck} size="sm" />
+      return <RyogoEnclosedIcon icon={CheckCheck} size="sm" circular />
+    default:
+      return <RyogoEnclosedIcon icon={Pin} size="sm" circular />
   }
 }

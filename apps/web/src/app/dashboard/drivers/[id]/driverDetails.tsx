@@ -25,7 +25,7 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { IconsList } from "@/components/tags/IconsList"
 
@@ -52,7 +52,7 @@ export default async function DriverDetailsPageComponent({
                 imageSize="lg"
               />
             ) : (
-              <RyogoIcon icon={User} size="xl" />
+              <RyogoEnclosedIcon icon={User} size="xl" />
             )}
             <ChangeDriverPhotoSheet
               userId={driver.userId}

@@ -12,7 +12,7 @@ import AssignVehiclePageComponent from "./assignVehicle"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Metadata } from "next"
 import { differenceInDays } from "date-fns"
-import { OLD_LEAD_CANCEL_DAYS } from "@/lib/constants"
+import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
@@ -45,7 +45,7 @@ export default async function AssignVehicleBookingPage({
   //If it is a lead booking and old, cancel it automatically
   if (
     booking.status === BookingStatusEnum.LEAD &&
-    differenceInDays(new Date(), booking.endDate) > OLD_LEAD_CANCEL_DAYS
+    differenceInDays(new Date(), booking.endDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
     if (
       await cancelBookingAction(

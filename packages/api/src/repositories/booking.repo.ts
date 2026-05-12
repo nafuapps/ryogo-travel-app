@@ -96,6 +96,7 @@ export const bookingRepository = {
       )
   },
 
+  //TODO:Fix this for completed
   async readBookingsByUpdatedDateRange(
     queryStartDate: Date,
     queryEndDate: Date,
@@ -178,11 +179,12 @@ export const bookingRepository = {
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
-        gte(bookings.updatedAt, queryStartDate),
-        lte(bookings.updatedAt, queryEndDate),
+        gte(bookings.completedAt, queryStartDate),
+        lte(bookings.completedAt, queryEndDate),
       ),
       columns: {
         status: true,
+        completedAt: true,
         updatedAt: true,
         type: true,
         id: true,
@@ -235,6 +237,7 @@ export const bookingRepository = {
       ),
       columns: {
         status: true,
+        completedAt: true,
         updatedAt: true,
         type: true,
         id: true,
@@ -287,6 +290,7 @@ export const bookingRepository = {
       ),
       columns: {
         status: true,
+        completedAt: true,
         updatedAt: true,
         type: true,
         id: true,
@@ -339,6 +343,7 @@ export const bookingRepository = {
       ),
       columns: {
         status: true,
+        completedAt: true,
         updatedAt: true,
         type: true,
         id: true,
@@ -391,6 +396,7 @@ export const bookingRepository = {
       ),
       columns: {
         status: true,
+        completedAt: true,
         updatedAt: true,
         type: true,
         id: true,
@@ -432,11 +438,7 @@ export const bookingRepository = {
     })
   },
 
-  async readUpcomingBookingsData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readUpcomingBookingsData(agencyId: string, queryEndDate: Date) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -729,11 +731,7 @@ export const bookingRepository = {
     })
   },
 
-  async readBookingsScheduleData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readBookingsScheduleData(agencyId: string, queryEndDate: Date) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -741,7 +739,6 @@ export const bookingRepository = {
         or(
           and(
             eq(bookings.status, BookingStatusEnum.CONFIRMED),
-            gte(bookings.endDate, queryStartDate),
             lte(bookings.startDate, queryEndDate),
           ),
           eq(bookings.status, BookingStatusEnum.IN_PROGRESS),

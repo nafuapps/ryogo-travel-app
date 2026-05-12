@@ -18,7 +18,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { User } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 
 export default async function AccountPageComponent({
   userDetails,
@@ -40,7 +40,7 @@ export default async function AccountPageComponent({
                 imageSize="lg"
               />
             ) : (
-              <RyogoIcon icon={User} size="xl" />
+              <RyogoEnclosedIcon icon={User} size="xl" />
             )}
             <ChangeUserPhotoSheet
               userId={userDetails.id}

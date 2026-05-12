@@ -24,7 +24,7 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 
 export default async function CustomerDetailsPageComponent({
@@ -48,7 +48,7 @@ export default async function CustomerDetailsPageComponent({
                 imageSize="lg"
               />
             ) : (
-              <RyogoIcon icon={User} size="xl" />
+              <RyogoEnclosedIcon icon={User} size="xl" />
             )}
             <ChangeCustomerPhotoSheet
               customerId={customer.id}

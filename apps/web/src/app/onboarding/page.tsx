@@ -22,7 +22,7 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import Link from "next/link"
 import { redirect, RedirectType } from "next/navigation"
 import RyoGoLogo from "@/components/logo"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
@@ -126,9 +126,13 @@ function OnboardingHomeDocumentItem(props: {
 }) {
   return (
     <div className="flex flex-row gap-3 md:gap-4 items-center">
-      <div className="bg-sky-700 rounded-lg size-10 md:size-12 flex justify-center items-center shrink-0">
-        <RyogoIcon icon={props.icon} size="sm" color="white" />
-      </div>
+      <RyogoEnclosedIcon
+        icon={props.icon}
+        color="brand"
+        bgColor="brand"
+        size="sm"
+      />
+
       <RyogoSmall color="slate">{props.label}</RyogoSmall>
     </div>
   )
@@ -143,11 +147,13 @@ function OnboardingHomeStepItem(props: {
   return (
     <div className="flex flex-row gap-3 md:gap-4 items-center">
       <div className="flex flex-col items-center">
-        <div className={`w-1 h-2 md:h-3 ${!props.first && `bg-sky-50`}`}></div>
-        <div className="bg-sky-50 rounded-full size-10 md:size-12 flex justify-center items-center shrink-0">
-          <RyogoIcon icon={props.icon} size="sm" color="brand" />
-        </div>
-        <div className={`w-1 h-2 md:h-3 ${!props.last && `bg-sky-50`}`}></div>
+        <div
+          className={`w-1 h-2 md:h-3 ${!props.first && `bg-slate-100`}`}
+        ></div>
+        <RyogoEnclosedIcon icon={props.icon} size="sm" color="brand" circular />
+        <div
+          className={`w-1 h-2 md:h-3 ${!props.last && `bg-slate-100`}`}
+        ></div>
       </div>
       <RyogoSmall color="slate">{props.label}</RyogoSmall>
     </div>

@@ -19,6 +19,7 @@ import {
 
 //ID initials
 export const agencyInitial = "A"
+export const invoiceInitial = "I"
 export const userInitial = "U"
 export const sessionInitial = "S"
 export const vehicleInitial = "V"
@@ -129,6 +130,37 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   vehicleRepairs: many(vehicleRepairs),
   driverLeaves: many(driverLeaves),
   tripLogs: many(tripLogs),
+}))
+
+//Invoices table
+export const invoiceIdSequence = pgSequence("invoice_id_seq", {
+  ...sequenceValues,
+})
+export const invoices = pgTable(
+  "invoices",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => {
+        return sql`${invoiceInitial} || nextval(${"invoice_id_seq"})`
+      }),
+    agencyId: text("agency_id")
+      .references(() => agencies.id, { onDelete: "cascade" })
+      .notNull(),
+    amount: integer("amount").notNull(), // in currency
+    url: text("url"),
+    emailSentAt: timestamp("email_sent_at", { withTimezone: true }),
+    ...timestamps,
+  },
+  (t) => [
+    index("invoices_agency_idx").on(t.agencyId), // to quickly filter all users in an agency
+  ],
+)
+export const invoicesRelations = relations(invoices, ({ one, many }) => ({
+  agency: one(agencies, {
+    fields: [invoices.agencyId],
+    references: [agencies.id],
+  }),
 }))
 
 export enum UserLangEnum {
@@ -666,6 +698,7 @@ export const bookings = pgTable(
     invoiceSentOn: timestamp("invoice_sent_on", { withTimezone: true }),
     invoiceUrl: text("invoice_url"),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
     ...timestamps,
   },
   (t) => [

@@ -15,9 +15,9 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-
-//TODO: Add subscription link when subscription is implemented
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { TRIAL_MODE } from "@/lib/uiConfig"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -42,7 +42,7 @@ export default async function AgencyDetailsPageComponent({
                 imageSize="lg"
               />
             ) : (
-              <RyogoIcon icon={Building} size="xl" />
+              <RyogoEnclosedIcon icon={Building} size="xl" />
             )}
           </SectionColWrapper>
           <SectionColWrapper end>
@@ -72,6 +72,25 @@ export default async function AgencyDetailsPageComponent({
             {t("ValidTill") +
               moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}
           </RyogoCaption>
+          {!TRIAL_MODE &&
+            isOwner &&
+            agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL && (
+              <Link href="/dashboard/account/subscription">
+                <Button variant={"brand"} size="lg">
+                  {t("BuyCTA")}
+                </Button>
+              </Link>
+            )}
+          {!TRIAL_MODE &&
+            isOwner &&
+            agency.subscriptionPlan !== SubscriptionPlanEnum.TRIAL &&
+            agency.subscriptionExpiresOn < new Date() && (
+              <Link href="/dashboard/account/subscription">
+                <Button variant={"brand"} size="lg">
+                  {t("RenewCTA")}
+                </Button>
+              </Link>
+            )}
         </SectionColWrapper>
       </SectionWrapper>
       {isOwner && (

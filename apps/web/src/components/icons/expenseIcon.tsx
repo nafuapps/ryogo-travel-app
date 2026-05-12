@@ -8,23 +8,23 @@ import {
   Ticket,
   Banknote,
 } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 
 export default function getExpenseIcon(type: ExpenseTypesEnum) {
   switch (type) {
     case ExpenseTypesEnum.FOOD:
-      return <RyogoIcon icon={Pizza} size="sm" />
+      return <RyogoEnclosedIcon icon={Pizza} size="sm" circular />
     case ExpenseTypesEnum.FUEL:
-      return <RyogoIcon icon={Fuel} size="sm" />
+      return <RyogoEnclosedIcon icon={Fuel} size="sm" circular />
     case ExpenseTypesEnum.PARKING:
-      return <RyogoIcon icon={ParkingSquare} size="sm" />
+      return <RyogoEnclosedIcon icon={ParkingSquare} size="sm" circular />
     case ExpenseTypesEnum.MAINTENANCE:
-      return <RyogoIcon icon={Wrench} size="sm" />
+      return <RyogoEnclosedIcon icon={Wrench} size="sm" circular />
     case ExpenseTypesEnum.AC:
-      return <RyogoIcon icon={AirVent} size="sm" />
+      return <RyogoEnclosedIcon icon={AirVent} size="sm" circular />
     case ExpenseTypesEnum.TOLL:
-      return <RyogoIcon icon={Ticket} size="sm" />
+      return <RyogoEnclosedIcon icon={Ticket} size="sm" circular />
     default:
-      return <RyogoIcon icon={Banknote} size="sm" />
+      return <RyogoEnclosedIcon icon={Banknote} size="sm" circular />
   }
 }

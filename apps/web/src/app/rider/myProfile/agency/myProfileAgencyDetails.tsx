@@ -15,7 +15,7 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -40,7 +40,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
                 imageSize="lg"
               />
             ) : (
-              <RyogoIcon icon={Building} size="xl" />
+              <RyogoEnclosedIcon icon={Building} size="xl" />
             )}
           </SectionColWrapper>
           <SectionColWrapper end>

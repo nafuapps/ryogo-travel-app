@@ -6,8 +6,7 @@ import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
-
-const BOOKINGS_SEARCH_DAYS = 365
+import { BOOKINGS_SEARCH_DAYS } from "../apiConfig"
 
 export const agencyServices = {
   //Find all agencies
@@ -134,12 +133,12 @@ export const agencyServices = {
     return updatedAgency[0]
   },
 
-  //Increase subscription of an agency by N days
-  async increaseSubscriptionExpiry(id: string, days: number) {
+  //Subscribe an agency for N days
+  async subscribeAgency(id: string, days: number) {
     const expiryTime = new Date(
       new Date().getTime() + days * 24 * 60 * 60 * 1000,
     )
-    await agencyRepository.updateAgencySubscriptionExpiry(id, expiryTime)
+    return await agencyRepository.updateAgencySubscription(id, expiryTime)
   },
 }
 

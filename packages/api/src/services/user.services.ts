@@ -25,8 +25,7 @@ import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
 import { sessionRepository } from "../repositories/session.repo"
-
-const TRIAL_DAYS = 30
+import { TRIAL_DAYS } from "../apiConfig"
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -115,7 +114,7 @@ export const userServices = {
     return bookings.map((booking) => {
       return {
         status: booking.status.toString(),
-        updatedAt: booking.updatedAt,
+        updatedAt: booking.completedAt ?? booking.updatedAt,
         type: booking.type.toString(),
         route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,

@@ -7,6 +7,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import NewAgentPageComponent from "./newAgent"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `New User - ${pageTitle}`,
@@ -23,7 +24,10 @@ export default async function NewUserPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/new"} />
-      <NewAgentPageComponent agencyId={agencyId} />
+      <NewAgentPageComponent
+        agencyId={agencyId}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+      />
     </MainWrapper>
   )
 }

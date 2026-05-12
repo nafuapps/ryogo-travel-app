@@ -81,7 +81,7 @@ export const vehicleServices = {
     return bookings.map((booking) => {
       return {
         status: booking.status.toString(),
-        updatedAt: booking.updatedAt,
+        updatedAt: booking.completedAt ?? booking.updatedAt,
         type: booking.type.toString(),
         route: booking.source.city + " - " + booking.destination.city,
         vehicle: booking.assignedVehicle?.vehicleNumber,

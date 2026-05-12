@@ -11,8 +11,7 @@ import { differenceInMinutes } from "date-fns"
 import { sendConfirmationAction } from "@/app/actions/bookings/sendConfirmationAction"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-
-const SEND_CONFIRMATION_TIMEOUT_MINUTES = 60
+import { SEND_CONFIRMATION_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 
 type SendConfirmationAlertButtonProps = {
   bookingId: string

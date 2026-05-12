@@ -143,12 +143,16 @@ export const vehicleRepository = {
       )
   },
 
-  //Get vehicle by number in an agency
+  //Get all vehicles in an agency
   async readAllVehiclesInAgency(agencyId: string) {
-    return await db
-      .select({ id: vehicles.id, vehicleNumber: vehicles.vehicleNumber })
-      .from(vehicles)
-      .where(eq(vehicles.agencyId, agencyId))
+    return await db.query.vehicles.findMany({
+      columns: {
+        id: true,
+        vehicleNumber: true,
+        status: true,
+      },
+      where: and(eq(vehicles.agencyId, agencyId)),
+    })
   },
 
   //Get vehicle schedule data

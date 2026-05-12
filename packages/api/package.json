@@ -15,8 +15,7 @@
     ".": "./src/index.ts",
     "./services/*": "./src/services/*.ts",
     "./repositories/*": "./src/repositories/*.ts",
-    "./types/*": "./src/types/*.ts",
-    "./client/*": "./src/client/*.ts"
+    "./types/*": "./src/types/*.ts"
   },
   "scripts": {}
 }

@@ -3,6 +3,7 @@ import {
   agencies,
   AgencyStatusEnum,
   InsertAgencyType,
+  SubscriptionPlanEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and } from "drizzle-orm"
 
@@ -104,14 +105,18 @@ export const agencyRepository = {
       })
   },
 
-  //Update agency subscription expiry time by Id
-  async updateAgencySubscriptionExpiry(id: string, expiryTime: Date) {
+  //Update agency subscription Id
+  async updateAgencySubscription(id: string, expiryTime: Date) {
     return await db
       .update(agencies)
-      .set({ subscriptionExpiresOn: expiryTime })
+      .set({
+        subscriptionPlan: SubscriptionPlanEnum.PREMIUM,
+        subscriptionExpiresOn: expiryTime,
+      })
       .where(eq(agencies.id, id))
       .returning({
         id: agencies.id,
+        subscriptionPlan: agencies.subscriptionPlan,
         expiryTime: agencies.subscriptionExpiresOn,
       })
   },

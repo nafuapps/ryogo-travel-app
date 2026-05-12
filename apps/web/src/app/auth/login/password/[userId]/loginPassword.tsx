@@ -38,6 +38,9 @@ export default function LoginPasswordPageComponent({
   type SchemaType = z.infer<typeof formSchema>
   const methods = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      password: "",
+    },
   })
 
   //Submit actions

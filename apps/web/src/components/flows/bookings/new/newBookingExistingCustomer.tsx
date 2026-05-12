@@ -4,7 +4,7 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { UserCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default function ExistingCutomerCard({
@@ -25,9 +25,7 @@ export default function ExistingCutomerCard({
           imageSize="sm"
         />
       ) : (
-        <div className="flex rounded-lg size-10 lg:size-12 bg-slate-100 justify-center items-center">
-          <RyogoIcon icon={UserCheck} size="md" />
-        </div>
+        <RyogoEnclosedIcon icon={UserCheck} size="md" />
       )}
       <SectionColWrapper small>
         <RyogoH4>{existingCustomer.name}</RyogoH4>

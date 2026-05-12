@@ -1,0 +1,29 @@
+//Onboarding
+export const RESEND_CODE_TIMEOUT_MINUTES = 5
+
+//Bookings
+export const OLD_LEAD_AUTO_CANCEL_DAYS = 1
+export const SEND_QUOTE_TIMEOUT_MINUTES = 60
+export const SEND_CONFIRMATION_TIMEOUT_MINUTES = 60
+export const SEND_INVOICE_TIMEOUT_MINUTES = 60
+
+//Subscription
+export const TRIAL_MODE = false
+
+export const TRIAL_DRIVER_LIMIT = 5
+export const TRIAL_AGENT_LIMIT = 5
+export const TRIAL_VEHICLE_LIMIT = 5
+
+export const GENTLE_REMINDER_DAYS = 7
+export const STRICT_REMINDER_DAYS = 1
+
+export const MONTHLY_SUBSCRIPTION_DAYS = 30
+export const ANNUAL_SUBSCRIPTION_DAYS = 365
+
+export const MONTHLY_SUBSCRIPTION_MRP = 999
+export const ANNUAL_SUBSCRIPTION_MRP = MONTHLY_SUBSCRIPTION_MRP * 12
+
+export const MONTHLY_SUBSCRIPTION_FINAL_PRICE = 499
+export const ANNUAL_SUBSCRIPTION_FINAL_PRICE = 4999
+
+export const GST_PERCENTAGE = 18

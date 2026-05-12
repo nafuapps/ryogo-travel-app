@@ -1,4 +1,11 @@
-type RyogoTextColor = "white" | "red" | "light" | "slate" | "brand" | "dark"
+type RyogoTextColor =
+  | "white"
+  | "red"
+  | "light"
+  | "slate"
+  | "brand"
+  | "dark"
+  | "yellow"
 type RyogoTextWeight = "font-normal" | "font-medium" | "font-bold"
 
 const getTextColor = (color?: RyogoTextColor) => {
@@ -7,6 +14,9 @@ const getTextColor = (color?: RyogoTextColor) => {
   }
   if (color === "red") {
     return "text-red-400"
+  }
+  if (color === "yellow") {
+    return "text-yellow-700"
   }
   if (color === "light") {
     return "text-slate-400"

@@ -19,6 +19,10 @@
       "persistent": true,
       "cache": false
     },
+    "dev-secure": {
+      "persistent": true,
+      "cache": false
+    },
     "lint": {}
   }
 }

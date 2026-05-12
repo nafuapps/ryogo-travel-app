@@ -1,0 +1,1 @@
+CREATE INDEX "invoices_agency_idx" ON "invoices" USING btree ("agency_id");

@@ -1,8 +1,6 @@
+import { MIN_USER_DISTANCE_RATIO, MAX_USER_DISTANCE_RATIO } from "../apiConfig"
 import { locationRepository } from "../repositories/location.repo"
 import { routeRepository } from "../repositories/route.repo"
-
-const MIN_RATIO = 0.8
-const MAX_RATIO = 1.2
 
 export const routeServices = {
   async findOrCreateRouteByLocations(
@@ -84,7 +82,7 @@ export const routeServices = {
     if (
       !dbDistance ||
       dbDistance < 1 ||
-      (ratio > MIN_RATIO && ratio < MAX_RATIO)
+      (ratio > MIN_USER_DISTANCE_RATIO && ratio < MAX_USER_DISTANCE_RATIO)
     ) {
       newDistance = distance
     } else {

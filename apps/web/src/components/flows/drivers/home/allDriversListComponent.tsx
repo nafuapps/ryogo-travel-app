@@ -17,7 +17,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { IconsList } from "@/components/tags/IconsList"
 
 export default async function AllDriversListComponent({
@@ -66,7 +66,7 @@ async function AllDriversItemComponent({
               imageSize="sm"
             />
           ) : (
-            <RyogoIcon icon={User} size="md" />
+            <RyogoEnclosedIcon icon={User} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

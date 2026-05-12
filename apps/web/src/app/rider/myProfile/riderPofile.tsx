@@ -18,7 +18,7 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 
 export default async function RiderProfilePageComponent({
   driverDetails,
@@ -40,7 +40,7 @@ export default async function RiderProfilePageComponent({
                 imageSize="lg"
               />
             ) : (
-              <RyogoIcon icon={User} size="xl" />
+              <RyogoEnclosedIcon icon={User} size="xl" />
             )}
             <ChangeUserPhotoSheet
               userId={driverDetails.userId}

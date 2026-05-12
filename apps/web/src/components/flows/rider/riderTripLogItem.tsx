@@ -13,7 +13,7 @@ import {
   Pin,
 } from "lucide-react"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderTripLogItem({
@@ -78,10 +78,12 @@ function getTripLogIcon(type: TripLogTypesEnum) {
     last = true
   }
   return (
-    <div
-      className={`flex size-7 lg:size-8 ${last ? "bg-slate-800" : "bg-slate-100"} rounded-full items-center justify-center`}
-    >
-      <RyogoIcon icon={icon} size="sm" color={last ? "white" : "slate"} />
-    </div>
+    <RyogoEnclosedIcon
+      icon={icon}
+      size="sm"
+      color={last ? "white" : "slate"}
+      bgColor={last ? "black" : "slate"}
+      circular
+    />
   )
 }

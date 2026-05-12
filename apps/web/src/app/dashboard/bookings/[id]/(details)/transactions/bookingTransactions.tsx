@@ -20,7 +20,6 @@ export default async function BookingTransactionsPageComponent({
 }) {
   const t = await getTranslations("Dashboard.BookingTransactions")
 
-  //TODO: Show booking details summary at the top
   return (
     <PageWrapper id="BookingTransactionsPage">
       <BookingDetailHeaderTabs id={bookingId} selectedTab="Transactions" />

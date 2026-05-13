@@ -28,7 +28,7 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
-import { getRouteAction } from "@/app/actions/routes/getRouteAction"
+import { findOrCreateRouteAction } from "@/app/actions/locations/findOrCreateRouteAction"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -149,7 +149,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
         props.newBookingFormData.tripSourceLocationState
     ) {
       //If route info has changed, fetch route data
-      newRoute = await getRouteAction(
+      newRoute = await findOrCreateRouteAction(
         values.tripSourceLocationCity,
         values.tripSourceLocationState,
         values.tripDestinationLocationCity,

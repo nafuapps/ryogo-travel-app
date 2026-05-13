@@ -5,7 +5,7 @@ import {
   SubscriptionPlanEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { TRIAL_MODE, TRIAL_VEHICLE_LIMIT } from "@/lib/uiConfig"
+import { TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -38,8 +38,8 @@ export default async function NewVehiclePageComponent({
   //Only allow subscribed agencies to add more than X vehicles
   if (
     !TRIAL_MODE &&
-    currentAgencyVehicles >= TRIAL_VEHICLE_LIMIT &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL ||
+    currentAgencyVehicles >= BASIC_PLAN_VEHICLE_LIMIT &&
+    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date())
   ) {
     return (
@@ -52,19 +52,19 @@ export default async function NewVehiclePageComponent({
             bgColor="yellow"
           />
           <RyogoSmall color="yellow">
-            {agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL
+            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
               ? t("TrialWarning")
               : t("ExpiredWarning")}
           </RyogoSmall>
           <RyogoH4>
-            {agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL
+            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
               ? t("TrialAction")
               : t("ExpiredAction")}
           </RyogoH4>
           {isOwner && (
             <Link href="/dashboard/account/subscription">
               <Button variant={"brand"} size="lg">
-                {agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL
+                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
                   ? t("BuyCTA")
                   : t("RenewCTA")}
               </Button>

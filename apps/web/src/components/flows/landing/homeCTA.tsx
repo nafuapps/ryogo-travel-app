@@ -14,7 +14,7 @@ export default async function HomeCTASection() {
         <RyogoSmall color="white">{t("Subtitle")}</RyogoSmall>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Link href="/onboarding">
-            <Button size="lg" variant="brand" className="w-full md:w-auto ">
+            <Button size="lg" variant="white" className="w-full md:w-auto ">
               <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
             </Button>
           </Link>

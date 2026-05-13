@@ -65,11 +65,11 @@ export const agencyStatus = pgEnum("agency_status", [
   AgencyStatusEnum.SUSPENDED,
 ])
 export enum SubscriptionPlanEnum {
-  TRIAL = "trial",
+  BASIC = "basic",
   PREMIUM = "premium",
 }
 export const subscriptionPlan = pgEnum("subscription_plan", [
-  SubscriptionPlanEnum.TRIAL,
+  SubscriptionPlanEnum.BASIC,
   SubscriptionPlanEnum.PREMIUM,
 ])
 //Agencies table
@@ -91,7 +91,7 @@ export const agencies = pgTable(
     logoUrl: text("logo_url"),
     subscriptionPlan: subscriptionPlan()
       .notNull()
-      .default(SubscriptionPlanEnum.TRIAL),
+      .default(SubscriptionPlanEnum.BASIC),
     subscriptionExpiresOn: timestamp("subscription_expires_on", {
       withTimezone: true,
     }).notNull(),

@@ -131,6 +131,15 @@ export function generateBookingInvoiceName(bookingId: string) {
   return `bookings/${bookingId}/invoices/${bookingId}-invoice.pdf`
 }
 
+export function generateAgencyInvoiceName(
+  agencyId: string,
+  month: string,
+  year: string,
+  invoiceId: string,
+) {
+  return `agencies/${agencyId}/invoices/${invoiceId}-${month}-${year}/${invoiceId}-ryogo-invoice.pdf`
+}
+
 function getDuration(startDate: Date, endDate: Date) {
   return differenceInDays(startOfDay(endDate), startOfDay(startDate)) + 1
 }

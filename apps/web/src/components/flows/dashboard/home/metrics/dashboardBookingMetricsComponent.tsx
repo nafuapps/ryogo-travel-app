@@ -30,6 +30,10 @@ export default async function DashboardBookingMetricsComponent({
   const inProgressBookings =
     await bookingServices.findInProgressBookings(agencyId)
 
+  //Get Completed bookings
+  const completedBookings =
+    await bookingServices.findCompletedBookingsPreviousDays(agencyId)
+
   //Get updated bookings with all the status (lead, completed, cancelled)
   const updatedBookings =
     await bookingServices.findBookingsUpdatedPreviousDays(agencyId)
@@ -46,12 +50,10 @@ export default async function DashboardBookingMetricsComponent({
 
   const inProgressCount = inProgressBookings.length
 
+  const completedCount = completedBookings.length
+
   const leadCount = updatedBookings.filter(
     (b) => b.status === BookingStatusEnum.LEAD,
-  ).length
-
-  const completedCount = updatedBookings.filter(
-    (b) => b.status === BookingStatusEnum.COMPLETED,
   ).length
 
   const cancelledCount = updatedBookings.filter(

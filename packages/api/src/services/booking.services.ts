@@ -83,7 +83,6 @@ export const bookingServices = {
       agencyId,
     )
 
-    //TODO:Fix this for completed
     return bookings.map((booking) => {
       return {
         id: booking.id,

@@ -3,7 +3,11 @@
 import { BookingRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  SubscriptionPlanEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
@@ -12,8 +16,13 @@ import AssignVehiclePageComponent from "./assignVehicle"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Metadata } from "next"
 import { differenceInDays } from "date-fns"
-import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
+import {
+  OLD_LEAD_AUTO_CANCEL_DAYS,
+  TRIAL_MODE,
+  BASIC_PLAN_VEHICLE_LIMIT,
+} from "@/lib/uiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: `Assign Vehicle - ${pageTitle}`,
@@ -26,8 +35,8 @@ export default async function AssignVehicleBookingPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
   //Invalid booking id regex
@@ -38,7 +47,7 @@ export default async function AssignVehicleBookingPage({
   const booking = await bookingServices.findBookingDetailsById(id)
 
   //No booking found or agency mismatch
-  if (!booking || booking.agency.id !== user.agencyId) {
+  if (!booking || booking.agency.id !== currentUser.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
@@ -70,22 +79,55 @@ export default async function AssignVehicleBookingPage({
 
   //Only owner or assigned agent can assign vehicle
   if (
-    user.userRole !== UserRolesEnum.OWNER &&
-    booking.assignedUser.id !== user.userId
+    currentUser.userRole !== UserRolesEnum.OWNER &&
+    booking.assignedUser.id !== currentUser.userId
   ) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   //Get vehicle data with their bookings and repairs
-  const vehicles = await vehicleServices.findVehiclesByAgency(user.agencyId)
+  const allVehicles = await vehicleServices.findVehiclesByAgency(
+    currentUser.agencyId,
+  )
+
+  let vehicles = allVehicles
+  let limited = false
+
+  //Only allow limited vehicles for unsubscribed agencies
+  if (
+    !TRIAL_MODE &&
+    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+      agency.subscriptionExpiresOn < new Date())
+  ) {
+    limited = true
+    const assignedVehicle = allVehicles.find(
+      (v) => v.id === booking.assignedVehicleId,
+    )
+    vehicles = vehicles
+      .sort((v1, v2) => v2.createdAt.getTime() - v1.createdAt.getTime())
+      .slice(0, BASIC_PLAN_VEHICLE_LIMIT)
+    if (
+      assignedVehicle &&
+      !vehicles.some((v) => v.id === booking.assignedVehicleId)
+    ) {
+      vehicles.splice(-1, 1, assignedVehicle)
+    }
+  }
 
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/assign-vehicle"} />
       <AssignVehiclePageComponent
         bookingId={id}
-        vehicles={vehicles}
+        vehicles={limited ? vehicles : allVehicles}
         booking={booking}
+        limited={limited}
+        isSubscribed={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
       />
     </MainWrapper>
   )

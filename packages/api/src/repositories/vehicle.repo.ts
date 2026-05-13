@@ -54,6 +54,7 @@ export const vehicleRepository = {
         defaultRatePerKm: true,
         hasAC: true,
         vehiclePhotoUrl: true,
+        createdAt: true,
       },
       where: and(
         eq(vehicles.agencyId, agencyId),

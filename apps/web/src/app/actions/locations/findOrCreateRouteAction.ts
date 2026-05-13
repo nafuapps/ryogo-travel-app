@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/lib/auth"
 import { routeServices } from "@ryogo-travel-app/api/services/route.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function getRouteAction(
+export async function findOrCreateRouteAction(
   sourceCity: string,
   sourceState: string,
   destinationCity: string,

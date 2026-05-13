@@ -59,6 +59,7 @@ export const driverRepository = {
         canDriveVehicleTypes: true,
         defaultAllowancePerDay: true,
         address: true,
+        createdAt: true,
       },
       where: and(
         eq(drivers.agencyId, agencyId),

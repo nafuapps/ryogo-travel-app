@@ -10,12 +10,11 @@ export const SEND_INVOICE_TIMEOUT_MINUTES = 60
 //Subscription
 export const TRIAL_MODE = false
 
-export const TRIAL_DRIVER_LIMIT = 5
-export const TRIAL_AGENT_LIMIT = 5
-export const TRIAL_VEHICLE_LIMIT = 5
+export const BASIC_PLAN_DRIVER_LIMIT = 5
+export const BASIC_PLAN_AGENT_LIMIT = 5
+export const BASIC_PLAN_VEHICLE_LIMIT = 5
 
-export const GENTLE_REMINDER_DAYS = 7
-export const STRICT_REMINDER_DAYS = 1
+export const SUBSCRIPTION_REMINDER_DAYS = 5
 
 export const MONTHLY_SUBSCRIPTION_DAYS = 30
 export const ANNUAL_SUBSCRIPTION_DAYS = 365

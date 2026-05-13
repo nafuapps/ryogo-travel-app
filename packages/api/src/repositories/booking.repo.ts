@@ -96,7 +96,6 @@ export const bookingRepository = {
       )
   },
 
-  //TODO:Fix this for completed
   async readBookingsByUpdatedDateRange(
     queryStartDate: Date,
     queryEndDate: Date,

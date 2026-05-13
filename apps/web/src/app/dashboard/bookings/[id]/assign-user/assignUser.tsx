@@ -10,17 +10,26 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
-import { RyogoSmall } from "@/components/typography"
-import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import {
+  SectionWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import Link from "next/link"
 
 export default function AssignUserPageComponent({
   bookingId,
   users,
   booking,
+  limited,
+  isSubscribed,
 }: {
   bookingId: string
   users: FindOwnerAndAgentsByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
+  limited: boolean
+  isSubscribed: boolean
 }) {
   const t = useTranslations("Dashboard.AssignUser")
   const router = useRouter()
@@ -51,6 +60,20 @@ export default function AssignUserPageComponent({
 
   return (
     <PageWrapper id="AssignUserPage">
+      {limited && (
+        <SectionWrapper id="SubscribeAction">
+          <SectionRowWrapper center>
+            <RyogoCaption color="yellow">
+              {isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
+            </RyogoCaption>
+            <Link href="/dashboard/account/subscription">
+              <Button variant={isSubscribed ? "brand" : "outline"}>
+                {isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+              </Button>
+            </Link>
+          </SectionRowWrapper>
+        </SectionWrapper>
+      )}
       <SectionWrapper id="AssignUserInfo">
         <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {users.map((user, index) => (

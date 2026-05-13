@@ -22,6 +22,8 @@ export default function NewBookingForm(props: {
   commissionRate: number
   userId: string
   customers: FindCustomersInAgencyType
+  limited: boolean
+  isSubscribed: boolean
 }) {
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingFormDataType>({
@@ -77,6 +79,8 @@ export default function NewBookingForm(props: {
       setNewBookingFormData={setNewBookingFormData}
       vehicles={props.vehicles}
       drivers={props.drivers}
+      limited={props.limited}
+      isSubscribed={props.isSubscribed}
     />,
     <NewBookingStep4
       key={3}

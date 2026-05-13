@@ -118,6 +118,7 @@ export const userRepository = {
         status: true,
         photoUrl: true,
         languagePref: true,
+        createdAt: true,
       },
       where: and(
         eq(users.agencyId, agencyId),

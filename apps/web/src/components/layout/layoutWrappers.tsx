@@ -20,7 +20,7 @@ export function LayoutSectionWrapper({
   children: React.ReactNode
 }) {
   return (
-    <section id={id} className="flex flex-row w-full h-dvh">
+    <section id={id} className="flex flex-col w-full h-dvh">
       {children}
     </section>
   )

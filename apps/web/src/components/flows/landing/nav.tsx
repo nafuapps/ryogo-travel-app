@@ -51,7 +51,7 @@ export default function Navbar(props: NavbarProps) {
               <Link
                 key={link.id}
                 href={link.href}
-                className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} text-sm lg:text-base font-semibold transition`}
+                className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} p-2 rounded-lg hover:bg-slate-50 text-sm lg:text-base font-semibold transition`}
               >
                 {link.label}
               </Link>

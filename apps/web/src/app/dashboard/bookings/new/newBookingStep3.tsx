@@ -28,6 +28,11 @@ import {
   NewStepGridWrapper,
 } from "@/components/form/newFormWrappers"
 import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import {
+  SectionRowWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
+import Link from "next/link"
 
 type NewBookingStep3Props = {
   onNext: () => void
@@ -38,6 +43,8 @@ type NewBookingStep3Props = {
   >
   vehicles: FindVehiclesByAgencyType
   drivers: FindDriversByAgencyType
+  limited: boolean
+  isSubscribed: boolean
 }
 export default function NewBookingStep3(props: NewBookingStep3Props) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step3")
@@ -98,6 +105,23 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
         <StepsTracker steps={"booking"} current={2} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
+      {props.limited && (
+        <SectionWrapper id="SubscribeAction">
+          <SectionRowWrapper center>
+            <RyogoCaption color="yellow">
+              {props.isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
+            </RyogoCaption>
+            <Link href="/dashboard/account/subscription">
+              <Button
+                variant={props.isSubscribed ? "brand" : "outline"}
+                size="default"
+              >
+                {props.isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+              </Button>
+            </Link>
+          </SectionRowWrapper>
+        </SectionWrapper>
+      )}
       <NewFormWrapper<Step3Type>
         id="Step3Form"
         form={form}

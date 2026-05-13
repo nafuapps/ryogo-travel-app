@@ -8,7 +8,7 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { TRIAL_DRIVER_LIMIT, TRIAL_MODE } from "@/lib/uiConfig"
+import { BASIC_PLAN_DRIVER_LIMIT, TRIAL_MODE } from "@/lib/uiConfig"
 import { RyogoH4, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { getTranslations } from "next-intl/server"
@@ -43,8 +43,8 @@ export default async function NewDriverPageComponent({
   //Only allow subscribed agencies to add more than X drivers
   if (
     !TRIAL_MODE &&
-    currentDriverUsers >= TRIAL_DRIVER_LIMIT &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL ||
+    currentDriverUsers >= BASIC_PLAN_DRIVER_LIMIT &&
+    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date())
   ) {
     return (
@@ -57,19 +57,19 @@ export default async function NewDriverPageComponent({
             bgColor="yellow"
           />
           <RyogoSmall color="yellow">
-            {agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL
+            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
               ? t("TrialWarning")
               : t("ExpiredWarning")}
           </RyogoSmall>
           <RyogoH4>
-            {agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL
+            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
               ? t("TrialAction")
               : t("ExpiredAction")}
           </RyogoH4>
           {isOwner && (
             <Link href="/dashboard/account/subscription">
               <Button variant={"brand"} size="lg">
-                {agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL
+                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
                   ? t("BuyCTA")
                   : t("RenewCTA")}
               </Button>

@@ -10,17 +10,26 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
-import { RyogoSmall } from "@/components/typography"
-import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import {
+  SectionWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import Link from "next/link"
 
 export default function AssignDriverPageComponent({
   bookingId,
   drivers,
   booking,
+  limited,
+  isSubscribed,
 }: {
   bookingId: string
   drivers: FindDriversByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
+  limited: boolean
+  isSubscribed: boolean
 }) {
   const t = useTranslations("Dashboard.AssignDriver")
   const router = useRouter()
@@ -56,6 +65,20 @@ export default function AssignDriverPageComponent({
 
   return (
     <PageWrapper id="AssignDriverPage">
+      {limited && (
+        <SectionWrapper id="SubscribeAction">
+          <SectionRowWrapper center>
+            <RyogoCaption color="yellow">
+              {isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
+            </RyogoCaption>
+            <Link href="/dashboard/account/subscription">
+              <Button variant={isSubscribed ? "brand" : "outline"}>
+                {isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+              </Button>
+            </Link>
+          </SectionRowWrapper>
+        </SectionWrapper>
+      )}
       <SectionWrapper id="AssignDriverInfo">
         <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {drivers.map((driver, index) => (

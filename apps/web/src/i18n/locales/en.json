@@ -856,7 +856,7 @@
       }
     },
     "NewBooking": {
-      "TrialWarning":"You trial plan has ended.",
+      "TrialWarning":"You have reached the agent limit for basic plan.",
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to create bookings!",
       "ExpiredAction":"Please renew your subscription plan to create bookings!",
@@ -961,6 +961,10 @@
           "Title": "Assignment options",
           "Subtitle": "Step 3 of 5",
           "Description": "Assign vehicle and driver for the trip",
+          "TrialWarning":"You are seeing limited list of vehicles and drivers in basic plan. Subscribe to add more!",
+          "ExpiredWarning":"You are seeing limited list of vehicles and drivers because your subscription plan has expired.",
+          "BuyCTA":"Buy Subscription",
+          "RenewCTA":"Renew Subscription",
           "Vehicle": {
             "Title": "Choose a vehicle:",
             "Score": "RyoGo Score",
@@ -1378,6 +1382,10 @@
       "Error": "Cannot modify expense.. Try again later!"
     },
     "AssignDriver": {
+      "TrialWarning":"You are seeing limited list of drivers in basic plan. Subscribe to add more drivers!",
+      "ExpiredWarning":"You are seeing limited list of drivers because your subscription plan has expired.",
+      "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "Title": "Select a driver to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
@@ -1394,6 +1402,10 @@
       "Error": "Cannot assign driver.. Try again later!"
     },
     "AssignVehicle": {
+      "TrialWarning":"You are seeing limited list of vehicles in basic plan. Subscribe to add more vehicles!",
+      "ExpiredWarning":"You are seeing limited list of vehicles because your subscription plan has expired.",
+      "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "Title": "Select a vehicle to assign for this booking",
       "Tile": {
         "Title": "Choose vehicle",
@@ -1413,6 +1425,10 @@
       "Error": "Cannot assign vehicle.. Try again later!"
     },
     "AssignUser": {
+      "TrialWarning":"You are seeing limited list of agents in basic plan. Subscribe to add more agents!",
+      "ExpiredWarning":"You are seeing limited list of agents because your subscription plan has expired.",
+      "BuyCTA":"Buy Subscription",
+      "RenewCTA":"Renew Subscription",
       "Title": "Select a user to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
@@ -1444,7 +1460,7 @@
       "History": {}
     },
     "NewVehicle": {
-      "TrialWarning":"You have reached the limit for trial plan.",
+      "TrialWarning":"You have reached the limit for basic plan.",
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to add more vehicles!",
       "ExpiredAction":"Please renew your subscription plan to add more vehicles!",
@@ -1891,7 +1907,7 @@
       "History": {}
     },
     "NewDriver": {
-      "TrialWarning":"You have reached the limit for trial plan.",
+      "TrialWarning":"You have reached the limit for basic plan.",
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to add more drivers!",
       "ExpiredAction":"Please renew your subscription plan to add more drivers!",
@@ -2372,6 +2388,7 @@
       "ValidTill": "Expires on: ",
        "BuyCTA":"Buy Subscription",
       "RenewCTA":"Renew Subscription",
+      "ViewCTA":"View Subscription",
       "EditDetails": "Edit Agency Details",
       "ChangeEmail": {
         "Title": "Change Agency Email",
@@ -2513,7 +2530,7 @@
       }
     },
     "NewAgent": {
-      "TrialWarning":"You have reached the limit for trial plan.",
+      "TrialWarning":"You have reached the limit for basic plan.",
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to add more agents!",
       "ExpiredAction":"Please renew your subscription plan to add more agents!",
@@ -2771,6 +2788,11 @@
       "Quote":"Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}",
       "DriverInvite":"Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
       "AgentInvite":"Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}"
+    },
+    "SubscriptionReminderStrip":{
+      "NotExpired":"Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
+      "Expired":"Your subscription has expired.",
+      "RenewCTA":"Recharge Now"
     }
   },
   "Rider": {
@@ -3151,46 +3173,46 @@
       "Signup":"Sign up"
     },
     "Footer":{
-      "LogoCaption":"Revolutionizing hassle-free travel agency planning countrywide",
+      "LogoCaption":"Reimagining travel agency operations worldwide",
       "Product":{
-        "Title":"Product",
+        "Title":"PRODUCT",
         "Features":"Features",
         "Pricing":"Pricing",
         "HowItWorks":"How It Works",
         "Resources":"Resources"
       },
       "Support":{
-        "Title":"Support",
+        "Title":"SUPPORT",
         "Customer":"Customer Support",
         "FAQ":"FAQ",
         "Email":"Email Us"
       },
       "Social":{
-        "Title":"Social Media",
+        "Title":"SOCIAL MEDIA",
         "Facebook":"Facebook",
         "Instagram":"Instagram",
         "YouTube":"YouTube",
         "LinkedIn":"LinkedIn"
       },
-      "Copyright":"Copyright @ 2026 RyoGo Travel Agency App",
+      "Copyright":"Copyright @ {year} RyoGo Travel Agency App",
       "Developer":"Designed & Developed by NaFu Apps"
     },
     "Home":{
       "Hero":{
-        "Title1":"Stop Everyday Chaos.",
-        "Title2":"Start Growing Your Agency",
-        "Subtitle":"RyoGo is an all-in-one app for Indian travel agencies to manage bookings, fleet, drivers, and daily operations with zero paperwork or hassle",
-        "PrimaryCTA":"Get Started For Free",
+        "Title1":"Stop everyday chaos.",
+        "Title2":"Start growing your travel business.",
+        "Subtitle":"RyoGo helps travel agencies and tour operators manage their bookings, fleet, drivers, and daily operations online without any hassle or paperwork",
+        "PrimaryCTA":"Get started for Free",
         "SecondaryCTA":"Watch Demo"
       },
       "CTA":{
-        "Title":"Ready to grow your agency business?",
-        "Subtitle":"Join hundreds of Indian travel agencies automating their daily workflows. Sign up today to get a free 2-month trial",
+        "Title":"Ready to grow your business?",
+        "Subtitle":"Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free 2-month trial",
         "PrimaryCTA":"Create Agency Account",
         "SecondaryCTA":"Explore More",
         "Prop1":"Free account",
         "Prop2":"No credit card required",
-        "Prop3":"Start booking in minutes"
+        "Prop3":"Start online booking in minutes"
       }
     },
     "Features":{},

@@ -1,4 +1,5 @@
 import { RyoGoLightLogo } from "@/components/logo"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -11,70 +12,74 @@ export default async function Footer() {
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand section */}
-          <div className="flex flex-col gap-2 md:gap-3">
+          <SectionColWrapper>
             <RyoGoLightLogo />
-            <RyogoCaption color="white">{t("LogoCaption")}</RyogoCaption>
-          </div>
+            <RyogoSmall color="white">{t("LogoCaption")}</RyogoSmall>
+          </SectionColWrapper>
 
           {/* Product */}
-          <div className="flex flex-col gap-2 md:gap-3">
-            <RyogoSmall color="white">{t("Product.Title")}</RyogoSmall>
+          <SectionColWrapper>
+            <RyogoSmall color="light" weight="font-bold">
+              {t("Product.Title")}
+            </RyogoSmall>
             <Link href="/features" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Product.Features")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Product.Features")}</RyogoSmall>
             </Link>
             <Link href="/pricing" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Product.Pricing")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Product.Pricing")}</RyogoSmall>
             </Link>
             <Link href="/how-it-works" className="hover:underline transition">
-              <RyogoCaption color="white">
-                {t("Product.HowItWorks")}
-              </RyogoCaption>
+              <RyogoSmall color="white">{t("Product.HowItWorks")}</RyogoSmall>
             </Link>
             <Link href="/resources" className="hover:underline transition">
-              <RyogoCaption color="white">
-                {t("Product.Resources")}
-              </RyogoCaption>
+              <RyogoSmall color="white">{t("Product.Resources")}</RyogoSmall>
             </Link>
-          </div>
+          </SectionColWrapper>
 
           {/* Support */}
-          <div className="flex flex-col gap-2 md:gap-3">
-            <RyogoSmall color="white">{t("Support.Title")}</RyogoSmall>
+          <SectionColWrapper>
+            <RyogoSmall color="light" weight="font-bold">
+              {t("Support.Title")}
+            </RyogoSmall>
             <Link href="tel:9840774089" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Support.Customer")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Support.Customer")}</RyogoSmall>
             </Link>
             <Link href="#faq" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Support.FAQ")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Support.FAQ")}</RyogoSmall>
             </Link>
             <Link
               href="mailto:ryogo.in@gmail.com"
               className="hover:underline transition"
             >
-              <RyogoCaption color="white">{t("Support.Email")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Support.Email")}</RyogoSmall>
             </Link>
-          </div>
+          </SectionColWrapper>
 
           {/* Social Media //TODO: Add SM links */}
-          <div className="flex flex-col gap-2 md:gap-3">
-            <RyogoSmall color="white">{t("Social.Title")}</RyogoSmall>
+          <SectionColWrapper>
+            <RyogoSmall color="light" weight="font-bold">
+              {t("Social.Title")}
+            </RyogoSmall>
             <Link href="/" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Social.Facebook")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Social.Facebook")}</RyogoSmall>
             </Link>
             <Link href="/" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Social.Instagram")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Social.Instagram")}</RyogoSmall>
             </Link>
             <Link href="/" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Social.LinkedIn")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Social.LinkedIn")}</RyogoSmall>
             </Link>
             <Link href="/" className="hover:underline transition">
-              <RyogoCaption color="white">{t("Social.YouTube")}</RyogoCaption>
+              <RyogoSmall color="white">{t("Social.YouTube")}</RyogoSmall>
             </Link>
-          </div>
+          </SectionColWrapper>
         </div>
 
         {/* Bottom section */}
         <div className="border-t border-sky-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <RyogoCaption color="white">{t("Copyright")}</RyogoCaption>
+          <RyogoCaption color="white">
+            {t("Copyright", { year: new Date().getFullYear() })}
+          </RyogoCaption>
           <Link
             href="https://nafuapps.in"
             target="_blank"

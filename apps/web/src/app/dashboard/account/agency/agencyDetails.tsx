@@ -72,25 +72,24 @@ export default async function AgencyDetailsPageComponent({
             {t("ValidTill") +
               moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}
           </RyogoCaption>
-          {!TRIAL_MODE &&
-            isOwner &&
-            agency.subscriptionPlan === SubscriptionPlanEnum.TRIAL && (
-              <Link href="/dashboard/account/subscription">
+          {isOwner && (
+            <Link href="/dashboard/account/subscription">
+              {!TRIAL_MODE &&
+              agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ? (
                 <Button variant={"brand"} size="lg">
                   {t("BuyCTA")}
                 </Button>
-              </Link>
-            )}
-          {!TRIAL_MODE &&
-            isOwner &&
-            agency.subscriptionPlan !== SubscriptionPlanEnum.TRIAL &&
-            agency.subscriptionExpiresOn < new Date() && (
-              <Link href="/dashboard/account/subscription">
+              ) : agency.subscriptionExpiresOn < new Date() ? (
                 <Button variant={"brand"} size="lg">
                   {t("RenewCTA")}
                 </Button>
-              </Link>
-            )}
+              ) : (
+                <Button variant={"outline"} size="lg">
+                  {t("ViewCTA")}
+                </Button>
+              )}
+            </Link>
+          )}
         </SectionColWrapper>
       </SectionWrapper>
       {isOwner && (

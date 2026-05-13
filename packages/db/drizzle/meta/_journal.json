@@ -211,6 +211,13 @@
       "when": 1778657915864,
       "tag": "0029_steady_doctor_strange",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1778680925418,
+      "tag": "0030_gifted_stature",
+      "breakpoints": true
     }
   ]
 }

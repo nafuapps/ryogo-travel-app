@@ -19,7 +19,7 @@ import {
 
 //ID initials
 export const agencyInitial = "A"
-export const invoiceInitial = "I"
+export const orderInitial = "O"
 export const userInitial = "U"
 export const sessionInitial = "S"
 export const vehicleInitial = "V"
@@ -120,6 +120,7 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
     fields: [agencies.locationId],
     references: [locations.id],
   }),
+  orders: many(orders),
   users: many(users),
   vehicles: many(vehicles),
   drivers: many(drivers),
@@ -132,34 +133,71 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   tripLogs: many(tripLogs),
 }))
 
-//Invoices table
-export const invoiceIdSequence = pgSequence("invoice_id_seq", {
+export enum OrderStatusEnum {
+  CREATED = "created",
+  AUTHORIZED = "authorized",
+  CAPTURED = "captured",
+}
+export const orderStatus = pgEnum("order_status", [
+  OrderStatusEnum.CREATED,
+  OrderStatusEnum.AUTHORIZED,
+  OrderStatusEnum.CAPTURED,
+])
+export enum OrderTypeEnum {
+  MONTHLY = "monthly",
+  QUARTERLY = "quarterly",
+  ANNUAL = "annual",
+}
+export const orderType = pgEnum("order_type", [
+  OrderTypeEnum.MONTHLY,
+  OrderTypeEnum.QUARTERLY,
+  OrderTypeEnum.ANNUAL,
+])
+//Orders table
+export const orderIdSequence = pgSequence("order_id_seq", {
   ...sequenceValues,
 })
-export const invoices = pgTable(
-  "invoices",
+export const orders = pgTable(
+  "orders",
   {
     id: text("id")
       .primaryKey()
       .$defaultFn(() => {
-        return sql`${invoiceInitial} || nextval(${"invoice_id_seq"})`
+        return sql`${orderInitial} || nextval(${"order_id_seq"})`
       }),
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
+    userId: text("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
     amount: integer("amount").notNull(), // in currency
     url: text("url"),
     emailSentAt: timestamp("email_sent_at", { withTimezone: true }),
+    orderType: orderType().notNull().default(OrderTypeEnum.MONTHLY),
+    status: orderStatus().notNull().default(OrderStatusEnum.CREATED),
+    rpOrderId: text("rp_order_id").unique().notNull(),
     ...timestamps,
   },
   (t) => [
-    index("invoices_agency_idx").on(t.agencyId), // to quickly filter all users in an agency
+    check(
+      "amount >= 0 AND amount <= 50000",
+      sql`${t.amount} >= 0 AND ${t.amount} <= 50000`,
+    ),
+    index("orders_agency_idx").on(t.agencyId), // to quickly filter all orders in an agency
+    index("orders_rpOrderId_idx").on(t.rpOrderId), // to quickly filter all orders by rp id
+    index("orders_agency_user_idx").on(t.agencyId, t.userId), // to quickly filter all orders by a user in an agency
+    index("orders_agency_status_idx").on(t.agencyId, t.status), // to quickly filter all orders with status in an agency
   ],
 )
-export const invoicesRelations = relations(invoices, ({ one, many }) => ({
+export const ordersRelations = relations(orders, ({ one, many }) => ({
   agency: one(agencies, {
-    fields: [invoices.agencyId],
+    fields: [orders.agencyId],
     references: [agencies.id],
+  }),
+  user: one(users, {
+    fields: [orders.userId],
+    references: [users.id],
   }),
 }))
 
@@ -249,6 +287,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
     fields: [users.agencyId],
     references: [agencies.id],
   }),
+  orders: many(orders),
   driver: one(drivers),
   bookingsAssigned: many(bookings, {
     relationName: "bookings_assigned_user_fkey",
@@ -1196,6 +1235,9 @@ export const driverLeaveRelations = relations(driverLeaves, ({ one }) => ({
 //Export types
 export type SelectAgencyType = typeof agencies.$inferSelect
 export type InsertAgencyType = typeof agencies.$inferInsert
+
+export type SelectOrderType = typeof orders.$inferSelect
+export type InsertOrderType = typeof orders.$inferInsert
 
 export type SelectUserType = typeof users.$inferSelect
 export type InsertUserType = typeof users.$inferInsert

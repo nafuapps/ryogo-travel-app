@@ -860,7 +860,7 @@
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to create bookings!",
       "ExpiredAction":"Please renew your subscription plan to create bookings!",
-      "BuyCTA":"Buy Subscription",
+      "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Form": {
         "Km": " Km",
@@ -963,7 +963,7 @@
           "Description": "Assign vehicle and driver for the trip",
           "TrialWarning":"You are seeing limited list of vehicles and drivers in basic plan. Subscribe to add more!",
           "ExpiredWarning":"You are seeing limited list of vehicles and drivers because your subscription plan has expired.",
-          "BuyCTA":"Buy Subscription",
+          "BuyCTA":"Buy Premium",
           "RenewCTA":"Renew Subscription",
           "Vehicle": {
             "Title": "Choose a vehicle:",
@@ -1384,7 +1384,7 @@
     "AssignDriver": {
       "TrialWarning":"You are seeing limited list of drivers in basic plan. Subscribe to add more drivers!",
       "ExpiredWarning":"You are seeing limited list of drivers because your subscription plan has expired.",
-      "BuyCTA":"Buy Subscription",
+      "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Title": "Select a driver to assign for this booking",
       "Tile": {
@@ -1404,7 +1404,7 @@
     "AssignVehicle": {
       "TrialWarning":"You are seeing limited list of vehicles in basic plan. Subscribe to add more vehicles!",
       "ExpiredWarning":"You are seeing limited list of vehicles because your subscription plan has expired.",
-      "BuyCTA":"Buy Subscription",
+      "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Title": "Select a vehicle to assign for this booking",
       "Tile": {
@@ -1427,7 +1427,7 @@
     "AssignUser": {
       "TrialWarning":"You are seeing limited list of agents in basic plan. Subscribe to add more agents!",
       "ExpiredWarning":"You are seeing limited list of agents because your subscription plan has expired.",
-      "BuyCTA":"Buy Subscription",
+      "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Title": "Select a user to assign for this booking",
       "Tile": {
@@ -1464,7 +1464,7 @@
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to add more vehicles!",
       "ExpiredAction":"Please renew your subscription plan to add more vehicles!",
-      "BuyCTA":"Buy Subscription",
+      "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Step1": {
         "Title": "Adding vehicle",
@@ -1911,7 +1911,7 @@
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to add more drivers!",
       "ExpiredAction":"Please renew your subscription plan to add more drivers!",
-      "BuyCTA":"Buy Subscription",
+      "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Step1": {
         "Title": "Adding Driver",
@@ -2386,7 +2386,7 @@
       "Photo": "View logo",
       "SubscriptionInfo": "Subscription info",
       "ValidTill": "Expires on: ",
-       "BuyCTA":"Buy Subscription",
+       "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "ViewCTA":"View Subscription",
       "EditDetails": "Edit Agency Details",
@@ -2471,7 +2471,11 @@
     },
     "AccountHelp": {},
     "AccountSubscription":{
-
+      "PaymentButton":{
+        "PayMonthly":"Pay Monthly",
+        "PayQuarterly":"Pay Quarterly",
+        "PayAnnual":"Pay Annual"
+      }
     },
     "UserDetailsHeaderTabs": {
       "Details": "Details",
@@ -2534,7 +2538,7 @@
       "ExpiredWarning":"Your subscription plan has expired.",
       "TrialAction":"Please upgrade your subscription plan to add more agents!",
       "ExpiredAction":"Please renew your subscription plan to add more agents!",
-      "BuyCTA":"Buy Subscription",
+      "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Field1": {
         "Title": "Agent name",

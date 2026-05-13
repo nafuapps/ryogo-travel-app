@@ -1,4 +1,8 @@
-import { AgencyStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  AgencyStatusEnum,
+  OrderTypeEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
@@ -6,24 +10,29 @@ import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
-import { BOOKINGS_SEARCH_DAYS } from "../apiConfig"
+import {
+  ANNUAL_SUBSCRIPTION_DAYS,
+  BOOKINGS_SEARCH_DAYS,
+  MONTHLY_SUBSCRIPTION_DAYS,
+  QUARTERLY_SUBSCRIPTION_DAYS,
+} from "../apiConfig"
 
 export const agencyServices = {
   //Find all agencies
   async findAllAgencies() {
-    const agencies = agencyRepository.readAllAgencies()
+    const agencies = await agencyRepository.readAllAgencies()
     return agencies
   },
 
   //Find all agencies by phone
   async findAgenciesByPhone(phone: string) {
-    const agencies = agencyRepository.readAgenciesByPhone(phone)
+    const agencies = await agencyRepository.readAgenciesByPhone(phone)
     return agencies
   },
 
   //Find all agencies by email
   async findAgenciesByEmail(email: string) {
-    const agencies = agencyRepository.readAgenciesByEmail(email)
+    const agencies = await agencyRepository.readAgenciesByEmail(email)
     return agencies
   },
 
@@ -133,12 +142,19 @@ export const agencyServices = {
     return updatedAgency[0]
   },
 
-  //Subscribe an agency for N days
-  async subscribeAgency(id: string, days: number) {
+  //Subscribe an agency based on order type
+  async subscribeAgency(agencyId: string, orderType: OrderTypeEnum) {
+    let days = MONTHLY_SUBSCRIPTION_DAYS
+    if (orderType === OrderTypeEnum.QUARTERLY) {
+      days = QUARTERLY_SUBSCRIPTION_DAYS
+    }
+    if (orderType === OrderTypeEnum.ANNUAL) {
+      days = ANNUAL_SUBSCRIPTION_DAYS
+    }
     const expiryTime = new Date(
       new Date().getTime() + days * 24 * 60 * 60 * 1000,
     )
-    return await agencyRepository.updateAgencySubscription(id, expiryTime)
+    return await agencyRepository.updateAgencySubscription(agencyId, expiryTime)
   },
 }
 

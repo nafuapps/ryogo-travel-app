@@ -66,12 +66,16 @@ export default async function AgencyDetailsPageComponent({
           <RyogoSmall color="slate">
             {agency.subscriptionPlan.toUpperCase()}
           </RyogoSmall>
-          <RyogoCaption
-            color={agency.subscriptionExpiresOn < new Date() ? "red" : "slate"}
-          >
-            {t("ValidTill") +
-              moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}
-          </RyogoCaption>
+          {agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC && (
+            <RyogoCaption
+              color={
+                agency.subscriptionExpiresOn < new Date() ? "red" : "slate"
+              }
+            >
+              {t("ValidTill") +
+                moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}
+            </RyogoCaption>
+          )}
           {isOwner && (
             <Link href="/dashboard/account/subscription">
               {!TRIAL_MODE &&

@@ -93,15 +93,31 @@ export const orderServices = {
     if (!order[0]) return
 
     //Trigger subscription upgrade
-    let days = MONTHLY_SUBSCRIPTION_DAYS
+    let subscriptionDays = MONTHLY_SUBSCRIPTION_DAYS
     if (order[0].orderType === OrderTypeEnum.QUARTERLY) {
-      days = QUARTERLY_SUBSCRIPTION_DAYS
+      subscriptionDays = QUARTERLY_SUBSCRIPTION_DAYS
     }
     if (order[0].orderType === OrderTypeEnum.ANNUAL) {
-      days = ANNUAL_SUBSCRIPTION_DAYS
+      subscriptionDays = ANNUAL_SUBSCRIPTION_DAYS
     }
+
+    const agencyDetails = await agencyRepository.readAgencyById(
+      order[0].agencyId,
+    )
+    if (!agencyDetails) return
+
+    let startDate = new Date()
+
+    //If premium subscription has not expired yet, extend from current expiry date
+    if (
+      agencyDetails.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
+      agencyDetails.subscriptionExpiresOn > new Date()
+    ) {
+      startDate = agencyDetails.subscriptionExpiresOn
+    }
+
     const newExpiryTime = new Date(
-      new Date().getTime() + days * 24 * 60 * 60 * 1000,
+      startDate.getTime() + subscriptionDays * 24 * 60 * 60 * 1000,
     )
     await agencyRepository.updateAgencySubscription(
       order[0].agencyId,

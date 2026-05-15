@@ -856,10 +856,14 @@
       }
     },
     "NewBooking": {
-      "TrialWarning":"You have reached the agent limit for basic plan.",
-      "ExpiredWarning":"Your subscription plan has expired.",
-      "TrialAction":"Please upgrade your subscription plan to create bookings!",
-      "ExpiredAction":"Please renew your subscription plan to create bookings!",
+      "BookingTrialWarning":"You have reached the monthly booking limit for basic plan.",
+      "BookingExpiredWarning":"Your subscription plan has expired and you have reached the monthly booking limit.",
+      "BookingTrialAction":"Please upgrade your subscription plan to create bookings!",
+      "BookingExpiredAction":"Please renew your subscription plan to create bookings!",
+      "AgentTrialWarning":"You have reached the agent limit for basic plan.",
+      "AgentExpiredWarning":"Your subscription plan has expired.",
+      "AgentTrialAction":"Please upgrade your subscription plan to create bookings!",
+      "AgentExpiredAction":"Please renew your subscription plan to create bookings!",
       "BuyCTA":"Buy Premium",
       "RenewCTA":"Renew Subscription",
       "Form": {

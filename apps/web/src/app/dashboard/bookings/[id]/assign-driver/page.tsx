@@ -98,7 +98,7 @@ export default async function AssignDriverBookingPage({
   let drivers = allDrivers
   let limited = false
 
-  //Only allow limited drivers for unsubscribed agencies
+  //SUBSCRIPTION BLOCKER: Limited drivers available for assignment
   if (
     !TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||

@@ -20,7 +20,6 @@ import { UPDATE_PRICE_DISTANCE_FACTOR } from "../apiConfig"
 import { getEstimatedTotalPrice, getFinalTotalPrice } from "@/lib/utils"
 
 export const bookingServices = {
-  //Bookings dashboard
   async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
     //Day N days ago
     const startDate = new Date(
@@ -33,7 +32,38 @@ export const bookingServices = {
         agencyId,
         startDate,
         endDate,
-        BookingStatusEnum.CONFIRMED,
+        [BookingStatusEnum.CONFIRMED],
+      )
+    return bookings.map((booking) => {
+      return {
+        id: booking.id,
+        status: booking.status,
+        createdAt: booking.createdAt,
+      }
+    })
+  },
+
+  //Find bookings created in last N days which are countable towards subscription limit (atleast confirmed)
+  async findSubscriptionBookingsPreviousDays(
+    agencyId: string,
+    days: number = 1,
+  ) {
+    //Day N days ago
+    const startDate = new Date(
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
+    )
+    //Day today
+    const endDate = new Date()
+    const bookings =
+      await bookingRepository.readBookingsByStatusCreatedDateRange(
+        agencyId,
+        startDate,
+        endDate,
+        [
+          BookingStatusEnum.CONFIRMED,
+          BookingStatusEnum.IN_PROGRESS,
+          BookingStatusEnum.COMPLETED,
+        ],
       )
     return bookings.map((booking) => {
       return {
@@ -57,7 +87,7 @@ export const bookingServices = {
         agencyId,
         startDate,
         endDate,
-        BookingStatusEnum.CONFIRMED,
+        [BookingStatusEnum.CONFIRMED],
       )
     return bookings.map((booking) => {
       return {

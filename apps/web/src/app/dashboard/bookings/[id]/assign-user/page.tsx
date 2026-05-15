@@ -87,7 +87,7 @@ export default async function AssignUserBookingPage({
   let users = allUsers
   let limited = false
 
-  //Only allow limited users for unsubscribed agencies
+  //SUBSCRIPTION BLOCKER: Limited agents available for assignment
   if (
     !TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||

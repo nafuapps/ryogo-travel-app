@@ -81,7 +81,7 @@ export const bookingRepository = {
     agencyId: string,
     queryStartDate: Date,
     queryEndDate: Date,
-    status: BookingStatusEnum,
+    status: BookingStatusEnum[],
   ) {
     return await db
       .select()
@@ -91,7 +91,7 @@ export const bookingRepository = {
           gte(bookings.createdAt, queryStartDate),
           lte(bookings.createdAt, queryEndDate),
           eq(bookings.agencyId, agencyId),
-          eq(bookings.status, status),
+          inArray(bookings.status, status),
         ),
       )
   },

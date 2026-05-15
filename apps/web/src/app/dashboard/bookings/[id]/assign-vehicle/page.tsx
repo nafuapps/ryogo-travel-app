@@ -98,7 +98,7 @@ export default async function AssignVehicleBookingPage({
   let vehicles = allVehicles
   let limited = false
 
-  //Only allow limited vehicles for unsubscribed agencies
+  //SUBSCRIPTION BLOCKER: Limited vehicles available for assignment
   if (
     !TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||

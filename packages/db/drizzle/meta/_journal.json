@@ -218,6 +218,13 @@
       "when": 1778680925418,
       "tag": "0030_gifted_stature",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1778825880389,
+      "tag": "0031_blue_proteus",
+      "breakpoints": true
     }
   ]
 }

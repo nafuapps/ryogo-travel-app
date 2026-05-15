@@ -1,5 +1,8 @@
+//Landing
+export const HOMEPAGE_URL = "https://ryogo.nafuapps.in"
+
 //Onboarding
-export const RESEND_CODE_TIMEOUT_MINUTES = 5
+export const VERIFY_CODE_TIMEOUT_MINUTES = 5
 
 //Bookings
 export const OLD_LEAD_AUTO_CANCEL_DAYS = 1
@@ -16,10 +19,6 @@ export const BASIC_PLAN_VEHICLE_LIMIT = 5
 
 export const SUBSCRIPTION_REMINDER_DAYS = 5
 
-export const MONTHLY_SUBSCRIPTION_MRP = 999
-export const ANNUAL_SUBSCRIPTION_MRP = MONTHLY_SUBSCRIPTION_MRP * 12
-
-export const MONTHLY_SUBSCRIPTION_FINAL_PRICE = 499
-export const ANNUAL_SUBSCRIPTION_FINAL_PRICE = 4999
-
-export const GST_PERCENTAGE = 18
+//Support
+export const SUPPORT_HELPLINE_NUMBER = "9840774089"
+export const SUPPORT_EMAIL = "ryogo.in@gmail.com"

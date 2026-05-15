@@ -1,6 +1,7 @@
 import { RyoGoLightLogo } from "@/components/logo"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -41,7 +42,10 @@ export default async function Footer() {
             <RyogoSmall color="light" weight="font-bold">
               {t("Support.Title")}
             </RyogoSmall>
-            <Link href="tel:9840774089" className="hover:underline transition">
+            <Link
+              href={`tel:${SUPPORT_HELPLINE_NUMBER}`}
+              className="hover:underline transition"
+            >
               <RyogoSmall color="white">{t("Support.Customer")}</RyogoSmall>
             </Link>
             <Link href="#faq" className="hover:underline transition">

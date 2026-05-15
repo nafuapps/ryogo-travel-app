@@ -131,13 +131,11 @@ export function generateBookingInvoiceName(bookingId: string) {
   return `bookings/${bookingId}/invoices/${bookingId}-invoice.pdf`
 }
 
-export function generateAgencyInvoiceName(
+export function generateSubscriptionInvoiceName(
   agencyId: string,
-  month: string,
-  year: string,
-  invoiceId: string,
+  orderId: string,
 ) {
-  return `agencies/${agencyId}/invoices/${invoiceId}-${month}-${year}/${invoiceId}-ryogo-invoice.pdf`
+  return `agencies/${agencyId}/orders/${orderId}/${orderId}-ryogo-invoice.pdf`
 }
 
 function getDuration(startDate: Date, endDate: Date) {

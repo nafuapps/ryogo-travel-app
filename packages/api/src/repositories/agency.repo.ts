@@ -105,19 +105,26 @@ export const agencyRepository = {
       })
   },
 
-  //Update agency subscription Id
-  async updateAgencySubscription(id: string, expiryTime: Date) {
+  //Update agency subscription plan, expiry and lastest order id
+  async updateAgencySubscription(
+    id: string,
+    plan: SubscriptionPlanEnum,
+    expiryTime: Date,
+    orderId: string,
+  ) {
     return await db
       .update(agencies)
       .set({
-        subscriptionPlan: SubscriptionPlanEnum.PREMIUM,
+        subscriptionPlan: plan,
         subscriptionExpiresOn: expiryTime,
+        latestPaidOrderId: orderId,
       })
       .where(eq(agencies.id, id))
       .returning({
         id: agencies.id,
         subscriptionPlan: agencies.subscriptionPlan,
         expiryTime: agencies.subscriptionExpiresOn,
+        latestPaidOrderId: agencies.latestPaidOrderId,
       })
   },
 

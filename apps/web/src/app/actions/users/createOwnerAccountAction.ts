@@ -12,6 +12,7 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
+import { headers } from "next/headers"
 import { redirect, RedirectType } from "next/navigation"
 
 export async function createOwnerAccountAction(
@@ -45,11 +46,20 @@ export async function createOwnerAccountAction(
     await userServices.updateUserPhoto(user.userId, uploadedPhoto.path)
   }
 
+  const headerList = await headers()
+  const host = headerList.get("host")
+  const protocol = headerList.get("x-forwarded-proto") || "http"
+  const absoluteUrl = `${protocol}://${host}/onboarding/verify-account`
+
   //Send new password email to the agent
   sendEmail(
     [user.email],
     "Welcome to RyoGo",
-    OnboardOwnerEmailTemplate({ name: user.name, code: user.code }),
+    OnboardOwnerEmailTemplate({
+      name: user.name,
+      code: user.code,
+      link: absoluteUrl,
+    }),
   )
 
   return user

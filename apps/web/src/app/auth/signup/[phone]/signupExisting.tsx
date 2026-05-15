@@ -11,6 +11,7 @@ import {
   AuthActionWrapper,
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
@@ -50,7 +51,7 @@ export default async function SignupExistingPageComponent({
         {hasOwnerAccount ? (
           <>
             <Button variant={"outline"} size={"lg"}>
-              <Link href="mailto:nafuapps@gmail.com">
+              <Link href={`mailto:${SUPPORT_EMAIL}`}>
                 <RyogoCaption color="light">
                   {t("SecondaryCTAYes")}
                 </RyogoCaption>

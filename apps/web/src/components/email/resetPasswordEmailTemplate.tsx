@@ -1,18 +1,26 @@
-interface EmailTemplateProps {
-  name: string
-  password: string
-}
+import { SUPPORT_EMAIL, SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
 
 export function ResetPasswordEmailTemplate({
   name,
   password,
-}: EmailTemplateProps) {
+}: {
+  name: string
+  password: string
+}) {
   return (
     <div>
       <h1>Welcome, {name}!</h1>
       <h5>
         Your password has been reset. Your new password is: <b>{password}</b>
       </h5>
+      <p>
+        For any issues, contact our support team at {SUPPORT_EMAIL} or call us
+        at
+        {SUPPORT_HELPLINE_NUMBER}
+      </p>
+      <small>
+        This is an automatically generated email. Please do not reply.
+      </small>
     </div>
   )
 }

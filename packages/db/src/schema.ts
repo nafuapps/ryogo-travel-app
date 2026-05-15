@@ -20,6 +20,7 @@ import {
 //ID initials
 export const agencyInitial = "A"
 export const orderInitial = "O"
+export const paymentInitial = "P"
 export const userInitial = "U"
 export const sessionInitial = "S"
 export const vehicleInitial = "V"
@@ -95,6 +96,7 @@ export const agencies = pgTable(
     subscriptionExpiresOn: timestamp("subscription_expires_on", {
       withTimezone: true,
     }).notNull(),
+    latestPaidOrderId: text("latest_paid_order_id"),
     status: agencyStatus().notNull().default(AgencyStatusEnum.NEW),
     defaultCommissionRate: integer("default_commission_rate")
       .notNull()
@@ -121,6 +123,7 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
     references: [locations.id],
   }),
   orders: many(orders),
+  payments: many(payments),
   users: many(users),
   vehicles: many(vehicles),
   drivers: many(drivers),
@@ -135,13 +138,13 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
 
 export enum OrderStatusEnum {
   CREATED = "created",
-  AUTHORIZED = "authorized",
-  CAPTURED = "captured",
+  ATTEMPTED = "attempted",
+  PAID = "captured",
 }
 export const orderStatus = pgEnum("order_status", [
   OrderStatusEnum.CREATED,
-  OrderStatusEnum.AUTHORIZED,
-  OrderStatusEnum.CAPTURED,
+  OrderStatusEnum.ATTEMPTED,
+  OrderStatusEnum.PAID,
 ])
 export enum OrderTypeEnum {
   MONTHLY = "monthly",
@@ -172,19 +175,24 @@ export const orders = pgTable(
       .references(() => users.id, { onDelete: "cascade" })
       .notNull(),
     amount: integer("amount").notNull(), // in currency
-    url: text("url"),
+    invoiceUrl: text("invoice_url"),
     emailSentAt: timestamp("email_sent_at", { withTimezone: true }),
     orderType: orderType().notNull().default(OrderTypeEnum.MONTHLY),
     status: orderStatus().notNull().default(OrderStatusEnum.CREATED),
+    attempts: integer("attempts"),
+    isWebhookConfirmed: boolean("is_webhook_confirmed")
+      .notNull()
+      .default(false),
     rpOrderId: text("rp_order_id").unique().notNull(),
     ...timestamps,
   },
   (t) => [
     check(
-      "amount >= 0 AND amount <= 50000",
-      sql`${t.amount} >= 0 AND ${t.amount} <= 50000`,
+      "amount >= 1 AND amount <= 10000",
+      sql`${t.amount} >= 1 AND ${t.amount} <= 10000`,
     ),
     index("orders_agency_idx").on(t.agencyId), // to quickly filter all orders in an agency
+    index("orders_user_idx").on(t.userId), // to quickly filter all orders in an agency
     index("orders_rpOrderId_idx").on(t.rpOrderId), // to quickly filter all orders by rp id
     index("orders_agency_user_idx").on(t.agencyId, t.userId), // to quickly filter all orders by a user in an agency
     index("orders_agency_status_idx").on(t.agencyId, t.status), // to quickly filter all orders with status in an agency
@@ -198,6 +206,104 @@ export const ordersRelations = relations(orders, ({ one, many }) => ({
   user: one(users, {
     fields: [orders.userId],
     references: [users.id],
+  }),
+  payments: many(payments),
+}))
+
+export enum PaymentStatusEnum {
+  CREATED = "created",
+  AUTHORIZED = "authorized",
+  FAILED = "failed",
+  CAPTURED = "captured",
+  REFUNDED = "refunded",
+}
+const paymentStatus = pgEnum("payment_status", [
+  PaymentStatusEnum.CREATED,
+  PaymentStatusEnum.AUTHORIZED,
+  PaymentStatusEnum.FAILED,
+  PaymentStatusEnum.CAPTURED,
+  PaymentStatusEnum.REFUNDED,
+])
+export enum PaymentMethodEnum {
+  UPI = "upi",
+  CARD = "card",
+  NET_BANKING = "netbanking",
+  WALLET = "wallet",
+  OTHER = "other",
+}
+export const paymentMethod = pgEnum("payment_method", [
+  PaymentMethodEnum.UPI,
+  PaymentMethodEnum.CARD,
+  PaymentMethodEnum.NET_BANKING,
+  PaymentMethodEnum.WALLET,
+  PaymentMethodEnum.OTHER,
+])
+// Payments table
+export const paymentIdSequence = pgSequence("payment_id_seq", {
+  ...sequenceValues,
+})
+export const payments = pgTable(
+  "payments",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => {
+        return sql`${paymentInitial} || nextval(${"payment_id_seq"})`
+      }),
+    agencyId: text("agency_id")
+      .references(() => agencies.id, { onDelete: "cascade" })
+      .notNull(),
+    userId: text("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    orderId: text("order_id")
+      .references(() => orders.id, { onDelete: "cascade" })
+      .notNull(),
+    amount: integer("amount").notNull(),
+    rpPaymentId: text("razorpay_payment_id").unique().notNull(),
+    method: paymentMethod().notNull().default(PaymentMethodEnum.UPI),
+    bankName: text("bank_name"),
+    cardId: text("card_id"),
+    vpa: text("vpa"),
+    wallet: text("wallet"),
+    email: text("email"),
+    contact: text("contact"),
+    rpFee: integer("rp_fee"),
+    tax: integer("tax"),
+    errorCode: text("error_code"),
+    errorDesc: text("error_desc"),
+    errorSource: text("error_source"),
+    errorStep: text("error_step"),
+    errorReason: text("error_reason"),
+    events: text("events").array().notNull().default([]),
+    status: paymentStatus().notNull().default(PaymentStatusEnum.CREATED),
+    ...timestamps,
+  },
+  (t) => [
+    check(
+      "amount >= 1 AND amount <= 10000",
+      sql`${t.amount} >= 1 AND ${t.amount} <= 10000`,
+    ),
+    index("payments_agency_idx").on(t.agencyId), // to quickly filter all payments in an agency
+    index("payments_user_idx").on(t.userId), // to quickly filter all payments in an agency
+    index("payments_order_idx").on(t.orderId), // to quickly filter all payments by order
+    index("payments_rpPaymentId_idx").on(t.rpPaymentId), // to quickly filter all payments by rpPaymentId
+    index("payments_agency_user_idx").on(t.agencyId, t.userId), // to quickly filter all orders by a user in an agency
+    index("payments_agency_status_idx").on(t.agencyId, t.status), // to quickly filter all orders with status in an agency
+  ],
+)
+export const paymentRelations = relations(payments, ({ one }) => ({
+  agency: one(agencies, {
+    fields: [payments.agencyId],
+    references: [agencies.id],
+  }),
+  user: one(users, {
+    fields: [payments.userId],
+    references: [users.id],
+  }),
+  order: one(orders, {
+    fields: [payments.userId],
+    references: [orders.id],
   }),
 }))
 
@@ -288,6 +394,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
     references: [agencies.id],
   }),
   orders: many(orders),
+  payments: many(payments),
   driver: one(drivers),
   bookingsAssigned: many(bookings, {
     relationName: "bookings_assigned_user_fkey",
@@ -1238,6 +1345,9 @@ export type InsertAgencyType = typeof agencies.$inferInsert
 
 export type SelectOrderType = typeof orders.$inferSelect
 export type InsertOrderType = typeof orders.$inferInsert
+
+export type SelectPaymentType = typeof payments.$inferSelect
+export type InsertPaymentType = typeof payments.$inferInsert
 
 export type SelectUserType = typeof users.$inferSelect
 export type InsertUserType = typeof users.$inferInsert

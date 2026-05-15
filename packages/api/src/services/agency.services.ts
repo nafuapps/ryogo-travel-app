@@ -141,21 +141,6 @@ export const agencyServices = {
     )
     return updatedAgency[0]
   },
-
-  //Subscribe an agency based on order type
-  async subscribeAgency(agencyId: string, orderType: OrderTypeEnum) {
-    let days = MONTHLY_SUBSCRIPTION_DAYS
-    if (orderType === OrderTypeEnum.QUARTERLY) {
-      days = QUARTERLY_SUBSCRIPTION_DAYS
-    }
-    if (orderType === OrderTypeEnum.ANNUAL) {
-      days = ANNUAL_SUBSCRIPTION_DAYS
-    }
-    const expiryTime = new Date(
-      new Date().getTime() + days * 24 * 60 * 60 * 1000,
-    )
-    return await agencyRepository.updateAgencySubscription(agencyId, expiryTime)
-  },
 }
 
 export type FindAllAgenciesType = Awaited<

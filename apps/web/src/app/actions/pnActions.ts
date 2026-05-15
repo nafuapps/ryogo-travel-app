@@ -1,9 +1,10 @@
 "use server"
 
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import webpush from "web-push"
 
 webpush.setVapidDetails(
-  "mailto:nafuapps@gmail.com",
+  `mailto:${SUPPORT_EMAIL}`,
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
   process.env.VAPID_PRIVATE_KEY!,
 )

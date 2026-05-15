@@ -2474,7 +2474,10 @@
       "PaymentButton":{
         "PayMonthly":"Pay Monthly",
         "PayQuarterly":"Pay Quarterly",
-        "PayAnnual":"Pay Annual"
+        "PayAnnual":"Pay Annual",
+        "Success":"Payment successful!",
+        "WaitDB":"Payment verified! Subscription will be active soon.",
+        "Error":"Payment failed. Our team will verify it manually if the amount was debited."
       }
     },
     "UserDetailsHeaderTabs": {

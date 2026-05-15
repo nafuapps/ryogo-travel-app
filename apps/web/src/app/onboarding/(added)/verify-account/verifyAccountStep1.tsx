@@ -17,7 +17,7 @@ import { toast } from "sonner"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { resendCodeAction } from "@/app/actions/users/resendCodeAction"
 import { RyogoCaption } from "@/components/typography"
-import { RESEND_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import { VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 
 export function VerifyAccountStep1(props: {
   onNext: () => void
@@ -82,16 +82,16 @@ export function VerifyAccountStep1(props: {
           <OnboardingStepSecondaryAction
             onClick={resendCode}
             disabled={
-              isPending || props.resendDifference < RESEND_CODE_TIMEOUT_MINUTES
+              isPending || props.resendDifference < VERIFY_CODE_TIMEOUT_MINUTES
             }
           >
             {isPending
               ? t("Sending")
-              : props.resendDifference >= RESEND_CODE_TIMEOUT_MINUTES
+              : props.resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
                 ? t("SecondaryCTA")
                 : t("Timeout", {
                     difference:
-                      RESEND_CODE_TIMEOUT_MINUTES - props.resendDifference,
+                      VERIFY_CODE_TIMEOUT_MINUTES - props.resendDifference,
                   })}
           </OnboardingStepSecondaryAction>
           <RyogoCaption color="light">{t("Help")}</RyogoCaption>

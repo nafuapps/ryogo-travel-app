@@ -52,7 +52,8 @@ export async function confirmBookingAction(
     await uploadPDFBlob(confirmationFile, generateBookingConfirmationName(id))
   ).path
 
-  if (!confirmationUrl) return
+  //Update confirmation url
+  await bookingServices.addConfirmationUrl(id, confirmationUrl)
 
   //Send booking confirmation pdf to customer over whatsapp
   const confirmationMessage = await getConfirmationMessage(

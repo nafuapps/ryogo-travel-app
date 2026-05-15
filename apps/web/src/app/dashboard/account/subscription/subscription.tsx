@@ -1,6 +1,7 @@
 import PaymentButton from "@/components/flows/susbcription/paymentButton"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
 
 export default async function SubscriptionPageComponent({
@@ -16,7 +17,8 @@ export default async function SubscriptionPageComponent({
     <div className="h-full w-full flex items-center justify-center">
       <PaymentButton
         agencyId={agencyDetails.id}
-        amount={1}
+        userId={userDetails.id}
+        plan={OrderTypeEnum.MONTHLY}
         ownerName={userDetails.name}
         ownerEmail={userDetails.email}
         ownerPhone={userDetails.phone}

@@ -23,9 +23,10 @@ export function SubscriptionInvoiceEmailTemplate({
     <div>
       <h1>Hello, {name}!</h1>
       <h5>
-        Thank you for purchasing <b>${orderType}</b> RyoGo subscription for your
-        agency <b>${agencyName}</b>. You are now subscribed to our
-        <b>${subscriptionPlan}</b> plan which will be valid till
+        Thank you for purchasing <b>{orderType.toUpperCase()}</b> RyoGo
+        subscription for your agency <b>{agencyName}</b>. You are now subscribed
+        to our
+        <b>{subscriptionPlan}</b> plan which will be valid till
         <b>{expiryTime.toLocaleDateString()}</b>.
       </h5>
       <p>
@@ -36,9 +37,9 @@ export function SubscriptionInvoiceEmailTemplate({
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
         at {SUPPORT_HELPLINE_NUMBER}
       </p>
-      <small>
+      <footer>
         This is an automatically generated email. Please do not reply.
-      </small>
+      </footer>
     </div>
   )
 }

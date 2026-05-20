@@ -14,7 +14,7 @@ export const orderRepository = {
       where: eq(orders.agencyId, agencyId),
       with: {
         payments: {
-          orderBy: (payments, { desc }) => [desc(payments.updatedAt)],
+          orderBy: (payments, { desc }) => [desc(payments.createdAt)],
         },
         user: {
           columns: {

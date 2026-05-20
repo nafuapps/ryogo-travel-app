@@ -90,28 +90,43 @@ export const orderServices = {
     isWebhookConfirmed: boolean,
     attempts?: number,
   ) {
-    const order = await orderRepository.updateOrderStatusbyRPId(
+    const orderDetails = await orderRepository.readOrderByRPId(rpOrderId)
+    if (!orderDetails) return
+    const agencyDetails = await agencyRepository.readAgencyById(
+      orderDetails.agencyId,
+    )
+    if (!agencyDetails) return
+
+    //If already paid and confirmed, do nothing
+    if (
+      orderDetails.status === OrderStatusEnum.PAID &&
+      orderDetails.isWebhookConfirmed
+    )
+      return
+
+    //Update order in DB
+    const updatedOrder = await orderRepository.updateOrderStatusbyRPId(
       rpOrderId,
       OrderStatusEnum.PAID,
       isWebhookConfirmed,
       attempts,
     )
-    // If for some reason, order update failed, should we proceed with subscription upgrade?
-    if (!order[0]) return
+    // If for some reason, order update failed, should we proceed with subscription upgrade? -> NO
+    if (!updatedOrder[0]) return
+
+    //If it was already paid, return now
+    if (orderDetails.status === OrderStatusEnum.PAID) return
 
     //Trigger subscription upgrade
+    const orderType = updatedOrder[0].orderType
+
     let subscriptionDays = MONTHLY_SUBSCRIPTION_DAYS
-    if (order[0].orderType === OrderTypeEnum.QUARTERLY) {
+    if (orderType === OrderTypeEnum.QUARTERLY) {
       subscriptionDays = QUARTERLY_SUBSCRIPTION_DAYS
     }
-    if (order[0].orderType === OrderTypeEnum.ANNUAL) {
+    if (orderType === OrderTypeEnum.ANNUAL) {
       subscriptionDays = ANNUAL_SUBSCRIPTION_DAYS
     }
-
-    const agencyDetails = await agencyRepository.readAgencyById(
-      order[0].agencyId,
-    )
-    if (!agencyDetails) return
 
     let startDate = new Date()
 
@@ -127,12 +142,12 @@ export const orderServices = {
       startDate.getTime() + subscriptionDays * 24 * 60 * 60 * 1000,
     )
     await agencyRepository.updateAgencySubscription(
-      order[0].agencyId,
+      updatedOrder[0].agencyId,
       SubscriptionPlanEnum.PREMIUM,
       newExpiryTime,
-      order[0].id,
+      updatedOrder[0].id,
     )
-    return order[0]
+    return updatedOrder[0]
   },
 
   async confirmOrderWebhookStatus(id: string) {

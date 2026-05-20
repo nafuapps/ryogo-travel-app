@@ -68,11 +68,11 @@ export default function PaymentButton({
             if (result) {
               //Payment successful.. DB update successful
               toast.success(t("Success"))
-              router.refresh() // Refresh server components to show Premium UI
             } else {
               //Payment successful.. DB update failed .. waiting for webhook
               toast.info(t("WaitDB"))
             }
+            router.refresh() // Refresh server components to show Premium UI
           } catch (err) {
             //Payment verification failed
             toast.error(t("Error"))

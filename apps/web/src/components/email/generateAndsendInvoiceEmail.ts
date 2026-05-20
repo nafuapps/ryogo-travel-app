@@ -27,7 +27,7 @@ export default async function generateAndsendInvoiceEmail(
 
   //Send invoice email to the user (payer)
   const emailSent = await sendEmail(
-    [userDetails.email],
+    [userDetails.email, agencyDetails.businessEmail],
     "RyoGo Subscription Invoice",
     SubscriptionInvoiceEmailTemplate({
       name: userDetails.name,

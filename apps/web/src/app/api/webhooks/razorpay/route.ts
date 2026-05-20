@@ -73,7 +73,9 @@ export async function POST(req: NextRequest) {
       status: getPaymentStatus(event.event),
       method: getPaymentMethod(paymentEntity.method),
       bankName: paymentEntity.bank,
-      cardId: paymentEntity.card.last4 + "-" + paymentEntity.card.network,
+      cardId: paymentEntity.card
+        ? paymentEntity.card.last4 + "-" + paymentEntity.card.network
+        : undefined,
       vpa: paymentEntity.vpa,
       wallet: paymentEntity.wallet,
       email: paymentEntity.email,
@@ -94,7 +96,9 @@ export async function POST(req: NextRequest) {
       status: getPaymentStatus(event.event),
       method: getPaymentMethod(paymentEntity.method),
       bankName: paymentEntity.bank,
-      cardId: paymentEntity.card.last4 + "-" + paymentEntity.card.network,
+      cardId: paymentEntity.card
+        ? paymentEntity.card.last4 + "-" + paymentEntity.card.network
+        : undefined,
       vpa: paymentEntity.vpa,
       wallet: paymentEntity.wallet,
       email: paymentEntity.email,
@@ -119,16 +123,18 @@ export async function POST(req: NextRequest) {
   if (event.event === "order.paid") {
     const attempts = event.payload.order.entity.attempts
     //Mark order as paid in DB - this will trigger subscription upgrade
-    await orderServices.changeOrderToPaid(
+    const updatedOrder = await orderServices.changeOrderToPaid(
       paymentEntity.order_id,
       true,
       attempts,
     )
-    generateAndsendInvoiceEmail(
-      paymentEntity.order_id,
-      orderInDB.agencyId,
-      orderInDB.userId,
-    )
+    if (updatedOrder) {
+      generateAndsendInvoiceEmail(
+        paymentEntity.order_id,
+        orderInDB.agencyId,
+        orderInDB.userId,
+      )
+    }
     return NextResponse.json({ received: true })
   }
 

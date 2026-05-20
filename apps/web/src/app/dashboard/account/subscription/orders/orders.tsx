@@ -184,6 +184,9 @@ function PaymentCard({
   return (
     <div className="flex bg-slate-100 p-3 lg:p-4 rounded-lg justify-between gap-2 lg:gap-3">
       <SectionColWrapper>
+        <RyogoSmall color="brand" weight="font-bold">
+          {payment.id}
+        </RyogoSmall>
         <PaymentStatusPill status={payment.status} />
         <RyogoCaption color="slate" weight="font-bold">
           {payment.method.toUpperCase()}
@@ -194,20 +197,28 @@ function PaymentCard({
           {moment(payment.updatedAt).format("DD MMM YYYY - hh:mm A")}
         </RyogoCaption>
         {payment.bankName && (
-          <RyogoCaption color="slate">{payment.bankName}</RyogoCaption>
+          <RyogoCaption color="slate">
+            {payment.bankName.toUpperCase()}
+          </RyogoCaption>
         )}
-        {payment.method === PaymentMethodEnum.CARD && (
+        {payment.method === PaymentMethodEnum.CARD && payment.cardId && (
           <RyogoCaption color="slate">{payment.cardId}</RyogoCaption>
         )}
-        {payment.method === PaymentMethodEnum.UPI && (
+        {payment.method === PaymentMethodEnum.UPI && payment.vpa && (
           <RyogoCaption color="slate">{payment.vpa}</RyogoCaption>
         )}
-        {payment.method === PaymentMethodEnum.WALLET && (
-          <RyogoCaption color="slate">{payment.wallet}</RyogoCaption>
+        {payment.method === PaymentMethodEnum.WALLET && payment.wallet && (
+          <RyogoCaption color="slate">
+            {payment.wallet.toUpperCase()}
+          </RyogoCaption>
         )}
-        {payment.status === PaymentStatusEnum.FAILED && (
-          <RyogoCaption color="red">{payment.errorDesc}</RyogoCaption>
-        )}
+        {payment.status === PaymentStatusEnum.FAILED &&
+          payment.errorReason &&
+          payment.errorSource && (
+            <RyogoCaption color="red">
+              {payment.errorReason + " (" + payment.errorSource + ")"}
+            </RyogoCaption>
+          )}
       </SectionColWrapper>
     </div>
   )

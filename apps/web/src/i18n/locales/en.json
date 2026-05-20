@@ -2530,9 +2530,7 @@
       "Paid":"Paid",
       "Attempted":"Attempted",
       "Created":"Created",
-      "NoPayments":"No payment made in this order",
       "DownloadInvoice":"Download Invoice"
-      
     },
     "UserDetailsHeaderTabs": {
       "Details": "Details",

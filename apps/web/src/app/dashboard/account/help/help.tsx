@@ -6,12 +6,18 @@ import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: Account Help page
 
-export default async function AccountHelpPageComponent() {
+export default async function AccountHelpPageComponent({
+  id,
+  isOwner,
+}: {
+  id: string
+  isOwner: boolean
+}) {
   const t = await getTranslations("Dashboard.AccountHelp")
 
   return (
     <PageWrapper id="AccountHelpPage">
-      <AccountDetailHeaderTabs selectedTab="Help" />
+      <AccountDetailHeaderTabs id={id} selectedTab="Help" />
       <SectionWrapper id="AccountHelpInfo">
         <></>
       </SectionWrapper>

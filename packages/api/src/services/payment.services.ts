@@ -1,7 +1,4 @@
-import {
-  InsertPaymentType,
-  PaymentStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { InsertPaymentType } from "@ryogo-travel-app/db/schema"
 import { paymentRepository } from "../repositories/payment.repo"
 import { UpdatePaymentDetailsType } from "../types/payment.types"
 

@@ -24,13 +24,8 @@ export const driverRepository = {
     })
   },
 
-  //Get all drivers of an agency
-  async readDriversByAgencyId(agencyId: string) {
-    return await db.select().from(drivers).where(eq(drivers.agencyId, agencyId))
-  },
-
   //Get drivers search data
-  async readDriversSearchData(agencyId: string) {
+  async readDriversByAgencyId(agencyId: string) {
     return await db.query.drivers.findMany({
       where: and(
         eq(drivers.agencyId, agencyId),

@@ -26,9 +26,11 @@ import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.
 export default function CreateAccountPageComponent({
   allOwners,
   allAgencies,
+  phone,
 }: {
   allOwners: FindAllUsersByRoleType
   allAgencies: FindAllAgenciesType
+  phone?: string
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage")
 
@@ -45,7 +47,7 @@ export default function CreateAccountPageComponent({
     },
     owner: {
       name: "",
-      phone: "",
+      phone: phone ?? "",
       email: "",
       photos: undefined,
       password: "",

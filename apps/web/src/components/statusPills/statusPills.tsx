@@ -3,6 +3,8 @@ import {
   BookingStatusEnum,
   CustomerStatusEnum,
   DriverStatusEnum,
+  OrderStatusEnum,
+  PaymentStatusEnum,
   TripLogTypesEnum,
   UserStatusEnum,
   VehicleStatusEnum,
@@ -27,7 +29,7 @@ interface StatusPillProps {
 export function StatusPill(props: StatusPillProps) {
   return (
     <div
-      className={`flex rounded-full ${getStatusPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 text-nowrap`}
+      className={`flex rounded-full ${getStatusPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 shrink-0 text-nowrap`}
     >
       <RyogoCaption color="white">{props.status}</RyogoCaption>
     </div>
@@ -131,6 +133,37 @@ export function CustomerStatusPill(props: CustomerStatusPillProps) {
     return <StatusPill status={props.status.toUpperCase()} bgColor={"brand"} />
   }
   if (props.status === CustomerStatusEnum.INACTIVE) {
+    return <StatusPill status={props.status.toUpperCase()} bgColor={"red"} />
+  }
+
+  return <StatusPill status={props.status.toUpperCase()} bgColor={"slate"} />
+}
+
+interface OrderStatusPillProps {
+  status: OrderStatusEnum
+}
+export function OrderStatusPill(props: OrderStatusPillProps) {
+  if (props.status === OrderStatusEnum.PAID) {
+    return <StatusPill status={props.status.toUpperCase()} bgColor={"green"} />
+  }
+  if (props.status === OrderStatusEnum.ATTEMPTED) {
+    return <StatusPill status={props.status.toUpperCase()} bgColor={"brand"} />
+  }
+
+  return <StatusPill status={props.status.toUpperCase()} bgColor={"yellow"} />
+}
+
+interface PaymentStatusPillProps {
+  status: PaymentStatusEnum
+}
+export function PaymentStatusPill(props: PaymentStatusPillProps) {
+  if (props.status === PaymentStatusEnum.CAPTURED) {
+    return <StatusPill status={props.status.toUpperCase()} bgColor={"green"} />
+  }
+  if (props.status === PaymentStatusEnum.AUTHORIZED) {
+    return <StatusPill status={props.status.toUpperCase()} bgColor={"brand"} />
+  }
+  if (props.status === PaymentStatusEnum.FAILED) {
     return <StatusPill status={props.status.toUpperCase()} bgColor={"red"} />
   }
 

@@ -8,7 +8,7 @@ export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
   return (
     <section className="h-lvh p-3 md:p-4 lg:p-5 items-center">
-      <div className="max-w-6xl relative w-full h-full gap-6 md:gap-8 px-5 md:px-10 lg:px-30 pt-24 md:pt-32 lg:pt-40 flex flex-col items-center mx-auto text-center rounded-lg bg-linear-to-b from-sky-400 to-sky-300">
+      <div className="max-w-6xl relative w-full h-full gap-6 md:gap-8 px-5 md:px-10 lg:px-30 pt-24 md:pt-32 lg:pt-40 flex flex-col items-center mx-auto text-center rounded-lg bg-linear-to-b from-sky-400 to-sky-200">
         <div className="flex flex-col items-center gap-1 lg:gap-2">
           <RyogoH1 weight="font-bold">{t("Title1")}</RyogoH1>
           <RyogoH1 color="white" weight="font-bold">

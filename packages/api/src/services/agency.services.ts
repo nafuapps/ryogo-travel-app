@@ -64,8 +64,8 @@ export const agencyServices = {
   },
 
   async findAgencySearchData(agencyId: string) {
-    const vehicles = await vehicleRepository.readVehiclesSearchData(agencyId)
-    const drivers = await driverRepository.readDriversSearchData(agencyId)
+    const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
+    const drivers = await driverRepository.readDriversByAgencyId(agencyId)
     const bookings = await bookingRepository.readBookingsSearchData(
       agencyId,
       new Date(

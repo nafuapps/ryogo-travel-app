@@ -20,8 +20,10 @@ import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 
 export default async function SignupExistingPageComponent({
   accounts,
+  phone,
 }: {
   accounts: FindUserAccountsByPhoneType
+  phone: string
 }) {
   const t = await getTranslations("Auth.SignupPage.Step2")
 
@@ -61,7 +63,7 @@ export default async function SignupExistingPageComponent({
           </>
         ) : (
           <Button variant={"outline"} size={"lg"}>
-            <Link href={"/onboarding"}>
+            <Link href={`/onboarding?phone=${phone}`}>
               <RyogoCaption color="light">{t("SecondaryCTANo")}</RyogoCaption>
             </Link>
           </Button>

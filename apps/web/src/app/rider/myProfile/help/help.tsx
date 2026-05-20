@@ -6,12 +6,16 @@ import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 //TODO: MyProfile Help page
 
-export default async function MyProfileHelpPageComponent() {
+export default async function MyProfileHelpPageComponent({
+  id,
+}: {
+  id: string
+}) {
   const t = await getTranslations("Rider.MyProfileHelp")
 
   return (
     <PageWrapper id="RiderHelpPage">
-      <MyProfileDetailHeaderTabs selectedTab="Help" />
+      <MyProfileDetailHeaderTabs id={id} selectedTab="Help" />
       <SectionWrapper id="MyProfileHelpInfo">
         <></>
       </SectionWrapper>

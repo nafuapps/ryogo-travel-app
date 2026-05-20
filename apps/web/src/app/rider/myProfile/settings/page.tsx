@@ -28,7 +28,7 @@ export default async function MyProfileSettingsPage() {
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/settings"} />
       <PageWrapper id="RiderAccountSettingsPage">
-        <MyProfileDetailHeaderTabs selectedTab="Settings" />
+        <MyProfileDetailHeaderTabs id={userDetails.id} selectedTab="Settings" />
         <MyProfileSettingsPageComponent userDetails={userDetails} />
       </PageWrapper>
     </MainWrapper>

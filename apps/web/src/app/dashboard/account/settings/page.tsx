@@ -28,7 +28,7 @@ export default async function AccountSettingsPage() {
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/settings"} />
       <PageWrapper id="AccountSettingsPage">
-        <AccountDetailHeaderTabs selectedTab="Settings" />
+        <AccountDetailHeaderTabs id={userDetails.id} selectedTab="Settings" />
         <AccountSettingsPageComponent userDetails={userDetails} />
       </PageWrapper>
     </MainWrapper>

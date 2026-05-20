@@ -34,118 +34,79 @@ const getTextColor = (color?: RyogoTextColor) => {
   return "text-slate-950"
 }
 
-export function RyogoH1({
-  children,
-  color,
-  weight = "font-medium",
-}: {
+type RyogoTextProps = {
   children: React.ReactNode
   color?: RyogoTextColor
   weight?: RyogoTextWeight
-}) {
+  extraClassName?: string
+}
+
+export function RyogoH1(props: RyogoTextProps) {
   return (
     <h1
-      className={`text-3xl md:text-4xl lg:text-5xl ${weight} ${getTextColor(color)}`}
+      className={`text-3xl md:text-4xl lg:text-5xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
     >
-      {children}
+      {props.children}
     </h1>
   )
 }
 
-export function RyogoH2({
-  children,
-  color,
-  weight = "font-bold",
-}: {
-  children: React.ReactNode
-  color?: RyogoTextColor
-  weight?: RyogoTextWeight
-}) {
+export function RyogoH2(props: RyogoTextProps) {
   return (
     <h2
-      className={`text-2xl md:text-3xl lg:text-4xl ${weight} ${getTextColor(color)}`}
+      className={`text-2xl md:text-3xl lg:text-4xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
     >
-      {children}
+      {props.children}
     </h2>
   )
 }
 
-export function RyogoH3({
-  children,
-  color,
-  weight = "font-medium",
-}: {
-  children: React.ReactNode
-  color?: RyogoTextColor
-  weight?: RyogoTextWeight
-}) {
+export function RyogoH3(props: RyogoTextProps) {
   return (
-    <h3 className={`text-xl lg:text-2xl ${weight} ${getTextColor(color)}`}>
-      {children}
+    <h3
+      className={`text-xl lg:text-2xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+    >
+      {props.children}
     </h3>
   )
 }
 
-export function RyogoH4({
-  children,
-  color,
-  weight = "font-medium",
-}: {
-  children: React.ReactNode
-  color?: RyogoTextColor
-  weight?: RyogoTextWeight
-}) {
+export function RyogoH4(props: RyogoTextProps) {
   return (
-    <h4 className={`text-lg lg:text-xl ${weight} ${getTextColor(color)}`}>
-      {children}
+    <h4
+      className={`text-lg lg:text-xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+    >
+      {props.children}
     </h4>
   )
 }
 
-export function RyogoP({
-  children,
-  color,
-  weight = "font-normal",
-}: {
-  children: React.ReactNode
-  color?: RyogoTextColor
-  weight?: RyogoTextWeight
-}) {
+export function RyogoP(props: RyogoTextProps) {
   return (
-    <p className={`text-base lg:text-lg ${weight} ${getTextColor(color)}`}>
-      {children}
+    <p
+      className={`text-base lg:text-lg ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+    >
+      {props.children}
     </p>
   )
 }
 
-export function RyogoSmall({
-  children,
-  color,
-  weight = "font-normal",
-}: {
-  children: React.ReactNode
-  color?: RyogoTextColor
-  weight?: RyogoTextWeight
-}) {
+export function RyogoSmall(props: RyogoTextProps) {
   return (
-    <small className={`text-sm lg:text-base ${weight} ${getTextColor(color)}`}>
-      {children}
+    <small
+      className={`text-sm lg:text-base ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+    >
+      {props.children}
     </small>
   )
 }
 
-export function RyogoCaption({
-  children,
-  color,
-  weight = "font-normal",
-}: {
-  children: React.ReactNode
-  color?: RyogoTextColor
-  weight?: RyogoTextWeight
-}) {
+export function RyogoCaption(props: RyogoTextProps) {
   return (
-    <span className={`text-xs lg:text-sm ${weight} ${getTextColor(color)}`}>
-      {children}
+    <span
+      className={`text-xs lg:text-[0.8125rem] ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+    >
+      {props.children}
     </span>
   )
 }

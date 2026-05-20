@@ -16,16 +16,8 @@ export const vehicleRepository = {
     })
   },
 
-  //Get all vehicles of an agency
-  async readVehiclesByAgencyId(agencyId: string) {
-    return await db
-      .select()
-      .from(vehicles)
-      .where(eq(vehicles.agencyId, agencyId))
-  },
-
   //Get vehicles search data
-  async readVehiclesSearchData(agencyId: string) {
+  async readVehiclesByAgencyId(agencyId: string) {
     return await db.query.vehicles.findMany({
       where: and(
         eq(vehicles.agencyId, agencyId),

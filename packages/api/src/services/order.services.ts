@@ -27,7 +27,14 @@ export const orderServices = {
     return await orderRepository.readOrderByRPId(rpOrderId)
   },
 
-  async findExistingOrder(
+  async findLastPaidOrder(agencyId: string) {
+    return await orderRepository.readAgencyLatestOrderByStatus(
+      agencyId,
+      OrderStatusEnum.PAID,
+    )
+  },
+
+  async findExistingCreatedOrder(
     agencyId: string,
     userId: string,
     plan: OrderTypeEnum,
@@ -155,6 +162,9 @@ export type FindOrderByRPIdTypr = Awaited<
   ReturnType<typeof orderServices.findOrderByRPId>
 >
 
+export type FindLastPaidOrderType = Awaited<
+  ReturnType<typeof orderServices.findLastPaidOrder>
+>
 export type FindExistingOrderType = Awaited<
-  ReturnType<typeof orderServices.findExistingOrder>
+  ReturnType<typeof orderServices.findExistingCreatedOrder>
 >

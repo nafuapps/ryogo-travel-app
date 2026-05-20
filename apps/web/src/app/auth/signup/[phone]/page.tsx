@@ -29,5 +29,5 @@ export default async function SignupExistingPage({
     redirect("/onboarding", RedirectType.replace)
   }
 
-  return <SignupExistingPageComponent accounts={accounts} />
+  return <SignupExistingPageComponent accounts={accounts} phone={phone} />
 }

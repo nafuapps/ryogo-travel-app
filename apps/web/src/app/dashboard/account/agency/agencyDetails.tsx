@@ -20,9 +20,11 @@ import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import { TRIAL_MODE } from "@/lib/uiConfig"
 
 export default async function AgencyDetailsPageComponent({
+  id,
   agency,
   isOwner,
 }: {
+  id: string
   agency: NonNullable<FindAgencyByIdType>
   isOwner: boolean
 }) {
@@ -30,7 +32,7 @@ export default async function AgencyDetailsPageComponent({
 
   return (
     <PageWrapper id="AccountAgencyPage">
-      <AccountDetailHeaderTabs selectedTab="Agency" />
+      <AccountDetailHeaderTabs id={id} selectedTab="Agency" />
       <SectionWrapper id="BasicInfo">
         <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
         <SectionRowWrapper>

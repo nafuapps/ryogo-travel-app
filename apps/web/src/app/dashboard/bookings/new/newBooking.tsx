@@ -41,14 +41,15 @@ export default async function NewBookingPageComponent({
   }
 
   //Find last X days confirmed bookings
-  const bookings = await bookingServices.findSubscriptionBookingsPreviousDays(
-    agencyId,
-    BOOKINGS_ROLLOVER_DAYS,
-  )
+  const confirmedBookingsLength =
+    await bookingServices.findSubscriptionBookingsLengthPreviousDays(
+      agencyId,
+      BOOKINGS_ROLLOVER_DAYS,
+    )
 
   if (
     !TRIAL_MODE &&
-    bookings.length >= BASIC_PLAN_MONTHLY_CONFIRMED_BOOKINGS_LIMIT &&
+    confirmedBookingsLength >= BASIC_PLAN_MONTHLY_CONFIRMED_BOOKINGS_LIMIT &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       //Check if premium expired more than X days ago
       differenceInDays(new Date(), agency.subscriptionExpiresOn) >

@@ -17,6 +17,8 @@ export default function PaymentButton({
   ownerName,
   ownerEmail,
   ownerPhone,
+  renewLabel,
+  icon,
 }: {
   agencyId: string
   userId: string
@@ -24,6 +26,8 @@ export default function PaymentButton({
   ownerName: string
   ownerEmail: string
   ownerPhone: string
+  renewLabel: string
+  icon?: React.ReactNode
 }) {
   const t = useTranslations("Dashboard.AccountSubscription.PaymentButton")
   const router = useRouter()
@@ -91,11 +95,8 @@ export default function PaymentButton({
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Button onClick={handlePayment} variant={"brand"} disabled={isPending}>
-        {plan === OrderTypeEnum.ANNUAL
-          ? t("PayAnnual")
-          : plan === OrderTypeEnum.QUARTERLY
-            ? t("PayQuarterly")
-            : t("PayMonthly")}
+        {renewLabel}
+        {icon}
       </Button>
     </>
   )

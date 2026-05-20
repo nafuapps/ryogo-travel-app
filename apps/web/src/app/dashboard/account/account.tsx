@@ -29,7 +29,7 @@ export default async function AccountPageComponent({
 
   return (
     <PageWrapper id="AccountPage">
-      <AccountDetailHeaderTabs selectedTab="Details" />
+      <AccountDetailHeaderTabs id={userDetails.id} selectedTab="Details" />
       <SectionWrapper id="AccountDetailsInfo">
         <SectionRowWrapper>
           <SectionColWrapper>

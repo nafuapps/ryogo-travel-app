@@ -215,15 +215,29 @@
     {
       "idx": 30,
       "version": "7",
-      "when": 1778680925418,
-      "tag": "0030_gifted_stature",
+      "when": 1778852314601,
+      "tag": "0030_loving_vermin",
       "breakpoints": true
     },
     {
       "idx": 31,
       "version": "7",
-      "when": 1778825880389,
-      "tag": "0031_blue_proteus",
+      "when": 1779271474330,
+      "tag": "0031_plain_hellion",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1779271970292,
+      "tag": "0032_minor_eternals",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1779272095513,
+      "tag": "0033_freezing_leo",
       "breakpoints": true
     }
   ]

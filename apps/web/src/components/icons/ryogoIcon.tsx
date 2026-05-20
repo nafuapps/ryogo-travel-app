@@ -8,23 +8,24 @@ type RyogoIconColor =
   | "slate"
   | "black"
   | "white"
+  | "light"
 export type RyogoIconSize = "sm" | "md" | "lg" | "xl"
 
 const getIconColor = (color?: RyogoIconColor) => {
   if (color === "red") {
-    return "text-red-600"
+    return "text-red-700"
   }
   if (color === "yellow") {
-    return "text-yellow-600"
+    return "text-yellow-700"
   }
   if (color === "green") {
-    return "text-green-600"
+    return "text-green-700"
   }
   if (color === "brand") {
-    return "text-sky-600"
+    return "text-sky-700"
   }
   if (color === "slate") {
-    return "text-slate-600"
+    return "text-slate-700"
   }
   if (color === "black") {
     return "text-slate-950"
@@ -32,7 +33,10 @@ const getIconColor = (color?: RyogoIconColor) => {
   if (color === "white") {
     return "text-white"
   }
-  return "text-slate-600"
+  if (color === "light") {
+    return "text-slate-400"
+  }
+  return "text-slate-700"
 }
 
 const getBGColor = (color?: RyogoIconColor) => {

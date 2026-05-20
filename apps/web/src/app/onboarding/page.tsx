@@ -23,13 +23,18 @@ import Link from "next/link"
 import { redirect, RedirectType } from "next/navigation"
 import RyoGoLogo from "@/components/logo"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { PhoneRegex } from "@/lib/regex"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function OnboardingHomePage() {
+export default async function OnboardingHomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const user = await getCurrentUser()
 
   // Redirect to private route if the user is authenticated
@@ -39,6 +44,9 @@ export default async function OnboardingHomePage() {
     }
     redirect("/dashboard", RedirectType.replace)
   }
+
+  const { phone } = await searchParams
+
   const t = await getTranslations("Onboarding.HomePage")
   return (
     <div
@@ -55,7 +63,13 @@ export default async function OnboardingHomePage() {
       </div>
       <div id="OnboardingHomeFooter" className="w-full md:w-1/2">
         <Button variant={"default"} size={"lg"} className="w-full">
-          <Link href="/onboarding/create-account">
+          <Link
+            href={
+              PhoneRegex.safeParse(phone).success
+                ? `/onboarding/create-account?phone=${phone}`
+                : "/onboarding/create-account"
+            }
+          >
             {t("Footer.PrimaryCTA")}
           </Link>
         </Button>

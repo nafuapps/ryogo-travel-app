@@ -44,7 +44,7 @@ export const bookingServices = {
   },
 
   //Find bookings created in last N days which are countable towards subscription limit (atleast confirmed)
-  async findSubscriptionBookingsPreviousDays(
+  async findSubscriptionBookingsLengthPreviousDays(
     agencyId: string,
     days: number = 1,
   ) {
@@ -65,13 +65,7 @@ export const bookingServices = {
           BookingStatusEnum.COMPLETED,
         ],
       )
-    return bookings.map((booking) => {
-      return {
-        id: booking.id,
-        status: booking.status,
-        createdAt: booking.createdAt,
-      }
-    })
+    return bookings.length
   },
 
   async findBookingsRevenuePreviousDays(agencyId: string, days: number = 1) {

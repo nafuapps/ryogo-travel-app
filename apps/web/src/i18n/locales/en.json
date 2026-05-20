@@ -97,6 +97,7 @@
           "Placeholder": "9876543210"
         },
         "PrimaryCTA": "Create agency account",
+        "Loading":"Loading..",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric"
       },
@@ -170,7 +171,7 @@
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
-        "APIError": "An owner account with this phone and email already exists"
+        "APIError": "An owner account with this phone and email combination already exists"
       },
       "Step2": {
         "Field1": {
@@ -742,6 +743,7 @@
         "/dashboard/account/change-email": "Change Email",
         "/dashboard/account/settings": "Settings",
         "/dashboard/account/subscription": "Subscription",
+        "/dashboard/account/subscription/orders": "Subscription Orders",
         "/dashboard/action-center": "Action Center",
         "/dashboard/analytics": "Analytics",
         "/dashboard/bookings": "Bookings",
@@ -2475,14 +2477,62 @@
     },
     "AccountHelp": {},
     "AccountSubscription":{
+      "CurrentPlan":"CURRENT PLAN",
+      "SubscriptionStatus":"SUBSCRIPTION STATUS",
+      "ValidTill":"Valid Till",
+      "SubscriptionExpiresIn":"Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
+      "SubscriptionExpired":"Subscription expired on {date}",
+      "RenewCTA":"Renew Plan",
+      "ViewOrders":"View All Orders",
+      "LimitUsage":"PLAN USAGE LIMITS",
+      "BookingsUsage":"BOOKINGS (Last {month} days)",
+      "DriversUsage":"DRIVERS",
+      "VehiclesUsage":"VEHICLES",
+      "AgentsUsage":"AGENTS",
+      "PremiumAdvantage":"THE PREMIUM ADVANTAGE",
+      "PremiumSubtitle":"Unlock the full potential of RyoGo with unlimited bookings & entities, complete app access, advanced features like analytics and priority live support.",
+      "UnlimitedBookings":{
+        "Title":"Unlimited Bookings",
+        "Subtitle":"Scale your travel operations without worrying about any booking volume limits."
+      },
+      "FullAccess":{
+        "Title":"Full App Access",
+        "Subtitle":"Add and manage unlimited agents, drivers, and vehicles with full access to all app features."
+      },
+      "AdvancedAnalytics":{
+        "Title":"Advanced Analytics",
+        "Subtitle":"Gain deep insights into your operations and finances and get smart suggestions to maximize your margins."
+      },
+      "LiveSupport":{
+        "Title":"24x7 Live Support",
+        "Subtitle":"Get priority help anytime, anywhere to resolve any issues you might face with RyoGo."
+      },
+      "ExperiencePremium":"EXPERIENCE RYOGO PREMIUM",
+      "UpgradeJourney":"Upgrade Your Growth Journey",
+      "Testimonial":"\"The transition to Premium reduced our daily manual workload by 60%.\"",
+      "TestimonialAuthor":"- Rakesh Kumar, JMD Travels, Delhi",
+      "ChooseYourPlan":"CHOOSE YOUR BILLING PLAN",
+      "MRP":"₹{mrp}",
+      "Save":"Save {percentage}%",
+      "BestValue":"Best Value",
+      "PayCTA":"BUY {plan} PREMIUM",
+      "Secure":"Secure checkout with Razorpay. No hidden fees.",
       "PaymentButton":{
-        "PayMonthly":"Pay Monthly",
-        "PayQuarterly":"Pay Quarterly",
-        "PayAnnual":"Pay Annual",
         "Success":"Payment successful!",
         "WaitDB":"Payment verified! Subscription will be active soon.",
         "Error":"Payment failed. Our team will verify it manually if the amount was debited."
       }
+    },
+    "AccountSubscriptionOrders":{
+      "History":"ORDER HISTORY",
+      "NoOrders":"No orders found",
+      "All":"All",
+      "Paid":"Paid",
+      "Attempted":"Attempted",
+      "Created":"Created",
+      "NoPayments":"No payment made in this order",
+      "DownloadInvoice":"Download Invoice"
+      
     },
     "UserDetailsHeaderTabs": {
       "Details": "Details",

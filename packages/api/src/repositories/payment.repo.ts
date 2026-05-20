@@ -25,6 +25,13 @@ export const paymentRepository = {
   async readAllPaymentsByAgencyId(agencyId: string) {
     return await db.query.payments.findMany({
       where: eq(payments.agencyId, agencyId),
+      with: {
+        order: {
+          columns: {
+            status: true,
+          },
+        },
+      },
     })
   },
 

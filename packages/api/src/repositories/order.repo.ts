@@ -10,7 +10,18 @@ import { eq, and, gt } from "drizzle-orm"
 export const orderRepository = {
   async readAllOrdersByAgencyId(agencyId: string) {
     return await db.query.orders.findMany({
+      orderBy: (orders, { desc }) => [desc(orders.updatedAt)],
       where: eq(orders.agencyId, agencyId),
+      with: {
+        payments: {
+          orderBy: (payments, { desc }) => [desc(payments.updatedAt)],
+        },
+        user: {
+          columns: {
+            name: true,
+          },
+        },
+      },
     })
   },
   async readAllOrdersByUserId(userId: string) {
@@ -22,6 +33,17 @@ export const orderRepository = {
   async readOrderByRPId(rpOrderId: string) {
     return await db.query.orders.findFirst({
       where: eq(orders.rpOrderId, rpOrderId),
+    })
+  },
+
+  //Find latest order by status for an agency
+  async readAgencyLatestOrderByStatus(
+    agencyId: string,
+    status: OrderStatusEnum,
+  ) {
+    return await db.query.orders.findFirst({
+      orderBy: (orders, { desc }) => [desc(orders.updatedAt)],
+      where: and(eq(orders.status, status), eq(orders.agencyId, agencyId)),
     })
   },
 

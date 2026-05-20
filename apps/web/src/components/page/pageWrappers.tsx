@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-lvh bg-slate-100 p-4 lg:p-5">
+    <div className="flex flex-col w-full h-lvh bg-slate-100 px-4 lg:px-5 pt-4 lg:pt-5 pb-8">
       {children}
     </div>
   )
@@ -66,7 +66,7 @@ export function SectionWrapper({
   return (
     <div
       id={id}
-      className={`bg-white rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-2 lg:gap-3 p-3 lg:p-4`}
+      className={`bg-white rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-3 lg:gap-4 p-4 lg:p-5`}
     >
       {children}
     </div>
@@ -78,15 +78,19 @@ export function SectionRowWrapper({
   small,
   center,
   end,
+  justifyStart,
+  wFull,
 }: {
   children: React.ReactNode
   small?: boolean
   center?: boolean
   end?: boolean
+  justifyStart?: boolean
+  wFull?: boolean
 }) {
   return (
     <div
-      className={`flex flex-row ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} justify-between ${center ? "items-center" : ""} ${end ? "items-end" : ""}`}
+      className={`flex flex-row ${wFull ? "w-full" : ""} ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${justifyStart ? "justify-start" : "justify-between"} ${center ? "items-center" : ""} ${end ? "items-end" : ""}`}
     >
       {children}
     </div>

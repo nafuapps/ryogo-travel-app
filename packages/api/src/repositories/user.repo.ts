@@ -102,7 +102,11 @@ export const userRepository = {
       .select({ id: users.id })
       .from(users)
       .where(
-        and(eq(users.agencyId, agencyId), inArray(users.userRole, userRoles)),
+        and(
+          eq(users.agencyId, agencyId),
+          inArray(users.userRole, userRoles),
+          not(eq(users.status, UserStatusEnum.SUSPENDED)),
+        ),
       )
   },
 

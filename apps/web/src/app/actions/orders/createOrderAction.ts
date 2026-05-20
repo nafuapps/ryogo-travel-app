@@ -26,7 +26,7 @@ export async function createOrderAction(
   const amountInRs = orderServices.getAmountByPlan(plan)
 
   //If an order already exists by this user for this plan in last X hours, use it for payment
-  const existingOrder = await orderServices.findExistingOrder(
+  const existingOrder = await orderServices.findExistingCreatedOrder(
     agencyId,
     userId,
     plan,

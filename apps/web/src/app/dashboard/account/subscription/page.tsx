@@ -10,6 +10,9 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import SubscriptionPageComponent from "./subscription"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { BOOKINGS_ROLLOVER_DAYS } from "@/lib/uiConfig"
+import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 
 export const metadata: Metadata = {
   title: `Subscription - ${pageTitle}`,
@@ -29,18 +32,36 @@ export default async function SubscriptionPage() {
   }
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  const agencyDetails = await agencyServices.findAgencyById(
+    currentUser.agencyId,
+  )
 
-  if (!userDetails || !agency) {
+  if (!userDetails || !agencyDetails) {
     redirect("/auth/login", RedirectType.replace)
   }
+
+  const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
+
+  //Find last X days confirmed bookings
+  const confirmedBookingsLength =
+    await bookingServices.findSubscriptionBookingsLengthPreviousDays(
+      currentUser.agencyId,
+      BOOKINGS_ROLLOVER_DAYS,
+    )
+
+  const lastPaidOrder = await orderServices.findLastPaidOrder(
+    currentUser.agencyId,
+  )
 
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/subscription"} />
       <SubscriptionPageComponent
         userDetails={userDetails}
-        agencyDetails={agency}
+        agencyDetails={agencyDetails}
+        agencyData={agencyData}
+        confirmedBookingsLength={confirmedBookingsLength}
+        lastPaidOrder={lastPaidOrder}
       />
     </MainWrapper>
   )

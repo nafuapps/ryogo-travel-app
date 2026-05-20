@@ -139,7 +139,7 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
 export enum OrderStatusEnum {
   CREATED = "created",
   ATTEMPTED = "attempted",
-  PAID = "captured",
+  PAID = "paid",
 }
 export const orderStatus = pgEnum("order_status", [
   OrderStatusEnum.CREATED,
@@ -193,7 +193,6 @@ export const orders = pgTable(
     ),
     index("orders_agency_idx").on(t.agencyId), // to quickly filter all orders in an agency
     index("orders_user_idx").on(t.userId), // to quickly filter all orders in an agency
-    index("orders_rpOrderId_idx").on(t.rpOrderId), // to quickly filter all orders by rp id
     index("orders_agency_user_idx").on(t.agencyId, t.userId), // to quickly filter all orders by a user in an agency
     index("orders_agency_status_idx").on(t.agencyId, t.status), // to quickly filter all orders with status in an agency
   ],
@@ -260,7 +259,7 @@ export const payments = pgTable(
       .references(() => orders.id, { onDelete: "cascade" })
       .notNull(),
     amount: integer("amount").notNull(),
-    rpPaymentId: text("razorpay_payment_id").unique().notNull(),
+    rpPaymentId: text("rp_payment_id").unique().notNull(),
     method: paymentMethod().notNull().default(PaymentMethodEnum.UPI),
     bankName: text("bank_name"),
     cardId: text("card_id"),
@@ -287,7 +286,6 @@ export const payments = pgTable(
     index("payments_agency_idx").on(t.agencyId), // to quickly filter all payments in an agency
     index("payments_user_idx").on(t.userId), // to quickly filter all payments in an agency
     index("payments_order_idx").on(t.orderId), // to quickly filter all payments by order
-    index("payments_rpPaymentId_idx").on(t.rpPaymentId), // to quickly filter all payments by rpPaymentId
     index("payments_agency_user_idx").on(t.agencyId, t.userId), // to quickly filter all orders by a user in an agency
     index("payments_agency_status_idx").on(t.agencyId, t.status), // to quickly filter all orders with status in an agency
   ],
@@ -302,7 +300,7 @@ export const paymentRelations = relations(payments, ({ one }) => ({
     references: [users.id],
   }),
   order: one(orders, {
-    fields: [payments.userId],
+    fields: [payments.orderId],
     references: [orders.id],
   }),
 }))

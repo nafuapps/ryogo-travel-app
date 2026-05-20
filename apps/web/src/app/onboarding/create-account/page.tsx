@@ -8,14 +8,21 @@ import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { PhoneRegex } from "@/lib/regex"
 
 export const metadata: Metadata = {
   title: `Onboarding Create Account - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function CreateAccountPage() {
+export default async function CreateAccountPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const user = await getCurrentUser()
+
+  const { phone } = await searchParams
 
   // Redirect to private route if the user is authenticated
   if (user) {
@@ -31,6 +38,11 @@ export default async function CreateAccountPage() {
     <CreateAccountPageComponent
       allOwners={allOwners}
       allAgencies={allAgencies}
+      phone={
+        typeof phone === "string" && PhoneRegex.safeParse(phone).success
+          ? phone
+          : undefined
+      }
     />
   )
 }

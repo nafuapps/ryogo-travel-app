@@ -3,13 +3,14 @@
   "description": "DB shared package for RyoGo Travel App",
   "version": "1.0.0",
   "dependencies": {
-    "@supabase/supabase-js": "^2.102.1",
-    "drizzle-orm": "^0.45.2",
-    "postgres": "^3.4.9"
+    "@supabase/supabase-js": "2.102.1",
+    "drizzle-orm": "0.45.2",
+    "postgres": "3.4.9"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.31.10",
-    "typescript": "^6.0.2"
+    "@types/node": "25.9.1",
+    "drizzle-kit": "0.31.10",
+    "typescript": "6.0.2"
   },
   "exports": {
     ".": "./src/index.ts",

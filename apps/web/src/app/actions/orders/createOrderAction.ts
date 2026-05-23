@@ -6,10 +6,14 @@ import { OrderTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 
 const razorpay = new Razorpay({
-  key_id: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID!,
-  key_secret: process.env.RAZORPAY_TEST_KEY_SECRET!,
-  // key_id: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY_ID!,
-  // key_secret: process.env.RAZORPAY_LIVE_KEY_SECRET!,
+  key_id:
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY_ID!
+      : process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID!,
+  key_secret:
+    process.env.NODE_ENV === "production"
+      ? process.env.RAZORPAY_LIVE_KEY_SECRET!
+      : process.env.RAZORPAY_TEST_KEY_SECRET!,
 })
 
 export async function createOrderAction(

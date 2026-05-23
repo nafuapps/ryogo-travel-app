@@ -3,6 +3,7 @@ import "./globals.css"
 import { NextIntlClientProvider } from "next-intl"
 import { Toaster } from "@/components/ui/sonner"
 import { Metadata } from "next"
+import { Analytics } from "@vercel/analytics/next"
 
 const notoSans = Noto_Sans({
   subsets: ["latin", "devanagari"],
@@ -26,7 +27,10 @@ export default async function RootLayout({
   return (
     <html lang="en" className={notoSans.className}>
       <body className={` antialiased`}>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          {children}
+          <Analytics />
+        </NextIntlClientProvider>
         <Toaster position="top-center" richColors />
       </body>
     </html>

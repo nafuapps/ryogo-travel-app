@@ -39,8 +39,10 @@ export default function PaymentButton({
       if (!createdOrder) return
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID,
-        // key: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY_ID,
+        key:
+          process.env.NODE_ENV === "production"
+            ? process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY_ID!
+            : process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID!,
         currency: "INR",
         name: "RyoGo Travel App",
         description: `Premium Subscription - ${plan} Plan`,

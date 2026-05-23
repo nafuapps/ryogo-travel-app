@@ -34,8 +34,10 @@ export async function verifyOrderAction({
   }
 
   // 1. Generate the expected signature
-  const secret = process.env.RAZORPAY_TEST_KEY_SECRET!
-  //   const secret = process.env.RAZORPAY_LIVE_KEY_SECRET!
+  const secret =
+    process.env.NODE_ENV === "production"
+      ? process.env.RAZORPAY_LIVE_KEY_SECRET!
+      : process.env.RAZORPAY_TEST_KEY_SECRET!
   const generated_signature = crypto
     .createHmac("sha256", secret)
     .update(rpOrderId + "|" + rpPaymentId)

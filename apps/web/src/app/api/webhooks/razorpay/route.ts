@@ -13,10 +13,14 @@ export async function POST(req: NextRequest) {
   const body = await req.text()
   const signature = req.headers.get("x-razorpay-signature")
 
+  const secret =
+    process.env.NODE_ENV === "production"
+      ? process.env.RAZORPAY_LIVE_WEBHOOK_SECRET!
+      : process.env.RAZORPAY_TEST_WEBHOOK_SECRET!
+
   // Verify Webhook Signature
   const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_TEST_WEBHOOK_SECRET!)
-    // .createHmac("sha256", process.env.RAZORPAY_LIVE_WEBHOOK_SECRET!)
+    .createHmac("sha256", secret)
     .update(body)
     .digest("hex")
 

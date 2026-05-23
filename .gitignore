@@ -23,11 +23,6 @@ build/
 .DS_Store
 *.pem
 
-
-# macOS
-.DS_Store
-*.pem
-
 .vscode/
 .turbo
 

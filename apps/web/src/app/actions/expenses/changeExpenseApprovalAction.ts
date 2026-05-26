@@ -5,7 +5,7 @@ import { expenseServices } from "@ryogo-travel-app/api/services/expense.services
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeExpenseApprovalAction(
-  txnId: string,
+  expId: string,
   status: boolean,
   agencyId: string,
 ) {
@@ -18,7 +18,7 @@ export async function changeExpenseApprovalAction(
     return
   }
   const updatedExpense = await expenseServices.modifyExpenseApprovalStatus(
-    txnId,
+    expId,
     status,
   )
   return updatedExpense

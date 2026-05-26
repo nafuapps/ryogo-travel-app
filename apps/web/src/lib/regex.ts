@@ -18,6 +18,8 @@ export const ExpenseRegex = getStringRegex(8).regex(/E\d{7}/)
 export const VehicleRepairRegex = getStringRegex(9).regex(/VR\d{7}/)
 export const DriverLeaveRegex = getStringRegex(9).regex(/DL\d{7}/)
 export const TripLogRegex = getStringRegex(9).regex(/TL\d{7}/)
+export const MissionRegex = getStringRegex(8).regex(/M\d{7}/)
+export const NotificationRegex = getStringRegex(8).regex(/N\d{7}/)
 
 export const PhoneRegex = getStringRegex(10).regex(/^[0-9]+$/)
 export const EmailRegex = z.email()

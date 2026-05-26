@@ -2,21 +2,11 @@
 import { getCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
-import { TripLogTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function midTripAction(data: {
-  driverId: string
-  bookingId: string
-  vehicleId: string
-  agencyId: string
-  odometerReading: number
-  type: TripLogTypesEnum
-  remarks?: string
-  lat?: number | null
-  long?: number | null
-  tripLogPhoto?: FileList
-}) {
+export async function midTripAction(data: AddTripLogRequestType) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -32,7 +22,7 @@ export async function midTripAction(data: {
     vehicleId: data.vehicleId,
     agencyId: data.agencyId,
     odometerReading: data.odometerReading,
-    tripLogType: data.type,
+    type: data.type,
     remarks: data.remarks,
     lat: data.lat,
     long: data.long,
@@ -54,5 +44,6 @@ export async function midTripAction(data: {
       uploadedFile.path,
     )
   }
+
   return newTripLog
 }

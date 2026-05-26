@@ -15,6 +15,7 @@ import {
   uniqueIndex,
   varchar,
   geometry,
+  jsonb,
 } from "drizzle-orm/pg-core"
 
 //ID initials
@@ -34,6 +35,8 @@ export const transactionInitial = "T"
 export const locationInitial = "L"
 export const vehicleRepairInitial = "VR"
 export const driverLeaveInitial = "DL"
+export const missionInitial = "M"
+export const notificationInitial = "N"
 
 //Common timestamps
 const timestamps = {
@@ -134,6 +137,8 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   vehicleRepairs: many(vehicleRepairs),
   driverLeaves: many(driverLeaves),
   tripLogs: many(tripLogs),
+  missions: many(missions),
+  notifications: many(notifications),
 }))
 
 export enum OrderStatusEnum {
@@ -226,7 +231,7 @@ const paymentStatus = pgEnum("payment_status", [
 export enum PaymentMethodEnum {
   UPI = "upi",
   CARD = "card",
-  NET_BANKING = "netbanking",
+  NET_BANKING = "net banking",
   WALLET = "wallet",
   OTHER = "other",
 }
@@ -305,6 +310,22 @@ export const paymentRelations = relations(payments, ({ one }) => ({
   }),
 }))
 
+export enum EntityTypeEnum {
+  BOOKING = "booking",
+  DRIVER = "driver",
+  VEHICLE = "vehicle",
+  USER = "user",
+  AGENCY = "agency",
+  CUSTOMER = "customer",
+}
+export const entityType = pgEnum("entity_type", [
+  EntityTypeEnum.BOOKING, //TE: BookingId
+  EntityTypeEnum.DRIVER, //TE: DriverId
+  EntityTypeEnum.VEHICLE, //TE: VehicleId
+  EntityTypeEnum.USER, //TE: UserId
+  EntityTypeEnum.AGENCY, //TE: AgencyId
+  EntityTypeEnum.CUSTOMER, //TE: CustomerId
+])
 export enum UserLangEnum {
   ENGLISH = "en",
   HINDI = "hi",
@@ -365,6 +386,7 @@ export const users = pgTable(
     codeSentAt: timestamp("code_sent_at", { withTimezone: true }),
     prefersDarkTheme: boolean().default(false),
     languagePref: userLangs().notNull().default(UserLangEnum.ENGLISH),
+    ignoreNotifications: entityType().array().default([]), //TODO: Implement notification settings feature
     userRole: userRoles().notNull().default(UserRolesEnum.AGENT),
     status: userStatus().notNull().default(UserStatusEnum.NEW),
     lastLogin: timestamp("last_login", { withTimezone: true }),
@@ -406,6 +428,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   driverLeavesAdded: many(driverLeaves),
   customersAdded: many(customers),
   sessions: many(sessions),
+  missions: many(missions),
 }))
 
 //Sessions table
@@ -1337,6 +1360,92 @@ export const driverLeaveRelations = relations(driverLeaves, ({ one }) => ({
   }),
 }))
 
+//Missions table
+export const missionIdSequence = pgSequence("mission_id_seq", {
+  ...sequenceValues,
+})
+export const missions = pgTable(
+  "missions",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => {
+        return sql`${missionInitial} || nextval(${"mission_id_seq"})`
+      }),
+    agencyId: text("agency_id")
+      .references(() => agencies.id, { onDelete: "cascade" })
+      .notNull(),
+    userId: text("user_id")
+      .references(() => users.id, {
+        onDelete: "cascade",
+      })
+      .notNull(),
+    entityId: text("entity_id").notNull(),
+    entityType: entityType("entity_type").notNull(),
+    isCritical: boolean("is_critical").notNull().default(false),
+    titleKey: text("title_key").notNull(),
+    titleObject: jsonb("title_object"),
+    messageKey: text("message_key"),
+    messageObject: jsonb("message_object"),
+    dueDate: timestamp("due_date", { withTimezone: true }),
+    isRead: boolean("is_read").notNull().default(false),
+    link: text("link"), // e.g., "/bookings" or "/drivers/D123/leaves" to route them instantly
+    ...timestamps,
+  },
+  (t) => [
+    index("missions_agency_idx").on(t.agencyId),
+    index("missions_user_idx").on(t.userId),
+    index("missions_entity_id_idx").on(t.entityId),
+    index("missions_entity_type_idx").on(t.entityType),
+  ],
+)
+export const missionRelations = relations(missions, ({ one }) => ({
+  agency: one(agencies, {
+    fields: [missions.agencyId],
+    references: [agencies.id],
+  }),
+  user: one(users, {
+    fields: [missions.userId],
+    references: [users.id],
+  }),
+}))
+
+//Notifications table
+export const notificationIdSequence = pgSequence("notification_id_seq", {
+  ...sequenceValues,
+})
+export const notifications = pgTable(
+  "notifications",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => {
+        return sql`${notificationInitial} || nextval(${"notification_id_seq"})`
+      }),
+    agencyId: text("agency_id")
+      .references(() => agencies.id, { onDelete: "cascade" })
+      .notNull(),
+    entityId: text("entity_id").notNull(),
+    entityType: entityType("entity_type").notNull(),
+    textKey: text("text_key").notNull(),
+    textObject: jsonb("text_object"),
+    isFeed: boolean("is_feed").notNull().default(true), //Non-feed are basically logs; feed can be shown to users
+    link: text("link"), // e.g., "/bookings" or "/drivers/D123/leaves" to route them instantly
+    ...timestamps,
+  },
+  (t) => [
+    index("notifications_agency_idx").on(t.agencyId),
+    index("notifications_entity_id_idx").on(t.entityId),
+    index("notifications_entity_type_idx").on(t.entityType),
+  ],
+)
+export const notificationRelations = relations(notifications, ({ one }) => ({
+  agency: one(agencies, {
+    fields: [notifications.agencyId],
+    references: [agencies.id],
+  }),
+}))
+
 //Export types
 export type SelectAgencyType = typeof agencies.$inferSelect
 export type InsertAgencyType = typeof agencies.$inferInsert
@@ -1385,3 +1494,9 @@ export type InsertVehicleRepairType = typeof vehicleRepairs.$inferInsert
 
 export type SelectDriverLeaveType = typeof driverLeaves.$inferSelect
 export type InsertDriverLeaveType = typeof driverLeaves.$inferInsert
+
+export type SelectMissionType = typeof missions.$inferSelect
+export type InsertMissionType = typeof missions.$inferInsert
+
+export type SelectNotificationType = typeof notifications.$inferSelect
+export type InsertNotificationType = typeof notifications.$inferInsert

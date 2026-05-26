@@ -10,9 +10,14 @@ import {
 } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  EntityTypeEnum,
+  UserRolesEnum,
+  UserStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addDriverAction(data: AddDriverRequestType) {
@@ -59,6 +64,20 @@ export async function addDriverAction(data: AddDriverRequestType) {
       await userServices.updateUserPhoto(driver.userId, uploadedPhoto.path)
     }
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.DRIVER,
+    entityId: driver.id,
+    isFeed: true,
+    textKey: "DriverAdded",
+    textObject: {
+      driverName: driver.name,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/drivers/${driver.id}`,
+  })
+
   //Send new password email to the driver
   sendEmail(
     [driver.email],

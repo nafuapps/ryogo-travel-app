@@ -27,6 +27,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { startTripAction } from "@/app/actions/bookings/startTripAction"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { useLocation } from "@/hooks/useLocation"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export default function StartTripSheet({
   booking,
@@ -87,20 +88,20 @@ export default function StartTripSheet({
   const driverId = booking.assignedDriverId
 
   const onSubmit = async (data: SchemaType) => {
+    const startTripData = {
+      agencyId: booking.agencyId,
+      bookingId: booking.id,
+      driverId: driverId,
+      vehicleId: vehicleId,
+      type: TripLogTypesEnum.START_TRIP,
+      odometerReading: data.odometerReading,
+      remarks: data.remarks,
+      tripLogPhoto: data.tripLogPhoto,
+      lat: latLong.latitude,
+      long: latLong.longitude,
+    }
     startTransition(async () => {
-      if (
-        await startTripAction({
-          agencyId: booking.agencyId,
-          bookingId: booking.id,
-          driverId: driverId,
-          vehicleId: vehicleId,
-          odometerReading: data.odometerReading,
-          remarks: data.remarks,
-          tripLogPhoto: data.tripLogPhoto,
-          lat: latLong.latitude,
-          long: latLong.longitude,
-        })
-      ) {
+      if (await startTripAction(startTripData)) {
         router.refresh()
         setOpen(false)
       } else {

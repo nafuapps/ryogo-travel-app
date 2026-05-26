@@ -31,9 +31,9 @@ export default function DashboardHeader(props: { pathName: string }) {
             <HeaderButton label={t("NewBooking")} icon={Plus} />
           </Link>
         )}
-        {props.pathName !== "/dashboard/action-center" && (
-          <Link href="/dashboard/action-center">
-            <HeaderButton label={t("ActionCenter")} icon={Target} />
+        {props.pathName !== "/dashboard/mission-control" && (
+          <Link href="/dashboard/mission-control">
+            <HeaderButton label={t("MissionControl")} icon={Target} />
           </Link>
         )}
       </HeaderRightWrapper>

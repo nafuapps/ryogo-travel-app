@@ -1,8 +1,4 @@
-import {
-  AgencyStatusEnum,
-  OrderTypeEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { AgencyStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
@@ -10,12 +6,7 @@ import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
-import {
-  ANNUAL_SUBSCRIPTION_DAYS,
-  BOOKINGS_SEARCH_DAYS,
-  MONTHLY_SUBSCRIPTION_DAYS,
-  QUARTERLY_SUBSCRIPTION_DAYS,
-} from "../apiConfig"
+import { BOOKINGS_SEARCH_DAYS } from "../apiConfig"
 
 export const agencyServices = {
   //Find all agencies

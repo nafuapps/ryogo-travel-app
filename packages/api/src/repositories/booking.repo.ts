@@ -889,6 +889,7 @@ export const bookingRepository = {
             id: true,
             name: true,
             phone: true,
+            userId: true,
           },
         },
         assignedVehicle: {
@@ -957,6 +958,7 @@ export const bookingRepository = {
         id: true,
         status: true,
         agencyId: true,
+        assignedUserId: true,
       },
     })
     return booking
@@ -989,6 +991,7 @@ export const bookingRepository = {
             id: true,
             name: true,
             phone: true,
+            userId: true,
           },
         },
         assignedVehicle: {
@@ -1241,6 +1244,9 @@ export const bookingRepository = {
       .returning({
         id: bookings.id,
         assignedVehicleId: bookings.assignedVehicleId,
+        startDate: bookings.startDate,
+        status: bookings.status,
+        assignedDriverId: bookings.assignedDriverId,
       })
   },
 

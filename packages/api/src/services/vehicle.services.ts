@@ -158,8 +158,13 @@ export const vehicleServices = {
 
   //Add vehicle repair
   async addVehicleRepair(data: InsertVehicleRepairType) {
+    const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
+    if (!vehicle) return
+
     const repair = await vehicleRepairRepository.createRepair(data)
-    return repair[0]
+    if (!repair[0]) return
+
+    return { ...repair[0], vehicleNumber: vehicle.vehicleNumber }
   },
 
   //Modify vehicle repair
@@ -175,7 +180,12 @@ export const vehicleServices = {
       data.remarks ?? undefined,
       data.cost ?? undefined,
     )
-    return repair[0]
+    if (!repair[0]) return
+
+    const vehicle = await vehicleRepository.readVehicleById(repair[0].vehicleId)
+    if (!vehicle) return
+
+    return { ...repair[0], vehicleNumber: vehicle.vehicleNumber }
   },
 
   //Modify vehicle details

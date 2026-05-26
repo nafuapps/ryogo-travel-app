@@ -14,6 +14,7 @@ type DeleteExpenseAlertButtonProps = {
   expenseId: string
   agencyId: string
   assignedUserId: string
+  byDriver?: boolean
 }
 export default function DeleteExpenseAlertButton(
   props: DeleteExpenseAlertButtonProps,
@@ -32,6 +33,7 @@ export default function DeleteExpenseAlertButton(
           props.expenseId,
           props.agencyId,
           props.assignedUserId,
+          props.byDriver,
         )
       ) {
         toast.success(t("Success"))

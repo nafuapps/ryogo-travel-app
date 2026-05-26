@@ -5,7 +5,9 @@ import getConfirmationMessage from "@/components/whatsapp/getConfirmationMessage
 import { getCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 
 export async function confirmBookingAction(
@@ -42,6 +44,32 @@ export async function confirmBookingAction(
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
   if (!bookingDetails || !bookingDetails.startTime) {
     return
+  }
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: bookingDetails.id,
+    isFeed: true,
+    textKey: "ConfirmedBooking",
+    textObject: {
+      bookingId: bookingDetails.id,
+      userName: bookingDetails.assignedUser.name,
+    },
+    link: `/dashboard/bookings/${bookingDetails.id}`,
+  })
+
+  if (bookingDetails.assignedDriver) {
+    await missionServices.addMission({
+      agencyId: agencyId,
+      userId: bookingDetails.assignedDriver.userId,
+      entityType: EntityTypeEnum.BOOKING,
+      entityId: bookingDetails.id,
+      titleKey: "ConfirmedBooking.Title",
+      titleObject: { bookingId: bookingDetails.id },
+      messageKey: "ConfirmedBooking.Message",
+      link: `/rider/myBookings/${bookingDetails.id}`,
+    })
   }
 
   //Generate confirmation pdf file

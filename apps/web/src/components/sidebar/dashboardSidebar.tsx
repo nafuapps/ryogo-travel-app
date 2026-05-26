@@ -18,6 +18,7 @@ import {
   BadgeIndianRupee,
   UserRoundPen,
   Search,
+  Megaphone,
 } from "lucide-react"
 import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
 import { MenuItemType } from "@/components/sidebar/sidebarCommon"
@@ -83,6 +84,12 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       title: t("Search"),
       url: "/dashboard/search",
       icon: Search,
+      onlyOwner: false,
+    },
+    {
+      title: t("Feed"),
+      url: "/dashboard/feed",
+      icon: Megaphone,
       onlyOwner: false,
     },
     {

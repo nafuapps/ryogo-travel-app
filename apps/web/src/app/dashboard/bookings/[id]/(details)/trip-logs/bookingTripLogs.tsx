@@ -17,7 +17,7 @@ export default async function BookingTripLogsPageComponent({
   return (
     <PageWrapper id="BookingTripLogsPage">
       <BookindDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
-      <SectionColWrapper center>
+      <SectionColWrapper>
         {bookingTripLogs.length === 0 ? (
           <RyogoSmall color="slate">{t("NoTripLogs")}</RyogoSmall>
         ) : (

@@ -6,8 +6,13 @@ import {
   generatePUCPhotoPathName,
   generateRCPhotoPathName,
 } from "@/lib/utils"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { UserRolesEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  EntityTypeEnum,
+  UserRolesEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyVehicleAction(
@@ -87,5 +92,20 @@ export async function modifyVehicleAction(
     insuranceUrl,
     pucUrl,
   )
+  if (!vehicle) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.VEHICLE,
+    entityId: vehicle.id,
+    isFeed: true,
+    textKey: "VehicleModified",
+    textObject: {
+      vehicleNumber: vehicle.vehicleNumber,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/vehicles/${vehicle.id}`,
+  })
+
   return vehicle
 }

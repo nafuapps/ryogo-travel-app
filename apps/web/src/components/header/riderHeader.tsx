@@ -27,8 +27,8 @@ export default function RiderHeader({ pathName }: { pathName: string }) {
         <RyogoP>{title}</RyogoP>
       </HeaderLeftWrapper>
       <HeaderRightWrapper>
-        <Link href="/rider/myActions">
-          <HeaderButton label={t("ActionCenter")} icon={Target} />
+        <Link href="/rider/myMissions">
+          <HeaderButton label={t("MissionControl")} icon={Target} />
         </Link>
       </HeaderRightWrapper>
     </HeaderWrapper>

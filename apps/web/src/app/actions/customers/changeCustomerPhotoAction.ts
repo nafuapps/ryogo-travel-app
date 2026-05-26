@@ -3,7 +3,8 @@
 import { getCurrentUser } from "@/lib/auth"
 import { generateCustomerPhotoPathName } from "@/lib/utils"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function changeCustomerPhotoAction(
@@ -35,5 +36,20 @@ export async function changeCustomerPhotoAction(
     customerId,
     uploadedPhoto.path,
   )
+  if (!customer) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.CUSTOMER,
+    entityId: customer.id,
+    isFeed: true,
+    textKey: "CustomerPhotoChanged",
+    textObject: {
+      customerName: customer.name,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/customers/${customer.id}`,
+  })
+
   return customer
 }

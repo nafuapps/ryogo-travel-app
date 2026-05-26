@@ -7,6 +7,7 @@ import {
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { SESSION_COOKIE_EXPIRATION_DAYS } from "@ryogo-travel-app/api/apiConfig"
 
 const secretKey = process.env.AUTH_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -14,7 +15,8 @@ const encodedKey = new TextEncoder().encode(secretKey)
 export const SESSION_COOKIE_NAME = "session"
 export const LOCALE_COOKIE_NAME = "locale"
 export const DARK_MODE_COOKIE_NAME = "dark"
-export const SESSION_COOKIE_EXPIRATION = 7 * 24 * 60 * 60 * 1000
+export const SESSION_COOKIE_EXPIRATION_TIME =
+  SESSION_COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000
 
 // Don't add any sensitive data like email, password in this payload
 export type SessionPayload = {
@@ -23,6 +25,7 @@ export type SessionPayload = {
   token: string
   agencyId: string
   userRole: UserRolesEnum
+  name: string
   phone: string
   isAdmin: boolean
   isVerified: boolean
@@ -66,7 +69,7 @@ export async function getWebSession() {
 
 //Create session both in cookie and database
 export async function createWebSession(user: SelectUserType) {
-  const expiresAt = new Date(Date.now() + SESSION_COOKIE_EXPIRATION)
+  const expiresAt = new Date(Date.now() + SESSION_COOKIE_EXPIRATION_TIME)
   const token = crypto.randomUUID()
 
   // 1. Create a session in the database
@@ -87,6 +90,7 @@ export async function createWebSession(user: SelectUserType) {
     isAdmin: user.isAdmin ?? false,
     isVerified: user.isVerified ?? false,
     userRole: user.userRole,
+    name: user.name,
     phone: user.phone,
     status: user.status,
     expiresAt,
@@ -125,31 +129,6 @@ export async function createWebSession(user: SelectUserType) {
   return token
 }
 
-//Update session expiry both in cookie and database
-export async function updateWebSession() {
-  // 1. Get session from cookie
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return
-
-  const payload = (await decrypt(session)) as SessionPayload | undefined
-  if (!payload) return
-
-  // 2. New expiry
-  const expires = new Date(Date.now() + SESSION_COOKIE_EXPIRATION)
-
-  // 3. Update session expiry in database
-  await sessionRepository.updateSessionExpiringTime(payload.sessionId, expires)
-
-  // 4. Update session expiry in cookie
-  const cookieStore = await cookies()
-  cookieStore.set(SESSION_COOKIE_NAME, session, {
-    httpOnly: true,
-    secure: true,
-    expires: expires,
-    sameSite: "lax",
-  })
-}
-
 //Update user status in session
 export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
   // 1. Get session from cookie
@@ -166,18 +145,21 @@ export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
     status: newStatus,
   })
 
+  // 3. Update New expiry in DB
+  const newExpiresAt = await updateSessionExpiry(payload.sessionId)
+
   // 4. Update session expiry in cookie
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: new Date(Date.now() + SESSION_COOKIE_EXPIRATION),
+    expires: newExpiresAt,
     sameSite: "lax",
   })
 }
 
 //Update user verification status in session
-export async function updateVerificationStatus(isVerified: boolean) {
+export async function updateSessionVerificationStatus(isVerified: boolean) {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
   const payload = (await decrypt(session)) as SessionPayload | undefined
@@ -192,12 +174,15 @@ export async function updateVerificationStatus(isVerified: boolean) {
     isVerified: isVerified,
   })
 
+  // 3. Update New expiry in DB
+  const newExpiresAt = await updateSessionExpiry(payload.sessionId)
+
   // 4. Update session expiry in cookie
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: new Date(Date.now() + SESSION_COOKIE_EXPIRATION),
+    expires: newExpiresAt,
     sameSite: "lax",
   })
 }
@@ -217,4 +202,11 @@ export async function deleteWebSession() {
   // 3. Delete session from cookie
   const cookieStore = await cookies()
   cookieStore.delete(SESSION_COOKIE_NAME)
+}
+
+async function updateSessionExpiry(sessionId: string) {
+  // 2. New expiry
+  const newExpiresAt = new Date(Date.now() + SESSION_COOKIE_EXPIRATION_TIME)
+  await sessionRepository.updateSessionExpiringTime(sessionId, newExpiresAt)
+  return newExpiresAt
 }

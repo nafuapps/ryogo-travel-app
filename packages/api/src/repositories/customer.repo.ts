@@ -142,6 +142,7 @@ export const customerRepository = {
       .returning({
         id: customers.id,
         photoUrl: customers.photoUrl,
+        name: customers.name,
       })
   },
 
@@ -154,6 +155,7 @@ export const customerRepository = {
       .returning({
         id: customers.id,
         status: customers.status,
+        name: customers.name,
       })
   },
 }

@@ -146,6 +146,7 @@ export default function RiderModifyExpensePageComponent({
           expenseId={expenseDetails.id}
           agencyId={expenseDetails.agencyId}
           assignedUserId={assignedUserId}
+          byDriver
         />
         <Button
           variant={"outline"}

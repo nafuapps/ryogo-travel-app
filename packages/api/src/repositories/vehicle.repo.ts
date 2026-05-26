@@ -319,7 +319,11 @@ export const vehicleRepository = {
         vehiclePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id, vehiclePhotoUrl: vehicles.vehiclePhotoUrl })
+      .returning({
+        id: vehicles.id,
+        vehiclePhotoUrl: vehicles.vehiclePhotoUrl,
+        vehicleNumber: vehicles.vehicleNumber,
+      })
   },
 
   //Update vehicle status
@@ -328,7 +332,11 @@ export const vehicleRepository = {
       .update(vehicles)
       .set({ status })
       .where(eq(vehicles.id, vehicleId))
-      .returning({ id: vehicles.id, status: vehicles.status })
+      .returning({
+        id: vehicles.id,
+        status: vehicles.status,
+        vehicleNumber: vehicles.vehicleNumber,
+      })
   },
 
   //Update vehicle odometerReading

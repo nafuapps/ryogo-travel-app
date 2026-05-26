@@ -2,12 +2,14 @@
 
 import { getCurrentUser } from "@/lib/auth"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function deleteExpenseAction(
   id: string,
   agencyId: string,
   assignedUserId: string,
+  byDriver?: boolean,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -19,6 +21,26 @@ export async function deleteExpenseAction(
   ) {
     return
   }
+
   const deletedExpense = await expenseServices.removeExpense(id)
+  if (!deletedExpense) return
+
+  if (byDriver) {
+    await missionServices.addMission({
+      agencyId: agencyId,
+      userId: assignedUserId,
+      entityType: EntityTypeEnum.BOOKING,
+      entityId: deletedExpense.bookingId,
+      titleKey: "ExpenseDeletedByDriver.Title",
+      titleObject: {
+        expenseId: deletedExpense.id,
+        type: deletedExpense.type.toUpperCase(),
+        bookingId: deletedExpense.bookingId,
+      },
+      messageKey: "ExpenseDeletedByDriver.Message",
+      link: `/dashboard/bookings/${deletedExpense.bookingId}/expenses`,
+    })
+  }
+
   return deletedExpense
 }

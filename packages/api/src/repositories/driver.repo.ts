@@ -302,6 +302,8 @@ export const driverRepository = {
         licenseNumber: drivers.licenseNumber,
         licenseExpiresOn: drivers.licenseExpiresOn,
         licensePhotoUrl: drivers.licensePhotoUrl,
+        name: drivers.name,
+        userId: drivers.userId,
       })
   },
 
@@ -322,6 +324,8 @@ export const driverRepository = {
       .returning({
         id: drivers.id,
         status: drivers.status,
+        name: drivers.name,
+        userId: drivers.userId,
       })
   },
 

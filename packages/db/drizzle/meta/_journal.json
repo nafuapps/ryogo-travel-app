@@ -239,6 +239,13 @@
       "when": 1779272095513,
       "tag": "0033_freezing_leo",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1779692266260,
+      "tag": "0034_lush_black_panther",
+      "breakpoints": true
     }
   ]
 }

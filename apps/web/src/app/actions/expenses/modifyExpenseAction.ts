@@ -3,14 +3,16 @@
 import { getCurrentUser } from "@/lib/auth"
 import { generateExpensePhotoPathName } from "@/lib/utils"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { UpdateExpenseRequestType } from "@ryogo-travel-app/api/types/expense.types"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyExpenseAction(
   data: UpdateExpenseRequestType,
   agencyId: string,
   assignedUserId: string,
+  byDriver?: boolean,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -36,5 +38,24 @@ export async function modifyExpenseAction(
   }
 
   const updatedExpense = await expenseServices.modifyExpense(data)
+  if (!updatedExpense) return
+
+  if (byDriver) {
+    await missionServices.addMission({
+      agencyId: agencyId,
+      userId: assignedUserId,
+      entityType: EntityTypeEnum.BOOKING,
+      entityId: updatedExpense.bookingId,
+      titleKey: "ExpenseModifiedByDriver.Title",
+      titleObject: {
+        expenseId: updatedExpense.id,
+        type: updatedExpense.type.toUpperCase(),
+        bookingId: updatedExpense.bookingId,
+      },
+      messageKey: "ExpenseModifiedByDriver.Message",
+      link: `/dashboard/bookings/${updatedExpense.bookingId}/expenses`,
+    })
+  }
+
   return updatedExpense
 }

@@ -1,4 +1,4 @@
-import { RyogoP } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import {
   TooltipContent,
   TooltipTrigger,
@@ -17,13 +17,6 @@ type MenuButtonProps = {
   open: boolean
   active?: boolean
 }
-
-const menuButtonClassName =
-  "flex flex-row gap-3 items-center rounded-lg hover:bg-slate-200 text-slate-600 w-full px-2 py-2"
-
-const activeMenuButtonClassName =
-  "flex flex-row gap-3 items-center rounded-lg bg-sky-700 hover:bg-sky-700/90 text-sky-50 w-full px-2 py-2"
-
 export function MenuButton(props: MenuButtonProps) {
   const { setOpenMobile } = useSidebar()
 
@@ -32,9 +25,8 @@ export function MenuButton(props: MenuButtonProps) {
       <Tooltip disableHoverableContent>
         <TooltipTrigger className="w-full">
           <div
-            className={
-              props.active ? activeMenuButtonClassName : menuButtonClassName
-            }
+            className={`flex flex-row gap-3 items-center rounded-lg ${props.active ? "bg-sky-700" : "hover:bg-sky-100"} w-full p-2 transition
+            `}
           >
             <RyogoIcon
               icon={props.icon}
@@ -43,9 +35,9 @@ export function MenuButton(props: MenuButtonProps) {
             />
             {props.open &&
               (props.active ? (
-                <RyogoP color="white">{props.title}</RyogoP>
+                <RyogoSmall color="white">{props.title}</RyogoSmall>
               ) : (
-                <RyogoP>{props.title}</RyogoP>
+                <RyogoSmall>{props.title}</RyogoSmall>
               ))}
           </div>
         </TooltipTrigger>

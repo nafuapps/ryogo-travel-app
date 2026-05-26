@@ -2,24 +2,23 @@
 import { getCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
-import { TripLogTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
+import {
+  EntityTypeEnum,
+  TripLogTypesEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function endTripAction(data: {
-  driverId: string
-  bookingId: string
-  vehicleId: string
-  agencyId: string
-  customerId: string
-  odometerReading: number
-  remarks?: string
-  lat?: number | null
-  long?: number | null
-  tripLogPhoto?: FileList
-  customerRating?: number
-  bookingRating?: number
-}) {
+export async function endTripAction(
+  data: AddTripLogRequestType,
+  customerId: string,
+  customerRatingData?: number,
+  bookingRatingData?: number,
+) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -36,7 +35,7 @@ export async function endTripAction(data: {
     vehicleId: data.vehicleId,
     agencyId: data.agencyId,
     odometerReading: data.odometerReading,
-    tripLogType: TripLogTypesEnum.END_TRIP,
+    type: TripLogTypesEnum.END_TRIP,
     remarks: data.remarks,
     lat: data.lat,
     long: data.long,
@@ -64,14 +63,43 @@ export async function endTripAction(data: {
     data.bookingId,
     data.driverId,
     data.vehicleId,
-    data.customerId,
-    data.customerRating,
-    data.bookingRating,
+    customerId,
+    customerRatingData,
+    bookingRatingData,
   )
   if (!bookingChanged) return
 
   //Update final total price and other values based on trip logs
   await bookingServices.updateBookingCompletedValues(data.bookingId)
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: bookingChanged.id,
+    isFeed: true,
+    textKey: "TripEnded",
+    textObject: {
+      bookingId: bookingChanged.id,
+      driverName: bookingChanged.driverName,
+      vehicleNumber: bookingChanged.vehicleNumber,
+    },
+    link: `/dashboard/bookings/${bookingChanged.id}`,
+  })
+
+  await missionServices.addMission({
+    agencyId: data.agencyId,
+    userId: bookingChanged.assignedUserId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: bookingChanged.id,
+    titleKey: "TripEnded.Title",
+    titleObject: {
+      bookingId: bookingChanged.id,
+      driverName: bookingChanged.driverName,
+    },
+    messageKey: "TripEnded.Message",
+    isCritical: true,
+    link: `/rider/myBookings/${bookingChanged.id}`,
+  })
 
   return newTripLog
 }

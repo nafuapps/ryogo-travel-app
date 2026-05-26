@@ -7,9 +7,10 @@ import {
   generateRCPhotoPathName,
   generateVehiclePhotoPathName,
 } from "@/lib/utils"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addVehicleAction(data: AddVehicleRequestType) {
@@ -74,5 +75,19 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
       vehiclePhotoUrl,
     )
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.VEHICLE,
+    entityId: vehicle.id,
+    isFeed: true,
+    textKey: "VehicleAdded",
+    textObject: {
+      vehicleNumber: vehicle.vehicleNumber,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/vehicles/${vehicle.id}`,
+  })
+
   return vehicle
 }

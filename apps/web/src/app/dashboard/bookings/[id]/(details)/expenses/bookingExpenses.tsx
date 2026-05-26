@@ -33,7 +33,7 @@ export default async function BookingExpensesPageComponent({
           </Button>
         </Link>
       )}
-      <SectionColWrapper center>
+      <SectionColWrapper>
         {bookingExpenses.length === 0 ? (
           <RyogoSmall color="slate">{t("NoExpenses")}</RyogoSmall>
         ) : (

@@ -80,13 +80,16 @@ export default function RiderAddExpensePageComponent({
   async function onSubmit(values: NewExpenseType) {
     startTransition(async () => {
       if (
-        await addExpenseAction({
-          agencyId,
-          bookingId,
-          userId,
-          assignedUserId,
-          ...values,
-        })
+        await addExpenseAction(
+          {
+            agencyId,
+            bookingId,
+            userId,
+            assignedUserId,
+            ...values,
+          },
+          true,
+        )
       ) {
         toast.success(t("Success"))
         router.replace(`/rider/myBookings/${bookingId}`)

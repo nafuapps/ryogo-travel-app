@@ -169,8 +169,15 @@ export const driverServices = {
 
   //Add driver leave
   async addDriverLeave(data: InsertDriverLeaveType) {
+    const driver = await driverRepository.readDriverById(data.driverId)
+    if (!driver) {
+      return
+    }
+
     const leave = await driverLeaveRepository.createLeave(data)
-    return leave[0]
+    if (!leave[0]) return
+
+    return { ...leave[0], driverName: driver.name }
   },
 
   //Modify driver leave
@@ -182,7 +189,10 @@ export const driverServices = {
       data.isCompleted,
       data.remarks ?? undefined,
     )
-    return leave[0]
+    if (!leave[0]) return
+    const driver = await driverRepository.readDriverById(leave[0].driverId)
+    if (!driver) return
+    return { ...leave[0], driverName: driver?.name }
   },
 
   //Upload driver license photo

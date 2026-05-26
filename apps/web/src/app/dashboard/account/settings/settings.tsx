@@ -14,7 +14,7 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
 import { useTransition } from "react"
-import { SectionWrapper, FormWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper } from "@/components/page/pageWrappers"
 
 export default function AccountSettingsPageComponent({
   userDetails,

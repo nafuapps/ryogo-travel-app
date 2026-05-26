@@ -13,7 +13,7 @@ type CancelBookingAlertButtonProps = {
   bookingId: string
   agencyId: string
   assignedUserId: string
-  notifyCustomer?: boolean
+  isConfirmedBooking?: boolean
 }
 export default function CancelBookingAlertButton(
   props: CancelBookingAlertButtonProps,
@@ -30,11 +30,11 @@ export default function CancelBookingAlertButton(
         props.bookingId,
         props.agencyId,
         props.assignedUserId,
-        props.notifyCustomer,
+        props.isConfirmedBooking,
       )
       if (cancelMessage) {
         toast.success(t("Success"))
-        if (typeof cancelMessage === "string" && props.notifyCustomer) {
+        if (typeof cancelMessage === "string" && props.isConfirmedBooking) {
           //Confirmed booking being cancelled
           window.open(cancelMessage, "_blank", "noopener,noreferrer")
           router.refresh()

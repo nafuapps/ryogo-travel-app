@@ -3,6 +3,7 @@ import {
   DriverStatusEnum,
   InsertBookingType,
   TripLogTypesEnum,
+  UserStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
@@ -18,6 +19,7 @@ import { driverRepository } from "../repositories/driver.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { UPDATE_PRICE_DISTANCE_FACTOR } from "../apiConfig"
 import { getEstimatedTotalPrice, getFinalTotalPrice } from "@/lib/utils"
+import { userRepository } from "../repositories/user.repo"
 
 export const bookingServices = {
   async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
@@ -440,7 +442,12 @@ export const bookingServices = {
     if (!booking[0] || booking[0].status !== BookingStatusEnum.IN_PROGRESS) {
       return
     }
-    return booking[0]
+    return {
+      ...booking[0],
+      driverName: driverStatus.name,
+      vehicleNumber: vehicleStatus.vehicleNumber,
+      assignedUserId: bookingStatus.assignedUserId,
+    }
   },
 
   //Update booking values on trip completion like total distance, total amount etc
@@ -519,7 +526,7 @@ export const bookingServices = {
     }
 
     //Atomic transaction to change booking to completed and driver, vehicle to available
-    const booking = await bookingRepository.completeBookingTransaction(
+    const completedBooking = await bookingRepository.completeBookingTransaction(
       bookingId,
       driverId,
       vehicleId,
@@ -527,43 +534,107 @@ export const bookingServices = {
       customerRating,
       bookingRating,
     )
-    if (!booking[0] || booking[0].status !== BookingStatusEnum.COMPLETED) {
+    if (
+      !completedBooking[0] ||
+      completedBooking[0].status !== BookingStatusEnum.COMPLETED
+    ) {
       return
     }
-    return booking[0]
+    return {
+      ...completedBooking[0],
+      driverName: driverStatus.name,
+      vehicleNumber: vehicleStatus.vehicleNumber,
+      assignedUserId: bookingStatus.assignedUserId,
+    }
   },
 
   //Cancel a booking
-  async cancelBooking(id: string) {
-    const updatedBooking = await bookingRepository.updateBookingToCancel(id)
+  async cancelBooking(bookingId: string) {
+    const booking = await bookingRepository.readBookingById(bookingId)
+    //Only lead or confirmed booking can be cancelled
+    if (
+      !booking ||
+      ![BookingStatusEnum.LEAD, BookingStatusEnum.CONFIRMED].includes(
+        booking.status,
+      )
+    ) {
+      return
+    }
+
+    const updatedBooking =
+      await bookingRepository.updateBookingToCancel(bookingId)
     return updatedBooking[0]
   },
 
   //Assign driver to booking
   async assignDriverToBooking(bookingId: string, driverId: string) {
+    const driver = await driverRepository.readDriverById(driverId)
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+
+    const booking = await bookingRepository.readBookingById(bookingId)
+    if (
+      !booking ||
+      ![BookingStatusEnum.LEAD, BookingStatusEnum.CONFIRMED].includes(
+        booking.status,
+      )
+    )
+      return
+
     const updatedBooking = await bookingRepository.updateAssignedDriver(
       bookingId,
       driverId,
     )
-    return updatedBooking[0]
+    return {
+      ...updatedBooking[0],
+      driverUserId: driver.userId,
+      driverName: driver.name,
+      startDate: booking.startDate,
+    }
   },
 
   //Assign vehicle to booking
   async assignVehicleToBooking(bookingId: string, vehicleId: string) {
+    const vehicle = await vehicleRepository.readVehicleById(vehicleId)
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+
+    const booking = await bookingRepository.readBookingById(bookingId)
+    if (
+      !booking ||
+      ![BookingStatusEnum.LEAD, BookingStatusEnum.CONFIRMED].includes(
+        booking.status,
+      )
+    )
+      return
+
     const updatedBooking = await bookingRepository.updateAssignedVehicle(
       bookingId,
       vehicleId,
     )
-    return updatedBooking[0]
+
+    return {
+      ...updatedBooking[0],
+      vehicleNumber: vehicle.vehicleNumber,
+      driverUserId: booking.assignedDriver?.userId,
+    }
   },
 
   //Assign user to booking
   async assignUserToBooking(bookingId: string, userId: string) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) return
+
+    const booking = await bookingRepository.readBookingById(bookingId)
+    if (!booking) return
+
     const updatedBooking = await bookingRepository.updateAssignedUser(
       bookingId,
       userId,
     )
-    return updatedBooking[0]
+    return {
+      ...updatedBooking[0],
+      assignedUserName: user.name,
+      startDate: booking.startDate,
+    }
   },
 
   async addQuoteUrl(id: string, url: string) {

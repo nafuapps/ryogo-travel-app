@@ -33,7 +33,7 @@ export default async function BookingTransactionsPageComponent({
           </Button>
         </Link>
       )}
-      <SectionColWrapper center>
+      <SectionColWrapper>
         {bookingTransactions.length === 0 ? (
           <RyogoSmall color="slate">{t("NoTransactions")}</RyogoSmall>
         ) : (

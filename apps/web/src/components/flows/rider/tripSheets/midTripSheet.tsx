@@ -96,21 +96,20 @@ export default function MidTripSheet({
   const driverId = booking.assignedDriverId
 
   const onSubmit = async (data: SchemaType) => {
+    const midTripData = {
+      agencyId: booking.agencyId,
+      bookingId: booking.id,
+      driverId: driverId,
+      vehicleId: vehicleId,
+      odometerReading: data.odometerReading,
+      type: tripType,
+      remarks: data.remarks,
+      tripLogPhoto: data.tripLogPhoto,
+      lat: latLong.latitude,
+      long: latLong.longitude,
+    }
     startTransition(async () => {
-      if (
-        await midTripAction({
-          agencyId: booking.agencyId,
-          bookingId: booking.id,
-          driverId: driverId,
-          vehicleId: vehicleId,
-          odometerReading: data.odometerReading,
-          type: tripType,
-          remarks: data.remarks,
-          tripLogPhoto: data.tripLogPhoto,
-          lat: latLong.latitude,
-          long: latLong.longitude,
-        })
-      ) {
+      if (await midTripAction(midTripData)) {
         router.refresh()
         setOpen(false)
       } else {

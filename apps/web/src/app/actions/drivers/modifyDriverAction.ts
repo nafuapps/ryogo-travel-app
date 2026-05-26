@@ -3,7 +3,12 @@
 import { getCurrentUser } from "@/lib/auth"
 import { generateLicensePhotoPathName } from "@/lib/utils"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { UserRolesEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import {
+  EntityTypeEnum,
+  UserRolesEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyDriverAction(
@@ -50,5 +55,20 @@ export async function modifyDriverAction(
     data.licenseExpiresOn,
     licenseUrl,
   )
+  if (!driver) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.DRIVER,
+    entityId: driver.id,
+    isFeed: true,
+    textKey: "DriverModified",
+    textObject: {
+      driverName: driver.name,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/drivers/${driver.id}`,
+  })
+
   return driver
 }

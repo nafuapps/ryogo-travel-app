@@ -29,6 +29,7 @@ import { endTripAction } from "@/app/actions/bookings/endTripAction"
 import Link from "next/link"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { useLocation } from "@/hooks/useLocation"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 
 const TOTAL_STARS = 5
 
@@ -93,28 +94,34 @@ export default function EndTripSheet({
   const driverId = booking.assignedDriverId
 
   const onSubmit = async (data: SchemaType) => {
+    const endTripData = {
+      agencyId: booking.agencyId,
+      bookingId: booking.id,
+      driverId: driverId,
+      vehicleId: vehicleId,
+      type: TripLogTypesEnum.END_TRIP,
+      odometerReading: data.odometerReading,
+      remarks: data.remarks,
+      tripLogPhoto: data.tripLogPhoto,
+      lat: latLong.latitude,
+      long: latLong.longitude,
+    }
+    const customerRatingData =
+      customerRating > 0 && customerRating <= TOTAL_STARS
+        ? customerRating
+        : undefined
+    const bookingRatingData =
+      bookingRating > 0 && bookingRating <= TOTAL_STARS
+        ? bookingRating
+        : undefined
     startTransition(async () => {
       if (
-        await endTripAction({
-          agencyId: booking.agencyId,
-          bookingId: booking.id,
-          driverId: driverId,
-          vehicleId: vehicleId,
-          customerId: booking.customerId,
-          odometerReading: data.odometerReading,
-          remarks: data.remarks,
-          tripLogPhoto: data.tripLogPhoto,
-          lat: latLong.latitude,
-          long: latLong.longitude,
-          customerRating:
-            customerRating > 0 && customerRating <= TOTAL_STARS
-              ? customerRating
-              : undefined,
-          bookingRating:
-            bookingRating > 0 && bookingRating <= TOTAL_STARS
-              ? bookingRating
-              : undefined,
-        })
+        await endTripAction(
+          endTripData,
+          booking.customerId,
+          customerRatingData,
+          bookingRatingData,
+        )
       ) {
         router.refresh()
         setOpen(false)

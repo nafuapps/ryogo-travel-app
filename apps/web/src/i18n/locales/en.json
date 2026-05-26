@@ -726,11 +726,12 @@
       "Users": "Users",
       "Analytics": "Analytics",
       "Search": "Search",
+      "Feed":"Feed",
       "Account": "Account"
     },
     "Header": {
       "NewBooking": "New Booking",
-      "ActionCenter": "Action Center",
+      "MissionControl": "Mission Control",
       "Title": {
         "/dashboard": "Home",
         "/dashboard/account": "Account",
@@ -744,7 +745,7 @@
         "/dashboard/account/settings": "Settings",
         "/dashboard/account/subscription": "Subscription",
         "/dashboard/account/subscription/orders": "Subscription Orders",
-        "/dashboard/action-center": "Action Center",
+        "/dashboard/mission-control": "Mission Control",
         "/dashboard/analytics": "Analytics",
         "/dashboard/bookings": "Bookings",
         "/dashboard/bookings/new": "New Booking",
@@ -776,6 +777,7 @@
         "/dashboard/drivers/[id]/leaves": "Driver Leaves",
         "/dashboard/drivers/[id]/leaves/new": "New Leave",
         "/dashboard/drivers/[id]/leaves/modify": "Modify Leave",
+        "/dashboard/feed":"Notification Feed",
         "/dashboard/search": "Search",
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New Agent",
@@ -2658,6 +2660,88 @@
       "Clear":"Clear",
       "Search":"Search"
     },
+    "MissionControl":{
+      "NoMissions":"No actions pending",
+      "LeadBooking":{
+        "Title":"Lead booking #{bookingId}",
+        "Message":"Any old lead booking will be cancelled. Call the customer to confirm this booking"
+      },
+      "ConfirmedBooking":{
+        "Title":"Assigned booking #{bookingId}",
+        "Message":"A new booking has been assigned to you."
+      },
+      "AssignedDriver":{
+        "Title":"Assigned booking #{bookingId}",
+        "Message":"A booking has been assigned to you."
+      },
+      "AssignedUser":{
+        "Title":"Assigned booking #{bookingId}",
+        "Message":"A booking has been assigned to you."
+      },
+      "AssignedVehicle":{
+        "Title":"{vehicleNumber} assigned for booking #{bookingId}",
+        "Message":"Assigned vehicle has been changed for this booking. Please review"
+      },
+      "TripEnded":{
+        "Title":"Trip ended for booking #{bookingId} by {driverName}",
+        "Message":"Trip has been completed for this booking. Please confirm and check the booking expenses and transactions"
+      },
+      "TripStarted":{
+        "Title":"Trip started for booking #{bookingId} by {driverName}",
+        "Message":"Trip has been started for this booking. Please confirm and check with the customer"
+      },
+      "DriverActivated":{
+        "Title":"Account activated by {userName}",
+        "Message":"You account has been activated. You can now start taking booking assignments"
+      },
+      "DriverInactivated":{
+        "Title":"Account deactivated by {userName}",
+        "Message":"You account has been deactivated. You cannot take any booking assignments"
+      },
+      "ExpenseAddedByDriver":{
+        "Title":"New {type} expense {expenseId} added for booking #{bookingId}",
+        "Message":"Driver has added a new expense for this booking. Please review"
+      },
+      "ExpenseDeletedByDriver":{
+        "Title":"A {type} expense {expenseId} removed for booking #{bookingId}",
+        "Message":"Driver has deleted an expense for this booking. Please review"
+      },
+      "ExpenseModifiedByDriver":{
+        "Title":"A {type} expense {expenseId} modified for booking #{bookingId}",
+        "Message":"Driver has modified an expense for this booking. Please review"
+      }
+    },
+    "Feed":{
+      "NoFeed":"No notifications to show",
+      "ConfirmedBooking":"Booking #{bookingId} has been confirmed by {userName}",
+      "ChangedAgencyEmail":"Agency email address has been changed by {userName}",
+      "ChangedAgencyPhone":"Agency phone number has been changed by {userName}",
+      "ModifiedAgency":"Agency details have been modified by {userName}",
+      "AssignedDriver":"Assigned driver for #{bookingId} has been changed to {driverName}",
+      "AssignedUser":"Assigned agent for #{bookingId} has been changed to {userName}",
+      "AssignedVehicle":"Assigned vehicle for #{bookingId} has been changed to {vehicleNumber}",
+      "CancelBooking":"Booking #{bookingId} has been cancelled by {userName}",
+      "TripEnded":"Trip completed for #{bookingId} by {driverName} with {vehicleNumber}",
+      "TripStarted":"Trip started for #{bookingId} by {driverName} with {vehicleNumber}",
+      "CustomerActivated":"Customer {customerName} has been activated by {userName}",
+      "CustomerInactivated":"Customer {customerName} has been inactivated by {userName}",
+      "CustomerPhotoChanged":"Customer {customerName} photo has been changed by {userName}",
+      "CustomerModified":"Customer {customerName} details have been changed by {userName}",
+      "CustomerAdded":"Customer {customerName} has been added by {userName}",
+      "DriverActivated":"Driver {driverName} has been activated by {userName}",
+      "DriverInactivated":"Driver {driverName} has been inactivated by {userName}",
+      "DriverAdded":"New driver {driverName} has been added by {userName}",
+      "DriverModified":"Driver {driverName} details have been changed by {userName}",
+      "DriverLeaveAdded":"Driver leave added for {driverName} by {userName}",
+      "DriverLeaveModified":"Driver leave details changed for {driverName} by {userName}",
+      "VehicleActivated":"Vehicle {vehicleNumber} has been activated by {userName}",
+      "VehicleInactivated":"Vehicle {vehicleNumber} has been inactivated by {userName}",
+      "VehicleAdded":"New vehicle {vehicleNumber} has been added by {userName}",
+      "VehiclePhotoChanged":"Vehicle {vehicleNumber} photo has been changed by {userName}",
+      "VehicleModified":"Vehicle {vehicleNumber} details have been changed by {userName}",
+      "VehicleRepairAdded":"Vehicle repair added for {vehicleNumber} by {userName}",
+      "VehicleRepairModified":"Vehicle repair details changed for {vehicleNumber} by {userName}"
+    },
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",
@@ -2862,10 +2946,10 @@
       "Profile": "Profile"
     },
     "Header": {
-      "ActionCenter": "Action Center",
+      "MissionControl": "Mission Control",
       "Title": {
         "/rider": "Home",
-        "/rider/myActions": "Action Center",
+        "/rider/myMissions": "Mission Control",
         "/rider/myBookings": "Bookings",
         "/rider/myBookings/[id]": "Booking Details",
         "/rider/myBookings/[id]/add-expense": "Add Expense",
@@ -3093,7 +3177,9 @@
       "Success": "Expense details modified successfully!",
       "Error": "Cannot modify expense.. Try again later!"
     },
-    "MyActions": {},
+    "MyMissions": {
+
+    },
     "MyVehicle": {
       "BasicInfo": "Basic info",
       "Photo": "Vehicle photo",

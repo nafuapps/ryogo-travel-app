@@ -2,7 +2,8 @@
 
 import { getCurrentUser } from "@/lib/auth"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function modifyCustomerAction(
   id: string,
@@ -35,5 +36,20 @@ export async function modifyCustomerAction(
     data.address,
     data.remarks,
   )
+  if (!customer) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.CUSTOMER,
+    entityId: customer.id,
+    isFeed: true,
+    textKey: "CustomerModified",
+    textObject: {
+      customerName: customer.name,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/customers/${customer.id}`,
+  })
+
   return customer
 }

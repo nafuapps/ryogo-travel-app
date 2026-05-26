@@ -3,8 +3,9 @@
 import { getCurrentUser } from "@/lib/auth"
 import { generateAgencyLogoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyAgencyAction(data: ModifyAgencyRequestType) {
@@ -35,6 +36,18 @@ export async function modifyAgencyAction(data: ModifyAgencyRequestType) {
     )
     await agencyServices.updateAgencyLogo(data.agencyId, uploadedFile.path)
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.AGENCY,
+    entityId: data.agencyId,
+    isFeed: true,
+    textKey: "ModifiedAgency",
+    textObject: {
+      userName: currentUser.name,
+    },
+    link: "/dashboard/account/agency",
+  })
 
   return agency
 }

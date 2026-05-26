@@ -3,13 +3,14 @@
 import getCancellationMessage from "@/components/whatsapp/getCancellationMessage"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function cancelBookingAction(
   id: string,
   agencyId: string,
   assignedUserId: string,
-  notifyCustomer = false,
+  isConfirmedBooking?: boolean,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -24,7 +25,22 @@ export async function cancelBookingAction(
   const canceledBooking = await bookingServices.cancelBooking(id)
   if (!canceledBooking) return
 
-  if (notifyCustomer) {
+  if (isConfirmedBooking) {
+    await notificationServices.addNotification({
+      agencyId: agencyId,
+      entityType: EntityTypeEnum.BOOKING,
+      entityId: id,
+      isFeed: true,
+      textKey: "CancelBooking",
+      textObject: {
+        bookingId: id,
+        userName: currentUser.name,
+      },
+      link: `/dashboard/bookings/${id}`,
+    })
+  }
+
+  if (isConfirmedBooking) {
     const bookingDetails = await bookingServices.findBookingDetailsById(id)
     if (!bookingDetails) return
 

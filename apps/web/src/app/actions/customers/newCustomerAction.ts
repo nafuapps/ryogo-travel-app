@@ -3,8 +3,9 @@
 import { getCurrentUser } from "@/lib/auth"
 import { generateCustomerPhotoPathName } from "@/lib/utils"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function newCustomerAction(data: NewCustomerRequestType) {
@@ -39,5 +40,19 @@ export async function newCustomerAction(data: NewCustomerRequestType) {
     )
     await customerServices.updateCustomerPhoto(customer.id, uploadedPhoto.path)
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.CUSTOMER,
+    entityId: customer.id,
+    isFeed: true,
+    textKey: "CustomerAdded",
+    textObject: {
+      customerName: customer.name,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/customers/${customer.id}`,
+  })
+
   return customer
 }

@@ -20,7 +20,6 @@ export const expenseServices = {
       amount: data.amount,
       remarks: data.remarks,
       agencyId: data.agencyId,
-      isApproved: data.isApproved,
     }
     const addedExpense = await expenseRepository.createExpense(newExpenseData)
     return addedExpense[0]

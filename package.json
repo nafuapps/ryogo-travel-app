@@ -26,6 +26,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@parcel/watcher": "^2.5.6",
     "razorpay": "^2.9.6"
   }
 }

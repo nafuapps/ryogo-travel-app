@@ -26,11 +26,23 @@ export async function deleteExpenseAction(
   if (!deletedExpense) return
 
   if (byDriver) {
+    await missionServices.removePreviousMissionsByEntityKey(
+      agencyId,
+      EntityTypeEnum.EXPENSE,
+      deletedExpense.id,
+      "ExpenseAddedByDriver.Title",
+    )
+    await missionServices.removePreviousMissionsByEntityKey(
+      agencyId,
+      EntityTypeEnum.EXPENSE,
+      deletedExpense.id,
+      "ExpenseModifiedByDriver.Title",
+    )
     await missionServices.addMission({
       agencyId: agencyId,
       userId: assignedUserId,
-      entityType: EntityTypeEnum.BOOKING,
-      entityId: deletedExpense.bookingId,
+      entityType: EntityTypeEnum.EXPENSE,
+      entityId: deletedExpense.id,
       titleKey: "ExpenseDeletedByDriver.Title",
       titleObject: {
         expenseId: deletedExpense.id,

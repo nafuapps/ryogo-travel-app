@@ -325,6 +325,7 @@ export enum EntityTypeEnum {
   AGENCY = "agency",
   CUSTOMER = "customer",
   ORDER = "order",
+  EXPENSE = "expense",
 }
 export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.BOOKING, //TE: BookingId
@@ -334,6 +335,7 @@ export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.AGENCY, //TE: AgencyId
   EntityTypeEnum.CUSTOMER, //TE: CustomerId
   EntityTypeEnum.ORDER, //TE: OrderId
+  EntityTypeEnum.EXPENSE, //TE: ExpenseId
 ])
 export enum UserLangEnum {
   ENGLISH = "en",

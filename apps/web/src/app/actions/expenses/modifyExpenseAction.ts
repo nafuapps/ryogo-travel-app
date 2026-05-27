@@ -41,11 +41,17 @@ export async function modifyExpenseAction(
   if (!updatedExpense) return
 
   if (byDriver) {
+    await missionServices.removePreviousMissionsByEntityKey(
+      agencyId,
+      EntityTypeEnum.EXPENSE,
+      updatedExpense.id,
+      "ExpenseAddedByDriver.Title",
+    )
     await missionServices.addMission({
       agencyId: agencyId,
       userId: assignedUserId,
-      entityType: EntityTypeEnum.BOOKING,
-      entityId: updatedExpense.bookingId,
+      entityType: EntityTypeEnum.EXPENSE,
+      entityId: updatedExpense.id,
       titleKey: "ExpenseModifiedByDriver.Title",
       titleObject: {
         expenseId: updatedExpense.id,

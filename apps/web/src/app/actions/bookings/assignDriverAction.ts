@@ -41,6 +41,7 @@ export async function assignDriverAction(
     textObject: { driverName: assignedDriver.driverName, bookingId: bookingId },
     link: `/dashboard/bookings/${bookingId}`,
   })
+
   await missionServices.addMission({
     agencyId: agencyId,
     userId: assignedDriver.driverUserId,

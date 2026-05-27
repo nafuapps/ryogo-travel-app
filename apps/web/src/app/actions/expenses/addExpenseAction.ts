@@ -42,8 +42,8 @@ export async function addExpenseAction(
     await missionServices.addMission({
       agencyId: data.agencyId,
       userId: data.assignedUserId,
-      entityType: EntityTypeEnum.BOOKING,
-      entityId: data.bookingId,
+      entityType: EntityTypeEnum.EXPENSE,
+      entityId: addedExpense.id,
       titleKey: "ExpenseAddedByDriver.Title",
       titleObject: {
         expenseId: addedExpense.id,

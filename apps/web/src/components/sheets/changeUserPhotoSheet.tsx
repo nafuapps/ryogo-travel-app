@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -16,7 +15,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -32,17 +31,16 @@ export default function ChangeUserPhotoSheet({
 }) {
   const t = useTranslations("Sheets.ChangePhoto")
   const [isPending, startTransition] = useTransition()
+  const [open, setOpen] = useState(false)
   const router = useRouter()
 
   const schema = z.object({
     accountPhotos: z
       .instanceof(FileList)
       .refine((file) => {
-        if (file.length < 1) return true
         return file[0] && file[0].size < 1000000
       }, t("Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
         return (
           file[0] &&
           [
@@ -63,6 +61,7 @@ export default function ChangeUserPhotoSheet({
   })
 
   const onSubmit = async (data: SchemaType) => {
+    setOpen(false)
     startTransition(async () => {
       if (await changeUserPhotoAction(userId, agencyId, data.accountPhotos)) {
         toast.success(t("Success"))
@@ -74,7 +73,7 @@ export default function ChangeUserPhotoSheet({
   }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="hover:underline">
         <RyogoCaption color="light">{t("Button")}</RyogoCaption>
       </SheetTrigger>
@@ -96,16 +95,16 @@ export default function ChangeUserPhotoSheet({
           </form>
         </Form>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit" disabled={isPending} form="changePhoto">
-              {t("Save")}
-            </Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button variant="outline" disabled={isPending}>
-              {t("Close")}
-            </Button>
-          </SheetClose>
+          <Button type="submit" disabled={isPending} form="changePhoto">
+            {t("Save")}
+          </Button>
+          <Button
+            variant="outline"
+            disabled={isPending}
+            onClick={() => setOpen(false)}
+          >
+            {t("Close")}
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

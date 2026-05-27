@@ -2,8 +2,9 @@
 
 import { getCurrentUser } from "@/lib/auth"
 import { generateUserPhotoPathName } from "@/lib/utils"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function changeUserPhotoAction(
@@ -32,5 +33,18 @@ export async function changeUserPhotoAction(
   )
   const url = uploadedPhoto.path
   const user = await userServices.updateUserPhoto(userId, url)
+  if (!user) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.USER,
+    entityId: user.id,
+    isFeed: true,
+    textKey: "UserPhotoChanged",
+    textObject: {
+      userName: user.name,
+    },
+  })
+
   return user
 }

@@ -9,7 +9,6 @@ import {
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -198,11 +197,13 @@ export default function EndTripSheet({
               {t("AddExpense")}
             </Button>
           </Link>
-          <SheetClose asChild>
-            <Button variant="outline" disabled={isPending}>
-              {t("Close")}
-            </Button>
-          </SheetClose>
+          <Button
+            variant="outline"
+            disabled={isPending}
+            onClick={() => setOpen(false)}
+          >
+            {t("Close")}
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

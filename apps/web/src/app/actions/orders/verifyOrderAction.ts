@@ -2,8 +2,9 @@
 
 import generateAndsendInvoiceEmail from "@/components/email/generateAndsendInvoiceEmail"
 import { getCurrentUser } from "@/lib/auth"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import crypto from "crypto"
 
 export async function verifyOrderAction({
@@ -51,6 +52,19 @@ export async function verifyOrderAction({
   // 3. Update the Database
   const updatedRecord = await orderServices.changeOrderToPaid(rpOrderId, false)
   if (!updatedRecord) return //Handle failed DB update on the client
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.ORDER,
+    entityId: updatedRecord.id,
+    isFeed: true,
+    textKey: "SubscriptionPurchased",
+    textObject: {
+      plan: updatedRecord.orderType.toUpperCase(),
+      userName: currentUser.name,
+    },
+    link: `/dashboard/account/agency`,
+  })
 
   // 4. Send invoice to user
   generateAndsendInvoiceEmail(rpOrderId, agencyId, userId)

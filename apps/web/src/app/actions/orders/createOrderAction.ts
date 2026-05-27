@@ -46,8 +46,9 @@ export async function createOrderAction(
     receipt: `ryogo_receipt_${Date.now()}`,
     notes: {
       agencyId: agencyId,
-      userId: userId,
       plan: plan,
+      userId: userId,
+      userName: currentUser.name,
     },
   })
 

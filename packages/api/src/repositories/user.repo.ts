@@ -225,7 +225,7 @@ export const userRepository = {
       .update(users)
       .set({ photoUrl: photoUrl })
       .where(eq(users.id, userId))
-      .returning({ id: users.id, photoUrl: users.photoUrl })
+      .returning({ id: users.id, photoUrl: users.photoUrl, name: users.name })
   },
 
   //Update user name

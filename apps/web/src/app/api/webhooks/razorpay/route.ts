@@ -3,11 +3,15 @@ import crypto from "crypto"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 import { paymentServices } from "@ryogo-travel-app/api/services/payment.services"
 import {
+  EntityTypeEnum,
   OrderStatusEnum,
   PaymentMethodEnum,
   PaymentStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import generateAndsendInvoiceEmail from "@/components/email/generateAndsendInvoiceEmail"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { addDays } from "date-fns"
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -133,10 +137,24 @@ export async function POST(req: NextRequest) {
       attempts,
     )
     if (updatedOrder) {
+      const userName = event.payload.order.entity.notes.userName
+      await notificationServices.addNotification({
+        agencyId: updatedOrder.agencyId,
+        entityType: EntityTypeEnum.ORDER,
+        entityId: updatedOrder.id,
+        isFeed: true,
+        textKey: "SubscriptionPurchased",
+        textObject: {
+          plan: updatedOrder.orderType.toUpperCase(),
+          userName: userName ?? "Owner",
+        },
+        link: `/dashboard/account/agency`,
+      })
+
       generateAndsendInvoiceEmail(
         paymentEntity.order_id,
-        orderInDB.agencyId,
-        orderInDB.userId,
+        updatedOrder.agencyId,
+        updatedOrder.userId,
       )
     }
     return NextResponse.json({ received: true })
@@ -151,6 +169,23 @@ export async function POST(req: NextRequest) {
     //Update 'created' order status to 'attempted'
     if (orderInDB.status === OrderStatusEnum.CREATED) {
       await orderServices.changeOrderToAttempted(paymentEntity.order_id)
+    }
+    if (event.event === "payment.failed") {
+      await missionServices.addMission({
+        agencyId: orderInDB.agencyId,
+        userId: orderInDB.userId,
+        entityType: EntityTypeEnum.ORDER,
+        entityId: orderInDB.id,
+        isCritical: true,
+        dueDate: addDays(new Date(), 3),
+        titleKey: "SubscriptionPaymentFailed.Title",
+        titleObject: {
+          plan: orderInDB.orderType.toUpperCase(),
+          orderId: orderInDB.id,
+        },
+        messageKey: "SubscriptionPaymentFailed.Message",
+        link: `/dashboard/account/subscription`,
+      })
     }
     return NextResponse.json({ received: true })
   }

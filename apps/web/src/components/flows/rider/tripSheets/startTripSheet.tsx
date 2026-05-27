@@ -8,7 +8,6 @@ import {
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -152,11 +151,13 @@ export default function StartTripSheet({
           <Button type="submit" disabled={isPending} form="startTrip">
             {isPending ? t("Loading") : t("Start")}
           </Button>
-          <SheetClose asChild>
-            <Button variant="outline" disabled={isPending}>
-              {t("Close")}
-            </Button>
-          </SheetClose>
+          <Button
+            variant="outline"
+            disabled={isPending}
+            onClick={() => setOpen(false)}
+          >
+            {t("Close")}
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

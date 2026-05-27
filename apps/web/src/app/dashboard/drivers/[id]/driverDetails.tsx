@@ -15,7 +15,6 @@ import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import ChangeDriverPhotoSheet from "@/components/sheets/changeDriverPhotoSheet"
 import { DriverStatusPill } from "@/components/statusPills/statusPills"
 import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
@@ -28,6 +27,7 @@ import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { IconsList } from "@/components/tags/IconsList"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 
 //TODO: Add driver schedule chart
 
@@ -54,7 +54,7 @@ export default async function DriverDetailsPageComponent({
             ) : (
               <RyogoEnclosedIcon icon={User} size="xl" />
             )}
-            <ChangeDriverPhotoSheet
+            <ChangeUserPhotoSheet
               userId={driver.userId}
               agencyId={driver.agencyId}
             />

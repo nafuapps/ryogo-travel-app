@@ -7,7 +7,7 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 //Verify account flow
-export async function resendCodeAction() {
+export async function resendVerificationCodeAction() {
   const currentUser = await getCurrentUser()
   if (!currentUser || currentUser.userRole !== UserRolesEnum.OWNER) {
     return

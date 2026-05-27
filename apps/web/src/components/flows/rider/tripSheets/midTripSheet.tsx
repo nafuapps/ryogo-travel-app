@@ -8,7 +8,6 @@ import {
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -160,11 +159,13 @@ export default function MidTripSheet({
           <Button type="submit" disabled={isPending} form="midTrip">
             {isPending ? t("Loading") : t("Mid", { type: type })}
           </Button>
-          <SheetClose asChild>
-            <Button variant="outline" disabled={isPending}>
-              {t("Close")}
-            </Button>
-          </SheetClose>
+          <Button
+            variant="outline"
+            disabled={isPending}
+            onClick={() => setOpen(false)}
+          >
+            {t("Close")}
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

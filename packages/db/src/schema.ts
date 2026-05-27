@@ -56,6 +56,13 @@ const sequenceValues = {
   increment: 1,
 }
 
+const bigSequenceValues = {
+  startWith: 10000000000,
+  maxValue: 99999999999,
+  minValue: 10000000000,
+  increment: 1,
+}
+
 export enum AgencyStatusEnum {
   NEW = "new",
   ACTIVE = "active",
@@ -317,6 +324,7 @@ export enum EntityTypeEnum {
   USER = "user",
   AGENCY = "agency",
   CUSTOMER = "customer",
+  ORDER = "order",
 }
 export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.BOOKING, //TE: BookingId
@@ -325,6 +333,7 @@ export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.USER, //TE: UserId
   EntityTypeEnum.AGENCY, //TE: AgencyId
   EntityTypeEnum.CUSTOMER, //TE: CustomerId
+  EntityTypeEnum.ORDER, //TE: OrderId
 ])
 export enum UserLangEnum {
   ENGLISH = "en",
@@ -1362,7 +1371,7 @@ export const driverLeaveRelations = relations(driverLeaves, ({ one }) => ({
 
 //Missions table
 export const missionIdSequence = pgSequence("mission_id_seq", {
-  ...sequenceValues,
+  ...bigSequenceValues,
 })
 export const missions = pgTable(
   "missions",
@@ -1412,7 +1421,7 @@ export const missionRelations = relations(missions, ({ one }) => ({
 
 //Notifications table
 export const notificationIdSequence = pgSequence("notification_id_seq", {
-  ...sequenceValues,
+  ...bigSequenceValues,
 })
 export const notifications = pgTable(
   "notifications",

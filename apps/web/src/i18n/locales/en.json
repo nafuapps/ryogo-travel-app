@@ -2709,6 +2709,10 @@
       "ExpenseModifiedByDriver":{
         "Title":"A {type} expense {expenseId} modified for booking #{bookingId}",
         "Message":"Driver has modified an expense for this booking. Please review"
+      },
+      "SubscriptionPaymentFailed":{
+        "Title":"Subscription payment failed",
+        "Message":"We see that your last payment failed. Please try again or contact support to get help."
       }
     },
     "Feed":{
@@ -2740,7 +2744,10 @@
       "VehiclePhotoChanged":"Vehicle {vehicleNumber} photo has been changed by {userName}",
       "VehicleModified":"Vehicle {vehicleNumber} details have been changed by {userName}",
       "VehicleRepairAdded":"Vehicle repair added for {vehicleNumber} by {userName}",
-      "VehicleRepairModified":"Vehicle repair details changed for {vehicleNumber} by {userName}"
+      "VehicleRepairModified":"Vehicle repair details changed for {vehicleNumber} by {userName}",
+      "SubscriptionPurchased":"Premium {plan} subscription plan has been purchased by {userName}",
+      "AgentAdded":"New agent {agentName} has been added by {userName}",
+      "UserPhotoChanged":"{userName} photo has changed"
     },
     "Buttons": {
       "CancelBooking": {
@@ -3299,8 +3306,8 @@
       "Title": "Choose a Photo",
       "Header": "Upload user photo",
       "Placeholder": "Browse a new photo",
-      "Error1": "Photo is required",
-      "Error2": "File size should be less than 1MB",
+      "Error1": "Photo is required and size should be less than 1MB",
+      "Error2": "Photo must be in .jpg, .jpeg or .png format",
       "Save": "Save changes",
       "Close": "Cancel",
       "Success": "Photo updated successfully!",

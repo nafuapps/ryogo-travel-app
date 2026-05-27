@@ -253,6 +253,13 @@
       "when": 1779783731199,
       "tag": "0035_boring_jane_foster",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1779867970848,
+      "tag": "0036_chemical_revanche",
+      "breakpoints": true
     }
   ]
 }

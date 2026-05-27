@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -36,6 +35,7 @@ export default function ChangeUserNameSheet({
 }) {
   const t = useTranslations("Sheets.ChangeName")
   const [isPending, startTransition] = useTransition()
+  const [open, setOpen] = useState(false)
   const router = useRouter()
 
   const schema = z.object({
@@ -52,6 +52,7 @@ export default function ChangeUserNameSheet({
   })
 
   const onSubmit = async (data: SchemaType) => {
+    setOpen(false)
     startTransition(async () => {
       if (await changeUserNameAction(userId, agencyId, data.name, userRole)) {
         toast.success(t("Success"))
@@ -63,7 +64,7 @@ export default function ChangeUserNameSheet({
   }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline" className="w-full">
           {t("Title")}
@@ -87,16 +88,16 @@ export default function ChangeUserNameSheet({
           </form>
         </Form>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit" disabled={isPending} form="changeName">
-              {t("Save")}
-            </Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button variant="outline" disabled={isPending}>
-              {t("Close")}
-            </Button>
-          </SheetClose>
+          <Button type="submit" disabled={isPending} form="changeName">
+            {t("Save")}
+          </Button>
+          <Button
+            variant="outline"
+            disabled={isPending}
+            onClick={() => setOpen(false)}
+          >
+            {t("Close")}
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

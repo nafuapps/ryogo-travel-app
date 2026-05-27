@@ -15,7 +15,7 @@ import { Form } from "@/components/ui/form"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
-import { resendCodeAction } from "@/app/actions/users/resendCodeAction"
+import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeAction"
 import { RyogoCaption } from "@/components/typography"
 import { VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 
@@ -52,7 +52,7 @@ export function VerifyAccountStep1(props: {
   //Submit actions
   const resendCode = async () => {
     startTransition(async () => {
-      if (await resendCodeAction()) {
+      if (await resendVerificationCodeAction()) {
         toast.success(t("ResendSuccess"))
       } else {
         toast.error(t("ResendError"))

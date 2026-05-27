@@ -6,9 +6,14 @@ import { getCurrentUser } from "@/lib/auth"
 import { updateSessionUserStatus } from "@/lib/session"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  EntityTypeEnum,
+  UserRolesEnum,
+  UserStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addAgentAction(data: AddAgentRequestType) {
@@ -40,6 +45,18 @@ export async function addAgentAction(data: AddAgentRequestType) {
     //Update status in session cookie
     await updateSessionUserStatus(UserStatusEnum.ACTIVE)
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.USER,
+    entityId: agent.id,
+    isFeed: true,
+    textKey: "AgentAdded",
+    textObject: {
+      agentName: agent.name,
+      userName: currentUser.name,
+    },
+  })
 
   //Send new password email to the agent
   sendEmail(

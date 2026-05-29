@@ -24,11 +24,11 @@ export async function assignDriverAction(
     return
   }
 
-  const assignedDriver = await bookingServices.assignDriverToBooking(
+  const assignedDriverBooking = await bookingServices.assignDriverToBooking(
     bookingId,
     selectedDriverId,
   )
-  if (!assignedDriver || !assignedDriver.assignedDriverId) {
+  if (!assignedDriverBooking || !assignedDriverBooking.assignedDriverId) {
     return
   }
 
@@ -38,24 +38,27 @@ export async function assignDriverAction(
     entityId: bookingId,
     isFeed: true,
     textKey: "AssignedDriver",
-    textObject: { driverName: assignedDriver.driverName, bookingId: bookingId },
+    textObject: {
+      driverName: assignedDriverBooking.driverName,
+      bookingId: bookingId,
+    },
     link: `/dashboard/bookings/${bookingId}`,
   })
 
   await missionServices.addMission({
     agencyId: agencyId,
-    userId: assignedDriver.driverUserId,
+    userId: assignedDriverBooking.driverUserId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingId,
     titleKey: "AssignedDriver.Title",
     titleObject: { bookingId: bookingId },
     messageKey: "AssignedDriver.Message",
-    dueDate: assignedDriver.startDate,
+    dueDate: assignedDriverBooking.startDate,
     isCritical:
-      differenceInDays(new Date(assignedDriver.startDate), new Date()) <=
+      differenceInDays(new Date(assignedDriverBooking.startDate), new Date()) <=
       BOOKING_ASSIGNMENT_CRITICAL_DAYS,
     link: `/rider/myBookings/${bookingId}`,
   })
 
-  return assignedDriver
+  return assignedDriverBooking
 }

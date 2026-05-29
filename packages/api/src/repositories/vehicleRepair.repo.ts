@@ -29,7 +29,7 @@ export const vehicleRepairRepository = {
 
   //Get vehicle repairs by user id
   async readVehicleRepairsByAddedUserId(userId: string) {
-    return db.query.vehicleRepairs.findMany({
+    return await db.query.vehicleRepairs.findMany({
       orderBy: (vehicleRepairs, { desc }) => [desc(vehicleRepairs.createdAt)],
       limit: 20,
       where: eq(vehicleRepairs.addedByUserId, userId),

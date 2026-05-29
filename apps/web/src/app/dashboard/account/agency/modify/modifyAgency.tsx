@@ -2,7 +2,6 @@
 
 import {
   RyogoCombobox,
-  RyogoFileInput,
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
@@ -42,35 +41,15 @@ export default function ModifyAgencyPageForm({
       .string()
       .min(20, t("Field2.Error1"))
       .max(300, t("Field2.Error2")),
-    agencyLogo: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field3.Error1"))
-      .refine((file) => {
-        if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
-        )
-      }, t("Field3.Error2"))
-      .optional(),
     commissionRate: z.coerce
-      .number<number>(t("Field4.Error1"))
-      .min(1, t("Field4.Error2"))
-      .max(100, t("Field4.Error3"))
-      .positive(t("Field4.Error4"))
-      .multipleOf(1, t("Field4.Error5"))
+      .number<number>(t("Field3.Error1"))
+      .min(1, t("Field3.Error2"))
+      .max(100, t("Field3.Error3"))
+      .positive(t("Field3.Error4"))
+      .multipleOf(1, t("Field3.Error5"))
       .optional(),
-    agencyState: z.string().min(1, t("Field5.Error1")),
-    agencyCity: z.string().min(1, t("Field6.Error1")),
+    agencyState: z.string().min(1, t("Field4.Error1")),
+    agencyCity: z.string().min(1, t("Field5.Error1")),
   })
 
   type SchemaType = z.infer<typeof schema>
@@ -91,7 +70,6 @@ export default function ModifyAgencyPageForm({
       agencyId: agency.id,
       businessName: data.agencyName,
       businessAddress: data.agencyAddress,
-      logo: data.agencyLogo,
       defaultCommissionRate: data.commissionRate,
       agencyState: data.agencyState,
       agencyCity: data.agencyCity,
@@ -112,7 +90,7 @@ export default function ModifyAgencyPageForm({
     name: "agencyState",
     control: formData.control,
   })
-  const cityOptions = data[selectedState] ?? [t("Field6.Title")]
+  const cityOptions = data[selectedState] ?? [t("Field5.Title")]
 
   return (
     <PageWrapper id="ModifyAgencyPage">
@@ -133,26 +111,19 @@ export default function ModifyAgencyPageForm({
           label={t("Field2.Title")}
           placeholder={t("Field2.Placeholder")}
         />
-        <RyogoFileInput
-          name={"agencyLogo"}
-          register={formData.register("agencyLogo")}
+        <RyogoInput
+          name={"commissionRate"}
+          type="tel"
           label={t("Field3.Title")}
           placeholder={t("Field3.Placeholder")}
           description={t("Field3.Description")}
         />
-        <RyogoInput
-          name={"commissionRate"}
-          type="tel"
-          label={t("Field4.Title")}
-          placeholder={t("Field4.Placeholder")}
-          description={t("Field4.Description")}
-        />
         <RyogoCombobox
           name={"agencyState"}
           register={formData.register("agencyState")}
-          title={t("Field5.Title")}
+          title={t("Field4.Title")}
           array={getArrayValueDisplayPairs(data)}
-          placeholder={t("Field5.Title")}
+          placeholder={t("Field4.Title")}
           resetField={() => {
             formData.setValue("agencyCity", "")
           }}
@@ -160,9 +131,9 @@ export default function ModifyAgencyPageForm({
         <RyogoCombobox
           name={"agencyCity"}
           register={formData.register("agencyCity")}
-          title={t("Field6.Title")}
+          title={t("Field5.Title")}
           array={getStringValueDisplayPairs(cityOptions)}
-          placeholder={t("Field6.Title")}
+          placeholder={t("Field5.Title")}
         />
         <Button
           variant={"default"}

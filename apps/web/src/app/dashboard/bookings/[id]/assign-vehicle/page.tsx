@@ -102,7 +102,8 @@ export default async function AssignVehicleBookingPage({
   if (
     !TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date())
+      agency.subscriptionExpiresOn < new Date()) &&
+    allVehicles.length > BASIC_PLAN_VEHICLE_LIMIT
   ) {
     limited = true
     const assignedVehicle = allVehicles.find(

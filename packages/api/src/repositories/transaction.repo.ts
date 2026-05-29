@@ -15,7 +15,7 @@ export const transactionRepository = {
     startDate: Date,
     endDate: Date,
   ) {
-    return db
+    return await db
       .select()
       .from(transactions)
       .where(
@@ -29,7 +29,7 @@ export const transactionRepository = {
 
   //Get transactions by booking id
   async readTransactionsByBookingId(bookingId: string) {
-    return db.query.transactions.findMany({
+    return await db.query.transactions.findMany({
       orderBy: (transactions, { desc }) => [desc(transactions.createdAt)],
       limit: 20,
       where: eq(transactions.bookingId, bookingId),
@@ -47,26 +47,26 @@ export const transactionRepository = {
 
   //Get transaction by transaction id
   async readTransactionById(txnId: string) {
-    return db.query.transactions.findFirst({
+    return await db.query.transactions.findFirst({
       where: eq(transactions.id, txnId),
     })
   },
 
   //Get transactions by user id
   async readTransactionsByAddedUserId(userId: string) {
-    return db.query.transactions.findMany({
+    return await db.query.transactions.findMany({
       where: eq(transactions.addedByUserId, userId),
     })
   },
 
   //Create a new transaction
   async createTransaction(data: InsertTransactionType) {
-    return db.insert(transactions).values(data).returning()
+    return await db.insert(transactions).values(data).returning()
   },
 
   //Update transaction photo URL
   async updateTransactionPhotoUrl(txnId: string, photoUrl: string) {
-    return db
+    return await db
       .update(transactions)
       .set({ transactionPhotoUrl: photoUrl })
       .where(eq(transactions.id, txnId))
@@ -83,7 +83,7 @@ export const transactionRepository = {
     remarks?: string,
     transactionPhotoUrl?: string,
   ) {
-    return db
+    return await db
       .update(transactions)
       .set({
         amount,
@@ -99,7 +99,7 @@ export const transactionRepository = {
 
   //Update transaction's approval status
   async updateTransactionApprovalStatus(txnId: string, status: boolean) {
-    return db
+    return await db
       .update(transactions)
       .set({ isApproved: status })
       .where(eq(transactions.id, txnId))
@@ -108,6 +108,9 @@ export const transactionRepository = {
 
   //Delete a transaction
   async deleteTransaction(txnId: string) {
-    return db.delete(transactions).where(eq(transactions.id, txnId)).returning()
+    return await db
+      .delete(transactions)
+      .where(eq(transactions.id, txnId))
+      .returning()
   },
 }

@@ -10,12 +10,12 @@ import { eq, and } from "drizzle-orm"
 export const agencyRepository = {
   //get all agencies
   async readAllAgencies() {
-    return db.query.agencies.findMany({})
+    return await db.query.agencies.findMany({})
   },
 
   //get agencies by phone
   async readAgenciesByPhone(phone: string) {
-    return db.query.agencies.findMany({
+    return await db.query.agencies.findMany({
       columns: {
         id: true,
         businessPhone: true,
@@ -27,7 +27,7 @@ export const agencyRepository = {
 
   //get agencies by email
   async readAgenciesByEmail(email: string) {
-    return db.query.agencies.findMany({
+    return await db.query.agencies.findMany({
       columns: {
         id: true,
         businessPhone: true,
@@ -106,7 +106,7 @@ export const agencyRepository = {
   },
 
   //Update agency subscription plan, expiry and lastest order id
-  async updateAgencySubscription(
+  async updateAgencySubscriptionWithOrder(
     id: string,
     plan: SubscriptionPlanEnum,
     expiryTime: Date,
@@ -125,6 +125,20 @@ export const agencyRepository = {
         subscriptionPlan: agencies.subscriptionPlan,
         expiryTime: agencies.subscriptionExpiresOn,
         latestPaidOrderId: agencies.latestPaidOrderId,
+      })
+  },
+
+  //Update agency subscription plan only
+  async updateAgencySubscriptionPlan(id: string, plan: SubscriptionPlanEnum) {
+    return await db
+      .update(agencies)
+      .set({
+        subscriptionPlan: plan,
+      })
+      .where(eq(agencies.id, id))
+      .returning({
+        id: agencies.id,
+        subscriptionPlan: agencies.subscriptionPlan,
       })
   },
 
@@ -158,6 +172,7 @@ export const agencyRepository = {
       .update(agencies)
       .set({ logoUrl: logoUrl })
       .where(eq(agencies.id, id))
+      .returning({ id: agencies.id, logoUrl: agencies.logoUrl })
   },
 
   //Delete agency by Id

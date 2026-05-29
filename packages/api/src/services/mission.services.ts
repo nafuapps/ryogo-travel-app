@@ -21,6 +21,7 @@ export const missionServices = {
     const newMission = await missionRepository.createMission(mission)
     return newMission[0]
   },
+
   async removePreviousMissionsByEntityKey(
     agencyId: string,
     entityType: EntityTypeEnum,
@@ -33,6 +34,11 @@ export const missionServices = {
       entityId,
       titleKey,
     )
+  },
+
+  async markReadMission(missionId: string) {
+    const result = await missionRepository.updateReadStatus(missionId, true)
+    return result[0]
   },
 }
 

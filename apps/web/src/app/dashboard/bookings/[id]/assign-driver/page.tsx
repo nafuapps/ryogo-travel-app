@@ -102,7 +102,8 @@ export default async function AssignDriverBookingPage({
   if (
     !TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date())
+      agency.subscriptionExpiresOn < new Date()) &&
+    allDrivers.length > BASIC_PLAN_DRIVER_LIMIT
   ) {
     limited = true
     const assignedDriver = allDrivers.find(

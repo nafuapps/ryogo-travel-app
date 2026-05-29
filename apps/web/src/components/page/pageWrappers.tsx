@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-lvh bg-slate-100 px-4 lg:px-5 pt-4 lg:pt-5 pb-8">
+    <div className="flex flex-col w-full h-lvh bg-slate-100 px-4 lg:px-5 pt-4 lg:pt-5 pb-6 lg:pb-7">
       {children}
     </div>
   )
@@ -80,6 +80,7 @@ export function SectionRowWrapper({
   end,
   justifyStart,
   wFull,
+  onClick,
 }: {
   children: React.ReactNode
   small?: boolean
@@ -87,10 +88,12 @@ export function SectionRowWrapper({
   end?: boolean
   justifyStart?: boolean
   wFull?: boolean
+  onClick?: () => void
 }) {
   return (
     <div
       className={`flex flex-row ${wFull ? "w-full" : ""} ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${justifyStart ? "justify-start" : "justify-between"} ${center ? "items-center" : ""} ${end ? "items-end" : ""}`}
+      onClick={onClick}
     >
       {children}
     </div>
@@ -103,16 +106,20 @@ export function SectionColWrapper({
   end,
   center,
   justifyBetween,
+  overflowScroll,
+  wFull,
 }: {
   children: React.ReactNode
   small?: boolean
   end?: boolean
   center?: boolean
   justifyBetween?: boolean
+  overflowScroll?: boolean
+  wFull?: boolean
 }) {
   return (
     <div
-      className={`flex flex-col ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""}`}
+      className={`flex flex-col ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""} ${overflowScroll ? "overflow-y-scroll m-1" : ""} ${wFull ? "w-full" : ""}`}
     >
       {children}
     </div>

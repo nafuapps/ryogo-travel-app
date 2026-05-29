@@ -14,11 +14,11 @@ import {
   Car,
   IdCard,
   ChartLine,
-  ShieldUser,
   BadgeIndianRupee,
   UserRoundPen,
   Search,
   Megaphone,
+  UserRoundCog,
 } from "lucide-react"
 import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
 import { MenuItemType } from "@/components/sidebar/sidebarCommon"
@@ -67,7 +67,7 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
     {
       title: t("Users"),
       url: "/dashboard/users",
-      icon: ShieldUser,
+      icon: UserRoundCog,
       onlyOwner: true,
     },
     {

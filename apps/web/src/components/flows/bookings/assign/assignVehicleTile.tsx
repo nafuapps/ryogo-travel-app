@@ -1,4 +1,4 @@
-import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import {
   Armchair,
   AirVent,
@@ -128,7 +128,9 @@ export default function AssignVehicleTile({
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
           <RyogoP weight="font-bold"> {vehicleData.vehicleNumber}</RyogoP>
-          <RyogoSmall>{vehicleData.brand + " " + vehicleData.model}</RyogoSmall>
+          <RyogoCaption>
+            {vehicleData.brand + " " + vehicleData.model}
+          </RyogoCaption>
           <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
             {getVehicleIcon(vehicleData.type, "sm")}
             <RyogoCaption color="slate">{vehicleData.color}</RyogoCaption>

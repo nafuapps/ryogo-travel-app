@@ -1,7 +1,7 @@
 import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import {
   Bolt,
   Check,
@@ -86,8 +86,7 @@ export default function AssignUserTile({
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
           <RyogoP weight="font-bold"> {userData.name}</RyogoP>
-          <RyogoSmall>{userData.email}</RyogoSmall>
-          <IconTextTag icon={Phone} text={userData.phone} />
+          <RyogoCaption color="slate">{userData.phone}</RyogoCaption>
         </AssignTileHeaderWrapper>
         <AssignTileFooterWrapper>
           <IconTextTag icon={User} text={userData.userRole.toUpperCase()} />

@@ -91,7 +91,8 @@ export default async function AssignUserBookingPage({
   if (
     !TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date())
+      agency.subscriptionExpiresOn < new Date()) &&
+    allUsers.length > BASIC_PLAN_AGENT_LIMIT
   ) {
     limited = true
     //Find owner or assigned agents

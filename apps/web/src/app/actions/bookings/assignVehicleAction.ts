@@ -28,11 +28,11 @@ export async function assignVehicleAction(
     return
   }
 
-  const assignedVehicle = await bookingServices.assignVehicleToBooking(
+  const assignedVehicleBooking = await bookingServices.assignVehicleToBooking(
     bookingId,
     selectedVehicleId,
   )
-  if (!assignedVehicle || !assignedVehicle.assignedVehicleId) {
+  if (!assignedVehicleBooking || !assignedVehicleBooking.assignedVehicleId) {
     return
   }
 
@@ -43,35 +43,35 @@ export async function assignVehicleAction(
     isFeed: true,
     textKey: "AssignedVehicle",
     textObject: {
-      vehicleNumber: assignedVehicle.vehicleNumber,
+      vehicleNumber: assignedVehicleBooking.vehicleNumber,
       bookingId: bookingId,
     },
     link: `/dashboard/bookings/${bookingId}`,
   })
 
   if (
-    assignedVehicle.status === BookingStatusEnum.CONFIRMED &&
-    assignedVehicle.driverUserId &&
-    assignedVehicle.startDate &&
-    differenceInDays(assignedVehicle.startDate, new Date()) <=
+    assignedVehicleBooking.status === BookingStatusEnum.CONFIRMED &&
+    assignedVehicleBooking.driverUserId &&
+    assignedVehicleBooking.startDate &&
+    differenceInDays(assignedVehicleBooking.startDate, new Date()) <=
       BOOKING_ASSIGNMENT_CRITICAL_DAYS
   ) {
     await missionServices.addMission({
       agencyId: agencyId,
-      userId: assignedVehicle.driverUserId,
+      userId: assignedVehicleBooking.driverUserId,
       entityType: EntityTypeEnum.BOOKING,
       entityId: bookingId,
       titleKey: "AssignedVehicle.Title",
       titleObject: {
         bookingId: bookingId,
-        vehicleNumber: assignedVehicle.vehicleNumber,
+        vehicleNumber: assignedVehicleBooking.vehicleNumber,
       },
       messageKey: "AssignedVehicle.Message",
       isCritical: true,
-      dueDate: assignedVehicle.startDate,
+      dueDate: assignedVehicleBooking.startDate,
       link: `/rider/myBookings/${bookingId}`,
     })
   }
 
-  return assignedVehicle
+  return assignedVehicleBooking
 }

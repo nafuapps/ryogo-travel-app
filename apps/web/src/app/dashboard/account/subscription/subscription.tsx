@@ -16,10 +16,10 @@ import { Separator } from "@/components/ui/separator"
 import {
   BASIC_PLAN_AGENT_LIMIT,
   BASIC_PLAN_DRIVER_LIMIT,
-  BASIC_PLAN_MONTHLY_CONFIRMED_BOOKINGS_LIMIT,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
   BASIC_PLAN_VEHICLE_LIMIT,
-  BOOKINGS_ROLLOVER_DAYS,
-  SUBSCRIPTION_REMINDER_DAYS,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
+  SUBSCRIPTION_EXPIRY_REMINDER_DAYS,
 } from "@/lib/uiConfig"
 import {
   FindAgencyByIdType,
@@ -75,6 +75,7 @@ export default async function SubscriptionPageComponent({
     new Date(),
   )
   const lastPaidPlan = lastPaidOrder?.orderType
+  const needExpiryReminder = daysToExpiry <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
 
   return (
     <PageWrapper id="AccountSubscriptionPage">
@@ -107,9 +108,9 @@ export default async function SubscriptionPageComponent({
           </SectionColWrapper>
           {!isBasic && (
             <div
-              className={`flex flex-col ${daysToExpiry < 0 ? "bg-red-100" : daysToExpiry < SUBSCRIPTION_REMINDER_DAYS ? "bg-yellow-100" : "bg-slate-200"}  p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
+              className={`flex flex-col ${daysToExpiry < 0 ? "bg-red-100" : needExpiryReminder ? "bg-yellow-100" : "bg-slate-200"}  p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
             >
-              {daysToExpiry < SUBSCRIPTION_REMINDER_DAYS ? (
+              {needExpiryReminder ? (
                 <>
                   <RyogoCaption
                     color={daysToExpiry < 0 ? "red" : "yellow"}
@@ -158,17 +159,23 @@ export default async function SubscriptionPageComponent({
       {(isBasic || daysToExpiry < 0) && (
         <SectionWrapper id="UsageSection">
           <RyogoCaption color={"light"}>{t("LimitUsage")}</RyogoCaption>
-          {(isBasic || daysToExpiry + BOOKINGS_ROLLOVER_DAYS < 0) && (
+          {(isBasic ||
+            daysToExpiry +
+              BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS <
+              0) && (
             <UsageElement
-              label={t("BookingsUsage", { month: BOOKINGS_ROLLOVER_DAYS })}
+              label={t("BookingsUsage", {
+                month:
+                  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
+              })}
               usageNumber={
                 confirmedBookingsLength.toString() +
                 " / " +
-                BASIC_PLAN_MONTHLY_CONFIRMED_BOOKINGS_LIMIT
+                BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
               }
               ratio={
                 (confirmedBookingsLength * 100) /
-                BASIC_PLAN_MONTHLY_CONFIRMED_BOOKINGS_LIMIT
+                BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
               }
             />
           )}
@@ -196,14 +203,12 @@ export default async function SubscriptionPageComponent({
         </SectionWrapper>
       )}
       <Separator />
-
-      {(isBasic || daysToExpiry < SUBSCRIPTION_REMINDER_DAYS) && (
+      {(isBasic || needExpiryReminder) && (
         <SubscriptionPaymentOptionsComponent
           userDetails={userDetails}
           agencyDetails={agencyDetails}
         />
       )}
-
       <SectionWrapper id="PremiumAdvantageInfo" center>
         <div className="flex items-center justify-center text-nowrap text-center py-1 lg:py-1.5">
           <SectionRowWrapper small center>

@@ -29,7 +29,7 @@ export const missionRepository = {
   },
 
   async updateReadStatus(missionId: string, isRead: boolean) {
-    await db
+    return await db
       .update(missions)
       .set({ isRead })
       .where(eq(missions.id, missionId))
@@ -42,7 +42,7 @@ export const missionRepository = {
     entityId: string,
     titleKey: string,
   ) {
-    await db
+    return await db
       .delete(missions)
       .where(
         and(

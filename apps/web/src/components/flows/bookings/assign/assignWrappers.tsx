@@ -104,7 +104,7 @@ export function RyoGoScoreWrapper({
       }`}
     >
       <RyogoCaption color="slate">{label}</RyogoCaption>
-      <RyogoH2>{totalScore.toFixed(0)}</RyogoH2>
+      <RyogoH2 weight="font-bold">{totalScore.toFixed(0)}</RyogoH2>
     </div>
   )
 }

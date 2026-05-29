@@ -10,8 +10,8 @@ import {
   BASIC_PLAN_DRIVER_LIMIT,
   TRIAL_MODE,
   BASIC_PLAN_VEHICLE_LIMIT,
-  BASIC_PLAN_MONTHLY_CONFIRMED_BOOKINGS_LIMIT,
-  BOOKINGS_ROLLOVER_DAYS,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@/lib/uiConfig"
 import { RyogoSmall, RyogoH4 } from "@/components/typography"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -44,16 +44,16 @@ export default async function NewBookingPageComponent({
   const confirmedBookingsLength =
     await bookingServices.findSubscriptionBookingsLengthPreviousDays(
       agencyId,
-      BOOKINGS_ROLLOVER_DAYS,
+      BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
     )
 
   if (
     !TRIAL_MODE &&
-    confirmedBookingsLength >= BASIC_PLAN_MONTHLY_CONFIRMED_BOOKINGS_LIMIT &&
+    confirmedBookingsLength >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       //Check if premium expired more than X days ago
       differenceInDays(new Date(), agency.subscriptionExpiresOn) >
-        BOOKINGS_ROLLOVER_DAYS)
+        BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS)
   ) {
     //SUBSCRIPTION BLOCKER: Monthly booking limit reached
     return (

@@ -141,7 +141,7 @@ export const orderServices = {
     const newExpiryTime = new Date(
       startDate.getTime() + subscriptionDays * 24 * 60 * 60 * 1000,
     )
-    await agencyRepository.updateAgencySubscription(
+    await agencyRepository.updateAgencySubscriptionWithOrder(
       updatedOrder[0].agencyId,
       SubscriptionPlanEnum.PREMIUM,
       newExpiryTime,

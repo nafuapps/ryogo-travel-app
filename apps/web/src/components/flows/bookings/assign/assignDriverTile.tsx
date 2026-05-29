@@ -1,6 +1,6 @@
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
-import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import {
   Phone,
   BadgeIndianRupee,
@@ -116,8 +116,8 @@ export default function AssignDriverTile({
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
           <RyogoP weight="font-bold"> {driverData.name}</RyogoP>
-          <RyogoSmall>{driverData.address}</RyogoSmall>
-          <IconTextTag icon={Phone} text={driverData.phone} />
+          <RyogoCaption color="slate">{driverData.phone}</RyogoCaption>
+          <RyogoCaption color="light">{driverData.address}</RyogoCaption>
         </AssignTileHeaderWrapper>
         <AssignTileFooterWrapper>
           <IconTextTag

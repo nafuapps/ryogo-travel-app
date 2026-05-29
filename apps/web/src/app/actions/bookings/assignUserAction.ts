@@ -21,11 +21,11 @@ export async function assignUserAction(
   ) {
     return
   }
-  const assignedUser = await bookingServices.assignUserToBooking(
+  const assignedUserBooking = await bookingServices.assignUserToBooking(
     bookingId,
     selectedUserId,
   )
-  if (!assignedUser || !assignedUser.assignedUserId) {
+  if (!assignedUserBooking || !assignedUserBooking.assignedUserId) {
     return
   }
 
@@ -36,25 +36,28 @@ export async function assignUserAction(
     isFeed: true,
     textKey: "AssignedUser",
     textObject: {
-      userName: assignedUser.assignedUserName,
+      userName: assignedUserBooking.assignedUserName,
       bookingId: bookingId,
     },
     link: `/dashboard/bookings/${bookingId}`,
   })
-  await missionServices.addMission({
-    agencyId: agencyId,
-    userId: assignedUser.assignedUserId,
-    entityType: EntityTypeEnum.BOOKING,
-    entityId: bookingId,
-    titleKey: "AssignedUser.Title",
-    titleObject: { bookingId: bookingId },
-    messageKey: "AssignedUser.Message",
-    dueDate: assignedUser.startDate,
-    isCritical:
-      differenceInDays(new Date(assignedUser.startDate), new Date()) <=
-      BOOKING_ASSIGNMENT_CRITICAL_DAYS,
-    link: `/dashboard/bookings/${bookingId}`,
-  })
 
-  return assignedUser
+  if (assignedUserBooking.assignedUserId !== currentUser.userId) {
+    await missionServices.addMission({
+      agencyId: agencyId,
+      userId: assignedUserBooking.assignedUserId,
+      entityType: EntityTypeEnum.BOOKING,
+      entityId: bookingId,
+      titleKey: "AssignedUser.Title",
+      titleObject: { bookingId: bookingId },
+      messageKey: "AssignedUser.Message",
+      dueDate: assignedUserBooking.startDate,
+      isCritical:
+        differenceInDays(new Date(assignedUserBooking.startDate), new Date()) <=
+        BOOKING_ASSIGNMENT_CRITICAL_DAYS,
+      link: `/dashboard/bookings/${bookingId}`,
+    })
+  }
+
+  return assignedUserBooking
 }

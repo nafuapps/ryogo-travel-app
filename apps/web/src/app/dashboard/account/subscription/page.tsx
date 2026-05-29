@@ -11,7 +11,7 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import SubscriptionPageComponent from "./subscription"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { BOOKINGS_ROLLOVER_DAYS } from "@/lib/uiConfig"
+import { BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS } from "@/lib/uiConfig"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export default async function SubscriptionPage() {
 
   //Only owner can access
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
-    redirect("/dashboard/account", RedirectType.replace)
+    redirect("/dashboard/account/agency", RedirectType.replace)
   }
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
@@ -46,7 +46,7 @@ export default async function SubscriptionPage() {
   const confirmedBookingsLength =
     await bookingServices.findSubscriptionBookingsLengthPreviousDays(
       currentUser.agencyId,
-      BOOKINGS_ROLLOVER_DAYS,
+      BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
     )
 
   const lastPaidOrder = await orderServices.findLastPaidOrder(

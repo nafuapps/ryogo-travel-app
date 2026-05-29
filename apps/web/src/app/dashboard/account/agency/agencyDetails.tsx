@@ -18,6 +18,7 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import { TRIAL_MODE } from "@/lib/uiConfig"
+import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
 
 export default async function AgencyDetailsPageComponent({
   id,
@@ -46,6 +47,7 @@ export default async function AgencyDetailsPageComponent({
             ) : (
               <RyogoEnclosedIcon icon={Building} size="xl" />
             )}
+            {isOwner && <ChangeAgencyLogoSheet agencyId={agency.id} />}
           </SectionColWrapper>
           <SectionColWrapper end>
             <RyogoH3>{agency.businessName}</RyogoH3>

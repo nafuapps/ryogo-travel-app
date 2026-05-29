@@ -5,7 +5,7 @@ import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
 export function IconTextTag(props: { icon: LucideIcon; text: string }) {
   return (
-    <SectionRowWrapper center small>
+    <SectionRowWrapper justifyStart center small>
       <RyogoIcon icon={props.icon} size={"sm"} />
       <RyogoCaption color="slate">{props.text}</RyogoCaption>
     </SectionRowWrapper>

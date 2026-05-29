@@ -75,7 +75,7 @@ export const customerRepository = {
 
   //Get customers by user id
   async readCustomersByAddedUserId(userId: string) {
-    return db.query.customers.findMany({
+    return await db.query.customers.findMany({
       orderBy: (customers, { desc }) => [desc(customers.createdAt)],
       limit: 20,
       where: eq(customers.addedByUserId, userId),

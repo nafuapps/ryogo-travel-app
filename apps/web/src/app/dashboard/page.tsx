@@ -1,5 +1,3 @@
-//Dashboard home page
-
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { Metadata } from "next"
@@ -7,7 +5,11 @@ import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import DashboardHomePageComponent from "./dashboardHome"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { SUBSCRIPTION_REMINDER_DAYS, TRIAL_MODE } from "@/lib/uiConfig"
+import {
+  SUBSCRIPTION_DOWNGRADE_TO_BASIC_DAYS,
+  SUBSCRIPTION_EXPIRY_REMINDER_DAYS,
+  TRIAL_MODE,
+} from "@/lib/uiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { differenceInDays } from "date-fns"
 import { RyogoCaption } from "@/components/typography"
@@ -18,6 +20,7 @@ import {
   SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
+import { downgradeAgencyToBasicAction } from "@/app/actions/agencies/downgradeAgencyToBasicAction"
 export const metadata: Metadata = {
   title: `Dashboard - ${pageTitle}`,
   description: pageDescription,
@@ -35,18 +38,29 @@ export default async function DashboardHomePage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  if (
+    agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
+    differenceInDays(new Date(), agency.subscriptionExpiresOn) >
+      SUBSCRIPTION_DOWNGRADE_TO_BASIC_DAYS
+  ) {
+    await downgradeAgencyToBasicAction(agency.id)
+  }
+
   const days = differenceInDays(agency.subscriptionExpiresOn, new Date())
+
+  const showReminderStrip =
+    !TRIAL_MODE &&
+    agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
+    days <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
 
   return (
     <>
-      {!TRIAL_MODE &&
-        agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
-        days <= SUBSCRIPTION_REMINDER_DAYS && (
-          <SubscriptionReminderStrip
-            days={days}
-            isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-          />
-        )}
+      {showReminderStrip && (
+        <SubscriptionReminderStrip
+          days={days}
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+        />
+      )}
       <MainWrapper>
         <DashboardHeader pathName={"/dashboard"} />
         <DashboardHomePageComponent agencyId={currentUser.agencyId} />

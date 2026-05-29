@@ -10,13 +10,13 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import {
   SectionWrapper,
   PageWrapper,
-  SectionRowWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import Link from "next/link"
+import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 
 export default function AssignDriverPageComponent({
   bookingId,
@@ -66,18 +66,11 @@ export default function AssignDriverPageComponent({
   return (
     <PageWrapper id="AssignDriverPage">
       {limited && (
-        <SectionWrapper id="SubscribeAction">
-          <SectionRowWrapper center>
-            <RyogoCaption color="yellow">
-              {isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
-            </RyogoCaption>
-            <Link href="/dashboard/account/subscription">
-              <Button variant={isSubscribed ? "brand" : "outline"}>
-                {isSubscribed ? t("RenewCTA") : t("BuyCTA")}
-              </Button>
-            </Link>
-          </SectionRowWrapper>
-        </SectionWrapper>
+        <SubscriptionReminderButton
+          warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
+          ctaText={isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+          isSubscribed={isSubscribed}
+        />
       )}
       <SectionWrapper id="AssignDriverInfo">
         <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
@@ -98,6 +91,8 @@ export default function AssignDriverPageComponent({
             }
           />
         ))}
+      </SectionWrapper>
+      <StickyActionWrapper>
         <Button
           variant={"default"}
           size={"lg"}
@@ -116,7 +111,7 @@ export default function AssignDriverPageComponent({
         >
           {t("CancelCTA")}
         </Button>
-      </SectionWrapper>
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

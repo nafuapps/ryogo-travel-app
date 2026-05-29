@@ -1,4 +1,8 @@
-import { AgencyStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  AgencyStatusEnum,
+  SubscriptionPlanEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
@@ -7,6 +11,7 @@ import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
 import { BOOKINGS_SEARCH_DAYS } from "../apiConfig"
+import { ModifyAgencyRequestType } from "../types/agency.types"
 
 export const agencyServices = {
   //Find all agencies
@@ -74,20 +79,13 @@ export const agencyServices = {
   },
 
   //Modify agency details
-  async modifyAgency(
-    agencyId: string,
-    businessName?: string,
-    businessAddress?: string,
-    defaultCommissionRate?: number,
-    agencyState?: string,
-    agencyCity?: string,
-  ) {
+  async modifyAgency(data: ModifyAgencyRequestType) {
     //Step1: Get location id from city, state (if provided)
     let locationId: string | undefined = undefined
-    if (agencyCity && agencyState) {
+    if (data.agencyCity && data.agencyState) {
       const location = await locationRepository.readLocationByCityState(
-        agencyCity,
-        agencyState,
+        data.agencyCity,
+        data.agencyState,
       )
       if (!location) {
         return
@@ -97,10 +95,10 @@ export const agencyServices = {
 
     //Step2: Update agency details
     const updatedAgency = await agencyRepository.updateAgencyDetails(
-      agencyId,
-      businessName,
-      businessAddress,
-      defaultCommissionRate,
+      data.agencyId,
+      data.businessName,
+      data.businessAddress,
+      data.defaultCommissionRate,
       locationId,
     )
     return updatedAgency[0]
@@ -112,7 +110,8 @@ export const agencyServices = {
   },
 
   async updateAgencyLogo(agencyId: string, url: string) {
-    await agencyRepository.updateAgencyLogoUrl(agencyId, url)
+    const agency = await agencyRepository.updateAgencyLogoUrl(agencyId, url)
+    return agency[0]
   },
 
   //Change agency phone
@@ -129,6 +128,14 @@ export const agencyServices = {
     const updatedAgency = await agencyRepository.updateAgencyEmail(
       agencyId,
       newEmail,
+    )
+    return updatedAgency[0]
+  },
+
+  async downgradeAgencyToBasic(agencyId: string) {
+    const updatedAgency = await agencyRepository.updateAgencySubscriptionPlan(
+      agencyId,
+      SubscriptionPlanEnum.BASIC,
     )
     return updatedAgency[0]
   },

@@ -1397,7 +1397,7 @@
       "Title": "Select a driver to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
-        "CurrentlyAssigned": "Already Assigned",
+        "CurrentlyAssigned": "Assigned",
         "Booked": "Booked",
         "Leave": "On Leave",
         "Available": "Available",
@@ -1418,7 +1418,7 @@
       "Tile": {
         "Title": "Choose vehicle",
         "Score": "RyoGo Score",
-        "CurrentlyAssigned": "Already Assigned",
+        "CurrentlyAssigned": "Assigned",
         "Seats": " {count, plural, =1 {seat} other {seats}}",
         "AC": "AC",
         "Booked": "Booked",
@@ -1440,7 +1440,7 @@
       "Title": "Select a user to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
-        "CurrentlyAssigned": "Already Assigned",
+        "CurrentlyAssigned": "Assigned",
         "Booked": "Booked",
         "Available": "Available"
       },
@@ -2447,13 +2447,6 @@
         "Error2": "Address must be less than 300 characters"
       },
       "Field3": {
-        "Title": "Agency logo (optional)",
-        "Placeholder": "UPLOAD",
-        "Description": "Upload a logo associated with your business",
-        "Error1": "Image file size should be less than 1MB",
-        "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
-      },
-      "Field4": {
         "Title": "Commission rate (in %)",
         "Placeholder": "15",
         "Description": "The extra commission that will be added to every booking quote. (Don't worry, you can leave it blank and change it later. Default 15% will be set)",
@@ -2463,11 +2456,11 @@
         "Error4": "Rate cannot be in decimals",
         "Error5": "Rate must be a positive number"
       },
-      "Field5": {
+      "Field4": {
         "Title": "Select state",
         "Error1": "Providing state is mandatory"
       },
-      "Field6": {
+      "Field5": {
         "Title": "Select city",
         "Error1": "Providing city is mandatory"
       },
@@ -2662,6 +2655,13 @@
     },
     "MissionControl":{
       "NoMissions":"No actions pending",
+      "CriticalMissions":"CRITICAL MISSIONS",
+      "OtherMissions":"OTHER MISSIONS",
+      "Due":"Due ",
+      "CheckNow":"Act Now",
+      "MarkRead":"Mark as Completed",
+      "Read":"Completed",
+      "ErrorMarkingRead":"Failed to mark as read.. please try again later",
       "LeadBooking":{
         "Title":"Lead booking #{bookingId}",
         "Message":"Any old lead booking will be cancelled. Call the customer to confirm this booking"
@@ -2696,7 +2696,7 @@
       },
       "DriverInactivated":{
         "Title":"Account deactivated by {userName}",
-        "Message":"You account has been deactivated. You cannot take any booking assignments"
+        "Message":"You account has been deactivated. You cannot take booking assignments"
       },
       "ExpenseAddedByDriver":{
         "Title":"New {type} expense {expenseId} added for booking #{bookingId}",
@@ -2717,37 +2717,43 @@
     },
     "Feed":{
       "NoFeed":"No notifications to show",
-      "ConfirmedBooking":"Booking #{bookingId} has been confirmed by {userName}",
-      "ChangedAgencyEmail":"Agency email address has been changed by {userName}",
-      "ChangedAgencyPhone":"Agency phone number has been changed by {userName}",
-      "ModifiedAgency":"Agency details have been modified by {userName}",
-      "AssignedDriver":"Assigned driver for #{bookingId} has been changed to {driverName}",
-      "AssignedUser":"Assigned agent for #{bookingId} has been changed to {userName}",
-      "AssignedVehicle":"Assigned vehicle for #{bookingId} has been changed to {vehicleNumber}",
-      "CancelBooking":"Booking #{bookingId} has been cancelled by {userName}",
-      "TripEnded":"Trip completed for #{bookingId} by {driverName} with {vehicleNumber}",
-      "TripStarted":"Trip started for #{bookingId} by {driverName} with {vehicleNumber}",
-      "CustomerActivated":"Customer {customerName} has been activated by {userName}",
-      "CustomerInactivated":"Customer {customerName} has been inactivated by {userName}",
-      "CustomerPhotoChanged":"Customer {customerName} photo has been changed by {userName}",
-      "CustomerModified":"Customer {customerName} details have been changed by {userName}",
-      "CustomerAdded":"Customer {customerName} has been added by {userName}",
-      "DriverActivated":"Driver {driverName} has been activated by {userName}",
-      "DriverInactivated":"Driver {driverName} has been inactivated by {userName}",
-      "DriverAdded":"New driver {driverName} has been added by {userName}",
-      "DriverModified":"Driver {driverName} details have been changed by {userName}",
-      "DriverLeaveAdded":"Driver leave added for {driverName} by {userName}",
-      "DriverLeaveModified":"Driver leave details changed for {driverName} by {userName}",
-      "VehicleActivated":"Vehicle {vehicleNumber} has been activated by {userName}",
-      "VehicleInactivated":"Vehicle {vehicleNumber} has been inactivated by {userName}",
-      "VehicleAdded":"New vehicle {vehicleNumber} has been added by {userName}",
-      "VehiclePhotoChanged":"Vehicle {vehicleNumber} photo has been changed by {userName}",
-      "VehicleModified":"Vehicle {vehicleNumber} details have been changed by {userName}",
-      "VehicleRepairAdded":"Vehicle repair added for {vehicleNumber} by {userName}",
-      "VehicleRepairModified":"Vehicle repair details changed for {vehicleNumber} by {userName}",
-      "SubscriptionPurchased":"Premium {plan} subscription plan has been purchased by {userName}",
-      "AgentAdded":"New agent {agentName} has been added by {userName}",
-      "UserPhotoChanged":"{userName} photo has changed"
+      "FeedFilters":"NOTIFICATION FILTERS",
+      "Notifications":{
+        "LeadBooking":"New lead booking #{bookingId} added by {userName}",
+        "ConfirmedBooking":"Booking #{bookingId} has been confirmed by {userName}",
+        "ChangedAgencyEmail":"Agency email address has been changed by {userName}",
+        "ChangedAgencyPhone":"Agency phone number has been changed by {userName}",
+        "ModifiedAgency":"Agency details have been modified by {userName}",
+        "AssignedDriver":"Assigned driver for booking #{bookingId} has been changed to {driverName}",
+        "AssignedUser":"Assigned agent for booking #{bookingId} has been changed to {userName}",
+        "AssignedVehicle":"Assigned vehicle for booking #{bookingId} has been changed to {vehicleNumber}",
+        "CancelBooking":"Booking #{bookingId} has been cancelled by {userName}",
+        "TripEnded":"Trip completed for booking #{bookingId} by {driverName} with {vehicleNumber}",
+        "TripStarted":"Trip started for booking #{bookingId} by {driverName} with {vehicleNumber}",
+        "CustomerActivated":"Customer {customerName} has been activated by {userName}",
+        "CustomerInactivated":"Customer {customerName} has been inactivated by {userName}",
+        "CustomerPhotoChanged":"Customer {customerName} photo has been changed by {userName}",
+        "CustomerModified":"Customer {customerName} details have been changed by {userName}",
+        "CustomerAdded":"Customer {customerName} has been added by {userName}",
+        "DriverActivated":"Driver {driverName} has been activated by {userName}",
+        "DriverInactivated":"Driver {driverName} has been inactivated by {userName}",
+        "DriverAdded":"New driver {driverName} has been added by {userName}",
+        "DriverModified":"Driver {driverName} details have been changed by {userName}",
+        "DriverLeaveAdded":"Driver leave added for {driverName} by {userName}",
+        "DriverLeaveModified":"Driver leave details changed for {driverName} by {userName}",
+        "VehicleActivated":"Vehicle {vehicleNumber} has been activated by {userName}",
+        "VehicleInactivated":"Vehicle {vehicleNumber} has been inactivated by {userName}",
+        "VehicleAdded":"New vehicle {vehicleNumber} has been added by {userName}",
+        "VehiclePhotoChanged":"Vehicle {vehicleNumber} photo has been changed by {userName}",
+        "VehicleModified":"Vehicle {vehicleNumber} details have been changed by {userName}",
+        "VehicleRepairAdded":"Vehicle repair added for booking #{bookingId} by {userName}",
+        "VehicleRepairModified":"Vehicle repair details changed for booking #{bookingId} by {userName}",
+        "SubscriptionPurchased":"Premium {plan} subscription plan has been purchased by {userName}",
+        "AgentAdded":"New agent {agentName} has been added by {userName}",
+        "UserPhotoChanged":"{userName} photo has changed",
+        "DowngradedAgencyToBasic":"Agency has been downgraded to BASIC plan",
+        "AgencyLogoChanged":"Agency logo has been changed by {userName}"
+      }
     },
     "Buttons": {
       "CancelBooking": {
@@ -3312,6 +3318,18 @@
       "Close": "Cancel",
       "Success": "Photo updated successfully!",
       "Error": "Cannot upload photo.. please try again after some time."
+    },
+    "ChangeLogo": {
+      "Button": "Change Logo",
+      "Title": "Choose a Logo",
+      "Header": "Upload agency logo",
+      "Placeholder": "Browse a new logo",
+      "Error1": "Logo is required and size should be less than 1MB",
+      "Error2": "Logo photo must be in .jpg, .jpeg or .png format",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Logo updated successfully!",
+      "Error": "Cannot upload logo.. please try again after some time."
     }
   },
   "Landing": {

@@ -125,7 +125,7 @@ function OrderCard({ order }: { order: FindAllOrdersByAgencyIdType[number] }) {
         <SectionRowWrapper wFull>
           <SectionColWrapper small>
             <RyogoSmall color="brand" weight="font-bold">
-              {order.id}
+              {"Order #" + order.id}
             </RyogoSmall>
             <OrderStatusPill status={order.status} />
           </SectionColWrapper>
@@ -185,7 +185,7 @@ function PaymentCard({
     <div className="flex bg-slate-100 p-3 lg:p-4 rounded-lg justify-between gap-2 lg:gap-3">
       <SectionColWrapper>
         <RyogoSmall color="brand" weight="font-bold">
-          {payment.id}
+          {"Payment #" + payment.id}
         </RyogoSmall>
         <PaymentStatusPill status={payment.status} />
         <RyogoCaption color="slate" weight="font-bold">
@@ -197,9 +197,7 @@ function PaymentCard({
           {moment(payment.updatedAt).format("DD MMM YYYY - hh:mm A")}
         </RyogoCaption>
         {payment.bankName && (
-          <RyogoCaption color="slate">
-            {payment.bankName.toUpperCase()}
-          </RyogoCaption>
+          <RyogoSmall>{payment.bankName.toUpperCase()}</RyogoSmall>
         )}
         {payment.method === PaymentMethodEnum.CARD && payment.cardId && (
           <RyogoCaption color="slate">{payment.cardId}</RyogoCaption>

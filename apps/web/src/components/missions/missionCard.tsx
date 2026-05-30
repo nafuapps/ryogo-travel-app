@@ -38,7 +38,7 @@ export default function MissionCard({
 
   return (
     <div
-      className={`flex flex-col gap-3 lg:gap-4 p-4 lg:p-5 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-200 shadow-sm" : "bg-white shadow-lg"} ${mission.isCritical && !isRead ? "border-l-6 border-red-600" : ""}`}
+      className={`flex flex-col gap-3 lg:gap-4 p-4 lg:p-5 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-200 shadow-sm" : "bg-white shadow-lg"} ${!isRead ? (mission.isCritical ? "border-l-6 border-red-600" : "border-l-6 border-sky-700") : ""}`}
     >
       <SectionRowWrapper center>
         <SectionRowWrapper justifyStart center>

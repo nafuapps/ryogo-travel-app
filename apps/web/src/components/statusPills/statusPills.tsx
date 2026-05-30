@@ -25,11 +25,12 @@ function getStatusPillColor(color?: StatusPillColor) {
 interface StatusPillProps {
   status: string
   bgColor: StatusPillColor
+  selfStart?: boolean
 }
 export function StatusPill(props: StatusPillProps) {
   return (
     <div
-      className={`flex rounded-full ${getStatusPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 shrink-0 text-nowrap`}
+      className={`flex rounded-full ${getStatusPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 shrink-0 text-nowrap ${props.selfStart ? "self-start" : ""}`}
     >
       <RyogoCaption color="white">{props.status}</RyogoCaption>
     </div>
@@ -144,13 +145,31 @@ interface OrderStatusPillProps {
 }
 export function OrderStatusPill(props: OrderStatusPillProps) {
   if (props.status === OrderStatusEnum.PAID) {
-    return <StatusPill status={props.status.toUpperCase()} bgColor={"green"} />
+    return (
+      <StatusPill
+        status={props.status.toUpperCase()}
+        bgColor={"green"}
+        selfStart
+      />
+    )
   }
   if (props.status === OrderStatusEnum.ATTEMPTED) {
-    return <StatusPill status={props.status.toUpperCase()} bgColor={"brand"} />
+    return (
+      <StatusPill
+        status={props.status.toUpperCase()}
+        bgColor={"brand"}
+        selfStart
+      />
+    )
   }
 
-  return <StatusPill status={props.status.toUpperCase()} bgColor={"yellow"} />
+  return (
+    <StatusPill
+      status={props.status.toUpperCase()}
+      bgColor={"yellow"}
+      selfStart
+    />
+  )
 }
 
 interface PaymentStatusPillProps {
@@ -158,16 +177,40 @@ interface PaymentStatusPillProps {
 }
 export function PaymentStatusPill(props: PaymentStatusPillProps) {
   if (props.status === PaymentStatusEnum.CAPTURED) {
-    return <StatusPill status={props.status.toUpperCase()} bgColor={"green"} />
+    return (
+      <StatusPill
+        status={props.status.toUpperCase()}
+        bgColor={"green"}
+        selfStart
+      />
+    )
   }
   if (props.status === PaymentStatusEnum.AUTHORIZED) {
-    return <StatusPill status={props.status.toUpperCase()} bgColor={"brand"} />
+    return (
+      <StatusPill
+        status={props.status.toUpperCase()}
+        bgColor={"brand"}
+        selfStart
+      />
+    )
   }
   if (props.status === PaymentStatusEnum.FAILED) {
-    return <StatusPill status={props.status.toUpperCase()} bgColor={"red"} />
+    return (
+      <StatusPill
+        status={props.status.toUpperCase()}
+        bgColor={"red"}
+        selfStart
+      />
+    )
   }
 
-  return <StatusPill status={props.status.toUpperCase()} bgColor={"slate"} />
+  return (
+    <StatusPill
+      status={props.status.toUpperCase()}
+      bgColor={"slate"}
+      selfStart
+    />
+  )
 }
 
 interface TripLogStatusPillProps {

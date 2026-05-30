@@ -13,6 +13,7 @@ import {
   RyogoSmall,
   RyogoCaption,
 } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 import {
   MONTHLY_SUBSCRIPTION_MRP,
   MONTHLY_SUBSCRIPTION_FINAL_PRICE,
@@ -48,18 +49,19 @@ export default function SubscriptionPaymentOptionsComponent({
         <RyogoH2 color="white" weight="font-bold">
           {t("UpgradeJourney")}
         </RyogoH2>
-        <div className="flex flex-col gap-0.5 lg:gap-1 items-center rounded-lg p-3 lg:p-4 bg-slate-100 text-center">
+        <div className="flex flex-col gap-1 lg:gap-1.5 items-center rounded-lg p-3 lg:p-4 bg-slate-100 text-center">
           <RyogoCaption weight="font-bold">{t("Testimonial")}</RyogoCaption>
           <RyogoCaption color="slate">{t("TestimonialAuthor")}</RyogoCaption>
         </div>
       </div>
       <div className="flex flex-col w-full items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-slate-100 rounded-lg">
         <RyogoCaption color="light">{t("ChooseYourPlan")}</RyogoCaption>
-        <div className="flex flex-col w-full lg:flex-row gap-3 lg:gap-4">
+        <div className="flex flex-col w-full xl:flex-row gap-4">
           <PaymentOptionCard
             plan={OrderTypeEnum.MONTHLY}
             mrp={MONTHLY_SUBSCRIPTION_MRP}
             price={MONTHLY_SUBSCRIPTION_FINAL_PRICE}
+            months={1}
             selectedOption={selectedPaymentOption}
             onClick={() => setSelectedOption(OrderTypeEnum.MONTHLY)}
           ></PaymentOptionCard>
@@ -67,6 +69,7 @@ export default function SubscriptionPaymentOptionsComponent({
             plan={OrderTypeEnum.QUARTERLY}
             mrp={QUARTERLY_SUBSCRIPTION_MRP}
             price={QUARTERLY_SUBSCRIPTION_FINAL_PRICE}
+            months={3}
             selectedOption={selectedPaymentOption}
             onClick={() => setSelectedOption(OrderTypeEnum.QUARTERLY)}
           ></PaymentOptionCard>
@@ -75,6 +78,7 @@ export default function SubscriptionPaymentOptionsComponent({
             mrp={ANNUAL_SUBSCRIPTION_MRP}
             price={ANNUAL_SUBSCRIPTION_FINAL_PRICE}
             selectedOption={selectedPaymentOption}
+            months={12}
             onClick={() => setSelectedOption(OrderTypeEnum.ANNUAL)}
             best
           ></PaymentOptionCard>
@@ -109,6 +113,7 @@ function PaymentOptionCard({
   plan,
   mrp,
   price,
+  months,
   selectedOption,
   onClick,
   best,
@@ -116,6 +121,7 @@ function PaymentOptionCard({
   plan: OrderTypeEnum
   mrp: number
   price: number
+  months: number
   selectedOption: OrderTypeEnum
   onClick: () => void
   best?: boolean
@@ -125,51 +131,63 @@ function PaymentOptionCard({
   const currentlySelected = selectedOption === plan
   return (
     <div
-      className={`flex w-full p-3 lg:p-4 gap-2 lg:gap-3 rounded-lg justify-between transition ${currentlySelected ? "bg-sky-700 shadow" : " hover:bg-sky-200 bg-white"}`}
+      className={`flex w-full flex-col p-3 lg:p-4 gap-2 shadow lg:gap-3 rounded-lg justify-between transition ${currentlySelected ? "bg-sky-700" : " hover:bg-sky-200 bg-white"}`}
       onClick={onClick}
     >
-      <SectionColWrapper>
-        <RyogoSmall
+      <SectionRowWrapper>
+        <SectionColWrapper>
+          <RyogoSmall color="light" extraClassName="line-through">
+            {t("MRP", { mrp: mrp })}
+          </RyogoSmall>
+          <SectionRowWrapper small>
+            <RyogoH3
+              color={currentlySelected ? "white" : "brand"}
+              weight="font-bold"
+            >
+              {"₹"}
+            </RyogoH3>
+            <RyogoH2
+              color={currentlySelected ? "white" : "brand"}
+              weight="font-bold"
+            >
+              {price}
+            </RyogoH2>
+          </SectionRowWrapper>
+        </SectionColWrapper>
+        <SectionColWrapper end justifyBetween>
+          <RyogoSmall
+            color={currentlySelected ? "white" : "brand"}
+            weight="font-bold"
+          >
+            {plan.toUpperCase()}
+          </RyogoSmall>
+          <RyogoCaption color={currentlySelected ? "white" : "slate"}>
+            {t("Save", {
+              percentage: discount,
+            })}
+          </RyogoCaption>
+        </SectionColWrapper>
+      </SectionRowWrapper>
+      <div
+        className={`h-0.5 w-full ${currentlySelected ? "bg-white" : "bg-slate-100"}`}
+      />
+      <SectionRowWrapper center small>
+        <RyogoCaption
           color={currentlySelected ? "white" : "brand"}
-          weight="font-bold"
+          weight="font-medium"
         >
-          {plan.toUpperCase()}
-        </RyogoSmall>
-        <RyogoCaption color="light" extraClassName="line-through">
-          {t("MRP", { mrp: mrp })}
+          {t("ForMonths", { months: months })}
         </RyogoCaption>
-        <RyogoCaption color={currentlySelected ? "white" : "slate"}>
-          {t("Save", {
-            percentage: discount,
-          })}
-        </RyogoCaption>
-      </SectionColWrapper>
-      <SectionColWrapper end justifyBetween>
-        <SectionRowWrapper small>
-          <RyogoH3
-            color={currentlySelected ? "white" : "brand"}
-            weight="font-bold"
-          >
-            {"₹"}
-          </RyogoH3>
-          <RyogoH2
-            color={currentlySelected ? "white" : "brand"}
-            weight="font-bold"
-          >
-            {price}
-          </RyogoH2>
-        </SectionRowWrapper>
-
         {best && (
           <div
-            className={`flex items-center justify-center w-full rounded-full gap-1 lg:gap-1.5 px-2 lg:px-3 py-1 lg:py-1.5 ${currentlySelected ? "bg-white" : "bg-sky-700"}`}
+            className={`flex items-center justify-center rounded-full gap-1 lg:gap-1.5 px-2 lg:px-3 py-1 lg:py-1.5 ${currentlySelected ? "bg-white" : "bg-sky-700"}`}
           >
             <RyogoCaption color={currentlySelected ? "brand" : "white"}>
               {t("BestValue")}
             </RyogoCaption>
           </div>
         )}
-      </SectionColWrapper>
+      </SectionRowWrapper>
     </div>
   )
 }

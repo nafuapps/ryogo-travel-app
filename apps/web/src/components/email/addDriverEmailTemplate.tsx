@@ -2,16 +2,16 @@ import { SUPPORT_EMAIL, SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
 
 export function AddDriverEmailTemplate({
   name,
-  password,
+  code,
 }: {
   name: string
-  password: string
+  code: string
 }) {
   return (
     <div>
       <h1>Welcome, {name}!</h1>
       <h5>
-        Your new password is: <b>{password}</b>
+        Your verification code is: <b>{code}</b>
       </h5>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us

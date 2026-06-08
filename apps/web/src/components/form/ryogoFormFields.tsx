@@ -40,6 +40,8 @@ import {
   ComboboxList,
 } from "@/components/ui/combobox"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
+import { REGEXP_ONLY_DIGITS } from "input-otp"
 
 export function RyogoInput(props: {
   name: string
@@ -68,6 +70,50 @@ export function RyogoInput(props: {
               {...field}
               disabled={props.disabled ?? false}
             />
+          </FormControl>
+          {props.description && (
+            <FormDescription>
+              <RyogoCaption color="light">{props.description}</RyogoCaption>
+            </FormDescription>
+          )}
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+export function RyogoOTPInput(props: {
+  name: string
+  label: string
+  placeholder: string
+  description?: string
+  type: React.HTMLInputTypeAttribute | undefined
+  disabled?: boolean
+}) {
+  return (
+    <FormField
+      name={props.name}
+      render={({ field }) => (
+        <FormItem className="w-full relative">
+          <FormLabel>
+            {props.disabled ? (
+              <RyogoSmall color="slate">{props.label}</RyogoSmall>
+            ) : (
+              <RyogoSmall weight="font-bold">{props.label}</RyogoSmall>
+            )}
+          </FormLabel>
+          <FormControl>
+            <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS} {...field}>
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
           </FormControl>
           {props.description && (
             <FormDescription>

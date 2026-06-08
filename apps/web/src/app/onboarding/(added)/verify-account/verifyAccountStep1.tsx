@@ -3,7 +3,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -12,7 +12,7 @@ import {
   OnboardingStepSecondaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import { useTransition } from "react"
+import { useEffect, useTransition } from "react"
 import { toast } from "sonner"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeAction"
@@ -36,6 +36,15 @@ export function VerifyAccountStep1(props: {
       userEnteredcode: "",
     },
   })
+
+  // Reset form with delay when form is submitted
+  useEffect(() => {
+    if (!isPending) {
+      setTimeout(() => {
+        formData.reset()
+      }, 1000)
+    }
+  }, [isPending])
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
@@ -66,7 +75,7 @@ export function VerifyAccountStep1(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step1Content">
-          <RyogoInput
+          <RyogoOTPInput
             name={"userEnteredcode"}
             type="tel"
             label={t("Field1.Title")}

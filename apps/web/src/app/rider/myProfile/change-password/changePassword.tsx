@@ -9,7 +9,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
-import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
+import { changeMyPasswordAction } from "@/app/actions/users/changeMyPasswordAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
@@ -61,7 +61,7 @@ export default function ChangePasswordMyProfileComponent({
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
-      const result = await changePasswordAction(
+      const result = await changeMyPasswordAction(
         userId,
         agencyId,
         data.oldPassword,

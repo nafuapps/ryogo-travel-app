@@ -5,7 +5,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
@@ -16,8 +16,8 @@ import { Form } from "@/components/ui/form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { changePasswordAction } from "@/app/actions/users/changePasswordAction"
 import { useTransition } from "react"
+import { verifyUserSetPasswordAction } from "@/app/actions/users/verifyUserSetPasswordAction"
 
 export function ChangePasswordStep1(props: {
   userId: string
@@ -30,10 +30,7 @@ export function ChangePasswordStep1(props: {
 
   const step1Schema = z
     .object({
-      oldPassword: z
-        .string()
-        .min(8, t("Field1.Error1"))
-        .refine((s) => !s.includes(" "), t("Field1.Error2")),
+      sentCode: z.string().length(6, t("Field1.Error1")),
       newPassword: z
         .string()
         .min(8, t("Field2.Error1"))
@@ -43,7 +40,7 @@ export function ChangePasswordStep1(props: {
         .min(8, t("Field3.Error1"))
         .refine((s) => !s.includes(" "), t("Field3.Error2")),
     })
-    .refine((data) => data.newPassword !== data.oldPassword, {
+    .refine((data) => data.newPassword !== data.sentCode, {
       message: t("Field2.Error3"),
       path: ["newPassword"], // path of error
     })
@@ -59,13 +56,11 @@ export function ChangePasswordStep1(props: {
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     startTransition(async () => {
-      //Change password in DB
-      const result = await changePasswordAction(
+      const result = await verifyUserSetPasswordAction(
         props.userId,
         props.agencyId,
-        data.oldPassword,
+        data.sentCode,
         data.newPassword,
-        true,
       )
       if (result) {
         //If success, redirect
@@ -77,11 +72,10 @@ export function ChangePasswordStep1(props: {
         }
       } else {
         //If failed, show error
-        formData.setError("oldPassword", {
+        formData.setError("sentCode", {
           type: "manual",
           message: t("APIError"),
         })
-        // formData.reset();
       }
     })
   }
@@ -93,8 +87,8 @@ export function ChangePasswordStep1(props: {
         submit={formData.handleSubmit(onSubmit)}
       >
         <OnboardingStepContent contentId="Step4Content">
-          <RyogoInput
-            name={"oldPassword"}
+          <RyogoOTPInput
+            name={"sentCode"}
             type="password"
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}

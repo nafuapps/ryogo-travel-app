@@ -37,3 +37,6 @@ export const MISSION_WINDOW_DAYS = 3
 //Notifications
 export const NOTIFICATION_FEED_WINDOW_DAYS = 3
 export const NOTIFICATION_FEED_LIMIT = 100
+
+//Users
+export const NEW_USER_DEFAULT_PASSWORD = "12345678"

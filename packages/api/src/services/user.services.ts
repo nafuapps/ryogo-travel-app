@@ -25,7 +25,7 @@ import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
 import { sessionRepository } from "../repositories/session.repo"
-import { TRIAL_DAYS } from "../apiConfig"
+import { NEW_USER_DEFAULT_PASSWORD, TRIAL_DAYS } from "../apiConfig"
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -277,10 +277,7 @@ export const userServices = {
     }
 
     //Step3: Generate a new password
-    const newPassword = generateNewPassword()
-    console.log(newPassword)
-
-    const passwordHash = await generatePasswordHash(newPassword)
+    const passwordHash = await generatePasswordHash(NEW_USER_DEFAULT_PASSWORD)
 
     //Step4: Create the agent user
     const newUser = await userRepository.createUser({
@@ -299,7 +296,6 @@ export const userServices = {
     }
     return {
       id: newUser[0].id,
-      password: newPassword,
       email: newUser[0].email,
       name: newUser[0].name,
       code: newUser[0].code,
@@ -330,9 +326,7 @@ export const userServices = {
     }
 
     //Step3: generate a new password
-    const newPassword = generateNewPassword() //Generate a random 8 character password
-    console.log(newPassword)
-    const passwordHash = await generatePasswordHash(newPassword)
+    const passwordHash = await generatePasswordHash(NEW_USER_DEFAULT_PASSWORD)
 
     //Step4: Create the driver user
     const newUser = await userRepository.createUser({
@@ -371,7 +365,6 @@ export const userServices = {
       id: newDriver.id,
       userId: newDriver.userId,
       name: newUser[0].name,
-      password: newPassword,
       email: newUser[0].email,
       code: newUser[0].code,
     }
@@ -446,6 +439,33 @@ export const userServices = {
       password: newPassword,
       email: newUserData[0].email,
     }
+  },
+
+  //Verify user with code and set new password (by user)
+  async verifyUserAndSetPassword(
+    userId: string,
+    code: string,
+    newPassword: string,
+  ) {
+    const user = await userRepository.readUserById(userId)
+    // If no user found, cannot reset password
+    if (!user) {
+      return
+    }
+    //Check if code matches
+    if (user.verificationCode !== code) {
+      return
+    }
+    //Set a new password
+    const passwordHash = await generatePasswordHash(newPassword)
+    const newUserData =
+      await userRepository.updatePasswordVerificationAndStatus(
+        userId,
+        passwordHash,
+        UserStatusEnum.ACTIVE,
+        true,
+      )
+    return newUserData[0]
   },
 
   //Change new password (by user - forgot password flow)

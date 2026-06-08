@@ -58,11 +58,11 @@ export async function addAgentAction(data: AddAgentRequestType) {
     },
   })
 
-  //Send new password email to the agent
+  //Send verification code email to the agent
   sendEmail(
     [agent.email],
     "Welcome to RyoGo",
-    AddAgentEmailTemplate({ name: agent.name, password: agent.password }),
+    AddAgentEmailTemplate({ name: agent.name, code: agent.code }),
   )
 
   return agent

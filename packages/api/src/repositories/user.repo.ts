@@ -290,6 +290,24 @@ export const userRepository = {
       .returning({ id: users.id, isVerified: users.isVerified })
   },
 
+  //Update user verification status
+  async updatePasswordVerificationAndStatus(
+    userId: string,
+    passwordHash: string,
+    status: UserStatusEnum,
+    isVerified: boolean,
+  ) {
+    return await db
+      .update(users)
+      .set({ password: passwordHash, status: status, isVerified: isVerified })
+      .where(eq(users.id, userId))
+      .returning({
+        id: users.id,
+        status: users.status,
+        isVerified: users.isVerified,
+      })
+  },
+
   //Update user verification code
   async updateVerificationCode(userId: string, code: string) {
     return await db

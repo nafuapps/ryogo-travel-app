@@ -78,11 +78,11 @@ export async function addDriverAction(data: AddDriverRequestType) {
     link: `/dashboard/drivers/${driver.id}`,
   })
 
-  //Send new password email to the driver
+  //Send verification code in email to the driver
   sendEmail(
     [driver.email],
     "Welcome to RyoGo",
-    AddDriverEmailTemplate({ name: driver.name, password: driver.password }),
+    AddDriverEmailTemplate({ name: driver.name, code: driver.code }),
   )
 
   return driver

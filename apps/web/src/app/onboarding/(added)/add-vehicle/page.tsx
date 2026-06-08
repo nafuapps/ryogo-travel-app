@@ -46,7 +46,7 @@ export default async function AddVehiclePage() {
     redirect("/onboarding/verify-account", RedirectType.replace)
   }
 
-  //Check for Onboarding flow
+  //Check for Onboarding flow status
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
   if (agencyData.vehicles.length > 0) {
     if (agencyData.drivers.length < 1) {

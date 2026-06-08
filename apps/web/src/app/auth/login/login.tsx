@@ -1,4 +1,3 @@
-//Login  page
 "use client"
 
 import z from "zod"
@@ -17,6 +16,7 @@ import {
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { toast } from "sonner"
 
 /*
 1. Find user by phone number
@@ -48,15 +48,19 @@ export default function LoginPageComponent() {
   const onSubmit = async (data: SchemaType) => {
     startTransition(async () => {
       const users = await findLoginUsersAction(data.phoneNumber)
-      if (users.length > 0) {
-        // If atleast 1 user found, go to accounts page
-        router.push(`/auth/login/${data.phoneNumber}`)
+      if (!users) {
+        toast.error(t("ServerError")) // Show server error if API call fails
       } else {
-        // else, Show error
-        methods.setError("phoneNumber", {
-          type: "manual",
-          message: t("APIError"),
-        })
+        if (users && users.length > 0) {
+          // If atleast 1 user found, go to accounts page
+          router.push(`/auth/login/${data.phoneNumber}`)
+        } else {
+          // else, Show error
+          methods.setError("phoneNumber", {
+            type: "manual",
+            message: t("NotFoundError"),
+          })
+        }
       }
     })
   }

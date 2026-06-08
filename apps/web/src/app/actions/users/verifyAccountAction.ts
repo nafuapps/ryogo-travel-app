@@ -14,7 +14,7 @@ export async function verifyAccountAction(code: string) {
   if (!user || !user.isVerified) return
 
   //Update verification in session cookie
-  await updateSessionVerificationStatus(true)
+  await updateSessionVerificationStatus(user.isVerified)
 
   return user
 }

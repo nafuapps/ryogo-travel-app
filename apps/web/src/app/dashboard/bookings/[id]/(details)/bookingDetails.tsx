@@ -35,7 +35,7 @@ export default async function BookingDetailsPageComponent({
 
   return (
     <PageWrapper id="BookingDetailsPage">
-      <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Details" />
+      <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Booking" />
       <BookingGrid>
         <BookingSection
           sectionTitle={t("BookingInfo")}

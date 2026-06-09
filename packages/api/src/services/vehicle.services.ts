@@ -127,7 +127,7 @@ export const vehicleServices = {
     //Step1: Check if the vehicle already exists in this agency
     const existingVehicleInAgency =
       await vehicleRepository.readVehicleByNumberInAgency(
-        data.vehicleNumber,
+        data.vehicleNumber.toUpperCase(),
         agencyId,
       )
     if (existingVehicleInAgency.length > 0) {
@@ -136,7 +136,7 @@ export const vehicleServices = {
 
     const newVehicleData: InsertVehicleType = {
       agencyId: agencyId,
-      vehicleNumber: data.vehicleNumber,
+      vehicleNumber: data.vehicleNumber.toUpperCase(),
       type: data.type,
       brand: data.brand,
       color: data.color,

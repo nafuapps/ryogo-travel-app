@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { useTransition } from "react"
+import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 
 export function AddAgentConfirm(props: {
   onNext: () => void
@@ -46,6 +47,7 @@ export function AddAgentConfirm(props: {
         },
       }
       if (await addAgentAction(newAgentData)) {
+        await onboardingCompleteAction()
         props.onNext()
       } else {
         //Take to dashboard page and show error

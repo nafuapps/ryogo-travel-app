@@ -33,7 +33,7 @@ export default async function SignupExistingPageComponent({
 
   return (
     <AuthPageWrapper>
-      <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
+      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
       <RyogoSmall weight="font-bold">
         {hasOwnerAccount
           ? t("InfoYes")

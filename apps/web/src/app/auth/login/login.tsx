@@ -51,11 +51,11 @@ export default function LoginPageComponent() {
       if (!users) {
         toast.error(t("ServerError")) // Show server error if API call fails
       } else {
-        if (users && users.length > 0) {
+        if (users.length > 0) {
           // If atleast 1 user found, go to accounts page
           router.push(`/auth/login/${data.phoneNumber}`)
         } else {
-          // else, Show error
+          // Else, Show no user found error
           methods.setError("phoneNumber", {
             type: "manual",
             message: t("NotFoundError"),

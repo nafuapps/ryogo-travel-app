@@ -35,16 +35,6 @@ export default async function OnboardingHomePage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const user = await getCurrentUser()
-
-  // Redirect to private route if the user is authenticated
-  if (user) {
-    if (user.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider", RedirectType.replace)
-    }
-    redirect("/dashboard", RedirectType.replace)
-  }
-
   const { phone } = await searchParams
 
   const t = await getTranslations("Onboarding.HomePage")

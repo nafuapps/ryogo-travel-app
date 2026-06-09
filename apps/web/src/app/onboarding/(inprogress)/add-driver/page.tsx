@@ -2,7 +2,7 @@ import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import AddDriverPageComponent from "./addDriver"
 import { Metadata } from "next"
-import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
@@ -24,32 +24,6 @@ export default async function AddDriverPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  //Not owner
-  if (currentUser.userRole !== UserRolesEnum.OWNER) {
-    if (currentUser.status === UserStatusEnum.NEW) {
-      //If new, go to change password
-      redirect("/onboarding/change-password", RedirectType.replace)
-    }
-    //Not new users
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      //If driver, go to rider page
-      redirect("/rider", RedirectType.replace)
-    }
-    //Else, go to dashboard
-    redirect("/dashboard", RedirectType.replace)
-  }
-
-  //Activated Owner
-  if (currentUser.status !== UserStatusEnum.NEW) {
-    //If not new, go to dashboard
-    redirect("/dashboard", RedirectType.replace)
-  }
-
-  //Owner not verified
-  if (!currentUser.isVerified) {
-    redirect("/onboarding/verify-account", RedirectType.replace)
-  }
-
   //Check for Onboarding flow
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
   if (agencyData.vehicles.length < 1) {
@@ -66,11 +40,10 @@ export default async function AddDriverPage() {
     UserRolesEnum.DRIVER,
   ])
 
-  //Only new owners can add driver
   return (
     <AddDriverPageComponent
       agencyId={currentUser.agencyId}
-      agencyName={agency?.businessName}
+      agencyName={agency.businessName}
       userId={currentUser.userId}
       userStatus={currentUser.status}
       allDrivers={allDrivers}

@@ -7,10 +7,10 @@ import {
 } from "@/components/header/headerWrappers"
 
 type BookingDetailHeaderTab =
-  | "Details"
+  | "Booking"
   | "Transactions"
-  | "TripLogs"
   | "Expenses"
+  | "TripLogs"
 
 type BookingDetailHeaderTabsProps = {
   selectedTab: BookingDetailHeaderTab
@@ -21,10 +21,10 @@ export default async function BookingDetailHeaderTabs(
 ) {
   const t = await getTranslations("Dashboard.BookingDetailsHeaderTabs")
   const links = {
-    Details: `/dashboard/bookings/${props.id}`,
+    Booking: `/dashboard/bookings/${props.id}`,
     Transactions: `/dashboard/bookings/${props.id}/transactions`,
-    TripLogs: `/dashboard/bookings/${props.id}/trip-logs`,
     Expenses: `/dashboard/bookings/${props.id}/expenses`,
+    TripLogs: `/dashboard/bookings/${props.id}/trip-logs`,
   } as const
 
   return (

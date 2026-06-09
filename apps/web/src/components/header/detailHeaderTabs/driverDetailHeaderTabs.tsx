@@ -6,7 +6,7 @@ import {
   DetailsHeaderTabWrapper,
 } from "@/components/header/headerWrappers"
 
-type DriverDetailHeaderTab = "Details" | "Assigned" | "Completed" | "Leaves"
+type DriverDetailHeaderTab = "Driver" | "Assigned" | "Completed" | "Leaves"
 
 type DriverDetailHeaderTabsProps = {
   selectedTab: DriverDetailHeaderTab
@@ -18,7 +18,7 @@ export default async function DriverDetailHeaderTabs(
   const t = await getTranslations("Dashboard.DriverDetailsHeaderTabs")
 
   const links = {
-    Details: `/dashboard/drivers/${props.id}`,
+    Driver: `/dashboard/drivers/${props.id}`,
     Assigned: `/dashboard/drivers/${props.id}/assigned`,
     Completed: `/dashboard/drivers/${props.id}/completed`,
     Leaves: `/dashboard/drivers/${props.id}/leaves`,

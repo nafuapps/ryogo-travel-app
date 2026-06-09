@@ -40,7 +40,7 @@ export default async function DriverDetailsPageComponent({
 
   return (
     <PageWrapper id="DriverDetailsPage">
-      <DriverDetailHeaderTabs selectedTab={"Details"} id={driver.id} />
+      <DriverDetailHeaderTabs selectedTab={"Driver"} id={driver.id} />
       <SectionWrapper id="BasicInfo">
         <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
         <SectionRowWrapper>

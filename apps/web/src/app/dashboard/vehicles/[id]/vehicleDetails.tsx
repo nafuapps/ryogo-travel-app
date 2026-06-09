@@ -37,7 +37,7 @@ export default async function VehicleDetailsPageComponent({
   const t = await getTranslations("Dashboard.VehicleDetails")
   return (
     <PageWrapper id="VehicleDetailsPage">
-      <VehicleDetailHeaderTabs selectedTab={"Details"} id={vehicle.id} />
+      <VehicleDetailHeaderTabs selectedTab={"Vehicle"} id={vehicle.id} />
       <SectionWrapper id="BasicInfo">
         <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
         <SectionRowWrapper>

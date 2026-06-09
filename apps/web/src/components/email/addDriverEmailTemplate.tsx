@@ -20,8 +20,7 @@ export function AddDriverEmailTemplate({
       </p>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
-        at
-        {SUPPORT_HELPLINE_NUMBER}
+        at {SUPPORT_HELPLINE_NUMBER}
       </p>
       <small>
         This is an automatically generated email. Please do not reply.

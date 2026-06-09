@@ -32,7 +32,7 @@ export default async function UserDetailsPageComponent({
 
   return (
     <PageWrapper id="UserDetailsPage">
-      <UserDetailHeaderTabs selectedTab={"Details"} id={user.id} />
+      <UserDetailHeaderTabs selectedTab={"User"} id={user.id} />
       <SectionWrapper id="UserDetailsInfo">
         <SectionRowWrapper>
           <SectionColWrapper>

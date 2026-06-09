@@ -36,7 +36,7 @@ export default async function CustomerDetailsPageComponent({
 
   return (
     <PageWrapper id="CustomerDetailsPage">
-      <CustomerDetailHeaderTabs selectedTab={"Details"} id={customer.id} />
+      <CustomerDetailHeaderTabs selectedTab={"Customer"} id={customer.id} />
       <SectionWrapper id="CustomerDetailsInfo">
         <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
         <SectionRowWrapper>

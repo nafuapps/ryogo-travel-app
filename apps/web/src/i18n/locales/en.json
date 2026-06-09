@@ -103,7 +103,7 @@
         "Error2": "Phone number must be numeric"
       },
       "Step2": {
-        "PageTitle": "Welcome!",
+        "PageTitle": "Hello there!",
         "InfoYes": "You already have an agency account with us:",
         "InfoNo": "{count, plural, =1 {You already have an account with us:} other {You already have # accounts with us:}}",
         "SecondaryCTANo": "Create a new agency account",
@@ -118,7 +118,7 @@
       "Logo":"RyoGo Logo",
       "Header": {
         "Title": "Welcome!",
-        "Description": "Let's get your account set up in just a few minutes"
+        "Description": "Let's setup your agency account. It will take just a few minutes."
       },
       "BodySteps": {
         "Title": "Onboarding Journey",
@@ -1222,7 +1222,7 @@
       "Proof": " View Attachment"
     },
     "BookingDetailsHeaderTabs": {
-      "Details": "Details",
+      "Booking": "Booking",
       "Expenses": "Expenses",
       "Transactions": "Transactions",
       "TripLogs": "Trip Logs"
@@ -1653,7 +1653,7 @@
       }
     },
     "VehicleDetailsHeaderTabs": {
-      "Details": "Details",
+      "Vehicle": "Vehicle",
       "Assigned": "Assigned",
       "Completed": "Completed",
       "Repairs": "Repairs"
@@ -2029,7 +2029,7 @@
       }
     },
     "DriverDetailsHeaderTabs": {
-      "Details": "Details",
+      "Driver": "Driver",
       "Assigned": "Assigned",
       "Completed": "Completed",
       "Leaves": "Leaves"
@@ -2293,7 +2293,7 @@
       "EditDetails": "Edit Details"
     },
     "CustomerDetailsHeaderTabs": {
-      "Details": "Details",
+      "Customer": "Customer",
       "Upcoming": "Upcoming",
       "Completed": "Completed"
     },
@@ -2304,7 +2304,7 @@
       "NoBookings": "No upcoming bookings for this customer."
     },
     "AccountDetailsHeaderTabs": {
-      "Details": "Details",
+      "Account": "Account",
       "Settings": "Settings",
       "Agency": "Agency",
       "Help": "Help"
@@ -2523,7 +2523,7 @@
       "DownloadInvoice":"Download Invoice"
     },
     "UserDetailsHeaderTabs": {
-      "Details": "Details",
+      "User": "User",
       "Assigned": "Assigned",
       "Completed": "Completed",
       "Activity": "Activity"

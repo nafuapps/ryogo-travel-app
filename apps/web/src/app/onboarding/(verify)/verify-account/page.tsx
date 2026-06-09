@@ -35,7 +35,7 @@ export default async function VerifyAccountPage() {
     redirect("/dashboard", RedirectType.replace)
   }
 
-  //Owner
+  //Not new Owner
   if (currentUser.status !== UserStatusEnum.NEW) {
     //If already activated, go to dashboard
     redirect("/dashboard", RedirectType.replace)

@@ -2,10 +2,15 @@ import { SubmitEventHandler } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import Image from "next/image"
+import Link from "next/link"
+import RyoGoLogo from "@/components/logo"
 
 export function AuthMainWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-12 md:gap-16 h-full items-center bg-slate-50 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
+      <Link href="/">
+        <RyoGoLogo />
+      </Link>
       {children}
     </div>
   )

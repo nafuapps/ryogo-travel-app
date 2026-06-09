@@ -75,7 +75,7 @@ export default function OnboardingSidebar({
                 >
                   {currentProcess > index ||
                   (currentProcess === index && isLastStep) ? (
-                    <RyogoIcon icon={Check} size="sm" />
+                    <RyogoIcon icon={Check} size="sm" color="white" />
                   ) : currentProcess === index ? (
                     <RyogoH4 color="brand">{index + 1}</RyogoH4>
                   ) : (

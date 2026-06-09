@@ -58,7 +58,7 @@ export default async function OnboardingHomePage({
         className="flex flex-col w-full items-center text-center gap-3"
       >
         <RyoGoLogo />
-        <RyogoH2 color="brand">{t("Header.Title")}</RyogoH2>
+        <RyogoH2>{t("Header.Title")}</RyogoH2>
         <RyogoSmall color="slate">{t("Header.Description")}</RyogoSmall>
       </div>
       <div id="OnboardingHomeFooter" className="w-full md:w-1/2">

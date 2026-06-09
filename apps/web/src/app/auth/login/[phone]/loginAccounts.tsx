@@ -19,7 +19,7 @@ export default async function LoginAccountsPageComponent({
 
   return (
     <AuthPageWrapper>
-      <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
+      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
       <RyogoSmall weight="font-bold">{t("Info")}</RyogoSmall>
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((account) => (

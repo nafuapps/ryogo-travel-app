@@ -3,22 +3,17 @@
 import { AddDriverEmailTemplate } from "@/components/email/addDriverEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import { getCurrentUser } from "@/lib/auth"
-import { updateSessionUserStatus } from "@/lib/session"
 import {
   generateLicensePhotoPathName,
   generateUserPhotoPathName,
 } from "@/lib/utils"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import {
-  EntityTypeEnum,
-  UserRolesEnum,
-  UserStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
+import { headers } from "next/headers"
 
 export async function addDriverAction(data: AddDriverRequestType) {
   const currentUser = await getCurrentUser()
@@ -33,15 +28,6 @@ export async function addDriverAction(data: AddDriverRequestType) {
   }
   const driver = await userServices.addDriverUser(data)
   if (!driver) return
-
-  if (data.ownerId) {
-    //Activate owner account
-    await userServices.activateUser(data.ownerId)
-    //Activate agency
-    await agencyServices.activateAgency(data.agencyId)
-    //Update status in session cookie
-    await updateSessionUserStatus(UserStatusEnum.ACTIVE)
-  }
 
   if (driver.id) {
     if (data.data.licensePhotos && data.data.licensePhotos[0]) {
@@ -78,11 +64,20 @@ export async function addDriverAction(data: AddDriverRequestType) {
     link: `/dashboard/drivers/${driver.id}`,
   })
 
-  //Send verification code in email to the driver
+  const headerList = await headers()
+  const host = headerList.get("host")
+  const protocol = headerList.get("x-forwarded-proto") || "http"
+  const absoluteUrl = `${protocol}://${host}/auth/login/password/${driver.userId}`
+
+  //Send password in email to the driver
   sendEmail(
     [driver.email],
     "Welcome to RyoGo",
-    AddDriverEmailTemplate({ name: driver.name, code: driver.code }),
+    AddDriverEmailTemplate({
+      name: driver.name,
+      password: driver.password,
+      link: absoluteUrl,
+    }),
   )
 
   return driver

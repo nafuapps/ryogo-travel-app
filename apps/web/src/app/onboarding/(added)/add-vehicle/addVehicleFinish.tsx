@@ -1,4 +1,4 @@
-import { RyogoH3, RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepContent,
@@ -13,14 +13,13 @@ export function AddVehicleFinish() {
 
   return (
     <OnboardingStepForm formId="Step6Form">
-      <OnboardingStepContent contentId="Step6Content">
+      <OnboardingStepContent contentId="Step6Content" success>
         <OnboardingSuccessIcon iconId="Step6Icon" />
         <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoP>{t("Subtitle")}</RyogoP>
+        <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step6Actions">
-        <RyogoP>{t("Description1")}</RyogoP>
-        <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
+        <RyogoSmall>{t("Description1")}</RyogoSmall>
         <OnboardingStepPrimaryAction disabled={false}>
           <Link href="/onboarding/add-driver">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>

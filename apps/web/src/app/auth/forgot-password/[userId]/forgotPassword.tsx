@@ -72,7 +72,7 @@ export default function ForgotPasswordPageComponent({
         onSubmit={methods.handleSubmit(onSubmit)}
         form={methods}
       >
-        <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
+        <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <UserCard user={user} />
         <RyogoInput
           name={"email"}

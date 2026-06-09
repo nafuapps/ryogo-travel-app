@@ -188,7 +188,7 @@ export const userRepository = {
     return await db.insert(users).values(data).returning({
       id: users.id,
       email: users.email,
-      name: users.email,
+      name: users.name,
       code: users.verificationCode,
     })
   },

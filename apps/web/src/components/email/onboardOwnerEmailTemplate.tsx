@@ -13,9 +13,9 @@ export function OnboardOwnerEmailTemplate({
     <div>
       <h1>Welcome, {name}!</h1>
       <p>Thanks for joining RyoGo. Your account has been created.</p>
-      <h5>
+      <p>
         Your verification code is: <b>{code}</b>
-      </h5>
+      </p>
       <p>Use this code to verify your account here: {link}</p>
       <p>
         You can continue with the onboarding process to add vehicles, drivers
@@ -23,7 +23,7 @@ export function OnboardOwnerEmailTemplate({
       </p>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
-        at ${SUPPORT_HELPLINE_NUMBER}
+        at {SUPPORT_HELPLINE_NUMBER}
       </p>
       <small>
         This is an automatically generated email. Please do not reply.

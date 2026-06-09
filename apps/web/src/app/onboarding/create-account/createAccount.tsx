@@ -98,8 +98,13 @@ export default function CreateAccountPageComponent({
         onNext={nextStepHandler}
         onPrev={prevStepHandler}
         finalData={finalData}
+        updateFinalData={setFinalData}
       />,
-      <CreateAccountFinish key={5} />,
+      <CreateAccountFinish
+        key={5}
+        id={finalData.owner.id}
+        password={finalData.owner.password}
+      />,
     ])
 
   return (

@@ -117,14 +117,14 @@
     "HomePage": {
       "Logo":"RyoGo Logo",
       "Header": {
-        "Title": "Welcome to RyoGo!",
+        "Title": "Welcome!",
         "Description": "Let's get your account set up in just a few minutes"
       },
       "BodySteps": {
         "Title": "Onboarding Journey",
         "Step1": "1. Create an owner account for your agency",
         "Step2": "2. Verify your account",
-        "Step3": "3. Register a vehicle",
+        "Step3": "3. Add a vehicle",
         "Step4": "4. Onboard a driver",
         "Step5": "5. Add an agent (optional)"
       },
@@ -483,9 +483,8 @@
       },
       "Finish": {
         "Title": "Congratulations!",
-        "Subtitle": "Your vehicle has been added to the agency account",
-        "Description1": "Next, let's add a driver to your account.",
-        "Description2": "(For now, we will add just 1 driver. You can add more later.)",
+        "Subtitle": "Vehicle has been added to the agency! You can add more later.",
+        "Description1": "Next, let's add a driver.",
         "PrimaryCTA": "Add Driver"
       }
     },
@@ -594,10 +593,10 @@
       },
       "Finish": {
         "Title": "Congratulations!",
-        "Subtitle": "Driver added to your account! You can add more later.",
-        "Email": "Also, an email has been sent with the login and password details to {email}",
-        "Description1": "Finally, we can also add an agent to your account. This step is optional",
-        "Description2": "An agent runs your day-to-day operations like taking bookings from customers, assigning drivers, vehicles, etc.",
+        "Subtitle": "Driver added to your agency! You can add more later.",
+        "Email": "Also, an email has been sent with the login details to {email}",
+        "Description1": "Finally, let's add an agent to your account. This step is optional",
+        "Description2": "An agent runs your day-to-day operations like creating bookings from customers, assigning drivers, vehicles, etc.",
         "PrimaryCTA": "Add Agent",
         "SendInvite": "Send Invite on Whatsapp",
         "SecondaryCTA": "Go to Dashboard"
@@ -650,7 +649,7 @@
       },
       "Finish": {
         "Title": "Congratulations!",
-        "Subtitle": "Agent added to your account! You can add more later.",
+        "Subtitle": "Agent added to your agency! You can add more later.",
         "Email": "Also, an email has been sent with the login details to {email}",
         "PrimaryCTA": "Go to Dashboard",
         "SendInvite": "Send Invite on Whatsapp"
@@ -662,13 +661,8 @@
       "Title": "Welcome!",
       "Subtitle": "It seems like you are logging in for the first time! Please set a new password to secure your account.",
       "Step1": {
+       
         "Field1": {
-          "Title": "Verify Code",
-          "Placeholder": "********",
-          "Description": "Enter the code that was sent in your email. You can check with the agency owner if you are not sure.",
-          "Error1": "Code must be 6 characters"
-        },
-        "Field2": {
           "Title": "New Password",
           "Placeholder": "********",
           "Description": "Choose a new password",
@@ -676,7 +670,7 @@
           "Error2": "Password should not contain spaces",
           "Error3": "New password cannot be the same as old password"
         },
-        "Field3": {
+        "Field2": {
           "Title": "Confirm New Password",
           "Placeholder": "********",
           "Description": "Re-enter your new password",
@@ -684,10 +678,10 @@
           "Error2": "Password should not contain spaces",
           "Error3": "Both passwords do not match"
         },
-        "PrimaryCTA": "Update password",
+        "PrimaryCTA": "Change password",
         "Loading": "Loading",
-        "Success": "Password updated successfully",
-        "APIError": "Code does not match.. please check again"
+        "Success": "Password changed successfully",
+        "APIError": "Could not set new password.. please try again"
       }
     },
     "Sidebar": {
@@ -704,7 +698,7 @@
       },
       "Step3": {
         "Title": "Add Vehicle",
-        "Description": "Register a vehicle in your agency"
+        "Description": "Add a vehicle to your agency"
       },
       "Step4": {
         "Title": "Add Driver",
@@ -2753,7 +2747,9 @@
         "AgentAdded":"New agent {agentName} has been added by {userName}",
         "UserPhotoChanged":"{userName} photo has changed",
         "DowngradedAgencyToBasic":"Agency has been downgraded to BASIC plan",
-        "AgencyLogoChanged":"Agency logo has been changed by {userName}"
+        "AgencyLogoChanged":"Agency logo has been changed by {userName}",
+        "OwnerAdded":"Owner account created for {userName}",
+        "AgencyCreated":"Agency has been created by {userName}"
       }
     },
     "Buttons": {

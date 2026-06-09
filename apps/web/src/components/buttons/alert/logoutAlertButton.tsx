@@ -27,12 +27,7 @@ export default function LogoutAlertButton() {
         </Button>
       }
     >
-      <Button
-        variant="destructive"
-        className="w-full"
-        onClick={logout}
-        disabled={isPending}
-      >
+      <Button variant="destructive" onClick={logout} disabled={isPending}>
         {isPending && <Spinner />}
         {t("YesCTA")}
       </Button>

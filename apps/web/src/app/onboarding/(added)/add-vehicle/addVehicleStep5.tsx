@@ -18,6 +18,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import { useTransition } from "react"
+import { Separator } from "@/components/ui/separator"
 
 export function AddVehicleConfirm(props: {
   onNext: () => void
@@ -60,7 +61,7 @@ export function AddVehicleConfirm(props: {
       } else {
         //If failed, Take back to vehicle onboarding page and show error
         toast.error(t("APIError"))
-        router.replace("/onboarding/add-vehicle")
+        router.refresh()
       }
     })
   }
@@ -77,7 +78,10 @@ export function AddVehicleConfirm(props: {
             name={t("VehicleNumber")}
             value={props.finalData.data.vehicleNumber}
           />
-          <ConfirmValues name={t("Type")} value={props.finalData.data.type} />
+          <ConfirmValues
+            name={t("Type")}
+            value={props.finalData.data.type.toUpperCase()}
+          />
           <ConfirmValues name={t("Brand")} value={props.finalData.data.brand} />
           <ConfirmValues name={t("Model")} value={props.finalData.data.model} />
           <ConfirmValues name={t("Color")} value={props.finalData.data.color} />

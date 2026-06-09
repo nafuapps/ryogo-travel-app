@@ -2,17 +2,22 @@ import { SUPPORT_EMAIL, SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
 
 export function AddAgentEmailTemplate({
   name,
-  code,
+  password,
+  link,
 }: {
   name: string
-  code: string
+  password: string
+  link: string
 }) {
   return (
     <div>
       <h1>Welcome, {name}!</h1>
-      <h5>
-        Your verification code is: <b>{code}</b>
-      </h5>
+      <p>
+        Your password is: <b>{password}</b>
+      </p>
+      <p>
+        Your can login to RyoGo with your phone number here: <b>{link}</b>
+      </p>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
         at

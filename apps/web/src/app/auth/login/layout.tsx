@@ -3,7 +3,6 @@
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
-import RyoGoLogo from "@/components/logo"
 import {
   AuthImage,
   AuthMainWrapper,
@@ -31,10 +30,7 @@ export default async function LoginLayout({
       <AuthSideWrapper>
         <AuthImage src={"/loginBG.png"} alt="Login Page Cover Image" />
       </AuthSideWrapper>
-      <AuthMainWrapper>
-        <RyoGoLogo />
-        {children}
-      </AuthMainWrapper>
+      <AuthMainWrapper>{children}</AuthMainWrapper>
     </LayoutWrapper>
   )
 }

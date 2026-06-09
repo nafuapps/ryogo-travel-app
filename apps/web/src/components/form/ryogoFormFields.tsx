@@ -40,7 +40,11 @@ import {
   ComboboxList,
 } from "@/components/ui/combobox"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 
 export function RyogoInput(props: {

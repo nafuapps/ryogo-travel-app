@@ -17,12 +17,12 @@ export type CreateOwnerAccountRequestType = {
     name: string
     password: string
     photos?: FileList
+    id?: string
   }
 }
 
 export type AddDriverRequestType = {
   agencyId: string
-  ownerId?: string
   data: {
     name: string
     phone: string
@@ -39,7 +39,6 @@ export type AddDriverRequestType = {
 
 export type AddAgentRequestType = {
   agencyId: string
-  ownerId?: string
   data: {
     name: string
     phone: string

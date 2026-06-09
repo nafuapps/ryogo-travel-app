@@ -28,10 +28,7 @@ export default async function LoginLayout({
 
   return (
     <LayoutWrapper id="ForgotPasswordLayout">
-      <AuthMainWrapper>
-        <RyoGoLogo />
-        {children}
-      </AuthMainWrapper>
+      <AuthMainWrapper>{children}</AuthMainWrapper>
       <AuthSideWrapper>
         <AuthImage
           src={"/forgotPasswordBG.png"}

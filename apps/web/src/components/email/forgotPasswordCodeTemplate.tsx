@@ -12,10 +12,9 @@ export function ForgotPasswordCodeTemplate({
   return (
     <div>
       <h1>Hello, {name}!</h1>
-      <h5>
+      <p>
         Your have asked for resetting your password. Your code is: <b>{code}</b>
-        !
-      </h5>
+      </p>
       <p>Use this code to reset password here: {link}</p>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us

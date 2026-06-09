@@ -16,14 +16,14 @@ import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { loginAction } from "@/app/actions/users/loginAction"
 import { createOwnerAccountAction } from "@/app/actions/users/createOwnerAccountAction"
-import { useTransition } from "react"
+import { Dispatch, SetStateAction, useTransition } from "react"
 
 export function CreateAccountConfirm(props: {
   onNext: () => void
   onPrev: () => void
   finalData: CreateOwnerAccountRequestType
+  updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Confirm")
   const router = useRouter()
@@ -56,13 +56,16 @@ export function CreateAccountConfirm(props: {
 
       const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
       if (createdOwnerAccount) {
-        //If success
-        //Login the user
-        await loginAction(
-          createdOwnerAccount.userId,
-          props.finalData.owner.password,
-        )
-        //Move to next step
+        //If success, update userid and move to next success page
+        props.updateFinalData({
+          agency: {
+            ...props.finalData.agency,
+          },
+          owner: {
+            ...props.finalData.owner,
+            id: createdOwnerAccount.userId,
+          },
+        })
         props.onNext()
       } else {
         //If failed, Take to onboarding page and show error

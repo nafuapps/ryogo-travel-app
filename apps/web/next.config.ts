@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
   typedRoutes: true,
   experimental: {
     externalDir: true,
+    serverActions: {
+      bodySizeLimit: "5mb",
+    },
   },
   images: {
     remotePatterns: [new URL("https://uxlvdjfgmmorufabopzd.supabase.co/**")],

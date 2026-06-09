@@ -277,7 +277,8 @@ export const userServices = {
     }
 
     //Step3: Generate a new password
-    const passwordHash = await generatePasswordHash(NEW_USER_DEFAULT_PASSWORD)
+    const newPassword = generateNewPassword()
+    const passwordHash = await generatePasswordHash(newPassword)
 
     //Step4: Create the agent user
     const newUser = await userRepository.createUser({
@@ -288,8 +289,6 @@ export const userServices = {
       status: UserStatusEnum.NEW,
       agencyId: agencyId,
       password: passwordHash,
-      verificationCode: generateVerificationCode(),
-      codeSentAt: new Date(),
     })
     if (!newUser[0]) {
       return
@@ -298,7 +297,7 @@ export const userServices = {
       id: newUser[0].id,
       email: newUser[0].email,
       name: newUser[0].name,
-      code: newUser[0].code,
+      password: newPassword,
     }
   },
 
@@ -326,7 +325,8 @@ export const userServices = {
     }
 
     //Step3: generate a new password
-    const passwordHash = await generatePasswordHash(NEW_USER_DEFAULT_PASSWORD)
+    const newPassword = generateNewPassword()
+    const passwordHash = await generatePasswordHash(newPassword)
 
     //Step4: Create the driver user
     const newUser = await userRepository.createUser({
@@ -337,8 +337,6 @@ export const userServices = {
       status: UserStatusEnum.NEW,
       agencyId: agencyId,
       password: passwordHash,
-      verificationCode: generateVerificationCode(),
-      codeSentAt: new Date(),
     })
     if (!newUser[0]) {
       return
@@ -366,7 +364,7 @@ export const userServices = {
       userId: newDriver.userId,
       name: newUser[0].name,
       email: newUser[0].email,
-      code: newUser[0].code,
+      password: newPassword,
     }
   },
 
@@ -420,7 +418,6 @@ export const userServices = {
 
     //Generate a new password
     const newPassword = generateNewPassword()
-    console.log(newPassword)
 
     //Store new password in DB
     const passwordHash = await generatePasswordHash(newPassword)
@@ -442,22 +439,10 @@ export const userServices = {
   },
 
   //Verify user with code and set new password (by user)
-  async verifyUserAndSetPassword(
-    userId: string,
-    code: string,
-    newPassword: string,
-  ) {
-    const user = await userRepository.readUserById(userId)
-    // If no user found, cannot reset password
-    if (!user) {
-      return
-    }
-    //Check if code matches
-    if (user.verificationCode !== code) {
-      return
-    }
+  async setNewPassword(userId: string, newPassword: string) {
     //Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
+
     const newUserData =
       await userRepository.updatePasswordVerificationAndStatus(
         userId,
@@ -465,6 +450,7 @@ export const userServices = {
         UserStatusEnum.ACTIVE,
         true,
       )
+
     return newUserData[0]
   },
 

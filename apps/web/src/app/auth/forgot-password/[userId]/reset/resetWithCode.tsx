@@ -17,7 +17,8 @@ import {
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { setNewPasswordAction } from "@/app/actions/users/setNewPasswordAction"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
+import { Separator } from "@/components/ui/separator"
 
 export default function ResetWithCodePageComponent({
   userId,
@@ -80,14 +81,15 @@ export default function ResetWithCodePageComponent({
         onSubmit={methods.handleSubmit(onSubmit)}
         form={methods}
       >
-        <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
-        <RyogoInput
+        <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+        <RyogoOTPInput
           name={"code"}
           type="tel"
           label={t("Field1.Title")}
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
         />
+        <Separator />
         <RyogoInput
           name={"password"}
           type="password"

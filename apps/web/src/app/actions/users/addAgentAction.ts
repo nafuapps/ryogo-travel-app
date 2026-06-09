@@ -3,18 +3,13 @@
 import { AddAgentEmailTemplate } from "@/components/email/addAgentEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import { getCurrentUser } from "@/lib/auth"
-import { updateSessionUserStatus } from "@/lib/session"
 import { generateUserPhotoPathName } from "@/lib/utils"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-import {
-  EntityTypeEnum,
-  UserRolesEnum,
-  UserStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
+import { headers } from "next/headers"
 
 export async function addAgentAction(data: AddAgentRequestType) {
   const currentUser = await getCurrentUser()
@@ -37,15 +32,6 @@ export async function addAgentAction(data: AddAgentRequestType) {
     await userServices.updateUserPhoto(agent.id, uploadedPhoto.path)
   }
 
-  if (data.ownerId) {
-    //Activate owner account
-    await userServices.activateUser(data.ownerId)
-    //Activate agency
-    await agencyServices.activateAgency(data.agencyId)
-    //Update status in session cookie
-    await updateSessionUserStatus(UserStatusEnum.ACTIVE)
-  }
-
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     entityType: EntityTypeEnum.USER,
@@ -58,11 +44,20 @@ export async function addAgentAction(data: AddAgentRequestType) {
     },
   })
 
-  //Send verification code email to the agent
+  const headerList = await headers()
+  const host = headerList.get("host")
+  const protocol = headerList.get("x-forwarded-proto") || "http"
+  const absoluteUrl = `${protocol}://${host}/auth/login/password/${agent.id}`
+
+  //Send password in email to the agent
   sendEmail(
     [agent.email],
     "Welcome to RyoGo",
-    AddAgentEmailTemplate({ name: agent.name, code: agent.code }),
+    AddAgentEmailTemplate({
+      name: agent.name,
+      password: agent.password,
+      link: absoluteUrl,
+    }),
   )
 
   return agent

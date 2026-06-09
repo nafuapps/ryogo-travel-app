@@ -38,8 +38,6 @@ export function AddAgentConfirm(props: {
       // Add agent
       const newAgentData: AddAgentRequestType = {
         agencyId: props.finalData.agencyId,
-        ownerId:
-          props.status === UserStatusEnum.NEW ? props.ownerId : undefined,
         data: {
           name: props.finalData.data.name,
           email: props.finalData.data.email,
@@ -50,7 +48,7 @@ export function AddAgentConfirm(props: {
       if (await addAgentAction(newAgentData)) {
         props.onNext()
       } else {
-        //Take back to agent onboarding page and show error
+        //Take to dashboard page and show error
         toast.error(t("APIError"))
         router.replace("/dashboard")
       }

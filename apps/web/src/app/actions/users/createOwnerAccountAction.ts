@@ -8,9 +8,10 @@ import {
   generateUserPhotoPathName,
 } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { headers } from "next/headers"
 import { redirect, RedirectType } from "next/navigation"
@@ -45,6 +46,29 @@ export async function createOwnerAccountAction(
     )
     await userServices.updateUserPhoto(user.userId, uploadedPhoto.path)
   }
+
+  await notificationServices.addNotification({
+    agencyId: user.agencyId,
+    entityType: EntityTypeEnum.USER,
+    entityId: user.userId,
+    isFeed: true,
+    textKey: "OwnerAdded",
+    textObject: {
+      userName: user.name,
+    },
+  })
+
+  await notificationServices.addNotification({
+    agencyId: user.agencyId,
+    entityType: EntityTypeEnum.AGENCY,
+    entityId: user.agencyId,
+    isFeed: true,
+    textKey: "AgencyCreated",
+    textObject: {
+      userName: user.name,
+    },
+    link: `/dashboard/account/agency`,
+  })
 
   const headerList = await headers()
   const host = headerList.get("host")

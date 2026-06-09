@@ -1,24 +1,32 @@
-import { RyogoH3, RyogoP } from "@/components/typography"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepContent,
   OnboardingStepActions,
   OnboardingStepForm,
   OnboardingSuccessIcon,
-  OnboardingStepPrimaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
-import Link from "next/link"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { Button } from "@/components/ui/button"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { MessageSquareShare } from "lucide-react"
 import getAgentInviteMessage from "@/components/whatsapp/getAgentInviteMessage"
+import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
+import { useTransition } from "react"
 
 export function AddAgentFinish(props: {
   finalData: AddAgentRequestType
   agencyName: string
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Finish")
+  const [isPending, startTransition] = useTransition()
+
+  const goToDashboard = async () => {
+    startTransition(async () => {
+      //Activate user and take to dashboard
+      await onboardingCompleteAction()
+    })
+  }
 
   const whatsappInviteLink = getAgentInviteMessage(
     props.finalData.data.phone,
@@ -29,15 +37,13 @@ export function AddAgentFinish(props: {
 
   return (
     <OnboardingStepForm formId="Step6Form">
-      <OnboardingStepContent contentId="Step6Content">
+      <OnboardingStepContent contentId="Step6Content" success>
         <OnboardingSuccessIcon iconId="Step6Icon" />
         <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoP>{t("Subtitle")}</RyogoP>
-        <RyogoP color="slate">
+        <RyogoSmall>{t("Subtitle")}</RyogoSmall>
+        <RyogoSmall color="slate">
           {t("Email", { email: props.finalData.data.email })}
-        </RyogoP>
-      </OnboardingStepContent>
-      <OnboardingStepActions actionsId="Step6Actions">
+        </RyogoSmall>
         <Button
           variant={"outline"}
           onClick={() =>
@@ -47,9 +53,16 @@ export function AddAgentFinish(props: {
           {t("SendInvite")}
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </Button>
-        <OnboardingStepPrimaryAction disabled={false}>
-          <Link href="/dashboard">{t("PrimaryCTA")}</Link>
-        </OnboardingStepPrimaryAction>
+      </OnboardingStepContent>
+      <OnboardingStepActions actionsId="Step6Actions">
+        <Button
+          variant={"default"}
+          size={"lg"}
+          disabled={isPending}
+          onClick={goToDashboard}
+        >
+          {t("PrimaryCTA")}
+        </Button>
       </OnboardingStepActions>
     </OnboardingStepForm>
   )

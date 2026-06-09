@@ -13,7 +13,7 @@ import { UrlObject } from "url"
 import { useState, useTransition } from "react"
 import { markReadMissionAction } from "@/app/actions/missions/markReadMissionAction"
 import { toast } from "sonner"
-import { IconTextTag } from "../tags/IconTextTag"
+import { IconTextTag } from "@/components/tags/IconTextTag"
 import { CircleCheckBig } from "lucide-react"
 
 export default function MissionCard({

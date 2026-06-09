@@ -10,9 +10,9 @@ export function resendCodeEmailTemplate({
   return (
     <div>
       <h1>Hello, {name}!</h1>
-      <h5>
+      <p>
         Your new verification code is: <b>{code}</b>
-      </h5>
+      </p>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
         at

@@ -38,8 +38,6 @@ export function AddDriverConfirm(props: {
       // Add driver
       const newDriverData: AddDriverRequestType = {
         agencyId: props.finalData.agencyId,
-        ownerId:
-          props.userStatus === UserStatusEnum.NEW ? props.ownerId : undefined,
         data: {
           name: props.finalData.data.name,
           email: props.finalData.data.email,
@@ -60,7 +58,7 @@ export function AddDriverConfirm(props: {
       } else {
         //If failed, Take back to driver onboarding page and show error
         toast.error(t("APIError"))
-        router.replace("/onboarding/add-driver")
+        router.refresh()
       }
     })
   }

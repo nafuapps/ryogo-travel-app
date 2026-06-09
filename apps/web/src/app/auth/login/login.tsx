@@ -72,7 +72,7 @@ export default function LoginPageComponent() {
         form={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <RyogoH3 color="slate">{t("PageTitle")} </RyogoH3>
+        <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <RyogoInput
           name={"phoneNumber"}
           type="tel"

@@ -17,7 +17,8 @@ import { toast } from "sonner"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeAction"
 import { RyogoCaption } from "@/components/typography"
-import { VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import { SUPPORT_EMAIL, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import Link from "next/link"
 
 export function VerifyAccountStep1(props: {
   onNext: () => void
@@ -103,7 +104,9 @@ export function VerifyAccountStep1(props: {
                       VERIFY_CODE_TIMEOUT_MINUTES - props.resendDifference,
                   })}
           </OnboardingStepSecondaryAction>
-          <RyogoCaption color="light">{t("Help")}</RyogoCaption>
+          <Link href={`mailto:${SUPPORT_EMAIL}`}>
+            <RyogoCaption color="light">{t("Help")}</RyogoCaption>
+          </Link>
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

@@ -10,9 +10,9 @@ export function ResetPasswordEmailTemplate({
   return (
     <div>
       <h1>Welcome, {name}!</h1>
-      <h5>
+      <p>
         Your password has been reset. Your new password is: <b>{password}</b>
-      </h5>
+      </p>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
         at

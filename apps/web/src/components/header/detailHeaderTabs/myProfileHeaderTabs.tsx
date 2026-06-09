@@ -6,7 +6,7 @@ import {
 } from "@/components/header/headerWrappers"
 import { RyogoH2 } from "@/components/typography"
 
-type MyProfileDetailHeaderTab = "Details" | "Settings" | "Agency" | "Help"
+type MyProfileDetailHeaderTab = "Account" | "Settings" | "Agency" | "Help"
 
 type MyProfileDetailHeaderTabsProps = {
   id: string
@@ -17,7 +17,7 @@ export default async function MyProfileDetailHeaderTabs(
 ) {
   const t = await getTranslations("Dashboard.AccountDetailsHeaderTabs")
   const links = {
-    Details: `/rider/myProfile`,
+    Account: `/rider/myProfile`,
     Settings: `/rider/myProfile/settings`,
     Agency: `/rider/myProfile/agency`,
     Help: `/rider/myProfile/help`,

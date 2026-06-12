@@ -438,7 +438,7 @@ export const userServices = {
     }
   },
 
-  //Verify user with code and set new password (by user)
+  //Verify and activate user and set new password
   async setNewPassword(userId: string, newPassword: string) {
     //Set a new password
     const passwordHash = await generatePasswordHash(newPassword)

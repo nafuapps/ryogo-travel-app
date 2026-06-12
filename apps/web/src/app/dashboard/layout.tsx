@@ -11,6 +11,8 @@ import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { onboardingCompleteAction } from "../actions/users/onboardingCompleteAction"
 
 export default async function DashboardLayout({
   children,
@@ -46,11 +48,20 @@ export default async function DashboardLayout({
       if (!currentUser.isVerified) {
         redirect("/onboarding/verify-account", RedirectType.replace)
       }
-      //If verified owner, go to vehicle onboarding
-      redirect("/onboarding/add-vehicle", RedirectType.replace)
+      const agencyData = await agencyServices.findAgencyData(
+        currentUser.agencyId,
+      )
+      if (agencyData.vehicles.length < 1) {
+        redirect("/onboarding/add-vehicle", RedirectType.replace)
+      }
+      if (agencyData.drivers.length < 1) {
+        redirect("/onboarding/add-driver", RedirectType.replace)
+      }
+      await onboardingCompleteAction()
+    } else {
+      //Else, go to change-password
+      redirect("/onboarding/change-password", RedirectType.replace)
     }
-    //Else, go to change-password
-    redirect("/onboarding/change-password", RedirectType.replace)
   }
 
   //Only non-new owner/agent can come to dashboard

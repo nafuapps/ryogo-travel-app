@@ -1,6 +1,6 @@
 "use server"
 
-import getInvoicePDF from "@/components/pdf/getInvoicePDF"
+import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
 import getInvoiceMessage from "@/components/whatsapp/getInvoiceMessage"
 import { getCurrentUser } from "@/lib/auth"
 import { generateBookingInvoiceName } from "@/lib/utils"
@@ -31,7 +31,7 @@ export async function sendInvoiceAction(
 
   if (!invoiceUrl) {
     //If no invoice url exists, generate invoice pdf file
-    const invoiceFile = await getInvoicePDF(bookingDetails)
+    const invoiceFile = await getBookingInvoicePDF(bookingDetails)
 
     //Upload file and get storage url
     invoiceUrl = (

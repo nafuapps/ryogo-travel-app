@@ -10,7 +10,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 
-export function InvoiceDocument({
+export function BookingInvoiceDocument({
   booking,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
@@ -191,10 +191,10 @@ export function InvoiceDocument({
   )
 }
 
-export default async function getInvoicePDF(
+export default async function getBookingInvoicePDF(
   bookingDetails: NonNullable<FindBookingDetailsByIdType>,
 ) {
   return await ReactPDF.pdf(
-    <InvoiceDocument booking={bookingDetails} />,
+    <BookingInvoiceDocument booking={bookingDetails} />,
   ).toBlob()
 }

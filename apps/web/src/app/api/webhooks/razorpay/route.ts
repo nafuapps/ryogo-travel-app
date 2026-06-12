@@ -8,7 +8,7 @@ import {
   PaymentMethodEnum,
   PaymentStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import generateAndsendInvoiceEmail from "@/components/email/generateAndsendInvoiceEmail"
+import generateAndSendSubscriptionInvoiceEmail from "@/components/email/generateAndSendSubscriptionInvoiceEmail"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { addDays } from "date-fns"
@@ -151,7 +151,7 @@ export async function POST(req: NextRequest) {
         link: `/dashboard/account/agency`,
       })
 
-      generateAndsendInvoiceEmail(
+      generateAndSendSubscriptionInvoiceEmail(
         paymentEntity.order_id,
         updatedOrder.agencyId,
         updatedOrder.userId,

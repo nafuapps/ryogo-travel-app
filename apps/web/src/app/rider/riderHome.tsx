@@ -11,10 +11,6 @@ import {
   UpcomingBookingCard,
 } from "@/components/cards/booking/bookingCards"
 
-/**
- * TODO: Show important actions
- */
-
 export default async function RiderHomePageComponent({
   assignedBookings,
   driver,

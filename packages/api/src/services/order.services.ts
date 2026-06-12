@@ -173,7 +173,7 @@ export type FindAllOrdersByAgencyIdType = Awaited<
 export type FindAllOrdersByUserIdType = Awaited<
   ReturnType<typeof orderServices.findAllOrdersByUserId>
 >
-export type FindOrderByRPIdTypr = Awaited<
+export type FindOrderByRPIdType = Awaited<
   ReturnType<typeof orderServices.findOrderByRPId>
 >
 

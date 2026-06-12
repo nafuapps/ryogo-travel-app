@@ -7,7 +7,7 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 import { SubscriptionInvoiceEmailTemplate } from "./subscriptionInvoiceEmailTemplate"
 
-export default async function generateAndsendInvoiceEmail(
+export default async function generateAndSendSubscriptionInvoiceEmail(
   rpOrderId: string,
   agencyId: string,
   userId: string,
@@ -17,8 +17,11 @@ export default async function generateAndsendInvoiceEmail(
   const orderDetails = await orderServices.findOrderByRPId(rpOrderId)
   if (!userDetails || !agencyDetails || !orderDetails) return
 
-  // Generate invoice pdf
-  const invoiceFile = await getSubscriptionInvoicePDF()
+  // Generate subscription invoice pdf
+  const invoiceFile = await getSubscriptionInvoicePDF(
+    orderDetails,
+    agencyDetails,
+  )
   const invoiceName = generateSubscriptionInvoiceName(agencyId, orderDetails.id)
   //Upload invoice file and get storage url
   const invoiceUrl = (await uploadPDFBlob(invoiceFile, invoiceName)).path

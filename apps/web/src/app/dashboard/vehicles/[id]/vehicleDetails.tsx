@@ -27,8 +27,6 @@ import {
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 
-//TODO: Add vehicle schedule chart
-
 export default async function VehicleDetailsPageComponent({
   vehicle,
 }: {

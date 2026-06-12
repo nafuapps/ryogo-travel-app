@@ -245,7 +245,7 @@ export default async function BookingDetailsPageComponent({
             )
           )}
           <BookingItem
-            title={t("AssignDriver")}
+            title={t("AssignedDriver")}
             value={
               bookingDetails.assignedDriver
                 ? bookingDetails.assignedDriver.name

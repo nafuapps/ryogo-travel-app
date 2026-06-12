@@ -29,8 +29,6 @@ import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { IconsList } from "@/components/tags/IconsList"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 
-//TODO: Add driver schedule chart
-
 export default async function DriverDetailsPageComponent({
   driver,
 }: {

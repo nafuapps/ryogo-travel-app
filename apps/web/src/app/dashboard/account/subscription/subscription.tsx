@@ -49,6 +49,7 @@ import { getTranslations } from "next-intl/server"
 import SubscriptionPaymentOptionsComponent from "./subscriptionPaymentOptions"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import SubscriptionInvoicePDFViewer from "@/components/pdf/subscriptionInvoicePDFViewer"
 
 export default async function SubscriptionPageComponent({
   userDetails,
@@ -79,6 +80,12 @@ export default async function SubscriptionPageComponent({
 
   return (
     <PageWrapper id="AccountSubscriptionPage">
+      {/* {lastPaidOrder && (
+        <SubscriptionInvoicePDFViewer
+          order={lastPaidOrder}
+          agency={agencyDetails}
+        />
+      )} */}
       <Link href="/dashboard/account/subscription/orders" className="self-end">
         <Button variant={"outline"} size="sm">
           <RyogoCaption color="slate">{t("ViewOrders")}</RyogoCaption>

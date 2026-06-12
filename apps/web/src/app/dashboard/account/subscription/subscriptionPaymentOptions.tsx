@@ -108,7 +108,6 @@ function getDiscountValue(mrp: number, price: number) {
   return (((mrp - price) * 100) / mrp).toFixed(0)
 }
 
-//TODO: Best value
 function PaymentOptionCard({
   plan,
   mrp,

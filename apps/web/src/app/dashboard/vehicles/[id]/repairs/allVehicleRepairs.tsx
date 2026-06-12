@@ -16,8 +16,6 @@ import { RepairStatusPill } from "@/components/statusPills/statusPills"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
-//TODO: User can mark vehicle has gone for repair
-
 export default async function AllVehicleRepairsPageComponent({
   repairs,
   vehicleId,

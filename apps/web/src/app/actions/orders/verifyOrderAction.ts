@@ -1,6 +1,6 @@
 "use server"
 
-import generateAndsendInvoiceEmail from "@/components/email/generateAndsendInvoiceEmail"
+import generateAndSendSubscriptionInvoiceEmail from "@/components/email/generateAndSendSubscriptionInvoiceEmail"
 import { getCurrentUser } from "@/lib/auth"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
@@ -67,7 +67,7 @@ export async function verifyOrderAction({
   })
 
   // 4. Send invoice to user
-  generateAndsendInvoiceEmail(rpOrderId, agencyId, userId)
+  generateAndSendSubscriptionInvoiceEmail(rpOrderId, agencyId, userId)
 
   return updatedRecord
 }

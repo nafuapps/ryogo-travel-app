@@ -14,8 +14,6 @@ import {
 import { LeaveStatusPill } from "@/components/statusPills/statusPills"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 
-//TODO: User can mark driver has gone on leave
-
 export default async function AllDriverLeavesPageComponent({
   leaves,
   driverId,

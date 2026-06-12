@@ -76,7 +76,6 @@ export default async function MyProfileAgencyDetailsPageComponent({
                 <RyogoCaption color="light">{t("CallAgent")}</RyogoCaption>
               </Link>
             </Button>
-            {/* //TODO: Driver can send message to assigned agent on whatsapp */}
           </SectionRowWrapper>
         </SectionWrapper>
       )}

@@ -13,6 +13,7 @@ import { MessageSquareShare } from "lucide-react"
 import getAgentInviteMessage from "@/components/whatsapp/getAgentInviteMessage"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useTransition } from "react"
+import { useRouter } from "next/navigation"
 
 export function AddAgentFinish(props: {
   finalData: AddAgentRequestType
@@ -20,11 +21,13 @@ export function AddAgentFinish(props: {
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Finish")
   const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   const goToDashboard = async () => {
     startTransition(async () => {
       //Activate user and take to dashboard
       await onboardingCompleteAction()
+      router.push("/dashboard")
     })
   }
 

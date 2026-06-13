@@ -13,11 +13,13 @@ export function AddDriverEmailTemplate({
     <div>
       <h1>Welcome, {name}!</h1>
       <p>
-        Your password is: <b>{password}</b>
+        You have been added as a driver on RyoGo. We are excited to have you on
+        board!
       </p>
       <p>
-        Your can login to RyoGo with your phone number here: <b>{link}</b>
+        Your password is: <b>{password}</b>
       </p>
+      <p>Your can login to RyoGo with your phone number here: {link}</p>
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
         at {SUPPORT_HELPLINE_NUMBER}

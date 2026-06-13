@@ -34,6 +34,11 @@ export default async function OnboardingInprogressLayout({
     redirect("/onboarding/verify-account", RedirectType.replace)
   }
 
-  //Only verified owner can continue with onboarding steps
+  //Not new owner, needs redirection to dashboard
+  if (currentUser.status !== UserStatusEnum.NEW) {
+    redirect("/dashboard", RedirectType.replace)
+  }
+
+  //Only verified new owner can continue with onboarding steps
   return children
 }

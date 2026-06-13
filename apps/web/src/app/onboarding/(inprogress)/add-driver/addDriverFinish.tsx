@@ -15,6 +15,7 @@ import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useTransition } from "react"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
+import { useRouter } from "next/navigation"
 
 export function AddDriverFinish(props: {
   finalData: AddDriverRequestType
@@ -22,11 +23,13 @@ export function AddDriverFinish(props: {
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Finish")
   const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   const goToDashboard = async () => {
     startTransition(async () => {
       //Activate user and take to dashboard
       await onboardingCompleteAction()
+      router.push("/dashboard")
     })
   }
 

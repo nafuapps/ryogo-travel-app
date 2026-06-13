@@ -16,6 +16,7 @@ import DashboardScheduleDayAxis, {
 import { User } from "lucide-react"
 import { OngoingBookingPopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function BookingScheduleChartComponent({
   bookings14Days,
@@ -49,7 +50,7 @@ export default function BookingScheduleChartComponent({
             return (
               <DashboardScheduleItem key={index}>
                 <DashboardScheduleItemID
-                  icon={User}
+                  icon={<RyogoIcon icon={User} size="md" />}
                   imageAlt={t("Photo")}
                   title={b.customerName}
                   photoUrl={b.customerPhotoUrl}

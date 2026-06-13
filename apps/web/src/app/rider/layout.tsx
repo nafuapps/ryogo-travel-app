@@ -1,5 +1,3 @@
-//Layout for Rider pages
-
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 import RiderSidebar from "@/components/sidebar/riderSidebar"
@@ -33,7 +31,6 @@ export default async function RiderLayout({
 
   //If not driver, go to dashboard
   if (currentUser.userRole !== UserRolesEnum.DRIVER) {
-    //If not driver, go to dashboard
     redirect("/dashboard", RedirectType.replace)
   }
 

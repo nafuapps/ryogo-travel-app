@@ -8,8 +8,12 @@ export default async function BookingScheduleComponent({
 }) {
   const bookings14Days = await bookingServices.findBookingsScheduleNextDays(
     agencyId,
-    14
+    14,
   )
+
+  if (bookings14Days.length === 0) {
+    return <></>
+  }
 
   return <BookingScheduleChartComponent bookings14Days={bookings14Days} />
 }

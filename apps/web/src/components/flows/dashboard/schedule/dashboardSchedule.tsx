@@ -141,7 +141,7 @@ export function DashboardScheduleItemID({
   imageAlt,
   photoUrl,
 }: {
-  icon: LucideIcon
+  icon: React.ReactNode
   title: string
   imageAlt: string
   photoUrl: string | null
@@ -151,9 +151,9 @@ export function DashboardScheduleItemID({
       {photoUrl ? (
         <RyogoImage src={getFileUrl(photoUrl)} alt={imageAlt} imageSize="xs" />
       ) : (
-        <RyogoEnclosedIcon icon={icon} size="md" circular />
+        icon
       )}
-      <RyogoCaption color="slate" weight="font-bold">
+      <RyogoCaption color="light" weight="font-bold">
         {title}
       </RyogoCaption>
     </div>

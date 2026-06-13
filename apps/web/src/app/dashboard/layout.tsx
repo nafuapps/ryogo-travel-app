@@ -1,5 +1,3 @@
-//Layout for dashboard pages
-
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 import DashboardSidebar from "@/components/sidebar/dashboardSidebar"

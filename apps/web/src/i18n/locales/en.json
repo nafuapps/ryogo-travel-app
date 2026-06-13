@@ -1664,8 +1664,8 @@
         "Header": "Upload vehicle photo",
         "Title": "Choose a photo to upload:",
         "Placeholder": "Browse a new photo",
-        "Error1": "Vehicle photo is required",
-        "Error2": "File size should be less than 1MB",
+        "Error1": "Vehicle photo is required and size should be less than 1MB",
+        "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png)",
         "Save": "Save changes",
         "Close": "Cancel",
         "Success": "Vehicle photo updated successfully!",
@@ -2040,8 +2040,8 @@
         "Header": "Upload driver photo",
         "Title": "Choose a photo to upload:",
         "Placeholder": "Browse a new photo",
-        "Error1": "Driver photo is required",
-        "Error2": "File size should be less than 1MB",
+        "Error1": "Driver photo is required and size should be less than 1MB",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
         "Save": "Save changes",
         "Close": "Cancel",
         "Success": "Driver photo updated successfully!",
@@ -2279,8 +2279,8 @@
         "Header": "Upload customer photo",
         "Title": "Choose a photo to upload:",
         "Placeholder": "Browse a new photo",
-        "Error1": "Customer photo is required",
-        "Error2": "File size should be less than 1MB",
+        "Error1": "Customer photo is required and size should be less than 1MB",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
         "Save": "Save changes",
         "Close": "Cancel",
         "Success": "Customer photo updated successfully!",
@@ -2634,6 +2634,14 @@
       "TripLogs": "Trip Logs",
       "Completed": "COMPLETED",
       "Pending": "PENDING"
+    },
+    "Analytics":{
+      "AnalyticsTrialWarning":"You cannot access analytics with basic plan.",
+      "AnalyticsExpiredWarning":"Your subscription plan has expired.",
+      "AnalyticsTrialAction":"Please upgrade your subscription plan to get advanced analytics!",
+      "AnalyticsExpiredAction":"Please renew your subscription plan to access analytics!",
+      "BuyCTA":"Buy Premium",
+      "RenewCTA":"Renew Subscription"
     },
     "Search":{
       "Field1":{

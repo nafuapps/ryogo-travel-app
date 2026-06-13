@@ -20,6 +20,7 @@ import {
   RepairPopoverCard,
 } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
+import getVehicleIcon from "@/components/icons/vehicleIcon"
 
 export default function VehiclesScheduleChartComponent({
   vehicleSchedule14Days,
@@ -59,7 +60,7 @@ export default function VehiclesScheduleChartComponent({
             return (
               <DashboardScheduleItem key={index}>
                 <DashboardScheduleItemID
-                  icon={Car}
+                  icon={getVehicleIcon(vehicle.type, "md")}
                   imageAlt={t("Photo")}
                   title={vehicle.vehicleNumber}
                   photoUrl={vehicle.vehiclePhotoUrl}

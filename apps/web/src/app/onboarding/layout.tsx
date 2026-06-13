@@ -1,5 +1,3 @@
-//Layout page for onboarding pages
-
 import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"

@@ -1,5 +1,3 @@
-//Layout for booking details pages
-
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { BookingRegex } from "@/lib/regex"

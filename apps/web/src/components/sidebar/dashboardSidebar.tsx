@@ -38,31 +38,26 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       title: t("Home"),
       url: "/dashboard",
       icon: House,
-      onlyOwner: false,
     },
     {
       title: t("Bookings"),
       url: "/dashboard/bookings",
       icon: Tickets,
-      onlyOwner: false,
     },
     {
       title: t("Vehicles"),
       url: "/dashboard/vehicles",
       icon: Car,
-      onlyOwner: false,
     },
     {
       title: t("Drivers"),
       url: "/dashboard/drivers",
       icon: IdCard,
-      onlyOwner: false,
     },
     {
       title: t("Customers"),
       url: "/dashboard/customers",
       icon: BadgeIndianRupee,
-      onlyOwner: false,
     },
     {
       title: t("Users"),
@@ -84,19 +79,16 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       title: t("Search"),
       url: "/dashboard/search",
       icon: Search,
-      onlyOwner: false,
     },
     {
       title: t("Feed"),
       url: "/dashboard/feed",
       icon: Megaphone,
-      onlyOwner: false,
     },
     {
       title: t("Account"),
       url: "/dashboard/account",
       icon: UserRoundPen,
-      onlyOwner: false,
     },
   ]
 
@@ -111,24 +103,17 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
         <RyoGoSidebarLogo open={sidebarOpen} />
       </SidebarHeader>
       <SidebarContent className="px-2 my-4">
-        {contentItems.map((item) =>
-          item.onlyOwner ? (
-            props.isOwner && (
+        {contentItems.map(
+          (item) =>
+            //Show onlyOwner items only if isOwner
+            (item.onlyOwner ? props.isOwner : true) && (
               <MenuButton
                 key={item.title}
                 {...item}
                 open={sidebarOpen}
                 active={pathname === item.url}
               />
-            )
-          ) : (
-            <MenuButton
-              key={item.title}
-              {...item}
-              open={sidebarOpen}
-              active={pathname === item.url}
-            />
-          ),
+            ),
         )}
       </SidebarContent>
       <SidebarFooter className="my-4">

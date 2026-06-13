@@ -18,7 +18,7 @@ export async function resendVerificationCodeAction() {
   //Send new code to the user
   sendEmail(
     [user.email],
-    "RyoGo Owner Account Verification Code",
+    "RyoGo Account Verification Code",
     resendCodeEmailTemplate({ name: user.name, code: user.code }),
   )
 

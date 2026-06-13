@@ -19,6 +19,7 @@ import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 
 export default function VerifyAccountPageComponent(props: {
+  code: string
   codeSentAt?: Date | null
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage")
@@ -46,6 +47,7 @@ export default function VerifyAccountPageComponent(props: {
           ? differenceInMinutes(new Date(), props.codeSentAt)
           : 999
       }
+      code={props.code}
     />,
     <VerifyAccountFinish key={1} />,
   ])

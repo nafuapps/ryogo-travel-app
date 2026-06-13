@@ -5,12 +5,12 @@ import { updateSessionVerificationStatus } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function verifyAccountAction(code: string) {
+export async function verifyAccountAction() {
   const currentUser = await getCurrentUser()
   if (!currentUser || currentUser.userRole !== UserRolesEnum.OWNER) {
     return
   }
-  const user = await userServices.verifyUser(currentUser.userId, code)
+  const user = await userServices.verifyUser(currentUser.userId)
   if (!user || !user.isVerified) return
 
   //Update verification in session cookie

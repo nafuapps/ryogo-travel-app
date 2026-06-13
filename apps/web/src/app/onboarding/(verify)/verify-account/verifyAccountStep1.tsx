@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -12,9 +11,8 @@ import {
   OnboardingStepSecondaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
-import { useEffect, useTransition } from "react"
+import { useTransition } from "react"
 import { toast } from "sonner"
-import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeAction"
 import { RyogoCaption } from "@/components/typography"
 import { SUPPORT_EMAIL, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
@@ -23,6 +21,7 @@ import Link from "next/link"
 export function VerifyAccountStep1(props: {
   onNext: () => void
   resendDifference: number
+  code: string
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage.Step1")
   const [isPending, startTransition] = useTransition()
@@ -38,25 +37,19 @@ export function VerifyAccountStep1(props: {
     },
   })
 
-  // Reset form with delay when form is submitted
-  useEffect(() => {
-    if (!isPending) {
-      setTimeout(() => {
-        formData.reset()
-      }, 1000)
-    }
-  }, [isPending])
-
   //Submit actions
-  const onSubmit = async (data: Step1Type) => {
-    startTransition(async () => {
-      if (await verifyAccountAction(data.userEnteredcode)) {
-        props.onNext()
-        toast.success(t("VerifySuccess"))
-      } else {
-        toast.error(t("APIError"))
-      }
-    })
+  const onSubmit = (data: Step1Type) => {
+    setTimeout(() => {
+      formData.setValue("userEnteredcode", "")
+    }, 1000)
+    if (data.userEnteredcode === props.code) {
+      props.onNext()
+    } else {
+      formData.setError("userEnteredcode", {
+        type: "manual",
+        message: t("APIError"),
+      })
+    }
   }
 
   //Submit actions
@@ -86,8 +79,7 @@ export function VerifyAccountStep1(props: {
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step1Actions">
           <OnboardingStepPrimaryAction disabled={isPending}>
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
+            {t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
           <OnboardingStepSecondaryAction
             onClick={resendCode}

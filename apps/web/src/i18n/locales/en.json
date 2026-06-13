@@ -294,8 +294,6 @@
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Resend Code",
         "Timeout": "Wait {difference} minutes to resend code",
-        "VerifySuccess": "Code verified!",
-        "Loading": "Loading..",
         "Sending": "Sending code..",
         "APIError": "Code does not match",
         "ResendError": "Cannot resend code.. try again later",

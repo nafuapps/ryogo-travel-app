@@ -47,5 +47,14 @@ export default async function VerifyAccountPage() {
   }
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
-  return <VerifyAccountPageComponent codeSentAt={userDetails?.codeSentAt} />
+  if (!userDetails) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
+  return (
+    <VerifyAccountPageComponent
+      code={userDetails.verificationCode}
+      codeSentAt={userDetails.codeSentAt}
+    />
+  )
 }

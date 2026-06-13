@@ -603,12 +603,7 @@ export const userServices = {
   },
 
   //Verify user with code
-  async verifyUser(userId: string, code: string) {
-    const user = await userRepository.readUserById(userId)
-    if (!user) return
-    if (user.verificationCode !== code) {
-      return
-    }
+  async verifyUser(userId: string) {
     const verifiedUser = await userRepository.updateVerificationStatus(userId)
     return verifiedUser[0]
   },

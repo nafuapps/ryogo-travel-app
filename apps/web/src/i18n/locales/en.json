@@ -1,8 +1,8 @@
 {
   "Auth": {
     "LoginPage": {
-      "SignupTitle":"Want to create an account for your agency?",
-      "SignupCTA":"Sign up for free",
+      "SignupTitle": "Want to create an account for your agency?",
+      "SignupCTA": "Sign up for free",
       "Step1": {
         "PageTitle": "Log into RyoGo",
         "Input": {
@@ -38,9 +38,9 @@
       }
     },
     "ForgotPassword": {
-      "RememberTitle":"Remember your password?",
-      "RememberCTA":"Go to Login",
-      "Step1":{
+      "RememberTitle": "Remember your password?",
+      "RememberCTA": "Go to Login",
+      "Step1": {
         "PageTitle": "Forgot password?",
         "Input": {
           "Title": "Verify your email address",
@@ -48,7 +48,7 @@
           "Description": "We will confirm your identity and send you a code to set a new password"
         },
         "PrimaryCTA": "Get verification code",
-        "CodeSentRecently":"Wait {count} minutes to resend code",
+        "CodeSentRecently": "Wait {count} minutes to resend code",
         "Loading": "Loading",
         "Back": "Back",
         "Error1": "Not a valid email",
@@ -56,14 +56,14 @@
         "Success": "Verification code sent.. check your inbox!",
         "Error": "Cannot send code.. Try again later!"
       },
-      "Step2":{
+      "Step2": {
         "PageTitle": "Set a new password",
         "Field1": {
           "Title": "Enter verification code",
           "Placeholder": "123456",
           "Description": "Provide the verification code sent to your email address",
-          "Error1":"Code must be 6 digits",
-          "Error2":"Code does not match our records"
+          "Error1": "Code must be 6 digits",
+          "Error2": "Code does not match our records"
         },
         "Field2": {
           "Title": "New Password",
@@ -85,12 +85,11 @@
         "DidnotReceiveCode": "Did not receive code?",
         "Success": "Password reset successfully!",
         "Error": "Cannot reset password.. Try again later!"
-      
       }
     },
     "SignupPage": {
-      "LoginTitle":"Already have an account?",
-      "LoginCTA":"Login Now",
+      "LoginTitle": "Already have an account?",
+      "LoginCTA": "Login Now",
       "Step1": {
         "PageTitle": "Welcome to RyoGo!",
         "Input": {
@@ -98,7 +97,7 @@
           "Placeholder": "9876543210"
         },
         "PrimaryCTA": "Create agency account",
-        "Loading":"Loading..",
+        "Loading": "Loading..",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric"
       },
@@ -115,7 +114,7 @@
   },
   "Onboarding": {
     "HomePage": {
-      "Logo":"RyoGo Logo",
+      "Logo": "RyoGo Logo",
       "Header": {
         "Title": "Welcome!",
         "Description": "Let's setup your agency account. It will take just a few minutes."
@@ -281,7 +280,7 @@
         "PrimaryCTA": "Verify Account"
       }
     },
-    "VerifyAccountPage":{
+    "VerifyAccountPage": {
       "Title": "Verify Account",
       "Description": "Step {step} of {total}",
       "Step1": {
@@ -298,7 +297,7 @@
         "APIError": "Code does not match",
         "ResendError": "Cannot resend code.. try again later",
         "ResendSuccess": "New verification code has been sent to your email",
-        "Help":"Not able to receive code? Please contact our support team."
+        "Help": "Not able to receive code? Please contact our support team."
       },
       "Finish": {
         "Title": "Great!",
@@ -651,15 +650,13 @@
         "Email": "Also, an email has been sent with the login details to {email}",
         "PrimaryCTA": "Go to Dashboard",
         "SendInvite": "Send Invite on Whatsapp"
-
       }
     },
     "ChangePasswordPage": {
-      "Logo":"RyoGo Logo",
+      "Logo": "RyoGo Logo",
       "Title": "Welcome!",
       "Subtitle": "It seems like you are logging in for the first time! Please set a new password to secure your account.",
       "Step1": {
-       
         "Field1": {
           "Title": "New Password",
           "Placeholder": "********",
@@ -683,9 +680,9 @@
       }
     },
     "Sidebar": {
-      "Logo":"RyoGo Logo",
+      "Logo": "RyoGo Logo",
       "Heading": "Setting up your account",
-      "NumberSteps":"{number, plural, =1 {[1 step]} other {[# steps]}}",
+      "NumberSteps": "{number, plural, =1 {[1 step]} other {[# steps]}}",
       "Step1": {
         "Title": "Create Account",
         "Description": "Create owner account and agency profile"
@@ -718,7 +715,7 @@
       "Users": "Users",
       "Analytics": "Analytics",
       "Search": "Search",
-      "Feed":"Feed",
+      "Feed": "Feed",
       "Account": "Account"
     },
     "Header": {
@@ -769,7 +766,7 @@
         "/dashboard/drivers/[id]/leaves": "Driver Leaves",
         "/dashboard/drivers/[id]/leaves/new": "New Leave",
         "/dashboard/drivers/[id]/leaves/modify": "Modify Leave",
-        "/dashboard/feed":"Notification Feed",
+        "/dashboard/feed": "Notification Feed",
         "/dashboard/search": "Search",
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New Agent",
@@ -793,7 +790,7 @@
     "Home": {
       "BookingMetrics": {
         "Title": "BOOKINGS (24H)",
-        "Subtitle":"{createdChange} {more} confirmed than weekly avg",
+        "Subtitle": "{createdChange} {more} confirmed than weekly avg",
         "Leads": "Leads",
         "Ongoing": "Ongoing",
         "Completed": "Completed",
@@ -817,7 +814,7 @@
       },
       "RevenueMetrics": {
         "Title": "REVENUE (24H)",
-        "Subtitle":"{revenueChange} {more} revenue than weekly avg",
+        "Subtitle": "{revenueChange} {more} revenue than weekly avg",
         "In": "Credit",
         "Out": "Debit",
         "Commission": "Avg commission rate"
@@ -842,7 +839,7 @@
       },
       "Schedule": {
         "Title": "Schedule",
-        "Photo":"Customer photo"
+        "Photo": "Customer photo"
       },
       "Leads": {
         "Title": "Leads",
@@ -852,16 +849,16 @@
       }
     },
     "NewBooking": {
-      "BookingTrialWarning":"You have reached the monthly booking limit for basic plan.",
-      "BookingExpiredWarning":"Your subscription plan has expired and you have reached the monthly booking limit.",
-      "BookingTrialAction":"Please upgrade your subscription plan to create bookings!",
-      "BookingExpiredAction":"Please renew your subscription plan to create bookings!",
-      "AgentTrialWarning":"You have reached the agent limit for basic plan.",
-      "AgentExpiredWarning":"Your subscription plan has expired.",
-      "AgentTrialAction":"Please upgrade your subscription plan to create bookings!",
-      "AgentExpiredAction":"Please renew your subscription plan to create bookings!",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
+      "BookingTrialWarning": "You have reached the monthly booking limit for basic plan.",
+      "BookingExpiredWarning": "Your subscription plan has expired and you have reached the monthly booking limit.",
+      "BookingTrialAction": "Please upgrade your subscription plan to create bookings!",
+      "BookingExpiredAction": "Please renew your subscription plan to create bookings!",
+      "AgentTrialWarning": "You have reached the agent limit for basic plan.",
+      "AgentExpiredWarning": "Your subscription plan has expired.",
+      "AgentTrialAction": "Please upgrade your subscription plan to create bookings!",
+      "AgentExpiredAction": "Please renew your subscription plan to create bookings!",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
       "Form": {
         "Km": " Km",
         "Days": " {count, plural, =1 {day} other {days}}",
@@ -961,10 +958,10 @@
           "Title": "Assignment options",
           "Subtitle": "Step 3 of 5",
           "Description": "Assign vehicle and driver for the trip",
-          "TrialWarning":"You are seeing limited list of vehicles and drivers in basic plan. Subscribe to add more!",
-          "ExpiredWarning":"You are seeing limited list of vehicles and drivers because your subscription plan has expired.",
-          "BuyCTA":"Buy Premium",
-          "RenewCTA":"Renew Subscription",
+          "TrialWarning": "You are seeing limited list of vehicles and drivers in basic plan. Subscribe to add more!",
+          "ExpiredWarning": "You are seeing limited list of vehicles and drivers because your subscription plan has expired.",
+          "BuyCTA": "Buy Premium",
+          "RenewCTA": "Renew Subscription",
           "Vehicle": {
             "Title": "Choose a vehicle:",
             "Score": "RyoGo Score",
@@ -1382,10 +1379,10 @@
       "Error": "Cannot modify expense.. Try again later!"
     },
     "AssignDriver": {
-      "TrialWarning":"You are seeing limited list of drivers in basic plan. Subscribe to add more drivers!",
-      "ExpiredWarning":"You are seeing limited list of drivers because your subscription plan has expired.",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
+      "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to add more drivers!",
+      "ExpiredWarning": "You are seeing limited list of drivers because your subscription plan has expired.",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
       "Title": "Select a driver to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
@@ -1402,10 +1399,10 @@
       "Error": "Cannot assign driver.. Try again later!"
     },
     "AssignVehicle": {
-      "TrialWarning":"You are seeing limited list of vehicles in basic plan. Subscribe to add more vehicles!",
-      "ExpiredWarning":"You are seeing limited list of vehicles because your subscription plan has expired.",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
+      "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to add more vehicles!",
+      "ExpiredWarning": "You are seeing limited list of vehicles because your subscription plan has expired.",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
       "Title": "Select a vehicle to assign for this booking",
       "Tile": {
         "Title": "Choose vehicle",
@@ -1425,10 +1422,10 @@
       "Error": "Cannot assign vehicle.. Try again later!"
     },
     "AssignUser": {
-      "TrialWarning":"You are seeing limited list of agents in basic plan. Subscribe to add more agents!",
-      "ExpiredWarning":"You are seeing limited list of agents because your subscription plan has expired.",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
+      "TrialWarning": "You are seeing limited list of agents in basic plan. Subscribe to add more agents!",
+      "ExpiredWarning": "You are seeing limited list of agents because your subscription plan has expired.",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
       "Title": "Select a user to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
@@ -1455,17 +1452,17 @@
       },
       "Schedule": {
         "Title": "Schedule",
-        "Photo":"Vehicle photo"
+        "Photo": "Vehicle photo"
       },
       "History": {}
     },
     "NewVehicle": {
-      "TrialWarning":"You have reached the limit for basic plan.",
-      "ExpiredWarning":"Your subscription plan has expired.",
-      "TrialAction":"Please upgrade your subscription plan to add more vehicles!",
-      "ExpiredAction":"Please renew your subscription plan to add more vehicles!",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
+      "TrialWarning": "You have reached the limit for basic plan.",
+      "ExpiredWarning": "Your subscription plan has expired.",
+      "TrialAction": "Please upgrade your subscription plan to add more vehicles!",
+      "ExpiredAction": "Please renew your subscription plan to add more vehicles!",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
       "Step1": {
         "Title": "Adding vehicle",
         "Subtitle": "Step 1 of 5",
@@ -1902,17 +1899,17 @@
       },
       "Schedule": {
         "Title": "Schedule",
-        "Photo":"Driver photo"
+        "Photo": "Driver photo"
       },
       "History": {}
     },
     "NewDriver": {
-      "TrialWarning":"You have reached the limit for basic plan.",
-      "ExpiredWarning":"Your subscription plan has expired.",
-      "TrialAction":"Please upgrade your subscription plan to add more drivers!",
-      "ExpiredAction":"Please renew your subscription plan to add more drivers!",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
+      "TrialWarning": "You have reached the limit for basic plan.",
+      "ExpiredWarning": "Your subscription plan has expired.",
+      "TrialAction": "Please upgrade your subscription plan to add more drivers!",
+      "ExpiredAction": "Please renew your subscription plan to add more drivers!",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
       "Step1": {
         "Title": "Adding Driver",
         "Subtitle": "Step 1 of 4",
@@ -2173,7 +2170,7 @@
         "AddCustomer": "Add customer",
         "Photo": "View customer photo",
         "Search": "Search",
-        "Type":"Type to search"
+        "Type": "Type to search"
       }
     },
     "NewCustomer": {
@@ -2386,9 +2383,9 @@
       "Photo": "View logo",
       "SubscriptionInfo": "Subscription info",
       "ValidTill": "Expires on: ",
-       "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
-      "ViewCTA":"View Subscription",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
+      "ViewCTA": "View Subscription",
       "EditDetails": "Edit Agency Details",
       "ChangeEmail": {
         "Title": "Change Agency Email",
@@ -2463,62 +2460,62 @@
       "Error": "Cannot change agency details.. please try again later."
     },
     "AccountHelp": {},
-    "AccountSubscription":{
-      "CurrentPlan":"CURRENT PLAN",
-      "SubscriptionStatus":"SUBSCRIPTION STATUS",
-      "ValidTill":"Valid Till",
-      "SubscriptionExpiresIn":"Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
-      "SubscriptionExpired":"Subscription expired on {date}",
-      "RenewCTA":"Renew Plan",
-      "ViewOrders":"View All Orders",
-      "LimitUsage":"PLAN USAGE LIMITS",
-      "BookingsUsage":"BOOKINGS (Last {month} days)",
-      "DriversUsage":"DRIVERS",
-      "VehiclesUsage":"VEHICLES",
-      "AgentsUsage":"AGENTS",
-      "PremiumAdvantage":"THE PREMIUM ADVANTAGE",
-      "PremiumSubtitle":"Unlock the full potential of RyoGo with unlimited bookings & entities, complete app access, advanced features like analytics and priority live support.",
-      "UnlimitedBookings":{
-        "Title":"Unlimited Bookings",
-        "Subtitle":"Scale your travel operations without worrying about any booking volume limits."
+    "AccountSubscription": {
+      "CurrentPlan": "CURRENT PLAN",
+      "SubscriptionStatus": "SUBSCRIPTION STATUS",
+      "ValidTill": "Valid Till",
+      "SubscriptionExpiresIn": "Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
+      "SubscriptionExpired": "Subscription expired on {date}",
+      "RenewCTA": "Renew Plan",
+      "ViewOrders": "View All Orders",
+      "LimitUsage": "PLAN USAGE LIMITS",
+      "BookingsUsage": "BOOKINGS (Last {month} days)",
+      "DriversUsage": "DRIVERS",
+      "VehiclesUsage": "VEHICLES",
+      "AgentsUsage": "AGENTS",
+      "PremiumAdvantage": "THE PREMIUM ADVANTAGE",
+      "PremiumSubtitle": "Unlock the full potential of RyoGo with unlimited bookings & entities, complete app access, advanced features like analytics and priority live support.",
+      "UnlimitedBookings": {
+        "Title": "Unlimited Bookings",
+        "Subtitle": "Scale your travel operations without worrying about any booking volume limits."
       },
-      "FullAccess":{
-        "Title":"Full App Access",
-        "Subtitle":"Add and manage unlimited agents, drivers, and vehicles with full access to all app features."
+      "FullAccess": {
+        "Title": "Full App Access",
+        "Subtitle": "Add and manage unlimited agents, drivers, and vehicles with full access to all app features."
       },
-      "AdvancedAnalytics":{
-        "Title":"Advanced Analytics",
-        "Subtitle":"Gain deep insights into your operations and finances and get smart suggestions to maximize your margins."
+      "AdvancedAnalytics": {
+        "Title": "Advanced Analytics",
+        "Subtitle": "Gain deep insights into your operations and finances and get smart suggestions to maximize your margins."
       },
-      "LiveSupport":{
-        "Title":"24x7 Live Support",
-        "Subtitle":"Get priority help anytime, anywhere to resolve any issues you might face with RyoGo."
+      "LiveSupport": {
+        "Title": "24x7 Live Support",
+        "Subtitle": "Get priority help anytime, anywhere to resolve any issues you might face with RyoGo."
       },
-      "ExperiencePremium":"EXPERIENCE RYOGO PREMIUM",
-      "UpgradeJourney":"Upgrade Your Growth Journey",
-      "Testimonial":"\"Moving to Premium reduced our daily manual workload by 60%.\"",
-      "TestimonialAuthor":"- Rakesh Kumar, JMD Travels, Delhi",
-      "ChooseYourPlan":"CHOOSE YOUR SUBSCRIPTION PLAN",
-      "MRP":"₹{mrp}",
-      "Save":"Save {percentage}%",
-      "BestValue":"Best Value",
-      "ForMonths":"FOR {months,plural, =1 {1 MONTH} other {# MONTHS}}",
-      "PayCTA":"BUY {plan} PREMIUM",
-      "Secure":"Secure checkout with Razorpay. No hidden fees.",
-      "PaymentButton":{
-        "Success":"Payment successful!",
-        "WaitDB":"Payment verified! Subscription will be active soon.",
-        "Error":"Payment failed. Our team will verify it manually if the amount was debited."
+      "ExperiencePremium": "EXPERIENCE RYOGO PREMIUM",
+      "UpgradeJourney": "Upgrade Your Growth Journey",
+      "Testimonial": "\"Moving to Premium reduced our daily manual workload by 60%.\"",
+      "TestimonialAuthor": "- Rakesh Kumar, JMD Travels, Delhi",
+      "ChooseYourPlan": "CHOOSE YOUR SUBSCRIPTION PLAN",
+      "MRP": "₹{mrp}",
+      "Save": "Save {percentage}%",
+      "BestValue": "Best Value",
+      "ForMonths": "FOR {months,plural, =1 {1 MONTH} other {# MONTHS}}",
+      "PayCTA": "BUY {plan} PREMIUM",
+      "Secure": "Secure checkout with Razorpay. No hidden fees.",
+      "PaymentButton": {
+        "Success": "Payment successful!",
+        "WaitDB": "Payment verified! Subscription will be active soon.",
+        "Error": "Payment failed. Our team will verify it manually if the amount was debited."
       }
     },
-    "AccountSubscriptionOrders":{
-      "History":"ORDER HISTORY",
-      "NoOrders":"No orders found",
-      "All":"All",
-      "Paid":"Paid",
-      "Attempted":"Attempted",
-      "Created":"Created",
-      "DownloadInvoice":"Download Invoice"
+    "AccountSubscriptionOrders": {
+      "History": "ORDER HISTORY",
+      "NoOrders": "No orders found",
+      "All": "All",
+      "Paid": "Paid",
+      "Attempted": "Attempted",
+      "Created": "Created",
+      "DownloadInvoice": "Download Invoice"
     },
     "UserDetailsHeaderTabs": {
       "User": "User",
@@ -2577,12 +2574,12 @@
       }
     },
     "NewAgent": {
-      "TrialWarning":"You have reached the limit for basic plan.",
-      "ExpiredWarning":"Your subscription plan has expired.",
-      "TrialAction":"Please upgrade your subscription plan to add more agents!",
-      "ExpiredAction":"Please renew your subscription plan to add more agents!",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription",
+      "TrialWarning": "You have reached the limit for basic plan.",
+      "ExpiredWarning": "Your subscription plan has expired.",
+      "TrialAction": "Please upgrade your subscription plan to add more agents!",
+      "ExpiredAction": "Please renew your subscription plan to add more agents!",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription",
       "Field1": {
         "Title": "Agent name",
         "Placeholder": "Vikram Sharma",
@@ -2635,127 +2632,127 @@
       "Completed": "COMPLETED",
       "Pending": "PENDING"
     },
-    "Analytics":{
-      "AnalyticsTrialWarning":"You cannot access analytics with basic plan.",
-      "AnalyticsExpiredWarning":"Your subscription plan has expired.",
-      "AnalyticsTrialAction":"Please upgrade your subscription plan to get advanced analytics!",
-      "AnalyticsExpiredAction":"Please renew your subscription plan to access analytics!",
-      "BuyCTA":"Buy Premium",
-      "RenewCTA":"Renew Subscription"
+    "Analytics": {
+      "AnalyticsTrialWarning": "You cannot access analytics with basic plan.",
+      "AnalyticsExpiredWarning": "Your subscription plan has expired.",
+      "AnalyticsTrialAction": "Please upgrade your subscription plan to get advanced analytics!",
+      "AnalyticsExpiredAction": "Please renew your subscription plan to access analytics!",
+      "BuyCTA": "Buy Premium",
+      "RenewCTA": "Renew Subscription"
     },
-    "Search":{
-      "Field1":{
-        "Placeholder":"Enter keyword or id to search..",
-        "Error1":"Enter atleast 3 characters to search",
-        "Error2":"Enter less than 20 characters for search"
+    "Search": {
+      "Field1": {
+        "Placeholder": "Enter keyword or id to search..",
+        "Error1": "Enter atleast 3 characters to search",
+        "Error2": "Enter less than 20 characters for search"
       },
-      "ResultsFound":"{count, plural, =0 {No matching {type} found} =1 {1 {type} found} other {# {type}s found}}",
-      "Photo":"View photo",
-      "Clear":"Clear",
-      "Search":"Search"
+      "ResultsFound": "{count, plural, =0 {No matching {type} found} =1 {1 {type} found} other {# {type}s found}}",
+      "Photo": "View photo",
+      "Clear": "Clear",
+      "Search": "Search"
     },
-    "MissionControl":{
-      "NoMissions":"No actions pending",
-      "CriticalMissions":"CRITICAL MISSIONS",
-      "OtherMissions":"OTHER MISSIONS",
-      "Due":"Due ",
-      "CheckNow":"Act Now",
-      "MarkRead":"Mark as Completed",
-      "Read":"Completed",
-      "ErrorMarkingRead":"Failed to mark mission as completed.. please try again later",
-      "LeadBooking":{
-        "Title":"Lead booking #{bookingId}",
-        "Message":"Any old lead booking will be cancelled. Call the customer to confirm this booking"
+    "MissionControl": {
+      "NoMissions": "No actions pending",
+      "CriticalMissions": "CRITICAL MISSIONS",
+      "OtherMissions": "OTHER MISSIONS",
+      "Due": "Due ",
+      "CheckNow": "Act Now",
+      "MarkRead": "Mark as Completed",
+      "Read": "Completed",
+      "ErrorMarkingRead": "Failed to mark mission as completed.. please try again later",
+      "LeadBooking": {
+        "Title": "Lead booking #{bookingId}",
+        "Message": "Any old lead booking will be cancelled. Call the customer to confirm this booking"
       },
-      "ConfirmedBooking":{
-        "Title":"Assigned booking #{bookingId}",
-        "Message":"A new booking has been assigned to you."
+      "ConfirmedBooking": {
+        "Title": "Assigned booking #{bookingId}",
+        "Message": "A new booking has been assigned to you."
       },
-      "AssignedDriver":{
-        "Title":"Assigned booking #{bookingId}",
-        "Message":"A booking has been assigned to you."
+      "AssignedDriver": {
+        "Title": "Assigned booking #{bookingId}",
+        "Message": "A booking has been assigned to you."
       },
-      "AssignedUser":{
-        "Title":"Assigned booking #{bookingId}",
-        "Message":"A booking has been assigned to you."
+      "AssignedUser": {
+        "Title": "Assigned booking #{bookingId}",
+        "Message": "A booking has been assigned to you."
       },
-      "AssignedVehicle":{
-        "Title":"{vehicleNumber} assigned for booking #{bookingId}",
-        "Message":"Assigned vehicle has been changed for this booking. Please review"
+      "AssignedVehicle": {
+        "Title": "{vehicleNumber} assigned for booking #{bookingId}",
+        "Message": "Assigned vehicle has been changed for this booking. Please review"
       },
-      "TripEnded":{
-        "Title":"Trip ended for booking #{bookingId} by {driverName}",
-        "Message":"Trip has been completed for this booking. Please confirm and check the booking expenses and transactions"
+      "TripEnded": {
+        "Title": "Trip ended for booking #{bookingId} by {driverName}",
+        "Message": "Trip has been completed for this booking. Please confirm and check the booking expenses and transactions"
       },
-      "TripStarted":{
-        "Title":"Trip started for booking #{bookingId} by {driverName}",
-        "Message":"Trip has been started for this booking. Please confirm and check with the customer"
+      "TripStarted": {
+        "Title": "Trip started for booking #{bookingId} by {driverName}",
+        "Message": "Trip has been started for this booking. Please confirm and check with the customer"
       },
-      "DriverActivated":{
-        "Title":"Account activated by {userName}",
-        "Message":"You account has been activated. You can now start taking booking assignments"
+      "DriverActivated": {
+        "Title": "Account activated by {userName}",
+        "Message": "You account has been activated. You can now start taking booking assignments"
       },
-      "DriverInactivated":{
-        "Title":"Account deactivated by {userName}",
-        "Message":"You account has been deactivated. You cannot take booking assignments"
+      "DriverInactivated": {
+        "Title": "Account deactivated by {userName}",
+        "Message": "You account has been deactivated. You cannot take booking assignments"
       },
-      "ExpenseAddedByDriver":{
-        "Title":"New {type} expense {expenseId} added for booking #{bookingId}",
-        "Message":"Driver has added a new expense for this booking. Please review"
+      "ExpenseAddedByDriver": {
+        "Title": "New {type} expense {expenseId} added for booking #{bookingId}",
+        "Message": "Driver has added a new expense for this booking. Please review"
       },
-      "ExpenseDeletedByDriver":{
-        "Title":"A {type} expense {expenseId} removed for booking #{bookingId}",
-        "Message":"Driver has deleted an expense for this booking. Please review"
+      "ExpenseDeletedByDriver": {
+        "Title": "A {type} expense {expenseId} removed for booking #{bookingId}",
+        "Message": "Driver has deleted an expense for this booking. Please review"
       },
-      "ExpenseModifiedByDriver":{
-        "Title":"A {type} expense {expenseId} modified for booking #{bookingId}",
-        "Message":"Driver has modified an expense for this booking. Please review"
+      "ExpenseModifiedByDriver": {
+        "Title": "A {type} expense {expenseId} modified for booking #{bookingId}",
+        "Message": "Driver has modified an expense for this booking. Please review"
       },
-      "SubscriptionPaymentFailed":{
-        "Title":"Subscription payment failed",
-        "Message":"We see that your last payment failed. Please try again or contact support to get help."
+      "SubscriptionPaymentFailed": {
+        "Title": "Subscription payment failed",
+        "Message": "We see that your last payment failed. Please try again or contact support to get help."
       }
     },
-    "Feed":{
-      "NoFeed":"No notifications to show",
-      "FeedFilters":"NOTIFICATION FILTERS",
-      "Notifications":{
-        "LeadBooking":"New lead booking #{bookingId} added by {userName}",
-        "ConfirmedBooking":"Booking #{bookingId} has been confirmed by {userName}",
-        "ChangedAgencyEmail":"Agency email address has been changed by {userName}",
-        "ChangedAgencyPhone":"Agency phone number has been changed by {userName}",
-        "ModifiedAgency":"Agency details have been modified by {userName}",
-        "AssignedDriver":"Assigned driver for booking #{bookingId} has been changed to {driverName}",
-        "AssignedUser":"Assigned agent for booking #{bookingId} has been changed to {userName}",
-        "AssignedVehicle":"Assigned vehicle for booking #{bookingId} has been changed to {vehicleNumber}",
-        "CancelBooking":"Booking #{bookingId} has been cancelled by {userName}",
-        "TripEnded":"Trip completed for booking #{bookingId} by {driverName} with {vehicleNumber}",
-        "TripStarted":"Trip started for booking #{bookingId} by {driverName} with {vehicleNumber}",
-        "CustomerActivated":"Customer {customerName} has been activated by {userName}",
-        "CustomerInactivated":"Customer {customerName} has been inactivated by {userName}",
-        "CustomerPhotoChanged":"Customer {customerName} photo has been changed by {userName}",
-        "CustomerModified":"Customer {customerName} details have been changed by {userName}",
-        "CustomerAdded":"Customer {customerName} has been added by {userName}",
-        "DriverActivated":"Driver {driverName} has been activated by {userName}",
-        "DriverInactivated":"Driver {driverName} has been inactivated by {userName}",
-        "DriverAdded":"New driver {driverName} has been added by {userName}",
-        "DriverModified":"Driver {driverName} details have been changed by {userName}",
-        "DriverLeaveAdded":"Driver leave added for {driverName} by {userName}",
-        "DriverLeaveModified":"Driver leave details changed for {driverName} by {userName}",
-        "VehicleActivated":"Vehicle {vehicleNumber} has been activated by {userName}",
-        "VehicleInactivated":"Vehicle {vehicleNumber} has been inactivated by {userName}",
-        "VehicleAdded":"New vehicle {vehicleNumber} has been added by {userName}",
-        "VehiclePhotoChanged":"Vehicle {vehicleNumber} photo has been changed by {userName}",
-        "VehicleModified":"Vehicle {vehicleNumber} details have been changed by {userName}",
-        "VehicleRepairAdded":"Vehicle repair added for booking #{bookingId} by {userName}",
-        "VehicleRepairModified":"Vehicle repair details changed for booking #{bookingId} by {userName}",
-        "SubscriptionPurchased":"Premium {plan} subscription plan has been purchased by {userName}",
-        "AgentAdded":"New agent {agentName} has been added by {userName}",
-        "UserPhotoChanged":"{userName} photo has changed",
-        "DowngradedAgencyToBasic":"Agency has been downgraded to BASIC plan",
-        "AgencyLogoChanged":"Agency logo has been changed by {userName}",
-        "OwnerAdded":"Owner account created for {userName}",
-        "AgencyCreated":"Agency has been created by {userName}"
+    "Feed": {
+      "NoFeed": "No notifications to show",
+      "FeedFilters": "NOTIFICATION FILTERS",
+      "Notifications": {
+        "LeadBooking": "New lead booking #{bookingId} added by {userName}",
+        "ConfirmedBooking": "Booking #{bookingId} has been confirmed by {userName}",
+        "ChangedAgencyEmail": "Agency email address has been changed by {userName}",
+        "ChangedAgencyPhone": "Agency phone number has been changed by {userName}",
+        "ModifiedAgency": "Agency details have been modified by {userName}",
+        "AssignedDriver": "Assigned driver for booking #{bookingId} has been changed to {driverName}",
+        "AssignedUser": "Assigned agent for booking #{bookingId} has been changed to {userName}",
+        "AssignedVehicle": "Assigned vehicle for booking #{bookingId} has been changed to {vehicleNumber}",
+        "CancelBooking": "Booking #{bookingId} has been cancelled by {userName}",
+        "TripEnded": "Trip completed for booking #{bookingId} by {driverName} with {vehicleNumber}",
+        "TripStarted": "Trip started for booking #{bookingId} by {driverName} with {vehicleNumber}",
+        "CustomerActivated": "Customer {customerName} has been activated by {userName}",
+        "CustomerInactivated": "Customer {customerName} has been inactivated by {userName}",
+        "CustomerPhotoChanged": "Customer {customerName} photo has been changed by {userName}",
+        "CustomerModified": "Customer {customerName} details have been changed by {userName}",
+        "CustomerAdded": "Customer {customerName} has been added by {userName}",
+        "DriverActivated": "Driver {driverName} has been activated by {userName}",
+        "DriverInactivated": "Driver {driverName} has been inactivated by {userName}",
+        "DriverAdded": "New driver {driverName} has been added by {userName}",
+        "DriverModified": "Driver {driverName} details have been changed by {userName}",
+        "DriverLeaveAdded": "Driver leave added for {driverName} by {userName}",
+        "DriverLeaveModified": "Driver leave details changed for {driverName} by {userName}",
+        "VehicleActivated": "Vehicle {vehicleNumber} has been activated by {userName}",
+        "VehicleInactivated": "Vehicle {vehicleNumber} has been inactivated by {userName}",
+        "VehicleAdded": "New vehicle {vehicleNumber} has been added by {userName}",
+        "VehiclePhotoChanged": "Vehicle {vehicleNumber} photo has been changed by {userName}",
+        "VehicleModified": "Vehicle {vehicleNumber} details have been changed by {userName}",
+        "VehicleRepairAdded": "Vehicle repair added for booking #{bookingId} by {userName}",
+        "VehicleRepairModified": "Vehicle repair details changed for booking #{bookingId} by {userName}",
+        "SubscriptionPurchased": "Premium {plan} subscription plan has been purchased by {userName}",
+        "AgentAdded": "New agent {agentName} has been added by {userName}",
+        "UserPhotoChanged": "{userName} photo has changed",
+        "DowngradedAgencyToBasic": "Agency has been downgraded to BASIC plan",
+        "AgencyLogoChanged": "Agency logo has been changed by {userName}",
+        "OwnerAdded": "Owner account created for {userName}",
+        "AgencyCreated": "Agency has been created by {userName}"
       }
     },
     "Buttons": {
@@ -2917,41 +2914,41 @@
         "YesCTA": "Yes, logout"
       }
     },
-    "Schedule":{
-      "Header":{
-        "7Days":"Next 7 Days",
-        "14Days":"Next 14 Days"
+    "Schedule": {
+      "Header": {
+        "7Days": "Next 7 Days",
+        "14Days": "Next 14 Days"
       }
     },
-    "PopoverCards":{
-      "Booking":{
+    "PopoverCards": {
+      "Booking": {
         "NotAssigned": "Not Assigned",
         "ViewDetails": "View Details",
         "Assign": "Assign"
       },
-      "AssignedBooking":{
+      "AssignedBooking": {
         "ViewDetails": "View Details"
       },
-      "Repair":{
+      "Repair": {
         "ViewDetails": "View Details"
       },
-      "Leave":{
+      "Leave": {
         "ViewDetails": "View Details"
       }
     },
-    "Whatsapp":{
-      "Cancellation":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* for *{startDate}* has been cancelled. For any queries, contact us at *{agencyPhone}*.",
-      "Confirmation":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. Your driver is *{driverName}* and vehicle is *{vehicleNumber}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
-      "ConfirmationWithoutDriverVehicle":"Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
-      "Invoice":"Hello *{customerName}*, your trip from *{source}* to *{destination}* for *{startDate}* has been successfully completed. We hope you had a safe and enjoyable journey. Your invoice is ready for booking *#{bookingId}*. Thank you for choosing our service. For any queries, contact us at *{agencyPhone}*. You can download and view the detailed invoice here: {invoiceLink}",
-      "Quote":"Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}",
-      "DriverInvite":"Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
-      "AgentInvite":"Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}"
+    "Whatsapp": {
+      "Cancellation": "Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* for *{startDate}* has been cancelled. For any queries, contact us at *{agencyPhone}*.",
+      "Confirmation": "Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. Your driver is *{driverName}* and vehicle is *{vehicleNumber}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
+      "ConfirmationWithoutDriverVehicle": "Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
+      "Invoice": "Hello *{customerName}*, your trip from *{source}* to *{destination}* for *{startDate}* has been successfully completed. We hope you had a safe and enjoyable journey. Your invoice is ready for booking *#{bookingId}*. Thank you for choosing our service. For any queries, contact us at *{agencyPhone}*. You can download and view the detailed invoice here: {invoiceLink}",
+      "Quote": "Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}",
+      "DriverInvite": "Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
+      "AgentInvite": "Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}"
     },
-    "SubscriptionReminderStrip":{
-      "NotExpired":"Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
-      "Expired":"Your subscription has expired.",
-      "RenewCTA":"Recharge Now"
+    "SubscriptionReminderStrip": {
+      "NotExpired": "Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
+      "Expired": "Your subscription has expired.",
+      "RenewCTA": "Recharge Now"
     }
   },
   "Rider": {
@@ -2983,7 +2980,7 @@
       "Upcoming": "Upcoming bookings",
       "Continue": "Continue",
       "Start": "Start Trip",
-      "NoBooking":"No bookings assigned at the moment."
+      "NoBooking": "No bookings assigned at the moment."
     },
     "MyBookings": {
       "Ongoing": "Ongoing booking",
@@ -3014,10 +3011,10 @@
       "No": "No",
       "Km": " Km",
       "Remarks": "Remarks",
-      "AddExpense":"Add Expense",
-      "Expenses":"Expenses",
-      "TripLogs":"Trip Logs",
-      "Back":"Back",
+      "AddExpense": "Add Expense",
+      "Expenses": "Expenses",
+      "TripLogs": "Trip Logs",
+      "Back": "Back",
       "StartTrip": {
         "Title": "Start Trip",
         "Field1": {
@@ -3068,18 +3065,17 @@
           "Error1": "File size should be less than 1MB",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
           "Error3": "Trip end photo is required"
-
         },
         "Field3": {
           "Title": "Remarks (optional)",
           "Placeholder": "Enter any remarks regarding this trip",
           "Error1": "Remarks must be less than 300 characters"
         },
-        "Field4":{
-          "Title":"Rate customer"
+        "Field4": {
+          "Title": "Rate customer"
         },
-        "Field5":{
-          "Title":"Rate booking experience"
+        "Field5": {
+          "Title": "Rate booking experience"
         },
         "End": "Confirm and End Trip",
         "Close": "Cancel",
@@ -3087,7 +3083,7 @@
         "AddExpense": "Add Expense",
         "Error": "Cannot end trip now.. please try again later"
       },
-      "MidTrip":{
+      "MidTrip": {
         "Title": "{type, select, Arrived {Reached Customer Address} Pickup {Pickup Customer} Drop {Drop Customer} other {End Trip}}",
         "Field1": {
           "Title": "Enter odometer reading (Km)",
@@ -3116,16 +3112,16 @@
         "Loading": "Loading",
         "Error": "Cannot mark {type} now.. please try again later"
       },
-      "TripLog":{
-        "Km":" Km",
-        "Proof":" View Attachment"
+      "TripLog": {
+        "Km": " Km",
+        "Proof": " View Attachment"
       },
-      "Expense":{
-        "Modify":"Modify",
-        "Proof":" View Attachment"
+      "Expense": {
+        "Modify": "Modify",
+        "Proof": " View Attachment"
       }
     },
-    "AddRiderExpense":{
+    "AddRiderExpense": {
       "Title": "New Expense",
       "Field1": {
         "Title": "Expense type",
@@ -3159,7 +3155,7 @@
       "Success": "Expense added successfully!",
       "Error": "Cannot add expense.. Try again later!"
     },
-    "ModifyRiderExpense":{
+    "ModifyRiderExpense": {
       "Title": "Modify Expense",
       "Field1": {
         "Title": "Expense type",
@@ -3193,9 +3189,7 @@
       "Success": "Expense details modified successfully!",
       "Error": "Cannot modify expense.. Try again later!"
     },
-    "MyMissions": {
-
-    },
+    "MyMissions": {},
     "MyVehicle": {
       "BasicInfo": "Basic info",
       "Photo": "Vehicle photo",
@@ -3336,61 +3330,202 @@
     }
   },
   "Landing": {
-    "Navbar":{
-      "Logo":"Logo for Ryogo - Travel Agency App",
-      "Features":"Features",
-      "Pricing":"Pricing",
-      "Resources":"Resources",
-      "HowItWorks":"How It Works",
-      "Login":"Login",
-      "Signup":"Sign up"
+    "Navbar": {
+      "Logo": "Logo for Ryogo - Travel Agency App",
+      "Features": "Features",
+      "Pricing": "Pricing",
+      "Resources": "Resources",
+      "HowItWorks": "How It Works",
+      "Login": "Login",
+      "Signup": "Sign up"
     },
-    "Footer":{
-      "LogoCaption":"Reimagining travel agency operations worldwide",
-      "Product":{
-        "Title":"PRODUCT",
-        "Features":"Features",
-        "Pricing":"Pricing",
-        "HowItWorks":"How It Works",
-        "Resources":"Resources"
+    "Footer": {
+      "LogoCaption": "Reimagining travel agency operations for the modern age",
+      "Product": {
+        "Title": "PRODUCT",
+        "Features": "Features",
+        "Pricing": "Pricing",
+        "HowItWorks": "How It Works",
+        "Resources": "Resources"
       },
-      "Support":{
-        "Title":"SUPPORT",
-        "Customer":"Customer Support",
-        "FAQ":"FAQ",
-        "Email":"Email Us"
+      "Support": {
+        "Title": "SUPPORT",
+        "Customer": "Customer Support",
+        "FAQ": "FAQ",
+        "Email": "Email Us"
       },
-      "Social":{
-        "Title":"SOCIAL MEDIA",
-        "Facebook":"Facebook",
-        "Instagram":"Instagram",
-        "YouTube":"YouTube",
-        "LinkedIn":"LinkedIn"
+      "Social": {
+        "Title": "SOCIAL MEDIA",
+        "Facebook": "Facebook",
+        "Instagram": "Instagram",
+        "YouTube": "YouTube",
+        "LinkedIn": "LinkedIn"
       },
-      "Copyright":"Copyright @ {year} RyoGo Travel Agency App",
-      "Developer":"Designed & Developed by NaFu Apps"
+      "Copyright": "Copyright @ {year} RyoGo Travel Agency App",
+      "Developer": "Designed & Developed by NaFu Apps"
     },
-    "Home":{
-      "Hero":{
-        "Title1":"Stop everyday chaos.",
-        "Title2":"Start growing your travel business.",
-        "Subtitle":"RyoGo helps travel agencies and tour operators manage their bookings, fleet, drivers, and daily operations online without any hassle or paperwork",
-        "PrimaryCTA":"Get started for Free",
-        "SecondaryCTA":"Watch Demo"
+    "Home": {
+      "Hero": {
+        "Title1": "Stop everyday chaos.",
+        "Title2": "Start growing your travel business.",
+        "Subtitle": "RyoGo helps travel agencies and tour operators manage their bookings, fleet, drivers, and daily operations online without any hassle or paperwork",
+        "PrimaryCTA": "Get started for Free",
+        "SecondaryCTA": "Watch Demo"
       },
-      "CTA":{
-        "Title":"Ready to grow your business?",
-        "Subtitle":"Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free 2-month trial",
-        "PrimaryCTA":"Create Agency Account",
-        "SecondaryCTA":"Explore More",
-        "Prop1":"Free account",
-        "Prop2":"No credit card required",
-        "Prop3":"Start online booking in minutes"
+      "Features": {
+        "Title": "Designed for speed and efficiency",
+        "Subtitle": "Ditch the spreadsheets. Our integrated app handles every aspect of your travel business from booking to managing your fleet.",
+        "F1": {
+          "Title": "Easy Booking Management",
+          "Description": "Book your trips in just a few clicks with our intuitive interface. Track all your trips in real-time. Our central hub ensures no itinerary falls through the cracks."
+        },
+        "F2": {
+          "Title": "Driver Communication",
+          "Description": "Integrated driver tracking and communication built for fast-moving agencies. Drivers can track their trips, add expenses and receive updates all in real-time."
+        },
+        "F3": {
+          "Title": "Fleet Scheduling",
+          "Description": "Real-time status monitoring and availability tracking for your entire vehicle fleet, from cars to buses."
+        },
+        "F4": {
+          "Title": "Smart Analytics",
+          "Description": "Get deep insights into your revenue, fleet and driver efficiency, and peak travel periods with automated charts and reports."
+        },
+        "MoreCTA": "Explore All Features"
+      },
+      "Working": {
+        "Title": "Works like a charm",
+        "Subtitle": "RyoGo makes your daily business operations simple and efficient. Try it out and decide for yourself.",
+        "W0": {
+          "Title": "Onboard fleet",
+          "Description": "Manage your entire operations from one place by adding your vehicles, drivers and agents."
+        },
+        "W1": {
+          "Title": "Create bookings",
+          "Description": "Easily add new customer bookings. Assign vehicles and drivers with the help of our AI suggestions."
+        },
+        "W2": {
+          "Title": "Connect with drivers",
+          "Description": "Sync up on what's happening on the road. Enable your drivers to fulfill the trip from their app."
+        },
+        "W3": {
+          "Title": "Share with customers",
+          "Description": "Provide real-time updates to your customers via WhatsApp and send professional messages and invoices."
+        },
+        "W4": {
+          "Title": "Reconcile operations",
+          "Description": "Review transactions, expenses and status for each booking to make sure everything is in order."
+        },
+        "W5": {
+          "Title": "Stay in control",
+          "Description": "Receive alerts, notifications and plan with the help of analytics to keep your business running smoothly."
+        },
+        "MoreCTA": "See How RyoGo Works"
+      },
+      "Testimonials": {
+        "Title": "What Our Customers Say",
+        "Subtitle": "Listen to the voice of satisfied travel agencies who have made their lives easier with RyoGo Travel App.",
+        "T1": {
+          "Quote": "RyoGo has completely transformed the way we manage our travel agency. The app's user-friendly interface and powerful features have made it easier for us to handle bookings, track our fleet, and communicate with our drivers. It's like having a personal assistant for our business!",
+          "Name": "Kirti Nair",
+          "Role": "Owner, JMD Travels",
+          "Initial": "KN"
+        },
+        "T2": {
+          "Quote": "As a tour operator, RyoGo has been a game-changer for us. The app's comprehensive booking management system and real-time updates have allowed us to provide better service to our customers. We can easily assign drivers, manage our fleet, and keep track of all our bookings in one place.",
+          "Name": "Rohit Singh",
+          "Role": "Manager, Wanderlust Tours",
+          "Initial": "RS"
+        },
+        "T3": {
+          "Quote": "RyoGo has made our lives so much easier! The app's intuitive design and powerful features have streamlined our operations and improved our efficiency. We can now focus more on growing our business and providing excellent service to our customers, rather than getting bogged down by administrative tasks.",
+          "Name": "Priya Patel",
+          "Role": "Agent, NorthEast Adventures",
+          "Initial": "PP"
+        },
+        "MoreCTA": "Explore More About RyoGo"
+      },
+      "CTA": {
+        "Title": "Ready to grow your business?",
+        "Subtitle": "Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free {days}-day trial",
+        "PrimaryCTA": "Create Free Agency Account",
+        "SecondaryCTA": "Talk To Our Team",
+        "Prop1": "Lifetime free account",
+        "Prop2": "No credit card required",
+        "Prop3": "Start online booking in minutes"
       }
     },
-    "Features":{},
-    "Pricing":{},
-    "HowItWorks":{},
-    "Resources":{}
+    "Features": {},
+    "Pricing": {
+      "Plans": {
+        "Title": "Simple, Transparent Pricing",
+        "Subtitle": "Choose the plan that fits your business needs",
+        "Basic": {
+          "Title": "BASIC",
+          "Description": "For small and starter agencies",
+          "Price": "Free Forever",
+          "F1": "Onboard vehicles, drivers and agents",
+          "F2": "Create and manage bookings",
+          "F3": "Standard support via email",
+          "F4": "Driver app access",
+          "F5": "Review and reconcile transactions and expenses",
+          "F6": "Send professional messages and invoices to customers",
+          "CTA": "Get Started"
+        },
+        "Premium": {
+          "Title": "PREMIUM",
+          "Description": "For large and growing agencies",
+          "Price": "Starting at ₹{price}/month",
+          "F1": "Everything in Basic",
+          "F2": "Unlimited bookings",
+          "F3": "Unlimited vehicles, drivers and agents",
+          "F4": "Priority 24x7 support over phone",
+          "F5": "Advanced analytics and AI suggestions",
+          "F6": "Full and unrestricted app access",
+          "F7": "",
+          "CTA": "Try For Free"
+        }
+      },
+      "Comparision": {
+        "Header": "Compare plan features",
+        "Basic": "Basic",
+        "Premium": "Premium",
+        "Unlimited": "Unlimited",
+        "Entities": "Entities",
+        "OnboardVehicles": "Onboard vehicles",
+        "OnboardDrivers": "Onboard drivers",
+        "OnboardAgents": "Onboard agents",
+        "Bookings": "Bookings",
+        "ConfrimedBookings": "Confirmed bookings (in last {days} days)",
+        "AssignmentSuggestions": "Get vehicle and driver assignment suggestion",
+        "SendMessages": "Send professional messages and invoices to customers via WhatsApp",
+        "GetAlerts": "Get real-time actionable alerts",
+        "Feed": "Receive agency-wide activity notifications",
+        "DriverApp": "Driver App",
+        "DriverAppAccess": "Driver can access app to manage trips",
+        "DriverExpenses": "Driver can add expenses",
+        "Analytics": "Analytics",
+        "BasicAnalytics": "Basic analytics and insights",
+        "AdvancedAnalytics": "Access to advanced analytics",
+        "AIRecommendations": "AI recommendations and tips to optimize operations",
+        "OwnerControl": "Owner Control",
+        "NewFeatures":"Priority access to new features",
+        "MultipleOwners":"Multiple owner accounts",
+        "SafetyPrivacy": "Safety & Privacy",
+        "DataSecurity":"Sensitive data secured with end-to-end encryption",
+        "DataPrivacy": "All data kept private",
+        "Support": "Support",
+        "EmailSupport": "Basic email support",
+        "PrioritySupport": "Priority 24x7 support over phone"
+      },
+      "CTA": {
+        "Title": "Simplify your travel agency operations",
+        "Subtitle": "Automate your daily workflows and grow your business fast. Try now to get a free {days}-day trial",
+        "PrimaryCTA": "Sign up Now",
+        "SecondaryCTA": "Watch Demo"
+      }
+    },
+    "HowItWorks": {},
+    "Resources": {}
   }
 }

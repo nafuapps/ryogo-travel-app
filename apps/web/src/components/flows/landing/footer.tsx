@@ -9,13 +9,13 @@ export default async function Footer() {
   const t = await getTranslations("Landing.Footer")
   return (
     <footer className="bg-sky-950 text-sky-100">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-10 lg:py-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
         {/* Main footer content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           {/* Brand section */}
           <SectionColWrapper>
             <RyoGoLightLogo />
-            <RyogoSmall color="white">{t("LogoCaption")}</RyogoSmall>
+            <RyogoSmall color="light">{t("LogoCaption")}</RyogoSmall>
           </SectionColWrapper>
 
           {/* Product */}
@@ -42,14 +42,14 @@ export default async function Footer() {
             <RyogoSmall color="light" weight="font-bold">
               {t("Support.Title")}
             </RyogoSmall>
+            <Link href="/resources#faq" className="hover:underline transition">
+              <RyogoSmall color="white">{t("Support.FAQ")}</RyogoSmall>
+            </Link>
             <Link
               href={`tel:${SUPPORT_HELPLINE_NUMBER}`}
               className="hover:underline transition"
             >
               <RyogoSmall color="white">{t("Support.Customer")}</RyogoSmall>
-            </Link>
-            <Link href="#faq" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Support.FAQ")}</RyogoSmall>
             </Link>
             <Link
               href="mailto:ryogo.in@gmail.com"
@@ -81,7 +81,7 @@ export default async function Footer() {
 
         {/* Bottom section */}
         <div className="border-t border-sky-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <RyogoCaption color="white">
+          <RyogoCaption color="light">
             {t("Copyright", { year: new Date().getFullYear() })}
           </RyogoCaption>
           <Link
@@ -89,7 +89,7 @@ export default async function Footer() {
             target="_blank"
             className="hover:underline transition"
           >
-            <RyogoCaption color="white">{t("Developer")}</RyogoCaption>
+            <RyogoCaption color="light">{t("Developer")}</RyogoCaption>
           </Link>
         </div>
       </div>

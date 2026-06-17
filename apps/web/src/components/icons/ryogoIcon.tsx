@@ -71,7 +71,7 @@ export function RyogoIcon(props: {
   thick?: boolean
   onClick?: () => void
 }) {
-  const sizeClassName = `${props.size === "xl" ? "size:20 lg:size-24" : props.size === "lg" ? "size:11 lg:size-12" : props.size === "md" ? "size-7 lg:size-8" : "size-5 lg:size-5.5"}`
+  const sizeClassName = `${props.size === "xl" ? "size-20 lg:size-24" : props.size === "lg" ? "size-11 lg:size-12" : props.size === "md" ? "size-7 lg:size-8" : "size-5 lg:size-5.5"}`
   return (
     <props.icon
       onClick={props.onClick}

@@ -5,21 +5,32 @@ import Link from "next/link"
 import { ChevronRight, Video } from "lucide-react"
 import Image from "next/image"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
   return (
-    <section id="hero" className="h-lvh p-3 md:p-4 lg:p-5 items-center">
-      <div className="max-w-6xl relative w-full h-full gap-6 md:gap-8 px-5 md:px-10 lg:px-16 py-24 md:py-32 flex flex-col items-center mx-auto text-center rounded-lg bg-linear-to-b from-sky-400 to-sky-50">
+    <LandingSectionWrapper id="hero" hero>
+      <LandingContentWrapper
+        justifyStart
+        className="relative h-full px-5 md:px-10 lg:px-16 py-24 md:py-32 rounded-lg bg-linear-to-b from-sky-400 to-sky-50"
+      >
         <div className="flex flex-col items-center gap-1 lg:gap-2">
-          <RyogoH1 weight="font-bold" color="dark">
+          <RyogoH1 weight="font-bold" color="dark" className="text-center">
             {t("Title1")}
           </RyogoH1>
-          <RyogoH1 color="white" weight="font-bold">
+          <RyogoH1 color="white" weight="font-bold" className="text-center">
             {t("Title2")}
           </RyogoH1>
         </div>
-        <RyogoP color="brand" weight="font-medium" extraClassName="max-w-4xl">
+        <RyogoP
+          color="brand"
+          weight="font-medium"
+          className="max-w-4xl text-center"
+        >
           {t("Subtitle")}
         </RyogoP>
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -75,7 +86,7 @@ export default async function HomeHeroSection() {
             sizes="160px"
           />
         </div>
-      </div>
-    </section>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }

@@ -80,7 +80,7 @@ async function SubscriptionReminderStrip({
 
   return (
     <div
-      className={`w-full ${days <= 0 ? "bg-red-900" : "bg-yellow-900"} px-4 lg:px-5 py-1 lg:py-1.5 flex items-center justify-between gap-2 lg:gap-3`}
+      className={`w-full ${days <= 0 ? "bg-red-900" : "bg-yellow-900"} px-5 lg:px-6 py-1 lg:py-1.5 flex items-center justify-between gap-2 lg:gap-3`}
     >
       <RyogoCaption color="white" weight="font-medium">
         {days < 0 ? t("Expired") : t("NotExpired", { days: days })}

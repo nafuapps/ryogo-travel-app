@@ -43,7 +43,7 @@ export default async function AnalyticsPageComponent({
               ? t("AnalyticsTrialWarning")
               : t("AnalyticsExpiredWarning")}
           </RyogoSmall>
-          <RyogoP extraClassName="text-center">
+          <RyogoP className="text-center">
             {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
               ? t("AnalyticsTrialAction")
               : t("AnalyticsExpiredAction")}

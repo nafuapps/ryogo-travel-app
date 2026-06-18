@@ -5,19 +5,20 @@ import Link from "next/link"
 import { MONTHLY_SUBSCRIPTION_FINAL_PRICE } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Check } from "lucide-react"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function PricingPlansSection() {
   const t = await getTranslations("Landing.Pricing.Plans")
   return (
-    <section
-      id="pricing"
-      className="py-24 md:py-32 px-4 md:px-6 lg:px-8 bg-sky-50 min-h-lvh"
-    >
-      <div className="max-w-6xl mx-auto flex flex-col items-center gap-6 md:gap-8">
-        <RyogoH1 weight="font-bold" extraClassName="text-center">
+    <LandingSectionWrapper id="pricing" className="bg-sky-50 min-h-lvh">
+      <LandingContentWrapper>
+        <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" extraClassName="text-center max-w-4xl">
+        <RyogoP color="slate" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -66,8 +67,8 @@ export default async function PricingPlansSection() {
             </Link>
           </PricingPlanCard>
         </div>
-      </div>
-    </section>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }
 

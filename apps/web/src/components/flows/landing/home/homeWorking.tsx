@@ -17,6 +17,10 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 const TIMER_IN_MILLISECONDS = 5000
 
@@ -90,15 +94,12 @@ export default function HomeWorkingSection() {
   }, [timeLeft, images.length])
 
   return (
-    <section
-      id="working"
-      className="py-24 md:py-32 px-4 md:px-6 lg:px-8 bg-white min-h-lvh"
-    >
-      <div className="max-w-6xl mx-auto flex flex-col items-center gap-6 md:gap-8">
-        <RyogoH1 weight="font-bold" color="dark" extraClassName="text-center">
+    <LandingSectionWrapper id="working" className="bg-white min-h-lvh">
+      <LandingContentWrapper>
+        <RyogoH1 weight="font-bold" color="dark" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" extraClassName="text-center max-w-4xl">
+        <RyogoP color="slate" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -125,11 +126,11 @@ export default function HomeWorkingSection() {
             <RyogoSmall color="white" weight="font-medium">
               {t("MoreCTA")}
             </RyogoSmall>
-            <RyogoIcon icon={ChevronRight} size="md" color="white" />
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
           </Button>
         </Link>
-      </div>
-    </section>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }
 

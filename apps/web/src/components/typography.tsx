@@ -38,13 +38,13 @@ type RyogoTextProps = {
   children: React.ReactNode
   color?: RyogoTextColor
   weight?: RyogoTextWeight
-  extraClassName?: string
+  className?: string
 }
 
 export function RyogoH1(props: RyogoTextProps) {
   return (
     <h1
-      className={`text-3xl md:text-4xl lg:text-5xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+      className={`text-3xl md:text-4xl lg:text-5xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </h1>
@@ -54,7 +54,7 @@ export function RyogoH1(props: RyogoTextProps) {
 export function RyogoH2(props: RyogoTextProps) {
   return (
     <h2
-      className={`text-2xl md:text-3xl lg:text-4xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+      className={`text-2xl md:text-3xl lg:text-4xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </h2>
@@ -64,7 +64,7 @@ export function RyogoH2(props: RyogoTextProps) {
 export function RyogoH3(props: RyogoTextProps) {
   return (
     <h3
-      className={`text-xl lg:text-2xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+      className={`text-xl lg:text-2xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </h3>
@@ -74,7 +74,7 @@ export function RyogoH3(props: RyogoTextProps) {
 export function RyogoH4(props: RyogoTextProps) {
   return (
     <h4
-      className={`text-lg lg:text-xl ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+      className={`text-lg lg:text-xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </h4>
@@ -84,7 +84,7 @@ export function RyogoH4(props: RyogoTextProps) {
 export function RyogoP(props: RyogoTextProps) {
   return (
     <p
-      className={`text-base lg:text-lg ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+      className={`text-base lg:text-lg ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </p>
@@ -94,7 +94,7 @@ export function RyogoP(props: RyogoTextProps) {
 export function RyogoSmall(props: RyogoTextProps) {
   return (
     <small
-      className={`text-sm lg:text-base ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+      className={`text-sm lg:text-base ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </small>
@@ -104,7 +104,7 @@ export function RyogoSmall(props: RyogoTextProps) {
 export function RyogoCaption(props: RyogoTextProps) {
   return (
     <span
-      className={`text-xs lg:text-[0.8125rem] ${props.weight} ${getTextColor(props.color)} ${props.extraClassName ?? ""}`}
+      className={`text-xs lg:text-[0.8125rem] ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </span>

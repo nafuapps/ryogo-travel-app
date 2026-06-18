@@ -10,14 +10,14 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 
-export default async function PricingCTASection() {
-  const t = await getTranslations("Landing.Pricing.CTA")
+export default async function FeaturesCTASection() {
+  const t = await getTranslations("Landing.Features.CTA")
   return (
     <LandingSectionWrapper
       id="cta"
       className="bg-linear-to-b from-sky-600 to-sky-900"
     >
-      <LandingContentWrapper className="md:flex-row">
+      <LandingContentWrapper>
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>

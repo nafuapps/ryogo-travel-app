@@ -1,9 +1,17 @@
+"use client"
+
+import { RyogoP, RyogoH1 } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useTranslations } from "next-intl"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 const faqs = [
   {
@@ -44,19 +52,17 @@ const faqs = [
   },
 ]
 
-export default function FAQSection() {
+export default function ResourcesFAQSection() {
+  const t = useTranslations("Landing.Resources.FAQ")
   return (
-    <section className="py-16 md:py-24 px-4 md:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-xl text-gray-600">
-            Find answers to common questions about RyoGo
-          </p>
-        </div>
-
+    <LandingSectionWrapper id="faq" className="min-h-lvh bg-white">
+      <LandingContentWrapper>
+        <RyogoH1 weight="font-bold" className="text-center">
+          {t("Title")}
+        </RyogoH1>
+        <RyogoP color="slate" className="max-w-4xl text-center">
+          {t("Subtitle")}
+        </RyogoP>
         <Accordion type="single" collapsible className="space-y-4">
           {faqs.map((faq) => (
             <AccordionItem
@@ -73,7 +79,7 @@ export default function FAQSection() {
             </AccordionItem>
           ))}
         </Accordion>
-      </div>
-    </section>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }

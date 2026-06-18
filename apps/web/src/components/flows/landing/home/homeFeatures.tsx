@@ -1,22 +1,24 @@
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function HomeFeaturesSection() {
   const t = await getTranslations("Landing.Home.Features")
   return (
-    <section
-      id="features"
-      className="py-24 md:py-32 px-4 md:px-6 lg:px-8 min-h-lvh bg-white"
-    >
-      <div className="max-w-6xl mx-auto flex flex-col items-center gap-6 md:gap-8">
-        <RyogoH1 weight="font-bold" extraClassName="text-center">
+    <LandingSectionWrapper id="features" className="min-h-lvh bg-white">
+      <LandingContentWrapper>
+        <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" extraClassName="text-center max-w-4xl">
+        <RyogoP color="slate" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
@@ -46,11 +48,11 @@ export default async function HomeFeaturesSection() {
             <RyogoSmall color="white" weight="font-medium">
               {t("MoreCTA")}
             </RyogoSmall>
-            <ChevronRight className="text-white size-5 lg:size-6" />
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
           </Button>
         </Link>
-      </div>
-    </section>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }
 

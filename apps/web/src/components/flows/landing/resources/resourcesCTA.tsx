@@ -10,8 +10,8 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 
-export default async function PricingCTASection() {
-  const t = await getTranslations("Landing.Pricing.CTA")
+export default async function ResourcesCTASection() {
+  const t = await getTranslations("Landing.Resources.CTA")
   return (
     <LandingSectionWrapper
       id="cta"

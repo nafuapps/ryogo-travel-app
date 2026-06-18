@@ -3424,7 +3424,7 @@
       },
       "Testimonials": {
         "Title": "What Our Customers Say",
-        "Subtitle": "Listen to the voice of satisfied travel agencies who have made their lives easier with RyoGo Travel App.",
+        "Subtitle": "Listen to the satisfied travel agencies whose lives have been easier with RyoGo Travel App.",
         "T1": {
           "Quote": "RyoGo has completely transformed the way we manage our travel agency. The app's user-friendly interface and powerful features have made it easier for us to handle bookings, track our fleet, and communicate with our drivers. It's like having a personal assistant for our business!",
           "Name": "Kirti Nair",
@@ -3443,7 +3443,7 @@
           "Role": "Agent, NorthEast Adventures",
           "Initial": "PP"
         },
-        "MoreCTA": "Explore More About RyoGo"
+        "MoreCTA": "Explore More Resources"
       },
       "CTA": {
         "Title": "Ready to grow your business?",
@@ -3455,7 +3455,15 @@
         "Prop3": "Start online booking in minutes"
       }
     },
-    "Features": {},
+    "Features": {
+      "Hero":{},
+      "Management":{},
+      "Scheduling":{},
+      "Communication":{},
+      "Analytics":{},
+      "Missions":{},
+      "CTA":{}
+    },
     "Pricing": {
       "Plans": {
         "Title": "Simple, Transparent Pricing",
@@ -3516,7 +3524,37 @@
         "DataPrivacy": "All data kept private",
         "Support": "Support",
         "EmailSupport": "Basic email support",
-        "PrioritySupport": "Priority 24x7 support over phone"
+        "PrioritySupport": "Priority 24x7 support over phone",
+        "MoreCTA":"Explore All Features"
+      },
+      "FAQ":{
+        "Title":"Frequently Asked Questions",
+        "Subtitle":"Get answers to all your pricing related queries here",
+        "Q1":{
+          "Question":"What happens at the end of my free trial?",
+          "Answer":"Every new account is created under Basic plan and is free forever. At the end of your trial period, your account will be stay under Basic plan. You can upgrade to Premium at any time."
+        },
+        "Q2":{
+          "Question":"How do I upgrade to the Premium plan?",
+          "Answer":"After creating an account, you can choose to upgrade to the Premium plan by buying our subscription from the subscription page in your account settings. For any help, contact our support team at {contact}"
+        },
+        "Q3":{
+          "Question":"What payment methods do you accept? Is it safe and secure",
+          "Answer":"We work with Razorpay to accept payments through various methods including UPI, cards, net banking, and digital wallets. All payments are processed securely using SSL encryption."
+        },
+        "Q4":{
+          "Question":"Can I cancel my Premium subscription?",
+          "Answer":"No. Once bought, you cannot cancel your subscription. However, when current subscription period expires, your account will be automatically downgraded to Basic plan."
+        },
+        "Q5":{
+          "Question":"What happens to all my excess data like additional vehicles and drivers if I do not renew my Premium subscription?",
+          "Answer":"All your saved data is retained with us forever. However, under Basic plan only limited number of entities are available for booking assignments. Refer to the comparision table above."
+        },
+        "Q6":{
+          "Question":"We are a non-profit travel organisation, is there any special pricing available?",
+          "Answer":"For any genuine special pricing needs, please contact our support team at {contact}"
+        },
+        "MoreCTA": "Explore More Resources"
       },
       "CTA": {
         "Title": "Simplify your travel agency operations",
@@ -3525,7 +3563,24 @@
         "SecondaryCTA": "Watch Demo"
       }
     },
-    "HowItWorks": {},
-    "Resources": {}
+    "HowItWorks": {
+      "Hero":{},
+      "Onboarding":{},
+      "Bookings":{},
+      "Entities":{},
+      "DriverApp":{},
+      "Customers":{},
+      "Alerts":{},
+      "CTA":{}
+    },
+    "Resources": {
+      "Hero":{},
+      "Videos":{},
+      "FAQ":{},
+      "Support":{},
+      "Blogs":{},
+      "About":{},
+      "CTA":{}
+    }
   }
 }

@@ -13,19 +13,20 @@ import { Button } from "@/components/ui/button"
 import { ChevronRight, Quote } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function HomeTestimonialsSection() {
   const t = await getTranslations("Landing.Home.Testimonials")
   return (
-    <section
-      id="testimonials"
-      className="py-24 md:py-32 px-4 md:px-6 lg:px-8 bg-white min-h-lvh"
-    >
-      <div className="max-w-6xl mx-auto flex flex-col justify-center items-center gap-6 md:gap-8">
-        <RyogoH1 weight="font-bold" extraClassName="text-center">
+    <LandingSectionWrapper id="testimonials" className="bg-white min-h-lvh">
+      <LandingContentWrapper>
+        <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" extraClassName="text-center max-w-4xl">
+        <RyogoP color="slate" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -56,11 +57,11 @@ export default async function HomeTestimonialsSection() {
             <RyogoSmall color="white" weight="font-medium">
               {t("MoreCTA")}
             </RyogoSmall>
-            <ChevronRight className="text-white size-5 lg:size-6" />
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
           </Button>
         </Link>
-      </div>
-    </section>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }
 
@@ -89,7 +90,7 @@ function TestimonialCard({
         </div>
         <RyogoIcon icon={Quote} size="md" color="slate" />
       </SectionRowWrapper>
-      <RyogoSmall color="slate" extraClassName="italic ">
+      <RyogoSmall color="slate" className="italic ">
         {testimonial}
       </RyogoSmall>
       <div className="mt-auto flex items-center gap-4">

@@ -1,5 +1,6 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH2, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
+import { Button } from "@/components/ui/button"
 import {
   BASIC_PLAN_AGENT_LIMIT,
   BASIC_PLAN_DRIVER_LIMIT,
@@ -7,17 +8,19 @@ import {
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@/lib/uiConfig"
-import { CircleCheckBig, X } from "lucide-react"
+import { ChevronRight, CircleCheckBig, X } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function PricingComparisionSection() {
   const t = await getTranslations("Landing.Pricing.Comparision")
   return (
-    <section
-      id="comparision"
-      className="py-24 md:py-32 px-4 md:px-6 lg:px-8 bg-white"
-    >
-      <div className="max-w-6xl mx-auto flex flex-col items-center gap-6 md:gap-8">
+    <LandingSectionWrapper id="comparision" className="min-h-lvh bg-white">
+      <LandingContentWrapper>
         <ComparisionRow
           title={<RyogoH2 weight="font-bold">{t("Header")}</RyogoH2>}
           basicItem={<RyogoP weight="font-bold">{t("Basic")}</RyogoP>}
@@ -142,8 +145,16 @@ export default async function PricingComparisionSection() {
             premiumItem={<BrandCheckIcon />}
           />
         </ComparisionGroup>
-      </div>
-    </section>
+        <Link href="/features">
+          <Button size="lg" className="w-full md:w-auto">
+            <RyogoSmall color="white" weight="font-medium">
+              {t("MoreCTA")}
+            </RyogoSmall>
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </Button>
+        </Link>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }
 

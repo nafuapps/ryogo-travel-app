@@ -135,7 +135,7 @@ function PaymentOptionCard({
     >
       <SectionRowWrapper>
         <SectionColWrapper>
-          <RyogoSmall color="light" extraClassName="line-through">
+          <RyogoSmall color="light" className="line-through">
             {t("MRP", { mrp: mrp })}
           </RyogoSmall>
           <SectionRowWrapper small>

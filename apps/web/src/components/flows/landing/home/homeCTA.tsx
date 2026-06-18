@@ -11,19 +11,23 @@ import { TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { Check } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function HomeCTASection() {
   const t = await getTranslations("Landing.Home.CTA")
   return (
-    <section
+    <LandingSectionWrapper
       id="cta"
-      className="py-24 md:py-32 px-4 md:px-6 lg:px-8 bg-linear-to-b from-sky-600 to-sky-900"
+      className="bg-linear-to-b from-sky-600 to-sky-900"
     >
-      <div className="max-w-6xl flex flex-col items-center justify-center mx-auto gap-6 md:gap-8">
-        <RyogoH1 color="white" weight="font-bold" extraClassName="text-center">
+      <LandingContentWrapper>
+        <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="white" extraClassName="max-w-4xl text-center opacity-80">
+        <RyogoP color="white" className="max-w-4xl text-center opacity-80">
           {t("Subtitle", { days: TRIAL_DAYS })}
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
@@ -49,8 +53,8 @@ export default async function HomeCTASection() {
           <PropDot />
           <PropItem label={t("Prop3")} />
         </div>
-      </div>
-    </section>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }
 

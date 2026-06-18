@@ -18,7 +18,7 @@ export default function TripSheetFormWrapper<T extends FieldValues>({
       <form
         id={id}
         onSubmit={onSubmit}
-        className="flex flex-col gap-3 lg:gap-4 px-4 lg:px-5"
+        className="flex flex-col gap-3 lg:gap-4 px-5 lg:px-6"
       >
         {children}
       </form>

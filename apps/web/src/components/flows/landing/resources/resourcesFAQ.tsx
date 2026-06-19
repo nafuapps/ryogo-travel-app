@@ -1,12 +1,4 @@
-"use client"
-
 import { RyogoP, RyogoH1 } from "@/components/typography"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import { useTranslations } from "next-intl"
 import {
   LandingContentWrapper,
@@ -63,22 +55,6 @@ export default function ResourcesFAQSection() {
         <RyogoP color="slate" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
-        <Accordion type="single" collapsible className="space-y-4">
-          {faqs.map((faq) => (
-            <AccordionItem
-              key={faq.id}
-              value={faq.id}
-              className="border rounded px-4"
-            >
-              <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-sky-600">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-gray-700">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

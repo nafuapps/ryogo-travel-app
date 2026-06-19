@@ -3564,14 +3564,156 @@
       }
     },
     "HowItWorks": {
-      "Hero":{},
-      "Onboarding":{},
-      "Bookings":{},
-      "Entities":{},
-      "DriverApp":{},
-      "Customers":{},
+      "Hero":{
+        "Title":"Not sure how it works?",
+        "Subtitle":"Go through our step-by-step guide"
+      },
+      "Onboarding":{
+        "Title":"Quick and Simple Onboarding",
+        "Subtitle":"Get started in a few minutes with our guided registration process",
+        "O0":{
+          "Title":"Create Agency Account",
+          "Description":"Provide basic details of the owner and the agency."
+        },
+        "O1":{
+          "Title":"Verify Account",
+          "Description":"One step account verification with an OTP sent to your email."
+        },
+        "O2":{
+          "Title":"Add Vehicle",
+          "Description":"Minimal documentation upload to get your vehicle onboarded."
+        },
+        "O3":{
+          "Title":"Add Driver",
+          "Description":"Onboard driver with simple details.. no Aadhaar required."
+        },
+        "O4":{
+          "Title":"Add Agent",
+          "Description":"Optionally add an agent to manage your daily agency operations."
+        },
+        "O5":{
+          "Title":"All Aboard!",
+          "Description":"Start creating booking instantly and grow your business from a single dashboard."
+        },
+        "MoreCTA":"Create Account Now"
+      },
+      "Bookings":{
+        "Title":"Create and Manage Bookings",
+        "Subtitle":"Streamline all your booking operations from one place.",
+        "B0":{
+          "Title":"Easy booking creation",
+          "Description":"Create a new booking in just a few seconds with guided and auto-filled steps."
+        },
+        "B1":{
+          "Title":"Vehicle and driver assignment",
+          "Description":"Assign vehicle, driver (and agent) to a booking with a single click."
+        },
+        "B2":{
+          "Title":"Get assignment recomendations",
+          "Description":"RyoGo gives you smart suggestions to choose the best vehicle, driver or agent for a booking."
+        },
+        "B3":{
+          "Title":"Send quotes and confirmations",
+          "Description":"Send professional booking quotations and confirmations to the customers via WhatsApp"
+        },
+        "B4":{
+          "Title":"Manage trips in real-time",
+          "Description":"Control all your bookings from a single place. Always stay updated on what's happening on the road."
+        },
+        "B5":{
+          "Title":"Add transactions and expenses",
+          "Description":"Easily add money transactions or expenses incurred in a trip. It will all be accounted in the final invoice."
+        },
+        "B6":{
+          "Title":"Reconcile bookings and payments",
+          "Description":"Get a complete picture of your revenue by reconciling a booking in the end to close the loop. So convenient!"
+        },
+        "MoreCTA":"Get Started For Free"
+      },
+      "Entities":{
+        "Title":"Simple fleet management",
+        "Subtitle":"It has never been so simple to take control of your everyday agency tasks.",
+        "E0":{
+          "Title":"Manage vehicles, drivers and agents",
+          "Description":"Add, remove or edit your vehicle, driver and agent details in just a few clicks.. all in one place"
+        },
+        "E1":{
+          "Title":"Stay compliant",
+          "Description":"Store all your licenses and policies documents in a single repository for easy access and compliance."
+        },
+        "E2":{
+          "Title":"Get expiry reminders",
+          "Description":"Any policy or license about to expire will be flagged. So that all your documents are updated before a trip."
+        },
+        "E3":{
+          "Title":"Secure storage",
+          "Description":"All your data is safe with us forever. No need to worry about data loss, privacy or security breaches."
+        },
+        "E4":{
+          "Title":"Accomodate driver leaves",
+          "Description":"Just add the time when a driver will be not available and the system will adjust bookings accordingly."
+        },
+        "E5":{
+          "Title":"Stay on top of vehicle repairs",
+          "Description":"Never get caught off-guard with a broken vehicle when assigning a booking. So that every trip is smooth, safe and hassle-free."
+        }
+      },
+      "DriverApp":{
+        "Title":"Easy to use app for drivers",
+        "Subtitle":"RyoGo comes with a dedicated web app for drivers that provides real-time trip status monitoring, communication and much more.",
+        "D0":{
+          "Title":"Driver's job made easy",
+          "Description":"Drivers can track their ongoing trips, navigate to pickup/drop locations and receive new booking updates all in real-time."
+        },
+        "D1":{
+          "Title":"Add Expenses on the go",
+          "Description":"Drivers can add expenses like toll, parking, fuel in their app. Agency can approve them and they will be automatically adjusted in the final invoice"
+        },
+        "D2":{
+          "Title":"Know your vehicle",
+          "Description":"Drivers can check out information about the assigned vehicle along with necessary online documentations on their fingertips."
+        },
+        "D3":{
+          "Title":"Get trip updates",
+          "Description":"Every time driver makes a move, the trip status is reflected on agency dashboard. So that you always know what's happening on the road."
+        },
+        "D4":{
+          "Title":"Protections from fraud",
+          "Description":"Every driver action is automatically logged, checked and verified for fraud. So that your final billing calculation is always accurate."
+        }
+      },
+      "Customers":{
+        "Title":"Customer-first experience",
+        "Subtitle":"Always stay connected with your customers and provice a premium experience.",
+        "C0":{
+          "Title":"Simple customer management",
+          "Description":"Add and manage customers with basic details and remarks.. no verification required. Data is always safe and private with us."
+        },
+        "C1":{
+          "Title":"Keep customer in the loop",
+          "Description":"Send regular trip updates to your customers via WhatsApp in real-time."
+        },
+        "C2":{
+          "Title":"Send booking documents",
+          "Description":"Easily send professional booking quotations, confirmations, and invoices to your customers via Whatsapp"
+        },
+        "C3":{
+          "Title":"Get paid online",
+          "Description":"Final invoice can be customized to have your payment link or QR code so that the customer can directly send money online to your account. RyoGo takes no cut here."
+        },
+        "C4":{
+          "Title":"Track customer transactions",
+          "Description":"Add transactions like advance payments made by customers in a booking. RyoGo will automatically adjust them in the final invoice."
+        },
+        "Disclaimer":"Please note that RyoGo is only an agency workflow management app. We are not a money-transfer booking or payment platform. Any transactions happening between the agency and its customers are their mutual responsibility and are not covered by RyoGo in any capacity."
+      },
       "Alerts":{},
-      "CTA":{}
+      "CTA":{
+        "Title":"Ready to try RyoGo now?",
+        "Subtitle":"Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free {days}-day trial",
+        "PrimaryCTA":"Start Free Trial",
+        "SecondaryCTA":"Watch Videos"
+      }
     },
     "Resources": {
       "Hero":{},

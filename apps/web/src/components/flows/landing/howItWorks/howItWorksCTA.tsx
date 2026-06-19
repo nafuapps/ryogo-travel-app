@@ -21,29 +21,27 @@ export default async function HowItWorksCTASection() {
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <div className="flex flex-col gap-4 justify-center items-center">
-          <RyogoP color="white" className="max-w-4xl text-center opacity-80">
-            {t("Subtitle", { days: TRIAL_DAYS })}
-          </RyogoP>
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <Link href="/onboarding">
-              <Button size="lg" variant="white" className="w-full md:w-auto ">
-                <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
-                <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
-              </Button>
-            </Link>
-            {/* //TODO: Demo video */}
-            <Link href="/features">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full md:w-auto border-white hover:bg-white/20"
-              >
-                <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
-                <RyogoIcon icon={Video} color="white" size="sm" thick />
-              </Button>
-            </Link>
-          </div>
+        <RyogoP color="white" className="max-w-4xl text-center opacity-80">
+          {t("Subtitle", { days: TRIAL_DAYS })}
+        </RyogoP>
+        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+          <Link href="/onboarding">
+            <Button size="lg" variant="white" className="w-full md:w-auto ">
+              <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
+              <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
+            </Button>
+          </Link>{" "}
+          {/* //TODO: Demo video */}
+          <Link href="/resources#videos">
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full md:w-auto border-white hover:bg-white/20"
+            >
+              <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
+              <RyogoIcon icon={Video} color="white" size="sm" thick />
+            </Button>
+          </Link>
         </div>
       </LandingContentWrapper>
     </LandingSectionWrapper>

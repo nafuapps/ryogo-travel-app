@@ -20,11 +20,11 @@ export default function ResourcesPage() {
     <div className="flex flex-col h-full">
       <Navbar selected="resources" />
       <ResourcesHeroSection />
+      <ResourcesVideosSection />
       <ResourcesFAQSection />
       <ResourcesBlogsSection />
-      <ResourcesAboutSection />
       <ResourcesSupportSection />
-      <ResourcesVideosSection />
+      <ResourcesAboutSection />
       <ResourcesCTASection />
       <Footer />
     </div>

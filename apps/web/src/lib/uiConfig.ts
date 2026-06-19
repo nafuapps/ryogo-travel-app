@@ -1,5 +1,6 @@
 //Landing
 export const HOMEPAGE_URL = "https://ryogo.nafuapps.in"
+export const SLIDESHOW_TIMER_MS = 5000
 
 //Onboarding
 export const VERIFY_CODE_TIMEOUT_MINUTES = 5

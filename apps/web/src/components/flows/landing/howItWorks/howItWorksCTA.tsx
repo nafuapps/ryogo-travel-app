@@ -15,6 +15,7 @@ export default async function HowItWorksCTASection() {
   return (
     <LandingSectionWrapper
       id="cta"
+      shrink
       className="bg-linear-to-b from-sky-600 to-sky-900"
     >
       <LandingContentWrapper>

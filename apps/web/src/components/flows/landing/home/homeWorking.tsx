@@ -64,7 +64,7 @@ export default function HomeWorkingSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="working" className="bg-white min-h-lvh">
+    <LandingSectionWrapper id="working" className="bg-white">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" color="dark" className="text-center">
           {t("Title")}

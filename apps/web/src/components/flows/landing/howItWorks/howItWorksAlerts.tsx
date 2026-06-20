@@ -7,7 +7,7 @@ import {
 export default async function HowItWorksAlertsSection() {
   const t = await getTranslations("Landing.HowItWorks.Alerts")
   return (
-    <LandingSectionWrapper id="alerts" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="alerts" className=" bg-white">
       <LandingContentWrapper>
         <></>
       </LandingContentWrapper>

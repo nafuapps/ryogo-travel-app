@@ -3456,13 +3456,23 @@
       }
     },
     "Features": {
-      "Hero":{},
+      "Hero":{
+        "Title":"Check out what's possible with RyoGo",
+        "Subtitle":"Bring all your travel business operations under one roof. From managing bookings to keeping your fleet running smoothly, we have got you covered.",
+        "PrimaryCTA":"Explore Features",
+        "SecondaryCTA":"Get Started Now"
+      },
       "Management":{},
       "Scheduling":{},
       "Communication":{},
       "Analytics":{},
       "Missions":{},
-      "CTA":{}
+      "CTA":{
+        "Title":"Want to make your business more efficient?",
+        "Subtitle":"Scale your travel agency faster with RyoGo. Start your {days}-day trial now",
+        "PrimaryCTA":"Get Started Now",
+        "SecondaryCTA":"Understand How RyoGo Works"
+      }
     },
     "Pricing": {
       "Plans": {
@@ -3476,15 +3486,15 @@
           "F2": "Create and manage bookings",
           "F3": "Standard support via email",
           "F4": "Driver app access",
-          "F5": "Review and reconcile transactions and expenses",
-          "F6": "Send professional messages and invoices to customers",
+          "F5": "Reconcile transactions and expenses",
+          "F6": "Send professional messages to customers",
           "CTA": "Get Started"
         },
         "Premium": {
           "Title": "PREMIUM",
           "Description": "For large and growing agencies",
           "Price": "Starting at ₹{price}/month",
-          "F1": "Everything in Basic",
+          "F1": "Everything in Basic, and",
           "F2": "Unlimited bookings",
           "F3": "Unlimited vehicles, drivers and agents",
           "F4": "Priority 24x7 support over phone",
@@ -3565,8 +3575,10 @@
     },
     "HowItWorks": {
       "Hero":{
-        "Title":"Not sure how it works?",
-        "Subtitle":"Go through our step-by-step guide"
+        "Title":"Let's find out how RyoGo app works",
+        "Subtitle":"Walkthrough our slideshow guide and understand how your business can benefit by automating and simplifying your daily travel operations",
+        "PrimaryCTA": "See How It Works",
+        "SecondaryCTA": "Explore Help Center"
       },
       "Onboarding":{
         "Title":"Quick and Simple Onboarding",
@@ -3709,20 +3721,20 @@
       },
       "Alerts":{},
       "CTA":{
-        "Title":"Ready to try RyoGo now?",
-        "Subtitle":"Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free {days}-day trial",
+        "Title":"Ready to try out RyoGo?",
+        "Subtitle":"Unleash the full potential of your travel business with the help of technology. Sign up now to get a free {days}-day trial",
         "PrimaryCTA":"Start Free Trial",
         "SecondaryCTA":"Watch Videos"
       }
     },
     "Resources": {
-      "Hero":{},
-      "Videos":{},
-      "FAQ":{},
-      "Support":{},
-      "Blogs":{},
-      "About":{},
-      "CTA":{}
+      "Hero":{"Title":"","Subtitle":""},
+      "Videos":{"Title":"","Subtitle":""},
+      "FAQ":{"Title":"","Subtitle":""},
+      "Support":{"Title":"","Subtitle":""},
+      "Blogs":{"Title":"","Subtitle":""},
+      "About":{"Title":"","Subtitle":""},
+      "CTA":{"Title":"","Subtitle":"","PrimaryCTA":"","SecondaryCTA":""}
     }
   }
 }

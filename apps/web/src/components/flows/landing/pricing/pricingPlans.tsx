@@ -13,9 +13,12 @@ import {
 export default async function PricingPlansSection() {
   const t = await getTranslations("Landing.Pricing.Plans")
   return (
-    <LandingSectionWrapper id="pricing" className="bg-sky-50 min-h-lvh">
-      <LandingContentWrapper>
-        <RyogoH1 weight="font-bold" className="text-center">
+    <LandingSectionWrapper id="pricing" hero>
+      <LandingContentWrapper
+        justifyStart
+        className="h-full px-5 md:px-10 lg:px-16 py-24 md:py-32 rounded-lg bg-linear-to-br from-sky-200 to-sky-50"
+      >
+        <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
         </RyogoH1>
         <RyogoP color="slate" className="text-center max-w-4xl">

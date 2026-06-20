@@ -47,7 +47,7 @@ const faqs = [
 export default function ResourcesFAQSection() {
   const t = useTranslations("Landing.Resources.FAQ")
   return (
-    <LandingSectionWrapper id="faq" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="faq" className="bg-white">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

@@ -21,14 +21,14 @@ import Navbar from "@/components/flows/landing/nav"
 export default function HowItWorksPage() {
   return (
     <div className="flex flex-col h-full">
-      <Navbar selected="resources" />
+      <Navbar selected="howItWorks" />
       <HowItWorksHeroSection />
       <HowItWorksOnboardingSection />
       <HowItWorksBookingsSection />
       <HowItWorksEntitiesSection />
       <HowItWorksDriverAppSection />
       <HowItWorksCustomersSection />
-      <HowItWorksAlertsSection />
+      {/* <HowItWorksAlertsSection /> */}
       <HowItWorksCTASection />
       <Footer />
     </div>

@@ -13,7 +13,7 @@ import {
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
   return (
-    <LandingSectionWrapper id="hero" hero>
+    <LandingSectionWrapper id="hero" hero className="h-lvh">
       <LandingContentWrapper
         justifyStart
         className="relative h-full px-5 md:px-10 lg:px-16 py-24 md:py-32 rounded-lg bg-linear-to-b from-sky-400 to-sky-50"
@@ -33,7 +33,7 @@ export default async function HomeHeroSection() {
         >
           {t("Subtitle")}
         </RyogoP>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/auth/signup">
             <Button size="lg" variant="brand" className="w-full md:w-auto">
               <RyogoSmall color="white" weight="font-medium">

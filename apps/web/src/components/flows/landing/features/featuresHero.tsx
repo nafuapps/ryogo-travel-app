@@ -1,21 +1,60 @@
-import { RyogoH1, RyogoP } from "@/components/typography"
+import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { ChevronDown } from "lucide-react"
+import Image from "next/image"
 
 export default async function FeaturesHeroSection() {
   const t = await getTranslations("Landing.Features.Hero")
   return (
-    <LandingSectionWrapper id="hero" hero className="min-h-lvh bg-white">
-      <LandingContentWrapper>
-        <RyogoH1 weight="font-bold" className="text-center">
+    <LandingSectionWrapper id="hero" hero>
+      <LandingContentWrapper
+        justifyStart
+        className="h-full px-5 md:px-10 lg:px-16 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-slate-200 to-white"
+      >
+        <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
         </RyogoH1>
         <RyogoP color="slate" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:mb-4">
+          <Link href="#management">
+            <Button size="lg" variant="brand" className="w-full md:w-auto">
+              <RyogoSmall color="white" weight="font-medium">
+                {t("PrimaryCTA")}
+              </RyogoSmall>
+              <RyogoIcon icon={ChevronDown} color="white" size="sm" thick />
+            </Button>
+          </Link>
+          <Link href="/auth/signup">
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full gap-1 lg:gap-2 md:w-auto"
+            >
+              <RyogoSmall color="slate" weight="font-medium">
+                {t("SecondaryCTA")}
+              </RyogoSmall>
+            </Button>
+          </Link>
+        </div>
+        <div className="bg-white mt-auto max-w-4xl relative w-full aspect-video rounded-t-2xl overflow-hidden">
+          <Image
+            className="object-cover"
+            loading="eager"
+            src="/forgotPasswordBG.png"
+            alt=""
+            fill
+            sizes="896px"
+          />
+        </div>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

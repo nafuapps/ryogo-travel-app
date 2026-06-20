@@ -7,7 +7,7 @@ import {
 export default async function FeaturesCommunicationSection() {
   const t = await getTranslations("Landing.Features.Communication")
   return (
-    <LandingSectionWrapper id="communication" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="communication" className="bg-white">
       <LandingContentWrapper>
         <></>
       </LandingContentWrapper>

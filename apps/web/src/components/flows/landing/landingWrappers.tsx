@@ -3,16 +3,18 @@ export function LandingSectionWrapper({
   children,
   className,
   hero,
+  shrink,
 }: {
   id: string
   children: React.ReactNode
   className?: string
   hero?: boolean
+  shrink?: boolean
 }) {
   return (
     <section
       id={id}
-      className={`${hero ? "h-lvh p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-5 md:px-6 lg:px-8"} ${className}`}
+      className={`${shrink ? "" : "min-h-lvh"} ${hero ? "p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-5 md:px-6 lg:px-8"} ${className}`}
     >
       {children}
     </section>

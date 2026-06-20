@@ -7,7 +7,7 @@ import {
 export default async function FeaturesAnalyticsSection() {
   const t = await getTranslations("Landing.Features.Analytics")
   return (
-    <LandingSectionWrapper id="analytics" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="analytics" className="bg-white">
       <LandingContentWrapper>
         <></>
       </LandingContentWrapper>

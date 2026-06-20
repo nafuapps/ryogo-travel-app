@@ -21,6 +21,7 @@ export default async function HomeCTASection() {
   return (
     <LandingSectionWrapper
       id="cta"
+      shrink
       className="bg-linear-to-b from-sky-600 to-sky-900"
     >
       <LandingContentWrapper>

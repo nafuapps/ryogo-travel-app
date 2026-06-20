@@ -8,7 +8,7 @@ import {
 export default async function ResourcesVideosSection() {
   const t = await getTranslations("Landing.Resources.Videos")
   return (
-    <LandingSectionWrapper id="videos" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="videos" className="bg-white">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

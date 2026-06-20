@@ -13,7 +13,7 @@ import {
 export default async function HomeFeaturesSection() {
   const t = await getTranslations("Landing.Home.Features")
   return (
-    <LandingSectionWrapper id="features" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="features" className="bg-white">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

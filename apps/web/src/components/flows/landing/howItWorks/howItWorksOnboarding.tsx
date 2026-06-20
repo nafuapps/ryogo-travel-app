@@ -67,7 +67,7 @@ export default function HowItWorksOnboardingSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="onboarding" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="onboarding" className=" bg-white">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" color="dark" className="text-center">
           {t("Title")}

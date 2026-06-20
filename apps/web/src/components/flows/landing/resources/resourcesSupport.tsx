@@ -8,7 +8,7 @@ import {
 export default async function ResourcesSupportSection() {
   const t = await getTranslations("Landing.Resources.Support")
   return (
-    <LandingSectionWrapper id="support" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="support" className="bg-white">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

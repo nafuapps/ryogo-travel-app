@@ -70,7 +70,7 @@ export default function HowItWorksBookingsSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="bookings" className="min-h-lvh bg-sky-50">
+    <LandingSectionWrapper id="bookings" className=" bg-sky-50">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" color="dark" className="text-center">
           {t("Title")}

@@ -7,7 +7,7 @@ import {
 export default async function FeaturesSchedulingSection() {
   const t = await getTranslations("Landing.Features.Scheduling")
   return (
-    <LandingSectionWrapper id="scheduling" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="scheduling" className="bg-white">
       <LandingContentWrapper>
         <></>
       </LandingContentWrapper>

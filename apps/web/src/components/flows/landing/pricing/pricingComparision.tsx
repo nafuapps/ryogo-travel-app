@@ -19,7 +19,7 @@ import {
 export default async function PricingComparisionSection() {
   const t = await getTranslations("Landing.Pricing.Comparision")
   return (
-    <LandingSectionWrapper id="comparision" className="min-h-lvh bg-white">
+    <LandingSectionWrapper id="comparision" className="bg-white">
       <LandingContentWrapper>
         <ComparisionRow
           title={<RyogoH2 weight="font-bold">{t("Header")}</RyogoH2>}

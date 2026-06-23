@@ -14,7 +14,7 @@ export function LandingSectionWrapper({
   return (
     <section
       id={id}
-      className={`${shrink ? "" : "min-h-lvh"} ${hero ? "p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-5 md:px-6 lg:px-8"} ${className}`}
+      className={`${shrink ? "" : "min-h-lvh"} flex flex-col ${hero ? "p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-5 md:px-6 lg:px-8"} ${className ?? ""}`}
     >
       {children}
     </section>
@@ -32,7 +32,7 @@ export function LandingContentWrapper({
 }) {
   return (
     <div
-      className={`max-w-6xl flex flex-col items-center ${justifyStart ? "justify-start" : "justify-center"} mx-auto gap-6 md:gap-8 ${className}`}
+      className={`flex-1 max-w-6xl w-full flex flex-col items-center ${justifyStart ? "justify-start" : "justify-center"} mx-auto gap-6 md:gap-8 ${className ?? ""}`}
     >
       {children}
     </div>

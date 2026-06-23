@@ -14,7 +14,7 @@ export default async function FeaturesCTASection() {
   const t = await getTranslations("Landing.Features.CTA")
   return (
     <LandingSectionWrapper id="cta">
-      <LandingContentWrapper className="h-full rounded-lg px-5 md:px-10 lg:px-16 py-24 md:py-32 bg-linear-to-b from-sky-600 to-sky-900">
+      <LandingContentWrapper className="rounded-lg px-5 md:px-10 lg:px-16 py-12 md:py-18 bg-linear-to-b from-slate-400 to-slate-900">
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
@@ -24,8 +24,8 @@ export default async function FeaturesCTASection() {
         <div className="flex flex-col gap-4 justify-center items-center">
           <Link href="/onboarding">
             <Button size="lg" variant="white" className="w-full md:w-auto ">
-              <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
-              <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
+              <RyogoSmall color="slate">{t("PrimaryCTA")}</RyogoSmall>
+              <RyogoIcon icon={ChevronRight} color="slate" size="sm" thick />
             </Button>
           </Link>
           <Link href="/how-it-works">

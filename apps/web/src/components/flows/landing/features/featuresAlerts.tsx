@@ -6,10 +6,10 @@ import {
 import { RyogoH1, RyogoP } from "@/components/typography"
 import { FeatureGrid, FeatureItem } from "./featureWrappers"
 
-export default async function FeaturesSchedulingSection() {
-  const t = await getTranslations("Landing.Features.Scheduling")
+export default async function FeaturesAlertsSection() {
+  const t = await getTranslations("Landing.Features.Alerts")
   return (
-    <LandingSectionWrapper id="scheduling" className="bg-slate-50">
+    <LandingSectionWrapper id="alerts" className="bg-white">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" color="dark" className="text-center">
           {t("Title")}
@@ -19,26 +19,26 @@ export default async function FeaturesSchedulingSection() {
         </RyogoP>
         <FeatureGrid>
           <FeatureItem
-            title={t("S1.Title")}
-            description={t("S1.Description")}
+            title={t("A1.Title")}
+            description={t("A1.Description")}
             src="/logoPWALight.png"
             long
           />
           <FeatureItem
-            title={t("S2.Title")}
-            description={t("S2.Description")}
+            title={t("A2.Title")}
+            description={t("A2.Description")}
             src="/logoPWALight.png"
             longReverse
           />
           <FeatureItem
-            title={t("S3.Title")}
-            description={t("S3.Description")}
+            title={t("A3.Title")}
+            description={t("A3.Description")}
             src="/logoPWALight.png"
             long
           />
           <FeatureItem
-            title={t("S4.Title")}
-            description={t("S4.Description")}
+            title={t("A4.Title")}
+            description={t("A4.Description")}
             src="/logoPWALight.png"
             longReverse
           />

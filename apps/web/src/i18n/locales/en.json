@@ -3456,38 +3456,145 @@
       }
     },
     "Features": {
-      "Hero":{
-        "Title":"Check out what's possible with RyoGo",
-        "Subtitle":"Bring all your travel business operations under one roof. From managing bookings to keeping your fleet running smoothly, we have got you covered.",
-        "PrimaryCTA":"Explore Features",
-        "SecondaryCTA":"Get Started Now"
+      "Hero": {
+        "Title": "Check out what you can do with RyoGo",
+        "Subtitle": "Bring all your travel business operations under one roof. From managing bookings to keeping your fleet running smoothly, we have got you covered.",
+        "PrimaryCTA": "Explore All Features",
+        "SecondaryCTA": "Create Free Account Now"
       },
-      "Management":{},
-      "Scheduling":{},
-      "Communication":{},
-      "Analytics":{},
-      "Missions":{},
-      "CTA":{
-        "Title":"Want to make your business more efficient?",
-        "Subtitle":"Scale your travel agency faster with RyoGo. Start your {days}-day trial now",
-        "PrimaryCTA":"Get Started Now",
-        "SecondaryCTA":"Understand How RyoGo Works"
+      "Menu": {
+        "Title": "Browse Features",
+        "M1": "Agency Management",
+        "M2": "Booking Scheduling",
+        "M3": "Trip Communication",
+        "M4": "Analytics & Reports",
+        "M5": "Alerts & Notifications",
+        "M6": "Security & Privacy",
+        "LearnMore": "Explore More"
+      },
+      "Management": {
+        "Title": "Manage your agency like a pro",
+        "Subtitle": "Run your entire travel business operations with ease.. from a unified operations desk.",
+        "M1": {
+          "Title": "Control your fleet",
+          "Description": "Manage your vehicles, drivers and agents under a single roof. Seamlessly add entities and control their entire lifecycle."
+        },
+        "M2": {
+          "Title": "Delegate tasks",
+          "Description": "Let the various users (agents and drivers) login with their own accounts and handle the day-to-day operations."},
+        "M3": {
+          "Title": "Stay in the loop",
+          "Description": "Get smart suggestions and real-time updates so that, as the owner, you are always one step ahead."},
+        "M4": {
+         "Title": "Automated workflows",
+          "Description": "Focus on the essential things like high level business planning and let RyoGo handle the rest."}
+      },
+      "Scheduling": {
+        "Title": "Scheduling has never been so easy",
+        "Subtitle": "Create and manage bookings with the help of smart recommendations.. for absolute peace of mind.",
+        "S1": {
+         "Title": "Seamless booking management",
+          "Description": "Track all your bookings with extensive workflows and real-time updates so that there are no cracks in the itinerary."},
+        "S2": {
+          "Title": "Conflict-free assignment",
+          "Description": "Get interactive visualizations that instantly flags double-bookings or overlapping driver duties, keeping your schedule clean."},
+        "S3": {
+          "Title": "Built for flexibility and completeness",
+          "Description": "Easily create different types of bookings, while tracking allowances, transactions and various expenses effortlessly."},
+        "S4": {
+         "Title": "Optimized for business growth",
+          "Description": "Receive intelligent assignment suggestions based on multiple factors to lower your costs while maximizing your revenue."}
+      },
+      "Communication": {
+        "Title": "Built for communication and collaboration",
+        "Subtitle": "Keep drivers, agency coordinators, and end customers completely aligned. Anytime, anywhere.",
+        "C1": {
+          "Title": "Connected by default",
+          "Description": "Get live trip status updates for each booking, so that everyone involved is always in the loop."
+        },
+        "C2": {
+          "Title": "WhatsApp integration",
+          "Description": "Remove the friction of endless phone calls and messages, with a single platform to initiate all your agency conversations."
+        },
+        "C3": {
+          "Title": "Driver Web App",
+          "Description": "Drivers can manage their bookings with easy-to-use web app, allowing them to start/end trips with odometer numbers directly on their phones."
+        },
+        "C4": {
+          "Title": "Engage your customers",
+          "Description": "Share timely updates, booking documents and invoices with your customers for a delightful experience."
+        }
+      },
+      "Analytics": {
+        "Title": "Stay ahead with data-driven analysis",
+        "Subtitle": "Make decisions based on real data, not guesswork. Uncover exactly what is working and how to improve your business numbers.",
+        "A1": {
+          "Title": "Grow revenue metrics",
+          "Description": "Track earnings versus fuel, maintenance, and driver costs, pinpointing exactly which entities are impacting profits."},
+        "A2": {
+          "Title": "Track business performance",
+          "Description": "Keep an eye on vehicles, drivers, agents activities and utilizations. Optimize your fleet for maximum efficiency."},
+        "A3": {
+          "Title": "Integrated with intelligence",
+          "Description": "Get data-driven insights, recommendations and tips to help you with operations planning."},
+        "A4": {
+          "Title": "Dynamic forecasting",
+          "Description": "Analyze historical trends to predict upcoming seasonal volume spikes, so that you can price bookings optimally."}
+      },
+      "Alerts": {
+        "Title": "Timely alerts and notifications",
+        "Subtitle": "Keep operations running perfectly without any blockers. A localized Mission Control highlights exactly what needs immediate attention.",
+        "A1": {
+          "Title": "Recieve targeted alerts",
+          "Description": "Flags upcoming license expirations proactively right on the dashboard before the trip starts."},
+        "A2": {
+          "Title": "Watch real-time feed",
+          "Description": "All users stay updated on every activity with agency-wide notifications."},
+        "A3": {
+          "Title": "Record every detail",
+          "Description": "Review and reconcile every booking with the help of transactions, expenses and trip logs to confirm and close the loop for every journey."},
+        "A4": {
+          "Title": "",
+          "Description": "."}
+      },
+      "Security": {
+        "Title": "T",
+        "Subtitle": "S",
+        "S1": {
+          "Title": "Safe and private",
+          "Description": "Enterprise-grade security to protect sensitive customer identities, booking data, and financial statements with absolute privacy."
+        },
+        "S2": {
+          "Title": "Built-in system corrections",
+          "Description": "Zero chance of fraud or malicious activity. Every workflow has automated checks and balances to ensure smooth operations without any foulplay."},
+        "S3": {
+          "Title": "Total Auditability",
+          "Description": "Track every single action, edit, adjustment, or override back to a specific user."},
+        "S4": {
+          "Title": "",
+          "Description": "D."}
+      },
+      "CTA": {
+        "Title": "Want to grow your business faster?",
+        "Subtitle": "Scale your travel agency operations rapidly with RyoGo. Start your {days}-day trial now",
+        "PrimaryCTA": "Get Started Now",
+        "SecondaryCTA": "Understand How RyoGo Works"
       }
     },
     "Pricing": {
       "Plans": {
-        "Title": "Simple, Transparent Pricing",
+        "Title": "Affordable, Transparent Pricing",
         "Subtitle": "Choose the plan that fits your business needs",
         "Basic": {
           "Title": "BASIC",
           "Description": "For small and starter agencies",
           "Price": "Free Forever",
-          "F1": "Onboard vehicles, drivers and agents",
-          "F2": "Create and manage bookings",
+          "F1": "Onboard limited vehicles, drivers and agents",
+          "F2": "Create and manage limited bookings",
           "F3": "Standard support via email",
-          "F4": "Driver app access",
+          "F4": "Driver web app access",
           "F5": "Reconcile transactions and expenses",
-          "F6": "Send professional messages to customers",
+          "F6": "Communicate with customers via WhatsApp",
           "CTA": "Get Started"
         },
         "Premium": {
@@ -3500,9 +3607,16 @@
           "F4": "Priority 24x7 support over phone",
           "F5": "Advanced analytics and AI suggestions",
           "F6": "Full and unrestricted app access",
-          "F7": "",
-          "CTA": "Try For Free"
-        }
+          "F7": "Priority access to new features",
+          "CTA": "Try {days} Days For Free"
+        },
+        "CompareCTA": "Compare plans"
+      },
+      "Social": {
+        "Title": "Trusted by 100+ travel agencies and tour operators countrywide",
+        "Testimonial": "\"RyoGo is easy enough for new users, and powerful enough to meet the needs of large travel agencies\"",
+        "Author": "- Priyank Kumar",
+        "Role": "(Owner, NorthEast Tours)"
       },
       "Comparision": {
         "Header": "Compare plan features",
@@ -3516,9 +3630,7 @@
         "Bookings": "Bookings",
         "ConfrimedBookings": "Confirmed bookings (in last {days} days)",
         "AssignmentSuggestions": "Get vehicle and driver assignment suggestion",
-        "SendMessages": "Send professional messages and invoices to customers via WhatsApp",
-        "GetAlerts": "Get real-time actionable alerts",
-        "Feed": "Receive agency-wide activity notifications",
+        "SendMessages": "Send timely messages and share invoices with customers via WhatsApp",
         "DriverApp": "Driver App",
         "DriverAppAccess": "Driver can access app to manage trips",
         "DriverExpenses": "Driver can add expenses",
@@ -3526,43 +3638,47 @@
         "BasicAnalytics": "Basic analytics and insights",
         "AdvancedAnalytics": "Access to advanced analytics",
         "AIRecommendations": "AI recommendations and tips to optimize operations",
-        "OwnerControl": "Owner Control",
-        "NewFeatures":"Priority access to new features",
-        "MultipleOwners":"Multiple owner accounts",
+        "AgencyControl": "Agency Control",
+        "GetAlerts": "Get real-time actionable alerts",
+        "Feed": "Receive agency-wide activity notifications",
+        "MultipleOwners": "Multiple owner accounts",
+        "NewFeatures": "Priority access to new features",
+        "CustomerReminders": "Set custom reminders",
         "SafetyPrivacy": "Safety & Privacy",
-        "DataSecurity":"Sensitive data secured with end-to-end encryption",
+        "DataSecurity": "Sensitive data secured with end-to-end encryption",
         "DataPrivacy": "All data kept private",
         "Support": "Support",
-        "EmailSupport": "Basic email support",
-        "PrioritySupport": "Priority 24x7 support over phone",
-        "MoreCTA":"Explore All Features"
+        "EmailSupport": "Basic 48-hr email support",
+        "PrioritySupport": "24x7 Priority support over phone",
+        "SupportTicket": "Raise support tickets for quick resolution",
+        "MoreCTA": "Explore All Features"
       },
-      "FAQ":{
-        "Title":"Frequently Asked Questions",
-        "Subtitle":"Get answers to all your pricing related queries here",
-        "Q1":{
-          "Question":"What happens at the end of my free trial?",
-          "Answer":"Every new account is created under Basic plan and is free forever. At the end of your trial period, your account will be stay under Basic plan. You can upgrade to Premium at any time."
+      "FAQ": {
+        "Title": "Frequently Asked Questions",
+        "Subtitle": "Get answers to all your pricing related queries here",
+        "Q1": {
+          "Question": "What happens at the end of my free trial?",
+          "Answer": "Every new account is created under Basic plan and is free forever. At the end of your trial period, your account will be stay under Basic plan. You can upgrade to Premium at any time."
         },
-        "Q2":{
-          "Question":"How do I upgrade to the Premium plan?",
-          "Answer":"After creating an account, you can choose to upgrade to the Premium plan by buying our subscription from the subscription page in your account settings. For any help, contact our support team at {contact}"
+        "Q2": {
+          "Question": "How do I upgrade to the Premium plan?",
+          "Answer": "After creating an account, you can choose to upgrade to the Premium plan by buying our subscription from the subscription page in your account settings. For any help, contact our support team at {contact}"
         },
-        "Q3":{
-          "Question":"What payment methods do you accept? Is it safe and secure",
-          "Answer":"We work with Razorpay to accept payments through various methods including UPI, cards, net banking, and digital wallets. All payments are processed securely using SSL encryption."
+        "Q3": {
+          "Question": "What payment methods do you accept? Is it safe and secure",
+          "Answer": "We work with Razorpay to accept payments through various methods including UPI, cards, net banking, and digital wallets. All payments are processed securely using SSL encryption."
         },
-        "Q4":{
-          "Question":"Can I cancel my Premium subscription?",
-          "Answer":"No. Once bought, you cannot cancel your subscription. However, when current subscription period expires, your account will be automatically downgraded to Basic plan."
+        "Q4": {
+          "Question": "Can I cancel my Premium subscription?",
+          "Answer": "No. Once bought, you cannot cancel your subscription. However, when current subscription period expires, your account will be automatically downgraded to Basic plan."
         },
-        "Q5":{
-          "Question":"What happens to all my excess data like additional vehicles and drivers if I do not renew my Premium subscription?",
-          "Answer":"All your saved data is retained with us forever. However, under Basic plan only limited number of entities are available for booking assignments. Refer to the comparision table above."
+        "Q5": {
+          "Question": "What happens to all my excess data like additional vehicles and drivers if I do not renew my Premium subscription?",
+          "Answer": "All your saved data is retained with us forever. However, under Basic plan only limited number of entities are available for booking assignments. Refer to the comparision table above."
         },
-        "Q6":{
-          "Question":"We are a non-profit travel organisation, is there any special pricing available?",
-          "Answer":"For any genuine special pricing needs, please contact our support team at {contact}"
+        "Q6": {
+          "Question": "We are a non-profit travel organisation, is there any special pricing available?",
+          "Answer": "For any genuine special pricing needs, please contact our support team at {contact}"
         },
         "MoreCTA": "Explore More Resources"
       },
@@ -3574,167 +3690,209 @@
       }
     },
     "HowItWorks": {
-      "Hero":{
-        "Title":"Let's find out how RyoGo app works",
-        "Subtitle":"Walkthrough our slideshow guide and understand how your business can benefit by automating and simplifying your daily travel operations",
+      "Hero": {
+        "Title": "Let's find out how RyoGo works",
+        "Subtitle": "Walkthrough our slideshow guide below and understand how your business can benefit by automating and simplifying your daily travel operations",
         "PrimaryCTA": "See How It Works",
         "SecondaryCTA": "Explore Help Center"
       },
-      "Onboarding":{
-        "Title":"Quick and Simple Onboarding",
-        "Subtitle":"Get started in a few minutes with our guided registration process",
-        "O0":{
-          "Title":"Create Agency Account",
-          "Description":"Provide basic details of the owner and the agency."
+      "Onboarding": {
+        "Title": "Quick and Simple Onboarding",
+        "Subtitle": "Get started in a few minutes with our guided registration process",
+        "O0": {
+          "Title": "Create Agency Account",
+          "Description": "Provide basic details of the owner and the agency."
         },
-        "O1":{
-          "Title":"Verify Account",
-          "Description":"One step account verification with an OTP sent to your email."
+        "O1": {
+          "Title": "Verify Account",
+          "Description": "One step account verification with an OTP sent to your email."
         },
-        "O2":{
-          "Title":"Add Vehicle",
-          "Description":"Minimal documentation upload to get your vehicle onboarded."
+        "O2": {
+          "Title": "Add Vehicle",
+          "Description": "Minimal documentation upload to get your vehicle onboarded."
         },
-        "O3":{
-          "Title":"Add Driver",
-          "Description":"Onboard driver with simple details.. no Aadhaar required."
+        "O3": {
+          "Title": "Add Driver",
+          "Description": "Onboard driver with simple details.. no Aadhaar required."
         },
-        "O4":{
-          "Title":"Add Agent",
-          "Description":"Optionally add an agent to manage your daily agency operations."
+        "O4": {
+          "Title": "Add Agent",
+          "Description": "Optionally add an agent to delegate your daily agency operations."
         },
-        "O5":{
-          "Title":"All Aboard!",
-          "Description":"Start creating booking instantly and grow your business from a single dashboard."
+        "O5": {
+          "Title": "All Aboard!",
+          "Description": "Start creating booking instantly and grow your business from a single dashboard."
         },
-        "MoreCTA":"Create Account Now"
+        "MoreCTA": "Create Account Now"
       },
-      "Bookings":{
-        "Title":"Create and Manage Bookings",
-        "Subtitle":"Streamline all your booking operations from one place.",
-        "B0":{
-          "Title":"Easy booking creation",
-          "Description":"Create a new booking in just a few seconds with guided and auto-filled steps."
+      "Bookings": {
+        "Title": "Create and Manage Bookings",
+        "Subtitle": "Streamline all your booking operations from one place.",
+        "B0": {
+          "Title": "Easy booking creation",
+          "Description": "Create a new booking in just a few seconds with guided and auto-filled steps."
         },
-        "B1":{
-          "Title":"Vehicle and driver assignment",
-          "Description":"Assign vehicle, driver (and agent) to a booking with a single click."
+        "B1": {
+          "Title": "Vehicle and driver assignment",
+          "Description": "Assign vehicle, driver (and agent) to a booking with a single click."
         },
-        "B2":{
-          "Title":"Get assignment recomendations",
-          "Description":"RyoGo gives you smart suggestions to choose the best vehicle, driver or agent for a booking."
+        "B2": {
+          "Title": "Get assignment recomendations",
+          "Description": "RyoGo gives you smart suggestions to choose the best vehicle, driver or agent for a booking."
         },
-        "B3":{
-          "Title":"Send quotes and confirmations",
-          "Description":"Send professional booking quotations and confirmations to the customers via WhatsApp"
+        "B3": {
+          "Title": "Send quotes and confirmations",
+          "Description": "Send professional booking quotations and confirmations to the customers via WhatsApp"
         },
-        "B4":{
-          "Title":"Manage trips in real-time",
-          "Description":"Control all your bookings from a single place. Always stay updated on what's happening on the road."
+        "B4": {
+          "Title": "Manage trips in real-time",
+          "Description": "Control all your bookings from a single place. Always stay updated on what's happening on the road."
         },
-        "B5":{
-          "Title":"Add transactions and expenses",
-          "Description":"Easily add money transactions or expenses incurred in a trip. It will all be accounted in the final invoice."
+        "B5": {
+          "Title": "Add transactions and expenses",
+          "Description": "Easily add money transactions or expenses incurred in a trip. It will all be accounted in the final invoice."
         },
-        "B6":{
-          "Title":"Reconcile bookings and payments",
-          "Description":"Get a complete picture of your revenue by reconciling a booking in the end to close the loop. So convenient!"
+        "B6": {
+          "Title": "Reconcile bookings and payments",
+          "Description": "Get a complete picture of your revenue by reconciling a booking in the end to close the loop. So convenient!"
         },
-        "MoreCTA":"Get Started For Free"
+        "MoreCTA": "Get Started For Free"
       },
-      "Entities":{
-        "Title":"Simple fleet management",
-        "Subtitle":"It has never been so simple to take control of your everyday agency tasks.",
-        "E0":{
-          "Title":"Manage vehicles, drivers and agents",
-          "Description":"Add, remove or edit your vehicle, driver and agent details in just a few clicks.. all in one place"
+      "Entities": {
+        "Title": "Simple fleet management",
+        "Subtitle": "It has never been so simple to take control of your everyday agency tasks.",
+        "E0": {
+          "Title": "Manage vehicles, drivers and agents",
+          "Description": "Add, remove or edit your vehicle, driver and agent details in just a few clicks.. all in one place"
         },
-        "E1":{
-          "Title":"Stay compliant",
-          "Description":"Store all your licenses and policies documents in a single repository for easy access and compliance."
+        "E1": {
+          "Title": "Stay compliant",
+          "Description": "Store all your licenses and policies documents in a single repository for easy access and compliance."
         },
-        "E2":{
-          "Title":"Get expiry reminders",
-          "Description":"Any policy or license about to expire will be flagged. So that all your documents are updated before a trip."
+        "E2": {
+          "Title": "Get expiry reminders",
+          "Description": "Any policy or license about to expire will be flagged. So that all your documents are updated before a trip."
         },
-        "E3":{
-          "Title":"Secure storage",
-          "Description":"All your data is safe with us forever. No need to worry about data loss, privacy or security breaches."
+        "E3": {
+          "Title": "Secure storage",
+          "Description": "All your data is safe with us forever. No need to worry about data loss, privacy or security breaches."
         },
-        "E4":{
-          "Title":"Accomodate driver leaves",
-          "Description":"Just add the time when a driver will be not available and the system will adjust bookings accordingly."
+        "E4": {
+          "Title": "Accomodate driver leaves",
+          "Description": "Just add the time when a driver will be not available and the system will adjust bookings accordingly."
         },
-        "E5":{
-          "Title":"Stay on top of vehicle repairs",
-          "Description":"Never get caught off-guard with a broken vehicle when assigning a booking. So that every trip is smooth, safe and hassle-free."
+        "E5": {
+          "Title": "Stay on top of vehicle repairs",
+          "Description": "Never get caught off-guard with a broken vehicle when assigning a booking. So that every trip is smooth, safe and hassle-free."
         }
       },
-      "DriverApp":{
-        "Title":"Easy to use app for drivers",
-        "Subtitle":"RyoGo comes with a dedicated web app for drivers that provides real-time trip status monitoring, communication and much more.",
-        "D0":{
-          "Title":"Driver's job made easy",
-          "Description":"Drivers can track their ongoing trips, navigate to pickup/drop locations and receive new booking updates all in real-time."
+      "DriverApp": {
+        "Title": "Integrated with drivers",
+        "Subtitle": "RyoGo comes with a dedicated web app for drivers that provides real-time trip status monitoring, communication and much more.",
+        "D0": {
+          "Title": "Driver's job made easy",
+          "Description": "Drivers can track their ongoing trips, navigate to pickup/drop locations and receive new booking updates all in real-time."
         },
-        "D1":{
-          "Title":"Add Expenses on the go",
-          "Description":"Drivers can add expenses like toll, parking, fuel in their app. Agency can approve them and they will be automatically adjusted in the final invoice"
+        "D1": {
+          "Title": "Add Expenses on the go",
+          "Description": "Drivers can add expenses like toll, parking, fuel in their app. Agency can approve them and they will be automatically adjusted in the final invoice"
         },
-        "D2":{
-          "Title":"Know your vehicle",
-          "Description":"Drivers can check out information about the assigned vehicle along with necessary online documentations on their fingertips."
+        "D2": {
+          "Title": "Know your vehicle",
+          "Description": "Drivers can check out information about the assigned vehicle along with necessary online documentations on their fingertips."
         },
-        "D3":{
-          "Title":"Get trip updates",
-          "Description":"Every time driver makes a move, the trip status is reflected on agency dashboard. So that you always know what's happening on the road."
+        "D3": {
+          "Title": "Get trip updates",
+          "Description": "Every time driver makes a move, the trip status is reflected on agency dashboard. So that you always know what's happening on the road."
         },
-        "D4":{
-          "Title":"Protections from fraud",
-          "Description":"Every driver action is automatically logged, checked and verified for fraud. So that your final billing calculation is always accurate."
+        "D4": {
+          "Title": "Protections from fraud",
+          "Description": "Every driver action is automatically logged, checked and verified for fraud. So that your final billing calculation is always accurate."
         }
       },
-      "Customers":{
-        "Title":"Customer-first experience",
-        "Subtitle":"Always stay connected with your customers and provice a premium experience.",
-        "C0":{
-          "Title":"Simple customer management",
-          "Description":"Add and manage customers with basic details and remarks.. no verification required. Data is always safe and private with us."
+      "Customers": {
+        "Title": "Customer-first experience",
+        "Subtitle": "Always stay connected with your customers and provice a premium experience.",
+        "C0": {
+          "Title": "Simple customer management",
+          "Description": "Add and manage customers with basic details and remarks.. no verification required. Data is always safe and private with us."
         },
-        "C1":{
-          "Title":"Keep customer in the loop",
-          "Description":"Send regular trip updates to your customers via WhatsApp in real-time."
+        "C1": {
+          "Title": "Keep customer in the loop",
+          "Description": "Send regular trip updates to your customers via WhatsApp in real-time."
         },
-        "C2":{
-          "Title":"Send booking documents",
-          "Description":"Easily send professional booking quotations, confirmations, and invoices to your customers via Whatsapp"
+        "C2": {
+          "Title": "Share booking documents",
+          "Description": "Easily send professional booking quotations, confirmations, and invoices to your customers via Whatsapp"
         },
-        "C3":{
-          "Title":"Get paid online",
-          "Description":"Final invoice can be customized to have your payment link or QR code so that the customer can directly send money online to your account. RyoGo takes no cut here."
+        "C3": {
+          "Title": "Get paid online",
+          "Description": "Final invoice can be customized to have your payment link or QR code so that the customer can directly send money online to your account. RyoGo takes no cut here."
         },
-        "C4":{
-          "Title":"Track customer transactions",
-          "Description":"Add transactions like advance payments made by customers in a booking. RyoGo will automatically adjust them in the final invoice."
+        "C4": {
+          "Title": "Track customer transactions",
+          "Description": "Add transactions like advance payments made by customers in a booking. RyoGo will automatically adjust them in the final invoice."
         },
-        "Disclaimer":"Please note that RyoGo is only an agency workflow management app. We are not a money-transfer booking or payment platform. Any transactions happening between the agency and its customers are their mutual responsibility and are not covered by RyoGo in any capacity."
+        "Disclaimer": "Please note that RyoGo is only an agency workflow management app. We are not a money-transfer booking or payment platform. Any transactions happening between the agency and its customers are their mutual responsibility and are not covered by RyoGo in any capacity."
       },
-      "Alerts":{},
-      "CTA":{
-        "Title":"Ready to try out RyoGo?",
-        "Subtitle":"Unleash the full potential of your travel business with the help of technology. Sign up now to get a free {days}-day trial",
-        "PrimaryCTA":"Start Free Trial",
-        "SecondaryCTA":"Watch Videos"
+      "Missions": {
+        "Title": "Platform built for preparedness",
+        "Subtitle": "Get notified of alerts or notifications so that everyone is always ready to take action.",
+        "M0": {
+          "Title": "Receive task alerts",
+          "Description": "Every user receives actionable alerts targeted for their assigned bookings and tasks."
+        },
+        "M1": {
+          "Title": "Get expiry alerts",
+          "Description": "Any license about to expire? No need to worry. RyoGo will automatically notify you."
+        },
+        "M2": {
+          "Title": "Set customer reminders",
+          "Description": "Miss nothing with scheduled reminders. Know at the right time to take action."
+        },
+        "M3": {
+          "Title": "Real-time notifications",
+          "Description": "No need to call others to know what's hapenning. Everyone in the agency can see updates in their notification feed."
+        }
+      },
+      "CTA": {
+        "Title": "Ready to try out RyoGo?",
+        "Subtitle": "Unleash the full potential of your travel business with the help of technology. Sign up now to get a free {days}-day trial",
+        "PrimaryCTA": "Start Free Trial",
+        "SecondaryCTA": "Watch Videos"
       }
     },
     "Resources": {
-      "Hero":{"Title":"","Subtitle":""},
-      "Videos":{"Title":"","Subtitle":""},
-      "FAQ":{"Title":"","Subtitle":""},
-      "Support":{"Title":"","Subtitle":""},
-      "Blogs":{"Title":"","Subtitle":""},
-      "About":{"Title":"","Subtitle":""},
-      "CTA":{"Title":"","Subtitle":"","PrimaryCTA":"","SecondaryCTA":""}
+      "Hero": {
+        "Title": "",
+        "Subtitle": ""
+      },
+      "Videos": {
+        "Title": "",
+        "Subtitle": ""
+      },
+      "FAQ": {
+        "Title": "",
+        "Subtitle": ""
+      },
+      "Support": {
+        "Title": "",
+        "Subtitle": ""
+      },
+      "Blogs": {
+        "Title": "",
+        "Subtitle": ""
+      },
+      "About": {
+        "Title": "",
+        "Subtitle": ""
+      },
+      "CTA": {
+        "Title": "",
+        "Subtitle": "",
+        "PrimaryCTA": "",
+        "SecondaryCTA": ""
+      }
     }
   }
 }

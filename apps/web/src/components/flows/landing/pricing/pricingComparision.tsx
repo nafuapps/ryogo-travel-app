@@ -69,16 +69,6 @@ export default async function PricingComparisionSection() {
             basicItem={<BlackCheckIcon />}
             premiumItem={<BrandCheckIcon />}
           />
-          <ComparisionRow
-            title={<RyogoSmall>{t("GetAlerts")}</RyogoSmall>}
-            basicItem={<BlackCheckIcon />}
-            premiumItem={<BrandCheckIcon />}
-          />
-          <ComparisionRow
-            title={<RyogoSmall>{t("Feed")}</RyogoSmall>}
-            basicItem={<BlackCheckIcon />}
-            premiumItem={<BrandCheckIcon />}
-          />
         </ComparisionGroup>
         <ComparisionGroup title={t("DriverApp")}>
           <ComparisionRow
@@ -109,7 +99,22 @@ export default async function PricingComparisionSection() {
             premiumItem={<BrandCheckIcon />}
           />
         </ComparisionGroup>
-        <ComparisionGroup title={t("OwnerControl")}>
+        <ComparisionGroup title={t("AgencyControl")}>
+          <ComparisionRow
+            title={<RyogoSmall>{t("GetAlerts")}</RyogoSmall>}
+            basicItem={<BlackCheckIcon />}
+            premiumItem={<BrandCheckIcon />}
+          />
+          <ComparisionRow
+            title={<RyogoSmall>{t("Feed")}</RyogoSmall>}
+            basicItem={<BlackCheckIcon />}
+            premiumItem={<BrandCheckIcon />}
+          />
+          <ComparisionRow
+            title={<RyogoSmall>{t("CustomerReminders")}</RyogoSmall>}
+            basicItem={<BlackCrossIcon />}
+            premiumItem={<BrandCheckIcon />}
+          />
           <ComparisionRow
             title={<RyogoSmall>{t("NewFeatures")}</RyogoSmall>}
             basicItem={<BlackCrossIcon />}
@@ -141,6 +146,11 @@ export default async function PricingComparisionSection() {
           />
           <ComparisionRow
             title={<RyogoSmall>{t("PrioritySupport")}</RyogoSmall>}
+            basicItem={<BlackCrossIcon />}
+            premiumItem={<BrandCheckIcon />}
+          />
+          <ComparisionRow
+            title={<RyogoSmall>{t("SupportTicket")}</RyogoSmall>}
             basicItem={<BlackCrossIcon />}
             premiumItem={<BrandCheckIcon />}
           />

@@ -25,7 +25,7 @@ export default async function FeaturesHeroSection() {
           {t("Subtitle")}
         </RyogoP>
         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:mb-4">
-          <Link href="#management">
+          <Link href="#menu">
             <Button size="lg" variant="brand" className="w-full md:w-auto">
               <RyogoSmall color="white" weight="font-medium">
                 {t("PrimaryCTA")}

@@ -64,7 +64,7 @@ export function RyogoH2(props: RyogoTextProps) {
 export function RyogoH3(props: RyogoTextProps) {
   return (
     <h3
-      className={`text-xl lg:text-2xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
+      className={`text-xl md:text-2xl lg:text-3xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </h3>
@@ -74,7 +74,7 @@ export function RyogoH3(props: RyogoTextProps) {
 export function RyogoH4(props: RyogoTextProps) {
   return (
     <h4
-      className={`text-lg lg:text-xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
+      className={`text-lg md:text-xl lg:text-2xl ${props.weight} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </h4>

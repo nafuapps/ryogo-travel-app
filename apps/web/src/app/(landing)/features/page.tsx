@@ -4,9 +4,11 @@ import FeaturesAnalyticsSection from "@/components/flows/landing/features/featur
 import FeaturesCommunicationSection from "@/components/flows/landing/features/featuresCommunication"
 import FeaturesCTASection from "@/components/flows/landing/features/featuresCTA"
 import FeaturesHeroSection from "@/components/flows/landing/features/featuresHero"
-import FeaturesManagementSection from "@/components/flows/landing/features/featuresmanagement"
-import FeaturesMissionsSection from "@/components/flows/landing/features/featuresMissions"
+import FeaturesManagementSection from "@/components/flows/landing/features/featuresManagement"
+import FeaturesMenuSection from "@/components/flows/landing/features/featuresMenu"
+import FeaturesAlertsSection from "@/components/flows/landing/features/featuresAlerts"
 import FeaturesSchedulingSection from "@/components/flows/landing/features/featuresScheduling"
+import FeaturesSecuritySection from "@/components/flows/landing/features/featuresSecurity"
 import Footer from "@/components/flows/landing/footer"
 import Navbar from "@/components/flows/landing/nav"
 
@@ -23,11 +25,13 @@ export default async function FeaturesPage() {
     <div className="flex flex-col h-full">
       <Navbar selected="features" />
       <FeaturesHeroSection />
+      <FeaturesMenuSection />
       <FeaturesManagementSection />
       <FeaturesSchedulingSection />
       <FeaturesCommunicationSection />
       <FeaturesAnalyticsSection />
-      <FeaturesMissionsSection />
+      <FeaturesAlertsSection />
+      <FeaturesSecuritySection />
       <FeaturesCTASection />
       <Footer />
     </div>

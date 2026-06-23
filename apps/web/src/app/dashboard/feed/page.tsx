@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: pageDescription,
 }
 
-export default async function NotificationFeedPage() {
+export default async function FeedPage() {
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {

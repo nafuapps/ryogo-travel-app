@@ -18,7 +18,7 @@ export default async function Footer() {
             <RyogoSmall color="light">{t("LogoCaption")}</RyogoSmall>
           </SectionColWrapper>
 
-          {/* Product */}
+          {/* Product //TODO: Add Download PWA Link */}
           <SectionColWrapper>
             <RyogoSmall color="light" weight="font-bold">
               {t("Product.Title")}

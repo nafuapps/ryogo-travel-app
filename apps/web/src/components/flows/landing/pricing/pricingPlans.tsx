@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button"
-import { RyogoH1, RyogoH3, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { MONTHLY_SUBSCRIPTION_FINAL_PRICE } from "@ryogo-travel-app/api/apiConfig"
+import {
+  MONTHLY_SUBSCRIPTION_FINAL_PRICE,
+  TRIAL_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Check } from "lucide-react"
+import { Check, ChevronDown } from "lucide-react"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
@@ -16,7 +19,7 @@ export default async function PricingPlansSection() {
     <LandingSectionWrapper id="pricing" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 md:px-10 lg:px-16 py-24 md:py-32 rounded-lg bg-linear-to-br from-sky-200 to-sky-50"
+        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-cyan-100 to-sky-50"
       >
         <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
@@ -24,7 +27,7 @@ export default async function PricingPlansSection() {
         <RyogoP color="slate" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 w-full">
           <PricingPlanCard
             title={t("Basic.Title")}
             description={t("Basic.Description")}
@@ -59,17 +62,30 @@ export default async function PricingPlansSection() {
               t("Premium.F4"),
               t("Premium.F5"),
               t("Premium.F6"),
+              t("Premium.F7"),
             ]}
           >
             <Link href="/onboarding" className="w-full">
               <Button size="lg" variant="brand" className="w-full">
                 <RyogoSmall color="white" weight="font-medium">
-                  {t("Premium.CTA")}
+                  {t("Premium.CTA", { days: TRIAL_DAYS })}
                 </RyogoSmall>
               </Button>
             </Link>
           </PricingPlanCard>
         </div>
+        <Link href="#comparision">
+          <Button
+            size="lg"
+            variant="link"
+            className="gap-1 lg:gap-1.5 hover:bg-sky-100/80"
+          >
+            <RyogoP color="brand" weight="font-medium">
+              {t("CompareCTA")}
+            </RyogoP>
+            <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
+          </Button>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )
@@ -89,12 +105,12 @@ function PricingPlanCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-4 lg:gap-5 p-5 lg:p-6 bg-white shadow rounded-lg">
+    <div className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white shadow-lg rounded-lg">
       <RyogoP weight="font-bold" color="slate">
         {title}
       </RyogoP>
       <RyogoSmall color="light">{description}</RyogoSmall>
-      <RyogoH3 weight="font-bold">{price}</RyogoH3>
+      <RyogoH4 weight="font-bold">{price}</RyogoH4>
       {children}
       <div className="flex flex-col gap-2 lg:gap-3 mb-2">
         {features.map((feature, index) => (

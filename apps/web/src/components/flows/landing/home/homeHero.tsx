@@ -13,7 +13,7 @@ import {
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
   return (
-    <LandingSectionWrapper id="hero" hero className="h-lvh">
+    <LandingSectionWrapper id="hero" hero>
       <LandingContentWrapper
         justifyStart
         className="relative h-full px-5 md:px-10 lg:px-16 py-24 md:py-32 rounded-lg bg-linear-to-b from-sky-400 to-sky-50"

@@ -8,9 +8,11 @@ export const UPDATE_PRICE_DISTANCE_FACTOR = 0.9
 
 export const BOOKING_ASSIGNMENT_CRITICAL_DAYS = 1
 
-//Subscription
-export const TRIAL_DAYS = 60
+//Orders
 export const EXISTING_ORDER_SEARCH_HOURS = 24
+
+//Subscription
+export const TRIAL_DAYS = 30
 
 export const MONTHLY_SUBSCRIPTION_DAYS = 30
 export const QUARTERLY_SUBSCRIPTION_DAYS = 90

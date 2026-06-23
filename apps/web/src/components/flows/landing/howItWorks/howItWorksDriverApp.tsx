@@ -50,7 +50,7 @@ export default function HowItWorksDriverAppSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="driverApp" className="0">
+    <LandingSectionWrapper id="driverApp" className="bg-sky-50">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" color="dark" className="text-center">
           {t("Title")}

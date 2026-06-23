@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react"
 import { RyoGoLandingLogo } from "@/components/logo"
 import { useTranslations } from "next-intl"
 import { UrlObject } from "url"
+import { RyogoSmall } from "@/components/typography"
 
 type NavbarItemType =
   | "home"
@@ -46,14 +47,18 @@ export default function Navbar(props: NavbarProps) {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center md:gap-8 lg:gap-10">
+          <div className="hidden md:flex items-center md:gap-5 lg:gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.id}
                 href={link.href}
-                className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} p-2 rounded-lg hover:bg-slate-50 text-sm lg:text-base font-semibold transition`}
+                className={`${props.selected !== link.id ? "hover:bg-slate-100" : "bg-sky-100"} p-2 rounded-lg text-sm lg:text-base font-semibold transition-all duration-300`}
               >
-                {link.label}
+                <RyogoSmall
+                  color={props.selected !== link.id ? "slate" : "brand"}
+                >
+                  {link.label}
+                </RyogoSmall>
               </Link>
             ))}
           </div>
@@ -86,10 +91,14 @@ export default function Navbar(props: NavbarProps) {
                 <Link
                   key={link.id}
                   href={link.href}
-                  className={`${props.selected !== link.id ? "text-slate-700 hover:text-sky-600" : "text-sky-700"} text-sm px-2 font-semibold transition`}
+                  className="px-2 font-semibold transition"
                   onClick={() => setIsOpen(false)}
                 >
-                  {link.label}
+                  <RyogoSmall
+                    color={props.selected !== link.id ? "slate" : "brand"}
+                  >
+                    {link.label}
+                  </RyogoSmall>
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t">

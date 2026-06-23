@@ -1,5 +1,5 @@
 import Footer from "@/components/flows/landing/footer"
-import HowItWorksAlertsSection from "@/components/flows/landing/howItWorks/howItWorksAlerts"
+import HowItWorksMissionsSection from "@/components/flows/landing/howItWorks/howItWorksMissions"
 import HowItWorksBookingsSection from "@/components/flows/landing/howItWorks/howItWorksBookings"
 import HowItWorksCTASection from "@/components/flows/landing/howItWorks/howItWorksCTA"
 import HowItWorksCustomersSection from "@/components/flows/landing/howItWorks/howItWorksCustomers"
@@ -28,7 +28,7 @@ export default function HowItWorksPage() {
       <HowItWorksEntitiesSection />
       <HowItWorksDriverAppSection />
       <HowItWorksCustomersSection />
-      {/* <HowItWorksAlertsSection /> */}
+      <HowItWorksMissionsSection />
       <HowItWorksCTASection />
       <Footer />
     </div>

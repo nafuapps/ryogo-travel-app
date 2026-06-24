@@ -3447,7 +3447,7 @@
       },
       "CTA": {
         "Title": "Ready to grow your business?",
-        "Subtitle": "Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free {days}-day trial",
+        "Subtitle": "Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free {days}-day Premium trial",
         "PrimaryCTA": "Create Free Agency Account",
         "SecondaryCTA": "Talk To Our Team",
         "Prop1": "Lifetime free account",
@@ -3473,43 +3473,64 @@
         "LearnMore": "Explore More"
       },
       "Management": {
-        "Title": "Manage your agency like a pro",
+        "Title": "Manage agency like a pro",
         "Subtitle": "Run your entire travel business operations with ease.. from a unified operations desk.",
         "M1": {
-          "Title": "Control your fleet",
-          "Description": "Manage your vehicles, drivers and agents under a single roof. Seamlessly add entities and control their entire lifecycle."
+          "Title": "Control entire fleet digitally",
+          "Description": "Manage vehicles, drivers and agents with all their details under a single roof. Seamlessly add and control their entire lifecycle."
         },
         "M2": {
-          "Title": "Delegate tasks",
-          "Description": "Let the various users (agents and drivers) login with their own accounts and handle the day-to-day operations."},
+          "Title": "Role-based task delegation",
+          "Description": "Let the various users (agents and drivers) login separately into their accounts and handle the day-to-day operations assigned to them."
+        },
         "M3": {
           "Title": "Stay in the loop",
-          "Description": "Get smart suggestions and real-time updates so that, as the owner, you are always one step ahead."},
+          "Description": "Get smart suggestions and real-time updates so that, as the owner, you can always plan one step ahead."
+        },
         "M4": {
-         "Title": "Automated workflows",
-          "Description": "Focus on the essential things like high level business planning and let RyoGo handle the rest."}
+          "Title": "Automated workflows",
+          "Description": "Focus on the essential things like high-level business decisions and let RyoGo handle the daily chores."
+        },
+        "M5": {
+          "Title": "Centralize customer database",
+          "Description": "Find customer's history or add new customers easily. Retrieve customer details with just a phone number at the time of booking."
+        },
+        "M6": {
+          "Title": "Status whiteboard in a glance",
+          "Description": "Instantly see which vehicle or driver is on trip, idle, or in the workshop or on leave. All automatically updated."
+        },
+        "WatchDemo": "Watch Demo Video"
       },
       "Scheduling": {
         "Title": "Scheduling has never been so easy",
-        "Subtitle": "Create and manage bookings with the help of smart recommendations.. for absolute peace of mind.",
+        "Subtitle": "Create and manage bookings with the help of smart suggestions.. for absolute peace of mind.",
         "S1": {
-         "Title": "Seamless booking management",
-          "Description": "Track all your bookings with extensive workflows and real-time updates so that there are no cracks in the itinerary."},
+          "Title": "Seamless booking management",
+          "Description": "Track all upcoming or ongoing bookings on a chart. Get extensive workflows and real-time updates so that there are no cracks in the itinerary."
+        },
         "S2": {
           "Title": "Conflict-free assignment",
-          "Description": "Get interactive visualizations that instantly flags double-bookings or overlapping driver duties, keeping your schedule clean."},
+          "Description": "Get interactive visualizations that instantly flags double-bookings, overlapping assignments or other conflicts, keeping the schedule clean."
+        },
         "S3": {
-          "Title": "Built for flexibility and completeness",
-          "Description": "Easily create different types of bookings, while tracking allowances, transactions and various expenses effortlessly."},
+          "Title": "Guided booking creation",
+          "Description": "Never be stuck on a call with customer when taking a new booking. Our guided flow provides all the information at your fingertips."
+        },
         "S4": {
-         "Title": "Optimized for business growth",
-          "Description": "Receive intelligent assignment suggestions based on multiple factors to lower your costs while maximizing your revenue."}
+          "Title": "Designed with flexibility in mind",
+          "Description": "Choose from various options and customizations as per requirements, while also tracking allowances, transactions and expenses effortlessly."
+        },
+        "S5": {
+          "Title": "Optimized for growth",
+          "Description": "Receive intelligent assignment recommendations based on multiple factors to lower costs while maximizing revenue from every booking."
+        },
+        "WatchDemo": "Watch Demo Video"
       },
       "Communication": {
         "Title": "Built for communication and collaboration",
-        "Subtitle": "Keep drivers, agency coordinators, and end customers completely aligned. Anytime, anywhere.",
+        "Subtitle": "Keep drivers, agents, and end customers completely aligned. Anytime, anywhere.",
         "C1": {
-          "Title": "Connected by default",
+          "Title": "Inter-connected system",
           "Description": "Get live trip status updates for each booking, so that everyone involved is always in the loop."
         },
         "C2": {
@@ -3518,65 +3539,105 @@
         },
         "C3": {
           "Title": "Driver Web App",
-          "Description": "Drivers can manage their bookings with easy-to-use web app, allowing them to start/end trips with odometer numbers directly on their phones."
+          "Description": "Drivers can manage their bookings with an easy-to-use web app, allowing them to start/end trips with odometer numbers directly on their phones."
         },
         "C4": {
-          "Title": "Engage your customers",
-          "Description": "Share timely updates, booking documents and invoices with your customers for a delightful experience."
+          "Title": "Engage customers",
+          "Description": "Share timely updates, booking confirmations and invoices with customers for a delightful experience."
         }
       },
       "Analytics": {
-        "Title": "Stay ahead with data-driven analysis",
-        "Subtitle": "Make decisions based on real data, not guesswork. Uncover exactly what is working and how to improve your business numbers.",
+        "Title": "Stay ahead with data analysis",
+        "Subtitle": "Make decisions based on real data, not guesswork. Uncover exactly what is working and how to improve business metrics.",
         "A1": {
-          "Title": "Grow revenue metrics",
-          "Description": "Track earnings versus fuel, maintenance, and driver costs, pinpointing exactly which entities are impacting profits."},
+          "Title": "Revenue and expenses snapshot",
+          "Description": "Track earnings versus fuel, maintenance, and driver costs, pinpointing exactly which entities are impacting profits."
+        },
         "A2": {
-          "Title": "Track business performance",
-          "Description": "Keep an eye on vehicles, drivers, agents activities and utilizations. Optimize your fleet for maximum efficiency."},
+          "Title": "Improve business performance",
+          "Description": "Keep an eye on vehicles, drivers, agents activities and utilizations. Optimize fleet for maximum efficiency."
+        },
         "A3": {
-          "Title": "Integrated with intelligence",
-          "Description": "Get data-driven insights, recommendations and tips to help you with operations planning."},
+          "Title": "Integrated intelligence",
+          "Description": "Get data-driven insights, recommendations and tips to help with operations planning. Download reports and conduct your own analysis."
+        },
         "A4": {
           "Title": "Dynamic forecasting",
-          "Description": "Analyze historical trends to predict upcoming seasonal volume spikes, so that you can price bookings optimally."}
+          "Description": "Analyze historical trends to predict upcoming seasonal volume spikes, so that you can price bookings optimally."
+        }
       },
       "Alerts": {
         "Title": "Timely alerts and notifications",
-        "Subtitle": "Keep operations running perfectly without any blockers. A localized Mission Control highlights exactly what needs immediate attention.",
+        "Subtitle": "Run schedule perfectly without any last minute blockers. Get highlights of exactly what needs immediate attention.",
         "A1": {
-          "Title": "Recieve targeted alerts",
-          "Description": "Flags upcoming license expirations proactively right on the dashboard before the trip starts."},
+          "Title": "Localized mission control",
+          "Description": "Know about upcoming deadlines like license expirations, vehicle maintenance proactively, so that every trip can start smoothly."
+        },
         "A2": {
-          "Title": "Watch real-time feed",
-          "Description": "All users stay updated on every activity with agency-wide notifications."},
+          "Title": "Discover activity feed",
+          "Description": "Don't waste time calling around to figure out what happened. Every user can see updates about each activity with agency-wide notification feed."
+        },
         "A3": {
           "Title": "Record every detail",
-          "Description": "Review and reconcile every booking with the help of transactions, expenses and trip logs to confirm and close the loop for every journey."},
+          "Description": "Review and reconcile every booking with the help of transactions, expenses and trip logs to confirm and close the loop for every journey."
+        },
         "A4": {
-          "Title": "",
-          "Description": "."}
+          "Title": "Finer controls for every detail",
+          "Description": "Add driver leave or vehicle repair reminders. Or just create custom reminders for any task."
+        }
       },
       "Security": {
-        "Title": "T",
-        "Subtitle": "S",
+        "Title": "Top-notch security is our top priority",
+        "Subtitle": "RyoGo is built with the latest safety standards and security protocols to ensure that your data is protected and private forever.",
         "S1": {
-          "Title": "Safe and private",
-          "Description": "Enterprise-grade security to protect sensitive customer identities, booking data, and financial statements with absolute privacy."
+          "Title": "Safe and private data",
+          "Description": "Enterprise-grade security to protect sensitive customer identities, booking information, and financial statements with absolute privacy. Data is never shared with other agencies or any third party."
         },
         "S2": {
           "Title": "Built-in system corrections",
-          "Description": "Zero chance of fraud or malicious activity. Every workflow has automated checks and balances to ensure smooth operations without any foulplay."},
+          "Description": "Zero chance of fraud or malicious activity. Every workflow has automated checks and balances to ensure smooth operations without scope of any foulplay."
+        },
         "S3": {
           "Title": "Total Auditability",
-          "Description": "Track every single action, edit, adjustment, or override back to a specific user."},
+          "Description": "Never be afraid of data corruption. Track every single action, edit, adjustment, or override back to the specific user."
+        },
         "S4": {
-          "Title": "",
-          "Description": "D."}
+          "Title": "Easy to signup and login",
+          "Description": "Create a new agency account in just 5 minutes with a phone number and basic details. Securely login to your RyoGo account with just a password."
+        }
+      },
+      "FAQ": {
+        "Title": "Frequently Asked Questions",
+        "Subtitle": "Still got any queries related to RyoGo features? We've help you out.",
+        "Q1":{
+          "Question":"",
+          "Answer":""
+        },
+        "Q2":{
+          "Question":"",
+          "Answer":""
+        },
+        "Q3":{
+          "Question":"",
+          "Answer":""
+        },
+        "Q4":{
+          "Question":"",
+          "Answer":""
+        },
+        "Q5":{
+          "Question":"",
+          "Answer":""
+        },
+        "Q6":{
+          "Question":"",
+          "Answer":""
+        },
+        "MoreCTA":"Explore More Resources"
       },
       "CTA": {
         "Title": "Want to grow your business faster?",
-        "Subtitle": "Scale your travel agency operations rapidly with RyoGo. Start your {days}-day trial now",
+        "Subtitle": "Scale travel agency operations rapidly with RyoGo. Start your {days}-day Premium trial now",
         "PrimaryCTA": "Get Started Now",
         "SecondaryCTA": "Understand How RyoGo Works"
       }
@@ -3658,7 +3719,7 @@
         "Subtitle": "Get answers to all your pricing related queries here",
         "Q1": {
           "Question": "What happens at the end of my free trial?",
-          "Answer": "Every new account is created under Basic plan and is free forever. At the end of your trial period, your account will be stay under Basic plan. You can upgrade to Premium at any time."
+          "Answer": "At the end of your free Premium trial period, your account will switch to Basic plan. You can upgrade to Premium plan at any time later."
         },
         "Q2": {
           "Question": "How do I upgrade to the Premium plan?",

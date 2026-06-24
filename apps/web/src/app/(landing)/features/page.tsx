@@ -1,5 +1,3 @@
-//(Landing) Features page
-
 import FeaturesAnalyticsSection from "@/components/flows/landing/features/featuresAnalytics"
 import FeaturesCommunicationSection from "@/components/flows/landing/features/featuresCommunication"
 import FeaturesCTASection from "@/components/flows/landing/features/featuresCTA"
@@ -11,14 +9,7 @@ import FeaturesSchedulingSection from "@/components/flows/landing/features/featu
 import FeaturesSecuritySection from "@/components/flows/landing/features/featuresSecurity"
 import Footer from "@/components/flows/landing/footer"
 import Navbar from "@/components/flows/landing/nav"
-
-//hero
-//agency management
-//scheduling
-//commmunication
-//analytics
-//missions
-//cta
+import FeaturesFAQSection from "@/components/flows/landing/features/featuresFAQ"
 
 export default async function FeaturesPage() {
   return (
@@ -32,6 +23,7 @@ export default async function FeaturesPage() {
       <FeaturesAnalyticsSection />
       <FeaturesAlertsSection />
       <FeaturesSecuritySection />
+      <FeaturesFAQSection />
       <FeaturesCTASection />
       <Footer />
     </div>

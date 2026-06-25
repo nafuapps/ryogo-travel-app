@@ -12,6 +12,10 @@ export default async function MissionControlPageComponent({
   const t = await getTranslations("Dashboard.MissionControl")
   const criticalMissions = missions.filter((mission) => mission.isCritical)
   const nonCriticalMissions = missions.filter((mission) => !mission.isCritical)
+
+  //TODO: Dynamic alerts (expiry, etc)
+  //TODO: Set custom reminders (PREMIUM only)
+
   return (
     <PageWrapper id="MissionControlPage">
       {missions.length === 0 && (

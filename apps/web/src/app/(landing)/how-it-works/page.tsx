@@ -8,6 +8,7 @@ import HowItWorksEntitiesSection from "@/components/flows/landing/howItWorks/how
 import HowItWorksHeroSection from "@/components/flows/landing/howItWorks/howItWorksHero"
 import HowItWorksOnboardingSection from "@/components/flows/landing/howItWorks/howItWorksOnboarding"
 import Navbar from "@/components/flows/landing/nav"
+import HowItWorksFAQSection from "@/components/flows/landing/howItWorks/howItWorksFAQ"
 
 //hero
 //onboarding
@@ -15,7 +16,8 @@ import Navbar from "@/components/flows/landing/nav"
 //entities
 //driver app
 //customers
-//alerts
+//missions
+//faq
 //cta
 
 export default function HowItWorksPage() {
@@ -29,6 +31,7 @@ export default function HowItWorksPage() {
       <HowItWorksDriverAppSection />
       <HowItWorksCustomersSection />
       <HowItWorksMissionsSection />
+      <HowItWorksFAQSection />
       <HowItWorksCTASection />
       <Footer />
     </div>

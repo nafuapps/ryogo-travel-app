@@ -5,13 +5,14 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import {
-  Building2,
-  Car,
+  BadgeInfo,
   ChevronRight,
-  LifeBuoy,
-  MonitorPlay,
-  ShieldCheck,
-  UserKey,
+  Coins,
+  MapPinPen,
+  MessageSquareShare,
+  PackagePlus,
+  Pin,
+  ScanSearch,
 } from "lucide-react"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { SlideshowItemType, SlideshowWrapper } from "../slideshowWrapper"
@@ -27,43 +28,43 @@ export default function HowItWorksBookingsSection() {
   const items: SlideshowItemType[] = [
     {
       src: "/Bookings0.png",
-      icon: Building2,
+      icon: PackagePlus,
       title: t("B0.Title"),
       description: t("B0.Description"),
     },
     {
       src: "/Bookings1.png",
-      icon: ShieldCheck,
+      icon: Pin,
       title: t("B1.Title"),
       description: t("B1.Description"),
     },
     {
       src: "/Bookings2.png",
-      icon: Car,
+      icon: BadgeInfo,
       title: t("B2.Title"),
       description: t("B2.Description"),
     },
     {
       src: "/Bookings3.png",
-      icon: LifeBuoy,
+      icon: MessageSquareShare,
       title: t("B3.Title"),
       description: t("B3.Description"),
     },
     {
       src: "/Bookings4.png",
-      icon: UserKey,
+      icon: MapPinPen,
       title: t("B4.Title"),
       description: t("B4.Description"),
     },
     {
       src: "/Bookings5.png",
-      icon: MonitorPlay,
+      icon: Coins,
       title: t("B5.Title"),
       description: t("B5.Description"),
     },
     {
       src: "/Bookings6.png",
-      icon: MonitorPlay,
+      icon: ScanSearch,
       title: t("B6.Title"),
       description: t("B6.Description"),
     },

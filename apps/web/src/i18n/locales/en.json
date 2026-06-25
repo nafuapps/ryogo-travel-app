@@ -2682,11 +2682,11 @@
       },
       "TripEnded": {
         "Title": "Trip ended for booking #{bookingId} by {driverName}",
-        "Message": "Trip has been completed for this booking. Please confirm and check the booking expenses and transactions"
+        "Message": "Trip has been completed for this booking. Please confirm and review the booking expenses and transactions"
       },
       "TripStarted": {
         "Title": "Trip started for booking #{bookingId} by {driverName}",
-        "Message": "Trip has been started for this booking. Please confirm and check with the customer"
+        "Message": "Trip has been started for this booking. Please confirm and review with the customer"
       },
       "DriverActivated": {
         "Title": "Account activated by {userName}",
@@ -3458,7 +3458,7 @@
     "Features": {
       "Hero": {
         "Title": "Check out what you can do with RyoGo",
-        "Subtitle": "Bring all your travel business operations under one roof. From managing bookings to keeping your fleet running smoothly, we have got you covered.",
+        "Subtitle": "Bring all your travel business operations under one roof. From managing bookings to keeping your fleet running smoothly.",
         "PrimaryCTA": "Explore All Features",
         "SecondaryCTA": "Create Free Account Now"
       },
@@ -3510,7 +3510,7 @@
         },
         "S2": {
           "Title": "Conflict-free assignment",
-          "Description": "Get interactive visualizations that instantly flags double-bookings, overlapping assignments or other conflicts, keeping the schedule clean."
+          "Description": "Get interactive visualizations that instantly flags double-bookings or overlapping conflicts, keeping the schedule clean."
         },
         "S3": {
           "Title": "Guided booking creation",
@@ -3518,11 +3518,11 @@
         },
         "S4": {
           "Title": "Designed with flexibility in mind",
-          "Description": "Choose from various options and customizations as per requirements, while also tracking allowances, transactions and expenses effortlessly."
+          "Description": "Choose from various booking options and customizations as per requirements, while also tracking allowances, transactions and expenses effortlessly."
         },
         "S5": {
-          "Title": "Optimized for growth",
-          "Description": "Receive intelligent assignment recommendations based on multiple factors to lower costs while maximizing revenue from every booking."
+          "Title": "Brilliant pocket assistant",
+          "Description": "Receive intelligent recommendations (like RyoGo score for assignment) based on multiple factors to lower costs while maximizing revenue from every booking."
         },
         "WatchDemo": "Watch Demo Video"
       },
@@ -3608,36 +3608,72 @@
       },
       "FAQ": {
         "Title": "Frequently Asked Questions",
-        "Subtitle": "Still got any queries related to RyoGo features? We've help you out.",
-        "Q1":{
-          "Question":"",
-          "Answer":""
+        "Subtitle": "Still got any queries related to RyoGo features? Don't worry.. We will help you out.",
+        "Reassign": {
+          "Question": "Can owner re-assign bookings?",
+          "Answer": "Yes, owner can re-assign a booking to any other agent or himself. A new booking is assigned to the user who created it by default but can be reassigned to someone else by the owner if needed. Similarly, a vehicle or driver assigned to a booking can also be changed untill the trip starts."
         },
-        "Q2":{
-          "Question":"",
-          "Answer":""
+        "PWA": {
+          "Question": "Do drivers need to download a heavy mobile app from the Play Store or App Store?",
+          "Answer": "No. Drivers can use RyoGo with a lightweight Progressive Web App (PWA) that runs directly inside a smartphone browser. It works beautifully even on low-end devices and uses minimal mobile data. Infact, the agents and owner can also download this web app and login to their accounts from their smartphones."
         },
-        "Q3":{
-          "Question":"",
-          "Answer":""
+        "AccessAnalytics": {
+          "Question": "Can drivers or agents see the revenue metrics or analytics?",
+          "Answer": "No. Only the owner has access revenue and advanced analytics pages. Agents can see basic charts and insights required for everyday operations and booking management. Drivers have no access to the dashboard."
         },
-        "Q4":{
-          "Question":"",
-          "Answer":""
+        "Alerts": {
+          "Question": "How do we get alerted about vehicle document, driver license expirations or insurance renewals, etc. without manually checking every day?",
+          "Answer": "RyoGo dynamically checks for such expiration alerts in real-time and adds them to Mission Control. Critical alerts will also be highlighted on your dashboard."
         },
-        "Q5":{
-          "Question":"",
-          "Answer":""
+        "Conflict": {
+          "Question": "When creating a new booking, do we get to know if a vehicle or driver is available or already assigned to another booking?",
+          "Answer": "Yes, the system clearly flags that a driver or vehicle has a conflicting schedule for the days selected in a new booking. This is one of the biggest advantages of using RyoGo."
         },
-        "Q6":{
-          "Question":"",
-          "Answer":""
+        "Status": {
+          "Question": "How will I know which all trips will start or complete soon?",
+          "Answer": "All ongoing trips are displayed in the dashboard. Any upcoming, completed trips and even open leads are also listed on the bookings page. You can also view all the trips in a calendar view."
         },
-        "MoreCTA":"Explore More Resources"
+        "Payment": {
+          "Question": "Is customer booking payment also handled by RyoGo?",
+          "Answer": "No, RyoGo is not a booking platform or a middleman between customers and travel agencies. We are here to help travel agencies and fleet operators run their operations more efficiently by centralizing all information and provide insights. However, we do help you in sharing documents, invoices and updates with customers online."
+        },
+        "TripSheet": {
+          "Question": "Do I need to send trip sheet or any other information to driver on WhatsApp?",
+          "Answer": "No, driver can just login from his account and view all the assigned trips along with their details."
+        },
+        "BookingConfirmation": {
+          "Question": "How do customers receive booking confirmation or invoices for their trips?",
+          "Answer": " On the booking details page, you can click 'Send Confirmation'. This will open WhatsApp chat with the customer directly with the document attached. You just need to press send in WhatsApp."
+        },
+        "TrackingLink": {
+          "Question": "Customers keep asking where is the vehicle? How does RyoGo help?",
+          "Answer": "Although there is no login for customers in RyoGo, you can send a tracking link to the customer on WhatsApp. Customers can then view live trip status on their phones."
+        },
+        "Languages": {
+          "Question": "What languages are supported?",
+          "Answer": "RyoGo is available in English and Hindi. We will be adding more languages soon."
+        },
+        "LeaveRepair": {
+          "Question": "A driver has to go on leave or a vehicle will be in repair. How can I make sure they are not assigned during those dates?",
+          "Answer": "RyoGo provides an option to add driver leave or vehicle repair dates. The system will flag them during booking assignment."
+        },
+        "Transactions": {
+          "Question": "Customer made advance payment or paid some amount to the driver during the trip. Or the agency gave some cash to the driver before the trip started. How do I keep track of all these transactions?",
+          "Answer": "In RyoGo, you can easily add all these money 'Transactions' for a booking and review them at the end of the trip. Final invoice will also be adjusted automatically."
+        },
+        "Expenses": {
+          "Question": "Driver sometimes pay for trip out of their pocket like fuel, parking, toll etc. How do I keep track of them and adjust them in invoice?",
+          "Answer": "Assigned agent or even the driver can simply add them as 'Expenses' to a booking. Final invoice will also be adjusted automatically."
+        },
+        "DataPrivacy": {
+          "Question": "Will my agency or customer data be shared with other businesses?",
+          "Answer": "Absolutely not. All your data is kept secured and private in RyoGo. We will not share your data with any third party or other businesses. Now or in the future."
+        },
+        "MoreCTA": "Explore More Resources"
       },
       "CTA": {
         "Title": "Want to grow your business faster?",
-        "Subtitle": "Scale travel agency operations rapidly with RyoGo. Start your {days}-day Premium trial now",
+        "Subtitle": "Scale your travel agency operations rapidly with RyoGo. Create a Basic account or get a free {days}-day Premium trial now.",
         "PrimaryCTA": "Get Started Now",
         "SecondaryCTA": "Understand How RyoGo Works"
       }
@@ -3717,27 +3753,27 @@
       "FAQ": {
         "Title": "Frequently Asked Questions",
         "Subtitle": "Get answers to all your pricing related queries here",
-        "Q1": {
+        "TrialEnd": {
           "Question": "What happens at the end of my free trial?",
           "Answer": "At the end of your free Premium trial period, your account will switch to Basic plan. You can upgrade to Premium plan at any time later."
         },
-        "Q2": {
+        "Upgrade": {
           "Question": "How do I upgrade to the Premium plan?",
           "Answer": "After creating an account, you can choose to upgrade to the Premium plan by buying our subscription from the subscription page in your account settings. For any help, contact our support team at {contact}"
         },
-        "Q3": {
+        "PaymentMethod": {
           "Question": "What payment methods do you accept? Is it safe and secure",
           "Answer": "We work with Razorpay to accept payments through various methods including UPI, cards, net banking, and digital wallets. All payments are processed securely using SSL encryption."
         },
-        "Q4": {
+        "Cancel": {
           "Question": "Can I cancel my Premium subscription?",
           "Answer": "No. Once bought, you cannot cancel your subscription. However, when current subscription period expires, your account will be automatically downgraded to Basic plan."
         },
-        "Q5": {
+        "DataDowngrade": {
           "Question": "What happens to all my excess data like additional vehicles and drivers if I do not renew my Premium subscription?",
           "Answer": "All your saved data is retained with us forever. However, under Basic plan only limited number of entities are available for booking assignments. Refer to the comparision table above."
         },
-        "Q6": {
+        "SpecialPricing": {
           "Question": "We are a non-profit travel organisation, is there any special pricing available?",
           "Answer": "For any genuine special pricing needs, please contact our support team at {contact}"
         },
@@ -3820,8 +3856,8 @@
         "MoreCTA": "Get Started For Free"
       },
       "Entities": {
-        "Title": "Simple fleet management",
-        "Subtitle": "It has never been so simple to take control of your everyday agency tasks.",
+        "Title": "Effortless fleet management",
+        "Subtitle": "It has never been so simple to take control of your entire agency operations.",
         "E0": {
           "Title": "Manage vehicles, drivers and agents",
           "Description": "Add, remove or edit your vehicle, driver and agent details in just a few clicks.. all in one place"
@@ -3832,7 +3868,7 @@
         },
         "E2": {
           "Title": "Get expiry reminders",
-          "Description": "Any policy or license about to expire will be flagged. So that all your documents are updated before a trip."
+          "Description": "Any insurance or license about to expire will be flagged before time. So that all your documents can be renewed before a trip."
         },
         "E3": {
           "Title": "Secure storage",
@@ -3848,25 +3884,29 @@
         }
       },
       "DriverApp": {
-        "Title": "Integrated with drivers",
+        "Title": "Collaborate with drivers",
         "Subtitle": "RyoGo comes with a dedicated web app for drivers that provides real-time trip status monitoring, communication and much more.",
         "D0": {
-          "Title": "Driver's job made easy",
-          "Description": "Drivers can track their ongoing trips, navigate to pickup/drop locations and receive new booking updates all in real-time."
+          "Title": "Invite driver",
+          "Description": "When you onboard a new driver to your agency, they are invited to join RyoGo and login to their account from their phone."
         },
         "D1": {
-          "Title": "Add Expenses on the go",
-          "Description": "Drivers can add expenses like toll, parking, fuel in their app. Agency can approve them and they will be automatically adjusted in the final invoice"
+          "Title": "Driver's job made easy",
+          "Description": "Drivers can track their ongoing trips, navigate to pickup/drop locations and receive new assignments all in real-time."
         },
         "D2": {
-          "Title": "Know your vehicle",
-          "Description": "Drivers can check out information about the assigned vehicle along with necessary online documentations on their fingertips."
+          "Title": "Add Expenses on the go",
+          "Description": "Drivers can add expenses like toll, parking, fuel which they paid from their pocket. After approval, they will be automatically adjusted in the final invoice"
         },
         "D3": {
-          "Title": "Get trip updates",
-          "Description": "Every time driver makes a move, the trip status is reflected on agency dashboard. So that you always know what's happening on the road."
+          "Title": "Know your vehicle",
+          "Description": "Drivers can view information about the assigned vehicle along with access to necessary documents like RC, insurance and PUC on their fingertips."
         },
         "D4": {
+          "Title": "Update trip status",
+          "Description": "Whenever driver makes a move, the trip status is reflected on agency dashboard. So that everyone in the agency knows what's happening on the road."
+        },
+        "D5": {
           "Title": "Protections from fraud",
           "Description": "Every driver action is automatically logged, checked and verified for fraud. So that your final billing calculation is always accurate."
         }
@@ -3879,8 +3919,8 @@
           "Description": "Add and manage customers with basic details and remarks.. no verification required. Data is always safe and private with us."
         },
         "C1": {
-          "Title": "Keep customer in the loop",
-          "Description": "Send regular trip updates to your customers via WhatsApp in real-time."
+          "Title": "Keep customer updated",
+          "Description": "Send regular trip status updates to your customers via WhatsApp chat and a live tracking link."
         },
         "C2": {
           "Title": "Share booking documents",
@@ -3916,11 +3956,48 @@
           "Description": "No need to call others to know what's hapenning. Everyone in the agency can see updates in their notification feed."
         }
       },
+      "FAQ": {
+        "Title": "Frequently Asked Questions",
+        "Subtitle": "Have any more confusion about how RyoGo works? We've got you covered.",
+        "OnboardingTime": {
+          "Question": "How long does it take to get our agency up and running on the platform?",
+          "Answer": "You can go live in under 10 minutes. Onboarding is a simple 5-step process: you input your basic business details, verify your account, then add a vehicle, driver, and agent. That's it! No credit card, long form or complicated formalities."
+        },
+        "Entities": {
+          "Question": "What are 'Entities' in the system, and how do they relate to my physical business?",
+          "Answer": "Entities are the digital mapping of your physical business. RyoGo mainly tracks 4 entities: Vehicles (Your cars/buses/vans/bikes with their registration numbers, model, documents and rates per Km), Drivers (with phone numbers, address, license details, and allowance per day), Agents (with phone number) and Bookings (with customer and trip details)."
+        },
+        "TechnicalKnowledge": {
+          "Question": "Do I need to know any techical knowledge to use RyoGo?",
+          "Answer": "Not at all. RyoGo is designed for simplicity and speed. You just need to add vehicles, drivers and start creating bookings (with our guidance). We will handle the rest."
+        },
+        "WithoutComputer": {
+          "Question": "Can my agency use RyoGo without any computer?",
+          "Answer": "Absolutely, you can use RyoGo on your smartphones with internet. You can either open RyoGo in your browser just like any other website or download the RyoGo web app on your phone."
+        },
+        "NoAgent": {
+          "Question": "Can I use RyoGo without any agent?",
+          "Answer": "Yes, absolutely. Adding agents is optional. Owners can themselves do everything in RyoGo. But delegating tasks to other agents is recommended if you want to grow your business."
+        },
+        "DriverActions": {
+          "Question": "What all can a driver do in RyoGo?",
+          "Answer": "Driver can view assigned bookings, call customer, update trip status in single clicks (like arrived at location, customer picked up, dropped, etc), add expenses, view past bookings, view assigned vehcile details, initiate chat with agent, etc. All actions are review by the system for fraud or malpractice." 
+        },
+        "AgentActions": {
+          "Question": "What all can an agent do in RyoGo?",
+          "Answer": "Agent can add vehicles, drivers and customers, create and manage bookings, share trip details with customer, assign driver/vehicle, add transactions and expenses." 
+        },
+        "NewBooking": {
+          "Question": "How is a new booking created? Explain in detail.",
+          "Answer": "New booking is created in 5 easy steps and it takes less than a minute with system guidance. First, the customer is selected or added using a phone number. Second, trip details (location, date, type, etc.) are selected. Third, driver and vehicle are assigned (optional). Fourth, trip costs (vehicle rate, driver allowance, agency commission, etc.) are input, if not already prefilled. Finally, overall trip summary can be reviewed to create the booking. Please note that, a bew booking is created as a lead and must be confirmed by the agent." 
+        },
+        "MoreCTA": "Explore More Resources"
+      },
       "CTA": {
         "Title": "Ready to try out RyoGo?",
-        "Subtitle": "Unleash the full potential of your travel business with the help of technology. Sign up now to get a free {days}-day trial",
-        "PrimaryCTA": "Start Free Trial",
-        "SecondaryCTA": "Watch Videos"
+        "Subtitle": "Unleash the full potential of your travel business with the help of technology. Sign up now to get a free {days}-day Premium trial",
+        "PrimaryCTA": "Start Free Trial Now",
+        "SecondaryCTA": "Watch Demo Videos"
       }
     },
     "Resources": {

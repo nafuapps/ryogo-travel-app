@@ -108,6 +108,7 @@ export const agencies = pgTable(
     }).notNull(),
     latestPaidOrderId: text("latest_paid_order_id"),
     status: agencyStatus().notNull().default(AgencyStatusEnum.NEW),
+    //TODO: QR code
     defaultCommissionRate: integer("default_commission_rate")
       .notNull()
       .default(15), // percentage
@@ -1391,6 +1392,7 @@ export const missions = pgTable(
         onDelete: "cascade",
       })
       .notNull(),
+    //TODO: Custom reminders
     entityId: text("entity_id").notNull(),
     entityType: entityType("entity_type").notNull(),
     isCritical: boolean("is_critical").notNull().default(false),

@@ -5,15 +5,18 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import {
-  Building2,
-  Car,
-  LifeBuoy,
-  MonitorPlay,
-  ShieldCheck,
-  UserKey,
+  BellCheck,
+  ClipboardCheck,
+  FolderBookmark,
+  TreePalm,
+  UserCog,
+  Wrench,
 } from "lucide-react"
 import { RyogoH1, RyogoP } from "@/components/typography"
-import { SlideshowItemType, SlideshowWrapper } from "../slideshowWrapper"
+import {
+  SlideshowItemType,
+  SlideshowWrapper,
+} from "@/components/flows/landing/slideshowWrapper"
 import { useTranslations } from "next-intl"
 
 export default function HowItWorksEntitiesSection() {
@@ -23,37 +26,37 @@ export default function HowItWorksEntitiesSection() {
   const items: SlideshowItemType[] = [
     {
       src: "/Entities0.png",
-      icon: Building2,
+      icon: UserCog,
       title: t("E0.Title"),
       description: t("E0.Description"),
     },
     {
       src: "/Entities1.png",
-      icon: ShieldCheck,
+      icon: ClipboardCheck,
       title: t("E1.Title"),
       description: t("E1.Description"),
     },
     {
       src: "/Entities2.png",
-      icon: Car,
+      icon: BellCheck,
       title: t("E2.Title"),
       description: t("E2.Description"),
     },
     {
       src: "/Entities3.png",
-      icon: LifeBuoy,
+      icon: FolderBookmark,
       title: t("E3.Title"),
       description: t("E3.Description"),
     },
     {
       src: "/Entities4.png",
-      icon: UserKey,
+      icon: TreePalm,
       title: t("E4.Title"),
       description: t("E4.Description"),
     },
     {
       src: "/Entities5.png",
-      icon: MonitorPlay,
+      icon: Wrench,
       title: t("E5.Title"),
       description: t("E5.Description"),
     },

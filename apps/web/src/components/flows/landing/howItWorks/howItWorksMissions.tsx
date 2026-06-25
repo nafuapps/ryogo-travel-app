@@ -9,7 +9,12 @@ import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
-import { Building2, Car, LifeBuoy, ShieldCheck } from "lucide-react"
+import {
+  BellPlus,
+  CalendarClock,
+  Megaphone,
+  MessageCircleWarning,
+} from "lucide-react"
 import { useTranslations } from "next-intl"
 
 export default function HowItWorksMissionsSection() {
@@ -19,25 +24,25 @@ export default function HowItWorksMissionsSection() {
   const items: SlideshowItemType[] = [
     {
       src: "/Missions0.png",
-      icon: Building2,
+      icon: MessageCircleWarning,
       title: t("M0.Title"),
       description: t("M0.Description"),
     },
     {
       src: "/Missions1.png",
-      icon: ShieldCheck,
+      icon: CalendarClock,
       title: t("M1.Title"),
       description: t("M1.Description"),
     },
     {
       src: "/Missions2.png",
-      icon: Car,
+      icon: BellPlus,
       title: t("M2.Title"),
       description: t("M2.Description"),
     },
     {
       src: "/Missions3.png",
-      icon: LifeBuoy,
+      icon: Megaphone,
       title: t("M3.Title"),
       description: t("M3.Description"),
     },

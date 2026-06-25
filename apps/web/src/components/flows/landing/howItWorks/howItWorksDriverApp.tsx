@@ -9,7 +9,14 @@ import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
-import { Building2, Car, LifeBuoy, ShieldCheck, UserKey } from "lucide-react"
+import {
+  BrickWallShield,
+  IdCard,
+  MailPlus,
+  MapPlus,
+  TicketPlus,
+  Zap,
+} from "lucide-react"
 import { RyogoH1, RyogoP } from "@/components/typography"
 
 export default function HowItWorksDriverAppSection() {
@@ -19,33 +26,39 @@ export default function HowItWorksDriverAppSection() {
   const items: SlideshowItemType[] = [
     {
       src: "/DriverApp0.png",
-      icon: Building2,
+      icon: MailPlus,
       title: t("D0.Title"),
       description: t("D0.Description"),
     },
     {
       src: "/DriverApp1.png",
-      icon: ShieldCheck,
+      icon: Zap,
       title: t("D1.Title"),
       description: t("D1.Description"),
     },
     {
       src: "/DriverApp2.png",
-      icon: Car,
+      icon: TicketPlus,
       title: t("D2.Title"),
       description: t("D2.Description"),
     },
     {
       src: "/DriverApp3.png",
-      icon: LifeBuoy,
+      icon: IdCard,
       title: t("D3.Title"),
       description: t("D3.Description"),
     },
     {
       src: "/DriverApp4.png",
-      icon: UserKey,
+      icon: MapPlus,
       title: t("D4.Title"),
       description: t("D4.Description"),
+    },
+    {
+      src: "/DriverApp5.png",
+      icon: BrickWallShield,
+      title: t("D5.Title"),
+      description: t("D5.Description"),
     },
   ]
 

@@ -1,19 +1,17 @@
-"use client"
-
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
-import { useTranslations } from "next-intl"
 import Link from "next/link"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
+import { getTranslations } from "next-intl/server"
 
-export default function FeaturesFAQSection() {
-  const t = useTranslations("Landing.Features.FAQ")
+export default async function FeaturesFAQSection() {
+  const t = await getTranslations("Landing.Features.FAQ")
   return (
     <LandingSectionWrapper id="faq" className="bg-white">
       <LandingContentWrapper>
@@ -24,12 +22,63 @@ export default function FeaturesFAQSection() {
           {t("Subtitle")}
         </RyogoP>
         <FAQWrapper>
-          <FAQItem question={t("Q1.Question")} answer={t("Q1.Answer")} />
-          <FAQItem question={t("Q2.Question")} answer={t("Q2.Answer")} />
-          <FAQItem question={t("Q3.Question")} answer={t("Q3.Answer")} />
-          <FAQItem question={t("Q4.Question")} answer={t("Q4.Answer")} />
-          <FAQItem question={t("Q5.Question")} answer={t("Q5.Answer")} />
-          <FAQItem question={t("Q6.Question")} answer={t("Q6.Answer")} />
+          <FAQItem
+            question={t("Reassign.Question")}
+            answer={t("Reassign.Answer")}
+          />
+          <FAQItem question={t("PWA.Question")} answer={t("PWA.Answer")} />
+          <FAQItem
+            question={t("AccessAnalytics.Question")}
+            answer={t("AccessAnalytics.Answer")}
+          />
+          <FAQItem
+            question={t("Alerts.Question")}
+            answer={t("Alerts.Answer")}
+          />
+          <FAQItem
+            question={t("Conflict.Question")}
+            answer={t("Conflict.Answer")}
+          />
+          <FAQItem
+            question={t("Status.Question")}
+            answer={t("Status.Answer")}
+          />
+          <FAQItem
+            question={t("Payment.Question")}
+            answer={t("Payment.Answer")}
+          />
+          <FAQItem
+            question={t("TripSheet.Question")}
+            answer={t("TripSheet.Answer")}
+          />
+          <FAQItem
+            question={t("BookingConfirmation.Question")}
+            answer={t("BookingConfirmation.Answer")}
+          />
+          <FAQItem
+            question={t("TrackingLink.Question")}
+            answer={t("TrackingLink.Answer")}
+          />
+          <FAQItem
+            question={t("Languages.Question")}
+            answer={t("Languages.Answer")}
+          />
+          <FAQItem
+            question={t("LeaveRepair.Question")}
+            answer={t("LeaveRepair.Answer")}
+          />
+          <FAQItem
+            question={t("Transactions.Question")}
+            answer={t("Transactions.Answer")}
+          />
+          <FAQItem
+            question={t("Expenses.Question")}
+            answer={t("Expenses.Answer")}
+          />
+          <FAQItem
+            question={t("DataPrivacy.Question")}
+            answer={t("DataPrivacy.Answer")}
+          />
         </FAQWrapper>
         <Link href="/resources">
           <Button size="lg" className="w-full md:w-auto">

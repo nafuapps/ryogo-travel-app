@@ -22,6 +22,8 @@ import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirma
 import { PageWrapper } from "@/components/page/pageWrappers"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 
+//TODO: Send tracking link to customer
+
 export default async function BookingDetailsPageComponent({
   bookingDetails,
   isOwner,

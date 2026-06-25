@@ -8,6 +8,7 @@ import { RyoGoLandingLogo } from "@/components/logo"
 import { useTranslations } from "next-intl"
 import { UrlObject } from "url"
 import { RyogoSmall } from "@/components/typography"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 type NavbarItemType =
   | "home"
@@ -39,7 +40,7 @@ export default function Navbar(props: NavbarProps) {
 
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
-      <div className="w-full lg:max-w-5xl bg-white opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
+      <div className="w-full max-w-5xl bg-white opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
         <div className="flex justify-between items-center h-12 md:h-14 lg:h-16 w-full">
           {/* Logo */}
           <Link href="/">
@@ -47,7 +48,7 @@ export default function Navbar(props: NavbarProps) {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center md:gap-5 lg:gap-10">
+          <div className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
             {navLinks.map((link) => (
               <Link
                 key={link.id}
@@ -64,7 +65,7 @@ export default function Navbar(props: NavbarProps) {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
             <Link href="/auth/login">
               <Button variant="outline">{t("Login")}</Button>
             </Link>
@@ -75,11 +76,11 @@ export default function Navbar(props: NavbarProps) {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-sky-700"
+            className="md:hidden"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <RyogoIcon icon={isOpen ? X : Menu} size="md" color="brand" />
           </button>
         </div>
 

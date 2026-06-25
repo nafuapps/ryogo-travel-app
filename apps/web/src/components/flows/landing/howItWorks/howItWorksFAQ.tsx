@@ -1,7 +1,6 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import {
@@ -11,8 +10,8 @@ import {
 import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
 import { getTranslations } from "next-intl/server"
 
-export default async function PricingFAQSection() {
-  const t = await getTranslations("Landing.Pricing.FAQ")
+export default async function HowItWorksFAQSection() {
+  const t = await getTranslations("Landing.HowItWorks.FAQ")
   return (
     <LandingSectionWrapper id="faq" className="bg-white">
       <LandingContentWrapper>
@@ -24,28 +23,36 @@ export default async function PricingFAQSection() {
         </RyogoP>
         <FAQWrapper>
           <FAQItem
-            question={t("TrialEnd.Question")}
-            answer={t("TrialEnd.Answer")}
+            question={t("OnboardingTime.Question")}
+            answer={t("OnboardingTime.Answer")}
           />
           <FAQItem
-            question={t("Upgrade.Question")}
-            answer={t("Upgrade.Answer", { contact: SUPPORT_EMAIL })}
+            question={t("Entities.Question")}
+            answer={t("Entities.Answer")}
           />
           <FAQItem
-            question={t("PaymentMethod.Question")}
-            answer={t("PaymentMethod.Answer")}
+            question={t("TechnicalKnowledge.Question")}
+            answer={t("TechnicalKnowledge.Answer")}
           />
           <FAQItem
-            question={t("Cancel.Question")}
-            answer={t("Cancel.Answer")}
+            question={t("WithoutComputer.Question")}
+            answer={t("WithoutComputer.Answer")}
           />
           <FAQItem
-            question={t("DataDowngrade.Question")}
-            answer={t("DataDowngrade.Answer")}
+            question={t("NoAgent.Question")}
+            answer={t("NoAgent.Answer")}
           />
           <FAQItem
-            question={t("SpecialPricing.Question")}
-            answer={t("SpecialPricing.Answer", { contact: SUPPORT_EMAIL })}
+            question={t("DriverActions.Question")}
+            answer={t("DriverActions.Answer")}
+          />
+          <FAQItem
+            question={t("AgentActions.Question")}
+            answer={t("AgentActions.Answer")}
+          />
+          <FAQItem
+            question={t("NewBooking.Question")}
+            answer={t("NewBooking.Answer")}
           />
         </FAQWrapper>
         <Link href="/resources">

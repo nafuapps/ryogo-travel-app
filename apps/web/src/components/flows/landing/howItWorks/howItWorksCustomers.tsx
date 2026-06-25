@@ -9,7 +9,13 @@ import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
-import { Building2, Car, LifeBuoy, ShieldCheck, UserKey } from "lucide-react"
+import {
+  CalendarSync,
+  BanknoteArrowUp,
+  ListPlus,
+  QrCode,
+  SquareArrowOutUpRight,
+} from "lucide-react"
 import { RyogoH1, RyogoP } from "@/components/typography"
 
 export default function HowItWorksCustomersSection() {
@@ -19,31 +25,31 @@ export default function HowItWorksCustomersSection() {
   const items: SlideshowItemType[] = [
     {
       src: "/Customers0.png",
-      icon: Building2,
+      icon: ListPlus,
       title: t("C0.Title"),
       description: t("C0.Description"),
     },
     {
       src: "/Customers1.png",
-      icon: ShieldCheck,
+      icon: CalendarSync,
       title: t("C1.Title"),
       description: t("C1.Description"),
     },
     {
       src: "/Customers2.png",
-      icon: Car,
+      icon: SquareArrowOutUpRight,
       title: t("C2.Title"),
       description: t("C2.Description"),
     },
     {
       src: "/Customers3.png",
-      icon: LifeBuoy,
+      icon: QrCode,
       title: t("C3.Title"),
       description: t("C3.Description"),
     },
     {
       src: "/Customers4.png",
-      icon: UserKey,
+      icon: BanknoteArrowUp,
       title: t("C4.Title"),
       description: t("C4.Description"),
     },

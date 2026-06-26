@@ -2,14 +2,8 @@ import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehic
 import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-  RyogoCaption,
-  RyogoH3,
-  RyogoP,
-  RyogoSmall,
-} from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import moment from "moment"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import ActivateVehicleAlertButton from "@/components/buttons/alert/activateVehicleAlertButton"

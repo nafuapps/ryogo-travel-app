@@ -21,10 +21,10 @@ export default function ResourcesPage() {
       <Navbar selected="resources" />
       <ResourcesHeroSection />
       <ResourcesVideosSection />
-      <ResourcesFAQSection />
-      <ResourcesBlogsSection />
       <ResourcesSupportSection />
+      <ResourcesBlogsSection />
       <ResourcesAboutSection />
+      <ResourcesFAQSection />
       <ResourcesCTASection />
       <Footer />
     </div>

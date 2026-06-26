@@ -16,7 +16,7 @@ export default async function HowItWorksHeroSection() {
     <LandingSectionWrapper id="hero" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 md:px-10 lg:px-16 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-sky-900 to-sky-50"
+        className="h-full px-5 sm:px-8 md:px-10 lg:px-16 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-sky-900 to-sky-50"
       >
         <RyogoH1 weight="font-bold" color="white" className="text-center">
           {t("Title")}
@@ -24,7 +24,7 @@ export default async function HowItWorksHeroSection() {
         <RyogoP color="white" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
+        <div className="flex flex-col md:flex-row gap-4 justify-center mb-4">
           <Link href="#onboarding">
             <Button size="lg" variant="white" className="w-full md:w-auto">
               <RyogoSmall color="brand" weight="font-medium">
@@ -45,14 +45,14 @@ export default async function HowItWorksHeroSection() {
             </Button>
           </Link>
         </div>
-        <div className="bg-white mt-auto max-w-4xl relative w-full aspect-video rounded-t-2xl overflow-hidden">
+        <div className="bg-white mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
           <Image
             className="object-cover"
             loading="eager"
             src="/forgotPasswordBG.png"
             alt=""
             fill
-            sizes="896px"
+            sizes="(max-width: 640px) 448px,768px"
           />
         </div>
       </LandingContentWrapper>

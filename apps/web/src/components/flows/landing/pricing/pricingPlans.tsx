@@ -80,9 +80,9 @@ export default async function PricingPlansSection() {
             variant="link"
             className="gap-1 lg:gap-1.5 hover:bg-sky-100/80"
           >
-            <RyogoP color="brand" weight="font-medium">
+            <RyogoSmall color="brand" weight="font-medium">
               {t("CompareCTA")}
-            </RyogoP>
+            </RyogoSmall>
             <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
           </Button>
         </Link>

@@ -3791,7 +3791,7 @@
         "Title": "Let's find out how RyoGo works",
         "Subtitle": "Walkthrough our slideshow guide below and understand how your business can benefit by automating and simplifying your daily travel operations",
         "PrimaryCTA": "See How It Works",
-        "SecondaryCTA": "Explore Help Center"
+        "SecondaryCTA": "Get Help"
       },
       "Onboarding": {
         "Title": "Quick and Simple Onboarding",
@@ -4002,12 +4002,16 @@
     },
     "Resources": {
       "Hero": {
-        "Title": "",
-        "Subtitle": ""
+        "Title": "Explore our resource library",
+        "Subtitle": "Feeling lost? Don't worry. Go through all our resources like videos, blogs, support center, FAQs and get to know more about us.",
+        "PrimaryCTA":"Explore FAQs",
+        "SecondaryCTA": "Go To Support Center",
+        "ScrollCTA":"Scroll to see more videos"
       },
       "Videos": {
-        "Title": "",
-        "Subtitle": ""
+        "Title": "Video Tutorials",
+        "Subtitle": "Want to learn how RyoGo works? Check out easy to understand short videos."
+
       },
       "FAQ": {
         "Title": "",

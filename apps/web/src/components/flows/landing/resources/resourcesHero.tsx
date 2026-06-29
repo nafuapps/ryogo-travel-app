@@ -4,7 +4,7 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import RyogoVideo from "@/components/video/ryogoVideo"
+import { RyogoVideo } from "@/components/video/ryogoVideo"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ChevronDown } from "lucide-react"
@@ -49,7 +49,7 @@ export default async function ResourcesHeroSection() {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col max-w-xl mt-8 lg:mt-0 gap-6 lg:gap-8 items-center lg:items-start justify-center w-full">
+        <div className="flex flex-col max-w-xl mt-8 lg:mt-0 gap-6 lg:gap-8 items-center justify-center w-full">
           <RyogoVideo
             //TODO: Add video source
             src="https://www.youtube.com/embed/1MobY_vR7-g"

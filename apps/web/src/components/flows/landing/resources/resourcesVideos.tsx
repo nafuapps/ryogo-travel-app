@@ -11,6 +11,29 @@ import {
 
 export default async function ResourcesVideosSection() {
   const t = await getTranslations("Landing.Resources.Videos")
+  //TODO: Add product videos
+  const items = [
+    {
+      title: t("V1.Title"),
+      desc: t("V1.Description"),
+      src: "https://www.youtube.com/embed/1MobY_vR7-g",
+    },
+    {
+      title: t("V2.Title"),
+      desc: t("V2.Description"),
+      src: "https://www.youtube.com/embed/1MobY_vR7-g",
+    },
+    {
+      title: t("V3.Title"),
+      desc: t("V4.Description"),
+      src: "https://www.youtube.com/embed/1MobY_vR7-g",
+    },
+    {
+      title: t("V4.Title"),
+      desc: t("V4.Description"),
+      src: "https://www.youtube.com/embed/1MobY_vR7-g",
+    },
+  ]
   return (
     <LandingSectionWrapper id="videos" className="bg-white">
       <LandingContentWrapper>
@@ -21,10 +44,14 @@ export default async function ResourcesVideosSection() {
           {t("Subtitle")}
         </RyogoP>
         <CarouselWrapper>
-          <VideoCarouselItem title="1" />
-          <VideoCarouselItem title="2" />
-          <VideoCarouselItem title="3" />
-          <VideoCarouselItem title="4" />
+          {items.map((item, index) => (
+            <VideoCarouselItem
+              key={index}
+              title={item.title}
+              desc={item.desc}
+              src={item.src}
+            />
+          ))}
         </CarouselWrapper>
       </LandingContentWrapper>
     </LandingSectionWrapper>

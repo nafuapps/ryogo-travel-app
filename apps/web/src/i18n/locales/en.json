@@ -4010,30 +4010,61 @@
       },
       "Videos": {
         "Title": "Video Tutorials",
-        "Subtitle": "Want to learn how RyoGo works? Check out easy to understand short videos."
-
+        "Subtitle": "Want to learn how RyoGo works? Check out some easy to understand short videos.",
+        "V1":{
+          "Title": "Getting Started",
+          "Description": "Getting started with RyoGo"
+        },
+        "V2":{
+          "Title": "Creating Bookings",
+          "Description": "Creating bookings in RyoGo"
+        },
+        "V3":{
+          "Title": "Creating Bookings",
+          "Description": "Creating bookings in RyoGo"
+        },
+        "V4":{
+          "Title": "Creating Bookings",
+          "Description": "Creating bookings in RyoGo"
+        }
       },
       "FAQ": {
-        "Title": "",
-        "Subtitle": ""
+        "Title": "Frequently Asked Questions",
+        "Subtitle": "Did not find what you were looking for? Get some of your queries answered here.",
+        "Training":{
+          "Question":"Do you provide training resources or material that we can hand over directly to our drivers or agents?",
+          "Answer":"We do have demo videos and guides for users to understand how RyoGo works. These resources can help them in their day to day operations. All such resources can be found in Help section under their account after login. Alternatively, you can find all such training videos and more on our YouTube channel as well."
+        },
+        "FeatureRequest":{
+          "Question":"Can we request a specific guide, calculator, or any other feature if it isn't currently in the system?",
+          "Answer":"We would love to build it for you. Our goal is to make RyoGo the definitive app for travel agencies and fleet operators countrywide. Drop in your suggestions in the support center."
+        },
+        "Language":{
+          "Question":"How do I change the language in RyoGo?",
+          "Answer":"You can change the language from menu bar. If you are logged in, you can change and save your preferred language in account settings."
+        },
+        "NewFeatures":{
+          "Question":"How do I get to know about app changes and new features in RyoGo?",
+          "Answer":"You will be notified on your registered email about any changes and new features in RyoGo. Also, keep an eye on our website and social media for any updates and news. If you are a premium subscriber, you will be able to access all new features as soon as they are rolled out."
+        }
       },
       "Support": {
-        "Title": "",
-        "Subtitle": ""
+        "Title": "Support Center",
+        "Subtitle": "Need help? Get in touch with our support team."
       },
       "Blogs": {
-        "Title": "",
-        "Subtitle": ""
+        "Title": "Blogs & News",
+        "Subtitle": "Get latest updates, news and expert guides from RyoGo."
       },
       "About": {
-        "Title": "",
-        "Subtitle": ""
+        "Title": "About RyoGo",
+        "Subtitle": "Learn more about RyoGo and the team behind it."
       },
       "CTA": {
-        "Title": "",
-        "Subtitle": "",
-        "PrimaryCTA": "",
-        "SecondaryCTA": ""
+        "Title": "Ready to get started with RyoGo?",
+        "Subtitle": "No payment details. No complicated setup. Just your phone number and 5 minutes.",
+        "PrimaryCTA": "Create Free Account Now",
+        "SecondaryCTA": "Explore All Features"
       }
     }
   }

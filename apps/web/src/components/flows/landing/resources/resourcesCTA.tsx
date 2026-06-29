@@ -2,7 +2,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { ChevronRight, Video } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
@@ -16,35 +16,31 @@ export default async function ResourcesCTASection() {
     <LandingSectionWrapper
       id="cta"
       shrink
-      className="bg-linear-to-b from-sky-600 to-sky-900"
+      className="bg-linear-to-b from-slate-500 to-slate-900"
     >
-      <LandingContentWrapper className="md:flex-row">
+      <LandingContentWrapper>
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <div className="flex flex-col gap-4 justify-center items-center">
-          <RyogoP color="white" className="max-w-4xl text-center opacity-80">
-            {t("Subtitle", { days: TRIAL_DAYS })}
-          </RyogoP>
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <Link href="/onboarding">
-              <Button size="lg" variant="white" className="w-full md:w-auto ">
-                <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
-                <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
-              </Button>
-            </Link>
-            {/* //TODO: Demo video */}
-            <Link href="/features">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full md:w-auto border-white hover:bg-white/20"
-              >
-                <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
-                <RyogoIcon icon={Video} color="white" size="sm" thick />
-              </Button>
-            </Link>
-          </div>
+        <RyogoP color="white" className="max-w-4xl text-center opacity-80">
+          {t("Subtitle", { days: TRIAL_DAYS })}
+        </RyogoP>
+        <div className="flex gap-4 justify-center items-center">
+          <Link href="/onboarding">
+            <Button size="lg" variant="white" className="w-full md:w-auto ">
+              <RyogoSmall color="slate">{t("PrimaryCTA")}</RyogoSmall>
+              <RyogoIcon icon={ChevronRight} color="slate" size="sm" thick />
+            </Button>
+          </Link>
+          <Link href="/features">
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full md:w-auto border-white hover:bg-white/20"
+            >
+              <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
+            </Button>
+          </Link>
         </div>
       </LandingContentWrapper>
     </LandingSectionWrapper>

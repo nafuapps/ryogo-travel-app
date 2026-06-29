@@ -1,14 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { RyoGoLandingLogo } from "@/components/logo"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { UrlObject } from "url"
-import { RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { UserLangEnum } from "@ryogo-travel-app/db/schema"
+import { setLocaleAction } from "@/app/actions/setLocalAction"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { getEnumValueDisplayPairs } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 type NavbarItemType =
   | "home"
@@ -41,7 +52,7 @@ export default function Navbar(props: NavbarProps) {
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
       <div className="w-full max-w-5xl bg-white opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
-        <div className="flex justify-between items-center h-12 md:h-14 lg:h-16 w-full">
+        <div className="flex flex-wrap justify-between items-center py-3 w-full">
           {/* Logo */}
           <Link href="/">
             <RyoGoLandingLogo alt={t("Logo")} />
@@ -57,6 +68,7 @@ export default function Navbar(props: NavbarProps) {
               >
                 <RyogoSmall
                   color={props.selected !== link.id ? "slate" : "brand"}
+                  className="text-nowrap"
                 >
                   {link.label}
                 </RyogoSmall>
@@ -66,6 +78,7 @@ export default function Navbar(props: NavbarProps) {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
+            <LanguageSwitcher />
             <Link href="/auth/login">
               <Button variant="outline">{t("Login")}</Button>
             </Link>
@@ -103,6 +116,7 @@ export default function Navbar(props: NavbarProps) {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t">
+                <LanguageSwitcher />
                 <Link href="/auth/login" className="w-full">
                   <Button variant="outline" className="w-full">
                     {t("Login")}
@@ -117,5 +131,40 @@ export default function Navbar(props: NavbarProps) {
         )}
       </div>
     </nav>
+  )
+}
+
+function LanguageSwitcher() {
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
+  const locale = useLocale() as UserLangEnum
+
+  const handleLocaleChange = (nextLocale: UserLangEnum) => {
+    startTransition(async () => {
+      await setLocaleAction(nextLocale)
+      router.refresh()
+    })
+  }
+  return (
+    <Select
+      defaultValue={locale}
+      disabled={isPending}
+      onValueChange={(value) => handleLocaleChange(value as UserLangEnum)}
+    >
+      <SelectTrigger className="w-full md:w-auto h-9 gap-2 font-medium bg-white border focus:ring-sky-700">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent align="end" className="bg-white">
+        {getEnumValueDisplayPairs(UserLangEnum).map((lang) => (
+          <SelectItem
+            key={lang.value}
+            value={lang.value}
+            className="cursor-pointer focus:bg-gray-50 text-gray-700"
+          >
+            <RyogoCaption color="slate">{lang.display}</RyogoCaption>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }

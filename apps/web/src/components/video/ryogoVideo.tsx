@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
-export default async function RyogoVideo({
+export function RyogoVideo({
   src,
   title,
   className,
@@ -26,7 +26,7 @@ export default async function RyogoVideo({
   )
 }
 
-export async function RyogoDialogVideo({
+export function RyogoDialogVideo({
   src,
   children,
   title,

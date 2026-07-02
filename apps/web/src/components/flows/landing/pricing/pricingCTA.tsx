@@ -9,6 +9,7 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
 
 export default async function PricingCTASection() {
   const t = await getTranslations("Landing.Pricing.CTA")
@@ -33,8 +34,12 @@ export default async function PricingCTASection() {
                 <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
               </Button>
             </Link>
-            {/* //TODO: Demo video */}
-            <Link href="/features">
+            {/* //TODO: Demo video source*/}
+            <RyogoDialogVideo
+              src="https://www.youtube.com/embed/1MobY_vR7-g"
+              title="RyoGo Demo video"
+              className="w-full aspect-video"
+            >
               <Button
                 size="lg"
                 variant="outline"
@@ -43,7 +48,7 @@ export default async function PricingCTASection() {
                 <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
                 <RyogoIcon icon={Video} color="white" size="sm" thick />
               </Button>
-            </Link>
+            </RyogoDialogVideo>
           </div>
         </div>
       </LandingContentWrapper>

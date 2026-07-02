@@ -40,7 +40,7 @@ export function RyogoDialogVideo({
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-full sm:w-3/4 sm:max-w-4xl">
+      <DialogContent className="w-full sm:w-3/4 sm:max-w-4xl p-3 md:p-4">
         <RyogoVideo src={src} title={title} className={className} />
       </DialogContent>
     </Dialog>

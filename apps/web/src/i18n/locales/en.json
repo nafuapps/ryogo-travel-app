@@ -4009,23 +4009,48 @@
         "ScrollCTA":"Scroll to see more videos"
       },
       "Videos": {
-        "Title": "Video Tutorials",
-        "Subtitle": "Want to learn how RyoGo works? Check out some easy to understand short videos.",
-        "V1":{
-          "Title": "Getting Started",
-          "Description": "Getting started with RyoGo"
+        "Title": "Product Videos",
+        "Subtitle": "Want to learn how RyoGo works? Check out these easy to understand short demo video tutorials.",
+        "Count":"{count} VIDEOS",
+        "KnowRyoGo":{
+          "Title": "Get to know RyoGo",
+          "Description": "Understand what is RyoGo and how it can help you."
         },
-        "V2":{
-          "Title": "Creating Bookings",
-          "Description": "Creating bookings in RyoGo"
+        "Onboarding":{
+          "Title": "Onboarding Guide",
+          "Description": "Simple 5 step process to take your agency live in a few minutes with RyoGo"
         },
-        "V3":{
+        "CreateBooking":{
           "Title": "Creating Bookings",
-          "Description": "Creating bookings in RyoGo"
+          "Description": "Easy to understand guide on how to create a new booking in RyoGo"
         },
-        "V4":{
-          "Title": "Creating Bookings",
-          "Description": "Creating bookings in RyoGo"
+        "ManageBooking":{
+          "Title": "Managing Bookings",
+          "Description": "Everything that you can do with a booking, from assignment to reconciliation. Learn how RyoGo does it all."
+        },
+        "ManageAccount":{
+          "Title": "Managing Your Account",
+          "Description": "It's easy to manage your agency account effectively. Watch this video to understand how."
+        },
+        "AddDriver":{
+          "Title": "Adding Drivers",
+          "Description": "Learn how to add and manage drivers in your RyoGo account."
+        },
+        "DriverApp":{
+          "Title": "Driver App",
+          "Description": "Get to know more about the driver app that makes collaboration easy with your drivers."
+        },
+        "AddVehicle":{
+          "Title": "Adding Vehicles",
+          "Description": "Find out how to add and manage your fleet of vehicles."
+        },
+        "AddAgent":{
+          "Title": "Adding Agents",
+          "Description": "Understand how you can add agents and delegate your agency operations to them."
+        },
+        "Analytics":{
+          "Title": "Why Analytics?",
+          "Description": "Check out how analytics can help you make informed decisions for your agency."
         }
       },
       "FAQ": {
@@ -4050,19 +4075,19 @@
       },
       "Support": {
         "Title": "Support Center",
-        "Subtitle": "Need help? Get in touch with our support team."
+        "Subtitle": "Looking for help? Get in touch with RyoGo support team."
       },
       "Blogs": {
         "Title": "Blogs & News",
         "Subtitle": "Get latest updates, news and expert guides from RyoGo."
       },
       "About": {
-        "Title": "About RyoGo",
+        "Title": "About Us",
         "Subtitle": "Learn more about RyoGo and the team behind it."
       },
       "CTA": {
-        "Title": "Ready to get started with RyoGo?",
-        "Subtitle": "No payment details. No complicated setup. Just your phone number and 5 minutes.",
+        "Title": "Want to get started with RyoGo?",
+        "Subtitle": "No payment details. No complicated setup. Just your phone number and 5 minutes to get onboard.",
         "PrimaryCTA": "Create Free Account Now",
         "SecondaryCTA": "Explore All Features"
       }

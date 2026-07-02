@@ -25,7 +25,7 @@ export default async function ResourcesCTASection() {
         <RyogoP color="white" className="max-w-4xl text-center opacity-80">
           {t("Subtitle", { days: TRIAL_DAYS })}
         </RyogoP>
-        <div className="flex gap-4 justify-center items-center">
+        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <Link href="/onboarding">
             <Button size="lg" variant="white" className="w-full md:w-auto ">
               <RyogoSmall color="slate">{t("PrimaryCTA")}</RyogoSmall>

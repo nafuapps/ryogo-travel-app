@@ -30,7 +30,7 @@ import {
   CustomerStatusPill,
   DriverStatusPill,
   VehicleStatusPill,
-} from "@/components/statusPills/statusPills"
+} from "@/components/pills/ryogoPills"
 import getVehicleIcon, {
   getCanDriveIcons,
 } from "@/components/icons/vehicleIcon"

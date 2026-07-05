@@ -15,7 +15,7 @@ import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import { DriverStatusPill } from "@/components/statusPills/statusPills"
+import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,

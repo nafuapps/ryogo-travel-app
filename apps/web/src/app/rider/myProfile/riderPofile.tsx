@@ -10,7 +10,7 @@ import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myPr
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
-import { DriverStatusPill } from "@/components/statusPills/statusPills"
+import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import {
   SectionWrapper,
   PageWrapper,

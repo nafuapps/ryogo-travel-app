@@ -10,7 +10,7 @@ import ActivateVehicleAlertButton from "@/components/buttons/alert/activateVehic
 import InactivateVehicleAlertButton from "@/components/buttons/alert/inactivateVehicleAlertButton"
 import Link from "next/link"
 import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
-import { VehicleStatusPill } from "@/components/statusPills/statusPills"
+import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import getVehicleIcon from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,

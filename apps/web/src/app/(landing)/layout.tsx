@@ -1,3 +1,5 @@
+import Footer from "@/components/flows/landing/footer"
+import Navbar from "@/components/flows/landing/nav"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -19,7 +21,11 @@ export default async function LandingLayout({
 
   return (
     <main id="LandingLayout" className="flex flex-col">
-      {children}
+      <div className="flex flex-col h-full">
+        <Navbar />
+        {children}
+        <Footer />
+      </div>
     </main>
   )
 }

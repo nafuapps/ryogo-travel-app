@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import moment from "moment"
-import { UserStatusPill } from "@/components/statusPills/statusPills"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
   GridWrapper,

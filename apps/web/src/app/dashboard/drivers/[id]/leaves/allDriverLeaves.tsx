@@ -11,7 +11,7 @@ import {
   PageWrapper,
   GridWrapper,
 } from "@/components/page/pageWrappers"
-import { LeaveStatusPill } from "@/components/statusPills/statusPills"
+import { LeaveStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllDriverLeavesPageComponent({

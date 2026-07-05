@@ -14,7 +14,7 @@ import { useState } from "react"
 import { PhoneRegex } from "@/lib/regex"
 import { PaginationControls } from "@/components/pagination/paginationControls"
 import { usePagination } from "@/hooks/usePagination"
-import { CustomerStatusPill } from "@/components/statusPills/statusPills"
+import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
   GridWrapper,

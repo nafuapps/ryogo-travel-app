@@ -11,7 +11,7 @@ import { PaginationControls } from "@/components/pagination/paginationControls"
 import {
   OrderStatusPill,
   PaymentStatusPill,
-} from "@/components/statusPills/statusPills"
+} from "@/components/pills/ryogoPills"
 import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {

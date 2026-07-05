@@ -1,4 +1,3 @@
-import Footer from "@/components/flows/landing/footer"
 import HowItWorksMissionsSection from "@/components/flows/landing/howItWorks/howItWorksMissions"
 import HowItWorksBookingsSection from "@/components/flows/landing/howItWorks/howItWorksBookings"
 import HowItWorksCTASection from "@/components/flows/landing/howItWorks/howItWorksCTA"
@@ -7,8 +6,9 @@ import HowItWorksDriverAppSection from "@/components/flows/landing/howItWorks/ho
 import HowItWorksEntitiesSection from "@/components/flows/landing/howItWorks/howItWorksEntities"
 import HowItWorksHeroSection from "@/components/flows/landing/howItWorks/howItWorksHero"
 import HowItWorksOnboardingSection from "@/components/flows/landing/howItWorks/howItWorksOnboarding"
-import Navbar from "@/components/flows/landing/nav"
 import HowItWorksFAQSection from "@/components/flows/landing/howItWorks/howItWorksFAQ"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 //hero
 //onboarding
@@ -20,10 +20,14 @@ import HowItWorksFAQSection from "@/components/flows/landing/howItWorks/howItWor
 //faq
 //cta
 
+export const metadata: Metadata = {
+  title: `How It Works - ${pageTitle}`,
+  description: pageDescription,
+}
+
 export default function HowItWorksPage() {
   return (
-    <div className="flex flex-col h-full">
-      <Navbar selected="howItWorks" />
+    <>
       <HowItWorksHeroSection />
       <HowItWorksOnboardingSection />
       <HowItWorksBookingsSection />
@@ -33,7 +37,6 @@ export default function HowItWorksPage() {
       <HowItWorksMissionsSection />
       <HowItWorksFAQSection />
       <HowItWorksCTASection />
-      <Footer />
-    </div>
+    </>
   )
 }

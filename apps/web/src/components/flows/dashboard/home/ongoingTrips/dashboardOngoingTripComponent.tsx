@@ -1,5 +1,5 @@
 import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { TripLogStatusPill } from "@/components/statusPills/statusPills"
+import { TripLogStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 

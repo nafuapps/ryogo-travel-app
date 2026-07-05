@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Button } from "@/components/ui/button"
-import { DriverStatusPill } from "@/components/statusPills/statusPills"
+import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   GridItemWrapper,

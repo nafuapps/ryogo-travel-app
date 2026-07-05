@@ -4014,11 +4014,11 @@
         "Count":"{count} VIDEOS",
         "KnowRyoGo":{
           "Title": "Get to know RyoGo",
-          "Description": "Understand what is RyoGo and how it can help you."
+          "Description": "Understand what is RyoGo and how it can help your travel business."
         },
         "Onboarding":{
           "Title": "Onboarding Guide",
-          "Description": "Simple 5 step process to take your agency live in a few minutes with RyoGo"
+          "Description": "A simple 5-step process to take your agency live in a few minutes with RyoGo"
         },
         "CreateBooking":{
           "Title": "Creating Bookings",
@@ -4026,11 +4026,11 @@
         },
         "ManageBooking":{
           "Title": "Managing Bookings",
-          "Description": "Everything that you can do with a booking, from assignment to reconciliation. Learn how RyoGo does it all."
+          "Description": "Everything from booking assignment to reconciliation, learn how RyoGo does it all."
         },
         "ManageAccount":{
           "Title": "Managing Your Account",
-          "Description": "It's easy to manage your agency account effectively. Watch this video to understand how."
+          "Description": "It's easy to manage your agency account. Watch this video to understand how."
         },
         "AddDriver":{
           "Title": "Adding Drivers",
@@ -4038,7 +4038,7 @@
         },
         "DriverApp":{
           "Title": "Driver App",
-          "Description": "Get to know more about the driver app that makes collaboration easy with your drivers."
+          "Description": "Know more about the driver app that makes collaboration easy with your drivers."
         },
         "AddVehicle":{
           "Title": "Adding Vehicles",
@@ -4075,11 +4075,71 @@
       },
       "Support": {
         "Title": "Support Center",
-        "Subtitle": "Looking for help? Get in touch with RyoGo support team."
+        "Subtitle": "Looking for help? Get in touch with RyoGo support team or drop your message in the query form below.",
+        "HelpBlock":{
+          "Title":"How can we help you?",
+          "Description":"We're here to assist you with any questions or issues you may have.",
+          "Help1":"Request a live demo call",
+          "Help2":"Get guidance for onboarding",
+          "Help3":"Learn which plan is best for you",
+          "Help4":"Understand how RyoGo works",
+          "CallCTA":"Call Our Support Team",
+          "EmailCTA":"Email Us",
+          "Disclaimer":"* Please note that response from our support team is subject to availablility during business hours."
+        },
+        "QueryForm":{
+          "Title":"Submit your query",
+          "Description":"We will get back to you within 24 hours.",
+          "Field1":{
+            "Title":"Your Name",
+            "Placeholder":"Sanjeev",
+            "Error1":"Name is required and should be atleast 5 characters long"
+          },
+          "Field2":{
+            "Title":"Your Phone Number",
+            "Placeholder":"9876543210",
+            "Error1":"Phone number is required and must be 10 digits long"
+          },
+          "Field3":{
+            "Title":"Your Email",
+            "Placeholder":"abcd@gmail.com",
+            "Error1":"Email is required and must be a valid email address"
+          },
+          "Field4":{
+            "Title":"Agency Name (Optional)",
+            "Placeholder":"ABCD Tours & Travels",
+            "Error1":"Agency Name must be atleast 5 characters long"
+          },
+          "Field5":{
+            "Title":"Your Message",
+            "Placeholder":"I need help with onboarding..",
+            "Error1":"Message should be atleast 10 characters long"
+          },
+          "BotError":"Bot activity detected.",
+          "SubmitCTA":"Send Message",
+          "Loading":"Loading...",
+          "SentCTA":"Message Sent",
+          "Success":"You message has been sent successfully!",
+          "Error":"Something went wrong. Please try again later."
+        }
       },
       "Blogs": {
         "Title": "Blogs & News",
-        "Subtitle": "Get latest updates, news and expert guides from RyoGo."
+        "Subtitle": "Get latest product updates, news, industry insights and expert guides from RyoGo.",
+        "Count":"{count} BLOGS",
+        "BlogTypes":{
+          "Type1":"News and Updates",
+          "Type2":"Industry Insights",
+          "Type3":"Product Guide"
+        },
+        "Blog1":{
+          "Title":"How to grow your travel agency business with RyoGo",
+          "Type":"News and Updates"
+        },
+        "Blog2":{
+          "Title":"How to manage your travel agency operations with RyoGo",
+          "Type":"Product Guide"
+        }
       },
       "About": {
         "Title": "About Us",

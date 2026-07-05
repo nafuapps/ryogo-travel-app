@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
-import { UserStatusPill } from "@/components/statusPills/statusPills"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
 import {
   SectionWrapper,
   PageWrapper,

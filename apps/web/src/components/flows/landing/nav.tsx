@@ -10,7 +10,7 @@ import { UrlObject } from "url"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
-import { setLocaleAction } from "@/app/actions/setLocalAction"
+import { setLocaleAction } from "@/app/actions/setLocaleAction"
 import {
   Select,
   SelectContent,
@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 type NavbarItemType =
   | "home"
@@ -34,13 +34,11 @@ type NavLinkType = {
   label: string
 }
 
-interface NavbarProps {
-  selected: NavbarItemType
-}
-
-export default function Navbar(props: NavbarProps) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const t = useTranslations("Landing.Navbar")
+  const path = usePathname()
+  console.log(path)
 
   const navLinks: NavLinkType[] = [
     { id: "features", href: "/features", label: t("Features") },
@@ -64,10 +62,10 @@ export default function Navbar(props: NavbarProps) {
               <Link
                 key={link.id}
                 href={link.href}
-                className={`${props.selected !== link.id ? "hover:bg-slate-100" : "bg-sky-100"} p-2 rounded-lg text-sm lg:text-base font-semibold transition-all duration-300`}
+                className={`${path !== link.href ? "hover:bg-slate-100" : "bg-sky-100"} p-2 rounded-lg text-sm lg:text-base font-semibold transition-all duration-300`}
               >
                 <RyogoSmall
-                  color={props.selected !== link.id ? "slate" : "brand"}
+                  color={path !== link.href ? "slate" : "brand"}
                   className="text-nowrap"
                 >
                   {link.label}
@@ -108,9 +106,7 @@ export default function Navbar(props: NavbarProps) {
                   className="px-2 font-semibold transition"
                   onClick={() => setIsOpen(false)}
                 >
-                  <RyogoSmall
-                    color={props.selected !== link.id ? "slate" : "brand"}
-                  >
+                  <RyogoSmall color={path !== link.href ? "slate" : "brand"}>
                     {link.label}
                   </RyogoSmall>
                 </Link>

@@ -13,7 +13,7 @@ import ActivateUserAlertButton from "@/components/buttons/alert/activateUserAler
 import ResetUserPasswordAlertButton from "@/components/buttons/alert/resetUserPasswordAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
-import { UserStatusPill } from "@/components/statusPills/statusPills"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
 import {
   SectionWrapper,
   PageWrapper,

@@ -1,4 +1,4 @@
-import { AgencyStatusPill } from "@/components/statusPills/statusPills"
+import { AgencyStatusPill } from "@/components/pills/ryogoPills"
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"

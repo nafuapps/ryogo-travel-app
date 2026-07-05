@@ -16,7 +16,7 @@ import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateCustomerAlertButton from "@/components/buttons/alert/inactivateCustomerAlertButton"
 import ActivateCustomerAlertButton from "@/components/buttons/alert/activateCustomerAlertButton"
 import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
-import { CustomerStatusPill } from "@/components/statusPills/statusPills"
+import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import {
   SectionWrapper,
   PageWrapper,

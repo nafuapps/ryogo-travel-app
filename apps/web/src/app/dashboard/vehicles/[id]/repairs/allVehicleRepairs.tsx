@@ -12,7 +12,7 @@ import {
   PageWrapper,
   GridWrapper,
 } from "@/components/page/pageWrappers"
-import { RepairStatusPill } from "@/components/statusPills/statusPills"
+import { RepairStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 

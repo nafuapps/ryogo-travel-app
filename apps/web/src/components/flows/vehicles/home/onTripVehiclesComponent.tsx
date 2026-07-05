@@ -7,7 +7,7 @@ import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import moment from "moment"
-import { TripLogStatusPill } from "@/components/statusPills/statusPills"
+import { TripLogStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
   GridWrapper,

@@ -19,7 +19,7 @@ import {
   FindUserAssignedBookingsByIdType,
   FindUserCompletedBookingsByIdType,
 } from "@ryogo-travel-app/api/services/user.services"
-import { TripLogStatusPill } from "@/components/statusPills/statusPills"
+import { TripLogStatusPill } from "@/components/pills/ryogoPills"
 import { getCombinedDateTime } from "@/lib/utils"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronRight } from "lucide-react"

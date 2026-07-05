@@ -7,14 +7,18 @@ import FeaturesMenuSection from "@/components/flows/landing/features/featuresMen
 import FeaturesAlertsSection from "@/components/flows/landing/features/featuresAlerts"
 import FeaturesSchedulingSection from "@/components/flows/landing/features/featuresScheduling"
 import FeaturesSecuritySection from "@/components/flows/landing/features/featuresSecurity"
-import Footer from "@/components/flows/landing/footer"
-import Navbar from "@/components/flows/landing/nav"
 import FeaturesFAQSection from "@/components/flows/landing/features/featuresFAQ"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: `Features - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function FeaturesPage() {
   return (
-    <div className="flex flex-col h-full">
-      <Navbar selected="features" />
+    <>
       <FeaturesHeroSection />
       <FeaturesMenuSection />
       <FeaturesManagementSection />
@@ -25,7 +29,6 @@ export default async function FeaturesPage() {
       <FeaturesSecuritySection />
       <FeaturesFAQSection />
       <FeaturesCTASection />
-      <Footer />
-    </div>
+    </>
   )
 }

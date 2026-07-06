@@ -40,7 +40,7 @@ export default async function ResourcesSupportSection() {
 async function HelpBlock() {
   const t = await getTranslations("Landing.Resources.Support.HelpBlock")
   return (
-    <div className="flex flex-col gap-5 md:gap-6 w-full bg-slate-900 p-6 lg:p-8 rounded-lg">
+    <div className="flex flex-col gap-5 md:gap-6 w-full bg-linear-to-b from-slate-950 to-slate-700 p-6 lg:p-8 rounded-lg">
       <RyogoH4 color="white" weight="font-bold">
         {t("Title")}
       </RyogoH4>

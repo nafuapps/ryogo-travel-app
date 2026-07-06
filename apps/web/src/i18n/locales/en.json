@@ -4003,7 +4003,7 @@
     "Resources": {
       "Hero": {
         "Title": "Explore our resource library",
-        "Subtitle": "Feeling lost? Don't worry. Go through all our resources like videos, blogs, support center, FAQs and get to know more about us.",
+        "Subtitle": "Feeling lost? Don't worry. Go through our resources like demo videos, blogs, support center, FAQs and get to know more about us.",
         "PrimaryCTA":"Explore FAQs",
         "SecondaryCTA": "Go To Support Center",
         "ScrollCTA":"Scroll to see more videos"
@@ -4126,7 +4126,7 @@
       "Blogs": {
         "Title": "Blogs & News",
         "Subtitle": "Get latest product updates, news, industry insights and expert guides from RyoGo.",
-        "Count":"{count} BLOGS",
+        "Count":"{count} ARTICLES",
         "BlogTypes":{
           "Type1":"News and Updates",
           "Type2":"Industry Insights",
@@ -4137,13 +4137,39 @@
           "Type":"News and Updates"
         },
         "Blog2":{
-          "Title":"How to manage your travel agency operations with RyoGo",
+          "Title":"Learn how to manage your travel agency operations with RyoGo",
           "Type":"Product Guide"
         }
       },
       "About": {
         "Title": "About Us",
-        "Subtitle": "Learn more about RyoGo and the team behind it."
+        "Subtitle": "Learn more about RyoGo, its mission and the incredible team behind it.",
+        "Mission":{
+          "Title":"Our Mission",
+          "Desc":"To enable every travel business in India to manage their daily operations efficiently, by providing an easy-to-use and all-in-one digital platform.",
+          "Subtitle":"\"We want to enable agency owners and fleet operators to communicate and collaborate across their businesses, ensuring a seamless experience for their customers.\"",
+          "Quote":"- Founder, RyoGo Travel App",
+          "M1":{
+            "Value":"100+",
+            "Label":"Companies use RyoGo"
+          },
+          "M2":{
+            "Value":"1000+",
+            "Label":"Man hours saved per month"
+          },
+          "M3":{
+            "Value":"40%",
+            "Label":"Revenue increase"
+          }
+          
+        },
+        "Founder":{
+          "Title":"Meet the founding team",
+          "Description":"RyoGo was founded in 2023 by Nitin Gautam, a travel industry veteran with over 13 years of experience in running and managing automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experiences.",
+          "Company1":"Ola Electric",
+          "Company2":"PharmEasy",
+          "Company3":"Park Plus"
+        }
       },
       "CTA": {
         "Title": "Want to get started with RyoGo?",

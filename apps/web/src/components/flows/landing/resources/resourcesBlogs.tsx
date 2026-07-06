@@ -11,18 +11,20 @@ import {
 
 export default async function ResourcesBlogsSection() {
   const t = await getTranslations("Landing.Resources.Blogs")
+
+  //TODO: Replace with actual blog data
   const items = [
     {
+      index: "1",
       title: t("Blog1.Title"),
       imageSrc: "/logoPWA.png",
       type: t("Blog1.Type"),
-      blogLink: "1",
     },
     {
+      index: "2",
       title: t("Blog2.Title"),
       imageSrc: "/logoPWA.png",
       type: t("Blog2.Type"),
-      blogLink: "2",
     },
   ]
 
@@ -42,7 +44,7 @@ export default async function ResourcesBlogsSection() {
               title={item.title}
               imageSrc={item.imageSrc}
               type={item.type}
-              blogLink={item.blogLink}
+              blogLink={item.index}
             />
           ))}
         </CarouselWrapper>

@@ -8,6 +8,7 @@ export async function generateStaticParams() {
   return blogs.map((blog) => ({ id: blog.id }))
 }
 
+//TODO: Blog page
 export default async function BlogPage({
   params,
 }: {

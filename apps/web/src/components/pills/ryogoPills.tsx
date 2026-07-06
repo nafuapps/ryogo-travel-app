@@ -11,10 +11,11 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption } from "@/components/typography"
 
-type RyogoPillColor = "slate" | "brand" | "green" | "red" | "yellow"
+type RyogoPillColor = "slate" | "brand" | "green" | "red" | "yellow" | "light"
 
 function getStatusPillColor(color?: RyogoPillColor) {
   if (color === "slate") return "bg-slate-700"
+  if (color === "light") return "bg-slate-400"
   if (color === "brand") return "bg-sky-700"
   if (color === "green") return "bg-green-600"
   if (color === "red") return "bg-red-600"

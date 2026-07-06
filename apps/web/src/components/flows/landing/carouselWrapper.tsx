@@ -1,4 +1,4 @@
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { RyogoVideo } from "@/components/video/ryogoVideo"
 import {
   Carousel,
@@ -21,9 +21,9 @@ export function CarouselWrapper({
   return (
     <Carousel className="w-full" opts={{}}>
       <div className="flex gap-2 lg:gap-3 items-center justify-center w-full mb-3">
-        <CarouselPrevious className="static translate-y-0 translate-x-0" />
+        <CarouselPrevious className="static translate-y-0 translate-x-0 rounded-lg" />
         {count && <RyogoCaption color="slate">{count}</RyogoCaption>}
-        <CarouselNext className="static translate-y-0 translate-x-0" />
+        <CarouselNext className="static translate-y-0 translate-x-0 rounded-lg" />
       </div>
       <CarouselContent className="m-0.5 gap-3 lg:gap-4">
         {children}
@@ -47,14 +47,14 @@ export function VideoCarouselItem({
     <CarouselItem className="flex flex-col p-3 md:p-4 rounded-xl border gap-2 md:gap-3 basis-full md:basis-1/2 lg:basis-1/3">
       <RyogoVideo src={src} className="w-full aspect-video rounded-lg" />
       <div className="flex gap-1.5 md:gap-2 items-center">
-        <div className="flex items-center justify-center border rounded-full size-8 lg:size-10 shrink-0">
-          <RyogoP color="light" weight="font-bold">
+        <div className="flex items-center justify-center bg-slate-50 rounded-lg size-8 lg:size-10 shrink-0">
+          <RyogoP color="slate" weight="font-bold">
             {index}
           </RyogoP>
         </div>
         <RyogoP weight="font-bold">{title}</RyogoP>
       </div>
-      <RyogoSmall color="light">{desc}</RyogoSmall>
+      <RyogoCaption color="light">{desc}</RyogoCaption>
     </CarouselItem>
   )
 }
@@ -71,7 +71,7 @@ export function BlogCarouselItem({
   blogLink: string
 }) {
   return (
-    <CarouselItem className="group basis-full md:basis-1/2 lg:basis-1/3">
+    <CarouselItem className="group basis-full md:basis-1/2 lg:basis-1/3 p-1 md:p-1.5">
       <Link
         href={`/resources/blog/${blogLink}`}
         className="flex flex-col gap-1.5 md:gap-2"
@@ -79,13 +79,13 @@ export function BlogCarouselItem({
         <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
           <Image
             src={imageSrc}
-            className="object-cover md:transition-transform md:duration-300 group-hover:scale-105"
+            className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-105"
             alt={title}
             fill
-            sizes=""
+            sizes="672px"
           />
         </div>
-        <RyogoPill label={type} bgColor={"slate"} selfStart />
+        <RyogoPill label={type} bgColor={"light"} selfStart />
         <RyogoP weight="font-bold">{title}</RyogoP>
       </Link>
     </CarouselItem>

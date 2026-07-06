@@ -50,22 +50,23 @@ export default function Navbar() {
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
       <div className="w-full max-w-5xl bg-white opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
-        <div className="flex flex-wrap justify-between items-center py-3 w-full">
+        <div className="flex flex-wrap justify-between items-center py-3 w-full gap-1 lg:gap-3">
           {/* Logo */}
           <Link href="/">
             <RyoGoLandingLogo alt={t("Logo")} />
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
+          <div className="hidden md:flex md:items-center md:gap-1 lg:gap-3">
             {navLinks.map((link) => (
               <Link
                 key={link.id}
                 href={link.href}
-                className={`${path !== link.href ? "hover:bg-slate-100" : "bg-sky-100"} p-2 rounded-lg text-sm lg:text-base font-semibold transition-all duration-300`}
+                className={`${path !== link.href ? "hover:bg-slate-100" : "bg-sky-100"} p-2 rounded-lg transition-all duration-300`}
               >
                 <RyogoSmall
                   color={path !== link.href ? "slate" : "brand"}
+                  weight="font-medium"
                   className="text-nowrap"
                 >
                   {link.label}
@@ -74,9 +75,10 @@ export default function Navbar() {
             ))}
           </div>
 
+          <LanguageSwitcher />
+
           {/* Desktop CTA */}
-          <div className="hidden md:flex md:items-center md:gap-4 lg:gap-5">
-            <LanguageSwitcher />
+          <div className="hidden md:flex md:items-center md:gap-1.5 lg:gap-3">
             <Link href="/auth/login">
               <Button variant="outline">{t("Login")}</Button>
             </Link>
@@ -112,7 +114,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t">
-                <LanguageSwitcher />
+                {/* <LanguageSwitcher /> */}
                 <Link href="/auth/login" className="w-full">
                   <Button variant="outline" className="w-full">
                     {t("Login")}
@@ -147,7 +149,7 @@ function LanguageSwitcher() {
       disabled={isPending}
       onValueChange={(value) => handleLocaleChange(value as UserLangEnum)}
     >
-      <SelectTrigger className="w-full md:w-auto h-9 gap-2 font-medium bg-white border focus:ring-sky-700">
+      <SelectTrigger className="ml-auto mr-2 md:mx-0 h-9 py-1.5 px-2 lg:py-2 lg:px-3 gap-2 font-medium bg-white border focus:ring-sky-700">
         <SelectValue />
       </SelectTrigger>
       <SelectContent align="end" className="bg-white">

@@ -32,7 +32,7 @@ export function LandingContentWrapper({
 }) {
   return (
     <div
-      className={`flex-1 max-w-6xl w-full flex flex-col items-center ${justifyStart ? "justify-start" : "justify-center"} mx-auto gap-6 md:gap-8 ${className ?? ""}`}
+      className={`flex-1 max-w-6xl w-full flex flex-col items-center ${justifyStart ? "justify-start" : "justify-center"} mx-auto gap-8 md:gap-10 ${className ?? ""}`}
     >
       {children}
     </div>

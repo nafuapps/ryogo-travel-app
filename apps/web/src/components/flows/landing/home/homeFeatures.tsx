@@ -18,7 +18,7 @@ export default async function HomeFeaturesSection() {
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" className="text-center max-w-4xl">
+        <RyogoP color="light" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">

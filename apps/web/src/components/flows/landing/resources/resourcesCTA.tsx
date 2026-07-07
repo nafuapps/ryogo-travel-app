@@ -16,7 +16,7 @@ export default async function ResourcesCTASection() {
     <LandingSectionWrapper
       id="cta"
       shrink
-      className="bg-linear-to-b from-slate-500 to-slate-900"
+      className="bg-linear-to-b from-slate-600 to-slate-900"
     >
       <LandingContentWrapper>
         <RyogoH1 color="white" weight="font-bold" className="text-center">

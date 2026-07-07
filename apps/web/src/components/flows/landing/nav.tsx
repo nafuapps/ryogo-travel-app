@@ -57,7 +57,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex md:items-center md:gap-1 lg:gap-3">
+          <div className="hidden md:flex md:items-center md:gap-1 lg:gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.id}
@@ -78,12 +78,16 @@ export default function Navbar() {
           <LanguageSwitcher />
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex md:items-center md:gap-1.5 lg:gap-3">
+          <div className="hidden md:flex md:items-center md:gap-1.5 lg:gap-2">
             <Link href="/auth/login">
-              <Button variant="outline">{t("Login")}</Button>
+              <Button variant="outline">
+                <RyogoCaption color="slate">{t("Login")}</RyogoCaption>
+              </Button>
             </Link>
             <Link href="/auth/signup">
-              <Button>{t("Signup")}</Button>
+              <Button variant="brand">
+                <RyogoCaption color="white">{t("Signup")}</RyogoCaption>
+              </Button>
             </Link>
           </div>
 
@@ -117,11 +121,13 @@ export default function Navbar() {
                 {/* <LanguageSwitcher /> */}
                 <Link href="/auth/login" className="w-full">
                   <Button variant="outline" className="w-full">
-                    {t("Login")}
+                    <RyogoCaption color="slate">{t("Login")}</RyogoCaption>
                   </Button>
                 </Link>
                 <Link href="/auth/signup" className="w-full">
-                  <Button className="w-full">{t("Signup")}</Button>
+                  <Button variant="brand" className="w-full">
+                    <RyogoCaption color="white">{t("Signup")}</RyogoCaption>
+                  </Button>
                 </Link>
               </div>
             </div>

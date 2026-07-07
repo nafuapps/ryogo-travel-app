@@ -5,29 +5,33 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { FeatureGrid, FeatureItem } from "./featureWrappers"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Video } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
 
 export default async function FeaturesManagementSection() {
   const t = await getTranslations("Landing.Features.Management")
   return (
     <LandingSectionWrapper id="management" className="bg-white">
       <LandingContentWrapper>
-        <RyogoH1 weight="font-bold" color="dark" className="text-center">
+        <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" className="text-center max-w-4xl">
+        <RyogoP color="light" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
-        {/* // TODO: Demo video */}
-        <Link href="/resources#videos">
+        {/* // TODO: Management Demo video source */}
+        <RyogoDialogVideo
+          src="https://www.youtube.com/embed/1MobY_vR7-g"
+          title="RyoGo Demo video"
+          className="w-full aspect-video"
+        >
           <Button size="lg" className="w-full md:w-auto">
             <RyogoSmall color="white">{t("WatchDemo")}</RyogoSmall>
             <RyogoIcon icon={Video} size="sm" color="white" thick />
           </Button>
-        </Link>
+        </RyogoDialogVideo>
         <FeatureGrid>
           <FeatureItem
             title={t("M1.Title")}

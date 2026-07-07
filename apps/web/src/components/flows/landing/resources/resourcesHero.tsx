@@ -60,11 +60,9 @@ export default async function ResourcesHeroSection() {
             <Button
               size="lg"
               variant="link"
-              className="gap-1 lg:gap-1.5 hover:bg-slate-700/80"
+              className="gap-1 lg:gap-1.5 hover:bg-slate-700/80 hover:no-underline"
             >
-              <RyogoSmall color="light" weight="font-medium">
-                {t("ScrollCTA")}
-              </RyogoSmall>
+              <RyogoSmall color="light">{t("ScrollCTA")}</RyogoSmall>
               <RyogoIcon icon={ChevronDown} color="light" size="sm" thick />
             </Button>
           </Link>

@@ -22,7 +22,11 @@ export function CarouselWrapper({
     <Carousel className="w-full" opts={{}}>
       <div className="flex gap-2 lg:gap-3 items-center justify-center w-full mb-3">
         <CarouselPrevious className="static translate-y-0 translate-x-0 rounded-lg" />
-        {count && <RyogoCaption color="slate">{count}</RyogoCaption>}
+        {count && (
+          <RyogoCaption weight="font-bold" color="slate">
+            {count}
+          </RyogoCaption>
+        )}
         <CarouselNext className="static translate-y-0 translate-x-0 rounded-lg" />
       </div>
       <CarouselContent className="m-0.5 gap-3 lg:gap-4">
@@ -71,7 +75,7 @@ export function BlogCarouselItem({
   blogLink: string
 }) {
   return (
-    <CarouselItem className="group basis-full md:basis-1/2 lg:basis-1/3 p-1 md:p-1.5">
+    <CarouselItem className="group basis-full md:basis-1/2 lg:basis-1/3 px-0.5 md:px-1">
       <Link
         href={`/resources/blog/${blogLink}`}
         className="flex flex-col gap-1.5 md:gap-2"

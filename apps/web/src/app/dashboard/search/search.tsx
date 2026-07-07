@@ -332,7 +332,7 @@ export default function SearchPageComponent({
           {searchResultType === SearchTypeEnum.Bookings ? (
             // Paginated booking search result
             <>
-              <RyogoCaption color="dark" weight="font-bold">
+              <RyogoCaption weight="font-bold">
                 {t("ResultsFound", {
                   count: bookingSearchResultSet.length,
                   type: "booking",
@@ -355,7 +355,7 @@ export default function SearchPageComponent({
             </>
           ) : searchResultType === SearchTypeEnum.Customers ? (
             <>
-              <RyogoCaption color="dark" weight="font-bold">
+              <RyogoCaption weight="font-bold">
                 {t("ResultsFound", {
                   count: customerSearchResultSet.length,
                   type: "customer",
@@ -367,7 +367,7 @@ export default function SearchPageComponent({
             </>
           ) : searchResultType === SearchTypeEnum.Vehicles ? (
             <>
-              <RyogoCaption color="dark" weight="font-bold">
+              <RyogoCaption weight="font-bold">
                 {t("ResultsFound", {
                   count: vehicleSearchResultSet.length,
                   type: "vehicle",
@@ -379,7 +379,7 @@ export default function SearchPageComponent({
             </>
           ) : (
             <>
-              <RyogoCaption color="dark" weight="font-bold">
+              <RyogoCaption weight="font-bold">
                 {t("ResultsFound", {
                   count: driverSearchResultSet.length,
                   type: "driver",

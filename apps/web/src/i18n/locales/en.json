@@ -3336,7 +3336,7 @@
       "Pricing": "Pricing",
       "Resources": "Resources",
       "HowItWorks": "How It Works",
-      "Login": "Login",
+      "Login": "Log in",
       "Signup": "Sign up"
     },
     "Footer": {
@@ -3448,7 +3448,7 @@
       "CTA": {
         "Title": "Ready to grow your business?",
         "Subtitle": "Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free {days}-day Premium trial",
-        "PrimaryCTA": "Create Free Agency Account",
+        "PrimaryCTA": "Create Free Account Now",
         "SecondaryCTA": "Talk To Our Team",
         "Prop1": "Lifetime free account",
         "Prop2": "No credit card required",
@@ -3460,7 +3460,7 @@
         "Title": "Check out what you can do with RyoGo",
         "Subtitle": "Bring all your travel business operations under one roof. From managing bookings to keeping your fleet running smoothly.",
         "PrimaryCTA": "Explore All Features",
-        "SecondaryCTA": "Create Free Account Now"
+        "SecondaryCTA": "Create Account Now"
       },
       "Menu": {
         "Title": "Browse Features",
@@ -3521,14 +3521,14 @@
           "Description": "Choose from various booking options and customizations as per requirements, while also tracking allowances, transactions and expenses effortlessly."
         },
         "S5": {
-          "Title": "Brilliant pocket assistant",
+          "Title": "Brilliant assistant",
           "Description": "Receive intelligent recommendations (like RyoGo score for assignment) based on multiple factors to lower costs while maximizing revenue from every booking."
         },
         "WatchDemo": "Watch Demo Video"
       },
       "Communication": {
-        "Title": "Built for communication and collaboration",
-        "Subtitle": "Keep drivers, agents, and end customers completely aligned. Anytime, anywhere.",
+        "Title": "Built for collaboration",
+        "Subtitle": "Keep communication flowing between drivers, agents, and customers. Anytime, anywhere.",
         "C1": {
           "Title": "Inter-connected system",
           "Description": "Get live trip status updates for each booking, so that everyone involved is always in the loop."
@@ -3673,7 +3673,7 @@
       },
       "CTA": {
         "Title": "Want to grow your business faster?",
-        "Subtitle": "Scale your travel agency operations rapidly with RyoGo. Create a Basic account or get a free {days}-day Premium trial now.",
+        "Subtitle": "Scale your travel agency operations rapidly with RyoGo. Create a forever free Basic account or get a {days}-day free Premium trial now.",
         "PrimaryCTA": "Get Started Now",
         "SecondaryCTA": "Understand How RyoGo Works"
       }
@@ -3795,7 +3795,7 @@
       },
       "Onboarding": {
         "Title": "Quick and Simple Onboarding",
-        "Subtitle": "Get started in a few minutes with our guided registration process",
+        "Subtitle": "Get started in a few minutes with our guided registration process.. without any paperwork.",
         "O0": {
           "Title": "Create Agency Account",
           "Description": "Provide basic details of the owner and the agency."
@@ -3824,7 +3824,7 @@
       },
       "Bookings": {
         "Title": "Create and Manage Bookings",
-        "Subtitle": "Streamline all your booking operations from one place.",
+        "Subtitle": "Streamline all your booking operations from start to end.. all in a single place.",
         "B0": {
           "Title": "Easy booking creation",
           "Description": "Create a new booking in just a few seconds with guided and auto-filled steps."
@@ -3913,7 +3913,7 @@
       },
       "Customers": {
         "Title": "Customer-first experience",
-        "Subtitle": "Always stay connected with your customers and provice a premium experience.",
+        "Subtitle": "Always stay connected with your customers and provide a premium user experience.",
         "C0": {
           "Title": "Simple customer management",
           "Description": "Add and manage customers with basic details and remarks.. no verification required. Data is always safe and private with us."
@@ -3958,7 +3958,7 @@
       },
       "FAQ": {
         "Title": "Frequently Asked Questions",
-        "Subtitle": "Have any more confusion about how RyoGo works? We've got you covered.",
+        "Subtitle": "Have any confusion about how RyoGo works? We've got you covered.",
         "OnboardingTime": {
           "Question": "How long does it take to get our agency up and running on the platform?",
           "Answer": "You can go live in under 10 minutes. Onboarding is a simple 5-step process: you input your basic business details, verify your account, then add a vehicle, driver, and agent. That's it! No credit card, long form or complicated formalities."
@@ -4010,7 +4010,7 @@
       },
       "Videos": {
         "Title": "Product Videos",
-        "Subtitle": "Want to learn how RyoGo works? Check out these easy to understand short demo video tutorials.",
+        "Subtitle": "Check out some easy to understand short demos to learn the basics of RyoGo.",
         "Count":"{count} VIDEOS",
         "KnowRyoGo":{
           "Title": "Get to know RyoGo",
@@ -4146,8 +4146,8 @@
         "Subtitle": "Learn more about RyoGo, its mission and the incredible team behind it.",
         "Mission":{
           "Title":"Our Mission",
-          "Desc":"To enable every travel business in India to manage their daily operations efficiently, by providing an easy-to-use and all-in-one digital platform.",
-          "Subtitle":"\"We want to enable agency owners and fleet operators to communicate and collaborate across their businesses, ensuring a seamless experience for their customers.\"",
+          "Desc":"To enable small scale travel businesses in India to manage their daily operations efficiently, by providing an easy-to-use, all-in-one digital platform.",
+          "Subtitle":"\"We want to help agency owners and fleet operators in running and collaborating across their businesses, ensuring growth and a seamless customer experience.\"",
           "Quote":"- Founder, RyoGo Travel App",
           "M1":{
             "Value":"100+",
@@ -4165,7 +4165,7 @@
         },
         "Founder":{
           "Title":"Meet the founding team",
-          "Description":"RyoGo was founded in 2023 by Nitin Gautam, a travel industry veteran with over 13 years of experience in running and managing automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experiences.",
+          "Description":"RyoGo was founded in 2023 by Nitin Gautam, an industry veteran with over 13 years of experience in running and managing travel, automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experiences.",
           "Company1":"Ola Electric",
           "Company2":"PharmEasy",
           "Company3":"Park Plus"

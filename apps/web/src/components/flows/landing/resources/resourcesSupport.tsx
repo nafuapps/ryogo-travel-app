@@ -25,7 +25,7 @@ export default async function ResourcesSupportSection() {
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" className="max-w-4xl text-center">
+        <RyogoP color="light" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-6 md:gap-8 w-full">

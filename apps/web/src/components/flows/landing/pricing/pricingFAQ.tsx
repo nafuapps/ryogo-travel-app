@@ -19,7 +19,7 @@ export default async function PricingFAQSection() {
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" className="max-w-4xl text-center">
+        <RyogoP color="light" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
         <FAQWrapper>

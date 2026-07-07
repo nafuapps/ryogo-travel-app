@@ -49,7 +49,7 @@ export default async function TripLogItem({
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
           {getTripLogIcon(tripLog.type)}
-          <RyogoCaption color="dark" weight="font-bold">
+          <RyogoCaption weight="font-bold">
             {tripLog.type.toUpperCase()}
           </RyogoCaption>
         </div>

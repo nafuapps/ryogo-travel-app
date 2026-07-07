@@ -20,7 +20,7 @@ export default async function HomeHeroSection() {
         className="h-full px-5 sm:px-8 md:px-10 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-sky-400 to-sky-50"
       >
         <div className="flex flex-col items-center gap-1 lg:gap-2">
-          <RyogoH1 weight="font-bold" color="dark" className="text-center">
+          <RyogoH1 weight="font-bold" className="text-center">
             {t("Title1")}
           </RyogoH1>
           <RyogoH1 color="white" weight="font-bold" className="text-center">

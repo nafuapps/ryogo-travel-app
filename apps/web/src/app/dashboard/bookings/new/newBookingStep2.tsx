@@ -381,9 +381,7 @@ function TripTypeSelectionCard({
       }`}
     >
       <RyogoIcon icon={icon} size="md" />
-      <RyogoCaption color="dark" weight="font-bold">
-        {title}
-      </RyogoCaption>
+      <RyogoCaption weight="font-bold">{title}</RyogoCaption>
       <RyogoCaption color="light">{desc}</RyogoCaption>
     </div>
   )

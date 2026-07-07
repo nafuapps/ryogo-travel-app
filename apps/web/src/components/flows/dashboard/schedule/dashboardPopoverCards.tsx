@@ -19,7 +19,7 @@ export function OngoingBookingPopoverCard(
     <SectionColWrapper>
       <SectionRowWrapper>
         <SectionColWrapper small>
-          <RyogoCaption color="dark" weight="font-bold">
+          <RyogoCaption weight="font-bold">
             {props.type.toUpperCase()}
           </RyogoCaption>
           <RyogoH4>{props.route}</RyogoH4>
@@ -35,9 +35,7 @@ export function OngoingBookingPopoverCard(
       <SectionRowWrapper end>
         <SectionColWrapper small>
           <RyogoSmall>{props.customerName}</RyogoSmall>
-          <RyogoCaption color="dark" weight="font-bold">
-            {props.bookingId}
-          </RyogoCaption>
+          <RyogoCaption weight="font-bold">{props.bookingId}</RyogoCaption>
         </SectionColWrapper>
         <SectionColWrapper small end>
           {props.vehicle ? (
@@ -46,9 +44,7 @@ export function OngoingBookingPopoverCard(
             <RyogoSmall color="red">{t("NotAssigned")}</RyogoSmall>
           )}
           {props.driver ? (
-            <RyogoCaption color="dark" weight="font-bold">
-              {props.driver}
-            </RyogoCaption>
+            <RyogoCaption weight="font-bold">{props.driver}</RyogoCaption>
           ) : (
             <RyogoCaption color="red">{t("NotAssigned")}</RyogoCaption>
           )}
@@ -84,7 +80,7 @@ export function AssignedBookingPopoverCard(
     <SectionColWrapper>
       <SectionRowWrapper>
         <SectionColWrapper small>
-          <RyogoCaption color="dark" weight="font-bold">
+          <RyogoCaption weight="font-bold">
             {props.type.toUpperCase()}
           </RyogoCaption>
           <RyogoH4>
@@ -102,13 +98,11 @@ export function AssignedBookingPopoverCard(
       <SectionRowWrapper end>
         <SectionColWrapper small>
           <RyogoSmall>{props.customer.name}</RyogoSmall>
-          <RyogoCaption color="dark" weight="font-bold">
-            {props.id}
-          </RyogoCaption>
+          <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
         </SectionColWrapper>
         <SectionColWrapper small end>
           <RyogoSmall>{props.assignedVehicle?.vehicleNumber}</RyogoSmall>
-          <RyogoCaption color="dark" weight="font-bold">
+          <RyogoCaption weight="font-bold">
             {props.assignedDriver?.name}
           </RyogoCaption>
         </SectionColWrapper>
@@ -138,9 +132,7 @@ export function RepairPopoverCard(
       </SectionColWrapper>
       <SectionColWrapper small>
         <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
-        <RyogoCaption color="dark" weight="font-bold">
-          {props.id}
-        </RyogoCaption>
+        <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
       </SectionColWrapper>
       <Link href={`/dashboard/vehicles/${props.vehicleId}/repairs`}>
         <Button variant={"secondary"} type="button" className="w-full">
@@ -167,9 +159,7 @@ export function LeavePopoverCard(
       </SectionColWrapper>
       <SectionColWrapper small>
         <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
-        <RyogoCaption color="dark" weight="font-bold">
-          {props.id}
-        </RyogoCaption>
+        <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
       </SectionColWrapper>
       <Link href={`/dashboard/drivers/${props.driverId}/leaves`}>
         <Button variant={"secondary"} type="button" className="w-full">

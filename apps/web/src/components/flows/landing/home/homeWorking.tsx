@@ -66,10 +66,10 @@ export default function HomeWorkingSection() {
   return (
     <LandingSectionWrapper id="working" className="bg-white">
       <LandingContentWrapper>
-        <RyogoH1 weight="font-bold" color="dark" className="text-center">
+        <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="slate" className="text-center max-w-4xl">
+        <RyogoP color="light" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
         <SlideshowWrapper items={items} />

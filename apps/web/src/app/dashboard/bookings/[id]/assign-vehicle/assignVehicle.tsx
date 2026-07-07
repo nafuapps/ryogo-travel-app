@@ -24,12 +24,14 @@ export default function AssignVehiclePageComponent({
   booking,
   limited,
   isSubscribed,
+  hasTriedSubscription,
 }: {
   bookingId: string
   vehicles: FindVehiclesByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
   limited: boolean
   isSubscribed: boolean
+  hasTriedSubscription: boolean
 }) {
   const t = useTranslations("Dashboard.AssignVehicle")
   const router = useRouter()
@@ -68,7 +70,13 @@ export default function AssignVehiclePageComponent({
       {limited && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
-          ctaText={isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+          ctaText={
+            isSubscribed
+              ? t("RenewCTA")
+              : hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+          }
           isSubscribed={isSubscribed}
         />
       )}

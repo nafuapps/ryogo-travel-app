@@ -28,7 +28,7 @@ export default async function LoginAccountsPageComponent({
       </AuthAccountsWrapper>
       <AuthActionWrapper>
         <Link href={"/auth/login"}>
-          <Button variant={"secondary"} size={"lg"} className="w-full">
+          <Button variant={"outline"} size={"lg"} className="w-full">
             <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
           </Button>
         </Link>

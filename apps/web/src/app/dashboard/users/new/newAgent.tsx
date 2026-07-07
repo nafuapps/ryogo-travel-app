@@ -67,7 +67,9 @@ export default async function NewAgentPageComponent({
             <Link href="/dashboard/account/subscription">
               <Button variant={"brand"} size="lg">
                 {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? t("BuyCTA")
+                  ? agency.hasTriedSubscription
+                    ? t("BuyCTA")
+                    : t("TryCTA")
                   : t("RenewCTA")}
               </Button>
             </Link>

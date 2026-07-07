@@ -17,6 +17,7 @@ import {
 import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 
+//TODO: Add a subsciption plan option (Basic, or Try Premium)
 export function CreateAccountStep4(props: {
   onNext: () => void
   onPrev: () => void

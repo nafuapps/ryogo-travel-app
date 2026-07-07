@@ -67,6 +67,10 @@ export function generateAgencyLogoPathName(agencyId: string, logo: File) {
   return `agencies/${agencyId}/logo/${Date.now()}-${logo.name}`
 }
 
+export function generateAgencyQRCodePathName(agencyId: string, qrCode: File) {
+  return `agencies/${agencyId}/qrCode/${Date.now()}-${qrCode.name}`
+}
+
 export function generateUserPhotoPathName(userId: string, photo: File) {
   return `users/${userId}/photo/${Date.now()}-${photo.name}`
 }

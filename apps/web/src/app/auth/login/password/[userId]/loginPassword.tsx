@@ -21,6 +21,8 @@ import {
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import UserCard from "@/components/flows/auth/userCard"
+import { useBotDetection } from "@/hooks/useBotDetection"
+import { toast } from "sonner"
 
 export default function LoginPasswordPageComponent({
   user,
@@ -30,6 +32,7 @@ export default function LoginPasswordPageComponent({
   const t = useTranslations("Auth.LoginPage.Step3")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const { checkBotActivity, isBot } = useBotDetection()
 
   const formSchema = z.object({
     password: z.string().min(8, t("Error1")),
@@ -45,6 +48,10 @@ export default function LoginPasswordPageComponent({
 
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
+    if (checkBotActivity()) {
+      toast.error(t("BotError"))
+      return
+    }
     startTransition(async () => {
       const loginResponse = await loginAction(user.id, data.password)
       if (loginResponse.error === "passwordNotMatching") {
@@ -93,13 +100,13 @@ export default function LoginPasswordPageComponent({
             variant={"default"}
             type="submit"
             size={"lg"}
-            disabled={isPending}
+            disabled={isPending || isBot}
           >
             {isPending && <Spinner />}
             {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
-            variant={"secondary"}
+            variant={"outline"}
             type="button"
             onClick={() => {
               router.back()

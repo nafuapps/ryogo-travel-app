@@ -16,6 +16,8 @@ import {
 import { Form } from "@/components/ui/form"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useBotDetection } from "@/hooks/useBotDetection"
+import { toast } from "sonner"
 
 export function CreateAccountStep1(props: {
   onNext: () => void
@@ -24,6 +26,8 @@ export function CreateAccountStep1(props: {
   allOwners: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step1")
+  const { checkBotActivity, isBot } = useBotDetection(3000)
+
   const step1Schema = z.object({
     agencyName: z
       .string()
@@ -49,6 +53,10 @@ export function CreateAccountStep1(props: {
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
+    if (checkBotActivity()) {
+      toast.error(t("BotError"))
+      return
+    }
     if (
       props.allOwners.some(
         (o) => o.email === data.ownerEmail && o.phone === data.ownerPhone,
@@ -113,7 +121,7 @@ export function CreateAccountStep1(props: {
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step1Actions">
           <OnboardingStepPrimaryAction
-            disabled={formData.formState.isSubmitting}
+            disabled={formData.formState.isSubmitting || isBot}
           >
             {formData.formState.isSubmitting && <Spinner />}
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}

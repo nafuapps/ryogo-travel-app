@@ -24,12 +24,14 @@ export default function AssignUserPageComponent({
   booking,
   limited,
   isSubscribed,
+  hasTriedSubscription,
 }: {
   bookingId: string
   users: FindOwnerAndAgentsByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
   limited: boolean
   isSubscribed: boolean
+  hasTriedSubscription: boolean
 }) {
   const t = useTranslations("Dashboard.AssignUser")
   const router = useRouter()
@@ -63,7 +65,13 @@ export default function AssignUserPageComponent({
       {limited && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
-          ctaText={isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+          ctaText={
+            isSubscribed
+              ? t("RenewCTA")
+              : hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+          }
           isSubscribed={isSubscribed}
         />
       )}

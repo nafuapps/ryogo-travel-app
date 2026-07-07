@@ -46,27 +46,27 @@ export default async function SignupExistingPageComponent({
       </AuthAccountsWrapper>
       <AuthActionWrapper>
         <Link href={"/auth/signup"}>
-          <Button variant={"secondary"} size={"lg"} className="w-full">
+          <Button variant={"outline"} size={"lg"} className="w-full">
             <RyogoCaption color="light">{t("BackCTA")}</RyogoCaption>
           </Button>
         </Link>
         {hasOwnerAccount ? (
           <>
-            <Button variant={"outline"} size={"lg"}>
-              <Link href={`mailto:${SUPPORT_EMAIL}`}>
+            <Link href={`mailto:${SUPPORT_EMAIL}`}>
+              <Button variant={"secondary"} size={"lg"} className="w-full">
                 <RyogoCaption color="light">
                   {t("SecondaryCTAYes")}
                 </RyogoCaption>
-              </Link>
-            </Button>
+              </Button>
+            </Link>
             <RyogoCaption color="light"> {t("Description")}</RyogoCaption>
           </>
         ) : (
-          <Button variant={"outline"} size={"lg"}>
-            <Link href={`/onboarding?phone=${phone}`}>
+          <Link href={`/onboarding?phone=${phone}`}>
+            <Button variant={"secondary"} size={"lg"} className="w-full">
               <RyogoCaption color="light">{t("SecondaryCTANo")}</RyogoCaption>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         )}
       </AuthActionWrapper>
     </AuthPageWrapper>

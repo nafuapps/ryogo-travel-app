@@ -24,12 +24,14 @@ export default function AssignDriverPageComponent({
   booking,
   limited,
   isSubscribed,
+  hasTriedSubscription,
 }: {
   bookingId: string
   drivers: FindDriversByAgencyType
   booking: NonNullable<FindBookingDetailsByIdType>
   limited: boolean
   isSubscribed: boolean
+  hasTriedSubscription: boolean
 }) {
   const t = useTranslations("Dashboard.AssignDriver")
   const router = useRouter()
@@ -68,7 +70,13 @@ export default function AssignDriverPageComponent({
       {limited && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
-          ctaText={isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+          ctaText={
+            isSubscribed
+              ? t("RenewCTA")
+              : hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+          }
           isSubscribed={isSubscribed}
         />
       )}

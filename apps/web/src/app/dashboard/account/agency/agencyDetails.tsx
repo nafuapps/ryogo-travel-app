@@ -85,7 +85,7 @@ export default async function AgencyDetailsPageComponent({
               {!TRIAL_MODE &&
               agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ? (
                 <Button variant={"brand"} size="lg">
-                  {t("BuyCTA")}
+                  {agency.hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}
                 </Button>
               ) : agency.subscriptionExpiresOn < new Date() ? (
                 <Button variant={"brand"} size="lg">

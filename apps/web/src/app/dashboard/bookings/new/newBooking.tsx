@@ -79,7 +79,9 @@ export default async function NewBookingPageComponent({
             <Link href="/dashboard/account/subscription">
               <Button variant={"brand"} size="lg">
                 {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? t("BuyCTA")
+                  ? agency.hasTriedSubscription
+                    ? t("BuyCTA")
+                    : t("TryCTA")
                   : t("RenewCTA")}
               </Button>
             </Link>
@@ -168,6 +170,7 @@ export default async function NewBookingPageComponent({
         customers={customers}
         limited={limited}
         isSubscribed={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        hasTriedSubscription={agency.hasTriedSubscription}
       />
     </PageWrapper>
   )

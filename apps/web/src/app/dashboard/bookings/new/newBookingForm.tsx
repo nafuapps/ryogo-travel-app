@@ -24,6 +24,7 @@ export default function NewBookingForm(props: {
   customers: FindCustomersInAgencyType
   limited: boolean
   isSubscribed: boolean
+  hasTriedSubscription: boolean
 }) {
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingFormDataType>({
@@ -81,6 +82,7 @@ export default function NewBookingForm(props: {
       drivers={props.drivers}
       limited={props.limited}
       isSubscribed={props.isSubscribed}
+      hasTriedSubscription={props.hasTriedSubscription}
     />,
     <NewBookingStep4
       key={3}

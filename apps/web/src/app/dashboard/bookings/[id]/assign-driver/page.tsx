@@ -129,6 +129,7 @@ export default async function AssignDriverBookingPage({
         booking={booking}
         limited={limited}
         isSubscribed={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        hasTriedSubscription={agency.hasTriedSubscription}
       />
     </MainWrapper>
   )

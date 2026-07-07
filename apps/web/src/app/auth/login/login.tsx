@@ -17,6 +17,7 @@ import {
 } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { toast } from "sonner"
+import { useBotDetection } from "@/hooks/useBotDetection"
 
 /*
 1. Find user by phone number
@@ -28,6 +29,7 @@ export default function LoginPageComponent() {
   const t = useTranslations("Auth.LoginPage.Step1")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const { checkBotActivity, isBot } = useBotDetection()
 
   const formSchema = z.object({
     phoneNumber: z
@@ -46,6 +48,10 @@ export default function LoginPageComponent() {
 
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
+    if (checkBotActivity()) {
+      toast.error(t("BotError"))
+      return
+    }
     startTransition(async () => {
       const users = await findLoginUsersAction(data.phoneNumber)
       if (!users) {
@@ -80,7 +86,7 @@ export default function LoginPageComponent() {
           placeholder={t("Input.Placeholder")}
         />
         <AuthActionWrapper>
-          <Button variant={"default"} size={"lg"} disabled={isPending}>
+          <Button variant={"default"} size={"lg"} disabled={isPending || isBot}>
             {isPending && <Spinner />}
             {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>

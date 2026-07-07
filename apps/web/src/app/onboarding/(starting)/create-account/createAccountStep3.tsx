@@ -63,6 +63,26 @@ export function CreateAccountStep3(props: {
       .optional(),
     agencyState: z.string().min(1, t("Field3.Error1")),
     agencyCity: z.string().min(1, t("Field4.Error1")),
+    qrCode: z
+      .instanceof(FileList)
+      .refine((file) => {
+        if (file.length < 1) return true
+        return file[0] && file[0].size < 1000000
+      }, t("Field5.Error1"))
+      .refine((file) => {
+        if (file.length < 1) return true
+        return (
+          file[0] &&
+          [
+            "image/jpeg",
+            "image/png",
+            "image/jpg",
+            "image/bmp",
+            "image/webp",
+          ].includes(file[0].type)
+        )
+      }, t("Field5.Error2"))
+      .optional(),
   })
   type Step3Type = z.infer<typeof step3Schema>
   const formData = useForm<Step3Type>({
@@ -72,8 +92,8 @@ export function CreateAccountStep3(props: {
       commissionRate: props.finalData.agency.commissionRate,
       agencyState: props.finalData.agency.agencyState,
       agencyCity: props.finalData.agency.agencyCity,
+      qrCode: props.finalData.agency.qrCode,
     },
-    shouldUnregister: false,
   })
 
   //Submit actions
@@ -137,6 +157,13 @@ export function CreateAccountStep3(props: {
             title={t("Field4.Title")}
             array={getStringValueDisplayPairs(cityOptions)}
             placeholder={t("Field4.Title")}
+          />
+          <RyogoFileInput
+            name={"qrCode"}
+            register={formData.register("qrCode")}
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+            description={t("Field5.Description")}
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step3Actions">

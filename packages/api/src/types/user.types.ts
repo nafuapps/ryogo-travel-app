@@ -10,6 +10,7 @@ export type CreateOwnerAccountRequestType = {
     agencyState: string
     commissionRate?: number | undefined
     logo?: FileList
+    qrCode?: FileList
   }
   owner: {
     email: string

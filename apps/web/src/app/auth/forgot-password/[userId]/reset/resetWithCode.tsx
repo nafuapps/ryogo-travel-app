@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
@@ -19,6 +19,7 @@ import {
 import { setNewPasswordAction } from "@/app/actions/users/setNewPasswordAction"
 import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { Separator } from "@/components/ui/separator"
+import { useBotDetection } from "@/hooks/useBotDetection"
 
 export default function ResetWithCodePageComponent({
   userId,
@@ -31,6 +32,7 @@ export default function ResetWithCodePageComponent({
 
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const { checkBotActivity, isBot } = useBotDetection()
 
   const formSchema = z
     .object({
@@ -65,6 +67,10 @@ export default function ResetWithCodePageComponent({
 
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
+    if (checkBotActivity()) {
+      toast.error(t("BotError"))
+      return
+    }
     startTransition(async () => {
       if (await setNewPasswordAction(userId, data.password)) {
         toast.success(t("Success"))
@@ -105,18 +111,19 @@ export default function ResetWithCodePageComponent({
           description={t("Field3.Description")}
         />
         <AuthActionWrapper>
-          <Button variant={"default"} size={"lg"} disabled={isPending}>
+          <Button variant={"default"} size={"lg"} disabled={isPending || isBot}>
             {isPending && <Spinner />}
             {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
-            variant={"secondary"}
+            variant={"link"}
             type="button"
+            size="sm"
             onClick={() => {
-              router.replace(`/auth/forgot-password/${userId}`)
+              router.push(`/auth/forgot-password/${userId}`)
             }}
           >
-            {t("DidnotReceiveCode")}
+            <RyogoCaption color="light">{t("DidnotReceiveCode")}</RyogoCaption>
           </Button>
         </AuthActionWrapper>
       </AuthFormWrapper>

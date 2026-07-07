@@ -1,9 +1,7 @@
 //Onboarding home page
 
-import { RyogoH2, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
   AtSign,
   Camera,
@@ -14,13 +12,13 @@ import {
   Image,
   LifeBuoy,
   LucideIcon,
+  User,
   UserKey,
 } from "lucide-react"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import Link from "next/link"
-import { redirect, RedirectType } from "next/navigation"
 import RyoGoLogo from "@/components/logo"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { PhoneRegex } from "@/lib/regex"
@@ -48,21 +46,21 @@ export default async function OnboardingHomePage({
         className="flex flex-col w-full items-center text-center gap-3"
       >
         <RyoGoLogo />
-        <RyogoH2>{t("Header.Title")}</RyogoH2>
-        <RyogoSmall color="slate">{t("Header.Description")}</RyogoSmall>
+        <RyogoH1 weight="font-bold">{t("Header.Title")}</RyogoH1>
+        <RyogoSmall color="light">{t("Header.Description")}</RyogoSmall>
       </div>
       <div id="OnboardingHomeFooter" className="w-full md:w-1/2">
-        <Button variant={"default"} size={"lg"} className="w-full">
-          <Link
-            href={
-              PhoneRegex.safeParse(phone).success
-                ? `/onboarding/create-account?phone=${phone}`
-                : "/onboarding/create-account"
-            }
-          >
-            {t("Footer.PrimaryCTA")}
-          </Link>
-        </Button>
+        <Link
+          href={
+            PhoneRegex.safeParse(phone).success
+              ? `/onboarding/create-account?phone=${phone}`
+              : "/onboarding/create-account"
+          }
+        >
+          <Button variant={"brand"} size={"lg"} className="w-full">
+            <RyogoSmall color="white">{t("Footer.PrimaryCTA")}</RyogoSmall>
+          </Button>
+        </Link>
       </div>
       <div
         id="OnboardingHomeBody"
@@ -97,27 +95,29 @@ export default async function OnboardingHomePage({
         </div>
         <div
           id="OnboardingHomeChecklist"
-          className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
+          className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-3 md:gap-4"
         >
           <RyogoP weight="font-bold"> {t("BodyChecklist.Title")}</RyogoP>
-          <div className="flex flex-col gap-2 md:gap-3">
-            <OnboardingHomeDocumentItem
-              label={t("BodyChecklist.Item1")}
-              icon={Image}
-            />
-            <OnboardingHomeDocumentItem
-              label={t("BodyChecklist.Item2")}
-              icon={Camera}
-            />
-            <OnboardingHomeDocumentItem
-              label={t("BodyChecklist.Item3")}
-              icon={FileText}
-            />
-            <OnboardingHomeDocumentItem
-              label={t("BodyChecklist.Item4")}
-              icon={IdCard}
-            />
-          </div>
+          <OnboardingHomeDocumentItem
+            label={t("BodyChecklist.Item1")}
+            icon={Image}
+          />
+          <OnboardingHomeDocumentItem
+            label={t("BodyChecklist.Item2")}
+            icon={Camera}
+          />
+          <OnboardingHomeDocumentItem
+            label={t("BodyChecklist.Item3")}
+            icon={FileText}
+          />
+          <OnboardingHomeDocumentItem
+            label={t("BodyChecklist.Item4")}
+            icon={IdCard}
+          />
+          <OnboardingHomeDocumentItem
+            label={t("BodyChecklist.Item5")}
+            icon={User}
+          />
         </div>
       </div>
     </div>
@@ -154,7 +154,7 @@ function OnboardingHomeStepItem(props: {
         <div
           className={`w-1 h-2 md:h-3 ${!props.first && `bg-slate-100`}`}
         ></div>
-        <RyogoEnclosedIcon icon={props.icon} size="sm" color="brand" circular />
+        <RyogoEnclosedIcon icon={props.icon} size="sm" color="slate" circular />
         <div
           className={`w-1 h-2 md:h-3 ${!props.last && `bg-slate-100`}`}
         ></div>

@@ -37,6 +37,8 @@ export const vehicleRepairInitial = "VR"
 export const driverLeaveInitial = "DL"
 export const missionInitial = "M"
 export const notificationInitial = "N"
+export const supportQueryInitial = "SQ"
+export const supportTicketInitial = "ST"
 
 //Common timestamps
 const timestamps = {
@@ -106,9 +108,12 @@ export const agencies = pgTable(
     subscriptionExpiresOn: timestamp("subscription_expires_on", {
       withTimezone: true,
     }).notNull(),
+    hasTriedSubscription: boolean("has_tried_subscription")
+      .notNull()
+      .default(false),
+    qrCodeUrl: text("qr_code_url"),
     latestPaidOrderId: text("latest_paid_order_id"),
     status: agencyStatus().notNull().default(AgencyStatusEnum.NEW),
-    //TODO: QR code
     defaultCommissionRate: integer("default_commission_rate")
       .notNull()
       .default(15), // percentage
@@ -147,6 +152,7 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   tripLogs: many(tripLogs),
   missions: many(missions),
   notifications: many(notifications),
+  supportTickets: many(supportTickets),
 }))
 
 export enum OrderStatusEnum {
@@ -229,7 +235,7 @@ export enum PaymentStatusEnum {
   CAPTURED = "captured",
   REFUNDED = "refunded",
 }
-const paymentStatus = pgEnum("payment_status", [
+export const paymentStatus = pgEnum("payment_status", [
   PaymentStatusEnum.CREATED,
   PaymentStatusEnum.AUTHORIZED,
   PaymentStatusEnum.FAILED,
@@ -441,6 +447,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   customersAdded: many(customers),
   sessions: many(sessions),
   missions: many(missions),
+  supportTickets: many(supportTickets),
 }))
 
 //Sessions table
@@ -1392,7 +1399,7 @@ export const missions = pgTable(
         onDelete: "cascade",
       })
       .notNull(),
-    //TODO: Custom reminders
+    isCustom: boolean("is_custom").notNull().default(false),
     entityId: text("entity_id").notNull(),
     entityType: entityType("entity_type").notNull(),
     isCritical: boolean("is_critical").notNull().default(false),
@@ -1456,6 +1463,87 @@ export const notificationRelations = relations(notifications, ({ one }) => ({
   agency: one(agencies, {
     fields: [notifications.agencyId],
     references: [agencies.id],
+  }),
+}))
+
+//Support Queries table
+export const supportQueryIdSequence = pgSequence("support_query_id_seq", {
+  ...sequenceValues,
+})
+export const supportQueries = pgTable("support_queries", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => {
+      return sql`${supportQueryInitial} || nextval(${"support_query_id_seq"})`
+    }),
+  name: varchar("name", { length: 30 }).notNull(),
+  phone: varchar("phone", { length: 10 }).notNull(),
+  email: varchar("phone", { length: 60 }).notNull(),
+  message: varchar("message", { length: 300 }).notNull(),
+  businessName: varchar("business_name", { length: 30 }),
+  isSolved: boolean("is_solved").notNull().default(false),
+  ...timestamps,
+})
+
+export enum TicketStatusEnum {
+  OPEN = "open",
+  IN_PROGRESS = "in progress",
+  RESOLVED = "resolved",
+  CLOSED = "closed",
+}
+export const ticketStatus = pgEnum("ticket_status", [
+  TicketStatusEnum.OPEN,
+  TicketStatusEnum.IN_PROGRESS,
+  TicketStatusEnum.RESOLVED,
+  TicketStatusEnum.CLOSED,
+])
+//Support Tickets table
+export const supportTicketIdSequence = pgSequence("support_ticket_id_seq", {
+  ...sequenceValues,
+})
+export const supportTickets = pgTable(
+  "support_tickets",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => {
+        return sql`${supportTicketInitial} || nextval(${"support_ticket_id_seq"})`
+      }),
+    agencyId: text("agency_id")
+      .references(() => agencies.id, { onDelete: "cascade" })
+      .notNull(),
+    userId: text("user_id")
+      .references(() => users.id, {
+        onDelete: "cascade",
+      })
+      .notNull(),
+    entityId: text("entity_id"),
+    entityType: entityType("entity_type").notNull(),
+    issue: varchar("issue", { length: 60 }).notNull(),
+    details: varchar("details", { length: 300 }),
+    photoUrl: text("photo_url"),
+    commentBySupport: varchar("comment_by_support", { length: 300 }), //Comment by Support team
+    resolutionRating: integer("resolution_rating"),
+    status: ticketStatus().notNull().default(TicketStatusEnum.OPEN),
+    ...timestamps,
+  },
+  (t) => [
+    check(
+      "resolution rating >=1 and rating <=5",
+      sql`${t.resolutionRating} >=1 AND ${t.resolutionRating} <=5`,
+    ),
+    index("support_tickets_agency_idx").on(t.agencyId), // to quickly filter tickets by agency
+    index("support_tickets_user_idx").on(t.userId), // to quickly filter tickets by user
+  ],
+)
+export const supportTicketRelations = relations(supportTickets, ({ one }) => ({
+  agency: one(agencies, {
+    fields: [supportTickets.agencyId],
+    references: [agencies.id],
+  }),
+  user: one(users, {
+    fields: [supportTickets.userId],
+    references: [users.id],
   }),
 }))
 

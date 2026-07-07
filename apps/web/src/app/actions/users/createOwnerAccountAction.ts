@@ -5,6 +5,7 @@ import sendEmail from "@/components/email/sendEmail"
 import { getCurrentUser } from "@/lib/auth"
 import {
   generateAgencyLogoPathName,
+  generateAgencyQRCodePathName,
   generateUserPhotoPathName,
 } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
@@ -31,12 +32,21 @@ export async function createOwnerAccountAction(
 
   if (data.agency.logo && data.agency.logo[0]) {
     const logo = data.agency.logo[0]
-    // Upload to Supabase Storage
-    const uploadData = await uploadFile(
+    // Upload logo to Supabase Storage
+    const uploadLogoData = await uploadFile(
       logo,
       generateAgencyLogoPathName(user.agencyId, logo),
     )
-    await agencyServices.updateAgencyLogo(user.agencyId, uploadData.path)
+    await agencyServices.updateAgencyLogo(user.agencyId, uploadLogoData.path)
+  }
+  if (data.agency.qrCode && data.agency.qrCode[0]) {
+    const qrCode = data.agency.qrCode[0]
+    // Upload qrCode to Supabase Storage
+    const uploadQRCodeData = await uploadFile(
+      qrCode,
+      generateAgencyQRCodePathName(user.agencyId, qrCode),
+    )
+    await agencyServices.updateAgencyLogo(user.agencyId, uploadQRCodeData.path)
   }
   if (data.owner.photos && data.owner.photos[0]) {
     const photo = data.owner.photos[0]

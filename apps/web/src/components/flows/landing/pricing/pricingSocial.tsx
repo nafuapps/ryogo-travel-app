@@ -1,6 +1,5 @@
 import {
   RyogoCaption,
-  RyogoP,
   RyogoSmall,
   RyogoH1,
   RyogoH4,
@@ -11,7 +10,6 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 
-//TODO: Create a section for social proof
 export default async function PricingSocialSection() {
   const t = await getTranslations("Landing.Pricing.Social")
   return (

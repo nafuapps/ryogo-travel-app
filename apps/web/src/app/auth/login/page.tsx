@@ -23,11 +23,11 @@ export default async function LoginPage() {
       <LoginPageComponent />
       <AuthFooterWrapper>
         <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
-        <Button variant="outline" size="lg">
-          <Link href={"/auth/signup"}>
+        <Link href={"/auth/signup"}>
+          <Button variant="outline" size="lg">
             <RyogoCaption color="light">{t("SignupCTA")}</RyogoCaption>
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </AuthFooterWrapper>
     </AuthSectionWrapper>
   )

@@ -14,12 +14,13 @@
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric and without spaces",
         "NotFoundError": "Phone number not registered",
-        "ServerError": "Cannot connect to server.. Try again later!"
+        "ServerError": "Cannot connect to server.. Try again later!",
+        "BotError":"Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Welcome back!",
         "Info": "Select the account you want to log into:",
-        "SecondaryCTA": "Back"
+        "SecondaryCTA": "Back to login"
       },
       "Step3": {
         "PageTitle": "Log into your account",
@@ -34,7 +35,8 @@
         "ForgotCTA": "Forgot Password?",
         "Error1": "Password must be at least 8 characters",
         "APIError1": "Password does not match",
-        "APIError2": "User does not exist.. Try logging in with a different phone number"
+        "APIError2": "User does not exist.. Try logging in with a different phone number",
+        "BotError":"Bot/Fraud activity detected."
       }
     },
     "ForgotPassword": {
@@ -47,6 +49,7 @@
           "Placeholder": "abcd@gmail.com",
           "Description": "We will confirm your identity and send you a code to set a new password"
         },
+        "GiveHelp":"Your email looks something like: {maskedEmail}",
         "PrimaryCTA": "Get verification code",
         "CodeSentRecently": "Wait {count} minutes to resend code",
         "Loading": "Loading",
@@ -54,10 +57,11 @@
         "Error1": "Not a valid email",
         "APIError": "Email address does not match our records",
         "Success": "Verification code sent.. check your inbox!",
-        "Error": "Cannot send code.. Try again later!"
+        "Error": "Cannot send code.. Try again later!",
+        "BotError":"Bot/Fraud activity detected."
       },
       "Step2": {
-        "PageTitle": "Set a new password",
+        "PageTitle": "Reset your password",
         "Field1": {
           "Title": "Enter verification code",
           "Placeholder": "123456",
@@ -82,9 +86,10 @@
         },
         "PrimaryCTA": "Reset Password and Login",
         "Loading": "Loading",
-        "DidnotReceiveCode": "Did not receive code?",
+        "DidnotReceiveCode": "Did not receive a code?",
         "Success": "Password reset successfully!",
-        "Error": "Cannot reset password.. Try again later!"
+        "Error": "Cannot reset password.. Try again later!",
+        "BotError":"Bot/Fraud activity detected."
       }
     },
     "SignupPage": {
@@ -99,13 +104,14 @@
         "PrimaryCTA": "Create agency account",
         "Loading": "Loading..",
         "Error1": "Phone number must be 10 digits",
-        "Error2": "Phone number must be numeric"
+        "Error2": "Phone number must be numeric",
+        "BotError":"Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Hello there!",
         "InfoYes": "You already have an agency account with us:",
         "InfoNo": "{count, plural, =1 {You already have an account with us:} other {You already have # accounts with us:}}",
-        "SecondaryCTANo": "Create a new agency account",
+        "SecondaryCTANo": "Create an owner account",
         "SecondaryCTAYes": "Contact support",
         "BackCTA": "Back",
         "Description": "To create more agency accounts, contact our support team."
@@ -130,9 +136,10 @@
       "BodyChecklist": {
         "Title": "Document checklist",
         "Item1": "Your business logo (optional)",
-        "Item2": "Photo of the vehicle (with visible number plate)",
-        "Item3": "Document photos of vehicle RC, Insurance policy and PUC certificate",
-        "Item4": "Driver's license"
+        "Item2": "Photo of a vehicle (with visible number plate)",
+        "Item3": "Document photocopy of vehicle RC, Insurance policy and PUC certificate",
+        "Item4": "Driving license photo of a driver",
+        "Item5": "Photo of your driver and agent (optional)"
       },
       "Footer": {
         "PrimaryCTA": "Get Started"
@@ -171,7 +178,8 @@
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
-        "APIError": "An owner account with this phone and email combination already exists"
+        "APIError": "An owner account with this phone and email combination already exists",
+        "BotError":"Bot/Fraud activity detected."
       },
       "Step2": {
         "Field1": {
@@ -210,7 +218,7 @@
       "Step3": {
         "Field1": {
           "Title": "Agency logo (optional)",
-          "Placeholder": "UPLOAD",
+          "Placeholder": "UPLOAD IMAGE",
           "Description": "Upload a logo associated with your business",
           "Error1": "Image file size should be less than 1MB",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
@@ -232,6 +240,13 @@
         "Field4": {
           "Title": "Select city",
           "Error1": "Providing city is mandatory"
+        },
+        "Field5": {
+          "Title": "Agency Payment QR Code (optional)",
+          "Placeholder": "UPLOAD IMAGE",
+          "Description": "Upload your QR code that will be used on invoices for receiving payments from customer",
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
@@ -858,6 +873,7 @@
       "AgentTrialAction": "Please upgrade your subscription plan to create bookings!",
       "AgentExpiredAction": "Please renew your subscription plan to create bookings!",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Form": {
         "Km": " Km",
@@ -961,6 +977,7 @@
           "TrialWarning": "You are seeing limited list of vehicles and drivers in basic plan. Subscribe to add more!",
           "ExpiredWarning": "You are seeing limited list of vehicles and drivers because your subscription plan has expired.",
           "BuyCTA": "Buy Premium",
+          "TryCTA": "Try Premium",
           "RenewCTA": "Renew Subscription",
           "Vehicle": {
             "Title": "Choose a vehicle:",
@@ -1382,6 +1399,7 @@
       "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to add more drivers!",
       "ExpiredWarning": "You are seeing limited list of drivers because your subscription plan has expired.",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Title": "Select a driver to assign for this booking",
       "Tile": {
@@ -1402,6 +1420,7 @@
       "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to add more vehicles!",
       "ExpiredWarning": "You are seeing limited list of vehicles because your subscription plan has expired.",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Title": "Select a vehicle to assign for this booking",
       "Tile": {
@@ -1425,6 +1444,7 @@
       "TrialWarning": "You are seeing limited list of agents in basic plan. Subscribe to add more agents!",
       "ExpiredWarning": "You are seeing limited list of agents because your subscription plan has expired.",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Title": "Select a user to assign for this booking",
       "Tile": {
@@ -1462,6 +1482,7 @@
       "TrialAction": "Please upgrade your subscription plan to add more vehicles!",
       "ExpiredAction": "Please renew your subscription plan to add more vehicles!",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Step1": {
         "Title": "Adding vehicle",
@@ -1909,6 +1930,7 @@
       "TrialAction": "Please upgrade your subscription plan to add more drivers!",
       "ExpiredAction": "Please renew your subscription plan to add more drivers!",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Step1": {
         "Title": "Adding Driver",
@@ -2384,6 +2406,7 @@
       "SubscriptionInfo": "Subscription info",
       "ValidTill": "Expires on: ",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "ViewCTA": "View Subscription",
       "EditDetails": "Edit Agency Details",
@@ -2579,6 +2602,7 @@
       "TrialAction": "Please upgrade your subscription plan to add more agents!",
       "ExpiredAction": "Please renew your subscription plan to add more agents!",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Field1": {
         "Title": "Agent name",
@@ -2638,6 +2662,7 @@
       "AnalyticsTrialAction": "Please upgrade your subscription plan to get advanced analytics!",
       "AnalyticsExpiredAction": "Please renew your subscription plan to access analytics!",
       "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription"
     },
     "Search": {
@@ -2746,7 +2771,7 @@
         "VehicleModified": "Vehicle {vehicleNumber} details have been changed by {userName}",
         "VehicleRepairAdded": "Vehicle repair added for booking #{bookingId} by {userName}",
         "VehicleRepairModified": "Vehicle repair details changed for booking #{bookingId} by {userName}",
-        "SubscriptionPurchased": "Premium {plan} subscription plan has been purchased by {userName}",
+        "SubscriptionPurchased": "Premium {plan} subscription plan has been activated by {userName}",
         "AgentAdded": "New agent {agentName} has been added by {userName}",
         "UserPhotoChanged": "{userName} photo has changed",
         "DowngradedAgencyToBasic": "Agency has been downgraded to BASIC plan",
@@ -3996,7 +4021,7 @@
       "CTA": {
         "Title": "Ready to try out RyoGo?",
         "Subtitle": "Unleash the full potential of your travel business with the help of technology. Sign up now to get a free {days}-day Premium trial",
-        "PrimaryCTA": "Start Free Trial Now",
+        "PrimaryCTA": "Get Started Now",
         "SecondaryCTA": "Watch Demo Videos"
       }
     },
@@ -4010,7 +4035,7 @@
       },
       "Videos": {
         "Title": "Product Videos",
-        "Subtitle": "Check out some easy to understand short demos to learn the basics of RyoGo.",
+        "Subtitle": "Check out some easy to understand short demo tutorials to learn the basics of RyoGo.",
         "Count":"{count} VIDEOS",
         "KnowRyoGo":{
           "Title": "Get to know RyoGo",
@@ -4070,7 +4095,7 @@
         },
         "NewFeatures":{
           "Question":"How do I get to know about app changes and new features in RyoGo?",
-          "Answer":"You will be notified on your registered email about any changes and new features in RyoGo. Also, keep an eye on our website and social media for any updates and news. If you are a premium subscriber, you will be able to access all new features as soon as they are rolled out."
+          "Answer":"You will be notified on your registered email about any changes and new features in RyoGo. Also, keep an eye on our website and social media for any updates and news. If you are a premium subscriber, you will be able to access all new features as soon as they are available."
         }
       },
       "Support": {
@@ -4093,7 +4118,8 @@
           "Field1":{
             "Title":"Your Name",
             "Placeholder":"Sanjeev",
-            "Error1":"Name is required and should be atleast 5 characters long"
+            "Error1":"Name is required and should be atleast 5 characters long",
+            "Error2":"Name must be less than 30 characters"
           },
           "Field2":{
             "Title":"Your Phone Number",
@@ -4103,17 +4129,20 @@
           "Field3":{
             "Title":"Your Email",
             "Placeholder":"abcd@gmail.com",
-            "Error1":"Email is required and must be a valid email address"
+            "Error1":"Email is required and must be a valid email address",
+            "Error2":"Email must be less than 60 characters"
           },
           "Field4":{
             "Title":"Agency Name (Optional)",
             "Placeholder":"ABCD Tours & Travels",
-            "Error1":"Agency Name must be atleast 5 characters long"
+            "Error1":"Agency Name must be atleast 5 characters long",
+            "Error2":"Agency Name must be less than 30 characters"
           },
           "Field5":{
             "Title":"Your Message",
             "Placeholder":"I need help with onboarding..",
-            "Error1":"Message should be atleast 10 characters long"
+            "Error1":"Message should be atleast 10 characters long",
+            "Error2":"Message must be less than 300 characters"
           },
           "BotError":"Bot activity detected.",
           "SubmitCTA":"Send Message",

@@ -45,6 +45,7 @@ type NewBookingStep3Props = {
   drivers: FindDriversByAgencyType
   limited: boolean
   isSubscribed: boolean
+  hasTriedSubscription: boolean
 }
 export default function NewBookingStep3(props: NewBookingStep3Props) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step3")
@@ -116,7 +117,11 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
                 variant={props.isSubscribed ? "brand" : "outline"}
                 size="default"
               >
-                {props.isSubscribed ? t("RenewCTA") : t("BuyCTA")}
+                {props.isSubscribed
+                  ? t("RenewCTA")
+                  : props.hasTriedSubscription
+                    ? t("BuyCTA")
+                    : t("TryCTA")}
               </Button>
             </Link>
           </SectionRowWrapper>

@@ -14,6 +14,7 @@ import {
   CalendarClock,
   Megaphone,
   MessageCircleWarning,
+  Search,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -45,6 +46,12 @@ export default function HowItWorksMissionsSection() {
       icon: Megaphone,
       title: t("M3.Title"),
       description: t("M3.Description"),
+    },
+    {
+      src: "/Missions4.png",
+      icon: Search,
+      title: t("M4.Title"),
+      description: t("M4.Description"),
     },
   ]
 

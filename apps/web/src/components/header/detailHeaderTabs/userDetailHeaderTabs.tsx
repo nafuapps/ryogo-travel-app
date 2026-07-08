@@ -5,34 +5,39 @@ import {
   DetailsHeaderTabItem,
   DetailsHeaderTabWrapper,
 } from "@/components/header/headerWrappers"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
 type UserDetailHeaderTab = "User" | "Assigned" | "Completed" | "Activity"
 
-type UserDetailHeaderTabsProps = {
-  selectedTab: UserDetailHeaderTab
+export default async function UserDetailHeaderTabs({
+  id,
+  selectedTab,
+}: {
   id: string
-}
-export default async function UserDetailHeaderTabs(
-  props: UserDetailHeaderTabsProps,
-) {
+  selectedTab: UserDetailHeaderTab
+}) {
   const t = await getTranslations("Dashboard.UserDetailsHeaderTabs")
 
   const links = {
-    User: `/dashboard/users/${props.id}`,
-    Assigned: `/dashboard/users/${props.id}/assigned`,
-    Completed: `/dashboard/users/${props.id}/completed`,
-    Activity: `/dashboard/users/${props.id}/activity`,
+    User: `/dashboard/users/${id}`,
+    Assigned: `/dashboard/users/${id}/assigned`,
+    Completed: `/dashboard/users/${id}/completed`,
+    Activity: `/dashboard/users/${id}/activity`,
   } as const
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-center">
-      <RyogoH2 color="brand">{props.id}</RyogoH2>
+      <SectionRowWrapper>
+        <RyogoH2 color="brand">{id}</RyogoH2>
+        <CopyClipboardButton />
+      </SectionRowWrapper>
       <DetailsHeaderTabWrapper>
         {(Object.keys(links) as UserDetailHeaderTab[]).map((tab) => (
           <Link href={links[tab]} key={tab}>
             <DetailsHeaderTabItem
               label={t(tab)}
-              selected={props.selectedTab === tab}
+              selected={selectedTab === tab}
             />
           </Link>
         ))}

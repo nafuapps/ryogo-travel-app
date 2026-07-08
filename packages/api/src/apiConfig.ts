@@ -2,7 +2,8 @@
 export const SESSION_COOKIE_EXPIRATION_DAYS = 7
 
 //Bookings
-export const BOOKINGS_SEARCH_DAYS = 365
+export const BASIC_BOOKINGS_SEARCH_DAYS = 30
+export const PREMIUM_BOOKINGS_SEARCH_DAYS = 365
 
 export const UPDATE_PRICE_DISTANCE_FACTOR = 0.9
 
@@ -12,7 +13,7 @@ export const BOOKING_ASSIGNMENT_CRITICAL_DAYS = 1
 export const EXISTING_ORDER_SEARCH_HOURS = 24
 
 //Subscription
-export const TRIAL_DAYS = 30
+export const PREMIUM_TRIAL_DAYS = 30
 
 export const MONTHLY_SUBSCRIPTION_DAYS = 30
 export const QUARTERLY_SUBSCRIPTION_DAYS = 90

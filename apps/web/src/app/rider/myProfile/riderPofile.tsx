@@ -29,10 +29,7 @@ export default async function RiderProfilePageComponent({
 
   return (
     <PageWrapper id="RiderProfilePage">
-      <MyProfileDetailHeaderTabs
-        id={driverDetails.userId}
-        selectedTab={"Account"}
-      />
+      <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <SectionWrapper id="RiderAccountDetailsInfo">
         <SectionRowWrapper>
           <SectionColWrapper>

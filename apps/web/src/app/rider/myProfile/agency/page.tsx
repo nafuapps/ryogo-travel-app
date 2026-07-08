@@ -37,7 +37,6 @@ export default async function MyProfileAgencyDetailsPage() {
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/agency"} />
       <MyProfileAgencyDetailsPageComponent
-        id={currentUser.userId}
         agency={agency}
         assignedUser={assignedUser}
       />

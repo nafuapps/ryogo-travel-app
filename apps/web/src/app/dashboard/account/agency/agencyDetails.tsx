@@ -16,16 +16,13 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import { TRIAL_MODE } from "@/lib/uiConfig"
 import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
 
+//TODO: QR code change
 export default async function AgencyDetailsPageComponent({
-  id,
   agency,
   isOwner,
 }: {
-  id: string
   agency: NonNullable<FindAgencyByIdType>
   isOwner: boolean
 }) {
@@ -33,7 +30,7 @@ export default async function AgencyDetailsPageComponent({
 
   return (
     <PageWrapper id="AccountAgencyPage">
-      <AccountDetailHeaderTabs id={id} selectedTab="Agency" />
+      <AccountDetailHeaderTabs selectedTab="Agency" />
       <SectionWrapper id="BasicInfo">
         <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
         <SectionRowWrapper>
@@ -63,42 +60,6 @@ export default async function AgencyDetailsPageComponent({
             <AgencyStatusPill status={agency.status} />
           </SectionColWrapper>
         </SectionRowWrapper>
-      </SectionWrapper>
-      <SectionWrapper id="SubscriptionInfo">
-        <RyogoSmall weight="font-bold">{t("SubscriptionInfo")}</RyogoSmall>
-        <SectionColWrapper>
-          <RyogoSmall color="slate">
-            {agency.subscriptionPlan.toUpperCase()}
-          </RyogoSmall>
-          {agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC && (
-            <RyogoCaption
-              color={
-                agency.subscriptionExpiresOn < new Date() ? "red" : "slate"
-              }
-            >
-              {t("ValidTill") +
-                moment(agency.subscriptionExpiresOn).format("DD MMM YYYY")}
-            </RyogoCaption>
-          )}
-          {isOwner && (
-            <Link href="/dashboard/account/subscription">
-              {!TRIAL_MODE &&
-              agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ? (
-                <Button variant={"brand"} size="lg">
-                  {agency.hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}
-                </Button>
-              ) : agency.subscriptionExpiresOn < new Date() ? (
-                <Button variant={"brand"} size="lg">
-                  {t("RenewCTA")}
-                </Button>
-              ) : (
-                <Button variant={"outline"} size="lg">
-                  {t("ViewCTA")}
-                </Button>
-              )}
-            </Link>
-          )}
-        </SectionColWrapper>
       </SectionWrapper>
       {isOwner && (
         <SectionWrapper id="AgencyActions">

@@ -15,6 +15,10 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import {
+  BASIC_BOOKINGS_SEARCH_DAYS,
+  PREMIUM_BOOKINGS_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
 
 export default async function PricingComparisionSection() {
   const t = await getTranslations("Landing.Pricing.Comparision")
@@ -124,6 +128,13 @@ export default async function PricingComparisionSection() {
             title={<RyogoSmall>{t("MultipleOwners")}</RyogoSmall>}
             basicItem={<BlackCrossIcon />}
             premiumItem={<BrandCheckIcon />}
+          />
+          <ComparisionRow
+            title={<RyogoSmall>{t("Search")}</RyogoSmall>}
+            basicItem={<RyogoSmall>{BASIC_BOOKINGS_SEARCH_DAYS}</RyogoSmall>}
+            premiumItem={
+              <RyogoSmall>{PREMIUM_BOOKINGS_SEARCH_DAYS}</RyogoSmall>
+            }
           />
         </ComparisionGroup>
         <ComparisionGroup title={t("SafetyPrivacy")}>

@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react"
 
-type RyogoIconColor =
+export type RyogoIconColor =
   | "red"
   | "yellow"
   | "green"

@@ -142,6 +142,28 @@ export const agencyRepository = {
       })
   },
 
+  //Update agency subscription plan with expiry date and trial
+  async updateAgencyTrialSubscription(
+    id: string,
+    plan: SubscriptionPlanEnum,
+    expiryTime: Date,
+  ) {
+    return await db
+      .update(agencies)
+      .set({
+        subscriptionPlan: plan,
+        subscriptionExpiresOn: expiryTime,
+        hasTriedSubscription: true,
+      })
+      .where(eq(agencies.id, id))
+      .returning({
+        id: agencies.id,
+        subscriptionPlan: agencies.subscriptionPlan,
+        expiryTime: agencies.subscriptionExpiresOn,
+        hasTriedSubscription: agencies.hasTriedSubscription,
+      })
+  },
+
   //Update agency phone by Id
   async updateAgencyPhone(id: string, businessPhone: string) {
     return await db

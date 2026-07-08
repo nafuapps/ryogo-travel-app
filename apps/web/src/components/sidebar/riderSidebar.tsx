@@ -1,25 +1,17 @@
 "use client"
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  useSidebar,
-} from "@/components/ui/sidebar"
 import { useTranslations } from "next-intl"
-import { House, Tickets, Car, UserRoundPen } from "lucide-react"
-import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
-import { MenuItemType } from "@/components/sidebar/sidebarCommon"
-import { usePathname } from "next/navigation"
-import { RyoGoSidebarLogo } from "@/components/logo"
+import {
+  House,
+  Tickets,
+  Car,
+  CircleQuestionMark,
+  UserRoundCog,
+} from "lucide-react"
+import RyogoSidebar, { MenuItemType } from "./ryogoSidebar"
 
 export default function RiderSidebar() {
-  const { isMobile, open, openMobile } = useSidebar()
   const t = useTranslations("Rider.Sidebar")
-  const pathname = usePathname()
-
-  const sidebarOpen = open || openMobile
 
   // Content Menu items
   const contentItems: MenuItemType = [
@@ -43,41 +35,22 @@ export default function RiderSidebar() {
   //Footer menu items
   const footerItems: MenuItemType = [
     {
+      title: t("Support"),
+      url: "/rider/mySupport",
+      icon: CircleQuestionMark,
+    },
+    {
       title: t("Profile"),
       url: "/rider/myProfile",
-      icon: UserRoundPen,
+      icon: UserRoundCog,
     },
   ]
 
   return (
-    <Sidebar
-      side="left"
-      collapsible={isMobile ? "offcanvas" : "icon"}
-      className="h-full"
-    >
-      <SidebarHeader className="my-4 items-center">
-        <RyoGoSidebarLogo open={sidebarOpen} />
-      </SidebarHeader>
-      <SidebarContent className="px-2 my-4">
-        {contentItems.map((item) => (
-          <MenuButton
-            key={item.title}
-            {...item}
-            open={sidebarOpen}
-            active={pathname === item.url}
-          />
-        ))}
-      </SidebarContent>
-      <SidebarFooter className="my-4">
-        {footerItems.map((item) => (
-          <MenuButton
-            key={item.title}
-            {...item}
-            open={sidebarOpen}
-            active={pathname === item.url}
-          />
-        ))}
-      </SidebarFooter>
-    </Sidebar>
+    <RyogoSidebar
+      contentItems={contentItems}
+      footerItems={footerItems}
+      isOwner={false}
+    />
   )
 }

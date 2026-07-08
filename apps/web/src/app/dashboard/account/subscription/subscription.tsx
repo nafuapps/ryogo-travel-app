@@ -30,6 +30,7 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import {
   OrderTypeEnum,
   SubscriptionPlanEnum,
+  UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import {
@@ -50,6 +51,7 @@ import SubscriptionPaymentOptionsComponent from "./subscriptionPaymentOptions"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import SubscriptionInvoicePDFViewer from "@/components/pdf/subscriptionInvoicePDFViewer"
+import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 
 export default async function SubscriptionPageComponent({
   userDetails,
@@ -66,6 +68,8 @@ export default async function SubscriptionPageComponent({
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription")
 
+  const isOwner = userDetails.userRole === UserRolesEnum.OWNER
+
   const vehicleLength = agencyData.vehicles.length
   const driverLength = agencyData.drivers.length
   const agentLength = agencyData.agents.length
@@ -80,18 +84,13 @@ export default async function SubscriptionPageComponent({
 
   return (
     <PageWrapper id="AccountSubscriptionPage">
+      <AccountDetailHeaderTabs selectedTab="Subscription" />
       {/* {lastPaidOrder && (
         <SubscriptionInvoicePDFViewer
           order={lastPaidOrder}
           agency={agencyDetails}
         />
       )} */}
-      <Link href="/dashboard/account/subscription/orders" className="self-end">
-        <Button variant={"outline"} size="sm">
-          <RyogoCaption color="slate">{t("ViewOrders")}</RyogoCaption>
-          <RyogoIcon icon={ChevronRight} size="sm" />
-        </Button>
-      </Link>
       <SectionWrapper id="AccountSubscriptionInfo">
         <div className="flex flex-col md:flex-row gap-3 lg:gap-4 md:justify-between">
           <SectionColWrapper>
@@ -107,9 +106,9 @@ export default async function SubscriptionPageComponent({
                 bgColor="slate"
               />
             </SectionRowWrapper>
-            {lastPaidPlan && (
+            {!isBasic && (
               <RyogoCaption color="slate">
-                {lastPaidPlan.toUpperCase()}
+                {lastPaidPlan ? lastPaidPlan.toUpperCase() : t("Trial")}
               </RyogoCaption>
             )}
           </SectionColWrapper>
@@ -131,23 +130,25 @@ export default async function SubscriptionPageComponent({
                         })
                       : t("SubscriptionExpiresIn", { days: daysToExpiry })}
                   </RyogoCaption>
-                  <PaymentButton
-                    agencyId={agencyDetails.id}
-                    userId={userDetails.id}
-                    plan={lastPaidPlan ?? OrderTypeEnum.MONTHLY}
-                    ownerName={userDetails.name}
-                    ownerEmail={userDetails.email}
-                    ownerPhone={userDetails.phone}
-                    icon={
-                      <RyogoIcon
-                        icon={CalendarSync}
-                        size="sm"
-                        color="white"
-                        thick
-                      />
-                    }
-                    renewLabel={t("RenewCTA")}
-                  />
+                  {isOwner && (
+                    <PaymentButton
+                      agencyId={agencyDetails.id}
+                      userId={userDetails.id}
+                      plan={lastPaidPlan ?? OrderTypeEnum.MONTHLY}
+                      ownerName={userDetails.name}
+                      ownerEmail={userDetails.email}
+                      ownerPhone={userDetails.phone}
+                      icon={
+                        <RyogoIcon
+                          icon={CalendarSync}
+                          size="sm"
+                          color="white"
+                          thick
+                        />
+                      }
+                      renewLabel={t("RenewCTA")}
+                    />
+                  )}
                 </>
               ) : (
                 <>
@@ -162,6 +163,18 @@ export default async function SubscriptionPageComponent({
             </div>
           )}
         </div>
+        {isOwner && (
+          <Link href="/dashboard/account/subscription/orders">
+            <Button
+              variant={"outline"}
+              size="sm"
+              className="w-full md:w-1/2 lg:w-1/3 self-end"
+            >
+              <RyogoCaption color="slate">{t("ViewOrders")}</RyogoCaption>
+              <RyogoIcon icon={ChevronRight} size="sm" />
+            </Button>
+          </Link>
+        )}
       </SectionWrapper>
       {(isBasic || daysToExpiry < 0) && (
         <SectionWrapper id="UsageSection">
@@ -210,12 +223,13 @@ export default async function SubscriptionPageComponent({
         </SectionWrapper>
       )}
       <Separator />
-      {(isBasic || needExpiryReminder) && (
+      {(isBasic || needExpiryReminder) && isOwner && (
         <SubscriptionPaymentOptionsComponent
           userDetails={userDetails}
           agencyDetails={agencyDetails}
         />
       )}
+
       <SectionWrapper id="PremiumAdvantageInfo" center>
         <div className="flex items-center justify-center text-nowrap text-center py-1 lg:py-1.5">
           <SectionRowWrapper small center>

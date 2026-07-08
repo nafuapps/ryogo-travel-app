@@ -14,7 +14,8 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
 import { useTransition } from "react"
-import { FormWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 
 export default function MyProfileSettingsPageComponent({
   userDetails,
@@ -61,37 +62,40 @@ export default function MyProfileSettingsPageComponent({
 
   const languages = getEnumValueDisplayPairs(UserLangEnum)
   return (
-    <FormWrapper<SchemaType>
-      form={formData}
-      id="ChangePreferencesForm"
-      onSubmit={formData.handleSubmit(onSubmit)}
-    >
-      <RyogoSwitch label={t("Field1.Title")} name="dark" />
-      <RyogoSelect
-        name={"lang"}
-        register={formData.register("lang")}
-        array={languages}
-        title={t("Field2.Title")}
-        placeholder={t("Field2.Title")}
-      />
-      <Button
-        variant={"default"}
-        size={"lg"}
-        type="submit"
-        disabled={isPending}
+    <PageWrapper id="RiderAccountSettingsPage">
+      <MyProfileDetailHeaderTabs selectedTab="Settings" />
+      <FormWrapper<SchemaType>
+        form={formData}
+        id="ChangePreferencesForm"
+        onSubmit={formData.handleSubmit(onSubmit)}
       >
-        {isPending && <Spinner />}
-        {isPending ? t("Loading") : t("PrimaryCTA")}
-      </Button>
-      <Button
-        variant={"secondary"}
-        size={"lg"}
-        type="button"
-        onClick={() => router.back()}
-        disabled={isPending}
-      >
-        {t("SecondaryCTA")}
-      </Button>
-    </FormWrapper>
+        <RyogoSwitch label={t("Field1.Title")} name="dark" />
+        <RyogoSelect
+          name={"lang"}
+          register={formData.register("lang")}
+          array={languages}
+          title={t("Field2.Title")}
+          placeholder={t("Field2.Title")}
+        />
+        <Button
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+          disabled={isPending}
+        >
+          {isPending && <Spinner />}
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </Button>
+        <Button
+          variant={"secondary"}
+          size={"lg"}
+          type="button"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          {t("SecondaryCTA")}
+        </Button>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

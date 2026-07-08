@@ -25,7 +25,7 @@ import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
 import { sessionRepository } from "../repositories/session.repo"
-import { NEW_USER_DEFAULT_PASSWORD, TRIAL_DAYS } from "../apiConfig"
+import { NEW_USER_DEFAULT_PASSWORD, PREMIUM_TRIAL_DAYS } from "../apiConfig"
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -212,7 +212,7 @@ export const userServices = {
       businessAddress: data.agency.businessAddress,
       locationId: location.id,
       subscriptionExpiresOn: new Date(
-        Date.now() + 1000 * 60 * 60 * 24 * TRIAL_DAYS,
+        Date.now() + 1000 * 60 * 60 * 24 * PREMIUM_TRIAL_DAYS,
       ),
       defaultCommissionRate: data.agency.commissionRate,
     }

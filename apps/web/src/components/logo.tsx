@@ -47,7 +47,7 @@ interface RyogoSidebarLogoProps {
 }
 export function RyoGoSidebarLogo(props: RyogoSidebarLogoProps) {
   return (
-    <div className={`relative ${props.open ? "w-1/2" : "w-full"} aspect-2/1`}>
+    <div className={`relative ${props.open ? "w-3/5" : "w-full"} aspect-2/1`}>
       <Image
         loading="eager"
         src="/logo.png"

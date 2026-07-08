@@ -731,6 +731,7 @@
       "Analytics": "Analytics",
       "Search": "Search",
       "Feed": "Feed",
+      "Support": "Support",
       "Account": "Account"
     },
     "Header": {
@@ -743,7 +744,6 @@
         "/dashboard/account/agency/change-email": "Change Agency Email",
         "/dashboard/account/agency/change-phone": "Change Agency Phone",
         "/dashboard/account/agency/modify": "Modify Agency",
-        "/dashboard/account/help": "Help",
         "/dashboard/account/change-password": "Change Password",
         "/dashboard/account/change-email": "Change Email",
         "/dashboard/account/settings": "Settings",
@@ -783,6 +783,7 @@
         "/dashboard/drivers/[id]/leaves/modify": "Modify Leave",
         "/dashboard/feed": "Notification Feed",
         "/dashboard/search": "Search",
+        "/dashboard/support": "Support",
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New Agent",
         "/dashboard/users/[id]": "User Details",
@@ -2324,7 +2325,7 @@
       "Account": "Account",
       "Settings": "Settings",
       "Agency": "Agency",
-      "Help": "Help"
+      "Subscription": "Subscription"
     },
     "Account": {
       "Photo": "View photo",
@@ -2482,11 +2483,12 @@
       "Success": "Agency details edited successfully!",
       "Error": "Cannot change agency details.. please try again later."
     },
-    "AccountHelp": {},
+    "Support": {},
     "AccountSubscription": {
       "CurrentPlan": "CURRENT PLAN",
       "SubscriptionStatus": "SUBSCRIPTION STATUS",
-      "ValidTill": "Valid Till",
+      "Trial": "TRIAL",
+      "ValidTill": "VALID TILL",
       "SubscriptionExpiresIn": "Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
       "SubscriptionExpired": "Subscription expired on {date}",
       "RenewCTA": "Renew Plan",
@@ -2666,6 +2668,10 @@
       "RenewCTA": "Renew Subscription"
     },
     "Search": {
+      "BasicWarning": "Showing {basicDays} days search results. Subscribe to search {premiumDays} days data.",
+      "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
+      "RenewCTA": "Renew Subscription",
       "Field1": {
         "Placeholder": "Enter keyword or id to search..",
         "Error1": "Enter atleast 3 characters to search",
@@ -2777,7 +2783,8 @@
         "DowngradedAgencyToBasic": "Agency has been downgraded to BASIC plan",
         "AgencyLogoChanged": "Agency logo has been changed by {userName}",
         "OwnerAdded": "Owner account created for {userName}",
-        "AgencyCreated": "Agency has been created by {userName}"
+        "AgencyCreated": "Agency has been created by {userName}",
+        "TryPremium":"Trial Premium plan has been activated by {userName}"
       }
     },
     "Buttons": {
@@ -2932,6 +2939,16 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Reset Password"
       },
+      "TryPremium":{
+        "Label":"Try Premium",
+        "Title":"Are you sure you want to try premium now?",
+        "Desc":"This is a {trialDays}-day free Premium Trial after which you will be downgraded to Basic unless you decide to buy Premium again.",
+        "NoCTA":"No",
+        "Success":"Trial Premium subscription started!",
+        "Error":"Cannot start trial premium subscription.. Try again later!",
+        "Loading":"Loading..",
+        "YesCTA":"Yes, Start Free Trial"
+      },
       "Logout": {
         "Label": "Logout",
         "Title": "Are you sure you want to logout?",
@@ -2981,7 +2998,8 @@
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicle": "Vehicle",
-      "Profile": "Profile"
+      "Profile": "Profile",
+      "Support": "Support"
     },
     "Header": {
       "MissionControl": "Mission Control",
@@ -2997,7 +3015,7 @@
         "/rider/myProfile/change-password": "Change Password",
         "/rider/myProfile/agency": "Agency Details",
         "/rider/myProfile/settings": "Settings",
-        "/rider/myProfile/help": "Help",
+        "/rider/mySupport": "Support",
         "/rider/myVehicle": "Vehicle"
       }
     },
@@ -3301,7 +3319,7 @@
       "AssignedUserInfo": "Assigned agent info",
       "CallAgent": "Call Agent"
     },
-    "MyProfileHelp": {},
+    "MySupport": {},
     "MyProfileSettings": {
       "Field1": {
         "Title": "Enable dark mode"
@@ -3764,6 +3782,7 @@
         "GetAlerts": "Get real-time actionable alerts",
         "Feed": "Receive agency-wide activity notifications",
         "MultipleOwners": "Multiple owner accounts",
+        "Search": "Search recent data (days)",
         "NewFeatures": "Priority access to new features",
         "CustomerReminders": "Set custom reminders",
         "SafetyPrivacy": "Safety & Privacy",
@@ -3979,6 +3998,10 @@
         "M3": {
           "Title": "Real-time notifications",
           "Description": "No need to call others to know what's hapenning. Everyone in the agency can see updates in their notification feed."
+        },
+        "M4":{
+          "Title":"Contextual search",
+          "Description":"Find customer, driver, vehicle, or booking across the system with any keyword and get quick results."
         }
       },
       "FAQ": {

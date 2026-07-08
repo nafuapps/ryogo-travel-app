@@ -18,11 +18,9 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function MyProfileAgencyDetailsPageComponent({
-  id,
   agency,
   assignedUser,
 }: {
-  id: string
   agency: NonNullable<FindAgencyByIdType>
   assignedUser: FindAssignedUserByDriverIdType
 }) {
@@ -30,7 +28,7 @@ export default async function MyProfileAgencyDetailsPageComponent({
 
   return (
     <PageWrapper id="RiderMyProfileAgencyPage">
-      <MyProfileDetailHeaderTabs id={id} selectedTab="Agency" />
+      <MyProfileDetailHeaderTabs selectedTab="Agency" />
       <SectionWrapper id="MyProfileAgencyDetailsInfo">
         <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
         <SectionRowWrapper>

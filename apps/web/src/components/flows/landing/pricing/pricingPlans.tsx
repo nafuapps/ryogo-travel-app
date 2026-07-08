@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
   MONTHLY_SUBSCRIPTION_FINAL_PRICE,
-  TRIAL_DAYS,
+  PREMIUM_TRIAL_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Check, ChevronDown } from "lucide-react"
@@ -68,7 +68,7 @@ export default async function PricingPlansSection() {
             <Link href="/onboarding" className="w-full">
               <Button size="lg" variant="brand" className="w-full">
                 <RyogoSmall color="white" weight="font-medium">
-                  {t("Premium.CTA", { days: TRIAL_DAYS })}
+                  {t("Premium.CTA", { days: PREMIUM_TRIAL_DAYS })}
                 </RyogoSmall>
               </Button>
             </Link>

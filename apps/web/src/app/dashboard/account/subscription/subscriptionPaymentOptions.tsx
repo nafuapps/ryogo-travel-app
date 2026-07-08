@@ -1,5 +1,6 @@
 "use client"
 
+import TryPremiumAlertButton from "@/components/buttons/alert/tryPremiumAlertButton"
 import PaymentButton from "@/components/flows/susbcription/paymentButton"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
@@ -13,7 +14,6 @@ import {
   RyogoSmall,
   RyogoCaption,
 } from "@/components/typography"
-import { Separator } from "@/components/ui/separator"
 import {
   MONTHLY_SUBSCRIPTION_MRP,
   MONTHLY_SUBSCRIPTION_FINAL_PRICE,
@@ -54,52 +54,60 @@ export default function SubscriptionPaymentOptionsComponent({
           <RyogoCaption color="slate">{t("TestimonialAuthor")}</RyogoCaption>
         </div>
       </div>
-      <div className="flex flex-col w-full items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-slate-100 rounded-lg">
-        <RyogoCaption color="light">{t("ChooseYourPlan")}</RyogoCaption>
-        <div className="flex flex-col w-full xl:flex-row gap-4">
-          <PaymentOptionCard
-            plan={OrderTypeEnum.MONTHLY}
-            mrp={MONTHLY_SUBSCRIPTION_MRP}
-            price={MONTHLY_SUBSCRIPTION_FINAL_PRICE}
-            months={1}
-            selectedOption={selectedPaymentOption}
-            onClick={() => setSelectedOption(OrderTypeEnum.MONTHLY)}
-          ></PaymentOptionCard>
-          <PaymentOptionCard
-            plan={OrderTypeEnum.QUARTERLY}
-            mrp={QUARTERLY_SUBSCRIPTION_MRP}
-            price={QUARTERLY_SUBSCRIPTION_FINAL_PRICE}
-            months={3}
-            selectedOption={selectedPaymentOption}
-            onClick={() => setSelectedOption(OrderTypeEnum.QUARTERLY)}
-          ></PaymentOptionCard>
-          <PaymentOptionCard
-            plan={OrderTypeEnum.ANNUAL}
-            mrp={ANNUAL_SUBSCRIPTION_MRP}
-            price={ANNUAL_SUBSCRIPTION_FINAL_PRICE}
-            selectedOption={selectedPaymentOption}
-            months={12}
-            onClick={() => setSelectedOption(OrderTypeEnum.ANNUAL)}
-            best
-          ></PaymentOptionCard>
-        </div>
-        <PaymentButton
-          agencyId={agencyDetails.id}
-          userId={userDetails.id}
-          plan={selectedPaymentOption}
-          ownerName={userDetails.name}
-          ownerEmail={userDetails.email}
-          ownerPhone={userDetails.phone}
-          icon={<RyogoIcon icon={ChevronRight} size="sm" color="white" thick />}
-          renewLabel={t("PayCTA", {
-            plan: selectedPaymentOption.toUpperCase(),
-          })}
-        />
-      </div>
-      <SectionRowWrapper small center>
-        <RyogoIcon icon={Lock} size="sm" color="light" />
-        <RyogoCaption color="light">{t("Secure")}</RyogoCaption>
-      </SectionRowWrapper>
+      {agencyDetails.hasTriedSubscription ? (
+        <>
+          <div className="flex flex-col w-full items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-slate-100 rounded-lg">
+            <RyogoCaption color="light">{t("ChooseYourPlan")}</RyogoCaption>
+            <div className="flex flex-col w-full xl:flex-row gap-4">
+              <PaymentOptionCard
+                plan={OrderTypeEnum.MONTHLY}
+                mrp={MONTHLY_SUBSCRIPTION_MRP}
+                price={MONTHLY_SUBSCRIPTION_FINAL_PRICE}
+                months={1}
+                selectedOption={selectedPaymentOption}
+                onClick={() => setSelectedOption(OrderTypeEnum.MONTHLY)}
+              ></PaymentOptionCard>
+              <PaymentOptionCard
+                plan={OrderTypeEnum.QUARTERLY}
+                mrp={QUARTERLY_SUBSCRIPTION_MRP}
+                price={QUARTERLY_SUBSCRIPTION_FINAL_PRICE}
+                months={3}
+                selectedOption={selectedPaymentOption}
+                onClick={() => setSelectedOption(OrderTypeEnum.QUARTERLY)}
+              ></PaymentOptionCard>
+              <PaymentOptionCard
+                plan={OrderTypeEnum.ANNUAL}
+                mrp={ANNUAL_SUBSCRIPTION_MRP}
+                price={ANNUAL_SUBSCRIPTION_FINAL_PRICE}
+                selectedOption={selectedPaymentOption}
+                months={12}
+                onClick={() => setSelectedOption(OrderTypeEnum.ANNUAL)}
+                best
+              ></PaymentOptionCard>
+            </div>
+            <PaymentButton
+              agencyId={agencyDetails.id}
+              userId={userDetails.id}
+              plan={selectedPaymentOption}
+              ownerName={userDetails.name}
+              ownerEmail={userDetails.email}
+              ownerPhone={userDetails.phone}
+              icon={
+                <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+              }
+              renewLabel={t("PayCTA", {
+                plan: selectedPaymentOption.toUpperCase(),
+              })}
+            />
+          </div>
+          <SectionRowWrapper small center>
+            <RyogoIcon icon={Lock} size="sm" color="light" />
+            <RyogoCaption color="light">{t("Secure")}</RyogoCaption>
+          </SectionRowWrapper>
+        </>
+      ) : (
+        <TryPremiumAlertButton agencyId={agencyDetails.id} />
+      )}
     </SectionWrapper>
   )
 }

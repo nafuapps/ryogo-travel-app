@@ -5,33 +5,38 @@ import {
   DetailsHeaderTabItem,
   DetailsHeaderTabWrapper,
 } from "@/components/header/headerWrappers"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
 type CustomerDetailHeaderTab = "Customer" | "Upcoming" | "Completed"
 
-type CustomerDetailHeaderTabsProps = {
-  selectedTab: CustomerDetailHeaderTab
+export default async function CustomerDetailHeaderTabs({
+  id,
+  selectedTab,
+}: {
   id: string
-}
-export default async function CustomerDetailHeaderTabs(
-  props: CustomerDetailHeaderTabsProps,
-) {
+  selectedTab: CustomerDetailHeaderTab
+}) {
   const t = await getTranslations("Dashboard.CustomerDetailsHeaderTabs")
 
   const links = {
-    Customer: `/dashboard/customers/${props.id}`,
-    Upcoming: `/dashboard/customers/${props.id}/upcoming`,
-    Completed: `/dashboard/customers/${props.id}/completed`,
+    Customer: `/dashboard/customers/${id}`,
+    Upcoming: `/dashboard/customers/${id}/upcoming`,
+    Completed: `/dashboard/customers/${id}/completed`,
   } as const
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-center">
-      <RyogoH2 color="brand">{props.id}</RyogoH2>
+      <SectionRowWrapper>
+        <RyogoH2 color="brand">{id}</RyogoH2>
+        <CopyClipboardButton />
+      </SectionRowWrapper>
       <DetailsHeaderTabWrapper>
         {(Object.keys(links) as CustomerDetailHeaderTab[]).map((tab) => (
           <Link href={links[tab]} key={tab}>
             <DetailsHeaderTabItem
               label={t(tab)}
-              selected={props.selectedTab === tab}
+              selected={selectedTab === tab}
             />
           </Link>
         ))}

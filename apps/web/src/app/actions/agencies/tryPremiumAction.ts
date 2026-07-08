@@ -3,28 +3,23 @@
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export async function modifyAgencyAction(data: ModifyAgencyRequestType) {
+export async function tryPremiumAction(agencyId: string) {
   const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.agencyId !== data.agencyId
-  ) {
+  if (!currentUser || currentUser.agencyId !== agencyId) {
     return
   }
 
-  const agency = await agencyServices.modifyAgency(data)
+  const agency = await agencyServices.tryPremium(agencyId)
   if (!agency) return
 
   await notificationServices.addNotification({
-    agencyId: data.agencyId,
+    agencyId: agencyId,
     entityType: EntityTypeEnum.AGENCY,
-    entityId: data.agencyId,
+    entityId: agencyId,
     isFeed: true,
-    textKey: "ModifiedAgency",
+    textKey: "TryPremium",
     textObject: {
       userName: currentUser.name,
     },

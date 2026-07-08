@@ -2,11 +2,10 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import AccountSettingsPageComponent from "./settings"
-import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Settings - ${pageTitle}`,
@@ -27,10 +26,7 @@ export default async function AccountSettingsPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/settings"} />
-      <PageWrapper id="AccountSettingsPage">
-        <AccountDetailHeaderTabs id={userDetails.id} selectedTab="Settings" />
-        <AccountSettingsPageComponent userDetails={userDetails} />
-      </PageWrapper>
+      <AccountSettingsPageComponent userDetails={userDetails} />
     </MainWrapper>
   )
 }

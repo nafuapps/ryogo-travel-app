@@ -14,7 +14,10 @@ import {
 } from "@/components/ui/input-group"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { FindAgencySearchDataType } from "@ryogo-travel-app/api/services/agency.services"
+import {
+  FindAgencyByIdType,
+  FindAgencySearchDataType,
+} from "@ryogo-travel-app/api/services/agency.services"
 import {
   BookingRegex,
   CustomerRegex,
@@ -39,14 +42,22 @@ import {
   GridItemWrapper,
   GridWrapper,
   PageWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { IconsList } from "@/components/tags/IconsList"
+import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BASIC_BOOKINGS_SEARCH_DAYS,
+  PREMIUM_BOOKINGS_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
 const BOOKINGS_PER_PAGE = 20
+
+type SearchDataType = FindAgencySearchDataType
 
 enum SearchTypeEnum {
   Bookings = "Bookings",
@@ -56,10 +67,16 @@ enum SearchTypeEnum {
 }
 export default function SearchPageComponent({
   searchData,
+  agency,
 }: {
-  searchData: FindAgencySearchDataType
+  searchData: SearchDataType
+  agency: NonNullable<FindAgencyByIdType>
 }) {
   const t = useTranslations("Dashboard.Search")
+
+  const isPremium = agency.subscriptionPlan === SubscriptionPlanEnum.PREMIUM
+  const isSubscribed = isPremium && agency.subscriptionExpiresOn > new Date()
+  const hasTriedSubscription = agency.hasTriedSubscription
 
   const [selectedSearchType, setSelectedSearchType] = useState<SearchTypeEnum>(
     SearchTypeEnum.Bookings,
@@ -84,16 +101,16 @@ export default function SearchPageComponent({
   const [searchResultType, setSearchResultType] =
     useState<SearchTypeEnum | null>(null)
   const [bookingSearchResultSet, setBookingSearchResultSet] = useState<
-    FindAgencySearchDataType["bookings"]
+    SearchDataType["bookings"]
   >([])
   const [driverSearchResultSet, setDriverSearchResultSet] = useState<
-    FindAgencySearchDataType["drivers"]
+    SearchDataType["drivers"]
   >([])
   const [customerSearchResultSet, setCustomerSearchResultSet] = useState<
-    FindAgencySearchDataType["customers"]
+    SearchDataType["customers"]
   >([])
   const [vehicleSearchResultSet, setVehicleSearchResultSet] = useState<
-    FindAgencySearchDataType["vehicles"]
+    SearchDataType["vehicles"]
   >([])
 
   //Pagination hook
@@ -237,6 +254,30 @@ export default function SearchPageComponent({
 
   return (
     <PageWrapper id="SearchPage">
+      {!isSubscribed && (
+        <SectionWrapper id="SubscribeAction">
+          <SectionRowWrapper center>
+            <RyogoCaption color="yellow">
+              {t("BasicWarning", {
+                basicDays: BASIC_BOOKINGS_SEARCH_DAYS,
+                premiumDays: PREMIUM_BOOKINGS_SEARCH_DAYS,
+              })}
+            </RyogoCaption>
+            <Link href="/dashboard/account/subscription">
+              <Button
+                variant={isSubscribed ? "brand" : "outline"}
+                size="default"
+              >
+                {isPremium
+                  ? t("RenewCTA")
+                  : hasTriedSubscription
+                    ? t("BuyCTA")
+                    : t("TryCTA")}
+              </Button>
+            </Link>
+          </SectionRowWrapper>
+        </SectionWrapper>
+      )}
       <SectionWrapper id="SearchControls">
         <div
           id="typeSelection"
@@ -415,13 +456,17 @@ function SearchOption({
             : searchType,
         )
       }}
-      className={`flex border rounded-lg justify-center items-center p-2 lg:px-3 hover:bg-slate-200 ${
+      className={`flex border rounded-lg justify-center items-center p-2 lg:px-3  ${
         selectedSearchType == searchType
-          ? "bg-slate-200 border-slate-400"
-          : "border-slate-200"
+          ? "bg-slate-900 border-slate-900"
+          : "border-slate-200 hover:bg-slate-200"
       }`}
     >
-      <RyogoCaption color="slate">{searchType}</RyogoCaption>
+      <RyogoCaption
+        color={selectedSearchType == searchType ? "white" : "slate"}
+      >
+        {searchType}
+      </RyogoCaption>
     </div>
   )
 }
@@ -429,7 +474,7 @@ function SearchOption({
 function BookingSearchResultItem({
   booking,
 }: {
-  booking: FindAgencySearchDataType["bookings"][number]
+  booking: SearchDataType["bookings"][number]
 }) {
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>
@@ -463,7 +508,7 @@ function BookingSearchResultItem({
 function DriverSearchResultItem({
   driver,
 }: {
-  driver: FindAgencySearchDataType["drivers"][number]
+  driver: SearchDataType["drivers"][number]
 }) {
   const t = useTranslations("Dashboard.Drivers.All")
   return (
@@ -501,7 +546,7 @@ function DriverSearchResultItem({
 function CustomerSearchResultItem({
   customer,
 }: {
-  customer: FindAgencySearchDataType["customers"][number]
+  customer: SearchDataType["customers"][number]
 }) {
   const t = useTranslations("Dashboard.Customers.All")
 
@@ -542,7 +587,7 @@ function CustomerSearchResultItem({
 function VehicleSearchResultItem({
   vehicle,
 }: {
-  vehicle: FindAgencySearchDataType["vehicles"][number]
+  vehicle: SearchDataType["vehicles"][number]
 }) {
   const t = useTranslations("Dashboard.Vehicles.All")
 

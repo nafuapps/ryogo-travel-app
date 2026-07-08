@@ -1,7 +1,7 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { ChevronRight, Video } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -23,7 +23,7 @@ export default async function HowItWorksCTASection() {
           {t("Title")}
         </RyogoH1>
         <RyogoP color="white" className="max-w-4xl text-center opacity-80">
-          {t("Subtitle", { days: TRIAL_DAYS })}
+          {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <Link href="/onboarding">

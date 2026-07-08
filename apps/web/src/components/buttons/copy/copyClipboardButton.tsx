@@ -1,0 +1,36 @@
+"use client"
+
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { Button } from "@/components/ui/button"
+import { CheckCheck, Copy } from "lucide-react"
+import { useEffect, useState } from "react"
+
+export default function CopyClipboardButton() {
+  const [isCopied, setIsCopied] = useState(false)
+
+  useEffect(() => {
+    if (isCopied) {
+      setTimeout(() => {
+        setIsCopied(false)
+      }, 3000)
+    }
+  }, [isCopied])
+
+  function handleCopy() {
+    setIsCopied(true)
+    navigator.clipboard.writeText(window.location.href)
+  }
+
+  return (
+    //Animate the copy button
+    <Button variant="outline" onClick={() => handleCopy()} size="icon">
+      <div className={` ${isCopied ? "animate-ping" : ""}`}>
+        <RyogoIcon
+          icon={isCopied ? CheckCheck : Copy}
+          size="sm"
+          color={isCopied ? "green" : "slate"}
+        ></RyogoIcon>
+      </div>
+    </Button>
+  )
+}

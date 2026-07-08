@@ -10,7 +10,11 @@ import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
-import { BOOKINGS_SEARCH_DAYS } from "../apiConfig"
+import {
+  BASIC_BOOKINGS_SEARCH_DAYS,
+  PREMIUM_BOOKINGS_SEARCH_DAYS,
+  PREMIUM_TRIAL_DAYS,
+} from "../apiConfig"
 import { ModifyAgencyRequestType } from "../types/agency.types"
 
 export const agencyServices = {
@@ -59,14 +63,12 @@ export const agencyServices = {
     }
   },
 
-  async findAgencySearchData(agencyId: string) {
+  async findAgencySearchData(agencyId: string, searchDays: number) {
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
     const bookings = await bookingRepository.readBookingsSearchData(
       agencyId,
-      new Date(
-        new Date().getTime() - BOOKINGS_SEARCH_DAYS * 24 * 60 * 60 * 1000,
-      ),
+      new Date(new Date().getTime() - searchDays * 24 * 60 * 60 * 1000),
     )
     const customers = await customerRepository.readCustomersSearchData(agencyId)
 
@@ -136,6 +138,15 @@ export const agencyServices = {
     const updatedAgency = await agencyRepository.updateAgencySubscriptionPlan(
       agencyId,
       SubscriptionPlanEnum.BASIC,
+    )
+    return updatedAgency[0]
+  },
+
+  async tryPremium(agencyId: string) {
+    const updatedAgency = await agencyRepository.updateAgencyTrialSubscription(
+      agencyId,
+      SubscriptionPlanEnum.PREMIUM,
+      new Date(new Date().getTime() + PREMIUM_TRIAL_DAYS * 24 * 60 * 60 * 1000),
     )
     return updatedAgency[0]
   },

@@ -19,6 +19,8 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { User } from "lucide-react"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { Separator } from "@/components/ui/separator"
 
 export default async function AccountPageComponent({
   userDetails,
@@ -29,8 +31,13 @@ export default async function AccountPageComponent({
 
   return (
     <PageWrapper id="AccountPage">
-      <AccountDetailHeaderTabs id={userDetails.id} selectedTab="Account" />
+      <AccountDetailHeaderTabs selectedTab="Account" />
       <SectionWrapper id="AccountDetailsInfo">
+        <SectionRowWrapper justifyStart center>
+          <RyogoH3 color="brand">{userDetails.id}</RyogoH3>
+          <CopyClipboardButton />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
             {userDetails.photoUrl ? (

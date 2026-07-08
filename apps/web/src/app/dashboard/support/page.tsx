@@ -1,6 +1,6 @@
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import AccountHelpPageComponent from "./help"
+import SupportPageComponent from "./support"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
@@ -8,11 +8,11 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
-  title: `Help - ${pageTitle}`,
+  title: `Support - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function AccountHelpPage() {
+export default async function SupportPage() {
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
@@ -20,8 +20,8 @@ export default async function AccountHelpPage() {
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/account/help"} />
-      <AccountHelpPageComponent
+      <DashboardHeader pathName={"/dashboard/support"} />
+      <SupportPageComponent
         id={currentUser.userId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />

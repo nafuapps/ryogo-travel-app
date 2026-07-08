@@ -1,12 +1,5 @@
 "use client"
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  useSidebar,
-} from "@/components/ui/sidebar"
 import { useTranslations } from "next-intl"
 import {
   House,
@@ -15,22 +8,16 @@ import {
   IdCard,
   ChartLine,
   BadgeIndianRupee,
-  UserRoundPen,
+  Users,
   Search,
   Megaphone,
   UserRoundCog,
+  CircleQuestionMark,
 } from "lucide-react"
-import { MenuButton } from "@/components/sidebar/sidebarMenuButton"
-import { MenuItemType } from "@/components/sidebar/sidebarCommon"
-import { usePathname } from "next/navigation"
-import { RyoGoSidebarLogo } from "@/components/logo"
+import RyogoSidebar, { MenuItemType } from "./ryogoSidebar"
 
-export default function DashboardSidebar(props: { isOwner: boolean }) {
-  const { isMobile, open, openMobile } = useSidebar()
+export default function DashboardSidebar({ isOwner }: { isOwner: boolean }) {
   const t = useTranslations("Dashboard.Sidebar")
-  const pathname = usePathname()
-
-  const sidebarOpen = open || openMobile
 
   // Content Menu items
   const contentItems: MenuItemType = [
@@ -62,7 +49,7 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
     {
       title: t("Users"),
       url: "/dashboard/users",
-      icon: UserRoundCog,
+      icon: Users,
       onlyOwner: true,
     },
     {
@@ -86,46 +73,22 @@ export default function DashboardSidebar(props: { isOwner: boolean }) {
       icon: Megaphone,
     },
     {
+      title: t("Support"),
+      url: "/dashboard/support",
+      icon: CircleQuestionMark,
+    },
+    {
       title: t("Account"),
       url: "/dashboard/account",
-      icon: UserRoundPen,
+      icon: UserRoundCog,
     },
   ]
 
   return (
-    <Sidebar
-      id="DashboardSidebar"
-      side="left"
-      collapsible={isMobile ? "offcanvas" : "icon"}
-      className="h-full"
-    >
-      <SidebarHeader className="my-4 items-center">
-        <RyoGoSidebarLogo open={sidebarOpen} />
-      </SidebarHeader>
-      <SidebarContent className="px-2 my-4">
-        {contentItems.map(
-          (item) =>
-            //Show onlyOwner items only if isOwner
-            (item.onlyOwner ? props.isOwner : true) && (
-              <MenuButton
-                key={item.title}
-                {...item}
-                open={sidebarOpen}
-                active={pathname === item.url}
-              />
-            ),
-        )}
-      </SidebarContent>
-      <SidebarFooter className="my-4">
-        {footerItems.map((item) => (
-          <MenuButton
-            key={item.title}
-            {...item}
-            open={sidebarOpen}
-            active={pathname === item.url}
-          />
-        ))}
-      </SidebarFooter>
-    </Sidebar>
+    <RyogoSidebar
+      contentItems={contentItems}
+      footerItems={footerItems}
+      isOwner={isOwner}
+    />
   )
 }

@@ -1,5 +1,3 @@
-//Account page
-
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
@@ -8,7 +6,6 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import SubscriptionPageComponent from "./subscription"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS } from "@/lib/uiConfig"
@@ -24,11 +21,6 @@ export default async function SubscriptionPage() {
 
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
-  }
-
-  //Only owner can access
-  if (currentUser.userRole !== UserRolesEnum.OWNER) {
-    redirect("/dashboard/account/agency", RedirectType.replace)
   }
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)

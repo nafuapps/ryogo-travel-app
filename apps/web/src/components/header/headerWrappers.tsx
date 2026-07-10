@@ -38,7 +38,7 @@ export function DetailsHeaderTabWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex rounded transition bg-slate-300 flex-row gap-1 lg:gap-1.5 p-1 lg:p-1.5 self-center my-2 lg:my-3">
+    <div className="flex rounded-lg transition bg-slate-200 flex-row gap-1 lg:gap-1.5 p-1.5 lg:p-2 self-center my-2 lg:my-3">
       {children}
     </div>
   )
@@ -54,10 +54,10 @@ export function DetailsHeaderTabItem({
   return (
     <div
       className={`flex items-center rounded transition justify-center px-2 py-1 lg:px-3 lg:py-1.5 ${
-        selected ? "bg-white shadow" : ""
+        selected ? "bg-white shadow" : " hover:bg-slate-300"
       }`}
     >
-      <RyogoSmall>{label}</RyogoSmall>
+      <RyogoSmall color={selected ? "slate" : "light"}>{label}</RyogoSmall>
     </div>
   )
 }

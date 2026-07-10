@@ -9,6 +9,7 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import OrdersPageComponent from "./orders"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: `Orders - ${pageTitle}`,
@@ -27,6 +28,14 @@ export default async function OrdersPage() {
     redirect("/dashboard/account", RedirectType.replace)
   }
 
+  const agencyDetails = await agencyServices.findAgencyById(
+    currentUser.agencyId,
+  )
+
+  if (!agencyDetails) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const allOrders = await orderServices.findAllOrdersByAgencyId(
     currentUser.agencyId,
   )
@@ -34,7 +43,10 @@ export default async function OrdersPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/subscription/orders"} />
-      <OrdersPageComponent allOrders={allOrders} />
+      <OrdersPageComponent
+        allOrders={allOrders}
+        agencyDetails={agencyDetails}
+      />
     </MainWrapper>
   )
 }

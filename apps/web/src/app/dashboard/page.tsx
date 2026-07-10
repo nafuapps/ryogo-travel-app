@@ -6,7 +6,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import DashboardHomePageComponent from "./dashboardHome"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import {
-  SUBSCRIPTION_DOWNGRADE_TO_BASIC_DAYS,
+  SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS,
   SUBSCRIPTION_EXPIRY_REMINDER_DAYS,
   TRIAL_MODE,
 } from "@/lib/uiConfig"
@@ -21,6 +21,7 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { downgradeAgencyToBasicAction } from "@/app/actions/agencies/downgradeAgencyToBasicAction"
+
 export const metadata: Metadata = {
   title: `Dashboard - ${pageTitle}`,
   description: pageDescription,
@@ -41,7 +42,7 @@ export default async function DashboardHomePage() {
   if (
     agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
     differenceInDays(new Date(), agency.subscriptionExpiresOn) >
-      SUBSCRIPTION_DOWNGRADE_TO_BASIC_DAYS
+      SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS
   ) {
     await downgradeAgencyToBasicAction(agency.id)
   }

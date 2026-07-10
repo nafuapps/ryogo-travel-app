@@ -1,7 +1,7 @@
 //Account/help page
 
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import MySupportPageComponent from "./support"
+import MySupportPageComponent from "./riderSupport"
 import RiderHeader from "@/components/header/riderHeader"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"

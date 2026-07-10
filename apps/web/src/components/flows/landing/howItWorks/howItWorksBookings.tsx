@@ -15,7 +15,10 @@ import {
   ScanSearch,
 } from "lucide-react"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
-import { SlideshowItemType, SlideshowWrapper } from "../slideshowWrapper"
+import {
+  SlideshowItemType,
+  SlideshowWrapper,
+} from "@/components/flows/landing/slideshowWrapper"
 import { useTranslations } from "next-intl"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Button } from "@/components/ui/button"

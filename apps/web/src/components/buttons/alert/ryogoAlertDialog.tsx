@@ -10,13 +10,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-import { JSX } from "react"
-
 export default function RyogoAlertDialog(props: {
   title: string
   desc: string
   noCTA: string
-  labelChild: JSX.Element
+  labelChild: React.ReactNode
   children: React.ReactNode
 }) {
   return (

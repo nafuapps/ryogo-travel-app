@@ -8,12 +8,21 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { PaginationControls } from "@/components/pagination/paginationControls"
+import SubscriptionInvoicePDFViewer from "@/components/pdf/subscriptionInvoicePDFViewer"
 import {
   OrderStatusPill,
   PaymentStatusPill,
 } from "@/components/pills/ryogoPills"
 import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import {
   Select,
   SelectContent,
@@ -24,6 +33,7 @@ import {
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { usePagination } from "@/hooks/usePagination"
+import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
 import {
   OrderStatusEnum,
@@ -31,22 +41,25 @@ import {
   PaymentStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ChevronDown, Dot, Download } from "lucide-react"
+import { ChevronDown, Dot, Download, Eye } from "lucide-react"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 const ORDERS_PER_PAGE = 10
 
+type OrderFilterType = OrderStatusEnum | "all"
+
 export default function OrdersPageComponent({
   allOrders,
+  agencyDetails,
 }: {
   allOrders: FindAllOrdersByAgencyIdType
+  agencyDetails: NonNullable<FindAgencyByIdType>
 }) {
   const t = useTranslations("Dashboard.AccountSubscriptionOrders")
-  const [selectedOrderStatus, setSelectedOrderStatus] = useState<
-    OrderStatusEnum | "all"
-  >("all")
+  const [selectedOrderStatus, setSelectedOrderStatus] =
+    useState<OrderFilterType>("all")
 
   const selectedOrders =
     selectedOrderStatus === "all"
@@ -63,28 +76,10 @@ export default function OrdersPageComponent({
     <PageWrapper id="AccountSubscriptionOrdersPage">
       <SectionRowWrapper center>
         <RyogoCaption color="light">{t("History")}</RyogoCaption>
-        <Select
-          value={selectedOrderStatus}
-          onValueChange={(value: OrderStatusEnum | "all") =>
-            setSelectedOrderStatus(value)
-          }
-        >
-          <SelectTrigger className="self-end">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="all">{t("All")}</SelectItem>
-              <SelectItem value={OrderStatusEnum.PAID}>{t("Paid")}</SelectItem>
-              <SelectItem value={OrderStatusEnum.ATTEMPTED}>
-                {t("Attempted")}
-              </SelectItem>
-              <SelectItem value={OrderStatusEnum.CREATED}>
-                {t("Created")}
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <OrderFilterSelect
+          selectedOrderStatus={selectedOrderStatus}
+          setSelectedOrderStatus={setSelectedOrderStatus}
+        />
       </SectionRowWrapper>
       {currentItems.length === 0 ? (
         <SectionWrapper id="NoOrders" center>
@@ -92,7 +87,7 @@ export default function OrdersPageComponent({
         </SectionWrapper>
       ) : (
         currentItems.map((o) => {
-          return <OrderCard order={o} key={o.id} />
+          return <OrderCard order={o} key={o.id} agency={agencyDetails} />
         })
       )}
       {currentItems.length > 0 && (
@@ -108,7 +103,46 @@ export default function OrdersPageComponent({
   )
 }
 
-function OrderCard({ order }: { order: FindAllOrdersByAgencyIdType[number] }) {
+function OrderFilterSelect({
+  selectedOrderStatus,
+  setSelectedOrderStatus,
+}: {
+  selectedOrderStatus: OrderFilterType
+  setSelectedOrderStatus: (value: OrderFilterType) => void
+}) {
+  const t = useTranslations("Dashboard.AccountSubscriptionOrders")
+
+  return (
+    <Select
+      value={selectedOrderStatus}
+      onValueChange={(value: OrderFilterType) => setSelectedOrderStatus(value)}
+    >
+      <SelectTrigger className="self-end">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value="all">{t("All")}</SelectItem>
+          <SelectItem value={OrderStatusEnum.PAID}>{t("Paid")}</SelectItem>
+          <SelectItem value={OrderStatusEnum.ATTEMPTED}>
+            {t("Attempted")}
+          </SelectItem>
+          <SelectItem value={OrderStatusEnum.CREATED}>
+            {t("Created")}
+          </SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
+}
+
+function OrderCard({
+  order,
+  agency,
+}: {
+  order: FindAllOrdersByAgencyIdType[number]
+  agency: NonNullable<FindAgencyByIdType>
+}) {
   const t = useTranslations("Dashboard.AccountSubscriptionOrders")
   const [collapsed, setCollapsed] = useState(true)
   return (
@@ -152,12 +186,17 @@ function OrderCard({ order }: { order: FindAllOrdersByAgencyIdType[number] }) {
               {order.user.name}
             </RyogoCaption>
             {order.invoiceUrl && (
-              <a href={getFileUrl(order.invoiceUrl) + "?download"} download>
-                <Button variant="outline">
-                  <RyogoIcon size="sm" icon={Download} />
-                  {t("DownloadInvoice")}
-                </Button>
-              </a>
+              <SectionRowWrapper small center>
+                <a href={getFileUrl(order.invoiceUrl) + "?download"} download>
+                  <Button variant="outline">
+                    <RyogoIcon size="sm" icon={Download} color="slate" />
+                    <RyogoCaption color="slate">
+                      {t("DownloadInvoice")}
+                    </RyogoCaption>
+                  </Button>
+                </a>
+                <ViewInvoiceDialog order={order} agency={agency} />
+              </SectionRowWrapper>
             )}
           </SectionRowWrapper>
           {order.payments.length > 0 && (
@@ -219,5 +258,30 @@ function PaymentCard({
           )}
       </SectionColWrapper>
     </div>
+  )
+}
+
+function ViewInvoiceDialog({
+  order,
+  agency,
+}: {
+  order: FindAllOrdersByAgencyIdType[number]
+  agency: NonNullable<FindAgencyByIdType>
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="icon">
+          <RyogoIcon size="sm" icon={Eye} color="slate" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="size-5/6 overflow-scroll">
+        <DialogHeader>
+          <DialogTitle></DialogTitle>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+        <SubscriptionInvoicePDFViewer order={order} agency={agency} />
+      </DialogContent>
+    </Dialog>
   )
 }

@@ -4,6 +4,7 @@ import sendEmail from "@/components/email/sendEmail"
 import { SupportQueryEmailTemplate } from "@/components/email/supportQueryEmailTemplate"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
+import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 
 export async function sendSupportQueryAction(data: {
   name: string
@@ -17,10 +18,16 @@ export async function sendSupportQueryAction(data: {
     redirect("/dashboard", RedirectType.replace)
   }
 
-  //TODO: Add the query to the database
-  const query = { id: "123" }
+  //Add the query to the database
+  const supportQuery = await supportServices.addSupportQuery({
+    email: data.email,
+    message: data.message,
+    name: data.name,
+    phone: data.phone,
+    businessName: data.agencyName,
+  })
 
-  if (!query) {
+  if (!supportQuery) {
     return
   }
 
@@ -30,12 +37,12 @@ export async function sendSupportQueryAction(data: {
     "RyoGo Support Query Confirmation",
     SupportQueryEmailTemplate({
       name: data.name,
-      id: query.id,
+      id: supportQuery.id,
       phone: data.phone,
       message: data.message,
       agencyName: data.agencyName,
     }),
   )
 
-  return query
+  return supportQuery
 }

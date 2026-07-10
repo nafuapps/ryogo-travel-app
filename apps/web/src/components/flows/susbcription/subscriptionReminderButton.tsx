@@ -1,7 +1,4 @@
-import {
-  SectionWrapper,
-  SectionRowWrapper,
-} from "@/components/page/pageWrappers"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"

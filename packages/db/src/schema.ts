@@ -1601,3 +1601,9 @@ export type InsertMissionType = typeof missions.$inferInsert
 
 export type SelectNotificationType = typeof notifications.$inferSelect
 export type InsertNotificationType = typeof notifications.$inferInsert
+
+export type SelectSupportQueryType = typeof supportQueries.$inferSelect
+export type InsertSupportQueryType = typeof supportQueries.$inferInsert
+
+export type SelectSupportTicketType = typeof supportTickets.$inferSelect
+export type InsertSupportTicketType = typeof supportTickets.$inferInsert

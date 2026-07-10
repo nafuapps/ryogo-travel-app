@@ -118,6 +118,7 @@ export const agencyRepository = {
         subscriptionPlan: plan,
         subscriptionExpiresOn: expiryTime,
         latestPaidOrderId: orderId,
+        hasTriedSubscription: true,
       })
       .where(eq(agencies.id, id))
       .returning({
@@ -125,6 +126,7 @@ export const agencyRepository = {
         subscriptionPlan: agencies.subscriptionPlan,
         expiryTime: agencies.subscriptionExpiresOn,
         latestPaidOrderId: agencies.latestPaidOrderId,
+        hasTriedSubscription: agencies.hasTriedSubscription,
       })
   },
 

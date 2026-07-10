@@ -9,11 +9,14 @@ import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { tryPremiumAction } from "@/app/actions/agencies/tryPremiumAction"
+import { RyogoCaption } from "@/components/typography"
 
 export default function TryPremiumAlertButton({
   agencyId,
+  displayButton,
 }: {
   agencyId: string
+  displayButton: React.ReactNode
 }) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.TryPremium")
@@ -35,11 +38,13 @@ export default function TryPremiumAlertButton({
       title={t("Title")}
       desc={t("Desc", { trialDays: PREMIUM_TRIAL_DAYS })}
       noCTA={t("NoCTA")}
-      labelChild={<Button variant={"outline"}>{t("Label")}</Button>}
+      labelChild={displayButton}
     >
       <Button variant={"default"} onClick={activate} disabled={isPending}>
         {isPending && <Spinner />}
-        {isPending ? t("Loading") : t("YesCTA")}
+        <RyogoCaption color="white">
+          {isPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

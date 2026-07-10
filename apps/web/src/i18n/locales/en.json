@@ -15,7 +15,7 @@
         "Error2": "Phone number must be numeric and without spaces",
         "NotFoundError": "Phone number not registered",
         "ServerError": "Cannot connect to server.. Try again later!",
-        "BotError":"Bot/Fraud activity detected."
+        "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Welcome back!",
@@ -36,7 +36,7 @@
         "Error1": "Password must be at least 8 characters",
         "APIError1": "Password does not match",
         "APIError2": "User does not exist.. Try logging in with a different phone number",
-        "BotError":"Bot/Fraud activity detected."
+        "BotError": "Bot/Fraud activity detected."
       }
     },
     "ForgotPassword": {
@@ -49,7 +49,7 @@
           "Placeholder": "abcd@gmail.com",
           "Description": "We will confirm your identity and send you a code to set a new password"
         },
-        "GiveHelp":"Your email looks something like: {maskedEmail}",
+        "GiveHelp": "Your email looks something like: {maskedEmail}",
         "PrimaryCTA": "Get verification code",
         "CodeSentRecently": "Wait {count} minutes to resend code",
         "Loading": "Loading",
@@ -58,7 +58,7 @@
         "APIError": "Email address does not match our records",
         "Success": "Verification code sent.. check your inbox!",
         "Error": "Cannot send code.. Try again later!",
-        "BotError":"Bot/Fraud activity detected."
+        "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Reset your password",
@@ -89,7 +89,7 @@
         "DidnotReceiveCode": "Did not receive a code?",
         "Success": "Password reset successfully!",
         "Error": "Cannot reset password.. Try again later!",
-        "BotError":"Bot/Fraud activity detected."
+        "BotError": "Bot/Fraud activity detected."
       }
     },
     "SignupPage": {
@@ -105,7 +105,7 @@
         "Loading": "Loading..",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric",
-        "BotError":"Bot/Fraud activity detected."
+        "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Hello there!",
@@ -179,7 +179,7 @@
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
         "APIError": "An owner account with this phone and email combination already exists",
-        "BotError":"Bot/Fraud activity detected."
+        "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
         "Field1": {
@@ -2485,19 +2485,33 @@
     },
     "Support": {},
     "AccountSubscription": {
-      "CurrentPlan": "CURRENT PLAN",
-      "SubscriptionStatus": "SUBSCRIPTION STATUS",
-      "Trial": "TRIAL",
-      "ValidTill": "VALID TILL",
-      "SubscriptionExpiresIn": "Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
-      "SubscriptionExpired": "Subscription expired on {date}",
-      "RenewCTA": "Renew Plan",
-      "ViewOrders": "View All Orders",
-      "LimitUsage": "PLAN USAGE LIMITS",
-      "BookingsUsage": "BOOKINGS (Last {month} days)",
-      "DriversUsage": "DRIVERS",
-      "VehiclesUsage": "VEHICLES",
-      "AgentsUsage": "AGENTS",
+      "CurrentPlan": {
+        "Header": "CURRENT PLAN",
+        "SubscriptionStatus": "SUBSCRIPTION STATUS",
+        "FreeForever": "FREE FOREVER",
+        "Trial": "TRIAL",
+        "ViewOrders": "View All Orders"
+      },
+      "PremiumNudge": {
+        "TryPremiumCTA": "Try Premium Now",
+        "TryPremiumDesc": "Start your {days}-day free trial of Premium plan and unlock full potential of RyoGo",
+        "BuyPremiumCTA": "Buy Premium Now",
+        "BuyPremiumDesc": "Upgrade to Premium plan and unlock the full potential of RyoGo"
+      },
+      "PlanExpiry": {
+        "ValidTill": "VALID TILL",
+        "SubscriptionExpiresIn": "Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
+        "SubscriptionExpired": "Subscription expired on {date}",
+        "RenewCTA": "Renew Plan"
+      },
+      "PlanUsage": {
+        "Header": "PLAN USAGE",
+        "BookingsUsage": "Bookings (Last {days} days)",
+        "DriversUsage": "Drivers",
+        "VehiclesUsage": "Vehicles",
+        "AgentsUsage": "Agents",
+        "Warning":"Some entities exceed Basic plan limits and will not be available for booking assignments."
+      },
       "PremiumAdvantage": "THE PREMIUM ADVANTAGE",
       "PremiumSubtitle": "Unlock the full potential of RyoGo with unlimited bookings & entities, complete app access, advanced features like analytics and priority live support.",
       "UnlimitedBookings": {
@@ -2514,19 +2528,36 @@
       },
       "LiveSupport": {
         "Title": "24x7 Live Support",
-        "Subtitle": "Get priority help anytime, anywhere to resolve any issues you might face with RyoGo."
+        "Subtitle": "Get priority help anytime and an option to create support tickets to resolve any issues you might face with RyoGo."
       },
-      "ExperiencePremium": "EXPERIENCE RYOGO PREMIUM",
-      "UpgradeJourney": "Upgrade Your Growth Journey",
-      "Testimonial": "\"Moving to Premium reduced our daily manual workload by 60%.\"",
-      "TestimonialAuthor": "- Rakesh Kumar, JMD Travels, Delhi",
-      "ChooseYourPlan": "CHOOSE YOUR SUBSCRIPTION PLAN",
-      "MRP": "₹{mrp}",
-      "Save": "Save {percentage}%",
-      "BestValue": "Best Value",
-      "ForMonths": "FOR {months,plural, =1 {1 MONTH} other {# MONTHS}}",
-      "PayCTA": "BUY {plan} PREMIUM",
-      "Secure": "Secure checkout with Razorpay. No hidden fees.",
+      "Customization": {
+        "Title": "Custom Features",
+        "Subtitle": "Create your own custom reminders, messages, and more. And always get the feature as soon as they are available."
+      },
+      "WiderDataAccess": {
+        "Title": "Wider Data Access",
+        "Subtitle": "Search and analyze data going back into the past without time bound limitations."
+      },
+      "Buy": {
+        "ExperiencePremium": "EXPERIENCE RYOGO PREMIUM",
+        "UpgradeJourney": "Upgrade Your Growth Journey",
+        "Testimonial": "\"Moving to Premium reduced our daily manual workload by 60%.\"",
+        "TestimonialAuthor": "- Rakesh Kumar, JMD Travels, Delhi",
+        "ChooseYourPlan": "CHOOSE YOUR SUBSCRIPTION PLAN",
+        "MRP": "₹{mrp}",
+        "Save": "Save {percentage}%",
+        "BestValue": "Best Value",
+        "ForMonths": "FOR {months,plural, =1 {1 MONTH} other {# MONTHS}}",
+        "PayCTA": "BUY {plan} PREMIUM",
+        "Secure": "Secure checkout with Razorpay. No hidden fees."
+      },
+      "Try": {
+        "Tag": "LIMITED TIME FREE TRIAL",
+        "Title": "Elevate your agency to Premium at no cost.",
+        "Description": "Get unlimited bookings, priority support, and advanced analytics for the next {trialDays} days. No credit card required.",
+        "TryCTA": "Start Free Trial Now",
+        "ViewFeatures": "View Premium Features"
+      },
       "PaymentButton": {
         "Success": "Payment successful!",
         "WaitDB": "Payment verified! Subscription will be active soon.",
@@ -2784,7 +2815,7 @@
         "AgencyLogoChanged": "Agency logo has been changed by {userName}",
         "OwnerAdded": "Owner account created for {userName}",
         "AgencyCreated": "Agency has been created by {userName}",
-        "TryPremium":"Trial Premium plan has been activated by {userName}"
+        "TryPremium": "Trial Premium plan has been activated by {userName}"
       }
     },
     "Buttons": {
@@ -2939,15 +2970,15 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Reset Password"
       },
-      "TryPremium":{
-        "Label":"Try Premium",
-        "Title":"Are you sure you want to try premium now?",
-        "Desc":"This is a {trialDays}-day free Premium Trial after which you will be downgraded to Basic unless you decide to buy Premium again.",
-        "NoCTA":"No",
-        "Success":"Trial Premium subscription started!",
-        "Error":"Cannot start trial premium subscription.. Try again later!",
-        "Loading":"Loading..",
-        "YesCTA":"Yes, Start Free Trial"
+      "TryPremium": {
+        "Label": "Start Free Trial",
+        "Title": "Are you sure you want to try premium now?",
+        "Desc": "This is a {trialDays}-day free Premium trial period after which you will be downgraded to Basic unless you decide to buy Premium again.",
+        "NoCTA": "No",
+        "Success": "Trial Premium subscription started!",
+        "Error": "Cannot start trial premium subscription.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Agree & Start Free Trial"
       },
       "Logout": {
         "Label": "Logout",
@@ -3999,9 +4030,9 @@
           "Title": "Real-time notifications",
           "Description": "No need to call others to know what's hapenning. Everyone in the agency can see updates in their notification feed."
         },
-        "M4":{
-          "Title":"Contextual search",
-          "Description":"Find customer, driver, vehicle, or booking across the system with any keyword and get quick results."
+        "M4": {
+          "Title": "Contextual search",
+          "Description": "Find customer, driver, vehicle, or booking across the system with any keyword and get quick results."
         }
       },
       "FAQ": {
@@ -4029,15 +4060,15 @@
         },
         "DriverActions": {
           "Question": "What all can a driver do in RyoGo?",
-          "Answer": "Driver can view assigned bookings, call customer, update trip status in single clicks (like arrived at location, customer picked up, dropped, etc), add expenses, view past bookings, view assigned vehcile details, initiate chat with agent, etc. All actions are review by the system for fraud or malpractice." 
+          "Answer": "Driver can view assigned bookings, call customer, update trip status in single clicks (like arrived at location, customer picked up, dropped, etc), add expenses, view past bookings, view assigned vehcile details, initiate chat with agent, etc. All actions are review by the system for fraud or malpractice."
         },
         "AgentActions": {
           "Question": "What all can an agent do in RyoGo?",
-          "Answer": "Agent can add vehicles, drivers and customers, create and manage bookings, share trip details with customer, assign driver/vehicle, add transactions and expenses." 
+          "Answer": "Agent can add vehicles, drivers and customers, create and manage bookings, share trip details with customer, assign driver/vehicle, add transactions and expenses."
         },
         "NewBooking": {
           "Question": "How is a new booking created? Explain in detail.",
-          "Answer": "New booking is created in 5 easy steps and it takes less than a minute with system guidance. First, the customer is selected or added using a phone number. Second, trip details (location, date, type, etc.) are selected. Third, driver and vehicle are assigned (optional). Fourth, trip costs (vehicle rate, driver allowance, agency commission, etc.) are input, if not already prefilled. Finally, overall trip summary can be reviewed to create the booking. Please note that, a bew booking is created as a lead and must be confirmed by the agent." 
+          "Answer": "New booking is created in 5 easy steps and it takes less than a minute with system guidance. First, the customer is selected or added using a phone number. Second, trip details (location, date, type, etc.) are selected. Third, driver and vehicle are assigned (optional). Fourth, trip costs (vehicle rate, driver allowance, agency commission, etc.) are input, if not already prefilled. Finally, overall trip summary can be reviewed to create the booking. Please note that, a bew booking is created as a lead and must be confirmed by the agent."
         },
         "MoreCTA": "Explore More Resources"
       },
@@ -4052,51 +4083,51 @@
       "Hero": {
         "Title": "Explore our resource library",
         "Subtitle": "Feeling lost? Don't worry. Go through our resources like demo videos, blogs, support center, FAQs and get to know more about us.",
-        "PrimaryCTA":"Explore FAQs",
+        "PrimaryCTA": "Explore FAQs",
         "SecondaryCTA": "Go To Support Center",
-        "ScrollCTA":"Scroll to see more videos"
+        "ScrollCTA": "Scroll to see more videos"
       },
       "Videos": {
         "Title": "Product Videos",
         "Subtitle": "Check out some easy to understand short demo tutorials to learn the basics of RyoGo.",
-        "Count":"{count} VIDEOS",
-        "KnowRyoGo":{
+        "Count": "{count} VIDEOS",
+        "KnowRyoGo": {
           "Title": "Get to know RyoGo",
           "Description": "Understand what is RyoGo and how it can help your travel business."
         },
-        "Onboarding":{
+        "Onboarding": {
           "Title": "Onboarding Guide",
           "Description": "A simple 5-step process to take your agency live in a few minutes with RyoGo"
         },
-        "CreateBooking":{
+        "CreateBooking": {
           "Title": "Creating Bookings",
           "Description": "Easy to understand guide on how to create a new booking in RyoGo"
         },
-        "ManageBooking":{
+        "ManageBooking": {
           "Title": "Managing Bookings",
           "Description": "Everything from booking assignment to reconciliation, learn how RyoGo does it all."
         },
-        "ManageAccount":{
+        "ManageAccount": {
           "Title": "Managing Your Account",
           "Description": "It's easy to manage your agency account. Watch this video to understand how."
         },
-        "AddDriver":{
+        "AddDriver": {
           "Title": "Adding Drivers",
           "Description": "Learn how to add and manage drivers in your RyoGo account."
         },
-        "DriverApp":{
+        "DriverApp": {
           "Title": "Driver App",
           "Description": "Know more about the driver app that makes collaboration easy with your drivers."
         },
-        "AddVehicle":{
+        "AddVehicle": {
           "Title": "Adding Vehicles",
           "Description": "Find out how to add and manage your fleet of vehicles."
         },
-        "AddAgent":{
+        "AddAgent": {
           "Title": "Adding Agents",
           "Description": "Understand how you can add agents and delegate your agency operations to them."
         },
-        "Analytics":{
+        "Analytics": {
           "Title": "Why Analytics?",
           "Description": "Check out how analytics can help you make informed decisions for your agency."
         }
@@ -4104,123 +4135,122 @@
       "FAQ": {
         "Title": "Frequently Asked Questions",
         "Subtitle": "Did not find what you were looking for? Get some of your queries answered here.",
-        "Training":{
-          "Question":"Do you provide training resources or material that we can hand over directly to our drivers or agents?",
-          "Answer":"We do have demo videos and guides for users to understand how RyoGo works. These resources can help them in their day to day operations. All such resources can be found in Help section under their account after login. Alternatively, you can find all such training videos and more on our YouTube channel as well."
+        "Training": {
+          "Question": "Do you provide training resources or material that we can hand over directly to our drivers or agents?",
+          "Answer": "We do have demo videos and guides for users to understand how RyoGo works. These resources can help them in their day to day operations. All such resources can be found in Help section under their account after login. Alternatively, you can find all such training videos and more on our YouTube channel as well."
         },
-        "FeatureRequest":{
-          "Question":"Can we request a specific guide, calculator, or any other feature if it isn't currently in the system?",
-          "Answer":"We would love to build it for you. Our goal is to make RyoGo the definitive app for travel agencies and fleet operators countrywide. Drop in your suggestions in the support center."
+        "FeatureRequest": {
+          "Question": "Can we request a specific guide, calculator, or any other feature if it isn't currently in the system?",
+          "Answer": "We would love to build it for you. Our goal is to make RyoGo the definitive app for travel agencies and fleet operators countrywide. Drop in your suggestions in the support center."
         },
-        "Language":{
-          "Question":"How do I change the language in RyoGo?",
-          "Answer":"You can change the language from menu bar. If you are logged in, you can change and save your preferred language in account settings."
+        "Language": {
+          "Question": "How do I change the language in RyoGo?",
+          "Answer": "You can change the language from menu bar. If you are logged in, you can change and save your preferred language in account settings."
         },
-        "NewFeatures":{
-          "Question":"How do I get to know about app changes and new features in RyoGo?",
-          "Answer":"You will be notified on your registered email about any changes and new features in RyoGo. Also, keep an eye on our website and social media for any updates and news. If you are a premium subscriber, you will be able to access all new features as soon as they are available."
+        "NewFeatures": {
+          "Question": "How do I get to know about app changes and new features in RyoGo?",
+          "Answer": "You will be notified on your registered email about any changes and new features in RyoGo. Also, keep an eye on our website and social media for any updates and news. If you are a premium subscriber, you will be able to access all new features as soon as they are available."
         }
       },
       "Support": {
         "Title": "Support Center",
         "Subtitle": "Looking for help? Get in touch with RyoGo support team or drop your message in the query form below.",
-        "HelpBlock":{
-          "Title":"How can we help you?",
-          "Description":"We're here to assist you with any questions or issues you may have.",
-          "Help1":"Request a live demo call",
-          "Help2":"Get guidance for onboarding",
-          "Help3":"Learn which plan is best for you",
-          "Help4":"Understand how RyoGo works",
-          "CallCTA":"Call Our Support Team",
-          "EmailCTA":"Email Us",
-          "Disclaimer":"* Please note that response from our support team is subject to availablility during business hours."
+        "HelpBlock": {
+          "Title": "How can we help you?",
+          "Description": "We're here to assist you with any questions or issues you may have.",
+          "Help1": "Request a live demo call",
+          "Help2": "Get guidance for onboarding",
+          "Help3": "Learn which plan is best for you",
+          "Help4": "Understand how RyoGo works",
+          "CallCTA": "Call Our Support Team",
+          "EmailCTA": "Email Us",
+          "Disclaimer": "* Please note that response from our support team is subject to availablility during business hours."
         },
-        "QueryForm":{
-          "Title":"Submit your query",
-          "Description":"We will get back to you within 24 hours.",
-          "Field1":{
-            "Title":"Your Name",
-            "Placeholder":"Sanjeev",
-            "Error1":"Name is required and should be atleast 5 characters long",
-            "Error2":"Name must be less than 30 characters"
+        "QueryForm": {
+          "Title": "Submit your query",
+          "Description": "We will get back to you within 24 hours.",
+          "Field1": {
+            "Title": "Your Name",
+            "Placeholder": "Sanjeev",
+            "Error1": "Name is required and should be atleast 5 characters long",
+            "Error2": "Name must be less than 30 characters"
           },
-          "Field2":{
-            "Title":"Your Phone Number",
-            "Placeholder":"9876543210",
-            "Error1":"Phone number is required and must be 10 digits long"
+          "Field2": {
+            "Title": "Your Phone Number",
+            "Placeholder": "9876543210",
+            "Error1": "Phone number is required and must be 10 digits long"
           },
-          "Field3":{
-            "Title":"Your Email",
-            "Placeholder":"abcd@gmail.com",
-            "Error1":"Email is required and must be a valid email address",
-            "Error2":"Email must be less than 60 characters"
+          "Field3": {
+            "Title": "Your Email",
+            "Placeholder": "abcd@gmail.com",
+            "Error1": "Email is required and must be a valid email address",
+            "Error2": "Email must be less than 60 characters"
           },
-          "Field4":{
-            "Title":"Agency Name (Optional)",
-            "Placeholder":"ABCD Tours & Travels",
-            "Error1":"Agency Name must be atleast 5 characters long",
-            "Error2":"Agency Name must be less than 30 characters"
+          "Field4": {
+            "Title": "Agency Name (Optional)",
+            "Placeholder": "ABCD Tours & Travels",
+            "Error1": "Agency Name must be atleast 5 characters long",
+            "Error2": "Agency Name must be less than 30 characters"
           },
-          "Field5":{
-            "Title":"Your Message",
-            "Placeholder":"I need help with onboarding..",
-            "Error1":"Message should be atleast 10 characters long",
-            "Error2":"Message must be less than 300 characters"
+          "Field5": {
+            "Title": "Your Message",
+            "Placeholder": "I need help with onboarding..",
+            "Error1": "Message should be atleast 10 characters long",
+            "Error2": "Message must be less than 300 characters"
           },
-          "BotError":"Bot activity detected.",
-          "SubmitCTA":"Send Message",
-          "Loading":"Loading...",
-          "SentCTA":"Message Sent",
-          "Success":"You message has been sent successfully!",
-          "Error":"Something went wrong. Please try again later."
+          "BotError": "Bot activity detected.",
+          "SubmitCTA": "Send Message",
+          "Loading": "Loading...",
+          "SentCTA": "Message Sent",
+          "Success": "You message has been sent successfully!",
+          "Error": "Something went wrong. Please try again later."
         }
       },
       "Blogs": {
         "Title": "Blogs & News",
         "Subtitle": "Get latest product updates, news, industry insights and expert guides from RyoGo.",
-        "Count":"{count} ARTICLES",
-        "BlogTypes":{
-          "Type1":"News and Updates",
-          "Type2":"Industry Insights",
-          "Type3":"Product Guide"
+        "Count": "{count} ARTICLES",
+        "BlogTypes": {
+          "Type1": "News and Updates",
+          "Type2": "Industry Insights",
+          "Type3": "Product Guide"
         },
-        "Blog1":{
-          "Title":"How to grow your travel agency business with RyoGo",
-          "Type":"News and Updates"
+        "Blog1": {
+          "Title": "How to grow your travel agency business with RyoGo",
+          "Type": "News and Updates"
         },
-        "Blog2":{
-          "Title":"Learn how to manage your travel agency operations with RyoGo",
-          "Type":"Product Guide"
+        "Blog2": {
+          "Title": "Learn how to manage your travel agency operations with RyoGo",
+          "Type": "Product Guide"
         }
       },
       "About": {
         "Title": "About Us",
         "Subtitle": "Learn more about RyoGo, its mission and the incredible team behind it.",
-        "Mission":{
-          "Title":"Our Mission",
-          "Desc":"To enable small scale travel businesses in India to manage their daily operations efficiently, by providing an easy-to-use, all-in-one digital platform.",
-          "Subtitle":"\"We want to help agency owners and fleet operators in running and collaborating across their businesses, ensuring growth and a seamless customer experience.\"",
-          "Quote":"- Founder, RyoGo Travel App",
-          "M1":{
-            "Value":"100+",
-            "Label":"Companies use RyoGo"
+        "Mission": {
+          "Title": "Our Mission",
+          "Desc": "To enable small scale travel businesses in India to manage their daily operations efficiently, by providing an easy-to-use, all-in-one digital platform.",
+          "Subtitle": "\"We want to help agency owners and fleet operators in running and collaborating across their businesses, ensuring growth and a seamless customer experience.\"",
+          "Quote": "- Founder, RyoGo Travel App",
+          "M1": {
+            "Value": "100+",
+            "Label": "Companies use RyoGo"
           },
-          "M2":{
-            "Value":"1000+",
-            "Label":"Man hours saved per month"
+          "M2": {
+            "Value": "1000+",
+            "Label": "Man hours saved per month"
           },
-          "M3":{
-            "Value":"40%",
-            "Label":"Revenue increase"
+          "M3": {
+            "Value": "40%",
+            "Label": "Revenue increase"
           }
-          
         },
-        "Founder":{
-          "Title":"Meet the founding team",
-          "Description":"RyoGo was founded in 2023 by Nitin Gautam, an industry veteran with over 13 years of experience in running and managing travel, automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experiences.",
-          "Company1":"Ola Electric",
-          "Company2":"PharmEasy",
-          "Company3":"Park Plus"
+        "Founder": {
+          "Title": "Meet the founding team",
+          "Description": "RyoGo was founded in 2023 by Nitin Gautam, an industry veteran with over 13 years of experience in running and managing travel, automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experiences.",
+          "Company1": "Ola Electric",
+          "Company2": "PharmEasy",
+          "Company3": "Park Plus"
         }
       },
       "CTA": {

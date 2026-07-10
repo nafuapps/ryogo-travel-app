@@ -1,6 +1,5 @@
 "use client"
 
-import TryPremiumAlertButton from "@/components/buttons/alert/tryPremiumAlertButton"
 import PaymentButton from "@/components/flows/susbcription/paymentButton"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
@@ -22,21 +21,18 @@ import {
   ANNUAL_SUBSCRIPTION_MRP,
   ANNUAL_SUBSCRIPTION_FINAL_PRICE,
 } from "@ryogo-travel-app/api/apiConfig"
-import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { ChevronRight, Lock } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-export default function SubscriptionPaymentOptionsComponent({
+export default function BuySubscriptionComponent({
   userDetails,
-  agencyDetails,
 }: {
   userDetails: NonNullable<FindUserDetailsByIdType>
-  agencyDetails: NonNullable<FindAgencyByIdType>
 }) {
-  const t = useTranslations("Dashboard.AccountSubscription")
+  const t = useTranslations("Dashboard.AccountSubscription.Buy")
 
   const [selectedPaymentOption, setSelectedOption] = useState<OrderTypeEnum>(
     OrderTypeEnum.ANNUAL,
@@ -54,60 +50,52 @@ export default function SubscriptionPaymentOptionsComponent({
           <RyogoCaption color="slate">{t("TestimonialAuthor")}</RyogoCaption>
         </div>
       </div>
-      {agencyDetails.hasTriedSubscription ? (
-        <>
-          <div className="flex flex-col w-full items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-slate-100 rounded-lg">
-            <RyogoCaption color="light">{t("ChooseYourPlan")}</RyogoCaption>
-            <div className="flex flex-col w-full xl:flex-row gap-4">
-              <PaymentOptionCard
-                plan={OrderTypeEnum.MONTHLY}
-                mrp={MONTHLY_SUBSCRIPTION_MRP}
-                price={MONTHLY_SUBSCRIPTION_FINAL_PRICE}
-                months={1}
-                selectedOption={selectedPaymentOption}
-                onClick={() => setSelectedOption(OrderTypeEnum.MONTHLY)}
-              ></PaymentOptionCard>
-              <PaymentOptionCard
-                plan={OrderTypeEnum.QUARTERLY}
-                mrp={QUARTERLY_SUBSCRIPTION_MRP}
-                price={QUARTERLY_SUBSCRIPTION_FINAL_PRICE}
-                months={3}
-                selectedOption={selectedPaymentOption}
-                onClick={() => setSelectedOption(OrderTypeEnum.QUARTERLY)}
-              ></PaymentOptionCard>
-              <PaymentOptionCard
-                plan={OrderTypeEnum.ANNUAL}
-                mrp={ANNUAL_SUBSCRIPTION_MRP}
-                price={ANNUAL_SUBSCRIPTION_FINAL_PRICE}
-                selectedOption={selectedPaymentOption}
-                months={12}
-                onClick={() => setSelectedOption(OrderTypeEnum.ANNUAL)}
-                best
-              ></PaymentOptionCard>
-            </div>
-            <PaymentButton
-              agencyId={agencyDetails.id}
-              userId={userDetails.id}
-              plan={selectedPaymentOption}
-              ownerName={userDetails.name}
-              ownerEmail={userDetails.email}
-              ownerPhone={userDetails.phone}
-              icon={
-                <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-              }
-              renewLabel={t("PayCTA", {
-                plan: selectedPaymentOption.toUpperCase(),
-              })}
-            />
-          </div>
-          <SectionRowWrapper small center>
-            <RyogoIcon icon={Lock} size="sm" color="light" />
-            <RyogoCaption color="light">{t("Secure")}</RyogoCaption>
-          </SectionRowWrapper>
-        </>
-      ) : (
-        <TryPremiumAlertButton agencyId={agencyDetails.id} />
-      )}
+      <div className="flex flex-col w-full items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-slate-100 rounded-lg">
+        <RyogoCaption color="light">{t("ChooseYourPlan")}</RyogoCaption>
+        <div className="flex flex-col w-full xl:flex-row gap-4">
+          <PaymentOptionCard
+            plan={OrderTypeEnum.MONTHLY}
+            mrp={MONTHLY_SUBSCRIPTION_MRP}
+            price={MONTHLY_SUBSCRIPTION_FINAL_PRICE}
+            months={1}
+            selectedOption={selectedPaymentOption}
+            onClick={() => setSelectedOption(OrderTypeEnum.MONTHLY)}
+          ></PaymentOptionCard>
+          <PaymentOptionCard
+            plan={OrderTypeEnum.QUARTERLY}
+            mrp={QUARTERLY_SUBSCRIPTION_MRP}
+            price={QUARTERLY_SUBSCRIPTION_FINAL_PRICE}
+            months={3}
+            selectedOption={selectedPaymentOption}
+            onClick={() => setSelectedOption(OrderTypeEnum.QUARTERLY)}
+          ></PaymentOptionCard>
+          <PaymentOptionCard
+            plan={OrderTypeEnum.ANNUAL}
+            mrp={ANNUAL_SUBSCRIPTION_MRP}
+            price={ANNUAL_SUBSCRIPTION_FINAL_PRICE}
+            selectedOption={selectedPaymentOption}
+            months={12}
+            onClick={() => setSelectedOption(OrderTypeEnum.ANNUAL)}
+            best
+          ></PaymentOptionCard>
+        </div>
+        <PaymentButton
+          agencyId={userDetails.agencyId}
+          userId={userDetails.id}
+          plan={selectedPaymentOption}
+          ownerName={userDetails.name}
+          ownerEmail={userDetails.email}
+          ownerPhone={userDetails.phone}
+          icon={<RyogoIcon icon={ChevronRight} size="sm" color="white" thick />}
+          renewLabel={t("PayCTA", {
+            plan: selectedPaymentOption.toUpperCase(),
+          })}
+        />
+      </div>
+      <SectionRowWrapper small center>
+        <RyogoIcon icon={Lock} size="sm" color="light" />
+        <RyogoCaption color="light">{t("Secure")}</RyogoCaption>
+      </SectionRowWrapper>
     </SectionWrapper>
   )
 }
@@ -133,7 +121,7 @@ function PaymentOptionCard({
   onClick: () => void
   best?: boolean
 }) {
-  const t = useTranslations("Dashboard.AccountSubscription")
+  const t = useTranslations("Dashboard.AccountSubscription.Buy")
   const discount = getDiscountValue(mrp, price)
   const currentlySelected = selectedOption === plan
   return (

@@ -30,11 +30,11 @@ export function SubscriptionInvoiceDocument({
             <Text id="CompanyName" style={styles.h2}>
               {"RyoGo Travel App"}
             </Text>
-            <Text id="CompanyPhone" style={styles.p}>
-              {SUPPORT_HELPLINE_NUMBER}
-            </Text>
             <Text id="CompanyEmail" style={styles.p}>
               {SUPPORT_EMAIL}
+            </Text>
+            <Text id="CompanyPhone" style={styles.p}>
+              {SUPPORT_HELPLINE_NUMBER}
             </Text>
           </View>
           <View id="headerRight" style={styles.headerRight}>

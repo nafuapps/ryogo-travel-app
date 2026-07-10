@@ -75,7 +75,7 @@ export function RyogoIcon(props: {
   return (
     <props.icon
       onClick={props.onClick}
-      className={`${props.thick ? "stroke-2" : "stroke-1"} ${sizeClassName} ${getIconColor(props.color)}`}
+      className={`shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${sizeClassName} ${getIconColor(props.color)}`}
     />
   )
 }

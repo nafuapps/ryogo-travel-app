@@ -54,10 +54,10 @@ export function DetailsHeaderTabItem({
   return (
     <div
       className={`flex items-center rounded transition justify-center px-2 py-1 lg:px-3 lg:py-1.5 ${
-        selected ? "bg-white shadow" : " hover:bg-slate-300"
+        selected ? "bg-white shadow" : " hover:bg-slate-100 hover:shadow-xs"
       }`}
     >
-      <RyogoSmall color={selected ? "slate" : "light"}>{label}</RyogoSmall>
+      <RyogoSmall color={"slate"}>{label}</RyogoSmall>
     </div>
   )
 }

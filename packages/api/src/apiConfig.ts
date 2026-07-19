@@ -36,6 +36,7 @@ export const MAX_USER_DISTANCE_RATIO = 1.2
 
 //Missions
 export const MISSION_WINDOW_DAYS = 3
+export const EXPIRATION_ALERT_WINDOW_DAYS = 15
 
 //Notifications
 export const NOTIFICATION_FEED_WINDOW_DAYS = 3

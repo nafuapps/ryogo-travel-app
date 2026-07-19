@@ -11,11 +11,14 @@ import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
 import {
-  BASIC_BOOKINGS_SEARCH_DAYS,
+  EXPIRATION_ALERT_WINDOW_DAYS,
   PREMIUM_BOOKINGS_SEARCH_DAYS,
   PREMIUM_TRIAL_DAYS,
 } from "../apiConfig"
 import { ModifyAgencyRequestType } from "../types/agency.types"
+import { differenceInDays } from "date-fns"
+import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
+import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 
 export const agencyServices = {
   //Find all agencies
@@ -77,6 +80,66 @@ export const agencyServices = {
       drivers,
       customers,
       bookings,
+    }
+  },
+
+  /*
+  1. Vehicle -  RC, PUC, Insurance
+  2. Driver - License
+  3. Driver leave
+  4. Vehicle repair
+  */
+  async findAgencyExpiryAlerts(agencyId: string, userId: string) {
+    const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
+    const rcExpiring = vehicles.filter(
+      (vehicle) =>
+        vehicle.rcExpiresOn &&
+        differenceInDays(vehicle.rcExpiresOn, new Date()) <=
+          EXPIRATION_ALERT_WINDOW_DAYS,
+    )
+    const pucExpiring = vehicles.filter(
+      (vehicle) =>
+        vehicle.pucExpiresOn &&
+        differenceInDays(vehicle.pucExpiresOn, new Date()) <=
+          EXPIRATION_ALERT_WINDOW_DAYS,
+    )
+    const insuranceExpiring = vehicles.filter(
+      (vehicle) =>
+        vehicle.insuranceExpiresOn &&
+        differenceInDays(vehicle.insuranceExpiresOn, new Date()) <=
+          EXPIRATION_ALERT_WINDOW_DAYS,
+    )
+
+    const vehicleRepairs =
+      await vehicleRepairRepository.readVehicleRepairsByAddedUserId(userId)
+    const vehicleRepairAlerts = vehicleRepairs.filter(
+      (vehicleRepair) =>
+        vehicleRepair.isCompleted === false &&
+        differenceInDays(vehicleRepair.endDate, new Date()) <= 0,
+    )
+
+    const drivers = await driverRepository.readDriversByAgencyId(agencyId)
+    const licenseExpiring = drivers.filter((driver) => {
+      driver.licenseExpiresOn &&
+        differenceInDays(driver.licenseExpiresOn, new Date()) <=
+          EXPIRATION_ALERT_WINDOW_DAYS
+    })
+
+    const driverLeaves =
+      await driverLeaveRepository.readDriverLeavesByAddedUserId(userId)
+    const driverLeaveAlerts = driverLeaves.filter(
+      (driverLeave) =>
+        driverLeave.isCompleted === false &&
+        differenceInDays(driverLeave.endDate, new Date()) <= 0,
+    )
+
+    return {
+      rcExpiring,
+      pucExpiring,
+      insuranceExpiring,
+      vehicleRepairAlerts,
+      licenseExpiring,
+      driverLeaveAlerts,
     }
   },
 
@@ -174,4 +237,8 @@ export type FindAgencyDataType = Awaited<
 
 export type FindAgencySearchDataType = Awaited<
   ReturnType<typeof agencyServices.findAgencySearchData>
+>
+
+export type FindAgencyExpiryAlertsType = Awaited<
+  ReturnType<typeof agencyServices.findAgencyExpiryAlerts>
 >

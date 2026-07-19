@@ -11,6 +11,8 @@ import { bookingRepository } from "../repositories/booking.repo"
 import { userRepository } from "../repositories/user.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
+import { differenceInDays } from "date-fns"
+import { EXPIRATION_ALERT_WINDOW_DAYS } from "../apiConfig"
 
 export const driverServices = {
   //Get all drivers in an agency

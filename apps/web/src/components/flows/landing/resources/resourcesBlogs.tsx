@@ -4,10 +4,8 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import {
-  BlogCarouselItem,
-  CarouselWrapper,
-} from "@/components/flows/landing/carouselWrapper"
+import { BlogCarouselItem } from "@/components/flows/landing/carouselWrapper"
+import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
 
 export default async function ResourcesBlogsSection() {
   const t = await getTranslations("Landing.Resources.Blogs")
@@ -37,7 +35,7 @@ export default async function ResourcesBlogsSection() {
         <RyogoP color="light" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
-        <CarouselWrapper count={t("Count", { count: items.length })}>
+        <RyogoCarouselWrapper count={t("Count", { count: items.length })}>
           {items.map((item, index) => (
             <BlogCarouselItem
               key={index}
@@ -47,7 +45,7 @@ export default async function ResourcesBlogsSection() {
               blogLink={item.index}
             />
           ))}
-        </CarouselWrapper>
+        </RyogoCarouselWrapper>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

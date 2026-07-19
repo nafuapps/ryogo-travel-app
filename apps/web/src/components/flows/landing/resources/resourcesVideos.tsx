@@ -4,10 +4,8 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import {
-  CarouselWrapper,
-  VideoCarouselItem,
-} from "@/components/flows/landing/carouselWrapper"
+import { VideoCarouselItem } from "@/components/flows/landing/carouselWrapper"
+import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
 
 export default async function ResourcesVideosSection() {
   const t = await getTranslations("Landing.Resources.Videos")
@@ -73,7 +71,7 @@ export default async function ResourcesVideosSection() {
         <RyogoP color="light" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
-        <CarouselWrapper count={t("Count", { count: items.length })}>
+        <RyogoCarouselWrapper count={t("Count", { count: items.length })}>
           {items.map((item, index) => (
             <VideoCarouselItem
               key={index}
@@ -83,7 +81,7 @@ export default async function ResourcesVideosSection() {
               index={index + 1}
             />
           ))}
-        </CarouselWrapper>
+        </RyogoCarouselWrapper>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

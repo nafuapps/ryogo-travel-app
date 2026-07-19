@@ -29,7 +29,7 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
     userId: booking.assignedUserId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,
-    dueDate: addDays(data.tripEndDate, OLD_LEAD_AUTO_CANCEL_DAYS),
+    dueDate: addDays(data.tripStartDate, OLD_LEAD_AUTO_CANCEL_DAYS),
     isCritical: true,
     titleKey: "LeadBooking.Title",
     titleObject: { bookingId: booking.id },

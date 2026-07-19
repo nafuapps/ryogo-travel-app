@@ -24,8 +24,37 @@ export const missionRepository = {
     })
   },
 
+  async readMissionById(missionId: string) {
+    return await db.query.missions.findFirst({
+      where: eq(missions.id, missionId),
+    })
+  },
+
   async createMission(mission: InsertMissionType) {
     return await db.insert(missions).values(mission).returning()
+  },
+
+  async updateMission(
+    id: string,
+    entityType: EntityTypeEnum,
+    entityId: string,
+    titleKey: string,
+    dueDate: Date,
+    isCritical: boolean,
+    messageKey?: string,
+  ) {
+    return await db
+      .update(missions)
+      .set({
+        entityType,
+        entityId,
+        titleKey,
+        dueDate,
+        isCritical,
+        messageKey,
+      })
+      .where(eq(missions.id, id))
+      .returning()
   },
 
   async updateReadStatus(missionId: string, isRead: boolean) {
@@ -34,6 +63,13 @@ export const missionRepository = {
       .set({ isRead })
       .where(eq(missions.id, missionId))
       .returning()
+  },
+
+  async deleteMissionById(id: string) {
+    return await db
+      .delete(missions)
+      .where(eq(missions.id, id))
+      .returning({ id: missions.id })
   },
 
   async deleteMissionsByEntityKey(

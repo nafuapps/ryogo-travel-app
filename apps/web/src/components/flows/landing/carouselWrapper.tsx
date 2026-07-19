@@ -1,40 +1,9 @@
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { RyogoVideo } from "@/components/video/ryogoVideo"
-import {
-  Carousel,
-  CarouselItem,
-  CarouselContent,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
+import { CarouselItem } from "@/components/ui/carousel"
 import Image from "next/image"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import Link from "next/link"
-
-export function CarouselWrapper({
-  children,
-  count,
-}: {
-  children: React.ReactNode
-  count?: string
-}) {
-  return (
-    <Carousel className="w-full" opts={{}}>
-      <div className="flex gap-2 lg:gap-3 items-center justify-center w-full mb-3">
-        <CarouselPrevious className="static translate-y-0 translate-x-0 rounded-lg" />
-        {count && (
-          <RyogoCaption weight="font-bold" color="slate">
-            {count}
-          </RyogoCaption>
-        )}
-        <CarouselNext className="static translate-y-0 translate-x-0 rounded-lg" />
-      </div>
-      <CarouselContent className="m-0.5 gap-3 lg:gap-4">
-        {children}
-      </CarouselContent>
-    </Carousel>
-  )
-}
 
 export function VideoCarouselItem({
   src,

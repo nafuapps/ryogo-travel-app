@@ -8,8 +8,8 @@
     "url": "https://github.com/kakashiorion"
   },
   "devDependencies": {
-    "baseline-browser-mapping": "2.10.42",
-    "turbo": "2.10.4",
+    "baseline-browser-mapping": "2.10.43",
+    "turbo": "2.10.5",
     "typescript": "7.0.2"
   },
   "main": "index.js",

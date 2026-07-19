@@ -35,7 +35,11 @@ export default async function PremiumNudge({
             icon={<RyogoIcon icon={BadgeCheck} size="sm" color="white" thick />}
             renewLabel={t("BuyPremiumCTA")}
           />
-          <RyogoCaption color="slate" className="md:max-w-3xs">
+          <RyogoCaption
+            color="light"
+            weight="font-bold"
+            className="md:max-w-3xs"
+          >
             {t("BuyPremiumDesc")}
           </RyogoCaption>
         </>
@@ -49,7 +53,11 @@ export default async function PremiumNudge({
               </Button>
             }
           />
-          <RyogoCaption color="slate" className="md:max-w-3xs">
+          <RyogoCaption
+            color="light"
+            weight="font-bold"
+            className="md:max-w-3xs"
+          >
             {t("TryPremiumDesc", { days: PREMIUM_TRIAL_DAYS })}
           </RyogoCaption>
         </>

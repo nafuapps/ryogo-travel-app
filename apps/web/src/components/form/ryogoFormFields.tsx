@@ -193,6 +193,7 @@ export function RyogoSelect(props: {
   title?: string
   array: { value: string; display: string }[]
   placeholder: string
+  description?: string
   register: UseFormRegisterReturn<string>
   resetField?: () => void
 }) {
@@ -225,6 +226,11 @@ export function RyogoSelect(props: {
               ))}
             </SelectContent>
           </Select>
+          {props.description && (
+            <FormDescription>
+              <RyogoCaption color="light">{props.description}</RyogoCaption>
+            </FormDescription>
+          )}
           <FormMessage />
         </FormItem>
       )}

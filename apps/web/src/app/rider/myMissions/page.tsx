@@ -6,6 +6,11 @@ import { redirect, RedirectType } from "next/navigation"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import RiderHeader from "@/components/header/riderHeader"
 import MissionControlPageComponent from "@/app/dashboard/mission-control/missionControl"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { differenceInDays } from "date-fns"
+import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
 
 export const metadata: Metadata = {
   title: `My Missions - ${pageTitle}`,
@@ -19,14 +24,33 @@ export default async function MyMissionsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const missions = await missionServices.findMissionsByUserId(
     currentUser.userId,
   )
 
+  const driver = await driverServices.findDriverByUserId(currentUser.userId)
+  if (!driver) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
+  const showDriverAlert =
+    driver.licenseExpiresOn &&
+    differenceInDays(driver.licenseExpiresOn, new Date()) <
+      EXPIRATION_ALERT_WINDOW_DAYS
+
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myMissions"} />
-      <MissionControlPageComponent missions={missions} />
+      <MissionControlPageComponent
+        missions={missions}
+        isPremium={agency.subscriptionPlan === SubscriptionPlanEnum.PREMIUM}
+        driverAlert={showDriverAlert ? driver : undefined}
+      />
     </MainWrapper>
   )
 }

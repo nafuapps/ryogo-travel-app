@@ -40,10 +40,10 @@ export default function RyogoSidebar({
       collapsible={isMobile ? "offcanvas" : "icon"}
       className="h-full"
     >
-      <SidebarHeader className={`my-3 ${sidebarOpen && "mx-4"}`}>
+      <SidebarHeader className="mb-3">
         <RyoGoSidebarLogo open={sidebarOpen} />
       </SidebarHeader>
-      <SidebarContent className="px-2 my-3">
+      <SidebarContent className="p-2">
         {contentItems.map(
           (item) =>
             //Show onlyOwner items only if isOwner
@@ -57,7 +57,7 @@ export default function RyogoSidebar({
             ),
         )}
       </SidebarContent>
-      <SidebarFooter className="my-3">
+      <SidebarFooter className="mb-3">
         {footerItems.map((item) => (
           <MenuButton
             key={item.title}

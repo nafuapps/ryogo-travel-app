@@ -47,14 +47,29 @@ interface RyogoSidebarLogoProps {
 }
 export function RyoGoSidebarLogo(props: RyogoSidebarLogoProps) {
   return (
-    <div className={`relative ${props.open ? "w-3/5" : "w-full"} aspect-2/1`}>
-      <Image
-        loading="eager"
-        src="/logo.png"
-        fill
-        alt={"Logo for Ryogo - Travel Agency App"}
-        sizes="100%"
-      />
+    <div
+      className={` ${props.open ? "py-3" : "py-4"} px-2 flex gap-3 items-center`}
+    >
+      <div className={`relative size-7 lg:size-8 aspect-square`}>
+        <Image
+          loading="eager"
+          src="/logoPWA.png"
+          fill
+          alt={"Logo Icon for Ryogo - Travel Agency App"}
+          sizes="100%"
+        />
+      </div>
+      <div
+        className={`relative h-9 lg:h-10 ${props.open ? "flex" : "hidden"} aspect-2/1`}
+      >
+        <Image
+          loading="eager"
+          src="/logo.png"
+          fill
+          alt={"Expanded Logo for Ryogo - Travel Agency App"}
+          sizes="100%"
+        />
+      </div>
     </div>
   )
 }

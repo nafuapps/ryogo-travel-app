@@ -23,6 +23,9 @@ export const BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS = 7
 export const SUBSCRIPTION_EXPIRY_REMINDER_DAYS = 5
 export const SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS = 7
 
+//Expiry Alerts
+export const EXPIRY_WARNING_DAYS = 7
+
 //Support
 export const SUPPORT_HELPLINE_NUMBER = "9840774089"
 export const SUPPORT_EMAIL = "ryogo.in@gmail.com"

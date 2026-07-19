@@ -47,7 +47,7 @@ export default async function ConfirmBookingPage({
 
   //If the lead booking is old, cancel it automatically
   if (
-    differenceInDays(new Date(), booking.endDate) > OLD_LEAD_AUTO_CANCEL_DAYS
+    differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
     if (
       await cancelBookingAction(

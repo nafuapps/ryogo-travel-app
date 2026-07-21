@@ -34,8 +34,8 @@ import {
   DriverStatusPill,
   VehicleStatusPill,
 } from "@/components/pills/ryogoPills"
-import getVehicleIcon, {
-  getCanDriveIcons,
+import GetVehicleIcon, {
+  GetCanDriveIcons,
 } from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,
@@ -46,7 +46,6 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { IconsList } from "@/components/tags/IconsList"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import {
   BASIC_BOOKINGS_SEARCH_DAYS,
@@ -531,7 +530,7 @@ function DriverSearchResultItem({
           <RyogoSmall>{driver.name}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
-          <IconsList icons={getCanDriveIcons(driver.canDriveVehicleTypes)} />
+          <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
           <RyogoCaption color="slate">{driver.address}</RyogoCaption>
           <RyogoCaption color="light">{driver.licenseNumber}</RyogoCaption>
         </GridItemWrapper>
@@ -602,7 +601,7 @@ function VehicleSearchResultItem({
               imageSize="sm"
             />
           ) : (
-            getVehicleIcon(vehicle.type, "md")
+            <GetVehicleIcon vehicleType={vehicle.type} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

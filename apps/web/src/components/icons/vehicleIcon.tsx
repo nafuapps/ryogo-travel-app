@@ -2,10 +2,13 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Truck, Bus, Car, Motorbike, Tractor, LucideIcon } from "lucide-react"
 import { RyogoIcon, RyogoIconSize } from "@/components/icons/ryogoIcon"
 
-export default function getVehicleIcon(
-  vehicleType: VehicleTypesEnum,
-  size: RyogoIconSize,
-) {
+export default function GetVehicleIcon({
+  vehicleType,
+  size,
+}: {
+  vehicleType: VehicleTypesEnum
+  size: RyogoIconSize
+}) {
   switch (vehicleType) {
     case VehicleTypesEnum.TRUCK:
       return <RyogoIcon icon={Truck} size={size} />
@@ -20,7 +23,11 @@ export default function getVehicleIcon(
   }
 }
 
-export function getCanDriveIcons(canDrive: VehicleTypesEnum[]) {
+export function GetCanDriveIcons({
+  canDrive,
+}: {
+  canDrive: VehicleTypesEnum[]
+}) {
   const icons: LucideIcon[] = []
 
   if (canDrive.includes(VehicleTypesEnum.BIKE)) {
@@ -38,5 +45,12 @@ export function getCanDriveIcons(canDrive: VehicleTypesEnum[]) {
   if (canDrive.includes(VehicleTypesEnum.OTHER)) {
     icons.push(Tractor)
   }
-  return icons
+
+  return (
+    <div className="flex flex-row gap-1 lg:gap-1.5">
+      {icons.map((Icon, index) => {
+        return <RyogoIcon key={index} icon={Icon} size="sm" />
+      })}
+    </div>
+  )
 }

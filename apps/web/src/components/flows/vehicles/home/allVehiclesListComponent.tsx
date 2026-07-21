@@ -9,7 +9,7 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Button } from "@/components/ui/button"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
-import getVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
   GridItemWrapper,
   GridWrapper,
@@ -65,7 +65,7 @@ async function AllVehiclesItemComponent({
               imageSize="sm"
             />
           ) : (
-            getVehicleIcon(vehicle.type, "md")
+            <GetVehicleIcon vehicleType={vehicle.type} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>

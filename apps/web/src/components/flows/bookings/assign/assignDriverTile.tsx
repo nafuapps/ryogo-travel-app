@@ -10,7 +10,7 @@ import {
   CheckCheck,
 } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
-import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
+import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -27,7 +27,6 @@ import {
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
-import { IconsList } from "@/components/tags/IconsList"
 
 export default function AssignDriverTile({
   driverData,
@@ -124,9 +123,7 @@ export default function AssignDriverTile({
             icon={BadgeIndianRupee}
             text={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
           />
-          <IconsList
-            icons={getCanDriveIcons(driverData.canDriveVehicleTypes)}
-          />
+          <GetCanDriveIcons canDrive={driverData.canDriveVehicleTypes} />
         </AssignTileFooterWrapper>
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>

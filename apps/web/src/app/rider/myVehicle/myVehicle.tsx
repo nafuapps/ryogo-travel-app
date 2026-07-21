@@ -1,4 +1,4 @@
-import getVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionWrapper,
@@ -43,7 +43,7 @@ export default async function RiderMyVehiclePageComponent({
                 imageSize="lg"
               />
             ) : (
-              getVehicleIcon(vehicle.type, "xl")
+              <GetVehicleIcon vehicleType={vehicle.type} size="xl" />
             )}
           </SectionColWrapper>
           <SectionColWrapper end>

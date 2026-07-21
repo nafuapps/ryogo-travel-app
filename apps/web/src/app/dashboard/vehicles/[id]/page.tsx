@@ -1,12 +1,9 @@
-//Vehicles/id (details) page
-
 import VehicleDetailsPageComponent from "./vehicleDetails"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
-import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 
@@ -30,11 +27,7 @@ export default async function VehicleDetailsPage({
 
   const vehicle = await vehicleServices.findVehicleDetailsById(id)
 
-  if (
-    !vehicle ||
-    user.agencyId !== vehicle.agencyId ||
-    vehicle.status === VehicleStatusEnum.SUSPENDED
-  ) {
+  if (!vehicle) {
     redirect("/dashboard/vehicles", RedirectType.replace)
   }
 

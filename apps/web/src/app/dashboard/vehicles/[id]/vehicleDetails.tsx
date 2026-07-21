@@ -11,7 +11,7 @@ import InactivateVehicleAlertButton from "@/components/buttons/alert/inactivateV
 import Link from "next/link"
 import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
-import getVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,
   PageWrapper,
@@ -41,7 +41,7 @@ export default async function VehicleDetailsPageComponent({
                 imageSize="lg"
               />
             ) : (
-              getVehicleIcon(vehicle.type, "xl")
+              <GetVehicleIcon vehicleType={vehicle.type} size="xl" />
             )}
             <ChangeVehiclePhotoSheet
               vehicleId={vehicle.id}

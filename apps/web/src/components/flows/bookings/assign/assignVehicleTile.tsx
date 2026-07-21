@@ -20,7 +20,7 @@ import {
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
-import getVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -132,7 +132,7 @@ export default function AssignVehicleTile({
             {vehicleData.brand + " " + vehicleData.model}
           </RyogoCaption>
           <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
-            {getVehicleIcon(vehicleData.type, "sm")}
+            <GetVehicleIcon vehicleType={vehicleData.type} size="sm" />
             <RyogoCaption color="slate">{vehicleData.color}</RyogoCaption>
           </div>
         </AssignTileHeaderWrapper>

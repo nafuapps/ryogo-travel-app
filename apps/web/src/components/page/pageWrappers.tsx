@@ -1,7 +1,8 @@
-import { SubmitEventHandler } from "react"
+import { SubmitEventHandler, Suspense } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { PageSkeleton } from "./loadingWrappers"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -19,12 +20,14 @@ export function PageWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div
-      id={id}
-      className="w-full h-full flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar pt-3 lg:pt-4"
-    >
-      {children}
-    </div>
+    <Suspense fallback={<PageSkeleton />}>
+      <div
+        id={id}
+        className="w-full h-full flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar pt-3 lg:pt-4"
+      >
+        {children}
+      </div>
+    </Suspense>
   )
 }
 

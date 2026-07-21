@@ -1,6 +1,5 @@
 "use client"
 
-import { Car } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -20,7 +19,7 @@ import {
   RepairPopoverCard,
 } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
-import getVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleIcon from "@/components/icons/vehicleIcon"
 
 export default function VehiclesScheduleChartComponent({
   vehicleSchedule14Days,
@@ -60,7 +59,7 @@ export default function VehiclesScheduleChartComponent({
             return (
               <DashboardScheduleItem key={index}>
                 <DashboardScheduleItemID
-                  icon={getVehicleIcon(vehicle.type, "md")}
+                  icon={<GetVehicleIcon vehicleType={vehicle.type} size="md" />}
                   imageAlt={t("Photo")}
                   title={vehicle.vehicleNumber}
                   photoUrl={vehicle.vehiclePhotoUrl}

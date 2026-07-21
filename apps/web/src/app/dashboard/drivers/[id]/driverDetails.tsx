@@ -16,7 +16,7 @@ import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDr
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import { DriverStatusPill } from "@/components/pills/ryogoPills"
-import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
+import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,
   PageWrapper,
@@ -26,7 +26,6 @@ import {
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
-import { IconsList } from "@/components/tags/IconsList"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 
 export default async function DriverDetailsPageComponent({
@@ -108,7 +107,7 @@ export default async function DriverDetailsPageComponent({
           <RyogoP weight="font-bold">
             {t("PerDay", { allowance: driver.defaultAllowancePerDay })}
           </RyogoP>
-          <IconsList icons={getCanDriveIcons(driver.canDriveVehicleTypes)} />
+          <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
         </SectionColWrapper>
       </SectionWrapper>
       <SectionWrapper id="DriverActions">

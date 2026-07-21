@@ -9,7 +9,7 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Button } from "@/components/ui/button"
 import { DriverStatusPill } from "@/components/pills/ryogoPills"
-import { getCanDriveIcons } from "@/components/icons/vehicleIcon"
+import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   GridItemWrapper,
   GridWrapper,
@@ -18,7 +18,6 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { IconsList } from "@/components/tags/IconsList"
 
 export default async function AllDriversListComponent({
   agencyId,
@@ -74,7 +73,7 @@ async function AllDriversItemComponent({
           <RyogoP weight="font-bold"> {driver.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <IconsList icons={getCanDriveIcons(driver.canDriveVehicleTypes)} />
+          <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
           <RyogoP weight="font-bold">
             {t("AllowancePerDay", { allowance: driver.defaultAllowancePerDay })}
           </RyogoP>

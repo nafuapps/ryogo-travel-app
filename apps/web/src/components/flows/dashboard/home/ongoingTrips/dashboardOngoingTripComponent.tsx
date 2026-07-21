@@ -10,7 +10,7 @@ export default function DashboardOngoingTripComponent(
 ) {
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <div className="flex flex-row gap-3 hover:bg-slate-100 lg:gap-4 w-full justify-between border border-slate-100 rounded-lg p-4 lg:p-5">
+      <div className="flex flex-row gap-3 hover:bg-slate-100 dark:hover:bg-slate-800 lg:gap-4 w-full justify-between border border-slate-100 dark:border-slate-800 rounded-lg p-4 lg:p-5">
         <SectionColWrapper justifyBetween>
           <SectionColWrapper small>
             <RyogoCaption weight="font-bold">

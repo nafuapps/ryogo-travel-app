@@ -46,7 +46,7 @@ export default async function RiderHomePageComponent({
             />
           )}
           {upcomingBookings.length > 0 && (
-            <div className="flex flex-col gap-2 lg:gap-3 bg-white rounded-lg p-3 lg:p-4">
+            <div className="flex flex-col gap-2 lg:gap-3 bg-white dark:bg-slate-900 rounded-lg p-3 lg:p-4">
               <RyogoSmall>{t("Upcoming")}</RyogoSmall>
               {upcomingBookings.map((b, i) => {
                 return (

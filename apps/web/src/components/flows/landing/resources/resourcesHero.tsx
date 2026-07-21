@@ -13,10 +13,14 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 export default async function ResourcesHeroSection() {
   const t = await getTranslations("Landing.Resources.Hero")
   return (
-    <LandingSectionWrapper id="hero" hero className="bg-white">
+    <LandingSectionWrapper
+      id="hero"
+      hero
+      className="bg-white  dark:bg-slate-900"
+    >
       <LandingContentWrapper
         justifyStart
-        className="h-full lg:flex-row px-5 sm:px-8 md:px-10 lg:px-16 py-24 md:py-32 rounded-lg bg-linear-to-b from-slate-950 to-slate-700"
+        className="h-full lg:flex-row px-5 sm:px-8 md:px-10 lg:px-16 py-24 md:py-32 rounded-lg bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-200"
       >
         <div className="flex flex-col gap-6 lg:gap-8 justify-center w-full">
           <RyogoH1
@@ -60,7 +64,7 @@ export default async function ResourcesHeroSection() {
             <Button
               size="lg"
               variant="link"
-              className="gap-1 lg:gap-1.5 hover:bg-slate-700/80 hover:no-underline"
+              className="gap-1 lg:gap-1.5 hover:bg-slate-700/80 dark:hover:bg-slate-200/80 hover:no-underline"
             >
               <RyogoSmall color="light">{t("ScrollCTA")}</RyogoSmall>
               <RyogoIcon icon={ChevronDown} color="light" size="sm" thick />

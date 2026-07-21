@@ -34,7 +34,7 @@ export default function CommandCenter() {
         {/* Search Bar */}
         <div className={`flex items-center ${isOpen ? "pt-2" : ""} gap-2`}>
           {isOpen && (
-            <div className="flex-1 flex items-center bg-slate-50 rounded-lg px-3 py-2">
+            <div className="flex-1 flex items-center bg-slate-50 dark:bg-slate-950 rounded-lg px-3 py-2">
               <Search className="w-4 h-4 text-sky-700 mr-2" />
               <input
                 type="text"

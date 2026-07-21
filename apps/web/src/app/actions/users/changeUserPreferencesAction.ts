@@ -1,7 +1,10 @@
 "use server"
 
 import { getCurrentUser } from "@/lib/auth"
-import { DARK_MODE_COOKIE_NAME, LOCALE_COOKIE_NAME } from "@/lib/session"
+import {
+  LOCALE_COOKIE_NAME,
+  DARK_MODE_COOKIE_NAME,
+} from "@ryogo-travel-app/api/apiConfig"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { cookies } from "next/headers"

@@ -63,7 +63,7 @@ export default async function ResourcesVideosSection() {
     },
   ]
   return (
-    <LandingSectionWrapper id="videos" className="bg-white">
+    <LandingSectionWrapper id="videos" className="bg-white dark:bg-slate-900">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

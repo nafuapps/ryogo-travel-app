@@ -4,6 +4,8 @@ import { NextIntlClientProvider } from "next-intl"
 import { Toaster } from "@/components/ui/sonner"
 import { Metadata } from "next"
 import { getLocale } from "next-intl/server"
+import { cookies } from "next/headers"
+import { DARK_MODE_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
 
 const notoSans = Noto_Sans({
   subsets: ["latin", "devanagari"],
@@ -25,9 +27,17 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const locale = await getLocale()
+  const prefersDarkClassName =
+    (await cookies()).get(DARK_MODE_COOKIE_NAME)?.value === "true"
+      ? " dark"
+      : ""
 
   return (
-    <html lang={locale} className={notoSans.className}>
+    <html
+      lang={locale}
+      className={notoSans.className + prefersDarkClassName}
+      suppressHydrationWarning
+    >
       <body className={` antialiased`}>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <Toaster position="top-center" richColors />

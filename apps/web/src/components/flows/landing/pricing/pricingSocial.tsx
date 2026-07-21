@@ -18,7 +18,7 @@ export default async function PricingSocialSection() {
         <RyogoH1 weight="font-bold" className="max-w-4xl text-center">
           {t("Title")}
         </RyogoH1>
-        <div className="flex flex-col gap-1 lg:gap-1.5 items-center max-w-4xl rounded-lg p-6 lg:p-8 bg-slate-50 text-center">
+        <div className="flex flex-col gap-1 lg:gap-1.5 items-center max-w-4xl rounded-lg p-6 lg:p-8 bg-slate-50 dark:bg-slate-950 text-center">
           <RyogoH4 color="brand" className="italic">
             {t("Testimonial")}
           </RyogoH4>

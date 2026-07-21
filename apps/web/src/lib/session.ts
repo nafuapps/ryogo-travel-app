@@ -7,14 +7,16 @@ import {
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { SESSION_COOKIE_EXPIRATION_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import {
+  DARK_MODE_COOKIE_NAME,
+  LOCALE_COOKIE_NAME,
+  SESSION_COOKIE_EXPIRATION_DAYS,
+  SESSION_COOKIE_NAME,
+} from "@ryogo-travel-app/api/apiConfig"
 
 const secretKey = process.env.AUTH_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
-export const SESSION_COOKIE_NAME = "session"
-export const LOCALE_COOKIE_NAME = "locale"
-export const DARK_MODE_COOKIE_NAME = "dark"
 export const SESSION_COOKIE_EXPIRATION_TIME =
   SESSION_COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000
 
@@ -130,7 +132,7 @@ export async function createWebSession(user: SelectUserType) {
 }
 
 //Update user status in session
-export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
+export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
   const payload = (await decrypt(session)) as SessionPayload | undefined
@@ -159,7 +161,7 @@ export async function updateSessionUserStatus(newStatus: UserStatusEnum) {
 }
 
 //Update user verification status in session
-export async function updateSessionVerificationStatus(isVerified: boolean) {
+export async function updateUserVerificationInWebSession(isVerified: boolean) {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
   const payload = (await decrypt(session)) as SessionPayload | undefined

@@ -49,7 +49,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
-      <div className="w-full max-w-5xl bg-white opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
+      <div className="w-full max-w-5xl bg-white dark:bg-slate-950 opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
         <div className="flex flex-wrap justify-between items-center py-3 w-full gap-1 lg:gap-3">
           {/* Logo */}
           <Link href="/">
@@ -62,7 +62,7 @@ export default function Navbar() {
               <Link
                 key={link.id}
                 href={link.href}
-                className={`${path !== link.href ? "hover:bg-slate-100" : "bg-sky-100"} p-2 rounded-lg transition-all duration-300`}
+                className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-800" : "bg-sky-100 dark:bg-sky-800"} p-2 rounded-lg transition-all duration-300`}
               >
                 <RyogoSmall
                   color={path !== link.href ? "slate" : "brand"}
@@ -155,15 +155,15 @@ function LanguageSwitcher() {
       disabled={isPending}
       onValueChange={(value) => handleLocaleChange(value as UserLangEnum)}
     >
-      <SelectTrigger className="ml-auto mr-2 md:mx-0 h-9 py-1.5 px-2 lg:py-2 lg:px-3 gap-2 font-medium bg-white border focus:ring-sky-700">
+      <SelectTrigger className="ml-auto mr-2 md:mx-0 h-9 py-1.5 px-2 lg:py-2 lg:px-3 gap-2 font-medium bg-white dark:bg-slate-900 border focus:ring-sky-700 dark:focus:ring-sky-200">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent align="end" className="bg-white">
+      <SelectContent align="end" className="bg-white dark:bg-slate-900">
         {getEnumValueDisplayPairs(UserLangEnum).map((lang) => (
           <SelectItem
             key={lang.value}
             value={lang.value}
-            className="cursor-pointer focus:bg-gray-50 text-gray-700"
+            className="cursor-pointer focus:bg-gray-50 dark:focus:bg-slate-900 text-gray-700 dark:text-gray-200"
           >
             <RyogoCaption color="slate">{lang.display}</RyogoCaption>
           </SelectItem>

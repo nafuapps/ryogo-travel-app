@@ -1,4 +1,7 @@
 //Cookies
+export const LOCALE_COOKIE_NAME = "locale"
+export const DARK_MODE_COOKIE_NAME = "dark"
+export const SESSION_COOKIE_NAME = "session"
 export const SESSION_COOKIE_EXPIRATION_DAYS = 7
 
 //Bookings

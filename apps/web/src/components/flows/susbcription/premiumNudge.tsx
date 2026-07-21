@@ -21,7 +21,7 @@ export default async function PremiumNudge({
   return (
     <div
       id="PremiumNudge"
-      className={`flex flex-col bg-slate-100 p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
+      className={`flex flex-col bg-slate-100  dark:bg-slate-800 p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
     >
       {agencyDetails.hasTriedSubscription ? (
         <>

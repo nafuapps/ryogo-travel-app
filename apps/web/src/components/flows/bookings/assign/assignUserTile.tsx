@@ -2,14 +2,7 @@ import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/u
 import { useTranslations } from "next-intl"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { RyogoP, RyogoCaption } from "@/components/typography"
-import {
-  Bolt,
-  Check,
-  Phone,
-  CheckCheck,
-  TriangleAlertIcon,
-  User,
-} from "lucide-react"
+import { Bolt, Check, CheckCheck, TriangleAlertIcon, User } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import {
   AssignTileWrapper,
@@ -29,15 +22,15 @@ import {
 
 type AssignUserTileProps = {
   userData: FindOwnerAndAgentsByAgencyType[number]
-  selectedUserId: string | null
-  setSelectedUserId: (userId: string | null) => void
+  selected: boolean
+  onClick: () => void
   booking: NonNullable<FindBookingDetailsByIdType>
 }
 export default function AssignUserTile({
   userData,
   booking,
-  selectedUserId,
-  setSelectedUserId,
+  selected,
+  onClick,
 }: AssignUserTileProps) {
   const t = useTranslations("Dashboard.AssignUser.Tile")
 
@@ -77,12 +70,7 @@ export default function AssignUserTile({
   })
 
   return (
-    <AssignTileWrapper
-      selected={selectedUserId === userData.id}
-      onClick={() =>
-        setSelectedUserId(selectedUserId === userData.id ? null : userData.id)
-      }
-    >
+    <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
           <RyogoP weight="font-bold"> {userData.name}</RyogoP>
@@ -95,7 +83,7 @@ export default function AssignUserTile({
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <AssignTileStatusWrapper>
+        <AssignTileStatusWrapper selected={selected}>
           {isCurrentlyAssigned ? (
             <RyogoIcon color="brand" icon={CheckCheck} size="sm" />
           ) : isBooked ? (

@@ -13,7 +13,7 @@ export function DashboardMetricWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-white rounded-lg flex flex-col p-4 lg:p-5 gap-1 lg:gap-2">
+    <div className="bg-white dark:bg-slate-900 rounded-lg flex flex-col p-4 lg:p-5 gap-1 lg:gap-2">
       {children}
     </div>
   )

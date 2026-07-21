@@ -22,7 +22,10 @@ export default function LogoutAlertButton() {
       desc={""}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button variant={"secondary"} className="hover:bg-red-200">
+        <Button
+          variant={"secondary"}
+          className="hover:bg-red-300 dark:hover:bg-red-700"
+        >
           {t("Label")}
         </Button>
       }

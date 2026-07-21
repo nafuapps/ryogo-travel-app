@@ -29,7 +29,7 @@ export default async function CustomerDetailHeaderTabs({
     <div className="flex flex-col md:flex-row justify-between items-center">
       <SectionRowWrapper>
         <RyogoH2 color="brand">{id}</RyogoH2>
-        <CopyClipboardButton />
+        <CopyClipboardButton label={id} />
       </SectionRowWrapper>
       <DetailsHeaderTabWrapper>
         {(Object.keys(links) as CustomerDetailHeaderTab[]).map((tab) => (

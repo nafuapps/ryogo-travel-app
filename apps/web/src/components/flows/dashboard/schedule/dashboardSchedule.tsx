@@ -7,7 +7,7 @@ import {
   SelectItem,
   Select,
 } from "@/components/ui/select"
-import { CalendarDays, LucideIcon } from "lucide-react"
+import { CalendarDays } from "lucide-react"
 import { Dispatch, SetStateAction } from "react"
 import { useTranslations } from "next-intl"
 import moment from "moment"
@@ -22,7 +22,7 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export enum SelectableDays {
   SEVEN = "7Days",
@@ -80,7 +80,7 @@ export function DashboardScheduleChart({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-row lg:flex-col gap-0.5 w-full bg-slate-50">
+    <div className="flex flex-row lg:flex-col gap-0.5 w-full bg-slate-50 dark:bg-slate-950">
       {children}
     </div>
   )
@@ -94,11 +94,11 @@ export default function DashboardScheduleDayAxis({
   const chartStartDate = new Date()
   return (
     <div className="flex flex-col lg:flex-row w-16 lg:w-full gap-0.5">
-      <div className="flex justify-center bg-white items-center p-1 w-16 lg:min-w-24 h-16"></div>
+      <div className="flex justify-center bg-white dark:bg-slate-900 items-center p-1 w-16 lg:min-w-24 h-16"></div>
       {Array.from({ length: selectedDays }, (_, index) => (
         <div
           key={index}
-          className="flex justify-center bg-white items-center p-1 w-16 lg:w-full min-h-16 lg:h-16"
+          className="flex justify-center bg-white dark:bg-slate-900 items-center p-1 w-16 lg:w-full min-h-16 lg:h-16"
         >
           <RyogoCaption color="light">
             {moment(
@@ -117,7 +117,7 @@ export function DashboardScheduleContent({
   children: React.ReactNode
 }) {
   return (
-    <div className="overflow-scroll w-full flex flex-row gap-0.5 lg:flex-col">
+    <div className="overflow-scroll scrollbar-none w-full flex flex-row gap-0.5 lg:flex-col">
       {children}
     </div>
   )
@@ -147,7 +147,7 @@ export function DashboardScheduleItemID({
   photoUrl: string | null
 }) {
   return (
-    <div className="flex flex-col p-1 gap-0.5 bg-white justify-center items-center shrink-0 min-w-20 h-16 lg:w-24 text-ellipsis whitespace-nowrap">
+    <div className="flex flex-col p-1 gap-0.5 bg-white dark:bg-slate-900 justify-center items-center shrink-0 min-w-20 h-16 lg:w-24 text-ellipsis whitespace-nowrap">
       {photoUrl ? (
         <RyogoImage src={getFileUrl(photoUrl)} alt={imageAlt} imageSize="xs" />
       ) : (
@@ -196,22 +196,22 @@ export function DashboardScheduleItemBar({
   startDate,
   endDate,
   selectedDays,
-  addedClass,
   children,
+  className,
 }: {
   id: string
   startDate: Date
   endDate: Date
   selectedDays: number
-  addedClass: string
   children: React.ReactNode
+  className: string
 }) {
   const { startIndex, endIndex } = getStartEndIndex(startDate, endDate)
   return (
     <Popover>
       <PopoverTrigger asChild>
         <div
-          className={`flex flex-row p-1 ${addedClass} ${
+          className={`flex flex-row p-1 ${className} ${
             endIndex > selectedDays + 1
               ? "lg:rounded-bl-2xl rounded-b-none lg:rounded-r-none"
               : "rounded-b-2xl lg:rounded-r-2xl"

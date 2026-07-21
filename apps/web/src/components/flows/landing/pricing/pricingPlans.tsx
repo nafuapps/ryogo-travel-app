@@ -19,7 +19,7 @@ export default async function PricingPlansSection() {
     <LandingSectionWrapper id="pricing" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-cyan-100 to-sky-50"
+        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-cyan-200 dark:from-cyan-700 to-sky-50 dark:to-sky-900"
       >
         <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
@@ -78,7 +78,7 @@ export default async function PricingPlansSection() {
           <Button
             size="lg"
             variant="link"
-            className="gap-1 lg:gap-1.5 hover:bg-sky-100/80"
+            className="gap-1 lg:gap-1.5 hover:bg-sky-100/80 dark:hover:bg-sky-800/80"
           >
             <RyogoSmall color="brand" weight="font-medium">
               {t("CompareCTA")}
@@ -105,7 +105,7 @@ function PricingPlanCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white shadow-lg rounded-lg">
+    <div className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white dark:bg-slate-900 shadow-lg rounded-lg">
       <RyogoP weight="font-bold" color="slate">
         {title}
       </RyogoP>

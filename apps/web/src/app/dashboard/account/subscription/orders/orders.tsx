@@ -149,7 +149,7 @@ function OrderCard({
     <SectionWrapper key={order.id} id={"Order#" + order.id}>
       <SectionRowWrapper center>
         <div
-          className={`flex items-center justify-center shrink-0 transition rounded-lg hover:bg-slate-100 p-1.5 lg:p-2 ${
+          className={`flex items-center justify-center shrink-0 transition rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 lg:p-2 ${
             collapsed ? "-rotate-90" : ""
           }`}
           onClick={() => setCollapsed(!collapsed)}
@@ -221,7 +221,7 @@ function PaymentCard({
   payment: FindAllOrdersByAgencyIdType[number]["payments"][number]
 }) {
   return (
-    <div className="flex bg-slate-100 p-3 lg:p-4 rounded-lg justify-between gap-2 lg:gap-3">
+    <div className="flex bg-slate-100 dark:bg-slate-800 p-3 lg:p-4 rounded-lg justify-between gap-2 lg:gap-3">
       <SectionColWrapper>
         <RyogoSmall color="brand" weight="font-bold">
           {"Payment #" + payment.id}

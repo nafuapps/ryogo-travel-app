@@ -25,14 +25,14 @@ export default function RyogoApprovalTooltip({
       <TooltipTrigger
         className={`flex p-3 lg:pl-4 lg:gap-1 rounded-lg justify-center items-center transition ${
           isApproved
-            ? "bg-green-200 hover:bg-red-200"
-            : "bg-slate-200 hover:bg-slate-300"
+            ? "bg-green-200 dark:bg-green-700 hover:bg-red-200 dark:hover:bg-red-700"
+            : "bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
         }`}
         onClick={onClick}
         disabled={disabled}
       >
         <div className="hidden lg:flex">
-          <RyogoCaption color="light">{label}</RyogoCaption>
+          <RyogoCaption color="slate">{label}</RyogoCaption>
         </div>
         <RyogoIcon icon={isApproved ? CheckCheck : Check} size="sm" />
       </TooltipTrigger>

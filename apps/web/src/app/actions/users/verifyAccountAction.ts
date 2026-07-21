@@ -1,7 +1,7 @@
 "use server"
 
 import { getCurrentUser } from "@/lib/auth"
-import { updateSessionVerificationStatus } from "@/lib/session"
+import { updateUserVerificationInWebSession } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
@@ -14,7 +14,7 @@ export async function verifyAccountAction() {
   if (!user || !user.isVerified) return
 
   //Update verification in session cookie
-  await updateSessionVerificationStatus(user.isVerified)
+  await updateUserVerificationInWebSession(user.isVerified)
 
   return user
 }

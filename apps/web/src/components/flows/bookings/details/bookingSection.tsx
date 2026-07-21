@@ -13,7 +13,7 @@ export default function BookingSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 rounded-lg bg-white p-4 lg:p-5">
+    <div className="flex flex-col gap-2 lg:gap-3 rounded-lg bg-white dark:bg-slate-900 p-4 lg:p-5">
       <div className="flex gap-1.5 lg:gap-2 items-center">
         <RyogoIcon icon={icon} size="sm" />
         <RyogoSmall weight="font-bold">{sectionTitle}</RyogoSmall>

@@ -9,6 +9,15 @@ export default function RyoGoLogo() {
         fill
         alt={"Logo for Ryogo - Travel Agency App"}
         sizes="(max-width: 768px) 160px, 192px"
+        className={"dark:hidden"}
+      />
+      <Image
+        loading="eager"
+        src="/logoLight.png"
+        fill
+        alt={"Logo for Ryogo - Travel Agency App"}
+        sizes="(max-width: 768px) 160px, 192px"
+        className={"hidden dark:block"}
       />
     </div>
   )
@@ -23,6 +32,15 @@ export function RyoGoLightLogo() {
         fill
         alt={"Logo for Ryogo - Travel Agency App"}
         sizes="(max-width: 768px) 112px, 128px"
+        className={"dark:hidden"}
+      />
+      <Image
+        loading="eager"
+        src="/logo.png"
+        fill
+        alt={"Logo for Ryogo - Travel Agency App"}
+        sizes="(max-width: 768px) 112px, 128px"
+        className={"hidden dark:block"}
       />
     </div>
   )
@@ -37,6 +55,15 @@ export function RyoGoLandingLogo(props: { alt: string }) {
         fill
         alt={props.alt}
         sizes="(max-width: 768px) 64px, (max-width: 1024px) 72px, 80px"
+        className={"dark:hidden"}
+      />
+      <Image
+        loading="eager"
+        src="/logoLight.png"
+        fill
+        alt={props.alt}
+        sizes="(max-width: 768px) 64px, (max-width: 1024px) 72px, 80px"
+        className={"hidden dark:block"}
       />
     </div>
   )
@@ -48,26 +75,44 @@ interface RyogoSidebarLogoProps {
 export function RyoGoSidebarLogo(props: RyogoSidebarLogoProps) {
   return (
     <div
-      className={` ${props.open ? "py-3" : "py-4"} px-2 flex gap-3 items-center`}
+      className={` ${props.open ? "py-2.5" : "py-3"} px-1 flex gap-3 items-center`}
     >
-      <div className={`relative size-7 lg:size-8 aspect-square`}>
+      <div className={`relative size-10 aspect-square`}>
         <Image
           loading="eager"
           src="/logoPWA.png"
           fill
           alt={"Logo Icon for Ryogo - Travel Agency App"}
-          sizes="100%"
+          sizes="40px"
+          className={"dark:hidden"}
+        />
+        <Image
+          loading="eager"
+          src="/logoPWALight.png"
+          fill
+          alt={"Logo Icon for Ryogo - Travel Agency App"}
+          sizes="40px"
+          className={"hidden dark:block"}
         />
       </div>
       <div
-        className={`relative h-9 lg:h-10 ${props.open ? "flex" : "hidden"} aspect-2/1`}
+        className={`relative h-11 ${props.open ? "flex" : "hidden"} aspect-2/1`}
       >
         <Image
           loading="eager"
           src="/logo.png"
           fill
           alt={"Expanded Logo for Ryogo - Travel Agency App"}
-          sizes="100%"
+          sizes="110px"
+          className={"dark:hidden"}
+        />
+        <Image
+          loading="eager"
+          src="/logoLight.png"
+          fill
+          alt={"Expanded Logo for Ryogo - Travel Agency App"}
+          sizes="110px"
+          className={"hidden dark:block"}
         />
       </div>
     </div>

@@ -60,20 +60,14 @@ export default async function MyProfileAgencyDetailsPageComponent({
       {assignedUser && (
         <SectionWrapper id="AssignedUserInfo">
           <RyogoSmall weight="font-bold">{t("AssignedUserInfo")}</RyogoSmall>
-          <SectionRowWrapper>
+          <SectionRowWrapper center>
             <RyogoSmall color="slate">{assignedUser.name}</RyogoSmall>
-            <Button
-              variant={"secondary"}
-              className="sm:col-span-2 xl:col-span-3"
-            >
-              <Link
-                href={`tel:${assignedUser.phone}`}
-                className="w-full gap-2 lg:gap-3 flex flex-row items-center justify-center"
-              >
-                <RyogoIcon icon={Phone} size="sm" />
-                <RyogoCaption color="light">{t("CallAgent")}</RyogoCaption>
-              </Link>
-            </Button>
+            <Link href={`tel:${assignedUser.phone}`}>
+              <Button variant={"outline"}>
+                <RyogoIcon icon={Phone} size="sm" color="slate" />
+                <RyogoCaption color="slate">{t("CallAgent")}</RyogoCaption>
+              </Button>
+            </Link>
           </SectionRowWrapper>
         </SectionWrapper>
       )}

@@ -13,7 +13,10 @@ import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
 export default async function FeaturesManagementSection() {
   const t = await getTranslations("Landing.Features.Management")
   return (
-    <LandingSectionWrapper id="management" className="bg-white">
+    <LandingSectionWrapper
+      id="management"
+      className="bg-white dark:bg-slate-900"
+    >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

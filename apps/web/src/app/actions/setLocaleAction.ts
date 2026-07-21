@@ -1,7 +1,8 @@
 "use server"
 
-import { LOCALE_COOKIE_NAME } from "@/lib/session"
+import { LOCALE_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
+import { refresh } from "next/cache"
 import { cookies } from "next/headers"
 
 export async function setLocaleAction(locale: UserLangEnum) {
@@ -12,4 +13,5 @@ export async function setLocaleAction(locale: UserLangEnum) {
     secure: true,
     sameSite: "lax",
   })
+  refresh()
 }

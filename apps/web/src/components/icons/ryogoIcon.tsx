@@ -13,55 +13,55 @@ export type RyogoIconSize = "sm" | "md" | "lg" | "xl"
 
 const getIconColor = (color?: RyogoIconColor) => {
   if (color === "red") {
-    return "text-red-700"
+    return "text-red-700 dark:text-red-300"
   }
   if (color === "yellow") {
-    return "text-yellow-700"
+    return "text-yellow-700 dark:text-yellow-300"
   }
   if (color === "green") {
-    return "text-green-700"
+    return "text-green-700 dark:text-green-300"
   }
   if (color === "brand") {
-    return "text-sky-700"
+    return "text-sky-700 dark:text-sky-300"
   }
   if (color === "slate") {
-    return "text-slate-700"
+    return "text-slate-700 dark:text-slate-300"
   }
   if (color === "black") {
-    return "text-slate-950"
+    return "text-slate-950 dark:text-white"
   }
   if (color === "white") {
-    return "text-white"
+    return "text-white dark:text-slate-950"
   }
   if (color === "light") {
-    return "text-slate-400"
+    return "text-slate-400 dark:text-slate-500"
   }
-  return "text-slate-700"
+  return "text-slate-700 dark:text-slate-300"
 }
 
 const getBGColor = (color?: RyogoIconColor) => {
   if (color === "red") {
-    return "bg-red-100"
+    return "bg-red-100 dark:bg-red-800"
   }
   if (color === "yellow") {
-    return "bg-yellow-100"
+    return "bg-yellow-100 dark:bg-yellow-800"
   }
   if (color === "green") {
-    return "bg-green-100"
+    return "bg-green-100 dark:bg-green-800"
   }
   if (color === "brand") {
-    return "bg-sky-100"
+    return "bg-sky-100 dark:bg-sky-800"
   }
   if (color === "slate") {
-    return "bg-slate-100"
+    return "bg-slate-100 dark:bg-slate-800"
   }
   if (color === "black") {
-    return "bg-slate-950"
+    return "bg-slate-950 dark:bg-white"
   }
   if (color === "white") {
-    return "bg-white"
+    return "bg-white dark:bg-slate-900"
   }
-  return "bg-slate-100"
+  return "bg-slate-100 dark:bg-slate-800"
 }
 
 export function RyogoIcon(props: {

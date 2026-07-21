@@ -9,9 +9,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-slate-700 text-white shadow-xs hover:bg-slate-950/90",
+        default:
+          "bg-slate-900 dark:bg-white text-white dark:text-slate-950 shadow-xs hover:bg-slate-900/90 dark:hover:bg-slate-50/90",
         destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-white dark:text-slate-950 shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "border border-slate-300 shadow-xs hover:opacity-70 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
@@ -19,8 +20,10 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        brand: "bg-sky-700 hover:bg-sky-900/90 shadow text-white font-bold",
-        white: "bg-white text-sky-700 shadow-sm font-bold hover:bg-sky-50",
+        brand:
+          "bg-sky-700 dark:bg-sky-200 hover:bg-sky-900/90 dark:hover:bg-sky-50/90 shadow text-white dark:text-slate-950 font-bold",
+        white:
+          "bg-white dark:bg-slate-900 text-sky-700 dark:text-sky-200 shadow-sm font-bold hover:bg-sky-50 dark:hover:bg-sky-900",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

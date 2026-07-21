@@ -9,7 +9,10 @@ import { FeatureGrid, FeatureItem } from "./featureWrappers"
 export default async function FeaturesCommunicationSection() {
   const t = await getTranslations("Landing.Features.Communication")
   return (
-    <LandingSectionWrapper id="communication" className="bg-white">
+    <LandingSectionWrapper
+      id="communication"
+      className="bg-white dark:bg-slate-900"
+    >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

@@ -48,7 +48,7 @@ export default async function MyMissionsPage() {
       <RiderHeader pathName={"/rider/myMissions"} />
       <MissionControlPageComponent
         missions={missions}
-        isPremium={agency.subscriptionPlan === SubscriptionPlanEnum.PREMIUM}
+        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
         driverAlert={showDriverAlert ? driver : undefined}
       />
     </MainWrapper>

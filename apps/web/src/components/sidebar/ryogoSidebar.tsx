@@ -38,7 +38,7 @@ export default function RyogoSidebar({
     <Sidebar
       side="left"
       collapsible={isMobile ? "offcanvas" : "icon"}
-      className="h-full"
+      className="h-full bg-slate-50 dark:bg-slate-800"
     >
       <SidebarHeader className="mb-3">
         <RyoGoSidebarLogo open={sidebarOpen} />
@@ -92,7 +92,7 @@ function MenuButton(props: {
       <Tooltip disableHoverableContent>
         <TooltipTrigger className="w-full">
           <div
-            className={`flex flex-row gap-3 items-center rounded-lg ${props.active ? "bg-sky-700" : "hover:bg-sky-100"} w-full p-2 transition
+            className={`flex flex-row gap-3 items-center rounded-lg ${props.active ? "bg-sky-700 dark:bg-sky-200" : "hover:bg-sky-100 dark:hover:bg-sky-800"} w-full px-2.5 lg:px-2 py-2 transition
             `}
           >
             <RyogoIcon

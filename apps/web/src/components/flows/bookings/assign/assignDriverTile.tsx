@@ -131,7 +131,7 @@ export default function AssignDriverTile({
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <AssignTileStatusWrapper>
+        <AssignTileStatusWrapper selected={selected}>
           {isCurrentlyAssigned ? (
             <RyogoIcon icon={CheckCheck} size="sm" color="brand" />
           ) : isBooked ? (

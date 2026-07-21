@@ -40,17 +40,17 @@ export default function BuySubscriptionComponent({
 
   return (
     <SectionWrapper id="PaymentOptions" center>
-      <div className="w-full rounded-lg bg-slate-950 p-7 lg:p-8 gap-3 lg:gap-4 flex flex-col items-center justify-center text-center">
+      <div className="w-full rounded-lg bg-slate-950 dark:bg-white p-7 lg:p-8 gap-3 lg:gap-4 flex flex-col items-center justify-center text-center">
         <RyogoSmall color="light">{t("ExperiencePremium")}</RyogoSmall>
         <RyogoH2 color="white" weight="font-bold">
           {t("UpgradeJourney")}
         </RyogoH2>
-        <div className="flex flex-col gap-1 lg:gap-1.5 items-center rounded-lg p-3 lg:p-4 bg-slate-100 text-center">
+        <div className="flex flex-col gap-1 lg:gap-1.5 items-center rounded-lg p-3 lg:p-4 bg-slate-100  dark:bg-slate-800 text-center">
           <RyogoCaption weight="font-bold">{t("Testimonial")}</RyogoCaption>
           <RyogoCaption color="slate">{t("TestimonialAuthor")}</RyogoCaption>
         </div>
       </div>
-      <div className="flex flex-col w-full items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-slate-100 rounded-lg">
+      <div className="flex flex-col w-full items-center gap-3 lg:gap-4 p-3 lg:p-4 bg-slate-100  dark:bg-slate-800 rounded-lg">
         <RyogoCaption color="light">{t("ChooseYourPlan")}</RyogoCaption>
         <div className="flex flex-col w-full xl:flex-row gap-4">
           <PaymentOptionCard
@@ -126,7 +126,7 @@ function PaymentOptionCard({
   const currentlySelected = selectedOption === plan
   return (
     <div
-      className={`flex w-full flex-col p-3 lg:p-4 gap-2 shadow lg:gap-3 rounded-lg justify-between transition ${currentlySelected ? "bg-sky-700" : " hover:bg-sky-200 bg-white"}`}
+      className={`flex w-full flex-col p-3 lg:p-4 gap-2 shadow lg:gap-3 rounded-lg justify-between transition ${currentlySelected ? "bg-sky-700 dark:bg-sky-200" : " hover:bg-sky-200 dark:hover:bg-sky-700 bg-white dark:bg-slate-900"}`}
       onClick={onClick}
     >
       <SectionRowWrapper>
@@ -164,7 +164,7 @@ function PaymentOptionCard({
         </SectionColWrapper>
       </SectionRowWrapper>
       <div
-        className={`h-0.5 w-full ${currentlySelected ? "bg-white" : "bg-slate-100"}`}
+        className={`h-0.5 w-full ${currentlySelected ? "bg-white dark:bg-slate-900" : "bg-slate-100 dark:bg-slate-800"}`}
       />
       <SectionRowWrapper center small>
         <RyogoCaption
@@ -175,7 +175,7 @@ function PaymentOptionCard({
         </RyogoCaption>
         {best && (
           <div
-            className={`flex items-center justify-center rounded-full gap-1 lg:gap-1.5 px-2 lg:px-3 py-1 lg:py-1.5 ${currentlySelected ? "bg-white" : "bg-sky-700"}`}
+            className={`flex items-center justify-center rounded-full gap-1 lg:gap-1.5 px-2 lg:px-3 py-1 lg:py-1.5 ${currentlySelected ? "bg-white dark:bg-slate-900" : "bg-sky-700 dark:bg-sky-200"}`}
           >
             <RyogoCaption color={currentlySelected ? "brand" : "white"}>
               {t("BestValue")}

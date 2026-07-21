@@ -87,7 +87,7 @@ async function FeaturesMenuItem({
           sizes="672px"
         />
       </div>
-      <div className="absolute left-0 right-0 bottom-0 p-2.5 lg:p-3 flex items-center justify-center gap-1 lg:gap-1.5 bg-slate-50 rounded-b-lg transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
+      <div className="absolute left-0 right-0 bottom-0 p-2.5 lg:p-3 flex items-center justify-center gap-1 lg:gap-1.5 bg-slate-50 dark:bg-slate-950 rounded-b-lg transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
         <RyogoSmall color="brand">{t("LearnMore")}</RyogoSmall>
         <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
       </div>

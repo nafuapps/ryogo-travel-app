@@ -16,7 +16,7 @@ export default async function FeaturesHeroSection() {
     <LandingSectionWrapper id="hero" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 sm:px-8 md:px-10 lg:px-16 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-slate-300 to-slate-50"
+        className="h-full px-5 sm:px-8 md:px-10 lg:px-16 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-slate-300 dark:from-slate-600 to-slate-50 dark:to-slate-900"
       >
         <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
@@ -45,7 +45,7 @@ export default async function FeaturesHeroSection() {
             </Button>
           </Link>
         </div>
-        <div className="bg-white mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
           <Image
             className="object-cover"
             loading="eager"

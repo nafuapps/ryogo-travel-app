@@ -3,11 +3,7 @@ import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { SUBSCRIPTION_EXPIRY_REMINDER_DAYS } from "@/lib/uiConfig"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import {
-  UserRolesEnum,
-  SubscriptionPlanEnum,
-  OrderTypeEnum,
-} from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import { CalendarSync } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -27,7 +23,6 @@ export default async function PlanExpiryDetails({
 
   const isOwner = userDetails.userRole === UserRolesEnum.OWNER
 
-  const isBasic = agencyDetails.subscriptionPlan === SubscriptionPlanEnum.BASIC
   const daysToExpiry = differenceInDays(
     agencyDetails.subscriptionExpiresOn,
     new Date(),
@@ -37,7 +32,7 @@ export default async function PlanExpiryDetails({
   return (
     <div
       id="PlanExpiry"
-      className={`flex flex-col ${daysToExpiry < 0 ? "bg-red-100" : needExpiryReminder ? "bg-yellow-100" : "bg-slate-200"}  p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
+      className={`flex flex-col ${daysToExpiry < 0 ? "bg-red-100 dark:bg-red-800" : needExpiryReminder ? "bg-yellow-100 dark:bg-yellow-800" : "bg-slate-100 dark:bg-slate-800"}  p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
     >
       {needExpiryReminder ? (
         <>

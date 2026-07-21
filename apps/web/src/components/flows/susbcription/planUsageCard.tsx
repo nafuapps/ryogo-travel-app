@@ -82,7 +82,7 @@ export default async function PlanUsageCard({
         ratio={agentsRatio}
       />
       {needsWarning && (
-        <div className="flex items-center gap-1.5 md:gap-2 p-2 md:p-3 bg-yellow-50 rounded-lg">
+        <div className="flex items-center gap-1.5 md:gap-2 p-2 md:p-3 bg-yellow-50 dark:bg-yellow-900 rounded-lg">
           <RyogoIcon icon={Info} size="sm" color="yellow" />
           <RyogoCaption color="yellow">{t("Warning")}</RyogoCaption>
         </div>
@@ -114,7 +114,7 @@ function UsageElement({
         <RyogoSmall weight="font-bold">{label}</RyogoSmall>
         <RyogoSmall weight="font-bold">{usageNumber}</RyogoSmall>
       </SectionRowWrapper>
-      <div className="rounded-full overflow-hidden h-2 lg:h-2.5 bg-slate-200">
+      <div className="rounded-full overflow-hidden h-2 lg:h-2.5 bg-slate-200 dark:bg-slate-700">
         <div
           className={`h-full rounded-full ${bgColor}`}
           style={{ width: (ratio > 100 ? 100 : ratio) + "%" }}

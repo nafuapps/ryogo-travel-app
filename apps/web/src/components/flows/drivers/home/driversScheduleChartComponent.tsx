@@ -75,13 +75,13 @@ export default function DriversScheduleChartComponent({
                         endDate={b.endDate}
                         id={b.id}
                         selectedDays={selectedDays}
-                        addedClass={
-                          b.status === BookingStatusEnum.CONFIRMED &&
-                          b.startDate < new Date()
-                            ? "bg-red-200 hover:bg-red-300"
-                            : b.status === BookingStatusEnum.IN_PROGRESS
-                              ? "bg-green-200 hover:bg-green-300"
-                              : "bg-slate-200 hover:bg-slate-300"
+                        className={
+                          (b.status === BookingStatusEnum.CONFIRMED &&
+                            b.startDate < new Date()) ||
+                          (b.status === BookingStatusEnum.IN_PROGRESS &&
+                            b.endDate < new Date())
+                            ? "bg-red-200 dark:bg-red-700 hover:bg-red-300 dark:hover:bg-red-600"
+                            : "bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
                         }
                       >
                         <AssignedBookingPopoverCard {...b} />
@@ -96,7 +96,9 @@ export default function DriversScheduleChartComponent({
                         endDate={l.endDate}
                         id={l.id}
                         selectedDays={selectedDays}
-                        addedClass={"bg-yellow-200 hover:bg-yellow-300"}
+                        className={
+                          "bg-yellow-200 dark:bg-yellow-700 hover:bg-yellow-300 dark:hover:bg-yellow-600"
+                        }
                       >
                         <LeavePopoverCard {...l} />
                       </DashboardScheduleItemBar>

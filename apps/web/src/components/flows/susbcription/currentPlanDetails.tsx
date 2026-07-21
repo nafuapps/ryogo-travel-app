@@ -1,5 +1,5 @@
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption, RyogoH2, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoH2 } from "@/components/typography"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -12,6 +12,7 @@ import { Disc, BadgeCheck, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { RyogoPill } from "@/components/pills/ryogoPills"
 
 export default async function CurrentPlanDetails({
   subscriptionPlan,
@@ -37,13 +38,17 @@ export default async function CurrentPlanDetails({
           bgColor="slate"
         />
       </SectionRowWrapper>
-      <RyogoSmall weight="font-bold" color="light">
-        {isBasic
-          ? t("FreeForever")
-          : lastPaidPlan
-            ? lastPaidPlan.toUpperCase()
-            : t("Trial")}
-      </RyogoSmall>
+      <RyogoPill
+        selfStart
+        label={
+          isBasic
+            ? t("FreeForever")
+            : lastPaidPlan
+              ? lastPaidPlan.toUpperCase()
+              : t("Trial")
+        }
+        bgColor="slate"
+      />
       {isOwner && (
         <Link href="/dashboard/account/subscription/orders">
           <Button variant={"outline"} size="sm" className="w-full">

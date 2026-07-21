@@ -26,7 +26,7 @@ export default async function AddCustomMissionPage() {
   }
 
   //Only Premium agencies can add custom missions
-  if (agency.subscriptionPlan !== SubscriptionPlanEnum.PREMIUM) {
+  if (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC) {
     redirect("/dashboard/mission-control", RedirectType.replace)
   }
 

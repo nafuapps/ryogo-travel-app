@@ -13,7 +13,7 @@ export default function AccountCard({
 }) {
   return (
     <Link href={`/auth/login/password/${account.id}`}>
-      <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-200 rounded-lg hover:bg-slate-50 p-3 lg:p-4">
+      <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 p-3 lg:p-4">
         <div className="flex flex-col justify-between gap-1 lg:gap-2">
           <div className="flex items-center gap-2 lg:gap-3">
             {account.photoUrl && (
@@ -30,7 +30,7 @@ export default function AccountCard({
           </RyogoCaption>
         </div>
         <div className="flex flex-col justify-between gap-2 lg:gap-3 items-end">
-          <div className="flex rounded-full bg-slate-200 px-2 py-1 lg:px-2.5 lg:py-1.5">
+          <div className="flex rounded-full bg-slate-200 dark:bg-slate-700 px-2 py-1 lg:px-2.5 lg:py-1.5">
             <RyogoCaption color="light">
               {account.userRole.toUpperCase()}
             </RyogoCaption>

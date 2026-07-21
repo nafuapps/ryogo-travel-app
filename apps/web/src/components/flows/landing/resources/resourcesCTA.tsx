@@ -16,7 +16,7 @@ export default async function ResourcesCTASection() {
     <LandingSectionWrapper
       id="cta"
       shrink
-      className="bg-linear-to-b from-slate-600 to-slate-900"
+      className="bg-linear-to-b from-slate-600 dark:from-slate-300 to-slate-900 dark:to-slate-50"
     >
       <LandingContentWrapper>
         <RyogoH1 color="white" weight="font-bold" className="text-center">
@@ -36,7 +36,7 @@ export default async function ResourcesCTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="w-full md:w-auto border-white hover:bg-white/20"
+              className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
             >
               <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
             </Button>

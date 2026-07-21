@@ -40,7 +40,7 @@ export default async function MissionControlPage() {
       <DashboardHeader pathName={"/dashboard/mission-control"} />
       <MissionControlPageComponent
         missions={missions}
-        isPremium={agency.subscriptionPlan === SubscriptionPlanEnum.PREMIUM}
+        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
         expiryAlerts={expiryAlerts}
       />
     </MainWrapper>

@@ -3,11 +3,11 @@ import {
   createWebSession,
   decrypt,
   SessionPayload,
-  SESSION_COOKIE_NAME,
 } from "./session"
 import { cookies } from "next/headers"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cache } from "react"
+import { SESSION_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
 
 // Get current user from session
 export const getCurrentUser = cache(async () => {

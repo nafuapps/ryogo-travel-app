@@ -35,7 +35,7 @@ export default async function AccountPageComponent({
       <SectionWrapper id="AccountDetailsInfo">
         <SectionRowWrapper justifyStart center>
           <RyogoH3 color="brand">{userDetails.id}</RyogoH3>
-          <CopyClipboardButton />
+          <CopyClipboardButton label={userDetails.id} />
         </SectionRowWrapper>
         <Separator />
         <SectionRowWrapper>

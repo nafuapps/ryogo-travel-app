@@ -14,13 +14,13 @@ import { RyogoCaption } from "@/components/typography"
 type RyogoPillColor = "slate" | "brand" | "green" | "red" | "yellow" | "light"
 
 function getStatusPillColor(color?: RyogoPillColor) {
-  if (color === "slate") return "bg-slate-700"
-  if (color === "light") return "bg-slate-400"
-  if (color === "brand") return "bg-sky-700"
-  if (color === "green") return "bg-green-600"
-  if (color === "red") return "bg-red-600"
-  if (color === "yellow") return "bg-yellow-600"
-  return "bg-slate-700"
+  if (color === "slate") return "bg-slate-700 dark:bg-slate-200"
+  if (color === "light") return "bg-slate-400 dark:bg-slate-500"
+  if (color === "brand") return "bg-sky-700 dark:bg-sky-200"
+  if (color === "green") return "bg-green-700 dark:bg-green-200"
+  if (color === "red") return "bg-red-700 dark:bg-red-200"
+  if (color === "yellow") return "bg-yellow-700 dark:bg-yellow-200"
+  return "bg-slate-700 dark:bg-slate-200"
 }
 
 export function RyogoPill(props: {

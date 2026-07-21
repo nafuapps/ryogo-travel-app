@@ -31,7 +31,7 @@ export default async function SearchPage() {
 
   const isSubscribed =
     agency.subscriptionExpiresOn > new Date() &&
-    agency.subscriptionPlan === SubscriptionPlanEnum.PREMIUM
+    agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
 
   const searchData = await agencyServices.findAgencySearchData(
     currentUser.agencyId,

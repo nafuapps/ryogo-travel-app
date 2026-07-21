@@ -2,8 +2,8 @@
 
 import { getCurrentUser } from "@/lib/auth"
 import {
-  updateSessionUserStatus,
-  updateSessionVerificationStatus,
+  updateUserStatusInWebSession,
+  updateUserVerificationInWebSession,
 } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
@@ -24,10 +24,10 @@ export async function newUserSetPasswordAction(
   if (!user) return
 
   // Update user status to active in cookies
-  await updateSessionUserStatus(user.status)
+  await updateUserStatusInWebSession(user.status)
 
   // Update verification status to true in cookies
-  await updateSessionVerificationStatus(user.isVerified)
+  await updateUserVerificationInWebSession(user.isVerified)
 
   return user
 }

@@ -13,7 +13,10 @@ import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
 export default async function FeaturesSchedulingSection() {
   const t = await getTranslations("Landing.Features.Scheduling")
   return (
-    <LandingSectionWrapper id="scheduling" className="bg-slate-50">
+    <LandingSectionWrapper
+      id="scheduling"
+      className="bg-slate-50 dark:bg-slate-950"
+    >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

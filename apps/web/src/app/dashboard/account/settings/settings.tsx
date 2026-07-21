@@ -52,7 +52,6 @@ export default function AccountSettingsPageComponent({
         newPreferences,
       )
       if (updatedUser) {
-        router.replace("/dashboard/account")
         toast.success(t("Success"))
       } else {
         toast.error(t("Error"))

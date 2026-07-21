@@ -52,7 +52,7 @@ export default function MissionCard({
 
   return (
     <CarouselItem
-      className={`flex flex-col gap-2 lg:gap-3 p-4 lg:p-5 basis-full md:basis-1/2 xl:basis-1/3 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-200 shadow-sm" : "bg-white shadow"} ${!isRead ? (mission.isCritical ? "border-l-6 border-red-600" : "border-l-6 border-sky-700") : ""}`}
+      className={`flex flex-col gap-2 lg:gap-3 p-4 lg:p-5 basis-full md:basis-1/2 xl:basis-1/3 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-200 dark:bg-slate-700 shadow-sm" : "bg-white dark:bg-slate-900 shadow"} ${!isRead ? (mission.isCritical ? "border-l-6 border-red-700 dark:border-red-300" : "border-l-6 border-sky-700 dark:border-sky-300") : ""}`}
     >
       <SectionRowWrapper center>
         <SectionRowWrapper justifyStart center>
@@ -140,12 +140,12 @@ export default function MissionCard({
         <>
           <Separator />
           <div className="flex items-center justify-between gap-1.5 lg:gap-2">
-            <RyogoPill label={t("Card.Custom")} bgColor={"light"} />
+            <RyogoPill label={t("Card.Custom")} bgColor={"slate"} />
             <Button
               variant={"link"}
               size="sm"
               disabled={isPending || isRead}
-              className="hover:bg-slate-50 hover:no-underline"
+              className="hover:bg-slate-50 dark:hover:bg-slate-900 hover:no-underline"
             >
               <Link
                 href={`/dashboard/mission-control/${mission.id}/modify`}

@@ -105,14 +105,14 @@ function SlideshowCard({
         </div>
       )}
       {active ? (
-        <div className="rounded w-full h-0.5 lg:h-1 bg-white">
+        <div className="rounded w-full h-0.5 lg:h-1 bg-white dark:bg-slate-900">
           <div
-            className="h-full rounded bg-sky-700"
+            className="h-full rounded bg-sky-700 dark:bg-sky-200"
             style={{ width: `${(timeLeft / SLIDESHOW_TIMER_MS) * 100}%` }}
           />
         </div>
       ) : (
-        <div className="w-full h-px lg:h-0.5 rounded bg-slate-200" />
+        <div className="w-full h-px lg:h-0.5 rounded bg-slate-200 dark:bg-slate-700" />
       )}
     </div>
   )

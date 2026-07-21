@@ -26,7 +26,7 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
     <div id="tripInfo" className="flex flex-col">
       <div
         id="tripHeader"
-        className="flex flex-row bg-white justify-between items-center p-3 lg:p-4 rounded-t-lg"
+        className="flex flex-row bg-white dark:bg-slate-900 justify-between items-center p-3 lg:p-4 rounded-t-lg"
       >
         <div className="flex flex-col gap-1 lg:gap-1.5">
           <RyogoP weight="font-bold"> {props.tripSourceLocationCity}</RyogoP>
@@ -42,11 +42,11 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
             id="tripDistance"
             className="flex flex-row items-center justify-center text-center gap-1.5 lg:gap-2"
           >
-            <div className="h-0.5 w-4 lg:w-6 bg-slate-200" />
+            <div className="h-0.5 w-4 lg:w-6 bg-slate-200 dark:bg-slate-700" />
             <RyogoSmall color="slate">
               {props.selectedDistance + t("Km")}
             </RyogoSmall>
-            <div className="h-0.5 w-4 lg:w-6 bg-slate-200" />
+            <div className="h-0.5 w-4 lg:w-6 bg-slate-200 dark:bg-slate-700" />
           </div>
         )}
         <div
@@ -66,7 +66,7 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
       </div>
       <div
         id="tripFooter"
-        className="bg-slate-200 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
+        className="bg-slate-200 dark:bg-slate-700 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
       >
         <TripTagWrapper>
           <SectionRowWrapper small center>
@@ -101,7 +101,7 @@ export default function NewBookingTripCard(props: NewBookingFormDataType) {
 
 function TripTagWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-center px-2 py-1.5 lg:px-3 lg:py-2 border border-slate-300 rounded-lg">
+    <div className="flex items-center justify-center px-2 py-1.5 lg:px-3 lg:py-2 border border-slate-300 dark:border-slate-600 rounded-lg">
       {children}
     </div>
   )

@@ -52,7 +52,6 @@ export default function MyProfileSettingsPageComponent({
         newPreferences,
       )
       if (updatedUser) {
-        router.replace("/rider/myProfile")
         toast.success(t("Success"))
       } else {
         toast.error(t("Error"))

@@ -45,7 +45,7 @@ export function ExpenseApprovalButton({
   return (
     <RyogoApprovalTooltip
       label={isApproved ? t("Approved") : t("Approve")}
-      tooltipText={isApproved ? t("RejectTitle") : t("RejectTitle")}
+      tooltipText={isApproved ? t("RejectTitle") : t("ApproveTitle")}
       isApproved={isApproved}
       onClick={isApproved ? rejectExpense : approveExpense}
       disabled={isPending}

@@ -2,6 +2,7 @@ import { SubmitEventHandler } from "react"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export const CreateAccountTotalSteps = 5
 export const VerifyAccountTotalSteps = 1
@@ -140,9 +141,9 @@ export function OnboardingSuccessIcon(props: OnboardingSuccessIconProps) {
   return (
     <div
       id={props.iconId}
-      className="bg-slate-950 rounded-full size-12 lg:size-16 flex justify-center items-center"
+      className="bg-slate-950 dark:bg-white rounded-full size-12 lg:size-16 flex justify-center items-center"
     >
-      <Check className="size-8 lg:size-10 text-white" />
+      <RyogoIcon icon={Check} size="md" color="white" />
     </div>
   )
 }

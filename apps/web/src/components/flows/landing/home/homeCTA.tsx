@@ -22,7 +22,7 @@ export default async function HomeCTASection() {
     <LandingSectionWrapper
       id="cta"
       shrink
-      className="bg-linear-to-b from-sky-600 to-sky-900"
+      className="bg-linear-to-b from-sky-600 dark:from-sky-300 to-sky-900 dark:to-sky-50"
     >
       <LandingContentWrapper>
         <RyogoH1 color="white" weight="font-bold" className="text-center">
@@ -41,7 +41,7 @@ export default async function HomeCTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="w-full md:w-auto border-white hover:bg-white/20"
+              className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
             >
               <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
             </Button>
@@ -70,6 +70,6 @@ function PropItem({ label }: { label: string }) {
 
 function PropDot() {
   return (
-    <div className="hidden md:flex bg-sky-200 size-1 lg:size-1.5 rounded-full" />
+    <div className="hidden md:flex bg-sky-200 dark:bg-sky-700 size-1 lg:size-1.5 rounded-full" />
   )
 }

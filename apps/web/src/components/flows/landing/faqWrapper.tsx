@@ -28,7 +28,7 @@ export function FAQItem({
         onClick={() => setOpen(!open)}
       >
         <div
-          className={`flex items-center justify-center shrink-0 transition rounded-lg bg-slate-100 p-1.5 lg:p-2 ${
+          className={`flex items-center justify-center shrink-0 transition rounded-lg bg-slate-100 dark:bg-slate-800 p-1.5 lg:p-2 ${
             open ? "" : "-rotate-90"
           }`}
         >

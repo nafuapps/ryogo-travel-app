@@ -5,20 +5,20 @@ import { Button } from "@/components/ui/button"
 import { CheckCheck, Copy } from "lucide-react"
 import { useEffect, useState } from "react"
 
-export default function CopyClipboardButton() {
+export default function CopyClipboardButton({ label }: { label?: string }) {
   const [isCopied, setIsCopied] = useState(false)
 
   useEffect(() => {
     if (isCopied) {
       setTimeout(() => {
         setIsCopied(false)
-      }, 3000)
+      }, 1000)
     }
   }, [isCopied])
 
   function handleCopy() {
     setIsCopied(true)
-    navigator.clipboard.writeText(window.location.href)
+    navigator.clipboard.writeText(label ?? window.location.href)
   }
 
   return (

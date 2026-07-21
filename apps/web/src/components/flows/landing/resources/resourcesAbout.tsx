@@ -10,7 +10,7 @@ import RyoGoLogo from "@/components/logo"
 export default async function ResourcesAboutSection() {
   const t = await getTranslations("Landing.Resources.About")
   return (
-    <LandingSectionWrapper id="about" className="bg-slate-50">
+    <LandingSectionWrapper id="about" className="bg-slate-50 dark:bg-slate-950">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
@@ -18,11 +18,11 @@ export default async function ResourcesAboutSection() {
         <RyogoP color="light" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
-        <div className="bg-white relative shadow w-full max-w-4xl rounded-lg p-6 md:p-8 my-3 md:my-4 flex flex-col items-center gap-4 md:gap-6 overflow-hidden">
-          <div className="bg-linear-to-b from-sky-900 to-sky-700 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -top-10 md:-left-14 md:-top-14 lg:-left-16 lg:-top-16"></div>
-          <div className="bg-linear-to-b from-sky-900 to-sky-700 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -top-10 md:-right-14 md:-top-14 lg:-right-16 lg:-top-16"></div>
-          <div className="bg-linear-to-b from-sky-700 to-sky-500 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -bottom-10 md:-left-14 md:-bottom-14 lg:-left-16 lg:-bottom-16"></div>
-          <div className="bg-linear-to-b from-sky-700 to-sky-500 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -bottom-10 md:-right-14 md:-bottom-14 lg:-right-16 lg:-bottom-16"></div>
+        <div className="bg-white dark:bg-slate-900 relative shadow w-full max-w-4xl rounded-lg p-6 md:p-8 my-3 md:my-4 flex flex-col items-center gap-4 md:gap-6 overflow-hidden">
+          <div className="bg-linear-to-b from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -top-10 md:-left-14 md:-top-14 lg:-left-16 lg:-top-16"></div>
+          <div className="bg-linear-to-b from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -top-10 md:-right-14 md:-top-14 lg:-right-16 lg:-top-16"></div>
+          <div className="bg-linear-to-b from-sky-700 dark:from-sky-200 to-sky-500 dark:to-sky-400 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -bottom-10 md:-left-14 md:-bottom-14 lg:-left-16 lg:-bottom-16"></div>
+          <div className="bg-linear-to-b from-sky-700 dark:from-sky-200 to-sky-500 dark:to-sky-400 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -bottom-10 md:-right-14 md:-bottom-14 lg:-right-16 lg:-bottom-16"></div>
           <RyogoH4 weight="font-bold">{t("Mission.Title")}</RyogoH4>
           <RyogoP color="brand" className="text-center">
             {t("Mission.Desc")}
@@ -78,7 +78,7 @@ export default async function ResourcesAboutSection() {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-2 lg:gap-3 p-4 md:p-6 my-3 md:my-4  bg-linear-to-b from-slate-950 to-slate-700 shadow w-full max-w-4xl rounded-lg">
+        <div className="flex flex-col gap-2 lg:gap-3 p-4 md:p-6 my-3 md:my-4  bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-200 shadow w-full max-w-4xl rounded-lg">
           <RyogoH4 color="white" className="text-center">
             {t("Mission.Subtitle")}
           </RyogoH4>

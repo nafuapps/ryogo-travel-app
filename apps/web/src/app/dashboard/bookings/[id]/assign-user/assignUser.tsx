@@ -75,15 +75,17 @@ export default function AssignUserPageComponent({
           isSubscribed={isSubscribed}
         />
       )}
+      <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
       <SectionWrapper id="AssignUserInfo">
-        <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
         {users.map((user, index) => (
           <AssignUserTile
             key={index}
             userData={user}
             booking={booking}
-            selectedUserId={selectedUserId}
-            setSelectedUserId={setSelectedUserId}
+            selected={selectedUserId === user.id}
+            onClick={() =>
+              setSelectedUserId(selectedUserId === user.id ? null : user.id)
+            }
           />
         ))}
       </SectionWrapper>
@@ -95,7 +97,9 @@ export default function AssignUserPageComponent({
           disabled={!canAssignUser}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoSmall color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoSmall>
         </Button>
         <Button
           variant={"outline"}
@@ -104,7 +108,7 @@ export default function AssignUserPageComponent({
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("CancelCTA")}
+          <RyogoSmall color="slate">{t("CancelCTA")}</RyogoSmall>
         </Button>
       </StickyActionWrapper>
     </PageWrapper>

@@ -152,7 +152,7 @@ export default function AssignVehicleTile({
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <AssignTileStatusWrapper>
+        <AssignTileStatusWrapper selected={selected}>
           {isCurrentlyAssigned ? (
             <RyogoIcon color="brand" icon={CheckCheck} size="sm" />
           ) : isBooked ? (

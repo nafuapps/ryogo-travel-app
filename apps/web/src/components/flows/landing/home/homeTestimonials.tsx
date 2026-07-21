@@ -21,7 +21,10 @@ import {
 export default async function HomeTestimonialsSection() {
   const t = await getTranslations("Landing.Home.Testimonials")
   return (
-    <LandingSectionWrapper id="testimonials" className="bg-white">
+    <LandingSectionWrapper
+      id="testimonials"
+      className="bg-white dark:bg-slate-900"
+    >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
@@ -94,7 +97,7 @@ function TestimonialCard({
         {testimonial}
       </RyogoSmall>
       <div className="mt-auto flex items-center gap-4">
-        <div className="size-12 shrink-0 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold">
+        <div className="size-12 shrink-0 rounded-full bg-sky-600 dark:bg-sky-300 text-white flex items-center justify-center font-bold">
           <RyogoP weight="font-bold" color="white">
             {initial}
           </RyogoP>

@@ -9,7 +9,7 @@ import { getTranslations } from "next-intl/server"
 export default async function ResourcesFAQSection() {
   const t = await getTranslations("Landing.Resources.FAQ")
   return (
-    <LandingSectionWrapper id="faq" className="bg-white">
+    <LandingSectionWrapper id="faq" className="bg-white dark:bg-slate-900">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

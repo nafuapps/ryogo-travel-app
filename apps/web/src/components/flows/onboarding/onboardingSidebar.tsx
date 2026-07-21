@@ -53,7 +53,7 @@ export default function OnboardingSidebar({
     <Sidebar side="right" collapsible={isMobile ? "offcanvas" : "none"}>
       <div
         id="OnboardingSidebarSection"
-        className="w-full flex px-8 py-10 md:px-10 md:py-12 h-full flex-col gap-8 lg:gap-10 bg-slate-50"
+        className="w-full flex px-8 py-10 md:px-10 md:py-12 h-full flex-col gap-8 lg:gap-10 bg-slate-50  dark:bg-slate-950"
       >
         <RyogoH4 color="slate">{t("Heading")}</RyogoH4>
         <div
@@ -67,10 +67,10 @@ export default function OnboardingSidebar({
                   className={`rounded-full
           ${
             currentProcess > index || (currentProcess === index && isLastStep)
-              ? "bg-sky-950 shadow"
+              ? "bg-slate-950 dark:bg-white shadow"
               : currentProcess === index
-                ? "bg-white border border-sky-700 shadow"
-                : "bg-slate-100"
+                ? "bg-white  dark:bg-slate-900 border border-sky-700 dark:border-sky-200 shadow"
+                : "bg-slate-100  dark:bg-slate-800"
           } flex shrink-0 justify-center items-center size-8 lg:size-10`}
                 >
                   {currentProcess > index ||
@@ -84,7 +84,7 @@ export default function OnboardingSidebar({
                 </div>
                 {index < items.length - 1 && (
                   <div
-                    className={`w-0.5 h-10 ${currentProcess > index ? "bg-sky-700" : "bg-slate-200"} rounded-full`}
+                    className={`w-0.5 h-10 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-200" : "bg-slate-200  dark:bg-slate-700"} rounded-full`}
                   ></div>
                 )}
               </div>

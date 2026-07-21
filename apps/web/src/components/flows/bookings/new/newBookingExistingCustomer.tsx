@@ -16,7 +16,7 @@ export default function ExistingCutomerCard({
   return (
     <div
       id="ExistingCustomer"
-      className="flex flex-row gap-3 lg:gap-4 bg-white border border-sky-700 rounded-lg p-3 lg:p-4"
+      className="flex flex-row gap-3 lg:gap-4 bg-white dark:bg-slate-900 border border-sky-700 dark:border-sky-200 rounded-lg p-3 lg:p-4"
     >
       {existingCustomer.photoUrl ? (
         <RyogoImage

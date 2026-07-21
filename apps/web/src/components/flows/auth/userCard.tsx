@@ -9,7 +9,7 @@ export default function UserCard({
   user: NonNullable<FindUserDetailsByIdType>
 }) {
   return (
-    <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between items-center border border-slate-100 rounded-lg p-3 lg:p-4">
+    <div className="flex flex-row gap-2 lg:gap-3 w-full justify-between items-center border border-slate-100 dark:border-slate-800 rounded-lg p-3 lg:p-4">
       <div className="flex items-center gap-2 lg:gap-3">
         {user.photoUrl && (
           <RyogoImage
@@ -21,7 +21,7 @@ export default function UserCard({
         <RyogoSmall>{user.name}</RyogoSmall>
       </div>
       <div className="flex flex-col justify-between gap-2 lg:gap-3 items-end">
-        <div className="flex rounded-full bg-slate-200 px-2 py-1 lg:px-2.5 lg:py-1.5">
+        <div className="flex rounded-full bg-slate-200 dark:bg-slate-700 px-2 py-1 lg:px-2.5 lg:py-1.5">
           <RyogoCaption color="slate">
             {user.userRole.toUpperCase()}
           </RyogoCaption>

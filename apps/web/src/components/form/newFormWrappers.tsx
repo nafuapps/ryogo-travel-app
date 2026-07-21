@@ -32,7 +32,7 @@ export function NewFormContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col relative gap-3 lg:gap-4 bg-white rounded-lg shadow p-3 lg:p-4">
+    <div className="flex flex-col relative gap-3 lg:gap-4 bg-white  dark:bg-slate-900 rounded-lg shadow p-3 lg:p-4">
       {children}
     </div>
   )
@@ -44,7 +44,7 @@ export function NewFormActionWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 pt-3 bg-slate-100 sticky mt-auto shadow border-t-slate-200 bottom-0">
+    <div className="flex flex-col gap-2 lg:gap-3 pt-3 bg-slate-100  dark:bg-slate-800 sticky mt-auto shadow border-t-slate-200 dark:border-t-slate-700 bottom-0">
       {children}
     </div>
   )

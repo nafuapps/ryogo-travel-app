@@ -4,7 +4,7 @@ export function HeaderWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={
-        "flex flex-row gap-3 lg:gap-4 pb-3 lg:pb-4 justify-between items-center border-b border-slate-200"
+        "flex flex-row gap-3 lg:gap-4 pb-3 lg:pb-4 justify-between items-center border-b border-slate-200 dark:border-slate-700"
       }
     >
       {children}
@@ -38,7 +38,7 @@ export function DetailsHeaderTabWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex rounded-lg transition bg-slate-200 flex-row gap-1 lg:gap-1.5 p-1.5 lg:p-2 self-center my-2 lg:my-3">
+    <div className="flex rounded-lg transition bg-slate-200 dark:bg-slate-700 flex-row gap-1 lg:gap-1.5 p-1.5 lg:p-2 self-center my-2 lg:my-3">
       {children}
     </div>
   )
@@ -54,7 +54,9 @@ export function DetailsHeaderTabItem({
   return (
     <div
       className={`flex items-center rounded transition justify-center px-2 py-1 lg:px-3 lg:py-1.5 ${
-        selected ? "bg-white shadow" : " hover:bg-slate-100 hover:shadow-xs"
+        selected
+          ? "bg-white dark:bg-slate-900 shadow"
+          : "hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-xs"
       }`}
     >
       <RyogoSmall color={"slate"}>{label}</RyogoSmall>

@@ -6,7 +6,10 @@ export function LayoutWrapper({
   children: React.ReactNode
 }) {
   return (
-    <main id={id} className="flex flex-row w-screen h-dvh">
+    <main
+      id={id}
+      className="flex flex-row w-screen h-dvh bg-white dark:bg-slate-900"
+    >
       {children}
     </main>
   )

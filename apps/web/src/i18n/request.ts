@@ -1,4 +1,4 @@
-import { LOCALE_COOKIE_NAME } from "@/lib/session"
+import { LOCALE_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { getRequestConfig } from "next-intl/server"
 import { cookies } from "next/headers"

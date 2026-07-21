@@ -22,9 +22,9 @@ export default async function RiderExpenseItem({
   return (
     <div className="flex flex-col">
       <div
-        className={`flex flex-row border border-slate-100 ${
+        className={`flex flex-row border border-slate-100 dark:border-slate-800 ${
           expense.expensePhotoUrl ? "rounded-t-lg" : "rounded-lg"
-        } justify-between gap-3 lg:gap-4 items-center w-full bg-white p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
+        } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
         <div className="flex flex-col gap-1.5 lg:gap-2 min-w-1/5">
           {getExpenseIcon(expense.type)}

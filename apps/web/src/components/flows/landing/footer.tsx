@@ -8,7 +8,7 @@ import Link from "next/link"
 export default async function Footer() {
   const t = await getTranslations("Landing.Footer")
   return (
-    <footer className="bg-sky-950 text-sky-100">
+    <footer className="bg-sky-950 dark:bg-white">
       <div className="max-w-6xl mx-auto px-5 md:px-6 lg:px-8 py-8 md:py-12">
         {/* Main footer content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
@@ -80,7 +80,7 @@ export default async function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="border-t border-sky-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-sky-700 dark:border-sky-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <RyogoCaption color="light">
             {t("Copyright", { year: new Date().getFullYear() })}
           </RyogoCaption>

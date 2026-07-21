@@ -10,28 +10,28 @@ type RyogoTextWeight = "font-normal" | "font-medium" | "font-bold"
 
 const getTextColor = (color?: RyogoTextColor) => {
   if (color === "white") {
-    return "text-white"
-  }
-  if (color === "red") {
-    return "text-red-400"
-  }
-  if (color === "yellow") {
-    return "text-yellow-700"
+    return "text-white dark:text-slate-950"
   }
   if (color === "light") {
-    return "text-slate-400"
+    return "text-slate-400 dark:text-slate-500"
   }
   if (color === "slate") {
-    return "text-slate-700"
+    return "text-slate-700 dark:text-slate-300"
+  }
+  if (color === "red") {
+    return "text-red-700 dark:text-red-300"
+  }
+  if (color === "yellow") {
+    return "text-yellow-700 dark:text-yellow-300"
   }
   if (color === "brand") {
-    return "text-sky-700"
+    return "text-sky-700 dark:text-sky-300"
   }
   if (color === "dark") {
-    return "text-slate-950"
+    return "text-slate-950 dark:text-white"
   }
   //default is dark
-  return "text-slate-950"
+  return "text-slate-950 dark:text-white"
 }
 
 type RyogoTextProps = {

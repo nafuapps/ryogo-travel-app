@@ -12,7 +12,7 @@ export default function PremiumAdvantageCard({
   subtitle: string
 }) {
   return (
-    <div className="flex flex-row gap-2 lg:gap-3 bg-slate-50 p-3 lg:p-4 rounded-lg w-full">
+    <div className="flex flex-row gap-2 lg:gap-3 bg-slate-50 dark:bg-slate-950 p-3 lg:p-4 rounded-lg w-full">
       <RyogoEnclosedIcon
         icon={icon}
         color="brand"

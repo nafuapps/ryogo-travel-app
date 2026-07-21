@@ -39,7 +39,7 @@ export default async function OnboardingHomePage({
   return (
     <div
       id="OnboardingHomePage"
-      className="bg-slate-50 w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 lg:p-16 py-8 md:py-12 gap-6 lg:gap-8"
+      className="bg-slate-50 dark:bg-slate-950 w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 lg:p-16 py-8 md:py-12 gap-6 lg:gap-8"
     >
       <div
         id="OnboardingHomeHeader"
@@ -152,11 +152,11 @@ function OnboardingHomeStepItem(props: {
     <div className="flex flex-row gap-3 md:gap-4 items-center">
       <div className="flex flex-col items-center">
         <div
-          className={`w-1 h-2 md:h-3 ${!props.first && `bg-slate-100`}`}
+          className={`w-1 h-2 md:h-3 ${!props.first && `bg-slate-100 dark:bg-slate-800`}`}
         ></div>
         <RyogoEnclosedIcon icon={props.icon} size="sm" color="slate" circular />
         <div
-          className={`w-1 h-2 md:h-3 ${!props.last && `bg-slate-100`}`}
+          className={`w-1 h-2 md:h-3 ${!props.last && `bg-slate-100 dark:bg-slate-800`}`}
         ></div>
       </div>
       <RyogoSmall color="slate">{props.label}</RyogoSmall>

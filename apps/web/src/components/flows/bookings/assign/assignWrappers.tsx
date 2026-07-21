@@ -13,8 +13,8 @@ export function AssignTileWrapper({
     <div
       className={`flex flex-row justify-between gap-2 lg:gap-3 rounded-lg p-3 lg:p-4 border ${
         selected
-          ? "border-sky-700 bg-sky-100"
-          : "border-slate-100 hover:bg-slate-50"
+          ? "border-sky-700 dark:border-sky-200 bg-sky-100 dark:bg-sky-900"
+          : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
       }`}
       onClick={onClick}
     >
@@ -67,11 +67,15 @@ export function AssignTileScoreWrapper({
 
 export function AssignTileStatusWrapper({
   children,
+  selected,
 }: {
   children: React.ReactNode
+  selected: boolean
 }) {
   return (
-    <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center text-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-full border border-slate-300">
+    <div
+      className={`flex flex-row gap-1 lg:gap-1.5 items-center justify-center text-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-full border ${selected ? "border-slate-700 dark:border-slate-300" : "border-slate-300 dark:border-slate-700"}`}
+    >
       {children}
     </div>
   )
@@ -93,14 +97,14 @@ export function RyoGoScoreWrapper({
     <div
       className={`flex flex-col rounded-lg items-center justify-center text-center gap-1 lg:gap-1.5 p-3 lg:p-4 ${
         totalScore < BadTotalScore
-          ? "bg-red-300"
+          ? "bg-red-300 dark:bg-red-700"
           : totalScore < MediumTotalScore
-            ? "bg-orange-300"
+            ? "bg-orange-300 dark:bg-orange-700"
             : totalScore < GoodTotalScore
-              ? "bg-yellow-300"
+              ? "bg-yellow-300 dark:bg-yellow-700"
               : totalScore < BestTotalScore
-                ? "bg-green-300"
-                : "bg-sky-300"
+                ? "bg-green-300 dark:bg-green-700"
+                : "bg-sky-300 dark:bg-sky-700"
       }`}
     >
       <RyogoCaption color="slate">{label}</RyogoCaption>

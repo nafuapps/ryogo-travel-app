@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-lvh bg-slate-100 px-5 lg:px-6 pt-4 lg:pt-5 pb-6 lg:pb-7">
+    <div className="flex flex-col w-full h-lvh bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-4 lg:pt-5 pb-6 lg:pb-7">
       {children}
     </div>
   )
@@ -45,7 +45,7 @@ export function FormWrapper<T extends FieldValues>({
         <form
           id={id}
           onSubmit={onSubmit}
-          className="flex flex-col gap-4 lg:gap-5 p-4 lg:p-5 bg-white rounded-lg shadow w-full"
+          className="flex flex-col gap-4 lg:gap-5 p-4 lg:p-5 bg-white dark:bg-slate-900 rounded-lg shadow w-full"
         >
           {children}
         </form>
@@ -66,7 +66,7 @@ export function SectionWrapper({
   return (
     <div
       id={id}
-      className={`bg-white rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-3 lg:gap-4 p-4 lg:p-5`}
+      className={`bg-white dark:bg-slate-900 rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-3 lg:gap-4 p-4 lg:p-5`}
     >
       {children}
     </div>
@@ -149,7 +149,7 @@ export function GridWrapper({
 }) {
   return (
     <div
-      className={`grid ${highlight ? "bg-slate-900 hover:bg-slate-800" : "border border-slate-100 hover:bg-slate-100"} ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
+      className={`grid ${highlight ? "bg-slate-900 dark:bg-slate-50 hover:bg-slate-800 dark:hover:bg-slate-100" : "border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
     >
       {children}
     </div>
@@ -170,7 +170,7 @@ export function StickyActionWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 sticky mt-auto shadow border-t-slate-200 bottom-0">
+    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 dark:bg-slate-800 sticky mt-auto shadow border-t-slate-200 dark:border-t-slate-700 bottom-0">
       {children}
     </div>
   )

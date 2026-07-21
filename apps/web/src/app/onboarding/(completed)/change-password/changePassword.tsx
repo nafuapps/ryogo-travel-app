@@ -42,7 +42,7 @@ export default function ChangePasswordPageComponent(
         <SidebarContent>
           <div
             id="SidebarSection"
-            className="w-full flex px-8 py-10 md:p-12 lg:p-16 h-full flex-col items-center justify-center gap-8 lg:gap-10 bg-slate-50"
+            className="w-full flex px-8 py-10 md:p-12 lg:p-16 h-full flex-col items-center justify-center gap-8 lg:gap-10 bg-slate-50 dark:bg-slate-950"
           >
             <RyoGoLogo />
           </div>

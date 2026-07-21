@@ -16,7 +16,7 @@ export default async function HowItWorksCTASection() {
     <LandingSectionWrapper
       id="cta"
       shrink
-      className="bg-linear-to-b from-sky-600 to-sky-900"
+      className="bg-linear-to-b from-sky-600 dark:from-sky-300 to-sky-900 dark:to-sky-50"
     >
       <LandingContentWrapper>
         <RyogoH1 color="white" weight="font-bold" className="text-center">
@@ -37,7 +37,7 @@ export default async function HowItWorksCTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="w-full md:w-auto border-white hover:bg-white/20"
+              className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
             >
               <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
               <RyogoIcon icon={Video} color="white" size="sm" thick />

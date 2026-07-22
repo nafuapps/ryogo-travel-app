@@ -64,7 +64,10 @@ export default async function DashboardHomePage() {
       )}
       <MainWrapper>
         <DashboardHeader pathName={"/dashboard"} />
-        <DashboardHomePageComponent agencyId={currentUser.agencyId} />
+        <DashboardHomePageComponent
+          agencyId={currentUser.agencyId}
+          userId={currentUser.userId}
+        />
       </MainWrapper>
     </>
   )

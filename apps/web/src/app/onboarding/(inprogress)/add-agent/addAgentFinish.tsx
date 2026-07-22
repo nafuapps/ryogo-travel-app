@@ -10,7 +10,7 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { Button } from "@/components/ui/button"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { MessageSquareShare } from "lucide-react"
-import getAgentInviteMessage from "@/components/whatsapp/getAgentInviteMessage"
+import getAgentInviteMessageLink from "@/components/whatsapp/getAgentInviteMessageLink"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
@@ -31,7 +31,7 @@ export function AddAgentFinish(props: {
     })
   }
 
-  const whatsappInviteLink = getAgentInviteMessage(
+  const whatsappInviteLink = getAgentInviteMessageLink(
     props.finalData.data.phone,
     props.finalData.data.name,
     props.agencyName,

@@ -20,6 +20,9 @@ import { getTranslations } from "next-intl/server"
 import ConfirmBookingForm from "./confirmBookingForm"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
+import { RyogoCaption } from "@/components/typography"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 
 export default async function ConfirmBookingPageComponent({
   booking,
@@ -58,7 +61,7 @@ export default async function ConfirmBookingPageComponent({
                 href={`/dashboard/bookings/${booking.id}/assign-user`}
                 className={"w-full"}
               >
-                {t("AssignAgent")}
+                <RyogoCaption color="slate">{t("AssignAgent")}</RyogoCaption>
               </Link>
             </Button>
           )}
@@ -105,14 +108,28 @@ export default async function ConfirmBookingPageComponent({
               value={booking.customer.remarks}
             />
           )}
-          <Button variant={"outline"}>
+          <Button variant={"secondary"}>
             <Link
               href={`/dashboard/customers/${booking.customer.id}`}
               className={"w-full"}
             >
-              {t("ViewCustomerDetails")}
+              <RyogoCaption color="slate">
+                {t("ViewCustomerDetails")}
+              </RyogoCaption>
             </Link>
           </Button>
+          {(isOwner || isAssignedUser) && (
+            <>
+              <RyogoPhoneButton
+                label={t("CallCustomer")}
+                phone={booking.customer.phone}
+              />
+              <RyogoChatButton
+                label={t("ChatCustomer")}
+                phone={booking.customer.phone}
+              />
+            </>
+          )}
         </BookingSection>
         <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
           <BookingItem
@@ -159,9 +176,11 @@ export default async function ConfirmBookingPageComponent({
               href={`/dashboard/bookings/${booking.id}/assign-vehicle`}
               className={"w-full"}
             >
-              {booking.assignedVehicle
-                ? t("ChangeVehicle")
-                : t("AssignVehicle")}
+              <RyogoCaption color="slate">
+                {booking.assignedVehicle
+                  ? t("ChangeVehicle")
+                  : t("AssignVehicle")}
+              </RyogoCaption>
             </Link>
           </Button>
           <BookingItem
@@ -173,7 +192,9 @@ export default async function ConfirmBookingPageComponent({
               href={`/dashboard/bookings/${booking.id}/assign-driver`}
               className={"w-full"}
             >
-              {booking.assignedDriver ? t("ChangeDriver") : t("AssignDriver")}
+              <RyogoCaption color="slate">
+                {booking.assignedDriver ? t("ChangeDriver") : t("AssignDriver")}
+              </RyogoCaption>
             </Link>
           </Button>
         </BookingSection>

@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl"
 
-export default function GetDriverInviteMessage(
+export default function getDriverInviteMessageLink(
   driverPhone: string,
   driverName: string,
   agencyName: string,

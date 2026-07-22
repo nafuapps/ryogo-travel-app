@@ -1,13 +1,11 @@
 import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Building, Phone } from "lucide-react"
+import { Building } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import { FindAssignedUserByDriverIdType } from "@ryogo-travel-app/api/services/user.services"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import {
   SectionWrapper,
   PageWrapper,
@@ -15,7 +13,9 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 
 export default async function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -60,15 +60,9 @@ export default async function MyProfileAgencyDetailsPageComponent({
       {assignedUser && (
         <SectionWrapper id="AssignedUserInfo">
           <RyogoSmall weight="font-bold">{t("AssignedUserInfo")}</RyogoSmall>
-          <SectionRowWrapper center>
-            <RyogoSmall color="slate">{assignedUser.name}</RyogoSmall>
-            <Link href={`tel:${assignedUser.phone}`}>
-              <Button variant={"outline"}>
-                <RyogoIcon icon={Phone} size="sm" color="slate" />
-                <RyogoCaption color="slate">{t("CallAgent")}</RyogoCaption>
-              </Button>
-            </Link>
-          </SectionRowWrapper>
+          <RyogoSmall color="slate">{assignedUser.name}</RyogoSmall>
+          <RyogoPhoneButton phone={assignedUser.phone} label={t("CallAgent")} />
+          <RyogoChatButton phone={assignedUser.phone} label={t("ChatAgent")} />
         </SectionWrapper>
       )}
     </PageWrapper>

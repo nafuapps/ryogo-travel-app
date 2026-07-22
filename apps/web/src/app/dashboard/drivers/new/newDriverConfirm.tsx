@@ -20,7 +20,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import GetDriverInviteMessage from "@/components/whatsapp/getDriverInviteMessage"
+import getDriverInviteMessageLink from "@/components/whatsapp/getDriverInviteMessageLink"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -34,7 +34,7 @@ export function NewDriverConfirm(props: {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  const whatsappInviteLink = GetDriverInviteMessage(
+  const whatsappInviteLink = getDriverInviteMessageLink(
     props.newDriverFormData.data.phone,
     props.newDriverFormData.data.name,
     props.agencyName,

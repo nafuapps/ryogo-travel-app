@@ -1,7 +1,7 @@
 "use server"
 
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
-import getConfirmationMessage from "@/components/whatsapp/getConfirmationMessage"
+import getConfirmationMessageLink from "@/components/whatsapp/getConfirmationMessageLink"
 import { getCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -84,7 +84,7 @@ export async function confirmBookingAction(
   await bookingServices.addConfirmationUrl(id, confirmationUrl)
 
   //Send booking confirmation pdf to customer over whatsapp
-  const confirmationMessage = await getConfirmationMessage(
+  const confirmationMessage = await getConfirmationMessageLink(
     bookingDetails.customer.phone,
     bookingDetails.customer.name,
     bookingDetails.id,

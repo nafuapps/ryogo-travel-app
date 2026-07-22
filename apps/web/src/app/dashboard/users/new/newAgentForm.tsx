@@ -14,7 +14,7 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
-import GetAgentInviteMessage from "@/components/whatsapp/getAgentInviteMessage"
+import getAgentInviteMessageLink from "@/components/whatsapp/getAgentInviteMessageLink"
 
 export default function NewAgentForm({
   agencyId,
@@ -88,7 +88,7 @@ export default function NewAgentForm({
       })
     } else {
       startTransition(async () => {
-        const whatsappInviteLink = GetAgentInviteMessage(
+        const whatsappInviteLink = getAgentInviteMessageLink(
           values.agentPhone,
           values.agentName,
           agencyName,

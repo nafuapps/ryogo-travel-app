@@ -1,26 +1,24 @@
 import { getTranslations } from "next-intl/server"
 
-export default async function getQuoteMessage(
+export default async function getInvoiceMessageLink(
   customerPhone: string,
   customerName: string,
   bookingId: string,
   source: string,
   destination: string,
-  amount: string,
   startDate: string,
   agencyPhone: string,
-  quoteUrl: string,
+  invoiceLink: string,
 ) {
   const t = await getTranslations("Dashboard.Whatsapp")
-  const message = t("Quote", {
+  const message = t("Invoice", {
     customerName: customerName,
     bookingId: bookingId,
     source: source,
     destination: destination,
     startDate: startDate,
-    amount: amount,
     agencyPhone: agencyPhone,
-    quoteLink: quoteUrl,
+    invoiceLink: invoiceLink,
   })
   return `https://wa.me/91${customerPhone}/?text=${encodeURIComponent(message)}`
 }

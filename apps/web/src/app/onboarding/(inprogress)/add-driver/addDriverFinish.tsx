@@ -9,7 +9,7 @@ import {
 } from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import getDriverInviteMessage from "@/components/whatsapp/getDriverInviteMessage"
+import getDriverInviteMessageLink from "@/components/whatsapp/getDriverInviteMessageLink"
 import { Button } from "@/components/ui/button"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -33,7 +33,7 @@ export function AddDriverFinish(props: {
     })
   }
 
-  const whatsappInviteLink = getDriverInviteMessage(
+  const whatsappInviteLink = getDriverInviteMessageLink(
     props.finalData.data.phone,
     props.finalData.data.name,
     props.agencyName,

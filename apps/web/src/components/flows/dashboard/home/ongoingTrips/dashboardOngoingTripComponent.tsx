@@ -5,30 +5,42 @@ import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.ser
 
 import Link from "next/link"
 
-export default function DashboardOngoingTripComponent(
-  props: NonNullable<FindOngoingTripsType>[number],
-) {
+export default function DashboardOngoingTripComponent({
+  ongoingTrip,
+  userId,
+}: {
+  ongoingTrip: NonNullable<FindOngoingTripsType>[number]
+  userId: string
+}) {
+  const isAssigned = ongoingTrip.assignedUserId === userId
+
   return (
-    <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <div className="flex flex-row gap-3 hover:bg-slate-100 dark:hover:bg-slate-800 lg:gap-4 w-full justify-between border border-slate-100 dark:border-slate-800 rounded-lg p-4 lg:p-5">
+    <Link href={`/dashboard/bookings/${ongoingTrip.bookingId}`}>
+      <div
+        className={`flex flex-row gap-3 lg:gap-4 w-full justify-between border ${isAssigned ? "border-sky-100 dark:border-sky-800 hover:bg-sky-100 dark:hover:bg-sky-800" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-4 lg:p-5`}
+      >
         <SectionColWrapper justifyBetween>
           <SectionColWrapper small>
             <RyogoCaption weight="font-bold">
-              {props.type.toUpperCase()}
+              {ongoingTrip.type.toUpperCase()}
             </RyogoCaption>
-            <RyogoH3>{props.route.toUpperCase()}</RyogoH3>
+            <RyogoH3>{ongoingTrip.route.toUpperCase()}</RyogoH3>
           </SectionColWrapper>
           <SectionColWrapper small>
-            <RyogoSmall>{props.vehicle}</RyogoSmall>
-            <RyogoCaption weight="font-bold">{props.driver}</RyogoCaption>
+            <RyogoSmall>{ongoingTrip.vehicle}</RyogoSmall>
+            <RyogoCaption weight="font-bold">{ongoingTrip.driver}</RyogoCaption>
           </SectionColWrapper>
         </SectionColWrapper>
         <SectionColWrapper end justifyBetween>
           <SectionColWrapper small end>
-            <RyogoSmall>{props.customerName}</RyogoSmall>
-            <RyogoCaption weight="font-bold">{props.bookingId}</RyogoCaption>
+            <RyogoSmall>{ongoingTrip.customerName}</RyogoSmall>
+            <RyogoCaption weight="font-bold">
+              {ongoingTrip.bookingId}
+            </RyogoCaption>
           </SectionColWrapper>
-          {props.status && <TripLogStatusPill status={props.status} />}
+          {ongoingTrip.status && (
+            <TripLogStatusPill status={ongoingTrip.status} />
+          )}
         </SectionColWrapper>
       </div>
     </Link>

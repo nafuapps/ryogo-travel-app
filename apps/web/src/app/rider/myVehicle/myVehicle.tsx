@@ -83,7 +83,7 @@ export default async function RiderMyVehiclePageComponent({
             {vehicle.insuranceExpiresOn &&
             vehicle.insuranceExpiresOn < new Date() ? (
               <RyogoCaption color="red">
-                {t("ValidTill") +
+                {t("Expired") +
                   moment(vehicle.insuranceExpiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             ) : (
@@ -105,7 +105,7 @@ export default async function RiderMyVehiclePageComponent({
             <RyogoSmall color="slate">{t("PUC")}</RyogoSmall>
             {vehicle.pucExpiresOn && vehicle.pucExpiresOn < new Date() ? (
               <RyogoCaption color="red">
-                {t("ValidTill") +
+                {t("Expired") +
                   moment(vehicle.pucExpiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             ) : (
@@ -127,7 +127,7 @@ export default async function RiderMyVehiclePageComponent({
             <RyogoSmall color="slate">{t("RC")}</RyogoSmall>
             {vehicle.rcExpiresOn && vehicle.rcExpiresOn < new Date() ? (
               <RyogoCaption color="red">
-                {t("ValidTill") +
+                {t("Expired") +
                   moment(vehicle.rcExpiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             ) : (

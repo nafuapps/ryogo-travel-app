@@ -1097,6 +1097,8 @@
       "CustomerLocation": "Location",
       "CustomerAddress": "Address",
       "ViewCustomerDetails": "View Customer Details",
+      "CallCustomer": "Call Customer",
+      "ChatCustomer":"Chat with Customer",
       "TripInfo": "TRIP INFO",
       "From": "From",
       "To": "To",
@@ -1163,6 +1165,7 @@
       "CustomerAddress": "Address",
       "CustomerRemarks": "Remarks",
       "CallCustomer": "Call Customer",
+      "ChatCustomer": "Chat with Customer",
       "ViewCustomerDetails": "View Customer Details",
       "TripInfo": "TRIP INFO",
       "From": "From",
@@ -1189,6 +1192,8 @@
       "ChangeDriver": "Change Driver",
       "AssignDriver": "Assign Driver",
       "ViewDriverDetails": "View Driver Details",
+      "CallDriver": "Call Driver",
+      "ChatDriver": "Chat with Driver",
       "PriceInfo": "PRICE INFO",
       "VehicleCharge": "Vehicle Charge",
       "RatePerKm": "(₹{rate} for {km} Km)",
@@ -3186,9 +3191,9 @@
       "NoBooking": "No bookings assigned at the moment."
     },
     "MyBookings": {
-      "Ongoing": "Ongoing booking",
-      "Upcoming": "Upcoming bookings",
-      "Completed": "Completed bookings",
+      "Ongoing": "ONGOING BOOKING",
+      "Upcoming": "UPCOMING BOOKINGS",
+      "Completed": "COMPLETED BOOKINGS",
       "Continue": "Continue",
       "Start": "Start Trip"
     },
@@ -3197,6 +3202,7 @@
       "BookingId": "Booking ID",
       "CustomerName": "Customer Name",
       "CallCustomer": "Call Customer",
+      "ChatCustomer": "Chat with Customer",
       "TripInfo": "TRIP INFO",
       "From": "From",
       "To": "To",
@@ -3408,6 +3414,7 @@
       "PUCPhoto": "PUC Photo",
       "RC": "Registration",
       "RCPhoto": "RC Photo",
+      "Expired": "Expired: ",
       "ValidTill": "Valid till: ",
       "AgencyInfo": "Agency related info",
       "ACCharge": "AC ₹{ac}/day",
@@ -3477,7 +3484,8 @@
       "BasicInfo": "Basic info",
       "Photo": "View logo",
       "AssignedUserInfo": "Assigned agent info",
-      "CallAgent": "Call Agent"
+      "CallAgent": "Call Agent",
+      "ChatAgent": "Chat with Agent"
     },
     "MySupport": {},
     "MyProfileSettings": {

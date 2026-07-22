@@ -11,8 +11,10 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function DashboardOngoingTripSection({
   agencyId,
+  userId,
 }: {
   agencyId: string
+  userId: string
 }) {
   const t = await getTranslations("Dashboard.Home.OngoingTrips")
 
@@ -27,7 +29,11 @@ export default async function DashboardOngoingTripSection({
       </SectionHeaderWrapper>
       <div className="grid flex-wrap gap-2 lg:gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {ongoingTrips.map((trip, index) => (
-          <DashboardOngoingTripComponent key={index} {...trip} />
+          <DashboardOngoingTripComponent
+            key={index}
+            ongoingTrip={trip}
+            userId={userId}
+          />
         ))}
       </div>
     </SectionWrapper>

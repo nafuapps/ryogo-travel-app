@@ -11,6 +11,8 @@ import {
   UpcomingBookingCard,
 } from "@/components/cards/booking/bookingCards"
 
+//TODO: Revamp home page for rider with a floating ongoing booking nudge
+
 export default async function RiderHomePageComponent({
   assignedBookings,
   driver,

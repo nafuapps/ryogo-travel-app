@@ -141,6 +141,8 @@ export const bookingServices = {
         customerName: booking.customer.name,
         bookingId: booking.id,
         status: booking.tripLogs[0]?.type,
+        assignedUserId: booking.assignedUser.id,
+        assignedUserName: booking.assignedUser.name,
       }
     })
   },

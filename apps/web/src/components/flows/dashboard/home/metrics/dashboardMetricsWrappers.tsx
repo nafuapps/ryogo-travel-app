@@ -54,7 +54,7 @@ export function DashboardMetricMain({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col flex-1 gap-3 lg:gap-4 justify-center">
+    <div className="flex flex-col flex-1 gap-3 lg:gap-4 justify-center items-center">
       <RyogoH2>{mainValue}</RyogoH2>
       {children}
     </div>

@@ -1,7 +1,7 @@
 "use server"
 
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
-import getInvoiceMessage from "@/components/whatsapp/getInvoiceMessage"
+import getInvoiceMessageLink from "@/components/whatsapp/getInvoiceMessageLink"
 import { getCurrentUser } from "@/lib/auth"
 import { generateBookingInvoiceName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -47,7 +47,7 @@ export async function sendInvoiceAction(
   }
 
   // Send invoice pdf to customer over whatsapp
-  const invoiceMessage = await getInvoiceMessage(
+  const invoiceMessage = await getInvoiceMessageLink(
     bookingDetails.customer.phone,
     bookingDetails.customer.name,
     bookingDetails.id,

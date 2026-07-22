@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl"
 
-export default function GetAgentInviteMessage(
+export default function getAgentInviteMessageLink(
   agentPhone: string,
   agentName: string,
   agencyName: string,

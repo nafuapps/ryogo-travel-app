@@ -58,7 +58,9 @@ export default async function CustomerDetailsPageComponent({
           <SectionColWrapper end>
             <RyogoH3>{customer.name}</RyogoH3>
             <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
-            <RyogoCaption color="slate">{customer.email}</RyogoCaption>
+            {customer.email && (
+              <RyogoCaption color="slate">{customer.email}</RyogoCaption>
+            )}
             <RyogoCaption color="slate">
               {moment(customer.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>

@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import BookingSection from "@/components/flows/bookings/details/bookingSection"
 import BookingItem from "@/components/flows/bookings/details/bookingItem"
 import { BriefcaseBusiness, Route } from "lucide-react"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 
 export default async function RiderMyBookingDetails({
   booking,
@@ -37,11 +37,16 @@ export default async function RiderMyBookingDetails({
           <BookingItem title={t("DropAddress")} value={booking.dropAddress} />
         )}
         {canCallCustomer && (
-          <Button variant={"secondary"}>
-            <Link href={`tel:${booking.customer.phone}`} className="w-full">
-              {t("CallCustomer")}
-            </Link>
-          </Button>
+          <>
+            <RyogoPhoneButton
+              label={t("CallCustomer")}
+              phone={booking.customer.phone}
+            />
+            <RyogoChatButton
+              label={t("ChatCustomer")}
+              phone={booking.customer.phone}
+            />
+          </>
         )}
       </BookingSection>
       <BookingSection sectionTitle={t("TripInfo")} icon={Route}>

@@ -17,8 +17,10 @@ import { PageWrapper } from "@/components/page/pageWrappers"
 
 export default function DashboardHomePageComponent({
   agencyId,
+  userId,
 }: {
   agencyId: string
+  userId: string
 }) {
   return (
     <PageWrapper id="DashboardPage">
@@ -31,7 +33,7 @@ export default function DashboardHomePageComponent({
         <DashboardVehicleMetricsComponent agencyId={agencyId} />
         <DashboardDriverMetricsComponent agencyId={agencyId} />
       </div>
-      <DashboardOngoingTripSection agencyId={agencyId} />
+      <DashboardOngoingTripSection agencyId={agencyId} userId={userId} />
     </PageWrapper>
   )
 }

@@ -1,7 +1,7 @@
 "use server"
 
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
-import getQuoteMessage from "@/components/whatsapp/getQuoteMessage"
+import getQuoteMessageLink from "@/components/whatsapp/getQuoteMessageLink"
 import { getCurrentUser } from "@/lib/auth"
 import { generateBookingQuoteName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -46,7 +46,7 @@ export async function sendQuoteAction(
   }
 
   //Send quote pdf to customer over whatsapp
-  const quoteMessage = await getQuoteMessage(
+  const quoteMessage = await getQuoteMessageLink(
     bookingDetails.customer.phone,
     bookingDetails.customer.name,
     bookingDetails.id,

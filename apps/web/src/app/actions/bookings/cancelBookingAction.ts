@@ -1,6 +1,6 @@
 "use server"
 
-import getCancellationMessage from "@/components/whatsapp/getCancellationMessage"
+import getCancellationMessageLink from "@/components/whatsapp/getCancellationMessageLink"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -45,7 +45,7 @@ export async function cancelBookingAction(
     if (!bookingDetails) return
 
     //Send booking cancellation pdf to customer over whatsapp
-    const cancelMessage = await getCancellationMessage(
+    const cancelMessage = await getCancellationMessageLink(
       bookingDetails.customer.phone,
       bookingDetails.customer.name,
       bookingDetails.id,

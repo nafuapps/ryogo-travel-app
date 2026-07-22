@@ -142,6 +142,12 @@ export const bookingRepository = {
             vehicleNumber: true,
           },
         },
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
         customer: {
           columns: {
             name: true,

@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 
-export default async function getConfirmationMessage(
+export default async function getConfirmationMessageLink(
   customerPhone: string,
   customerName: string,
   bookingId: string,

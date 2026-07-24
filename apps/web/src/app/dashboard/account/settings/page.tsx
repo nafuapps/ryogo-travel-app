@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 }
 
 export default async function AccountSettingsPage() {
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const userDetails = await userServices.findUserDetailsById(user.userId)
+  const userDetails = await userServices.findUserDetailsById(currentUser.userId)
 
   if (!userDetails) {
     redirect("/auth/login", RedirectType.replace)

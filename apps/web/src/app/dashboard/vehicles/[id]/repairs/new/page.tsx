@@ -19,8 +19,8 @@ export default async function NewVehicleRepairPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -28,8 +28,8 @@ export default async function NewVehicleRepairPage({
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs/new"} />
       <NewVehicleRepairPageComponent
-        userId={user.userId}
-        agencyId={user.agencyId}
+        userId={currentUser.userId}
+        agencyId={currentUser.agencyId}
         vehicleId={id}
       />
     </MainWrapper>

@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
   cacheComponents: false,
   typedRoutes: true,
   experimental: {
+    useTypeScriptCli: true,
     externalDir: true,
     serverActions: {
       bodySizeLimit: "5mb",

@@ -12,9 +12,9 @@ export default async function DriverDetailsLayout({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -27,7 +27,7 @@ export default async function DriverDetailsLayout({
   const driver = await driverServices.findDriverDetailsById(id)
   if (
     !driver ||
-    driver.agencyId !== user.agencyId ||
+    driver.agencyId !== currentUser.agencyId ||
     driver.status === DriverStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/drivers", RedirectType.replace)

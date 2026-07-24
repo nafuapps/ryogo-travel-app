@@ -3398,7 +3398,6 @@
       "Success": "Expense details modified successfully!",
       "Error": "Cannot modify expense.. Try again later!"
     },
-    "MyMissions": {},
     "MyVehicle": {
       "BasicInfo": "Basic info",
       "Photo": "Vehicle photo",
@@ -3487,7 +3486,62 @@
       "CallAgent": "Call Agent",
       "ChatAgent": "Chat with Agent"
     },
-    "MySupport": {},
+    "MySupport": {
+      "Title":"Help & Support Center",
+      "Description":"Get answers to all your queries, frequently asked questions, video tutorials and more",
+      "Started":{
+        "Title":"GETTING STARTED",
+        "Description":"Onboarding guide, platform overview, and initial setup instructions"
+      },
+      "Account":{
+        "Title":"ACCOUNT & PROFILE",
+        "Description":"Get help related to your account details and settings"
+      },
+      "Bookings":{
+        "Title":"BOOKINGS",
+        "Description":"Understand booking flow, expenses, trip logs and more."
+      },
+      "Vehicle":{
+        "Title":"VEHICLE",
+        "Description":"Know more about your assigned vehicle"
+      },
+      "Missions":{
+        "Title":"MISSION AND ALERTS",
+        "Description":"Managing your alert notifications and missions"
+      },
+      "Videos":{
+        "Title":"VIDEO TUTORIALS",
+        "Description":"Watch short demo videos to understand more about RyoGo Travel App"
+      },
+      "FAQs":{
+        "Title":"Top Questions",
+        "Q1":{
+          "Question":"How do I know if I have been assigned a booking",
+          "Answer":""
+        },
+        "Q2":{
+          "Question":"How do I know more about my vehicle?",
+          "Answer":""
+        },
+        "Q3":{
+          "Question":"How do I reach out to the customer?",
+          "Answer":""
+        }
+      },
+      "Contact":{
+        "Title":"Still need help?",
+        "Description":"Get in touch with our specialized support team to assist your with any complex queries.",
+        "CallCTA":"Call Support Team",
+        "ChatCTA":"Chat with Support",
+        "EmailCTA":"Email Support"
+      },
+      "Tickets":{
+        "Title":"Support Tickets",
+        "Description":"View and manage your support tickets",
+        "ViewCTA":"View Your Tickets",
+        "CreateCTA":"Create New Ticket"
+      }
+    },
     "MyProfileSettings": {
       "Field1": {
         "Title": "Enable dark mode"

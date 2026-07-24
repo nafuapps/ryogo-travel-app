@@ -15,21 +15,21 @@ export const metadata: Metadata = {
 }
 
 export default async function ChangeEmailAccountPage() {
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
   const usersWithPhoneRole = await userServices.findUserAccountsByPhoneRole(
-    user.phone,
-    user.userRole,
+    currentUser.phone,
+    currentUser.userRole,
   )
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/change-email"} />
       <ChangeEmailAccountComponent
         usersWithPhoneRole={usersWithPhoneRole}
-        userId={user.userId}
-        agencyId={user.agencyId}
+        userId={currentUser.userId}
+        agencyId={currentUser.agencyId}
       />
     </MainWrapper>
   )

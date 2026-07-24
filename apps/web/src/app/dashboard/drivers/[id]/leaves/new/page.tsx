@@ -17,8 +17,8 @@ export default async function NewDriverLeavePage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -26,8 +26,8 @@ export default async function NewDriverLeavePage({
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers/[id]/leaves/new"} />
       <NewDriverLeavePageComponent
-        userId={user.userId}
-        agencyId={user.agencyId}
+        userId={currentUser.userId}
+        agencyId={currentUser.agencyId}
         driverId={id}
       />
     </MainWrapper>

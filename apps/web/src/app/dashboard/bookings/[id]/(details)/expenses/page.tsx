@@ -19,8 +19,8 @@ export default async function BookingExpensesPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -35,10 +35,10 @@ export default async function BookingExpensesPage({
         bookingId={id}
         bookingExpenses={bookingExpenses}
         canCreateExpense={
-          user.userRole === UserRolesEnum.OWNER ||
-          user.userId === assignedUserId
+          currentUser.userRole === UserRolesEnum.OWNER ||
+          currentUser.userId === assignedUserId
         }
-        canApproveExpense={user.userRole === UserRolesEnum.OWNER}
+        canApproveExpense={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </MainWrapper>
   )

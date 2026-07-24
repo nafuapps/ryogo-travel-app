@@ -19,9 +19,9 @@ export default async function BookingDetailsPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -36,8 +36,8 @@ export default async function BookingDetailsPage({
       <DashboardHeader pathName={"/dashboard/bookings/[id]"} />
       <BookingDetailsPageComponent
         bookingDetails={bookingDetails}
-        isOwner={user.userRole === UserRolesEnum.OWNER}
-        isAssignedUser={bookingDetails.assignedUser.id === user.userId}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+        isAssignedUser={bookingDetails.assignedUser.id === currentUser.userId}
       />
     </MainWrapper>
   )

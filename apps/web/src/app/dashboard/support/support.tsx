@@ -1,16 +1,16 @@
-//Account/Help page
-
 import { getTranslations } from "next-intl/server"
 import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
-//TODO: Support page
+//TODO: Dashboard Support page
 
 export default async function SupportPageComponent({
   id,
   isOwner,
+  isPremium,
 }: {
   id: string
   isOwner: boolean
+  isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.Support")
 

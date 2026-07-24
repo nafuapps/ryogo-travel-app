@@ -12,16 +12,16 @@ export const metadata: Metadata = {
 }
 
 export default async function AllCustomersPage() {
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const agencyId = user.agencyId
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers"} />
-      <CustomersPageComponent agencyId={agencyId} />
+      <CustomersPageComponent agencyId={currentUser.agencyId} />
     </MainWrapper>
   )
 }

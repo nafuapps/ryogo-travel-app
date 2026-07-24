@@ -7,6 +7,8 @@ import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
 import { getCurrentUser } from "@/lib/auth"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Support - ${pageTitle}`,
@@ -18,10 +20,18 @@ export default async function MySupportPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
+  const isPremium = agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
+
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport"} />
-      <MySupportPageComponent id={currentUser.userId} />
+      <MySupportPageComponent isPremium={isPremium} />
     </MainWrapper>
   )
 }

@@ -12,9 +12,9 @@ export default async function CustomerDetailsLayout({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -27,7 +27,7 @@ export default async function CustomerDetailsLayout({
   const customer = await customerServices.findCustomerDetailsById(id)
   if (
     !customer ||
-    customer.agencyId !== user.agencyId ||
+    customer.agencyId !== currentUser.agencyId ||
     customer.status === CustomerStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/customers", RedirectType.replace)

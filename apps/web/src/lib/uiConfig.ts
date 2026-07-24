@@ -28,4 +28,5 @@ export const EXPIRY_WARNING_DAYS = 7
 
 //Support
 export const SUPPORT_HELPLINE_NUMBER = "9840774089"
+export const SUPPORT_CHAT_NUMBER = "9840774089"
 export const SUPPORT_EMAIL = "ryogo.in@gmail.com"

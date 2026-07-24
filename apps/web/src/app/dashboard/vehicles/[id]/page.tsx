@@ -1,6 +1,5 @@
 import VehicleDetailsPageComponent from "./vehicleDetails"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
@@ -18,12 +17,6 @@ export default async function VehicleDetailsPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const vehicle = await vehicleServices.findVehicleDetailsById(id)
 

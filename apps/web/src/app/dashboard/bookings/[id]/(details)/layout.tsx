@@ -18,13 +18,13 @@ export default async function BookingDetailsLayout({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingStatusById(id)
-  if (!booking || booking.agencyId !== user.agencyId) {
+  if (!booking || booking.agencyId !== currentUser.agencyId) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 

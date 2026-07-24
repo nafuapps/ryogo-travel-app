@@ -12,9 +12,9 @@ export default async function VehicleDetailsLayout({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -27,7 +27,7 @@ export default async function VehicleDetailsLayout({
   const vehicle = await vehicleServices.findVehicleDetailsById(id)
   if (
     !vehicle ||
-    vehicle.agencyId !== user.agencyId ||
+    vehicle.agencyId !== currentUser.agencyId ||
     vehicle.status === VehicleStatusEnum.SUSPENDED
   ) {
     redirect("/dashboard/vehicles", RedirectType.replace)

@@ -19,8 +19,8 @@ export default async function NewExpensePage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
@@ -30,8 +30,8 @@ export default async function NewExpensePage({
 
   //Only owner or assigned user can add expense
   if (
-    user.userRole !== UserRolesEnum.OWNER &&
-    user.userId !== bookingDetails.assignedUserId
+    currentUser.userRole !== UserRolesEnum.OWNER &&
+    currentUser.userId !== bookingDetails.assignedUserId
   ) {
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
   }
@@ -41,8 +41,8 @@ export default async function NewExpensePage({
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses/new"} />
       <NewExpensePageComponent
         bookingId={id}
-        userId={user.userId}
-        agencyId={user.agencyId}
+        userId={currentUser.userId}
+        agencyId={currentUser.agencyId}
         assignedUserId={bookingDetails.assignedUserId}
       />
     </MainWrapper>

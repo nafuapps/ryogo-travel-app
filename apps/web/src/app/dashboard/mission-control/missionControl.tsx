@@ -6,7 +6,6 @@ import { PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { FindAgencyExpiryAlertsType } from "@ryogo-travel-app/api/services/agency.services"
-import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
 import { CalendarPlus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -20,7 +19,6 @@ export default async function MissionControlPageComponent({
   missions: FindMissionsByUserIdType
   isPremium: boolean
   expiryAlerts?: FindAgencyExpiryAlertsType
-  driverAlert?: FindDriverByUserIdType
 }) {
   const t = await getTranslations("Dashboard.MissionControl")
   const criticalMissions = missions.filter((mission) => mission.isCritical)

@@ -24,11 +24,13 @@ export default async function ExpiryAlertCard({
   entityId,
   entityName,
   dueDate,
+  isDriver,
 }: {
   expiryType: ExpiryType
   entityId: string
   entityName: string
   dueDate: Date
+  isDriver?: boolean
 }) {
   const t = await getTranslations("Dashboard.MissionControl.ExpiryAlerts")
   const expiryDays = differenceInDays(dueDate, new Date())
@@ -70,7 +72,7 @@ export default async function ExpiryAlertCard({
           entityName: entityName,
         })}
       </RyogoSmall>
-      <ExpiryLink type={expiryType} entityId={entityId}>
+      <ExpiryLink type={expiryType} entityId={entityId} isDriver>
         <Button variant="default" className="w-full">
           <RyogoCaption color="white" weight="font-bold">
             {t("CheckNow")}
@@ -102,16 +104,23 @@ function ExpiryLink({
   children,
   type,
   entityId,
+  isDriver,
 }: {
   children: React.ReactNode
   type: ExpiryType
   entityId: string
+  isDriver?: boolean
 }) {
   switch (type) {
     case "License":
     case "Leave":
       return (
-        <Link href={`/dashboard/drivers/${entityId}`} className="mt-auto">
+        <Link
+          href={
+            isDriver ? `/rider/myProfile` : `/dashboard/drivers/${entityId}`
+          }
+          className="mt-auto"
+        >
           {children}
         </Link>
       )

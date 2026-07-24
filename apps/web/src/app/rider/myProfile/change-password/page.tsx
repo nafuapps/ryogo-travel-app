@@ -14,16 +14,16 @@ export const metadata: Metadata = {
 }
 
 export default async function ChangePasswordMyProfilePage() {
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/change-password"} />
       <ChangePasswordMyProfileComponent
-        userId={user.userId}
-        agencyId={user.agencyId}
+        userId={currentUser.userId}
+        agencyId={currentUser.agencyId}
       />
     </MainWrapper>
   )

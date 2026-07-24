@@ -27,8 +27,8 @@ export default async function ModifyTransactionPage({
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
   }
 
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
   const bookingDetails = await bookingServices.findBookingDetailsById(id)
@@ -41,8 +41,8 @@ export default async function ModifyTransactionPage({
   //Only owner or assigned user can modify transactions
   if (
     !transactionDetails ||
-    (user.userRole !== UserRolesEnum.OWNER &&
-      user.userId !== bookingDetails.assignedUserId)
+    (currentUser.userRole !== UserRolesEnum.OWNER &&
+      currentUser.userId !== bookingDetails.assignedUserId)
   ) {
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
   }

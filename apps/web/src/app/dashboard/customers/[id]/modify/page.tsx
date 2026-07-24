@@ -20,9 +20,9 @@ export default async function ModifyCustomerPage({
 }) {
   const { id } = await params
 
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -32,8 +32,8 @@ export default async function ModifyCustomerPage({
   }
   //Only owner or the adding agent can modify customer
   if (
-    user.userRole !== UserRolesEnum.OWNER &&
-    customer.addedByUserId !== user.userId
+    currentUser.userRole !== UserRolesEnum.OWNER &&
+    customer.addedByUserId !== currentUser.userId
   ) {
     redirect("/dashboard", RedirectType.replace)
   }

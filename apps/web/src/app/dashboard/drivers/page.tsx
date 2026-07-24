@@ -12,16 +12,16 @@ export const metadata: Metadata = {
 }
 
 export default async function AllDriversPage() {
-  const user = await getCurrentUser()
+  const currentUser = await getCurrentUser()
 
-  if (!user) {
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const agencyId = user.agencyId
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers"} />
-      <DriversPageComponent agencyId={agencyId} />
+      <DriversPageComponent agencyId={currentUser.agencyId} />
     </MainWrapper>
   )
 }

@@ -27,8 +27,8 @@ export default async function ModifyExpensePage({
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
   }
 
-  const user = await getCurrentUser()
-  if (!user) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
@@ -39,8 +39,8 @@ export default async function ModifyExpensePage({
   if (
     !expenseDetails ||
     !bookingDetails ||
-    (user.userRole !== UserRolesEnum.OWNER &&
-      user.userId !== bookingDetails.assignedUserId)
+    (currentUser.userRole !== UserRolesEnum.OWNER &&
+      currentUser.userId !== bookingDetails.assignedUserId)
   ) {
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
   }

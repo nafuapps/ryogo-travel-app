@@ -2,6 +2,11 @@ import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { getTranslations } from "next-intl/server"
+import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoSmall, RyogoH4 } from "@/components/typography"
+import { Hourglass } from "lucide-react"
 
 export default async function MySupportTicketsLayout({
   children,
@@ -18,10 +23,28 @@ export default async function MySupportTicketsLayout({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const isPremium = agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
-
-  if (!isPremium) {
-    redirect("/rider/mySupport", RedirectType.replace)
+  //SUBSCRIPTION BLOCKER: Only premium users can access support tickets
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+  if (isBasic || agency.subscriptionExpiresOn < new Date()) {
+    const t = await getTranslations("Rider.MySupportTickets")
+    return (
+      <PageWrapper id="SupportTicketsBlockerPage">
+        <SectionWrapper id="SupportTicketsBlockerSection" center>
+          <RyogoEnclosedIcon
+            icon={Hourglass}
+            size="md"
+            color="yellow"
+            bgColor="yellow"
+          />
+          <RyogoSmall color="yellow">
+            {isBasic ? t("TicketsTrialWarning") : t("TicketsExpiredWarning")}
+          </RyogoSmall>
+          <RyogoH4>
+            {isBasic ? t("TicketsTrialAction") : t("TicketsExpiredAction")}
+          </RyogoH4>
+        </SectionWrapper>
+      </PageWrapper>
+    )
   }
 
   return children

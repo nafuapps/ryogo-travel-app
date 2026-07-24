@@ -786,6 +786,19 @@
         "/dashboard/mission-control/modify": "Modify Custom Mission",
         "/dashboard/search": "Search",
         "/dashboard/support": "Support",
+        "/dashboard/support/help-started": "Get Started Help",
+        "/dashboard/support/help-account": "Account Help",
+        "/dashboard/support/help-bookings": "Bookings Help",
+        "/dashboard/support/help-drivers": "Drivers Help",
+        "/dashboard/support/help-vehicles": "Vehicles Help",
+        "/dashboard/support/help-customers": "Customers Help",
+        "/dashboard/support/help-users": "Users Help",
+        "/dashboard/support/help-analytics": "Analytics Help",
+        "/dashboard/support/help-missions": "Missions Help",
+        "/dashboard/support/help-videos": "Videos Help",
+        "/dashboard/support/tickets": "Support Tickets",
+        "/dashboard/support/tickets/add": "Create Support Ticket",
+        "/dashboard/support/tickets/[id]": "View Support Ticket",
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New Agent",
         "/dashboard/users/[id]": "User Details",
@@ -1098,7 +1111,7 @@
       "CustomerAddress": "Address",
       "ViewCustomerDetails": "View Customer Details",
       "CallCustomer": "Call Customer",
-      "ChatCustomer":"Chat with Customer",
+      "ChatCustomer": "Chat with Customer",
       "TripInfo": "TRIP INFO",
       "From": "From",
       "To": "To",
@@ -2490,7 +2503,100 @@
       "Success": "Agency details edited successfully!",
       "Error": "Cannot change agency details.. please try again later."
     },
-    "Support": {},
+    "Support": {
+      "Title": "Help & Support Center",
+      "Description": "Get answers to all your queries, frequently asked questions, video tutorials and more",
+      "Started": {
+        "Title": "GETTING STARTED",
+        "Description": "Onboarding guide, platform overview, and initial setup instructions"
+      },
+      "Account": {
+        "Title": "ACCOUNT & PROFILE",
+        "Description": "Get help related to your account details and settings"
+      },
+      "Bookings": {
+        "Title": "BOOKINGS",
+        "Description": "Learn everything about bookings like adding a new booking, transactions, expenses, trip logs and more."
+      },
+      "Vehicles": {
+        "Title": "VEHICLES",
+        "Description": "Learn more about managing your fleet of vehicles"
+      },
+      "Drivers": {
+        "Title": "DRIVERS",
+        "Description": "Understand how to manage your team of drivers"
+      },
+      "Users": {
+        "Title": "USERS",
+        "Description": "Know how to manage your agency users"
+      },
+      "Customers": {
+        "Title": "CUSTOMERS",
+        "Description": "Know how to manage your customers"
+      },
+      "Analytics": {
+        "Title": "ANALYTICS",
+        "Description": "Understand how to use analytics and reports to make informed decisions"
+      },
+      "Missions": {
+        "Title": "MISSION AND ALERTS",
+        "Description": "Managing your alert notifications and missions"
+      },
+      "Videos": {
+        "Title": "VIDEO TUTORIALS",
+        "Description": "Watch short demo videos to understand more about RyoGo Travel App"
+      },
+      "FAQs": {
+        "Title": "Top Questions",
+        "Description": "Get answers to frequently asked questions and queries",
+        "Q1": {
+          "Question": "How do I create a new booking",
+          "Answer": ""
+        },
+        "Q2": {
+          "Question": "How do I know the status of a booking?",
+          "Answer": ""
+        },
+        "Q3": {
+          "Question": "How do I reach out to the customer?",
+          "Answer": ""
+        }
+      },
+      "Contact": {
+        "Title": "Still need help?",
+        "Description": "Get in touch with our specialized support team to assist your with any complex queries.",
+        "CallCTA": "Call Support Team",
+        "ChatCTA": "Chat with Support",
+        "EmailCTA": "Email Support"
+      },
+      "Tickets": {
+        "Title": "Support Tickets",
+        "Description": "View and manage your support tickets",
+        "ViewCTA": "View Your Tickets",
+        "CreateCTA": "Create New Ticket"
+      }
+    },
+    "SupportTickets":{
+       "TicketsTrialWarning":"You cannot access support tickets because you are on Basic plan.",
+      "TicketsTrialAction":"To get full access to our support tickets feature, please upgrade to Premium plan.",
+      "TicketsExpiredWarning":"Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
+      "TicketsExpiredAction":"To get full access to our support tickets feature, please renew Premium plan.",
+      "BuyCTA":"Buy Premium",
+      "TryCTA":"Try Premium",
+      "RenewCTA":"Renew Subscription"
+    },
+    "AddSupportTicket":{},
+    "ViewSupportTicket":{},
+    "SupportStartedHelp":{},
+    "SupportAccountHelp":{},
+    "SupportBookingsHelp":{},
+    "SupportVehiclesHelp":{},
+    "SupportDriversHelp":{},
+    "SupportCustomersHelp":{},
+    "SupportUsersHelp":{},
+    "SupportAnalyticsHelp":{},
+    "SupportMissionsHelp":{},
+    "SupportVideosHelp":{},
     "AccountSubscription": {
       "CurrentPlan": {
         "Header": "CURRENT PLAN",
@@ -2734,23 +2840,23 @@
         "ErrorMarkingRead": "Failed to mark mission as completed.. please try again later",
         "ErrorMarkingUnread": "Failed to mark mission as unread.. please try again later"
       },
-      "ExpiryAlerts":{
+      "ExpiryAlerts": {
         "Header": "{count, plural, =1 {1 EXPIRY ALERT} other {# EXPIRY ALERTS}}",
-        "License":"LICENSE",
-        "Insurance":"INSURANCE",
-        "PUC":"PUC",
-        "RC":"RC",
-        "Leave":"LEAVE",
-        "Repair":"REPAIR",
-        "Title":{
-          "License":"Driver license {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "Leave":"Driver Leave {expired,select,true {has ended} other {is going to end}} for {entityName}",
-          "PUC":"Vehicle PUC certicate {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "RC":"Vehicle registration certificate {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "Insurance":"Vehicle insurance {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "Repair":"Vehicle Repair {expired,select,true {has ended} other {is going to end}} for {entityName}"
+        "License": "LICENSE",
+        "Insurance": "INSURANCE",
+        "PUC": "PUC",
+        "RC": "RC",
+        "Leave": "LEAVE",
+        "Repair": "REPAIR",
+        "Title": {
+          "License": "Driver license {expired,select,true {has expired} other {is expiring}} for {entityName}",
+          "Leave": "Driver Leave {expired,select,true {has ended} other {is going to end}} for {entityName}",
+          "PUC": "Vehicle PUC certicate {expired,select,true {has expired} other {is expiring}} for {entityName}",
+          "RC": "Vehicle registration certificate {expired,select,true {has expired} other {is expiring}} for {entityName}",
+          "Insurance": "Vehicle insurance {expired,select,true {has expired} other {is expiring}} for {entityName}",
+          "Repair": "Vehicle Repair {expired,select,true {has ended} other {is going to end}} for {entityName}"
         },
-        "CheckNow":"Check Now"
+        "CheckNow": "Check Now"
       },
       "LeadBooking": {
         "Title": "Lead booking #{bookingId}",
@@ -3181,6 +3287,15 @@
         "/rider/myProfile/agency": "Agency Details",
         "/rider/myProfile/settings": "Settings",
         "/rider/mySupport": "Support",
+        "/rider/mySupport/help-started": "Get Started Help",
+        "/rider/mySupport/help-account": "Account Help",
+        "/rider/mySupport/help-bookings": "Bookings Help",
+        "/rider/mySupport/help-vehicle": "Vehicle Help",
+        "/rider/mySupport/help-missions": "Missions Help",
+        "/rider/mySupport/help-videos": "Videos Help",
+        "/rider/mySupport/tickets": "Support Tickets",
+        "/rider/mySupport/tickets/add": "Create Support Ticket",
+        "/rider/mySupport/tickets/[id]": "View Support Ticket",
         "/rider/myVehicle": "Vehicle"
       }
     },
@@ -3487,61 +3602,76 @@
       "ChatAgent": "Chat with Agent"
     },
     "MySupport": {
-      "Title":"Help & Support Center",
-      "Description":"Get answers to all your queries, frequently asked questions, video tutorials and more",
-      "Started":{
-        "Title":"GETTING STARTED",
-        "Description":"Onboarding guide, platform overview, and initial setup instructions"
+      "Title": "Help & Support Center",
+      "Description": "Get answers to all your queries, frequently asked questions, video tutorials and more",
+      "Started": {
+        "Title": "GETTING STARTED",
+        "Description": "Onboarding guide, platform overview, and initial setup instructions"
       },
-      "Account":{
-        "Title":"ACCOUNT & PROFILE",
-        "Description":"Get help related to your account details and settings"
+      "Account": {
+        "Title": "ACCOUNT & PROFILE",
+        "Description": "Get help related to your account details and settings"
       },
-      "Bookings":{
-        "Title":"BOOKINGS",
-        "Description":"Understand booking flow, expenses, trip logs and more."
+      "Bookings": {
+        "Title": "BOOKINGS",
+        "Description": "Understand booking flow, expenses, trip logs and more."
       },
-      "Vehicle":{
-        "Title":"VEHICLE",
-        "Description":"Know more about your assigned vehicle"
+      "Vehicle": {
+        "Title": "VEHICLE",
+        "Description": "Know more about your assigned vehicle"
       },
-      "Missions":{
-        "Title":"MISSION AND ALERTS",
-        "Description":"Managing your alert notifications and missions"
+      "Missions": {
+        "Title": "MISSION AND ALERTS",
+        "Description": "Managing your alert notifications and missions"
       },
-      "Videos":{
-        "Title":"VIDEO TUTORIALS",
-        "Description":"Watch short demo videos to understand more about RyoGo Travel App"
+      "Videos": {
+        "Title": "VIDEO TUTORIALS",
+        "Description": "Watch short demo videos to understand more about RyoGo Travel App"
       },
-      "FAQs":{
-        "Title":"Top Questions",
-        "Q1":{
-          "Question":"How do I know if I have been assigned a booking",
-          "Answer":""
+      "FAQs": {
+        "Title": "Top Questions",
+        "Description": "Get answers to frequently asked questions and queries",
+        "Q1": {
+          "Question": "How do I know if I have been assigned a booking",
+          "Answer": ""
         },
-        "Q2":{
-          "Question":"How do I know more about my vehicle?",
-          "Answer":""
+        "Q2": {
+          "Question": "How do I know more about my vehicle?",
+          "Answer": ""
         },
-        "Q3":{
-          "Question":"How do I reach out to the customer?",
-          "Answer":""
+        "Q3": {
+          "Question": "How do I reach out to the customer?",
+          "Answer": ""
         }
       },
-      "Contact":{
-        "Title":"Still need help?",
-        "Description":"Get in touch with our specialized support team to assist your with any complex queries.",
-        "CallCTA":"Call Support Team",
-        "ChatCTA":"Chat with Support",
-        "EmailCTA":"Email Support"
+      "Contact": {
+        "Title": "Still need help?",
+        "Description": "Get in touch with our specialized support team to assist your with any complex queries.",
+        "CallCTA": "Call Support Team",
+        "ChatCTA": "Chat with Support",
+        "EmailCTA": "Email Support"
       },
-      "Tickets":{
-        "Title":"Support Tickets",
-        "Description":"View and manage your support tickets",
-        "ViewCTA":"View Your Tickets",
-        "CreateCTA":"Create New Ticket"
+      "Tickets": {
+        "Title": "Support Tickets",
+        "Description": "View and manage your support tickets",
+        "ViewCTA": "View Your Tickets",
+        "CreateCTA": "Create New Ticket"
       }
     },
+    "MySupportStartedHelp": {},
+    "MySupportAccountHelp": {},
+    "MySupportBookingsHelp": {},
+    "MySupportVehicleHelp": {},
+    "MySupportMissionsHelp": {},
+    "MySupportVideosHelp": {},
+    "MySupportTickets": {
+      "TicketsTrialWarning":"You cannot access support tickets because you are on Basic plan.",
+      "TicketsTrialAction":"To get full access to our support tickets feature, please upgrade to Premium plan.",
+      "TicketsExpiredWarning":"Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
+      "TicketsExpiredAction":"To get full access to our support tickets feature, please renew Premium plan."
+    },
+    "AddMySupportTicket": {},
+    "ViewMySupportTicket": {},
     "MyProfileSettings": {
       "Field1": {
         "Title": "Enable dark mode"

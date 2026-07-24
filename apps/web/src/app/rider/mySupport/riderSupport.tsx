@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server"
 import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
-import { Car, ChevronRight, Play, Plus, Tickets, User } from "lucide-react"
+import { Car, ChevronRight, Play, Tickets, User } from "lucide-react"
 import { UrlObject } from "url"
 import { Separator } from "@/components/ui/separator"
 import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
@@ -27,8 +27,10 @@ export default async function MySupportPageComponent({
 
   return (
     <PageWrapper id="RiderSupportPage">
-      <RyogoP>{t("Title")}</RyogoP>
-      <RyogoSmall color="light">{t("Description")}</RyogoSmall>
+      <RyogoP className="mx-auto text-center mt-4 lg:mt-5">{t("Title")}</RyogoP>
+      <RyogoSmall className="mx-auto text-center mb-4 lg:mb-5" color="light">
+        {t("Description")}
+      </RyogoSmall>
       <div className="grid gap-5 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         <SupportCategoryCard
           title={t("Started.Title")}
@@ -68,7 +70,12 @@ export default async function MySupportPageComponent({
         />
       </div>
       <Separator />
-      <RyogoP>{t("FAQs.Title")}</RyogoP>
+      <RyogoP className="mx-auto text-center mt-4 lg:mt-5">
+        {t("FAQs.Title")}
+      </RyogoP>
+      <RyogoSmall color="light" className="mx-auto text-center mb-4 lg:mb-5">
+        {t("FAQs.Description")}
+      </RyogoSmall>
       <FAQWrapper>
         <FAQItem
           question={t("FAQs.Q1.Question")}
@@ -86,7 +93,9 @@ export default async function MySupportPageComponent({
       <Separator />
       <SectionWrapper id="Contact" center>
         <RyogoP>{t("Contact.Title")}</RyogoP>
-        <RyogoSmall color="light">{t("Contact.Description")}</RyogoSmall>
+        <RyogoSmall className="text-center" color="light">
+          {t("Contact.Description")}
+        </RyogoSmall>
         <div className="flex flex-col lg:flex-row w-full lg:items-center lg:justify-center gap-3 lg:gap-4">
           <RyogoPhoneButton
             label={t("Contact.CallCTA")}
@@ -105,17 +114,13 @@ export default async function MySupportPageComponent({
       {isPremium && (
         <SectionWrapper id="Tickets" center>
           <RyogoP>{t("Tickets.Title")}</RyogoP>
-          <RyogoSmall color="light">{t("Tickets.Description")}</RyogoSmall>
+          <RyogoSmall className="text-center" color="light">
+            {t("Tickets.Description")}
+          </RyogoSmall>
           <Link href="/rider/mySupport/tickets">
-            <Button>
-              <RyogoCaption color="white">{t("Tickets.ViewCTA")}</RyogoCaption>
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" />
-            </Button>
-          </Link>
-          <Link href="/rider/mySupport/tickets/add">
-            <Button variant={"outline"}>
-              <RyogoIcon icon={Plus} size="sm" />
-              <RyogoCaption>{t("Tickets.CreateCTA")}</RyogoCaption>
+            <Button variant="outline">
+              <RyogoCaption>{t("Tickets.ViewCTA")}</RyogoCaption>
+              <RyogoIcon icon={ChevronRight} size="sm" />
             </Button>
           </Link>
         </SectionWrapper>

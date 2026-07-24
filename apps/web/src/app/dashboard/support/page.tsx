@@ -27,15 +27,12 @@ export default async function SupportPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const isPremium = agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
-
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support"} />
       <SupportPageComponent
-        id={currentUser.userId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-        isPremium={isPremium}
+        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
       />
     </MainWrapper>
   )

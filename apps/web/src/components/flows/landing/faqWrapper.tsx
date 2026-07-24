@@ -7,7 +7,7 @@ import { useState } from "react"
 
 export function FAQWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col justify-center divide-y items-center w-full max-w-4xl">
+    <div className="flex flex-col justify-center divide-y items-center w-full max-w-4xl mx-auto">
       {children}
     </div>
   )

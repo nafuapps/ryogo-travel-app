@@ -2,7 +2,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ModifyDriverLeavePageComponent from "./modifyDriverLeave"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { DriverLeaveRegex } from "@/lib/regex"
+import { DriverLeaveIdRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
@@ -20,7 +20,7 @@ export default async function ModifyDriverLeavePage({
   const { id, leaveId } = await params
 
   //Invalid leave id regex check
-  if (!DriverLeaveRegex.safeParse(leaveId).success) {
+  if (!DriverLeaveIdRegex.safeParse(leaveId).success) {
     redirect(`/dashboard/drivers/${id}/leaves`, RedirectType.replace)
   }
 

@@ -19,10 +19,10 @@ import {
   FindAgencySearchDataType,
 } from "@ryogo-travel-app/api/services/agency.services"
 import {
-  BookingRegex,
-  CustomerRegex,
-  DriverRegex,
-  VehicleRegex,
+  BookingIdRegex,
+  CustomerIdRegex,
+  DriverIdRegex,
+  VehicleIdRegex,
 } from "@/lib/regex"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -132,86 +132,136 @@ export default function SearchPageComponent({
   })
 
   function getDriverSearchData(searchTerm: string) {
-    if (DriverRegex.safeParse(searchTerm).success) {
+    if (DriverIdRegex.safeParse(searchTerm).success) {
       return searchData.drivers.filter((d) => d.id === searchTerm)
     } else {
       return searchData.drivers.filter((d) => {
-        return (
-          d.address.toUpperCase().includes(searchTerm) ||
-          d.licenseNumber.toUpperCase().includes(searchTerm) ||
-          d.name.toUpperCase().includes(searchTerm) ||
-          d.phone.toUpperCase().includes(searchTerm) ||
-          d.status.toUpperCase().includes(searchTerm)
-        )
+        return hasTerm(searchTerm, [
+          d.licenseNumber,
+          d.address,
+          d.name,
+          d.phone,
+          d.status,
+        ])
+        // return (
+        //   d.address.toUpperCase().includes(searchTerm) ||
+        //   d.licenseNumber.toUpperCase().includes(searchTerm) ||
+        //   d.name.toUpperCase().includes(searchTerm) ||
+        //   d.phone.toUpperCase().includes(searchTerm) ||
+        //   d.status.toUpperCase().includes(searchTerm)
+        // )
       })
     }
   }
 
   function getVehicleSearchData(searchTerm: string) {
-    if (VehicleRegex.safeParse(searchTerm).success) {
+    if (VehicleIdRegex.safeParse(searchTerm).success) {
       return searchData.vehicles.filter((v) => v.id === searchTerm)
     } else {
       return searchData.vehicles.filter((v) => {
-        return (
-          v.brand.toUpperCase().includes(searchTerm) ||
-          v.color.toUpperCase().includes(searchTerm) ||
-          v.model.toUpperCase().includes(searchTerm) ||
-          v.type.toUpperCase().includes(searchTerm) ||
-          v.vehicleNumber.toUpperCase().includes(searchTerm) ||
-          v.status.toUpperCase().includes(searchTerm)
-        )
+        return hasTerm(searchTerm, [
+          v.brand,
+          v.color,
+          v.model,
+          v.type,
+          v.vehicleNumber,
+          v.status,
+        ])
+        // return (
+        //   v.brand.toUpperCase().includes(searchTerm) ||
+        //   v.color.toUpperCase().includes(searchTerm) ||
+        //   v.model.toUpperCase().includes(searchTerm) ||
+        //   v.type.toUpperCase().includes(searchTerm) ||
+        //   v.vehicleNumber.toUpperCase().includes(searchTerm) ||
+        //   v.status.toUpperCase().includes(searchTerm)
+        // )
       })
     }
   }
   function getCustomerSearchData(searchTerm: string) {
-    if (CustomerRegex.safeParse(searchTerm).success) {
+    if (CustomerIdRegex.safeParse(searchTerm).success) {
       return searchData.customers.filter((c) => c.id === searchTerm)
     } else {
       return searchData.customers.filter((c) => {
-        return (
-          c.location.city.toUpperCase().includes(searchTerm) ||
-          c.location.state.toUpperCase().includes(searchTerm) ||
-          c.name.toUpperCase().includes(searchTerm) ||
-          c.phone.toUpperCase().includes(searchTerm) ||
-          c.remarks?.toUpperCase().includes(searchTerm) ||
-          c.address?.toUpperCase().includes(searchTerm) ||
-          c.email?.toUpperCase().includes(searchTerm) ||
-          c.status.toUpperCase().includes(searchTerm)
-        )
+        return hasTerm(searchTerm, [
+          c.address ?? "",
+          c.email ?? "",
+          c.location.city,
+          c.location.state,
+          c.name,
+          c.phone,
+          c.remarks ?? "",
+          c.status,
+        ])
+        // return (
+        //   c.location.city.toUpperCase().includes(searchTerm) ||
+        //   c.location.state.toUpperCase().includes(searchTerm) ||
+        //   c.name.toUpperCase().includes(searchTerm) ||
+        //   c.phone.toUpperCase().includes(searchTerm) ||
+        //   c.remarks?.toUpperCase().includes(searchTerm) ||
+        //   c.address?.toUpperCase().includes(searchTerm) ||
+        //   c.email?.toUpperCase().includes(searchTerm) ||
+        //   c.status.toUpperCase().includes(searchTerm)
+        // )
       })
     }
   }
 
   function getBookingSearchData(searchTerm: string) {
-    if (BookingRegex.safeParse(searchTerm).success) {
+    if (BookingIdRegex.safeParse(searchTerm).success) {
       return searchData.bookings.filter((b) => b.id === searchTerm)
     } else {
       return searchData.bookings.filter((b) => {
-        return (
-          b.source.city.toUpperCase().includes(searchTerm) ||
-          b.source.state.toUpperCase().includes(searchTerm) ||
-          b.destination.city.toUpperCase().includes(searchTerm) ||
-          b.destination.state.toUpperCase().includes(searchTerm) ||
-          b.assignedVehicle?.vehicleNumber.toUpperCase().includes(searchTerm) ||
-          b.assignedVehicleId?.toUpperCase().includes(searchTerm) ||
-          b.assignedDriver?.name.toUpperCase().includes(searchTerm) ||
-          b.assignedDriver?.phone.toUpperCase().includes(searchTerm) ||
-          b.assignedDriverId?.toUpperCase().includes(searchTerm) ||
-          b.assignedUser.name.toUpperCase().includes(searchTerm) ||
-          b.assignedUser.phone.toUpperCase().includes(searchTerm) ||
-          b.assignedUserId.toUpperCase().includes(searchTerm) ||
-          b.bookedByUser.name.toUpperCase().includes(searchTerm) ||
-          b.bookedByUser.phone.toUpperCase().includes(searchTerm) ||
-          b.bookedByUserId.toUpperCase().includes(searchTerm) ||
-          b.customer.name.toUpperCase().includes(searchTerm) ||
-          b.customer.phone.toUpperCase().includes(searchTerm) ||
-          b.customerId.toUpperCase().includes(searchTerm) ||
-          b.type.toUpperCase().includes(searchTerm) ||
-          b.status.toUpperCase().includes(searchTerm) ||
-          b.pickupAddress?.toUpperCase().includes(searchTerm) ||
-          b.dropAddress?.toUpperCase().includes(searchTerm) ||
-          b.remarks?.toUpperCase().includes(searchTerm)
-        )
+        return hasTerm(searchTerm, [
+          b.source.city,
+          b.source.state,
+          b.destination.city,
+          b.destination.state,
+          b.assignedVehicle?.vehicleNumber ?? "",
+          b.assignedVehicleId ?? "",
+          b.assignedDriver?.name ?? "",
+          b.assignedDriver?.phone ?? "",
+          b.assignedDriverId ?? "",
+          b.assignedUser.name,
+          b.assignedUser.phone,
+          b.assignedUserId,
+          b.bookedByUser.name,
+          b.bookedByUser.phone,
+          b.bookedByUserId,
+          b.customer.name,
+          b.customer.phone,
+          b.customerId,
+          b.type,
+          b.status,
+          b.pickupAddress ?? "",
+          b.dropAddress ?? "",
+          b.remarks ?? "",
+        ])
+        // return (
+        //   b.source.city.toUpperCase().includes(searchTerm) ||
+        //   b.source.state.toUpperCase().includes(searchTerm) ||
+        //   b.destination.city.toUpperCase().includes(searchTerm) ||
+        //   b.destination.state.toUpperCase().includes(searchTerm) ||
+        //   b.assignedVehicle?.vehicleNumber.toUpperCase().includes(searchTerm) ||
+        //   b.assignedVehicleId?.toUpperCase().includes(searchTerm) ||
+        //   b.assignedDriver?.name.toUpperCase().includes(searchTerm) ||
+        //   b.assignedDriver?.phone.toUpperCase().includes(searchTerm) ||
+        //   b.assignedDriverId?.toUpperCase().includes(searchTerm) ||
+        //   b.assignedUser.name.toUpperCase().includes(searchTerm) ||
+        //   b.assignedUser.phone.toUpperCase().includes(searchTerm) ||
+        //   b.assignedUserId.toUpperCase().includes(searchTerm) ||
+        //   b.bookedByUser.name.toUpperCase().includes(searchTerm) ||
+        //   b.bookedByUser.phone.toUpperCase().includes(searchTerm) ||
+        //   b.bookedByUserId.toUpperCase().includes(searchTerm) ||
+        //   b.customer.name.toUpperCase().includes(searchTerm) ||
+        //   b.customer.phone.toUpperCase().includes(searchTerm) ||
+        //   b.customerId.toUpperCase().includes(searchTerm) ||
+        //   b.type.toUpperCase().includes(searchTerm) ||
+        //   b.status.toUpperCase().includes(searchTerm) ||
+        //   b.pickupAddress?.toUpperCase().includes(searchTerm) ||
+        //   b.dropAddress?.toUpperCase().includes(searchTerm) ||
+        //   b.remarks?.toUpperCase().includes(searchTerm)
+        // )
       })
     }
   }
@@ -620,5 +670,14 @@ function VehicleSearchResultItem({
         </GridItemWrapper>
       </GridWrapper>
     </Link>
+  )
+}
+
+//Check if the search term matches any of the list of strings
+function hasTerm(searchTerm: string, list: string[]) {
+  if (searchTerm === "" || list.length === 0) return false
+
+  return list.some((value) =>
+    value.toUpperCase().includes(searchTerm.toUpperCase()),
   )
 }

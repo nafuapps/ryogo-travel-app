@@ -1,33 +1,33 @@
 import {
-  AgencyRegex,
-  BookingRegex,
-  CustomerRegex,
-  DriverRegex,
-  ExpenseRegex,
-  OrderRegex,
-  UserRegex,
-  VehicleRegex,
+  AgencyIdRegex,
+  BookingIdRegex,
+  CustomerIdRegex,
+  DriverIdRegex,
+  ExpenseIdRegex,
+  OrderIdRegex,
+  UserIdRegex,
+  VehicleIdRegex,
 } from "@/lib/regex"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export function regexCheckIDByEntityType(type: EntityTypeEnum, value: string) {
   switch (type) {
     case EntityTypeEnum.AGENCY:
-      return AgencyRegex.safeParse(value).success
+      return AgencyIdRegex.safeParse(value).success
     case EntityTypeEnum.BOOKING:
-      return BookingRegex.safeParse(value).success
+      return BookingIdRegex.safeParse(value).success
     case EntityTypeEnum.CUSTOMER:
-      return CustomerRegex.safeParse(value).success
+      return CustomerIdRegex.safeParse(value).success
     case EntityTypeEnum.DRIVER:
-      return DriverRegex.safeParse(value).success
+      return DriverIdRegex.safeParse(value).success
     case EntityTypeEnum.EXPENSE:
-      return ExpenseRegex.safeParse(value).success
+      return ExpenseIdRegex.safeParse(value).success
     case EntityTypeEnum.ORDER:
-      return OrderRegex.safeParse(value).success
+      return OrderIdRegex.safeParse(value).success
     case EntityTypeEnum.USER:
-      return UserRegex.safeParse(value).success
+      return UserIdRegex.safeParse(value).success
     case EntityTypeEnum.VEHICLE:
-      return VehicleRegex.safeParse(value).success
+      return VehicleIdRegex.safeParse(value).success
     default:
       return false
   }

@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import { BookingRegex } from "@/lib/regex"
+import { BookingIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
@@ -19,7 +19,7 @@ export default async function RiderMyBookingLayout({
   }
 
   //Invalid booking id regex check
-  if (!BookingRegex.safeParse(id).success) {
+  if (!BookingIdRegex.safeParse(id).success) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 

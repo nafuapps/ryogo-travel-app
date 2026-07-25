@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/auth"
-import { DriverRegex } from "@/lib/regex"
+import { DriverIdRegex } from "@/lib/regex"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -19,7 +19,7 @@ export default async function DriverDetailsLayout({
   }
 
   //Invalid driver id regex check
-  if (!DriverRegex.safeParse(id).success) {
+  if (!DriverIdRegex.safeParse(id).success) {
     redirect("/dashboard/drivers", RedirectType.replace)
   }
 

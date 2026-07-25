@@ -182,7 +182,7 @@ export function DashboardScheduleItemGrid({
   )
 }
 
-export function getStartEndIndex(startDate: Date, endDate: Date) {
+function getStartEndIndex(startDate: Date, endDate: Date) {
   const chartStartTime = new Date().getTime()
   return {
     startIndex:

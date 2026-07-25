@@ -3,7 +3,7 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
-import { BookingRegex } from "@/lib/regex"
+import { BookingIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -27,7 +27,7 @@ export default async function ReconcileBookingPage({
     redirect("/auth/login", RedirectType.replace)
   }
   //Invalid booking id regex
-  if (!BookingRegex.safeParse(id).success) {
+  if (!BookingIdRegex.safeParse(id).success) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 

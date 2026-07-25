@@ -1,6 +1,6 @@
 //Bookings/id/assign-driver page (for a lead/confirmed booking)
 
-import { BookingRegex } from "@/lib/regex"
+import { BookingIdRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {
@@ -40,7 +40,7 @@ export default async function AssignDriverBookingPage({
     redirect("/auth/login", RedirectType.replace)
   }
   //Invalid booking id regex
-  if (!BookingRegex.safeParse(id).success) {
+  if (!BookingIdRegex.safeParse(id).success) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 

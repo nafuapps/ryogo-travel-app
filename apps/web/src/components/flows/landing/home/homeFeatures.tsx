@@ -71,6 +71,7 @@ function FeatureCard({
         <Image
           className="object-cover w-full"
           loading="eager"
+          //TODO: Add product images
           // src={imageSrc}
           src={"/logoPWA.png"}
           alt=""

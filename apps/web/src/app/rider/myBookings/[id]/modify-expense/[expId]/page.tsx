@@ -4,7 +4,7 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
 import RiderModifyExpensePageComponent from "./riderModifyExpense"
-import { ExpenseRegex } from "@/lib/regex"
+import { ExpenseIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -28,7 +28,7 @@ export default async function RiderModifyExpensePage({
   }
 
   //Invalid expense id regex check
-  if (!ExpenseRegex.safeParse(expId).success) {
+  if (!ExpenseIdRegex.safeParse(expId).success) {
     redirect(`/rider/myBookings/${id}`, RedirectType.replace)
   }
 

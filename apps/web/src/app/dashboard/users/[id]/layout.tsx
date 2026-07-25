@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/auth"
-import { UserRegex } from "@/lib/regex"
+import { UserIdRegex } from "@/lib/regex"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -19,7 +19,7 @@ export default async function UserDetailsLayout({
   }
 
   //Invalid user id regex check
-  if (!UserRegex.safeParse(id).success) {
+  if (!UserIdRegex.safeParse(id).success) {
     redirect("/dashboard/users", RedirectType.replace)
   }
 

@@ -1,7 +1,7 @@
 //Confirm Email page
 
 import { redirect, RedirectType } from "next/navigation"
-import { UserRegex } from "@/lib/regex"
+import { UserIdRegex } from "@/lib/regex"
 import ForgotPasswordPageComponent from "./forgotPassword"
 import { Metadata } from "next"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
@@ -27,7 +27,7 @@ export default async function ConfirmEmailPage({
 }) {
   const userId = (await params).userId
 
-  if (!UserRegex.safeParse(userId).success) {
+  if (!UserIdRegex.safeParse(userId).success) {
     redirect("/auth/login", RedirectType.replace)
   }
 

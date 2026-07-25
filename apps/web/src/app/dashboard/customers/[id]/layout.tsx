@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/auth"
-import { CustomerRegex } from "@/lib/regex"
+import { CustomerIdRegex } from "@/lib/regex"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -19,7 +19,7 @@ export default async function CustomerDetailsLayout({
   }
 
   //Invalid customer id regex check
-  if (!CustomerRegex.safeParse(id).success) {
+  if (!CustomerIdRegex.safeParse(id).success) {
     redirect("/dashboard/customers", RedirectType.replace)
   }
 

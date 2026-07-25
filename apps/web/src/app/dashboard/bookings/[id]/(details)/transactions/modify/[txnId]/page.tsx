@@ -5,7 +5,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { redirect, RedirectType } from "next/navigation"
 import ModifyTransactionPageComponent from "./modifyTransaction"
-import { TransactionRegex } from "@/lib/regex"
+import { TransactionIdRegex } from "@/lib/regex"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
@@ -23,7 +23,7 @@ export default async function ModifyTransactionPage({
   const { id, txnId } = await params
 
   //Invalid transaction id regex check
-  if (!TransactionRegex.safeParse(txnId).success) {
+  if (!TransactionIdRegex.safeParse(txnId).success) {
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
   }
 

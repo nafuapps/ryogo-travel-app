@@ -17,7 +17,7 @@ import {
 const secretKey = process.env.AUTH_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
-export const SESSION_COOKIE_EXPIRATION_TIME =
+const SESSION_COOKIE_EXPIRATION_TIME =
   SESSION_COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000
 
 // Don't add any sensitive data like email, password in this payload
@@ -36,7 +36,7 @@ export type SessionPayload = {
 }
 
 //Encrypt session data into a JWT
-export async function encrypt(payload: SessionPayload) {
+async function encrypt(payload: SessionPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()

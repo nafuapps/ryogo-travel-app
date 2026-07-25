@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/auth"
-import { VehicleRegex } from "@/lib/regex"
+import { VehicleIdRegex } from "@/lib/regex"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -19,7 +19,7 @@ export default async function VehicleDetailsLayout({
   }
 
   //Invalid vehicle id regex check
-  if (!VehicleRegex.safeParse(id).success) {
+  if (!VehicleIdRegex.safeParse(id).success) {
     redirect("/dashboard/vehicles", RedirectType.replace)
   }
 

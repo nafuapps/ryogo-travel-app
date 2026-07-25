@@ -6,7 +6,7 @@ import {
   RyogoSmall,
   RyogoCaption,
 } from "@/components/typography"
-import { DriverRegex, VehicleRegex } from "@/lib/regex"
+import { DriverIdRegex, VehicleIdRegex } from "@/lib/regex"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
@@ -52,8 +52,8 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
 
   const step3Schema = z.object({
     //Assignment
-    assignedDriverId: DriverRegex.optional(),
-    assignedVehicleId: VehicleRegex.optional(),
+    assignedDriverId: DriverIdRegex.optional(),
+    assignedVehicleId: VehicleIdRegex.optional(),
   })
 
   type Step3Type = z.infer<typeof step3Schema>

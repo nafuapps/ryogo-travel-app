@@ -2,7 +2,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ModifyVehicleRepairPageComponent from "./modifyVehicleRepair"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { VehicleRepairRegex } from "@/lib/regex"
+import { VehicleRepairIdRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
@@ -20,7 +20,7 @@ export default async function ModifyVehicleRepairPage({
   const { id, repairId } = await params
 
   //Invalid repair id regex check
-  if (!VehicleRepairRegex.safeParse(repairId).success) {
+  if (!VehicleRepairIdRegex.safeParse(repairId).success) {
     redirect(`/dashboard/vehicles/${id}/repairs`, RedirectType.replace)
   }
 

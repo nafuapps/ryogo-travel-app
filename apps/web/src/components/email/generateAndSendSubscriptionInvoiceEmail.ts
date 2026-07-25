@@ -1,4 +1,4 @@
-import { generateSubscriptionInvoiceName } from "@/lib/utils"
+import { generateSubscriptionInvoicePathName } from "@/lib/utils"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 import getSubscriptionInvoicePDF from "@/components/pdf/generateSubscriptionInvoicePDF"
 import sendEmail from "./sendEmail"
@@ -22,7 +22,10 @@ export default async function generateAndSendSubscriptionInvoiceEmail(
     orderDetails,
     agencyDetails,
   )
-  const invoiceName = generateSubscriptionInvoiceName(agencyId, orderDetails.id)
+  const invoiceName = generateSubscriptionInvoicePathName(
+    agencyId,
+    orderDetails.id,
+  )
   //Upload invoice file and get storage url
   const invoiceUrl = (await uploadPDFBlob(invoiceFile, invoiceName)).path
 

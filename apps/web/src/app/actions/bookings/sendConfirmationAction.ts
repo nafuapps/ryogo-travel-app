@@ -3,7 +3,7 @@
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
 import getConfirmationMessageLink from "@/components/whatsapp/getConfirmationMessageLink"
 import { getCurrentUser } from "@/lib/auth"
-import { generateBookingConfirmationName } from "@/lib/utils"
+import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
@@ -35,7 +35,10 @@ export async function sendConfirmationAction(
 
     //Upload file and get storage url
     confirmationUrl = (
-      await uploadPDFBlob(confirmationFile, generateBookingConfirmationName(id))
+      await uploadPDFBlob(
+        confirmationFile,
+        generateBookingConfirmationPathName(id),
+      )
     ).path
     if (!confirmationUrl) return
 

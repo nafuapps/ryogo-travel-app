@@ -146,7 +146,7 @@ export function NewDriverStep1(props: {
             description={t("Field3.Description")}
           />
           <RyogoFileInput
-            name={"agenctPhotos"}
+            name={"driverPhotos"}
             register={formData.register("driverPhotos")}
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}

@@ -1,6 +1,6 @@
 "use client"
 
-import { sendSupportQueryAction } from "@/app/actions/sendSupportQueryAction"
+import { sendSupportQueryAction } from "@/app/actions/support/sendSupportQueryAction"
 import { RyogoInput, RyogoTextarea } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH4 } from "@/components/typography"

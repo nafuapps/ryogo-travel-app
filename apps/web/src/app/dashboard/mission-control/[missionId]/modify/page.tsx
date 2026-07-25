@@ -6,6 +6,7 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
 import ModifyCustomMissionPageComponent from "./modifyCustomMission"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { MissionIdRegex } from "@/lib/regex"
 
 export const metadata: Metadata = {
   title: `Modify Custom Mission - ${pageTitle}`,
@@ -18,6 +19,11 @@ export default async function ModifyCustomMissionPage({
   params: Promise<{ missionId: string }>
 }) {
   const { missionId } = await params
+
+  if (!MissionIdRegex.safeParse(missionId).success) {
+    redirect("/rider/myMissions", RedirectType.replace)
+  }
+
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {

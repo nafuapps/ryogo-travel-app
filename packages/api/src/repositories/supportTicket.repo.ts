@@ -19,12 +19,22 @@ export const supportTicketRepository = {
   async readSupportTicketsByUserId(userId: string) {
     return await db.query.supportTickets.findMany({
       where: eq(supportTickets.userId, userId),
+      orderBy: (supportTickets, { desc }) => [desc(supportTickets.updatedAt)],
     })
   },
 
   async readSupportTicketsByAgencyId(agencyId: string) {
     return await db.query.supportTickets.findMany({
       where: eq(supportTickets.agencyId, agencyId),
+      orderBy: (supportTickets, { desc }) => [desc(supportTickets.updatedAt)],
     })
+  },
+
+  async updatePhotoUrl(ticketId: string, photoUrl: string) {
+    return await db
+      .update(supportTickets)
+      .set({ photoUrl: photoUrl })
+      .where(eq(supportTickets.id, ticketId))
+      .returning({ id: supportTickets.id, photoUrl: supportTickets.photoUrl })
   },
 }

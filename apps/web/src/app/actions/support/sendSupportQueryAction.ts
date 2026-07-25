@@ -5,6 +5,7 @@ import { SupportQueryEmailTemplate } from "@/components/email/supportQueryEmailT
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 
 export async function sendSupportQueryAction(data: {
   name: string
@@ -33,7 +34,7 @@ export async function sendSupportQueryAction(data: {
 
   //Send query confirmation email
   sendEmail(
-    [data.email, "nafuapps@gmail.com"],
+    [data.email, SUPPORT_EMAIL],
     "RyoGo Support Query Confirmation",
     SupportQueryEmailTemplate({
       name: data.name,

@@ -196,7 +196,7 @@ export const driverServices = {
   },
 
   //Upload driver license photo
-  async updateDriverLicensePhoto(driverId: string, licenseUrl?: string) {
+  async updateDriverLicensePhoto(driverId: string, licenseUrl: string) {
     await driverRepository.updateDriverLicenseUrl(driverId, licenseUrl)
   },
 

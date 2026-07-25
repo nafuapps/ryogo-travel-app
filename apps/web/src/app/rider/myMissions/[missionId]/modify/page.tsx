@@ -1,11 +1,12 @@
 import { Metadata } from "next"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
-import DashboardHeader from "@/components/header/dashboardHeader"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
 import ModifyCustomMissionPageComponent from "./modifyCustomMission"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { MissionIdRegex } from "@/lib/regex"
+import RiderHeader from "@/components/header/riderHeader"
 
 export const metadata: Metadata = {
   title: `Modify Custom Mission - ${pageTitle}`,
@@ -18,6 +19,11 @@ export default async function ModifyCustomMissionPage({
   params: Promise<{ missionId: string }>
 }) {
   const { missionId } = await params
+
+  if (!MissionIdRegex.safeParse(missionId).success) {
+    redirect("/rider/myMissions", RedirectType.replace)
+  }
+
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
@@ -27,12 +33,12 @@ export default async function ModifyCustomMissionPage({
   const mission = await missionServices.findMissionById(missionId)
 
   if (!mission || currentUser.userId !== mission.userId) {
-    redirect("/dashboard/mission-control", RedirectType.replace)
+    redirect("/rider/myMissions", RedirectType.replace)
   }
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/mission-control/modify"} />
+      <RiderHeader pathName={"/rider/myMissions/modify"} />
       <ModifyCustomMissionPageComponent mission={mission} />
     </MainWrapper>
   )

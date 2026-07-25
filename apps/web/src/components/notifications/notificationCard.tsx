@@ -5,7 +5,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { ChevronRight } from "lucide-react"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useTranslations } from "next-intl"
 import { RyogoCaption } from "@/components/typography"
 import Link from "next/link"
@@ -21,7 +21,7 @@ export default function NotificationCard({
   const t = useTranslations("Dashboard.Feed.Notifications")
   return (
     <SectionWrapper id={notification.id}>
-      <SectionRowWrapper justifyStart>
+      <SectionRowWrapper justifyStart center>
         <RyogoEnclosedIcon
           icon={getEntityIcon(notification.entityType)}
           size="sm"
@@ -37,17 +37,12 @@ export default function NotificationCard({
             )}
           </RyogoCaption>
           <RyogoCaption color="light">
-            {moment(notification.createdAt).calendar()}
+            {moment(notification.createdAt).fromNow()}
           </RyogoCaption>
         </SectionColWrapper>
         {notification.link && (
           <Link href={notification.link as any as UrlObject}>
-            <RyogoEnclosedIcon
-              icon={ChevronRight}
-              size="sm"
-              color="slate"
-              bgColor="light"
-            />
+            <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
           </Link>
         )}
       </SectionRowWrapper>

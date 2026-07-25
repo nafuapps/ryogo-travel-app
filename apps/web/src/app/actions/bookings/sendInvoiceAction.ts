@@ -3,7 +3,7 @@
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
 import getInvoiceMessageLink from "@/components/whatsapp/getInvoiceMessageLink"
 import { getCurrentUser } from "@/lib/auth"
-import { generateBookingInvoiceName } from "@/lib/utils"
+import { generateBookingInvoicePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
@@ -35,7 +35,7 @@ export async function sendInvoiceAction(
 
     //Upload file and get storage url
     invoiceUrl = (
-      await uploadPDFBlob(invoiceFile, generateBookingInvoiceName(id))
+      await uploadPDFBlob(invoiceFile, generateBookingInvoicePathName(id))
     ).path
     if (!invoiceUrl) return
 

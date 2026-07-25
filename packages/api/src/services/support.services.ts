@@ -32,6 +32,10 @@ export const supportServices = {
       await supportTicketRepository.readSupportTicketsByAgencyId(agencyId)
     return tickets
   },
+
+  async updateSupportTicketPhoto(ticketId: string, photoUrl: string) {
+    await supportTicketRepository.updatePhotoUrl(ticketId, photoUrl)
+  },
 }
 
 export type FindSupportTicketByIdType = Awaited<

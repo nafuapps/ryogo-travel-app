@@ -5,6 +5,7 @@ import {
   DriverStatusEnum,
   OrderStatusEnum,
   PaymentStatusEnum,
+  TicketStatusEnum,
   TripLogTypesEnum,
   UserStatusEnum,
   VehicleStatusEnum,
@@ -220,4 +221,15 @@ export function RepairStatusPill(props: {
       bgColor={props.completed ? "green" : "yellow"}
     />
   )
+}
+
+export function SupportTicketStatusPill(props: { status: TicketStatusEnum }) {
+  if (props.status === TicketStatusEnum.IN_PROGRESS) {
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+  }
+  if (props.status === TicketStatusEnum.RESOLVED) {
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+  }
+
+  return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
 }

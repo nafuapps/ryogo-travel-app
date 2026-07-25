@@ -3,7 +3,7 @@
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
 import getQuoteMessageLink from "@/components/whatsapp/getQuoteMessageLink"
 import { getCurrentUser } from "@/lib/auth"
-import { generateBookingQuoteName } from "@/lib/utils"
+import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
@@ -34,8 +34,9 @@ export async function sendQuoteAction(
     const quoteFile = await getLeadQuotePDF(bookingDetails)
 
     //Upload file and get storage url
-    quoteUrl = (await uploadPDFBlob(quoteFile, generateBookingQuoteName(id)))
-      .path
+    quoteUrl = (
+      await uploadPDFBlob(quoteFile, generateBookingQuotePathName(id))
+    ).path
     if (!quoteUrl) return
 
     //Update quote url in DB

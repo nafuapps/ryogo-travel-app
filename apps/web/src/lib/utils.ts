@@ -75,6 +75,14 @@ export function generateUserPhotoPathName(userId: string, photo: File) {
   return `users/${userId}/photo/${Date.now()}-${photo.name}`
 }
 
+export function generateUserSupportTicketPhotoPathName(
+  userId: string,
+  ticketId: string,
+  photo: File,
+) {
+  return `users/${userId}/supportTickets/${ticketId}/photo/${Date.now()}-${photo.name}`
+}
+
 export function generateInsurancePhotoPathName(vehicleId: string, photo: File) {
   return `vehicles/${vehicleId}/insurancePhoto/${Date.now()}-${photo.name}`
 }
@@ -123,19 +131,19 @@ export function generateTripLogPhotoPathName(
   return `bookings/${bookingId}/tripLogs/${tripLogId}/photo/${Date.now()}-${photo.name}`
 }
 
-export function generateBookingQuoteName(bookingId: string) {
+export function generateBookingQuotePathName(bookingId: string) {
   return `bookings/${bookingId}/quotes/${bookingId}-quote.pdf`
 }
 
-export function generateBookingConfirmationName(bookingId: string) {
+export function generateBookingConfirmationPathName(bookingId: string) {
   return `bookings/${bookingId}/confirmations/${bookingId}-confirmation.pdf`
 }
 
-export function generateBookingInvoiceName(bookingId: string) {
+export function generateBookingInvoicePathName(bookingId: string) {
   return `bookings/${bookingId}/invoices/${bookingId}-invoice.pdf`
 }
 
-export function generateSubscriptionInvoiceName(
+export function generateSubscriptionInvoicePathName(
   agencyId: string,
   orderId: string,
 ) {

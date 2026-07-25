@@ -308,7 +308,7 @@ export const driverRepository = {
   },
 
   //Update driver license URL by Id
-  async updateDriverLicenseUrl(driverId: string, licenseUrl?: string) {
+  async updateDriverLicenseUrl(driverId: string, licenseUrl: string) {
     return await db
       .update(drivers)
       .set({ licensePhotoUrl: licenseUrl })

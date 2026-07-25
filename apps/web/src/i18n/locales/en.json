@@ -2583,9 +2583,55 @@
       "TicketsExpiredAction":"To get full access to our support tickets feature, please renew Premium plan.",
       "BuyCTA":"Buy Premium",
       "TryCTA":"Try Premium",
-      "RenewCTA":"Renew Subscription"
+      "RenewCTA":"Renew Subscription",
+      "AddTicket":"Add Support Ticket",
+      "TicketStatusFilters":"TICKET STATUS FILTERS",
+      "NoTickets":"No support tickets found. Try changing the filter options",
+      "Item":{
+
+      }
     },
-    "AddSupportTicket":{},
+    "AddSupportTicket":{
+      "Title": "Add New Support Ticket",
+      "Field1": {
+        "Title": "Entity Type",
+        "Placeholder": "Select Entity Type",
+        "Description": "Select type of entity for which reminder is being created. Select User if not sure",
+        "Error1": "Entity type is required"
+      },
+      "Field2": {
+        "Title": "Entity ID",
+        "Placeholder": "U1000001",
+        "Description": "Enter the entity ID for which reminder is being created. Leave blank if not sure",
+        "Error1": "Entity Id must be less than 12 characters",
+        "Error2": "Not a valid Entity ID. Leave blank if not sure."
+      },
+      "Field3": {
+        "Title": "Issue",
+        "Placeholder": "Booking Link not working",
+        "Description": "What problem are you facing?",
+        "Error1": "Issue must be atleast 5 characters",
+        "Error2": "issue must be less than 100 characters"
+      },
+      "Field4": {
+        "Title": "Details",
+        "Placeholder": "Enter details (Optional)",
+        "Error1": "Details must be less than 300 characters"
+      },
+      "Field5": {
+         "Title": "Photo/Screenshot (optional)",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload a photo proof of the issue that will help us resolve it better", 
+          "Error1": "Image file size should be less than 1MB",
+          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+      },
+      "PrimaryCTA": "Create Ticket",
+      "Loading": "Loading..",
+      "CancelCTA": "Cancel",
+      "Success": "Ticket created successfully!",
+      "Error": "Cannot add ticket.. Try again later!"
+    
+    },
     "ViewSupportTicket":{},
     "SupportStartedHelp":{},
     "SupportAccountHelp":{},
@@ -3277,6 +3323,8 @@
       "Title": {
         "/rider": "Home",
         "/rider/myMissions": "Mission Control",
+        "/rider/myMissions/add": "Add Custom Mission",
+        "/rider/myMissions/modify": "Modify Custom Mission",
         "/rider/myBookings": "Bookings",
         "/rider/myBookings/[id]": "Booking Details",
         "/rider/myBookings/[id]/add-expense": "Add Expense",
@@ -3668,9 +3716,12 @@
       "TicketsTrialWarning":"You cannot access support tickets because you are on Basic plan.",
       "TicketsTrialAction":"To get full access to our support tickets feature, please upgrade to Premium plan.",
       "TicketsExpiredWarning":"Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
-      "TicketsExpiredAction":"To get full access to our support tickets feature, please renew Premium plan."
+      "TicketsExpiredAction":"To get full access to our support tickets feature, please renew Premium plan.",
+      "AddTicket":"Add Support Ticket",
+            "TicketStatusFilters":"TICKET STATUS FILTERS",
+
+      "NoTickets":"No support tickets found. Try changing the filter options"
     },
-    "AddMySupportTicket": {},
     "ViewMySupportTicket": {},
     "MyProfileSettings": {
       "Field1": {

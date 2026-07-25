@@ -18,7 +18,7 @@ export const notificationRepository = {
       where: and(
         eq(notifications.agencyId, agencyId),
         eq(notifications.isFeed, true),
-        gte(notifications.createdAt, subDays(new Date(), days)),
+        // gte(notifications.createdAt, subDays(new Date(), days)),
       ),
     })
   },

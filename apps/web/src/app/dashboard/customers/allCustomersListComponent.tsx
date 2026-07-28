@@ -17,7 +17,7 @@ import { usePagination } from "@/hooks/usePagination"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -68,9 +68,11 @@ export default function AllCustomersListComponent({
   return (
     <SectionWrapper id="AllCustomersSection">
       <SectionHeaderWrapper>
-        <RyogoIcon icon={Rows3} size="sm" />
-        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoP color="slate"> {allCustomers.length}</RyogoP>
+        <RyogoIcon icon={Rows3} size="sm" color="light" />
+        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {allCustomers.length}
+        </RyogoSmall>
         <Link href={`/dashboard/customers/new`} className="ml-auto">
           <Button variant={"outline"}>
             <RyogoIcon icon={Plus} size="sm" />
@@ -123,7 +125,7 @@ function AllCustomersItemComponent({
 
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           {customer.photoUrl ? (
             <RyogoImage
@@ -146,7 +148,7 @@ function AllCustomersItemComponent({
         <GridItemWrapper>
           <CustomerStatusPill status={customer.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

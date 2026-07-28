@@ -6,7 +6,6 @@ import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -73,7 +72,6 @@ export default function ChangeUserNameSheet({
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
-          <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
           <form id="changeName" onSubmit={formData.handleSubmit(onSubmit)}>

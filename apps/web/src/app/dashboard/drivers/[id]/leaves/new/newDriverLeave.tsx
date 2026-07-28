@@ -17,6 +17,7 @@ import z from "zod"
 import { newDriverLeaveAction } from "@/app/actions/drivers/newDriverLeaveAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoH4 } from "@/components/typography"
 
 export default function NewDriverLeavePageComponent({
   userId,
@@ -84,6 +85,8 @@ export default function NewDriverLeavePageComponent({
 
   return (
     <PageWrapper id="NewDriverLeavePage">
+      <RyogoH4 weight="font-bold">{t("Title")}</RyogoH4>
+      <RyogoCaption color="light">{t("Description")}</RyogoCaption>
       <FormWrapper<NewDriverLeaveType>
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}

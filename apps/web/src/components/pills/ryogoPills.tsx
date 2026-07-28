@@ -14,25 +14,32 @@ import { RyogoCaption } from "@/components/typography"
 
 type RyogoPillColor = "slate" | "brand" | "green" | "red" | "yellow" | "light"
 
-function getStatusPillColor(color?: RyogoPillColor) {
-  if (color === "slate") return "bg-slate-700 dark:bg-slate-200"
-  if (color === "light") return "bg-slate-400 dark:bg-slate-500"
-  if (color === "brand") return "bg-sky-700 dark:bg-sky-200"
-  if (color === "green") return "bg-green-700 dark:bg-green-200"
-  if (color === "red") return "bg-red-700 dark:bg-red-200"
-  if (color === "yellow") return "bg-yellow-700 dark:bg-yellow-200"
-  return "bg-slate-700 dark:bg-slate-200"
+function getPillColor(color?: RyogoPillColor) {
+  switch (color) {
+    case undefined:
+    case "slate":
+      return "bg-slate-700 dark:bg-slate-200"
+    case "light":
+      return "bg-slate-400 dark:bg-slate-500"
+    case "brand":
+      return "bg-sky-700 dark:bg-sky-200"
+    case "green":
+      return "bg-green-700 dark:bg-green-200"
+    case "red":
+      return "bg-red-700 dark:bg-red-200"
+    case "yellow":
+      return "bg-yellow-700 dark:bg-yellow-200"
+  }
 }
 
 export function RyogoPill(props: {
   label: string
   bgColor: RyogoPillColor
-  selfStart?: boolean
   className?: string
 }) {
   return (
     <div
-      className={`flex rounded-full ${getStatusPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 shrink-0 text-nowrap ${props.selfStart ? "self-start" : ""} ${props.className ?? ""}`}
+      className={`flex items-center justify-center rounded-full ${getPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 shrink-0 text-nowrap ${props.className ?? ""}`}
     >
       <RyogoCaption color="white">{props.label}</RyogoCaption>
     </div>
@@ -126,61 +133,27 @@ export function CustomerStatusPill(props: { status: CustomerStatusEnum }) {
 
 export function OrderStatusPill(props: { status: OrderStatusEnum }) {
   if (props.status === OrderStatusEnum.PAID) {
-    return (
-      <RyogoPill
-        label={props.status.toUpperCase()}
-        bgColor={"green"}
-        selfStart
-      />
-    )
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
   }
   if (props.status === OrderStatusEnum.ATTEMPTED) {
-    return (
-      <RyogoPill
-        label={props.status.toUpperCase()}
-        bgColor={"brand"}
-        selfStart
-      />
-    )
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
   }
 
-  return (
-    <RyogoPill
-      label={props.status.toUpperCase()}
-      bgColor={"yellow"}
-      selfStart
-    />
-  )
+  return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
 }
 
 export function PaymentStatusPill(props: { status: PaymentStatusEnum }) {
   if (props.status === PaymentStatusEnum.CAPTURED) {
-    return (
-      <RyogoPill
-        label={props.status.toUpperCase()}
-        bgColor={"green"}
-        selfStart
-      />
-    )
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
   }
   if (props.status === PaymentStatusEnum.AUTHORIZED) {
-    return (
-      <RyogoPill
-        label={props.status.toUpperCase()}
-        bgColor={"brand"}
-        selfStart
-      />
-    )
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
   }
   if (props.status === PaymentStatusEnum.FAILED) {
-    return (
-      <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} selfStart />
-    )
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
   }
 
-  return (
-    <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} selfStart />
-  )
+  return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
 }
 
 export function TripLogStatusPill(props: { status: TripLogTypesEnum }) {
@@ -229,6 +202,9 @@ export function SupportTicketStatusPill(props: { status: TicketStatusEnum }) {
   }
   if (props.status === TicketStatusEnum.RESOLVED) {
     return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+  }
+  if (props.status === TicketStatusEnum.CLOSED) {
+    return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
   }
 
   return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />

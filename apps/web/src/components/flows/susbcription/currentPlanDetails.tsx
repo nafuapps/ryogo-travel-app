@@ -39,7 +39,6 @@ export default async function CurrentPlanDetails({
         />
       </SectionRowWrapper>
       <RyogoPill
-        selfStart
         label={
           isBasic
             ? t("FreeForever")

@@ -10,7 +10,7 @@ import moment from "moment"
 import { TripLogStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -27,9 +27,11 @@ export default async function OnTripDriversComponent({
   return (
     <SectionWrapper id="OnTripDriversSection">
       <SectionHeaderWrapper>
-        <RyogoIcon icon={Route} size="sm" />
-        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoP color="slate"> {onTripDrivers.length}</RyogoP>
+        <RyogoIcon icon={Route} size="sm" color="light" />
+        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {onTripDrivers.length}
+        </RyogoSmall>
       </SectionHeaderWrapper>
       {onTripDrivers.map((driver) => (
         <OnTripDriverComponent key={driver.id} {...driver} />
@@ -45,7 +47,7 @@ function OnTripDriverComponent(props: FindDriversOnTripType[number]) {
   }
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{props.phone}</RyogoCaption>
           <RyogoP weight="font-bold"> {props.name}</RyogoP>
@@ -73,7 +75,7 @@ function OnTripDriverComponent(props: FindDriversOnTripType[number]) {
             <TripLogStatusPill status={booking.tripLogs[0].type} />
           </GridItemWrapper>
         )}
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

@@ -23,6 +23,7 @@ import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import { RyogoCaption } from "@/components/typography"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import { BookingStatusPill } from "@/components/pills/ryogoPills"
 
 export default async function ConfirmBookingPageComponent({
   booking,
@@ -55,6 +56,7 @@ export default async function ConfirmBookingPageComponent({
             title={t("AssignedTo")}
             value={booking.assignedUser.name}
           />
+          <BookingStatusPill status={booking.status} />
           {isOwner && (
             <Button variant={"outline"}>
               <Link

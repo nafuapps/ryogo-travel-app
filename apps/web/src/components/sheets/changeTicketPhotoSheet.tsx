@@ -17,24 +17,26 @@ import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { changeVehiclePhotoAction } from "@/app/actions/vehicles/changeVehiclePhotoAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { changeSupportTicketPhotoAction } from "@/app/actions/support/changeSupportTicketPhotoAction"
 
-export default function ChangeVehiclePhotoSheet({
-  vehicleId,
-  agencyId,
+export default function ChangeTicketPhotoSheet({
+  ticketId,
+  userId,
+  newPhoto,
 }: {
-  vehicleId: string
-  agencyId: string
+  ticketId: string
+  userId: string
+  newPhoto: boolean
 }) {
-  const t = useTranslations("Dashboard.VehicleDetails.ChangePhoto")
+  const t = useTranslations("Sheets.ChangeTicketPhoto")
   const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
   const schema = z.object({
-    vehiclePhotos: z
+    photo: z
       .instanceof(FileList)
       .refine((file) => {
         return file[0] && file[0].size < 1000000
@@ -62,9 +64,7 @@ export default function ChangeVehiclePhotoSheet({
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
     startTransition(async () => {
-      if (
-        await changeVehiclePhotoAction(vehicleId, agencyId, data.vehiclePhotos)
-      ) {
+      if (await changeSupportTicketPhotoAction(ticketId, userId, data.photo)) {
         toast.success(t("Success"))
         router.refresh()
       } else {
@@ -76,7 +76,11 @@ export default function ChangeVehiclePhotoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="hover:underline">
-        <RyogoCaption color="light">{t("Button")}</RyogoCaption>
+        <Button variant="outline">
+          <RyogoCaption color="slate">
+            {newPhoto ? t("UploadButton") : t("ChangeButton")}
+          </RyogoCaption>
+        </Button>
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -86,8 +90,8 @@ export default function ChangeVehiclePhotoSheet({
           <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
               <RyogoFileInput
-                name={"vehiclePhotos"}
-                register={formData.register("vehiclePhotos")}
+                name={"photo"}
+                register={formData.register("photo")}
                 label={t("Title")}
                 placeholder={t("Placeholder")}
               />

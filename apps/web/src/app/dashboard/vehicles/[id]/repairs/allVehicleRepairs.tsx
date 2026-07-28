@@ -10,7 +10,7 @@ import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
-  GridWrapper,
+  PlainGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RepairStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
@@ -68,7 +68,7 @@ async function VehicleRepairComponent({
 
   const canModify = isOwner || userId === repair.addedByUserId
   return (
-    <GridWrapper>
+    <PlainGridWrapper>
       <GridItemWrapper>
         <RyogoP weight="font-bold">
           {moment(repair.startDate).format("DD MMM") +
@@ -98,6 +98,6 @@ async function VehicleRepairComponent({
           </Link>
         )}
       </GridItemWrapper>
-    </GridWrapper>
+    </PlainGridWrapper>
   )
 }

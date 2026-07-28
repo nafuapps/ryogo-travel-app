@@ -7,7 +7,6 @@ import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -78,7 +77,6 @@ export default function ChangeAgencyLogoSheet({
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>
-          <SheetDescription></SheetDescription>
         </SheetHeader>
         <Form {...formData}>
           <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>

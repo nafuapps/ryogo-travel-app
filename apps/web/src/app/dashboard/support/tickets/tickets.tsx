@@ -6,6 +6,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import {
   FindSupportTicketsByAgencyIdType,
@@ -20,16 +21,27 @@ import { useState } from "react"
 export default function SupportTicketsPageComponent({
   isOwner,
   tickets,
+  userId,
 }: {
   isOwner: boolean
   tickets: FindSupportTicketsByAgencyIdType | FindSupportTicketsByUserIdType
+  userId: string
 }) {
   const t = useTranslations("Dashboard.SupportTickets")
+
+  const [showAgencyTickets, setShowAgencyTickets] = useState(false)
+
+  const allTickets = showAgencyTickets
+    ? tickets
+    : tickets.filter((t) => t.userId === userId)
+
   const ticketStatusPairs = getEnumValueDisplayPairs(TicketStatusEnum)
+
   const [selectedFilters, setSelectedFilters] = useState<TicketStatusEnum[]>(
     ticketStatusPairs.map((pair) => pair.value),
   )
-  const filteredTickets = tickets.filter((t) =>
+
+  const filteredTickets = allTickets.filter((t) =>
     selectedFilters.includes(t.status),
   )
 
@@ -41,7 +53,7 @@ export default function SupportTicketsPageComponent({
       >
         <Button variant={"outline"} className="w-full">
           <RyogoIcon icon={Plus} size="sm" color="slate" />
-          <RyogoCaption>{t("AddTicket")}</RyogoCaption>
+          <RyogoCaption color="slate">{t("AddTicket")}</RyogoCaption>
         </Button>
       </Link>
       <FilterCheckboxGroup<TicketStatusEnum>
@@ -50,6 +62,16 @@ export default function SupportTicketsPageComponent({
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}
       />
+      {isOwner && (
+        <div className="flex items-center gap-2 lg:gap-3 justify-end">
+          <RyogoSmall weight="font-bold">{t("ShowAgencyTickets")}</RyogoSmall>
+          <Switch
+            id="agencyTickets"
+            checked={showAgencyTickets}
+            onCheckedChange={setShowAgencyTickets}
+          />
+        </div>
+      )}
       {filteredTickets.length === 0 ? (
         <RyogoSmall color="light" className="mx-auto">
           {t("NoTickets")}

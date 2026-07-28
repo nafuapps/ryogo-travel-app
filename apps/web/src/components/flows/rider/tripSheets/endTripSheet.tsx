@@ -29,8 +29,8 @@ import Link from "next/link"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { useLocation } from "@/hooks/useLocation"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-
-const TOTAL_STARS = 5
+import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
+import { RyogoCaption } from "@/components/typography"
 
 export default function EndTripSheet({
   booking,
@@ -106,11 +106,11 @@ export default function EndTripSheet({
       long: latLong.longitude,
     }
     const customerRatingData =
-      customerRating > 0 && customerRating <= TOTAL_STARS
+      customerRating > 0 && customerRating <= TOTAL_RATING_STARS
         ? customerRating
         : undefined
     const bookingRatingData =
-      bookingRating > 0 && bookingRating <= TOTAL_STARS
+      bookingRating > 0 && bookingRating <= TOTAL_RATING_STARS
         ? bookingRating
         : undefined
     startTransition(async () => {
@@ -141,7 +141,9 @@ export default function EndTripSheet({
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
-          <SheetDescription>{t("Warning")}</SheetDescription>
+          <SheetDescription>
+            <RyogoCaption>{t("Warning")}</RyogoCaption>
+          </SheetDescription>
         </SheetHeader>
         <TripSheetFormWrapper<SchemaType>
           id="endTrip"
@@ -172,14 +174,14 @@ export default function EndTripSheet({
             label={t("Field4.Title")}
             selectedStars={customerRating}
             setSelectedStars={setCustomerRating}
-            totalStars={TOTAL_STARS}
+            totalStars={TOTAL_RATING_STARS}
           />
           <RyogoRatingInput
             name="bookingRating"
             label={t("Field5.Title")}
             selectedStars={bookingRating}
             setSelectedStars={setBookingRating}
-            totalStars={TOTAL_STARS}
+            totalStars={TOTAL_RATING_STARS}
           />
         </TripSheetFormWrapper>
         <SheetFooter>

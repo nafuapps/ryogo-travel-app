@@ -851,29 +851,30 @@
         "Commission": "Avg commission rate"
       },
       "OngoingTrips": {
-        "Title": "ONGOING TRIPS"
+        "Title": "ONGOING TRIPS",
+        "Assigned":"ASSIGNED"
       }
     },
     "Bookings": {
       "Ongoing": {
-        "Title": "Ongoing"
+        "Title": "ONGOING TRIPS"
       },
       "Upcoming": {
-        "Title": "Upcoming",
+        "Title": "UPCOMING BOOKINGS",
         "24Hrs": "Next 24 Hours",
         "7Days": "Next 7 Days"
       },
       "Completed": {
-        "Title": "Completed",
+        "Title": "COMPLETED BOOKINGS",
         "24Hrs": "Last 24 Hours",
         "7Days": "Last 7 Days"
       },
       "Schedule": {
-        "Title": "Schedule",
+        "Title": "BOOKING SCHEDULE",
         "Photo": "Customer photo"
       },
       "Leads": {
-        "Title": "Leads",
+        "Title": "BOOKING LEADS",
         "24Hrs": "Last 24 Hours",
         "7Days": "Last 7 Days",
         "Passengers": "pax"
@@ -1482,17 +1483,17 @@
     },
     "Vehicles": {
       "All": {
-        "Title": "All Vehicles",
+        "Title": "ALL VEHICLES",
         "Photo": "Vehicle photo",
         "Km": " Km",
         "RatePerKm": "₹{rate}/Km",
         "AddVehicle": "Add Vehicle"
       },
       "OnTrip": {
-        "Title": "On Trip"
+        "Title": "ON TRIP VEHICLES"
       },
       "Schedule": {
-        "Title": "Schedule",
+        "Title": "VEHICLE SCHEDULE",
         "Photo": "Vehicle photo"
       },
       "History": {}
@@ -1931,16 +1932,16 @@
     },
     "Drivers": {
       "All": {
-        "Title": "All Drivers",
+        "Title": "ALL DRIVERS",
         "Photo": "Driver photo",
         "AllowancePerDay": "₹{allowance}/day",
         "AddDriver": "Add Driver"
       },
       "OnTrip": {
-        "Title": "On Trip"
+        "Title": "ON TRIP DRIVERS"
       },
       "Schedule": {
-        "Title": "Schedule",
+        "Title": "DRIVER SCHEDULE",
         "Photo": "Driver photo"
       },
       "History": {}
@@ -2158,6 +2159,8 @@
       "Edit": "Edit"
     },
     "NewDriverLeave": {
+      "Title":"Add Driver Leave",
+      "Description":"By adding a driver leave, you can ensure no booking is assigned during the leave period.",
       "Field1": {
         "Error1": "Leave start date is required",
         "Title": "Leave Start Date",
@@ -2165,12 +2168,12 @@
       },
       "Field2": {
         "Error1": "Leave end date is required",
-        "Error2": "Start date cannot be after end date",
+        "Error2": "End date cannot be before start date",
         "Title": "Leave End Date",
         "Placeholder": "Select a date"
       },
       "Field3": {
-        "Title": "Leave already completed?"
+        "Title": "Leave already taken?"
       },
       "Field4": {
         "Title": "Remarks (optional)",
@@ -2190,12 +2193,12 @@
       },
       "Field2": {
         "Error1": "Leave end date is required",
-        "Error2": "Start date cannot be after end date",
+        "Error2": "End date cannot be before start date",
         "Title": "Leave End Date",
         "Placeholder": "Select a date"
       },
       "Field3": {
-        "Title": "Leave already completed?"
+        "Title": "Leave already taken?"
       },
       "Field4": {
         "Title": "Remarks (optional)",
@@ -2209,7 +2212,7 @@
     },
     "Customers": {
       "All": {
-        "Title": "All Customers",
+        "Title": "ALL CUSTOMERS",
         "AddCustomer": "Add customer",
         "Photo": "View customer photo",
         "Search": "Search",
@@ -2576,22 +2579,20 @@
         "CreateCTA": "Create New Ticket"
       }
     },
-    "SupportTickets":{
-       "TicketsTrialWarning":"You cannot access support tickets because you are on Basic plan.",
-      "TicketsTrialAction":"To get full access to our support tickets feature, please upgrade to Premium plan.",
-      "TicketsExpiredWarning":"Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
-      "TicketsExpiredAction":"To get full access to our support tickets feature, please renew Premium plan.",
-      "BuyCTA":"Buy Premium",
-      "TryCTA":"Try Premium",
-      "RenewCTA":"Renew Subscription",
-      "AddTicket":"Add Support Ticket",
-      "TicketStatusFilters":"TICKET STATUS FILTERS",
-      "NoTickets":"No support tickets found. Try changing the filter options",
-      "Item":{
-
-      }
+    "SupportTickets": {
+      "TicketsTrialWarning": "You cannot access support tickets because you are on Basic plan.",
+      "TicketsTrialAction": "To get full access to our support tickets feature, please upgrade to Premium plan.",
+      "TicketsExpiredWarning": "Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
+      "TicketsExpiredAction": "To get full access to our support tickets feature, please renew Premium plan.",
+      "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
+      "RenewCTA": "Renew Subscription",
+      "AddTicket": "Add Support Ticket",
+      "TicketStatusFilters": "TICKET STATUS FILTERS",
+      "NoTickets": "No support tickets found. Try changing the filter options",
+      "ShowAgencyTickets": "Show All Agency Tickets"
     },
-    "AddSupportTicket":{
+    "AddSupportTicket": {
       "Title": "Add New Support Ticket",
       "Field1": {
         "Title": "Entity Type",
@@ -2619,30 +2620,39 @@
         "Error1": "Details must be less than 300 characters"
       },
       "Field5": {
-         "Title": "Photo/Screenshot (optional)",
-          "Placeholder": "UPLOAD",
-          "Description": "Upload a photo proof of the issue that will help us resolve it better", 
-          "Error1": "Image file size should be less than 1MB",
-          "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+        "Title": "Photo/Screenshot (optional)",
+        "Placeholder": "UPLOAD",
+        "Description": "Upload a photo proof of the issue that will help us resolve it better",
+        "Error1": "Image file size should be less than 1MB",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "PrimaryCTA": "Create Ticket",
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
       "Success": "Ticket created successfully!",
       "Error": "Cannot add ticket.. Try again later!"
-    
     },
-    "ViewSupportTicket":{},
-    "SupportStartedHelp":{},
-    "SupportAccountHelp":{},
-    "SupportBookingsHelp":{},
-    "SupportVehiclesHelp":{},
-    "SupportDriversHelp":{},
-    "SupportCustomersHelp":{},
-    "SupportUsersHelp":{},
-    "SupportAnalyticsHelp":{},
-    "SupportMissionsHelp":{},
-    "SupportVideosHelp":{},
+    "ViewSupportTicket": {
+      "ID": "TICKET ID",
+      "Status": "STATUS",
+      "EntityType": "ENTITY TYPE",
+      "EntityId": "ENTITY ID",
+      "Created": "CREATED",
+      "ResolutionRating":"RESOLUTION RATING",
+      "CommentBySupport": "REPLY FROM SUPPORT TEAM",
+      "CommentsByUser": "COMMENTS FROM USER",
+      "CloseTicketDesc":"If you are satisfied with the resolution given by support team, you can close this ticket."
+    },
+    "SupportStartedHelp": {},
+    "SupportAccountHelp": {},
+    "SupportBookingsHelp": {},
+    "SupportVehiclesHelp": {},
+    "SupportDriversHelp": {},
+    "SupportCustomersHelp": {},
+    "SupportUsersHelp": {},
+    "SupportAnalyticsHelp": {},
+    "SupportMissionsHelp": {},
+    "SupportVideosHelp": {},
     "AccountSubscription": {
       "CurrentPlan": {
         "Header": "CURRENT PLAN",
@@ -2741,14 +2751,14 @@
     "Users": {
       "Photo": "User photo",
       "Owners": {
-        "Title": "Owners"
+        "Title": "OWNERS"
       },
       "Agents": {
-        "Title": "Agents",
+        "Title": "AGENTS",
         "AddAgent": "Add Agent"
       },
       "Drivers": {
-        "Title": "Drivers",
+        "Title": "DRIVERS",
         "AddDriver": "Add Driver"
       }
     },
@@ -2875,7 +2885,7 @@
     "MissionControl": {
       "AddCustomMission": "Add Custom Mission",
       "CriticalMissions": "{count, plural, =1 {1 CRITICAL MISSION} other {# CRITICAL MISSIONS}}",
-      "OtherMissions": "{count, plural, =1 {1 OTHER MISSION} other {# OTHER MISSIONS}}",
+      "OtherMissions": "{count, plural, =1 {1 NON-CRITICAL MISSION} other {# NON-CRITICAL MISSIONS}}",
       "Card": {
         "Due": "Due ",
         "CheckNow": "Act Now",
@@ -3263,6 +3273,16 @@
         "NoCTA": "No",
         "Success": "Custom reminder deleted!",
         "Error": "Cannot delete reminder.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Delete"
+      },
+      "DeleteSupportTicket": {
+        "Label": "Delete Support Ticket",
+        "Title": "Are you sure you want to delete this ticket?",
+        "Desc": "When deleted, this ticket cannot be resolved later.",
+        "NoCTA": "No",
+        "Success": "Support Ticket deleted!",
+        "Error": "Cannot delete ticket.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Delete"
       },
@@ -3713,16 +3733,14 @@
     "MySupportMissionsHelp": {},
     "MySupportVideosHelp": {},
     "MySupportTickets": {
-      "TicketsTrialWarning":"You cannot access support tickets because you are on Basic plan.",
-      "TicketsTrialAction":"To get full access to our support tickets feature, please upgrade to Premium plan.",
-      "TicketsExpiredWarning":"Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
-      "TicketsExpiredAction":"To get full access to our support tickets feature, please renew Premium plan.",
-      "AddTicket":"Add Support Ticket",
-            "TicketStatusFilters":"TICKET STATUS FILTERS",
-
-      "NoTickets":"No support tickets found. Try changing the filter options"
+      "TicketsTrialWarning": "You cannot access support tickets because you are on Basic plan.",
+      "TicketsTrialAction": "To get full access to our support tickets feature, please upgrade to Premium plan.",
+      "TicketsExpiredWarning": "Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
+      "TicketsExpiredAction": "To get full access to our support tickets feature, please renew Premium plan.",
+      "AddTicket": "Add Support Ticket",
+      "TicketStatusFilters": "TICKET STATUS FILTERS",
+      "NoTickets": "No support tickets found. Try changing the filter options"
     },
-    "ViewMySupportTicket": {},
     "MyProfileSettings": {
       "Field1": {
         "Title": "Enable dark mode"
@@ -3753,7 +3771,7 @@
     "ChangePhoto": {
       "Button": "Change Photo",
       "Title": "Choose a Photo",
-      "Header": "Upload user photo",
+      "Header": "Upload photo",
       "Placeholder": "Browse a new photo",
       "Error1": "Photo is required and size should be less than 1MB",
       "Error2": "Photo must be in .jpg, .jpeg or .png format",
@@ -3773,6 +3791,36 @@
       "Close": "Cancel",
       "Success": "Logo updated successfully!",
       "Error": "Cannot upload logo.. please try again after some time."
+    },
+    "ChangeTicketPhoto": {
+      "ChangeButton": "Change Photo",
+      "UploadButton": "Upload Photo",
+      "Title": "Choose a Photo",
+      "Header": "Upload photo/screenshot",
+      "Placeholder": "Browse a new photo",
+      "Error1": "Photo is required and size should be less than 1MB",
+      "Error2": "Photo must be in .jpg, .jpeg or .png format",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Photo updated successfully!",
+      "Error": "Cannot upload photo.. please try again after some time."
+    },
+    "CloseSupportTicket": {
+      "Title": "Close resolved ticket",
+      "Warning":"You can rate your satisfaction level from 1 to 5, to give feedback for the resolution given by support team.",
+      "CloseTicket": "Close Ticket",
+      "Loading": "Loading..",
+      "RatingLabel":"Resolution rating",
+      "Success": "Ticket closed successfully!",
+      "Error": "Cannot close ticket.. please try again after some time."
+    },
+    "AddSupportTicketComment":{
+      "Title": "Add Comment",
+      "Placeholder": "Enter comment",
+      "FieldError": "Comment is required and must be less than 300 characters",
+      "Error": "Cannot add comment.. please try again after some time.",
+      "Save": "Add Comment",
+      "Loading":"Loading.."
     }
   },
   "Landing": {

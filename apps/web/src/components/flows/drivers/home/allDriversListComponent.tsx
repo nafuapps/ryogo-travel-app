@@ -12,7 +12,7 @@ import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -30,9 +30,11 @@ export default async function AllDriversListComponent({
   return (
     <SectionWrapper id="AllDriversSection">
       <SectionHeaderWrapper>
-        <RyogoIcon icon={Rows3} size="sm" />
-        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoP color="slate"> {allDrivers.length}</RyogoP>
+        <RyogoIcon icon={Rows3} size="sm" color="light" />
+        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {allDrivers.length}
+        </RyogoSmall>
         <Link href={`/dashboard/drivers/new`} className="ml-auto">
           <Button variant={"outline"}>
             <RyogoIcon icon={Plus} size="sm" />
@@ -56,7 +58,7 @@ async function AllDriversItemComponent({
 
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           {driver.user.photoUrl ? (
             <RyogoImage
@@ -81,7 +83,7 @@ async function AllDriversItemComponent({
         <GridItemWrapper>
           <DriverStatusPill status={driver.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

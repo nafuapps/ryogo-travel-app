@@ -58,7 +58,7 @@ export function BlogCarouselItem({
             sizes="672px"
           />
         </div>
-        <RyogoPill label={type} bgColor={"light"} selfStart />
+        <RyogoPill label={type} bgColor={"light"} />
         <RyogoP weight="font-bold">{title}</RyogoP>
       </Link>
     </CarouselItem>

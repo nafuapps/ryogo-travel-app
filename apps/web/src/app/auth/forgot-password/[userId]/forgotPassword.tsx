@@ -24,8 +24,7 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { X, Info } from "lucide-react"
 import { useBotDetection } from "@/hooks/useBotDetection"
-
-const CODE_RESEND_MINUTES = 5
+import { VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 
 export default function ForgotPasswordPageComponent({
   user,
@@ -44,7 +43,8 @@ export default function ForgotPasswordPageComponent({
   const forgotPasswordLink = `/auth/forgot-password/${user.id}/reset`
 
   const codeSentRecently = user.codeSentAt
-    ? differenceInMinutes(new Date(), user.codeSentAt) < CODE_RESEND_MINUTES
+    ? differenceInMinutes(new Date(), user.codeSentAt) <
+      VERIFY_CODE_TIMEOUT_MINUTES
     : false
 
   const formSchema = z.object({
@@ -118,7 +118,7 @@ export default function ForgotPasswordPageComponent({
             {isPending
               ? t("Loading")
               : codeSentRecently
-                ? t("CodeSentRecently", { count: CODE_RESEND_MINUTES })
+                ? t("CodeSentRecently", { count: VERIFY_CODE_TIMEOUT_MINUTES })
                 : t("PrimaryCTA")}
           </Button>
           <Button

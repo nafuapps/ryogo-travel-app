@@ -11,7 +11,7 @@ export type RyogoIconColor =
   | "light"
 export type RyogoIconSize = "sm" | "md" | "lg" | "xl"
 
-const getIconColor = (color?: RyogoIconColor) => {
+function getIconColor(color?: RyogoIconColor) {
   if (color === "red") {
     return "text-red-700 dark:text-red-300"
   }
@@ -39,7 +39,7 @@ const getIconColor = (color?: RyogoIconColor) => {
   return "text-slate-700 dark:text-slate-300"
 }
 
-const getBGColor = (color?: RyogoIconColor) => {
+function getBGColor(color?: RyogoIconColor) {
   if (color === "red") {
     return "bg-red-100 dark:bg-red-800"
   }
@@ -64,6 +64,19 @@ const getBGColor = (color?: RyogoIconColor) => {
   return "bg-slate-100 dark:bg-slate-800"
 }
 
+function getIconSize(size: RyogoIconSize) {
+  switch (size) {
+    case "xl":
+      return "size-20 lg:size-24"
+    case "lg":
+      return "size-11 lg:size-12"
+    case "md":
+      return "size-7 lg:size-8"
+    case "sm":
+      return "size-5 lg:size-5.5"
+  }
+}
+
 export function RyogoIcon(props: {
   icon: LucideIcon
   size: RyogoIconSize
@@ -71,11 +84,10 @@ export function RyogoIcon(props: {
   thick?: boolean
   onClick?: () => void
 }) {
-  const sizeClassName = `${props.size === "xl" ? "size-20 lg:size-24" : props.size === "lg" ? "size-11 lg:size-12" : props.size === "md" ? "size-7 lg:size-8" : "size-5 lg:size-5.5"}`
   return (
     <props.icon
       onClick={props.onClick}
-      className={`shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${sizeClassName} ${getIconColor(props.color)}`}
+      className={`shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${getIconSize(props.size)} ${getIconColor(props.color)}`}
     />
   )
 }

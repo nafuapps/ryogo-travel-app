@@ -1,4 +1,4 @@
-import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   SelectTrigger,
   SelectValue,
@@ -50,9 +50,11 @@ export function DashboardScheduleHeader({
   return (
     <SectionRowWrapper center>
       <SectionHeaderWrapper>
-        <RyogoIcon icon={CalendarDays} size="sm" />
-        <RyogoSmall color="slate">{title}</RyogoSmall>
-        <RyogoP color="slate"> {length}</RyogoP>
+        <RyogoIcon icon={CalendarDays} size="sm" color="light" />
+        <RyogoSmall color="light">{title}</RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {length}
+        </RyogoSmall>
       </SectionHeaderWrapper>
       <Select
         value={selectedTab}

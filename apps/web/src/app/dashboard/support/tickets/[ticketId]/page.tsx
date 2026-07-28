@@ -2,8 +2,8 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
-import ViewSupportTicketPageComponent from "./ticketDetails"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import ViewSupportTicketPageComponent from "@/components/flows/support/viewSupportTicketComponent"
 
 export default async function ViewSupportTicketPage({
   params,

@@ -7,30 +7,34 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { deleteCustomMissionAction } from "@/app/actions/missions/deleteCustomMissionAction"
+import { deleteSupportTicketAction } from "@/app/actions/support/deleteSupportTicketAction"
+import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoCaption } from "@/components/typography"
 
-export default function DeleteCustomMissionAlertButton({
-  missionId,
+export default function DeleteSupportTicketAlertButton({
+  ticketId,
   userId,
   agencyId,
+  status,
   isRider,
 }: {
-  missionId: string
+  ticketId: string
   userId: string
   agencyId: string
+  status: TicketStatusEnum
   isRider?: boolean
 }) {
   const [isCancelPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.DeleteCustomMission")
+  const t = useTranslations("Dashboard.Buttons.DeleteSupportTicket")
 
   const router = useRouter()
 
   async function deleteCustomMission() {
     startCancelTransition(async () => {
-      if (await deleteCustomMissionAction(missionId, userId, agencyId)) {
+      if (await deleteSupportTicketAction(ticketId, userId, agencyId, status)) {
         toast.success(t("Success"))
         router.replace(
-          isRider ? `/rider/myMissions` : `/dashboard/mission-control`,
+          isRider ? `/rider/mySupport/tickets` : `/dashboard/support/tickets`,
         )
       } else {
         toast.error(t("Error"))
@@ -43,7 +47,11 @@ export default function DeleteCustomMissionAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<Button variant={"secondary"}>{t("Label")}</Button>}
+      labelChild={
+        <Button variant={"link"}>
+          <RyogoCaption>{t("Label")}</RyogoCaption>
+        </Button>
+      }
     >
       <Button
         variant={"destructive"}

@@ -97,6 +97,7 @@ export default async function RiderMyVehiclePageComponent({
             <RyogoDialogImage
               src={getFileUrl(vehicle.insurancePhotoUrl)}
               alt={t("InsurancePhoto")}
+              imageSize="lg"
             />
           )}
         </SectionRowWrapper>
@@ -119,6 +120,7 @@ export default async function RiderMyVehiclePageComponent({
             <RyogoDialogImage
               src={getFileUrl(vehicle.pucPhotoUrl)}
               alt={t("PUCPhoto")}
+              imageSize="lg"
             />
           )}
         </SectionRowWrapper>
@@ -141,6 +143,7 @@ export default async function RiderMyVehiclePageComponent({
             <RyogoDialogImage
               src={getFileUrl(vehicle.rcPhotoUrl)}
               alt={t("RCPhoto")}
+              imageSize="lg"
             />
           )}
         </SectionRowWrapper>

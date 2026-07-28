@@ -10,7 +10,7 @@ import moment from "moment"
 import { TripLogStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -27,9 +27,11 @@ export default async function OnTripVehiclesComponent({
   return (
     <SectionWrapper id="OnTripVehiclesSection">
       <SectionHeaderWrapper>
-        <RyogoIcon icon={Route} size="sm" />
-        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoP color="slate"> {onTripVehicles.length}</RyogoP>
+        <RyogoIcon icon={Route} size="sm" color="light" />
+        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {onTripVehicles.length}
+        </RyogoSmall>
       </SectionHeaderWrapper>
       {onTripVehicles.map((vehicle) => (
         <OnTripVehicleComponent key={vehicle.id} {...vehicle} />
@@ -45,7 +47,7 @@ function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
   }
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
             {props.brand + " " + props.model}
@@ -73,7 +75,7 @@ function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
             <TripLogStatusPill status={booking.tripLogs[0].type} />
           </GridItemWrapper>
         )}
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

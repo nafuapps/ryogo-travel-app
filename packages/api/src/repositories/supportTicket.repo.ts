@@ -2,8 +2,9 @@ import { db } from "@ryogo-travel-app/db"
 import {
   supportTickets,
   InsertSupportTicketType,
+  TicketStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq } from "drizzle-orm"
+import { eq, sql } from "drizzle-orm"
 
 export const supportTicketRepository = {
   async createSupportTicket(ticket: InsertSupportTicketType) {
@@ -36,5 +37,41 @@ export const supportTicketRepository = {
       .set({ photoUrl: photoUrl })
       .where(eq(supportTickets.id, ticketId))
       .returning({ id: supportTickets.id, photoUrl: supportTickets.photoUrl })
+  },
+
+  async updateTicketStatusWithRating(
+    ticketId: string,
+    status: TicketStatusEnum,
+    resolutionRating?: number,
+  ) {
+    return await db
+      .update(supportTickets)
+      .set({ status, resolutionRating })
+      .where(eq(supportTickets.id, ticketId))
+      .returning({
+        id: supportTickets.id,
+        status: supportTickets.status,
+        resolutionRating: supportTickets.resolutionRating,
+      })
+  },
+
+  async updateTicketCommentsByUser(ticketId: string, comment: string) {
+    return await db
+      .update(supportTickets)
+      .set({
+        commentsByUser: sql`array_append(${supportTickets.commentsByUser}, ${comment})`,
+      })
+      .where(eq(supportTickets.id, ticketId))
+      .returning({
+        id: supportTickets.id,
+        commentsByUser: supportTickets.commentsByUser,
+      })
+  },
+
+  async deleteSupportTicket(ticketId: string) {
+    return await db
+      .delete(supportTickets)
+      .where(eq(supportTickets.id, ticketId))
+      .returning({ id: supportTickets.id })
   },
 }

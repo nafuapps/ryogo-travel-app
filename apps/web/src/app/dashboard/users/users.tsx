@@ -4,7 +4,7 @@ import {
   userServices,
 } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { User, Plus, Rows3 } from "lucide-react"
+import { User, Plus, IdCard, UserKey, UserRoundCog } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -13,7 +13,7 @@ import moment from "moment"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   PageWrapper,
   SectionHeaderWrapper,
   SectionWrapper,
@@ -38,9 +38,11 @@ export default async function UsersPageComponent({
     <PageWrapper id="UsersPage">
       <SectionWrapper id="OwnersSection">
         <SectionHeaderWrapper>
-          <RyogoIcon icon={Rows3} size="sm" />
-          <RyogoSmall color="slate">{t("Owners.Title")}</RyogoSmall>
-          <RyogoP color="slate"> {owners.length}</RyogoP>
+          <RyogoIcon icon={UserKey} size="sm" color="light" />
+          <RyogoSmall color="light">{t("Owners.Title")}</RyogoSmall>
+          <RyogoSmall color="light" weight="font-bold">
+            {owners.length}
+          </RyogoSmall>
         </SectionHeaderWrapper>
         {owners.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
@@ -48,9 +50,11 @@ export default async function UsersPageComponent({
       </SectionWrapper>
       <SectionWrapper id="AgentsSection">
         <SectionHeaderWrapper>
-          <RyogoIcon icon={Rows3} size="sm" />
-          <RyogoSmall color="slate">{t("Agents.Title")}</RyogoSmall>
-          <RyogoP color="slate"> {agents.length}</RyogoP>
+          <RyogoIcon icon={UserRoundCog} size="sm" color="light" />
+          <RyogoSmall color="light">{t("Agents.Title")}</RyogoSmall>
+          <RyogoSmall color="light" weight="font-bold">
+            {agents.length}
+          </RyogoSmall>
           <Link href={`/dashboard/users/new`} className="ml-auto">
             <Button variant={"outline"}>
               <RyogoIcon icon={Plus} size="sm" />
@@ -64,9 +68,11 @@ export default async function UsersPageComponent({
       </SectionWrapper>
       <SectionWrapper id="DriversSection">
         <SectionHeaderWrapper>
-          <RyogoIcon icon={Rows3} size="sm" />
-          <RyogoSmall color="slate">{t("Drivers.Title")}</RyogoSmall>
-          <RyogoP color="slate"> {drivers.length}</RyogoP>
+          <RyogoIcon icon={IdCard} size="sm" color="light" />
+          <RyogoSmall color="light">{t("Drivers.Title")}</RyogoSmall>
+          <RyogoSmall color="light" weight="font-bold">
+            {drivers.length}
+          </RyogoSmall>
           <Link href={`/dashboard/drivers/new`} className="ml-auto">
             <Button variant={"outline"}>
               <RyogoIcon icon={Plus} size="sm" />
@@ -91,7 +97,7 @@ async function AllUsersItemComponent({
 
   return (
     <Link href={`/dashboard/users/${user.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           {user.photoUrl ? (
             <RyogoImage
@@ -116,7 +122,7 @@ async function AllUsersItemComponent({
         <GridItemWrapper>
           <UserStatusPill status={user.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

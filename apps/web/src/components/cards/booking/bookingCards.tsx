@@ -1,4 +1,7 @@
-import { GridItemWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import {
+  GridItemWrapper,
+  HoverGridWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
@@ -46,7 +49,7 @@ export function CompletedBookingCard({
       href={`${rider ? `/rider/myBookings/` : `/dashboard/bookings/`}${booking.bookingId}`}
       className="w-full"
     >
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{booking.bookingId}</RyogoCaption>
           <RyogoP weight="font-bold"> {booking.customerName}</RyogoP>
@@ -69,7 +72,7 @@ export function CompletedBookingCard({
             {moment(booking.updatedAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -93,7 +96,7 @@ export function OngoingBookingCard({
       href={`${rider ? `/rider/myBookings/` : `/dashboard/bookings/`}${booking.bookingId}`}
       className="w-full"
     >
-      <GridWrapper highlight={rider} hasChin={rider}>
+      <HoverGridWrapper highlight={rider} hasChin={rider}>
         <GridItemWrapper>
           <RyogoCaption color={rider ? "white" : "slate"}>
             {booking.bookingId}
@@ -123,7 +126,7 @@ export function OngoingBookingCard({
             <TripLogStatusPill status={booking.status} />
           </GridItemWrapper>
         )}
-      </GridWrapper>
+      </HoverGridWrapper>
       {rider && (
         <div className="bg-slate-200 dark:bg-slate-700 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
           <RyogoSmall>{startLabel}</RyogoSmall>
@@ -160,7 +163,7 @@ export function UpcomingBookingCard({
       href={`${rider ? `/rider/myBookings/` : `/dashboard/bookings/`}${booking.bookingId}`}
       className="w-full"
     >
-      <GridWrapper hasChin={rider && canStart}>
+      <HoverGridWrapper hasChin={rider && canStart}>
         <GridItemWrapper>
           <RyogoCaption color="slate">{booking.bookingId}</RyogoCaption>
           <RyogoP weight="font-bold"> {booking.customerName}</RyogoP>
@@ -197,7 +200,7 @@ export function UpcomingBookingCard({
             <RyogoIcon icon={ChevronRight} size="sm" color="black" />
           </div>
         )}
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

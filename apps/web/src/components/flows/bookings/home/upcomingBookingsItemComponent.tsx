@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoSmall, RyogoP } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -42,9 +42,11 @@ export default function UpcomingBookingsItemComponent({
     <SectionWrapper id="UpcomingBookingsSection">
       <SectionRowWrapper center>
         <SectionHeaderWrapper>
-          <RyogoIcon icon={Clock} size="sm" />
-          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-          <RyogoP color="slate"> {trips.length}</RyogoP>
+          <RyogoIcon icon={Clock} size="sm" color="light" />
+          <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+          <RyogoSmall color="light" weight="font-bold">
+            {trips.length}
+          </RyogoSmall>
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}

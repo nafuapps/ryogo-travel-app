@@ -9,10 +9,12 @@ import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
-  GridWrapper,
+  PlainGridWrapper,
 } from "@/components/page/pageWrappers"
 import { LeaveStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { Plus } from "lucide-react"
 
 export default async function AllDriverLeavesPageComponent({
   leaves,
@@ -35,7 +37,8 @@ export default async function AllDriverLeavesPageComponent({
           className="md:w-1/2 w-full self-center"
         >
           <Button variant={"outline"} className="w-full">
-            {t("AddLeave")}
+            <RyogoIcon icon={Plus} size="sm" />
+            <RyogoCaption>{t("AddLeave")}</RyogoCaption>
           </Button>
         </Link>
         {leaves.map((leave) => (
@@ -64,7 +67,7 @@ async function DriverLeaveComponent({
 
   const canModify = isOwner || userId === leave.addedByUserId
   return (
-    <GridWrapper>
+    <PlainGridWrapper>
       <GridItemWrapper>
         <RyogoP weight="font-bold">
           {moment(leave.startDate).format("DD MMM") +
@@ -91,6 +94,6 @@ async function DriverLeaveComponent({
           </Link>
         )}
       </GridItemWrapper>
-    </GridWrapper>
+    </PlainGridWrapper>
   )
 }

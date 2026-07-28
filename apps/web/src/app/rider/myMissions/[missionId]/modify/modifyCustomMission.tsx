@@ -173,6 +173,7 @@ export default function ModifyCustomMissionPageComponent({
           missionId={mission.id}
           userId={mission.userId}
           agencyId={mission.agencyId}
+          isRider
         />
       </FormWrapper>
     </PageWrapper>

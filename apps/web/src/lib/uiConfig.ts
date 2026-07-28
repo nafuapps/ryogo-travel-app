@@ -27,6 +27,8 @@ export const SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS = 7
 export const EXPIRY_WARNING_DAYS = 7
 
 //Support
+export const TOTAL_RATING_STARS = 5
+export const MAX_USER_COMMENTS_PER_TICKET = 5
 export const SUPPORT_HELPLINE_NUMBER = "9840774089"
 export const SUPPORT_CHAT_NUMBER = "9840774089"
 export const SUPPORT_EMAIL = "ryogo.in@gmail.com"

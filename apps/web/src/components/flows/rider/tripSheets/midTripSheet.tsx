@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -128,7 +127,6 @@ export default function MidTripSheet({
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Title", { type: type })}</SheetTitle>
-          <SheetDescription></SheetDescription>
         </SheetHeader>
         <TripSheetFormWrapper<SchemaType>
           id="midTrip"

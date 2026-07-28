@@ -143,6 +143,8 @@ export const bookingServices = {
         status: booking.tripLogs[0]?.type,
         assignedUserId: booking.assignedUser.id,
         assignedUserName: booking.assignedUser.name,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
       }
     })
   },

@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server"
 import { FindDriverActivityByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   PageWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -53,7 +53,7 @@ function ExpenseActivityComponent(
       href={`/dashboard/bookings/${expense.bookingId}/expenses`}
       className="w-full"
     >
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{expense.id}</RyogoCaption>
           <RyogoP weight="font-bold"> {expense.type.toUpperCase()}</RyogoP>
@@ -70,7 +70,7 @@ function ExpenseActivityComponent(
             {moment(expense.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -83,7 +83,7 @@ function TripLogActivityComponent(
       href={`/dashboard/bookings/${tripLog.bookingId}/trip-logs`}
       className="w-full"
     >
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
             {tripLog.vehicle.vehicleNumber}
@@ -103,7 +103,7 @@ function TripLogActivityComponent(
             {moment(tripLog.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

@@ -19,3 +19,26 @@ export default function RyogoRatingDisplay({
     </div>
   )
 }
+
+export function RyogoSingleRatingDisplay({
+  total,
+  rating,
+}: {
+  total: number
+  rating: number
+}) {
+  return (
+    <div className="flex gap-1 lg:gap-1.5 items-center">
+      {Array.from({ length: total }).map((_, index) => {
+        return (
+          <RyogoIcon
+            key={index + 1}
+            icon={Star}
+            size="sm"
+            color={`${rating > index ? "yellow" : "slate"}`}
+          />
+        )
+      })}
+    </div>
+  )
+}

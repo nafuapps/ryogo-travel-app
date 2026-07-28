@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { BookOpen } from "lucide-react"
+import { BookOpenText } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
@@ -17,7 +17,7 @@ import moment from "moment"
 import { FindLeadBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
@@ -42,9 +42,11 @@ export default function LeadBookingsItemComponent({
     <SectionWrapper id="leadsBookingsSection">
       <SectionRowWrapper center>
         <SectionHeaderWrapper>
-          <RyogoIcon icon={BookOpen} size="sm" />
-          <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-          <RyogoP color="slate"> {trips.length}</RyogoP>
+          <RyogoIcon icon={BookOpenText} size="sm" color="light" />
+          <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+          <RyogoSmall color="light" weight="font-bold">
+            {trips.length}
+          </RyogoSmall>
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
@@ -74,7 +76,7 @@ function LeadBookingsComponent(
   const t = useTranslations("Dashboard.Bookings.Leads")
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
           <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
@@ -101,7 +103,7 @@ function LeadBookingsComponent(
             {moment(props.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

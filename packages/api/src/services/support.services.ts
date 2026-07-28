@@ -1,6 +1,7 @@
 import {
   InsertSupportQueryType,
   InsertSupportTicketType,
+  TicketStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { supportQueryRepository } from "../repositories/supportQuery.repo"
 import { supportTicketRepository } from "../repositories/supportTicket.repo"
@@ -34,7 +35,25 @@ export const supportServices = {
   },
 
   async updateSupportTicketPhoto(ticketId: string, photoUrl: string) {
-    await supportTicketRepository.updatePhotoUrl(ticketId, photoUrl)
+    return await supportTicketRepository.updatePhotoUrl(ticketId, photoUrl)
+  },
+
+  async closeTicketWithRating(ticketId: string, rating?: number) {
+    return await supportTicketRepository.updateTicketStatusWithRating(
+      ticketId,
+      TicketStatusEnum.CLOSED,
+      rating,
+    )
+  },
+  async addSupportTicketUserComment(ticketId: string, comment: string) {
+    return await supportTicketRepository.updateTicketCommentsByUser(
+      ticketId,
+      comment,
+    )
+  },
+
+  async removeTicket(ticketId: string) {
+    return await supportTicketRepository.deleteSupportTicket(ticketId)
   },
 }
 

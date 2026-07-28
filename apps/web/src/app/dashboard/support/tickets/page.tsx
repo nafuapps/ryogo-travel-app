@@ -34,7 +34,11 @@ export default async function SupportTicketsPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/tickets"} />
-      <SupportTicketsPageComponent isOwner={isOwner} tickets={tickets} />
+      <SupportTicketsPageComponent
+        isOwner={isOwner}
+        tickets={tickets}
+        userId={currentUser.userId}
+      />
     </MainWrapper>
   )
 }

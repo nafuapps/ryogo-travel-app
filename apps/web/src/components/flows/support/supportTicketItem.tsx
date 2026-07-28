@@ -1,6 +1,7 @@
 import getEntityIcon from "@/components/icons/entityIcon"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import {
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -32,16 +33,12 @@ export default function SupportTicketItem({
     >
       <SectionWrapper id={ticket.id}>
         <SectionRowWrapper center>
-          <RyogoSmall color="slate">{ticket.id}</RyogoSmall>
+          <RyogoSmall weight="font-bold" color="light">
+            {"# " + ticket.id}
+          </RyogoSmall>
           <SupportTicketStatusPill status={ticket.status} />
         </SectionRowWrapper>
         <RyogoP weight="font-bold">{ticket.issue}</RyogoP>
-        {ticket.details && (
-          <RyogoCaption color="light">{ticket.details}</RyogoCaption>
-        )}
-        {ticket.commentBySupport && (
-          <RyogoCaption color="slate">{ticket.commentBySupport}</RyogoCaption>
-        )}
         <SectionRowWrapper center>
           <SectionRowWrapper justifyStart center>
             <RyogoEnclosedIcon
@@ -51,7 +48,7 @@ export default function SupportTicketItem({
               bgColor={"slate"}
               circular
             />
-            <div className="flex flex-col gap-0.5">
+            <SectionColWrapper small>
               <RyogoCaption color={"slate"} weight="font-bold">
                 {ticket.entityType.toUpperCase()}
               </RyogoCaption>
@@ -60,7 +57,7 @@ export default function SupportTicketItem({
                   {"(" + ticket.entityId + ")"}
                 </RyogoCaption>
               )}
-            </div>
+            </SectionColWrapper>
           </SectionRowWrapper>
           <RyogoCaption color="slate">
             {moment(ticket.createdAt).format("DD MMM")}

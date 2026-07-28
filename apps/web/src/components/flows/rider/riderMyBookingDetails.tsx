@@ -7,6 +7,7 @@ import { BriefcaseBusiness, Route } from "lucide-react"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import { BookingStatusPill } from "@/components/pills/ryogoPills"
 
 export default async function RiderMyBookingDetails({
   booking,
@@ -21,6 +22,7 @@ export default async function RiderMyBookingDetails({
       <BookingSection sectionTitle={t("BookingInfo")} icon={BriefcaseBusiness}>
         <BookingItem title={t("BookingId")} value={booking.id} />
         <BookingItem title={t("CustomerName")} value={booking.customer.name} />
+        <BookingStatusPill status={booking.status} />
         {booking.pickupAddress && (
           <BookingItem
             title={t("PickupAddress")}

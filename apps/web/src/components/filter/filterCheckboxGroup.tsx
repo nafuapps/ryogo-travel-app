@@ -26,7 +26,7 @@ export default function FilterCheckboxGroup<V extends string>({
   const [open, setOpen] = useState(false)
 
   return (
-    <SectionWrapper id="FeedFilters">
+    <SectionWrapper id="Filters">
       <FieldSet className="gap-4">
         <SectionRowWrapper center onClick={() => setOpen(!open)}>
           <RyogoCaption color="light">{title}</RyogoCaption>

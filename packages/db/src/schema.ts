@@ -1521,6 +1521,7 @@ export const supportTickets = pgTable(
     entityType: entityType("entity_type").notNull(),
     issue: varchar("issue", { length: 60 }).notNull(),
     details: varchar("details", { length: 300 }),
+    commentsByUser: varchar("comments_by_user", { length: 300 }).array(),
     photoUrl: text("photo_url"),
     commentBySupport: varchar("comment_by_support", { length: 300 }), //Comment by Support team
     resolutionRating: integer("resolution_rating"),

@@ -24,6 +24,7 @@ import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import { RyogoCaption } from "@/components/typography"
+import { BookingStatusPill } from "@/components/pills/ryogoPills"
 
 //TODO: Send tracking link to customer
 
@@ -51,10 +52,6 @@ export default async function BookingDetailsPageComponent({
             value={format(bookingDetails.createdAt, "dd MMM hh:mm aaa")}
           />
           <BookingItem
-            title={t("Status")}
-            value={bookingDetails.status.toUpperCase()}
-          />
-          <BookingItem
             title={t("BookedBy")}
             value={bookingDetails.bookedByUser.name}
           />
@@ -62,6 +59,7 @@ export default async function BookingDetailsPageComponent({
             title={t("AssignedTo")}
             value={bookingDetails.assignedUser.name}
           />
+          <BookingStatusPill status={bookingDetails.status} />
           {isOwner && bookingDetails.status !== BookingStatusEnum.CANCELLED && (
             <Button variant={"outline"}>
               <Link

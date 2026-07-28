@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -120,7 +119,6 @@ export default function StartTripSheet({
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
-          <SheetDescription></SheetDescription>
         </SheetHeader>
         <TripSheetFormWrapper<SchemaType>
           id="startTrip"

@@ -96,6 +96,7 @@ export default async function DriverDetailsPageComponent({
             <RyogoDialogImage
               src={getFileUrl(driver.licensePhotoUrl)}
               alt={t("LicensePhoto")}
+              imageSize="lg"
             />
           )}
         </SectionRowWrapper>

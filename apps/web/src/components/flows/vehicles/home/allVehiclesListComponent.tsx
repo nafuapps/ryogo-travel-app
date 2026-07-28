@@ -12,7 +12,7 @@ import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   SectionHeaderWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -30,9 +30,11 @@ export default async function AllVehiclesListComponent({
   return (
     <SectionWrapper id="AllVehiclesSection">
       <SectionHeaderWrapper>
-        <RyogoIcon icon={Rows3} size="sm" />
-        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoP color="slate"> {allVehicles.length}</RyogoP>
+        <RyogoIcon icon={Rows3} size="sm" color="light" />
+        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {allVehicles.length}
+        </RyogoSmall>
         <Link href={`/dashboard/vehicles/new`} className="ml-auto">
           <Button variant={"outline"}>
             <RyogoIcon icon={Plus} size="sm" />
@@ -56,7 +58,7 @@ async function AllVehiclesItemComponent({
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           {vehicle.vehiclePhotoUrl ? (
             <RyogoImage
@@ -85,7 +87,7 @@ async function AllVehiclesItemComponent({
         <GridItemWrapper>
           <VehicleStatusPill status={vehicle.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

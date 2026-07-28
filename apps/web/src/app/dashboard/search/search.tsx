@@ -40,7 +40,7 @@ import GetVehicleIcon, {
 import {
   SectionWrapper,
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   PageWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
@@ -527,7 +527,7 @@ function BookingSearchResultItem({
 }) {
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{booking.id}</RyogoCaption>
           <RyogoSmall>{booking.customer.name}</RyogoSmall>
@@ -549,7 +549,7 @@ function BookingSearchResultItem({
         <GridItemWrapper>
           <BookingStatusPill status={booking.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -562,7 +562,7 @@ function DriverSearchResultItem({
   const t = useTranslations("Dashboard.Drivers.All")
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           {driver.user.photoUrl ? (
             <RyogoImage
@@ -587,7 +587,7 @@ function DriverSearchResultItem({
         <GridItemWrapper>
           <DriverStatusPill status={driver.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -601,7 +601,7 @@ function CustomerSearchResultItem({
 
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           {customer.photoUrl ? (
             <RyogoImage
@@ -628,7 +628,7 @@ function CustomerSearchResultItem({
         <GridItemWrapper>
           <CustomerStatusPill status={customer.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -642,7 +642,7 @@ function VehicleSearchResultItem({
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           {vehicle.vehiclePhotoUrl ? (
             <RyogoImage
@@ -668,7 +668,7 @@ function VehicleSearchResultItem({
         <GridItemWrapper>
           <VehicleStatusPill status={vehicle.status} />
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

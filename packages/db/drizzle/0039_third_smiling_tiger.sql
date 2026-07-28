@@ -1,0 +1,1 @@
+ALTER TABLE "support_tickets" ADD COLUMN "comments_by_user" varchar(300)[];

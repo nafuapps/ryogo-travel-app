@@ -6,7 +6,7 @@ import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import {
   GridItemWrapper,
-  GridWrapper,
+  HoverGridWrapper,
   PageWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -102,7 +102,7 @@ function BookingActivityComponent(
 ) {
   return (
     <Link href={`/dashboard/bookings/${booking.id}`} className="w-full">
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{booking.id}</RyogoCaption>
           <RyogoP weight="font-bold"> {booking.customer.name}</RyogoP>
@@ -131,7 +131,7 @@ function BookingActivityComponent(
             {moment(booking.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -144,7 +144,7 @@ function TransactionActivityComponent(
       href={`/dashboard/bookings/${transaction.bookingId}/transactions`}
       className="w-full"
     >
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{transaction.id}</RyogoCaption>
           <RyogoP weight="font-bold"> {transaction.type.toUpperCase()}</RyogoP>
@@ -165,7 +165,7 @@ function TransactionActivityComponent(
             {moment(transaction.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -178,7 +178,7 @@ function ExpenseActivityComponent(
       href={`/dashboard/bookings/${expense.bookingId}/expenses`}
       className="w-full"
     >
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{expense.id}</RyogoCaption>
           <RyogoP weight="font-bold"> {expense.type.toUpperCase()}</RyogoP>
@@ -195,7 +195,7 @@ function ExpenseActivityComponent(
             {moment(expense.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -205,7 +205,7 @@ function CustomerActivityComponent(
 ) {
   return (
     <Link href={`/dashboard/customers/${customer.id}`} className="w-full">
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{customer.id}</RyogoCaption>
           <RyogoP weight="font-bold"> {customer.name}</RyogoP>
@@ -224,7 +224,7 @@ function CustomerActivityComponent(
             {moment(customer.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -238,7 +238,7 @@ async function DriverLeaveActivityComponent(
       href={`/dashboard/drivers/${driverLeave.driverId}/leaves`}
       className="w-full"
     >
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
             {moment(driverLeave.startDate).format("DD MMM")}
@@ -261,7 +261,7 @@ async function DriverLeaveActivityComponent(
             {moment(driverLeave.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }
@@ -275,7 +275,7 @@ async function VehicleRepairActivityComponent(
       href={`/dashboard/vehicles/${vehicleRepair.vehicleId}/repairs`}
       className="w-full"
     >
-      <GridWrapper>
+      <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
             {moment(vehicleRepair.startDate).format("DD MMM")}
@@ -300,7 +300,7 @@ async function VehicleRepairActivityComponent(
             {moment(vehicleRepair.createdAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
-      </GridWrapper>
+      </HoverGridWrapper>
     </Link>
   )
 }

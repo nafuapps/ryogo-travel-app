@@ -130,6 +130,8 @@ export const bookingRepository = {
       columns: {
         type: true,
         id: true,
+        startDate: true,
+        endDate: true,
       },
       with: {
         assignedDriver: {

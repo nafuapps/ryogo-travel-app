@@ -860,12 +860,12 @@
         "Title": "ONGOING TRIPS"
       },
       "Upcoming": {
-        "Title": "UPCOMING BOOKINGS",
+        "Title": "UPCOMING",
         "24Hrs": "Next 24 Hours",
         "7Days": "Next 7 Days"
       },
       "Completed": {
-        "Title": "COMPLETED BOOKINGS",
+        "Title": "COMPLETED",
         "24Hrs": "Last 24 Hours",
         "7Days": "Last 7 Days"
       },
@@ -873,8 +873,14 @@
         "Title": "BOOKING SCHEDULE",
         "Photo": "Customer photo"
       },
+      "History":{
+        "Title": "BOOKING HISTORY",
+        "Photo": "Customer photo",
+        "24Hrs": "Last 24 Hours",
+        "7Days": "Last 7 Days"
+      },
       "Leads": {
-        "Title": "BOOKING LEADS",
+        "Title": "LEADS",
         "24Hrs": "Last 24 Hours",
         "7Days": "Last 7 Days",
         "Passengers": "pax"
@@ -2434,6 +2440,7 @@
       "RenewCTA": "Renew Subscription",
       "ViewCTA": "View Subscription",
       "EditDetails": "Edit Agency Details",
+      "QRCode": "QR Code",
       "ChangeEmail": {
         "Title": "Change Agency Email",
         "Field1": {
@@ -3299,6 +3306,12 @@
         "14Days": "Next 14 Days"
       }
     },
+    "History": {
+      "Header": {
+        "7Days": "Last 7 Days",
+        "14Days": "Last 14 Days"
+      }
+    },
     "PopoverCards": {
       "Booking": {
         "NotAssigned": "Not Assigned",
@@ -3804,6 +3817,19 @@
       "Close": "Cancel",
       "Success": "Photo updated successfully!",
       "Error": "Cannot upload photo.. please try again after some time."
+    },
+    "ChangeQRCode": {
+      "ChangeButton": "Change QR Code",
+      "UploadButton": "Upload QR Code",
+      "Title": "Choose a Photo",
+      "Header": "Upload photo/screenshot",
+      "Placeholder": "Browse a new photo",
+      "Error1": "QRCode Photo is required and size should be less than 1MB",
+      "Error2": "QRCode Photo must be in .jpg, .jpeg or .png format",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "QR Code updated successfully!",
+      "Error": "Cannot upload QR Code.. please try again after some time."
     },
     "CloseSupportTicket": {
       "Title": "Close resolved ticket",
@@ -4315,7 +4341,8 @@
           "Title": "All Aboard!",
           "Description": "Start creating booking instantly and grow your business from a single dashboard."
         },
-        "MoreCTA": "Create Account Now"
+        "MoreCTA": "Create Free Account Now",
+        "ContinueCTA":"Continue Walkthrough"
       },
       "Bookings": {
         "Title": "Create and Manage Bookings",
@@ -4348,7 +4375,8 @@
           "Title": "Reconcile bookings and payments",
           "Description": "Get a complete picture of your revenue by reconciling a booking in the end to close the loop. So convenient!"
         },
-        "MoreCTA": "Get Started For Free"
+        "MoreCTA": "Get Started For Free",
+        "ContinueCTA":"Continue Walkthrough"
       },
       "Entities": {
         "Title": "Effortless fleet management",

@@ -15,7 +15,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   Building2,
   Car,
-  ChevronRight,
+  ChevronDown,
   LifeBuoy,
   MonitorPlay,
   ShieldCheck,
@@ -84,7 +84,18 @@ export default function HowItWorksOnboardingSection() {
             <RyogoSmall color="white" weight="font-medium">
               {t("MoreCTA")}
             </RyogoSmall>
-            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </Button>
+        </Link>
+        <Link href="#bookings">
+          <Button
+            size="lg"
+            variant="link"
+            className="gap-1 lg:gap-1.5 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 hover:no-underline"
+          >
+            <RyogoSmall color="light" weight="font-medium">
+              {t("ContinueCTA")}
+            </RyogoSmall>
+            <RyogoIcon icon={ChevronDown} size="sm" color="light" thick />
           </Button>
         </Link>
       </LandingContentWrapper>

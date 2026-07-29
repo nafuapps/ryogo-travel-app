@@ -1,4 +1,4 @@
-import { RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import DashboardOngoingTripComponent from "./dashboardOngoingTripComponent"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -23,9 +23,12 @@ export default async function DashboardOngoingTripSection({
   return (
     <SectionWrapper id="DashboardOngoingTrips">
       <SectionHeaderWrapper>
-        <RyogoIcon icon={Route} size="sm" />
-        <RyogoSmall color="slate">{t("Title")}</RyogoSmall>
-        <RyogoP color="slate"> {ongoingTrips.length}</RyogoP>
+        <RyogoIcon icon={Route} size="sm" color="light" />
+        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {" "}
+          {ongoingTrips.length}
+        </RyogoSmall>
       </SectionHeaderWrapper>
       <div className="grid flex-wrap gap-2 lg:gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {ongoingTrips.map((trip, index) => (

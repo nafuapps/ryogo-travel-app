@@ -11,8 +11,6 @@ import { PageWrapper } from "@/components/page/pageWrappers"
  * Drivers - total (Available, In trip, Leave, Inactive)
  * Revenue - Last 24 hrs [based on confirmed bookings] (Transactions In/out  )
  * Ongoing trips list
- * // TODO: Critical Actions to be taken
- * // TODO: Graph - Bookings in the last 7/15/30 days
  */
 
 export default function DashboardHomePageComponent({

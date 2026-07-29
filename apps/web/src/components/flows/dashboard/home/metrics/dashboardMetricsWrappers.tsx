@@ -40,8 +40,8 @@ export function DashboardMetricHeader({
 }) {
   return (
     <div className="flex flex-row gap-2 items-center self-start">
-      <RyogoIcon icon={icon} size="sm" />
-      <RyogoSmall color="slate">{label}</RyogoSmall>
+      <RyogoIcon icon={icon} size="sm" color="light" />
+      <RyogoSmall color="light">{label}</RyogoSmall>
     </div>
   )
 }

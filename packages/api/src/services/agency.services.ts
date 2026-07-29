@@ -179,6 +179,11 @@ export const agencyServices = {
     return agency[0]
   },
 
+  async updateAgencyQRCode(agencyId: string, url: string) {
+    const agency = await agencyRepository.updateAgencyQRCodeUrl(agencyId, url)
+    return agency[0]
+  },
+
   //Change agency phone
   async changeAgencyPhone(agencyId: string, newPhone: string) {
     const updatedAgency = await agencyRepository.updateAgencyPhone(

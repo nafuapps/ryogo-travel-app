@@ -221,6 +221,31 @@ export const bookingServices = {
     })
   },
 
+  async findBookingsHistoryLastDays(agencyId: string, days: number = 7) {
+    //Day N days earlier
+    const startDate = new Date(
+      new Date().getTime() - days * 24 * 60 * 60 * 1000,
+    )
+    const bookings = await bookingRepository.readBookingsHistoryData(
+      agencyId,
+      startDate,
+    )
+    return bookings.map((booking) => {
+      return {
+        type: booking.type.toString(),
+        route: booking.source.city + " - " + booking.destination.city,
+        vehicle: booking.assignedVehicle?.vehicleNumber,
+        driver: booking.assignedDriver?.name,
+        customerName: booking.customer?.name,
+        customerPhotoUrl: booking.customer?.photoUrl,
+        bookingId: booking.id,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+        status: booking.status,
+      }
+    })
+  },
+
   async findLeadBookingsPreviousDays(agencyId: string, days: number = 1) {
     const startDate = new Date(
       new Date().getTime() - days * 24 * 60 * 60 * 1000,
@@ -694,8 +719,12 @@ export type FindUpcomingBookingsNextDaysType = Awaited<
   ReturnType<typeof bookingServices.findUpcomingBookingsNextDays>
 >
 
-export type FindScheduleNextDaysType = Awaited<
+export type FindBookingScheduleNextDaysType = Awaited<
   ReturnType<typeof bookingServices.findBookingsScheduleNextDays>
+>
+
+export type FindBookingHistoryLastDaysType = Awaited<
+  ReturnType<typeof bookingServices.findBookingsHistoryLastDays>
 >
 
 export type FindLeadBookingsPreviousDaysType = Awaited<

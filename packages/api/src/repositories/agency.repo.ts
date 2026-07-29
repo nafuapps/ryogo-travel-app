@@ -131,11 +131,14 @@ export const agencyRepository = {
   },
 
   //Update agency subscription plan only
-  async updateAgencySubscriptionPlan(id: string, plan: SubscriptionPlanEnum) {
+  async updateAgencySubscriptionPlan(
+    id: string,
+    subscriptionPlan: SubscriptionPlanEnum,
+  ) {
     return await db
       .update(agencies)
       .set({
-        subscriptionPlan: plan,
+        subscriptionPlan,
       })
       .where(eq(agencies.id, id))
       .returning({
@@ -170,7 +173,7 @@ export const agencyRepository = {
   async updateAgencyPhone(id: string, businessPhone: string) {
     return await db
       .update(agencies)
-      .set({ businessPhone: businessPhone })
+      .set({ businessPhone })
       .where(eq(agencies.id, id))
       .returning({
         id: agencies.id,
@@ -182,7 +185,7 @@ export const agencyRepository = {
   async updateAgencyEmail(id: string, businessEmail: string) {
     return await db
       .update(agencies)
-      .set({ businessEmail: businessEmail })
+      .set({ businessEmail })
       .where(eq(agencies.id, id))
       .returning({
         id: agencies.id,
@@ -194,9 +197,18 @@ export const agencyRepository = {
   async updateAgencyLogoUrl(id: string, logoUrl: string) {
     return await db
       .update(agencies)
-      .set({ logoUrl: logoUrl })
+      .set({ logoUrl })
       .where(eq(agencies.id, id))
       .returning({ id: agencies.id, logoUrl: agencies.logoUrl })
+  },
+
+  //Update QR Code URL by Id
+  async updateAgencyQRCodeUrl(id: string, qrCodeUrl: string) {
+    return await db
+      .update(agencies)
+      .set({ qrCodeUrl })
+      .where(eq(agencies.id, id))
+      .returning({ id: agencies.id, qrCodeUrl: agencies.qrCodeUrl })
   },
 
   //Delete agency by Id

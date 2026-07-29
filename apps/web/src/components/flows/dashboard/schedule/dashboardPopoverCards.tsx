@@ -2,21 +2,23 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
+import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { FindScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindBookingScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 
-export function OngoingBookingPopoverCard(
-  props: FindScheduleNextDaysType[number],
+export function BookingSchedulePopoverCard(
+  props: FindBookingScheduleNextDaysType[number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Booking")
   return (
     <SectionColWrapper>
+      <BookingStatusPill status={props.status} />
       <SectionRowWrapper>
         <SectionColWrapper small>
           <RyogoCaption weight="font-bold">

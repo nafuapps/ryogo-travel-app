@@ -7,7 +7,7 @@ import {
   SelectItem,
   Select,
 } from "@/components/ui/select"
-import { CalendarDays } from "lucide-react"
+import { CalendarDays, CalendarSync } from "lucide-react"
 import { Dispatch, SetStateAction } from "react"
 import { useTranslations } from "next-intl"
 import moment from "moment"
@@ -40,17 +40,25 @@ export function DashboardScheduleHeader({
   length,
   selectedTab,
   setSelectedTab,
+  isHistory,
 }: {
   title: string
   length: string
   selectedTab: SelectableDays
   setSelectedTab: Dispatch<SetStateAction<SelectableDays>>
+  isHistory?: boolean
 }) {
-  const t = useTranslations("Dashboard.Schedule.Header")
+  const t = useTranslations(
+    isHistory ? "Dashboard.History.Header" : "Dashboard.Schedule.Header",
+  )
   return (
     <SectionRowWrapper center>
       <SectionHeaderWrapper>
-        <RyogoIcon icon={CalendarDays} size="sm" color="light" />
+        <RyogoIcon
+          icon={isHistory ? CalendarSync : CalendarDays}
+          size="sm"
+          color="light"
+        />
         <RyogoSmall color="light">{title}</RyogoSmall>
         <RyogoSmall color="light" weight="font-bold">
           {length}
@@ -87,16 +95,23 @@ export function DashboardScheduleChart({
     </div>
   )
 }
+function DayAxisEmptyBlock() {
+  return (
+    <div className="flex justify-center bg-white dark:bg-slate-900 items-center p-1 w-16 lg:min-w-24 h-16"></div>
+  )
+}
 
 export default function DashboardScheduleDayAxis({
   selectedDays,
+  isHistory,
 }: {
   selectedDays: number
+  isHistory?: boolean
 }) {
   const chartStartDate = new Date()
   return (
     <div className="flex flex-col lg:flex-row w-16 lg:w-full gap-0.5">
-      <div className="flex justify-center bg-white dark:bg-slate-900 items-center p-1 w-16 lg:min-w-24 h-16"></div>
+      {!isHistory && <DayAxisEmptyBlock />}
       {Array.from({ length: selectedDays }, (_, index) => (
         <div
           key={index}
@@ -104,11 +119,19 @@ export default function DashboardScheduleDayAxis({
         >
           <RyogoCaption color="light">
             {moment(
-              new Date(chartStartDate.getTime() + index * 24 * 60 * 60 * 1000),
+              isHistory
+                ? new Date(
+                    chartStartDate.getTime() -
+                      (selectedDays - index) * 24 * 60 * 60 * 1000,
+                  )
+                : new Date(
+                    chartStartDate.getTime() + index * 24 * 60 * 60 * 1000,
+                  ),
             ).format("D MMM")}
           </RyogoCaption>
         </div>
       ))}
+      {isHistory && <DayAxisEmptyBlock />}
     </div>
   )
 }
@@ -127,11 +150,15 @@ export function DashboardScheduleContent({
 
 export function DashboardScheduleItem({
   children,
+  isHistory,
 }: {
   children: React.ReactNode
+  isHistory?: boolean
 }) {
   return (
-    <div className="min-w-20 grow flex flex-col lg:flex-row gap-0.5">
+    <div
+      className={`min-w-20 grow flex ${isHistory ? "flex-col-reverse lg:flex-row-reverse" : "flex-col lg:flex-row"} gap-0.5`}
+    >
       {children}
     </div>
   )
@@ -184,8 +211,23 @@ export function DashboardScheduleItemGrid({
   )
 }
 
-function getStartEndIndex(startDate: Date, endDate: Date) {
+function getScheduleStartEndIndex(startDate: Date, endDate: Date) {
   const chartStartTime = new Date().getTime()
+  return {
+    startIndex:
+      Math.ceil((startDate.getTime() - chartStartTime) / 86400000) + 1,
+    endIndex: Math.ceil((endDate.getTime() - chartStartTime) / 86400000) + 2,
+  }
+}
+
+function getHistoryStartEndIndex(
+  startDate: Date,
+  endDate: Date,
+  selectedDays: number,
+) {
+  const chartStartTime = new Date(
+    new Date().getTime() - selectedDays * 24 * 60 * 60 * 1000,
+  ).getTime()
   return {
     startIndex:
       Math.ceil((startDate.getTime() - chartStartTime) / 86400000) + 1,
@@ -200,6 +242,7 @@ export function DashboardScheduleItemBar({
   selectedDays,
   children,
   className,
+  isHistory,
 }: {
   id: string
   startDate: Date
@@ -207,8 +250,11 @@ export function DashboardScheduleItemBar({
   selectedDays: number
   children: React.ReactNode
   className: string
+  isHistory?: boolean
 }) {
-  const { startIndex, endIndex } = getStartEndIndex(startDate, endDate)
+  const { startIndex, endIndex } = isHistory
+    ? getHistoryStartEndIndex(startDate, endDate, selectedDays)
+    : getScheduleStartEndIndex(startDate, endDate)
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -236,7 +282,9 @@ export function DashboardScheduleItemBar({
               "--startIndex": startIndex < 1 ? 1 : startIndex,
               "--endIndex":
                 endIndex < 2
-                  ? 2
+                  ? isHistory
+                    ? selectedDays + 1
+                    : 2
                   : endIndex > selectedDays + 1
                     ? selectedDays + 1
                     : endIndex,

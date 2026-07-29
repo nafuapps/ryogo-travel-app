@@ -14,11 +14,11 @@ import {
   SectionRowWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
+import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
 
-//TODO: QR code change
 export default async function AgencyDetailsPageComponent({
   agency,
   isOwner,
@@ -61,6 +61,26 @@ export default async function AgencyDetailsPageComponent({
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionWrapper>
+      {(isOwner || agency.qrCodeUrl) && (
+        <SectionWrapper id="QRCodeSection">
+          <RyogoSmall weight="font-bold">{t("QRCode")}</RyogoSmall>
+          <SectionColWrapper center>
+            {agency.qrCodeUrl && (
+              <RyogoDialogImage
+                src={getFileUrl(agency.qrCodeUrl)}
+                alt={t("QRCode")}
+                imageSize="lg"
+              />
+            )}
+            {isOwner && (
+              <ChangeQRCodeSheet
+                agencyId={agency.id}
+                newPhoto={agency.qrCodeUrl ? false : true}
+              />
+            )}
+          </SectionColWrapper>
+        </SectionWrapper>
+      )}
       {isOwner && (
         <SectionWrapper id="AgencyActions">
           <Link href="/dashboard/account/agency/modify">

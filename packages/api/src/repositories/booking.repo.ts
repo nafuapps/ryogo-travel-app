@@ -790,6 +790,58 @@ export const bookingRepository = {
     })
   },
 
+  async readBookingsHistoryData(agencyId: string, queryStartDate: Date) {
+    return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
+      where: and(
+        eq(bookings.agencyId, agencyId),
+        or(
+          and(
+            eq(bookings.status, BookingStatusEnum.COMPLETED),
+            gte(bookings.endDate, queryStartDate),
+          ),
+          eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+        ),
+      ),
+      columns: {
+        startDate: true,
+        endDate: true,
+        updatedAt: true,
+        type: true,
+        id: true,
+        status: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+            photoUrl: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+      },
+    })
+  },
+
   async readLeadBookingsData(
     agencyId: string,
     queryStartDate: Date,

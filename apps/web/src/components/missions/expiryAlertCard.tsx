@@ -16,6 +16,7 @@ import {
 } from "lucide-react"
 import { EXPIRY_WARNING_DAYS } from "@/lib/uiConfig"
 import { CarouselItem } from "@/components/ui/carousel"
+import { UrlObject } from "url"
 
 type ExpiryType = "License" | "PUC" | "RC" | "Insurance" | "Leave" | "Repair"
 
@@ -72,13 +73,16 @@ export default async function ExpiryAlertCard({
           entityName: entityName,
         })}
       </RyogoSmall>
-      <ExpiryLink type={expiryType} entityId={entityId} isDriver={isDriver}>
+      <Link
+        href={getExpiryLink(expiryType, entityId, isDriver) as any as UrlObject}
+        className="mt-auto"
+      >
         <Button variant="default" className="w-full">
           <RyogoCaption color="white" weight="font-bold">
             {t("CheckNow")}
           </RyogoCaption>
         </Button>
-      </ExpiryLink>
+      </Link>
     </CarouselItem>
   )
 }
@@ -100,43 +104,23 @@ function getExpiryIcon(type: ExpiryType) {
   }
 }
 
-function ExpiryLink({
-  children,
-  type,
-  entityId,
-  isDriver,
-}: {
-  children: React.ReactNode
-  type: ExpiryType
-  entityId: string
-  isDriver?: boolean
-}) {
+function getExpiryLink(type: ExpiryType, entityId: string, isDriver?: boolean) {
   switch (type) {
     case "License":
+      return isDriver ? `/rider/myProfile` : `/dashboard/drivers/${entityId}`
     case "Leave":
-      return (
-        <Link
-          href={
-            isDriver ? `/rider/myProfile` : `/dashboard/drivers/${entityId}`
-          }
-          className="mt-auto"
-        >
-          {children}
-        </Link>
-      )
+      return isDriver
+        ? `/rider/myProfile`
+        : `/dashboard/drivers/${entityId}/leaves`
+
     case "PUC":
     case "RC":
     case "Insurance":
+      return isDriver ? `/rider/myVehicle` : `/dashboard/vehicles/${entityId}`
+
     case "Repair":
-      return (
-        <Link
-          href={
-            isDriver ? `/rider/myVehicle` : `/dashboard/vehicles/${entityId}`
-          }
-          className="mt-auto"
-        >
-          {children}
-        </Link>
-      )
+      return isDriver
+        ? `/rider/myVehicle`
+        : `/dashboard/vehicles/${entityId}/repairs`
   }
 }

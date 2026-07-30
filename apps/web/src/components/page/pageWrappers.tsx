@@ -31,6 +31,26 @@ export function PageWrapper({
   )
 }
 
+export function SideWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col w-full lg:w-2/5 gap-3 lg:gap-4 pt-3 lg:pt-4">
+      {children}
+    </div>
+  )
+}
+
+export function DoubleContentWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col-reverse lg:flex-row gap-5 lg:gap-6 w-full h-full overflow-hidden">
+      {children}
+    </div>
+  )
+}
+
 export function FormWrapper<T extends FieldValues>({
   id,
   form,

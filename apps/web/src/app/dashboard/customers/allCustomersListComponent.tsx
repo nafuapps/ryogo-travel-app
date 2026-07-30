@@ -75,8 +75,8 @@ export default function AllCustomersListComponent({
         </RyogoSmall>
         <Link href={`/dashboard/customers/new`} className="ml-auto">
           <Button variant={"outline"}>
-            <RyogoIcon icon={Plus} size="sm" />
-            {t("AddCustomer")}
+            <RyogoIcon icon={Plus} size="sm" color="slate" />
+            <RyogoCaption color="slate">{t("AddCustomer")}</RyogoCaption>
           </Button>
         </Link>
       </SectionHeaderWrapper>
@@ -100,6 +100,7 @@ export default function AllCustomersListComponent({
           >
             {t("Search")}
           </Button>
+          {/* TODO: Clear button */}
         </ButtonGroup>
       </Field>
       {currentItems.map((customer) => (

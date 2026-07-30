@@ -11,6 +11,7 @@ export type CreateOwnerAccountRequestType = {
     commissionRate?: number | undefined
     logo?: FileList
     qrCode?: FileList
+    tryPremium?: boolean
   }
   owner: {
     email: string

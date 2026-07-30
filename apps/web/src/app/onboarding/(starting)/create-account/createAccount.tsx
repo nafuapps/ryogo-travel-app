@@ -44,6 +44,8 @@ export default function CreateAccountPageComponent({
       commissionRate: undefined,
       agencyState: "",
       agencyCity: "",
+      qrCode: undefined,
+      tryPremium: false,
     },
     owner: {
       name: "",

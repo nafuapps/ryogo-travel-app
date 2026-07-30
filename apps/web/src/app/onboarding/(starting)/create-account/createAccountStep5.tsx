@@ -44,6 +44,8 @@ export function CreateAccountConfirm(props: {
           agencyState: props.finalData.agency.agencyState,
           commissionRate: props.finalData.agency.commissionRate,
           logo: props.finalData.agency.logo,
+          qrCode: props.finalData.agency.qrCode,
+          tryPremium: props.finalData.agency.tryPremium,
         },
         owner: {
           email: props.finalData.owner.email,

@@ -10,11 +10,7 @@ import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
-import {
-  EXPIRATION_ALERT_WINDOW_DAYS,
-  PREMIUM_BOOKINGS_SEARCH_DAYS,
-  PREMIUM_TRIAL_DAYS,
-} from "../apiConfig"
+import { EXPIRATION_ALERT_WINDOW_DAYS, PREMIUM_TRIAL_DAYS } from "../apiConfig"
 import { ModifyAgencyRequestType } from "../types/agency.types"
 import { differenceInDays } from "date-fns"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
@@ -171,7 +167,11 @@ export const agencyServices = {
 
   //Activate an agency
   async activateAgency(id: string) {
-    await agencyRepository.updateAgencyStatus(id, AgencyStatusEnum.ACTIVE)
+    await agencyRepository.updateAgencyStatus(
+      id,
+      AgencyStatusEnum.ACTIVE,
+      getSubscriptionExpirationDate(),
+    )
   },
 
   async updateAgencyLogo(agencyId: string, url: string) {
@@ -214,10 +214,16 @@ export const agencyServices = {
     const updatedAgency = await agencyRepository.updateAgencyTrialSubscription(
       agencyId,
       SubscriptionPlanEnum.PREMIUM,
-      new Date(new Date().getTime() + PREMIUM_TRIAL_DAYS * 24 * 60 * 60 * 1000),
+      getSubscriptionExpirationDate(),
     )
     return updatedAgency[0]
   },
+}
+
+export function getSubscriptionExpirationDate() {
+  return new Date(
+    new Date().getTime() + PREMIUM_TRIAL_DAYS * 24 * 60 * 60 * 1000,
+  )
 }
 
 export type FindAllAgenciesType = Awaited<

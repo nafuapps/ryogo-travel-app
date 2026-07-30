@@ -25,8 +25,7 @@ import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import { RyogoCaption } from "@/components/typography"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
-
-//TODO: Send tracking link to customer
+import ShareTrackBookingLinkButton from "@/components/buttons/track/shareTrackBookingLinkButton"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -153,6 +152,16 @@ export default async function BookingDetailsPageComponent({
                   label={t("ChatCustomer")}
                   phone={bookingDetails.customer.phone}
                 />
+                {[
+                  BookingStatusEnum.IN_PROGRESS,
+                  BookingStatusEnum.COMPLETED,
+                ].includes(bookingDetails.status) && (
+                  <ShareTrackBookingLinkButton
+                    bookingId={bookingDetails.id}
+                    phone={bookingDetails.customer.phone}
+                    label={t("ShareTrackingLink")}
+                  />
+                )}
               </>
             )}
         </BookingSection>

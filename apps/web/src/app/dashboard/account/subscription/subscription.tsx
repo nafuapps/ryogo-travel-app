@@ -30,7 +30,7 @@ import {
 import { getTranslations } from "next-intl/server"
 import BuySubscriptionComponent from "@/components/flows/susbcription/buySubscription"
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
-import TrySubscriptionComponent from "@/components/flows/susbcription/trySubscription"
+import TryPremiumComponent from "@/components/flows/susbcription/tryPremium"
 import PlanExpiryDetails from "@/components/flows/susbcription/planExpiryDetails"
 import PremiumNudge from "@/components/flows/susbcription/premiumNudge"
 import PremiumAdvantageCard from "@/components/flows/susbcription/premiumAdvantageCard"
@@ -106,7 +106,7 @@ export default async function SubscriptionPageComponent({
         (agencyDetails.hasTriedSubscription ? (
           <BuySubscriptionComponent userDetails={userDetails} />
         ) : (
-          <TrySubscriptionComponent agencyId={agencyDetails.id} />
+          <TryPremiumComponent agencyId={agencyDetails.id} />
         ))}
       <div
         id="PremiumAdvantageInfo"

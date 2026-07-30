@@ -108,11 +108,11 @@ export const agencies = pgTable(
     subscriptionExpiresOn: timestamp("subscription_expires_on", {
       withTimezone: true,
     }).notNull(),
+    latestPaidOrderId: text("latest_paid_order_id"),
     hasTriedSubscription: boolean("has_tried_subscription")
       .notNull()
       .default(false),
     qrCodeUrl: text("qr_code_url"),
-    latestPaidOrderId: text("latest_paid_order_id"),
     status: agencyStatus().notNull().default(AgencyStatusEnum.NEW),
     defaultCommissionRate: integer("default_commission_rate")
       .notNull()

@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
@@ -16,8 +16,13 @@ import {
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { Separator } from "@/components/ui/separator"
+import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { BadgeCheck, Disc, LucideIcon } from "lucide-react"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 
-//TODO: Add a subsciption plan option (Basic, or Try Premium)
 export function CreateAccountStep4(props: {
   onNext: () => void
   onPrev: () => void
@@ -25,6 +30,8 @@ export function CreateAccountStep4(props: {
   updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step4")
+  const [wantsPremiumTrial, setWantsPremiumTrial] = useState(true)
+
   const step4Schema = z
     .object({
       password: z
@@ -35,6 +42,7 @@ export function CreateAccountStep4(props: {
         .string()
         .min(8, t("Field2.Error1"))
         .refine((s) => !s.includes(" "), t("Field2.Error3")),
+      wantsPremium: z.boolean(),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: t("Field2.Error2"),
@@ -53,6 +61,7 @@ export function CreateAccountStep4(props: {
     props.updateFinalData({
       agency: {
         ...props.finalData.agency,
+        tryPremium: wantsPremiumTrial,
       },
       owner: {
         ...props.finalData.owner,
@@ -82,6 +91,30 @@ export function CreateAccountStep4(props: {
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
+          <Separator />
+          <RyogoSmall weight="font-bold">{t("Field3.Title")}</RyogoSmall>
+          {/* <div className="flex flex-col gap-2 lg:gap-3 border rounded-lg p-4 lg:p-5"> */}
+          <PlanSelectionCard
+            type={SubscriptionPlanEnum.BASIC}
+            onClick={() => {
+              setWantsPremiumTrial(true)
+            }}
+            selected={wantsPremiumTrial}
+            icon={BadgeCheck}
+            title={t("Field3.PremiumTitle")}
+            desc={t("Field3.PremiumDesc", { day: PREMIUM_TRIAL_DAYS })}
+          />
+          <PlanSelectionCard
+            type={SubscriptionPlanEnum.BASIC}
+            onClick={() => {
+              setWantsPremiumTrial(false)
+            }}
+            selected={!wantsPremiumTrial}
+            icon={Disc}
+            title={t("Field3.BasicTitle")}
+            desc={t("Field3.BasicDesc")}
+          />
+          {/* </div> */}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step4Actions">
           <OnboardingStepPrimaryAction
@@ -99,5 +132,37 @@ export function CreateAccountStep4(props: {
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>
+  )
+}
+
+function PlanSelectionCard({
+  type,
+  onClick,
+  selected,
+  title,
+  desc,
+  icon,
+}: {
+  type: SubscriptionPlanEnum
+  onClick: () => void
+  selected: boolean
+  title: string
+  desc: string
+  icon: LucideIcon
+}) {
+  return (
+    <div
+      id={type}
+      onClick={onClick}
+      className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
+        selected
+          ? "bg-sky-100 dark:bg-sky-800 border-sky-700 dark:border-sky-200"
+          : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 "
+      }`}
+    >
+      <RyogoIcon icon={icon} size="md" />
+      <RyogoCaption weight="font-bold">{title}</RyogoCaption>
+      <RyogoCaption color="light">{desc}</RyogoCaption>
+    </div>
   )
 }

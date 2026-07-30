@@ -8,8 +8,7 @@ import RiderHeader from "@/components/header/riderHeader"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { differenceInDays } from "date-fns"
-import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import MyMissionControlPageComponent from "./myMissionControl"
 
 export const metadata: Metadata = {
@@ -38,11 +37,9 @@ export default async function MyMissionsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  //TODO: Show assigned vehicle alert as well
-  const showDriverAlert =
-    driver.licenseExpiresOn &&
-    differenceInDays(driver.licenseExpiresOn, new Date()) <
-      EXPIRATION_ALERT_WINDOW_DAYS
+  const assignedVehicle = await vehicleServices.findAssignedVehicleByDriverId(
+    driver.id,
+  )
 
   return (
     <MainWrapper>
@@ -50,7 +47,8 @@ export default async function MyMissionsPage() {
       <MyMissionControlPageComponent
         missions={missions}
         isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
-        driverAlert={showDriverAlert ? driver : undefined}
+        driver={driver}
+        assignedVehicle={assignedVehicle}
       />
     </MainWrapper>
   )

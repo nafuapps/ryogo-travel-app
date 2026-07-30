@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
 
-export default async function TrySubscriptionComponent({
+export default async function TryPremiumComponent({
   agencyId,
 }: {
   agencyId: string

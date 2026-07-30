@@ -100,7 +100,7 @@ export default async function VehicleDetailsPageComponent({
             <RyogoDialogImage
               src={getFileUrl(vehicle.insurancePhotoUrl)}
               alt={t("InsurancePhoto")}
-              imageSize="lg"
+              imageSize="md"
             />
           )}
         </SectionRowWrapper>
@@ -123,7 +123,7 @@ export default async function VehicleDetailsPageComponent({
             <RyogoDialogImage
               src={getFileUrl(vehicle.pucPhotoUrl)}
               alt={t("PUCPhoto")}
-              imageSize="lg"
+              imageSize="md"
             />
           )}
         </SectionRowWrapper>
@@ -146,7 +146,7 @@ export default async function VehicleDetailsPageComponent({
             <RyogoDialogImage
               src={getFileUrl(vehicle.rcPhotoUrl)}
               alt={t("RCPhoto")}
-              imageSize="lg"
+              imageSize="md"
             />
           )}
         </SectionRowWrapper>

@@ -26,7 +26,7 @@ export function CreateAccountStep1(props: {
   allOwners: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step1")
-  const { checkBotActivity, isBot } = useBotDetection(3000)
+  const { checkBotActivity, isBot } = useBotDetection()
 
   const step1Schema = z.object({
     agencyName: z

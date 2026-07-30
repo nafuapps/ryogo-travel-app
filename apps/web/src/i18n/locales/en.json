@@ -268,6 +268,13 @@
           "Error2": "Both passwords do not match",
           "Error3": "Password should not contain spaces"
         },
+        "Field3":{
+          "Title":"Choose Account Type",
+          "BasicTitle":"BASIC",
+          "BasicDesc":"Start with a Basic account (You can try premium later)",
+          "PremiumTitle":"TRY PREMIUM NOW",
+          "PremiumDesc":"Start with {day}-day Premium account free trial"
+        },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
         "Loading": "Loading"
@@ -1224,7 +1231,8 @@
       "Commission": "Commission",
       "CommissionRate": "({rate}%)",
       "TotalAmount": "Total Amount",
-      "Reconcile": "Reconcile Booking"
+      "Reconcile": "Reconcile Booking",
+      "ShareTrackingLink": "Share Tracking Link"
     },
     "BookingTransactions": {
       "NoTransactions": "No transactions found for this booking.",
@@ -3335,7 +3343,8 @@
       "Invoice": "Hello *{customerName}*, your trip from *{source}* to *{destination}* for *{startDate}* has been successfully completed. We hope you had a safe and enjoyable journey. Your invoice is ready for booking *#{bookingId}*. Thank you for choosing our service. For any queries, contact us at *{agencyPhone}*. You can download and view the detailed invoice here: {invoiceLink}",
       "Quote": "Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}",
       "DriverInvite": "Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
-      "AgentInvite": "Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}"
+      "AgentInvite": "Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
+      "TrackBooking":"Hello! You can track your booking at: ${bookingLink}"
     },
     "SubscriptionReminderStrip": {
       "NotExpired": "Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",

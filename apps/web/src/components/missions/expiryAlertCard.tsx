@@ -72,7 +72,7 @@ export default async function ExpiryAlertCard({
           entityName: entityName,
         })}
       </RyogoSmall>
-      <ExpiryLink type={expiryType} entityId={entityId} isDriver>
+      <ExpiryLink type={expiryType} entityId={entityId} isDriver={isDriver}>
         <Button variant="default" className="w-full">
           <RyogoCaption color="white" weight="font-bold">
             {t("CheckNow")}
@@ -129,7 +129,12 @@ function ExpiryLink({
     case "Insurance":
     case "Repair":
       return (
-        <Link href={`/dashboard/vehicles/${entityId}`} className="mt-auto">
+        <Link
+          href={
+            isDriver ? `/rider/myVehicle` : `/dashboard/vehicles/${entityId}`
+          }
+          className="mt-auto"
+        >
           {children}
         </Link>
       )

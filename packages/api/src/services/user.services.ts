@@ -5,6 +5,7 @@ import {
   DriverStatusEnum,
   InsertAgencyType,
   InsertUserType,
+  SubscriptionPlanEnum,
 } from "@ryogo-travel-app/db/schema"
 import bcrypt from "bcryptjs"
 import { userRepository } from "../repositories/user.repo"
@@ -25,7 +26,7 @@ import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
 import { sessionRepository } from "../repositories/session.repo"
-import { PREMIUM_TRIAL_DAYS } from "../apiConfig"
+import { getSubscriptionExpirationDate } from "./agency.services"
 
 export async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -204,16 +205,18 @@ export const userServices = {
       return
     }
 
-    //Step4: Create agency (Trial subscription with 30 day expiry, Status New)
+    //Step4: Create agency (Status New)
     const createAgencyData: InsertAgencyType = {
       businessEmail: data.agency.businessEmail,
       businessPhone: data.agency.businessPhone,
       businessName: data.agency.businessName,
       businessAddress: data.agency.businessAddress,
       locationId: location.id,
-      subscriptionExpiresOn: new Date(
-        Date.now() + 1000 * 60 * 60 * 24 * PREMIUM_TRIAL_DAYS,
-      ),
+      subscriptionExpiresOn: getSubscriptionExpirationDate(),
+      subscriptionPlan: data.agency.tryPremium
+        ? SubscriptionPlanEnum.PREMIUM
+        : SubscriptionPlanEnum.BASIC,
+      hasTriedSubscription: data.agency.tryPremium,
       defaultCommissionRate: data.agency.commissionRate,
     }
 

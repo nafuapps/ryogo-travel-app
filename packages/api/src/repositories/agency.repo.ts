@@ -94,14 +94,19 @@ export const agencyRepository = {
   },
 
   //Update agency status by Id
-  async updateAgencyStatus(id: string, status: AgencyStatusEnum) {
+  async updateAgencyStatus(
+    id: string,
+    status: AgencyStatusEnum,
+    subscriptionExpiresOn: Date,
+  ) {
     return await db
       .update(agencies)
-      .set({ status })
+      .set({ status, subscriptionExpiresOn })
       .where(eq(agencies.id, id))
       .returning({
         id: agencies.id,
         status: agencies.status,
+        subscriptionExpiresOn: agencies.subscriptionExpiresOn,
       })
   },
 

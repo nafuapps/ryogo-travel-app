@@ -46,7 +46,10 @@ export async function createOwnerAccountAction(
       qrCode,
       generateAgencyQRCodePathName(user.agencyId, qrCode),
     )
-    await agencyServices.updateAgencyLogo(user.agencyId, uploadQRCodeData.path)
+    await agencyServices.updateAgencyQRCode(
+      user.agencyId,
+      uploadQRCodeData.path,
+    )
   }
   if (data.owner.photos && data.owner.photos[0]) {
     const photo = data.owner.photos[0]

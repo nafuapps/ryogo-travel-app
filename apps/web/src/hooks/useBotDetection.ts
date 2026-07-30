@@ -5,13 +5,13 @@ export const useBotDetection = (checkTimeInMs: number = 1000) => {
 
   const startTime = new Date().getTime()
 
-  //Reset bot to false after 1 minute
+  //Reset bot to false after 10 seconds
   useEffect(() => {
     if (!isBot) return
 
     const timer = window.setTimeout(() => {
       setIsBot(false)
-    }, 60000)
+    }, 10000)
 
     return () => window.clearTimeout(timer)
   }, [isBot])

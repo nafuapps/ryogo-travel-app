@@ -1,7 +1,7 @@
 "use server"
 
 import getCancellationMessageLink from "@/components/whatsapp/getCancellationMessageLink"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -19,6 +19,10 @@ export async function cancelBookingAction(
       assignedUserId !== currentUser.userId) ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

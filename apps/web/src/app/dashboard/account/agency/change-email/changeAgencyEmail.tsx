@@ -20,9 +20,11 @@ import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 export default function ChangeAgencyEmailPageComponent({
   agency,
   allAgencies,
+  userId,
 }: {
   agency: NonNullable<FindAgencyByIdType>
   allAgencies: FindAgenciesByPhoneType
+  userId: string
 }) {
   const t = useTranslations("Dashboard.AccountAgency.ChangeEmail")
   const router = useRouter()
@@ -59,7 +61,7 @@ export default function ChangeAgencyEmailPageComponent({
       })
     } else {
       startTransition(async () => {
-        if (await changeAgencyEmailAction(agency.id, data.newEmail)) {
+        if (await changeAgencyEmailAction(agency.id, userId, data.newEmail)) {
           router.replace("/dashboard/account/agency")
           toast.success(t("Success"))
         } else {

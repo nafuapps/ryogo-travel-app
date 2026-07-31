@@ -22,9 +22,11 @@ import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
 export default async function AgencyDetailsPageComponent({
   agency,
   isOwner,
+  userId,
 }: {
   agency: NonNullable<FindAgencyByIdType>
   isOwner: boolean
+  userId: string
 }) {
   const t = await getTranslations("Dashboard.AccountAgency")
 
@@ -44,7 +46,9 @@ export default async function AgencyDetailsPageComponent({
             ) : (
               <RyogoEnclosedIcon icon={Building} size="xl" />
             )}
-            {isOwner && <ChangeAgencyLogoSheet agencyId={agency.id} />}
+            {isOwner && (
+              <ChangeAgencyLogoSheet agencyId={agency.id} userId={userId} />
+            )}
           </SectionColWrapper>
           <SectionColWrapper end>
             <RyogoH3>{agency.businessName}</RyogoH3>
@@ -75,6 +79,7 @@ export default async function AgencyDetailsPageComponent({
             {isOwner && (
               <ChangeQRCodeSheet
                 agencyId={agency.id}
+                userId={userId}
                 newPhoto={agency.qrCodeUrl ? false : true}
               />
             )}

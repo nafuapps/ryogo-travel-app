@@ -11,8 +11,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 /*
 TODO
   - What is mission?
-  - How to know?
-  - Creation and editing
+  - How to get and know alerts?
+  - Creation and editing custom mission
   - Notification feed
   - 
 */

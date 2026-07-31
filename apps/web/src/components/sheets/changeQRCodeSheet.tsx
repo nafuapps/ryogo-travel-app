@@ -23,9 +23,11 @@ import { changeAgencyQRCodeAction } from "@/app/actions/agencies/changeAgencyQRC
 
 export default function ChangeQRCodeSheet({
   agencyId,
+  userId,
   newPhoto,
 }: {
   agencyId: string
+  userId: string
   newPhoto: boolean
 }) {
   const t = useTranslations("Sheets.ChangeQRCode")
@@ -62,7 +64,7 @@ export default function ChangeQRCodeSheet({
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
     startTransition(async () => {
-      if (await changeAgencyQRCodeAction(agencyId, data.qrCode)) {
+      if (await changeAgencyQRCodeAction(agencyId, userId, data.qrCode)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

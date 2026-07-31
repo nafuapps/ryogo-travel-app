@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { BOOKING_ASSIGNMENT_CRITICAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
@@ -25,6 +25,10 @@ export async function assignVehicleAction(
       assignedUserId !== currentUser.userId) ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

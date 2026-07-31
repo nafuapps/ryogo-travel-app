@@ -13,9 +13,11 @@ import { RyogoCaption } from "@/components/typography"
 
 export default function TryPremiumAlertButton({
   agencyId,
+  userId,
   displayButton,
 }: {
   agencyId: string
+  userId: string
   displayButton: React.ReactNode
 }) {
   const [isPending, startTransition] = useTransition()
@@ -24,7 +26,7 @@ export default function TryPremiumAlertButton({
 
   async function activate() {
     startTransition(async () => {
-      if (await tryPremiumAction(agencyId)) {
+      if (await tryPremiumAction(agencyId, userId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

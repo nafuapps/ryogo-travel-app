@@ -2,7 +2,7 @@
 
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
 import getInvoiceMessageLink from "@/components/whatsapp/getInvoiceMessageLink"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingInvoicePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -20,6 +20,10 @@ export async function sendInvoiceAction(
       assignedUserId !== currentUser.userId) ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

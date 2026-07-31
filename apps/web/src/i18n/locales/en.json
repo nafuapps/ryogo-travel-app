@@ -2530,7 +2530,7 @@
       },
       "Account": {
         "Title": "ACCOUNT & PROFILE",
-        "Description": "Get help related to your account details and settings"
+        "Description": "Get help related to your account details, settings and security"
       },
       "Bookings": {
         "Title": "BOOKINGS",
@@ -2538,19 +2538,19 @@
       },
       "Vehicles": {
         "Title": "VEHICLES",
-        "Description": "Learn more about managing your fleet of vehicles"
+        "Description": "Learn more about adding and managing your fleet of vehicles"
       },
       "Drivers": {
         "Title": "DRIVERS",
-        "Description": "Understand how to manage your team of drivers"
+        "Description": "Understand how to manage your team of drivers, and how to communicate with them using driver app"
       },
       "Users": {
         "Title": "USERS",
-        "Description": "Know how to manage your agency users"
+        "Description": "Get to know more about various user roles, permissions and how to manage your agency users"
       },
       "Customers": {
         "Title": "CUSTOMERS",
-        "Description": "Know how to manage your customers"
+        "Description": "Know how to add, manage and communicate with your customers"
       },
       "Analytics": {
         "Title": "ANALYTICS",
@@ -2582,7 +2582,7 @@
       },
       "Contact": {
         "Title": "Still need help?",
-        "Description": "Get in touch with our specialized support team to assist your with any complex queries.",
+        "Description": "Get in touch with our specialized support team to assist you with any queries.",
         "CallCTA": "Call Support Team",
         "ChatCTA": "Chat with Support",
         "EmailCTA": "Email Support"

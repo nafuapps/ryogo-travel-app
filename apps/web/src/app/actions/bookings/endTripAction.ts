@@ -1,5 +1,5 @@
 "use server"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
@@ -25,6 +25,10 @@ export async function endTripAction(
     currentUser.userRole !== UserRolesEnum.DRIVER ||
     currentUser.agencyId !== data.agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

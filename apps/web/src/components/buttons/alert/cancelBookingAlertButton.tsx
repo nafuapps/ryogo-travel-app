@@ -9,15 +9,12 @@ import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 
-type CancelBookingAlertButtonProps = {
+export default function CancelBookingAlertButton(props: {
   bookingId: string
   agencyId: string
   assignedUserId: string
   isConfirmedBooking?: boolean
-}
-export default function CancelBookingAlertButton(
-  props: CancelBookingAlertButtonProps,
-) {
+}) {
   const [isCancelPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.CancelBooking")
   const router = useRouter()

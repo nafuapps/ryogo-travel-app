@@ -1,19 +1,28 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateAgencyLogoPathName } from "@/lib/utils"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function changeAgencyLogoAction(agencyId: string, logo: FileList) {
+export async function changeAgencyLogoAction(
+  agencyId: string,
+  userId: string,
+  logo: FileList,
+) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
+    currentUser.userId !== userId ||
     currentUser.userRole !== UserRolesEnum.OWNER ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

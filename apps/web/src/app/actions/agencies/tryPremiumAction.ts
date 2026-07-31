@@ -1,13 +1,22 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function tryPremiumAction(agencyId: string) {
+export async function tryPremiumAction(agencyId: string, userId: string) {
   const currentUser = await getCurrentUser()
-  if (!currentUser || currentUser.agencyId !== agencyId) {
+  if (
+    !currentUser ||
+    currentUser.userId !== userId ||
+    currentUser.userRole !== UserRolesEnum.OWNER ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

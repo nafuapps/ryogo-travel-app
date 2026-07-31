@@ -32,16 +32,10 @@ export const vehicleServices = {
 
   //Get vehicles schedule
   async findVehiclesScheduleNextDays(agencyId: string, days: number = 7) {
-    //Day today
-    const startDate = new Date()
     //Day N days later
     const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
     const vehiclesScheduleData =
-      await vehicleRepository.readVehiclesScheduleData(
-        agencyId,
-        startDate,
-        endDate,
-      )
+      await vehicleRepository.readVehiclesScheduleData(agencyId, endDate)
 
     return vehiclesScheduleData
   },

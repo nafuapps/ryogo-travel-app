@@ -1,5 +1,5 @@
 "use server"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
 import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
@@ -15,6 +15,11 @@ export async function midTripAction(data: AddTripLogRequestType) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   // Create Mid Trip Log
   const newTripLog = await tripLogServices.addTripLog({
     driverId: data.driverId,

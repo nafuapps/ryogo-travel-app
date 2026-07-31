@@ -1,14 +1,25 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { refresh } from "next/cache"
 
-export async function downgradeAgencyToBasicAction(agencyId: string) {
+export async function downgradeAgencyToBasicAction(
+  userId: string,
+  agencyId: string,
+) {
   const currentUser = await getCurrentUser()
-  if (!currentUser || currentUser.agencyId !== agencyId) {
+  if (
+    !currentUser ||
+    currentUser.userId !== userId ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

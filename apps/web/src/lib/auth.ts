@@ -3,13 +3,14 @@ import {
   createWebSession,
   decrypt,
   SessionPayload,
+  checkWebSessionInDB,
 } from "./session"
 import { cookies } from "next/headers"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cache } from "react"
 import { SESSION_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
 
-// Get current user from session
+// Get current user session from cookie - for optimistic checks before DB reads
 export const getCurrentUser = cache(async () => {
   // S1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
@@ -21,6 +22,11 @@ export const getCurrentUser = cache(async () => {
 
   // S3: Return payload as current user data
   return payload
+})
+
+//Verify User session in DB - For strict checking before any DB writes
+export const verifyCurrentUser = cache(async () => {
+  return await checkWebSessionInDB()
 })
 
 // Login user - Create session and update login time in DB

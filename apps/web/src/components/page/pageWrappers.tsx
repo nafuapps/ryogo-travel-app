@@ -6,7 +6,7 @@ import { PageSkeleton } from "./loadingWrappers"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-lvh bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-4 lg:pt-5 pb-6 lg:pb-7">
+    <div className="flex flex-col w-full h-screen min-h-0 bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-4 lg:pt-5 pb-6 lg:pb-7">
       {children}
     </div>
   )
@@ -15,15 +15,17 @@ export function MainWrapper({ children }: { children: React.ReactNode }) {
 export function PageWrapper({
   id,
   children,
+  disableScrollInMobile, //For controlling scrolling with DoubleContentWrapper in Mobile screen
 }: {
   id: string
   children: React.ReactNode
+  disableScrollInMobile?: boolean
 }) {
   return (
     <Suspense fallback={<PageSkeleton />}>
       <div
         id={id}
-        className="w-full h-full flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar pt-3 lg:pt-4"
+        className={`w-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "overflow-y-scroll"} no-scrollbar pt-3 lg:pt-4 pb-1`}
       >
         {children}
       </div>
@@ -33,7 +35,7 @@ export function PageWrapper({
 
 export function SideWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full lg:w-2/5 gap-3 lg:gap-4 pt-3 lg:pt-4">
+    <div className="flex flex-col w-full lg:w-2/5 gap-3 lg:gap-4 pt-3 lg:pt-4 pb-1">
       {children}
     </div>
   )
@@ -41,11 +43,15 @@ export function SideWrapper({ children }: { children: React.ReactNode }) {
 
 export function DoubleContentWrapper({
   children,
+  sideOnTop,
 }: {
   children: React.ReactNode
+  sideOnTop?: boolean
 }) {
   return (
-    <div className="flex flex-col-reverse lg:flex-row gap-5 lg:gap-6 w-full h-full overflow-hidden">
+    <div
+      className={`flex ${sideOnTop ? "flex-col-reverse" : "flex-col"} lg:flex-row gap-5 lg:gap-6 w-full overflow-y-scroll no-scrollbar`}
+    >
       {children}
     </div>
   )
@@ -81,15 +87,17 @@ export function SectionWrapper({
   id,
   children,
   center,
+  bgColor,
 }: {
   id: string
   children: React.ReactNode
   center?: boolean
+  bgColor?: string
 }) {
   return (
     <div
       id={id}
-      className={`bg-white dark:bg-slate-900 rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-3 lg:gap-4 p-4 lg:p-5`}
+      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-3 lg:gap-4 p-4 lg:p-5`}
     >
       {children}
     </div>

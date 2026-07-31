@@ -53,7 +53,7 @@ export async function decrypt(session: string = "") {
 }
 
 //Get session from DB by token
-export async function getWebSession() {
+export async function checkWebSessionInDB() {
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
   if (!session) return
 
@@ -63,10 +63,15 @@ export async function getWebSession() {
   const token = payload.token
   const sessionDB = await sessionRepository.readSessionByToken(token)
 
-  if (!sessionDB[0] || sessionDB[0].expiresAt < new Date()) {
+  //Check if session exists, is not expired and is of the same user
+  if (
+    !sessionDB ||
+    sessionDB.expiresAt < new Date() ||
+    sessionDB.userId !== payload.userId
+  ) {
     return
   }
-  return sessionDB[0]
+  return sessionDB
 }
 
 //Create session both in cookie and database

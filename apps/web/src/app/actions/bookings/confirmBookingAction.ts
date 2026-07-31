@@ -2,7 +2,7 @@
 
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
 import getConfirmationMessageLink from "@/components/whatsapp/getConfirmationMessageLink"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
@@ -27,6 +27,10 @@ export async function confirmBookingAction(
       assignedUserId !== currentUser.userId) ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

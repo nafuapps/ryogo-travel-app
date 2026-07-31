@@ -8,8 +8,15 @@ import {
 import RiderHeader from "@/components/header/riderHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+  TODO
+  - what and why is ryogo?
+  - Driver app overview with guided tutorial
+  - various entities, and how they work together
+  - 
+*/
+
 export default async function MySupportHelpStartedPage() {
-  //TODO
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-started"} />

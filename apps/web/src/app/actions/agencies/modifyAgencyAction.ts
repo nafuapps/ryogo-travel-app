@@ -1,18 +1,26 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function modifyAgencyAction(data: ModifyAgencyRequestType) {
+export async function modifyAgencyAction(
+  userId: string,
+  data: ModifyAgencyRequestType,
+) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
+    currentUser.userId !== userId ||
     currentUser.userRole !== UserRolesEnum.OWNER ||
     currentUser.agencyId !== data.agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

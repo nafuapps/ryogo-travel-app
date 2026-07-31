@@ -10,8 +10,10 @@ import Link from "next/link"
 
 export default async function TryPremiumComponent({
   agencyId,
+  userId,
 }: {
   agencyId: string
+  userId: string
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.Try")
   return (
@@ -30,6 +32,7 @@ export default async function TryPremiumComponent({
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 lg:gap-4">
           <TryPremiumAlertButton
             agencyId={agencyId}
+            userId={userId}
             displayButton={
               <Button variant={"white"} size="lg" className="w-full sm:w-auto">
                 <RyogoSmall color="brand">{t("TryCTA")}</RyogoSmall>

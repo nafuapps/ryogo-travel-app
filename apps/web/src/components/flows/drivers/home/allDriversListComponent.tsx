@@ -37,8 +37,8 @@ export default async function AllDriversListComponent({
         </RyogoSmall>
         <Link href={`/dashboard/drivers/new`} className="ml-auto">
           <Button variant={"outline"}>
-            <RyogoIcon icon={Plus} size="sm" />
-            {t("AddDriver")}
+            <RyogoIcon icon={Plus} size="sm" color="slate" />
+            <RyogoCaption color="slate">{t("AddDriver")}</RyogoCaption>
           </Button>
         </Link>
       </SectionHeaderWrapper>

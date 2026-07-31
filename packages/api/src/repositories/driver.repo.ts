@@ -166,11 +166,7 @@ export const driverRepository = {
   },
 
   //Get driver schedule data
-  async readDriversScheduleData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readDriversScheduleData(agencyId: string, queryEndDate: Date) {
     return await db.query.drivers.findMany({
       columns: {
         id: true,
@@ -232,7 +228,6 @@ export const driverRepository = {
             or(
               and(
                 eq(assignedBookings.status, BookingStatusEnum.CONFIRMED),
-                gte(assignedBookings.endDate, queryStartDate),
                 lte(assignedBookings.startDate, queryEndDate),
               ),
               eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
@@ -260,7 +255,6 @@ export const driverRepository = {
           where: (driverLeaves) =>
             and(
               eq(driverLeaves.isCompleted, false),
-              gte(driverLeaves.endDate, queryStartDate),
               lte(driverLeaves.startDate, queryEndDate),
             ),
         },

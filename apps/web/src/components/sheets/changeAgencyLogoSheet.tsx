@@ -23,8 +23,10 @@ import { changeAgencyLogoAction } from "@/app/actions/agencies/changeAgencyLogoA
 
 export default function ChangeAgencyLogoSheet({
   agencyId,
+  userId,
 }: {
   agencyId: string
+  userId: string
 }) {
   const t = useTranslations("Sheets.ChangeLogo")
   const [isPending, startTransition] = useTransition()
@@ -60,7 +62,7 @@ export default function ChangeAgencyLogoSheet({
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
     startTransition(async () => {
-      if (await changeAgencyLogoAction(agencyId, data.logo)) {
+      if (await changeAgencyLogoAction(agencyId, userId, data.logo)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

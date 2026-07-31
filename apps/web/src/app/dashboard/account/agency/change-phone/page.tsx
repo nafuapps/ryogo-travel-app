@@ -42,6 +42,7 @@ export default async function ChangeAgencyPhonePage() {
       <ChangeAgencyPhonePageComponent
         agency={agency}
         allAgencies={allAgencies}
+        userId={currentUser.userId}
       />
     </MainWrapper>
   )

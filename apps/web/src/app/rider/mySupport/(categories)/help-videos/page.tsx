@@ -8,8 +8,14 @@ import {
 import RiderHeader from "@/components/header/riderHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+  TODO
+  - Add Video tutorial
+  - Link to YT and social media
+
+*/
+
 export default async function MySupportHelpVideosPage() {
-  //TODO
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-videos"} />

@@ -1,8 +1,10 @@
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import SupportPageComponent from "./support"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import {
+  DoubleContentWrapper,
+  MainWrapper,
+} from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import {
   SubscriptionPlanEnum,
@@ -10,6 +12,8 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import SupportPageComponent from "./support"
+import SupportSideComponent from "./supportSide"
 
 export const metadata: Metadata = {
   title: `Support - ${pageTitle}`,
@@ -30,10 +34,14 @@ export default async function SupportPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support"} />
-      <SupportPageComponent
-        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
-      />
+      <DoubleContentWrapper>
+        <SupportPageComponent
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+        />
+        <SupportSideComponent
+          isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        />
+      </DoubleContentWrapper>
     </MainWrapper>
   )
 }

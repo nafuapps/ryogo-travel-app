@@ -18,6 +18,8 @@ TODO
   - Expenses
   - Trip Logs
   - Assignment
+  - Communicating with customer
+  - Documents (invoice, lead, confirmation, etc)
   - Recommendations & Suggestions
   - Price & Commission
 */

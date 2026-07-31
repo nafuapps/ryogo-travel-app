@@ -8,8 +8,14 @@ import {
 } from "@/components/page/pageWrappers"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+  TODO
+  - Add Video tutorial
+  - Link to YT and social media
+
+*/
+
 export default async function SupportHelpVideosPage() {
-  //TODO
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/help-videos"} />

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { FindBookingScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
@@ -16,6 +17,11 @@ export function BookingSchedulePopoverCard(
   props: FindBookingScheduleNextDaysType[number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Booking")
+  const isDelayed =
+    (props.status === BookingStatusEnum.CONFIRMED &&
+      props.startDate < new Date()) ||
+    (props.status === BookingStatusEnum.IN_PROGRESS &&
+      props.endDate < new Date())
   return (
     <SectionColWrapper>
       <BookingStatusPill status={props.status} />
@@ -27,7 +33,7 @@ export function BookingSchedulePopoverCard(
           <RyogoH4>{props.route}</RyogoH4>
         </SectionColWrapper>
         <SectionColWrapper small end>
-          <RyogoCaption color="slate">
+          <RyogoCaption color={isDelayed ? "red" : "slate"}>
             {moment(props.startDate).format("DD MMM") +
               " - " +
               moment(props.endDate).format("DD MMM")}
@@ -78,6 +84,11 @@ export function AssignedBookingPopoverCard(
     | FindVehiclesScheduleNextDaysType[number]["assignedBookings"][number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.AssignedBooking")
+  const isDelayed =
+    (props.status === BookingStatusEnum.CONFIRMED &&
+      props.startDate < new Date()) ||
+    (props.status === BookingStatusEnum.IN_PROGRESS &&
+      props.endDate < new Date())
   return (
     <SectionColWrapper>
       <SectionRowWrapper>
@@ -90,7 +101,7 @@ export function AssignedBookingPopoverCard(
           </RyogoH4>
         </SectionColWrapper>
         <SectionColWrapper small end>
-          <RyogoCaption color="slate">
+          <RyogoCaption color={isDelayed ? "red" : "slate"}>
             {moment(props.startDate).format("DD MMM") +
               " - " +
               moment(props.endDate).format("DD MMM")}
@@ -122,11 +133,12 @@ export function RepairPopoverCard(
   props: FindVehiclesScheduleNextDaysType[number]["vehicleRepairs"][number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Repair")
+  const isDelayed = props.endDate < new Date()
   return (
     <SectionColWrapper>
       <SectionColWrapper small>
         <RyogoCaption color="slate">{props.vehicle.vehicleNumber}</RyogoCaption>
-        <RyogoH4>
+        <RyogoH4 color={isDelayed ? "red" : "slate"}>
           {moment(props.startDate).format("DD MMM") +
             " - " +
             moment(props.endDate).format("DD MMM")}
@@ -149,11 +161,12 @@ export function LeavePopoverCard(
   props: FindDriversScheduleNextDaysType[number]["driverLeaves"][number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Leave")
+  const isDelayed = props.endDate < new Date()
   return (
     <SectionColWrapper>
       <SectionColWrapper small>
         <RyogoCaption color="slate">{props.driver.name}</RyogoCaption>
-        <RyogoH4>
+        <RyogoH4 color={isDelayed ? "red" : "slate"}>
           {moment(props.startDate).format("DD MMM") +
             " - " +
             moment(props.endDate).format("DD MMM")}

@@ -8,8 +8,16 @@ import {
 import RiderHeader from "@/components/header/riderHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+  TODO
+  - Account Details (Name, Email, Pwd)
+  - Account Security (login, logout)
+  - Account settings
+  - Agency
+  - Subscription (in brief)
+*/
+
 export default async function MySupportHelpAccountPage() {
-  //TODO
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-account"} />

@@ -33,7 +33,7 @@ export default async function ModifyAgencyPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/agency/modify"} />
-      <ModifyAgencyPageForm agency={agency} />
+      <ModifyAgencyPageForm agency={agency} userId={currentUser.userId} />
     </MainWrapper>
   )
 }

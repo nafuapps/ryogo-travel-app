@@ -1,5 +1,5 @@
 "use server"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
@@ -22,6 +22,11 @@ export async function startTripAction(data: AddTripLogRequestType) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   //Change Booking, Driver and vehicle status to In trip
   const bookingChanged = await bookingServices.changeBookingToInProgress(
     data.bookingId,

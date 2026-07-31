@@ -13,7 +13,8 @@ TODO
   - Details
   - Add (with invite)
   - Modify
-  - App
+  - Leaves
+  - Driver App
   - Communication
 */
 

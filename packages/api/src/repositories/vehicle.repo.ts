@@ -149,11 +149,7 @@ export const vehicleRepository = {
   },
 
   //Get vehicle schedule data
-  async readVehiclesScheduleData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readVehiclesScheduleData(agencyId: string, queryEndDate: Date) {
     return await db.query.vehicles.findMany({
       columns: {
         id: true,
@@ -209,7 +205,6 @@ export const vehicleRepository = {
             or(
               and(
                 eq(assignedBookings.status, BookingStatusEnum.CONFIRMED),
-                gte(assignedBookings.endDate, queryStartDate),
                 lte(assignedBookings.startDate, queryEndDate),
               ),
               eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
@@ -237,7 +232,6 @@ export const vehicleRepository = {
           where: (vehicleRepairs) =>
             and(
               eq(vehicleRepairs.isCompleted, false),
-              gte(vehicleRepairs.endDate, queryStartDate),
               lte(vehicleRepairs.startDate, queryEndDate),
             ),
         },

@@ -44,7 +44,7 @@ export default async function DashboardHomePage() {
     differenceInDays(new Date(), agency.subscriptionExpiresOn) >
       SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS
   ) {
-    await downgradeAgencyToBasicAction(agency.id)
+    await downgradeAgencyToBasicAction(currentUser.userId, agency.id)
   }
 
   const days = differenceInDays(agency.subscriptionExpiresOn, new Date())

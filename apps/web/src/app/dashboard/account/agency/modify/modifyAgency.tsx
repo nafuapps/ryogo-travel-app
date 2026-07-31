@@ -26,8 +26,10 @@ import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
 export default function ModifyAgencyPageForm({
   agency,
+  userId,
 }: {
   agency: NonNullable<FindAgencyByIdType>
+  userId: string
 }) {
   const t = useTranslations("Dashboard.ModifyAgency")
   const router = useRouter()
@@ -75,7 +77,7 @@ export default function ModifyAgencyPageForm({
       agencyCity: data.agencyCity,
     }
     startTransition(async () => {
-      if (await modifyAgencyAction(modifyAgencyData)) {
+      if (await modifyAgencyAction(userId, modifyAgencyData)) {
         router.replace(`/dashboard/account/agency`)
         toast.success(t("Success"))
       } else {

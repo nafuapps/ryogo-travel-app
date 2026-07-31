@@ -106,7 +106,10 @@ export default async function SubscriptionPageComponent({
         (agencyDetails.hasTriedSubscription ? (
           <BuySubscriptionComponent userDetails={userDetails} />
         ) : (
-          <TryPremiumComponent agencyId={agencyDetails.id} />
+          <TryPremiumComponent
+            agencyId={agencyDetails.id}
+            userId={userDetails.id}
+          />
         ))}
       <div
         id="PremiumAdvantageInfo"

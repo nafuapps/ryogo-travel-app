@@ -8,8 +8,18 @@ import {
 import RiderHeader from "@/components/header/riderHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+TODO
+  - Get booking
+  - Booking Details
+  - Cancellation (brief)
+  - Transactions (brief)
+  - Expenses
+  - Trip Logs
+  - Communicating with customer
+*/
+
 export default async function MySupportHelpBookingsPage() {
-  //TODO
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-bookings"} />

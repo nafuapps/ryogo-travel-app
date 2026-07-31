@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton"
   - Account Security (login, logout)
   - Account settings
   - Agency
-  - Subscription
+  - Subscription (in detail for owner)
 */
 export default async function SupportHelpAccountPage() {
   return (

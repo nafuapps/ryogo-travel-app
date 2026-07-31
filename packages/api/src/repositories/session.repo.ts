@@ -5,12 +5,16 @@ import { eq } from "drizzle-orm"
 export const sessionRepository = {
   //Get session by id
   async readSessionById(sessionId: string) {
-    return await db.select().from(sessions).where(eq(sessions.id, sessionId))
+    return await db.query.sessions.findFirst({
+      where: eq(sessions.id, sessionId),
+    })
   },
 
   //Get session by token
   async readSessionByToken(token: string) {
-    return await db.select().from(sessions).where(eq(sessions.token, token))
+    return await db.query.sessions.findFirst({
+      where: eq(sessions.token, token),
+    })
   },
 
   //Create session

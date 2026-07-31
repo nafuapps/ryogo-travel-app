@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
@@ -12,11 +12,16 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
+    currentUser.userId !== data.userId ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
     currentUser.agencyId !== data.agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

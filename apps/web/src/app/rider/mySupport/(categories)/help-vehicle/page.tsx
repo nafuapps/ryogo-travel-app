@@ -8,8 +8,13 @@ import {
 import RiderHeader from "@/components/header/riderHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+  TODO
+  - Vehicle assignment and details
+
+*/
+
 export default async function MySupportHelpVehiclePage() {
-  //TODO
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-vehicle"} />

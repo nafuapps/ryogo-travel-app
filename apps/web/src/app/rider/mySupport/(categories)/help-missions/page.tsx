@@ -8,8 +8,15 @@ import {
 import RiderHeader from "@/components/header/riderHeader"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+TODO
+  - What is mission?
+  - How to get and know alerts?
+  - Creation and editing custom mission
+  - 
+*/
+
 export default async function MySupportHelpMissionsPage() {
-  //TODO
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-missions"} />

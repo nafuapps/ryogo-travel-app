@@ -23,8 +23,10 @@ export default function SupportCategoryCard({
     <Link href={link} className="flex">
       <SectionWrapper id={title}>
         <SectionRowWrapper justifyStart center>
-          <RyogoEnclosedIcon icon={icon} size="sm" circular />
-          <RyogoSmall>{title}</RyogoSmall>
+          <RyogoEnclosedIcon icon={icon} size="sm" />
+          <RyogoSmall color="slate" weight="font-bold">
+            {title}
+          </RyogoSmall>
         </SectionRowWrapper>
         <RyogoSmall color="light">{description}</RyogoSmall>
       </SectionWrapper>

@@ -29,13 +29,10 @@ export const driverServices = {
 
   //Get drivers schedule
   async findDriversScheduleNextDays(agencyId: string, days: number = 7) {
-    //Day today
-    const startDate = new Date()
     //Day N days later
     const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
     const driversScheduleData = await driverRepository.readDriversScheduleData(
       agencyId,
-      startDate,
       endDate,
     )
 

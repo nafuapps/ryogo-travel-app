@@ -8,8 +8,15 @@ import {
 } from "@/components/page/pageWrappers"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+  TODO
+  - what and why is ryogo?
+  - app overview with guided tutorial
+  - various entities, and how they work together
+  - 
+*/
+
 export default async function SupportHelpStartedPage() {
-  //TODO
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/help-started"} />

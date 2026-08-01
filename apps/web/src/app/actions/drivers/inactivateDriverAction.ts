@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -17,6 +17,11 @@ export async function inactivateDriverAction(id: string, agencyId: string) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const driver = await driverServices.inactivateDriver(id)
   if (!driver) return
 

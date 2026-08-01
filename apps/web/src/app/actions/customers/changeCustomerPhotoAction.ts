@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateCustomerPhotoPathName } from "@/lib/utils"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -24,6 +24,10 @@ export async function changeCustomerPhotoAction(
   }
 
   if (!photo[0]) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

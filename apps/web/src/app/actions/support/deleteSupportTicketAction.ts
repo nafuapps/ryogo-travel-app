@@ -1,9 +1,8 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
 
 export async function deleteSupportTicketAction(
   ticketId: string,
@@ -12,14 +11,16 @@ export async function deleteSupportTicketAction(
   status: TicketStatusEnum,
 ) {
   const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
   if (
+    !currentUser ||
     currentUser.userId !== userId ||
     currentUser.agencyId !== agencyId ||
     status !== TicketStatusEnum.OPEN
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

@@ -1,10 +1,9 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateUserSupportTicketPhotoPathName } from "@/lib/utils"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
-import { redirect, RedirectType } from "next/navigation"
 
 export async function changeSupportTicketPhotoAction(
   ticketId: string,
@@ -12,10 +11,11 @@ export async function changeSupportTicketPhotoAction(
   photo: FileList,
 ) {
   const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
+  if (!currentUser || currentUser.userId !== userId || !photo[0]) {
+    return
   }
-  if (currentUser.userId !== userId || !photo[0]) {
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

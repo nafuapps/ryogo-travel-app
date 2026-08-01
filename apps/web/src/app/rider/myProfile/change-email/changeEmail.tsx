@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { changeEmailAction } from "@/app/actions/users/changeEmailAction"
+import { changeMyEmailAction } from "@/app/actions/users/changeMyEmailAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 
@@ -68,7 +68,7 @@ export default function ChangeEmailMyProfileComponent({
       })
     } else {
       startTransition(async () => {
-        const result = await changeEmailAction(
+        const result = await changeMyEmailAction(
           userId,
           data.password,
           data.newEmail,

@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import {
   generateInsurancePhotoPathName,
   generatePUCPhotoPathName,
@@ -8,33 +8,14 @@ import {
 } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import {
-  EntityTypeEnum,
-  UserRolesEnum,
-  VehicleTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyVehicleAction(
   id: string,
   agencyId: string,
-  data: {
-    type?: VehicleTypesEnum
-    brand?: string
-    color?: string
-    model?: string
-    capacity?: number
-    odometerReading?: number
-    rcExpiresOn?: Date
-    insuranceExpiresOn?: Date
-    pucExpiresOn?: Date
-    defaultRatePerKm?: number
-    hasAC?: boolean
-    defaultAcChargePerDay?: number
-    rcPhotos?: FileList
-    pucPhotos?: FileList
-    insurancePhotos?: FileList
-  },
+  data: ModifyVehicleRequestType,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -44,6 +25,10 @@ export async function modifyVehicleAction(
     ) ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 
@@ -76,18 +61,7 @@ export async function modifyVehicleAction(
 
   const vehicle = await vehicleServices.modifyVehicle(
     id,
-    data.type,
-    data.brand,
-    data.color,
-    data.model,
-    data.capacity,
-    data.odometerReading,
-    data.rcExpiresOn,
-    data.insuranceExpiresOn,
-    data.pucExpiresOn,
-    data.defaultRatePerKm,
-    data.hasAC,
-    data.defaultAcChargePerDay,
+    data,
     rcUrl,
     insuranceUrl,
     pucUrl,

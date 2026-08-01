@@ -1,7 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
@@ -22,11 +21,15 @@ export async function addSupportTicketAction(
   },
 ) {
   const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
+  if (
+    !currentUser ||
+    currentUser.userId !== userId ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
   }
 
-  if (currentUser.userId !== userId || currentUser.agencyId !== agencyId) {
+  if (!(await verifyCurrentUser())) {
     return
   }
 

@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import {
   generateInsurancePhotoPathName,
   generatePUCPhotoPathName,
@@ -24,6 +24,11 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const vehicle = await vehicleServices.addVehicle(data)
   if (!vehicle) return
 

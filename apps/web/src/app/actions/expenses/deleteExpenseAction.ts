@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -19,6 +19,10 @@ export async function deleteExpenseAction(
       assignedUserId !== currentUser.userId) ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

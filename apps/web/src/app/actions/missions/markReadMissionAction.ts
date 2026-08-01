@@ -2,13 +2,15 @@
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { refresh } from "next/cache"
 
-export async function deleteCustomMissionAction(
+export async function markReadMissionAction(
   missionId: string,
   userId: string,
   agencyId: string,
 ) {
   const currentUser = await getCurrentUser()
+
   if (
     !currentUser ||
     currentUser.userId !== userId ||
@@ -21,7 +23,10 @@ export async function deleteCustomMissionAction(
     return
   }
 
-  const mission = await missionServices.removeMission(missionId)
-
+  const mission = await missionServices.markReadMission(missionId)
+  if (!mission) {
+    return
+  }
+  refresh()
   return mission
 }

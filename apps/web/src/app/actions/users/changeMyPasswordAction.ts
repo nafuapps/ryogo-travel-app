@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export async function changeMyPasswordAction(
@@ -17,6 +17,11 @@ export async function changeMyPasswordAction(
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const user = await userServices.changeMyPassword(
     userId,
     oldPassword,

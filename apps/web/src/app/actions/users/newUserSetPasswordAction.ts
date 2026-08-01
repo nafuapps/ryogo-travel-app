@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import {
   updateUserStatusInWebSession,
   updateUserVerificationInWebSession,
@@ -20,6 +20,11 @@ export async function newUserSetPasswordAction(
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const user = await userServices.setNewPassword(userId, newPassword)
   if (!user) return
 

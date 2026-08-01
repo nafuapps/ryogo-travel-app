@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import {
@@ -23,6 +23,11 @@ export async function modifyDriverLeaveAction(
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const leave = await driverServices.modifyDriverLeave(id, data)
   if (!leave) return
 

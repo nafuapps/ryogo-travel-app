@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
@@ -17,6 +17,11 @@ export async function changeExpenseApprovalAction(
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const updatedExpense = await expenseServices.modifyExpenseApprovalStatus(
     expId,
     status,

@@ -1,27 +1,17 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateLicensePhotoPathName } from "@/lib/utils"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import {
-  EntityTypeEnum,
-  UserRolesEnum,
-  VehicleTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function modifyDriverAction(
   id: string,
   agencyId: string,
-  data: {
-    address?: string
-    canDriveVehicleTypes?: VehicleTypesEnum[]
-    defaultAllowancePerDay?: number
-    licenseNumber?: string
-    licenseExpiresOn?: Date
-    licensePhotos?: FileList
-  },
+  data: ModifyDriverRequestType,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -31,6 +21,10 @@ export async function modifyDriverAction(
     ) ||
     currentUser.agencyId !== agencyId
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 
@@ -46,15 +40,7 @@ export async function modifyDriverAction(
     licenseUrl = uploadedFile.path
   }
 
-  const driver = await driverServices.modifyDriver(
-    id,
-    data.address,
-    data.canDriveVehicleTypes,
-    data.defaultAllowancePerDay,
-    data.licenseNumber,
-    data.licenseExpiresOn,
-    licenseUrl,
-  )
+  const driver = await driverServices.modifyDriver(id, data, licenseUrl)
   if (!driver) return
 
   await notificationServices.addNotification({

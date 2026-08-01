@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
@@ -18,6 +18,11 @@ export async function deleteTransactionAction(
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const deletedTransaction = await transactionServices.removeTransaction(id)
   return deletedTransaction
 }

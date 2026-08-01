@@ -24,7 +24,7 @@ export const getCurrentUser = cache(async () => {
   return payload
 })
 
-//Verify User session in DB - For strict checking before any DB writes
+//Verify User session in DB - For strict checking before any DB writes in server actions
 export const verifyCurrentUser = cache(async () => {
   return await checkWebSessionInDB()
 })

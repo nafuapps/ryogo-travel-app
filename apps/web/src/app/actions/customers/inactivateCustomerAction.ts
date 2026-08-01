@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -16,6 +16,11 @@ export async function inactivateCustomerAction(id: string, agencyId: string) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const customer = await customerServices.inactivateCustomer(id)
   if (!customer) return
 

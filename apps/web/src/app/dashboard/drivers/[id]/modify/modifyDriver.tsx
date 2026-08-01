@@ -21,6 +21,7 @@ import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
+import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
 
 export default function ModifyDriverPageComponent({
   driver,
@@ -92,7 +93,7 @@ export default function ModifyDriverPageComponent({
   //Submit actions
   async function onSubmit(data: ModifyDriverType) {
     startTransition(async () => {
-      const modifyDriverData = {
+      const modifyDriverData: ModifyDriverRequestType = {
         address: data.address,
         canDriveVehicleTypes: data.canDriveVehicleTypes,
         defaultAllowancePerDay: data.defaultAllowancePerDay,

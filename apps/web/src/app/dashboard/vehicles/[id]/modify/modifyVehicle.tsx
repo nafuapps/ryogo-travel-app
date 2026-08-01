@@ -21,6 +21,7 @@ import {
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -166,22 +167,22 @@ export default function ModifyVehiclePageComponent({
   //Submit actions
   async function onSubmit(data: ModifyVehicleType) {
     startTransition(async () => {
-      const modifyVehicleData = {
+      const modifyVehicleData: ModifyVehicleRequestType = {
         type: data.type,
         brand: data.brand,
         color: data.color,
         model: data.model,
         capacity: data.capacity,
         odometerReading: data.odometerReading,
-        rcExpiresOn: data.rcExpiresOn,
-        insuranceExpiresOn: data.insuranceExpiresOn,
-        pucExpiresOn: data.pucExpiresOn,
-        rcPhotos: data.rcPhotos,
-        insurancePhotos: data.insurancePhotos,
-        pucPhotos: data.pucPhotos,
         defaultRatePerKm: data.defaultRatePerKm,
         hasAC: data.hasAC,
         defaultAcChargePerDay: data.defaultAcChargePerDay,
+        rcExpiresOn: data.rcExpiresOn,
+        pucExpiresOn: data.pucExpiresOn,
+        insuranceExpiresOn: data.insuranceExpiresOn,
+        rcPhotos: data.rcPhotos,
+        pucPhotos: data.pucPhotos,
+        insurancePhotos: data.insurancePhotos,
       }
       const modifiedVehicle = await modifyVehicleAction(
         vehicle.id,

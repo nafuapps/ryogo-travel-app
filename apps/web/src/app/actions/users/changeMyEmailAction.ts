@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
-export async function changeEmailAction(
+export async function changeMyEmailAction(
   userId: string,
   password: string,
   newEmail: string,
@@ -17,6 +17,11 @@ export async function changeEmailAction(
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const user = await userServices.changeEmailWithPasswordConfirmation(
     userId,
     password,

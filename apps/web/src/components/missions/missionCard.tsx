@@ -11,10 +11,10 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { UrlObject } from "url"
 import { useState, useTransition } from "react"
-import { readMissionAction } from "@/app/actions/missions/readMissionAction"
+import { markReadMissionAction } from "@/app/actions/missions/markReadMissionAction"
 import { toast } from "sonner"
 import { CircleCheckBig, ChevronRight } from "lucide-react"
-import { unreadMissionAction } from "@/app/actions/missions/unreadMissionAction"
+import { markUnreadMissionAction } from "@/app/actions/missions/markUnreadMissionAction"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import { Separator } from "@/components/ui/separator"
 import { CarouselItem } from "@/components/ui/carousel"
@@ -30,7 +30,11 @@ export default function MissionCard({
 
   const markRead = async () => {
     startTransition(async () => {
-      const result = await readMissionAction(mission.id)
+      const result = await markReadMissionAction(
+        mission.id,
+        mission.userId,
+        mission.agencyId,
+      )
       if (result) {
         setIsRead(true)
       } else {
@@ -41,7 +45,11 @@ export default function MissionCard({
 
   const markUnread = async () => {
     startTransition(async () => {
-      const result = await unreadMissionAction(mission.id)
+      const result = await markUnreadMissionAction(
+        mission.id,
+        mission.userId,
+        mission.agencyId,
+      )
       if (result) {
         setIsRead(false)
       } else {

@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import {
@@ -13,6 +13,7 @@ export async function newDriverLeaveAction(data: InsertDriverLeaveType) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
+    currentUser.userId !== data.addedByUserId ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
@@ -20,6 +21,11 @@ export async function newDriverLeaveAction(data: InsertDriverLeaveType) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const leave = await driverServices.addDriverLeave(data)
   if (!leave) return
 

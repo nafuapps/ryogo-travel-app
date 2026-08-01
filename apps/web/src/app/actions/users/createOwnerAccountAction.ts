@@ -27,21 +27,24 @@ export async function createOwnerAccountAction(
     }
     redirect("/dashboard", RedirectType.replace)
   }
+
+  //Try to create a new user and agency account
   const user = await userServices.addAgencyAndOwnerAccount(data)
   if (!user) return
 
+  // Upload agency logo to storage
   if (data.agency.logo && data.agency.logo[0]) {
     const logo = data.agency.logo[0]
-    // Upload logo to Supabase Storage
     const uploadLogoData = await uploadFile(
       logo,
       generateAgencyLogoPathName(user.agencyId, logo),
     )
     await agencyServices.updateAgencyLogo(user.agencyId, uploadLogoData.path)
   }
+
+  // Upload agency qrCode to storage
   if (data.agency.qrCode && data.agency.qrCode[0]) {
     const qrCode = data.agency.qrCode[0]
-    // Upload qrCode to Supabase Storage
     const uploadQRCodeData = await uploadFile(
       qrCode,
       generateAgencyQRCodePathName(user.agencyId, qrCode),
@@ -51,6 +54,8 @@ export async function createOwnerAccountAction(
       uploadQRCodeData.path,
     )
   }
+
+  // Upload owner photo to storage
   if (data.owner.photos && data.owner.photos[0]) {
     const photo = data.owner.photos[0]
     const uploadedPhoto = await uploadFile(
@@ -88,7 +93,7 @@ export async function createOwnerAccountAction(
   const protocol = headerList.get("x-forwarded-proto") || "http"
   const absoluteUrl = `${protocol}://${host}/onboarding/verify-account`
 
-  //Send new password email to the agent
+  //Send welcome email with verification code to the owner
   sendEmail(
     [user.email],
     "Welcome to RyoGo",

@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateTransactionPhotoPathName } from "@/lib/utils"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { UpdateTransactionRequestType } from "@ryogo-travel-app/api/types/transaction.types"
@@ -21,7 +21,12 @@ export async function modifyTransactionAction(
   ) {
     return
   }
-  //If there is a url for transaction photo, upload it to cloud storage
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
+  //If there is a transaction photo, upload it to cloud storage
   if (data.txnPhoto && data.txnPhoto[0]) {
     const file = data.txnPhoto[0]
     const uploadResult = await uploadFile(

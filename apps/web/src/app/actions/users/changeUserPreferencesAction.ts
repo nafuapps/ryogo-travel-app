@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import {
   LOCALE_COOKIE_NAME,
   DARK_MODE_COOKIE_NAME,
@@ -22,6 +22,11 @@ export async function changeUserPreferencesAction(
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const user = await userServices.changeUserPreferences(
     userId,
     data.prefersDarkTheme,

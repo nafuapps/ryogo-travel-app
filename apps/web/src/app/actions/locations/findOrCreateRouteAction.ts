@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { routeServices } from "@ryogo-travel-app/api/services/route.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
@@ -15,6 +15,10 @@ export async function findOrCreateRouteAction(
     !currentUser ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(currentUser.userRole)
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

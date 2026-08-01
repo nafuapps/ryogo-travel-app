@@ -1,9 +1,8 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
 
 export async function closeSupportTicketAction(
   ticketId: string,
@@ -13,14 +12,16 @@ export async function closeSupportTicketAction(
   rating?: number,
 ) {
   const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
   if (
+    !currentUser ||
     currentUser.userId !== userId ||
     currentUser.agencyId !== agencyId ||
     status !== TicketStatusEnum.RESOLVED
   ) {
+    return
+  }
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

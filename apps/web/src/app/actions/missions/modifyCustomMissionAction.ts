@@ -1,9 +1,8 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
 
 export async function modifyCustomMissionAction(
   missionId: string,
@@ -19,10 +18,15 @@ export async function modifyCustomMissionAction(
   },
 ) {
   const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
+  if (
+    !currentUser ||
+    currentUser.userId !== userId ||
+    currentUser.agencyId !== agencyId
+  ) {
+    return
   }
-  if (currentUser.userId !== userId || currentUser.agencyId !== agencyId) {
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

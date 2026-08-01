@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateCustomerPhotoPathName } from "@/lib/utils"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -12,6 +12,7 @@ export async function newCustomerAction(data: NewCustomerRequestType) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
+    currentUser.userId !== data.addedByUserId ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
@@ -19,6 +20,11 @@ export async function newCustomerAction(data: NewCustomerRequestType) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const customer = await customerServices.addNewCustomer(
     data.name,
     data.phone,

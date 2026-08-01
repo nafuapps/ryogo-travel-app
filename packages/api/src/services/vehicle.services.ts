@@ -4,9 +4,11 @@ import {
   InsertVehicleRepairType,
   InsertVehicleType,
   VehicleStatusEnum,
-  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { AddVehicleRequestType } from "../types/vehicle.types"
+import {
+  AddVehicleRequestType,
+  ModifyVehicleRequestType,
+} from "../types/vehicle.types"
 import { bookingRepository } from "../repositories/booking.repo"
 
 export const vehicleServices = {
@@ -185,36 +187,25 @@ export const vehicleServices = {
   //Modify vehicle details
   async modifyVehicle(
     id: string,
-    type?: VehicleTypesEnum,
-    brand?: string,
-    color?: string,
-    model?: string,
-    capacity?: number,
-    odometerReading?: number,
-    rcExpiresOn?: Date,
-    insuranceExpiresOn?: Date,
-    pucExpiresOn?: Date,
-    defaultRatePerKm?: number,
-    hasAC?: boolean,
-    defaultAcChargePerDay?: number,
+    data: ModifyVehicleRequestType,
     rcPhotoUrl?: string,
     pucPhotoUrl?: string,
     insurancePhotoUrl?: string,
   ) {
     const vehicle = await vehicleRepository.updateVehicle(
       id,
-      type,
-      brand,
-      color,
-      model,
-      capacity,
-      odometerReading,
-      rcExpiresOn,
-      insuranceExpiresOn,
-      pucExpiresOn,
-      defaultRatePerKm,
-      hasAC,
-      defaultAcChargePerDay,
+      data.type,
+      data.brand,
+      data.color,
+      data.model,
+      data.capacity,
+      data.odometerReading,
+      data.rcExpiresOn,
+      data.insuranceExpiresOn,
+      data.pucExpiresOn,
+      data.defaultRatePerKm,
+      data.hasAC,
+      data.defaultAcChargePerDay,
       rcPhotoUrl,
       pucPhotoUrl,
       insurancePhotoUrl,

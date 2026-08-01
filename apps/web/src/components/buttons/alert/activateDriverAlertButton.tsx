@@ -9,14 +9,11 @@ import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { activateDriverAction } from "@/app/actions/drivers/activateDriverAction"
 
-type ActivateDriverAlertButtonProps = {
+export default function ActivateDriverAlertButton(props: {
   driverId: string
   userId: string
   agencyId: string
-}
-export default function ActivateDriverAlertButton(
-  props: ActivateDriverAlertButtonProps,
-) {
+}) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.ActivateDriver")
   const router = useRouter()

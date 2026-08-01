@@ -1,7 +1,7 @@
 "use server"
 
 import Razorpay from "razorpay"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { OrderTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 
@@ -22,8 +22,16 @@ export async function createOrderAction(
   plan: OrderTypeEnum,
 ) {
   const currentUser = await getCurrentUser()
+  if (
+    !currentUser ||
+    currentUser.userId !== userId ||
+    currentUser.agencyId !== agencyId ||
+    currentUser.userRole !== UserRolesEnum.OWNER
+  ) {
+    return
+  }
 
-  if (!currentUser || currentUser.userRole !== UserRolesEnum.OWNER) {
+  if (!(await verifyCurrentUser())) {
     return
   }
 

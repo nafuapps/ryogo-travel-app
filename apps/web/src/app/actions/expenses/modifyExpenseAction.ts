@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateExpensePhotoPathName } from "@/lib/utils"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
@@ -24,7 +24,12 @@ export async function modifyExpenseAction(
   ) {
     return
   }
-  //If there is a url for expense photo, upload it to cloud storage
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
+  //If there is an expense photo, upload it to cloud storage
   if (data.expensePhoto && data.expensePhoto[0]) {
     const file = data.expensePhoto[0]
     const uploadResult = await uploadFile(

@@ -3,7 +3,6 @@ import {
   InsertDriverLeaveType,
   InsertDriverType,
   UserStatusEnum,
-  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
@@ -11,6 +10,7 @@ import { bookingRepository } from "../repositories/booking.repo"
 import { userRepository } from "../repositories/user.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
+import { ModifyDriverRequestType } from "../types/driver.types"
 
 export const driverServices = {
   //Get all drivers in an agency
@@ -145,20 +145,16 @@ export const driverServices = {
   //Modify driver details
   async modifyDriver(
     id: string,
-    address?: string,
-    canDriveVehicleTypes?: VehicleTypesEnum[],
-    defaultAllowancePerDay?: number,
-    licenseNumber?: string,
-    licenseExpiresOn?: Date,
+    data: ModifyDriverRequestType,
     licensePhotoUrl?: string,
   ) {
     const driver = await driverRepository.updateDriver(
       id,
-      address,
-      canDriveVehicleTypes,
-      defaultAllowancePerDay,
-      licenseNumber,
-      licenseExpiresOn,
+      data.address,
+      data.canDriveVehicleTypes,
+      data.defaultAllowancePerDay,
+      data.licenseNumber,
+      data.licenseExpiresOn,
       licensePhotoUrl,
     )
     return driver[0]

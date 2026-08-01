@@ -22,3 +22,21 @@ export type AddVehicleRequestType = {
     pucPhotos?: FileList | undefined
   }
 }
+
+export type ModifyVehicleRequestType = {
+  type?: VehicleTypesEnum
+  brand?: string
+  color?: string
+  model?: string
+  capacity?: number
+  odometerReading?: number
+  rcExpiresOn?: Date
+  insuranceExpiresOn?: Date
+  pucExpiresOn?: Date
+  defaultRatePerKm?: number
+  hasAC?: boolean
+  defaultAcChargePerDay?: number
+  rcPhotos?: FileList
+  pucPhotos?: FileList
+  insurancePhotos?: FileList
+}

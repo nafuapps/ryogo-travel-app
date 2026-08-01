@@ -2,7 +2,7 @@
 
 import { AddAgentEmailTemplate } from "@/components/email/addAgentEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
@@ -20,6 +20,11 @@ export async function addAgentAction(data: AddAgentRequestType) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const agent = await userServices.addAgentUser(data)
   if (!agent) return
 

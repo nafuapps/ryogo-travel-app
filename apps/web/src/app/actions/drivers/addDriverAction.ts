@@ -2,7 +2,7 @@
 
 import { AddDriverEmailTemplate } from "@/components/email/addDriverEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import {
   generateLicensePhotoPathName,
   generateUserPhotoPathName,
@@ -26,6 +26,11 @@ export async function addDriverAction(data: AddDriverRequestType) {
   ) {
     return
   }
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
   const driver = await userServices.addDriverUser(data)
   if (!driver) return
 

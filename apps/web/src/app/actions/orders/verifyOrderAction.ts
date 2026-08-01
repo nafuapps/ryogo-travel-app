@@ -1,7 +1,7 @@
 "use server"
 
 import generateAndSendSubscriptionInvoiceEmail from "@/components/email/generateAndSendSubscriptionInvoiceEmail"
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -32,6 +32,10 @@ export async function verifyOrderAction({
     currentUser.agencyId !== agencyId
   ) {
     throw new Error("User verification failed")
+  }
+
+  if (!(await verifyCurrentUser())) {
+    return
   }
 
   // 1. Generate the expected signature

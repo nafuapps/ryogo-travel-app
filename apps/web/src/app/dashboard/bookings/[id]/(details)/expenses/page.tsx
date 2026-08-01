@@ -28,6 +28,7 @@ export default async function BookingExpensesPage({
   const assignedUserId = await bookingServices.findAssignedUserIdByBookingId(id)
 
   //Only booking assigned user or owner can create/modify expenses
+  //Only Owner can approve expense
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses"} />

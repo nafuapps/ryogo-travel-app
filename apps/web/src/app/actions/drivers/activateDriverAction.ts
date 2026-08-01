@@ -1,14 +1,14 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function activateDriverAction(
-  id: string,
-  userId: string,
+  driverId: string,
+  driverUserId: string,
   agencyId: string,
 ) {
   const currentUser = await getCurrentUser()
@@ -21,7 +21,12 @@ export async function activateDriverAction(
   ) {
     return
   }
-  const driver = await driverServices.activateDriver(id, userId)
+
+  if (!(await verifyCurrentUser())) {
+    return
+  }
+
+  const driver = await driverServices.activateDriver(driverId, driverUserId)
   if (!driver) return
 
   await notificationServices.addNotification({

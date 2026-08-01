@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateVehiclePhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -18,11 +18,13 @@ export async function changeVehiclePhotoAction(
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
-    currentUser.agencyId !== agencyId
+    currentUser.agencyId !== agencyId ||
+    !photo[0]
   ) {
     return
   }
-  if (!photo[0]) {
+
+  if (!(await verifyCurrentUser())) {
     return
   }
 

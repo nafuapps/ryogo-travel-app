@@ -99,6 +99,15 @@ export default async function BookingDetailsPageComponent({
                   />
                 )
               }
+              {/* {
+                //Share cancel message link with customer over whatsapp for a cancelled booking
+                bookingDetails.status === BookingStatusEnum.CANCELLED && (
+                  <SendCancelMessageAlertButton
+                    bookingId={bookingDetails.id}
+                    phone={bookingDetails.customer.phone}
+                    label={t("ShareCancelMessage")}
+                  />)
+              } */}
             </>
           )}
         </BookingSection>

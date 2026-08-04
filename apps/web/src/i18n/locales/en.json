@@ -268,12 +268,12 @@
           "Error2": "Both passwords do not match",
           "Error3": "Password should not contain spaces"
         },
-        "Field3":{
-          "Title":"Choose Account Type",
-          "BasicTitle":"BASIC",
-          "BasicDesc":"Start with a Basic account (You can try premium later)",
-          "PremiumTitle":"TRY PREMIUM NOW",
-          "PremiumDesc":"Start with {day}-day Premium account free trial"
+        "Field3": {
+          "Title": "Choose Account Type",
+          "BasicTitle": "BASIC",
+          "BasicDesc": "Start with a Basic account (You can try premium later)",
+          "PremiumTitle": "TRY PREMIUM NOW",
+          "PremiumDesc": "Start with {day}-day Premium account free trial"
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
@@ -859,7 +859,7 @@
       },
       "OngoingTrips": {
         "Title": "ONGOING TRIPS",
-        "Assigned":"ASSIGNED"
+        "Assigned": "ASSIGNED"
       }
     },
     "Bookings": {
@@ -880,7 +880,7 @@
         "Title": "BOOKING SCHEDULE",
         "Photo": "Customer photo"
       },
-      "History":{
+      "History": {
         "Title": "BOOKING HISTORY",
         "Photo": "Customer photo",
         "24Hrs": "Last 24 Hours",
@@ -2173,8 +2173,8 @@
       "Edit": "Edit"
     },
     "NewDriverLeave": {
-      "Title":"Add Driver Leave",
-      "Description":"By adding a driver leave, you can ensure no booking is assigned during the leave period.",
+      "Title": "Add Driver Leave",
+      "Description": "By adding a driver leave, you can ensure no booking is assigned during the leave period.",
       "Field1": {
         "Error1": "Leave start date is required",
         "Title": "Leave Start Date",
@@ -2529,7 +2529,7 @@
         "Description": "Onboarding guide, platform overview, and initial setup instructions"
       },
       "Account": {
-        "Title": "ACCOUNT & PROFILE",
+        "Title": "ACCOUNT & SUBSCRIPTION",
         "Description": "Get help related to your account details, settings and security"
       },
       "Bookings": {
@@ -2557,7 +2557,7 @@
         "Description": "Understand how to use analytics and reports to make informed decisions"
       },
       "Missions": {
-        "Title": "MISSION AND ALERTS",
+        "Title": "ALERTS AND NOTIFICATIONS",
         "Description": "Managing your alert notifications and missions"
       },
       "Videos": {
@@ -2653,21 +2653,611 @@
       "EntityType": "ENTITY TYPE",
       "EntityId": "ENTITY ID",
       "Created": "CREATED",
-      "ResolutionRating":"RESOLUTION RATING",
+      "ResolutionRating": "RESOLUTION RATING",
       "CommentBySupport": "REPLY FROM SUPPORT TEAM",
       "CommentsByUser": "COMMENTS FROM USER",
-      "CloseTicketDesc":"If you are satisfied with the resolution given by support team, you can close this ticket."
+      "CloseTicketDesc": "If you are satisfied with the resolution given by support team, you can close this ticket."
     },
-    "SupportStartedHelp": {},
-    "SupportAccountHelp": {},
-    "SupportBookingsHelp": {},
-    "SupportVehiclesHelp": {},
-    "SupportDriversHelp": {},
-    "SupportCustomersHelp": {},
-    "SupportUsersHelp": {},
-    "SupportAnalyticsHelp": {},
-    "SupportMissionsHelp": {},
-    "SupportVideosHelp": {},
+    "SupportAccountHelp": {
+      "Title": "Account & Subscription Help",
+      "Description": "Get help related to your account details, settings, security, agency and subscription.",
+      "Details": {
+        "Title": "ACCOUNT DETAILS",
+        "ViewDetails": "You can view and edit your account details like name, email, user ID and more by going to your account details page.",
+        "CTA": "View account details"
+      },
+      "Security": {
+        "Title": "SECURITY",
+        "ChangePassword": "You can change your password by going to your account details page.",
+        "ChangePhoneOwner": "Phone number is the main credential to access an account. As an owner, you can change all your agency users' phone numbers.",
+        "ChangePhoneOthers": "Your phone number is the main credential to access your account and therefore you cannot change it by yourself. To change your phone number, you must request your agency owner or contact our support team.",
+        "Session": "Once you log in with a device, you will remain logged in until you log out (from account details page) or your session expires automatically in {days} days.",
+        "CTA": "Change password"
+      },
+      "Settings": {
+        "Title": "SETTINGS & PREFERENCES",
+        "ChangePreferences": "You can change your app preferences like dark mode, language and more by going to your account settings page.",
+        "CTA": "View account settings"
+      },
+      "Agency": {
+        "Title": "AGENCY",
+        "Description": "You can view all agency related details like name, address, logo, payment qr code, and more by going to your agency details page.",
+        "Change": "As owner, you can also change your agency details.",
+        "CTA": "View agency details"
+      },
+      "Subscription": {
+        "Title": "SUBSCRIPTION",
+        "Description": "You can view all subscription related details like plan, status, expiry date, and more by going to your subscription details page.",
+        "Buy": "As owner, you can also buy or renew your subscription.",
+        "CTA": "View subscription details"
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common account and subscription related questions",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "ChangeEmail": "Change Email",
+        "ChangePassword": "Change Password",
+        "ChangeSettings": "Change Preferences",
+        "ViewSubscription": "View Subscription",
+        "ViewAgencyDetails": "View Agency Details"
+      }
+    },
+    "SupportAnalyticsHelp": {
+      "Title": "Analytics Help",
+      "Description": "Get help related to analytics, reports and predictions as part of our Premium analytics feature",
+      "Bookings": {
+        "Title": "BOOKINGS",
+        "Description": "You can view all booking related analytics."
+      },
+      "Vehicles": {
+        "Title": "VEHICLES",
+        "Description": "You can view all vehicle related analytics."
+      },
+      "Drivers": {
+        "Title": "DRIVERS",
+        "Description": "You can view all driver related analytics."
+      },
+      "Revenue": {
+        "Title": "REVENUE",
+        "Description": "You can view all revenue related analytics."
+      },
+      "Reports": {
+        "Title": "REPORTS",
+        "Description": "You can view all reports."
+      },
+      "Predictions": {
+        "Title": "PREDICTIONS",
+        "Description": "You can view all predictions."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to analytics",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "ViewAnalytics": "View Analytics"
+      }
+    },
+    "SupportBookingsHelp": {
+      "Title": "Booking Help",
+      "Description": "Get help related to bookings like trip assignments, transactions, expenses and more.",
+      "Overview": {
+        "Title": "BOOKING OVERVIEW",
+        "Definition": "A booking is a trip from one location to another with a driver and a vehicle.",
+        "Elements": "A booking consists of the following elements:",
+        "ElementsList": {
+          "Customer": "",
+          "Vehicle": "",
+          "Driver": "",
+          "Trip details": "",
+          "Price details": "",
+          "Expenses": "",
+          "Transactions": "",
+          "Trip logs": ""
+        },
+        "Status": "A booking can have the following statuses:",
+        "StatusList": {
+          "Lead": "Lead: A booking that is created but not yet confirmed by the assigned agent",
+          "Confirmed": "Confirmed: A booking that is confirmed by the assigned agent with pickup time and address and has been shared with the customer and the driver",
+          "InProgress": "In Progress: A booking that is currently being executed by the driver",
+          "Completed": "Completed: A booking that is completed by the driver and marked as completed by the assigned agent",
+          "Cancelled": "Cancelled: A booking that has been cancelled by the assigned agent. An old lead booking is auto cancelled if the date has passed."
+        },
+        "CTA": "View all bookings"
+      },
+      "Creation": {
+        "Title": "CREATING A BOOKING",
+        "Description": "You can create a booking by going to the 'New Booking' page and filling in the required details like customer, vehicle, driver, trip details and more.",
+        "Steps": {
+          "Title": "Steps to create a booking:",
+          "Step1": "Select a customer or add a new customer",
+          "Step2": "Provide the trip details like source, destination, date and time",
+          "Step3": "Choose a vehicle and driver for the trip (optional)",
+          "Step4": "Enter price details like vehicle fare, driver allowance and commission",
+          "Step5": "Review the booking details and create the booking"
+        },
+        "Lead": "Upon creation the booking will still be a Lead and will have to be confirmed by the assigned agent with pickup time and address.",
+        "ShareQuote": "A quote for created booking can be shared with the customer over Whatsapp.",
+        "Default": "The system will automatically calculate the final price based on distance and default fare values set in your agency details. Although you can change the price details while creating a booking in Step 4.",
+        "CTA": "Create a new booking"
+      },
+      "Price": {
+        "Title": "PRICE & COMMISSION",
+        "Description": "Price details are the fare for the trip and the commission that will be added to the booking quote. The price details are calculated based on the vehicle fare, driver allowance and commission rate set by default in your agency details.",
+        "Elements": "The price details consist of the following elements:",
+        "ElementsList": {
+          "VehicleFare": "Vehicle Fare: The fare for the vehicle based on distance.",
+          "DriverAllowance": "Driver Allowance: The allowance paid to the driver for the trip on per day basis",
+          "ACCharge": "AC Charge: The extra charge for AC vehicles (if applicable) on per day basis",
+          "Commission": "Commission: The extra commission added to the booking quote"
+        },
+        "FuelCharges": "You can choose to include fuel charges in the vehicle fare or add them later as additional expenses."
+      },
+      "Confirmation": {
+        "Title": "CONFIRMATION",
+        "Description": "Once a booking is created, it can be confirmed by the assigned agent with pickup time and address. You can confirm a trip by going to the lead booking details page and clicking on 'Confirm Trip'.",
+        "Steps": {
+          "Title": "Steps to confirm a trip:",
+          "Step1": "Provide the pickup time and address and the drop address (if applicable)",
+          "Step2": "Review the booking details and confirm the trip"
+        },
+        "ShareConfirmation": "Once a booking is confirmed, it can be shared with the customer over Whatsapp."
+      },
+      "Cancellation": {
+        "Title": "CANCELLATION",
+        "Description": "A booking can be cancelled by the assigned agent or the agency owner. You can cancel a trip by going to the booking details page and clicking on 'Cancel Trip'. A booking once cancelled, cannot be undone.",
+        "Warning": " A booking which has started cannot be cancelled. That is, only a LEAD or CONFIRMED booking can be cancelled.",
+        "ShareCancellation": "If a confirmed booking is cancelled, a cancellation message can be shared with the customer over Whatsapp."
+      },
+      "Reconciling": {
+        "Title": "RECONCILING",
+        "Description": "Once a booking is completed, it can be reconciled by the owner. You can reconcile a trip by going to the completed booking details page and clicking on 'Reconcile Trip'.",
+        "Process": "As part of reconciling, you can add any additional expenses incurred during the trip and mark the trip as reconciled. Once a trip is reconciled, it cannot be undone."
+      },
+      "Assignment": {
+        "Title": "ASSIGNMENT",
+        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'.",
+        "Steps": {
+          "Title": "Steps to assign a trip:",
+          "Step1": "Select a driver and vehicle for the trip",
+          "Step2": "Provide the pickup time and address",
+          "Step3": "Confirm the assignment"
+        }
+      },
+      "Transactions": {
+        "Title": "TRANSACTIONS",
+        "Description": "You can view all transactions related details like amount, date, mode, and more by going to your transaction details page.",
+        "Steps": {
+          "Title": "Steps to add a transaction:",
+          "Step1": "Select the type of transaction (Payment, Refund, Other)",
+          "Step2": "Provide the amount, date and mode for the transaction",
+          "Step3": "Confirm the transaction"
+        }
+      },
+      "Expenses": {
+        "Title": "EXPENSES",
+        "Description": "You can add any additional expenses incurred during the trip by going to the completed booking details page and clicking on 'Add Expenses'.",
+        "Steps": {
+          "Title": "Steps to add expenses:",
+          "Step1": "Select the type of expense (Fuel, Toll, Parking, Other)",
+          "Step2": "Provide the amount and description for the expense",
+          "Step3": "Confirm the expense"
+        }
+      },
+      "TripLogs": {
+        "Title": "TRIP LOGS",
+        "Description": "A trip log is created as and when driver updates the trip status. You can view all trip logs related details like start time, end time, distance, and more by going to your trip logs details page.",
+        "Status": {
+          "Started": "STARTED: The trip has been started by the driver",
+          "Arrived": "ARRIVED: The driver has arrived at the pickup location",
+          "PickedUp": "PICKED UP: The customer has been picked up by the driver",
+          "Dropped": "DROPPED: The customer has been dropped by the driver",
+          "Ended": "ENDED: The trip has been ended by the driver. The booking is considered as completed."
+        }
+      },
+      "Communication": {
+        "Title": "COMMUNICATION",
+        "Description": "The platform makes sure that you are always connected with your customers and drivers.",
+        "Customer": "You can send messages to the customer by going to the booking details page and clicking on 'Send Message'.",
+        "Driver": " You can also send messages to the driver by going to the booking details page and clicking on 'Send Driver Message'."
+      },
+      "Documents": {
+        "Title": "DOCUMENTS",
+        "Description": "You can upload any documents related to the trip by going to the booking details page and clicking on 'Upload Documents'."
+      },
+      "Recommendations": {
+        "Title": "RECOMMENDATIONS",
+        "Description": "The system provides recommendations and tips throughout the lifecycle of a booking."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to bookings",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "NewBooking": "Create Booking",
+        "AllBookings": "View All Bookings"
+      }
+    },
+    "SupportCustomersHelp": {
+      "Title": "Customers Help",
+      "Description": "Get help related to customer management",
+      "Overview": {
+        "Title": "CUSTOMER OVERVIEW",
+        "Description": "Let's learn how to manage your customers."
+      },
+      "Adding": {
+        "Title": "ADDING CUSTOMER",
+        "Description": "You can add a new customer."
+      },
+      "Editing": {
+        "Title": "EDITING CUSTOMER DETAILS",
+        "Description": "You can edit customer information by going to the customer details page."
+      },
+      "Communication": {
+        "Title": "COMMUNICATION",
+        "Description": "You can communicate with your customer during a booking through the platform directly."
+      },
+      "Bookings": {
+        "Title": "BOOKINGS",
+        "Description": "You can see the bookings made by a customer."
+      },
+      "Search": {
+        "Title": "SEARCH",
+        "Description": "You can search through your customer list."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to customers",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "AddCustomer": "Add customer",
+        "AllCustomers": "View All Customers"
+      }
+    },
+    "SupportDriversHelp": {
+      "Title": "Drivers Help",
+      "Description": "Get help related to driver management",
+      "Overview": {
+        "Title": "DRIVER OVERVIEW",
+        "Description": "Let's learn about your drivers"
+      },
+      "Adding": {
+        "Title": "ADDING DRIVER",
+        "Description": "You can add a new driver."
+      },
+      "Editing": {
+        "Title": "EDITING DRIVER DETAILS",
+        "Description": "You can edit driver information by going to the driver details page."
+      },
+      "Assignment": {
+        "Title": "ASSIGNMENT",
+        "Description": "You can assign a driver to a booking."
+      },
+      "Bookings": {
+        "Title": "BOOKINGS",
+        "Description": "You can see the bookings assigned to or completed by a driver."
+      },
+      "Leaves": {
+        "Title": "DRIVER LEAVES",
+        "Description": "You can manage driver leaves."
+      },
+      "DriverApp": {
+        "Title": "DRIVER APP",
+        "Description": "Let's discuss about the driver app."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to drivers",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "AddCustomer": "Add customer",
+        "AllCustomers": "View All Customers"
+      }
+    },
+    "SupportMissionsHelp": {
+      "Title": "ALERTS AND NOTIFICATIONS",
+      "Description": "Get help related to alerts and notifications",
+      "Overview": {
+        "Title": "MISSIONS OVERVIEW",
+        "Description": "Learn about missions (alerts)"
+      },
+      "Managing": {
+        "Title": "MANAGING MISSIONS",
+        "Description": "Learn how you get alerts and how to work with them."
+      },
+      "Custom": {
+        "Title": "CUSTOM MISSIONS",
+        "Description": "Learn about entities and how they work together."
+      },
+      "Feed": {
+        "Title": "NOTIFICATION FEED",
+        "Description": "Learn about agency wide activity feed"
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to getting started",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "CreateCustomMission": "Create Custom Mission",
+        "ViewMissions": "View Missions",
+        "ViewFeed": "View Feed"
+      }
+    },
+    "SupportStartedHelp": {
+      "Title": "Getting Started",
+      "Description": "New to the platform and feeling stuck? Find all the help you need here.",
+      "About": {
+        "Title": "WHAT IS RYOGO?",
+        "Description": "Learn about RyoGo."
+      },
+      "Overview": {
+        "Title": "APP OVERVIEW",
+        "Description": "Walkthrough our slideshow guide below and understand how your business can benefit by automating and simplifying your daily travel operations"
+      },
+      "Onboarding": {
+        "Title": "ONBOARDING GUIDE",
+        "Description": "Learn about onboarding process."
+      },
+      "Entities": {
+        "Title": "ENTITIES",
+        "Description": "Learn about entities and how they work together."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to getting started",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "ViewAccount": "View Account Details"
+      }
+    },
+    "SupportUsersHelp": {
+      "Title": "Users Help",
+      "Description": "Get help related to user management",
+      "Overview": {
+        "Title": "USER OVERVIEW",
+        "Description": "Let's learn more about your users."
+      },
+      "Roles": {
+        "Title": "ROLES & PERMISSIONS",
+        "Description": "You can add a new user."
+      },
+      "Managing": {
+        "Title": "MANAGING USERS",
+        "Description": "You can manage users."
+      },
+      "Bookings": {
+        "Title": "BOOKINGS",
+        "Description": "You can see the bookings assigned to or completed by a user."
+      },
+      "Communication": {
+        "Title": "COMMUNICATION",
+        "Description": "You can communicate with your user through the platform directly."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to users",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "AddAgent": "Add Agent",
+        "AddDriver": "Add Driver",
+        "AllUsers": "View All Users"
+      }
+    },
+    "SupportVehiclesHelp": {
+      "Title": "Vehicles Help",
+      "Description": "Get help related to vehicle fleet management",
+      "Overview": {
+        "Title": "VEHICLE OVERVIEW",
+        "Description": "Let's learn about your vehicles."
+      },
+      "Adding": {
+        "Title": "ADDING VEHICLE",
+        "Description": "You can add a new vehicle."
+      },
+      "Editing": {
+        "Title": "EDITING VEHICLE DETAILS",
+        "Description": "You can edit vehicle information by going to the vehicle details page."
+      },
+      "Assignment": {
+        "Title": "ASSIGNMENT",
+        "Description": "You can assign a vehicle to a booking."
+      },
+      "Bookings": {
+        "Title": "BOOKINGS",
+        "Description": "You can see the bookings assigned to or completed in a vehicle."
+      },
+      "Repairs": {
+        "Title": "VEHICLE REPAIRS",
+        "Description": "You can manage vehicle repairs."
+      },
+      "Documents": {
+        "Title": "DOCUMENTS",
+        "Description": "Let's discuss about the vehicle documentation and expiry alerts."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to vehicles",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "AddVehicle": "Add Vehicle",
+        "AllVehicles": "View All Vehicles"
+      }
+    },
+    "SupportVideosHelp": {
+      "Title": "Video Tutorials",
+      "Description": "Watch easy to understand demo videos to learn the basics of RyoGo.",
+      "KnowRyoGo": {
+        "Title": "Get to know RyoGo",
+        "Description": "Understand what is RyoGo and how it can help your travel business."
+      },
+      "Onboarding": {
+        "Title": "Onboarding Guide",
+        "Description": "A simple 5-step process to take your agency live in a few minutes with RyoGo"
+      },
+      "CreateBooking": {
+        "Title": "Creating Bookings",
+        "Description": "Easy to understand guide on how to create a new booking in RyoGo"
+      },
+      "ManageBooking": {
+        "Title": "Managing Bookings",
+        "Description": "Everything from booking assignment to reconciliation, learn how RyoGo does it all."
+      },
+      "ManageAccount": {
+        "Title": "Managing Your Account",
+        "Description": "It's easy to manage your agency account. Watch this video to understand how."
+      },
+      "AddDriver": {
+        "Title": "Adding Drivers",
+        "Description": "Learn how to add and manage drivers in your RyoGo account."
+      },
+      "DriverApp": {
+        "Title": "Driver App",
+        "Description": "Know more about the driver app that makes collaboration easy with your drivers."
+      },
+      "AddVehicle": {
+        "Title": "Adding Vehicles",
+        "Description": "Find out how to add and manage your fleet of vehicles."
+      },
+      "AddAgent": {
+        "Title": "Adding Agents",
+        "Description": "Understand how you can add agents and delegate your agency operations to them."
+      },
+      "Analytics": {
+        "Title": "Why Analytics?",
+        "Description": "Check out how analytics can help you make informed decisions for your agency."
+      },
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "NewBooking": "Create Booking",
+        "AllBookings": "View All Bookings"
+      }
+    },
     "AccountSubscription": {
       "CurrentPlan": {
         "Header": "CURRENT PLAN",
@@ -3344,7 +3934,7 @@
       "Quote": "Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}",
       "DriverInvite": "Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
       "AgentInvite": "Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
-      "TrackBooking":"Hello! You can track your booking at: ${bookingLink}"
+      "TrackBooking": "Hello! You can track your booking at: ${bookingLink}"
     },
     "SubscriptionReminderStrip": {
       "NotExpired": "Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
@@ -3748,11 +4338,261 @@
         "CreateCTA": "Create New Ticket"
       }
     },
-    "MySupportStartedHelp": {},
-    "MySupportAccountHelp": {},
-    "MySupportBookingsHelp": {},
-    "MySupportVehicleHelp": {},
-    "MySupportMissionsHelp": {},
+    "MySupportAccountHelp": {
+      "Title": "Account Help",
+      "Description": "Get help related to your account details, settings, security, agency and subscription.",
+      "Details": {
+        "Title": "ACCOUNT DETAILS",
+        "ViewDetails": "You can view and edit your account details like name, email, user ID and more by going to your account details page.",
+        "CTA": "View account details"
+      },
+      "Security": {
+        "Title": "SECURITY",
+        "ChangePassword": "You can change your password by going to your account details page.",
+        "ChangePhoneOthers": "Your phone number is the main credential to access your account and therefore you cannot change it by yourself. To change your phone number, you must request your agency owner or contact our support team.",
+        "Session": "Once you log in with a device, you will remain logged in until you log out (from account details page) or your session expires automatically in {days} days.",
+        "CTA": "Change password"
+      },
+      "Settings": {
+        "Title": "SETTINGS & PREFERENCES",
+        "ChangePreferences": "You can change your app preferences like dark mode, language and more by going to your account settings page.",
+        "CTA": "View account settings"
+      },
+      "Agency": {
+        "Title": "AGENCY",
+        "Description": "You can view all agency related details like name, address, logo, payment qr code, and more by going to your agency details page.",
+        "Change": "As owner, you can also change your agency details.",
+        "CTA": "View agency details"
+      },
+      "Subscription": {
+        "Title": "SUBSCRIPTION",
+        "Description": "You can view all subscription related details like plan, status, expiry date, and more by going to your subscription details page."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common account and subscription related questions",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "ChangeEmail": "Change Email",
+        "ChangePassword": "Change Password",
+        "ChangeSettings": "Change Preferences",
+        "ViewAgencyDetails": "View Agency Details"
+      }
+    },
+    "MySupportBookingsHelp": {
+      "Title": "Booking Help",
+      "Description": "Get help related to bookings like trip assignments, transactions, expenses and more.",
+      "Overview": {
+        "Title": "BOOKING OVERVIEW",
+        "Definition": "A booking is a trip from one location to another with a driver and a vehicle.",
+        "Elements": "A booking consists of the following elements:",
+        "ElementsList": {
+          "Customer": "",
+          "Vehicle": "",
+          "Driver": "",
+          "Trip details": "",
+          "Price details": "",
+          "Expenses": "",
+          "Transactions": "",
+          "Trip logs": ""
+        },
+        "Status": "A booking can have the following statuses:",
+        "StatusList": {
+          "Lead": "Lead: A booking that is created but not yet confirmed by the assigned agent",
+          "Confirmed": "Confirmed: A booking that is confirmed by the assigned agent with pickup time and address and has been shared with the customer and the driver",
+          "InProgress": "In Progress: A booking that is currently being executed by the driver",
+          "Completed": "Completed: A booking that is completed by the driver and marked as completed by the assigned agent",
+          "Cancelled": "Cancelled: A booking that has been cancelled by the assigned agent. An old lead booking is auto cancelled if the date has passed."
+        },
+        "CTA": "View all bookings"
+      },
+      "Assignment": {
+        "Title": "ASSIGNMENT",
+        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'."
+      },
+      "Execution": {
+        "Title": "EXECUTION",
+        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'."
+      },
+      "Completed": {
+        "Title": "Completed",
+        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'."
+      },
+      "Expenses": {
+        "Title": "EXPENSES",
+        "Description": "You can add any additional expenses incurred during the trip by going to the completed booking details page and clicking on 'Add Expenses'.",
+        "Steps": {
+          "Title": "Steps to add expenses:",
+          "Step1": "Select the type of expense (Fuel, Toll, Parking, Other)",
+          "Step2": "Provide the amount and description for the expense",
+          "Step3": "Confirm the expense"
+        }
+      },
+      "TripLogs": {
+        "Title": "TRIP LOGS",
+        "Description": "A trip log is created as and when driver updates the trip status. You can view all trip logs related details like start time, end time, distance, and more by going to your trip logs details page.",
+        "Status": {
+          "Started": "STARTED: The trip has been started by the driver",
+          "Arrived": "ARRIVED: The driver has arrived at the pickup location",
+          "PickedUp": "PICKED UP: The customer has been picked up by the driver",
+          "Dropped": "DROPPED: The customer has been dropped by the driver",
+          "Ended": "ENDED: The trip has been ended by the driver. The booking is considered as completed."
+        }
+      },
+      "Communication": {
+        "Title": "COMMUNICATION",
+        "Description": "The platform makes sure that you are always connected with your customers and drivers.",
+        "Customer": "You can send messages to the customer by going to the booking details page and clicking on 'Send Message'.",
+        "Driver": " You can also send messages to the driver by going to the booking details page and clicking on 'Send Driver Message'."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to bookings",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "AllBookings": "View All Bookings"
+      }
+    },
+    "MySupportMissionsHelp": {
+      "Title": "ALERTS AND NOTIFICATIONS",
+      "Description": "Get help related to alerts and notifications",
+      "Overview": {
+        "Title": "MISSIONS OVERVIEW",
+        "Description": "Learn about missions (alerts)"
+      },
+      "Managing": {
+        "Title": "MANAGING MISSIONS",
+        "Description": "Learn how you get alerts and how to work with them."
+      },
+      "Custom": {
+        "Title": "CUSTOM MISSIONS",
+        "Description": "Learn about entities and how they work together."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to getting started",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "CreateCustomMission": "Create Custom Mission",
+        "ViewMissions": "View Missions"
+      }
+    },
+    "MySupportStartedHelp": {
+      "Title": "Getting Started",
+      "Description": "New to the platform and feeling stuck? Find all the help you need here.",
+      "About": {
+        "Title": "WHAT IS RYOGO?",
+        "Description": "Learn about RyoGo."
+      },
+      "Overview": {
+        "Title": "APP OVERVIEW",
+        "Description": "Walkthrough our slideshow guide below and understand how your business can benefit by automating and simplifying your daily travel operations"
+      },
+      "Entities": {
+        "Title": "ENTITIES",
+        "Description": "Learn about entities and how they work together."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to getting started",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "ViewAccount": "View Account Details"
+      }
+    },
+    "MySupportVehicleHelp": {
+      "Title": "Vehicle Help",
+      "Description": "Get help related to you assigned vehicle",
+      "Overview": {
+        "Title": "VEHICLE OVERVIEW",
+        "Description": "Let's learn about your vehicle."
+      },
+      "Assignment": {
+        "Title": "ASSIGNMENT",
+        "Description": "You are assigned a vehicle with a booking."
+      },
+      "Documents": {
+        "Title": "DOCUMENTS",
+        "Description": "Let's discuss about the vehicle documentation and expiry alerts."
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to vehicles",
+        "Q1": {
+          "Question": "How do I change my account password?",
+          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+        },
+        "Q2": {
+          "Question": "How do I change my account email?",
+          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+        },
+        "Q3": {
+          "Question": "How do I know my user ID?",
+          "Answer": "Your user ID can be found on your account details page."
+        }
+      },
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "ViewVehicle": "View Vehicle"
+      }
+    },
     "MySupportVideosHelp": {},
     "MySupportTickets": {
       "TicketsTrialWarning": "You cannot access support tickets because you are on Basic plan.",
@@ -3842,20 +4682,20 @@
     },
     "CloseSupportTicket": {
       "Title": "Close resolved ticket",
-      "Warning":"You can rate your satisfaction level from 1 to 5, to give feedback for the resolution given by support team.",
+      "Warning": "You can rate your satisfaction level from 1 to 5, to give feedback for the resolution given by support team.",
       "CloseTicket": "Close Ticket",
       "Loading": "Loading..",
-      "RatingLabel":"Resolution rating",
+      "RatingLabel": "Resolution rating",
       "Success": "Ticket closed successfully!",
       "Error": "Cannot close ticket.. please try again after some time."
     },
-    "AddSupportTicketComment":{
+    "AddSupportTicketComment": {
       "Title": "Add Comment",
       "Placeholder": "Enter comment",
       "FieldError": "Comment is required and must be less than 300 characters",
       "Error": "Cannot add comment.. please try again after some time.",
       "Save": "Add Comment",
-      "Loading":"Loading.."
+      "Loading": "Loading.."
     }
   },
   "Landing": {
@@ -4351,7 +5191,7 @@
           "Description": "Start creating booking instantly and grow your business from a single dashboard."
         },
         "MoreCTA": "Create Free Account Now",
-        "ContinueCTA":"Continue Walkthrough"
+        "ContinueCTA": "Continue Walkthrough"
       },
       "Bookings": {
         "Title": "Create and Manage Bookings",
@@ -4385,7 +5225,7 @@
           "Description": "Get a complete picture of your revenue by reconciling a booking in the end to close the loop. So convenient!"
         },
         "MoreCTA": "Get Started For Free",
-        "ContinueCTA":"Continue Walkthrough"
+        "ContinueCTA": "Continue Walkthrough"
       },
       "Entities": {
         "Title": "Effortless fleet management",

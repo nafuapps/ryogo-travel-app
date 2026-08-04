@@ -1,3 +1,17 @@
+import QuickActionLinkButton, {
+  QuickActionType,
+} from "@/components/flows/support/quickActionLink"
+import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import TableContentLinkButton, {
+  SupportContentItemType,
+} from "@/components/flows/support/tableContentLink"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   DoubleContentWrapper,
@@ -6,12 +20,23 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import { Skeleton } from "@/components/ui/skeleton"
+import { RyogoCaption } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
+import {
+  ChevronRight,
+  PhoneCall,
+  Plus,
+  SquarePen,
+  Telescope,
+  Tickets,
+  UserRoundPlus,
+  UserRoundSearch,
+} from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
 /*
-TODO
-  - Adding
   - Details
+  - Adding
   - Modifying
   - Communication
   - Search
@@ -19,23 +44,179 @@ TODO
 */
 
 export default async function SupportHelpCustomersPage() {
+  const t = await getTranslations("Dashboard.SupportCustomersHelp")
+
+  const contentItems: SupportContentItemType[] = [
+    {
+      id: "overview",
+      title: t("Overview.Title"),
+      icon: Telescope,
+      content: <OverviewContent />,
+    },
+    {
+      id: "adding",
+      title: t("Adding.Title"),
+      icon: UserRoundPlus,
+      content: <AddingContent />,
+    },
+    {
+      id: "editing",
+      title: t("Editing.Title"),
+      icon: SquarePen,
+      content: <EditingContent />,
+    },
+    {
+      id: "bookings",
+      title: t("Bookings.Title"),
+      icon: Tickets,
+      content: <BookingsContent />,
+    },
+    {
+      id: "communication",
+      title: t("Communication.Title"),
+      icon: PhoneCall,
+      content: <CommunicationContent />,
+    },
+    {
+      id: "search",
+      title: t("Search.Title"),
+      icon: UserRoundSearch,
+      content: <SearchContent />,
+    },
+  ]
+
+  const faqItems: SupportFAQItemType[] = [
+    {
+      question: t("FAQs.Q1.Question"),
+      answer: t("FAQs.Q1.Answer"),
+    },
+    {
+      question: t("FAQs.Q2.Question"),
+      answer: t("FAQs.Q2.Answer"),
+    },
+    {
+      question: t("FAQs.Q3.Question"),
+      answer: t("FAQs.Q3.Answer"),
+    },
+  ]
+
+  const quickActions: QuickActionType[] = [
+    {
+      label: t("QuickActions.AddCustomer"),
+      href: "/dashboard/customers/new",
+      icon: Plus,
+    },
+    {
+      label: t("QuickActions.AllCustomers"),
+      href: "/dashboard/customers",
+      icon: ChevronRight,
+    },
+  ]
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/help-customers"} />
-      <DoubleContentWrapper>
-        <PageWrapper id="SupportHelpCustomersPage">
-          <SectionWrapper id="SupportHelpCustomersMain">
-            <Skeleton className="h-100" />
-            <Skeleton className="h-100" />
-            <Skeleton className="h-100" />
-          </SectionWrapper>
+      <DoubleContentWrapper sideOnTop>
+        <PageWrapper id="SupportHelpCustomersPage" disableScrollInMobile>
+          <SupportSectionHeader
+            title={t("Title")}
+            description={t("Description")}
+          />
+          {contentItems.map((item) => (
+            <SectionWrapper key={item.id} id={item.id}>
+              <SupportContentHeader icon={item.icon} title={item.title} />
+              {item.content}
+            </SectionWrapper>
+          ))}
+          <Separator />
+          <SupportSectionHeader
+            title={t("FAQs.Title")}
+            description={t("FAQs.Description")}
+          />
+          <SupportFAQWrapper>
+            {faqItems.map((item, index) => (
+              <SupportFAQItem
+                key={index}
+                question={item.question}
+                answer={item.answer}
+              />
+            ))}
+          </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SectionWrapper id="SupportHelpCustomersSide">
-            <Skeleton className="h-20" />
-          </SectionWrapper>
+          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+            {contentItems.map((item) => (
+              <TableContentLinkButton
+                key={item.id}
+                href={`#${item.id}`}
+                label={item.title}
+                icon={item.icon}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+            {quickActions.map((item) => (
+              <QuickActionLinkButton
+                key={item.label}
+                href={item.href}
+                icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
         </SideWrapper>
       </DoubleContentWrapper>
     </MainWrapper>
+  )
+}
+
+async function OverviewContent() {
+  const t = await getTranslations("Dashboard.SupportCustomersHelp.Overview")
+  return (
+    <>
+      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+    </>
+  )
+}
+async function AddingContent() {
+  const t = await getTranslations("Dashboard.SupportCustomersHelp.Adding")
+  return (
+    <>
+      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+    </>
+  )
+}
+async function EditingContent() {
+  const t = await getTranslations("Dashboard.SupportCustomersHelp.Editing")
+  return (
+    <>
+      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+    </>
+  )
+}
+async function BookingsContent() {
+  const t = await getTranslations("Dashboard.SupportCustomersHelp.Bookings")
+  return (
+    <>
+      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+    </>
+  )
+}
+async function CommunicationContent() {
+  const t = await getTranslations(
+    "Dashboard.SupportCustomersHelp.Communication",
+  )
+  return (
+    <>
+      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+    </>
+  )
+}
+async function SearchContent() {
+  const t = await getTranslations("Dashboard.SupportCustomersHelp.Search")
+  return (
+    <>
+      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+    </>
   )
 }

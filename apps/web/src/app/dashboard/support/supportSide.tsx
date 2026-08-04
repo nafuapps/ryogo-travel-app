@@ -3,7 +3,7 @@ import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SectionWrapper, SideWrapper } from "@/components/page/pageWrappers"
-import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   SUPPORT_HELPLINE_NUMBER,
@@ -25,9 +25,9 @@ export default async function SupportSideComponent({
     <SideWrapper>
       <SectionWrapper id="Contact" center>
         <RyogoP weight="font-bold">{t("Contact.Title")}</RyogoP>
-        <RyogoSmall color="light" className="text-center">
+        <RyogoCaption color="light" className="text-center">
           {t("Contact.Description")}
-        </RyogoSmall>
+        </RyogoCaption>
         <div className="flex flex-col w-full gap-3 lg:gap-4">
           <RyogoPhoneButton
             label={t("Contact.CallCTA")}
@@ -52,9 +52,9 @@ export default async function SupportSideComponent({
           <RyogoP weight="font-bold" color="white">
             {t("Tickets.Title")}
           </RyogoP>
-          <RyogoSmall color="light" className="text-center">
+          <RyogoCaption color="light" className="text-center">
             {t("Tickets.Description")}
-          </RyogoSmall>
+          </RyogoCaption>
           <Link href="/dashboard/support/tickets">
             <Button variant="white">
               <RyogoCaption color="slate">{t("Tickets.ViewCTA")}</RyogoCaption>

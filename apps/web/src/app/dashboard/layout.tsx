@@ -4,7 +4,7 @@ import DashboardSidebar from "@/components/sidebar/dashboardSidebar"
 import { getCurrentUser, logout } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import CommandCenter from "@/components/command/commandCenter"
+// import CommandCenter from "@/components/command/commandCenter"
 import {
   LayoutSectionWrapper,
   LayoutWrapper,
@@ -67,7 +67,7 @@ export default async function DashboardLayout({
         <DashboardSidebar isOwner={isOwner} />
         <LayoutSectionWrapper id="DashboardMainSection">
           {children}
-          <CommandCenter />
+          {/* //TODO <CommandCenter /> */}
         </LayoutSectionWrapper>
       </LayoutWrapper>
     </SidebarProvider>

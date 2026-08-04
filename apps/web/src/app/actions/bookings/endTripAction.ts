@@ -39,7 +39,7 @@ export async function endTripAction(
     vehicleId: data.vehicleId,
     agencyId: data.agencyId,
     odometerReading: data.odometerReading,
-    type: TripLogTypesEnum.END_TRIP,
+    type: TripLogTypesEnum.ENDED,
     remarks: data.remarks,
     lat: data.lat,
     long: data.long,

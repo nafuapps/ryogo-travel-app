@@ -485,10 +485,8 @@ export const bookingServices = {
     if (!booking) return
 
     const logs = await tripLogRepository.readTripLogsByBookingId(bookingId)
-    const startLog = logs.find(
-      (log) => log.type === TripLogTypesEnum.START_TRIP,
-    )
-    const endLog = logs.find((log) => log.type === TripLogTypesEnum.END_TRIP)
+    const startLog = logs.find((log) => log.type === TripLogTypesEnum.STARTED)
+    const endLog = logs.find((log) => log.type === TripLogTypesEnum.ENDED)
     if (!startLog || !endLog) return
 
     const startDate = startLog.createdAt

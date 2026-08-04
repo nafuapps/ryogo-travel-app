@@ -14,6 +14,7 @@ import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import getTripLogIcon from "@/components/icons/tripLogIcon"
 
 export default async function TripLogItem({
   tripLog,
@@ -48,7 +49,11 @@ export default async function TripLogItem({
           )}
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
-          {getTripLogIcon(tripLog.type)}
+          <RyogoEnclosedIcon
+            icon={getTripLogIcon(tripLog.type)}
+            size="sm"
+            circular
+          />
           <RyogoCaption weight="font-bold">
             {tripLog.type.toUpperCase()}
           </RyogoCaption>
@@ -62,25 +67,4 @@ export default async function TripLogItem({
       )}
     </div>
   )
-}
-
-const getTripLogIcon = (type: TripLogTypesEnum) => {
-  switch (type) {
-    case TripLogTypesEnum.START_TRIP:
-      return <RyogoEnclosedIcon icon={Play} size="sm" circular />
-
-    case TripLogTypesEnum.ARRIVED:
-      return <RyogoEnclosedIcon icon={MapPinCheck} size="sm" circular />
-
-    case TripLogTypesEnum.PICKUP:
-      return <RyogoEnclosedIcon icon={Handshake} size="sm" circular />
-
-    case TripLogTypesEnum.DROP:
-      return <RyogoEnclosedIcon icon={FlagTriangleRight} size="sm" circular />
-
-    case TripLogTypesEnum.END_TRIP:
-      return <RyogoEnclosedIcon icon={CheckCheck} size="sm" circular />
-    default:
-      return <RyogoEnclosedIcon icon={Pin} size="sm" circular />
-  }
 }

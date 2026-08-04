@@ -5,7 +5,7 @@ import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { UrlObject } from "url"
 
 export default function SupportCategoryCard({
@@ -24,11 +24,11 @@ export default function SupportCategoryCard({
       <SectionWrapper id={title}>
         <SectionRowWrapper justifyStart center>
           <RyogoEnclosedIcon icon={icon} size="sm" />
-          <RyogoSmall color="slate" weight="font-bold">
+          <RyogoSmall color="slate" weight="font-medium">
             {title}
           </RyogoSmall>
         </SectionRowWrapper>
-        <RyogoSmall color="light">{description}</RyogoSmall>
+        <RyogoCaption color="light">{description}</RyogoCaption>
       </SectionWrapper>
     </Link>
   )

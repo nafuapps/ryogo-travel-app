@@ -24,7 +24,7 @@ export default function getExpenseIcon(type: ExpenseTypesEnum) {
       return <RyogoEnclosedIcon icon={AirVent} size="sm" circular />
     case ExpenseTypesEnum.TOLL:
       return <RyogoEnclosedIcon icon={Ticket} size="sm" circular />
-    default:
+    case ExpenseTypesEnum.OTHER:
       return <RyogoEnclosedIcon icon={Banknote} size="sm" circular />
   }
 }

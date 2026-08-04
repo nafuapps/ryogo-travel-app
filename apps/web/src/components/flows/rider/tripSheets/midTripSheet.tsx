@@ -43,7 +43,7 @@ export default function MidTripSheet({
   const type: string =
     tripType === TripLogTypesEnum.ARRIVED
       ? "Arrived"
-      : tripType === TripLogTypesEnum.PICKUP
+      : tripType === TripLogTypesEnum.PICKED_UP
         ? "Pickup"
         : "Drop"
 

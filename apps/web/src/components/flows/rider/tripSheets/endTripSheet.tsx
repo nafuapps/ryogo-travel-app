@@ -98,7 +98,7 @@ export default function EndTripSheet({
       bookingId: booking.id,
       driverId: driverId,
       vehicleId: vehicleId,
-      type: TripLogTypesEnum.END_TRIP,
+      type: TripLogTypesEnum.ENDED,
       odometerReading: data.odometerReading,
       remarks: data.remarks,
       tripLogPhoto: data.tripLogPhoto,

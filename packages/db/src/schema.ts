@@ -1061,18 +1061,18 @@ export const expenseRelations = relations(expenses, ({ one }) => ({
 }))
 
 export enum TripLogTypesEnum {
-  START_TRIP = "trip started",
-  END_TRIP = "trip ended",
+  STARTED = "trip started",
+  ENDED = "trip ended",
   ARRIVED = "arrived",
-  PICKUP = "picked up",
-  DROP = "dropped",
+  PICKED_UP = "picked up",
+  DROPPED = "dropped",
 }
 export const tripLogTypes = pgEnum("trip_log_types", [
-  TripLogTypesEnum.START_TRIP,
-  TripLogTypesEnum.END_TRIP,
+  TripLogTypesEnum.STARTED,
+  TripLogTypesEnum.ENDED,
   TripLogTypesEnum.ARRIVED,
-  TripLogTypesEnum.PICKUP,
-  TripLogTypesEnum.DROP,
+  TripLogTypesEnum.PICKED_UP,
+  TripLogTypesEnum.DROPPED,
 ])
 //Trip Logs table
 export const tripLogIdSequence = pgSequence("trip_log_id_seq", {

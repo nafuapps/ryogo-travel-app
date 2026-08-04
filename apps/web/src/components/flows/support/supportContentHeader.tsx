@@ -1,0 +1,27 @@
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import { RyogoP } from "@/components/typography"
+import { LucideIcon } from "lucide-react"
+
+export default function SupportContentHeader({
+  icon,
+  title,
+}: {
+  icon: LucideIcon
+  title: string
+}) {
+  return (
+    <SectionRowWrapper justifyStart center>
+      <RyogoEnclosedIcon
+        icon={icon}
+        size="sm"
+        color="slate"
+        bgColor="light"
+        thick
+      />
+      <RyogoP color="dark" weight="font-bold">
+        {title}
+      </RyogoP>
+    </SectionRowWrapper>
+  )
+}

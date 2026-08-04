@@ -15,6 +15,7 @@ import {
 import { RyogoChinImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
+import getTripLogIcon from "@/components/icons/tripLogIcon"
 
 export default async function RiderTripLogItem({
   tripLog,
@@ -46,7 +47,17 @@ export default async function RiderTripLogItem({
           <RyogoCaption weight="font-bold">
             {tripLog.type.toUpperCase()}
           </RyogoCaption>
-          {getTripLogIcon(tripLog.type)}
+          <RyogoEnclosedIcon
+            icon={getTripLogIcon(tripLog.type)}
+            size="sm"
+            color={
+              tripLog.type === TripLogTypesEnum.DROPPED ? "white" : "slate"
+            }
+            bgColor={
+              tripLog.type === TripLogTypesEnum.DROPPED ? "black" : "slate"
+            }
+            circular
+          />
         </div>
       </div>
       {tripLog.tripLogPhotoUrl && (
@@ -56,36 +67,5 @@ export default async function RiderTripLogItem({
         />
       )}
     </div>
-  )
-}
-
-function getTripLogIcon(type: TripLogTypesEnum) {
-  let icon = Pin
-  let last = false
-
-  if (type === TripLogTypesEnum.START_TRIP) {
-    icon = Play
-  }
-  if (type === TripLogTypesEnum.ARRIVED) {
-    icon = MapPinCheck
-  }
-  if (type === TripLogTypesEnum.PICKUP) {
-    icon = Handshake
-  }
-  if (type === TripLogTypesEnum.DROP) {
-    icon = FlagTriangleRight
-  }
-  if (type === TripLogTypesEnum.END_TRIP) {
-    icon = CheckCheck
-    last = true
-  }
-  return (
-    <RyogoEnclosedIcon
-      icon={icon}
-      size="sm"
-      color={last ? "white" : "slate"}
-      bgColor={last ? "black" : "slate"}
-      circular
-    />
   )
 }

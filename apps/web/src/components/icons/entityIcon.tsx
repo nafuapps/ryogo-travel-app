@@ -7,7 +7,6 @@ import {
   CreditCard,
   HandCoins,
   IdCard,
-  Megaphone,
   UserRoundCog,
 } from "lucide-react"
 
@@ -29,7 +28,5 @@ export default function getEntityIcon(entityType: EntityTypeEnum) {
       return HandCoins
     case EntityTypeEnum.USER:
       return UserRoundCog
-    default:
-      return Megaphone
   }
 }

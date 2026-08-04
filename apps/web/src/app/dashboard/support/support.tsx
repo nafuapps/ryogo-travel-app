@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server"
 import { PageWrapper } from "@/components/page/pageWrappers"
-import { FAQWrapper, FAQItem } from "@/components/flows/landing/faqWrapper"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
 import { RyogoH3, RyogoSmall } from "@/components/typography"
 import {
@@ -16,6 +15,10 @@ import {
   Video,
 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
+import {
+  SupportFAQWrapper,
+  SupportFAQItem,
+} from "@/components/flows/support/supportFAQWrapper"
 
 export default async function SupportPageComponent({
   isOwner,
@@ -105,20 +108,20 @@ export default async function SupportPageComponent({
       <RyogoSmall color="light" className="mx-auto text-center mb-4 lg:mb-5">
         {t("FAQs.Description")}
       </RyogoSmall>
-      <FAQWrapper>
-        <FAQItem
+      <SupportFAQWrapper>
+        <SupportFAQItem
           question={t("FAQs.Q1.Question")}
           answer={t("FAQs.Q1.Answer")}
         />
-        <FAQItem
+        <SupportFAQItem
           question={t("FAQs.Q2.Question")}
           answer={t("FAQs.Q2.Answer")}
         />
-        <FAQItem
+        <SupportFAQItem
           question={t("FAQs.Q3.Question")}
           answer={t("FAQs.Q3.Answer")}
         />
-      </FAQWrapper>
+      </SupportFAQWrapper>
     </PageWrapper>
   )
 }

@@ -42,7 +42,7 @@ export async function startTripAction(data: AddTripLogRequestType) {
     vehicleId: data.vehicleId,
     agencyId: data.agencyId,
     odometerReading: data.odometerReading,
-    type: TripLogTypesEnum.START_TRIP,
+    type: TripLogTypesEnum.STARTED,
     remarks: data.remarks,
     lat: data.lat,
     long: data.long,

@@ -91,7 +91,7 @@ export default function StartTripSheet({
       bookingId: booking.id,
       driverId: driverId,
       vehicleId: vehicleId,
-      type: TripLogTypesEnum.START_TRIP,
+      type: TripLogTypesEnum.STARTED,
       odometerReading: data.odometerReading,
       remarks: data.remarks,
       tripLogPhoto: data.tripLogPhoto,

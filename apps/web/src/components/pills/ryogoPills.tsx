@@ -157,14 +157,14 @@ export function PaymentStatusPill(props: { status: PaymentStatusEnum }) {
 
 export function TripLogStatusPill(props: { status: TripLogTypesEnum }) {
   switch (props.status) {
-    case TripLogTypesEnum.END_TRIP:
+    case TripLogTypesEnum.ENDED:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
-    case TripLogTypesEnum.DROP:
-    case TripLogTypesEnum.PICKUP:
+    case TripLogTypesEnum.DROPPED:
+    case TripLogTypesEnum.PICKED_UP:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
     case TripLogTypesEnum.ARRIVED:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
-    case TripLogTypesEnum.START_TRIP:
+    case TripLogTypesEnum.STARTED:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
   }
 }

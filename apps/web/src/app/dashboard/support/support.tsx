@@ -13,12 +13,14 @@ import {
   Target,
   Users,
   Video,
+  Newspaper,
 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import {
   SupportFAQWrapper,
   SupportFAQItem,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 
 export default async function SupportPageComponent({
   isOwner,
@@ -29,18 +31,14 @@ export default async function SupportPageComponent({
 
   return (
     <PageWrapper id="DashboardSupportPage" disableScrollInMobile>
-      <RyogoH3 weight="font-bold" className="mx-auto text-center mt-4 lg:mt-5">
-        {t("Title")}
-      </RyogoH3>
-      <RyogoSmall color="light" className="mx-auto text-center mb-4 lg:mb-5">
-        {t("Description")}
-      </RyogoSmall>
+      <SupportSectionHeader title={t("Title")} description={t("Description")} />
       <div className="grid gap-5 lg:gap-6 grid-cols-1 md:grid-cols-2 2xl:grid-cols-3">
         <SupportCategoryCard
           title={t("Started.Title")}
           description={t("Started.Description")}
           icon={Play}
           link={"/dashboard/support/help-started"}
+          highlight
         />
         <SupportCategoryCard
           title={t("Account.Title")}
@@ -99,15 +97,20 @@ export default async function SupportPageComponent({
           description={t("Videos.Description")}
           icon={Video}
           link={"/dashboard/support/help-videos"}
+          highlight
+        />
+        <SupportCategoryCard
+          title={t("Blogs.Title")}
+          description={t("Blogs.Description")}
+          icon={Newspaper}
+          link={"/dashboard/support/help-blogs"}
         />
       </div>
       <Separator />
-      <RyogoH3 weight="font-bold" className="mx-auto text-center mt-4 lg:mt-5">
-        {t("FAQs.Title")}
-      </RyogoH3>
-      <RyogoSmall color="light" className="mx-auto text-center mb-4 lg:mb-5">
-        {t("FAQs.Description")}
-      </RyogoSmall>
+      <SupportSectionHeader
+        title={t("FAQs.Title")}
+        description={t("FAQs.Description")}
+      />
       <SupportFAQWrapper>
         <SupportFAQItem
           question={t("FAQs.Q1.Question")}

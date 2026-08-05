@@ -9,7 +9,6 @@ import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import getEntityIcon from "@/components/icons/entityIcon"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { UrlObject } from "url"
 import { useState, useTransition } from "react"
 import { markReadMissionAction } from "@/app/actions/missions/markReadMissionAction"
 import { toast } from "sonner"
@@ -122,7 +121,7 @@ export default function MissionCard({
       )}
       <div></div>
       {mission.link && (
-        <Link href={mission.link as any as UrlObject}>
+        <Link href={mission.link as React.ComponentProps<typeof Link>["href"]}>
           <Button
             variant={mission.isRead ? "secondary" : "default"}
             disabled={isPending}

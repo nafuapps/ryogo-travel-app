@@ -4,7 +4,6 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import Link from "next/link"
-import { UrlObject } from "url"
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import Image from "next/image"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -20,32 +19,32 @@ export default async function FeaturesMenuSection() {
           <FeaturesMenuItem
             title={t("M1")}
             href="#management"
-            src="/featureMenu1.png"
+            imageSrc="/featureMenu1.png"
           />
           <FeaturesMenuItem
             title={t("M2")}
             href="#scheduling"
-            src="/featureMenu2.png"
+            imageSrc="/featureMenu2.png"
           />
           <FeaturesMenuItem
             title={t("M3")}
             href="#communication"
-            src="/featureMenu3.png"
+            imageSrc="/featureMenu3.png"
           />
           <FeaturesMenuItem
             title={t("M4")}
             href="#analytics"
-            src="/featureMenu4.png"
+            imageSrc="/featureMenu4.png"
           />
           <FeaturesMenuItem
             title={t("M5")}
             href="#alerts"
-            src="/featureMenu5.png"
+            imageSrc="/featureMenu5.png"
           />
           <FeaturesMenuItem
             title={t("M6")}
             href="#security"
-            src="/featureMenu6.png"
+            imageSrc="/featureMenu6.png"
           />
         </div>
       </LandingContentWrapper>
@@ -56,17 +55,17 @@ export default async function FeaturesMenuSection() {
 async function FeaturesMenuItem({
   title,
   href,
-  src,
+  imageSrc,
 }: {
   title: string
-  href: string
-  src: string
+  href: React.ComponentProps<typeof Link>["href"]
+  imageSrc: string
 }) {
   const t = await getTranslations("Landing.Features.Menu")
   return (
     <Link
       className="group relative flex flex-col bg-white shadow rounded-lg overflow-hidden"
-      href={href as any as UrlObject}
+      href={href}
     >
       <RyogoP
         weight="font-bold"
@@ -80,7 +79,7 @@ async function FeaturesMenuItem({
           className="object-cover"
           loading="eager"
           //TODO: Add product images
-          //   src={src}
+          //   src={imageSrc}
           src="/forgotPasswordBG.png"
           alt=""
           fill

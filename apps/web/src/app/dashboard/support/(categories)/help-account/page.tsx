@@ -2,7 +2,7 @@ import QuickActionLinkButton, {
   QuickActionType,
 } from "@/components/flows/support/quickActionLink"
 import SupportContentHeader from "@/components/flows/support/supportContentHeader"
-import SupportContentLinkButton from "@/components/flows/support/supportContentLink"
+import SupportContentLinkButton from "@/components/flows/support/supportContentLinkButton"
 import {
   SupportFAQWrapper,
   SupportFAQItem,

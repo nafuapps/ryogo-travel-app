@@ -83,11 +83,12 @@ export function RyogoIcon(props: {
   color?: RyogoIconColor
   thick?: boolean
   onClick?: () => void
+  className?: string
 }) {
   return (
     <props.icon
       onClick={props.onClick}
-      className={`shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${getIconSize(props.size)} ${getIconColor(props.color)}`}
+      className={`shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${getIconSize(props.size)} ${getIconColor(props.color)} ${props.className ?? ""}`}
     />
   )
 }
@@ -100,6 +101,7 @@ export function RyogoEnclosedIcon(props: {
   onClick?: () => void
   circular?: boolean
   bgColor?: RyogoIconColor
+  className?: string
 }) {
   return (
     <div
@@ -111,6 +113,7 @@ export function RyogoEnclosedIcon(props: {
         size={props.size}
         color={props.color}
         thick={props.thick}
+        className={props.className}
       />
     </div>
   )

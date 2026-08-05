@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl"
 import { RyogoCaption } from "@/components/typography"
 import Link from "next/link"
 import moment from "moment"
-import { UrlObject } from "url"
 import getEntityIcon from "@/components/icons/entityIcon"
 
 export default function NotificationCard({
@@ -41,7 +40,11 @@ export default function NotificationCard({
           </RyogoCaption>
         </SectionColWrapper>
         {notification.link && (
-          <Link href={notification.link as any as UrlObject}>
+          <Link
+            href={
+              notification.link as React.ComponentProps<typeof Link>["href"]
+            }
+          >
             <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
           </Link>
         )}

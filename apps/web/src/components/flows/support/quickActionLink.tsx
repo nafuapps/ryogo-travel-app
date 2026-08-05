@@ -3,10 +3,9 @@ import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { LucideIcon } from "lucide-react"
 import Link from "next/link"
-import { UrlObject } from "url"
 
 export type QuickActionType = {
-  href: UrlObject | __next_route_internal_types__.RouteImpl<UrlObject>
+  href: React.ComponentProps<typeof Link>["href"]
   label: string
   icon: LucideIcon
 }

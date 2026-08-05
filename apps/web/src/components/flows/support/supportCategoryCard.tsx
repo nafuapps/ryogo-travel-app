@@ -1,23 +1,24 @@
 import Link from "next/link"
-import { LucideIcon } from "lucide-react"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { Dot, LucideIcon } from "lucide-react"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { UrlObject } from "url"
 
 export default function SupportCategoryCard({
   title,
   icon,
   description,
   link,
+  highlight,
 }: {
   title: string
   icon: LucideIcon
   description: string
-  link: UrlObject | __next_route_internal_types__.RouteImpl<UrlObject>
+  link: React.ComponentProps<typeof Link>["href"]
+  highlight?: boolean
 }) {
   return (
     <Link href={link} className="flex">
@@ -27,6 +28,15 @@ export default function SupportCategoryCard({
           <RyogoSmall color="slate" weight="font-medium">
             {title}
           </RyogoSmall>
+          {highlight && (
+            <RyogoIcon
+              icon={Dot}
+              size="md"
+              color="yellow"
+              thick
+              className={"animate-pulse"}
+            />
+          )}
         </SectionRowWrapper>
         <RyogoCaption color="light">{description}</RyogoCaption>
       </SectionWrapper>

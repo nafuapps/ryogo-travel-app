@@ -803,6 +803,7 @@
         "/dashboard/support/help-analytics": "Analytics Help",
         "/dashboard/support/help-missions": "Missions Help",
         "/dashboard/support/help-videos": "Videos Help",
+        "/dashboard/support/help-blogs": "Blogs Help",
         "/dashboard/support/tickets": "Support Tickets",
         "/dashboard/support/tickets/add": "Create Support Ticket",
         "/dashboard/support/tickets/[id]": "View Support Ticket",
@@ -2564,6 +2565,10 @@
         "Title": "VIDEO TUTORIALS",
         "Description": "Watch short demo videos to understand more about RyoGo Travel App"
       },
+      "Blogs": {
+        "Title": "BLOGS & NEWS",
+        "Description": "Get latest news and updates related to RyoGo Travel App"
+      },
       "FAQs": {
         "Title": "Top Questions",
         "Description": "Get answers to frequently asked questions and queries",
@@ -2581,7 +2586,7 @@
         }
       },
       "Contact": {
-        "Title": "Still need help?",
+        "Title": "Looking for help?",
         "Description": "Get in touch with our specialized support team to assist you with any queries.",
         "CallCTA": "Call Support Team",
         "ChatCTA": "Chat with Support",
@@ -2591,7 +2596,11 @@
         "Title": "Support Tickets",
         "Description": "View and manage your support tickets",
         "ViewCTA": "View Your Tickets",
-        "CreateCTA": "Create New Ticket"
+        "Premium": {
+          "Title": "Want Premium Support?",
+          "Description": "Get elite customer support with the help of support ticket feature with Premium plan.",
+          "CTA": "Upgrade Now"
+        }
       }
     },
     "SupportTickets": {
@@ -2659,7 +2668,7 @@
       "CloseTicketDesc": "If you are satisfied with the resolution given by support team, you can close this ticket."
     },
     "SupportAccountHelp": {
-      "Title": "Account & Subscription Help",
+      "Title": "Account & Subscription",
       "Description": "Get help related to your account details, settings, security, agency and subscription.",
       "Details": {
         "Title": "ACCOUNT DETAILS",
@@ -2718,7 +2727,7 @@
       }
     },
     "SupportAnalyticsHelp": {
-      "Title": "Analytics Help",
+      "Title": "Analytics",
       "Description": "Get help related to analytics, reports and predictions as part of our Premium analytics feature",
       "Bookings": {
         "Title": "BOOKINGS",
@@ -2766,8 +2775,16 @@
         "ViewAnalytics": "View Analytics"
       }
     },
+    "SupportBlogsHelp": {
+      "Title": "Blogs & News",
+      "Description": "Find latest news, guides and industry insights.",
+      "Blog1": {
+        "Title": "How to grow your travel agency business with RyoGo?",
+        "Type": "PRODUCT GUIDE"
+      }
+    },
     "SupportBookingsHelp": {
-      "Title": "Booking Help",
+      "Title": "Bookings",
       "Description": "Get help related to bookings like trip assignments, transactions, expenses and more.",
       "Overview": {
         "Title": "BOOKING OVERVIEW",
@@ -2921,7 +2938,7 @@
       }
     },
     "SupportCustomersHelp": {
-      "Title": "Customers Help",
+      "Title": "Customers",
       "Description": "Get help related to customer management",
       "Overview": {
         "Title": "CUSTOMER OVERVIEW",
@@ -2971,7 +2988,7 @@
       }
     },
     "SupportDriversHelp": {
-      "Title": "Drivers Help",
+      "Title": "Drivers",
       "Description": "Get help related to driver management",
       "Overview": {
         "Title": "DRIVER OVERVIEW",
@@ -3025,7 +3042,7 @@
       }
     },
     "SupportMissionsHelp": {
-      "Title": "ALERTS AND NOTIFICATIONS",
+      "Title": "Alerts & Notifications",
       "Description": "Get help related to alerts and notifications",
       "Overview": {
         "Title": "MISSIONS OVERVIEW",
@@ -3109,7 +3126,7 @@
       }
     },
     "SupportUsersHelp": {
-      "Title": "Users Help",
+      "Title": "Users & Agents",
       "Description": "Get help related to user management",
       "Overview": {
         "Title": "USER OVERVIEW",
@@ -3156,7 +3173,7 @@
       }
     },
     "SupportVehiclesHelp": {
-      "Title": "Vehicles Help",
+      "Title": "Vehicles",
       "Description": "Get help related to vehicle fleet management",
       "Overview": {
         "Title": "VEHICLE OVERVIEW",
@@ -3252,10 +3269,18 @@
         "Title": "Why Analytics?",
         "Description": "Check out how analytics can help you make informed decisions for your agency."
       },
+      "SM": {
+        "Title": "SOCIAL MEDIA",
+        "Youtube": "YouTube",
+        "Instagram": "Instagram",
+        "Facebook": "Facebook",
+        "Linkedin": "LinkedIn"
+      },
       "QuickActions": {
         "Title": "QUICK ACTIONS",
         "NewBooking": "Create Booking",
-        "AllBookings": "View All Bookings"
+        "AddDriver": "Add Driver",
+        "AddVehicle": "Add Vehicle"
       }
     },
     "AccountSubscription": {
@@ -4335,11 +4360,14 @@
         "Title": "Support Tickets",
         "Description": "View and manage your support tickets",
         "ViewCTA": "View Your Tickets",
-        "CreateCTA": "Create New Ticket"
+        "Premium": {
+          "Title": "Want Premium Support?",
+          "Description": "Get elite customer support with the help of support ticket feature with Premium plan."
+        }
       }
     },
     "MySupportAccountHelp": {
-      "Title": "Account Help",
+      "Title": "Account & Profile",
       "Description": "Get help related to your account details, settings, security, agency and subscription.",
       "Details": {
         "Title": "ACCOUNT DETAILS",
@@ -4394,7 +4422,7 @@
       }
     },
     "MySupportBookingsHelp": {
-      "Title": "Booking Help",
+      "Title": "Bookings",
       "Description": "Get help related to bookings like trip assignments, transactions, expenses and more.",
       "Overview": {
         "Title": "BOOKING OVERVIEW",
@@ -4482,7 +4510,7 @@
       }
     },
     "MySupportMissionsHelp": {
-      "Title": "ALERTS AND NOTIFICATIONS",
+      "Title": "Alerts",
       "Description": "Get help related to alerts and notifications",
       "Overview": {
         "Title": "MISSIONS OVERVIEW",
@@ -4557,7 +4585,7 @@
       }
     },
     "MySupportVehicleHelp": {
-      "Title": "Vehicle Help",
+      "Title": "Vehicle",
       "Description": "Get help related to you assigned vehicle",
       "Overview": {
         "Title": "VEHICLE OVERVIEW",
@@ -4593,7 +4621,46 @@
         "ViewVehicle": "View Vehicle"
       }
     },
-    "MySupportVideosHelp": {},
+    "MySupportVideosHelp": {
+      "Title": "Video Tutorials",
+      "Description": "Watch easy to understand demo videos to learn the basics of RyoGo.",
+      "MyBookings": {
+        "Title": "Managing Bookings",
+        "Description": "Understand how to manage bookings assigned to you"
+      },
+      "ExecutingTrip": {
+        "Title": "Executing Trip",
+        "Description": "Learn how to execute a successful trip with a customer from start to end"
+      },
+      "MyVehicle": {
+        "Title": "Assigned Vehicle",
+        "Description": "Learn more about your assigned vehicle"
+      },
+      "DriverApp": {
+        "Title": "Driver App",
+        "Description": "In-depth guide on how to use the driver app"
+      },
+      "MyProfile": {
+        "Title": "Managing My Profile",
+        "Description": "Know about managing your account and profile details"
+      },
+      "Communication": {
+        "Title": "Communication",
+        "Description": "Understand main methods of collaborating with customer and the agency"
+      },
+      "SM": {
+        "Title": "SOCIAL MEDIA",
+        "Youtube": "YouTube",
+        "Instagram": "Instagram",
+        "Facebook": "Facebook",
+        "Linkedin": "LinkedIn"
+      },
+      "QuickActions": {
+        "Title": "QUICK ACTIONS",
+        "ViewMyBookings": "View My Bookings",
+        "ViewMyVehicle": "View My Vehicle"
+      }
+    },
     "MySupportTickets": {
       "TicketsTrialWarning": "You cannot access support tickets because you are on Basic plan.",
       "TicketsTrialAction": "To get full access to our support tickets feature, please upgrade to Premium plan.",

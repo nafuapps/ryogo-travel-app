@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { RyoGoLandingLogo } from "@/components/logo"
 import { useLocale, useTranslations } from "next-intl"
-import { UrlObject } from "url"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
@@ -30,7 +29,7 @@ type NavbarItemType =
 
 type NavLinkType = {
   id: NavbarItemType
-  href: UrlObject | __next_route_internal_types__.RouteImpl<string>
+  href: React.ComponentProps<typeof Link>["href"]
   label: string
 }
 

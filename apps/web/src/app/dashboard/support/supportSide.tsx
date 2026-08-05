@@ -15,8 +15,10 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
 export default async function SupportSideComponent({
+  isOwner,
   isPremium,
 }: {
+  isOwner: boolean
   isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.Support")
@@ -43,26 +45,50 @@ export default async function SupportSideComponent({
           />
         </div>
       </SectionWrapper>
-      {isPremium && (
-        <SectionWrapper
-          id="Tickets"
-          center
-          bgColor="bg-slate-900 dark:bg-white"
-        >
-          <RyogoP weight="font-bold" color="white">
-            {t("Tickets.Title")}
-          </RyogoP>
-          <RyogoCaption color="light" className="text-center">
-            {t("Tickets.Description")}
-          </RyogoCaption>
-          <Link href="/dashboard/support/tickets">
-            <Button variant="white">
-              <RyogoCaption color="slate">{t("Tickets.ViewCTA")}</RyogoCaption>
-              <RyogoIcon icon={ChevronRight} size="sm" color="slate" thick />
-            </Button>
-          </Link>
-        </SectionWrapper>
-      )}
+      <SectionWrapper id="Tickets" center bgColor="bg-slate-900 dark:bg-white">
+        {isPremium ? (
+          <>
+            <RyogoP weight="font-bold" color="white">
+              {t("Tickets.Title")}
+            </RyogoP>
+            <RyogoCaption color="light" className="text-center">
+              {t("Tickets.Description")}
+            </RyogoCaption>
+            <Link href="/dashboard/support/tickets">
+              <Button variant="white">
+                <RyogoCaption color="slate">
+                  {t("Tickets.ViewCTA")}
+                </RyogoCaption>
+                <RyogoIcon icon={ChevronRight} size="sm" color="slate" thick />
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <RyogoP weight="font-bold" color="white">
+              {t("Tickets.Premium.Title")}
+            </RyogoP>
+            <RyogoCaption color="light" className="text-center">
+              {t("Tickets.Premium.Description")}
+            </RyogoCaption>
+            {isOwner && (
+              <Link href="/dashboard/account/subscription">
+                <Button variant="white">
+                  <RyogoCaption color="slate">
+                    {t("Tickets.Premium.CTA")}
+                  </RyogoCaption>
+                  <RyogoIcon
+                    icon={ChevronRight}
+                    size="sm"
+                    color="slate"
+                    thick
+                  />
+                </Button>
+              </Link>
+            )}
+          </>
+        )}
+      </SectionWrapper>
     </SideWrapper>
   )
 }

@@ -3,7 +3,7 @@ import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import moment from "moment"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import Link from "next/link"
+import Link, { LinkProps } from "next/link"
 import { Button } from "@/components/ui/button"
 import { differenceInDays } from "date-fns"
 import {
@@ -16,7 +16,6 @@ import {
 } from "lucide-react"
 import { EXPIRY_WARNING_DAYS } from "@/lib/uiConfig"
 import { CarouselItem } from "@/components/ui/carousel"
-import { UrlObject } from "url"
 
 type ExpiryType = "License" | "PUC" | "RC" | "Insurance" | "Leave" | "Repair"
 
@@ -74,7 +73,11 @@ export default async function ExpiryAlertCard({
         })}
       </RyogoSmall>
       <Link
-        href={getExpiryLink(expiryType, entityId, isDriver) as any as UrlObject}
+        href={
+          getExpiryLink(expiryType, entityId, isDriver) as React.ComponentProps<
+            typeof Link
+          >["href"]
+        }
         className="mt-auto"
       >
         <Button variant="default" className="w-full">

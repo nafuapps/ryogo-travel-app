@@ -4,9 +4,13 @@ import QuickActionLinkButton, {
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import {
+  SupportSMLink,
+  SupportSMLinkType,
+} from "@/components/flows/support/supportSMLink"
+import {
   SupportVideoItem,
   SupportVideoItemType,
-} from "@/components/flows/support/SupportVideoItem"
+} from "@/components/flows/support/supportVideoItem"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   DoubleContentWrapper,
@@ -14,14 +18,13 @@ import {
   PageWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import { Separator } from "@/components/ui/separator"
-import { Plus, ChevronRight } from "lucide-react"
+import { FB_LINK, IG_LINK, LI_LINK, YT_LINK } from "@/lib/uiConfig"
+import { Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 /*
   - Videos
-  - Link to YT and social media
-
+  - Social media
 */
 
 export default async function SupportHelpVideosPage() {
@@ -80,6 +83,25 @@ export default async function SupportHelpVideosPage() {
     },
   ]
 
+  const socialMediaLinks: SupportSMLinkType[] = [
+    {
+      label: t("SM.Youtube"),
+      href: YT_LINK,
+    },
+    {
+      label: t("SM.Instagram"),
+      href: IG_LINK,
+    },
+    {
+      label: t("SM.Facebook"),
+      href: FB_LINK,
+    },
+    {
+      label: t("SM.Linkedin"),
+      href: LI_LINK,
+    },
+  ]
+
   const quickActions: QuickActionType[] = [
     {
       label: t("QuickActions.NewBooking"),
@@ -87,9 +109,14 @@ export default async function SupportHelpVideosPage() {
       icon: Plus,
     },
     {
-      label: t("QuickActions.AllBookings"),
-      href: "/dashboard/bookings",
-      icon: ChevronRight,
+      label: t("QuickActions.AddDriver"),
+      href: "/dashboard/drivers/new",
+      icon: Plus,
+    },
+    {
+      label: t("QuickActions.AddVehicle"),
+      href: "/dashboard/vehicles/new",
+      icon: Plus,
     },
   ]
 
@@ -105,9 +132,13 @@ export default async function SupportHelpVideosPage() {
           {videoItems.map((item, index) => (
             <SupportVideoItem key={item.title} {...item} index={index + 1} />
           ))}
-          <Separator />
         </PageWrapper>
         <SideWrapper>
+          <SupportSideAccordionWrapper label={t("SM.Title")}>
+            {socialMediaLinks.map((item, index) => (
+              <SupportSMLink key={index} {...item} />
+            ))}
+          </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item) => (
               <QuickActionLinkButton

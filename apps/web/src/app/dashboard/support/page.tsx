@@ -39,6 +39,7 @@ export default async function SupportPage() {
           isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         />
         <SupportSideComponent
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
           isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
         />
       </DoubleContentWrapper>

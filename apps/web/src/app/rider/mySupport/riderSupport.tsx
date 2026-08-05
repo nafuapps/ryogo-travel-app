@@ -1,11 +1,14 @@
 import { getTranslations } from "next-intl/server"
-import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import {
+  DoubleContentWrapper,
+  PageWrapper,
+  SectionWrapper,
+  SideWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
 import { Car, ChevronRight, Play, Tickets, User } from "lucide-react"
-import { UrlObject } from "url"
 import { Separator } from "@/components/ui/separator"
-import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import {
   SUPPORT_CHAT_NUMBER,
@@ -17,6 +20,11 @@ import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import {
+  SupportFAQWrapper,
+  SupportFAQItem,
+} from "@/components/flows/support/supportFAQWrapper"
 
 export default async function MySupportPageComponent({
   isPremium,
@@ -26,105 +34,130 @@ export default async function MySupportPageComponent({
   const t = await getTranslations("Rider.MySupport")
 
   return (
-    <PageWrapper id="RiderSupportPage">
-      <RyogoP className="mx-auto text-center mt-4 lg:mt-5">{t("Title")}</RyogoP>
-      <RyogoSmall className="mx-auto text-center mb-4 lg:mb-5" color="light">
-        {t("Description")}
-      </RyogoSmall>
-      <div className="grid gap-5 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-        <SupportCategoryCard
-          title={t("Started.Title")}
-          description={t("Started.Description")}
-          icon={Play}
-          link={"/rider/mySupport/help-started" as any as UrlObject}
+    <DoubleContentWrapper>
+      <PageWrapper id="RiderSupportPage" disableScrollInMobile>
+        <SupportSectionHeader
+          title={t("Title")}
+          description={t("Description")}
         />
-        <SupportCategoryCard
-          title={t("Account.Title")}
-          description={t("Account.Description")}
-          icon={User}
-          link={"/rider/mySupport/help-account" as any as UrlObject}
-        />
-        <SupportCategoryCard
-          title={t("Vehicle.Title")}
-          description={t("Vehicle.Description")}
-          icon={Car}
-          link={"/rider/mySupport/help-vehicle" as any as UrlObject}
-        />
-        <SupportCategoryCard
-          title={t("Bookings.Title")}
-          description={t("Bookings.Description")}
-          icon={Tickets}
-          link={"/rider/mySupport/help-bookings" as any as UrlObject}
-        />
-        <SupportCategoryCard
-          title={t("Missions.Title")}
-          description={t("Missions.Description")}
-          icon={User}
-          link={"/rider/mySupport/help-missions" as any as UrlObject}
-        />
-        <SupportCategoryCard
-          title={t("Videos.Title")}
-          description={t("Videos.Description")}
-          icon={User}
-          link={"/rider/mySupport/help-videos" as any as UrlObject}
-        />
-      </div>
-      <Separator />
-      <RyogoP className="mx-auto text-center mt-4 lg:mt-5">
-        {t("FAQs.Title")}
-      </RyogoP>
-      <RyogoSmall color="light" className="mx-auto text-center mb-4 lg:mb-5">
-        {t("FAQs.Description")}
-      </RyogoSmall>
-      <FAQWrapper>
-        <FAQItem
-          question={t("FAQs.Q1.Question")}
-          answer={t("FAQs.Q1.Answer")}
-        />
-        <FAQItem
-          question={t("FAQs.Q2.Question")}
-          answer={t("FAQs.Q2.Answer")}
-        />
-        <FAQItem
-          question={t("FAQs.Q3.Question")}
-          answer={t("FAQs.Q3.Answer")}
-        />
-      </FAQWrapper>
-      <Separator />
-      <SectionWrapper id="Contact" center>
-        <RyogoP>{t("Contact.Title")}</RyogoP>
-        <RyogoSmall className="text-center" color="light">
-          {t("Contact.Description")}
-        </RyogoSmall>
-        <div className="flex flex-col lg:flex-row w-full lg:items-center lg:justify-center gap-3 lg:gap-4">
-          <RyogoPhoneButton
-            label={t("Contact.CallCTA")}
-            phone={SUPPORT_HELPLINE_NUMBER}
+        <div className="grid gap-5 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          <SupportCategoryCard
+            title={t("Started.Title")}
+            description={t("Started.Description")}
+            icon={Play}
+            link={"/rider/mySupport/help-started"}
           />
-          <RyogoChatButton
-            label={t("Contact.ChatCTA")}
-            phone={SUPPORT_CHAT_NUMBER}
+          <SupportCategoryCard
+            title={t("Account.Title")}
+            description={t("Account.Description")}
+            icon={User}
+            link={"/rider/mySupport/help-account"}
           />
-          <RyogoMailButton
-            label={t("Contact.EmailCTA")}
-            email={SUPPORT_EMAIL}
+          <SupportCategoryCard
+            title={t("Vehicle.Title")}
+            description={t("Vehicle.Description")}
+            icon={Car}
+            link={"/rider/mySupport/help-vehicle"}
+          />
+          <SupportCategoryCard
+            title={t("Bookings.Title")}
+            description={t("Bookings.Description")}
+            icon={Tickets}
+            link={"/rider/mySupport/help-bookings"}
+          />
+          <SupportCategoryCard
+            title={t("Missions.Title")}
+            description={t("Missions.Description")}
+            icon={User}
+            link={"/rider/mySupport/help-missions"}
+          />
+          <SupportCategoryCard
+            title={t("Videos.Title")}
+            description={t("Videos.Description")}
+            icon={User}
+            link={"/rider/mySupport/help-videos"}
           />
         </div>
-      </SectionWrapper>
-      {isPremium && (
-        <SectionWrapper id="Tickets" center>
-          <RyogoP>{t("Tickets.Title")}</RyogoP>
-          <RyogoSmall className="text-center" color="light">
-            {t("Tickets.Description")}
-          </RyogoSmall>
-          <Link href="/rider/mySupport/tickets">
-            <Button variant="outline">
-              <RyogoCaption>{t("Tickets.ViewCTA")}</RyogoCaption>
-              <RyogoIcon icon={ChevronRight} size="sm" />
-            </Button>
-          </Link>
+        <Separator />
+        <SupportSectionHeader
+          title={t("FAQs.Title")}
+          description={t("FAQs.Description")}
+        />
+        <SupportFAQWrapper>
+          <SupportFAQItem
+            question={t("FAQs.Q1.Question")}
+            answer={t("FAQs.Q1.Answer")}
+          />
+          <SupportFAQItem
+            question={t("FAQs.Q2.Question")}
+            answer={t("FAQs.Q2.Answer")}
+          />
+          <SupportFAQItem
+            question={t("FAQs.Q3.Question")}
+            answer={t("FAQs.Q3.Answer")}
+          />
+        </SupportFAQWrapper>
+      </PageWrapper>
+      <SideWrapper>
+        <SectionWrapper id="Contact" center>
+          <RyogoP weight="font-bold">{t("Contact.Title")}</RyogoP>
+          <RyogoCaption color="light" className="text-center">
+            {t("Contact.Description")}
+          </RyogoCaption>
+          <div className="flex flex-col w-full gap-3 lg:gap-4">
+            <RyogoPhoneButton
+              label={t("Contact.CallCTA")}
+              phone={SUPPORT_HELPLINE_NUMBER}
+            />
+            <RyogoChatButton
+              label={t("Contact.ChatCTA")}
+              phone={SUPPORT_CHAT_NUMBER}
+            />
+            <RyogoMailButton
+              label={t("Contact.EmailCTA")}
+              email={SUPPORT_EMAIL}
+            />
+          </div>
         </SectionWrapper>
-      )}
-    </PageWrapper>
+        <SectionWrapper
+          id="Tickets"
+          center
+          bgColor="bg-slate-900 dark:bg-white"
+        >
+          {isPremium ? (
+            <>
+              <RyogoP weight="font-bold" color="white">
+                {t("Tickets.Title")}
+              </RyogoP>
+              <RyogoCaption color="light" className="text-center">
+                {t("Tickets.Description")}
+              </RyogoCaption>
+              <Link href="/dashboard/support/tickets">
+                <Button variant="white">
+                  <RyogoCaption color="slate">
+                    {t("Tickets.ViewCTA")}
+                  </RyogoCaption>
+                  <RyogoIcon
+                    icon={ChevronRight}
+                    size="sm"
+                    color="slate"
+                    thick
+                  />
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <RyogoP weight="font-bold" color="white">
+                {t("Tickets.Premium.Title")}
+              </RyogoP>
+              <RyogoCaption color="light" className="text-center">
+                {t("Tickets.Premium.Description")}
+              </RyogoCaption>
+            </>
+          )}
+        </SectionWrapper>
+      </SideWrapper>
+    </DoubleContentWrapper>
   )
 }

@@ -3,14 +3,13 @@ import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
-import { UrlObject } from "url"
 
 export default function SupportContentLinkButton({
   label,
   href,
 }: {
   label: string
-  href: UrlObject | __next_route_internal_types__.RouteImpl<UrlObject>
+  href: React.ComponentProps<typeof Link>["href"]
 }) {
   return (
     <Link href={href} className="self-center">

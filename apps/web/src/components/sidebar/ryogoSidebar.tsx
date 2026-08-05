@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/tooltip"
 import { LucideIcon } from "lucide-react"
 import Link from "next/link"
-import { UrlObject } from "url"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function RyogoSidebar({
@@ -73,14 +72,14 @@ export default function RyogoSidebar({
 
 export type MenuItemType = {
   title: string
-  url: UrlObject | __next_route_internal_types__.RouteImpl<URL>
+  url: React.ComponentProps<typeof Link>["href"]
   icon: LucideIcon
   onlyOwner?: boolean
 }[]
 
 function MenuButton(props: {
   title: string
-  url: UrlObject | __next_route_internal_types__.RouteImpl<URL>
+  url: React.ComponentProps<typeof Link>["href"]
   icon: LucideIcon
   open: boolean
   active?: boolean

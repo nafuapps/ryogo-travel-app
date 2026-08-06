@@ -46,7 +46,6 @@ export default async function AddAgentPage() {
       agencyId={currentUser.agencyId}
       agencyName={agency.businessName}
       ownerId={currentUser.userId}
-      status={currentUser.status}
       allAgents={allAgents}
     />
   )

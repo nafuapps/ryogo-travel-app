@@ -11,7 +11,7 @@ export type SupportContentItemType = {
   content: React.ReactNode
 }
 
-export default function TableContentLinkButton({
+export default function SupportTableOfContentLinkButton({
   href,
   label,
   icon,

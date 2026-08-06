@@ -2670,35 +2670,93 @@
     "SupportAccountHelp": {
       "Title": "Account & Subscription",
       "Description": "Get help related to your account details, settings, security, agency and subscription.",
-      "Details": {
-        "Title": "ACCOUNT DETAILS",
-        "ViewDetails": "You can view and edit your account details like name, email, user ID and more by going to your account details page.",
-        "CTA": "View account details"
+      "Overview": {
+        "Title": "ACCOUNT OVERVIEW",
+        "ViewDetails": {
+          "Title": "Account details",
+          "Description": "You can view your account details like name, email, user ID and more by going to your account details page.",
+          "CTA": "View account details"
+        },
+        "EditDetails": {
+          "Title": "Changing account details",
+          "Description": "You can change only a few of your account details, that is, name, email and password."
+        },
+        "StatusList": {
+          "Title": "Account status",
+          "Description": "The account status tells you the current status of your account. You can see the status of your account by going to your account details page.",
+          "Caption": "A list of status for your account.",
+          "New": "Your account is newly created. You must activate your account before you can start using the platform.",
+          "Active": "Your account is active and you can use the platform.",
+          "Inactive": "Your account has been inactived by the owner. You can login and interact with the platform but you will not be assigned any bookings.",
+          "Suspended": "Your account is banned by us. You cannot log into the platform."
+        }
       },
       "Security": {
         "Title": "SECURITY",
-        "ChangePassword": "You can change your password by going to your account details page.",
-        "ChangePhoneOwner": "Phone number is the main credential to access an account. As an owner, you can change all your agency users' phone numbers.",
-        "ChangePhoneOthers": "Your phone number is the main credential to access your account and therefore you cannot change it by yourself. To change your phone number, you must request your agency owner or contact our support team.",
-        "Session": "Once you log in with a device, you will remain logged in until you log out (from account details page) or your session expires automatically in {days} days.",
-        "CTA": "Change password"
+        "ChangePassword": {
+          "Title": "Changing password",
+          "Description": "You can change your password by going to your account details page.",
+          "ChangePhoneOwner": "Phone number is the main credential to access an account. As an owner, you can change all your agency users' phone numbers.",
+          "ChangePhoneOthers": "Your phone number is the main credential to access your account and therefore you cannot change it by yourself. To change your phone number, you must request your agency owner or contact our support team.",
+          "PasswordBestPractice": "You should keep your password safe and private. You should change it regularly. It must be at least 8 characters long.",
+          "CTA": "Change password"
+        },
+        "Login": {
+          "Title": "Login & Logout",
+          "Description": "You can login into your account from any device by using your phone number and password.",
+          "Session": "Once you log in with a device, you will remain logged in until you log out or your session expires automatically in {days} days.",
+          "Logout": "You can logout of your account by going to your account details page and clicking on Logout."
+        }
       },
       "Settings": {
         "Title": "SETTINGS & PREFERENCES",
-        "ChangePreferences": "You can change your app preferences like dark mode, language and more by going to your account settings page.",
-        "CTA": "View account settings"
+        "ChangePreferences": {
+          "Title": "Changing preferences",
+          "Description": "You can change your app preferences like enabling dark mode, preferred language and more by going to your account settings page.",
+          "CTA": "View account settings"
+        }
       },
       "Agency": {
         "Title": "AGENCY",
-        "Description": "You can view all agency related details like name, address, logo, payment qr code, and more by going to your agency details page.",
-        "Change": "As owner, you can also change your agency details.",
-        "CTA": "View agency details"
+        "AgencyDetails": {
+          "Title": "Agency details",
+          "Description": "You can view all agency related details like agency name, address, logo, payment QR code, agency ID and more by going to your agency details page.",
+          "Change": "As owner, you can also change some of your agency details.",
+          "CTA": "View agency details"
+        },
+        "StatusList": {
+          "Title": "Agency status",
+          "Description": "The agency status tells you the current status of your agency. You can see the status of your agency by going to your agency details page.",
+          "Caption": "A list of status for your agency.",
+          "New": "Your agency is newly created. You must activate your agency by adding drivers and vehicles before you can start using the platform.",
+          "Active": "Your agency is active and all your users can use the platform.",
+          "Inactive": "Your agency is inactive. You can activate it by contacting support team.",
+          "Suspended": "Your agency has been banned by us. None of your users can login to the platform."
+        }
       },
       "Subscription": {
         "Title": "SUBSCRIPTION",
-        "Description": "You can view all subscription related details like plan, status, expiry date, and more by going to your subscription details page.",
-        "Buy": "As owner, you can also buy or renew your subscription.",
-        "CTA": "View subscription details"
+        "PlanDetails": {
+          "Title": "Current subscription plan details",
+          "Description": "You can view all subscription related details like current plan, status, expiry date, and more by going to your subscription details page.",
+          "CTA": "View subscription details"
+        },
+        "GettingSubscription": {
+          "Title": "Getting a subscription",
+          "Description": "As owner, you can buy or renew your Premium subscription.",
+          "PlanTerms": "You can get subscription for Monthly, Quarterly or Annual plan.",
+          "CTA": "Get Premium"
+        },
+        "PlanList": {
+          "Title": "Subscription plans",
+          "Description": "RyoGo provides two subscription plans: BASIC and PREMIUM. By default, when an account is created, it is Basic and free forever. You can upgrade to PREMIUM plan at any time.",
+          "Caption": "A list of subscription plans for your agency.",
+          "Basic": "BASIC",
+          "BasicDescription": "Free forever plan with basic features and limited entities. Perfect for small and starter agencies.",
+          "Premium": "PREMIUM",
+          "PremiumDescription": "Paid plan with advanced features and unlimited capacity. For large and growing agencies."
+        },
+        "PremiumFeatures": {}
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -2788,27 +2846,42 @@
       "Description": "Get help related to bookings like trip assignments, transactions, expenses and more.",
       "Overview": {
         "Title": "BOOKING OVERVIEW",
-        "Definition": "A booking is a trip from one location to another with a driver and a vehicle.",
-        "Elements": "A booking consists of the following elements:",
-        "ElementsList": {
-          "Customer": "",
-          "Vehicle": "",
-          "Driver": "",
-          "Trip details": "",
-          "Price details": "",
-          "Expenses": "",
-          "Transactions": "",
-          "Trip logs": ""
+        "WhatIsBooking": {
+          "Title": "WHAT IS A BOOKING?",
+          "Description": "A booking is a trip from one location to another with a driver and a vehicle.",
+          "CTA": "View all bookings"
         },
-        "Status": "A booking can have the following statuses:",
+        "Elements": {
+          "Title": "BOOKING ELEMENTS",
+          "Description": "A booking consists of the following elements:",
+          "Caption": "A list of booking elements",
+          "Customer": "CUSTOMER",
+          "CustomerDesc": "Details about customer like name, phone number, address, etc.",
+          "TripDetails": "TRIP DETAILS",
+          "TripDetailsDesc": "Details about trip like source, destination, type (one-way, round-trip, multi-day), number of passengers, wants AC, pickup date, time, etc.",
+          "Assignment": "ASSIGNMENT",
+          "AssignmentDesc": "Vehicle and Driver assigned for the booking.",
+          "Variables": "VARIABLES",
+          "VariablesDesc": "Factors which will decide the price of the booking, such as distance, vehicle rate per km, driver allowance per day, etc.",
+          "Price": "PRICE",
+          "PriceDesc": "Final price calculated based on all the above factors.",
+          "Expenses": "EXPENSES",
+          "ExpensesDesc": "All the extra cost incurred on the road, like fuel, toll, etc.",
+          "Transactions": "TRANSACTIONS",
+          "TransactionsDesc": "All the transactions related to the booking, like payment from customer, cash given to/from driver, etc.",
+          "TripLogs": "TRIP LOGS",
+          "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end."
+        },
         "StatusList": {
-          "Lead": "Lead: A booking that is created but not yet confirmed by the assigned agent",
-          "Confirmed": "Confirmed: A booking that is confirmed by the assigned agent with pickup time and address and has been shared with the customer and the driver",
-          "InProgress": "In Progress: A booking that is currently being executed by the driver",
-          "Completed": "Completed: A booking that is completed by the driver and marked as completed by the assigned agent",
-          "Cancelled": "Cancelled: A booking that has been cancelled by the assigned agent. An old lead booking is auto cancelled if the date has passed."
-        },
-        "CTA": "View all bookings"
+          "Title": "BOOKING STATUS",
+          "Description": "A booking can have the following statuses:",
+          "Caption": "A list of booking status",
+          "Lead": "A booking that is created but not yet confirmed by the assigned agent",
+          "Confirmed": "A booking that is confirmed by the assigned agent with pickup time and address and has been shared with the customer and the driver",
+          "InProgress": "A booking that is currently being executed by the driver",
+          "Completed": "A booking that is completed by the driver and marked as completed by the assigned agent",
+          "Cancelled": "A booking that has been cancelled by the assigned agent. An old lead booking is auto cancelled if the date has passed."
+        }
       },
       "Creation": {
         "Title": "CREATING A BOOKING",
@@ -4369,28 +4442,67 @@
     "MySupportAccountHelp": {
       "Title": "Account & Profile",
       "Description": "Get help related to your account details, settings, security, agency and subscription.",
-      "Details": {
-        "Title": "ACCOUNT DETAILS",
-        "ViewDetails": "You can view and edit your account details like name, email, user ID and more by going to your account details page.",
-        "CTA": "View account details"
+      "Overview": {
+        "Title": "ACCOUNT OVERVIEW",
+        "ViewDetails": {
+          "Title": "Account details",
+          "Description": "You can view your account details like name, email, user ID and more by going to your account details page.",
+          "CTA": "View account details"
+        },
+        "EditDetails": {
+          "Title": "Changing account details",
+          "Description": "You can change only a few of your account details, that is, name, email and password."
+        },
+        "StatusList": {
+          "Title": "Account status",
+          "Description": "The account status tells you the current status of your account. You can see the status of your account by going to your account details page.",
+          "Caption": "A list of status for your account.",
+          "New": "Your account is newly created. You must activate your account before you can start using the platform.",
+          "Active": "Your account is active and you can use the platform.",
+          "Inactive": "Your account has been inactived by the owner. You can login and interact with the platform but you will not be assigned any bookings.",
+          "Suspended": "Your account is banned by us. You cannot log into the platform."
+        }
       },
       "Security": {
         "Title": "SECURITY",
-        "ChangePassword": "You can change your password by going to your account details page.",
-        "ChangePhoneOthers": "Your phone number is the main credential to access your account and therefore you cannot change it by yourself. To change your phone number, you must request your agency owner or contact our support team.",
-        "Session": "Once you log in with a device, you will remain logged in until you log out (from account details page) or your session expires automatically in {days} days.",
-        "CTA": "Change password"
+        "ChangePassword": {
+          "Title": "Changing password",
+          "Description": "You can change your password by going to your account details page.",
+          "ChangePhoneOthers": "Your phone number is the main credential to access your account and therefore you cannot change it by yourself. To change your phone number, you must request your agency owner or contact our support team.",
+          "PasswordBestPractice": "You should keep your password safe and private. You should change it regularly. It must be at least 8 characters long.",
+          "CTA": "Change password"
+        },
+        "Login": {
+          "Title": "Login & Logout",
+          "Description": "You can login into your account from any device by using your phone number and password.",
+          "Session": "Once you log in with a device, you will remain logged in until you log out or your session expires automatically in {days} days.",
+          "Logout": "You can logout of your account by going to your account details page and clicking on Logout."
+        }
       },
       "Settings": {
         "Title": "SETTINGS & PREFERENCES",
-        "ChangePreferences": "You can change your app preferences like dark mode, language and more by going to your account settings page.",
-        "CTA": "View account settings"
+        "ChangePreferences": {
+          "Title": "Changing preferences",
+          "Description": "You can change your app preferences like enabling dark mode, preferred language and more by going to your account settings page.",
+          "CTA": "View account settings"
+        }
       },
       "Agency": {
         "Title": "AGENCY",
-        "Description": "You can view all agency related details like name, address, logo, payment qr code, and more by going to your agency details page.",
-        "Change": "As owner, you can also change your agency details.",
-        "CTA": "View agency details"
+        "AgencyDetails": {
+          "Title": "Agency details",
+          "Description": "You can view all agency related details like agency name, address, logo, payment QR code, agency ID and more by going to your agency details page.",
+          "CTA": "View agency details"
+        },
+        "StatusList": {
+          "Title": "Agency status",
+          "Description": "The agency status tells you the current status of your agency. You can see the status of your agency by going to your agency details page.",
+          "Caption": "A list of status for your agency.",
+          "New": "Your agency is newly created. You must activate your agency by adding drivers and vehicles before you can start using the platform.",
+          "Active": "Your agency is active and all your users can use the platform.",
+          "Inactive": "Your agency is inactive. You can activate it by contacting support team.",
+          "Suspended": "Your agency has been banned by us. None of your users can login to the platform."
+        }
       },
       "Subscription": {
         "Title": "SUBSCRIPTION",

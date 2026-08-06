@@ -16,7 +16,6 @@ import {
 import { AddAgentStep1 } from "./addAgentStep1"
 import { AddAgentFinish } from "./addAgentFinish"
 import { AddAgentConfirm } from "./addAgentStep2"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 
@@ -24,7 +23,6 @@ type AddAgentPageComponentProps = {
   agencyId: string
   agencyName: string
   ownerId: string
-  status: UserStatusEnum
   allAgents: FindAllUsersByRoleType
 }
 export default function AddAgentPageComponent(
@@ -64,7 +62,6 @@ export default function AddAgentPageComponent(
         onNext={nextStepHandler}
         onPrev={prevStepHandler}
         finalData={finalData}
-        status={props.status}
         ownerId={props.ownerId}
       />,
       <AddAgentFinish

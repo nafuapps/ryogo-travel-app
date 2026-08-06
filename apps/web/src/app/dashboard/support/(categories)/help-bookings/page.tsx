@@ -1,7 +1,9 @@
-import QuickActionLinkButton, {
+import SupportQuickActionLinkButton, {
   QuickActionType,
-} from "@/components/flows/support/quickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQWrapper,
   SupportFAQItem,
@@ -9,9 +11,9 @@ import {
 } from "@/components/flows/support/supportFAQWrapper"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import TableContentLinkButton, {
+import SupportTableOfContentLinkButton, {
   SupportContentItemType,
-} from "@/components/flows/support/tableContentLink"
+} from "@/components/flows/support/supportTableOfContentLink"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   DoubleContentWrapper,
@@ -40,6 +42,15 @@ import {
   ListTodo,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import {
+  SupportTableStatusRow,
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 /*
   - Overview
   - Creation
@@ -201,7 +212,7 @@ export default async function SupportHelpBookingsPage() {
         <SideWrapper>
           <SupportSideAccordionWrapper label={t("TableOfContent")}>
             {contentItems.map((item) => (
-              <TableContentLinkButton
+              <SupportTableOfContentLinkButton
                 key={item.id}
                 href={`#${item.id}`}
                 label={item.title}
@@ -211,7 +222,7 @@ export default async function SupportHelpBookingsPage() {
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item) => (
-              <QuickActionLinkButton
+              <SupportQuickActionLinkButton
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
@@ -229,10 +240,78 @@ async function OverviewContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Definition")}</RyogoCaption>
-      <RyogoCaption color="slate" weight="font-bold">
-        {t("Elements")}
-      </RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsBooking.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsBooking.Description")}
+        </RyogoCaption>
+        <RyogoImage
+          alt="Booking overview"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings"}
+          label={t("WhatIsBooking.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Elements.Title")}>
+        <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Elements.Caption")}>
+          <SupportTableTextRow
+            label={t("Elements.Customer")}
+            desc={t("Elements.CustomerDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.TripDetails")}
+            desc={t("Elements.TripDetailsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Assignment")}
+            desc={t("Elements.AssignmentDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Variables")}
+            desc={t("Elements.VariablesDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Price")}
+            desc={t("Elements.PriceDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Expenses")}
+            desc={t("Elements.ExpensesDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Transactions")}
+            desc={t("Elements.TransactionsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.TripLogs")}
+            desc={t("Elements.TripLogsDesc")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("StatusList.Title")}>
+        <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("StatusList.Caption")}>
+          <SupportTableStatusRow desc={t("StatusList.Lead")}>
+            <BookingStatusPill status={BookingStatusEnum.LEAD} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Confirmed")}>
+            <BookingStatusPill status={BookingStatusEnum.CONFIRMED} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.InProgress")}>
+            <BookingStatusPill status={BookingStatusEnum.IN_PROGRESS} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Completed")}>
+            <BookingStatusPill status={BookingStatusEnum.COMPLETED} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Cancelled")}>
+            <BookingStatusPill status={BookingStatusEnum.CANCELLED} />
+          </SupportTableStatusRow>
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }

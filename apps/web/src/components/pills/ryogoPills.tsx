@@ -5,6 +5,7 @@ import {
   DriverStatusEnum,
   OrderStatusEnum,
   PaymentStatusEnum,
+  SubscriptionPlanEnum,
   TicketStatusEnum,
   TripLogTypesEnum,
   UserStatusEnum,
@@ -95,7 +96,7 @@ export function AgencyStatusPill(props: { status: AgencyStatusEnum }) {
   switch (props.status) {
     case AgencyStatusEnum.ACTIVE:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
-    case AgencyStatusEnum.EXPIRED:
+    case AgencyStatusEnum.INACTIVE:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
     case AgencyStatusEnum.SUSPENDED:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
@@ -200,5 +201,14 @@ export function SupportTicketStatusPill(props: { status: TicketStatusEnum }) {
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
     case TicketStatusEnum.OPEN:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+  }
+}
+
+export function SubscriptionPlanPill(props: { plan: SubscriptionPlanEnum }) {
+  switch (props.plan) {
+    case SubscriptionPlanEnum.BASIC:
+      return <RyogoPill label={props.plan.toUpperCase()} bgColor={"slate"} />
+    case SubscriptionPlanEnum.PREMIUM:
+      return <RyogoPill label={props.plan.toUpperCase()} bgColor={"brand"} />
   }
 }

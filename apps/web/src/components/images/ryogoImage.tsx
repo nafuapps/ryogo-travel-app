@@ -14,9 +14,9 @@ export type RyogoImageSize = "xs" | "sm" | "md" | "lg" | "xl"
 function getImageSizeClassName(size: RyogoImageSize) {
   switch (size) {
     case "xl":
-      return "size-44 lg:size-48"
+      return "size-72 lg:size-80"
     case "lg":
-      return "size-28 lg:size-32"
+      return "size-32 lg:size-36"
     case "md":
       return "size-18 lg:size-20"
     case "sm":
@@ -29,9 +29,9 @@ function getImageSizeClassName(size: RyogoImageSize) {
 function getNextImageSizes(size: RyogoImageSize) {
   switch (size) {
     case "xl":
-      return "(max-width: 1024px) 176px,192px"
+      return "(max-width: 1024px) 288px,320px"
     case "lg":
-      return "(max-width: 1024px) 112px,128px"
+      return "(max-width: 1024px) 128px,144px"
     case "md":
       return "(max-width: 1024px) 72px,80px"
     case "sm":
@@ -45,15 +45,17 @@ export function RyogoImage({
   src,
   alt,
   imageSize,
+  className,
 }: {
   src: string
   alt: string
   imageSize: RyogoImageSize
+  className?: string
 }) {
-  let className = `relative ${getImageSizeClassName(imageSize)} rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700`
-
   return (
-    <div className={className}>
+    <div
+      className={`relative ${getImageSizeClassName(imageSize)} rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 ${className ?? ""}`}
+    >
       <Image
         loading="eager"
         src={src}

@@ -61,7 +61,7 @@ export default async function AgencyDetailsPageComponent({
             <RyogoCaption color="slate">
               {moment(agency.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
-            <AgencyStatusPill status={agency.status} />
+            {isOwner && <AgencyStatusPill status={agency.status} />}
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionWrapper>

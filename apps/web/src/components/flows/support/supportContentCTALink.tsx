@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 
-export default function SupportContentLinkButton({
+export default function SupportContentCTALinkButton({
   label,
   href,
 }: {
@@ -13,12 +13,7 @@ export default function SupportContentLinkButton({
 }) {
   return (
     <Link href={href} className="self-center">
-      <Button
-        variant="link"
-        type="button"
-        size="sm"
-        className="gap-1 lg:gap-1.5 hover:bg-slate-50/80 dark:hover:bg-slate-900/80 hover:no-underline"
-      >
+      <Button variant="ghost" type="button" size="sm">
         <RyogoCaption weight="font-bold" color="brand">
           {label}
         </RyogoCaption>

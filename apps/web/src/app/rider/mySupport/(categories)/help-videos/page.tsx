@@ -14,9 +14,9 @@ import {
   SupportSMLink,
   SupportSMLinkType,
 } from "@/components/flows/support/supportSMLink"
-import QuickActionLinkButton, {
+import SupportQuickActionLinkButton, {
   QuickActionType,
-} from "@/components/flows/support/quickActionLink"
+} from "@/components/flows/support/supportQuickActionLink"
 import { YT_LINK, IG_LINK, FB_LINK, LI_LINK } from "@/lib/uiConfig"
 import { ChevronRight } from "lucide-react"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
@@ -115,7 +115,7 @@ export default async function MySupportHelpVideosPage() {
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item) => (
-              <QuickActionLinkButton
+              <SupportQuickActionLinkButton
                 key={item.label}
                 href={item.href}
                 icon={item.icon}

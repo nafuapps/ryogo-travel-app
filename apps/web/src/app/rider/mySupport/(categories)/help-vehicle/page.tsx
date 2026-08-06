@@ -10,9 +10,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ChevronRight, FileClock, ListTodo, Telescope } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import QuickActionLinkButton, {
+import SupportQuickActionLinkButton, {
   QuickActionType,
-} from "@/components/flows/support/quickActionLink"
+} from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItemType,
@@ -20,9 +20,9 @@ import {
   SupportFAQItem,
 } from "@/components/flows/support/supportFAQWrapper"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import TableContentLinkButton, {
+import SupportTableOfContentLinkButton, {
   SupportContentItemType,
-} from "@/components/flows/support/tableContentLink"
+} from "@/components/flows/support/supportTableOfContentLink"
 import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
 
@@ -115,7 +115,7 @@ export default async function MySupportHelpVehiclePage() {
         <SideWrapper>
           <SupportSideAccordionWrapper label={t("TableOfContent")}>
             {contentItems.map((item) => (
-              <TableContentLinkButton
+              <SupportTableOfContentLinkButton
                 key={item.id}
                 href={`#${item.id}`}
                 label={item.title}
@@ -125,7 +125,7 @@ export default async function MySupportHelpVehiclePage() {
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item) => (
-              <QuickActionLinkButton
+              <SupportQuickActionLinkButton
                 key={item.label}
                 href={item.href}
                 icon={item.icon}

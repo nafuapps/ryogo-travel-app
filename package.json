@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "turbo": "2.10.8",
-    "typescript": "^6.0.2"
+    "typescript": "7.0.2"
   },
   "main": "index.js",
   "packageManager": "npm@11.6.2",

@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
-import { RyogoH3, RyogoSmall } from "@/components/typography"
 import {
   Play,
   User,

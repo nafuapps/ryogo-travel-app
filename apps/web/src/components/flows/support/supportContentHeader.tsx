@@ -1,6 +1,6 @@
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoP } from "@/components/typography"
+import { RyogoP, RyogoSmall } from "@/components/typography"
 import { LucideIcon } from "lucide-react"
 
 export default function SupportContentHeader({
@@ -23,5 +23,22 @@ export default function SupportContentHeader({
         {title}
       </RyogoP>
     </SectionRowWrapper>
+  )
+}
+
+export function SupportContentSectionWrapper({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <>
+      <RyogoSmall color="dark" weight="font-bold" className="mt-2">
+        {title}
+      </RyogoSmall>
+      {children}
+    </>
   )
 }

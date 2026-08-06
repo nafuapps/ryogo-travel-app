@@ -14,6 +14,7 @@ import { getTranslations } from "next-intl/server"
 export default async function SupportHelpBlogsPage() {
   const t = await getTranslations("Dashboard.SupportBlogsHelp")
 
+  //TODO: Replace with actual blog data
   const blogItems: SupportBlogItemType[] = [
     {
       blogLink: "",

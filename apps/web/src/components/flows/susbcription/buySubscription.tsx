@@ -39,7 +39,7 @@ export default function BuySubscriptionComponent({
   )
 
   return (
-    <SectionWrapper id="PaymentOptions" center>
+    <SectionWrapper id="getPremium" center>
       <div className="w-full rounded-lg bg-slate-950 dark:bg-white p-7 lg:p-8 gap-3 lg:gap-4 flex flex-col items-center justify-center text-center">
         <RyogoSmall color="light">{t("ExperiencePremium")}</RyogoSmall>
         <RyogoH2 color="white" weight="font-bold">

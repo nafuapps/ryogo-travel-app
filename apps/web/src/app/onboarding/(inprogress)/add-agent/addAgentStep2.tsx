@@ -16,7 +16,6 @@ import ConfirmValues from "@/components/form/confirmValues"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { useTransition } from "react"
 
@@ -24,7 +23,6 @@ export function AddAgentConfirm(props: {
   onNext: () => void
   onPrev: () => void
   finalData: AddAgentRequestType
-  status: UserStatusEnum
   ownerId: string
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm")

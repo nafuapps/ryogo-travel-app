@@ -1,6 +1,6 @@
-import QuickActionLinkButton, {
+import SupportQuickActionLinkButton, {
   QuickActionType,
-} from "@/components/flows/support/quickActionLink"
+} from "@/components/flows/support/supportQuickActionLink"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import {
@@ -141,7 +141,7 @@ export default async function SupportHelpVideosPage() {
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item) => (
-              <QuickActionLinkButton
+              <SupportQuickActionLinkButton
                 key={item.label}
                 href={item.href}
                 icon={item.icon}

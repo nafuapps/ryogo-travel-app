@@ -1,17 +1,19 @@
-import QuickActionLinkButton, {
+import SupportQuickActionLinkButton, {
   QuickActionType,
-} from "@/components/flows/support/quickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
-import SupportContentLinkButton from "@/components/flows/support/supportContentLinkButton"
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import {
   SupportFAQWrapper,
   SupportFAQItem,
   SupportFAQItemType,
 } from "@/components/flows/support/supportFAQWrapper"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import TableContentLinkButton, {
+import SupportTableOfContentLinkButton, {
   SupportContentItemType,
-} from "@/components/flows/support/tableContentLink"
+} from "@/components/flows/support/supportTableOfContentLink"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   DoubleContentWrapper,
@@ -24,7 +26,11 @@ import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { getCurrentUser } from "@/lib/auth"
 import { SESSION_COOKIE_EXPIRATION_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  AgencyStatusEnum,
+  UserRolesEnum,
+  UserStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import {
   BadgeCheck,
   BrickWallShield,
@@ -39,9 +45,17 @@ import {
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import {
+  SupportTableStatusRow,
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { AgencyStatusPill, UserStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 
 /*
-  - Account Details (Name, Email, Pwd)
+  - Account Overview (Name, Email, Pwd)
   - Account Security (login, logout)
   - Account settings
   - Agency
@@ -59,10 +73,10 @@ export default async function SupportHelpAccountPage() {
 
   const contentItems: SupportContentItemType[] = [
     {
-      id: "details",
-      title: t("Details.Title"),
+      id: "overview",
+      title: t("Overview.Title"),
       icon: ReceiptText,
-      content: <DetailsContent />,
+      content: <OverviewContent />,
     },
     {
       id: "security",
@@ -166,7 +180,7 @@ export default async function SupportHelpAccountPage() {
         <SideWrapper>
           <SupportSideAccordionWrapper label={t("TableOfContent")}>
             {contentItems.map((item) => (
-              <TableContentLinkButton
+              <SupportTableOfContentLinkButton
                 key={item.id}
                 href={`#${item.id}`}
                 label={item.title}
@@ -176,7 +190,7 @@ export default async function SupportHelpAccountPage() {
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item, index) => (
-              <QuickActionLinkButton
+              <SupportQuickActionLinkButton
                 key={index}
                 href={item.href}
                 icon={item.icon}
@@ -190,13 +204,48 @@ export default async function SupportHelpAccountPage() {
   )
 }
 
-async function DetailsContent() {
-  const t = await getTranslations("Dashboard.SupportAccountHelp.Details")
+async function OverviewContent() {
+  const t = await getTranslations("Dashboard.SupportAccountHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("ViewDetails")}</RyogoCaption>
-      {/* //TODO: Add details page snapshot */}
-      <SupportContentLinkButton href={"/dashboard/account"} label={t("CTA")} />
+      <SupportContentSectionWrapper title={t("ViewDetails.Title")}>
+        <RyogoCaption color="slate">
+          {t("ViewDetails.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add details page snapshot */}
+        <RyogoImage
+          alt="View Details"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/account"}
+          label={t("ViewDetails.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("EditDetails.Title")}>
+        <RyogoCaption color="slate">
+          {t("EditDetails.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("StatusList.Title")}>
+        <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("StatusList.Caption")}>
+          <SupportTableStatusRow desc={t("StatusList.New")}>
+            <UserStatusPill status={UserStatusEnum.NEW} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Active")}>
+            <UserStatusPill status={UserStatusEnum.ACTIVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Inactive")}>
+            <UserStatusPill status={UserStatusEnum.INACTIVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Suspended")}>
+            <UserStatusPill status={UserStatusEnum.SUSPENDED} />
+          </SupportTableStatusRow>
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -205,20 +254,39 @@ async function SecurityContent({ isOwner }: { isOwner: boolean }) {
   const t = await getTranslations("Dashboard.SupportAccountHelp.Security")
   return (
     <>
-      <RyogoCaption color="slate">{t("ChangePassword")}</RyogoCaption>
-      {/* //TODO: Add change password page snapshot */}
-      <RyogoCaption color="slate">
-        {isOwner ? t("ChangePhoneOwner") : t("ChangePhoneOthers")}
-      </RyogoCaption>
-      <RyogoCaption color="slate">
-        {t("Session", {
-          days: SESSION_COOKIE_EXPIRATION_DAYS,
-        })}
-      </RyogoCaption>
-      <SupportContentLinkButton
-        href={"/dashboard/account/change-password"}
-        label={t("CTA")}
-      />
+      <SupportContentSectionWrapper title={t("ChangePassword.Title")}>
+        <RyogoCaption color="slate">
+          {t("ChangePassword.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add change password page snapshot */}
+        <RyogoImage
+          alt="Change Password"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/account/change-password"}
+          label={t("ChangePassword.CTA")}
+        />
+        <RyogoCaption color="slate">
+          {isOwner
+            ? t("ChangePassword.ChangePhoneOwner")
+            : t("ChangePassword.ChangePhoneOthers")}
+        </RyogoCaption>
+        <SupportWarningWrapper
+          text={t("ChangePassword.PasswordBestPractice")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Login.Title")}>
+        <RyogoCaption color="slate">{t("Login.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("Login.Session", {
+            days: SESSION_COOKIE_EXPIRATION_DAYS,
+          })}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("Login.Logout")}</RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -226,14 +294,22 @@ async function SecurityContent({ isOwner }: { isOwner: boolean }) {
 async function SettingsContent() {
   const t = await getTranslations("Dashboard.SupportAccountHelp.Settings")
   return (
-    <>
-      <RyogoCaption color="slate">{t("ChangePreferences")}</RyogoCaption>
+    <SupportContentSectionWrapper title={t("ChangePreferences.Title")}>
+      <RyogoCaption color="slate">
+        {t("ChangePreferences.Description")}
+      </RyogoCaption>
       {/* //TODO: Add settings page snapshot */}
-      <SupportContentLinkButton
-        href={"/dashboard/account/settings"}
-        label={t("CTA")}
+      <RyogoImage
+        alt="Change Preferences"
+        imageSize="xl"
+        src="/logoPWA.png"
+        className="self-center"
       />
-    </>
+      <SupportContentCTALinkButton
+        href={"/dashboard/account/settings"}
+        label={t("ChangePreferences.CTA")}
+      />
+    </SupportContentSectionWrapper>
   )
 }
 
@@ -241,13 +317,46 @@ async function AgencyContent({ isOwner }: { isOwner: boolean }) {
   const t = await getTranslations("Dashboard.SupportAccountHelp.Agency")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-      {isOwner && <RyogoCaption color="slate">{t("Change")}</RyogoCaption>}
-      {/* //TODO: Add agency details page snapshot */}
-      <SupportContentLinkButton
-        href={"/dashboard/account/agency"}
-        label={t("CTA")}
-      />
+      <SupportContentSectionWrapper title={t("AgencyDetails.Title")}>
+        <RyogoCaption color="slate">
+          {t("AgencyDetails.Description")}
+        </RyogoCaption>
+        {isOwner && (
+          <RyogoCaption color="slate">{t("AgencyDetails.Change")}</RyogoCaption>
+        )}
+        {/* //TODO: Add agency details page snapshot */}
+        <RyogoImage
+          alt="Agency Details"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/account/agency"}
+          label={t("AgencyDetails.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      {isOwner && (
+        <SupportContentSectionWrapper title={t("StatusList.Title")}>
+          <RyogoCaption color="slate">
+            {t("StatusList.Description")}
+          </RyogoCaption>
+          <SupportTableWrapper label={t("StatusList.Caption")}>
+            <SupportTableStatusRow desc={t("StatusList.New")}>
+              <AgencyStatusPill status={AgencyStatusEnum.NEW} />
+            </SupportTableStatusRow>
+            <SupportTableStatusRow desc={t("StatusList.Active")}>
+              <AgencyStatusPill status={AgencyStatusEnum.ACTIVE} />
+            </SupportTableStatusRow>
+            <SupportTableStatusRow desc={t("StatusList.Inactive")}>
+              <AgencyStatusPill status={AgencyStatusEnum.INACTIVE} />
+            </SupportTableStatusRow>
+            <SupportTableStatusRow desc={t("StatusList.Suspended")}>
+              <AgencyStatusPill status={AgencyStatusEnum.SUSPENDED} />
+            </SupportTableStatusRow>
+          </SupportTableWrapper>
+        </SupportContentSectionWrapper>
+      )}
     </>
   )
 }
@@ -256,13 +365,56 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
   const t = await getTranslations("Dashboard.SupportAccountHelp.Subscription")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-      {isOwner && <RyogoCaption color="slate">{t("Buy")}</RyogoCaption>}
-      {/* //TODO: Add subscription page snapshot */}
-      <SupportContentLinkButton
-        href={"/dashboard/account/subscription"}
-        label={t("CTA")}
-      />
+      <SupportContentSectionWrapper title={t("PlanDetails.Title")}>
+        <RyogoCaption color="slate">
+          {t("PlanDetails.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add subscription page snapshot */}
+        <RyogoImage
+          alt="Subscription Details"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/account/subscription"}
+          label={t("PlanDetails.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      {isOwner && (
+        <SupportContentSectionWrapper title={t("GettingSubscription.Title")}>
+          <RyogoCaption color="slate">
+            {t("GettingSubscription.Description")}
+          </RyogoCaption>
+          <RyogoCaption color="slate">
+            {t("GettingSubscription.PlanTerms")}
+          </RyogoCaption>
+          {/* //TODO: Add subscription buy page snapshot */}
+          <RyogoImage
+            alt="Subscription Details"
+            imageSize="xl"
+            src="/logoPWA.png"
+            className="self-center"
+          />
+          <SupportContentCTALinkButton
+            href={"/dashboard/account/subscription#getPremium"}
+            label={t("GettingSubscription.CTA")}
+          />
+        </SupportContentSectionWrapper>
+      )}
+      <SupportContentSectionWrapper title={t("PlanList.Title")}>
+        <RyogoCaption color="slate">{t("PlanList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("PlanList.Caption")}>
+          <SupportTableTextRow
+            label={t("PlanList.Basic")}
+            desc={t("PlanList.BasicDescription")}
+          />
+          <SupportTableTextRow
+            label={t("PlanList.Premium")}
+            desc={t("PlanList.PremiumDescription")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }

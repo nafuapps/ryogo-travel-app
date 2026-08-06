@@ -1,6 +1,6 @@
-import QuickActionLinkButton, {
+import SupportQuickActionLinkButton, {
   QuickActionType,
-} from "@/components/flows/support/quickActionLink"
+} from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItem,
@@ -9,9 +9,9 @@ import {
 } from "@/components/flows/support/supportFAQWrapper"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import TableContentLinkButton, {
+import SupportTableOfContentLinkButton, {
   SupportContentItemType,
-} from "@/components/flows/support/tableContentLink"
+} from "@/components/flows/support/supportTableOfContentLink"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import {
   DoubleContentWrapper,
@@ -146,7 +146,7 @@ export default async function SupportHelpCustomersPage() {
         <SideWrapper>
           <SupportSideAccordionWrapper label={t("TableOfContent")}>
             {contentItems.map((item) => (
-              <TableContentLinkButton
+              <SupportTableOfContentLinkButton
                 key={item.id}
                 href={`#${item.id}`}
                 label={item.title}
@@ -156,7 +156,7 @@ export default async function SupportHelpCustomersPage() {
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item) => (
-              <QuickActionLinkButton
+              <SupportQuickActionLinkButton
                 key={item.label}
                 href={item.href}
                 icon={item.icon}

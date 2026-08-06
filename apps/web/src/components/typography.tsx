@@ -104,7 +104,7 @@ export function RyogoSmall(props: RyogoTextProps) {
 export function RyogoCaption(props: RyogoTextProps) {
   return (
     <span
-      className={`text-[11px] lg:text-xs ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
+      className={`text-xs ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </span>

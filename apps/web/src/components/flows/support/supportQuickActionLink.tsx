@@ -10,7 +10,7 @@ export type QuickActionType = {
   icon: LucideIcon
 }
 
-export default function QuickActionLinkButton({
+export default function SupportQuickActionLinkButton({
   href,
   label,
   icon,

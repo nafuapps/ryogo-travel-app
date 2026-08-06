@@ -7,9 +7,9 @@ import {
 } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
 import { Separator } from "@/components/ui/separator"
-import QuickActionLinkButton, {
+import SupportQuickActionLinkButton, {
   QuickActionType,
-} from "@/components/flows/support/quickActionLink"
+} from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItemType,
@@ -18,9 +18,9 @@ import {
 } from "@/components/flows/support/supportFAQWrapper"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import TableContentLinkButton, {
+import SupportTableOfContentLinkButton, {
   SupportContentItemType,
-} from "@/components/flows/support/tableContentLink"
+} from "@/components/flows/support/supportTableOfContentLink"
 import {
   Telescope,
   SquarePen,
@@ -122,7 +122,7 @@ export default async function MySupportHelpMissionsPage() {
         <SideWrapper>
           <SupportSideAccordionWrapper label={t("TableOfContent")}>
             {contentItems.map((item) => (
-              <TableContentLinkButton
+              <SupportTableOfContentLinkButton
                 key={item.id}
                 href={`#${item.id}`}
                 label={item.title}
@@ -132,7 +132,7 @@ export default async function MySupportHelpMissionsPage() {
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
             {quickActions.map((item, index) => (
-              <QuickActionLinkButton
+              <SupportQuickActionLinkButton
                 key={index}
                 href={item.href}
                 icon={item.icon}

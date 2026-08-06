@@ -68,13 +68,13 @@ const bigSequenceValues = {
 export enum AgencyStatusEnum {
   NEW = "new",
   ACTIVE = "active",
-  EXPIRED = "expired",
+  INACTIVE = "inactive",
   SUSPENDED = "suspended",
 }
 export const agencyStatus = pgEnum("agency_status", [
   AgencyStatusEnum.NEW,
   AgencyStatusEnum.ACTIVE,
-  AgencyStatusEnum.EXPIRED,
+  AgencyStatusEnum.INACTIVE,
   AgencyStatusEnum.SUSPENDED,
 ])
 export enum SubscriptionPlanEnum {

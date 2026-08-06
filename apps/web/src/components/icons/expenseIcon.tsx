@@ -10,7 +10,7 @@ import {
 } from "lucide-react"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 
-export default function getExpenseIcon(type: ExpenseTypesEnum) {
+export default function ExpenseIcon({ type }: { type: ExpenseTypesEnum }) {
   switch (type) {
     case ExpenseTypesEnum.FOOD:
       return <RyogoEnclosedIcon icon={Pizza} size="sm" circular />

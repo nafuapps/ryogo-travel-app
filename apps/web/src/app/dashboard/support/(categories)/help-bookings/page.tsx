@@ -22,7 +22,7 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import {
   Tickets,
@@ -47,10 +47,26 @@ import {
   SupportTableTextRow,
   SupportTableWrapper,
 } from "@/components/flows/support/supportTableWrapper"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import { BookingStatusPill } from "@/components/pills/ryogoPills"
+import {
+  BookingStatusEnum,
+  ExpenseTypesEnum,
+  TripLogTypesEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusPill,
+  TripLogStatusPill,
+} from "@/components/pills/ryogoPills"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import { getCurrentUser } from "@/lib/auth"
+import { redirect, RedirectType } from "next/navigation"
+import ExpenseIcon from "@/components/icons/expenseIcon"
+import {
+  SupportListItem,
+  SupportListWrapper,
+} from "@/components/flows/support/supportListWrapper"
 /*
   - Overview
   - Creation
@@ -68,6 +84,11 @@ import SupportContentCTALinkButton from "@/components/flows/support/supportConte
 */
 
 export default async function SupportHelpBookingsPage() {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
   const t = await getTranslations("Dashboard.SupportBookingsHelp")
 
   const contentItems: SupportContentItemType[] = [
@@ -105,13 +126,13 @@ export default async function SupportHelpBookingsPage() {
       id: "reconciling",
       title: t("Reconciling.Title"),
       icon: ScanEye,
-      content: <ReconcilingContent />,
+      content: <ReconcilingContent isOwner={isOwner} />,
     },
     {
       id: "assignment",
       title: t("Assignment.Title"),
       icon: ListTodo,
-      content: <AssignmentContent />,
+      content: <AssignmentContent isOwner={isOwner} />,
     },
     {
       id: "transactions",
@@ -244,6 +265,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatIsBooking.Description")}
         </RyogoCaption>
+        {/* //TODO: Add booking details page snapshot */}
         <RyogoImage
           alt="Booking overview"
           imageSize="xl"
@@ -258,6 +280,10 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("Elements.Title")}>
         <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
         <SupportTableWrapper label={t("Elements.Caption")}>
+          <SupportTableTextRow
+            label={t("Elements.BasicInfo")}
+            desc={t("Elements.BasicInfoDesc")}
+          />
           <SupportTableTextRow
             label={t("Elements.Customer")}
             desc={t("Elements.CustomerDesc")}
@@ -320,11 +346,68 @@ async function CreationContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Creation")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-      <RyogoSmall color="slate" weight="font-bold">
-        {t("Steps.Title")}
-      </RyogoSmall>
-      <RyogoCaption color="slate">{t("Lead")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("HowToCreate.Title")}>
+        <RyogoCaption color="slate">
+          {t("HowToCreate.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step1.Title")}>
+        <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
+        {/* //TODO: Add booking step1 page snapshot */}
+        <RyogoImage
+          alt="Booking step1"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings/new"}
+          label={t("Step1.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step2.Title")}>
+        <RyogoCaption color="slate">{t("Step2.Description")}</RyogoCaption>
+        {/* //TODO: Add booking step2 page snapshot */}
+        <RyogoImage
+          alt="Booking step2"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step3.Title")}>
+        <RyogoCaption color="slate">{t("Step3.Description")}</RyogoCaption>
+        {/* //TODO: Add booking step3 page snapshot */}
+        <RyogoImage
+          alt="Booking step3"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step4.Title")}>
+        <RyogoCaption color="slate">{t("Step4.Description")}</RyogoCaption>
+        {/* //TODO: Add booking step4 page snapshot */}
+        <RyogoImage
+          alt="Booking step4"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step5.Title")}>
+        <RyogoCaption color="slate">{t("Step5.Description")}</RyogoCaption>
+        {/* //TODO: Add booking step5 page snapshot */}
+        <RyogoImage
+          alt="Booking step5"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportWarningWrapper text={t("Lead")} />
+      <SupportWarningWrapper text={t("ShareQuote")} />
+      <SupportWarningWrapper text={t("Default")} />
     </>
   )
 }
@@ -333,7 +416,32 @@ async function PriceContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Price")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("FinalPrice.Title")}>
+        <RyogoCaption color="slate">{t("FinalPrice.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("FinalPrice.Example")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Elements.Title")}>
+        <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Elements.Caption")}>
+          <SupportTableTextRow
+            label={t("Elements.VehicleRate")}
+            desc={t("Elements.VehicleRateDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.DriverAllowance")}
+            desc={t("Elements.DriverAllowanceDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.ACCharge")}
+            desc={t("Elements.ACChargeDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Commission")}
+            desc={t("Elements.CommissionDesc")}
+          />
+        </SupportTableWrapper>
+        <SupportWarningWrapper text={t("Elements.FuelCharges")} />
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -341,35 +449,105 @@ async function PriceContent() {
 async function ConfirmationContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Confirmation")
   return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
+    <SupportContentSectionWrapper title={t("Confirming.Title")}>
+      <RyogoCaption color="slate">{t("Confirming.Description")}</RyogoCaption>
+      <RyogoCaption color="slate">{t("Confirming.Step1")}</RyogoCaption>
+      <RyogoCaption color="slate">{t("Confirming.Step2")}</RyogoCaption>
+      {/* //TODO: Add confirm booking page snapshot */}
+      <RyogoImage
+        alt="Confirm booking"
+        imageSize="xl"
+        src="/logoPWA.png"
+        className="self-center"
+      />
+      <SupportWarningWrapper text={t("Confirming.Share")} />
+    </SupportContentSectionWrapper>
   )
 }
 
 async function CancellationContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Cancellation")
   return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
+    <SupportContentSectionWrapper title={t("Cancelling.Title")}>
+      <RyogoCaption color="slate">{t("Cancelling.Description")}</RyogoCaption>
+      <RyogoCaption color="slate">{t("Cancelling.Step")}</RyogoCaption>
+      <SupportWarningWrapper text={t("Cancelling.Warning")} />
+      <SupportWarningWrapper text={t("Cancelling.Share")} />
+    </SupportContentSectionWrapper>
   )
 }
 
-async function ReconcilingContent() {
+async function ReconcilingContent({ isOwner }: { isOwner: boolean }) {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Reconciling")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhyReconcile.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhyReconcile.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("WhyReconcile.Reason")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      {isOwner && (
+        <SupportContentSectionWrapper title={t("Reconciling.Title")}>
+          <RyogoCaption color="slate">{t("Reconciling.Step")}</RyogoCaption>
+          <RyogoCaption color="slate">{t("Reconciling.Process")}</RyogoCaption>
+          {/* //TODO: Add reconciling page snapshot */}
+          <RyogoImage
+            alt="Booking step1"
+            imageSize="xl"
+            src="/logoPWA.png"
+            className="self-center"
+          />
+        </SupportContentSectionWrapper>
+      )}
     </>
   )
 }
 
-async function AssignmentContent() {
+async function AssignmentContent({ isOwner }: { isOwner: boolean }) {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Assignment")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("AssignVehicle.Title")}>
+        <RyogoCaption color="slate">
+          {t("AssignVehicle.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("AssignVehicle.Reassign")}</RyogoCaption>
+        {/* //TODO: Add assign vehicle snapshot */}
+        <RyogoImage
+          alt="Assign Vehicle"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("AssignDriver.Title")}>
+        <RyogoCaption color="slate">
+          {t("AssignDriver.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("AssignDriver.Reassign")}</RyogoCaption>
+        {/* //TODO: Add assign driver snapshot */}
+        <RyogoImage
+          alt="Assign Driver"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      {isOwner && (
+        <SupportContentSectionWrapper title={t("ReassignUser.Title")}>
+          <RyogoCaption color="slate">
+            {t("ReassignUser.Description")}
+          </RyogoCaption>
+          {/* //TODO: Add assign user snapshot */}
+          <RyogoImage
+            alt="Reassign User"
+            imageSize="xl"
+            src="/logoPWA.png"
+            className="self-center"
+          />
+        </SupportContentSectionWrapper>
+      )}
     </>
   )
 }
@@ -378,7 +556,60 @@ async function TransactionsContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Transactions")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsTransaction.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsTransaction.Definition")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatIsTransaction.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add All Transactions snapshot */}
+        <RyogoImage
+          alt="Transactions"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("AddingTransaction.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingTransaction.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("AddingTransaction.Process")}
+        </RyogoCaption>
+        {/* //TODO: Add New Transaction snapshot */}
+        <RyogoImage
+          alt="New Transaction"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ModifyingTransaction.Title")}>
+        <RyogoCaption color="slate">
+          {t("ModifyingTransaction.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add New Transaction snapshot */}
+        <RyogoImage
+          alt="Modify Transaction"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ApprovingTransaction.Title")}>
+        <RyogoCaption color="slate">
+          {t("ApprovingTransaction.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add Approving Transaction snapshot */}
+        <RyogoImage
+          alt="Approving Transaction"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -387,7 +618,86 @@ async function ExpensesContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Expenses")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsExpense.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsExpense.Definition")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatIsExpense.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add All Expenses snapshot */}
+        <RyogoImage
+          alt="Expenses"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("AddingExpense.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingExpense.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("AddingExpense.Process")}</RyogoCaption>
+        {/* //TODO: Add New Expense snapshot */}
+        <RyogoImage
+          alt="New expense"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ModifyingExpense.Title")}>
+        <RyogoCaption color="slate">
+          {t("ModifyingExpense.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add New expense snapshot */}
+        <RyogoImage
+          alt="Modify expense"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ApprovingExpense.Title")}>
+        <RyogoCaption color="slate">
+          {t("ApprovingExpense.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add Approving Expense snapshot */}
+        <RyogoImage
+          alt="Approving Expense"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ExpenseTypes.Title")}>
+        <RyogoCaption color="slate">
+          {t("ExpenseTypes.Description")}
+        </RyogoCaption>
+        <SupportListWrapper>
+          <SupportListItem label={t("ExpenseTypes.Fuel")}>
+            <ExpenseIcon type={ExpenseTypesEnum.FUEL} />
+          </SupportListItem>
+          <SupportListItem label={t("ExpenseTypes.Toll")}>
+            <ExpenseIcon type={ExpenseTypesEnum.TOLL} />
+          </SupportListItem>
+          <SupportListItem label={t("ExpenseTypes.Parking")}>
+            <ExpenseIcon type={ExpenseTypesEnum.PARKING} />
+          </SupportListItem>
+          <SupportListItem label={t("ExpenseTypes.Maintenance")}>
+            <ExpenseIcon type={ExpenseTypesEnum.MAINTENANCE} />
+          </SupportListItem>
+          <SupportListItem label={t("ExpenseTypes.AC")}>
+            <ExpenseIcon type={ExpenseTypesEnum.AC} />
+          </SupportListItem>
+          <SupportListItem label={t("ExpenseTypes.Food")}>
+            <ExpenseIcon type={ExpenseTypesEnum.FOOD} />
+          </SupportListItem>
+          <SupportListItem label={t("ExpenseTypes.Other")}>
+            <ExpenseIcon type={ExpenseTypesEnum.OTHER} />
+          </SupportListItem>
+        </SupportListWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -396,7 +706,41 @@ async function TripLogsContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.TripLogs")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsTripLog.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsTripLog.Definition")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatIsTripLog.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add All TripLog snapshot */}
+        <RyogoImage
+          alt="TripLogs"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("TypeList.Title")}>
+        <RyogoCaption color="slate">{t("TypeList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("TypeList.Caption")}>
+          <SupportTableStatusRow desc={t("TypeList.Started")}>
+            <TripLogStatusPill status={TripLogTypesEnum.STARTED} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("TypeList.Arrived")}>
+            <TripLogStatusPill status={TripLogTypesEnum.ARRIVED} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("TypeList.PickedUp")}>
+            <TripLogStatusPill status={TripLogTypesEnum.PICKED_UP} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("TypeList.Dropped")}>
+            <TripLogStatusPill status={TripLogTypesEnum.DROPPED} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("TypeList.Ended")}>
+            <TripLogStatusPill status={TripLogTypesEnum.ENDED} />
+          </SupportTableStatusRow>
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }

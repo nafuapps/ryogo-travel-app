@@ -1,4 +1,4 @@
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import {
   Table,
   TableBody,
@@ -58,9 +58,9 @@ export function SupportTableTextRow({
   return (
     <TableRow>
       <TableCell>
-        <RyogoSmall color="slate" weight="font-bold">
+        <RyogoCaption color="slate" weight="font-bold">
           {label}
-        </RyogoSmall>
+        </RyogoCaption>
       </TableCell>
       <TableCell>
         <RyogoCaption color="slate" className="text-wrap">

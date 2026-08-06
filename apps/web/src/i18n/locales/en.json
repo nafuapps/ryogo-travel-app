@@ -2848,13 +2848,15 @@
         "Title": "BOOKING OVERVIEW",
         "WhatIsBooking": {
           "Title": "WHAT IS A BOOKING?",
-          "Description": "A booking is a trip from one location to another with a driver and a vehicle.",
+          "Description": "A booking is a trip booked by a customer at your agency from one location to another with a driver and a vehicle to fulfill it.",
           "CTA": "View all bookings"
         },
         "Elements": {
           "Title": "BOOKING ELEMENTS",
-          "Description": "A booking consists of the following elements:",
+          "Description": "A booking consists of the various elements.",
           "Caption": "A list of booking elements",
+          "BasicInfo": "BASIC INFO",
+          "BasicInfoDesc": "Basic details about the booking like booking ID, status, assigned agent, etc.",
           "Customer": "CUSTOMER",
           "CustomerDesc": "Details about customer like name, phone number, address, etc.",
           "TripDetails": "TRIP DETAILS",
@@ -2862,115 +2864,199 @@
           "Assignment": "ASSIGNMENT",
           "AssignmentDesc": "Vehicle and Driver assigned for the booking.",
           "Variables": "VARIABLES",
-          "VariablesDesc": "Factors which will decide the price of the booking, such as distance, vehicle rate per km, driver allowance per day, etc.",
+          "VariablesDesc": "Factors which will decide the price of the booking, such as distance, vehicle rate per km, driver allowance per day, commission rate, etc.",
           "Price": "PRICE",
-          "PriceDesc": "Final price calculated based on all the above factors.",
+          "PriceDesc": "Final price calculated based on all the above factors. Once booking is created, this cannot be changed.",
           "Expenses": "EXPENSES",
-          "ExpensesDesc": "All the extra cost incurred on the road, like fuel, toll, etc.",
+          "ExpensesDesc": "All the extra cost incurred after the trip starts, like fuel, toll, etc.",
           "Transactions": "TRANSACTIONS",
-          "TransactionsDesc": "All the transactions related to the booking, like payment from customer, cash given to/from driver, etc.",
+          "TransactionsDesc": "All the money transactions related to the booking, like payment from customer, cash given to/from driver, etc.",
           "TripLogs": "TRIP LOGS",
           "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end."
         },
         "StatusList": {
           "Title": "BOOKING STATUS",
-          "Description": "A booking can have the following statuses:",
+          "Description": "A booking will have the different status based on the progress of the trip.",
           "Caption": "A list of booking status",
-          "Lead": "A booking that is created but not yet confirmed by the assigned agent",
-          "Confirmed": "A booking that is confirmed by the assigned agent with pickup time and address and has been shared with the customer and the driver",
-          "InProgress": "A booking that is currently being executed by the driver",
-          "Completed": "A booking that is completed by the driver and marked as completed by the assigned agent",
-          "Cancelled": "A booking that has been cancelled by the assigned agent. An old lead booking is auto cancelled if the date has passed."
+          "Lead": "A booking that is created but not yet confirmed by the assigned agent.",
+          "Confirmed": "A booking that has been confirmed by the assigned agent with pickup time and address. It can now be shared with the customer and the driver.",
+          "InProgress": "A booking that is currently being executed by the driver on the road.",
+          "Completed": "A booking that has been completed by the driver.",
+          "Cancelled": "A booking that has been cancelled by the assigned agent. A booking which once started by the driver cannot be cancelled. (An old lead booking is automatically cancelled by the system if the trip date has passed.)"
         }
       },
       "Creation": {
         "Title": "CREATING A BOOKING",
-        "Description": "You can create a booking by going to the 'New Booking' page and filling in the required details like customer, vehicle, driver, trip details and more.",
-        "Steps": {
-          "Title": "Steps to create a booking:",
-          "Step1": "Select a customer or add a new customer",
-          "Step2": "Provide the trip details like source, destination, date and time",
-          "Step3": "Choose a vehicle and driver for the trip (optional)",
-          "Step4": "Enter price details like vehicle fare, driver allowance and commission",
-          "Step5": "Review the booking details and create the booking"
+        "HowToCreate": {
+          "Title": "How to create a booking?",
+          "Description": "You can create a booking by going to the 'New Booking' page and filling in the required details like customer, vehicle, driver, trip details and more."
         },
-        "Lead": "Upon creation the booking will still be a Lead and will have to be confirmed by the assigned agent with pickup time and address.",
-        "ShareQuote": "A quote for created booking can be shared with the customer over Whatsapp.",
-        "Default": "The system will automatically calculate the final price based on distance and default fare values set in your agency details. Although you can change the price details while creating a booking in Step 4.",
-        "CTA": "Create a new booking"
+        "Step1": {
+          "Title": "Step1: Customer details",
+          "Description": "Find and select a customer using phone number. If not found, you can add a new customer",
+          "CTA": "Create a new booking"
+        },
+        "Step2": {
+          "Title": "Step2: Trip details",
+          "Description": "Provide the trip details like source, destination, type, number of passengers, dates, etc."
+        },
+        "Step3": {
+          "Title": "Step3: Assignment",
+          "Description": "Choose a vehicle and driver for the trip (This is optional during creation)."
+        },
+        "Step4": {
+          "Title": "Step4: Variables",
+          "Description": "Enter the variable details like vehicle fare, driver allowance and commission rate to calculate the final price."
+        },
+        "Step5": {
+          "Title": "Step5: Finalize & Create",
+          "Description": "Review the booking details and create the booking. If you want, you can go back to previous steps and change any details. Once booking is created, details cannot be changed."
+        },
+        "Lead": "Upon creation the booking will still be a Lead and will have to be confirmed by the assigned agent with pickup time and address from the customer.",
+        "ShareQuote": "A booking quotation for a created lead booking (pdf) can be shared with the customer over Whatsapp. So that the customer can review the details and confirm the trip.",
+        "Default": "The system will automatically calculate the final price based on distance and default variables set in your agency details. However, you can change these variables while creating a booking in Step 4."
       },
       "Price": {
         "Title": "PRICE & COMMISSION",
-        "Description": "Price details are the fare for the trip and the commission that will be added to the booking quote. The price details are calculated based on the vehicle fare, driver allowance and commission rate set by default in your agency details.",
-        "Elements": "The price details consist of the following elements:",
-        "ElementsList": {
-          "VehicleFare": "Vehicle Fare: The fare for the vehicle based on distance.",
-          "DriverAllowance": "Driver Allowance: The allowance paid to the driver for the trip on per day basis",
-          "ACCharge": "AC Charge: The extra charge for AC vehicles (if applicable) on per day basis",
-          "Commission": "Commission: The extra commission added to the booking quote"
+        "FinalPrice": {
+          "Title": "Final Price",
+          "Description": "The final price is calculated based on the distance between source and destination, trip type, vehicle raet per km, driver allowance per day and commission rate.",
+          "Example": "For example, if the trip is one-way with a distance of 100 km, the final price will be 100 x 10 (vehicle rate per km) + 500 (driver allowance for one day) with a 10% (commission rate) = Rs. 1650"
         },
-        "FuelCharges": "You can choose to include fuel charges in the vehicle fare or add them later as additional expenses."
+        "Elements": {
+          "Title": "Price Elements",
+          "Description": "The price details consist of the following elements:",
+          "Caption": "A list of price elements",
+          "VehicleRate": "VEHICLE RATE",
+          "VehicleRateDesc": "The rate for the vehicle per Km. (Min ₹0, Max ₹100)",
+          "DriverAllowance": "DRIVER ALLOWANCE",
+          "DriverAllowanceDesc": "The allowance for the driver per day. (Min ₹0, Max ₹10000)",
+          "ACCharge": "AC CHARGE",
+          "ACChargeDesc": "The extra charge for AC vehicles (if applicable) on per day basis. (Min ₹0, Max ₹10000)",
+          "Commission": "COMMISSION",
+          "CommissionDesc": "The commission added by the agency. (Min 0%, Max 100%)",
+          "FuelCharges": "You can choose to include fuel charges in the vehicle rate itself or add them later as additional expenses."
+        }
       },
       "Confirmation": {
         "Title": "CONFIRMATION",
-        "Description": "Once a booking is created, it can be confirmed by the assigned agent with pickup time and address. You can confirm a trip by going to the lead booking details page and clicking on 'Confirm Trip'.",
-        "Steps": {
-          "Title": "Steps to confirm a trip:",
-          "Step1": "Provide the pickup time and address and the drop address (if applicable)",
-          "Step2": "Review the booking details and confirm the trip"
-        },
-        "ShareConfirmation": "Once a booking is confirmed, it can be shared with the customer over Whatsapp."
+        "Confirming": {
+          "Title": "Confirming a booking",
+          "Description": "Once a booking is created, it must be confirmed by the assigned agent (or owner) with pickup time and address, before it can be started.",
+          "Step1": "Step1: Provide the pickup time and address and the drop address.",
+          "Step2": "Step2: Review the booking details and click on 'Confirm Trip'.",
+          "Share": "Once a booking is confirmed, it can now be shared (as a pdf) with the customer over Whatsapp. Also, the assigned driver will receive booking in their app."
+        }
       },
       "Cancellation": {
         "Title": "CANCELLATION",
-        "Description": "A booking can be cancelled by the assigned agent or the agency owner. You can cancel a trip by going to the booking details page and clicking on 'Cancel Trip'. A booking once cancelled, cannot be undone.",
-        "Warning": " A booking which has started cannot be cancelled. That is, only a LEAD or CONFIRMED booking can be cancelled.",
-        "ShareCancellation": "If a confirmed booking is cancelled, a cancellation message can be shared with the customer over Whatsapp."
+        "Cancelling": {
+          "Title": "Cancelling a booking",
+          "Description": "A booking can be cancelled by the assigned agent (or owner).",
+          "Step": "You can cancel a trip by going to the booking details page and clicking on 'Cancel Trip'. A booking once cancelled, cannot be undone.",
+          "Warning": " A booking which has started cannot be cancelled. That is, only a LEAD or CONFIRMED booking can be cancelled.",
+          "Share": "If a confirmed booking is cancelled, a cancellation message can be shared with the customer over Whatsapp."
+        }
       },
       "Reconciling": {
         "Title": "RECONCILING",
-        "Description": "Once a booking is completed, it can be reconciled by the owner. You can reconcile a trip by going to the completed booking details page and clicking on 'Reconcile Trip'.",
-        "Process": "As part of reconciling, you can add any additional expenses incurred during the trip and mark the trip as reconciled. Once a trip is reconciled, it cannot be undone."
+        "WhyReconcile": {
+          "Title": "Why reconcile a booking",
+          "Description": "Once a booking is completed, it can be reconciled by the owner. This is an optional step to ensure the authenticity of the trip completion and the final amount.",
+          "Reason": "Reconciling helps make sure all the bills and expenses are added correctly for the booking and the final amount is calculated correctly. It also helps to get a complete picture of your revenue."
+        },
+        "Reconciling": {
+          "Title": "Reconciling a booking",
+          "Step": "You can reconcile a trip by going to the completed booking details page and clicking on 'Reconcile Trip'.",
+          "Process": "As part of reconciling, you can add any additional expenses incurred during the trip and mark the trip as reconciled. Once a trip is reconciled, it cannot be undone."
+        }
       },
       "Assignment": {
         "Title": "ASSIGNMENT",
-        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'.",
-        "Steps": {
-          "Title": "Steps to assign a trip:",
-          "Step1": "Select a driver and vehicle for the trip",
-          "Step2": "Provide the pickup time and address",
-          "Step3": "Confirm the assignment"
+        "AssignVehicle": {
+          "Title": "Assigning a vehicle",
+          "Description": "You must assign a vehicle to a booking before it can start. You can assign a vehicle by going to the booking details page and clicking on 'Assign Vehicle'.",
+          "Reassign": "You may also reassign another vehicle to a booking. This can be done only until the trip starts."
+        },
+        "AssignDriver": {
+          "Title": "Assigning a driver",
+          "Description": "You must also assign a driver to a booking. You can assign a driver by going to the booking details page and clicking on 'Assign Driver'. Once assigned, the driver will be able to see the booking in their app.",
+          "Reassign": "You may also reassign another driver to a booking. This can be done only until the trip starts."
+        },
+        "ReassignUser": {
+          "Title": "Reassigning a user",
+          "Description": "As owner, you can also reassign the booking to another agent or yourself. You can reassign user by going to the booking details page and clicking on 'Change Agent'. Once reassigned, the new agent will be able to see the booking in their app."
         }
       },
       "Transactions": {
         "Title": "TRANSACTIONS",
-        "Description": "You can view all transactions related details like amount, date, mode, and more by going to your transaction details page.",
-        "Steps": {
-          "Title": "Steps to add a transaction:",
-          "Step1": "Select the type of transaction (Payment, Refund, Other)",
-          "Step2": "Provide the amount, date and mode for the transaction",
-          "Step3": "Confirm the transaction"
+        "WhatIsTransaction": {
+          "Title": "What is a transaction?",
+          "Definition": "A transaction is any money movement related to the booking that you may want to log. Such as (advance or final) payment from customer, cash handed to driver before trip, or received from driver after trip, etc.",
+          "Description": "You can view all transactions related details like amount, date, mode, and more by going to transaction details tab under a booking."
+        },
+        "AddingTransaction": {
+          "Title": "Adding a transaction",
+          "Description": "The assigned agent (or owner) can add a transaction by going to the booking transactions page and clicking on 'Add Transaction'.",
+          "Process": "To add a transaction, you must provide the following details: type (credit/debit), amount, payment mode (upi, cash, etc.), other party (customer/driver), photo proof (optional), and remarks (optional)"
+        },
+        "ModifyingTransaction": {
+          "Title": "Modifying a transaction",
+          "Description": "The assigned agent (or owner) can modify a transaction by going to the booking transactions page and clicking on 'Edit' against a transaction'. All the details can be edited."
+        },
+        "ApprovingTransaction": {
+          "Title": "Approving a transaction",
+          "Description": "The owner can approve a transaction by going to the booking transactions page and clicking on 'Approve' against a transaction'. This helps during the reconciling process."
         }
       },
       "Expenses": {
         "Title": "EXPENSES",
-        "Description": "You can add any additional expenses incurred during the trip by going to the completed booking details page and clicking on 'Add Expenses'.",
-        "Steps": {
-          "Title": "Steps to add expenses:",
-          "Step1": "Select the type of expense (Fuel, Toll, Parking, Other)",
-          "Step2": "Provide the amount and description for the expense",
-          "Step3": "Confirm the expense"
+        "WhatIsExpense": {
+          "Title": "What is an expense?",
+          "Definition": "An expense is any additional cost incurred during the trip which was paid by the agency/driver but which shall be borne by the customer in final invoice. Such as, fuel, toll, parking, etc.",
+          "Description": "You can view all expenses related details like amount, type, and more by going to expense details tab under a booking."
+        },
+        "AddingExpense": {
+          "Title": "Adding an expense",
+          "Description": "The assigned agent, driver (or owner) can add an expense by going to the booking expenses page and clicking on 'Add Expense'.",
+          "Process": "To add an expense, you must provide the following details: type (fuel, toll, etc.), amount, photo proof (optional), and remarks (optional)"
+        },
+        "ModifyingExpense": {
+          "Title": "Modifying an expense",
+          "Description": "The assigned agent (or owner) can modify an expense by going to the booking expenses page and clicking on 'Edit' against an expense'. All the details can be edited."
+        },
+        "ApprovingExpense": {
+          "Title": "Approving an expense",
+          "Description": "The owner can approve an expense by going to the booking expenses page and clicking on 'Approve' against an expense'. This helps during the reconciling process."
+        },
+        "ExpenseTypes": {
+          "Title": "Expense types",
+          "Description": "This is the list of expense types that are allowed for a booking.",
+          "Fuel": "Fuel",
+          "Toll": "Toll",
+          "Parking": "Parking",
+          "Maintenance": "Maintenance",
+          "AC": "AC",
+          "Food": "Food",
+          "Other": "Other"
         }
       },
       "TripLogs": {
         "Title": "TRIP LOGS",
-        "Description": "A trip log is created as and when driver updates the trip status. You can view all trip logs related details like start time, end time, distance, and more by going to your trip logs details page.",
-        "Status": {
-          "Started": "STARTED: The trip has been started by the driver",
-          "Arrived": "ARRIVED: The driver has arrived at the pickup location",
-          "PickedUp": "PICKED UP: The customer has been picked up by the driver",
-          "Dropped": "DROPPED: The customer has been dropped by the driver",
-          "Ended": "ENDED: The trip has been ended by the driver. The booking is considered as completed."
+        "WhatIsTripLog": {
+          "Title": "What is a trip log?",
+          "Definition": "A trip log is created as and when driver updates the current status of an ongoing trip.",
+          "Description": "You can view all trip logs related details like current trip status, start time, end time, distance, and more by going to your trip logs details tab under booking page."
+        },
+        "TypeList": {
+          "Title": "Trip Log Types",
+          "Description": "These are the different types of trip logs that will be generated for a booking as it progresses. For trips which take place over multiple days, multiple trip logs of same type may be generated.",
+          "Caption": "A list of trip log types",
+          "Started": "The trip has been started by the driver.",
+          "Arrived": "The driver has arrived at the pickup location of the customer.",
+          "PickedUp": "The customer has been picked up by the driver.",
+          "Dropped": "The customer has been dropped by the driver at the destination location.",
+          "Ended": "The trip has been ended by the driver. The booking is now considered as completed."
         }
       },
       "Communication": {
@@ -4538,27 +4624,44 @@
       "Description": "Get help related to bookings like trip assignments, transactions, expenses and more.",
       "Overview": {
         "Title": "BOOKING OVERVIEW",
-        "Definition": "A booking is a trip from one location to another with a driver and a vehicle.",
-        "Elements": "A booking consists of the following elements:",
-        "ElementsList": {
-          "Customer": "",
-          "Vehicle": "",
-          "Driver": "",
-          "Trip details": "",
-          "Price details": "",
-          "Expenses": "",
-          "Transactions": "",
-          "Trip logs": ""
+        "WhatIsBooking": {
+          "Title": "WHAT IS A BOOKING?",
+          "Description": "A booking is a trip booked by a customer at your agency from one location to another with a driver and a vehicle to fulfill it.",
+          "CTA": "View all bookings"
         },
-        "Status": "A booking can have the following statuses:",
+        "Elements": {
+          "Title": "BOOKING ELEMENTS",
+          "Description": "A booking consists of the various elements.",
+          "Caption": "A list of booking elements",
+          "BasicInfo": "BASIC INFO",
+          "BasicInfoDesc": "Basic details about the booking like booking ID, status, assigned agent, etc.",
+          "Customer": "CUSTOMER",
+          "CustomerDesc": "Details about customer like name, phone number, address, etc.",
+          "TripDetails": "TRIP DETAILS",
+          "TripDetailsDesc": "Details about trip like source, destination, type (one-way, round-trip, multi-day), number of passengers, wants AC, pickup date, time, etc.",
+          "Assignment": "ASSIGNMENT",
+          "AssignmentDesc": "Vehicle and Driver assigned for the booking.",
+          "Variables": "VARIABLES",
+          "VariablesDesc": "Factors which will decide the price of the booking, such as distance, vehicle rate per km, driver allowance per day, commission rate, etc.",
+          "Price": "PRICE",
+          "PriceDesc": "Final price calculated based on all the above factors. Once booking is created, this cannot be changed.",
+          "Expenses": "EXPENSES",
+          "ExpensesDesc": "All the extra cost incurred after the trip starts, like fuel, toll, etc.",
+          "Transactions": "TRANSACTIONS",
+          "TransactionsDesc": "All the money transactions related to the booking, like payment from customer, cash given to/from driver, etc.",
+          "TripLogs": "TRIP LOGS",
+          "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end."
+        },
         "StatusList": {
-          "Lead": "Lead: A booking that is created but not yet confirmed by the assigned agent",
-          "Confirmed": "Confirmed: A booking that is confirmed by the assigned agent with pickup time and address and has been shared with the customer and the driver",
-          "InProgress": "In Progress: A booking that is currently being executed by the driver",
-          "Completed": "Completed: A booking that is completed by the driver and marked as completed by the assigned agent",
-          "Cancelled": "Cancelled: A booking that has been cancelled by the assigned agent. An old lead booking is auto cancelled if the date has passed."
-        },
-        "CTA": "View all bookings"
+          "Title": "BOOKING STATUS",
+          "Description": "A booking will have the different status based on the progress of the trip.",
+          "Caption": "A list of booking status",
+          "Lead": "A booking that is created but not yet confirmed by the assigned agent.",
+          "Confirmed": "A booking that has been confirmed by the assigned agent with pickup time and address. It can now be shared with the customer and the driver.",
+          "InProgress": "A booking that is currently being executed by the driver on the road.",
+          "Completed": "A booking that has been completed by the driver.",
+          "Cancelled": "A booking that has been cancelled by the assigned agent. A booking which once started by the driver cannot be cancelled. (An old lead booking is automatically cancelled by the system if the trip date has passed.)"
+        }
       },
       "Assignment": {
         "Title": "ASSIGNMENT",

@@ -20,7 +20,9 @@ import { Separator } from "@/components/ui/separator"
 import SupportQuickActionLinkButton, {
   QuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItemType,
   SupportFAQWrapper,
@@ -33,6 +35,15 @@ import SupportTableOfContentLinkButton, {
 import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import {
+  SupportTableWrapper,
+  SupportTableTextRow,
+  SupportTableStatusRow,
+} from "@/components/flows/support/supportTableWrapper"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { BookingStatusPill } from "@/components/pills/ryogoPills"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 /*
   - Booking Overview
@@ -176,10 +187,83 @@ async function OverviewContent() {
   const t = await getTranslations("Rider.MySupportBookingsHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Definition")}</RyogoCaption>
-      <RyogoCaption color="slate" weight="font-bold">
-        {t("Elements")}
-      </RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsBooking.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsBooking.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add booking details page snapshot */}
+        <RyogoImage
+          alt="Booking overview"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings"}
+          label={t("WhatIsBooking.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Elements.Title")}>
+        <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Elements.Caption")}>
+          <SupportTableTextRow
+            label={t("Elements.BasicInfo")}
+            desc={t("Elements.BasicInfoDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Customer")}
+            desc={t("Elements.CustomerDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.TripDetails")}
+            desc={t("Elements.TripDetailsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Assignment")}
+            desc={t("Elements.AssignmentDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Variables")}
+            desc={t("Elements.VariablesDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Price")}
+            desc={t("Elements.PriceDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Expenses")}
+            desc={t("Elements.ExpensesDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Transactions")}
+            desc={t("Elements.TransactionsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.TripLogs")}
+            desc={t("Elements.TripLogsDesc")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("StatusList.Title")}>
+        <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("StatusList.Caption")}>
+          <SupportTableStatusRow desc={t("StatusList.Lead")}>
+            <BookingStatusPill status={BookingStatusEnum.LEAD} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Confirmed")}>
+            <BookingStatusPill status={BookingStatusEnum.CONFIRMED} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.InProgress")}>
+            <BookingStatusPill status={BookingStatusEnum.IN_PROGRESS} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Completed")}>
+            <BookingStatusPill status={BookingStatusEnum.COMPLETED} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Cancelled")}>
+            <BookingStatusPill status={BookingStatusEnum.CANCELLED} />
+          </SupportTableStatusRow>
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }

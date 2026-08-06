@@ -3,9 +3,12 @@ import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { getRequestConfig } from "next-intl/server"
 import { cookies } from "next/headers"
 
+type Locale = `${UserLangEnum}`
+
 export default getRequestConfig(async () => {
   const store = await cookies()
-  const locale = store.get(LOCALE_COOKIE_NAME)?.value || UserLangEnum.ENGLISH
+  const locale: Locale =
+    (store.get(LOCALE_COOKIE_NAME)?.value as Locale) || UserLangEnum.ENGLISH
 
   return {
     locale,

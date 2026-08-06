@@ -4,7 +4,7 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { format } from "date-fns"
 import Link from "next/link"
-import getExpenseIcon from "@/components/icons/expenseIcon"
+import ExpenseIcon from "@/components/icons/expenseIcon"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 
@@ -27,7 +27,7 @@ export default async function RiderExpenseItem({
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
         <div className="flex flex-col gap-1.5 lg:gap-2 min-w-1/5">
-          {getExpenseIcon(expense.type)}
+          <ExpenseIcon type={expense.type} />
           <RyogoCaption color="light">{expense.id}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-2 lg:gap-3 w-full">

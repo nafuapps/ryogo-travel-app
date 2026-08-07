@@ -34,6 +34,8 @@ import {
   FileClock,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Overview
@@ -45,6 +47,11 @@ import { getTranslations } from "next-intl/server"
   - Documents
 
 */
+
+export const metadata: Metadata = {
+  title: `Vehicles Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpVehiclesPage() {
   const t = await getTranslations("Dashboard.SupportVehiclesHelp")

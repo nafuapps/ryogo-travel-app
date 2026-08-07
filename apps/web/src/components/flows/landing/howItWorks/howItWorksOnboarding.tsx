@@ -69,7 +69,7 @@ export default function HowItWorksOnboardingSection() {
   return (
     <LandingSectionWrapper
       id="onboarding"
-      className=" bg-white dark:bg-slate-900"
+      className=" bg-white dark:bg-slate-950"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
@@ -89,8 +89,8 @@ export default function HowItWorksOnboardingSection() {
         <Link href="#bookings">
           <Button
             size="lg"
-            variant="link"
-            className="gap-1 lg:gap-1.5 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 hover:no-underline"
+            variant="ghost"
+            className="gap-1 lg:gap-1.5 hover:bg-slate-100/80 dark:hover:bg-slate-800/80"
           >
             <RyogoSmall color="light" weight="font-medium">
               {t("ContinueCTA")}

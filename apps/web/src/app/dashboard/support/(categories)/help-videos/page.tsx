@@ -12,6 +12,7 @@ import {
   SupportVideoItemType,
 } from "@/components/flows/support/supportVideoItem"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -20,12 +21,18 @@ import {
 } from "@/components/page/pageWrappers"
 import { FB_LINK, IG_LINK, LI_LINK, YT_LINK } from "@/lib/uiConfig"
 import { Plus } from "lucide-react"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 
 /*
   - Videos
   - Social media
 */
+
+export const metadata: Metadata = {
+  title: `Videos Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpVideosPage() {
   const t = await getTranslations("Dashboard.SupportVideosHelp")

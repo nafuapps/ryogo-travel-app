@@ -4,12 +4,19 @@ import {
 } from "@/components/flows/support/supportBlogItem"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 
 /*
   - Blogs
 */
+
+export const metadata: Metadata = {
+  title: `Blogs Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpBlogsPage() {
   const t = await getTranslations("Dashboard.SupportBlogsHelp")

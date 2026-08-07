@@ -90,7 +90,11 @@ export async function confirmBookingAction(
   //Update confirmation url
   await bookingServices.addConfirmationUrl(id, confirmationUrl)
 
-  //Send booking confirmation pdf to customer over whatsapp
+  if (bookingDetails.customer.email) {
+    //TODO: Share confirmation over email with customer
+  }
+
+  //Get booking confirmation pdf link so that it can be shared to customer over whatsapp
   const confirmationMessage = await getConfirmationMessageLink(
     bookingDetails.customer.phone,
     bookingDetails.customer.name,

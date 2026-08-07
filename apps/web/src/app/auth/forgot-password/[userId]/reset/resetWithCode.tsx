@@ -116,9 +116,9 @@ export default function ResetWithCodePageComponent({
             {isPending ? t("Loading") : t("PrimaryCTA")}
           </Button>
           <Button
-            variant={"link"}
+            variant={"ghost"}
             type="button"
-            size="sm"
+            size="lg"
             onClick={() => {
               router.push(`/auth/forgot-password/${userId}`)
             }}

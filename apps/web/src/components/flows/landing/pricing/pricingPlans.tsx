@@ -19,12 +19,12 @@ export default async function PricingPlansSection() {
     <LandingSectionWrapper id="pricing" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-cyan-200 dark:from-cyan-700 to-sky-50 dark:to-sky-900"
+        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-cyan-200 dark:from-cyan-800 to-sky-50 dark:to-sky-950"
       >
         <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="light" className="text-center max-w-4xl">
+        <RyogoP color="slate" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 w-full">
@@ -77,7 +77,7 @@ export default async function PricingPlansSection() {
         <Link href="#comparision">
           <Button
             size="lg"
-            variant="link"
+            variant="ghost"
             className="gap-1 lg:gap-1.5 hover:bg-sky-100/80 dark:hover:bg-sky-800/80"
           >
             <RyogoSmall color="brand" weight="font-medium">

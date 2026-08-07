@@ -13,7 +13,7 @@ import {
 export default async function HomeFeaturesSection() {
   const t = await getTranslations("Landing.Home.Features")
   return (
-    <LandingSectionWrapper id="features" className="bg-white dark:bg-slate-900">
+    <LandingSectionWrapper id="features" className="bg-white dark:bg-slate-950">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
@@ -66,7 +66,7 @@ function FeatureCard({
   imageSrc: string
 }) {
   return (
-    <div className="flex flex-col gap-4 lg:gap-5 w-full rounded-lg bg-sky-50 dark:bg-sky-900 p-6 lg:p-8">
+    <div className="flex flex-col gap-4 lg:gap-5 w-full rounded-lg bg-sky-50 dark:bg-sky-950 p-6 lg:p-8">
       <div className="w-full aspect-video rounded overflow-hidden relative">
         <Image
           className="object-cover w-full"

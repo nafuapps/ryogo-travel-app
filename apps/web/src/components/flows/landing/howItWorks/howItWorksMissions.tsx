@@ -56,7 +56,10 @@ export default function HowItWorksMissionsSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="missions" className="bg-sky-50 dark:bg-sky-900">
+    <LandingSectionWrapper
+      id="missions"
+      className="bg-sky-50 dark:bg-sky-950/70"
+    >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

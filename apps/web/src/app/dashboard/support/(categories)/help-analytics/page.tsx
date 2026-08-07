@@ -35,6 +35,8 @@ import {
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   TODO
@@ -45,6 +47,11 @@ import SupportSectionHeader from "@/components/flows/support/supportSectionHeade
   - Reports
   - Prediction
 */
+
+export const metadata: Metadata = {
+  title: `Analytics Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpAnalyticsPage() {
   const currentUser = await getCurrentUser()

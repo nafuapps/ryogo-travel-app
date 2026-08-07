@@ -64,7 +64,7 @@ async function FeaturesMenuItem({
   const t = await getTranslations("Landing.Features.Menu")
   return (
     <Link
-      className="group relative flex flex-col bg-white shadow rounded-lg overflow-hidden"
+      className="group relative flex flex-col bg-slate-50 dark:bg-slate-900 shadow rounded-lg overflow-hidden"
       href={href}
     >
       <RyogoP
@@ -74,7 +74,7 @@ async function FeaturesMenuItem({
       >
         {title}
       </RyogoP>
-      <div className="bg-white w-full max-w-2xl relative aspect-video overflow-hidden transition-transform duration-300 md:hover:scale-105">
+      <div className="w-full max-w-2xl relative aspect-video overflow-hidden transition-transform duration-300 md:hover:scale-105">
         <Image
           className="object-cover"
           loading="eager"
@@ -86,7 +86,7 @@ async function FeaturesMenuItem({
           sizes="672px"
         />
       </div>
-      <div className="absolute left-0 right-0 bottom-0 p-2.5 lg:p-3 flex items-center justify-center gap-1 lg:gap-1.5 bg-slate-50 dark:bg-slate-950 rounded-b-lg transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
+      <div className="absolute left-0 right-0 bottom-0 p-2.5 lg:p-3 flex items-center justify-center gap-1 lg:gap-1.5 bg-slate-50 dark:bg-slate-900 rounded-b-lg transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
         <RyogoSmall color="brand">{t("LearnMore")}</RyogoSmall>
         <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
       </div>

@@ -33,16 +33,12 @@ export default async function HomeCTASection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Link href="/onboarding">
-            <Button size="lg" variant="white" className="w-full md:w-auto ">
+            <Button size="lg" variant="white" className="w-full md:w-auto">
               <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
             </Button>
           </Link>
           <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`}>
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
-            >
+            <Button size="lg" variant="outline" className="w-full md:w-auto">
               <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
             </Button>
           </Link>
@@ -70,6 +66,6 @@ function PropItem({ label }: { label: string }) {
 
 function PropDot() {
   return (
-    <div className="hidden md:flex bg-sky-200 dark:bg-sky-700 size-1 lg:size-1.5 rounded-full" />
+    <div className="hidden md:flex bg-sky-200 dark:bg-sky-800 size-1 lg:size-1.5 rounded-full" />
   )
 }

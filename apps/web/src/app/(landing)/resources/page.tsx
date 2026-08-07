@@ -10,10 +10,11 @@ import { Metadata } from "next"
 
 //Hero (with main demo)
 //Videos
-//FAQs
 //Support
 //Blog
 //About us
+//FAQs
+//CTA
 
 export const metadata: Metadata = {
   title: `Resources - ${pageTitle}`,

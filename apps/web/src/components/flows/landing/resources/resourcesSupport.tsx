@@ -22,7 +22,7 @@ export default async function ResourcesSupportSection() {
   return (
     <LandingSectionWrapper
       id="support"
-      className="bg-slate-50 dark:bg-slate-950"
+      className="bg-slate-50 dark:bg-slate-900"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
@@ -43,7 +43,7 @@ export default async function ResourcesSupportSection() {
 async function HelpBlock() {
   const t = await getTranslations("Landing.Resources.Support.HelpBlock")
   return (
-    <div className="flex flex-col gap-5 md:gap-6 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-200 p-6 lg:p-8 rounded-lg">
+    <div className="flex flex-col gap-5 md:gap-6 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-300 p-6 lg:p-8 rounded-lg">
       <RyogoH4 color="white" weight="font-bold">
         {t("Title")}
       </RyogoH4>

@@ -27,18 +27,14 @@ export default async function HowItWorksHeroSection() {
         <div className="flex flex-col md:flex-row gap-4 justify-center mb-4">
           <Link href="#onboarding">
             <Button size="lg" variant="white" className="w-full md:w-auto">
-              <RyogoSmall color="brand" weight="font-medium">
+              <RyogoSmall color="slate" weight="font-medium">
                 {t("PrimaryCTA")}
               </RyogoSmall>
-              <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
+              <RyogoIcon icon={ChevronDown} color="slate" size="sm" thick />
             </Button>
           </Link>
           <Link href="/resources#support">
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full gap-1 lg:gap-2 md:w-auto"
-            >
+            <Button size="lg" variant="outline" className="w-full md:w-auto">
               <RyogoSmall color="white" weight="font-medium">
                 {t("SecondaryCTA")}
               </RyogoSmall>

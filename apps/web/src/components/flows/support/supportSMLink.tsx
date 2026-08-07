@@ -9,7 +9,7 @@ export type SupportSMLinkType = {
 export function SupportSMLink(props: SupportSMLinkType) {
   return (
     <a href={props.href} target="_blank">
-      <Button variant="link">
+      <Button variant="ghost" className="w-full justify-start">
         <RyogoCaption>{props.label}</RyogoCaption>
       </Button>
     </a>

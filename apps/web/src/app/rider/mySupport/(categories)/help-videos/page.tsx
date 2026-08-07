@@ -21,11 +21,18 @@ import { YT_LINK, IG_LINK, FB_LINK, LI_LINK } from "@/lib/uiConfig"
 import { ChevronRight } from "lucide-react"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Videos
   - Social media
 */
+
+export const metadata: Metadata = {
+  title: `Videos Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function MySupportHelpVideosPage() {
   const t = await getTranslations("Rider.MySupportVideosHelp")

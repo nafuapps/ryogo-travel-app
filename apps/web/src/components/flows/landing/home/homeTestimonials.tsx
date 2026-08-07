@@ -23,7 +23,7 @@ export default async function HomeTestimonialsSection() {
   return (
     <LandingSectionWrapper
       id="testimonials"
-      className="bg-white dark:bg-slate-900"
+      className="bg-white dark:bg-slate-950"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
@@ -102,7 +102,7 @@ function TestimonialCard({
             {initial}
           </RyogoP>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-0.5">
           <RyogoSmall>{name}</RyogoSmall>
           <RyogoCaption color="light">{role}</RyogoCaption>
         </div>

@@ -74,7 +74,10 @@ export default function HowItWorksBookingsSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="bookings" className=" bg-sky-50 dark:bg-sky-900">
+    <LandingSectionWrapper
+      id="bookings"
+      className="bg-sky-50 dark:bg-sky-950/70"
+    >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
@@ -93,8 +96,8 @@ export default function HowItWorksBookingsSection() {
         <Link href="#entities">
           <Button
             size="lg"
-            variant="link"
-            className="gap-1 lg:gap-1.5 hover:bg-sky-100/80 dark:hover:bg-sky-800/80 hover:no-underline"
+            variant="ghost"
+            className="gap-1 lg:gap-1.5 hover:bg-sky-100/80 dark:hover:bg-sky-900/80"
           >
             <RyogoSmall color="light" weight="font-medium">
               {t("ContinueCTA")}

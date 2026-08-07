@@ -4,6 +4,14 @@ import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import ViewSupportTicketPageComponent from "@/components/flows/support/viewSupportTicketComponent"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: `View My Support Ticket - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function ViewMySupportTicketPage({
   params,
@@ -18,7 +26,11 @@ export default async function ViewMySupportTicketPage({
 
   const ticket = await supportServices.findSupportTicketById(ticketId)
 
-  if (!ticket || currentUser.userId !== ticket.userId) {
+  if (
+    !ticket ||
+    (currentUser.userId !== ticket.userId &&
+      currentUser.userRole !== UserRolesEnum.OWNER)
+  ) {
     redirect("/rider/mySupport/tickets", RedirectType.replace)
   }
 

@@ -372,12 +372,22 @@ export default function SearchPageComponent({
                       {...field}
                     />
                     <Button
-                      variant="link"
+                      variant="ghost"
+                      size="sm"
+                      type="button"
                       aria-label="Clear"
                       onClick={() => formData.setValue("searchTerm", "")}
                       disabled={formData.getValues("searchTerm") === ""}
                     >
-                      <RyogoCaption color="light">{t("Clear")}</RyogoCaption>
+                      <RyogoCaption
+                        color={
+                          formData.getValues("searchTerm") === ""
+                            ? "light"
+                            : "slate"
+                        }
+                      >
+                        {t("Clear")}
+                      </RyogoCaption>
                     </Button>
                     <Button
                       type="submit"

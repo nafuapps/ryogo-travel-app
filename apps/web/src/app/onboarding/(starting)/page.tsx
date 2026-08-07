@@ -68,7 +68,7 @@ export default async function OnboardingHomePage({
       >
         <div
           id="OnboardingHomeSteps"
-          className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
+          className="bg-white dark:bg-slate-900 shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
         >
           <RyogoP weight="font-bold"> {t("BodySteps.Title")}</RyogoP>
           <div className="flex flex-col">
@@ -95,7 +95,7 @@ export default async function OnboardingHomePage({
         </div>
         <div
           id="OnboardingHomeChecklist"
-          className="bg-white shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-3 md:gap-4"
+          className="bg-white dark:bg-slate-900 shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-3 md:gap-4"
         >
           <RyogoP weight="font-bold"> {t("BodyChecklist.Title")}</RyogoP>
           <OnboardingHomeDocumentItem

@@ -33,6 +33,8 @@ import {
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - What and why is ryogo?
@@ -41,6 +43,11 @@ import { redirect, RedirectType } from "next/navigation"
   - various entities, and how they work together
   - 
 */
+
+export const metadata: Metadata = {
+  title: `Get Started Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpStartedPage() {
   const currentUser = await getCurrentUser()

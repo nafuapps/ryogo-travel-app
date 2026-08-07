@@ -38,8 +38,6 @@ export default function QueryForm() {
       .max(300, t("Field5.Error2")),
   })
 
-  const loadTime = new Date().getTime()
-
   type FormData = z.infer<typeof schema>
 
   const form = useForm<FormData>({
@@ -79,7 +77,7 @@ export default function QueryForm() {
       <form
         id={"queryForm"}
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 w-full shadow-md bg-white dark:bg-slate-900"
+        className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 w-full shadow-md bg-white dark:bg-sky-950/70"
       >
         <RyogoH4 color="brand" weight="font-bold">
           {t("Title")}

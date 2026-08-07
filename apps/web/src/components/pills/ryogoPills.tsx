@@ -161,10 +161,11 @@ export function TripLogStatusPill(props: { status: TripLogTypesEnum }) {
     case TripLogTypesEnum.ENDED:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
     case TripLogTypesEnum.DROPPED:
-    case TripLogTypesEnum.PICKED_UP:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
-    case TripLogTypesEnum.ARRIVED:
+    case TripLogTypesEnum.PICKED_UP:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+    case TripLogTypesEnum.ARRIVED:
+      return <RyogoPill label={props.status.toUpperCase()} bgColor={"light"} />
     case TripLogTypesEnum.STARTED:
       return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
   }

@@ -1,11 +1,14 @@
 "use server"
 
+import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
+import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 import { addDays } from "date-fns"
 
 export async function newBookingAction(data: CreateNewBookingRequestType) {
@@ -27,6 +30,27 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
 
   const booking = await bookingServices.addNewBooking(data)
   if (!booking) return
+
+  const leadBooking = await bookingServices.findBookingDetailsById(booking.id)
+  if (!leadBooking) return
+
+  if (leadBooking.customer.email) {
+    //Generate and upload quote
+    const quoteFile = await getLeadQuotePDF(leadBooking)
+
+    const quoteUrl = (
+      await uploadPDFBlob(
+        quoteFile,
+        generateBookingQuotePathName(leadBooking.id),
+      )
+    ).path
+    if (!quoteUrl) return
+
+    //Update quote url in DB
+    await bookingServices.addQuoteUrl(leadBooking.id, quoteUrl)
+
+    //TODO: Share quote over email with customer
+  }
 
   //Add mission to confirm this new booking
   await missionServices.addMission({

@@ -148,22 +148,22 @@ export default function MissionCard({
           <Separator />
           <div className="flex items-center justify-between gap-1.5 lg:gap-2">
             <RyogoPill label={t("Card.Custom")} bgColor={"slate"} />
-            <Button
-              variant={"link"}
-              size="sm"
-              disabled={isPending || isRead}
-              className="hover:bg-slate-50 dark:hover:bg-slate-900 hover:no-underline"
+            <Link
+              href={`/dashboard/mission-control/${mission.id}/modify`}
+              className="flex items-center gap-0.5"
             >
-              <Link
-                href={`/dashboard/mission-control/${mission.id}/modify`}
-                className="flex items-center gap-0.5"
+              <Button
+                variant={"ghost"}
+                size="sm"
+                disabled={isPending || isRead}
+                className="hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 <RyogoCaption color="slate">
                   {t("Card.EditMission")}
                 </RyogoCaption>
                 <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </>
       )}

@@ -1,4 +1,9 @@
-import { RyogoH4, RyogoP, RyogoCaption } from "@/components/typography"
+import {
+  RyogoH4,
+  RyogoP,
+  RyogoCaption,
+  RyogoSmall,
+} from "@/components/typography"
 import { Sidebar, useSidebar } from "@/components/ui/sidebar"
 import { Check } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -69,7 +74,7 @@ export default function OnboardingSidebar({
             currentProcess > index || (currentProcess === index && isLastStep)
               ? "bg-slate-950 dark:bg-white shadow"
               : currentProcess === index
-                ? "bg-white  dark:bg-slate-900 border border-sky-700 dark:border-sky-200 shadow"
+                ? "bg-white  dark:bg-slate-950 border border-sky-700 dark:border-sky-300 shadow"
                 : "bg-slate-100  dark:bg-slate-800"
           } flex shrink-0 justify-center items-center size-8 lg:size-10`}
                 >
@@ -77,9 +82,13 @@ export default function OnboardingSidebar({
                   (currentProcess === index && isLastStep) ? (
                     <RyogoIcon icon={Check} size="sm" color="white" />
                   ) : currentProcess === index ? (
-                    <RyogoH4 color="brand">{index + 1}</RyogoH4>
+                    <RyogoP weight="font-bold" color="brand">
+                      {index + 1}
+                    </RyogoP>
                   ) : (
-                    <RyogoH4 color="light">{index + 1}</RyogoH4>
+                    <RyogoP weight="font-bold" color="light">
+                      {index + 1}
+                    </RyogoP>
                   )}
                 </div>
                 {index < items.length - 1 && (
@@ -90,16 +99,18 @@ export default function OnboardingSidebar({
               </div>
               <div className="flex flex-col">
                 {currentProcess > index ? (
-                  <RyogoP>{item.title}</RyogoP>
+                  <RyogoP weight="font-bold">{item.title}</RyogoP>
                 ) : currentProcess === index ? (
-                  <RyogoP color="brand">{item.title}</RyogoP>
+                  <RyogoP weight="font-bold" color="brand">
+                    {item.title}
+                  </RyogoP>
                 ) : (
                   <RyogoP color="slate">{item.title}</RyogoP>
                 )}
                 {currentProcess >= index ? (
-                  <RyogoCaption color="slate">{item.description}</RyogoCaption>
+                  <RyogoSmall color="slate">{item.description}</RyogoSmall>
                 ) : (
-                  <RyogoCaption color="light">{item.description}</RyogoCaption>
+                  <RyogoSmall color="light">{item.description}</RyogoSmall>
                 )}
                 {currentProcess >= index ? (
                   <RyogoCaption color="slate">{item.steps}</RyogoCaption>

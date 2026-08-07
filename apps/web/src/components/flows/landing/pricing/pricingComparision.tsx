@@ -31,23 +31,51 @@ export default async function PricingComparisionSection() {
         <ComparisionRow
           title={<RyogoH2 weight="font-bold">{t("Header")}</RyogoH2>}
           basicItem={<RyogoP weight="font-bold">{t("Basic")}</RyogoP>}
-          premiumItem={<RyogoP weight="font-bold">{t("Premium")}</RyogoP>}
+          premiumItem={
+            <RyogoP weight="font-bold" color="brand">
+              {t("Premium")}
+            </RyogoP>
+          }
         />
         <ComparisionGroup title={t("Entities")}>
           <ComparisionRow
             title={<RyogoSmall>{t("OnboardVehicles")}</RyogoSmall>}
-            basicItem={<RyogoSmall>{BASIC_PLAN_VEHICLE_LIMIT}</RyogoSmall>}
-            premiumItem={<RyogoSmall>{t("Unlimited")}</RyogoSmall>}
+            basicItem={
+              <RyogoSmall weight="font-bold">
+                {BASIC_PLAN_VEHICLE_LIMIT}
+              </RyogoSmall>
+            }
+            premiumItem={
+              <RyogoSmall weight="font-bold" color="brand">
+                {t("Unlimited")}
+              </RyogoSmall>
+            }
           />
           <ComparisionRow
             title={<RyogoSmall>{t("OnboardDrivers")}</RyogoSmall>}
-            basicItem={<RyogoSmall>{BASIC_PLAN_DRIVER_LIMIT}</RyogoSmall>}
-            premiumItem={<RyogoSmall>{t("Unlimited")}</RyogoSmall>}
+            basicItem={
+              <RyogoSmall weight="font-bold">
+                {BASIC_PLAN_DRIVER_LIMIT}
+              </RyogoSmall>
+            }
+            premiumItem={
+              <RyogoSmall weight="font-bold" color="brand">
+                {t("Unlimited")}
+              </RyogoSmall>
+            }
           />
           <ComparisionRow
             title={<RyogoSmall>{t("OnboardAgents")}</RyogoSmall>}
-            basicItem={<RyogoSmall>{BASIC_PLAN_AGENT_LIMIT}</RyogoSmall>}
-            premiumItem={<RyogoSmall>{t("Unlimited")}</RyogoSmall>}
+            basicItem={
+              <RyogoSmall weight="font-bold">
+                {BASIC_PLAN_AGENT_LIMIT}
+              </RyogoSmall>
+            }
+            premiumItem={
+              <RyogoSmall weight="font-bold" color="brand">
+                {t("Unlimited")}
+              </RyogoSmall>
+            }
           />
         </ComparisionGroup>
         <ComparisionGroup title={t("Bookings")}>
@@ -60,11 +88,15 @@ export default async function PricingComparisionSection() {
               </RyogoSmall>
             }
             basicItem={
-              <RyogoSmall>
+              <RyogoSmall weight="font-bold">
                 {BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT}
               </RyogoSmall>
             }
-            premiumItem={<RyogoSmall>{t("Unlimited")}</RyogoSmall>}
+            premiumItem={
+              <RyogoSmall weight="font-bold" color="brand">
+                {t("Unlimited")}
+              </RyogoSmall>
+            }
           />
           <ComparisionRow
             title={<RyogoSmall>{t("AssignmentSuggestions")}</RyogoSmall>}
@@ -134,9 +166,15 @@ export default async function PricingComparisionSection() {
           />
           <ComparisionRow
             title={<RyogoSmall>{t("Search")}</RyogoSmall>}
-            basicItem={<RyogoSmall>{BASIC_BOOKINGS_SEARCH_DAYS}</RyogoSmall>}
+            basicItem={
+              <RyogoSmall weight="font-bold">
+                {BASIC_BOOKINGS_SEARCH_DAYS}
+              </RyogoSmall>
+            }
             premiumItem={
-              <RyogoSmall>{PREMIUM_BOOKINGS_SEARCH_DAYS}</RyogoSmall>
+              <RyogoSmall weight="font-bold" color="brand">
+                {PREMIUM_BOOKINGS_SEARCH_DAYS}
+              </RyogoSmall>
             }
           />
         </ComparisionGroup>
@@ -228,7 +266,7 @@ function ComparisionRow({
       <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         {basicItem}
       </div>
-      <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-sky-50 dark:bg-sky-900 flex items-center justify-center">
+      <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-sky-100 dark:bg-sky-900 flex items-center justify-center">
         {premiumItem}
       </div>
     </div>

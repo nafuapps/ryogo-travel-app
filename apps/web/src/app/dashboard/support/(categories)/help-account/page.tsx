@@ -53,6 +53,8 @@ import {
 import { AgencyStatusPill, UserStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Account Overview (Name, Email, Pwd)
@@ -61,6 +63,11 @@ import { SupportWarningWrapper } from "@/components/flows/support/supportWarning
   - Agency
   - Subscription (in detail for owner)
 */
+
+export const metadata: Metadata = {
+  title: `Account Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpAccountPage() {
   const currentUser = await getCurrentUser()

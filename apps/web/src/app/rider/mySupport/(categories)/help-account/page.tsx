@@ -45,6 +45,8 @@ import {
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Account Overview (Name, Email, Pwd)
@@ -52,6 +54,11 @@ import { SupportWarningWrapper } from "@/components/flows/support/supportWarning
   - Account settings
   - Agency
 */
+
+export const metadata: Metadata = {
+  title: `My Profile Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function MySupportHelpAccountPage() {
   const t = await getTranslations("Rider.MySupportAccountHelp")

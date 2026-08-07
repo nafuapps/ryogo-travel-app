@@ -31,6 +31,8 @@ import {
   Telescope,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Overview (What is mission?)
@@ -39,6 +41,11 @@ import { getTranslations } from "next-intl/server"
   - Notification feed
   - 
 */
+
+export const metadata: Metadata = {
+  title: `Missions Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpMissionsPage() {
   const t = await getTranslations("Dashboard.SupportMissionsHelp")

@@ -44,6 +44,8 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Booking Overview
@@ -54,6 +56,11 @@ import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
   - Trip Logs
   - Communication
 */
+
+export const metadata: Metadata = {
+  title: `My Bookings Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function MySupportHelpBookingsPage() {
   const t = await getTranslations("Rider.MySupportBookingsHelp")

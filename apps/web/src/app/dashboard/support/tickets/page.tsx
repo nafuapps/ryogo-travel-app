@@ -6,6 +6,13 @@ import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: `All Support Tickets - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportTicketsPage() {
   const currentUser = await getCurrentUser()

@@ -25,6 +25,8 @@ import SupportTableOfContentLinkButton, {
 } from "@/components/flows/support/supportTableOfContentLink"
 import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   TODO
@@ -33,6 +35,11 @@ import { RyogoCaption } from "@/components/typography"
   - Documentation
 
 */
+
+export const metadata: Metadata = {
+  title: `My Vehicle Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function MySupportHelpVehiclePage() {
   const t = await getTranslations("Rider.MySupportVehicleHelp")

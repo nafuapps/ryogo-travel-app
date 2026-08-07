@@ -985,6 +985,7 @@ export const bookingRepository = {
             remarks: true,
             phone: true,
             address: true,
+            email: true,
           },
           with: {
             location: {
@@ -1088,6 +1089,7 @@ export const bookingRepository = {
             remarks: true,
             phone: true,
             address: true,
+            email: true,
           },
           with: {
             location: {

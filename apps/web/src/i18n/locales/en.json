@@ -3061,17 +3061,39 @@
       },
       "Communication": {
         "Title": "COMMUNICATION",
-        "Description": "The platform makes sure that you are always connected with your customers and drivers.",
-        "Customer": "You can send messages to the customer by going to the booking details page and clicking on 'Send Message'.",
-        "Driver": " You can also send messages to the driver by going to the booking details page and clicking on 'Send Driver Message'."
+        "Integration": {
+          "Title": "Communication integration",
+          "Description": "The platform makes sure that you are always connected with your customers and drivers.",
+          "Whatsapp": "Because of deep integration with Whatsapp, you can always send messages (with documents and links) to your customers and drivers for a booking.",
+          "Email": "Morever, the platform is email integrated, and therefore emails are automatically sent out at important milestones, wherever applicable."
+        },
+        "Customer": {
+          "Title": "Interacting with customers",
+          "Description": "You can send messages to the customer by going to the booking details page and clicking on 'Chat with customer'."
+        },
+        "Driver": {
+          "Title": "Interacting with drivers",
+          "Description": " You can also send messages to the driver from booking details page and clicking on 'Chat with Driver'."
+        }
       },
       "Documents": {
         "Title": "DOCUMENTS",
-        "Description": "You can upload any documents related to the trip by going to the booking details page and clicking on 'Upload Documents'."
-      },
-      "Recommendations": {
-        "Title": "RECOMMENDATIONS",
-        "Description": "The system provides recommendations and tips throughout the lifecycle of a booking."
+        "Sharing": {
+          "Title": "Sharing documents",
+          "Description": "You can share booking related documents with the customer over Whatsapp with our integrated feature."
+        },
+        "BookingQuote": {
+          "Title": "Booking Quotation",
+          "Description": "When a new booking is created as a lead, a booking quotation is generated. This quotation can be shared with the customer over Whatsapp."
+        },
+        "BookingConfirm": {
+          "Title": "Booking Confirmation",
+          "Description": "When a new booking is confirmed by the assigned agent, a booking confirmation is generated and automatically sent to customer email. This confirmation can alsobe shared with the customer over Whatsapp."
+        },
+        "BookingInvoice": {
+          "Title": "Booking Invoice",
+          "Description": "When a new booking is completed, an invoice is generated and automatically sent to customer email. This invoice can also be shared with the customer over Whatsapp."
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -5219,7 +5241,7 @@
       },
       "Alerts": {
         "Title": "Timely alerts and notifications",
-        "Subtitle": "Run schedule perfectly without any last minute blockers. Get highlights of exactly what needs immediate attention.",
+        "Subtitle": "Run a tight ship without any last minute blockers. Get highlights of exactly what needs immediate attention.",
         "A1": {
           "Title": "Localized mission control",
           "Description": "Know about upcoming deadlines like license expirations, vehicle maintenance proactively, so that every trip can start smoothly."
@@ -5352,7 +5374,7 @@
           "F1": "Everything in Basic, and",
           "F2": "Unlimited bookings",
           "F3": "Unlimited vehicles, drivers and agents",
-          "F4": "Priority 24x7 support over phone",
+          "F4": "Priority 24x7 support over phone and tickets",
           "F5": "Advanced analytics and AI suggestions",
           "F6": "Full and unrestricted app access",
           "F7": "Priority access to new features",
@@ -5747,7 +5769,7 @@
         },
         "QueryForm": {
           "Title": "Submit your query",
-          "Description": "We will get back to you within 24 hours.",
+          "Description": "We will get back to you with a response within 24 hours.",
           "Field1": {
             "Title": "Your Name",
             "Placeholder": "Sanjeev",

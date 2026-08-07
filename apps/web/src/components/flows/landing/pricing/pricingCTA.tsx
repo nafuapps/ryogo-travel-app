@@ -40,11 +40,7 @@ export default async function PricingCTASection() {
               title="RyoGo Demo video"
               className="w-full aspect-video"
             >
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
-              >
+              <Button size="lg" variant="outline" className="w-full md:w-auto">
                 <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
                 <RyogoIcon icon={Video} color="white" size="sm" thick />
               </Button>

@@ -34,6 +34,8 @@ import {
   Tickets,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Overview
@@ -44,6 +46,11 @@ import { getTranslations } from "next-intl/server"
   - Leaves
   - Driver App
 */
+
+export const metadata: Metadata = {
+  title: `Drivers Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpDriversPage() {
   const t = await getTranslations("Dashboard.SupportDriversHelp")

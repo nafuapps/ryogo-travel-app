@@ -35,6 +35,8 @@ import {
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - User overview
@@ -43,6 +45,11 @@ import { redirect, RedirectType } from "next/navigation"
   - Bookings
   - User communication
 */
+
+export const metadata: Metadata = {
+  title: `Users Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpUsersPage() {
   const currentUser = await getCurrentUser()

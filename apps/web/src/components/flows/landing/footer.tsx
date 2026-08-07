@@ -1,7 +1,13 @@
 import { RyoGoLightLogo } from "@/components/logo"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
+import {
+  FB_LINK,
+  IG_LINK,
+  LI_LINK,
+  SUPPORT_HELPLINE_NUMBER,
+  YT_LINK,
+} from "@/lib/uiConfig"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -59,22 +65,22 @@ export default async function Footer() {
             </Link>
           </SectionColWrapper>
 
-          {/* Social Media //TODO: Add SM links */}
+          {/* Social Media */}
           <SectionColWrapper>
             <RyogoSmall color="light" weight="font-bold">
               {t("Social.Title")}
             </RyogoSmall>
-            <Link href="/" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Social.Facebook")}</RyogoSmall>
+            <Link href={YT_LINK} className="hover:underline transition">
+              <RyogoSmall color="white">{t("Social.YouTube")}</RyogoSmall>
             </Link>
-            <Link href="/" className="hover:underline transition">
+            <Link href={IG_LINK} className="hover:underline transition">
               <RyogoSmall color="white">{t("Social.Instagram")}</RyogoSmall>
             </Link>
-            <Link href="/" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Social.LinkedIn")}</RyogoSmall>
+            <Link href={FB_LINK} className="hover:underline transition">
+              <RyogoSmall color="white">{t("Social.Facebook")}</RyogoSmall>
             </Link>
-            <Link href="/" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Social.YouTube")}</RyogoSmall>
+            <Link href={LI_LINK} className="hover:underline transition">
+              <RyogoSmall color="white">{t("Social.LinkedIn")}</RyogoSmall>
             </Link>
           </SectionColWrapper>
         </div>

@@ -67,6 +67,8 @@ import {
   SupportListItem,
   SupportListWrapper,
 } from "@/components/flows/support/supportListWrapper"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 /*
   - Overview
   - Creation
@@ -80,8 +82,12 @@ import {
   - Trip Logs
   - Communicating with customer and driver
   - Documents (invoice, lead, confirmation, etc)
-  - Recommendations & Suggestions
 */
+
+export const metadata: Metadata = {
+  title: `Bookings Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpBookingsPage() {
   const currentUser = await getCurrentUser()
@@ -163,12 +169,6 @@ export default async function SupportHelpBookingsPage() {
       title: t("Documents.Title"),
       icon: StickyNotes,
       content: <DocumentsContent />,
-    },
-    {
-      id: "recommendations",
-      title: t("Recommendations.Title"),
-      icon: BadgeInfo,
-      content: <RecommendationsContent />,
     },
   ]
 
@@ -749,9 +749,26 @@ async function CommunicationContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Communication")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-      <RyogoCaption color="slate">{t("Driver")}</RyogoCaption>
-      <RyogoCaption color="slate">{t("Customer")}</RyogoCaption>{" "}
+      <SupportContentSectionWrapper title={t("Integration.Title")}>
+        <RyogoCaption color="slate">
+          {t("Integration.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("Integration.Whatsapp")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Integration.Email")}</RyogoCaption>
+        {/* //TODO: Add Booking Chat snapshot */}
+        <RyogoImage
+          alt="Communication"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Customer.Title")}>
+        <RyogoCaption color="slate">{t("Customer.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Driver.Title")}>
+        <RyogoCaption color="slate">{t("Driver.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -760,18 +777,48 @@ async function DocumentsContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Documents")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
-  )
-}
+      <SupportContentSectionWrapper title={t("Sharing.Title")}>
+        <RyogoCaption color="slate">{t("Sharing.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("BookingQuote.Title")}>
+        <RyogoCaption color="slate">
+          {t("BookingQuote.Description")}
+        </RyogoCaption>
 
-async function RecommendationsContent() {
-  const t = await getTranslations(
-    "Dashboard.SupportBookingsHelp.Recommendations",
-  )
-  return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+        {/* //TODO: Add quote sharing snapshot */}
+        <RyogoImage
+          alt="Documents"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("BookingConfirm.Title")}>
+        <RyogoCaption color="slate">
+          {t("BookingConfirm.Description")}
+        </RyogoCaption>
+
+        {/* //TODO: Add confirmation sharing snapshot */}
+        <RyogoImage
+          alt="Documents"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("BookingInvoice.Title")}>
+        <RyogoCaption color="slate">
+          {t("BookingInvoice.Description")}
+        </RyogoCaption>
+
+        {/* //TODO: Add invoice sharing snapshot */}
+        <RyogoImage
+          alt="Documents"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }

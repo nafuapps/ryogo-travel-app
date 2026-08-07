@@ -29,6 +29,8 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   TODO
@@ -37,6 +39,11 @@ import { getTranslations } from "next-intl/server"
   - various entities, and how they work together
   - 
 */
+
+export const metadata: Metadata = {
+  title: `Getting Started Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function MySupportHelpStartedPage() {
   const t = await getTranslations("Rider.MySupportStartedHelp")

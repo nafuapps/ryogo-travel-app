@@ -114,7 +114,7 @@ export default function LoginPasswordPageComponent({
           >
             <RyogoCaption color="light">{t("Back")}</RyogoCaption>
           </Button>
-          <Button variant={"link"} type="button" size="sm">
+          <Button variant={"ghost"} type="button" size="lg">
             <Link href={`/auth/forgot-password/${user.id}`}>
               <RyogoCaption color="light">{t("ForgotCTA")}</RyogoCaption>
             </Link>

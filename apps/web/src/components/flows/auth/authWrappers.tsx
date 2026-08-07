@@ -7,7 +7,7 @@ import RyoGoLogo from "@/components/logo"
 
 export function AuthMainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-10 md:gap-12 min-h-full overflow-scroll items-center bg-slate-50 dark:bg-slate-950 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
+    <div className="flex flex-col gap-10 md:gap-12 min-h-full overflow-scroll no-scrollbar items-center bg-slate-50 dark:bg-slate-950 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
       <Link href="/">
         <RyoGoLogo />
       </Link>

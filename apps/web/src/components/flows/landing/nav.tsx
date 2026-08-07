@@ -48,7 +48,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
-      <div className="w-full max-w-5xl bg-white dark:bg-slate-950 opacity-99 shadow-sm rounded-lg px-3 md:px-4 lg:px-5">
+      <div className="w-full max-w-5xl bg-white dark:bg-slate-950 border border-sky-100 dark:border-sky-900 opacity-99 shadow rounded-lg px-3 md:px-4 lg:px-5">
         <div className="flex flex-wrap justify-between items-center py-3 w-full gap-1 lg:gap-3">
           {/* Logo */}
           <Link href="/">
@@ -61,7 +61,7 @@ export default function Navbar() {
               <Link
                 key={link.id}
                 href={link.href}
-                className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-800" : "bg-sky-100 dark:bg-sky-800"} p-2 rounded-lg transition-all duration-300`}
+                className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-800" : "bg-sky-100 dark:bg-sky-900"} py-2 px-3 rounded-lg transition-all duration-300`}
               >
                 <RyogoSmall
                   color={path !== link.href ? "slate" : "brand"}

@@ -30,6 +30,8 @@ import {
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Overview What is mission?
@@ -37,6 +39,11 @@ import { RyogoCaption } from "@/components/typography"
   - Custom mission
   - 
 */
+
+export const metadata: Metadata = {
+  title: `My Missions Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function MySupportHelpMissionsPage() {
   const t = await getTranslations("Rider.MySupportMissionsHelp")

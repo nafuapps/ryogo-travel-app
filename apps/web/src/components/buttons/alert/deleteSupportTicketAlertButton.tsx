@@ -48,7 +48,7 @@ export default function DeleteSupportTicketAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button variant={"link"}>
+        <Button variant={"ghost"}>
           <RyogoCaption>{t("Label")}</RyogoCaption>
         </Button>
       }

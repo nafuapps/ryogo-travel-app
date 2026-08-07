@@ -33,6 +33,8 @@ import {
   UserRoundSearch,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 
 /*
   - Details
@@ -42,6 +44,11 @@ import { getTranslations } from "next-intl/server"
   - Search
   - 
 */
+
+export const metadata: Metadata = {
+  title: `Customers Help - ${pageTitle}`,
+  description: pageDescription,
+}
 
 export default async function SupportHelpCustomersPage() {
   const t = await getTranslations("Dashboard.SupportCustomersHelp")

@@ -20,9 +20,9 @@ export default async function RiderMyBookingDetails({
   return (
     <BookingGrid>
       <BookingSection sectionTitle={t("BookingInfo")} icon={BriefcaseBusiness}>
+        <BookingStatusPill status={booking.status} />
         <BookingItem title={t("BookingId")} value={booking.id} />
         <BookingItem title={t("CustomerName")} value={booking.customer.name} />
-        <BookingStatusPill status={booking.status} />
         {booking.pickupAddress && (
           <BookingItem
             title={t("PickupAddress")}
@@ -52,6 +52,14 @@ export default async function RiderMyBookingDetails({
         )}
       </BookingSection>
       <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
+        <RyogoPhoneButton
+          label={t("CallAgent")}
+          phone={booking.assignedUser.phone}
+        />
+        <RyogoChatButton
+          label={t("ChatAgent")}
+          phone={booking.assignedUser.phone}
+        />
         <BookingItem
           title={t("From")}
           value={booking.source.city + ", " + booking.source.state}

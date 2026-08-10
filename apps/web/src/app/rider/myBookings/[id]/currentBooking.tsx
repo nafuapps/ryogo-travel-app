@@ -86,88 +86,53 @@ function getNextStep(
   endDate: Date,
   tripLogs: NonNullable<FindBookingDetailsByIdType>["tripLogs"],
 ) {
-  //One way trip: START_TRIP->ARRIVED->PICKUP->DROP->END_TRIP
+  const now = new Date()
+  const counts = tripLogs.reduce(
+    (acc, log) => {
+      acc[log.type] = (acc[log.type] ?? 0) + 1
+      return acc
+    },
+    {
+      [TripLogTypesEnum.STARTED]: 0,
+      [TripLogTypesEnum.ARRIVED]: 0,
+      [TripLogTypesEnum.PICKED_UP]: 0,
+      [TripLogTypesEnum.DROPPED]: 0,
+      [TripLogTypesEnum.ENDED]: 0,
+    } as Record<TripLogTypesEnum, number>,
+  )
+
+  const startedCount = counts[TripLogTypesEnum.STARTED]
+  const arrivedCount = counts[TripLogTypesEnum.ARRIVED]
+  const pickedUpCount = counts[TripLogTypesEnum.PICKED_UP]
+  const droppedCount = counts[TripLogTypesEnum.DROPPED]
+
   if (bookingType === BookingTypeEnum.OneWay) {
-    if (tripLogs.some((t) => t.type === TripLogTypesEnum.DROPPED)) {
-      return TripLogTypesEnum.ENDED
-    }
-    if (tripLogs.some((t) => t.type === TripLogTypesEnum.PICKED_UP)) {
-      return TripLogTypesEnum.DROPPED
-    }
-    if (tripLogs.some((t) => t.type === TripLogTypesEnum.ARRIVED)) {
-      return TripLogTypesEnum.PICKED_UP
-    }
-    if (tripLogs.some((t) => t.type === TripLogTypesEnum.STARTED)) {
-      return TripLogTypesEnum.ARRIVED
-    }
+    if (droppedCount > 0) return TripLogTypesEnum.ENDED
+    if (pickedUpCount > 0) return TripLogTypesEnum.DROPPED
+    if (arrivedCount > 0) return TripLogTypesEnum.PICKED_UP
+    if (startedCount > 0) return TripLogTypesEnum.ARRIVED
     return TripLogTypesEnum.STARTED
   }
-  //Round trip: START_TRIP->ARRIVED->PICKUP->DROP->ARRIVED->PICKUP->DROP->END_TRIP
+
   if (bookingType === BookingTypeEnum.Round) {
-    if (
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.DROPPED).length > 1
-    ) {
-      return TripLogTypesEnum.ENDED
-    }
-    if (
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKED_UP).length > 1
-    ) {
-      return TripLogTypesEnum.DROPPED
-    }
-    if (
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length > 1
-    ) {
-      return TripLogTypesEnum.PICKED_UP
-    }
-    if (
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.DROPPED).length === 1
-    ) {
+    if (droppedCount > 1) return TripLogTypesEnum.ENDED
+    if (pickedUpCount > arrivedCount) return TripLogTypesEnum.DROPPED
+    if (arrivedCount > pickedUpCount) return TripLogTypesEnum.PICKED_UP
+    if (droppedCount === 1 || startedCount === 1)
       return TripLogTypesEnum.ARRIVED
-    }
-    if (
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKED_UP).length === 1
-    ) {
-      return TripLogTypesEnum.DROPPED
-    }
-    if (
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length === 1
-    ) {
-      return TripLogTypesEnum.PICKED_UP
-    }
-    if (
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.STARTED).length === 1
-    ) {
-      return TripLogTypesEnum.ARRIVED
-    }
+    if (pickedUpCount === 1) return TripLogTypesEnum.DROPPED
+    if (arrivedCount === 1) return TripLogTypesEnum.PICKED_UP
     return TripLogTypesEnum.STARTED
   }
-  //Multi day trip: START_TRIP->(ARRIVED->PICKUP->DROP)->END_TRIP
-  if (
-    tripLogs.filter((t) => t.type === TripLogTypesEnum.DROPPED).length ==
-    tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length
-  ) {
-    if (
-      endDate <= new Date() &&
-      tripLogs.filter((t) => t.type === TripLogTypesEnum.DROPPED).length > 0
-    ) {
-      return TripLogTypesEnum.ENDED
-    }
-    if (tripLogs.some((t) => t.type === TripLogTypesEnum.STARTED)) {
-      return TripLogTypesEnum.ARRIVED
-    }
-    return TripLogTypesEnum.STARTED
+
+  if (droppedCount === arrivedCount) {
+    if (droppedCount > 0 && endDate <= now) return TripLogTypesEnum.ENDED
+    return startedCount > 0
+      ? TripLogTypesEnum.ARRIVED
+      : TripLogTypesEnum.STARTED
   }
-  if (
-    tripLogs.filter((t) => t.type === TripLogTypesEnum.DROPPED).length <
-    tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKED_UP).length
-  ) {
-    return TripLogTypesEnum.DROPPED
-  }
-  if (
-    tripLogs.filter((t) => t.type === TripLogTypesEnum.PICKED_UP).length <
-    tripLogs.filter((t) => t.type === TripLogTypesEnum.ARRIVED).length
-  ) {
-    return TripLogTypesEnum.PICKED_UP
-  }
+
+  if (droppedCount < pickedUpCount) return TripLogTypesEnum.DROPPED
+  if (pickedUpCount < arrivedCount) return TripLogTypesEnum.PICKED_UP
   return TripLogTypesEnum.STARTED
 }

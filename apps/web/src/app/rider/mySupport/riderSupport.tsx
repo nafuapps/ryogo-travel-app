@@ -46,6 +46,7 @@ export default async function MySupportPageComponent({
             description={t("Started.Description")}
             icon={Play}
             link={"/rider/mySupport/help-started"}
+            highlight
           />
           <SupportCategoryCard
             title={t("Account.Title")}
@@ -64,6 +65,7 @@ export default async function MySupportPageComponent({
             description={t("Bookings.Description")}
             icon={Tickets}
             link={"/rider/mySupport/help-bookings"}
+            highlight
           />
           <SupportCategoryCard
             title={t("Missions.Title")}
@@ -76,6 +78,7 @@ export default async function MySupportPageComponent({
             description={t("Videos.Description")}
             icon={User}
             link={"/rider/mySupport/help-videos"}
+            highlight
           />
         </div>
         <Separator />

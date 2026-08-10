@@ -2847,12 +2847,12 @@
       "Overview": {
         "Title": "BOOKING OVERVIEW",
         "WhatIsBooking": {
-          "Title": "WHAT IS A BOOKING?",
+          "Title": "What is a booking?",
           "Description": "A booking is a trip booked by a customer at your agency from one location to another with a driver and a vehicle to fulfill it.",
           "CTA": "View all bookings"
         },
         "Elements": {
-          "Title": "BOOKING ELEMENTS",
+          "Title": "Booking elements",
           "Description": "A booking consists of the various elements.",
           "Caption": "A list of booking elements",
           "BasicInfo": "BASIC INFO",
@@ -2875,7 +2875,7 @@
           "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end."
         },
         "StatusList": {
-          "Title": "BOOKING STATUS",
+          "Title": "Booking status",
           "Description": "A booking will have the different status based on the progress of the trip.",
           "Caption": "A list of booking status",
           "Lead": "A booking that is created but not yet confirmed by the assigned agent.",
@@ -3018,12 +3018,12 @@
         },
         "AddingExpense": {
           "Title": "Adding an expense",
-          "Description": "The assigned agent, driver (or owner) can add an expense by going to the booking expenses page and clicking on 'Add Expense'.",
+          "Description": "The assigned agent, driver, or owner can add an expense by going to the booking expenses page and clicking on 'Add Expense'.",
           "Process": "To add an expense, you must provide the following details: type (fuel, toll, etc.), amount, photo proof (optional), and remarks (optional)"
         },
         "ModifyingExpense": {
           "Title": "Modifying an expense",
-          "Description": "The assigned agent (or owner) can modify an expense by going to the booking expenses page and clicking on 'Edit' against an expense'. All the details can be edited."
+          "Description": "The assigned agent, driver, or owner can modify an expense by going to the booking expenses page and clicking on 'Edit' against an expense'. All the details can be edited."
         },
         "ApprovingExpense": {
           "Title": "Approving an expense",
@@ -4204,6 +4204,8 @@
       "CustomerName": "Customer Name",
       "CallCustomer": "Call Customer",
       "ChatCustomer": "Chat with Customer",
+      "CallAgent": "Call Agency",
+      "ChatAgent": "Chat with Agency",
       "TripInfo": "TRIP INFO",
       "From": "From",
       "To": "To",
@@ -4647,12 +4649,12 @@
       "Overview": {
         "Title": "BOOKING OVERVIEW",
         "WhatIsBooking": {
-          "Title": "WHAT IS A BOOKING?",
+          "Title": "What is a booking?",
           "Description": "A booking is a trip booked by a customer at your agency from one location to another with a driver and a vehicle to fulfill it.",
           "CTA": "View all bookings"
         },
         "Elements": {
-          "Title": "BOOKING ELEMENTS",
+          "Title": "Booking elements",
           "Description": "A booking consists of the various elements.",
           "Caption": "A list of booking elements",
           "BasicInfo": "BASIC INFO",
@@ -4675,7 +4677,7 @@
           "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end."
         },
         "StatusList": {
-          "Title": "BOOKING STATUS",
+          "Title": "Booking status",
           "Description": "A booking will have the different status based on the progress of the trip.",
           "Caption": "A list of booking status",
           "Lead": "A booking that is created but not yet confirmed by the assigned agent.",
@@ -4687,42 +4689,117 @@
       },
       "Assignment": {
         "Title": "ASSIGNMENT",
-        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'."
+        "BookingAssignment": {
+          "Title": "Booking assignment",
+          "Description": "Every new booking created by the agency will be assigned a driver. All such assigned bookings are listed in order of execution on My Bookings page."
+        },
+        "CurrentBooking": {
+          "Title": "Current booking",
+          "Description": "The booking currently being executed by the driver will be displayed at the top of My Bookings page. Also, it will be clearly accessible on the home page."
+        },
+        "UpcomingBookings": {
+          "Title": "Upcoming bookings",
+          "Description": "The next 3 upcoming bookings will be accessible on the home page. Upcoming booking can only be started after the current booking (if any) is completed."
+        }
       },
       "Execution": {
         "Title": "EXECUTION",
-        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'."
+        "AccessingCurrent": {
+          "Title": "Accessing current booking",
+          "Description": "The currently assigned booking can be accessed by the driver by going on the booking details page by clicking on the booking on home page or My Bookings page."
+        },
+        "Steps": {
+          "Title": "Steps in execution",
+          "Description": "A booking when executed will go through multiple steps.",
+          "Caption": "A list of steps in booking execution",
+          "Started": "The trip has been started by the driver.",
+          "Arrived": "The driver has arrived at the pickup location of the customer.",
+          "PickedUp": "The customer has been picked up by the driver.",
+          "Dropped": "The customer has been dropped by the driver at the destination location.",
+          "Ended": "The trip has been ended by the driver. The booking is now considered as completed."
+        },
+        "StartTrip": {
+          "Title": "Start trip",
+          "Description": "The driver can start the trip by going to the booking details page and clicking on 'Start Trip'.",
+          "Input": "When starting a trip, driver must enter the current odometer reading and take a screenshot of the odometer. You can also add any remarks optionally.",
+          "Warning": "A trip can only be started once and cannot be undone."
+        },
+        "Arrived": {
+          "Title": "Arrived at customer location",
+          "Description": "After the trip has started, the driver can mark that he has arrived at the customer's pickup location by clicking on 'Arrived'.",
+          "Input": "When marking that he has arrived, driver must enter the current odometer reading while take a screenshot of the odometer is optional.",
+          "Warning": "A multi day trip will have 'Arrived' status for every new day/trip when customer is picked up again."
+        },
+        "PickedUp": {
+          "Title": "Picked up customer",
+          "Description": "After the driver has arrived at the customer's pickup location, the driver can mark that he has picked up the customer by clicking on 'Picked Up'.",
+          "Input": "When marking that he has picked up the customer, driver must enter the current odometer reading while take a screenshot of the odometer is optional.",
+          "Warning": "A multi day trip will have 'Picked Up' status for every new day/trip when customer is picked up again."
+        },
+        "Dropped": {
+          "Title": "Dropped customer",
+          "Description": "After reaching the destination, the driver can mark that he has dropped the customer by clicking on 'Dropped'.",
+          "Input": "When marking dropped, driver must enter the current odometer reading (taking a screenshot of the odometer is optional).",
+          "Warning": "A multi day trip will have 'Dropped' status for every new day/trip when customer is dropped again."
+        },
+        "Ended": {
+          "Title": "End Trip",
+          "Description": "After dropping the customer for the last time, the driver must complete the booking by clicking on 'Ended'.",
+          "Input": "When marking that the trip has ended, driver must enter the current odometer reading and its screenshot. Remarks are optional",
+          "Rating": "When ending a trip, the driver can provide booking and customer rating for the trip",
+          "Warning": "A trip can only be 'Ended' once and cannot be undone. Moreover, ensure all the expenses are added before you end the trip."
+        }
       },
       "Completed": {
         "Title": "Completed",
-        "Description": "Once a booking is created, it can be assigned to a driver and vehicle for execution. You can assign a trip by going to the booking details page and clicking on 'Assign Trip'."
+        "CompletedBookings": {
+          "Title": "Completed Bookings",
+          "Description": "All the previously completed bookings can be accessed by the driver on My Bookings page."
+        }
       },
       "Expenses": {
         "Title": "EXPENSES",
-        "Description": "You can add any additional expenses incurred during the trip by going to the completed booking details page and clicking on 'Add Expenses'.",
-        "Steps": {
-          "Title": "Steps to add expenses:",
-          "Step1": "Select the type of expense (Fuel, Toll, Parking, Other)",
-          "Step2": "Provide the amount and description for the expense",
-          "Step3": "Confirm the expense"
-        }
-      },
-      "TripLogs": {
-        "Title": "TRIP LOGS",
-        "Description": "A trip log is created as and when driver updates the trip status. You can view all trip logs related details like start time, end time, distance, and more by going to your trip logs details page.",
-        "Status": {
-          "Started": "STARTED: The trip has been started by the driver",
-          "Arrived": "ARRIVED: The driver has arrived at the pickup location",
-          "PickedUp": "PICKED UP: The customer has been picked up by the driver",
-          "Dropped": "DROPPED: The customer has been dropped by the driver",
-          "Ended": "ENDED: The trip has been ended by the driver. The booking is considered as completed."
+        "WhatIsExpense": {
+          "Title": "What is an expense?",
+          "Definition": "An expense is any additional cost incurred during the trip which was paid by the agency/driver but which shall be borne by the customer in final invoice. Such as, fuel, toll, parking, etc.",
+          "Description": "You can view all expenses related details like amount, type, and more by going to booking details page."
+        },
+        "AddingExpense": {
+          "Title": "Adding an expense",
+          "Description": "The assigned agent, driver, or owner can add an expense by going to the booking expenses page and clicking on 'Add Expense'.",
+          "Process": "To add an expense, you must provide the following details: type (fuel, toll, etc.), amount, photo proof (optional), and remarks (optional)"
+        },
+        "ModifyingExpense": {
+          "Title": "Modifying an expense",
+          "Description": "The assigned agent, driver, or owner can modify an expense by going to the booking expenses page and clicking on 'Edit' against an expense'. All the details can be edited."
+        },
+        "ExpenseTypes": {
+          "Title": "Expense types",
+          "Description": "This is the list of expense types that are allowed for a booking.",
+          "Fuel": "Fuel",
+          "Toll": "Toll",
+          "Parking": "Parking",
+          "Maintenance": "Maintenance",
+          "AC": "AC",
+          "Food": "Food",
+          "Other": "Other"
         }
       },
       "Communication": {
         "Title": "COMMUNICATION",
-        "Description": "The platform makes sure that you are always connected with your customers and drivers.",
-        "Customer": "You can send messages to the customer by going to the booking details page and clicking on 'Send Message'.",
-        "Driver": " You can also send messages to the driver by going to the booking details page and clicking on 'Send Driver Message'."
+        "Integration": {
+          "Title": "Communication integration",
+          "Description": "The platform makes sure that you are always connected with your customers and agency.",
+          "Whatsapp": "Because of deep integration with Whatsapp, you can always send messages to your customers or assigned agent for a booking."
+        },
+        "Customer": {
+          "Title": "Interacting with customers",
+          "Description": "You can send messages to the customer by going to the booking details page and clicking on 'Chat with Customer'."
+        },
+        "Agency": {
+          "Title": "Interacting with agency",
+          "Description": " You can also send messages to the assigned agent from booking details page and clicking on 'Chat with Agency'."
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",

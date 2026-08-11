@@ -2764,16 +2764,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common account and subscription related questions",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -2817,16 +2817,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to analytics",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -3104,16 +3104,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to bookings",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -3198,16 +3198,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to customers",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -3250,7 +3250,7 @@
           "Available": "The driver is available right now. He is not on a trip.",
           "OnTrip": "The driver is currently working on a trip.",
           "Leave": "The driver is on leave.",
-          "Inactive": "The driver has been inactived by the agency and cannot be assigned to any booking.",
+          "Inactive": "The driver has been inactivated by the agency and cannot be assigned to any booking.",
           "Suspended": "The driver has been banned by us and cannot login to the platform."
         }
       },
@@ -3297,7 +3297,7 @@
         },
         "Selection": {
           "Title": "Driver selection",
-          "Description": "You can select a driver from the list of drivers.",
+          "Description": "You must select a driver from the list of drivers.",
           "Score": " We also provide a score for each driver to select the recommended driver for a booking. This score is generated based on driver's availability, schedule, license status, rating, type of vehicle he can drive and other such factors."
         },
         "Reassignment": {
@@ -3365,16 +3365,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to drivers",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -3461,16 +3461,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -3504,16 +3504,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -3549,16 +3549,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to users",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -3574,46 +3574,142 @@
       "Description": "Get help related to vehicle fleet management",
       "Overview": {
         "Title": "VEHICLE OVERVIEW",
-        "Description": "Let's learn about your vehicles."
+        "KnowVehicle": {
+          "Title": "Know your vehicle",
+          "Description": "Vehicle is the entity which will be used to manage your fleet and assigned to a booking based on customer's request.",
+          "AllVehicles": "You can view all the vehicles in your agency by going to the vehicles page.",
+          "CTA": "View all vehicles"
+        },
+        "VehicleDetails": {
+          "Title": "Vehicle details",
+          "Description": "A Vehicle has the various details associated with it.",
+          "Caption": "A list of Vehicle details",
+          "Basic": "BASIC INFO",
+          "BasicDesc": "Vehicle number, type, brand, color, etc. along with a photo of the vehicle.",
+          "Specific": "SPECIFIC INFO",
+          "SpecificDesc": "Details like odometer reading, number of seats (other than driver), has AC or not, etc.",
+          "Documents": "DOCUMENTS",
+          "DocumentsDesc": "Documents like insurance, RC, PUC along with their expiry dates and photos.",
+          "Type": "TYPE",
+          "TypeDesc": "Type of vehicle (car, bus, bike, etc.). Used in selecting vehicle for a new booking based on customer's preferences.",
+          "Rate": "RATE",
+          "RateDesc": "Default rate charge per km for this vehicle. This will be used to calculate the booking quote for the customer. This can be changed while create a booking.",
+          "Rating": "RATING",
+          "RatingDesc": "Average vehicle rating. Provided by customers after each booking."
+        },
+        "StatusList": {
+          "Title": "Vehicle status",
+          "Description": "A vehicle will have a status to identify its current availability.",
+          "Caption": "A list of vehicle status",
+          "Available": "The vehicle is available right now. He is not on a trip.",
+          "OnTrip": "The vehicle is currently working on a trip.",
+          "Repair": "The vehicle is in repair.",
+          "Inactive": "The vehicle has been inactivated by the agency and cannot be assigned to any booking.",
+          "Suspended": "The vehicle has been banned by us and cannot be used on the platform."
+        }
       },
       "Adding": {
         "Title": "ADDING VEHICLE",
-        "Description": "You can add a new vehicle."
+        "AddingVehicle": {
+          "Title": "Adding a new vehicle",
+          "Description": "You can add a new vehicle to your agency by going to the vehicles page and clicking on 'Add Vehicle'.",
+          "CTA": "Add Vehicle"
+        },
+        "Step1": {
+          "Title": "Step 1: Vehicle Info",
+          "Description": "Provide basic vehicle info like vehicle number, type, brand, and color."
+        },
+        "Step2": {
+          "Title": "Step 2: Specific Info",
+          "Description": "Provide vehicle specific info like odometer reading, capacity (number of seats), RC details and vehicle photo."
+        },
+        "Step3": {
+          "Title": "Step 3: Documentation",
+          "Description": "Provide vehicle Insurance and PUC related details."
+        },
+        "Step4": {
+          "Title": "Step 4: Agency related info",
+          "Description": "Provide agency related info for this vehicle: rate per km, AC charge per day (if applicable)."
+        },
+        "Step5": {
+          "Title": "Step 5: Confirm",
+          "Description": "Confirm all the details and submit to add a new vehicle."
+        }
       },
       "Editing": {
         "Title": "EDITING VEHICLE DETAILS",
-        "Description": "You can edit vehicle information by going to the vehicle details page."
+        "ModifyingVehicle": {
+          "Title": "Modifying vehicle details",
+          "Description": "You can edit vehicle information by going to the vehicle details page and clicking 'Edit Details'."
+        }
       },
       "Assignment": {
         "Title": "ASSIGNMENT",
-        "Description": "You can assign a vehicle to a booking."
+        "BookingAssignment": {
+          "Title": "Booking assignment",
+          "Description": "You can assign a booking (lead or confirmed) to a vehicle. Go to the booking details page and select 'Add vehicle'."
+        },
+        "Selection": {
+          "Title": "Vehicle selection",
+          "Description": "You must select a vehicle from the list of vehicles.",
+          "Score": " We also provide a score for each vehicle to select the recommended vehicle for a booking. This score is generated based on vehicle's availability, schedule, documentation status, rating, type and other such factors."
+        },
+        "Reassignment": {
+          "Title": "Reassigning a booking",
+          "Description": "You can also reassign a booking to another vehicle. Go to the booking details page and select 'Change vehicle'. Once a booking has started, it cannot be reassigned."
+        }
       },
       "Bookings": {
         "Title": "BOOKINGS",
-        "Description": "You can see the bookings assigned to or completed in a vehicle."
+        "UpcomingBookings": {
+          "Title": "Assigned bookings",
+          "Description": "You can view all the upcoming bookings (including any ongoing booking) for a vehicle by going to the Upcoming tab."
+        },
+        "CompletedBookings": {
+          "Title": "Completed bookings",
+          "Description": "You can also view all the past bookings completed in a vehicle by going to the Completed tab."
+        }
       },
       "Repairs": {
         "Title": "VEHICLE REPAIRS",
-        "Description": "You can manage vehicle repairs."
+        "WhatIsRepair": {
+          "Title": "Understanding vehicle repairs",
+          "Description": "If a vehicle is going for a repair or maintenance, you can keep track of that. This also ensures that such vehicles are not assigned a booking.",
+          "AllRepairs": "You can view all repairs (in future and past) for a vehicle by going to Repairs tab on vehicle details page."
+        },
+        "AddingVehicleRepair": {
+          "Title": "Adding a vehicle repair",
+          "Description": "You can add a vehicle repair by going to the vehicle repairs page and clicking on 'Add Repair'.",
+          "Fields": "You must provide the repair start date, end date, whether the repair has already been completed and remarks, if any."
+        },
+        "EditingVehicleRepair": {
+          "Title": "Editing a vehicle repair",
+          "Description": "You can edit a vehicle repair details by selecting the repair and clicking on 'Edit'."
+        }
       },
       "Documents": {
         "Title": "DOCUMENTS",
-        "Description": "Let's discuss about the vehicle documentation and expiry alerts."
+        "WhatIsDocument": {
+          "Title": "Understanding vehicle documents",
+          "Description": "You can view all the documents related to a vehicle in the Documents section on vehicle details page.",
+          "ExpiryAlerts": "These documentation help in receiving timely alerts for expiry. For example, if the vehicle insurance is about to expire, you will be notified a few days earlier so that you can renew it on time.",
+          "CTA": "View expiry alerts"
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to vehicles",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -4840,16 +4936,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common account and subscription related questions",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -5013,7 +5109,7 @@
           "Whatsapp": "Because of deep integration with Whatsapp, you can always send messages to your customers or assigned agent for a booking."
         },
         "Customer": {
-          "Title": "Interacting with customers",
+          "Title": "Interacting with customer",
           "Description": "You can send messages to the customer by going to the booking details page and clicking on 'Chat with Customer'."
         },
         "Agency": {
@@ -5025,16 +5121,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to bookings",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -5109,16 +5205,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -5147,16 +5243,16 @@
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",
@@ -5170,30 +5266,53 @@
       "Description": "Get help related to you assigned vehicle",
       "Overview": {
         "Title": "VEHICLE OVERVIEW",
-        "Description": "Let's learn about your vehicle."
-      },
-      "Assignment": {
-        "Title": "ASSIGNMENT",
-        "Description": "You are assigned a vehicle with a booking."
+        "KnowVehicle": {
+          "Title": "Know your vehicle",
+          "Description": "Vehicle is the entity which will be assigned to you with a booking.",
+          "AllVehicles": "You can view your assigned vehicle by going to the MyVehicle page.",
+          "CTA": "View assigned vehicle"
+        },
+        "VehicleDetails": {
+          "Title": "Vehicle details",
+          "Description": "A Vehicle has the various details associated with it.",
+          "Caption": "A list of Vehicle details",
+          "Basic": "BASIC INFO",
+          "BasicDesc": "Vehicle number, type, brand, color, etc. along with a photo of the vehicle.",
+          "Specific": "SPECIFIC INFO",
+          "SpecificDesc": "Details like odometer reading, number of seats (other than driver), has AC or not, etc.",
+          "Documents": "DOCUMENTS",
+          "DocumentsDesc": "Documents like insurance, RC, PUC along with their expiry dates and photos.",
+          "Type": "TYPE",
+          "TypeDesc": "Type of vehicle (car, bus, bike, etc.). Used in selecting vehicle for a new booking based on customer's preferences.",
+          "Rate": "RATE",
+          "RateDesc": "Default rate charge per km for this vehicle. This will be used to calculate the booking quote for the customer. This can be changed while create a booking.",
+          "Rating": "RATING",
+          "RatingDesc": "Average vehicle rating. Provided by customers after each booking."
+        }
       },
       "Documents": {
         "Title": "DOCUMENTS",
-        "Description": "Let's discuss about the vehicle documentation and expiry alerts."
+        "WhatIsDocument": {
+          "Title": "Understanding vehicle documents",
+          "Description": "You can view all the documents related to a vehicle in the Documents section on my vehicle page.",
+          "ExpiryAlerts": "These documentation help in receiving timely alerts for expiry. For example, if the vehicle insurance is about to expire, you will be notified so that it can be renewed on time.",
+          "CTA": "View expiry alerts"
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to vehicles",
         "Q1": {
-          "Question": "How do I change my account password?",
-          "Answer": "You can change your account password by going to your account details page and clicking on 'Change Password'."
+          "Question": "",
+          "Answer": ""
         },
         "Q2": {
-          "Question": "How do I change my account email?",
-          "Answer": "You can change your account email by going to your account details page and clicking on 'Change Email'."
+          "Question": "",
+          "Answer": ""
         },
         "Q3": {
-          "Question": "How do I know my user ID?",
-          "Answer": "Your user ID can be found on your account details page."
+          "Question": "",
+          "Answer": ""
         }
       },
       "TableOfContent": "TABLE OF CONTENT",

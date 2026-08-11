@@ -17,7 +17,7 @@ export function SupportVideoItem({
   return (
     <SectionWrapper id={title}>
       <div className="flex gap-1.5 md:gap-2 items-center">
-        <div className="flex items-center justify-center bg-slate-50 dark:bg-slate-950 rounded-lg size-8 lg:size-10 shrink-0">
+        <div className="flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg size-8 lg:size-10 shrink-0">
           <RyogoP color="slate" weight="font-bold">
             {index}
           </RyogoP>

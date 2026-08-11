@@ -292,7 +292,7 @@ async function AddingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step1.Title")}>
         <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
-        {/* //TODO: Add driver step2 page snapshot */}
+        {/* //TODO: Add driver step1 page snapshot */}
         <RyogoImage
           alt="driver step1"
           imageSize="xl"
@@ -386,7 +386,7 @@ async function BookingsContent() {
         </RyogoCaption>
         {/* //TODO: Add Upcoming Bookings page snapshot */}
         <RyogoImage
-          alt="Customer UpcomingBookings"
+          alt="UpcomingBookings"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
@@ -398,7 +398,7 @@ async function BookingsContent() {
         </RyogoCaption>
         {/* //TODO: Add CompletedBookings page snapshot */}
         <RyogoImage
-          alt="Customer CompletedBookings"
+          alt="CompletedBookings"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"

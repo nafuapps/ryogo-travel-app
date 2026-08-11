@@ -7,6 +7,7 @@ import ViewSupportTicketPageComponent from "@/components/flows/support/viewSuppo
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import { SupportTicketIdRegex } from "@/lib/regex"
 
 export const metadata: Metadata = {
   title: `View Support Ticket - ${pageTitle}`,
@@ -19,6 +20,12 @@ export default async function ViewSupportTicketPage({
   params: Promise<{ ticketId: string }>
 }) {
   const { ticketId } = await params
+
+  //Invalid ticket id regex check
+  if (!SupportTicketIdRegex.safeParse(ticketId).success) {
+    redirect("/dashboard/support", RedirectType.replace)
+  }
+
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)

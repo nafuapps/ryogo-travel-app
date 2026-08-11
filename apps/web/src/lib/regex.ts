@@ -20,6 +20,7 @@ export const DriverLeaveIdRegex = getStringRegex(9).regex(/DL\d{7}/)
 export const TripLogIdRegex = getStringRegex(9).regex(/TL\d{7}/)
 export const MissionIdRegex = getStringRegex(12).regex(/M\d{11}/)
 export const NotificationIdRegex = getStringRegex(12).regex(/N\d{11}/)
+export const SupportTicketIdRegex = getStringRegex(9).regex(/ST\d{7}/)
 
 export const PhoneRegex = getStringRegex(10).regex(/^[0-9]+$/)
 export const EmailRegex = z.email()

@@ -1,4 +1,3 @@
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { SUBSCRIPTION_EXPIRY_REMINDER_DAYS } from "@/lib/uiConfig"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
@@ -9,6 +8,7 @@ import { CalendarSync } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import PaymentButton from "./paymentButton"
 import moment from "moment"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function PlanExpiryDetails({
   userDetails,
@@ -32,11 +32,11 @@ export default async function PlanExpiryDetails({
   return (
     <div
       id="PlanExpiry"
-      className={`flex flex-col ${daysToExpiry < 0 ? "bg-red-100 dark:bg-red-800" : needExpiryReminder ? "bg-yellow-100 dark:bg-yellow-800" : "bg-slate-100 dark:bg-slate-800"}  p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
+      className={`flex flex-col ${daysToExpiry < 0 ? "bg-red-200 dark:bg-red-800" : needExpiryReminder ? "bg-yellow-200 dark:bg-yellow-800" : "bg-slate-200 dark:bg-slate-800"}  p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
     >
       {needExpiryReminder ? (
         <>
-          <RyogoCaption
+          <RyogoSmall
             color={daysToExpiry < 0 ? "red" : "yellow"}
             weight="font-bold"
           >
@@ -47,7 +47,7 @@ export default async function PlanExpiryDetails({
                   ),
                 })
               : t("SubscriptionExpiresIn", { days: daysToExpiry })}
-          </RyogoCaption>
+          </RyogoSmall>
           {isOwner && (
             <PaymentButton
               agencyId={agencyDetails.id}

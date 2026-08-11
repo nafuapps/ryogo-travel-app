@@ -1714,7 +1714,6 @@
       "Repairs": "Repairs"
     },
     "VehicleDetails": {
-      "BasicInfo": "Basic info",
       "Photo": "Vehicle photo",
       "ChangePhoto": {
         "Button": "Change Photo",
@@ -2091,7 +2090,6 @@
       "Leaves": "Leaves"
     },
     "DriverDetails": {
-      "BasicInfo": "Basic info",
       "Photo": "Driver photo",
       "CallDriver": "Call Driver",
       "ChatDriver": "Chat with Driver",
@@ -2334,7 +2332,6 @@
       "SecondaryCTA": "Back"
     },
     "CustomerDetails": {
-      "BasicInfo": "Basic info",
       "Photo": "View customer photo",
       "ChangePhoto": {
         "Button": "Change Photo",
@@ -2609,7 +2606,7 @@
     "SupportTickets": {
       "TicketsTrialWarning": "You cannot access support tickets because you are on Basic plan.",
       "TicketsTrialAction": "To get full access to our support tickets feature, please upgrade to Premium plan.",
-      "TicketsExpiredWarning": "Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
+      "TicketsExpiredWarning": "Your cannot access support tickets because your plan has expired.",
       "TicketsExpiredAction": "To get full access to our support tickets feature, please renew Premium plan.",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
@@ -4786,7 +4783,6 @@
       "Error": "Cannot modify expense.. Try again later!"
     },
     "MyVehicle": {
-      "BasicInfo": "Basic info",
       "Photo": "Vehicle photo",
       "AC": "AC",
       "NonAC": "Non AC",
@@ -5433,7 +5429,7 @@
     "MySupportTickets": {
       "TicketsTrialWarning": "You cannot access support tickets because you are on Basic plan.",
       "TicketsTrialAction": "To get full access to our support tickets feature, please upgrade to Premium plan.",
-      "TicketsExpiredWarning": "Your cannot access support tickets because your plan has expired. To get full access to our support tickets feature, please upgrade to a premium plan.",
+      "TicketsExpiredWarning": "Your cannot access support tickets because your plan has expired.",
       "TicketsExpiredAction": "To get full access to our support tickets feature, please renew Premium plan.",
       "AddTicket": "Add Support Ticket",
       "TicketStatusFilters": "TICKET STATUS FILTERS",

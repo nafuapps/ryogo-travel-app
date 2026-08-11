@@ -135,7 +135,7 @@ export default async function MySupportPageComponent({
               <RyogoCaption color="light" className="text-center">
                 {t("Tickets.Description")}
               </RyogoCaption>
-              <Link href="/dashboard/support/tickets">
+              <Link href="/rider/mySupport/tickets">
                 <Button variant="white">
                   <RyogoCaption color="slate">
                     {t("Tickets.ViewCTA")}

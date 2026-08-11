@@ -1,5 +1,4 @@
 import TryPremiumAlertButton from "@/components/buttons/alert/tryPremiumAlertButton"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
@@ -9,6 +8,7 @@ import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { BadgeCheck } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import PaymentButton from "./paymentButton"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function PremiumNudge({
   userDetails,

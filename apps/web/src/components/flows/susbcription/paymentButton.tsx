@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl"
 import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { useTransition } from "react"
 import { toast } from "sonner"
+import { RyogoCaption } from "@/components/typography"
 
 export default function PaymentButton({
   agencyId,
@@ -97,7 +98,7 @@ export default function PaymentButton({
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Button onClick={handlePayment} variant={"brand"} disabled={isPending}>
-        {renewLabel}
+        <RyogoCaption color="white">{renewLabel}</RyogoCaption>
         {icon}
       </Button>
     </>

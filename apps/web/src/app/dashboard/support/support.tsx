@@ -50,6 +50,7 @@ export default async function SupportPageComponent({
           description={t("Bookings.Description")}
           icon={Tickets}
           link={"/dashboard/support/help-bookings"}
+          highlight
         />
         <SupportCategoryCard
           title={t("Vehicles.Title")}

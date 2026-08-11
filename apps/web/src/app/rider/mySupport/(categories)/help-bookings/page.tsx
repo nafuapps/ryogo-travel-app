@@ -212,7 +212,7 @@ async function OverviewContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/bookings"}
+          href={"/rider/myBookings"}
           label={t("WhatIsBooking.CTA")}
         />
       </SupportContentSectionWrapper>
@@ -254,6 +254,10 @@ async function OverviewContent() {
           <SupportTableTextRow
             label={t("Elements.TripLogs")}
             desc={t("Elements.TripLogsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Rating")}
+            desc={t("Elements.RatingDesc")}
           />
         </SupportTableWrapper>
       </SupportContentSectionWrapper>

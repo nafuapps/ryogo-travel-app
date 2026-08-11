@@ -12,7 +12,7 @@ export const SEND_CONFIRMATION_TIMEOUT_MINUTES = 60
 export const SEND_INVOICE_TIMEOUT_MINUTES = 60
 
 //Subscription
-export const TRIAL_MODE = false
+export const TRIAL_MODE = true
 
 export const BASIC_PLAN_DRIVER_LIMIT = 3
 export const BASIC_PLAN_AGENT_LIMIT = 3

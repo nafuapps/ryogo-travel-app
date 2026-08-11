@@ -31,7 +31,7 @@ export default async function HowItWorksCTASection() {
               <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
               <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
             </Button>
-          </Link>{" "}
+          </Link>
           {/* //TODO: Demo video */}
           <Link href="/resources#videos">
             <Button

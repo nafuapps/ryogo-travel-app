@@ -900,7 +900,7 @@
       "BookingTrialAction": "Please upgrade your subscription plan to create bookings!",
       "BookingExpiredAction": "Please renew your subscription plan to create bookings!",
       "AgentTrialWarning": "You have reached the agent limit for basic plan.",
-      "AgentExpiredWarning": "Your subscription plan has expired.",
+      "AgentExpiredWarning": "Your subscription plan has expired and you have reached the agent limit.",
       "AgentTrialAction": "Please upgrade your subscription plan to create bookings!",
       "AgentExpiredAction": "Please renew your subscription plan to create bookings!",
       "BuyCTA": "Buy Premium",
@@ -1185,6 +1185,8 @@
       "Created": "Created On",
       "BookedBy": "Booked By",
       "AssignedTo": "Assigned Agent",
+      "CustomerRating": "Customer Rating",
+      "DriverRating": "Driver Rating",
       "AssignAgent": "Change Agent",
       "CustomerInfo": "CUSTOMER INFO",
       "CustomerName": "Name",
@@ -2849,6 +2851,7 @@
         "WhatIsBooking": {
           "Title": "What is a booking?",
           "Description": "A booking is a trip booked by a customer at your agency from one location to another with a driver and a vehicle to fulfill it.",
+          "AllBookings": "You can view all bookings in your agency by going to bookings page.",
           "CTA": "View all bookings"
         },
         "Elements": {
@@ -2872,7 +2875,9 @@
           "Transactions": "TRANSACTIONS",
           "TransactionsDesc": "All the money transactions related to the booking, like payment from customer, cash given to/from driver, etc.",
           "TripLogs": "TRIP LOGS",
-          "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end."
+          "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end.",
+          "Rating": "RATINGS",
+          "RatingDesc": "Average rating given by customer and driver for a completed booking."
         },
         "StatusList": {
           "Title": "Booking status",
@@ -3123,27 +3128,71 @@
       "Description": "Get help related to customer management",
       "Overview": {
         "Title": "CUSTOMER OVERVIEW",
-        "Description": "Let's learn how to manage your customers."
+        "KnowCustomer": {
+          "Title": "Knowing your customers",
+          "Description": "A customer is the entity to which each booking is mapped. Therefore, when creating a new booking, customer is the first thing you must select.",
+          "AllCustomers": "You can view (or search through) all your customers by going to the customers page.",
+          "CTA": "View all customers"
+        },
+        "CustomerDetails": {
+          "Title": "Customer details",
+          "Description": "You can view all the details of a customer by going to the customer details page.",
+          "Elements": "Customer details include: Name, Phone, Email, Address, Location (city & state), Photo, Remarks, Rating, Status, etc."
+        },
+        "StatusList": {
+          "Title": "Customer status",
+          "Description": "A customer will have different statuses",
+          "Caption": "A list of customer status",
+          "Active": "Customer is active and can be selected for making new bookings",
+          "Inactive": "Customer has been inactivated by your agency and cannot make new bookings. Although, any ongoing booking for this customer can proceed.",
+          "Suspended": "Customer has been banned by us. The customer will not be allowed to make any bookings."
+        }
       },
       "Adding": {
         "Title": "ADDING CUSTOMER",
-        "Description": "You can add a new customer."
+        "AddingCustomer": {
+          "Title": "Adding a new customer",
+          "Description": "You can add a new customer by going to the customers page and clicking on 'Add Customer'.",
+          "CTA": "Add a customer"
+        },
+        "AddingInBooking": {
+          "Title": "Adding customer in a new booking",
+          "Description": "When creating a new booking, if you cannot search for an existing customer by phone number, you must create a new customer.",
+          "Required": "The required details for creating a customer are: Name, Phone and Location (City, State)"
+        }
       },
       "Editing": {
-        "Title": "EDITING CUSTOMER DETAILS",
-        "Description": "You can edit customer information by going to the customer details page."
-      },
-      "Communication": {
-        "Title": "COMMUNICATION",
-        "Description": "You can communicate with your customer during a booking through the platform directly."
+        "Title": "EDITING CUSTOMER INFO",
+        "EditingCustomer": {
+          "Title": "Modifying customer details",
+          "Description": "You can edit all the customer details by clicking on 'Edit Details' in the customer details page."
+        }
       },
       "Bookings": {
         "Title": "BOOKINGS",
-        "Description": "You can see the bookings made by a customer."
+        "UpcomingBookings": {
+          "Title": "Assigned bookings",
+          "Description": "You can view all the upcoming bookings (including any ongoing booking) for a customer by going to the Upcoming tab."
+        },
+        "CompletedBookings": {
+          "Title": "Completed bookings",
+          "Description": "You can also view all the past bookings made by a customer by going to the Completed tab."
+        }
+      },
+      "Communication": {
+        "Title": "COMMUNICATION",
+        "ContactingCustomer": {
+          "Title": "Contacting a customer",
+          "Description": "You can communicate with your customer during a booking through the platform directly.",
+          "Contact": "The assigned agent (or owner) can chat or call the customer from the booking details page."
+        }
       },
       "Search": {
         "Title": "SEARCH",
-        "Description": "You can search through your customer list."
+        "SearchingCustomer": {
+          "Title": "Searching for a customer",
+          "Description": "You can lookg for a customer in your customer list by typing their name, phone, location, etc."
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -3173,31 +3222,144 @@
       "Description": "Get help related to driver management",
       "Overview": {
         "Title": "DRIVER OVERVIEW",
-        "Description": "Let's learn about your drivers"
+        "KnowDriver": {
+          "Title": "Know your driver",
+          "Description": "Driver is the entity which will execute a booking from start to complete it. Therefore, a driver must be assigned to a booking before it can start.",
+          "AllDrivers": "You can view all the drivers in your agency by going to the drivers page.",
+          "CTA": "View all drivers"
+        },
+        "DriverDetails": {
+          "Title": "Driver details",
+          "Description": "A driver has the various details associated with it.",
+          "Caption": "A list of driver details",
+          "Basic": "BASIC INFO",
+          "BasicDesc": "Name, phone, address, Driver Id, etc.",
+          "License": "LICENSE",
+          "LicenseDesc": "License number, expiry date, license photo, etc.",
+          "Vehicles": "VEHICLE TYPE",
+          "VehiclesDesc": "Vehicle types that the driver can drive (like car, bus, bike). Useful in selecting driver for a new booking based on customer's requested vehicle.",
+          "Allowance": "ALLOWANCE",
+          "AllowanceDesc": "Default driver allowance per day. This will be used to calculate the booking quote for the customer. This can be changed while create a booking.",
+          "Rating": "RATING",
+          "RatingDesc": "Average driver rating. Provided by customers after each booking."
+        },
+        "StatusList": {
+          "Title": "Driver status",
+          "Description": "A driver will have a status to identify their current availability.",
+          "Caption": "A list of driver status",
+          "Available": "The driver is available right now. He is not on a trip.",
+          "OnTrip": "The driver is currently working on a trip.",
+          "Leave": "The driver is on leave.",
+          "Inactive": "The driver has been inactived by the agency and cannot be assigned to any booking.",
+          "Suspended": "The driver has been banned by us and cannot login to the platform."
+        }
       },
       "Adding": {
         "Title": "ADDING DRIVER",
-        "Description": "You can add a new driver."
+        "AddingDriver": {
+          "Title": "Adding a new driver",
+          "Description": "You can add a new driver to your agency by going to the drivers page and clicking on 'Add Driver'.",
+          "CTA": "Add driver"
+        },
+        "Step1": {
+          "Title": "Step 1: Driver Info",
+          "Description": "Provide basic driver info like name, phone, email, and photo."
+        },
+        "Step2": {
+          "Title": "Step 2: License Info",
+          "Description": "Provide driver license info: license number, expiry date, and license photo/screenshot."
+        },
+        "Step3": {
+          "Title": "Step 3: Agency related Info",
+          "Description": "Provide agency related info for this driver: address, types of vehicle that he can drive, and default driver allowance per day."
+        },
+        "Step4": {
+          "Title": "Step 4: Confirm",
+          "Description": "Confirm all the details and submit to add a new driver."
+        },
+        "DriverInvite": {
+          "Title": "Driver invite",
+          "Description": "As soon as driver is added, an invite is sent to the driver's provided email for them to join the agency."
+        }
       },
       "Editing": {
         "Title": "EDITING DRIVER DETAILS",
-        "Description": "You can edit driver information by going to the driver details page."
+        "ModifyingDriver": {
+          "Title": "Modifying driver details",
+          "Description": "You can edit driver information by going to the driver details page and clicking 'Edit Details'."
+        }
       },
       "Assignment": {
         "Title": "ASSIGNMENT",
-        "Description": "You can assign a driver to a booking."
+        "BookingAssignment": {
+          "Title": "Booking assignment",
+          "Description": "You can assign a booking (lead or confirmed) to a driver. Go to the booking details page and select 'Add driver'."
+        },
+        "Selection": {
+          "Title": "Driver selection",
+          "Description": "You can select a driver from the list of drivers.",
+          "Score": " We also provide a score for each driver to select the recommended driver for a booking. This score is generated based on driver's availability, schedule, license status, rating, type of vehicle he can drive and other such factors."
+        },
+        "Reassignment": {
+          "Title": "Reassigning a booking",
+          "Description": "You can also reassign a booking to another driver. Go to the booking details page and select 'Change driver'. Once a booking has started, it cannot be reassigned."
+        }
       },
       "Bookings": {
         "Title": "BOOKINGS",
-        "Description": "You can see the bookings assigned to or completed by a driver."
+        "UpcomingBookings": {
+          "Title": "Assigned bookings",
+          "Description": "You can view all the upcoming bookings (including any ongoing booking) for a driver by going to the Upcoming tab."
+        },
+        "CompletedBookings": {
+          "Title": "Completed bookings",
+          "Description": "You can also view all the past bookings completed by a driver by going to the Completed tab."
+        }
       },
       "Leaves": {
         "Title": "DRIVER LEAVES",
-        "Description": "You can manage driver leaves."
+        "WhatIsLeave": {
+          "Title": "Understanding driver leaves",
+          "Description": "If a driver is taking a leave, you can keep track of that. This also ensures that such drivers are not assigned a booking.",
+          "AllLeaves": "You can view all leaves (in future and past) taken by a driver by going to Leaves tab on driver details page."
+        },
+        "AddingDriverLeave": {
+          "Title": "Adding a driver leave",
+          "Description": "You can add a driver leave by going to the driver leaves page and clicking on 'Add Leave'.",
+          "Fields": "You must provide the leave start date, end date, whether the leave has already been taken and remarks, if any."
+        },
+        "EditingDriverLeave": {
+          "Title": "Editing a driver leave",
+          "Description": "You can edit a driver leave details by selecting the leave and clicking on 'Edit'."
+        }
       },
       "DriverApp": {
         "Title": "DRIVER APP",
-        "Description": "Let's discuss about the driver app."
+        "WhatIsDriverApp": {
+          "Title": "Understanding driver app",
+          "Description": "The driver app is another side of RyoGo app that allows drivers to accept and complete bookings. This way, the driver can always keep the live booking status updated for the agency and customers.",
+          "Use": "You can use the driver app the same way you use RyoGo app using your browser.",
+          "Download": "Alternatively, the driver app can also be used by downloading the PWA from your browser. Just click 'Install App' prompt in your browser."
+        },
+        "Features": {
+          "Title": "Features in driver app",
+          "Description": "Through driver app, the driver can perform a lot of activities. Some of these are common with agency users while some are exclusive to driver role.",
+          "Caption": "A list of features in driver app",
+          "Bookings": "BOOKINGS",
+          "BookingsDesc": "View all the assigned and completed bookings in the driver app.",
+          "Execution": "EXECUTION",
+          "ExecutionDesc": "Start and execute the currently assigned trip with a customer till completion.",
+          "Profile": "PROFILE",
+          "ProfileDesc": "View and edit profile details",
+          "Vehicle": "VEHICLE",
+          "VehicleDesc": "View assigned vehicle details and documents",
+          "Expenses": "EXPENSES",
+          "ExpensesDesc": "Add and edit expenses incurred in the trip.",
+          "Communication": "COMMUNICATION",
+          "CommunicationDesc": "Chat with or call the customer or the agency for any queries.",
+          "Alerts": "ALERTS",
+          "AlertsDesc": "Get alerts related to trips, bookings, etc."
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -3227,19 +3389,73 @@
       "Description": "Get help related to alerts and notifications",
       "Overview": {
         "Title": "MISSIONS OVERVIEW",
-        "Description": "Learn about missions (alerts)"
+        "WhatAreMissions": {
+          "Title": "Understanding missions",
+          "Description": "Missions are basically alerts generated by the system for a user to act upon. These can be critical or non-critical missions.",
+          "AllMissions": "You can view all your missions on Mission Control page (Target button in the header).",
+          "CTA": "View missions"
+        },
+        "Elements": {
+          "Title": "Elements of a mission",
+          "Description": "A mission informs about an event which has happened or about to happen and requires user's attention. The following elements in a mission helps you understand the message:",
+          "Caption": "A list of mission elements",
+          "Entity": "ENTITY",
+          "EntityDesc": "The entity for which this alert is generated. The entity can be a booking, customer, driver, agency, etc. For example, when an assigned booking has completed, you will receive an alert for this booking.",
+          "Message": "MESSAGE",
+          "MessageDesc": "The message is a summary of the alert.",
+          "Actions": "ACTIONS",
+          "ActionsDesc": "The actions that the user can take in response to this alert.",
+          "DueDate": "DUE DATE",
+          "DueDateDesc": "The date by which this alert should be resolved.",
+          "Status": "STATUS",
+          "StatusDesc": "The status of the alert. If the alert has already been read/completed by the user, it will be greyed out."
+        }
       },
       "Managing": {
         "Title": "MANAGING MISSIONS",
-        "Description": "Learn how you get alerts and how to work with them."
+        "ReadingMission": {
+          "Title": "Reading a mission",
+          "Description": "Once you have read/completed an alert, you can mark is as completed. This action can be undone by clicking on the check mark again."
+        },
+        "ActingMission": {
+          "Title": "Acting on a mission",
+          "Description": "You can take actions on a mission by clicking on the action link. For example, you can click on the link to view booking details and status."
+        },
+        "ExpiryAlerts": {
+          "Title": "Get expiry alerts",
+          "Description": "You will also receive alerts for expiry. For example, if a driver's license is about to expire, or a vehicle's insurance.",
+          "Items": "System will generate alerts for the following items: Driver license, Driver leaves, Vehicle insurance, PUC, RC, repairs."
+        }
       },
       "Custom": {
         "Title": "CUSTOM MISSIONS",
-        "Description": "Learn about entities and how they work together."
+        "WhatIsCustomMission": {
+          "Title": "Understanding custom mission",
+          "Description": "Premium plan provides an option to create missions (custom alerts/reminders).",
+          "ViewCustomMissions": "On the mission control page, you can identify if a mission is custom created by the 'Custom' badge."
+        },
+        "CreatingCustom": {
+          "Title": "Creating a custom mission",
+          "Description": "You can create a custom mission by clicking on the 'Add Custom Mission' button at the top of the mission control page.",
+          "Fields": "You must select the entity with its ID (leave blank if not sure or if it is a generic reminder), message for the alert, whether it is critical and a due date-time.",
+          "CTA": "Add Custom Mission"
+        },
+        "ModifyingCustom": {
+          "Title": "Editing a custom mission",
+          "Description": "You can modify a custom mission by clicking on the 'Edit' button in a mission card.",
+          "Fields": "You may change all the details."
+        }
       },
       "Feed": {
         "Title": "NOTIFICATION FEED",
-        "Description": "Learn about agency wide activity feed"
+        "WhatIsFeed": {
+          "Title": "Understanding feed",
+          "Description": "Feed notifications tells you about all the activities happening across the agency, like a new vehicle getting added, a booking being completed, etc. It is a central hub for all the agency-wide notifications.",
+          "ViewFeed": "You can view the feed by clicking on the 'Notification Feed' option in the sidebar.",
+          "FilterFeed": "You may also filter the feed by entity type. For example, you only want to see vehicle related notifications.",
+          "Link": "You may also click a feed notificationto view the details of that activity.",
+          "CTA": "View feed"
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -4202,6 +4418,8 @@
       "BookingInfo": "BOOKING INFO",
       "BookingId": "Booking ID",
       "CustomerName": "Customer Name",
+      "CustomerRating": "Customer Rating",
+      "DriverRating": "Driver Rating",
       "CallCustomer": "Call Customer",
       "ChatCustomer": "Chat with Customer",
       "CallAgent": "Call Agency",
@@ -4674,7 +4892,9 @@
           "Transactions": "TRANSACTIONS",
           "TransactionsDesc": "All the money transactions related to the booking, like payment from customer, cash given to/from driver, etc.",
           "TripLogs": "TRIP LOGS",
-          "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end."
+          "TripLogsDesc": "Location and timestamp log of each activity in the booking from trip start to end.",
+          "Rating": "RATINGS",
+          "RatingDesc": "Average rating given by customer and driver for a completed booking."
         },
         "StatusList": {
           "Title": "Booking status",
@@ -4828,15 +5048,62 @@
       "Description": "Get help related to alerts and notifications",
       "Overview": {
         "Title": "MISSIONS OVERVIEW",
-        "Description": "Learn about missions (alerts)"
+        "WhatAreMissions": {
+          "Title": "Understanding missions",
+          "Description": "Missions are basically alerts generated by the system for a user to act upon. These can be critical or non-critical missions.",
+          "AllMissions": "You can view all your missions on Mission Control page (Target button in the header).",
+          "CTA": "View missions"
+        },
+        "Elements": {
+          "Title": "Elements of a mission",
+          "Description": "A mission informs about an event which has happened or about to happen and requires user's attention. The following elements in a mission helps you understand the message:",
+          "Caption": "A list of mission elements",
+          "Entity": "ENTITY",
+          "EntityDesc": "The entity for which this alert is generated. The entity can be a booking, customer, driver, agency, etc. For example, when a booking is assigned, you will receive an alert for this booking.",
+          "Message": "MESSAGE",
+          "MessageDesc": "The message is a summary of the alert.",
+          "Actions": "ACTIONS",
+          "ActionsDesc": "The actions that the user can take in response to this alert.",
+          "DueDate": "DUE DATE",
+          "DueDateDesc": "The date by which this alert should be resolved.",
+          "Status": "STATUS",
+          "StatusDesc": "The status of the alert. If the alert has already been read/completed by the user, it will be greyed out."
+        }
       },
       "Managing": {
         "Title": "MANAGING MISSIONS",
-        "Description": "Learn how you get alerts and how to work with them."
+        "ReadingMission": {
+          "Title": "Reading a mission",
+          "Description": "Once you have read/completed an alert, you can mark is as completed. This action can be undone by clicking on the check mark again."
+        },
+        "ActingMission": {
+          "Title": "Acting on a mission",
+          "Description": "You can take actions on a mission by clicking on the action link. For example, you can click on the link to view booking details and status."
+        },
+        "ExpiryAlerts": {
+          "Title": "Get expiry alerts",
+          "Description": "You will also receive alerts for expiry. For example, if your driver license is about to expire, or the assigned vehicle's insurance.",
+          "Items": "System will generate alerts for the following items: Driver license, Vehicle insurance, PUC, RC."
+        }
       },
       "Custom": {
         "Title": "CUSTOM MISSIONS",
-        "Description": "Learn about entities and how they work together."
+        "WhatIsCustomMission": {
+          "Title": "Understanding custom mission",
+          "Description": "Premium plan provides an option to create missions (custom alerts/reminders).",
+          "ViewCustomMissions": "On the mission control page, you can identify if a mission is custom created by the 'Custom' badge."
+        },
+        "CreatingCustom": {
+          "Title": "Creating a custom mission",
+          "Description": "You can create a custom mission by clicking on the 'Add Custom Mission' button at the top of the mission control page.",
+          "Fields": "You must select the entity with its ID (leave blank if not sure or if it is a generic reminder), message for the alert, whether it is critical and a due date-time.",
+          "CTA": "Add Custom Mission"
+        },
+        "ModifyingCustom": {
+          "Title": "Editing a custom mission",
+          "Description": "You can modify a custom mission by clicking on the 'Edit' button in a mission card.",
+          "Fields": "You may change all the details."
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",

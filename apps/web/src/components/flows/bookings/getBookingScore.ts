@@ -49,3 +49,23 @@ export function getExpiryScore(
   //OK
   return OKExpiryScore
 }
+
+const LowRatingScore = 10
+const MediumRatingScore = 50
+const HighRatingScore = 75
+const VeryHighRatingScore = 100
+export function getCustomerRatingScore(rating: number[] | null): number {
+  if (!rating || rating.length < 1) return HighRatingScore
+  const averageRating = rating.reduce((a, b) => a + b, 0) / rating.length
+
+  if (averageRating < 3) {
+    return LowRatingScore
+  }
+  if (averageRating < 4) {
+    return MediumRatingScore
+  }
+  if (averageRating < 4.8) {
+    return HighRatingScore
+  }
+  return VeryHighRatingScore
+}

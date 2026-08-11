@@ -10,7 +10,9 @@ import { Separator } from "@/components/ui/separator"
 import SupportQuickActionLinkButton, {
   QuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItemType,
   SupportFAQWrapper,
@@ -32,12 +34,17 @@ import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import {
+  SupportTableWrapper,
+  SupportTableTextRow,
+} from "@/components/flows/support/supportTableWrapper"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 /*
   - Overview What is mission?
   - How to get and know alerts?
   - Custom mission
-  - 
 */
 
 export const metadata: Metadata = {
@@ -157,15 +164,73 @@ async function OverviewContent() {
   const t = await getTranslations("Rider.MySupportMissionsHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatAreMissions.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatAreMissions.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatAreMissions.AllMissions")}
+        </RyogoCaption>
+        {/* //TODO: Add MissionControl snapshot */}
+        <RyogoImage
+          alt="MissionControl"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/rider/myMissions"}
+          label={t("WhatAreMissions.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Elements.Title")}>
+        <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Elements.Caption")}>
+          <SupportTableTextRow
+            label={t("Elements.Entity")}
+            desc={t("Elements.EntityDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Message")}
+            desc={t("Elements.MessageDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Actions")}
+            desc={t("Elements.ActionsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.DueDate")}
+            desc={t("Elements.DueDateDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Status")}
+            desc={t("Elements.StatusDesc")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }
 async function ManagingContent() {
-  const t = await getTranslations("Rider.MySupportMissionsHelp.Overview")
+  const t = await getTranslations("Rider.MySupportMissionsHelp.Managing")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("ReadingMission.Title")}>
+        <RyogoCaption color="slate">
+          {t("ReadingMission.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ActingMission.Title")}>
+        <RyogoCaption color="slate">
+          {t("ActingMission.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ExpiryAlerts.Title")}>
+        <RyogoCaption color="slate">
+          {t("ExpiryAlerts.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("ExpiryAlerts.Items")}</RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -173,7 +238,44 @@ async function CustomContent() {
   const t = await getTranslations("Rider.MySupportMissionsHelp.Custom")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsCustomMission.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsCustomMission.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatIsCustomMission.ViewCustomMissions")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("CreatingCustom.Title")}>
+        <RyogoCaption color="slate">
+          {t("CreatingCustom.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("CreatingCustom.Fields")}</RyogoCaption>
+        {/* //TODO: Add CreatingCustom snapshot */}
+        <RyogoImage
+          alt="CreatingCustom"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/rider/myMissions/add"}
+          label={t("CreatingCustom.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ModifyingCustom.Title")}>
+        <RyogoCaption color="slate">
+          {t("ModifyingCustom.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("ModifyingCustom.Fields")}</RyogoCaption>
+        {/* //TODO: Add ModifyingCustom snapshot */}
+        <RyogoImage
+          alt="ModifyingCustom"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }

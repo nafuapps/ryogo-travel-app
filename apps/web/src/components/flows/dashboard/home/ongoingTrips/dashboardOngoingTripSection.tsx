@@ -26,7 +26,6 @@ export default async function DashboardOngoingTripSection({
         <RyogoIcon icon={Route} size="sm" color="light" />
         <RyogoSmall color="light">{t("Title")}</RyogoSmall>
         <RyogoSmall color="light" weight="font-bold">
-          {" "}
           {ongoingTrips.length}
         </RyogoSmall>
       </SectionHeaderWrapper>

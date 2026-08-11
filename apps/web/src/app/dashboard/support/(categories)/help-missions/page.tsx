@@ -1,7 +1,9 @@
 import SupportQuickActionLinkButton, {
   QuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItemType,
   SupportFAQWrapper,
@@ -33,6 +35,12 @@ import {
 import { getTranslations } from "next-intl/server"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import {
+  SupportTableWrapper,
+  SupportTableTextRow,
+} from "@/components/flows/support/supportTableWrapper"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 
 /*
   - Overview (What is mission?)
@@ -170,15 +178,73 @@ async function OverviewContent() {
   const t = await getTranslations("Dashboard.SupportMissionsHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatAreMissions.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatAreMissions.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatAreMissions.AllMissions")}
+        </RyogoCaption>
+        {/* //TODO: Add MissionControl snapshot */}
+        <RyogoImage
+          alt="MissionControl"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/mission-control"}
+          label={t("WhatAreMissions.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Elements.Title")}>
+        <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Elements.Caption")}>
+          <SupportTableTextRow
+            label={t("Elements.Entity")}
+            desc={t("Elements.EntityDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Message")}
+            desc={t("Elements.MessageDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Actions")}
+            desc={t("Elements.ActionsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.DueDate")}
+            desc={t("Elements.DueDateDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Status")}
+            desc={t("Elements.StatusDesc")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }
 async function ManagingContent() {
-  const t = await getTranslations("Dashboard.SupportMissionsHelp.Overview")
+  const t = await getTranslations("Dashboard.SupportMissionsHelp.Managing")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("ReadingMission.Title")}>
+        <RyogoCaption color="slate">
+          {t("ReadingMission.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ActingMission.Title")}>
+        <RyogoCaption color="slate">
+          {t("ActingMission.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ExpiryAlerts.Title")}>
+        <RyogoCaption color="slate">
+          {t("ExpiryAlerts.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("ExpiryAlerts.Items")}</RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -186,7 +252,44 @@ async function CustomContent() {
   const t = await getTranslations("Dashboard.SupportMissionsHelp.Custom")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsCustomMission.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsCustomMission.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatIsCustomMission.ViewCustomMissions")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("CreatingCustom.Title")}>
+        <RyogoCaption color="slate">
+          {t("CreatingCustom.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("CreatingCustom.Fields")}</RyogoCaption>
+        {/* //TODO: Add CreatingCustom snapshot */}
+        <RyogoImage
+          alt="CreatingCustom"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/mission-control/add"}
+          label={t("CreatingCustom.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ModifyingCustom.Title")}>
+        <RyogoCaption color="slate">
+          {t("ModifyingCustom.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("ModifyingCustom.Fields")}</RyogoCaption>
+        {/* //TODO: Add ModifyingCustom snapshot */}
+        <RyogoImage
+          alt="ModifyingCustom"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -194,7 +297,23 @@ async function FeedContent() {
   const t = await getTranslations("Dashboard.SupportMissionsHelp.Feed")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsFeed.Title")}>
+        <RyogoCaption color="slate">{t("WhatIsFeed.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsFeed.ViewFeed")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsFeed.FilterFeed")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsFeed.Link")}</RyogoCaption>
+        {/* //TODO: Add Feed snapshot */}
+        <RyogoImage
+          alt="Feed"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/feed"}
+          label={t("WhatIsFeed.CTA")}
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }

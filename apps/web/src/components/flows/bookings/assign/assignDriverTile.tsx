@@ -14,6 +14,7 @@ import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
+  getCustomerRatingScore,
   getExpiryScore,
   getOverlapScore,
   NoOverlapScore,
@@ -101,6 +102,8 @@ export default function AssignDriverTile({
     bookingPassengers,
   )
 
+  const customerRatingScore = getCustomerRatingScore(driverData.customerRatings)
+
   const totalScore = getDriverTotalScore({
     bookingScore,
     leaveScore,
@@ -108,6 +111,7 @@ export default function AssignDriverTile({
     licenseScore,
     allowanceScore,
     canDriveScore,
+    customerRatingScore,
   })
 
   return (
@@ -223,10 +227,11 @@ function getCanDriveScore(
 
 const DriverWeightage_Booking = 0.35
 const DriverWeightage_Leave = 0.2
-const DriverWeightage_Status = 0.15
+const DriverWeightage_Status = 0.05
 const DriverWeightage_License = 0.1
 const DriverWeightage_Allowance = 0.1
 const DriverWeightage_CanDrive = 0.1
+const DriverWeightage_CustomerRating = 0.1
 const getDriverTotalScore = (data: {
   bookingScore: number
   leaveScore: number
@@ -234,6 +239,7 @@ const getDriverTotalScore = (data: {
   licenseScore: number
   allowanceScore: number
   canDriveScore: number
+  customerRatingScore: number
 }) => {
   return (
     data.bookingScore * DriverWeightage_Booking +
@@ -241,6 +247,7 @@ const getDriverTotalScore = (data: {
     data.statusScore * DriverWeightage_Status +
     data.licenseScore * DriverWeightage_License +
     data.allowanceScore * DriverWeightage_Allowance +
-    data.canDriveScore * DriverWeightage_CanDrive
+    data.canDriveScore * DriverWeightage_CanDrive +
+    data.customerRatingScore * DriverWeightage_CustomerRating
   )
 }

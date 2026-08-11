@@ -27,6 +27,7 @@ import {
   getOverlapScore,
   NoOverlapScore,
   getExpiryScore,
+  getCustomerRatingScore,
 } from "@/components/flows/bookings/getBookingScore"
 
 export default function AssignVehicleTile({
@@ -109,6 +110,9 @@ export default function AssignVehicleTile({
   const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm)
 
   const acScore = vehicleData.hasAC === bookingNeedsAC ? 4 : 1
+  const customerRatingScore = getCustomerRatingScore(
+    vehicleData.customerRatings,
+  )
 
   const totalScore = getVehicleTotalScore({
     bookingScore,
@@ -121,6 +125,7 @@ export default function AssignVehicleTile({
     rcScore,
     odometerScore,
     ratePerKmScore,
+    customerRatingScore,
   })
 
   return (
@@ -261,13 +266,14 @@ function getCapacityScore(capacity: number, passengers: number): number {
 const VehicleWeightage_Booking = 0.25
 const VehicleWeightage_Repair = 0.15
 const VehicleWeightage_Capacity = 0.2
-const VehicleWeightage_Status = 0.1
+const VehicleWeightage_Status = 0.05
 const VehicleWeightage_AC = 0.05
 const VehicleWeightage_Insurance = 0.05
 const VehicleWeightage_PUC = 0.05
 const VehicleWeightage_RC = 0.05
 const VehicleWeightage_Odometer = 0.05
 const VehicleWeightage_Rate = 0.05
+const VehicleWeightage_CustomerRating = 0.05
 const getVehicleTotalScore = (data: {
   bookingScore: number
   repairScore: number
@@ -279,6 +285,7 @@ const getVehicleTotalScore = (data: {
   rcScore: number
   odometerScore: number
   ratePerKmScore: number
+  customerRatingScore: number
 }) => {
   return (
     data.bookingScore * VehicleWeightage_Booking +
@@ -290,6 +297,7 @@ const getVehicleTotalScore = (data: {
     data.pucScore * VehicleWeightage_PUC +
     data.rcScore * VehicleWeightage_RC +
     data.odometerScore * VehicleWeightage_Odometer +
-    data.ratePerKmScore * VehicleWeightage_Rate
+    data.ratePerKmScore * VehicleWeightage_Rate +
+    data.customerRatingScore * VehicleWeightage_CustomerRating
   )
 }

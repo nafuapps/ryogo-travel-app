@@ -46,6 +46,7 @@ export default async function BookingDetailsPageComponent({
           sectionTitle={t("BookingInfo")}
           icon={BriefcaseBusiness}
         >
+          <BookingStatusPill status={bookingDetails.status} />
           <BookingItem
             title={t("Created")}
             value={format(bookingDetails.createdAt, "dd MMM hh:mm aaa")}
@@ -58,17 +59,34 @@ export default async function BookingDetailsPageComponent({
             title={t("AssignedTo")}
             value={bookingDetails.assignedUser.name}
           />
-          <BookingStatusPill status={bookingDetails.status} />
-          {isOwner && bookingDetails.status !== BookingStatusEnum.CANCELLED && (
-            <Button variant={"outline"}>
-              <Link
-                href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
-                className={"w-full"}
-              >
-                <RyogoCaption color="slate">{t("AssignAgent")}</RyogoCaption>
-              </Link>
-            </Button>
-          )}
+          {bookingDetails.ratingByCustomer &&
+            bookingDetails.status === BookingStatusEnum.COMPLETED && (
+              <BookingItem
+                title={t("CustomerRating")}
+                value={bookingDetails.ratingByCustomer.toString()}
+              />
+            )}
+          {bookingDetails.ratingByDriver &&
+            bookingDetails.status === BookingStatusEnum.COMPLETED && (
+              <BookingItem
+                title={t("DriverRating")}
+                value={bookingDetails.ratingByDriver.toString()}
+              />
+            )}
+          {isOwner &&
+            [
+              BookingStatusEnum.CONFIRMED,
+              BookingStatusEnum.IN_PROGRESS,
+            ].includes(bookingDetails.status) && (
+              <Button variant={"outline"}>
+                <Link
+                  href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
+                  className={"w-full"}
+                >
+                  <RyogoCaption color="slate">{t("AssignAgent")}</RyogoCaption>
+                </Link>
+              </Button>
+            )}
           {(isOwner || isAssignedUser) && (
             <>
               {

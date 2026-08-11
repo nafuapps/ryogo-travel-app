@@ -30,6 +30,7 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 
 type NewBookingStep1Props = {
   onNext: () => void
@@ -109,7 +110,9 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     }
     form.clearErrors("customerPhone")
     const foundCustomer = props.customers.find(
-      (c) => c.phone === form.getValues("customerPhone"),
+      (c) =>
+        c.phone === form.getValues("customerPhone") &&
+        c.status === CustomerStatusEnum.ACTIVE, //Only active customers can make new bookings
     )
     setExistingCustomer(foundCustomer)
     if (!foundCustomer) {

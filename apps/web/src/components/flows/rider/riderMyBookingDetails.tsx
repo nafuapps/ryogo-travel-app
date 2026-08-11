@@ -8,6 +8,7 @@ import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function RiderMyBookingDetails({
   booking,
@@ -38,6 +39,20 @@ export default async function RiderMyBookingDetails({
         {booking.dropAddress && (
           <BookingItem title={t("DropAddress")} value={booking.dropAddress} />
         )}
+        {booking.ratingByCustomer &&
+          booking.status === BookingStatusEnum.COMPLETED && (
+            <BookingItem
+              title={t("CustomerRating")}
+              value={booking.ratingByCustomer.toString()}
+            />
+          )}
+        {booking.ratingByDriver &&
+          booking.status === BookingStatusEnum.COMPLETED && (
+            <BookingItem
+              title={t("DriverRating")}
+              value={booking.ratingByDriver.toString()}
+            />
+          )}
         {canCallCustomer && (
           <>
             <RyogoPhoneButton

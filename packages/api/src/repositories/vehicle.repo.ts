@@ -46,6 +46,7 @@ export const vehicleRepository = {
         defaultRatePerKm: true,
         hasAC: true,
         vehiclePhotoUrl: true,
+        customerRatings: true,
         createdAt: true,
       },
       where: and(

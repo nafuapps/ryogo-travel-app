@@ -1,7 +1,9 @@
 import SupportQuickActionLinkButton, {
   QuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItem,
   SupportFAQItemType,
@@ -36,6 +38,21 @@ import {
 import { getTranslations } from "next-intl/server"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import {
+  SupportTableWrapper,
+  SupportTableStatusRow,
+  SupportTableTextRow,
+} from "@/components/flows/support/supportTableWrapper"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import {
+  CustomerStatusPill,
+  DriverStatusPill,
+} from "@/components/pills/ryogoPills"
+import {
+  CustomerStatusEnum,
+  DriverStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 
 /*
   - Overview
@@ -188,7 +205,75 @@ async function OverviewContent() {
   const t = await getTranslations("Dashboard.SupportDriversHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("KnowDriver.Title")}>
+        <RyogoCaption color="slate">{t("KnowDriver.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("KnowDriver.AllDrivers")}</RyogoCaption>
+        {/* //TODO: Add all drivers page snapshot */}
+        <RyogoImage
+          alt="Drivers"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/drivers"}
+          label={t("KnowDriver.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("DriverDetails.Title")}>
+        <RyogoCaption color="slate">
+          {t("DriverDetails.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add driver details page snapshot */}
+        <RyogoImage
+          alt="Driver details"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportTableWrapper label={t("DriverDetails.Caption")}>
+          <SupportTableTextRow
+            label={t("DriverDetails.Basic")}
+            desc={t("DriverDetails.BasicDesc")}
+          />
+          <SupportTableTextRow
+            label={t("DriverDetails.License")}
+            desc={t("DriverDetails.LicenseDesc")}
+          />
+          <SupportTableTextRow
+            label={t("DriverDetails.Vehicles")}
+            desc={t("DriverDetails.VehiclesDesc")}
+          />
+          <SupportTableTextRow
+            label={t("DriverDetails.Allowance")}
+            desc={t("DriverDetails.AllowanceDesc")}
+          />
+          <SupportTableTextRow
+            label={t("DriverDetails.Rating")}
+            desc={t("DriverDetails.RatingDesc")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("StatusList.Title")}>
+        <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("StatusList.Caption")}>
+          <SupportTableStatusRow desc={t("StatusList.Available")}>
+            <DriverStatusPill status={DriverStatusEnum.AVAILABLE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.OnTrip")}>
+            <DriverStatusPill status={DriverStatusEnum.ON_TRIP} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Leave")}>
+            <DriverStatusPill status={DriverStatusEnum.LEAVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Inactive")}>
+            <DriverStatusPill status={DriverStatusEnum.INACTIVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Suspended")}>
+            <DriverStatusPill status={DriverStatusEnum.SUSPENDED} />
+          </SupportTableStatusRow>
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -196,23 +281,98 @@ async function AddingContent() {
   const t = await getTranslations("Dashboard.SupportDriversHelp.Adding")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("AddingDriver.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingDriver.Description")}
+        </RyogoCaption>
+        <SupportContentCTALinkButton
+          href={"/dashboard/drivers/new"}
+          label={t("AddingDriver.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step1.Title")}>
+        <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
+        {/* //TODO: Add driver step2 page snapshot */}
+        <RyogoImage
+          alt="driver step1"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step2.Title")}>
+        <RyogoCaption color="slate">{t("Step2.Description")}</RyogoCaption>
+        {/* //TODO: Add driver step2 page snapshot */}
+        <RyogoImage
+          alt="driver step2"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step3.Title")}>
+        <RyogoCaption color="slate">{t("Step3.Description")}</RyogoCaption>
+        {/* //TODO: Add driver step3 page snapshot */}
+        <RyogoImage
+          alt="driver step3"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Step4.Title")}>
+        <RyogoCaption color="slate">{t("Step4.Description")}</RyogoCaption>
+        {/* //TODO: Add driver step4 page snapshot */}
+        <RyogoImage
+          alt="driver step4"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("DriverInvite.Title")}>
+        <RyogoCaption color="slate">
+          {t("DriverInvite.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
 async function EditingContent() {
   const t = await getTranslations("Dashboard.SupportDriversHelp.Editing")
   return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
+    <SupportContentSectionWrapper title={t("ModifyingDriver.Title")}>
+      <RyogoCaption color="slate">
+        {t("ModifyingDriver.Description")}
+      </RyogoCaption>
+    </SupportContentSectionWrapper>
   )
 }
 async function AssignmentContent() {
   const t = await getTranslations("Dashboard.SupportDriversHelp.Assignment")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("BookingAssignment.Title")}>
+        <RyogoCaption color="slate">
+          {t("BookingAssignment.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add driver assignment page snapshot */}
+        <RyogoImage
+          alt="Assign Driver"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Selection.Title")}>
+        <RyogoCaption color="slate">{t("Selection.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Selection.Score")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Reassignment.Title")}>
+        <RyogoCaption color="slate">
+          {t("Reassignment.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -220,7 +380,30 @@ async function BookingsContent() {
   const t = await getTranslations("Dashboard.SupportDriversHelp.Bookings")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("UpcomingBookings.Title")}>
+        <RyogoCaption color="slate">
+          {t("UpcomingBookings.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add Upcoming Bookings page snapshot */}
+        <RyogoImage
+          alt="Customer UpcomingBookings"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
+        <RyogoCaption color="slate">
+          {t("CompletedBookings.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add CompletedBookings page snapshot */}
+        <RyogoImage
+          alt="Customer CompletedBookings"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -228,7 +411,46 @@ async function LeavesContent() {
   const t = await getTranslations("Dashboard.SupportDriversHelp.Leaves")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsLeave.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsLeave.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsLeave.AllLeaves")}</RyogoCaption>
+        {/* //TODO: Add All Driver leaves page snapshot */}
+        <RyogoImage
+          alt="AllDriverLeaves"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("AddingDriverLeave.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingDriverLeave.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("AddingDriverLeave.Fields")}
+        </RyogoCaption>
+        {/* //TODO: Add AddingDriverLeave page snapshot */}
+        <RyogoImage
+          alt="AddingDriverLeave"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("EditingDriverLeave.Title")}>
+        <RyogoCaption color="slate">
+          {t("EditingDriverLeave.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add EditingDriverLeave page snapshot */}
+        <RyogoImage
+          alt="EditingDriverLeave"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -236,7 +458,55 @@ async function DriverAppContent() {
   const t = await getTranslations("Dashboard.SupportDriversHelp.DriverApp")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsDriverApp.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsDriverApp.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsDriverApp.Use")}</RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatIsDriverApp.Download")}
+        </RyogoCaption>
+        {/* //TODO: Add driver app snapshot */}
+        <RyogoImage
+          alt="DriverApp"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Features.Title")}>
+        <RyogoCaption color="slate">{t("Features.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Features.Caption")}>
+          <SupportTableTextRow
+            label={t("Features.Bookings")}
+            desc={t("Features.BookingsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Execution")}
+            desc={t("Features.ExecutionDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Profile")}
+            desc={t("Features.ProfileDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Vehicle")}
+            desc={t("Features.VehicleDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Expenses")}
+            desc={t("Features.ExpensesDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Communication")}
+            desc={t("Features.CommunicationDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Alerts")}
+            desc={t("Features.AlertsDesc")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }

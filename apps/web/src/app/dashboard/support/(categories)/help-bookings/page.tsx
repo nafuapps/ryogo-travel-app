@@ -265,9 +265,12 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatIsBooking.Description")}
         </RyogoCaption>
-        {/* //TODO: Add booking details page snapshot */}
+        <RyogoCaption color="slate">
+          {t("WhatIsBooking.AllBookings")}
+        </RyogoCaption>
+        {/* //TODO: Add all bookings page snapshot */}
         <RyogoImage
-          alt="Booking overview"
+          alt="All Bookings"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
@@ -279,6 +282,13 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Elements.Title")}>
         <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
+        {/* //TODO: Add booking details page snapshot */}
+        <RyogoImage
+          alt="Booking details"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
         <SupportTableWrapper label={t("Elements.Caption")}>
           <SupportTableTextRow
             label={t("Elements.BasicInfo")}
@@ -315,6 +325,10 @@ async function OverviewContent() {
           <SupportTableTextRow
             label={t("Elements.TripLogs")}
             desc={t("Elements.TripLogsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Elements.Rating")}
+            desc={t("Elements.RatingDesc")}
           />
         </SupportTableWrapper>
       </SupportContentSectionWrapper>

@@ -1,7 +1,9 @@
 import SupportQuickActionLinkButton, {
   QuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItem,
   SupportFAQItemType,
@@ -35,6 +37,14 @@ import {
 import { getTranslations } from "next-intl/server"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import {
+  SupportTableWrapper,
+  SupportTableStatusRow,
+} from "@/components/flows/support/supportTableWrapper"
+import { CustomerStatusPill } from "@/components/pills/ryogoPills"
+import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 
 /*
   - Details
@@ -181,7 +191,54 @@ async function OverviewContent() {
   const t = await getTranslations("Dashboard.SupportCustomersHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("KnowCustomer.Title")}>
+        <RyogoCaption color="slate">
+          {t("KnowCustomer.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("KnowCustomer.AllCustomers")}
+        </RyogoCaption>
+        {/* //TODO: Add all customers page snapshot */}
+        <RyogoImage
+          alt="Customers overview"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/customers"}
+          label={t("KnowCustomer.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("CustomerDetails.Title")}>
+        <RyogoCaption color="slate">
+          {t("CustomerDetails.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("CustomerDetails.Elements")}
+        </RyogoCaption>
+        {/* //TODO: Add customer details page snapshot */}
+        <RyogoImage
+          alt="Customer details"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("StatusList.Title")}>
+        <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("StatusList.Caption")}>
+          <SupportTableStatusRow desc={t("StatusList.Active")}>
+            <CustomerStatusPill status={CustomerStatusEnum.ACTIVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Inactive")}>
+            <CustomerStatusPill status={CustomerStatusEnum.INACTIVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Suspended")}>
+            <CustomerStatusPill status={CustomerStatusEnum.SUSPENDED} />
+          </SupportTableStatusRow>
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -189,23 +246,85 @@ async function AddingContent() {
   const t = await getTranslations("Dashboard.SupportCustomersHelp.Adding")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("AddingCustomer.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingCustomer.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add New customer page snapshot */}
+        <RyogoImage
+          alt="Add Customer"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/customers/new"}
+          label={t("AddingCustomer.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("AddingInBooking.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingInBooking.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("AddingInBooking.Required")}
+        </RyogoCaption>
+        {/* //TODO: Add New booking - new customer page snapshot */}
+        <RyogoImage
+          alt="Create Customer - New booking"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }
 async function EditingContent() {
   const t = await getTranslations("Dashboard.SupportCustomersHelp.Editing")
   return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
+    <SupportContentSectionWrapper title={t("EditingCustomer.Title")}>
+      <RyogoCaption color="slate">
+        {t("EditingCustomer.Description")}
+      </RyogoCaption>
+      {/* //TODO: Add Modify customer page snapshot */}
+      <RyogoImage
+        alt="Edit Customer"
+        imageSize="xl"
+        src="/logoPWA.png"
+        className="self-center"
+      />
+    </SupportContentSectionWrapper>
   )
 }
 async function BookingsContent() {
   const t = await getTranslations("Dashboard.SupportCustomersHelp.Bookings")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("UpcomingBookings.Title")}>
+        <RyogoCaption color="slate">
+          {t("UpcomingBookings.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add Upcoming Bookings page snapshot */}
+        <RyogoImage
+          alt="Customer UpcomingBookings"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
+        <RyogoCaption color="slate">
+          {t("CompletedBookings.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add CompletedBookings page snapshot */}
+        <RyogoImage
+          alt="Customer CompletedBookings"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -214,16 +333,37 @@ async function CommunicationContent() {
     "Dashboard.SupportCustomersHelp.Communication",
   )
   return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
+    <SupportContentSectionWrapper title={t("ContactingCustomer.Title")}>
+      <RyogoCaption color="slate">
+        {t("ContactingCustomer.Description")}
+      </RyogoCaption>
+      <RyogoCaption color="slate">
+        {t("ContactingCustomer.Contact")}
+      </RyogoCaption>
+      {/* //TODO: Add Connect with customer page snapshot */}
+      <RyogoImage
+        alt="Contact Customer"
+        imageSize="xl"
+        src="/logoPWA.png"
+        className="self-center"
+      />
+    </SupportContentSectionWrapper>
   )
 }
 async function SearchContent() {
   const t = await getTranslations("Dashboard.SupportCustomersHelp.Search")
   return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
+    <SupportContentSectionWrapper title={t("SearchingCustomer.Title")}>
+      <RyogoCaption color="slate">
+        {t("SearchingCustomer.Description")}
+      </RyogoCaption>
+      {/* //TODO: Add Search customer page snapshot */}
+      <RyogoImage
+        alt="Search Customer"
+        imageSize="xl"
+        src="/logoPWA.png"
+        className="self-center"
+      />
+    </SupportContentSectionWrapper>
   )
 }

@@ -24,7 +24,7 @@ export default function CopyClipboardButton({ label }: { label?: string }) {
   return (
     //Animate the copy button
     <Button variant="outline" onClick={() => handleCopy()} size="icon">
-      <div className={` ${isCopied ? "animate-ping" : ""}`}>
+      <div className={` ${isCopied ? "animate-ping scale-75" : ""}`}>
         <RyogoIcon
           icon={isCopied ? CheckCheck : Copy}
           size="sm"

@@ -1,3 +1,4 @@
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import {
@@ -8,6 +9,7 @@ import {
 } from "@/components/page/pageWrappers"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import moment from "moment"
@@ -33,7 +35,11 @@ export default async function RiderMyVehiclePageComponent({
   return (
     <PageWrapper id="RiderVehicleDetailsPage">
       <SectionWrapper id="BasicInfo">
-        <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
+        <SectionRowWrapper justifyStart>
+          <RyogoH3 color="brand">{vehicle.id}</RyogoH3>
+          <CopyClipboardButton label={vehicle.id} />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
             {vehicle.vehiclePhotoUrl ? (

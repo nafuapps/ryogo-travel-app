@@ -1,7 +1,9 @@
 import SupportQuickActionLinkButton, {
   QuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItem,
   SupportFAQItemType,
@@ -23,7 +25,7 @@ import {
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   Telescope,
   SquarePen,
@@ -37,6 +39,15 @@ import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import {
+  SupportTableWrapper,
+  SupportTableTextRow,
+  SupportTableStatusRow,
+} from "@/components/flows/support/supportTableWrapper"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 
 /*
   - User overview
@@ -191,31 +202,142 @@ async function OverviewContent() {
   const t = await getTranslations("Dashboard.SupportUsersHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("KnowUser.Title")}>
+        <RyogoCaption color="slate">{t("KnowUser.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("KnowUser.AllUsers")}</RyogoCaption>
+        {/* //TODO: Add all users page snapshot */}
+        <RyogoImage
+          alt="Users"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/users"}
+          label={t("KnowUser.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("StatusList.Title")}>
+        <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("StatusList.Caption")}>
+          <SupportTableStatusRow desc={t("StatusList.New")}>
+            <UserStatusPill status={UserStatusEnum.NEW} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Active")}>
+            <UserStatusPill status={UserStatusEnum.ACTIVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Inactive")}>
+            <UserStatusPill status={UserStatusEnum.INACTIVE} />
+          </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("StatusList.Suspended")}>
+            <UserStatusPill status={UserStatusEnum.SUSPENDED} />
+          </SupportTableStatusRow>
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
     </>
   )
 }
+
 async function RolesContent() {
   const t = await getTranslations("Dashboard.SupportUsersHelp.Roles")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsRole.Title")}>
+        <RyogoCaption color="slate">{t("WhatIsRole.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("RoleList.Title")}>
+        <RyogoCaption color="slate">{t("RoleList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("RoleList.Caption")}>
+          <SupportTableTextRow
+            label={t("RoleList.Owner")}
+            desc={t("RoleList.OwnerDesc")}
+          />
+          <SupportTableTextRow
+            label={t("RoleList.Agent")}
+            desc={t("RoleList.AgentDesc")}
+          />
+          <SupportTableTextRow
+            label={t("RoleList.Driver")}
+            desc={t("RoleList.DriverDesc")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
+      <SupportWarningWrapper text={t("DriverRole")} />
     </>
   )
 }
+
 async function ManagingContent() {
   const t = await getTranslations("Dashboard.SupportUsersHelp.Managing")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("AddingAgent.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingAgent.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("AddingAgent.Fields")}</RyogoCaption>
+        {/* //TODO: Add add agent page snapshot */}
+        <RyogoImage
+          alt="AddAgent"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/users/new"}
+          label={t("AddingAgent.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("AddingDriver.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingDriver.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add AddingDriver page snapshot */}
+        <RyogoImage
+          alt="AddingDriver"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/drivers/new"}
+          label={t("AddingDriver.CTA")}
+        />
+        <RyogoCaption color="slate">{t("AddingDriver.Help")}</RyogoCaption>
+        <SupportContentCTALinkButton
+          href={"/dashboard/support/help-drivers"}
+          label={t("AddingDriver.HelpCTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("UserInvite.Title")}>
+        <RyogoCaption color="slate">{t("UserInvite.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("ModifyingUser.Title")}>
+        <RyogoCaption color="slate">
+          {t("ModifyingUser.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Activity.Title")}>
+        <RyogoCaption color="slate">{t("Activity.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
+
 async function BookingsContent() {
   const t = await getTranslations("Dashboard.SupportUsersHelp.Bookings")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("AssignedBookings.Title")}>
+        <RyogoCaption color="slate">
+          {t("AssignedBookings.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
+        <RyogoCaption color="slate">
+          {t("CompletedBookings.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -223,8 +345,10 @@ async function BookingsContent() {
 async function CommunicationContent() {
   const t = await getTranslations("Dashboard.SupportUsersHelp.Communication")
   return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
+    <SupportContentSectionWrapper title={t("CommunicateUser.Title")}>
+      <RyogoCaption color="slate">
+        {t("CommunicateUser.Description")}
+      </RyogoCaption>
+    </SupportContentSectionWrapper>
   )
 }

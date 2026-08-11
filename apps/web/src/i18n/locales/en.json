@@ -2093,6 +2093,8 @@
     "DriverDetails": {
       "BasicInfo": "Basic info",
       "Photo": "Driver photo",
+      "CallDriver": "Call Driver",
+      "ChatDriver": "Chat with Driver",
       "ChangePhoto": {
         "Button": "Change Photo",
         "Header": "Upload driver photo",
@@ -2442,7 +2444,6 @@
       "SecondaryCTA": "Back"
     },
     "AccountAgency": {
-      "BasicInfo": "Basic info",
       "Photo": "View logo",
       "SubscriptionInfo": "Subscription info",
       "ValidTill": "Expires on: ",
@@ -3230,7 +3231,7 @@
         },
         "DriverDetails": {
           "Title": "Driver details",
-          "Description": "A driver has the various details associated with it.",
+          "Description": "A driver has various details associated with it.",
           "Caption": "A list of driver details",
           "Basic": "BASIC INFO",
           "BasicDesc": "Name, phone, address, Driver Id, etc.",
@@ -3527,23 +3528,90 @@
       "Description": "Get help related to user management",
       "Overview": {
         "Title": "USER OVERVIEW",
-        "Description": "Let's learn more about your users."
+        "KnowUser": {
+          "Title": "Know your users",
+          "Description": "User is the entity which can interact and login to the platform as part of your agency.",
+          "AllUsers": "You can view all the users in your agency by going to the users page.",
+          "CTA": "View all users"
+        },
+        "UserDetails": {
+          "Title": "User details",
+          "Description": "A user has various details associated with it like user ID, name, phone, email, photo, etc. You can view all the details by going to the user details page."
+        },
+        "StatusList": {
+          "Title": "User status",
+          "Description": "The user status tells you the current status of the user. You can see the status of the user by going to the user details page.",
+          "Caption": "A list of user status",
+          "New": "User is newly created. User must login and activate their account (and change their password) before they can start using the platform.",
+          "Active": "User is active and can use the platform.",
+          "Inactive": "User has been inactived by the owner. User can login and interact with the platform but you will not be assigned any bookings.",
+          "Suspended": "User is banned by us and cannot log into the platform."
+        }
       },
       "Roles": {
         "Title": "ROLES & PERMISSIONS",
-        "Description": "You can add a new user."
+        "WhatIsRole": {
+          "Title": "Understanding roles",
+          "Description": "The user role tells you the type of the user and defines what all activities the user can perform within the platform. You can see the role of the user by going to the user details page."
+        },
+        "RoleList": {
+          "Title": "List of user roles",
+          "Description": ".",
+          "Caption": "A list of user roles",
+          "Owner": "OWNER",
+          "OwnerDesc": "The owner of the agency. Owner is the superuser who can add and manage other users (like agents, drivers) and manage agency like changing agency details, buying subscription plan, etc.",
+          "Agent": "AGENT",
+          "AgentDesc": "An agent in the agency. Agent can add, manage and assign bookings, vehicles, drivers and perform daily agency workflows.",
+          "Driver": "DRIVER",
+          "DriverDesc": "A driver in the agency. Driver is a user that will receive bookings and fulfill the trip with a customer and vehicle."
+        },
+        "DriverRole": "Driver is also a user because he can login into the platform as well. Therefore, every driver has 2 entities associated with him: a driver ID and a user ID."
       },
       "Managing": {
         "Title": "MANAGING USERS",
-        "Description": "You can manage users."
+        "AddingAgent": {
+          "Title": "Adding agents",
+          "Description": "You can add agent to your agency by going to the users page and clicking 'Add Agent'.",
+          "Fields": "To add an agent, you must provide their name, phone, email, and photo.",
+          "CTA": "Add agent"
+        },
+        "AddingDriver": {
+          "Title": "Adding drivers",
+          "Description": "You can add driver to your agency by going to the users page and clicking 'Add Driver'.",
+          "CTA": "Add driver",
+          "Help": "Check out Drivers Help page to know more about how to manage drivers",
+          "HelpCTA": "Visit driver help page"
+        },
+        "UserInvite": {
+          "Title": "User invitation",
+          "Description": "As soon as you add an agent or driver, they receive an invite link on the provided email to login and join the agency."
+        },
+        "ModifyingUser": {
+          "Title": "Modifying user details",
+          "Description": "You can modify agent details by going to the user details page and clicking 'Edit Details'."
+        },
+        "Activity": {
+          "Title": "User activity",
+          "Description": "You can view the activity of a user by going to the Activity tab of the user details page. This page shows each and every action performed by the user on the platform."
+        }
       },
       "Bookings": {
         "Title": "BOOKINGS",
-        "Description": "You can see the bookings assigned to or completed by a user."
+        "AssignedBookings": {
+          "Title": "Assigned bookings",
+          "Description": "You can view all the assigned bookings (including any ongoing booking) for a user by going to the Assigned tab."
+        },
+        "CompletedBookings": {
+          "Title": "Completed bookings",
+          "Description": "You can also view all the past bookings for a user by going to the Completed tab."
+        }
       },
       "Communication": {
         "Title": "COMMUNICATION",
-        "Description": "You can communicate with your user through the platform directly."
+        "CommunicateUser": {
+          "Title": "Communicate with users",
+          "Description": "You can communicate with users by going to the user details page and clicking 'Chat with user' to start a Whatsapp chat or you can call them on their phone."
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -3582,7 +3650,7 @@
         },
         "VehicleDetails": {
           "Title": "Vehicle details",
-          "Description": "A Vehicle has the various details associated with it.",
+          "Description": "A Vehicle has various details associated with it.",
           "Caption": "A list of Vehicle details",
           "Basic": "BASIC INFO",
           "BasicDesc": "Vehicle number, type, brand, color, etc. along with a photo of the vehicle.",
@@ -3887,6 +3955,8 @@
     },
     "UserDetails": {
       "Photo": "User photo",
+      "CallUser": "Call User",
+      "ChatUser": "Chat with User",
       "ChangeEmail": {
         "Title": "Change Email",
         "Field1": {
@@ -4797,7 +4867,6 @@
       "LastLogin": "Logged in since {loginTime}"
     },
     "MyProfileAgency": {
-      "BasicInfo": "Basic info",
       "Photo": "View logo",
       "AssignedUserInfo": "Assigned agent info",
       "CallAgent": "Call Agent",
@@ -5067,7 +5136,7 @@
         }
       },
       "Completed": {
-        "Title": "Completed",
+        "Title": "COMPLETED",
         "CompletedBookings": {
           "Title": "Completed Bookings",
           "Description": "All the previously completed bookings can be accessed by the driver on My Bookings page."
@@ -5274,7 +5343,7 @@
         },
         "VehicleDetails": {
           "Title": "Vehicle details",
-          "Description": "A Vehicle has the various details associated with it.",
+          "Description": "A Vehicle has various details associated with it.",
           "Caption": "A list of Vehicle details",
           "Basic": "BASIC INFO",
           "BasicDesc": "Vehicle number, type, brand, color, etc. along with a photo of the vehicle.",

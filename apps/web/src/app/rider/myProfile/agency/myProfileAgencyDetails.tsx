@@ -16,6 +16,8 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import { Separator } from "@/components/ui/separator"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 
 export default async function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -30,7 +32,11 @@ export default async function MyProfileAgencyDetailsPageComponent({
     <PageWrapper id="RiderMyProfileAgencyPage">
       <MyProfileDetailHeaderTabs selectedTab="Agency" />
       <SectionWrapper id="MyProfileAgencyDetailsInfo">
-        <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
+        <SectionRowWrapper justifyStart>
+          <RyogoH3 color="brand">{agency.id}</RyogoH3>
+          <CopyClipboardButton label={agency.id} />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
             {agency.logoUrl ? (

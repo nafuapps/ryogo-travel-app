@@ -20,6 +20,8 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import { Separator } from "@/components/ui/separator"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 
 export default async function VehicleDetailsPageComponent({
   vehicle,
@@ -31,7 +33,11 @@ export default async function VehicleDetailsPageComponent({
     <PageWrapper id="VehicleDetailsPage">
       <VehicleDetailHeaderTabs selectedTab={"Vehicle"} id={vehicle.id} />
       <SectionWrapper id="BasicInfo">
-        <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
+        <SectionRowWrapper justifyStart>
+          <RyogoH3 color="brand">{vehicle.id}</RyogoH3>
+          <CopyClipboardButton label={vehicle.id} />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
             {vehicle.vehiclePhotoUrl ? (

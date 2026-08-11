@@ -55,17 +55,17 @@ export default async function MySupportPageComponent({
             link={"/rider/mySupport/help-account"}
           />
           <SupportCategoryCard
-            title={t("Vehicle.Title")}
-            description={t("Vehicle.Description")}
-            icon={Car}
-            link={"/rider/mySupport/help-vehicle"}
-          />
-          <SupportCategoryCard
             title={t("Bookings.Title")}
             description={t("Bookings.Description")}
             icon={Tickets}
             link={"/rider/mySupport/help-bookings"}
             highlight
+          />
+          <SupportCategoryCard
+            title={t("Vehicle.Title")}
+            description={t("Vehicle.Description")}
+            icon={Car}
+            link={"/rider/mySupport/help-vehicle"}
           />
           <SupportCategoryCard
             title={t("Missions.Title")}

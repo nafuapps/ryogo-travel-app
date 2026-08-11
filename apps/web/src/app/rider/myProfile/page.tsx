@@ -4,10 +4,10 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
-import RiderProfilePageComponent from "./riderPofile"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import RiderProfilePageComponent from "./riderProfile"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export const metadata: Metadata = {
   title: `My Profile - ${pageTitle}`,
@@ -21,18 +21,16 @@ export default async function MyProfilePage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const driverDetails = await driverServices.findDriverByUserId(
-    currentUser.userId,
-  )
+  const userDetails = await userServices.findUserDetailsById(currentUser.userId)
 
-  if (!driverDetails) {
+  if (!userDetails) {
     redirect("/auth/login", RedirectType.replace)
   }
 
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile"} />
-      <RiderProfilePageComponent driverDetails={driverDetails} />
+      <RiderProfilePageComponent userDetails={userDetails} />
     </MainWrapper>
   )
 }

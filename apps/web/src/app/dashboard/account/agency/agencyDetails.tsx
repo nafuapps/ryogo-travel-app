@@ -18,6 +18,8 @@ import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
 import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { Separator } from "@/components/ui/separator"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -34,7 +36,11 @@ export default async function AgencyDetailsPageComponent({
     <PageWrapper id="AccountAgencyPage">
       <AccountDetailHeaderTabs selectedTab="Agency" />
       <SectionWrapper id="BasicInfo">
-        <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
+        <SectionRowWrapper justifyStart>
+          <RyogoH3 color="brand">{agency.id}</RyogoH3>
+          <CopyClipboardButton label={agency.id} />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
             {agency.logoUrl ? (

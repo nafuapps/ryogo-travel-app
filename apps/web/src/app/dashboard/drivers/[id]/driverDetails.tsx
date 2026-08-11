@@ -27,6 +27,10 @@ import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import { Separator } from "@/components/ui/separator"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -39,7 +43,11 @@ export default async function DriverDetailsPageComponent({
     <PageWrapper id="DriverDetailsPage">
       <DriverDetailHeaderTabs selectedTab={"Driver"} id={driver.id} />
       <SectionWrapper id="BasicInfo">
-        <RyogoSmall weight="font-bold">{t("BasicInfo")}</RyogoSmall>
+        <SectionRowWrapper justifyStart>
+          <RyogoH3 color="brand">{driver.id}</RyogoH3>
+          <CopyClipboardButton label={driver.id} />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
             {driver.user.photoUrl ? (
@@ -110,6 +118,10 @@ export default async function DriverDetailsPageComponent({
           </RyogoP>
           <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
         </SectionColWrapper>
+      </SectionWrapper>
+      <SectionWrapper id="DriverCommunication">
+        <RyogoPhoneButton label={t("CallDriver")} phone={driver.phone} />
+        <RyogoChatButton label={t("ChatDriver")} phone={driver.phone} />
       </SectionWrapper>
       <SectionWrapper id="DriverActions">
         <Link href={`/dashboard/drivers/${driver.id}/modify`}>

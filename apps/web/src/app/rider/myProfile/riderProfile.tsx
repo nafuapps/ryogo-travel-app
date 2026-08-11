@@ -5,12 +5,11 @@ import { RyogoH3, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
-import { DriverStatusPill } from "@/components/pills/ryogoPills"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
 import {
   SectionWrapper,
   PageWrapper,
@@ -19,11 +18,14 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { Separator } from "@/components/ui/separator"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 
 export default async function RiderProfilePageComponent({
-  driverDetails,
+  userDetails,
 }: {
-  driverDetails: NonNullable<FindDriverByUserIdType>
+  userDetails: NonNullable<FindUserDetailsByIdType>
 }) {
   const t = await getTranslations("Rider.MyProfile")
 
@@ -31,11 +33,16 @@ export default async function RiderProfilePageComponent({
     <PageWrapper id="RiderProfilePage">
       <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <SectionWrapper id="RiderAccountDetailsInfo">
+        <SectionRowWrapper justifyStart>
+          <RyogoH3 color="brand">{userDetails.id}</RyogoH3>
+          <CopyClipboardButton label={userDetails.id} />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
-            {driverDetails.user.photoUrl ? (
+            {userDetails.photoUrl ? (
               <RyogoImage
-                src={getFileUrl(driverDetails.user.photoUrl)}
+                src={getFileUrl(userDetails.photoUrl)}
                 alt={t("Photo")}
                 imageSize="lg"
               />
@@ -43,29 +50,27 @@ export default async function RiderProfilePageComponent({
               <RyogoEnclosedIcon icon={User} size="xl" />
             )}
             <ChangeUserPhotoSheet
-              userId={driverDetails.userId}
-              agencyId={driverDetails.agencyId}
+              userId={userDetails.id}
+              agencyId={userDetails.agencyId}
             />
           </SectionColWrapper>
           <SectionColWrapper end>
-            <RyogoH3>{driverDetails.name}</RyogoH3>
-            <RyogoCaption color="slate">{driverDetails.phone}</RyogoCaption>
+            <RyogoH3>{userDetails.name}</RyogoH3>
+            <RyogoCaption color="slate">{userDetails.phone}</RyogoCaption>
+            <RyogoCaption color="slate">{userDetails.email}</RyogoCaption>
             <RyogoCaption color="slate">
-              {driverDetails.user.email}
+              {moment(userDetails.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
-            <RyogoCaption color="slate">
-              {moment(driverDetails.createdAt).format("DD MMM YYYY")}
-            </RyogoCaption>
-            <DriverStatusPill status={driverDetails.status} />
+            <UserStatusPill status={userDetails.status} />
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionWrapper>
       <SectionWrapper id="RiderAccountActions">
         <ChangeUserNameSheet
-          userId={driverDetails.userId}
-          userName={driverDetails.user.name}
-          userRole={driverDetails.user.userRole}
-          agencyId={driverDetails.agencyId}
+          userId={userDetails.id}
+          userName={userDetails.name}
+          userRole={userDetails.userRole}
+          agencyId={userDetails.agencyId}
         />
         <Link href="/rider/myProfile/change-email">
           <Button variant={"outline"} className="w-full">
@@ -80,7 +85,7 @@ export default async function RiderProfilePageComponent({
         <LogoutAlertButton />
         <RyogoCaption color="light">
           {t("LastLogin", {
-            loginTime: moment(driverDetails.user.lastLogin).format(
+            loginTime: moment(userDetails.lastLogin).format(
               "MMMM Do YYYY, h:mm:ss a",
             ),
           })}

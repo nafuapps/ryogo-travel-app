@@ -22,6 +22,10 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { Separator } from "@/components/ui/separator"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -34,6 +38,11 @@ export default async function UserDetailsPageComponent({
     <PageWrapper id="UserDetailsPage">
       <UserDetailHeaderTabs selectedTab={"User"} id={user.id} />
       <SectionWrapper id="UserDetailsInfo">
+        <SectionRowWrapper justifyStart>
+          <RyogoH3 color="brand">{user.id}</RyogoH3>
+          <CopyClipboardButton label={user.id} />
+        </SectionRowWrapper>
+        <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
             {user.photoUrl ? (
@@ -57,42 +66,46 @@ export default async function UserDetailsPageComponent({
             <UserStatusPill status={user.status} />
           </SectionColWrapper>
         </SectionRowWrapper>
-        <SectionColWrapper>
-          <ChangeUserNameSheet
+      </SectionWrapper>
+      <SectionWrapper id="UserCommunication">
+        <RyogoPhoneButton label={t("CallUser")} phone={user.phone} />
+        <RyogoChatButton label={t("ChatUser")} phone={user.phone} />
+      </SectionWrapper>
+      <SectionWrapper id="UserActions">
+        <ChangeUserNameSheet
+          userId={user.id}
+          userName={user.name}
+          userRole={user.userRole}
+          agencyId={user.agencyId}
+        />
+        <Link href={`/dashboard/users/${user.id}/change-email`}>
+          <Button variant={"outline"} className="w-full">
+            {t("ChangeEmail.Title")}
+          </Button>
+        </Link>
+        <Link href={`/dashboard/users/${user.id}/change-phone`}>
+          <Button variant={"outline"} className="w-full">
+            {t("ChangePhone.Title")}
+          </Button>
+        </Link>
+        <ResetUserPasswordAlertButton
+          userId={user.id}
+          agencyId={user.agencyId}
+        />
+        {user.status !== UserStatusEnum.INACTIVE && (
+          <InactivateUserAlertButton
             userId={user.id}
-            userName={user.name}
-            userRole={user.userRole}
             agencyId={user.agencyId}
+            role={user.userRole}
           />
-          <Link href={`/dashboard/users/${user.id}/change-email`}>
-            <Button variant={"outline"} className="w-full">
-              {t("ChangeEmail.Title")}
-            </Button>
-          </Link>
-          <Link href={`/dashboard/users/${user.id}/change-phone`}>
-            <Button variant={"outline"} className="w-full">
-              {t("ChangePhone.Title")}
-            </Button>
-          </Link>
-          <ResetUserPasswordAlertButton
+        )}
+        {user.status === UserStatusEnum.INACTIVE && (
+          <ActivateUserAlertButton
             userId={user.id}
             agencyId={user.agencyId}
+            role={user.userRole}
           />
-          {user.status !== UserStatusEnum.INACTIVE && (
-            <InactivateUserAlertButton
-              userId={user.id}
-              agencyId={user.agencyId}
-              role={user.userRole}
-            />
-          )}
-          {user.status === UserStatusEnum.INACTIVE && (
-            <ActivateUserAlertButton
-              userId={user.id}
-              agencyId={user.agencyId}
-              role={user.userRole}
-            />
-          )}
-        </SectionColWrapper>
+        )}
       </SectionWrapper>
     </PageWrapper>
   )

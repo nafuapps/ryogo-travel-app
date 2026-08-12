@@ -1,6 +1,5 @@
 //Bookings/id/assign-vehicle page (for a lead/confirmed booking)
 
-import { BookingIdRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {
@@ -9,18 +8,12 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
-import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import AssignVehiclePageComponent from "./assignVehicle"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Metadata } from "next"
-import { differenceInDays } from "date-fns"
-import {
-  OLD_LEAD_AUTO_CANCEL_DAYS,
-  TRIAL_MODE,
-  BASIC_PLAN_VEHICLE_LIMIT,
-} from "@/lib/uiConfig"
+import { TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
@@ -35,44 +28,24 @@ export default async function AssignVehicleBookingPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+
+  //Get current user
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  //Invalid booking id regex
-  if (!BookingIdRegex.safeParse(id).success) {
-    redirect("/dashboard/bookings", RedirectType.replace)
-  }
 
+  //Get booking details from DB
   const booking = await bookingServices.findBookingDetailsById(id)
-
-  //No booking found or agency mismatch
-  if (!booking || booking.agency.id !== currentUser.agencyId) {
+  if (!booking) {
     redirect("/dashboard/bookings", RedirectType.replace)
-  }
-
-  //If it is a lead booking and old, cancel it automatically
-  if (
-    booking.status === BookingStatusEnum.LEAD &&
-    differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
-  ) {
-    if (
-      await cancelBookingAction(
-        booking.id,
-        booking.agencyId,
-        booking.assignedUserId,
-      )
-    ) {
-      redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
-    } else {
-      redirect(`/dashboard/bookings`, RedirectType.replace)
-    }
   }
 
   //Only lead and confirmed bookings can be assigned vehicles
   if (
-    booking.status !== BookingStatusEnum.LEAD &&
-    booking.status !== BookingStatusEnum.CONFIRMED
+    ![BookingStatusEnum.LEAD, BookingStatusEnum.CONFIRMED].includes(
+      booking.status,
+    )
   ) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
@@ -85,6 +58,7 @@ export default async function AssignVehicleBookingPage({
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
+  //Get agency details from DB
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
@@ -98,7 +72,7 @@ export default async function AssignVehicleBookingPage({
   let vehicles = allVehicles
   let limited = false
 
-  //SUBSCRIPTION BLOCKER: Limited vehicles available for assignment
+  //SUBSCRIPTION BLOCKER: Limit the vehicles available for assignment
   if (
     !TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||

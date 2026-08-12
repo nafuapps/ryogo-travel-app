@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -53,6 +53,9 @@ import {
   CustomerStatusEnum,
   DriverStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Overview
@@ -132,7 +135,7 @@ export default async function SupportHelpDriversPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.AddCustomer"),
       href: "/dashboard/customers/new",
@@ -144,6 +147,22 @@ export default async function SupportHelpDriversPage() {
       icon: ChevronRight,
     },
   ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Vehicles"),
+      href: "/dashboard/support/help-vehicles",
+    },
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/dashboard/support/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Users"),
+      href: "/dashboard/support/help-users",
+    },
+  ]
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/help-drivers"} />
@@ -191,6 +210,15 @@ export default async function SupportHelpDriversPage() {
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

@@ -15,7 +15,7 @@ import {
   SupportSMLinkType,
 } from "@/components/flows/support/supportSMLink"
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import { YT_LINK, IG_LINK, FB_LINK, LI_LINK } from "@/lib/uiConfig"
 import { ChevronRight } from "lucide-react"
@@ -89,7 +89,7 @@ export default async function MySupportHelpVideosPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.ViewMyBookings"),
       href: "/rider/myBookings",

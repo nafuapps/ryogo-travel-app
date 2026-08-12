@@ -32,7 +32,12 @@ export default async function ModifyCustomMissionPage({
 
   const mission = await missionServices.findMissionById(missionId)
 
-  if (!mission || currentUser.userId !== mission.userId) {
+  //If no mission found or user/agency mismatch, redirect
+  if (
+    !mission ||
+    currentUser.userId !== mission.userId ||
+    currentUser.agencyId !== mission.agencyId
+  ) {
     redirect("/rider/myMissions", RedirectType.replace)
   }
 

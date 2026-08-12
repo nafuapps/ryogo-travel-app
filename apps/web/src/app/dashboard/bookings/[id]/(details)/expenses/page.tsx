@@ -3,7 +3,7 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingExpensesPageComponent from "./bookingExpenses"
 import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
@@ -24,21 +24,29 @@ export default async function BookingExpensesPage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const bookingExpenses = await bookingServices.findBookingExpensesById(id)
-  const assignedUserId = await bookingServices.findAssignedUserIdByBookingId(id)
+  const booking = await bookingServices.findBookingStatusById(id)
+  if (!booking) {
+    redirect("/dashboard/bookings", RedirectType.replace)
+  }
 
-  //Only booking assigned user or owner can create/modify expenses
-  //Only Owner can approve expense
+  //Expense can be created for in-progress or completed bookings only
+  //Only owner or assigned user can create expenses
+  const canCreateExpense =
+    (currentUser.userRole === UserRolesEnum.OWNER ||
+      currentUser.userId === booking.assignedUserId) &&
+    [BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      booking.status,
+    )
+
+  const bookingExpenses = await bookingServices.findBookingExpensesById(id)
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses"} />
       <BookingExpensesPageComponent
         bookingId={id}
         bookingExpenses={bookingExpenses}
-        canCreateExpense={
-          currentUser.userRole === UserRolesEnum.OWNER ||
-          currentUser.userId === assignedUserId
-        }
+        canCreateExpense={canCreateExpense}
         canApproveExpense={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </MainWrapper>

@@ -12,8 +12,8 @@ export default async function DriverDetailsLayout({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const currentUser = await getCurrentUser()
 
+  const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }

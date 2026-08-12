@@ -19,11 +19,11 @@ export default async function AllUsersPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const agencyId = currentUser.agencyId
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users"} />
-      <UsersPageComponent agencyId={agencyId} />
+      <UsersPageComponent agencyId={currentUser.agencyId} />
     </MainWrapper>
   )
 }

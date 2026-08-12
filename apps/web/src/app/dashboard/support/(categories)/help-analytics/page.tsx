@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader from "@/components/flows/support/supportContentHeader"
 import {
@@ -120,7 +120,7 @@ export default async function SupportHelpAnalyticsPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.ViewAnalytics"),
       href: "/dashboard/analytics",

@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader from "@/components/flows/support/supportContentHeader"
 import {
@@ -35,6 +35,9 @@ import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - What and why is ryogo?
@@ -100,13 +103,29 @@ export default async function SupportHelpStartedPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       href: `/dashboard/account`,
       icon: ChevronRight,
       label: t("QuickActions.ViewAccount"),
     },
   ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Account"),
+      href: "/dashboard/support/help-account",
+    },
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/dashboard/support/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/dashboard/support/help-videos",
+    },
+  ]
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/help-started"} />
@@ -154,6 +173,15 @@ export default async function SupportHelpStartedPage() {
                 key={index}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

@@ -1,6 +1,4 @@
-import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import { BookingIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
@@ -13,24 +11,16 @@ export default async function BookingDetailsLayout({
 }) {
   const { id } = await params
 
-  //Invalid booking id regex check
-  if (!BookingIdRegex.safeParse(id).success) {
-    redirect("/dashboard/bookings", RedirectType.replace)
-  }
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
   //No booking found or agency mismatch
   const booking = await bookingServices.findBookingStatusById(id)
-  if (!booking || booking.agencyId !== currentUser.agencyId) {
+  if (!booking) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Lead booking -> send to confirm page
+  //Lead booking -> send to lead confirm page
   if (booking.status === BookingStatusEnum.LEAD) {
     redirect(`/dashboard/bookings/${id}/confirm`, RedirectType.replace)
   }
+
   return children
 }

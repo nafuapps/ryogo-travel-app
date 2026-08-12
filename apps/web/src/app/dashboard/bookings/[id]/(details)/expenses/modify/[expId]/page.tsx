@@ -6,7 +6,7 @@ import { expenseServices } from "@ryogo-travel-app/api/services/expense.services
 import { redirect, RedirectType } from "next/navigation"
 import ModifyExpensePageComponent from "./modifyExpense"
 import { ExpenseIdRegex } from "@/lib/regex"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 
@@ -32,15 +32,31 @@ export default async function ModifyExpensePage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
+  //Get expense details from DB
   const expenseDetails = await expenseServices.findExpenseDetailsById(expId)
 
-  //Only owner or assigned user can modify expenses
+  //If no expense found, or bookingId/agency mismatch
   if (
     !expenseDetails ||
-    !bookingDetails ||
+    expenseDetails.bookingId !== id ||
+    expenseDetails.agencyId !== currentUser.agencyId
+  ) {
+    redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
+  }
+
+  const booking = await bookingServices.findBookingStatusById(id)
+  if (!booking) {
+    redirect(`/dashboard/bookings`, RedirectType.replace)
+  }
+
+  //Expense can be modified for in-progress or completed bookings only
+  //Only owner or booking assigned user can modify expenses (irrespective of who created the expense)
+  if (
+    ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      booking.status,
+    ) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== bookingDetails.assignedUserId)
+      currentUser.userId !== booking.assignedUserId)
   ) {
     redirect(`/dashboard/bookings/${id}/expenses`, RedirectType.replace)
   }
@@ -50,7 +66,7 @@ export default async function ModifyExpensePage({
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses/modify"} />
       <ModifyExpensePageComponent
         expenseDetails={expenseDetails}
-        assignedUserId={bookingDetails.assignedUserId}
+        assignedUserId={booking.assignedUserId}
       />
     </MainWrapper>
   )

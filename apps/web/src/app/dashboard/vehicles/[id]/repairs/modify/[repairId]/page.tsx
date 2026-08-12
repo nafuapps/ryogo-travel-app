@@ -6,6 +6,8 @@ import { VehicleRepairIdRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Modify Vehicle Repair - ${pageTitle}`,
@@ -19,6 +21,10 @@ export default async function ModifyVehicleRepairPage({
 }) {
   const { id, repairId } = await params
 
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
   //Invalid repair id regex check
   if (!VehicleRepairIdRegex.safeParse(repairId).success) {
     redirect(`/dashboard/vehicles/${id}/repairs`, RedirectType.replace)
@@ -26,11 +32,22 @@ export default async function ModifyVehicleRepairPage({
 
   const repair = await vehicleServices.findVehicleRepairById(repairId)
 
-  //If no such repair found, redirect
-  if (!repair) {
+  //If no such repair found or vehicle mismatch or agency mismatch, redirect
+  if (
+    !repair ||
+    repair.vehicleId !== id ||
+    repair.agencyId !== currentUser.agencyId
+  ) {
     redirect(`/dashboard/vehicles/${id}/repairs`, RedirectType.replace)
   }
-  //Can anyone modify repair?
+
+  //Only owner or addedByUser can modify repair
+  if (
+    currentUser.userRole !== UserRolesEnum.OWNER &&
+    repair.addedByUserId !== currentUser.userId
+  ) {
+    redirect(`/dashboard/vehicles/${id}/repairs`, RedirectType.replace)
+  }
 
   return (
     <MainWrapper>

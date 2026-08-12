@@ -22,6 +22,7 @@ export default async function RiderModifyExpensePage({
   params: Promise<{ id: string; expId: string }>
 }) {
   const { id, expId } = await params
+
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
@@ -32,21 +33,31 @@ export default async function RiderModifyExpensePage({
     redirect(`/rider/myBookings/${id}`, RedirectType.replace)
   }
 
+  const expenseDetails = await expenseServices.findExpenseDetailsById(expId)
+
+  //If no expense found, or bookingid/user/agency mismatch
+  if (
+    !expenseDetails ||
+    expenseDetails.bookingId !== id ||
+    expenseDetails.addedByUserId !== currentUser.userId ||
+    expenseDetails.agencyId !== currentUser.agencyId
+  ) {
+    redirect(`/rider/myBookings/${id}`, RedirectType.replace)
+  }
+
   const driver = await driverServices.findDriverByUserId(currentUser.userId)
   if (!driver) {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const expenseDetails = await expenseServices.findExpenseDetailsById(expId)
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
-  //Driver can modify expense which was added by him and for in progress booking only
-  if (
-    !bookingDetails ||
-    !expenseDetails ||
-    bookingDetails.status !== BookingStatusEnum.IN_PROGRESS ||
-    expenseDetails.addedByUserId !== driver.userId
-  ) {
+  const booking = await bookingServices.findBookingStatusById(id)
+  if (!booking) {
     redirect("/rider/myBookings", RedirectType.replace)
+  }
+
+  //Expense can be modified for in-progress booking only
+  if (booking.status !== BookingStatusEnum.IN_PROGRESS) {
+    redirect(`/rider/myBookings/${id}`, RedirectType.replace)
   }
 
   return (
@@ -54,7 +65,7 @@ export default async function RiderModifyExpensePage({
       <RiderHeader pathName={"/rider/myBookings/[id]/modify-expense"} />
       <RiderModifyExpensePageComponent
         expenseDetails={expenseDetails}
-        assignedUserId={bookingDetails.assignedUserId}
+        assignedUserId={booking.assignedUserId}
       />
     </MainWrapper>
   )

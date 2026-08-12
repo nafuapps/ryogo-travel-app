@@ -10,7 +10,7 @@ import { ChevronRight, FileClock, ListTodo, Telescope } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -79,7 +79,7 @@ export default async function MySupportHelpVehiclePage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.ViewVehicle"),
       href: "/rider/myVehicle",

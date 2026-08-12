@@ -6,7 +6,7 @@ import { transactionServices } from "@ryogo-travel-app/api/services/transaction.
 import { redirect, RedirectType } from "next/navigation"
 import ModifyTransactionPageComponent from "./modifyTransaction"
 import { TransactionIdRegex } from "@/lib/regex"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 
@@ -31,18 +31,33 @@ export default async function ModifyTransactionPage({
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
-  if (!bookingDetails) {
-    redirect("/dashboard/bookings", RedirectType.replace)
-  }
+
+  //Get txn details from DB
   const transactionDetails =
     await transactionServices.findTransactionDetailsById(txnId)
 
-  //Only owner or assigned user can modify transactions
+  //If no txn found, or bookingId/agency mismatch
   if (
     !transactionDetails ||
+    transactionDetails.bookingId !== id ||
+    transactionDetails.agencyId !== currentUser.agencyId
+  ) {
+    redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
+  }
+
+  const booking = await bookingServices.findBookingStatusById(id)
+  if (!booking) {
+    redirect("/dashboard/bookings", RedirectType.replace)
+  }
+
+  //Txn can be modified for in-progress or completed bookings only
+  //Only owner or booking assigned user can modify transactions
+  if (
+    ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      booking.status,
+    ) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== bookingDetails.assignedUserId)
+      currentUser.userId !== booking.assignedUserId)
   ) {
     redirect(`/dashboard/bookings/${id}/transactions`, RedirectType.replace)
   }
@@ -54,7 +69,7 @@ export default async function ModifyTransactionPage({
       />
       <ModifyTransactionPageComponent
         transactionDetails={transactionDetails}
-        assignedUserId={bookingDetails.assignedUserId}
+        assignedUserId={booking.assignedUserId}
       />
     </MainWrapper>
   )

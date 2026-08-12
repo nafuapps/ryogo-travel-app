@@ -4,7 +4,6 @@ import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import ViewSupportTicketPageComponent from "@/components/flows/support/viewSupportTicketComponent"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
 import { SupportTicketIdRegex } from "@/lib/regex"
@@ -33,10 +32,11 @@ export default async function ViewMySupportTicketPage({
 
   const ticket = await supportServices.findSupportTicketById(ticketId)
 
+  //If no ticket found or user/agency mismatch, redirect
   if (
     !ticket ||
-    (currentUser.userId !== ticket.userId &&
-      currentUser.userRole !== UserRolesEnum.OWNER)
+    currentUser.userId !== ticket.userId ||
+    ticket.agencyId !== currentUser.agencyId
   ) {
     redirect("/rider/mySupport/tickets", RedirectType.replace)
   }

@@ -1,5 +1,3 @@
-//Customers/id/ (details) page
-
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import DashboardHeader from "@/components/header/dashboardHeader"

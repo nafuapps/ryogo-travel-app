@@ -4,14 +4,10 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import ConfirmBookingPageComponent from "./confirmBooking"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
-import { BookingIdRegex } from "@/lib/regex"
 import { getCurrentUser } from "@/lib/auth"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { Metadata } from "next"
-import { differenceInDays } from "date-fns"
-import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
@@ -25,41 +21,22 @@ export default async function ConfirmBookingPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+
+  //Get current user
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  //Invalid booking id regex
-  if (!BookingIdRegex.safeParse(id).success) {
-    redirect("/dashboard/bookings", RedirectType.replace)
-  }
 
-  //No booking found or agency mismatch
+  //Get lead booking details from DB
   const booking = await bookingServices.findLeadBookingById(id)
-  if (!booking || booking.agency.id !== currentUser.agencyId) {
+  if (!booking) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Not a lead booking -> send to details page
   if (booking.status !== BookingStatusEnum.LEAD) {
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
-  }
-
-  //If the lead booking is old, cancel it automatically
-  if (
-    differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
-  ) {
-    if (
-      await cancelBookingAction(
-        booking.id,
-        booking.agencyId,
-        booking.assignedUserId,
-      )
-    ) {
-      redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
-    } else {
-      redirect(`/dashboard/bookings`, RedirectType.replace)
-    }
   }
 
   return (

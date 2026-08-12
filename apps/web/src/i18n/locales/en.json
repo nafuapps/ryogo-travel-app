@@ -2782,6 +2782,11 @@
         "ChangeSettings": "Change Preferences",
         "ViewSubscription": "View Subscription",
         "ViewAgencyDetails": "View Agency Details"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Users": "Learn about users",
+        "Videos": "Watch video tutorials"
       }
     },
     "SupportAnalyticsHelp": {
@@ -3119,6 +3124,13 @@
         "Title": "QUICK ACTIONS",
         "NewBooking": "Create Booking",
         "AllBookings": "View All Bookings"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Drivers": "Understand more about drivers",
+        "Vehicles": "Learn how to manage vehicles",
+        "Customers": "Learn how to add customers",
+        "Missions": "Know about alerts and notifications"
       }
     },
     "SupportCustomersHelp": {
@@ -3213,6 +3225,11 @@
         "Title": "QUICK ACTIONS",
         "AddCustomer": "Add customer",
         "AllCustomers": "View All Customers"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Bookings": "Learn how to create bookings",
+        "Videos": "Watch video tutorials"
       }
     },
     "SupportDriversHelp": {
@@ -3380,6 +3397,12 @@
         "Title": "QUICK ACTIONS",
         "AddCustomer": "Add customer",
         "AllCustomers": "View All Customers"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Vehicles": "Learn how to manage vehicles",
+        "Bookings": "Learn more about bookings",
+        "Users": "Know how to manage users"
       }
     },
     "SupportMissionsHelp": {
@@ -3477,6 +3500,12 @@
         "CreateCustomMission": "Create Custom Mission",
         "ViewMissions": "View Missions",
         "ViewFeed": "View Feed"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Account": "Learn how to manage your account",
+        "Bookings": "Learn more about bookings",
+        "Videos": "Watch video tutorials"
       }
     },
     "SupportStartedHelp": {
@@ -3518,6 +3547,12 @@
       "QuickActions": {
         "Title": "QUICK ACTIONS",
         "ViewAccount": "View Account Details"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Account": "Learn how to manage your account",
+        "Bookings": "Learn more about bookings",
+        "Videos": "Watch video tutorials"
       }
     },
     "SupportUsersHelp": {
@@ -3632,6 +3667,12 @@
         "AddAgent": "Add Agent",
         "AddDriver": "Add Driver",
         "AllUsers": "View All Users"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Account": "Learn how to manage your account",
+        "Bookings": "Learn more about bookings",
+        "Videos": "Watch video tutorials"
       }
     },
     "SupportVehiclesHelp": {
@@ -3782,6 +3823,12 @@
         "Title": "QUICK ACTIONS",
         "AddVehicle": "Add Vehicle",
         "AllVehicles": "View All Vehicles"
+      },
+      "RelatedArticles": {
+        "Title": "RELATED ARTICLES",
+        "Drivers": "Learn more about drivers",
+        "Bookings": "Learn more about bookings",
+        "Videos": "Watch video tutorials"
       }
     },
     "SupportVideosHelp": {

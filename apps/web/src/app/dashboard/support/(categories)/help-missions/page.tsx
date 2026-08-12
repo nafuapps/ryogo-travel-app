@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -41,6 +41,9 @@ import {
   SupportTableTextRow,
 } from "@/components/flows/support/supportTableWrapper"
 import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Overview (What is mission?)
@@ -100,7 +103,7 @@ export default async function SupportHelpMissionsPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       href: `/dashboard/mission-control/add`,
       icon: Plus,
@@ -117,6 +120,22 @@ export default async function SupportHelpMissionsPage() {
       label: t("QuickActions.ViewFeed"),
     },
   ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Account"),
+      href: "/dashboard/support/help-account",
+    },
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/dashboard/support/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/dashboard/support/help-videos",
+    },
+  ]
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/help-missions"} />
@@ -164,6 +183,15 @@ export default async function SupportHelpMissionsPage() {
                 key={index}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

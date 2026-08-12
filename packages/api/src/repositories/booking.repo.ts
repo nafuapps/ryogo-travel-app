@@ -1020,6 +1020,8 @@ export const bookingRepository = {
         status: true,
         agencyId: true,
         assignedUserId: true,
+        startDate: true,
+        endDate: true,
       },
     })
     return booking

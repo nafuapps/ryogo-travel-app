@@ -8,7 +8,7 @@ import {
 import RiderHeader from "@/components/header/riderHeader"
 import { Separator } from "@/components/ui/separator"
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -91,7 +91,7 @@ export default async function MySupportHelpMissionsPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       href: `/rider/myMissions/add`,
       icon: Plus,

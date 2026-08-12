@@ -12,8 +12,8 @@ export default async function CustomerDetailsLayout({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const currentUser = await getCurrentUser()
 
+  const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }

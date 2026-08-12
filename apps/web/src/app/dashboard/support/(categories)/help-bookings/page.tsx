@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -69,6 +69,9 @@ import {
 } from "@/components/flows/support/supportListWrapper"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 /*
   - Overview
   - Creation
@@ -187,7 +190,7 @@ export default async function SupportHelpBookingsPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.NewBooking"),
       href: "/dashboard/bookings/new",
@@ -197,6 +200,25 @@ export default async function SupportHelpBookingsPage() {
       label: t("QuickActions.AllBookings"),
       href: "/dashboard/bookings",
       icon: ChevronRight,
+    },
+  ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Drivers"),
+      href: "/dashboard/support/help-drivers",
+    },
+    {
+      label: t("RelatedArticles.Vehicles"),
+      href: "/dashboard/support/help-vehicles",
+    },
+    {
+      label: t("RelatedArticles.Customers"),
+      href: "/dashboard/support/help-customers",
+    },
+    {
+      label: t("RelatedArticles.Missions"),
+      href: "/dashboard/support/help-missions",
     },
   ]
 
@@ -247,6 +269,15 @@ export default async function SupportHelpBookingsPage() {
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

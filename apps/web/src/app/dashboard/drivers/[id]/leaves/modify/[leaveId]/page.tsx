@@ -6,6 +6,8 @@ import { DriverLeaveIdRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Modify Driver Leave - ${pageTitle}`,
@@ -19,6 +21,11 @@ export default async function ModifyDriverLeavePage({
 }) {
   const { id, leaveId } = await params
 
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   //Invalid leave id regex check
   if (!DriverLeaveIdRegex.safeParse(leaveId).success) {
     redirect(`/dashboard/drivers/${id}/leaves`, RedirectType.replace)
@@ -26,11 +33,22 @@ export default async function ModifyDriverLeavePage({
 
   const leave = await driverServices.findDriverLeaveById(leaveId)
 
-  //If no such leave found, redirect
-  if (!leave) {
+  //If no such leave found or driver mismatch or agency mismatch, redirect
+  if (
+    !leave ||
+    leave.driverId !== id ||
+    leave.agencyId !== currentUser.agencyId
+  ) {
     redirect(`/dashboard/drivers/${id}/leaves`, RedirectType.replace)
   }
-  //Can anyone modify leave?
+
+  //Only owner or addedByUser can modify leave
+  if (
+    currentUser.userRole !== UserRolesEnum.OWNER &&
+    leave.addedByUserId !== currentUser.userId
+  ) {
+    redirect(`/dashboard/drivers/${id}/leaves`, RedirectType.replace)
+  }
 
   return (
     <MainWrapper>

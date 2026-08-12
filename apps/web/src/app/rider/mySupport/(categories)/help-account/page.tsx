@@ -7,7 +7,7 @@ import {
 } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -105,7 +105,7 @@ export default async function MySupportHelpAccountPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       href: `/rider/myProfile/change-email`,
       icon: Mail,

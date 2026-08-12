@@ -30,7 +30,8 @@ export default async function ModifyCustomerPage({
   if (!customer) {
     redirect("/dashboard/customers", RedirectType.replace)
   }
-  //Only owner or the adding agent can modify customer
+
+  //Only owner or the addedByUser can modify customer
   if (
     currentUser.userRole !== UserRolesEnum.OWNER &&
     customer.addedByUserId !== currentUser.userId

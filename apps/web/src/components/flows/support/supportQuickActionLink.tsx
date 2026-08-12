@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { LucideIcon } from "lucide-react"
 import Link from "next/link"
 
-export type QuickActionType = {
+export type SupportQuickActionType = {
   href: React.ComponentProps<typeof Link>["href"]
   label: string
   icon: LucideIcon
@@ -14,7 +14,7 @@ export default function SupportQuickActionLinkButton({
   href,
   label,
   icon,
-}: QuickActionType) {
+}: SupportQuickActionType) {
   return (
     <Link href={href}>
       <Button variant="outline" className="w-full justify-between">

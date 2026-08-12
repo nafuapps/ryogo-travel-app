@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -48,6 +48,9 @@ import {
 } from "@/components/flows/support/supportTableWrapper"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - User overview
@@ -123,7 +126,7 @@ export default async function SupportHelpUsersPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.AddAgent"),
       href: "/dashboard/users/new",
@@ -138,6 +141,21 @@ export default async function SupportHelpUsersPage() {
       label: t("QuickActions.AllUsers"),
       href: "/dashboard/users",
       icon: ChevronRight,
+    },
+  ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Account"),
+      href: "/dashboard/support/help-account",
+    },
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/dashboard/support/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/dashboard/support/help-videos",
     },
   ]
 
@@ -188,6 +206,15 @@ export default async function SupportHelpUsersPage() {
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

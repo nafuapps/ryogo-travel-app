@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
@@ -109,7 +109,7 @@ export default async function SupportHelpVideosPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.NewBooking"),
       href: "/dashboard/bookings/new",

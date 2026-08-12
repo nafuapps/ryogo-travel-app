@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -55,6 +55,9 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Account Overview (Name, Email, Pwd)
@@ -126,7 +129,7 @@ export default async function SupportHelpAccountPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       href: `/dashboard/account/change-email`,
       icon: Mail,
@@ -151,6 +154,17 @@ export default async function SupportHelpAccountPage() {
       href: `/dashboard/account/subscription`,
       icon: ChevronRight,
       label: t("QuickActions.ViewSubscription"),
+    },
+  ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Users"),
+      href: "/dashboard/support/help-users",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/dashboard/support/help-videos",
     },
   ]
 
@@ -201,6 +215,15 @@ export default async function SupportHelpAccountPage() {
                 key={index}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

@@ -3,7 +3,6 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
-import { BookingIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -22,13 +21,10 @@ export default async function ReconcileBookingPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
-  }
-  //Invalid booking id regex
-  if (!BookingIdRegex.safeParse(id).success) {
-    redirect("/dashboard/bookings", RedirectType.replace)
   }
 
   //Only owner can reconcile booking
@@ -36,9 +32,8 @@ export default async function ReconcileBookingPage({
     redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
   }
 
-  //No booking found or agency mismatch
   const booking = await bookingServices.findBookingDetailsById(id)
-  if (!booking || booking.agency.id !== currentUser.agencyId) {
+  if (!booking) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 

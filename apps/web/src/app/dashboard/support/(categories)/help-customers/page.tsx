@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -45,6 +45,9 @@ import {
 } from "@/components/flows/support/supportTableWrapper"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Details
@@ -117,7 +120,7 @@ export default async function SupportHelpCustomersPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.AddCustomer"),
       href: "/dashboard/customers/new",
@@ -127,6 +130,17 @@ export default async function SupportHelpCustomersPage() {
       label: t("QuickActions.AllCustomers"),
       href: "/dashboard/customers",
       icon: ChevronRight,
+    },
+  ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/dashboard/support/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/dashboard/support/help-videos",
     },
   ]
 
@@ -177,6 +191,15 @@ export default async function SupportHelpCustomersPage() {
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

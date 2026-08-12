@@ -1,5 +1,5 @@
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -47,6 +47,9 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Overview
@@ -127,7 +130,7 @@ export default async function SupportHelpVehiclesPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.AddVehicle"),
       href: "/dashboard/vehicles/new",
@@ -139,6 +142,22 @@ export default async function SupportHelpVehiclesPage() {
       icon: ChevronRight,
     },
   ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Drivers"),
+      href: "/dashboard/support/help-drivers",
+    },
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/dashboard/support/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/dashboard/support/help-videos",
+    },
+  ]
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support/help-vehicles"} />
@@ -186,6 +205,15 @@ export default async function SupportHelpVehiclesPage() {
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

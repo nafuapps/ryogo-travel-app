@@ -33,10 +33,12 @@ export default async function ViewSupportTicketPage({
 
   const ticket = await supportServices.findSupportTicketById(ticketId)
 
+  //If no ticket found or user mismatch (except owner) or agency mismatch, redirect
   if (
     !ticket ||
     (currentUser.userId !== ticket.userId &&
-      currentUser.userRole !== UserRolesEnum.OWNER)
+      currentUser.userRole !== UserRolesEnum.OWNER) ||
+    ticket.agencyId !== currentUser.agencyId
   ) {
     redirect("/dashboard/support/tickets", RedirectType.replace)
   }

@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import SupportQuickActionLinkButton, {
-  QuickActionType,
+  SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
@@ -131,7 +131,7 @@ export default async function MySupportHelpBookingsPage() {
     },
   ]
 
-  const quickActions: QuickActionType[] = [
+  const quickActions: SupportQuickActionType[] = [
     {
       label: t("QuickActions.AllBookings"),
       href: "/rider/myBookings",

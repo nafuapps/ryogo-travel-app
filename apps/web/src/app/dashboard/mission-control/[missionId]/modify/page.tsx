@@ -25,14 +25,18 @@ export default async function ModifyCustomMissionPage({
   }
 
   const currentUser = await getCurrentUser()
-
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
   const mission = await missionServices.findMissionById(missionId)
 
-  if (!mission || currentUser.userId !== mission.userId) {
+  //If no mission found or user/agency mismatch
+  if (
+    !mission ||
+    currentUser.userId !== mission.userId ||
+    mission.agencyId !== currentUser.agencyId
+  ) {
     redirect("/dashboard/mission-control", RedirectType.replace)
   }
 

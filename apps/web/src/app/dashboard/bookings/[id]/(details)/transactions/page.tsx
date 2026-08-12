@@ -3,7 +3,7 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingTransactionsPageComponent from "./bookingTransactions"
 import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
@@ -24,22 +24,30 @@ export default async function BookingTransactionsPage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const assignedUserId = await bookingServices.findAssignedUserIdByBookingId(id)
+  const booking = await bookingServices.findBookingStatusById(id)
+  if (!booking) {
+    redirect("/dashboard/bookings", RedirectType.replace)
+  }
+
+  //Txn can be created for in-progress or completed bookings only
+  //Only owner or assigned user can create transactions
+  const canCreateTransaction =
+    (currentUser.userRole === UserRolesEnum.OWNER ||
+      currentUser.userId === booking.assignedUserId) &&
+    [BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      booking.status,
+    )
 
   const bookingTransactions =
     await bookingServices.findBookingTransactionsById(id)
 
-  //Only booking assigned user or owner can create/modify transactions
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/transactions"} />
       <BookingTransactionsPageComponent
         bookingId={id}
         bookingTransactions={bookingTransactions}
-        canCreateTransaction={
-          currentUser.userRole === UserRolesEnum.OWNER ||
-          currentUser.userId === assignedUserId
-        }
+        canCreateTransaction={canCreateTransaction}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </MainWrapper>

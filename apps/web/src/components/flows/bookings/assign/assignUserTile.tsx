@@ -1,6 +1,6 @@
 import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindBookingStatusByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import { Bolt, Check, CheckCheck, TriangleAlertIcon, User } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
@@ -24,7 +24,7 @@ type AssignUserTileProps = {
   userData: FindOwnerAndAgentsByAgencyType[number]
   selected: boolean
   onClick: () => void
-  booking: NonNullable<FindBookingDetailsByIdType>
+  booking: NonNullable<FindBookingStatusByIdType>
 }
 export default function AssignUserTile({
   userData,

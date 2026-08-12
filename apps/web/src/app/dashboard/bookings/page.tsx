@@ -17,11 +17,11 @@ export default async function BookingsPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const agencyId = currentUser.agencyId
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings"} />
-      <BookingsPageComponent agencyId={agencyId} />
+      <BookingsPageComponent agencyId={currentUser.agencyId} />
     </MainWrapper>
   )
 }

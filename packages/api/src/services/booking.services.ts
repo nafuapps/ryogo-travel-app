@@ -468,11 +468,11 @@ export const bookingServices = {
       vehicleId,
     )
 
-    if (!booking[0] || booking[0].status !== BookingStatusEnum.IN_PROGRESS) {
+    if (!booking || booking.status !== BookingStatusEnum.IN_PROGRESS) {
       return
     }
     return {
-      ...booking[0],
+      ...booking,
       driverName: driverStatus.name,
       vehicleNumber: vehicleStatus.vehicleNumber,
       assignedUserId: bookingStatus.assignedUserId,
@@ -562,13 +562,13 @@ export const bookingServices = {
       bookingRating,
     )
     if (
-      !completedBooking[0] ||
-      completedBooking[0].status !== BookingStatusEnum.COMPLETED
+      !completedBooking ||
+      completedBooking.status !== BookingStatusEnum.COMPLETED
     ) {
       return
     }
     return {
-      ...completedBooking[0],
+      ...completedBooking,
       driverName: driverStatus.name,
       vehicleNumber: vehicleStatus.vehicleNumber,
       assignedUserId: bookingStatus.assignedUserId,

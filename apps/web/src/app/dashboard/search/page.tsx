@@ -6,7 +6,6 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { agencyRepository } from "@ryogo-travel-app/api/repositories/agency.repo"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import {
   BASIC_BOOKINGS_SEARCH_DAYS,
@@ -24,7 +23,7 @@ export default async function SearchPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const agency = await agencyRepository.readAgencyById(currentUser.agencyId)
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }

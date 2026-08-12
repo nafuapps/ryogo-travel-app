@@ -6,7 +6,7 @@ import {
   InsertDriverType,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, notInArray, or, gte, lte, not } from "drizzle-orm"
+import { eq, and, notInArray, or, lte, not } from "drizzle-orm"
 
 export const driverRepository = {
   //Get driver by id
@@ -137,14 +137,6 @@ export const driverRepository = {
         },
       },
     })
-  },
-
-  //Get driver by phone in agency
-  async readDriverByPhoneInAgency(agencyId: string, phone: string) {
-    return await db
-      .select()
-      .from(drivers)
-      .where(and(eq(drivers.phone, phone), eq(drivers.agencyId, agencyId)))
   },
 
   //Get driver by userId

@@ -1,6 +1,6 @@
 "use client"
 
-//TODO
+//TODO: A page to enter booking Id
 export default function TrackBookingPageComponent() {
   return <div />
 }

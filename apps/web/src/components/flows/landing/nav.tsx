@@ -28,7 +28,7 @@ type NavbarItemType =
   | "resources"
 
 type NavLinkType = {
-  id: NavbarItemType
+  navId: NavbarItemType
   href: React.ComponentProps<typeof Link>["href"]
   label: string
 }
@@ -40,10 +40,10 @@ export default function Navbar() {
   console.log(path)
 
   const navLinks: NavLinkType[] = [
-    { id: "features", href: "/features", label: t("Features") },
-    { id: "pricing", href: "/pricing", label: t("Pricing") },
-    { id: "howItWorks", href: "/how-it-works", label: t("HowItWorks") },
-    { id: "resources", href: "/resources", label: t("Resources") },
+    { navId: "features", href: "/features", label: t("Features") },
+    { navId: "pricing", href: "/pricing", label: t("Pricing") },
+    { navId: "howItWorks", href: "/how-it-works", label: t("HowItWorks") },
+    { navId: "resources", href: "/resources", label: t("Resources") },
   ]
 
   return (
@@ -59,7 +59,7 @@ export default function Navbar() {
           <div className="hidden md:flex md:items-center md:gap-1 lg:gap-2">
             {navLinks.map((link) => (
               <Link
-                key={link.id}
+                key={link.navId}
                 href={link.href}
                 className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-800" : "bg-sky-100 dark:bg-sky-900"} py-2 px-3 rounded-lg transition-all duration-300`}
               >
@@ -106,7 +106,7 @@ export default function Navbar() {
             <div className="flex flex-col gap-6 pt-4">
               {navLinks.map((link) => (
                 <Link
-                  key={link.id}
+                  key={link.navId}
                   href={link.href}
                   className="px-2 font-semibold transition"
                   onClick={() => setIsOpen(false)}

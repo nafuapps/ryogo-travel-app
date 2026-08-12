@@ -126,7 +126,7 @@ export const vehicleServices = {
         data.vehicleNumber.toUpperCase(),
         agencyId,
       )
-    if (existingVehicleInAgency.length > 0) {
+    if (existingVehicleInAgency) {
       return
     }
 

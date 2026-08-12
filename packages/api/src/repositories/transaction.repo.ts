@@ -15,16 +15,13 @@ export const transactionRepository = {
     startDate: Date,
     endDate: Date,
   ) {
-    return await db
-      .select()
-      .from(transactions)
-      .where(
-        and(
-          gte(transactions.createdAt, startDate),
-          lte(transactions.createdAt, endDate),
-          eq(transactions.agencyId, agencyId),
-        ),
-      )
+    return await db.query.transactions.findMany({
+      where: and(
+        gte(transactions.createdAt, startDate),
+        lte(transactions.createdAt, endDate),
+        eq(transactions.agencyId, agencyId),
+      ),
+    })
   },
 
   //Get transactions by booking id

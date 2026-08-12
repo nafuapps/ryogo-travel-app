@@ -56,16 +56,16 @@ export const userRepository = {
     roles: UserRolesEnum[],
     agencyId: string,
   ) {
-    return await db
-      .select({ id: users.id })
-      .from(users)
-      .where(
-        and(
-          eq(users.phone, phone),
-          inArray(users.userRole, roles),
-          eq(users.agencyId, agencyId),
-        ),
-      )
+    return await db.query.users.findFirst({
+      columns: {
+        id: true,
+      },
+      where: and(
+        eq(users.phone, phone),
+        inArray(users.userRole, roles),
+        eq(users.agencyId, agencyId),
+      ),
+    })
   },
 
   //Get unique user by phone, role and email
@@ -74,16 +74,16 @@ export const userRepository = {
     roles: UserRolesEnum[],
     email: string,
   ) {
-    return await db
-      .select({ id: users.id })
-      .from(users)
-      .where(
-        and(
-          eq(users.phone, phone),
-          inArray(users.userRole, roles),
-          eq(users.email, email),
-        ),
-      )
+    return await db.query.users.findFirst({
+      columns: {
+        id: true,
+      },
+      where: and(
+        eq(users.phone, phone),
+        inArray(users.userRole, roles),
+        eq(users.email, email),
+      ),
+    })
   },
 
   //Get users by phone and role
@@ -98,16 +98,16 @@ export const userRepository = {
 
   //Get user by roles in an agency
   async readUserByRolesAgencyId(agencyId: string, userRoles: UserRolesEnum[]) {
-    return await db
-      .select({ id: users.id })
-      .from(users)
-      .where(
-        and(
-          eq(users.agencyId, agencyId),
-          inArray(users.userRole, userRoles),
-          not(eq(users.status, UserStatusEnum.SUSPENDED)),
-        ),
-      )
+    return await db.query.users.findMany({
+      columns: {
+        id: true,
+      },
+      where: and(
+        eq(users.agencyId, agencyId),
+        inArray(users.userRole, userRoles),
+        not(eq(users.status, UserStatusEnum.SUSPENDED)),
+      ),
+    })
   },
 
   //Get all dashboard users data by agency id (owner and agents)

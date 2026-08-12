@@ -14,18 +14,6 @@ import {
 import { eq, and, or, gte, lte, inArray, sql } from "drizzle-orm"
 
 export const bookingRepository = {
-  async readAllBookingsByAgencyId(agencyId: string, queryStartDate: Date) {
-    return await db
-      .select()
-      .from(bookings)
-      .where(
-        and(
-          gte(bookings.createdAt, queryStartDate),
-          eq(bookings.agencyId, agencyId),
-        ),
-      )
-  },
-
   async readBookingsSearchData(agencyId: string, queryStartDate: Date) {
     return await db.query.bookings.findMany({
       where: and(
@@ -83,17 +71,21 @@ export const bookingRepository = {
     queryEndDate: Date,
     status: BookingStatusEnum[],
   ) {
-    return await db
-      .select()
-      .from(bookings)
-      .where(
-        and(
-          gte(bookings.createdAt, queryStartDate),
-          lte(bookings.createdAt, queryEndDate),
-          eq(bookings.agencyId, agencyId),
-          inArray(bookings.status, status),
-        ),
-      )
+    return await db.query.bookings.findMany({
+      columns: {
+        id: true,
+        status: true,
+        createdAt: true,
+        totalAmount: true,
+        commissionRate: true,
+      },
+      where: and(
+        gte(bookings.createdAt, queryStartDate),
+        lte(bookings.createdAt, queryEndDate),
+        eq(bookings.agencyId, agencyId),
+        inArray(bookings.status, status),
+      ),
+    })
   },
 
   async readBookingsByUpdatedDateRange(
@@ -101,23 +93,27 @@ export const bookingRepository = {
     queryEndDate: Date,
     agencyId: string,
   ) {
-    return await db
-      .select()
-      .from(bookings)
-      .where(
-        and(
-          gte(bookings.createdAt, queryStartDate),
-          lte(bookings.createdAt, queryEndDate),
-          eq(bookings.agencyId, agencyId),
-        ),
-      )
+    return await db.query.bookings.findMany({
+      columns: {
+        id: true,
+        status: true,
+        updatedAt: true,
+      },
+      where: and(
+        gte(bookings.createdAt, queryStartDate),
+        lte(bookings.createdAt, queryEndDate),
+        eq(bookings.agencyId, agencyId),
+      ),
+    })
   },
 
   async readBookingsByStatus(status: BookingStatusEnum, agencyId: string) {
-    return await db
-      .select()
-      .from(bookings)
-      .where(and(eq(bookings.status, status), eq(bookings.agencyId, agencyId)))
+    return await db.query.bookings.findMany({
+      columns: {
+        id: true,
+      },
+      where: and(eq(bookings.status, status), eq(bookings.agencyId, agencyId)),
+    })
   },
 
   async readOngoingBookingsData(agencyId: string) {
@@ -452,7 +448,6 @@ export const bookingRepository = {
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
         lte(bookings.startDate, queryEndDate),
-        // gte(bookings.endDate, queryStartDate), //Even show booking which were supposed to end before start date
       ),
       columns: {
         startDate: true,
@@ -1020,6 +1015,10 @@ export const bookingRepository = {
         status: true,
         agencyId: true,
         assignedUserId: true,
+        assignedDriverId: true,
+        assignedVehicleId: true,
+        passengers: true,
+        needsAc: true,
         startDate: true,
         endDate: true,
       },
@@ -1204,10 +1203,13 @@ export const bookingRepository = {
         })
         .where(eq(vehicles.id, vehicleId))
 
-      return await tx
-        .select({ id: bookings.id, status: bookings.status })
-        .from(bookings)
-        .where(eq(bookings.id, bookingId))
+      return await tx.query.bookings.findFirst({
+        columns: {
+          id: true,
+          status: true,
+        },
+        where: eq(bookings.id, bookingId),
+      })
     })
   },
 
@@ -1248,10 +1250,13 @@ export const bookingRepository = {
           })
           .where(eq(customers.id, customerId))
       }
-      return await tx
-        .select({ id: bookings.id, status: bookings.status })
-        .from(bookings)
-        .where(eq(bookings.id, bookingId))
+      return await tx.query.bookings.findFirst({
+        columns: {
+          id: true,
+          status: true,
+        },
+        where: eq(bookings.id, bookingId),
+      })
     })
   },
 

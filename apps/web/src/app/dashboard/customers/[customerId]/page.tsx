@@ -1,0 +1,32 @@
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
+import DashboardHeader from "@/components/header/dashboardHeader"
+import CustomerDetailsPageComponent from "./customerDetails"
+import { redirect, RedirectType } from "next/navigation"
+import { Metadata } from "next"
+import { MainWrapper } from "@/components/page/pageWrappers"
+
+export const metadata: Metadata = {
+  title: `Cusomer Details - ${pageTitle}`,
+  description: pageDescription,
+}
+
+export default async function CustomerDetailsPage({
+  params,
+}: {
+  params: Promise<{ customerId: string }>
+}) {
+  const { customerId } = await params
+
+  const customer = await customerServices.findCustomerDetailsById(customerId)
+  if (!customer) {
+    redirect("/dashboard/customers", RedirectType.replace)
+  }
+
+  return (
+    <MainWrapper>
+      <DashboardHeader pathName={"/dashboard/customers/[id]"} />
+      <CustomerDetailsPageComponent customer={customer} />
+    </MainWrapper>
+  )
+}

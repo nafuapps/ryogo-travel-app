@@ -183,7 +183,7 @@ export const userServices = {
       [UserRolesEnum.OWNER],
       data.owner.email,
     )
-    if (existingUsers.length > 0) {
+    if (existingUsers) {
       return
     }
 
@@ -192,7 +192,7 @@ export const userServices = {
       data.agency.businessPhone,
       data.agency.businessEmail,
     )
-    if (existingAgencies.length > 0) {
+    if (existingAgencies) {
       return
     }
 
@@ -265,7 +265,7 @@ export const userServices = {
         [UserRolesEnum.AGENT],
         data.phone,
       )
-    if (existingUserInAgency.length > 0) {
+    if (existingUserInAgency) {
       return
     }
 
@@ -275,7 +275,7 @@ export const userServices = {
       [UserRolesEnum.AGENT],
       data.email,
     )
-    if (existingUserInSystem.length > 0) {
+    if (existingUserInSystem) {
       return
     }
 
@@ -313,7 +313,7 @@ export const userServices = {
         [UserRolesEnum.DRIVER],
         agencyId,
       )
-    if (existingUserInAgency.length > 0) {
+    if (existingUserInAgency) {
       return
     }
 
@@ -323,7 +323,7 @@ export const userServices = {
       [UserRolesEnum.DRIVER],
       data.email,
     )
-    if (existingUserInSystem.length > 0) {
+    if (existingUserInSystem) {
       return
     }
 

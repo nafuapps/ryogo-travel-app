@@ -51,15 +51,15 @@ export const agencyRepository = {
 
   //Get agency by phone and email
   async readAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
-    return await db
-      .select({ id: agencies.id })
-      .from(agencies)
-      .where(
-        and(
-          eq(agencies.businessPhone, businessPhone),
-          eq(agencies.businessEmail, businessEmail),
-        ),
-      )
+    return await db.query.agencies.findFirst({
+      columns: {
+        id: true,
+      },
+      where: and(
+        eq(agencies.businessPhone, businessPhone),
+        eq(agencies.businessEmail, businessEmail),
+      ),
+    })
   },
 
   //Create agency
@@ -214,13 +214,5 @@ export const agencyRepository = {
       .set({ qrCodeUrl })
       .where(eq(agencies.id, id))
       .returning({ id: agencies.id, qrCodeUrl: agencies.qrCodeUrl })
-  },
-
-  //Delete agency by Id
-  async deleteAgency(id: string) {
-    return await db
-      .delete(agencies)
-      .where(eq(agencies.id, id))
-      .returning({ id: agencies.id })
   },
 }

@@ -5,22 +5,22 @@ import Image from "next/image"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 
 export type SupportBlogItemType = {
+  blogId: string
   imageSrc: string
   title: string
-  blogLink: string
   type: string
 }
 
 export function SupportBlogItem({
+  blogId,
   imageSrc,
   title,
-  blogLink,
   type,
 }: SupportBlogItemType) {
   return (
     <SectionWrapper id={title}>
       <Link
-        href={`/resources/blog/${blogLink}`}
+        href={`/dashboard/support/help-blogs/${blogId}`}
         className="flex flex-col gap-1.5 md:gap-2"
       >
         <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">

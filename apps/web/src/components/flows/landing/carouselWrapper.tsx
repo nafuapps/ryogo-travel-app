@@ -36,17 +36,17 @@ export function BlogCarouselItem({
   imageSrc,
   title,
   type,
-  blogLink,
+  blogId,
 }: {
   imageSrc: string
   title: string
   type: string
-  blogLink: string
+  blogId: string
 }) {
   return (
     <CarouselItem className="group basis-full md:basis-1/2 lg:basis-1/3 px-0.5 md:px-1">
       <Link
-        href={`/resources/blog/${blogLink}`}
+        href={`/resources/blog/${blogId}`}
         className="flex flex-col gap-1.5 md:gap-2"
       >
         <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">

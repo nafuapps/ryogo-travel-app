@@ -6399,6 +6399,10 @@
         "Blog2": {
           "Title": "Learn how to manage your travel agency operations with RyoGo",
           "Type": "Product Guide"
+        },
+        "Blog3": {
+          "Title": "Understand the onboarding flow with RyoGo",
+          "Type": "Product Guide"
         }
       },
       "About": {

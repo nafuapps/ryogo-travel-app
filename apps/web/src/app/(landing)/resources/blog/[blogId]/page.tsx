@@ -1,7 +1,7 @@
 const blogs = [
-  { blogId: "1", file: "first.md" },
-  { blogId: "2", file: "second.md" },
-  { blogId: "3", file: "third.md" },
+  { blogId: "1", file: "1.md" },
+  { blogId: "2", file: "2.md" },
+  { blogId: "3", file: "3.md" },
 ]
 
 export async function generateStaticParams() {

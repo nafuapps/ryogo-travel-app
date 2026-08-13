@@ -7,22 +7,35 @@ import {
 import { BlogCarouselItem } from "@/components/flows/landing/carouselWrapper"
 import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
 
+type BlogItemType = {
+  blogId: string
+  title: string
+  imageSrc: string
+  type: string
+}
+
 export default async function ResourcesBlogsSection() {
   const t = await getTranslations("Landing.Resources.Blogs")
 
   //TODO: Replace with actual blog data
-  const items = [
+  const items: BlogItemType[] = [
     {
-      index: "1",
+      blogId: "1",
       title: t("Blog1.Title"),
       imageSrc: "/logoPWA.png",
       type: t("Blog1.Type"),
     },
     {
-      index: "2",
+      blogId: "2",
       title: t("Blog2.Title"),
       imageSrc: "/logoPWA.png",
       type: t("Blog2.Type"),
+    },
+    {
+      blogId: "3",
+      title: t("Blog3.Title"),
+      imageSrc: "/logoPWA.png",
+      type: t("Blog3.Type"),
     },
   ]
 
@@ -36,13 +49,13 @@ export default async function ResourcesBlogsSection() {
           {t("Subtitle")}
         </RyogoP>
         <RyogoCarouselWrapper count={t("Count", { count: items.length })}>
-          {items.map((item, index) => (
+          {items.map((item) => (
             <BlogCarouselItem
-              key={index}
+              key={item.blogId}
               title={item.title}
               imageSrc={item.imageSrc}
               type={item.type}
-              blogLink={item.index}
+              blogId={item.blogId}
             />
           ))}
         </RyogoCarouselWrapper>

@@ -25,7 +25,7 @@ export default async function SupportHelpBlogsPage() {
   //TODO: Replace with actual blog data
   const blogItems: SupportBlogItemType[] = [
     {
-      blogLink: "",
+      blogId: "1",
       type: t("Blog1.Type"),
       title: t("Blog1.Title"),
       imageSrc: "/logoPWA.png",

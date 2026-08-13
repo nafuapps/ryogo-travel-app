@@ -8,7 +8,7 @@ import { redirect, RedirectType } from "next/navigation"
 import { RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@/lib/uiConfig"
 
 export default async function AnalyticsPageComponent({
   agencyId,
@@ -24,7 +24,7 @@ export default async function AnalyticsPageComponent({
   }
 
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date())
   ) {

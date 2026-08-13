@@ -17,6 +17,7 @@ import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { APP_TRIAL_MODE } from "@/lib/uiConfig"
 
 export default async function SupportTicketsLayout({
   children,
@@ -35,7 +36,10 @@ export default async function SupportTicketsLayout({
 
   //SUBSCRIPTION BLOCKER: Only premium users can access support tickets
   const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-  if (isBasic || agency.subscriptionExpiresOn < new Date()) {
+  if (
+    !APP_TRIAL_MODE &&
+    (isBasic || agency.subscriptionExpiresOn < new Date())
+  ) {
     const t = await getTranslations("Dashboard.SupportTickets")
     return (
       <MainWrapper>

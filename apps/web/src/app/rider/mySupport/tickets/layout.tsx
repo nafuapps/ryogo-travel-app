@@ -12,6 +12,7 @@ import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoSmall, RyogoH4 } from "@/components/typography"
 import { Hourglass } from "lucide-react"
 import RiderHeader from "@/components/header/riderHeader"
+import { APP_TRIAL_MODE } from "@/lib/uiConfig"
 
 export default async function MySupportTicketsLayout({
   children,
@@ -30,7 +31,10 @@ export default async function MySupportTicketsLayout({
 
   //SUBSCRIPTION BLOCKER: Only premium users can access support tickets
   const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-  if (isBasic || agency.subscriptionExpiresOn < new Date()) {
+  if (
+    !APP_TRIAL_MODE &&
+    (isBasic || agency.subscriptionExpiresOn < new Date())
+  ) {
     const t = await getTranslations("Rider.MySupportTickets")
     return (
       <MainWrapper>

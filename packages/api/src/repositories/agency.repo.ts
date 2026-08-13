@@ -97,7 +97,7 @@ export const agencyRepository = {
   async updateAgencyStatus(
     id: string,
     status: AgencyStatusEnum,
-    subscriptionExpiresOn: Date,
+    subscriptionExpiresOn?: Date,
   ) {
     return await db
       .update(agencies)

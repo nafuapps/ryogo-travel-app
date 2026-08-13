@@ -861,6 +861,15 @@
       "OngoingTrips": {
         "Title": "ONGOING TRIPS",
         "Assigned": "ASSIGNED"
+      },
+      "SubscriptionReminderStrip": {
+        "NotExpired": "Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
+        "Expired": "Your subscription has expired.",
+        "RenewCTA": "Recharge Now"
+      },
+      "SubscriptionTrialStrip": {
+        "TryPremium": "Get {days} days Premium plan for FREE.",
+        "TryCTA": "Try Now"
       }
     },
     "Bookings": {
@@ -3512,20 +3521,152 @@
       "Title": "Getting Started",
       "Description": "New to the platform and feeling stuck? Find all the help you need here.",
       "About": {
-        "Title": "WHAT IS RYOGO?",
-        "Description": "Learn about RyoGo."
-      },
-      "Overview": {
-        "Title": "APP OVERVIEW",
-        "Description": "Walkthrough our slideshow guide below and understand how your business can benefit by automating and simplifying your daily travel operations"
+        "Title": "UNDERSTAND RYOGO",
+        "WhatIsRyogo": {
+          "Title": "What is RyoGo?",
+          "Description": ""
+        },
+        "WhyNeedRyogo": {
+          "Title": "Why do I need Ryogo?",
+          "Description": ""
+        },
+        "WhenUseRyogo": {
+          "Title": "When should I start using Ryogo?",
+          "Description": ""
+        },
+        "Features": {
+          "Title": "Features of Ryogo?",
+          "Description": ""
+        },
+        "Benefits": {
+          "Title": "Key benefits of Ryogo?",
+          "Description": ""
+        }
       },
       "Onboarding": {
         "Title": "ONBOARDING GUIDE",
-        "Description": "Learn about onboarding process."
+        "Owner": {
+          "Title": "Getting started as Owner",
+          "Description": ""
+        },
+        "Agent": {
+          "Title": "Getting started as Agent",
+          "Description": ""
+        },
+        "Driver": {
+          "Title": "Onboarding Driver",
+          "Description": ""
+        }
+      },
+      "Overview": {
+        "Title": "PLATFORM OVERVIEW",
+        "Dashboard": {
+          "Title": "Dashboard",
+          "Description": ""
+        },
+        "Sidebar": {
+          "Title": "Sidebar",
+          "Description": ""
+        },
+        "Header": {
+          "Title": "Header",
+          "Description": ""
+        },
+        "Navigation": {
+          "Title": "Navigation",
+          "Description": ""
+        },
+        "Home": {
+          "Title": "Home page",
+          "Description": "",
+          "CTA": "View home page"
+        },
+        "Bookings": {
+          "Title": "Bookings page",
+          "Description": "",
+          "CTA": "View bookings page"
+        },
+        "Vehicles": {
+          "Title": "Vehicles page",
+          "Description": "",
+          "CTA": "View vehicles page"
+        },
+        "Drivers": {
+          "Title": "Drivers page",
+          "Description": "",
+          "CTA": "View drivers page"
+        },
+        "Customers": {
+          "Title": "Customers page",
+          "Description": "",
+          "CTA": "View customers page"
+        },
+        "Users": {
+          "Title": "Users page",
+          "Description": "",
+          "CTA": "View users page"
+        },
+        "Analytics": {
+          "Title": "Analytics page",
+          "Description": "",
+          "CTA": "View analytics page"
+        },
+        "Search": {
+          "Title": "Search page",
+          "Description": "",
+          "CTA": "View search page"
+        },
+        "Feed": {
+          "Title": "Feed page",
+          "Description": "",
+          "CTA": "View feed page"
+        },
+        "Support": {
+          "Title": "Support page",
+          "Description": "",
+          "CTA": "View support page"
+        },
+        "Account": {
+          "Title": "Account page",
+          "Description": "",
+          "CTA": "View account page"
+        },
+        "Missions": {
+          "Title": "Mission Control",
+          "Description": "",
+          "CTA": "View mission control page"
+        }
       },
       "Entities": {
-        "Title": "ENTITIES",
-        "Description": "Learn about entities and how they work together."
+        "Title": "MAIN ENTITIES",
+        "WhatIsEntity": {
+          "Title": "Understanding Entities",
+          "Description": ""
+        },
+        "Users": {
+          "Title": "Users",
+          "Description": ""
+        },
+        "Drivers": {
+          "Title": "Drivers",
+          "Description": ""
+        },
+        "Vehicles": {
+          "Title": "Vehicles",
+          "Description": ""
+        },
+        "Customers": {
+          "Title": "Customers",
+          "Description": ""
+        },
+        "Bookings": {
+          "Title": "Bookings",
+          "Description": ""
+        },
+        "Others": {
+          "Title": "Other entities",
+          "Description": ""
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -3546,12 +3687,17 @@
       "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
         "Title": "QUICK ACTIONS",
-        "ViewAccount": "View Account Details"
+        "ViewAccount": "View Account Details",
+        "ViewBookings": "View all bookings",
+        "ViewDrivers": "View all drivers",
+        "ViewVehicles": "View all vehicles"
       },
       "RelatedArticles": {
         "Title": "RELATED ARTICLES",
         "Account": "Learn how to manage your account",
         "Bookings": "Learn more about bookings",
+        "Drivers": "Learn how to manage drivers",
+        "Vehicles": "Learn how to manage vehicles",
         "Videos": "Watch video tutorials"
       }
     },
@@ -4313,6 +4459,8 @@
         "CancelBooking": "Booking #{bookingId} has been cancelled by {userName}",
         "TripEnded": "Trip completed for booking #{bookingId} by {driverName} with {vehicleNumber}",
         "TripStarted": "Trip started for booking #{bookingId} by {driverName} with {vehicleNumber}",
+        "AgencyActivated": "Agency has been activated by {userName}",
+        "AgencyInactivated": "Agency has been inactivated by {userName}",
         "CustomerActivated": "Customer {customerName} has been activated by {userName}",
         "CustomerInactivated": "Customer {customerName} has been inactivated by {userName}",
         "CustomerPhotoChanged": "Customer {customerName} photo has been changed by {userName}",
@@ -4443,6 +4591,26 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Activate"
       },
+      "InactivateAgency": {
+        "Label": "Inactivate Agency",
+        "Title": "Are you sure you want to inactivate this agency?",
+        "Desc": "When inactivated, creation/modification of bookings, vehicles, drivers, users, etc. will stop. You can activate agency later.",
+        "NoCTA": "No",
+        "Success": "Agency inactivated!",
+        "Error": "Cannot inactivate agency.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Inactivate"
+      },
+      "ActivateAgency": {
+        "Label": "Activate Agency",
+        "Title": "Are you sure you want to activate this agency?",
+        "Desc": "When activated, all creation/modification operations will resume.",
+        "NoCTA": "No",
+        "Success": "Agency activated!",
+        "Error": "Cannot activate agency.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Activate"
+      },
       "InactivateCustomer": {
         "Label": "Inactivate Customer",
         "Title": "Are you sure you want to inactivate this customer?",
@@ -4568,11 +4736,6 @@
       "DriverInvite": "Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
       "AgentInvite": "Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
       "TrackBooking": "Hello! You can track your booking at: ${bookingLink}"
-    },
-    "SubscriptionReminderStrip": {
-      "NotExpired": "Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
-      "Expired": "Your subscription has expired.",
-      "RenewCTA": "Recharge Now"
     }
   },
   "Rider": {

@@ -8,7 +8,7 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { BASIC_PLAN_AGENT_LIMIT, TRIAL_MODE } from "@/lib/uiConfig"
+import { BASIC_PLAN_AGENT_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoSmall, RyogoH4 } from "@/components/typography"
 import { Hourglass } from "lucide-react"
@@ -39,7 +39,7 @@ export default async function NewAgentPageComponent({
 
   //Only allow subscribed agencies to add more than X agents
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     currentAgentUsers >= BASIC_PLAN_AGENT_LIMIT &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date())

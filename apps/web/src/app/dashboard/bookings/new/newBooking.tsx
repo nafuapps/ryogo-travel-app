@@ -8,7 +8,7 @@ import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import {
   BASIC_PLAN_AGENT_LIMIT,
   BASIC_PLAN_DRIVER_LIMIT,
-  TRIAL_MODE,
+  APP_TRIAL_MODE,
   BASIC_PLAN_VEHICLE_LIMIT,
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
@@ -48,7 +48,7 @@ export default async function NewBookingPageComponent({
     )
 
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     confirmedBookingsLength >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       //Check if premium expired more than X days ago
@@ -103,7 +103,7 @@ export default async function NewBookingPageComponent({
   let limited = false
 
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date())
   ) {

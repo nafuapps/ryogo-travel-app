@@ -12,7 +12,7 @@ import {
 import { redirect, RedirectType } from "next/navigation"
 import AssignUserPageComponent from "./assignUser"
 import { Metadata } from "next"
-import { BASIC_PLAN_AGENT_LIMIT, TRIAL_MODE } from "@/lib/uiConfig"
+import { BASIC_PLAN_AGENT_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
@@ -61,7 +61,7 @@ export default async function AssignUserBookingPage({
 
   //SUBSCRIPTION BLOCKER: Limit the agents available for assignment
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date()) &&
     allUsers.length > BASIC_PLAN_AGENT_LIMIT

@@ -7,23 +7,22 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { activateCustomerAction } from "@/app/actions/customers/activateCustomerAction"
+import { activateAgencyAction } from "@/app/actions/agencies/activateAgencyAction"
 import { RyogoCaption } from "@/components/typography"
 
-type ActivateCustomerAlertButtonProps = {
-  customerId: string
+type ActivateAgencyAlertButtonProps = {
   agencyId: string
 }
-export default function ActivateCustomerAlertButton(
-  props: ActivateCustomerAlertButtonProps,
+export default function ActivateAgencyAlertButton(
+  props: ActivateAgencyAlertButtonProps,
 ) {
   const [isPending, startTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.ActivateCustomer")
+  const t = useTranslations("Dashboard.Buttons.ActivateAgency")
   const router = useRouter()
 
   async function activate() {
     startTransition(async () => {
-      if (await activateCustomerAction(props.customerId, props.agencyId)) {
+      if (await activateAgencyAction(props.agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {
@@ -39,7 +38,7 @@ export default function ActivateCustomerAlertButton(
       noCTA={t("NoCTA")}
       labelChild={
         <Button variant={"outline"}>
-          <RyogoCaption color="slate">{t("Label")}</RyogoCaption>
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
         </Button>
       }
     >

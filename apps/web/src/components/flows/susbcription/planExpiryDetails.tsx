@@ -32,7 +32,7 @@ export default async function PlanExpiryDetails({
   return (
     <div
       id="PlanExpiry"
-      className={`flex flex-col ${daysToExpiry < 0 ? "bg-red-200 dark:bg-red-800" : needExpiryReminder ? "bg-yellow-200 dark:bg-yellow-800" : "bg-slate-200 dark:bg-slate-800"}  p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
+      className="flex flex-col border p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center"
     >
       {needExpiryReminder ? (
         <>

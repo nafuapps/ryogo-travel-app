@@ -166,12 +166,22 @@ export const agencyServices = {
   },
 
   //Activate an agency
-  async activateAgency(id: string) {
-    await agencyRepository.updateAgencyStatus(
+  async activateAgency(id: string, updateSubscriptionExpiry?: boolean) {
+    const updatedAgency = await agencyRepository.updateAgencyStatus(
       id,
       AgencyStatusEnum.ACTIVE,
-      getSubscriptionExpirationDate(),
+      updateSubscriptionExpiry ? getSubscriptionExpirationDate() : undefined,
     )
+    return updatedAgency[0]
+  },
+
+  //Inactivate an agency
+  async inactivateAgency(id: string) {
+    const updatedAgency = await agencyRepository.updateAgencyStatus(
+      id,
+      AgencyStatusEnum.INACTIVE,
+    )
+    return updatedAgency[0]
   },
 
   async updateAgencyLogo(agencyId: string, url: string) {

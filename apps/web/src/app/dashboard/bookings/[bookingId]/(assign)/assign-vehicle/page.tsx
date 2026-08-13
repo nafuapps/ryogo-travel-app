@@ -13,7 +13,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import AssignVehiclePageComponent from "./assignVehicle"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Metadata } from "next"
-import { TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
@@ -74,7 +74,7 @@ export default async function AssignVehicleBookingPage({
 
   //SUBSCRIPTION BLOCKER: Limit the vehicles available for assignment
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date()) &&
     allVehicles.length > BASIC_PLAN_VEHICLE_LIMIT

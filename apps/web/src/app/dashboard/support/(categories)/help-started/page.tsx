@@ -1,7 +1,9 @@
 import SupportQuickActionLinkButton, {
   SupportQuickActionType,
 } from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader from "@/components/flows/support/supportContentHeader"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItemType,
   SupportFAQWrapper,
@@ -38,6 +40,8 @@ import { Metadata } from "next"
 import SupportRelatedArticleLinkButton, {
   SupportRelatedArticleType,
 } from "@/components/flows/support/supportRelatedArticleType"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 /*
   - What and why is ryogo?
@@ -69,16 +73,16 @@ export default async function SupportHelpStartedPage() {
       content: <AboutContent />,
     },
     {
-      id: "overview",
-      title: t("Overview.Title"),
-      icon: Telescope,
-      content: <OverviewContent isOwner={isOwner} />,
-    },
-    {
       id: "onboarding",
       title: t("Onboarding.Title"),
       icon: Play,
       content: <OnboardingContent isOwner={isOwner} />,
+    },
+    {
+      id: "overview",
+      title: t("Overview.Title"),
+      icon: Telescope,
+      content: <OverviewContent isOwner={isOwner} />,
     },
     {
       id: "entities",
@@ -109,6 +113,21 @@ export default async function SupportHelpStartedPage() {
       icon: ChevronRight,
       label: t("QuickActions.ViewAccount"),
     },
+    {
+      href: `/dashboard/bookings`,
+      icon: ChevronRight,
+      label: t("QuickActions.ViewBookings"),
+    },
+    {
+      href: `/dashboard/drivers`,
+      icon: ChevronRight,
+      label: t("QuickActions.ViewDrivers"),
+    },
+    {
+      href: `/dashboard/vehicles`,
+      icon: ChevronRight,
+      label: t("QuickActions.ViewVehicles"),
+    },
   ]
 
   const relatedArticles: SupportRelatedArticleType[] = [
@@ -119,6 +138,14 @@ export default async function SupportHelpStartedPage() {
     {
       label: t("RelatedArticles.Bookings"),
       href: "/dashboard/support/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Drivers"),
+      href: "/dashboard/support/help-drivers",
+    },
+    {
+      label: t("RelatedArticles.Vehicles"),
+      href: "/dashboard/support/help-vehicles",
     },
     {
       label: t("RelatedArticles.Videos"),
@@ -196,7 +223,46 @@ async function AboutContent() {
   const t = await getTranslations("Dashboard.SupportStartedHelp.About")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsRyogo.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsRyogo.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("WhyNeedRyogo.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhyNeedRyogo.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("WhenUseRyogo.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhenUseRyogo.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Features.Title")}>
+        <RyogoCaption color="slate">{t("Features.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Benefits.Title")}>
+        <RyogoCaption color="slate">{t("Benefits.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+    </>
+  )
+}
+
+async function OnboardingContent({ isOwner }: { isOwner: boolean }) {
+  const t = await getTranslations("Dashboard.SupportStartedHelp.Onboarding")
+  return (
+    <>
+      {isOwner && (
+        <SupportContentSectionWrapper title={t("Owner.Title")}>
+          <RyogoCaption color="slate">{t("Owner.Description")}</RyogoCaption>
+        </SupportContentSectionWrapper>
+      )}
+      <SupportContentSectionWrapper title={t("Agent.Title")}>
+        <RyogoCaption color="slate">{t("Agent.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Driver.Title")}>
+        <RyogoCaption color="slate">{t("Driver.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -205,15 +271,213 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
   const t = await getTranslations("Dashboard.SupportStartedHelp.Overview")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
-    </>
-  )
-}
-async function OnboardingContent({ isOwner }: { isOwner: boolean }) {
-  const t = await getTranslations("Dashboard.SupportStartedHelp.Onboarding")
-  return (
-    <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("Dashboard.Title")}>
+        <RyogoCaption color="slate">{t("Dashboard.Description")}</RyogoCaption>
+        {/* //TODO: Add Dashboard snapshot */}
+        <RyogoImage
+          alt="Dashboard"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Sidebar.Title")}>
+        <RyogoCaption color="slate">{t("Sidebar.Description")}</RyogoCaption>
+        {/* //TODO: Add Sidebar snapshot */}
+        <RyogoImage
+          alt="Sidebar"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Header.Title")}>
+        <RyogoCaption color="slate">{t("Header.Description")}</RyogoCaption>
+        {/* //TODO: Add Header snapshot */}
+        <RyogoImage
+          alt="Header"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Navigation.Title")}>
+        <RyogoCaption color="slate">{t("Navigation.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Home.Title")}>
+        <RyogoCaption color="slate">{t("Home.Description")}</RyogoCaption>
+        {/* //TODO: Add Home snapshot */}
+        <RyogoImage
+          alt="Home"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard"}
+          label={t("Home.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Bookings.Title")}>
+        <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
+        {/* //TODO: Add Bookings snapshot */}
+        <RyogoImage
+          alt="Bookings"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings"}
+          label={t("Bookings.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Vehicles.Title")}>
+        <RyogoCaption color="slate">{t("Vehicles.Description")}</RyogoCaption>
+        {/* //TODO: Add Vehicles snapshot */}
+        <RyogoImage
+          alt="Vehicles"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/vehicles"}
+          label={t("Vehicles.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Drivers.Title")}>
+        <RyogoCaption color="slate">{t("Drivers.Description")}</RyogoCaption>
+        {/* //TODO: Add Drivers snapshot */}
+        <RyogoImage
+          alt="Drivers"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/drivers"}
+          label={t("Drivers.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Customers.Title")}>
+        <RyogoCaption color="slate">{t("Customers.Description")}</RyogoCaption>
+        {/* //TODO: Add Customers snapshot */}
+        <RyogoImage
+          alt="Customers"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/customers"}
+          label={t("Customers.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      {isOwner && (
+        <SupportContentSectionWrapper title={t("Users.Title")}>
+          <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
+          {/* //TODO: Add Users snapshot */}
+          <RyogoImage
+            alt="Users"
+            imageSize="xl"
+            src="/logoPWA.png"
+            className="self-center"
+          />
+          <SupportContentCTALinkButton
+            href={"/dashboard/users"}
+            label={t("Users.CTA")}
+          />
+        </SupportContentSectionWrapper>
+      )}
+      {isOwner && (
+        <SupportContentSectionWrapper title={t("Analytics.Title")}>
+          <RyogoCaption color="slate">
+            {t("Analytics.Description")}
+          </RyogoCaption>
+          {/* //TODO: Add Analytics snapshot */}
+          <RyogoImage
+            alt="Analytics"
+            imageSize="xl"
+            src="/logoPWA.png"
+            className="self-center"
+          />
+          <SupportContentCTALinkButton
+            href={"/dashboard/analytics"}
+            label={t("Analytics.CTA")}
+          />
+        </SupportContentSectionWrapper>
+      )}
+      <SupportContentSectionWrapper title={t("Search.Title")}>
+        <RyogoCaption color="slate">{t("Search.Description")}</RyogoCaption>
+        {/* //TODO: Add Search snapshot */}
+        <RyogoImage
+          alt="Search"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/search"}
+          label={t("Search.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Feed.Title")}>
+        <RyogoCaption color="slate">{t("Feed.Description")}</RyogoCaption>
+        {/* //TODO: Add Feed snapshot */}
+        <RyogoImage
+          alt="Feed"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/feed"}
+          label={t("Feed.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Support.Title")}>
+        <RyogoCaption color="slate">{t("Support.Description")}</RyogoCaption>
+        {/* //TODO: Add Support snapshot */}
+        <RyogoImage
+          alt="Support"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/support"}
+          label={t("Support.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Account.Title")}>
+        <RyogoCaption color="slate">{t("Account.Description")}</RyogoCaption>
+        {/* //TODO: Add Account snapshot */}
+        <RyogoImage
+          alt="Account"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/account"}
+          label={t("Account.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Missions.Title")}>
+        <RyogoCaption color="slate">{t("Missions.Description")}</RyogoCaption>
+        {/* //TODO: Add Missions snapshot */}
+        <RyogoImage
+          alt="Missions"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/mission-control"}
+          label={t("Missions.CTA")}
+        />
+      </SupportContentSectionWrapper>
     </>
   )
 }
@@ -222,7 +486,29 @@ async function EntitiesContent() {
   const t = await getTranslations("Dashboard.SupportStartedHelp.Entities")
   return (
     <>
-      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+      <SupportContentSectionWrapper title={t("WhatIsEntity.Title")}>
+        <RyogoCaption color="slate">
+          {t("WhatIsEntity.Description")}
+        </RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Users.Title")}>
+        <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Drivers.Title")}>
+        <RyogoCaption color="slate">{t("Drivers.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Vehicles.Title")}>
+        <RyogoCaption color="slate">{t("Vehicles.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Customers.Title")}>
+        <RyogoCaption color="slate">{t("Customers.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Bookings.Title")}>
+        <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Others.Title")}>
+        <RyogoCaption color="slate">{t("Others.Description")}</RyogoCaption>
+      </SupportContentSectionWrapper>
     </>
   )
 }

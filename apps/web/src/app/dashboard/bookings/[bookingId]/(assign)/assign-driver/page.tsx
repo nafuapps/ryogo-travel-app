@@ -13,7 +13,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import AssignDriverPageComponent from "./assignDriver"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
-import { BASIC_PLAN_DRIVER_LIMIT, TRIAL_MODE } from "@/lib/uiConfig"
+import { BASIC_PLAN_DRIVER_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
@@ -74,7 +74,7 @@ export default async function AssignDriverBookingPage({
 
   //SUBSCRIPTION BLOCKER: Limit the drivers available for assignment
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date()) &&
     allDrivers.length > BASIC_PLAN_DRIVER_LIMIT

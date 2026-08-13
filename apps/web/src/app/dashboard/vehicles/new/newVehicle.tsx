@@ -5,7 +5,7 @@ import {
   SubscriptionPlanEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -37,7 +37,7 @@ export default async function NewVehiclePageComponent({
 
   //Only allow subscribed agencies to add more than X vehicles
   if (
-    !TRIAL_MODE &&
+    !APP_TRIAL_MODE &&
     currentAgencyVehicles >= BASIC_PLAN_VEHICLE_LIMIT &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date())

@@ -20,6 +20,9 @@ import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
 import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
+import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgencyAlertButton"
+import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
+import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -96,19 +99,29 @@ export default async function AgencyDetailsPageComponent({
         <SectionWrapper id="AgencyActions">
           <Link href="/dashboard/account/agency/modify">
             <Button variant={"outline"} className="w-full">
-              {t("EditDetails")}
+              <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
             </Button>
           </Link>
           <Link href={`/dashboard/account/agency/change-email`}>
             <Button variant={"outline"} className="w-full">
-              {t("ChangeEmail.Title")}
+              <RyogoCaption color="slate">
+                {t("ChangeEmail.Title")}
+              </RyogoCaption>
             </Button>
           </Link>
           <Link href={`/dashboard/account/agency/change-phone`}>
             <Button variant={"outline"} className="w-full">
-              {t("ChangePhone.Title")}
+              <RyogoCaption color="slate">
+                {t("ChangePhone.Title")}
+              </RyogoCaption>
             </Button>
           </Link>
+          {agency.status === AgencyStatusEnum.INACTIVE && (
+            <ActivateAgencyAlertButton agencyId={agency.id} />
+          )}
+          {agency.status === AgencyStatusEnum.ACTIVE && (
+            <InactivateAgencyAlertButton agencyId={agency.id} />
+          )}
         </SectionWrapper>
       )}
     </PageWrapper>

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoCaption } from "@/components/typography"
 
 export const CreateAccountTotalSteps = 5
 export const VerifyAccountTotalSteps = 1
@@ -95,7 +96,7 @@ export function OnboardingStepActions(props: {
   )
 }
 
-const buttonClassName = "flex flex-row justify-center items-center gap-4 w-full"
+const buttonClassName = "w-full"
 export function OnboardingStepPrimaryAction(props: {
   children: React.ReactNode
   disabled: boolean
@@ -108,7 +109,9 @@ export function OnboardingStepPrimaryAction(props: {
       className={buttonClassName}
       disabled={props.disabled}
     >
-      {props.children}
+      <RyogoCaption color="white" className="items-center gap-2">
+        {props.children}
+      </RyogoCaption>
     </Button>
   )
 }
@@ -123,13 +126,13 @@ export function OnboardingStepSecondaryAction(
 ) {
   return (
     <Button
-      variant={"secondary"}
+      variant={"outline"}
       size={"lg"}
       onClick={props.onClick}
       className={buttonClassName}
       disabled={props.disabled}
     >
-      {props.children}
+      <RyogoCaption color="light">{props.children}</RyogoCaption>
     </Button>
   )
 }

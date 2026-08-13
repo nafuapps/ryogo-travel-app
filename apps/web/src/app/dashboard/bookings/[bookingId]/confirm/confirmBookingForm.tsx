@@ -8,6 +8,7 @@ import {
   RyogoCheckbox,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
+import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -125,7 +126,7 @@ export default function ConfirmBookingForm({
             noCTA={t("Confirm.NoCTA")}
             labelChild={
               <Button variant={"default"} className="w-full">
-                {t("Confirm.Label")}
+                <RyogoCaption color="white">{t("Confirm.Label")}</RyogoCaption>
               </Button>
             }
           >
@@ -135,7 +136,9 @@ export default function ConfirmBookingForm({
               disabled={isConfirmPending}
             >
               {isConfirmPending && <Spinner />}
-              {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
+              <RyogoCaption color="white">
+                {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
+              </RyogoCaption>
             </Button>
           </RyogoAlertDialog>
         </>

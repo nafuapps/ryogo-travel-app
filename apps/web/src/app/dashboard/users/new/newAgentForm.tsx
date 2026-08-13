@@ -15,6 +15,7 @@ import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import getAgentInviteMessageLink from "@/components/whatsapp/getAgentInviteMessageLink"
+import { RyogoCaption } from "@/components/typography"
 
 export default function NewAgentForm({
   agencyId,
@@ -157,16 +158,17 @@ export default function NewAgentForm({
         disabled={isPending}
       >
         {isPending && <Spinner />}
-        {isPending ? t("Loading") : t("PrimaryCTA")}
+        <RyogoCaption color="white">
+          {isPending ? t("Loading") : t("PrimaryCTA")}
+        </RyogoCaption>
       </Button>
       <Button
         variant={"outline"}
-        size={"default"}
         type="button"
         disabled={isPending}
         onClick={() => router.back()}
       >
-        {t("SecondaryCTA")}
+        <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
       </Button>
     </FormWrapper>
   )

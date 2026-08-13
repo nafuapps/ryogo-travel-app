@@ -99,7 +99,7 @@ export default async function BookingDetailsPageComponent({
                         href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}
                         className={"w-full"}
                       >
-                        <RyogoCaption color="slate">
+                        <RyogoCaption color="white">
                           {t("Reconcile")}
                         </RyogoCaption>
                       </Link>
@@ -158,7 +158,7 @@ export default async function BookingDetailsPageComponent({
               value={bookingDetails.customer.remarks}
             />
           )}
-          <Button variant={"secondary"}>
+          <Button variant={"outline"}>
             <Link
               href={`/dashboard/customers/${bookingDetails.customer.id}`}
               className={"w-full"}
@@ -272,7 +272,9 @@ export default async function BookingDetailsPageComponent({
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
                 className={"w-full"}
               >
-                <RyogoCaption color="slate">
+                <RyogoCaption
+                  color={bookingDetails.assignedVehicle ? "light" : "white"}
+                >
                   {bookingDetails.assignedVehicle
                     ? t("ChangeVehicle")
                     : t("AssignVehicle")}
@@ -281,7 +283,7 @@ export default async function BookingDetailsPageComponent({
             </Button>
           ) : (
             bookingDetails.assignedVehicle && (
-              <Button variant={"secondary"}>
+              <Button variant={"outline"}>
                 <Link
                   href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
                   className={"w-full"}
@@ -309,7 +311,9 @@ export default async function BookingDetailsPageComponent({
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
                 className={"w-full"}
               >
-                <RyogoCaption color="slate">
+                <RyogoCaption
+                  color={bookingDetails.assignedDriver ? "light" : "white"}
+                >
                   {bookingDetails.assignedDriver
                     ? t("ChangeDriver")
                     : t("AssignDriver")}
@@ -318,12 +322,12 @@ export default async function BookingDetailsPageComponent({
             </Button>
           ) : (
             bookingDetails.assignedDriver && (
-              <Button variant={"secondary"}>
+              <Button variant={"outline"}>
                 <Link
                   href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
                   className={"w-full"}
                 >
-                  <RyogoCaption color="slate">
+                  <RyogoCaption color="light">
                     {t("ViewDriverDetails")}
                   </RyogoCaption>
                 </Link>

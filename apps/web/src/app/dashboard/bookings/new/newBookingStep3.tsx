@@ -113,15 +113,14 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
               {props.isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
             </RyogoCaption>
             <Link href="/dashboard/account/subscription">
-              <Button
-                variant={props.isSubscribed ? "brand" : "outline"}
-                size="default"
-              >
-                {props.isSubscribed
-                  ? t("RenewCTA")
-                  : props.hasTriedSubscription
-                    ? t("BuyCTA")
-                    : t("TryCTA")}
+              <Button variant={"outline"}>
+                <RyogoCaption color="light">
+                  {props.isSubscribed
+                    ? t("RenewCTA")
+                    : props.hasTriedSubscription
+                      ? t("BuyCTA")
+                      : t("TryCTA")}
+                </RyogoCaption>
               </Button>
             </Link>
           </SectionRowWrapper>
@@ -177,7 +176,9 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}
@@ -186,7 +187,7 @@ export default function NewBookingStep3(props: NewBookingStep3Props) {
             onClick={props.onPrev}
             disabled={form.formState.isSubmitting}
           >
-            {t("Back")}
+            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>

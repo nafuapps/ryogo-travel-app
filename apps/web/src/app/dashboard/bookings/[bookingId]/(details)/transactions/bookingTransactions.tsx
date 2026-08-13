@@ -35,7 +35,9 @@ export default async function BookingTransactionsPageComponent({
       )}
       <SectionColWrapper>
         {bookingTransactions.length === 0 ? (
-          <RyogoSmall color="slate">{t("NoTransactions")}</RyogoSmall>
+          <RyogoSmall color="slate" className="text-center">
+            {t("NoTransactions")}
+          </RyogoSmall>
         ) : (
           bookingTransactions.map((transaction) => (
             <TransactionItem

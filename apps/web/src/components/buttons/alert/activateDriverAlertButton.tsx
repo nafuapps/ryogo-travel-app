@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { activateDriverAction } from "@/app/actions/drivers/activateDriverAction"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ActivateDriverAlertButton(props: {
   driverId: string
@@ -36,11 +37,17 @@ export default function ActivateDriverAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<Button variant={"outline"}>{t("Label")}</Button>}
+      labelChild={
+        <Button variant={"outline"}>
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
+        </Button>
+      }
     >
       <Button variant={"default"} onClick={activate} disabled={isPending}>
         {isPending && <Spinner />}
-        {isPending ? t("Loading") : t("YesCTA")}
+        <RyogoCaption color="white">
+          {isPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

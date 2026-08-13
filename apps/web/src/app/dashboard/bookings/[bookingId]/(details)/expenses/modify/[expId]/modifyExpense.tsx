@@ -21,6 +21,7 @@ import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ModifyExpensePageComponent({
   expenseDetails,
@@ -140,7 +141,17 @@ export default function ModifyExpensePageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
+        </Button>
+        <Button
+          variant={"outline"}
+          type="button"
+          disabled={isPending}
+          onClick={() => router.back()}
+        >
+          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
         </Button>
         <DeleteExpenseAlertButton
           bookingId={expenseDetails.bookingId}
@@ -148,15 +159,6 @@ export default function ModifyExpensePageComponent({
           agencyId={expenseDetails.agencyId}
           assignedUserId={assignedUserId}
         />
-        <Button
-          variant={"outline"}
-          size={"default"}
-          type="button"
-          disabled={isPending}
-          onClick={() => router.back()}
-        >
-          {t("CancelCTA")}
-        </Button>
       </FormWrapper>
     </PageWrapper>
   )

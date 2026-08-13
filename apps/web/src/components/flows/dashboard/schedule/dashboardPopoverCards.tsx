@@ -65,13 +65,13 @@ export function BookingSchedulePopoverCard(
           }`}
         >
           <Button variant={"default"} type="button" className="w-full">
-            {t("Assign")}
+            <RyogoCaption color="white">{t("Assign")}</RyogoCaption>
           </Button>
         </Link>
       )}
       <Link href={`/dashboard/bookings/${props.bookingId}`}>
-        <Button variant={"secondary"} type="button" className="w-full">
-          {t("ViewDetails")}
+        <Button variant={"outline"} type="button" className="w-full">
+          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
         </Button>
       </Link>
     </SectionColWrapper>
@@ -121,8 +121,8 @@ export function AssignedBookingPopoverCard(
         </SectionColWrapper>
       </SectionRowWrapper>
       <Link href={`/dashboard/bookings/${props.id}`}>
-        <Button variant={"secondary"} type="button" className="w-full">
-          {t("ViewDetails")}
+        <Button variant={"outline"} type="button" className="w-full">
+          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
         </Button>
       </Link>
     </SectionColWrapper>
@@ -149,8 +149,8 @@ export function RepairPopoverCard(
         <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
       </SectionColWrapper>
       <Link href={`/dashboard/vehicles/${props.vehicleId}/repairs`}>
-        <Button variant={"secondary"} type="button" className="w-full">
-          {t("ViewDetails")}
+        <Button variant={"outline"} type="button" className="w-full">
+          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
         </Button>
       </Link>
     </SectionColWrapper>
@@ -177,8 +177,8 @@ export function LeavePopoverCard(
         <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
       </SectionColWrapper>
       <Link href={`/dashboard/drivers/${props.driverId}/leaves`}>
-        <Button variant={"secondary"} type="button" className="w-full">
-          {t("ViewDetails")}
+        <Button variant={"outline"} type="button" className="w-full">
+          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
         </Button>
       </Link>
     </SectionColWrapper>

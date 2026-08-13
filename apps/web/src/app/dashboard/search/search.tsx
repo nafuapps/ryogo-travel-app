@@ -313,15 +313,14 @@ export default function SearchPageComponent({
               })}
             </RyogoCaption>
             <Link href="/dashboard/account/subscription">
-              <Button
-                variant={isSubscribed ? "brand" : "outline"}
-                size="default"
-              >
-                {isPremium
-                  ? t("RenewCTA")
-                  : hasTriedSubscription
-                    ? t("BuyCTA")
-                    : t("TryCTA")}
+              <Button variant={"outline"}>
+                <RyogoCaption color="light">
+                  {isPremium
+                    ? t("RenewCTA")
+                    : hasTriedSubscription
+                      ? t("BuyCTA")
+                      : t("TryCTA")}
+                </RyogoCaption>
               </Button>
             </Link>
           </SectionRowWrapper>
@@ -395,7 +394,7 @@ export default function SearchPageComponent({
                       aria-label="Search"
                       disabled={formData.getValues("searchTerm").length < 3}
                     >
-                      {t("Search")}
+                      <RyogoCaption color="white">{t("Search")}</RyogoCaption>
                     </Button>
                   </InputGroup>
                   <FormMessage />

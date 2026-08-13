@@ -117,7 +117,9 @@ export default function NewDriverLeavePageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
@@ -126,7 +128,7 @@ export default function NewDriverLeavePageComponent({
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("Back")}
+          <RyogoCaption color="light">{t("Back")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

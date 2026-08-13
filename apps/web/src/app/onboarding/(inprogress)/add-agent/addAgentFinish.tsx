@@ -1,4 +1,4 @@
-import { RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepContent,
@@ -54,8 +54,8 @@ export function AddAgentFinish(props: {
             window.open(whatsappInviteLink, "_blank", "noreferrer")
           }}
         >
-          {t("SendInvite")}
-          <RyogoIcon icon={MessageSquareShare} size="sm" />
+          <RyogoCaption color="slate">{t("SendInvite")}</RyogoCaption>
+          <RyogoIcon icon={MessageSquareShare} size="sm" color="slate" />
         </Button>
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step6Actions">
@@ -65,7 +65,7 @@ export function AddAgentFinish(props: {
           disabled={isPending}
           onClick={goToDashboard}
         >
-          {t("PrimaryCTA")}
+          <RyogoCaption color="white">{t("PrimaryCTA")}</RyogoCaption>
         </Button>
       </OnboardingStepActions>
     </OnboardingStepForm>

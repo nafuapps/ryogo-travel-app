@@ -18,6 +18,7 @@ import z from "zod"
 import { newVehicleRepairAction } from "@/app/actions/vehicles/newVehicleRepairAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function NewVehicleRepairPageComponent({
   userId,
@@ -128,7 +129,9 @@ export default function NewVehicleRepairPageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
@@ -137,7 +140,7 @@ export default function NewVehicleRepairPageComponent({
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("Back")}
+          <RyogoCaption color="light">{t("Back")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ModifyDriverPageComponent({
   driver,
@@ -165,16 +166,18 @@ export default function ModifyDriverPageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           size={"lg"}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

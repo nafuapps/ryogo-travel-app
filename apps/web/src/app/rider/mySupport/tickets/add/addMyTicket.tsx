@@ -10,7 +10,7 @@ import {
 } from "@/components/form/ryogoFormFields"
 import { regexCheckIDByEntityType } from "@/components/missions/missionCommons"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Spinner } from "@/components/ui/spinner"
@@ -151,16 +151,17 @@ export default function AddMySupportTicketPageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
-          size={"default"}
           type="button"
           disabled={isPending}
           onClick={() => router.back()}
         >
-          {t("CancelCTA")}
+          <RyogoCaption color="white">{t("CancelCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

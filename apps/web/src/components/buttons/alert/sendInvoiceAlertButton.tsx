@@ -12,6 +12,7 @@ import { differenceInMinutes } from "date-fns"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SEND_INVOICE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import { RyogoCaption } from "@/components/typography"
 
 type SendInvoiceAlertButtonProps = {
   bookingId: string
@@ -66,7 +67,7 @@ export default function SendInvoiceAlertButton(
       noCTA={t("NoCTA")}
       labelChild={
         <Button variant={"outline"} disabled={!canSendInvoice}>
-          {t("Label")}
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </Button>
       }
@@ -77,7 +78,9 @@ export default function SendInvoiceAlertButton(
         disabled={isSendPending}
       >
         {isSendPending && <Spinner />}
-        {isSendPending ? t("Loading") : t("YesCTA")}
+        <RyogoCaption color="white">
+          {isSendPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

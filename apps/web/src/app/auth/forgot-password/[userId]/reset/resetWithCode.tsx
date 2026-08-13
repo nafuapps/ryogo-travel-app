@@ -113,7 +113,9 @@ export default function ResetWithCodePageComponent({
         <AuthActionWrapper>
           <Button variant={"default"} size={"lg"} disabled={isPending || isBot}>
             {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"ghost"}

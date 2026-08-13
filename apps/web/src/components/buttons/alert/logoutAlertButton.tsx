@@ -6,6 +6,7 @@ import { logoutAction } from "@/app/actions/users/logoutAction"
 import { useTranslations } from "next-intl"
 import { useTransition } from "react"
 import { Spinner } from "@/components/ui/spinner"
+import { RyogoCaption } from "@/components/typography"
 
 export default function LogoutAlertButton() {
   const t = useTranslations("Dashboard.Buttons.Logout")
@@ -22,17 +23,16 @@ export default function LogoutAlertButton() {
       desc={""}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button
-          variant={"secondary"}
-          className="hover:bg-red-300 dark:hover:bg-red-700"
-        >
-          {t("Label")}
+        <Button variant={"ghost"}>
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
         </Button>
       }
     >
       <Button variant="destructive" onClick={logout} disabled={isPending}>
         {isPending && <Spinner />}
-        {t("YesCTA")}
+        <RyogoCaption color="white">
+          {isPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

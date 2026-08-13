@@ -159,7 +159,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
             type="button"
             onClick={findCustomer}
           >
-            {t("FindCTA")}
+            <RyogoCaption color="slate">{t("FindCTA")}</RyogoCaption>
           </Button>
           {existingCustomer && (
             <ExistingCutomerCard existingCustomer={existingCustomer} />
@@ -205,7 +205,9 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting && <Spinner />}
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+              <RyogoCaption color="white">
+                {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+              </RyogoCaption>
             </Button>
           </NewFormActionWrapper>
         )}

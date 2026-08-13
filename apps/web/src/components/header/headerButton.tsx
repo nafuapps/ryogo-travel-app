@@ -20,9 +20,9 @@ export default function HeaderButton({
       <TooltipTrigger asChild>
         <Button variant="outline" size={"default"}>
           <RyogoIcon icon={icon} size="sm" />
-          <span className="hidden lg:flex">
-            <RyogoCaption color="slate">{label}</RyogoCaption>
-          </span>
+          <RyogoCaption color="slate" className="hidden lg:flex">
+            {label}
+          </RyogoCaption>
         </Button>
       </TooltipTrigger>
       <TooltipContent className="flex lg:hidden">{label}</TooltipContent>

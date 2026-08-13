@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button"
 import { changeMyPasswordAction } from "@/app/actions/users/changeMyPasswordAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 
 export default function ChangePasswordAccountComponent({
   userId,
@@ -110,6 +112,7 @@ export default function ChangePasswordAccountComponent({
           placeholder={t("Field3.Placeholder")}
           description={t("Field3.Description")}
         />
+        <Separator />
         <Button
           variant={"default"}
           size={"lg"}
@@ -117,16 +120,18 @@ export default function ChangePasswordAccountComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           size={"lg"}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

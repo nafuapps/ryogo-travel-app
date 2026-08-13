@@ -131,7 +131,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </RyogoSmall>
               <RyogoCaption color="light">
                 {t("VehicleSubtitle", {
-                  charge: props.newBookingFormData.selectedRatePerKm!,
+                  charge: props.newBookingFormData.selectedRatePerKm ?? 0,
                   distance: finalAmount.totalDistance,
                 })}
               </RyogoCaption>
@@ -146,7 +146,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                 </RyogoSmall>
                 <RyogoCaption color="light">
                   {t("ACSubtitle", {
-                    ac: props.newBookingFormData.selectedAcChargePerDay!,
+                    ac: props.newBookingFormData.selectedAcChargePerDay ?? 0,
                     days: finalAmount.totalAllowanceDays,
                   })}
                 </RyogoCaption>
@@ -161,7 +161,8 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </RyogoSmall>
               <RyogoCaption color="light">
                 {t("DriverSubtitle", {
-                  allowance: props.newBookingFormData.selectedAllowancePerDay!,
+                  allowance:
+                    props.newBookingFormData.selectedAllowancePerDay ?? 0,
                   days: finalAmount.totalAllowanceDays,
                 })}
               </RyogoCaption>
@@ -195,7 +196,9 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             disabled={isPending}
           >
             {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}
@@ -204,7 +207,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
             onClick={props.onPrev}
             disabled={isPending}
           >
-            {t("Back")}
+            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>

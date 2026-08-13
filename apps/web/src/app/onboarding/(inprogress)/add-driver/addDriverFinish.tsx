@@ -67,12 +67,12 @@ export function AddDriverFinish(props: {
           <Link href="/onboarding/add-agent">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           size={"lg"}
           disabled={isPending}
           onClick={goToDashboard}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </OnboardingStepActions>
     </OnboardingStepForm>

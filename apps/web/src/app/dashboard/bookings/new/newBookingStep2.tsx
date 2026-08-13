@@ -277,7 +277,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               }}
               selected={selectedTripType === BookingTypeEnum.OneWay}
               icon={ArrowRightFromLine}
-              title={t("Field8.OneWay")}
+              title={BookingTypeEnum.OneWay.toUpperCase()}
               desc={t("Field8.OneWayDesc")}
             />
             <TripTypeSelectionCard
@@ -287,7 +287,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               }}
               selected={selectedTripType === BookingTypeEnum.Round}
               icon={ArrowRightLeft}
-              title={t("Field8.RoundTrip")}
+              title={BookingTypeEnum.Round.toUpperCase()}
               desc={t("Field8.RoundTripDesc")}
             />
 
@@ -296,7 +296,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
               onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
               selected={selectedTripType === BookingTypeEnum.MultiDay}
               icon={Waypoints}
-              title={t("Field8.MultiDay")}
+              title={BookingTypeEnum.MultiDay.toUpperCase()}
               desc={t("Field8.MultiDayDesc")}
             />
           </SectionRowWrapper>
@@ -338,7 +338,9 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}
@@ -347,7 +349,7 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
             onClick={props.onPrev}
             disabled={form.formState.isSubmitting}
           >
-            {t("Back")}
+            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>
@@ -374,15 +376,17 @@ function TripTypeSelectionCard({
     <div
       id={type}
       onClick={onClick}
-      className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
+      className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full transition-all ${
         selected
-          ? "bg-sky-100 dark:bg-sky-800 border-sky-700 dark:border-sky-200"
-          : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 "
+          ? "bg-slate-950 dark:bg-white"
+          : "border hover:bg-slate-50 dark:hover:bg-slate-800 "
       }`}
     >
-      <RyogoIcon icon={icon} size="md" />
-      <RyogoCaption weight="font-bold">{title}</RyogoCaption>
-      <RyogoCaption color="light">{desc}</RyogoCaption>
+      <RyogoIcon icon={icon} size="md" color={selected ? "white" : "slate"} />
+      <RyogoCaption weight="font-bold" color={selected ? "white" : "slate"}>
+        {title}
+      </RyogoCaption>
+      <RyogoCaption color={"light"}>{desc}</RyogoCaption>
     </div>
   )
 }

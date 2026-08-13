@@ -40,7 +40,7 @@ export function VerifyAccountFinish() {
           disabled={isPending}
           onClick={goToVehicleOnboarding}
         >
-          {t("PrimaryCTA")}
+          <RyogoCaption color="white">{t("PrimaryCTA")}</RyogoCaption>
         </Button>
       </OnboardingStepActions>
     </OnboardingStepForm>

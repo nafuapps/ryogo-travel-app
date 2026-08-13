@@ -22,6 +22,7 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -310,16 +311,18 @@ export default function ModifyVehiclePageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           size={"lg"}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

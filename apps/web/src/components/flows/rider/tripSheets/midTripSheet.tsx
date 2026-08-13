@@ -26,6 +26,7 @@ import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { midTripAction } from "@/app/actions/bookings/midTripAction"
 import { useLocation } from "@/hooks/useLocation"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
+import { RyogoCaption } from "@/components/typography"
 
 export default function MidTripSheet({
   booking,
@@ -121,7 +122,9 @@ export default function MidTripSheet({
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
         <Button variant="default" className="w-full">
-          {t("Title", { type: type })}
+          <RyogoCaption color="white">
+            {t("Title", { type: type })}
+          </RyogoCaption>
         </Button>
       </SheetTrigger>
       <SheetContent side="bottom">

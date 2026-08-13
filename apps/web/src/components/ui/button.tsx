@@ -11,21 +11,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-slate-950 dark:bg-white text-white dark:text-slate-950 shadow-sm hover:opacity-80",
-        destructive:
-          "bg-red-700 hover:bg-red-600/90 dark:bg-red-300 dark:hover:bg-red-200/90 text-white dark:text-slate-950 shadow-xs",
+        default: "bg-slate-950 dark:bg-white shadow-sm hover:opacity-80",
+        destructive: "bg-red-700 dark:bg-red-300 hover:opacity-80 shadow-xs",
         outline:
           "border border-slate-300 shadow-xs hover:opacity-80 dark:border-slate-700",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/70",
+        // secondary:
+        //   "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/70",
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         // link: "text-primary underline-offset-4 hover:underline",
-        brand:
-          "bg-sky-700 dark:bg-sky-300 hover:opacity-80 shadow-sm text-white dark:text-slate-950",
+        brand: "bg-sky-700 dark:bg-sky-300 hover:opacity-80 shadow-sm",
         white:
-          "bg-white dark:bg-slate-950 text-slate-950 dark:text-white shadow-sm font-bold hover:opacity-80",
+          "bg-white dark:bg-slate-950 shadow-sm font-bold hover:opacity-80",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

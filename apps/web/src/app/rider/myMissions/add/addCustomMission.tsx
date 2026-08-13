@@ -21,7 +21,7 @@ import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { addCustomMissionAction } from "@/app/actions/missions/addCustomMissionAction"
-import { RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import {
   regexCheckIDByEntityType,
@@ -151,16 +151,17 @@ export default function AddCustomMissionPageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
-          size={"default"}
           type="button"
           disabled={isPending}
           onClick={() => router.back()}
         >
-          {t("CancelCTA")}
+          <RyogoCaption color="white">{t("CancelCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import {
   AuthActionWrapper,
@@ -76,7 +76,9 @@ export default function SignupPageComponent() {
         <AuthActionWrapper>
           <Button variant={"default"} size={"lg"} disabled={isPending || isBot}>
             {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
         </AuthActionWrapper>
       </AuthFormWrapper>

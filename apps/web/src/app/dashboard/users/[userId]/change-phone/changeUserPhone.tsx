@@ -16,6 +16,7 @@ import z from "zod"
 import { changeUserPhoneAction } from "@/app/actions/users/changeUserPhoneAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ChangeUserPhonePageComponent({
   user,
@@ -92,16 +93,18 @@ export default function ChangeUserPhonePageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           size={"lg"}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

@@ -26,6 +26,7 @@ import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransa
 import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
@@ -164,7 +165,17 @@ export default function ModifyTransactionPageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
+        </Button>
+        <Button
+          variant={"outline"}
+          type="button"
+          disabled={isPending}
+          onClick={() => router.back()}
+        >
+          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
         </Button>
         <DeleteTransactionAlertButton
           bookingId={transactionDetails.bookingId}
@@ -172,15 +183,6 @@ export default function ModifyTransactionPageComponent({
           agencyId={transactionDetails.agencyId}
           assignedUserId={assignedUserId}
         />
-        <Button
-          variant={"outline"}
-          size={"default"}
-          type="button"
-          disabled={isPending}
-          onClick={() => router.back()}
-        >
-          {t("CancelCTA")}
-        </Button>
       </FormWrapper>
     </PageWrapper>
   )

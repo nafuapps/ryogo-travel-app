@@ -19,6 +19,7 @@ import { modifyVehicleRepairAction } from "@/app/actions/vehicles/modifyVehicleR
 import { FindVehicleRepairByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ModifyVehicleRepairPageComponent({
   repair,
@@ -129,7 +130,9 @@ export default function ModifyVehicleRepairPageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
@@ -138,7 +141,7 @@ export default function ModifyVehicleRepairPageComponent({
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("Back")}
+          <RyogoCaption color="light">{t("Back")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

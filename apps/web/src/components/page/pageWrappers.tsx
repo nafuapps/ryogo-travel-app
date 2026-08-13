@@ -25,7 +25,7 @@ export function PageWrapper({
     <Suspense fallback={<PageSkeleton />}>
       <div
         id={id}
-        className={`w-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "overflow-y-scroll"} no-scrollbar pt-3 lg:pt-4 pb-1`}
+        className={`w-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "overflow-y-scroll"} no-scrollbar pt-3 lg:pt-4`}
       >
         {children}
       </div>
@@ -216,7 +216,7 @@ export function StickyActionWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 dark:bg-slate-800 sticky mt-auto shadow border-t-slate-200 dark:border-t-slate-700 bottom-0">
+    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 dark:bg-slate-950 sticky mt-auto shadow border-t-slate-200 dark:border-t-slate-700 bottom-0">
       {children}
     </div>
   )

@@ -23,6 +23,8 @@ import { toast } from "sonner"
 import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 
 export default function ModifyAgencyPageForm({
   agency,
@@ -137,6 +139,7 @@ export default function ModifyAgencyPageForm({
           array={getStringValueDisplayPairs(cityOptions)}
           placeholder={t("Field5.Title")}
         />
+        <Separator />
         <Button
           variant={"default"}
           size={"lg"}
@@ -144,16 +147,18 @@ export default function ModifyAgencyPageForm({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           size={"lg"}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

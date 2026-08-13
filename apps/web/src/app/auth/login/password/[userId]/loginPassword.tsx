@@ -103,7 +103,9 @@ export default function LoginPasswordPageComponent({
             disabled={isPending || isBot}
           >
             {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}

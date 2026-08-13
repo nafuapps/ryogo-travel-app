@@ -136,7 +136,7 @@ export default function EndTripSheet({
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
         <Button variant="default" className="w-full">
-          {t("Title")}
+          <RyogoCaption color="white">{t("Title")}</RyogoCaption>
         </Button>
       </SheetTrigger>
       <SheetContent side="bottom">
@@ -187,25 +187,27 @@ export default function EndTripSheet({
         </TripSheetFormWrapper>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="endTrip">
-            {isPending ? t("Loading") : t("End")}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("End")}
+            </RyogoCaption>
           </Button>
           <Link href={`/rider/myBookings/${booking.id}/add-expense`}>
             <Button
               type="button"
-              variant={"secondary"}
+              variant={"outline"}
               disabled={isPending}
               form="endTrip"
               className="w-full"
             >
-              {t("AddExpense")}
+              <RyogoCaption color="light">{t("AddExpense")}</RyogoCaption>
             </Button>
           </Link>
           <Button
-            variant="outline"
+            variant="ghost"
             disabled={isPending}
             onClick={() => setOpen(false)}
           >
-            {t("Close")}
+            <RyogoCaption color="light">{t("Close")}</RyogoCaption>
           </Button>
         </SheetFooter>
       </SheetContent>

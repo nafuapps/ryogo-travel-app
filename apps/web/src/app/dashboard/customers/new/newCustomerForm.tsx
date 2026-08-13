@@ -21,6 +21,7 @@ import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function NewCustomerForm({
   agencyId,
@@ -195,16 +196,17 @@ export default function NewCustomerForm({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
-          size={"default"}
           type="button"
           disabled={isPending}
           onClick={() => router.back()}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

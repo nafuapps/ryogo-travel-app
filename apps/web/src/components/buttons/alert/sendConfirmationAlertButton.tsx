@@ -12,6 +12,7 @@ import { sendConfirmationAction } from "@/app/actions/bookings/sendConfirmationA
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SEND_CONFIRMATION_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import { RyogoCaption } from "@/components/typography"
 
 type SendConfirmationAlertButtonProps = {
   bookingId: string
@@ -66,7 +67,7 @@ export default function SendConfirmationAlertButton(
       noCTA={t("NoCTA")}
       labelChild={
         <Button variant={"outline"} disabled={!canSendConfirmation}>
-          {t("Label")}
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </Button>
       }
@@ -77,7 +78,9 @@ export default function SendConfirmationAlertButton(
         disabled={isSendPending}
       >
         {isSendPending && <Spinner />}
-        {isSendPending ? t("Loading") : t("YesCTA")}
+        <RyogoCaption color="white">
+          {isSendPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

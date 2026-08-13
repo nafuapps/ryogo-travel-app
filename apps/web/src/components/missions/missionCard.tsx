@@ -66,30 +66,23 @@ export default function MissionCard({
           <RyogoEnclosedIcon
             icon={getEntityIcon(mission.entityType)}
             size="sm"
-            color={mission.isRead ? "light" : "brand"}
-            bgColor={mission.isRead ? "slate" : "brand"}
+            color={isRead ? "light" : "slate"}
+            bgColor={"slate"}
             circular
           />
           <div className="flex flex-col gap-0.5">
-            <RyogoCaption
-              color={mission.isRead ? "light" : "brand"}
-              weight="font-bold"
-            >
+            <RyogoCaption color={isRead ? "light" : "slate"} weight="font-bold">
               {mission.entityType.toUpperCase()}
             </RyogoCaption>
-            <RyogoCaption color={mission.isRead ? "light" : "brand"}>
+            <RyogoCaption color={"light"}>
               {"(" + mission.entityId + ")"}
             </RyogoCaption>
           </div>
         </SectionRowWrapper>
-        {mission.isRead ? (
-          <Button
-            variant={"secondary"}
-            onClick={markUnread}
-            disabled={isPending}
-          >
-            <RyogoIcon icon={CircleCheckBig} size={"sm"} />
-            <RyogoCaption color="slate">{t("Card.Read")}</RyogoCaption>
+        {isRead ? (
+          <Button variant={"white"} onClick={markUnread} disabled={isPending}>
+            <RyogoIcon icon={CircleCheckBig} size={"sm"} color="light" />
+            <RyogoCaption color="light">{t("Card.Read")}</RyogoCaption>
           </Button>
         ) : (
           mission.dueDate && (
@@ -101,7 +94,7 @@ export default function MissionCard({
           )
         )}
       </SectionRowWrapper>
-      <RyogoP weight="font-bold" color={mission.isRead ? "light" : "dark"}>
+      <RyogoP weight="font-bold" color={isRead ? "light" : "dark"}>
         {mission.isCustom
           ? mission.titleKey
           : t(
@@ -110,7 +103,7 @@ export default function MissionCard({
             )}
       </RyogoP>
       {mission.messageKey && (
-        <RyogoCaption color={mission.isRead ? "light" : "slate"}>
+        <RyogoCaption color={isRead ? "light" : "slate"}>
           {mission.isCustom
             ? mission.messageKey
             : t(
@@ -120,34 +113,28 @@ export default function MissionCard({
         </RyogoCaption>
       )}
       <div></div>
-      {mission.link && (
+      {mission.link && !isRead && (
         <Link href={mission.link as React.ComponentProps<typeof Link>["href"]}>
-          <Button
-            variant={mission.isRead ? "secondary" : "default"}
-            disabled={isPending}
-            className="w-full"
-          >
-            <RyogoCaption
-              color={mission.isRead ? "light" : "white"}
-              weight="font-bold"
-            >
+          <Button variant={"default"} disabled={isPending} className="w-full">
+            <RyogoCaption color={"white"} weight="font-bold">
               {t("Card.CheckNow")}
             </RyogoCaption>
           </Button>
         </Link>
       )}
-      {!mission.isRead && (
+      {!isRead && (
         <Button variant={"outline"} onClick={markRead} disabled={isPending}>
-          <RyogoCaption color={mission.isRead ? "light" : "slate"}>
-            {t("Card.MarkRead")}
-          </RyogoCaption>
+          <RyogoCaption color={"slate"}>{t("Card.MarkRead")}</RyogoCaption>
         </Button>
       )}
       {mission.isCustom && (
         <>
           <Separator />
           <div className="flex items-center justify-between gap-1.5 lg:gap-2">
-            <RyogoPill label={t("Card.Custom")} bgColor={"slate"} />
+            <RyogoPill
+              label={t("Card.Custom")}
+              bgColor={isRead ? "light" : "slate"}
+            />
             <Link
               href={`/dashboard/mission-control/${mission.id}/modify`}
               className="flex items-center gap-0.5"

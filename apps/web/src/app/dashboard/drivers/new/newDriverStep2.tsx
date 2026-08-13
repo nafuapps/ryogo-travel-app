@@ -134,7 +134,10 @@ export function NewDriverStep2(props: {
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+
+            <RyogoCaption color="white">
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}
@@ -143,7 +146,7 @@ export function NewDriverStep2(props: {
             onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
           >
-            {t("SecondaryCTA")}
+            <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>

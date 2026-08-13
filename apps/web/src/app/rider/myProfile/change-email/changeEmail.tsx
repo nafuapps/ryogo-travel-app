@@ -13,6 +13,7 @@ import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/
 import { changeMyEmailAction } from "@/app/actions/users/changeMyEmailAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ChangeEmailMyProfileComponent({
   usersWithPhoneRole,
@@ -118,16 +119,18 @@ export default function ChangeEmailMyProfileComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           size={"lg"}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("SecondaryCTA")}
+          <RyogoCaption color="white">{t("SecondaryCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

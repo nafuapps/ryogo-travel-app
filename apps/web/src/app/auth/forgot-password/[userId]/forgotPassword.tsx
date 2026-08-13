@@ -115,11 +115,15 @@ export default function ForgotPasswordPageComponent({
             disabled={isPending || codeSentRecently || isBot}
           >
             {isPending && <Spinner />}
-            {isPending
-              ? t("Loading")
-              : codeSentRecently
-                ? t("CodeSentRecently", { count: VERIFY_CODE_TIMEOUT_MINUTES })
-                : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {isPending
+                ? t("Loading")
+                : codeSentRecently
+                  ? t("CodeSentRecently", {
+                      count: VERIFY_CODE_TIMEOUT_MINUTES,
+                    })
+                  : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}

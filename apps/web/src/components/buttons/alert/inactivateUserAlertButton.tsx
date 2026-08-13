@@ -9,6 +9,7 @@ import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { inactivateUserAction } from "@/app/actions/users/inactivateUserAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoCaption } from "@/components/typography"
 
 type InactivateUserAlertButtonProps = {
   userId: string
@@ -40,11 +41,17 @@ export default function InactivateUserAlertButton(
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<Button variant={"secondary"}>{t("Label")}</Button>}
+      labelChild={
+        <Button variant={"ghost"}>
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
+        </Button>
+      }
     >
       <Button variant={"destructive"} onClick={inactivate} disabled={isPending}>
         {isPending && <Spinner />}
-        {isPending ? t("Loading") : t("YesCTA")}
+        <RyogoCaption color="white">
+          {isPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

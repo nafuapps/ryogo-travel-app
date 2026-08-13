@@ -24,6 +24,7 @@ import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -159,16 +160,17 @@ export default function NewTransactionPageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>{" "}
         </Button>
         <Button
           variant={"outline"}
-          size={"default"}
           type="button"
           disabled={isPending}
           onClick={() => router.back()}
         >
-          {t("CancelCTA")}
+          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

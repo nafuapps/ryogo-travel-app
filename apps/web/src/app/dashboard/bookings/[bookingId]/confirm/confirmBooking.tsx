@@ -110,7 +110,7 @@ export default async function ConfirmBookingPageComponent({
               value={booking.customer.remarks}
             />
           )}
-          <Button variant={"secondary"}>
+          <Button variant={"outline"}>
             <Link
               href={`/dashboard/customers/${booking.customer.id}`}
               className={"w-full"}
@@ -173,7 +173,7 @@ export default async function ConfirmBookingPageComponent({
                 : "-"
             }
           />
-          <Button variant={booking.assignedVehicle ? "secondary" : "outline"}>
+          <Button variant={"outline"}>
             <Link
               href={`/dashboard/bookings/${booking.id}/assign-vehicle`}
               className={"w-full"}
@@ -189,7 +189,7 @@ export default async function ConfirmBookingPageComponent({
             title={t("AssignedDriver")}
             value={booking.assignedDriver ? booking.assignedDriver.name : "-"}
           />
-          <Button variant={booking.assignedDriver ? "secondary" : "outline"}>
+          <Button variant={"outline"}>
             <Link
               href={`/dashboard/bookings/${booking.id}/assign-driver`}
               className={"w-full"}

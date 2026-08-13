@@ -160,7 +160,9 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && <Spinner />}
-            {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}
@@ -169,7 +171,7 @@ export default function NewBookingStep4(props: NewBookingStep4Props) {
             onClick={props.onPrev}
             disabled={form.formState.isSubmitting}
           >
-            {t("Back")}
+            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>

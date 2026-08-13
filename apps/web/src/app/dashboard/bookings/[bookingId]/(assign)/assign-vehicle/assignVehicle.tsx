@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignVehicleAction } from "@/app/actions/bookings/assignVehicleAction"
 import { toast } from "sonner"
-import { RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import {
   SectionWrapper,
   PageWrapper,
@@ -77,7 +77,6 @@ export default function AssignVehiclePageComponent({
                 ? t("BuyCTA")
                 : t("TryCTA")
           }
-          isSubscribed={isSubscribed}
         />
       )}
       <SectionWrapper id="AssignVehicleInfo">
@@ -109,7 +108,9 @@ export default function AssignVehiclePageComponent({
           disabled={!canAssignVehicle}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
@@ -118,7 +119,7 @@ export default function AssignVehiclePageComponent({
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("CancelCTA")}
+          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
         </Button>
       </StickyActionWrapper>
     </PageWrapper>

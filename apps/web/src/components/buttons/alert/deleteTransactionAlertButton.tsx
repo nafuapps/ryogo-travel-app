@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
+import { RyogoCaption } from "@/components/typography"
 
 type DeleteTransactionAlertButtonProps = {
   bookingId: string
@@ -47,7 +48,11 @@ export default function DeleteTransactionAlertButton(
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<Button variant={"secondary"}>{t("Label")}</Button>}
+      labelChild={
+        <Button variant={"ghost"}>
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
+        </Button>
+      }
     >
       <Button
         variant={"destructive"}
@@ -55,7 +60,9 @@ export default function DeleteTransactionAlertButton(
         disabled={isPending}
       >
         {isPending && <Spinner />}
-        {isPending ? t("Loading") : t("YesCTA")}
+        <RyogoCaption color="white">
+          {isPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

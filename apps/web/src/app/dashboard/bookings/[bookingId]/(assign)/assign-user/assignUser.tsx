@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
-import { RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import {
   SectionWrapper,
   PageWrapper,
@@ -72,7 +72,6 @@ export default function AssignUserPageComponent({
                 ? t("BuyCTA")
                 : t("TryCTA")
           }
-          isSubscribed={isSubscribed}
         />
       )}
       <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
@@ -97,9 +96,9 @@ export default function AssignUserPageComponent({
           disabled={!canAssignUser}
         >
           {isPending && <Spinner />}
-          <RyogoSmall color="white">
+          <RyogoCaption color="white">
             {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoSmall>
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
@@ -108,7 +107,7 @@ export default function AssignUserPageComponent({
           onClick={() => router.back()}
           disabled={isPending}
         >
-          <RyogoSmall color="slate">{t("CancelCTA")}</RyogoSmall>
+          <RyogoCaption color="slate">{t("CancelCTA")}</RyogoCaption>
         </Button>
       </StickyActionWrapper>
     </PageWrapper>

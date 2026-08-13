@@ -164,7 +164,9 @@ export function NewVehicleConfirm(props: {
             disabled={isPending}
           >
             {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
           <Button
             variant={"outline"}
@@ -173,7 +175,7 @@ export function NewVehicleConfirm(props: {
             onClick={props.onPrev}
             disabled={isPending}
           >
-            {t("SecondaryCTA")}
+            <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>

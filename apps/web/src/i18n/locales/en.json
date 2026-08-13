@@ -111,10 +111,10 @@
         "PageTitle": "Hello there!",
         "InfoYes": "You already have an agency account with us:",
         "InfoNo": "{count, plural, =1 {You already have an account with us:} other {You already have # accounts with us:}}",
-        "SecondaryCTANo": "Create an owner account",
+        "SecondaryCTANo": "Create agency account as owner",
         "SecondaryCTAYes": "Contact support",
         "BackCTA": "Back",
-        "Description": "To create more agency accounts, contact our support team."
+        "Description": "Want to create another agency account?"
       }
     }
   },
@@ -4110,7 +4110,7 @@
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Field1": {
-        "Placeholder": "Enter keyword or id to search..",
+        "Placeholder": "Type to search..",
         "Error1": "Enter atleast 3 characters to search",
         "Error2": "Enter less than 20 characters for search"
       },
@@ -4527,6 +4527,7 @@
         "Label": "Logout",
         "Title": "Are you sure you want to logout?",
         "NoCTA": "No",
+        "Loading": "Loading..",
         "YesCTA": "Yes, logout"
       }
     },

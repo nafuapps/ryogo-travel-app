@@ -146,7 +146,9 @@ export function NewVehicleStep1(props: {
             disabled={formData.formState.isSubmitting}
           >
             {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            <RyogoCaption color="white">
+              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            </RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>

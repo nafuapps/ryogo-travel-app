@@ -18,6 +18,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -110,7 +111,9 @@ export default function ModifyDriverLeavePageComponent({
           disabled={isPending}
         >
           {isPending && <Spinner />}
-          {isPending ? t("Loading") : t("PrimaryCTA")}
+          <RyogoCaption color="white">
+            {isPending ? t("Loading") : t("PrimaryCTA")}
+          </RyogoCaption>
         </Button>
         <Button
           variant={"outline"}
@@ -119,7 +122,7 @@ export default function ModifyDriverLeavePageComponent({
           onClick={() => router.back()}
           disabled={isPending}
         >
-          {t("Back")}
+          <RyogoCaption color="white">{t("Back")}</RyogoCaption>
         </Button>
       </FormWrapper>
     </PageWrapper>

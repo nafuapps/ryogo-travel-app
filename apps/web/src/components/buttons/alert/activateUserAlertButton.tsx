@@ -9,6 +9,7 @@ import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { activateUserAction } from "@/app/actions/users/activateUserAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoCaption } from "@/components/typography"
 
 type ActivateUserAlertButtonProps = {
   userId: string
@@ -38,11 +39,17 @@ export default function ActivateUserAlertButton(
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<Button variant={"outline"}>{t("Label")}</Button>}
+      labelChild={
+        <Button variant={"outline"}>
+          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
+        </Button>
+      }
     >
       <Button variant={"default"} onClick={activate} disabled={isPending}>
         {isPending && <Spinner />}
-        {isPending ? t("Loading") : t("YesCTA")}
+        <RyogoCaption color="white">
+          {isPending ? t("Loading") : t("YesCTA")}
+        </RyogoCaption>
       </Button>
     </RyogoAlertDialog>
   )

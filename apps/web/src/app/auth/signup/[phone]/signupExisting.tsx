@@ -12,6 +12,9 @@ import {
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { ChevronRight } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
@@ -50,24 +53,26 @@ export default async function SignupExistingPageComponent({
             <RyogoCaption color="light">{t("BackCTA")}</RyogoCaption>
           </Button>
         </Link>
-        {hasOwnerAccount ? (
-          <>
-            <Link href={`mailto:${SUPPORT_EMAIL}`}>
-              <Button variant={"secondary"} size={"lg"} className="w-full">
-                <RyogoCaption color="light">
-                  {t("SecondaryCTAYes")}
-                </RyogoCaption>
-              </Button>
-            </Link>
-            <RyogoCaption color="light"> {t("Description")}</RyogoCaption>
-          </>
-        ) : (
-          <Link href={`/onboarding?phone=${phone}`}>
-            <Button variant={"secondary"} size={"lg"} className="w-full">
-              <RyogoCaption color="light">{t("SecondaryCTANo")}</RyogoCaption>
-            </Button>
-          </Link>
+        <Separator />
+        {hasOwnerAccount && (
+          <RyogoCaption color="light" className="text-center">
+            {t("Description")}
+          </RyogoCaption>
         )}
+        <Link
+          href={
+            hasOwnerAccount
+              ? `mailto:${SUPPORT_EMAIL}`
+              : `/onboarding?phone=${phone}`
+          }
+        >
+          <Button variant={"ghost"} size={"lg"} className="w-full">
+            <RyogoCaption color="light">
+              {hasOwnerAccount ? t("SecondaryCTAYes") : t("SecondaryCTANo")}
+            </RyogoCaption>
+            <RyogoIcon icon={ChevronRight} size="sm" color="light" />
+          </Button>
+        </Link>
       </AuthActionWrapper>
     </AuthPageWrapper>
   )

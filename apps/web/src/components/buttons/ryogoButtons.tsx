@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button"
 
 export function RyogoIconButton({ label }: { label: string }) {
   return (
-    <Button variant="secondary">
-      <RyogoCaption color="slate" className="hidden lg:flex">
+    <Button variant="outline">
+      <RyogoCaption color="light" className="hidden lg:flex">
         {label}
       </RyogoCaption>
-      <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
+      <RyogoIcon icon={ChevronRight} size="sm" color="light" />
     </Button>
   )
 }

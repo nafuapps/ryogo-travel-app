@@ -199,7 +199,7 @@ export default async function SupportHelpAccountPage() {
           </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+          <SupportSideAccordionWrapper label={"TableOfContent"}>
             {contentItems.map((item) => (
               <SupportTableOfContentLinkButton
                 key={item.id}
@@ -209,7 +209,7 @@ export default async function SupportHelpAccountPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item, index) => (
               <SupportQuickActionLinkButton
                 key={index}
@@ -219,7 +219,7 @@ export default async function SupportHelpAccountPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+          <SupportSideAccordionWrapper label={"RelatedArticles"}>
             {relatedArticles.map((item) => (
               <SupportRelatedArticleLinkButton
                 key={item.label}

@@ -194,7 +194,7 @@ export default async function SupportHelpDriversPage() {
           </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+          <SupportSideAccordionWrapper label={"TableOfContent"}>
             {contentItems.map((item) => (
               <SupportTableOfContentLinkButton
                 key={item.id}
@@ -204,7 +204,7 @@ export default async function SupportHelpDriversPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item) => (
               <SupportQuickActionLinkButton
                 key={item.label}
@@ -214,7 +214,7 @@ export default async function SupportHelpDriversPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+          <SupportSideAccordionWrapper label={"RelatedArticles"}>
             {relatedArticles.map((item) => (
               <SupportRelatedArticleLinkButton
                 key={item.label}

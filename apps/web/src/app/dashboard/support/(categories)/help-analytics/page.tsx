@@ -159,7 +159,7 @@ export default async function SupportHelpAnalyticsPage() {
           </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+          <SupportSideAccordionWrapper label={"TableOfContent"}>
             {contentItems.map((item) => (
               <SupportTableOfContentLinkButton
                 key={item.id}
@@ -169,7 +169,7 @@ export default async function SupportHelpAnalyticsPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item) => (
               <SupportQuickActionLinkButton
                 key={item.label}

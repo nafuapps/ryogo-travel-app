@@ -6,7 +6,7 @@ import {
   SideWrapper,
 } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
-import { ChevronRight, FileClock, ListTodo, Telescope } from "lucide-react"
+import { ChevronRight, FileClock, Telescope } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportQuickActionLinkButton, {
@@ -34,6 +34,9 @@ import {
   SupportTableTextRow,
 } from "@/components/flows/support/supportTableWrapper"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Overview
@@ -86,6 +89,18 @@ export default async function MySupportHelpVehiclePage() {
       icon: ChevronRight,
     },
   ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/rider/mySupport/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/rider/mySupport/help-videos",
+    },
+  ]
+
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-vehicle"} />
@@ -117,7 +132,7 @@ export default async function MySupportHelpVehiclePage() {
           </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+          <SupportSideAccordionWrapper label={"TableOfContent"}>
             {contentItems.map((item) => (
               <SupportTableOfContentLinkButton
                 key={item.id}
@@ -127,12 +142,21 @@ export default async function MySupportHelpVehiclePage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item) => (
               <SupportQuickActionLinkButton
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={"RelatedArticles"}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

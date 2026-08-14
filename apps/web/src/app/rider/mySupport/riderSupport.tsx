@@ -7,7 +7,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
-import { Car, ChevronRight, Play, Tickets, User } from "lucide-react"
+import { Car, ChevronRight, Play, Target, Tickets, User } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import {
@@ -70,13 +70,13 @@ export default async function MySupportPageComponent({
           <SupportCategoryCard
             title={t("Missions.Title")}
             description={t("Missions.Description")}
-            icon={User}
+            icon={Target}
             link={"/rider/mySupport/help-missions"}
           />
           <SupportCategoryCard
             title={t("Videos.Title")}
             description={t("Videos.Description")}
-            icon={User}
+            icon={Play}
             link={"/rider/mySupport/help-videos"}
             highlight
           />
@@ -125,7 +125,7 @@ export default async function MySupportPageComponent({
         <SectionWrapper
           id="Tickets"
           center
-          bgColor="bg-slate-900 dark:bg-white"
+          bgColor="bg-slate-950 dark:bg-white"
         >
           {isPremium ? (
             <>
@@ -140,12 +140,7 @@ export default async function MySupportPageComponent({
                   <RyogoCaption color="slate">
                     {t("Tickets.ViewCTA")}
                   </RyogoCaption>
-                  <RyogoIcon
-                    icon={ChevronRight}
-                    size="sm"
-                    color="slate"
-                    thick
-                  />
+                  <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
                 </Button>
               </Link>
             </>

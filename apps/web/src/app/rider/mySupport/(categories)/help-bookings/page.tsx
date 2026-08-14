@@ -10,7 +10,6 @@ import {
   BanknoteArrowDown,
   CalendarCheck,
   ChevronRight,
-  Logs,
   PhoneCall,
   Tickets,
   UserRoundArrowLeft,
@@ -59,6 +58,9 @@ import {
   SupportListItem,
 } from "@/components/flows/support/supportListWrapper"
 import ExpenseIcon from "@/components/icons/expenseIcon"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Booking Overview
@@ -138,6 +140,17 @@ export default async function MySupportHelpBookingsPage() {
       icon: ChevronRight,
     },
   ]
+
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Vehicle"),
+      href: "/rider/mySupport/help-vehicle",
+    },
+    {
+      label: t("RelatedArticles.Missions"),
+      href: "/rider/mySupport/help-missions",
+    },
+  ]
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-bookings"} />
@@ -170,7 +183,7 @@ export default async function MySupportHelpBookingsPage() {
           </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+          <SupportSideAccordionWrapper label={"TableOfContent"}>
             {contentItems.map((item) => (
               <SupportTableOfContentLinkButton
                 key={item.id}
@@ -180,12 +193,21 @@ export default async function MySupportHelpBookingsPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item) => (
               <SupportQuickActionLinkButton
                 key={item.label}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={"RelatedArticles"}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

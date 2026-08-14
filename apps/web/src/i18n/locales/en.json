@@ -2783,9 +2783,7 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "ChangeEmail": "Change Email",
         "ChangePassword": "Change Password",
         "ChangeSettings": "Change Preferences",
@@ -2793,7 +2791,6 @@
         "ViewAgencyDetails": "View Agency Details"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Users": "Learn about users",
         "Videos": "Watch video tutorials"
       }
@@ -2841,9 +2838,7 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "ViewAnalytics": "View Analytics"
       }
     },
@@ -3128,14 +3123,11 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "NewBooking": "Create Booking",
         "AllBookings": "View All Bookings"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Drivers": "Understand more about drivers",
         "Vehicles": "Learn how to manage vehicles",
         "Customers": "Learn how to add customers",
@@ -3229,14 +3221,11 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "AddCustomer": "Add customer",
         "AllCustomers": "View All Customers"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Bookings": "Learn how to create bookings",
         "Videos": "Watch video tutorials"
       }
@@ -3401,14 +3390,11 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "AddCustomer": "Add customer",
         "AllCustomers": "View All Customers"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Vehicles": "Learn how to manage vehicles",
         "Bookings": "Learn more about bookings",
         "Users": "Know how to manage users"
@@ -3503,15 +3489,12 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "CreateCustomMission": "Create Custom Mission",
         "ViewMissions": "View Missions",
         "ViewFeed": "View Feed"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Account": "Learn how to manage your account",
         "Bookings": "Learn more about bookings",
         "Videos": "Watch video tutorials"
@@ -3524,23 +3507,48 @@
         "Title": "UNDERSTAND RYOGO",
         "WhatIsRyogo": {
           "Title": "What is RyoGo?",
-          "Description": ""
+          "Description": "RyoGo is a travel agency management platform.",
+          "ValueProp": "It is a simple and easy-to-use app that helps you manage your agency from one place and helps your agency staff to perform their tasks online.",
+          "Headline": "Basically, RyoGo is a one-stop solution for managing daily operations without the hassle of tedious paperwork."
         },
         "WhyNeedRyogo": {
-          "Title": "Why do I need Ryogo?",
-          "Description": ""
+          "Title": "Why do I need RyoGo?",
+          "Description": "If you are running a tour and travel agency where you need to keep track of your drivers, vehicles, and bookings, Ryogo is the perfect solution.",
+          "Solution": "RyoGo removes all the complexity of going through various documents and manually tracking your drivers, vehicles, and bookings. You can run your entire agency from a single place."
         },
         "WhenUseRyogo": {
-          "Title": "When should I start using Ryogo?",
-          "Description": ""
+          "Title": "When should I start using RyoGo?",
+          "Description": "If your agency has multiple vehicles and drivers and you want to delegate most of the daily workflow to your agents, RyoGo is the perfect solution.",
+          "Growing": "If your business is starting to get hectic due to demand and you want to focus more on growing your business and providing excellent service to your customers, RyoGo provides a great scalable platform for you."
         },
         "Features": {
-          "Title": "Features of Ryogo?",
-          "Description": ""
+          "Title": "Features of RyoGo",
+          "Description": "RyoGo has various features to help you manage your travel agency operations.",
+          "Caption": "A list of RyoGo features",
+          "Feature1": "Driver & Vehicle Management",
+          "Feature1Desc": "Easily add and manage your fleet of vehicles and drivers. Get timely alerts for any expiration and keep track of any leaves/repairs easily.",
+          "Feature2": "Booking Management",
+          "Feature2Desc": "From quick creation to trip completion, manage all your bookings and leads with ease... in one place.",
+          "Feature3": "Communication",
+          "Feature3Desc": "Stay connected with customers, drivers and agents from a single communication hub so that every one is on the same page. Integrated with Whatsapp.",
+          "Feature4": "Analytics & Reports",
+          "Feature4Desc": "Get real-time analytics and reports to keep track of your business performance and growth.",
+          "Feature5": "Alerts & Notifications",
+          "Feature5Desc": "Receive alerts, notifications and plan with the help of analytics and predictions to grow your business smoothly.",
+          "Feature6": "Security & Privacy",
+          "Feature6Desc": "All your data is kept safe and secure. No need to worry about data loss, privacy or security breaches, ever.",
+          "Feature7": "Customer Management",
+          "Feature7Desc": " Manage all your customers and their trips in one place. No need to maintain separate diaries."
         },
         "Benefits": {
-          "Title": "Key benefits of Ryogo?",
-          "Description": ""
+          "Title": "Key benefits of RyoGo",
+          "Description": "When you start using RyoGo, you get the following benefits:",
+          "Benefit1": "Consolidation of all the agency-related information in a single place",
+          "Benefit2": "Saving of countless hours of manual work with automated workflows",
+          "Benefit3": "Delegation of tasks to the specific user with total visibility",
+          "Benefit4": "Keeping documentation up to date with timely reminders",
+          "Benefit5": "Real-time collaboration with all agency members, drivers and customers",
+          "Benefit6": "Snapshot view of your business performance and tips for growth"
         }
       },
       "Onboarding": {
@@ -3559,7 +3567,7 @@
         }
       },
       "Overview": {
-        "Title": "PLATFORM OVERVIEW",
+        "Title": "APP OVERVIEW",
         "Dashboard": {
           "Title": "Dashboard",
           "Description": ""
@@ -3684,16 +3692,13 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "ViewAccount": "View Account Details",
         "ViewBookings": "View all bookings",
         "ViewDrivers": "View all drivers",
         "ViewVehicles": "View all vehicles"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Account": "Learn how to manage your account",
         "Bookings": "Learn more about bookings",
         "Drivers": "Learn how to manage drivers",
@@ -3807,15 +3812,12 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "AddAgent": "Add Agent",
         "AddDriver": "Add Driver",
         "AllUsers": "View All Users"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Account": "Learn how to manage your account",
         "Bookings": "Learn more about bookings",
         "Videos": "Watch video tutorials"
@@ -3964,14 +3966,11 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "AddVehicle": "Add Vehicle",
         "AllVehicles": "View All Vehicles"
       },
       "RelatedArticles": {
-        "Title": "RELATED ARTICLES",
         "Drivers": "Learn more about drivers",
         "Bookings": "Learn more about bookings",
         "Videos": "Watch video tutorials"
@@ -4021,14 +4020,12 @@
         "Description": "Check out how analytics can help you make informed decisions for your agency."
       },
       "SM": {
-        "Title": "SOCIAL MEDIA",
         "Youtube": "YouTube",
         "Instagram": "Instagram",
         "Facebook": "Facebook",
         "Linkedin": "LinkedIn"
       },
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "NewBooking": "Create Booking",
         "AddDriver": "Add Driver",
         "AddVehicle": "Add Vehicle"
@@ -5099,7 +5096,7 @@
         "Description": "Know more about your assigned vehicle"
       },
       "Missions": {
-        "Title": "MISSION AND ALERTS",
+        "Title": "MISSIONS AND ALERTS",
         "Description": "Managing your alert notifications and missions"
       },
       "Videos": {
@@ -5224,13 +5221,16 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "ChangeEmail": "Change Email",
         "ChangePassword": "Change Password",
         "ChangeSettings": "Change Preferences",
         "ViewAgencyDetails": "View Agency Details"
+      },
+      "RelatedArticles": {
+        "Bookings": "Learn about your assigned bookings",
+        "Missions": "Know about alerts and notifications",
+        "Videos": "Watch video tutorials"
       }
     },
     "MySupportBookingsHelp": {
@@ -5409,14 +5409,16 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "AllBookings": "View All Bookings"
+      },
+      "RelatedArticles": {
+        "Vehicle": "Learn about your assigned vehicle",
+        "Missions": "Know about alerts and notifications"
       }
     },
     "MySupportMissionsHelp": {
-      "Title": "Alerts",
+      "Title": "Missions and Alerts",
       "Description": "Get help related to alerts and notifications",
       "Overview": {
         "Title": "MISSIONS OVERVIEW",
@@ -5493,27 +5495,121 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "CreateCustomMission": "Create Custom Mission",
         "ViewMissions": "View Missions"
+      },
+      "RelatedArticles": {
+        "Account": "Learn how to manage your account",
+        "Bookings": "Learn more about assigned bookings",
+        "Videos": "Watch video tutorials"
       }
     },
     "MySupportStartedHelp": {
       "Title": "Getting Started",
       "Description": "New to the platform and feeling stuck? Find all the help you need here.",
       "About": {
-        "Title": "WHAT IS RYOGO?",
-        "Description": "Learn about RyoGo."
+        "Title": "UNDERSTAND RYOGO",
+        "WhatIsRyogo": {
+          "Title": "What is RyoGo?",
+          "Description": ""
+        },
+        "WhyNeedRyogo": {
+          "Title": "Why do I need RyoGo?",
+          "Description": ""
+        },
+        "Features": {
+          "Title": "Features of RyoGo",
+          "Description": ""
+        },
+        "Benefits": {
+          "Title": "Key benefits of RyoGo",
+          "Description": ""
+        },
+        "StartedDriver": {
+          "Title": "Getting started as Driver",
+          "Description": ""
+        }
       },
       "Overview": {
         "Title": "APP OVERVIEW",
-        "Description": "Walkthrough our slideshow guide below and understand how your business can benefit by automating and simplifying your daily travel operations"
+        "Dashboard": {
+          "Title": "Dashboard",
+          "Description": ""
+        },
+        "Sidebar": {
+          "Title": "Sidebar",
+          "Description": ""
+        },
+        "Header": {
+          "Title": "Header",
+          "Description": ""
+        },
+        "Navigation": {
+          "Title": "Navigation",
+          "Description": ""
+        },
+        "Home": {
+          "Title": "Home page",
+          "Description": "",
+          "CTA": "View home page"
+        },
+        "Bookings": {
+          "Title": "My Bookings page",
+          "Description": "",
+          "CTA": "View my bookings page"
+        },
+        "Vehicle": {
+          "Title": "My Vehicle page",
+          "Description": "",
+          "CTA": "View my vehicle page"
+        },
+        "Support": {
+          "Title": "My Support page",
+          "Description": "",
+          "CTA": "View my support page"
+        },
+        "Account": {
+          "Title": "My Profile page",
+          "Description": "",
+          "CTA": "View my profile page"
+        },
+        "Missions": {
+          "Title": "My Missions Page",
+          "Description": "",
+          "CTA": "View my missions page"
+        }
       },
       "Entities": {
-        "Title": "ENTITIES",
-        "Description": "Learn about entities and how they work together."
+        "Title": "MAIN ENTITIES",
+        "WhatIsEntity": {
+          "Title": "Understanding Entities",
+          "Description": ""
+        },
+        "Users": {
+          "Title": "Users",
+          "Description": ""
+        },
+        "Drivers": {
+          "Title": "Drivers",
+          "Description": ""
+        },
+        "Vehicles": {
+          "Title": "Vehicles",
+          "Description": ""
+        },
+        "Customers": {
+          "Title": "Customers",
+          "Description": ""
+        },
+        "Bookings": {
+          "Title": "Bookings",
+          "Description": ""
+        },
+        "Others": {
+          "Title": "Other entities",
+          "Description": ""
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -5531,10 +5627,16 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
-        "ViewAccount": "View Account Details"
+        "ViewAccount": "View Account Details",
+        "ViewBookings": "View my bookings",
+        "ViewVehicle": "View my vehicle"
+      },
+      "RelatedArticles": {
+        "Account": "Learn how to manage your account",
+        "Bookings": "Learn about your assigned bookings",
+        "Vehicle": "Learn more about your assigned vehicle",
+        "Videos": "Watch video tutorials"
       }
     },
     "MySupportVehicleHelp": {
@@ -5591,10 +5693,12 @@
           "Answer": ""
         }
       },
-      "TableOfContent": "TABLE OF CONTENT",
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "ViewVehicle": "View Vehicle"
+      },
+      "RelatedArticles": {
+        "Bookings": "Learn more about assigned bookings",
+        "Videos": "Watch video tutorials"
       }
     },
     "MySupportVideosHelp": {
@@ -5625,14 +5729,12 @@
         "Description": "Understand main methods of collaborating with customer and the agency"
       },
       "SM": {
-        "Title": "SOCIAL MEDIA",
         "Youtube": "YouTube",
         "Instagram": "Instagram",
         "Facebook": "Facebook",
         "Linkedin": "LinkedIn"
       },
       "QuickActions": {
-        "Title": "QUICK ACTIONS",
         "ViewMyBookings": "View My Bookings",
         "ViewMyVehicle": "View My Vehicle"
       }
@@ -5660,6 +5762,12 @@
       "Loading": "Loading..",
       "SecondaryCTA": "Back"
     }
+  },
+  "SupportAccordion": {
+    "TableOfContent": "TABLE OF CONTENT",
+    "QuickActions": "QUICK ACTIONS",
+    "RelatedArticles": "RELATED ARTICLES",
+    "SocialMedia": "SOCIAL MEDIA"
   },
   "Sheets": {
     "ChangeName": {

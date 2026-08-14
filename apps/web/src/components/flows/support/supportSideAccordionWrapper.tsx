@@ -8,15 +8,17 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion"
+import { useTranslations } from "next-intl"
 
 export default function SupportSideAccordionWrapper({
   label,
   children,
 }: {
-  label: string
+  label: "TableOfContent" | "QuickActions" | "RelatedArticles" | "SocialMedia"
   children: React.ReactNode
 }) {
   const isLargeScreen = window.innerWidth >= 1024
+  const labelString = useTranslations("SupportAccordion")(label)
 
   return (
     <SectionWrapper id={label}>
@@ -27,7 +29,7 @@ export default function SupportSideAccordionWrapper({
       >
         <AccordionItem value={label}>
           <AccordionTrigger className="flex items-center justify-between gap-2.5 lg:gap-3 py-0">
-            <RyogoCaption color="light">{label}</RyogoCaption>
+            <RyogoCaption color="light">{labelString}</RyogoCaption>
           </AccordionTrigger>
           <AccordionContent className="flex flex-col w-full pt-4 pb-0 gap-1.5 lg:gap-2">
             {children}

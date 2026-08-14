@@ -115,12 +115,12 @@ export default async function MySupportHelpVideosPage() {
           ))}
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("SM.Title")}>
+          <SupportSideAccordionWrapper label={"SocialMedia"}>
             {socialMediaLinks.map((item, index) => (
               <SupportSMLink key={index} {...item} />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item) => (
               <SupportQuickActionLinkButton
                 key={item.label}

@@ -42,6 +42,11 @@ import SupportRelatedArticleLinkButton, {
 } from "@/components/flows/support/supportRelatedArticleType"
 import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoVideo } from "@/components/video/ryogoVideo"
+import {
+  SupportTableWrapper,
+  SupportTableTextRow,
+} from "@/components/flows/support/supportTableWrapper"
 
 /*
   - What and why is ryogo?
@@ -184,7 +189,7 @@ export default async function SupportHelpStartedPage() {
           </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+          <SupportSideAccordionWrapper label={"TableOfContent"}>
             {contentItems.map((item) => (
               <SupportTableOfContentLinkButton
                 key={item.id}
@@ -194,7 +199,7 @@ export default async function SupportHelpStartedPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item, index) => (
               <SupportQuickActionLinkButton
                 key={index}
@@ -204,7 +209,7 @@ export default async function SupportHelpStartedPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("RelatedArticles.Title")}>
+          <SupportSideAccordionWrapper label={"RelatedArticles"}>
             {relatedArticles.map((item) => (
               <SupportRelatedArticleLinkButton
                 key={item.label}
@@ -227,22 +232,72 @@ async function AboutContent() {
         <RyogoCaption color="slate">
           {t("WhatIsRyogo.Description")}
         </RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsRyogo.ValueProp")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsRyogo.Headline")}</RyogoCaption>
+        {/* //TODO: Add what is ryogo video */}
+        <RyogoVideo
+          src="https://www.youtube.com/embed/1MobY_vR7-g"
+          className="w-full aspect-video rounded-lg"
+        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("WhyNeedRyogo.Title")}>
         <RyogoCaption color="slate">
           {t("WhyNeedRyogo.Description")}
         </RyogoCaption>
+        <RyogoCaption color="slate">{t("WhyNeedRyogo.Solution")}</RyogoCaption>
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("WhenUseRyogo.Title")}>
         <RyogoCaption color="slate">
           {t("WhenUseRyogo.Description")}
         </RyogoCaption>
+        <RyogoCaption color="slate">{t("WhenUseRyogo.Growing")}</RyogoCaption>
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Features.Title")}>
         <RyogoCaption color="slate">{t("Features.Description")}</RyogoCaption>
+        {/* //TODO: Add ryogo features video */}
+        <RyogoVideo
+          src="https://www.youtube.com/embed/1MobY_vR7-g"
+          className="w-full aspect-video rounded-lg"
+        />
+        <SupportTableWrapper label={t("Features.Caption")}>
+          <SupportTableTextRow
+            label={t("Features.Feature1")}
+            desc={t("Features.Feature1Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature2")}
+            desc={t("Features.Feature2Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature3")}
+            desc={t("Features.Feature3Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature4")}
+            desc={t("Features.Feature4Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature5")}
+            desc={t("Features.Feature5Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature6")}
+            desc={t("Features.Feature6Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature7")}
+            desc={t("Features.Feature7Desc")}
+          />
+        </SupportTableWrapper>
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Benefits.Title")}>
         <RyogoCaption color="slate">{t("Benefits.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit1")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit2")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit3")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit4")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit5")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit6")}</RyogoCaption>
       </SupportContentSectionWrapper>
     </>
   )
@@ -263,6 +318,11 @@ async function OnboardingContent({ isOwner }: { isOwner: boolean }) {
       <SupportContentSectionWrapper title={t("Driver.Title")}>
         <RyogoCaption color="slate">{t("Driver.Description")}</RyogoCaption>
       </SupportContentSectionWrapper>
+      {/* //TODO: Add dashboard app tutorial video */}
+      <RyogoVideo
+        src="https://www.youtube.com/embed/1MobY_vR7-g"
+        className="w-full aspect-video rounded-lg"
+      />
     </>
   )
 }
@@ -490,6 +550,11 @@ async function EntitiesContent() {
         <RyogoCaption color="slate">
           {t("WhatIsEntity.Description")}
         </RyogoCaption>
+        {/* //TODO: Add entities video */}
+        <RyogoVideo
+          src="https://www.youtube.com/embed/1MobY_vR7-g"
+          className="w-full aspect-video rounded-lg"
+        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Users.Title")}>
         <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>

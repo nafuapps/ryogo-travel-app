@@ -59,7 +59,7 @@ export default async function SupportSideComponent({
                 <RyogoCaption color="slate">
                   {t("Tickets.ViewCTA")}
                 </RyogoCaption>
-                <RyogoIcon icon={ChevronRight} size="sm" color="slate" thick />
+                <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
               </Button>
             </Link>
           </>

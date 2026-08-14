@@ -47,6 +47,9 @@ import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - Account Overview (Name, Email, Pwd)
@@ -127,6 +130,21 @@ export default async function MySupportHelpAccountPage() {
       label: t("QuickActions.ViewAgencyDetails"),
     },
   ]
+  const relatedArticles: SupportRelatedArticleType[] = [
+    {
+      label: t("RelatedArticles.Bookings"),
+      href: "/rider/mySupport/help-bookings",
+    },
+    {
+      label: t("RelatedArticles.Missions"),
+      href: "/rider/mySupport/help-missions",
+    },
+    {
+      label: t("RelatedArticles.Videos"),
+      href: "/rider/mySupport/help-videos",
+    },
+  ]
+
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/help-account"} />
@@ -158,7 +176,7 @@ export default async function MySupportHelpAccountPage() {
           </SupportFAQWrapper>
         </PageWrapper>
         <SideWrapper>
-          <SupportSideAccordionWrapper label={t("TableOfContent")}>
+          <SupportSideAccordionWrapper label={"TableOfContent"}>
             {contentItems.map((item) => (
               <SupportTableOfContentLinkButton
                 key={item.id}
@@ -168,12 +186,21 @@ export default async function MySupportHelpAccountPage() {
               />
             ))}
           </SupportSideAccordionWrapper>
-          <SupportSideAccordionWrapper label={t("QuickActions.Title")}>
+          <SupportSideAccordionWrapper label={"QuickActions"}>
             {quickActions.map((item, index) => (
               <SupportQuickActionLinkButton
                 key={index}
                 href={item.href}
                 icon={item.icon}
+                label={item.label}
+              />
+            ))}
+          </SupportSideAccordionWrapper>
+          <SupportSideAccordionWrapper label={"RelatedArticles"}>
+            {relatedArticles.map((item) => (
+              <SupportRelatedArticleLinkButton
+                key={item.label}
+                href={item.href}
                 label={item.label}
               />
             ))}

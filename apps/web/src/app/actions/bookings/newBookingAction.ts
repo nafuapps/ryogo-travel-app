@@ -1,5 +1,7 @@
 "use server"
 
+import { LeadBookingEmailTemplate } from "@/components/email/leadBookingEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
@@ -9,7 +11,7 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 import { addDays } from "date-fns"
 
 export async function newBookingAction(data: CreateNewBookingRequestType) {
@@ -50,7 +52,18 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
     //Update quote url in DB
     await bookingServices.addQuoteUrl(leadBooking.id, quoteUrl)
 
-    //TODO: Share quote over email with customer
+    // Share quote over email to customer
+    sendEmail(
+      [leadBooking.customer.email],
+      "Booking Quotation | RyoGo",
+      LeadBookingEmailTemplate({
+        name: leadBooking.customer.name,
+        bookingId: leadBooking.id,
+        downloadUrl: getFileUrl(quoteUrl),
+        route: `${leadBooking.source.city} - ${leadBooking.destination.city}`,
+        date: leadBooking.startDate.toLocaleDateString(),
+      }),
+    )
   }
 
   //Add mission to confirm this new booking

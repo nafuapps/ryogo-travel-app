@@ -1,5 +1,7 @@
 "use server"
 
+import { ConfirmBookingEmailTemplate } from "@/components/email/confirmBookingEmailTemplate copy"
+import sendEmail from "@/components/email/sendEmail"
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
 import getConfirmationMessageLink from "@/components/whatsapp/getConfirmationMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
@@ -9,6 +11,7 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { headers } from "next/headers"
 
 export async function confirmBookingAction(
   id: string,
@@ -87,11 +90,30 @@ export async function confirmBookingAction(
     )
   ).path
 
-  //Update confirmation url
+  //Update confirmation url in DB
   await bookingServices.addConfirmationUrl(id, confirmationUrl)
 
+  //Share confirmation over email to customer
   if (bookingDetails.customer.email) {
-    //TODO: Share confirmation over email with customer
+    const headerList = await headers()
+    const host = headerList.get("host")
+    const protocol = headerList.get("x-forwarded-proto") || "http"
+    const trackingUrl = `${protocol}://${host}/track/booking/${bookingDetails.id}`
+
+    sendEmail(
+      [bookingDetails.customer.email],
+      "Booking Confirmation | RyoGo",
+      ConfirmBookingEmailTemplate({
+        name: bookingDetails.customer.name,
+        bookingId: bookingDetails.id,
+        downloadUrl: getFileUrl(confirmationUrl),
+        trackingUrl: trackingUrl,
+        route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
+        date: bookingDetails.startDate.toLocaleDateString(),
+        assignedDriver: bookingDetails.assignedDriver?.name,
+        assignedVehicle: bookingDetails.assignedVehicle?.vehicleNumber,
+      }),
+    )
   }
 
   //Get booking confirmation pdf link so that it can be shared to customer over whatsapp

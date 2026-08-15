@@ -305,13 +305,11 @@ export default function NewBookingStep2(props: NewBookingStep2Props) {
           <RyogoDatePicker
             name="tripStartDate"
             label={t("Field5.Title")}
-            description=""
             placeholder=""
           />
           <RyogoDatePicker
             name="tripEndDate"
             label={t("Field6.Title")}
-            description=""
             placeholder=""
             disabled={selectedTripType === BookingTypeEnum.OneWay}
           />

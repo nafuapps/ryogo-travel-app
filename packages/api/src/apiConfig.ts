@@ -42,7 +42,7 @@ export const MISSION_WINDOW_DAYS = 3
 export const EXPIRATION_ALERT_WINDOW_DAYS = 15
 
 //Notifications
-export const NOTIFICATION_FEED_WINDOW_DAYS = 3
+export const NOTIFICATION_FEED_WINDOW_DAYS = 30
 export const NOTIFICATION_FEED_LIMIT = 100
 
 //Users

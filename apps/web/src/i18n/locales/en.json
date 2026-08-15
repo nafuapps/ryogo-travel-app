@@ -863,12 +863,12 @@
         "Assigned": "ASSIGNED"
       },
       "SubscriptionReminderStrip": {
-        "NotExpired": "Your subscription will expire {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
-        "Expired": "Your subscription has expired.",
+        "NotExpired": "Subscription expiring {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
+        "Expired": "Subscription has expired.",
         "RenewCTA": "Recharge Now"
       },
       "SubscriptionTrialStrip": {
-        "TryPremium": "Get {days} days Premium plan for FREE.",
+        "TryPremium": "Get {days} days Premium for FREE.",
         "TryCTA": "Try Now"
       }
     },
@@ -3543,105 +3543,134 @@
         "Benefits": {
           "Title": "Key benefits of RyoGo",
           "Description": "When you start using RyoGo, you get the following benefits:",
-          "Benefit1": "Consolidation of all the agency-related information in a single place",
-          "Benefit2": "Saving of countless hours of manual work with automated workflows",
-          "Benefit3": "Delegation of tasks to the specific user with total visibility",
-          "Benefit4": "Keeping documentation up to date with timely reminders",
-          "Benefit5": "Real-time collaboration with all agency members, drivers and customers",
-          "Benefit6": "Snapshot view of your business performance and tips for growth"
+          "Benefit1": "1. Consolidation of all the agency-related information in a single place",
+          "Benefit2": "2. Saving of countless hours of manual work with automated workflows",
+          "Benefit3": "3. Delegation of tasks to the specific user with total visibility",
+          "Benefit4": "4. Keeping documentation up to date with timely reminders",
+          "Benefit5": "5. Real-time collaboration with all agency members, drivers and customers",
+          "Benefit6": "6. Snapshot view of your business performance and tips for growth"
         }
       },
       "Onboarding": {
         "Title": "ONBOARDING GUIDE",
         "Owner": {
           "Title": "Getting started as Owner",
-          "Description": ""
+          "Step1": "1. As an owner, the first step is to create a new agency account and verify it with an OTP received on your email.",
+          "Step2": "2. Next, you must add a vehicle and a driver to your agency account. This is mandatory before you can start using the platform. (Optionally, you can also add an agent to delegate your daily operations.)",
+          "Step3": "3. This will complete the onboarding process and take you to your dashboard. Now, you can start creating bookings or adding more entities like agents, vehicles and drivers."
         },
         "Agent": {
           "Title": "Getting started as Agent",
-          "Description": ""
+          "Step1": "1. An agent will receive an email when they are added to the agency by the owner.",
+          "Step2": "2. This email will have a system-generated password which must be used by the agent for logging in for the first time.",
+          "Step3": "3. After logging in, the agent must change the password immediately. This will complete the onboarding process for the agent and take you to the dashboard."
         },
         "Driver": {
           "Title": "Onboarding Driver",
-          "Description": ""
+          "Step1": "1. A driver will receive an email when they are added to the agency.",
+          "Step2": "2. This email will have a system-generated password which must be used by the driver for logging in for the first time.",
+          "Step3": "3. After logging in, the driver must change the password immediately. This will complete the onboarding process for the driver and take you to the driver app dashboard."
         }
       },
       "Overview": {
         "Title": "APP OVERVIEW",
         "Dashboard": {
           "Title": "Dashboard",
-          "Description": ""
+          "Description": "Dashboard is the main hub for all your agency operations. You can do everything related to your daily workflows from here.",
+          "Components": "Let's go through the various components of the dashboard."
         },
         "Sidebar": {
           "Title": "Sidebar",
-          "Description": ""
+          "Description": "Sidebar is the main menu of the app. You can view it on the left side of the dashboard. You can quicly navigate to all the main pages of the app from the sidebar menu. It is a toggleable menu."
         },
         "Header": {
           "Title": "Header",
-          "Description": ""
-        },
-        "Navigation": {
-          "Title": "Navigation",
-          "Description": ""
+          "Description": "Header is the top bar of the app which contains the name of the current page. Also, it contains the 2 most critical actions of the app, that is, creating a new booking and mission control."
         },
         "Home": {
           "Title": "Home page",
-          "Description": "",
+          "Description": "Home page is the default/main page of the app. You will see this main you log in. It shows you a snapshot of key metrics and business performance of the agency.",
+          "Actions": "You can also view your main actionable items (like your assigned bookings, etc.) on the home page for quick navigation.",
           "CTA": "View home page"
         },
         "Bookings": {
           "Title": "Bookings page",
-          "Description": "",
+          "Description": "Bookings page contains the list of all bookings in the app.",
+          "Ongoing": "This shows the list of all the bookings which are in progress, on the road.",
+          "Upcoming": "This shows the list of all the confirmed upcoming bookings.",
+          "Completed": "This shows the list of all the recently completed bookings",
+          "Lead": "This shows the list of all the  bookings which have been created but not yet confirmed. Interact with the potential leads/customers to confirm them.",
+          "Schedule": "The schedule shows a calendar view of all the ongoing and upcoming bookings for quick reference. Watch out for the bookings (in red) which need immediate attention.",
+          "History": "History shows a view of all the recently completed or started bookings.",
+          "Details": "You can click on any booking to view its details.",
           "CTA": "View bookings page"
         },
         "Vehicles": {
           "Title": "Vehicles page",
-          "Description": "",
+          "Description": "Vehicles page contains the list of all vehicles added to your agency.",
+          "Ongoing": "This shows the list of all the vehicles which are currently in use in a trip.",
+          "Schedule": "The schedule shows a calendar view of all the vehicles along with their assigned trips or scheduled repairs.",
+          "Details": "You can click on any vehicle to view its details.",
           "CTA": "View vehicles page"
         },
         "Drivers": {
           "Title": "Drivers page",
-          "Description": "",
+          "Description": "Drivers page contains the list of all drivers added to your agency.",
+          "Ongoing": "This shows the list of all the drivers which are currently driving on a trip.",
+          "Schedule": "The schedule shows a calendar view of all the drivers along with their assigned trips or planned leaves.",
+          "Details": "You can click on any driver to view its details.",
           "CTA": "View drivers page"
         },
         "Customers": {
           "Title": "Customers page",
-          "Description": "",
+          "Description": "Customers page contains the list of all customers added to your agency.",
+          "Details": "You can click on any customer to view its details.",
           "CTA": "View customers page"
         },
         "Users": {
           "Title": "Users page",
-          "Description": "",
+          "Description": "Users page contains the list of all users added to your agency. These are categorised as owners, agents and drivers",
+          "Details": "You can click on any user to view its details.",
           "CTA": "View users page"
         },
         "Analytics": {
           "Title": "Analytics page",
-          "Description": "",
+          "Description": "Analytics page shows you all the key metrics and graphs to help you understand your business performance.",
+          "Metrics": "Metrics section shows you key metrics related to bookings, drivers, vehicles, revenue, etc.",
+          "Trends": "Trends shows you major trends related to your business.",
+          "Predictions": "Predictions section is our best guess at what your business will look like in the future.",
           "CTA": "View analytics page"
         },
         "Search": {
           "Title": "Search page",
-          "Description": "",
+          "Description": "Search page can be used to search for a booking, customer, driver, vehicle or any other entity. It is a useful feature to find something quickly and easily.",
+          "Keyword": "You can use any keyword (min 3 characters) for searching.",
+          "Data": "Search looks through last 30 days of data for Basic plan. Whereas, for Premium plan, it looks through last 1 year of data.",
           "CTA": "View search page"
         },
         "Feed": {
           "Title": "Feed page",
-          "Description": "",
+          "Description": "Feed notifications is an informative page which shows you all the activities happening across the agency, like a new vehicle getting added, a booking being completed, etc. It is a central hub for all the agency-wide notifications.",
+          "Filters": "You can use the filters to narrow down the notifications.",
           "CTA": "View feed page"
         },
         "Support": {
           "Title": "Support page",
-          "Description": "",
+          "Description": "Support pages contains all the information you need to successfully use the app. It is the help & support center. You are currently browsing the support pages.",
+          "Contact": "You may also contact our support team via phone, email or Whatsapp chat for any queries.",
+          "Tickets": "You can also raise support tickets for quick resolution from our team. This feature is available only for Premium plan.",
           "CTA": "View support page"
         },
         "Account": {
           "Title": "Account page",
-          "Description": "",
+          "Description": "Account page is where you will find all your personal account details and settings, like, name, email, password and more.",
+          "Other": "You will also find details related to the agency and subscription on this page.",
           "CTA": "View account page"
         },
         "Missions": {
           "Title": "Mission Control",
-          "Description": "",
+          "Description": "Mission control page is where all your actionable alerts and reminders reside. You should often check this page to keep track of any urgent items that need your attention.",
+          "Custom": "You may also create custom reminder for yourself. This feature is available only for Premium plan.",
           "CTA": "View mission control page"
         }
       },
@@ -3649,31 +3678,50 @@
         "Title": "MAIN ENTITIES",
         "WhatIsEntity": {
           "Title": "Understanding Entities",
-          "Description": ""
-        },
-        "Users": {
-          "Title": "Users",
-          "Description": ""
+          "Description": "Entities are what we call our digital mapping of your physical business. RyoGo mainly tracks 4 entities: Vehicles, Drivers, Bookings and Customers."
         },
         "Drivers": {
           "Title": "Drivers",
-          "Description": ""
+          "Description": "Driver is simply the entity under which a driver is managed and tracked in the app. When a driver is added to the agency, a driver entity is created in the system with a driver ID."
         },
         "Vehicles": {
           "Title": "Vehicles",
-          "Description": ""
+          "Description": "Similarly, Vehicle is the entity under which a vehicle is tracked. When a vehicle is added to the agency, a vehicle entity is created in the system with a vehicle ID."
         },
         "Customers": {
           "Title": "Customers",
-          "Description": ""
+          "Description": "A customer entity (with a customer ID) is created when a new customer is added to the agency."
         },
         "Bookings": {
           "Title": "Bookings",
-          "Description": ""
+          "Description": "Booking is the entity under which an entire booking trip is managed. When a booking is created (with a booking ID), a customer is mapped to this booking. And then, the assigned driver and vehicle are also mapped to this booking."
+        },
+        "Users": {
+          "Title": "Users",
+          "Description": "User is the entity we refer to anyone who can login and use the app on behalf of the agency. When a new user is added, an entity is created in the system with a user ID.",
+          "Types": "There are 3 types of users: Owner, Agent and Driver.",
+          "Owner": "Owner is the user entity which is created along with the agency at the start of the onboarding process.",
+          "Agent": "Agent is the user entity which is added by the owner. An agent can then start creating other entities like vehicles, drivers and bookings.",
+          "Driver": "Driver is the user entity which is created when a driver is added to the agency. So, for a driver there are 2 entities in the system: a driver ID and a user ID. Driver ID is used for booking related activities and user ID is used for app login related activities."
         },
         "Others": {
           "Title": "Other entities",
-          "Description": ""
+          "Description": "Apart from these main entities, there are also a few other entities created during regular workflows in the app.",
+          "Caption": "A list of other entities",
+          "Agency": "AGENCY",
+          "AgencyDesc": "An agency entity is created when your agency was onboarded to the app. It has an unique ID for your agency in the system.",
+          "Expense": "EXPENSE",
+          "ExpenseDesc": "An expense entity is created when an expense is added to a booking. An expense entity is a sub-entity of a booking entity.",
+          "Transaction": "TRANSACTION",
+          "TransactionDesc": "An transaction entity is created when a transaction is added to a booking. A transaction entity is a sub-entity of a booking entity.",
+          "TripLog": "TRIP LOG",
+          "TripLogDesc": "A trip log entity is created when a driver updates the trip status in a booking on the road. A trip log entity is a sub-entity of a booking entity.",
+          "Order": "ORDER",
+          "OrderDesc": "An order entity is created when a subscription plan is purchased by the owner.",
+          "VehicleRepair": "VEHICLE REPAIR",
+          "VehicleRepairDesc": "A vehicle repair entity is created when a vehicle repair is scheduled for a vehicle. A vehicle repair entity is a sub-entity of a vehicle entity.",
+          "DriverLeave": "DRIVER LEAVE",
+          "DriverLeaveDesc": "A driver leave entity is created when a driver leave is added for a driver. A driver leave entity is a sub-entity of a driver entity."
         }
       },
       "FAQs": {
@@ -4483,6 +4531,7 @@
         "AgencyLogoChanged": "Agency logo has been changed by {userName}",
         "OwnerAdded": "Owner account created for {userName}",
         "AgencyCreated": "Agency has been created by {userName}",
+        "AgencyQRCodeChanged": "Agency QR code has been changed by {userName}",
         "TryPremium": "Trial Premium plan has been activated by {userName}"
       }
     },
@@ -5512,71 +5561,96 @@
         "Title": "UNDERSTAND RYOGO",
         "WhatIsRyogo": {
           "Title": "What is RyoGo?",
-          "Description": ""
-        },
-        "WhyNeedRyogo": {
-          "Title": "Why do I need RyoGo?",
-          "Description": ""
+          "Description": "RyoGo is a travel agency management platform.",
+          "ValueProp": "It is a simple and easy-to-use app that helps you manage your agency from one place and helps your agency staff to perform their tasks online.",
+          "Headline": "Basically, RyoGo is a one-stop solution for managing daily operations without the hassle of tedious paperwork."
         },
         "Features": {
           "Title": "Features of RyoGo",
-          "Description": ""
+          "Description": "RyoGo has various features to help you manage your travel agency operations.",
+          "Caption": "A list of RyoGo features",
+          "Feature1": "Driver & Vehicle Management",
+          "Feature1Desc": "Easily add and manage your fleet of vehicles and drivers. Get timely alerts for any expiration and keep track of any leaves/repairs easily.",
+          "Feature2": "Booking Management",
+          "Feature2Desc": "From quick creation to trip completion, manage all your bookings and leads with ease... in one place.",
+          "Feature3": "Communication",
+          "Feature3Desc": "Stay connected with customers, drivers and agents from a single communication hub so that every one is on the same page. Integrated with Whatsapp.",
+          "Feature4": "Analytics & Reports",
+          "Feature4Desc": "Get real-time analytics and reports to keep track of your business performance and growth.",
+          "Feature5": "Alerts & Notifications",
+          "Feature5Desc": "Receive alerts, notifications and plan with the help of analytics and predictions to grow your business smoothly.",
+          "Feature6": "Security & Privacy",
+          "Feature6Desc": "All your data is kept safe and secure. No need to worry about data loss, privacy or security breaches, ever.",
+          "Feature7": "Customer Management",
+          "Feature7Desc": " Manage all your customers and their trips in one place. No need to maintain separate diaries."
         },
         "Benefits": {
           "Title": "Key benefits of RyoGo",
-          "Description": ""
+          "Description": "When you start using RyoGo, you get the following benefits:",
+          "Benefit1": "1. Consolidation of all the agency-related information in a single place",
+          "Benefit2": "2. Saving of countless hours of manual work with automated workflows",
+          "Benefit3": "3. Delegation of tasks to the specific user with total visibility",
+          "Benefit4": "4. Keeping documentation up to date with timely reminders",
+          "Benefit5": "5. Real-time collaboration with all agency members, drivers and customers",
+          "Benefit6": "6. Snapshot view of your business performance and tips for growth"
         },
         "StartedDriver": {
           "Title": "Getting started as Driver",
-          "Description": ""
+          "Step1": "1. A driver will receive an email when they are added to the agency.",
+          "Step2": "2. This email will have a system-generated password which must be used by the driver for logging in for the first time.",
+          "Step3": "3. After logging in, the driver must change the password immediately. This will complete the onboarding process for the driver and take you to the driver app dashboard."
         }
       },
       "Overview": {
         "Title": "APP OVERVIEW",
         "Dashboard": {
           "Title": "Dashboard",
-          "Description": ""
+          "Description": "Dashboard is the main hub for all your driver operations. You can do everything related to your daily workflows from here.",
+          "Components": "Let's go through the various components of the driver app dashboard."
         },
         "Sidebar": {
           "Title": "Sidebar",
-          "Description": ""
+          "Description": "Sidebar is the main menu of the app. You can view it on the left side of the dashboard. You can quicly navigate to all the main pages of the app from the sidebar menu. It is a toggleable menu."
         },
         "Header": {
           "Title": "Header",
-          "Description": ""
-        },
-        "Navigation": {
-          "Title": "Navigation",
-          "Description": ""
+          "Description": "Header is the top bar of the app which contains the name of the current page. Also, it contains the  most critical action of the app, that is, mission control."
         },
         "Home": {
           "Title": "Home page",
-          "Description": "",
+          "Description": "Home page is the default/main page of the app. You will see this main you log in. It shows you a snapshot of your main actions and assigned items.",
           "CTA": "View home page"
         },
         "Bookings": {
           "Title": "My Bookings page",
-          "Description": "",
+          "Description": "My Bookings page contains the list of all your assigned bookings.",
+          "Ongoing": "Any ongoing booking will show up here. You must execute this booking now.",
+          "Upcoming": "This shows the list of all your assigned upcoming bookings.",
+          "Completed": "This shows the list of all your recently completed bookings.",
           "CTA": "View my bookings page"
         },
         "Vehicle": {
           "Title": "My Vehicle page",
-          "Description": "",
+          "Description": "My Vehicle page shows the details of your assigned vehicle for the current/upcoming trip.",
           "CTA": "View my vehicle page"
         },
         "Support": {
           "Title": "My Support page",
-          "Description": "",
+          "Description": "Support pages contains all the information you need to successfully use the app. It is the help & support center. You are currently browsing the support pages.",
+          "Contact": "You may also contact our support team via phone, email or Whatsapp chat for any queries.",
+          "Tickets": "You can also raise support tickets for quick resolution from our team. This feature is available only for Premium plan.",
           "CTA": "View my support page"
         },
         "Account": {
           "Title": "My Profile page",
-          "Description": "",
+          "Description": "My Profile page is where you will find all your personal account details and settings, like, name, email, password and more.",
+          "Other": "You will also find details related to the agency and subscription on this page.",
           "CTA": "View my profile page"
         },
         "Missions": {
           "Title": "My Missions Page",
-          "Description": "",
+          "Description": "My Missions page is where all your actionable alerts and reminders reside. You should often check this page to keep track of any urgent items that need your attention.",
+          "Custom": "You may also create custom reminder for yourself. This feature is available only for Premium plan.",
           "CTA": "View my missions page"
         }
       },
@@ -5584,31 +5658,50 @@
         "Title": "MAIN ENTITIES",
         "WhatIsEntity": {
           "Title": "Understanding Entities",
-          "Description": ""
-        },
-        "Users": {
-          "Title": "Users",
-          "Description": ""
+          "Description": "Entities are what we call our digital mapping of your physical business. RyoGo mainly tracks 4 entities: Vehicles, Drivers, Bookings and Customers."
         },
         "Drivers": {
           "Title": "Drivers",
-          "Description": ""
+          "Description": "Driver is simply the entity under which a driver is managed and tracked in the app. When a driver is added to the agency, a driver entity is created in the system with a driver ID."
         },
         "Vehicles": {
           "Title": "Vehicles",
-          "Description": ""
+          "Description": "Similarly, Vehicle is the entity under which a vehicle is tracked. When a vehicle is added to the agency, a vehicle entity is created in the system with a vehicle ID."
         },
         "Customers": {
           "Title": "Customers",
-          "Description": ""
+          "Description": "A customer entity (with a customer ID) is created when a new customer is added to the agency."
         },
         "Bookings": {
           "Title": "Bookings",
-          "Description": ""
+          "Description": "Booking is the entity under which an entire booking trip is managed. When a booking is created (with a booking ID), a customer is mapped to this booking. And then, the assigned driver and vehicle are also mapped to this booking."
+        },
+        "Users": {
+          "Title": "Users",
+          "Description": "User is the entity we refer to anyone who can login and use the app on behalf of the agency. When a new user is added, an entity is created in the system with a user ID.",
+          "Types": "There are 3 types of users: Owner, Agent and Driver.",
+          "Owner": "Owner is the user entity which is created along with the agency at the start of the onboarding process.",
+          "Agent": "Agent is the user entity which is added by the owner. An agent can then start creating other entities like vehicles, drivers and bookings.",
+          "Driver": "Driver is the user entity which is created when a driver is added to the agency. So, for a driver there are 2 entities in the system: a driver ID and a user ID. Driver ID is used for booking related activities and user ID is used for app login related activities."
         },
         "Others": {
           "Title": "Other entities",
-          "Description": ""
+          "Description": "Apart from these main entities, there are also a few other entities created during regular workflows in the app.",
+          "Caption": "A list of other entities",
+          "Agency": "AGENCY",
+          "AgencyDesc": "An agency entity is created when your agency was onboarded to the app. It has an unique ID for your agency in the system.",
+          "Expense": "EXPENSE",
+          "ExpenseDesc": "An expense entity is created when an expense is added to a booking. An expense entity is a sub-entity of a booking entity.",
+          "Transaction": "TRANSACTION",
+          "TransactionDesc": "An transaction entity is created when a transaction is added to a booking. A transaction entity is a sub-entity of a booking entity.",
+          "TripLog": "TRIP LOG",
+          "TripLogDesc": "A trip log entity is created when a driver updates the trip status in a booking on the road. A trip log entity is a sub-entity of a booking entity.",
+          "Order": "ORDER",
+          "OrderDesc": "An order entity is created when a subscription plan is purchased by the owner.",
+          "VehicleRepair": "VEHICLE REPAIR",
+          "VehicleRepairDesc": "A vehicle repair entity is created when a vehicle repair is scheduled for a vehicle. A vehicle repair entity is a sub-entity of a vehicle entity.",
+          "DriverLeave": "DRIVER LEAVE",
+          "DriverLeaveDesc": "A driver leave entity is created when a driver leave is added for a driver. A driver leave entity is a sub-entity of a driver entity."
         }
       },
       "FAQs": {

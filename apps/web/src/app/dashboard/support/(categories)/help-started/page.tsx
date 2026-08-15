@@ -309,20 +309,36 @@ async function OnboardingContent({ isOwner }: { isOwner: boolean }) {
     <>
       {isOwner && (
         <SupportContentSectionWrapper title={t("Owner.Title")}>
-          <RyogoCaption color="slate">{t("Owner.Description")}</RyogoCaption>
+          <RyogoCaption color="slate">{t("Owner.Step1")}</RyogoCaption>
+          <RyogoCaption color="slate">{t("Owner.Step2")}</RyogoCaption>
+          <RyogoCaption color="slate">{t("Owner.Step3")}</RyogoCaption>
+          {/* //TODO: Add onboarding tutorial video */}
+          <RyogoVideo
+            src="https://www.youtube.com/embed/1MobY_vR7-g"
+            className="w-full aspect-video rounded-lg"
+          />
         </SupportContentSectionWrapper>
       )}
       <SupportContentSectionWrapper title={t("Agent.Title")}>
-        <RyogoCaption color="slate">{t("Agent.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Agent.Step1")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Agent.Step2")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Agent.Step3")}</RyogoCaption>
+        {/* //TODO: Add agent onboarding tutorial video */}
+        <RyogoVideo
+          src="https://www.youtube.com/embed/1MobY_vR7-g"
+          className="w-full aspect-video rounded-lg"
+        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Driver.Title")}>
-        <RyogoCaption color="slate">{t("Driver.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Driver.Step1")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Driver.Step2")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Driver.Step3")}</RyogoCaption>
+        {/* //TODO: Add driver onboarding tutorial video */}
+        <RyogoVideo
+          src="https://www.youtube.com/embed/1MobY_vR7-g"
+          className="w-full aspect-video rounded-lg"
+        />
       </SupportContentSectionWrapper>
-      {/* //TODO: Add dashboard app tutorial video */}
-      <RyogoVideo
-        src="https://www.youtube.com/embed/1MobY_vR7-g"
-        className="w-full aspect-video rounded-lg"
-      />
     </>
   )
 }
@@ -333,6 +349,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
     <>
       <SupportContentSectionWrapper title={t("Dashboard.Title")}>
         <RyogoCaption color="slate">{t("Dashboard.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Dashboard.Components")}</RyogoCaption>
         {/* //TODO: Add Dashboard snapshot */}
         <RyogoImage
           alt="Dashboard"
@@ -361,9 +378,6 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
           className="self-center"
         />
       </SupportContentSectionWrapper>
-      <SupportContentSectionWrapper title={t("Navigation.Title")}>
-        <RyogoCaption color="slate">{t("Navigation.Description")}</RyogoCaption>
-      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Home.Title")}>
         <RyogoCaption color="slate">{t("Home.Description")}</RyogoCaption>
         {/* //TODO: Add Home snapshot */}
@@ -380,6 +394,13 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Bookings.Title")}>
         <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Ongoing")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Upcoming")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Completed")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Lead")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Schedule")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.History")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Details")}</RyogoCaption>
         {/* //TODO: Add Bookings snapshot */}
         <RyogoImage
           alt="Bookings"
@@ -394,6 +415,9 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Vehicles.Title")}>
         <RyogoCaption color="slate">{t("Vehicles.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Vehicles.Ongoing")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Vehicles.Schedule")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Vehicles.Details")}</RyogoCaption>
         {/* //TODO: Add Vehicles snapshot */}
         <RyogoImage
           alt="Vehicles"
@@ -408,6 +432,9 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Drivers.Title")}>
         <RyogoCaption color="slate">{t("Drivers.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Drivers.Ongoing")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Drivers.Schedule")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Drivers.Details")}</RyogoCaption>
         {/* //TODO: Add Drivers snapshot */}
         <RyogoImage
           alt="Drivers"
@@ -422,6 +449,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Customers.Title")}>
         <RyogoCaption color="slate">{t("Customers.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Customers.Details")}</RyogoCaption>
         {/* //TODO: Add Customers snapshot */}
         <RyogoImage
           alt="Customers"
@@ -437,6 +465,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       {isOwner && (
         <SupportContentSectionWrapper title={t("Users.Title")}>
           <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
+          <RyogoCaption color="slate">{t("Users.Details")}</RyogoCaption>
           {/* //TODO: Add Users snapshot */}
           <RyogoImage
             alt="Users"
@@ -455,6 +484,11 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
           <RyogoCaption color="slate">
             {t("Analytics.Description")}
           </RyogoCaption>
+          <RyogoCaption color="slate">{t("Analytics.Metrics")}</RyogoCaption>
+          <RyogoCaption color="slate">{t("Analytics.Trends")}</RyogoCaption>
+          <RyogoCaption color="slate">
+            {t("Analytics.Predictions")}
+          </RyogoCaption>
           {/* //TODO: Add Analytics snapshot */}
           <RyogoImage
             alt="Analytics"
@@ -470,6 +504,8 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       )}
       <SupportContentSectionWrapper title={t("Search.Title")}>
         <RyogoCaption color="slate">{t("Search.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Search.Keyword")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Search.Data")}</RyogoCaption>
         {/* //TODO: Add Search snapshot */}
         <RyogoImage
           alt="Search"
@@ -484,6 +520,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Feed.Title")}>
         <RyogoCaption color="slate">{t("Feed.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Feed.Filters")}</RyogoCaption>
         {/* //TODO: Add Feed snapshot */}
         <RyogoImage
           alt="Feed"
@@ -498,6 +535,8 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Support.Title")}>
         <RyogoCaption color="slate">{t("Support.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Support.Contact")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Support.Tickets")}</RyogoCaption>
         {/* //TODO: Add Support snapshot */}
         <RyogoImage
           alt="Support"
@@ -512,6 +551,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Account.Title")}>
         <RyogoCaption color="slate">{t("Account.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Account.Other")}</RyogoCaption>
         {/* //TODO: Add Account snapshot */}
         <RyogoImage
           alt="Account"
@@ -526,6 +566,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Missions.Title")}>
         <RyogoCaption color="slate">{t("Missions.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Missions.Custom")}</RyogoCaption>
         {/* //TODO: Add Missions snapshot */}
         <RyogoImage
           alt="Missions"
@@ -556,9 +597,6 @@ async function EntitiesContent() {
           className="w-full aspect-video rounded-lg"
         />
       </SupportContentSectionWrapper>
-      <SupportContentSectionWrapper title={t("Users.Title")}>
-        <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
-      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Drivers.Title")}>
         <RyogoCaption color="slate">{t("Drivers.Description")}</RyogoCaption>
       </SupportContentSectionWrapper>
@@ -571,8 +609,45 @@ async function EntitiesContent() {
       <SupportContentSectionWrapper title={t("Bookings.Title")}>
         <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
       </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Users.Title")}>
+        <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Types")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Owner")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Agent")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Driver")}</RyogoCaption>
+      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Others.Title")}>
         <RyogoCaption color="slate">{t("Others.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Others.Caption")}>
+          <SupportTableTextRow
+            label={t("Others.Agency")}
+            desc={t("Others.AgencyDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.Expense")}
+            desc={t("Others.ExpenseDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.Transaction")}
+            desc={t("Others.TransactionDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.TripLog")}
+            desc={t("Others.TripLogDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.Order")}
+            desc={t("Others.OrderDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.VehicleRepair")}
+            desc={t("Others.VehicleRepairDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.DriverLeave")}
+            desc={t("Others.DriverLeaveDesc")}
+          />
+        </SupportTableWrapper>
       </SupportContentSectionWrapper>
     </>
   )

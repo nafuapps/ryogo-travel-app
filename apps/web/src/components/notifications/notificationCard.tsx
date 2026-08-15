@@ -5,7 +5,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { ChevronRight } from "lucide-react"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { useTranslations } from "next-intl"
 import { RyogoCaption } from "@/components/typography"
 import Link from "next/link"
@@ -45,7 +45,12 @@ export default function NotificationCard({
               notification.link as React.ComponentProps<typeof Link>["href"]
             }
           >
-            <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
+            <RyogoEnclosedIcon
+              icon={ChevronRight}
+              size="sm"
+              color="slate"
+              bgColor="slate"
+            />
           </Link>
         )}
       </SectionRowWrapper>

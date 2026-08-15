@@ -39,6 +39,10 @@ import SupportRelatedArticleLinkButton, {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import { RyogoVideo } from "@/components/video/ryogoVideo"
+import {
+  SupportTableWrapper,
+  SupportTableTextRow,
+} from "@/components/flows/support/supportTableWrapper"
 
 /*
   TODO
@@ -199,11 +203,6 @@ async function AboutContent() {
           className="w-full aspect-video rounded-lg"
         />
       </SupportContentSectionWrapper>
-      <SupportContentSectionWrapper title={t("WhyNeedRyogo.Title")}>
-        <RyogoCaption color="slate">
-          {t("WhyNeedRyogo.Description")}
-        </RyogoCaption>
-      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Features.Title")}>
         <RyogoCaption color="slate">{t("Features.Description")}</RyogoCaption>
         {/* //TODO: Add ryogo features video */}
@@ -211,15 +210,51 @@ async function AboutContent() {
           src="https://www.youtube.com/embed/1MobY_vR7-g"
           className="w-full aspect-video rounded-lg"
         />
+        <SupportTableWrapper label={t("Features.Caption")}>
+          <SupportTableTextRow
+            label={t("Features.Feature1")}
+            desc={t("Features.Feature1Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature2")}
+            desc={t("Features.Feature2Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature3")}
+            desc={t("Features.Feature3Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature4")}
+            desc={t("Features.Feature4Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature5")}
+            desc={t("Features.Feature5Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature6")}
+            desc={t("Features.Feature6Desc")}
+          />
+          <SupportTableTextRow
+            label={t("Features.Feature7")}
+            desc={t("Features.Feature7Desc")}
+          />
+        </SupportTableWrapper>
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Benefits.Title")}>
         <RyogoCaption color="slate">{t("Benefits.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit1")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit2")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit3")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit4")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit5")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Benefits.Benefit6")}</RyogoCaption>
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StartedDriver.Title")}>
-        <RyogoCaption color="slate">
-          {t("StartedDriver.Description")}
-        </RyogoCaption>
-        {/* //TODO: Add rider app tutorial video */}
+        <RyogoCaption color="slate">{t("StartedDriver.Step1")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("StartedDriver.Step2")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("StartedDriver.Step3")}</RyogoCaption>
+        {/* //TODO: Add driver onboarding tutorial video */}
         <RyogoVideo
           src="https://www.youtube.com/embed/1MobY_vR7-g"
           className="w-full aspect-video rounded-lg"
@@ -235,6 +270,7 @@ async function OverviewContent() {
     <>
       <SupportContentSectionWrapper title={t("Dashboard.Title")}>
         <RyogoCaption color="slate">{t("Dashboard.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Dashboard.Components")}</RyogoCaption>
         {/* //TODO: Add Dashboard snapshot */}
         <RyogoImage
           alt="Dashboard"
@@ -263,9 +299,6 @@ async function OverviewContent() {
           className="self-center"
         />
       </SupportContentSectionWrapper>
-      <SupportContentSectionWrapper title={t("Navigation.Title")}>
-        <RyogoCaption color="slate">{t("Navigation.Description")}</RyogoCaption>
-      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Home.Title")}>
         <RyogoCaption color="slate">{t("Home.Description")}</RyogoCaption>
         {/* //TODO: Add Home snapshot */}
@@ -282,6 +315,9 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Bookings.Title")}>
         <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Ongoing")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Upcoming")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Bookings.Completed")}</RyogoCaption>
         {/* //TODO: Add Bookings snapshot */}
         <RyogoImage
           alt="Bookings"
@@ -310,6 +346,8 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Support.Title")}>
         <RyogoCaption color="slate">{t("Support.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Support.Contact")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Support.Tickets")}</RyogoCaption>
         {/* //TODO: Add Support snapshot */}
         <RyogoImage
           alt="Support"
@@ -324,6 +362,7 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Account.Title")}>
         <RyogoCaption color="slate">{t("Account.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Account.Other")}</RyogoCaption>
         {/* //TODO: Add Account snapshot */}
         <RyogoImage
           alt="Account"
@@ -338,6 +377,7 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Missions.Title")}>
         <RyogoCaption color="slate">{t("Missions.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Missions.Custom")}</RyogoCaption>
         {/* //TODO: Add Missions snapshot */}
         <RyogoImage
           alt="Missions"
@@ -368,9 +408,6 @@ async function EntitiesContent() {
           className="w-full aspect-video rounded-lg"
         />
       </SupportContentSectionWrapper>
-      <SupportContentSectionWrapper title={t("Users.Title")}>
-        <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
-      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Drivers.Title")}>
         <RyogoCaption color="slate">{t("Drivers.Description")}</RyogoCaption>
       </SupportContentSectionWrapper>
@@ -383,8 +420,45 @@ async function EntitiesContent() {
       <SupportContentSectionWrapper title={t("Bookings.Title")}>
         <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
       </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Users.Title")}>
+        <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Types")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Owner")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Agent")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Driver")}</RyogoCaption>
+      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Others.Title")}>
         <RyogoCaption color="slate">{t("Others.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Others.Caption")}>
+          <SupportTableTextRow
+            label={t("Others.Agency")}
+            desc={t("Others.AgencyDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.Expense")}
+            desc={t("Others.ExpenseDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.Transaction")}
+            desc={t("Others.TransactionDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.TripLog")}
+            desc={t("Others.TripLogDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.Order")}
+            desc={t("Others.OrderDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.VehicleRepair")}
+            desc={t("Others.VehicleRepairDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Others.DriverLeave")}
+            desc={t("Others.DriverLeaveDesc")}
+          />
+        </SupportTableWrapper>
       </SupportContentSectionWrapper>
     </>
   )

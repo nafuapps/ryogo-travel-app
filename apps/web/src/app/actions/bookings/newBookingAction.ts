@@ -6,6 +6,7 @@ import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadPDFBlob } from "@ryogo-travel-app/db/storage"
@@ -63,6 +64,20 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
     titleKey: "LeadBooking.Title",
     titleObject: { bookingId: booking.id },
     messageKey: "LeadBooking.Message",
+    link: `/dashboard/bookings/${booking.id}/confirm`,
+  })
+
+  //Add notification
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: booking.id,
+    isFeed: true,
+    textKey: "LeadBooking",
+    textObject: {
+      bookingId: booking.id,
+      userName: currentUser.name,
+    },
     link: `/dashboard/bookings/${booking.id}/confirm`,
   })
 

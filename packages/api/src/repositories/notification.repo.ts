@@ -9,7 +9,7 @@ import { subDays } from "date-fns"
 export const notificationRepository = {
   async readFeedNotificationsByAgencyId(
     agencyId: string,
-    days: number,
+    days: number = 30,
     limit: number = 100,
   ) {
     return await db.query.notifications.findMany({
@@ -18,7 +18,7 @@ export const notificationRepository = {
       where: and(
         eq(notifications.agencyId, agencyId),
         eq(notifications.isFeed, true),
-        // gte(notifications.createdAt, subDays(new Date(), days)),
+        gte(notifications.createdAt, subDays(new Date(), days)),
       ),
     })
   },

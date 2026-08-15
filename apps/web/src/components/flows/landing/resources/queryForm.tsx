@@ -131,11 +131,13 @@ export default function QueryForm() {
             <RyogoIcon icon={CheckCircle} size="sm" color="green" thick />
           )}
           {isPending && <Spinner />}
-          {messageSent
-            ? t("SentCTA")
-            : isPending
-              ? t("Loading")
-              : t("SubmitCTA")}
+          <RyogoCaption color={messageSent ? "slate" : "white"}>
+            {messageSent
+              ? t("SentCTA")
+              : isPending
+                ? t("Loading")
+                : t("SubmitCTA")}
+          </RyogoCaption>
         </Button>
       </form>
     </Form>

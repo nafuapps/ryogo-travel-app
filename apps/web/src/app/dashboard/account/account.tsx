@@ -74,12 +74,14 @@ export default async function AccountPageComponent({
         />
         <Link href="/dashboard/account/change-email">
           <Button variant={"outline"} className="w-full">
-            {t("ChangeEmail.Title")}
+            <RyogoCaption color="slate">{t("ChangeEmail.Title")}</RyogoCaption>
           </Button>
         </Link>
         <Link href="/dashboard/account/change-password">
           <Button variant={"outline"} className="w-full">
-            {t("ChangePassword.Title")}
+            <RyogoCaption color="slate">
+              {t("ChangePassword.Title")}
+            </RyogoCaption>
           </Button>
         </Link>
         <LogoutAlertButton />

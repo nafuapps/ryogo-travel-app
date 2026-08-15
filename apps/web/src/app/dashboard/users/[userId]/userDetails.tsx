@@ -80,12 +80,12 @@ export default async function UserDetailsPageComponent({
         />
         <Link href={`/dashboard/users/${user.id}/change-email`}>
           <Button variant={"outline"} className="w-full">
-            {t("ChangeEmail.Title")}
+            <RyogoCaption color="slate">{t("ChangeEmail.Title")}</RyogoCaption>
           </Button>
         </Link>
         <Link href={`/dashboard/users/${user.id}/change-phone`}>
           <Button variant={"outline"} className="w-full">
-            {t("ChangePhone.Title")}
+            <RyogoCaption color="slate">{t("ChangePhone.Title")}</RyogoCaption>
           </Button>
         </Link>
         <ResetUserPasswordAlertButton

@@ -29,7 +29,7 @@ export default function CopyClipboardButton({ label }: { label?: string }) {
           icon={isCopied ? CheckCheck : Copy}
           size="sm"
           color={isCopied ? "green" : "slate"}
-        ></RyogoIcon>
+        />
       </div>
     </Button>
   )

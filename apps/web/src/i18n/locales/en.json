@@ -5408,7 +5408,8 @@
         "AddingExpense": {
           "Title": "Adding an expense",
           "Description": "The assigned agent, driver, or owner can add an expense by going to the booking expenses page and clicking on 'Add Expense'.",
-          "Process": "To add an expense, you must provide the following details: type (fuel, toll, etc.), amount, photo proof (optional), and remarks (optional)"
+          "Process": "To add an expense, you must provide the following details: type (fuel, toll, etc.), amount, photo proof (optional), and remarks (optional)",
+          "Warning": "Always remember to add your expenses before ending the trip. Once you have marked a trip as Ended, expenses cannot be added/modified by you. In such cases, you must inform agent or owner to add/modify the expenses."
         },
         "ModifyingExpense": {
           "Title": "Modifying an expense",

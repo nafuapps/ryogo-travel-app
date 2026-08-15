@@ -96,7 +96,7 @@ export default async function CustomerDetailsPageComponent({
       <SectionWrapper id={"CustomerActions"}>
         <Link href={`/dashboard/customers/${customer.id}/modify`}>
           <Button variant={"outline"} className="w-full">
-            {t("EditDetails")}
+            <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
           </Button>
         </Link>
         {customer.status !== CustomerStatusEnum.INACTIVE && (

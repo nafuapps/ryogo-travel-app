@@ -56,7 +56,7 @@ export function AddDriverFinish(props: {
             window.open(whatsappInviteLink, "_blank", "noreferrer")
           }}
         >
-          {t("SendInvite")}
+          <RyogoCaption color="slate">{t("SendInvite")}</RyogoCaption>
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </Button>
       </OnboardingStepContent>

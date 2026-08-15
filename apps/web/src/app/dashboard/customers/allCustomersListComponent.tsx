@@ -98,7 +98,7 @@ export default function AllCustomersListComponent({
             aria-label="Search"
             onClick={() => searchCustomer(searchTerm)}
           >
-            {t("Search")}
+            <RyogoCaption color="slate">{t("Search")}</RyogoCaption>
           </Button>
           {/* TODO: Clear button */}
         </ButtonGroup>

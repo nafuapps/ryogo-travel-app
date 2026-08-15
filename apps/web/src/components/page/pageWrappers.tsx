@@ -25,7 +25,7 @@ export function PageWrapper({
     <Suspense fallback={<PageSkeleton />}>
       <div
         id={id}
-        className={`w-full h-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "overflow-y-scroll"} no-scrollbar mt-3 lg:mt-4`}
+        className={`w-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll"} no-scrollbar mt-3 lg:mt-4`}
       >
         {children}
       </div>

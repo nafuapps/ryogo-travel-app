@@ -39,7 +39,7 @@ export default async function AllVehicleRepairsPageComponent({
         >
           <Button variant={"outline"} className="w-full">
             <RyogoIcon icon={Plus} size="sm" />
-            {t("AddRepair")}
+            <RyogoCaption color="slate">{t("AddRepair")}</RyogoCaption>
           </Button>
         </Link>
         {repairs.map((repair) => (

@@ -107,7 +107,7 @@ export default function ChangeTicketPhotoSheet({
             disabled={isPending}
             onClick={() => setOpen(false)}
           >
-            {t("Close")}
+            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
           </Button>
         </SheetFooter>
       </SheetContent>

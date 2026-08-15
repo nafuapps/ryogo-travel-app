@@ -126,7 +126,7 @@ export default async function DriverDetailsPageComponent({
       <SectionWrapper id="DriverActions">
         <Link href={`/dashboard/drivers/${driver.id}/modify`}>
           <Button variant={"outline"} className="w-full">
-            {t("EditDetails")}
+            <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
           </Button>
         </Link>
         {driver.status !== DriverStatusEnum.INACTIVE &&

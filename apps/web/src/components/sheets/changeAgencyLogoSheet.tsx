@@ -94,14 +94,14 @@ export default function ChangeAgencyLogoSheet({
         </Form>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="changePhoto">
-            {t("Save")}
+            <RyogoCaption color="slate">{t("Save")}</RyogoCaption>
           </Button>
           <Button
             variant="outline"
             disabled={isPending}
             onClick={() => setOpen(false)}
           >
-            {t("Close")}
+            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
           </Button>
         </SheetFooter>
       </SheetContent>

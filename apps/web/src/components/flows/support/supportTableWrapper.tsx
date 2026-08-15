@@ -58,7 +58,7 @@ export function SupportTableTextRow({
   return (
     <TableRow>
       <TableCell>
-        <RyogoCaption color="slate" weight="font-bold">
+        <RyogoCaption color="slate" weight="font-bold" className="text-wrap">
           {label}
         </RyogoCaption>
       </TableCell>

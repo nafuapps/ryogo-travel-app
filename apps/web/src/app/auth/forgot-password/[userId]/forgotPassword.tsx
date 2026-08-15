@@ -132,7 +132,7 @@ export default function ForgotPasswordPageComponent({
               router.back()
             }}
           >
-            {t("Back")}
+            <RyogoCaption color="slate">{t("Back")}</RyogoCaption>
           </Button>
         </AuthActionWrapper>
       </AuthFormWrapper>

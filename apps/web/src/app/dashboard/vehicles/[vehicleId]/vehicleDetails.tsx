@@ -173,7 +173,7 @@ export default async function VehicleDetailsPageComponent({
       <SectionWrapper id="VehiclActions">
         <Link href={`/dashboard/vehicles/${vehicle.id}/modify`}>
           <Button variant={"outline"} className="w-full">
-            {t("EditDetails")}
+            <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
           </Button>
         </Link>
         {vehicle.status !== VehicleStatusEnum.INACTIVE &&

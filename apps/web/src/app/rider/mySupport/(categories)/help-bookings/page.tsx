@@ -497,6 +497,7 @@ async function ExpensesContent() {
           src="/logoPWA.png"
           className="self-center"
         />
+        <SupportWarningWrapper text={t("AddingExpense.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("ModifyingExpense.Title")}>
         <RyogoCaption color="slate">

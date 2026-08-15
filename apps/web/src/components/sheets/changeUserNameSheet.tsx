@@ -20,6 +20,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserNameAction } from "@/app/actions/users/changeUserNameAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoCaption } from "@/components/typography"
 
 export default function ChangeUserNameSheet({
   userId,
@@ -66,7 +67,7 @@ export default function ChangeUserNameSheet({
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline" className="w-full">
-          {t("Title")}
+          <RyogoCaption color="slate">{t("Title")}</RyogoCaption>
         </Button>
       </SheetTrigger>
       <SheetContent side="bottom">
@@ -94,7 +95,7 @@ export default function ChangeUserNameSheet({
             disabled={isPending}
             onClick={() => setOpen(false)}
           >
-            {t("Close")}
+            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
           </Button>
         </SheetFooter>
       </SheetContent>

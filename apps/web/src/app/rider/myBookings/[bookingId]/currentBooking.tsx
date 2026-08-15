@@ -7,7 +7,7 @@ import { BookingTypeEnum, TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
 import EndTripSheet from "@/components/flows/rider/tripSheets/endTripSheet"
 import MidTripSheet from "@/components/flows/rider/tripSheets/midTripSheet"
-import { RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
 import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
 import { getCurrentUser } from "@/lib/auth"
@@ -53,7 +53,7 @@ export default async function RiderMyOngoingBookingPageComponent({
           >
             <Button variant={"outline"}>
               <RyogoIcon icon={Plus} size="sm" />
-              {t("AddExpense")}
+              <RyogoCaption color="slate">{t("AddExpense")}</RyogoCaption>
             </Button>
           </Link>
         </SectionHeaderWrapper>

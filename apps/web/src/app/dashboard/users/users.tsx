@@ -58,7 +58,7 @@ export default async function UsersPageComponent({
           <Link href={`/dashboard/users/new`} className="ml-auto">
             <Button variant={"outline"}>
               <RyogoIcon icon={Plus} size="sm" />
-              {t("Agents.AddAgent")}
+              <RyogoCaption color="slate">{t("Agents.AddAgent")}</RyogoCaption>
             </Button>
           </Link>
         </SectionHeaderWrapper>
@@ -76,7 +76,9 @@ export default async function UsersPageComponent({
           <Link href={`/dashboard/drivers/new`} className="ml-auto">
             <Button variant={"outline"}>
               <RyogoIcon icon={Plus} size="sm" />
-              {t("Drivers.AddDriver")}
+              <RyogoCaption color="slate">
+                {t("Drivers.AddDriver")}
+              </RyogoCaption>
             </Button>
           </Link>
         </SectionHeaderWrapper>

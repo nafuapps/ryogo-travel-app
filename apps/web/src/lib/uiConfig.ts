@@ -1,5 +1,5 @@
 //Landing
-export const HOMEPAGE_URL = "https://ryogo.nafuapps.in" //TODO
+export const HOMEPAGE_URL = "https://ryogo.in"
 export const SLIDESHOW_TIMER_MS = 5000
 
 //Onboarding
@@ -32,9 +32,13 @@ export const MAX_USER_COMMENTS_PER_TICKET = 5
 export const SUPPORT_HELPLINE_NUMBER = "9840774089"
 export const SUPPORT_CHAT_NUMBER = "9840774089"
 export const SUPPORT_EMAIL = "ryogo.in@gmail.com"
+//RyoGo logo in email footer
+export const EmailLogoSrc =
+  "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png"
 
 //TODO: Social Media
 export const YT_LINK = "https://www.youtube.com/@ryogoapp"
 export const IG_LINK = "https://www.instagram.com/ryogoapp/"
 export const FB_LINK = "https://www.facebook.com/ryogoapp/"
 export const LI_LINK = "https://www.linkedin.com/ryogoapp/"
+export const NAFUAPPS_LINK = "https://nafuapps.in/"

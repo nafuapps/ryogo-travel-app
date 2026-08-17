@@ -53,17 +53,17 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
     await bookingServices.addQuoteUrl(leadBooking.id, quoteUrl)
 
     // Share quote over email to customer
-    sendEmail(
-      [leadBooking.customer.email],
-      "Booking Quotation | RyoGo",
-      LeadBookingEmailTemplate({
+    sendEmail({
+      receipientEmail: [leadBooking.customer.email],
+      subject: "Booking Quotation | RyoGo",
+      element: LeadBookingEmailTemplate({
         name: leadBooking.customer.name,
         bookingId: leadBooking.id,
         downloadUrl: getFileUrl(quoteUrl),
         route: `${leadBooking.source.city} - ${leadBooking.destination.city}`,
         date: leadBooking.startDate.toLocaleDateString(),
       }),
-    )
+    })
   }
 
   //Add mission to confirm this new booking

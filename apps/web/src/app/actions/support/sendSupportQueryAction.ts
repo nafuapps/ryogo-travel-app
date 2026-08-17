@@ -32,18 +32,19 @@ export async function sendSupportQueryAction(data: {
     return
   }
 
-  //Send query confirmation email
-  sendEmail(
-    [data.email, SUPPORT_EMAIL],
-    "RyoGo Support Query Confirmation",
-    SupportQueryEmailTemplate({
+  //Send query creation email
+  sendEmail({
+    receipientEmail: [data.email],
+    cc: [SUPPORT_EMAIL],
+    subject: "RyoGo Support Query",
+    element: SupportQueryEmailTemplate({
       name: data.name,
       id: supportQuery.id,
       phone: data.phone,
       message: data.message,
       agencyName: data.agencyName,
     }),
-  )
+  })
 
   return supportQuery
 }

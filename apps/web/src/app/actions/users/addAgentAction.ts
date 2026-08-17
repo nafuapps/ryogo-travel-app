@@ -3,6 +3,7 @@
 import { AddAgentEmailTemplate } from "@/components/email/addAgentEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
@@ -55,15 +56,16 @@ export async function addAgentAction(data: AddAgentRequestType) {
   const absoluteUrl = `${protocol}://${host}/auth/login/password/${agent.id}`
 
   //Send password in email to the agent
-  sendEmail(
-    [agent.email],
-    "Welcome to RyoGo",
-    AddAgentEmailTemplate({
+  sendEmail({
+    receipientEmail: [agent.email],
+    bcc: [SUPPORT_EMAIL],
+    subject: "Welcome to RyoGo",
+    element: AddAgentEmailTemplate({
       name: agent.name,
       password: agent.password,
       link: absoluteUrl,
     }),
-  )
+  })
 
   return agent
 }

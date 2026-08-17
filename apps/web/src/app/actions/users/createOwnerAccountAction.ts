@@ -3,6 +3,7 @@
 import { OnboardOwnerEmailTemplate } from "@/components/email/onboardOwnerEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import { getCurrentUser } from "@/lib/auth"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import {
   generateAgencyLogoPathName,
   generateAgencyQRCodePathName,
@@ -94,15 +95,16 @@ export async function createOwnerAccountAction(
   const absoluteUrl = `${protocol}://${host}/onboarding/verify-account`
 
   //Send welcome email with verification code to the owner
-  sendEmail(
-    [user.email],
-    "Welcome to RyoGo",
-    OnboardOwnerEmailTemplate({
+  sendEmail({
+    receipientEmail: [user.email],
+    bcc: [SUPPORT_EMAIL],
+    subject: "Welcome to RyoGo",
+    element: OnboardOwnerEmailTemplate({
       name: user.name,
       code: user.code,
       link: absoluteUrl,
     }),
-  )
+  })
 
   return user
 }

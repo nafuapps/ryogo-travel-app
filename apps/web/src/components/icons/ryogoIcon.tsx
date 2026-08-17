@@ -74,12 +74,8 @@ export function RyogoIcon(props: {
   onClick?: () => void
   className?: string
 }) {
-  return (
-    <props.icon
-      onClick={props.onClick}
-      className={`shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${getIconSize(props.size)} ${getIconColor(props.color)} ${props.className ?? ""}`}
-    />
-  )
+  const className = `shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${getIconSize(props.size)} ${getIconColor(props.color)} ${props.className ?? ""}`
+  return <props.icon onClick={props.onClick} className={className} />
 }
 
 export function RyogoEnclosedIcon(props: {

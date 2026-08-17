@@ -45,7 +45,6 @@ import {
 } from "@/components/flows/support/supportTableWrapper"
 
 /*
-  TODO
   - what and why is ryogo?
   - Driver app overview with guided tutorial
   - various entities, and how they work together

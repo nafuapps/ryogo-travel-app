@@ -15,7 +15,10 @@ export const tripLogServices = {
       odometerReading: data.odometerReading, // in kilometers
       type: data.type,
       remarks: data.remarks,
-      latLong: data.lat && data.long ? `${data.lat},${data.long}` : null,
+      latLong:
+        data.lat && data.long
+          ? `${data.lat.toFixed(4)},${data.long.toFixed(4)}`
+          : null,
       location:
         data.lat && data.long
           ? (sql.raw(

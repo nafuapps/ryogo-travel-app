@@ -6,6 +6,7 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 import { SubscriptionInvoiceEmailTemplate } from "./subscriptionInvoiceEmailTemplate"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 
 export default async function generateAndSendSubscriptionInvoiceEmail(
   rpOrderId: string,
@@ -32,19 +33,20 @@ export default async function generateAndSendSubscriptionInvoiceEmail(
   const invoicePublicUrl = getFileUrl(invoiceUrl)
 
   //Send invoice email to the user (payer)
-  const emailSent = await sendEmail(
-    [userDetails.email, agencyDetails.businessEmail],
-    "RyoGo Subscription Invoice",
-    SubscriptionInvoiceEmailTemplate({
+  const emailSent = await sendEmail({
+    receipientEmail: [userDetails.email, agencyDetails.businessEmail],
+    bcc: [SUPPORT_EMAIL],
+    subject: "RyoGo Subscription Invoice",
+    element: SubscriptionInvoiceEmailTemplate({
       name: userDetails.name,
       agencyName: agencyDetails.businessName,
       ryogoInvoiceUrl: invoicePublicUrl,
-      orderType: orderDetails.orderType,
-      subscriptionPlan: agencyDetails.subscriptionPlan,
+      orderType: orderDetails.orderType.toUpperCase(),
+      subscriptionPlan: agencyDetails.subscriptionPlan.toUpperCase(),
       expiryTime: agencyDetails.subscriptionExpiresOn,
     }),
-    [{ filename: invoiceName, path: invoicePublicUrl }],
-  )
+    attachments: [{ filename: invoiceName, path: invoicePublicUrl }],
+  })
 
   await orderServices.addInvoiceUrlAndEmailSentTime(
     orderDetails.id,

@@ -26,14 +26,14 @@ export async function forgotPasswordAction(userId: string, link: string) {
   const absoluteUrl = `${protocol}://${host}${link}`
 
   //Send password reset code email to the user
-  sendEmail(
-    [user.email],
-    "RyoGo verification code for password reset",
-    ForgotPasswordCodeTemplate({
+  sendEmail({
+    receipientEmail: [user.email],
+    subject: "RyoGo verification code - Password reset",
+    element: ForgotPasswordCodeTemplate({
       name: user.name,
       code: user.code,
       link: absoluteUrl,
     }),
-  )
+  })
   return user
 }

@@ -1,23 +1,22 @@
 import EmailFooter from "./emailFooter"
-
-export function LeadBookingEmailTemplate({
+export function EndTripBookingEmailTemplate({
   name,
   bookingId,
   route,
-  date,
   downloadUrl,
 }: {
   name: string
   bookingId: string
   route: string
-  date: string
   downloadUrl: string
 }) {
   return (
     <div>
       <h1>Hello, {name}!</h1>
-      <p>Your booking quotation has been created.</p>
-      <p>Here are the details of your booking:</p>
+      <p>
+        Your booking has been completed and invoice for the trip has been
+        generated.
+      </p>
       <ul>
         <li>
           <strong>BookingId:</strong> {bookingId}
@@ -25,11 +24,8 @@ export function LeadBookingEmailTemplate({
         <li>
           <strong>Route:</strong> {route}
         </li>
-        <li>
-          <strong>Date:</strong> {date}
-        </li>
       </ul>
-      <p>You may download your booking quotation here: {downloadUrl}:</p>
+      <p>You may download your booking invoice here: {downloadUrl}:</p>
       <EmailFooter />
     </div>
   )

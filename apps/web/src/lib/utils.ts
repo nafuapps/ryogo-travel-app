@@ -63,6 +63,7 @@ export function getCombinedDateTime(date: Date, time: string | null) {
   return combinedDateTime
 }
 
+//Generating file upload path names
 export function generateAgencyLogoPathName(agencyId: string, logo: File) {
   return `agencies/${agencyId}/logo/${Date.now()}-${logo.name}`
 }
@@ -150,10 +151,12 @@ export function generateSubscriptionInvoicePathName(
   return `agencies/${agencyId}/orders/${orderId}/${orderId}-ryogo-invoice.pdf`
 }
 
-function getDuration(startDate: Date, endDate: Date) {
+//Get trip duration
+export function getTripDuration(startDate: Date, endDate: Date) {
   return differenceInDays(startOfDay(endDate), startOfDay(startDate)) + 1
 }
 
+//Calculate driver allowance days
 function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
   if (tripType === BookingTypeEnum.Round) {
     if (days > 1) {
@@ -172,6 +175,7 @@ function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
   return 1
 }
 
+//Calculate estimated trip distance
 function getEstimatedTripDistance(
   tripType: BookingTypeEnum,
   days: number,
@@ -188,10 +192,11 @@ function getEstimatedTripDistance(
   return distance
 }
 
+//Calculate estimated total price
 export function getEstimatedTotalPrice(
   data: NewBookingFormDataType | CreateNewBookingRequestType,
 ) {
-  const days = getDuration(data.tripStartDate, data.tripEndDate)
+  const days = getTripDuration(data.tripStartDate, data.tripEndDate)
   const commissionRate = data.selectedCommissionRate ?? 0
 
   const totalAllowanceDays = getTripAllowanceDays(data.tripType, days)
@@ -228,6 +233,7 @@ export function getEstimatedTotalPrice(
   }
 }
 
+//Calculate final total price
 export function getFinalTotalPrice(
   tripType: BookingTypeEnum,
   startDate: Date,
@@ -240,7 +246,7 @@ export function getFinalTotalPrice(
 ) {
   const tripAllowanceDays = getTripAllowanceDays(
     tripType,
-    getDuration(startDate, endDate),
+    getTripDuration(startDate, endDate),
   )
 
   const totalVehiclePrice = Math.round(actualDistance * ratePerKm)

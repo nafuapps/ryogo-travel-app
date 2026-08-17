@@ -62,18 +62,18 @@ export async function addSupportTicketAction(
     )
   }
 
-  //Send ticket creation email
-  sendEmail(
-    [SUPPORT_EMAIL],
-    "RyoGo Support Ticket Created",
-    AddSupportTicketEmailTemplate({
+  //Send ticket creation email to support only
+  sendEmail({
+    receipientEmail: [SUPPORT_EMAIL],
+    subject: "RyoGo Support Ticket Received",
+    element: AddSupportTicketEmailTemplate({
       id: supportTicket.id,
       userId: supportTicket.userId,
       agencyId: supportTicket.agencyId,
       issue: supportTicket.issue,
       details: supportTicket.details,
     }),
-  )
+  })
 
   return supportTicket
 }

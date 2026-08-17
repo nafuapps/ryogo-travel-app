@@ -20,6 +20,8 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Plus } from "lucide-react"
+import { getTripDuration } from "@/lib/utils"
+import { differenceInDays } from "date-fns"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -33,7 +35,14 @@ export default async function RiderMyOngoingBookingPageComponent({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const nextStep = getNextStep(booking.type, booking.endDate, booking.tripLogs)
+  const tripDays = getTripDuration(booking.startDate, booking.endDate)
+
+  const nextStep = getNextStep(
+    booking.type,
+    booking.endDate,
+    tripDays,
+    booking.tripLogs,
+  )
 
   return (
     <PageWrapper id="RiderCurrentBookingPage">
@@ -84,6 +93,7 @@ export default async function RiderMyOngoingBookingPageComponent({
 function getNextStep(
   bookingType: BookingTypeEnum,
   endDate: Date,
+  tripDays: number,
   tripLogs: NonNullable<FindBookingDetailsByIdType>["tripLogs"],
 ) {
   const now = new Date()
@@ -125,8 +135,13 @@ function getNextStep(
     return TripLogTypesEnum.STARTED
   }
 
+  //For multi day trip, end the trip when, either trip days are completed or end date has passed by trip days
   if (droppedCount === arrivedCount) {
-    if (droppedCount > 0 && endDate <= now) return TripLogTypesEnum.ENDED
+    if (
+      (droppedCount > 0 && droppedCount === tripDays) ||
+      differenceInDays(now, endDate) > tripDays
+    )
+      return TripLogTypesEnum.ENDED
     return startedCount > 0
       ? TripLogTypesEnum.ARRIVED
       : TripLogTypesEnum.STARTED

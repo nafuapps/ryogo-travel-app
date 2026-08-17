@@ -21,11 +21,11 @@ export async function resendVerificationCodeAction() {
   if (!user) return
 
   //Send new code to the user
-  sendEmail(
-    [user.email],
-    "RyoGo Account Verification Code",
-    resendCodeEmailTemplate({ name: user.name, code: user.code }),
-  )
+  sendEmail({
+    receipientEmail: [user.email],
+    subject: "RyoGo Account Verification Code",
+    element: resendCodeEmailTemplate({ name: user.name, code: user.code }),
+  })
 
   return user
 }

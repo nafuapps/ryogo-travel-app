@@ -944,6 +944,7 @@
           "FindCTA": "Find Customer",
           "PrimaryCTA": "Next",
           "CustomerNotFound": "No customer found.. Adding a new one",
+          "CustomerMustBeActive": "Customer must be active to creating a booking",
           "Photo": "View photo"
         },
         "Step2": {
@@ -1186,7 +1187,15 @@
         "YesCTA": "Yes, Confirm"
       }
     },
-    "ReconcileBooking": {},
+    "ReconcileBooking": {
+      "ReconcileTrialWarning": "You cannot use this feature in basic plan.",
+      "ReconcileExpiredWarning": "Your subscription plan has expired.",
+      "ReconcileTrialAction": "Please upgrade your subscription plan to reconcile bookings!",
+      "ReconcileExpiredAction": "Please renew your subscription plan to reconcile bookings!",
+      "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
+      "RenewCTA": "Renew Subscription"
+    },
     "BookingDetails": {
       "BookingInfo": "BOOKING INFO",
       "BookingId": "Booking ID",
@@ -2242,6 +2251,7 @@
         "AddCustomer": "Add customer",
         "Photo": "View customer photo",
         "Search": "Search",
+        "Clear": "Clear",
         "Type": "Type to search"
       }
     },

@@ -148,7 +148,9 @@ export default function StartTripSheet({
         </TripSheetFormWrapper>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="startTrip">
-            {isPending ? t("Loading") : t("Start")}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("Start")}
+            </RyogoCaption>
           </Button>
           <Button
             variant="outline"

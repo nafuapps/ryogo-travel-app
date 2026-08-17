@@ -95,12 +95,25 @@ export default function AllCustomersListComponent({
           />
           <Button
             variant="outline"
+            type="button"
+            aria-label="Clear"
+            onClick={() => {
+              setSearchTerm("")
+              searchCustomer("")
+            }}
+            disabled={searchTerm.length < 0}
+          >
+            <RyogoCaption color={searchTerm.length < 0 ? "light" : "slate"}>
+              {t("Clear")}
+            </RyogoCaption>
+          </Button>
+          <Button
+            variant="default"
             aria-label="Search"
             onClick={() => searchCustomer(searchTerm)}
           >
-            <RyogoCaption color="slate">{t("Search")}</RyogoCaption>
+            <RyogoCaption color="white">{t("Search")}</RyogoCaption>
           </Button>
-          {/* TODO: Clear button */}
         </ButtonGroup>
       </Field>
       {currentItems.map((customer) => (

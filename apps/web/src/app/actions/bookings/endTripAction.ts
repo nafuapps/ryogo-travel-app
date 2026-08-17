@@ -1,4 +1,6 @@
 "use server"
+import { EndTripBookingEmailTemplate } from "@/components/email/endTripBookingEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import {
@@ -15,7 +17,11 @@ import {
   TripLogTypesEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { uploadFile, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import {
+  getFileUrl,
+  uploadFile,
+  uploadPDFBlob,
+} from "@ryogo-travel-app/db/storage"
 
 export async function endTripAction(
   data: AddTripLogRequestType,
@@ -102,7 +108,17 @@ export async function endTripAction(
     //Update invoice url in DB
     await bookingServices.addInvoiceUrl(data.bookingId, invoiceUrl)
 
-    //TODO: Share invoice over email with customer
+    //Share invoice over email with customer
+    sendEmail({
+      receipientEmail: [customerEmail],
+      subject: "Booking Compeleted - Invoice | RyoGo",
+      element: EndTripBookingEmailTemplate({
+        name: bookingChanged.customer.name,
+        bookingId: bookingChanged.id,
+        downloadUrl: getFileUrl(invoiceUrl),
+        route: `${bookingChanged.source.city} - ${bookingChanged.destination.city}`,
+      }),
+    })
   }
 
   await notificationServices.addNotification({

@@ -1256,6 +1256,25 @@ export const bookingRepository = {
           status: true,
         },
         where: eq(bookings.id, bookingId),
+        with: {
+          customer: {
+            columns: {
+              name: true,
+            },
+          },
+          source: {
+            columns: {
+              city: true,
+              state: true,
+            },
+          },
+          destination: {
+            columns: {
+              city: true,
+              state: true,
+            },
+          },
+        },
       })
     })
   },

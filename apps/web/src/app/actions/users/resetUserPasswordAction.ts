@@ -29,10 +29,13 @@ export async function resetUserPasswordAction(
   if (!user) return
 
   //Send password reset email to the user
-  sendEmail(
-    [user.email],
-    "Password Reset successful",
-    ResetPasswordEmailTemplate({ name: user.name, password: user.password }),
-  )
+  sendEmail({
+    receipientEmail: [user.email],
+    subject: "Password Reset successful",
+    element: ResetPasswordEmailTemplate({
+      name: user.name,
+      password: user.password,
+    }),
+  })
   return user
 }

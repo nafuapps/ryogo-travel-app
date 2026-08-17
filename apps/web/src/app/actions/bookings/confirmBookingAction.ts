@@ -100,10 +100,10 @@ export async function confirmBookingAction(
     const protocol = headerList.get("x-forwarded-proto") || "http"
     const trackingUrl = `${protocol}://${host}/track/booking/${bookingDetails.id}`
 
-    sendEmail(
-      [bookingDetails.customer.email],
-      "Booking Confirmation | RyoGo",
-      ConfirmBookingEmailTemplate({
+    sendEmail({
+      receipientEmail: [bookingDetails.customer.email],
+      subject: "Booking Confirmation | RyoGo",
+      element: ConfirmBookingEmailTemplate({
         name: bookingDetails.customer.name,
         bookingId: bookingDetails.id,
         downloadUrl: getFileUrl(confirmationUrl),
@@ -113,7 +113,7 @@ export async function confirmBookingAction(
         assignedDriver: bookingDetails.assignedDriver?.name,
         assignedVehicle: bookingDetails.assignedVehicle?.vehicleNumber,
       }),
-    )
+    })
   }
 
   //Get booking confirmation pdf link so that it can be shared to customer over whatsapp

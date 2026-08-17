@@ -3,6 +3,7 @@
 import { AddDriverEmailTemplate } from "@/components/email/addDriverEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import {
   generateLicensePhotoPathName,
   generateUserPhotoPathName,
@@ -75,15 +76,16 @@ export async function addDriverAction(data: AddDriverRequestType) {
   const absoluteUrl = `${protocol}://${host}/auth/login/password/${driver.userId}`
 
   //Send password in email to the driver
-  sendEmail(
-    [driver.email],
-    "Welcome to RyoGo",
-    AddDriverEmailTemplate({
+  sendEmail({
+    receipientEmail: [driver.email],
+    bcc: [SUPPORT_EMAIL],
+    subject: "Welcome to RyoGo",
+    element: AddDriverEmailTemplate({
       name: driver.name,
       password: driver.password,
       link: absoluteUrl,
     }),
-  )
+  })
 
   return driver
 }

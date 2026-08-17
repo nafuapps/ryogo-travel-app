@@ -1,4 +1,4 @@
-import { SUPPORT_EMAIL, SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
+import EmailFooter from "./emailFooter"
 
 export function ResetPasswordEmailTemplate({
   name,
@@ -13,14 +13,7 @@ export function ResetPasswordEmailTemplate({
       <p>
         Your password has been reset. Your new password is: <b>{password}</b>
       </p>
-      <p>
-        For any issues, contact our support team at {SUPPORT_EMAIL} or call us
-        at
-        {SUPPORT_HELPLINE_NUMBER}
-      </p>
-      <small>
-        This is an automatically generated email. Please do not reply.
-      </small>
+      <EmailFooter />
     </div>
   )
 }

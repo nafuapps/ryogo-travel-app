@@ -110,9 +110,7 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
     }
     form.clearErrors("customerPhone")
     const foundCustomer = props.customers.find(
-      (c) =>
-        c.phone === form.getValues("customerPhone") &&
-        c.status === CustomerStatusEnum.ACTIVE, //Only active customers can make new bookings
+      (c) => c.phone === form.getValues("customerPhone"),
     )
     setExistingCustomer(foundCustomer)
     if (!foundCustomer) {
@@ -162,7 +160,15 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
             <RyogoCaption color="slate">{t("FindCTA")}</RyogoCaption>
           </Button>
           {existingCustomer && (
-            <ExistingCutomerCard existingCustomer={existingCustomer} />
+            <>
+              <ExistingCutomerCard existingCustomer={existingCustomer} />
+              {existingCustomer.status !== CustomerStatusEnum.ACTIVE && (
+                <Alert>
+                  <RyogoIcon icon={Info} color="yellow" size="sm" />
+                  <RyogoSmall>{t("CustomerMustBeActive")}</RyogoSmall>
+                </Alert>
+              )}
+            </>
           )}
         </NewFormContentWrapper>
         {customerNotFound && (
@@ -202,7 +208,10 @@ export default function NewBookingStep1(props: NewBookingStep1Props) {
               variant={"default"}
               size={"lg"}
               type="submit"
-              disabled={form.formState.isSubmitting}
+              disabled={
+                form.formState.isSubmitting ||
+                existingCustomer?.status !== CustomerStatusEnum.ACTIVE
+              }
             >
               {form.formState.isSubmitting && <Spinner />}
               <RyogoCaption color="white">

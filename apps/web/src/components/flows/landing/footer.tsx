@@ -5,6 +5,7 @@ import {
   FB_LINK,
   IG_LINK,
   LI_LINK,
+  NAFUAPPS_LINK,
   SUPPORT_HELPLINE_NUMBER,
   YT_LINK,
 } from "@/lib/uiConfig"
@@ -91,7 +92,7 @@ export default async function Footer() {
             {t("Copyright", { year: new Date().getFullYear() })}
           </RyogoCaption>
           <Link
-            href="https://nafuapps.in"
+            href={NAFUAPPS_LINK}
             target="_blank"
             className="hover:underline transition"
           >

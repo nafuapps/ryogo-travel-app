@@ -158,7 +158,9 @@ export default function MidTripSheet({
         </TripSheetFormWrapper>
         <SheetFooter>
           <Button type="submit" disabled={isPending} form="midTrip">
-            {isPending ? t("Loading") : t("Mid", { type: type })}
+            <RyogoCaption color="white">
+              {isPending ? t("Loading") : t("Mid", { type: type })}
+            </RyogoCaption>
           </Button>
           <Button
             variant="outline"

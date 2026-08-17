@@ -1,4 +1,4 @@
-import { SUPPORT_EMAIL, SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
+import EmailFooter from "./emailFooter"
 
 export function AddAgentEmailTemplate({
   name,
@@ -20,13 +20,7 @@ export function AddAgentEmailTemplate({
         Your password is: <b>{password}</b>
       </p>
       <p>Your can login to RyoGo with your phone number here: {link}</p>
-      <p>
-        For any issues, contact our support team at {SUPPORT_EMAIL} or call us
-        at {SUPPORT_HELPLINE_NUMBER}
-      </p>
-      <small>
-        This is an automatically generated email. Please do not reply.
-      </small>
+      <EmailFooter />
     </div>
   )
 }

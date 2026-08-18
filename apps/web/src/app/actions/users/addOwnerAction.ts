@@ -1,6 +1,6 @@
 "use server"
 
-import { AddAgentEmailTemplate } from "@/components/email/addAgentEmailTemplate"
+import { AddOwnerEmailTemplate } from "@/components/email/addOwnerEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
@@ -8,19 +8,20 @@ import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddOwnerRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
-export async function addAgentAction(
-  data: AddAgentRequestType,
+export async function addOwnerAction(
+  data: AddOwnerRequestType,
   agencyName?: string,
 ) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
+    !currentUser.isAdmin ||
     currentUser.userRole !== UserRolesEnum.OWNER ||
     currentUser.agencyId !== data.agencyId
   ) {
@@ -31,26 +32,26 @@ export async function addAgentAction(
     return
   }
 
-  const agent = await userServices.addAgentUser(data)
-  if (!agent) return
+  const addedOwner = await userServices.addOwnerUser(data, currentUser.userId)
+  if (!addedOwner) return
 
-  if (agent.id && data.data.photos && data.data.photos[0]) {
+  if (addedOwner.id && data.data.photos && data.data.photos[0]) {
     const photo = data.data.photos[0]
     const uploadedPhoto = await uploadFile(
       photo,
-      generateUserPhotoPathName(agent.id, photo),
+      generateUserPhotoPathName(addedOwner.id, photo),
     )
-    await userServices.updateUserPhoto(agent.id, uploadedPhoto.path)
+    await userServices.updateUserPhoto(addedOwner.id, uploadedPhoto.path)
   }
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     entityType: EntityTypeEnum.USER,
-    entityId: agent.id,
+    entityId: addedOwner.id,
     isFeed: true,
-    textKey: "AgentAdded",
+    textKey: "OwnerAdded",
     textObject: {
-      agentName: agent.name,
+      addedOwnerName: addedOwner.name,
       userName: currentUser.name,
     },
   })
@@ -58,16 +59,16 @@ export async function addAgentAction(
   const headerList = await headers()
   const host = headerList.get("host")
   const protocol = headerList.get("x-forwarded-proto") || "http"
-  const absoluteUrl = `${protocol}://${host}/auth/login/password/${agent.id}`
+  const absoluteUrl = `${protocol}://${host}/auth/login/password/${addedOwner.id}`
 
   //Send password in email to the agent
   sendEmail({
-    receipientEmail: [agent.email],
+    receipientEmail: [addedOwner.email],
     bcc: [SUPPORT_EMAIL],
     subject: "Welcome to RyoGo",
-    element: AddAgentEmailTemplate({
-      name: agent.name,
-      password: agent.password,
+    element: AddOwnerEmailTemplate({
+      name: addedOwner.name,
+      password: addedOwner.password,
       link: absoluteUrl,
     }),
   })
@@ -76,14 +77,14 @@ export async function addAgentAction(
 
   if (agencyName) {
     const t = await getTranslations("Dashboard.Whatsapp")
-    const message = t("AgentInvite", {
-      agentName: data.data.name,
+    const message = t("OwnerInvite", {
+      ownerName: addedOwner.name,
       agencyName: agencyName,
-      emailId: data.data.email,
+      emailId: addedOwner.email,
       inviteLink: absoluteUrl,
     })
     whatsappInviteLink = getWhatsappMessageLink(data.data.phone, message)
   }
 
-  return { ...agent, whatsappInviteLink: whatsappInviteLink }
+  return { ...addedOwner, whatsappInviteLink: whatsappInviteLink }
 }

@@ -9,7 +9,7 @@ import { APP_TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { RyogoSmall, RyogoH4 } from "@/components/typography"
+import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
 import { Hourglass } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
@@ -64,11 +64,13 @@ export default async function NewVehiclePageComponent({
           {isOwner && (
             <Link href="/dashboard/account/subscription">
               <Button variant={"brand"} size="lg">
-                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? agency.hasTriedSubscription
-                    ? t("BuyCTA")
-                    : t("TryCTA")
-                  : t("RenewCTA")}
+                <RyogoCaption color="white">
+                  {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+                    ? agency.hasTriedSubscription
+                      ? t("BuyCTA")
+                      : t("TryCTA")
+                    : t("RenewCTA")}
+                </RyogoCaption>
               </Button>
             </Link>
           )}

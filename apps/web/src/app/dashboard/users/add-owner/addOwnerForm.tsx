@@ -10,33 +10,33 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { addAgentAction } from "@/app/actions/users/addAgentAction"
+import { AddOwnerRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { addOwnerAction } from "@/app/actions/users/addOwnerAction"
 
-export default function NewAgentForm({
+export default function AddOwnerForm({
   agencyId,
   agencyName,
-  allAgents,
+  allOwners,
 }: {
   agencyId: string
   agencyName: string
-  allAgents: FindAllUsersByRoleType
+  allOwners: FindAllUsersByRoleType
 }) {
-  const t = useTranslations("Dashboard.NewAgent")
+  const t = useTranslations("Dashboard.AddOwner")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  const newAgentSchema = z.object({
-    agentName: z
+  const addOwnerSchema = z.object({
+    ownerName: z
       .string()
       .min(5, t("Field1.Error1"))
       .max(30, t("Field1.Error2")),
-    agentPhone: z.string().length(10, t("Field2.Error1")),
-    agentEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
-    agentPhotos: z
+    ownerPhone: z.string().length(10, t("Field2.Error1")),
+    ownerEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
+    ownerPhotos: z
       .instanceof(FileList)
       .refine((file) => {
         if (file.length < 1) return true
@@ -57,55 +57,53 @@ export default function NewAgentForm({
       }, t("Field4.Error2"))
       .optional(),
   })
-  type NewAgentType = z.infer<typeof newAgentSchema>
+  type AddOwnerType = z.infer<typeof addOwnerSchema>
 
-  //Form init
-  const formData = useForm<NewAgentType>({
-    resolver: zodResolver(newAgentSchema),
+  const formData = useForm<AddOwnerType>({
+    resolver: zodResolver(addOwnerSchema),
   })
 
-  //Form submit
-  async function onSubmit(values: NewAgentType) {
+  async function onSubmit(values: AddOwnerType) {
     if (
-      allAgents.some(
-        (u) => u.phone === values.agentPhone && u.agencyId === agencyId,
+      allOwners.some(
+        (u) => u.phone === values.ownerPhone && u.agencyId === agencyId,
       )
     ) {
-      // Check if an agent with same phone exists in this agency
-      formData.setError("agentPhone", {
+      // Check if an owner with same phone exists in this agency
+      formData.setError("ownerPhone", {
         type: "manual",
         message: t("APIError1"),
       })
     } else if (
-      allAgents.some(
-        (u) => u.phone === values.agentPhone && u.email === values.agentEmail,
+      allOwners.some(
+        (u) => u.phone === values.ownerPhone && u.email === values.ownerEmail,
       )
     ) {
-      // Check if an agent with same phone and email exists in entire DB
-      formData.setError("agentPhone", {
+      // Check if an owner with same phone and email exists in entire DB
+      formData.setError("ownerPhone", {
         type: "manual",
         message: t("APIError2"),
       })
     } else {
       startTransition(async () => {
-        const newAgentData: AddAgentRequestType = {
+        const addOwnerData: AddOwnerRequestType = {
           agencyId: agencyId,
           data: {
-            name: values.agentName,
-            phone: values.agentPhone,
-            email: values.agentEmail,
-            photos: values.agentPhotos,
+            name: values.ownerName,
+            phone: values.ownerPhone,
+            email: values.ownerEmail,
+            photos: values.ownerPhotos,
           },
         }
-        const createdAgent = await addAgentAction(newAgentData, agencyName)
-        if (createdAgent && createdAgent.whatsappInviteLink) {
+        const createdOwner = await addOwnerAction(addOwnerData, agencyName)
+        if (createdOwner) {
           toast.success(t("Success"))
           window.open(
-            createdAgent.whatsappInviteLink,
+            createdOwner.whatsappInviteLink,
             "_blank",
             "noopener,noreferrer",
           )
-          router.replace(`/dashboard/users/${createdAgent.id}`)
+          router.replace(`/dashboard/users/${createdOwner.id}`)
         } else {
           toast.error(t("Error"))
           router.replace(`/dashboard/users`)
@@ -115,27 +113,27 @@ export default function NewAgentForm({
   }
 
   return (
-    <FormWrapper<NewAgentType>
+    <FormWrapper<AddOwnerType>
       form={formData}
       onSubmit={formData.handleSubmit(onSubmit)}
-      id="newAgentForm"
+      id="addOwnerForm"
     >
       <RyogoInput
-        name={"agentName"}
+        name={"ownerName"}
         type="text"
         label={t("Field1.Title")}
         placeholder={t("Field1.Placeholder")}
         description={t("Field1.Description")}
       />
       <RyogoInput
-        name={"agentPhone"}
+        name={"ownerPhone"}
         type="tel"
         label={t("Field2.Title")}
         placeholder={t("Field2.Placeholder")}
         description={t("Field2.Description")}
       />
       <RyogoInput
-        name={"agentEmail"}
+        name={"ownerEmail"}
         type="email"
         label={t("Field3.Title")}
         placeholder={t("Field3.Placeholder")}
@@ -143,7 +141,7 @@ export default function NewAgentForm({
       />
       <RyogoFileInput
         name={"agenctPhotos"}
-        register={formData.register("agentPhotos")}
+        register={formData.register("ownerPhotos")}
         label={t("Field4.Title")}
         placeholder={t("Field4.Placeholder")}
         description={t("Field4.Description")}

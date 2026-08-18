@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { MapPinned } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import getTrackBookingLink from "@/components/whatsapp/getTrackBookingLink"
 import { RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 
 export default function ShareTrackBookingLinkButton(props: {
   bookingId: string
@@ -20,7 +20,7 @@ export default function ShareTrackBookingLinkButton(props: {
     const message = t("TrackBooking", {
       bookingLink: bookingLink,
     })
-    const messageLink = getTrackBookingLink(message, props.phone)
+    const messageLink = getWhatsappMessageLink(props.phone, message)
     window.open(messageLink, "_blank", "noopener,noreferrer")
   }
 

@@ -3,7 +3,7 @@
 import { ConfirmBookingEmailTemplate } from "@/components/email/confirmBookingEmailTemplate copy"
 import sendEmail from "@/components/email/sendEmail"
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
-import getConfirmationMessageLink from "@/components/whatsapp/getConfirmationMessageLink"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -11,6 +11,7 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
 export async function confirmBookingAction(
@@ -117,18 +118,33 @@ export async function confirmBookingAction(
   }
 
   //Get booking confirmation pdf link so that it can be shared to customer over whatsapp
-  const confirmationMessage = await getConfirmationMessageLink(
+  const t = await getTranslations("Dashboard.Whatsapp")
+  let message
+  const messageBody = {
+    customerName: bookingDetails.customer.name,
+    bookingId: bookingDetails.id,
+    source: bookingDetails.source.city,
+    destination: bookingDetails.destination.city,
+    startDate: bookingDetails.startDate.toLocaleDateString(),
+    startTime: bookingDetails.startTime,
+    agencyPhone: bookingDetails.assignedUser.phone,
+    confirmationLink: getFileUrl(confirmationUrl),
+  }
+
+  if (!bookingDetails.assignedDriver || !bookingDetails.assignedVehicle) {
+    message = t("ConfirmationWithoutDriverVehicle", messageBody)
+  } else {
+    message = t("Confirmation", {
+      ...messageBody,
+      driverName: bookingDetails.assignedDriver.name,
+      vehicleNumber: bookingDetails.assignedVehicle.vehicleNumber,
+    })
+  }
+
+  const confirmationMessage = getWhatsappMessageLink(
     bookingDetails.customer.phone,
-    bookingDetails.customer.name,
-    bookingDetails.id,
-    bookingDetails.source.city,
-    bookingDetails.destination.city,
-    bookingDetails.startDate.toLocaleDateString(),
-    bookingDetails.startTime,
-    bookingDetails.assignedUser.phone,
-    getFileUrl(confirmationUrl),
-    bookingDetails.assignedDriver?.name,
-    bookingDetails.assignedVehicle?.vehicleNumber,
+    message,
   )
+
   return confirmationMessage
 }

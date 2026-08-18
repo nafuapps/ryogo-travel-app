@@ -48,3 +48,13 @@ export type AddAgentRequestType = {
     photos?: FileList
   }
 }
+
+export type AddOwnerRequestType = {
+  agencyId: string
+  data: {
+    name: string
+    phone: string
+    email: string
+    photos?: FileList
+  }
+}

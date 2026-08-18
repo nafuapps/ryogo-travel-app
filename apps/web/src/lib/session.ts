@@ -32,6 +32,7 @@ export type SessionPayload = {
   isAdmin: boolean
   isVerified: boolean
   status: UserStatusEnum
+  updatedAt: Date
   expiresAt: Date
 }
 
@@ -94,12 +95,13 @@ export async function createWebSession(user: SelectUserType) {
     token: sessionData[0].token,
     userId: sessionData[0].userId,
     agencyId: user.agencyId,
-    isAdmin: user.isAdmin ?? false,
-    isVerified: user.isVerified ?? false,
+    isAdmin: user.isAdmin,
+    isVerified: user.isVerified,
     userRole: user.userRole,
     name: user.name,
     phone: user.phone,
     status: user.status,
+    updatedAt: new Date(),
     expiresAt,
   }
   const session = await encrypt(newPayload)
@@ -134,6 +136,54 @@ export async function createWebSession(user: SelectUserType) {
   )
 
   return token
+}
+
+//Update session from DB
+export async function updateWebSessionFromDB(payload: SessionPayload) {
+  const user = await userServices.findUserDetailsById(payload.userId)
+  if (!user) return
+
+  const updatedPayload: SessionPayload = {
+    sessionId: payload.sessionId,
+    userId: payload.userId,
+    token: payload.token,
+    agencyId: user.agencyId,
+    isAdmin: user.isAdmin,
+    isVerified: user.isVerified,
+    userRole: user.userRole,
+    name: user.name,
+    phone: user.phone,
+    status: user.status,
+    updatedAt: new Date(),
+    expiresAt: payload.expiresAt,
+  }
+  const updatedSession = await encrypt(updatedPayload)
+
+  const cookieStore = await cookies()
+  cookieStore.set(SESSION_COOKIE_NAME, updatedSession, {
+    httpOnly: true,
+    secure: true,
+    expires: payload.expiresAt,
+    sameSite: "lax",
+  })
+
+  cookieStore.set(LOCALE_COOKIE_NAME, user.languagePref, {
+    maxAge: 315360000, // 10 years
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+  })
+
+  cookieStore.set(
+    DARK_MODE_COOKIE_NAME,
+    user.prefersDarkTheme ? "true" : "false",
+    {
+      maxAge: 315360000, // 10 years
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+    },
+  )
 }
 
 //Update user status in session
@@ -179,6 +229,35 @@ export async function updateUserVerificationInWebSession(isVerified: boolean) {
   const newSession = await encrypt({
     ...payload,
     isVerified: isVerified,
+  })
+
+  // 3. Update New expiry in DB
+  const newExpiresAt = await updateSessionExpiry(payload.sessionId)
+
+  // 4. Update session expiry in cookie
+  const cookieStore = await cookies()
+  cookieStore.set(SESSION_COOKIE_NAME, newSession, {
+    httpOnly: true,
+    secure: true,
+    expires: newExpiresAt,
+    sameSite: "lax",
+  })
+}
+
+//Update user admin status in session
+export async function updateUserAdminInWebSession(isAdmin: boolean) {
+  // 1. Get session from cookie
+  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
+  const payload = (await decrypt(session)) as SessionPayload | undefined
+
+  if (!session || !payload) {
+    return
+  }
+
+  // 2. Update verification status in payload
+  const newSession = await encrypt({
+    ...payload,
+    isAdmin: isAdmin,
   })
 
   // 3. Update New expiry in DB

@@ -1,8 +1,5 @@
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
-import {
-  FindAllUsersInAgencyType,
-  userServices,
-} from "@ryogo-travel-app/api/services/user.services"
+import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { User, Plus, IdCard, UserKey, UserRoundCog } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -22,13 +19,13 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function UsersPageComponent({
-  agencyId,
+  allUsers,
+  isPremium,
 }: {
-  agencyId: string
+  allUsers: FindAllUsersInAgencyType
+  isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.Users")
-
-  const allUsers = await userServices.findAllUsersInAgency(agencyId)
 
   const owners = allUsers.filter((u) => u.userRole === UserRolesEnum.OWNER)
   const agents = allUsers.filter((u) => u.userRole === UserRolesEnum.AGENT)
@@ -43,6 +40,16 @@ export default async function UsersPageComponent({
           <RyogoSmall color="light" weight="font-bold">
             {owners.length}
           </RyogoSmall>
+          {isPremium && (
+            <Link href={`/dashboard/users/add-owner`} className="ml-auto">
+              <Button variant={"outline"}>
+                <RyogoIcon icon={Plus} size="sm" />
+                <RyogoCaption color="slate">
+                  {t("Owners.AddOwner")}
+                </RyogoCaption>
+              </Button>
+            </Link>
+          )}
         </SectionHeaderWrapper>
         {owners.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />

@@ -20,7 +20,6 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import getDriverInviteMessageLink from "@/components/whatsapp/getDriverInviteMessageLink"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -33,13 +32,6 @@ export function NewDriverConfirm(props: {
   const formData = useForm<AddDriverRequestType>()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-
-  const whatsappInviteLink = getDriverInviteMessageLink(
-    props.newDriverFormData.data.phone,
-    props.newDriverFormData.data.name,
-    props.agencyName,
-    props.newDriverFormData.data.email,
-  )
 
   //Submit action
   const onSubmit = async () => {
@@ -62,11 +54,15 @@ export function NewDriverConfirm(props: {
           userPhotos: props.newDriverFormData.data.userPhotos,
         },
       }
-      const addedDriver = await addDriverAction(newDriverData)
+      const addedDriver = await addDriverAction(newDriverData, props.agencyName)
       if (addedDriver) {
         //Send to driver details page
         toast.success(t("APISuccess"))
-        window.open(whatsappInviteLink, "_blank", "noopener,noreferrer")
+        window.open(
+          addedDriver.whatsappInviteLink,
+          "_blank",
+          "noopener,noreferrer",
+        )
         router.replace(`/dashboard/drivers/${addedDriver.id}`)
       } else {
         //If failed, Take back to driver page and show error

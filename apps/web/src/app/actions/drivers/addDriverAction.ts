@@ -2,6 +2,7 @@
 
 import { AddDriverEmailTemplate } from "@/components/email/addDriverEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import {
@@ -14,9 +15,13 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
+import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
-export async function addDriverAction(data: AddDriverRequestType) {
+export async function addDriverAction(
+  data: AddDriverRequestType,
+  agencyName?: string,
+) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -87,5 +92,18 @@ export async function addDriverAction(data: AddDriverRequestType) {
     }),
   })
 
-  return driver
+  let whatsappInviteLink
+
+  if (agencyName) {
+    const t = await getTranslations("Dashboard.Whatsapp")
+    const message = t("DriverInvite", {
+      driverName: driver.name,
+      agencyName: agencyName,
+      emailId: driver.email,
+      inviteLink: absoluteUrl,
+    })
+    whatsappInviteLink = getWhatsappMessageLink(data.data.phone, message)
+  }
+
+  return { ...driver, whatsappInviteLink: whatsappInviteLink }
 }

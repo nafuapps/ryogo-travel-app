@@ -1,12 +1,13 @@
 "use server"
 
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
-import getConfirmationMessageLink from "@/components/whatsapp/getConfirmationMessageLink"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getTranslations } from "next-intl/server"
 
 export async function sendConfirmationAction(
   id: string,
@@ -53,18 +54,32 @@ export async function sendConfirmationAction(
   }
 
   //Send confirmation pdf to customer over whatsapp
-  const confirmationMessage = await getConfirmationMessageLink(
+  const t = await getTranslations("Dashboard.Whatsapp")
+  let message
+  const messageBody = {
+    customerName: bookingDetails.customer.name,
+    bookingId: bookingDetails.id,
+    source: bookingDetails.source.city,
+    destination: bookingDetails.destination.city,
+    startDate: bookingDetails.startDate.toLocaleDateString(),
+    startTime: bookingDetails.startTime,
+    agencyPhone: bookingDetails.assignedUser.phone,
+    confirmationLink: getFileUrl(confirmationUrl),
+  }
+
+  if (!bookingDetails.assignedDriver || !bookingDetails.assignedVehicle) {
+    message = t("ConfirmationWithoutDriverVehicle", messageBody)
+  } else {
+    message = t("Confirmation", {
+      ...messageBody,
+      driverName: bookingDetails.assignedDriver.name,
+      vehicleNumber: bookingDetails.assignedVehicle.vehicleNumber,
+    })
+  }
+
+  const confirmationMessage = getWhatsappMessageLink(
     bookingDetails.customer.phone,
-    bookingDetails.customer.name,
-    bookingDetails.id,
-    bookingDetails.source.city,
-    bookingDetails.destination.city,
-    bookingDetails.startDate.toLocaleDateString(),
-    bookingDetails.startTime,
-    bookingDetails.assignedUser.phone,
-    getFileUrl(confirmationUrl),
-    bookingDetails.assignedDriver?.name,
-    bookingDetails.assignedVehicle?.vehicleNumber,
+    message,
   )
   return confirmationMessage
 }

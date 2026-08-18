@@ -1,6 +1,6 @@
 import EmailFooter from "./emailFooter"
 
-export function AddAgentEmailTemplate({
+export function AddOwnerEmailTemplate({
   name,
   password,
   link,
@@ -13,8 +13,8 @@ export function AddAgentEmailTemplate({
     <div>
       <h1>Welcome, {name}!</h1>
       <p>
-        You have been added as an agent on RyoGo. We are excited to have you on
-        board!
+        You have been added as another owner on RyoGo. We are excited to have
+        you on board!
       </p>
       <p>
         Your password is: <b>{password}</b>

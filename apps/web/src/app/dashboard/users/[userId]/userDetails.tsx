@@ -7,7 +7,7 @@ import { User } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateUserAlertButton from "@/components/buttons/alert/inactivateUserAlertButton"
 import ActivateUserAlertButton from "@/components/buttons/alert/activateUserAlertButton"
 import ResetUserPasswordAlertButton from "@/components/buttons/alert/resetUserPasswordAlertButton"
@@ -26,11 +26,16 @@ import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
+import TransferAdminAlertButton from "@/components/buttons/alert/transferAdminAlertButton"
 
 export default async function UserDetailsPageComponent({
   user,
+  currentUserId,
+  isCurrentUserAdmin,
 }: {
   user: NonNullable<FindUserDetailsByIdType>
+  currentUserId: string
+  isCurrentUserAdmin: boolean
 }) {
   const t = await getTranslations("Dashboard.UserDetails")
 
@@ -58,6 +63,9 @@ export default async function UserDetailsPageComponent({
           </SectionColWrapper>
           <SectionColWrapper end>
             <RyogoH3>{user.name}</RyogoH3>
+            <RyogoCaption color="slate">
+              {user.userRole.toUpperCase()} {user.isAdmin && t("Admin")}
+            </RyogoCaption>
             <RyogoCaption color="slate">{user.phone}</RyogoCaption>
             <RyogoCaption color="slate">{user.email}</RyogoCaption>
             <RyogoCaption color="slate">
@@ -71,42 +79,59 @@ export default async function UserDetailsPageComponent({
         <RyogoPhoneButton label={t("CallUser")} phone={user.phone} />
         <RyogoChatButton label={t("ChatUser")} phone={user.phone} />
       </SectionWrapper>
-      <SectionWrapper id="UserActions">
-        <ChangeUserNameSheet
-          userId={user.id}
-          userName={user.name}
-          userRole={user.userRole}
-          agencyId={user.agencyId}
-        />
-        <Link href={`/dashboard/users/${user.id}/change-email`}>
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">{t("ChangeEmail.Title")}</RyogoCaption>
-          </Button>
-        </Link>
-        <Link href={`/dashboard/users/${user.id}/change-phone`}>
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">{t("ChangePhone.Title")}</RyogoCaption>
-          </Button>
-        </Link>
-        <ResetUserPasswordAlertButton
-          userId={user.id}
-          agencyId={user.agencyId}
-        />
-        {user.status !== UserStatusEnum.INACTIVE && (
-          <InactivateUserAlertButton
+      {(user.userRole !== UserRolesEnum.OWNER ||
+        user.id === currentUserId ||
+        isCurrentUserAdmin) && (
+        <SectionWrapper id="UserActions">
+          <ChangeUserNameSheet
+            userId={user.id}
+            userName={user.name}
+            userRole={user.userRole}
+            agencyId={user.agencyId}
+          />
+          <Link href={`/dashboard/users/${user.id}/change-email`}>
+            <Button variant={"outline"} className="w-full">
+              <RyogoCaption color="slate">
+                {t("ChangeEmail.Title")}
+              </RyogoCaption>
+            </Button>
+          </Link>
+          <Link href={`/dashboard/users/${user.id}/change-phone`}>
+            <Button variant={"outline"} className="w-full">
+              <RyogoCaption color="slate">
+                {t("ChangePhone.Title")}
+              </RyogoCaption>
+            </Button>
+          </Link>
+          <ResetUserPasswordAlertButton
             userId={user.id}
             agencyId={user.agencyId}
-            role={user.userRole}
           />
-        )}
-        {user.status === UserStatusEnum.INACTIVE && (
-          <ActivateUserAlertButton
-            userId={user.id}
-            agencyId={user.agencyId}
-            role={user.userRole}
-          />
-        )}
-      </SectionWrapper>
+          {user.userRole === UserRolesEnum.OWNER &&
+            user.id !== currentUserId &&
+            isCurrentUserAdmin && (
+              <TransferAdminAlertButton
+                currentUserId={currentUserId}
+                userId={user.id}
+                agencyId={user.agencyId}
+              />
+            )}
+          {user.status !== UserStatusEnum.INACTIVE && (
+            <InactivateUserAlertButton
+              userId={user.id}
+              agencyId={user.agencyId}
+              role={user.userRole}
+            />
+          )}
+          {user.status === UserStatusEnum.INACTIVE && (
+            <ActivateUserAlertButton
+              userId={user.id}
+              agencyId={user.agencyId}
+              role={user.userRole}
+            />
+          )}
+        </SectionWrapper>
+      )}
     </PageWrapper>
   )
 }

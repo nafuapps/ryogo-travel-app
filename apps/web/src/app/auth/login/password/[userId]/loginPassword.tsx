@@ -110,6 +110,7 @@ export default function LoginPasswordPageComponent({
           <Button
             variant={"outline"}
             type="button"
+            size={"lg"}
             onClick={() => {
               router.back()
             }}

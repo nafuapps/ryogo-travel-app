@@ -71,7 +71,7 @@ export async function createOwnerAccountAction(
     entityType: EntityTypeEnum.USER,
     entityId: user.userId,
     isFeed: true,
-    textKey: "OwnerAdded",
+    textKey: "OwnerCreated",
     textObject: {
       userName: user.name,
     },

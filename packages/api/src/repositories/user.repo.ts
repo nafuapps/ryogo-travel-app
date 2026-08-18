@@ -322,6 +322,18 @@ export const userRepository = {
       })
   },
 
+  //Update admin
+  async updateAdmin(userId: string, isAdmin: boolean) {
+    return await db
+      .update(users)
+      .set({ isAdmin })
+      .where(eq(users.id, userId))
+      .returning({
+        id: users.id,
+        isAdmin: users.isAdmin,
+      })
+  },
+
   //Delete user
   async deleteUser(userId: string) {
     return await db

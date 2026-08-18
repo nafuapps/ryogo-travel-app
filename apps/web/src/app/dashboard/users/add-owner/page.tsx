@@ -4,22 +4,25 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import NewAgentPageComponent from "./newAgent"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import AddOwnerPageComponent from "./addOwner"
 
 export const metadata: Metadata = {
-  title: `New User - ${pageTitle}`,
+  title: `Add Owner - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function NewUserPage() {
+export default async function AddOwnerPage() {
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
+  }
+
+  //Only agency admin can add more owners
+  if (!currentUser.isAdmin) {
+    redirect("/dashboard/users", RedirectType.replace)
   }
 
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
@@ -27,12 +30,10 @@ export default async function NewUserPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const allAgents = await userServices.findAllUsersByRole([UserRolesEnum.AGENT])
-
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/users/new"} />
-      <NewAgentPageComponent agency={agency} allAgents={allAgents} />
+      <DashboardHeader pathName={"/dashboard/users/add-owner"} />
+      <AddOwnerPageComponent agency={agency} />
     </MainWrapper>
   )
 }

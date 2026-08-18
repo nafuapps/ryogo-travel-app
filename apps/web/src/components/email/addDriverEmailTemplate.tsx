@@ -19,7 +19,7 @@ export function AddDriverEmailTemplate({
       <p>
         Your password is: <b>{password}</b>
       </p>
-      <p>Your can login to RyoGo with your phone number here: {link}</p>
+      <p>Your can login to RyoGo here: {link}</p>
       <EmailFooter />
     </div>
   )

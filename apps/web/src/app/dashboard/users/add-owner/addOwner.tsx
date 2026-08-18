@@ -1,10 +1,6 @@
 import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
-import NewAgentForm from "./newAgentForm"
-import {
-  SubscriptionPlanEnum,
-  UserStatusEnum,
-} from "@ryogo-travel-app/db/schema"
-import { BASIC_PLAN_AGENT_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { APP_TRIAL_MODE } from "@/lib/uiConfig"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
 import { Hourglass } from "lucide-react"
@@ -12,32 +8,26 @@ import { Button } from "@/components/ui/button"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import AddOwnerForm from "./addOwnerForm"
 
-export default async function NewAgentPageComponent({
+export default async function AddOwnerPageComponent({
   agency,
-  allAgents,
 }: {
   agency: NonNullable<FindAgencyByIdType>
-  allAgents: FindAllUsersByRoleType
 }) {
-  const t = await getTranslations("Dashboard.NewAgent")
+  const t = await getTranslations("Dashboard.AddOwner")
 
-  const currentAgentUsers = allAgents.filter(
-    (agent) =>
-      agent.agencyId === agency.id && agent.status !== UserStatusEnum.SUSPENDED,
-  ).length
-
-  //SUBSCRIPTION BLOCKER: Only Premium agencies can add more than X agents
+  //SUBSCRIPTION BLOCKER: Only Premium agencies can add more owners
   if (
     !APP_TRIAL_MODE &&
-    currentAgentUsers >= BASIC_PLAN_AGENT_LIMIT &&
     (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
       agency.subscriptionExpiresOn < new Date())
   ) {
     return (
-      <PageWrapper id="NewAgentPage">
-        <SectionWrapper id="AgentLimitSection" center>
+      <PageWrapper id="AddOwnerPage">
+        <SectionWrapper id="OwnerLimitSection" center>
           <RyogoEnclosedIcon
             icon={Hourglass}
             size="md"
@@ -70,10 +60,12 @@ export default async function NewAgentPageComponent({
     )
   }
 
+  const allOwners = await userServices.findAllUsersByRole([UserRolesEnum.OWNER])
+
   return (
-    <PageWrapper id="NewAgentPage">
-      <NewAgentForm
-        allAgents={allAgents}
+    <PageWrapper id="AddOwnerPage">
+      <AddOwnerForm
+        allOwners={allOwners}
         agencyId={agency.id}
         agencyName={agency.businessName}
       />

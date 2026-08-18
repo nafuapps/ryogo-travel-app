@@ -1,7 +1,8 @@
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoPill } from "@/components/pills/ryogoPills"
 
 export default function UserCard({
   user,
@@ -21,11 +22,7 @@ export default function UserCard({
         <RyogoSmall>{user.name}</RyogoSmall>
       </div>
       <div className="flex flex-col justify-between gap-2 lg:gap-3 items-end">
-        <div className="flex rounded-full bg-slate-200 dark:bg-slate-700 px-2 py-1 lg:px-2.5 lg:py-1.5">
-          <RyogoCaption color="slate">
-            {user.userRole.toUpperCase()}
-          </RyogoCaption>
-        </div>
+        <RyogoPill label={user.userRole.toUpperCase()} bgColor={"slate"} />
       </div>
     </div>
   )

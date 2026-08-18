@@ -4,7 +4,7 @@ import { MessageSquare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import getChatLink from "@/components/whatsapp/getChatLink"
+import getWhatsappChatLink from "@/components/whatsapp/getWhatsappChatLink"
 
 export default function RyogoChatButton({
   label,
@@ -14,7 +14,7 @@ export default function RyogoChatButton({
   phone: string
 }) {
   function startChat() {
-    window.open(getChatLink(phone), "_blank", "noopener,noreferrer")
+    window.open(getWhatsappChatLink(phone), "_blank", "noopener,noreferrer")
   }
 
   return (

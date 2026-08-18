@@ -13,7 +13,7 @@ import {
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@/lib/uiConfig"
-import { RyogoSmall, RyogoH4 } from "@/components/typography"
+import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
@@ -78,11 +78,13 @@ export default async function NewBookingPageComponent({
           {isOwner && (
             <Link href="/dashboard/account/subscription">
               <Button variant={"brand"} size="lg">
-                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? agency.hasTriedSubscription
-                    ? t("BuyCTA")
-                    : t("TryCTA")
-                  : t("RenewCTA")}
+                <RyogoCaption color="white">
+                  {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+                    ? agency.hasTriedSubscription
+                      ? t("BuyCTA")
+                      : t("TryCTA")
+                    : t("RenewCTA")}
+                </RyogoCaption>
               </Button>
             </Link>
           )}
@@ -135,9 +137,11 @@ export default async function NewBookingPageComponent({
               {isOwner && (
                 <Link href="/dashboard/account/subscription">
                   <Button variant={"brand"} size="lg">
-                    {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                      ? t("BuyCTA")
-                      : t("RenewCTA")}
+                    <RyogoCaption color="white">
+                      {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+                        ? t("BuyCTA")
+                        : t("RenewCTA")}
+                    </RyogoCaption>
                   </Button>
                 </Link>
               )}

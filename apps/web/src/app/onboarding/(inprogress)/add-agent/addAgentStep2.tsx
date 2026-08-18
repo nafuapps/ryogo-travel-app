@@ -43,7 +43,8 @@ export function AddAgentConfirm(props: {
           photos: props.finalData.data.photos,
         },
       }
-      if (await addAgentAction(newAgentData)) {
+      const addAgent = await addAgentAction(newAgentData)
+      if (addAgent) {
         props.onNext()
       } else {
         //Take to dashboard page and show error

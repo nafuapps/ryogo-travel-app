@@ -809,6 +809,7 @@
         "/dashboard/support/tickets/[id]": "View Support Ticket",
         "/dashboard/users": "Users",
         "/dashboard/users/new": "New Agent",
+        "/dashboard/users/add-owner": "Add Owner",
         "/dashboard/users/[id]": "User Details",
         "/dashboard/users/[id]/change-email": "Change User Email",
         "/dashboard/users/[id]/change-phone": "Change User Phone",
@@ -2589,19 +2590,47 @@
         "Description": "Get latest news and updates related to RyoGo Travel App"
       },
       "FAQs": {
-        "Title": "Top Questions",
-        "Description": "Get answers to frequently asked questions and queries",
-        "Q1": {
-          "Question": "How do I create a new booking",
-          "Answer": ""
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common doubts and queries",
+        "GetHelp": {
+          "Question": "How do I get help in RyoGo?",
+          "Answer": "The fastest way to get answers is to browse through our detailed support documentation pages. If you still need help, you may contact our support team. If you want fast-tracked resolution, you may raise support tickets. This feature is only available in Premium plan."
         },
-        "Q2": {
-          "Question": "How do I know the status of a booking?",
-          "Answer": ""
+        "Learn": {
+          "Question": "How do I learn more about RyoGo app and its features?",
+          "Answer": "You can find all the learning resources you need in our Help & Support center under categorized pages. Moreover, you can find demo tutorial videos here (and on our YouTube channel). You can always contact our support team for any queries."
         },
-        "Q3": {
-          "Question": "How do I reach out to the customer?",
-          "Answer": ""
+        "Started": {
+          "Question": "How do I get started in RyoGo?",
+          "Answer": "Since you are here, that means you already have an account with us. Now you can visit 'Getting Started' help page to know the next steps."
+        },
+        "Account": {
+          "Question": "How do I know more about my account?",
+          "Answer": "You can visit 'Accounts & Subscription' help page to learn all about how Accounts work in RyoGo."
+        },
+        "Bookings": {
+          "Question": "How do I create and manage bookings?",
+          "Answer": "Please visit 'Bookings' help page to learn about how Bookings work in RyoGo. You can create a booking by clicking the 'New Booking' option in the header bar."
+        },
+        "Vehicles": {
+          "Question": "How do I manage vehicles in RyoGo?",
+          "Answer": "RyoGo removes all the headache of managing your vehicles by bringing all the information in a single hub. You may visit 'Vehicles' help page to learn all about fleet management."
+        },
+        "Drivers": {
+          "Question": "How do I onboard drivers?",
+          "Answer": "You can visit 'Drivers' help page to know all about driver-related features in RyoGo."
+        },
+        "Users": {
+          "Question": "How do I manage users in my agency?",
+          "Answer": "Everyone who can login to RyoGo as part of your agency (agents and drivers) are your users. Please visit 'Users' help page to understand more about user management in RyoGo."
+        },
+        "Customers": {
+          "Question": "How do I add customers in RyoGo?",
+          "Answer": "RyoGo helps you maintain all your customers details in one place instead of lookng around and going through multiple notebooks. Learn all about customer management in 'Customers' help page."
+        },
+        "Subscription": {
+          "Question": "How does subscription work?",
+          "Answer": "Every agency has a subscription plan associated with it. 'Basic' is our free forever plan with basic features and limited usage. 'Premium' is our paid plan with advanced features and unlimited usage. You can upgrade your plan at any time. We also provide a {days} day free premium trial. You can visit 'Account & Subscription' help page to learn more about subscription in RyoGo."
         }
       },
       "Contact": {
@@ -2779,10 +2808,10 @@
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
-        "Description": "Get answers to common account and subscription related questions",
+        "Description": "Get answers to common account and subscription related queries",
         "Q1": {
-          "Question": "",
-          "Answer": ""
+          "Question": "Can I add more users to my agency?",
+          "Answer": "Yes, you can add drivers and agents to your account. However, under Basic plan, you can only add/assign limited number of users. You can upgrade to Premium plan to add unlimited users. Also, you can add more owners to your agency under Premium plan."
         },
         "Q2": {
           "Question": "",
@@ -4187,7 +4216,8 @@
     "Users": {
       "Photo": "User photo",
       "Owners": {
-        "Title": "OWNERS"
+        "Title": "OWNERS",
+        "AddOwner": "Add Owner"
       },
       "Agents": {
         "Title": "AGENTS",
@@ -4200,6 +4230,7 @@
     },
     "UserDetails": {
       "Photo": "User photo",
+      "Admin": " (Admin)",
       "CallUser": "Call User",
       "ChatUser": "Chat with User",
       "ChangeEmail": {
@@ -4235,6 +4266,49 @@
         "Success": "Phone updated successfully!",
         "Error": "Cannot update phone.. please try again later"
       }
+    },
+    "AddOwner": {
+      "TrialWarning": "You cannot add more owners in basic plan.",
+      "ExpiredWarning": "Your subscription plan has expired.",
+      "TrialAction": "Please upgrade your subscription plan to add more owners!",
+      "ExpiredAction": "Please renew your subscription plan to add more owners!",
+      "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
+      "RenewCTA": "Renew Subscription",
+      "Field1": {
+        "Title": "Name",
+        "Placeholder": "Vikram Sharma",
+        "Description": "Enter the user's name",
+        "Error1": "Name must be atleast 5 characters",
+        "Error2": "Name must be less than 30 characters"
+      },
+      "Field2": {
+        "Title": "Phone number",
+        "Placeholder": "9988776655",
+        "Description": "Enter the user's phone number (to be used for login)",
+        "Error1": "Phone number must be 10 digits"
+      },
+      "Field3": {
+        "Title": "Email",
+        "Placeholder": "surender.kumar@gmail.com",
+        "Description": "Enter the user's email address (login password will be sent here).",
+        "Error1": "Invalid email",
+        "Error2": "Email must be less than 60 characters"
+      },
+      "Field4": {
+        "Title": "Photo (optional)",
+        "Placeholder": "UPLOAD",
+        "Description": "Upload the user's photo",
+        "Error1": "Image file size should be less than 1MB",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
+      },
+      "PrimaryCTA": "Confirm and Add Owner",
+      "Loading": "Loading",
+      "SecondaryCTA": "Back",
+      "APIError1": "Owner with this phone already added .. try adding with a different phone",
+      "APIError2": "Owner with this phone and email is already added to another agency.. try adding with a different phone or email",
+      "Success": "Owner added successfully!",
+      "Error": "Cannot add owner.. Try again later!"
     },
     "NewAgent": {
       "TrialWarning": "You have reached the limit for basic plan.",
@@ -4539,7 +4613,8 @@
         "UserPhotoChanged": "{userName} photo has changed",
         "DowngradedAgencyToBasic": "Agency has been downgraded to BASIC plan",
         "AgencyLogoChanged": "Agency logo has been changed by {userName}",
-        "OwnerAdded": "Owner account created for {userName}",
+        "OwnerAdded": "Another owner {addedOwnerName} has been added by {userName}",
+        "OwnerCreated": "Agency owner account created for {userName}",
         "AgencyCreated": "Agency has been created by {userName}",
         "AgencyQRCodeChanged": "Agency QR code has been changed by {userName}",
         "TryPremium": "Trial Premium plan has been activated by {userName}"
@@ -4707,6 +4782,16 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Activate"
       },
+      "TransferAdmin": {
+        "Label": "Transfer Admin",
+        "Title": "Are you sure you want to transfer admin rights to this user?",
+        "Desc": "When transferred, you will no longer be the admin of this agency.",
+        "NoCTA": "No",
+        "Success": "Admin rights transferred!",
+        "Error": "Cannot transfer admin.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Transfer"
+      },
       "ResetUserPassword": {
         "Label": "Reset User Password",
         "Title": "Are you sure you want to reset the password for this user?",
@@ -4791,6 +4876,7 @@
       "Quote": "Hello *{customerName}*, your quotation for the trip from *{source}* to *{destination}* on *{startDate}* is ready with booking ID *#{bookingId}*. The estimated amount is *₹{amount}*. To confirm this booking, contact us at *{agencyPhone}*. You can download and view the detailed quote here: {quoteLink}",
       "DriverInvite": "Hello *{driverName}*,%0A you have been invited to join *{agencyName}* as a driver. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
       "AgentInvite": "Hello *{agentName}*,%0A you have been invited to join *{agencyName}* as an agent. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
+      "OwnerInvite": "Hello *{ownerName}*,%0A you have been invited to join *{agencyName}* as another owner. A password has been sent to your email address: {emailId}. Click the link below to login: {inviteLink}",
       "TrackBooking": "Hello! You can track your booking at: ${bookingLink}"
     }
   },
@@ -6352,6 +6438,7 @@
         "ConfrimedBookings": "Confirmed bookings (in last {days} days)",
         "AssignmentSuggestions": "Get vehicle and driver assignment suggestion",
         "SendMessages": "Send timely messages and share invoices with customers via WhatsApp",
+        "ReconcileBookings": "Reconcile expenses and transactions for completed bookings",
         "DriverApp": "Driver App",
         "DriverAppAccess": "Driver can access app to manage trips",
         "DriverExpenses": "Driver can add expenses",

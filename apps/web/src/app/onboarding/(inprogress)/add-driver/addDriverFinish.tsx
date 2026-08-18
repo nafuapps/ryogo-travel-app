@@ -9,13 +9,13 @@ import {
 } from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import getDriverInviteMessageLink from "@/components/whatsapp/getDriverInviteMessageLink"
 import { Button } from "@/components/ui/button"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useTransition } from "react"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useRouter } from "next/navigation"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 
 export function AddDriverFinish(props: {
   finalData: AddDriverRequestType
@@ -33,11 +33,18 @@ export function AddDriverFinish(props: {
     })
   }
 
-  const whatsappInviteLink = getDriverInviteMessageLink(
+  const u = useTranslations("Dashboard.Whatsapp")
+  const inviteLink = `${window.location.origin}/auth/login`
+  const message = u("DriverInvite", {
+    driverName: props.finalData.data.name,
+    agencyName: props.agencyName,
+    emailId: props.finalData.data.email,
+    inviteLink: inviteLink,
+  })
+
+  const whatsappInviteLink = getWhatsappMessageLink(
     props.finalData.data.phone,
-    props.finalData.data.name,
-    props.agencyName,
-    props.finalData.data.email,
+    message,
   )
 
   return (

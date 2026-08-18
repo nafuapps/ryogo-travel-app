@@ -1,12 +1,13 @@
 "use server"
 
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
-import getQuoteMessageLink from "@/components/whatsapp/getQuoteMessageLink"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getTranslations } from "next-intl/server"
 
 export async function sendQuoteAction(
   id: string,
@@ -51,16 +52,20 @@ export async function sendQuoteAction(
   }
 
   //Send quote pdf to customer over whatsapp
-  const quoteMessage = await getQuoteMessageLink(
+  const t = await getTranslations("Dashboard.Whatsapp")
+  const message = t("Quote", {
+    customerName: bookingDetails.customer.name,
+    bookingId: bookingDetails.id,
+    source: bookingDetails.source.city,
+    destination: bookingDetails.destination.city,
+    startDate: bookingDetails.startDate.toLocaleDateString(),
+    amount: bookingDetails.totalAmount.toString(),
+    agencyPhone: bookingDetails.assignedUser.phone,
+    quoteLink: getFileUrl(quoteUrl),
+  })
+  const quoteMessage = getWhatsappMessageLink(
     bookingDetails.customer.phone,
-    bookingDetails.customer.name,
-    bookingDetails.id,
-    bookingDetails.source.city,
-    bookingDetails.destination.city,
-    bookingDetails.totalAmount.toString(),
-    bookingDetails.startDate.toLocaleDateString(),
-    bookingDetails.assignedUser.phone,
-    getFileUrl(quoteUrl),
+    message,
   )
 
   return quoteMessage

@@ -9,7 +9,7 @@ export default function SupportSectionHeader({
 }) {
   return (
     <>
-      <RyogoH3 weight="font-bold" className="mx-auto text-center mt-4 lg:mt-5">
+      <RyogoH3 weight="font-bold" className="mx-auto text-center mt-5 lg:mt-6">
         {title}
       </RyogoH3>
       <RyogoSmall color="light" className="mx-auto text-center mb-4 lg:mb-5">

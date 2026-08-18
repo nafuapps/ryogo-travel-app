@@ -1,3 +1,5 @@
+"use client"
+
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
@@ -10,10 +12,10 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { Button } from "@/components/ui/button"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { MessageSquareShare } from "lucide-react"
-import getAgentInviteMessageLink from "@/components/whatsapp/getAgentInviteMessageLink"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 
 export function AddAgentFinish(props: {
   finalData: AddAgentRequestType
@@ -31,17 +33,24 @@ export function AddAgentFinish(props: {
     })
   }
 
-  const whatsappInviteLink = getAgentInviteMessageLink(
+  const u = useTranslations("Dashboard.Whatsapp")
+  const inviteLink = `${window.location.origin}/auth/login`
+  const message = u("AgentInvite", {
+    agentName: props.finalData.data.name,
+    agencyName: props.agencyName,
+    emailId: props.finalData.data.email,
+    inviteLink: inviteLink,
+  })
+
+  const whatsappInviteLink = getWhatsappMessageLink(
     props.finalData.data.phone,
-    props.finalData.data.name,
-    props.agencyName,
-    props.finalData.data.email,
+    message,
   )
 
   return (
-    <OnboardingStepForm formId="Step6Form">
-      <OnboardingStepContent contentId="Step6Content" success>
-        <OnboardingSuccessIcon iconId="Step6Icon" />
+    <OnboardingStepForm formId="FinishForm">
+      <OnboardingStepContent contentId="FinishContent" success>
+        <OnboardingSuccessIcon iconId="FinishIcon" />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
         <RyogoSmall color="slate">
@@ -58,7 +67,7 @@ export function AddAgentFinish(props: {
           <RyogoIcon icon={MessageSquareShare} size="sm" color="slate" />
         </Button>
       </OnboardingStepContent>
-      <OnboardingStepActions actionsId="Step6Actions">
+      <OnboardingStepActions actionsId="FinishActions">
         <Button
           variant={"default"}
           size={"lg"}

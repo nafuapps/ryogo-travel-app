@@ -1,10 +1,11 @@
 "use server"
 
-import getCancellationMessageLink from "@/components/whatsapp/getCancellationMessageLink"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { getTranslations } from "next-intl/server"
 
 export async function cancelBookingAction(
   id: string,
@@ -49,14 +50,18 @@ export async function cancelBookingAction(
     if (!bookingDetails) return
 
     //Send booking cancellation pdf to customer over whatsapp
-    const cancelMessage = await getCancellationMessageLink(
+    const t = await getTranslations("Dashboard.Whatsapp")
+    const message = t("Cancellation", {
+      customerName: bookingDetails.customer.name,
+      bookingId: bookingDetails.id,
+      source: bookingDetails.source.city,
+      destination: bookingDetails.destination.city,
+      startDate: bookingDetails.startDate.toLocaleDateString(),
+      agencyPhone: bookingDetails.assignedUser.phone,
+    })
+    const cancelMessage = getWhatsappMessageLink(
       bookingDetails.customer.phone,
-      bookingDetails.customer.name,
-      bookingDetails.id,
-      bookingDetails.source.city,
-      bookingDetails.destination.city,
-      bookingDetails.startDate.toLocaleDateString(),
-      bookingDetails.assignedUser.phone,
+      message,
     )
     return cancelMessage
   }

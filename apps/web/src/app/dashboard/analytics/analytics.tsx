@@ -5,7 +5,7 @@ import { Hourglass } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
-import { RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { APP_TRIAL_MODE } from "@/lib/uiConfig"
@@ -50,11 +50,13 @@ export default async function AnalyticsPageComponent({
           </RyogoP>
           <Link href="/dashboard/account/subscription">
             <Button variant={"brand"} size="lg">
-              {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                ? agency.hasTriedSubscription
-                  ? t("BuyCTA")
-                  : t("TryCTA")
-                : t("RenewCTA")}
+              <RyogoCaption color="white">
+                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+                  ? agency.hasTriedSubscription
+                    ? t("BuyCTA")
+                    : t("TryCTA")
+                  : t("RenewCTA")}
+              </RyogoCaption>
             </Button>
           </Link>
         </SectionWrapper>

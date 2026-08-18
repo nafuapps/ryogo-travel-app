@@ -16,7 +16,7 @@ import { APP_TRIAL_MODE } from "@/lib/uiConfig"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { Hourglass } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { RyogoH4, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -83,11 +83,13 @@ export default async function ReconcileBookingPage({
           </RyogoH4>
           <Link href="/dashboard/account/subscription">
             <Button variant={"brand"} size="lg">
-              {isBasic
-                ? agency.hasTriedSubscription
-                  ? t("BuyCTA")
-                  : t("TryCTA")
-                : t("RenewCTA")}
+              <RyogoCaption color="white">
+                {isBasic
+                  ? agency.hasTriedSubscription
+                    ? t("BuyCTA")
+                    : t("TryCTA")
+                  : t("RenewCTA")}
+              </RyogoCaption>
             </Button>
           </Link>
         </SectionWrapper>

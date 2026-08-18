@@ -7,6 +7,7 @@ import UserDetailsPageComponent from "./userDetails"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
 
 export const metadata: Metadata = {
   title: `User Details - ${pageTitle}`,
@@ -20,14 +21,24 @@ export default async function UserDetailsPage({
 }) {
   const { userId } = await params
 
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const user = await userServices.findUserDetailsById(userId)
   if (!user) {
     redirect("/dashboard/users", RedirectType.replace)
   }
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]"} />
-      <UserDetailsPageComponent user={user} />
+      <UserDetailsPageComponent
+        user={user}
+        currentUserId={currentUser.userId}
+        isCurrentUserAdmin={currentUser.isAdmin}
+      />
     </MainWrapper>
   )
 }

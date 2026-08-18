@@ -1,12 +1,13 @@
 "use server"
 
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
-import getInvoiceMessageLink from "@/components/whatsapp/getInvoiceMessageLink"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingInvoicePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getTranslations } from "next-intl/server"
 
 export async function sendInvoiceAction(
   id: string,
@@ -51,15 +52,19 @@ export async function sendInvoiceAction(
   }
 
   // Send invoice pdf to customer over whatsapp
-  const invoiceMessage = await getInvoiceMessageLink(
+  const t = await getTranslations("Dashboard.Whatsapp")
+  const message = t("Invoice", {
+    customerName: bookingDetails.customer.name,
+    bookingId: bookingDetails.id,
+    source: bookingDetails.source.city,
+    destination: bookingDetails.destination.city,
+    startDate: bookingDetails.startDate.toLocaleDateString(),
+    agencyPhone: bookingDetails.assignedUser.phone,
+    invoiceLink: getFileUrl(invoiceUrl),
+  })
+  const invoiceMessage = getWhatsappMessageLink(
     bookingDetails.customer.phone,
-    bookingDetails.customer.name,
-    bookingDetails.id,
-    bookingDetails.source.city,
-    bookingDetails.destination.city,
-    bookingDetails.startDate.toLocaleDateString(),
-    bookingDetails.assignedUser.phone,
-    getFileUrl(invoiceUrl),
+    message,
   )
 
   return invoiceMessage

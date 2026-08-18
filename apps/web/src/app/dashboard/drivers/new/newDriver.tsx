@@ -9,7 +9,7 @@ import {
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { BASIC_PLAN_DRIVER_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
-import { RyogoH4, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { getTranslations } from "next-intl/server"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -69,11 +69,13 @@ export default async function NewDriverPageComponent({
           {isOwner && (
             <Link href="/dashboard/account/subscription">
               <Button variant={"brand"} size="lg">
-                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? agency.hasTriedSubscription
-                    ? t("BuyCTA")
-                    : t("TryCTA")
-                  : t("RenewCTA")}
+                <RyogoCaption color="white">
+                  {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+                    ? agency.hasTriedSubscription
+                      ? t("BuyCTA")
+                      : t("TryCTA")
+                    : t("RenewCTA")}
+                </RyogoCaption>
               </Button>
             </Link>
           )}

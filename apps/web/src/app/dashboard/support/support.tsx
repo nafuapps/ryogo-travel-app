@@ -18,8 +18,10 @@ import { Separator } from "@/components/ui/separator"
 import {
   SupportFAQWrapper,
   SupportFAQItem,
+  SupportFAQItemType,
 } from "@/components/flows/support/supportFAQWrapper"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 
 export default async function SupportPageComponent({
   isOwner,
@@ -27,6 +29,49 @@ export default async function SupportPageComponent({
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.Support")
+
+  const faqItems: SupportFAQItemType[] = [
+    {
+      question: t("FAQs.GetHelp.Question"),
+      answer: t("FAQs.GetHelp.Answer"),
+    },
+    {
+      question: t("FAQs.Learn.Question"),
+      answer: t("FAQs.Learn.Answer"),
+    },
+    {
+      question: t("FAQs.Started.Question"),
+      answer: t("FAQs.Started.Answer"),
+    },
+    {
+      question: t("FAQs.Account.Question"),
+      answer: t("FAQs.Account.Answer"),
+    },
+    {
+      question: t("FAQs.Bookings.Question"),
+      answer: t("FAQs.Bookings.Answer"),
+    },
+    {
+      question: t("FAQs.Vehicles.Question"),
+      answer: t("FAQs.Vehicles.Answer"),
+    },
+    {
+      question: t("FAQs.Drivers.Question"),
+      answer: t("FAQs.Drivers.Answer"),
+    },
+    {
+      question: t("FAQs.Users.Question"),
+      answer: t("FAQs.Users.Answer"),
+    },
+    {
+      question: t("FAQs.Customers.Question"),
+      answer: t("FAQs.Customers.Answer"),
+    },
+    {
+      question: t("FAQs.Subscription.Question"),
+      answer: t("FAQs.Subscription.Answer", { day: PREMIUM_TRIAL_DAYS }),
+    },
+  ]
 
   return (
     <PageWrapper id="DashboardSupportPage" disableScrollInMobile>
@@ -112,18 +157,13 @@ export default async function SupportPageComponent({
         description={t("FAQs.Description")}
       />
       <SupportFAQWrapper>
-        <SupportFAQItem
-          question={t("FAQs.Q1.Question")}
-          answer={t("FAQs.Q1.Answer")}
-        />
-        <SupportFAQItem
-          question={t("FAQs.Q2.Question")}
-          answer={t("FAQs.Q2.Answer")}
-        />
-        <SupportFAQItem
-          question={t("FAQs.Q3.Question")}
-          answer={t("FAQs.Q3.Answer")}
-        />
+        {faqItems.map((item) => (
+          <SupportFAQItem
+            key={item.question}
+            question={item.question}
+            answer={item.answer}
+          />
+        ))}
       </SupportFAQWrapper>
     </PageWrapper>
   )

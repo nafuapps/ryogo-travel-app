@@ -1,7 +1,7 @@
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 import RiderSidebar from "@/components/sidebar/riderSidebar"
-import { getCurrentUser, logout } from "@/lib/auth"
+import { getCurrentUser, logout, updateCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -23,6 +23,9 @@ export default async function RiderLayout({
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+
+  //Update current user session cookie from DB every X hours
+  await updateCurrentUser()
 
   //If suspended, logout user
   if (currentUser.status === UserStatusEnum.SUSPENDED) {

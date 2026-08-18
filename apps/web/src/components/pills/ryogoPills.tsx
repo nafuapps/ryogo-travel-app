@@ -17,9 +17,6 @@ type RyogoPillColor = "slate" | "brand" | "green" | "red" | "yellow" | "light"
 
 function getPillColor(color?: RyogoPillColor) {
   switch (color) {
-    case undefined:
-    case "slate":
-      return "bg-slate-700 dark:bg-slate-200"
     case "light":
       return "bg-slate-400 dark:bg-slate-500"
     case "brand":
@@ -30,6 +27,9 @@ function getPillColor(color?: RyogoPillColor) {
       return "bg-red-700 dark:bg-red-200"
     case "yellow":
       return "bg-yellow-700 dark:bg-yellow-200"
+    case "slate":
+    case undefined:
+      return "bg-slate-700 dark:bg-slate-200"
   }
 }
 

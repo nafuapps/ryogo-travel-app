@@ -11,7 +11,7 @@ import {
   PageWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoH4 } from "@/components/typography"
+import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
 import { Hourglass } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
@@ -61,11 +61,13 @@ export default async function SupportTicketsLayout({
             {currentUser.userRole === UserRolesEnum.OWNER && (
               <Link href="/dashboard/account/subscription">
                 <Button variant={"brand"} size="lg">
-                  {isBasic
-                    ? agency.hasTriedSubscription
-                      ? t("BuyCTA")
-                      : t("TryCTA")
-                    : t("RenewCTA")}
+                  <RyogoCaption color="white">
+                    {isBasic
+                      ? agency.hasTriedSubscription
+                        ? t("BuyCTA")
+                        : t("TryCTA")
+                      : t("RenewCTA")}
+                  </RyogoCaption>
                 </Button>
               </Link>
             )}

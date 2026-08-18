@@ -14,6 +14,7 @@ import {
   AddDriverRequestType,
   CreateOwnerAccountRequestType,
   AddAgentRequestType,
+  AddOwnerRequestType,
 } from "../types/user.types"
 import { driverRepository } from "../repositories/driver.repo"
 import { bookingRepository } from "../repositories/booking.repo"
@@ -238,6 +239,7 @@ export const userServices = {
       password: passwordHash,
       verificationCode: generateVerificationCode(),
       codeSentAt: new Date(),
+      isAdmin: true, //This user is the creator of the agency
     }
 
     //Step7: Create the owner user
@@ -292,6 +294,7 @@ export const userServices = {
       status: UserStatusEnum.NEW,
       agencyId: agencyId,
       password: passwordHash,
+      isAdmin: false,
     })
     if (!newUser[0]) {
       return
@@ -302,6 +305,106 @@ export const userServices = {
       name: newUser[0].name,
       password: newPassword,
     }
+  },
+
+  //Add Owner (Premium flow - only admin can add owner)
+  async addOwnerUser(
+    { agencyId, data }: AddOwnerRequestType,
+    currentUserId: string,
+  ) {
+    //Step0: If currentUser is not admin, return
+    const currentUser = await userRepository.readUserById(currentUserId)
+    if (
+      !currentUser ||
+      !currentUser.isAdmin ||
+      currentUser.userRole !== UserRolesEnum.OWNER
+    ) {
+      return
+    }
+    //Step1: Check if owner with same phone already exists in this agency
+    const existingUserInAgency =
+      await userRepository.readUserByPhoneRolesAgencyId(
+        agencyId,
+        [UserRolesEnum.OWNER],
+        data.phone,
+      )
+    if (existingUserInAgency) {
+      return
+    }
+
+    //Step2: Check if owner (phone, email) already exists in the system
+    const existingUserInSystem = await userRepository.readUserByPhoneRoleEmail(
+      data.phone,
+      [UserRolesEnum.OWNER],
+      data.email,
+    )
+    if (existingUserInSystem) {
+      return
+    }
+
+    //Step3: Generate a new password
+    const newPassword = generateNewPassword()
+    const passwordHash = await generatePasswordHash(newPassword)
+
+    //Step4: Create the owner user
+    const newUser = await userRepository.createUser({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      userRole: UserRolesEnum.OWNER,
+      status: UserStatusEnum.NEW,
+      agencyId: agencyId,
+      password: passwordHash,
+      isAdmin: false,
+    })
+    if (!newUser[0]) {
+      return
+    }
+    return {
+      id: newUser[0].id,
+      email: newUser[0].email,
+      name: newUser[0].name,
+      password: newPassword,
+    }
+  },
+
+  async transferAdmin(
+    currentUserId: string,
+    otherUserId: string,
+    agencyId: string,
+  ) {
+    const currentUser = await userRepository.readUserById(currentUserId)
+    if (
+      !currentUser ||
+      !currentUser.isAdmin ||
+      currentUser.userRole !== UserRolesEnum.OWNER ||
+      currentUser.agencyId !== agencyId
+    ) {
+      return
+    }
+    const otherUser = await userRepository.readUserById(currentUserId)
+    if (
+      !otherUser ||
+      otherUser.userRole !== UserRolesEnum.OWNER ||
+      otherUser.agencyId !== agencyId
+    ) {
+      return
+    }
+
+    const updatedCurrentUser = await userRepository.updateAdmin(
+      currentUserId,
+      false,
+    )
+    if (!updatedCurrentUser[0]) {
+      return
+    }
+
+    const updatedOtherUser = await userRepository.updateAdmin(otherUserId, true)
+    if (!updatedOtherUser[0]) {
+      return
+    }
+
+    return updatedOtherUser[0]
   },
 
   //Create Driver (Onboarding flow)
@@ -340,6 +443,7 @@ export const userServices = {
       status: UserStatusEnum.NEW,
       agencyId: agencyId,
       password: passwordHash,
+      isAdmin: false,
     })
     if (!newUser[0]) {
       return

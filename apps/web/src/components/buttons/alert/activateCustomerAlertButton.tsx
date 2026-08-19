@@ -10,13 +10,10 @@ import RyogoAlertDialog from "./ryogoAlertDialog"
 import { activateCustomerAction } from "@/app/actions/customers/activateCustomerAction"
 import { RyogoCaption } from "@/components/typography"
 
-type ActivateCustomerAlertButtonProps = {
+export default function ActivateCustomerAlertButton(props: {
   customerId: string
   agencyId: string
-}
-export default function ActivateCustomerAlertButton(
-  props: ActivateCustomerAlertButtonProps,
-) {
+}) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.ActivateCustomer")
   const router = useRouter()

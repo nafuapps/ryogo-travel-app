@@ -20,15 +20,14 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 
-type NewBookingStep4Props = {
+export default function NewBookingStep4(props: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
   >
-}
-export default function NewBookingStep4(props: NewBookingStep4Props) {
+}) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step4")
 
   const step4Schema = z.object({

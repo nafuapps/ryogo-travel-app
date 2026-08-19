@@ -11,11 +11,7 @@ import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { tryPremiumAction } from "@/app/actions/agencies/tryPremiumAction"
 import { RyogoCaption } from "@/components/typography"
 
-export default function TryPremiumAlertButton({
-  agencyId,
-  userId,
-  displayButton,
-}: {
+export default function TryPremiumAlertButton(props: {
   agencyId: string
   userId: string
   displayButton: React.ReactNode
@@ -26,7 +22,7 @@ export default function TryPremiumAlertButton({
 
   async function activate() {
     startTransition(async () => {
-      if (await tryPremiumAction(agencyId, userId)) {
+      if (await tryPremiumAction(props.agencyId, props.userId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {
@@ -40,7 +36,7 @@ export default function TryPremiumAlertButton({
       title={t("Title")}
       desc={t("Desc", { trialDays: PREMIUM_TRIAL_DAYS })}
       noCTA={t("NoCTA")}
-      labelChild={displayButton}
+      labelChild={props.displayButton}
     >
       <Button variant={"default"} onClick={activate} disabled={isPending}>
         {isPending && <Spinner />}

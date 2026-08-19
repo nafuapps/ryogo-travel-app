@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react"
 
-export type RyogoIconColor =
+type RyogoIconColorType =
   | "red"
   | "yellow"
   | "green"
@@ -9,9 +9,10 @@ export type RyogoIconColor =
   | "black"
   | "white"
   | "light"
-export type RyogoIconSize = "sm" | "md" | "lg" | "xl"
 
-function getIconColor(color?: RyogoIconColor) {
+export type RyogoIconSizeType = "sm" | "md" | "lg" | "xl"
+
+function getIconColor(color?: RyogoIconColorType) {
   switch (color) {
     case "red":
       return "text-red-700 dark:text-red-300"
@@ -33,7 +34,7 @@ function getIconColor(color?: RyogoIconColor) {
   }
 }
 
-function getBGColor(bgColor?: RyogoIconColor) {
+function getBGColor(bgColor?: RyogoIconColorType) {
   switch (bgColor) {
     case "red":
       return "bg-red-100 dark:bg-red-800"
@@ -53,7 +54,7 @@ function getBGColor(bgColor?: RyogoIconColor) {
   }
 }
 
-function getIconSize(size: RyogoIconSize) {
+function getIconSize(size: RyogoIconSizeType) {
   switch (size) {
     case "xl":
       return "size-20 lg:size-24"
@@ -68,8 +69,8 @@ function getIconSize(size: RyogoIconSize) {
 
 export function RyogoIcon(props: {
   icon: LucideIcon
-  size: RyogoIconSize
-  color?: RyogoIconColor
+  size: RyogoIconSizeType
+  color?: RyogoIconColorType
   thick?: boolean
   onClick?: () => void
   className?: string
@@ -80,12 +81,12 @@ export function RyogoIcon(props: {
 
 export function RyogoEnclosedIcon(props: {
   icon: LucideIcon
-  size: RyogoIconSize
-  color?: RyogoIconColor
+  size: RyogoIconSizeType
+  color?: RyogoIconColorType
   thick?: boolean
   onClick?: () => void
   circular?: boolean
-  bgColor?: RyogoIconColor
+  bgColor?: RyogoIconColorType
   className?: string
 }) {
   return (

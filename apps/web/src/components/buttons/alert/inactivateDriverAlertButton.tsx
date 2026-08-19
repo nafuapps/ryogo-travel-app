@@ -10,13 +10,10 @@ import RyogoAlertDialog from "./ryogoAlertDialog"
 import { inactivateDriverAction } from "@/app/actions/drivers/inactivateDriverAction"
 import { RyogoCaption } from "@/components/typography"
 
-type InactivateDriverAlertButtonProps = {
+export default function InactivateDriverAlertButton(props: {
   driverId: string
   agencyId: string
-}
-export default function InactivateDriverAlertButton(
-  props: InactivateDriverAlertButtonProps,
-) {
+}) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.InactivateDriver")
   const router = useRouter()

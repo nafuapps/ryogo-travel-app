@@ -20,18 +20,17 @@ import {
   NoOverlapScore,
 } from "@/components/flows/bookings/getBookingScore"
 
-type AssignUserTileProps = {
-  userData: FindOwnerAndAgentsByAgencyType[number]
-  selected: boolean
-  onClick: () => void
-  booking: NonNullable<FindBookingStatusByIdType>
-}
 export default function AssignUserTile({
   userData,
   booking,
   selected,
   onClick,
-}: AssignUserTileProps) {
+}: {
+  userData: FindOwnerAndAgentsByAgencyType[number]
+  selected: boolean
+  onClick: () => void
+  booking: NonNullable<FindBookingStatusByIdType>
+}) {
   const t = useTranslations("Dashboard.AssignUser.Tile")
 
   const isCurrentlyAssigned = booking.assignedUserId === userData.id

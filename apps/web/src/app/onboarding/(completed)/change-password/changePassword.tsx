@@ -12,14 +12,11 @@ import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import RyoGoLogo from "@/components/logo"
 
-type ChangePasswordPageComponentProps = {
+export default function ChangePasswordPageComponent(props: {
   userId: string
   agencyId: string
   role: UserRolesEnum
-}
-export default function ChangePasswordPageComponent(
-  props: ChangePasswordPageComponentProps,
-) {
+}) {
   const t = useTranslations("Onboarding.ChangePasswordPage")
   const { isMobile } = useSidebar()
 

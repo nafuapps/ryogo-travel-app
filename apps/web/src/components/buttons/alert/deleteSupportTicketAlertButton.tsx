@@ -11,13 +11,7 @@ import { deleteSupportTicketAction } from "@/app/actions/support/deleteSupportTi
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption } from "@/components/typography"
 
-export default function DeleteSupportTicketAlertButton({
-  ticketId,
-  userId,
-  agencyId,
-  status,
-  isRider,
-}: {
+export default function DeleteSupportTicketAlertButton(props: {
   ticketId: string
   userId: string
   agencyId: string
@@ -31,10 +25,19 @@ export default function DeleteSupportTicketAlertButton({
 
   async function deleteCustomMission() {
     startCancelTransition(async () => {
-      if (await deleteSupportTicketAction(ticketId, userId, agencyId, status)) {
+      if (
+        await deleteSupportTicketAction(
+          props.ticketId,
+          props.userId,
+          props.agencyId,
+          props.status,
+        )
+      ) {
         toast.success(t("Success"))
         router.replace(
-          isRider ? `/rider/mySupport/tickets` : `/dashboard/support/tickets`,
+          props.isRider
+            ? `/rider/mySupport/tickets`
+            : `/dashboard/support/tickets`,
         )
       } else {
         toast.error(t("Error"))

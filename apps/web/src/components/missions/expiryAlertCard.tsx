@@ -3,7 +3,7 @@ import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import moment from "moment"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import Link, { LinkProps } from "next/link"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { differenceInDays } from "date-fns"
 import {

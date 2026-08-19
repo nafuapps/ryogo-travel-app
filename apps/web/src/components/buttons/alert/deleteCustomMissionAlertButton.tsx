@@ -10,12 +10,7 @@ import RyogoAlertDialog from "./ryogoAlertDialog"
 import { deleteCustomMissionAction } from "@/app/actions/missions/deleteCustomMissionAction"
 import { RyogoCaption } from "@/components/typography"
 
-export default function DeleteCustomMissionAlertButton({
-  missionId,
-  userId,
-  agencyId,
-  isRider,
-}: {
+export default function DeleteCustomMissionAlertButton(props: {
   missionId: string
   userId: string
   agencyId: string
@@ -28,10 +23,16 @@ export default function DeleteCustomMissionAlertButton({
 
   async function deleteCustomMission() {
     startCancelTransition(async () => {
-      if (await deleteCustomMissionAction(missionId, userId, agencyId)) {
+      if (
+        await deleteCustomMissionAction(
+          props.missionId,
+          props.userId,
+          props.agencyId,
+        )
+      ) {
         toast.success(t("Success"))
         router.replace(
-          isRider ? `/rider/myMissions` : `/dashboard/mission-control`,
+          props.isRider ? `/rider/myMissions` : `/dashboard/mission-control`,
         )
       } else {
         toast.error(t("Error"))

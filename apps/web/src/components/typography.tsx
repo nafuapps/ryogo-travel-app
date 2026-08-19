@@ -1,4 +1,4 @@
-type RyogoTextColor =
+type RyogoTextColorType =
   | "white"
   | "red"
   | "light"
@@ -6,9 +6,9 @@ type RyogoTextColor =
   | "brand"
   | "dark"
   | "yellow"
-type RyogoTextWeight = "font-normal" | "font-medium" | "font-bold"
+type RyogoTextWeightType = "font-normal" | "font-medium" | "font-bold"
 
-const getTextColor = (color?: RyogoTextColor) => {
+const getTextColor = (color?: RyogoTextColorType) => {
   if (color === "white") {
     return "text-white dark:text-slate-950"
   }
@@ -36,8 +36,8 @@ const getTextColor = (color?: RyogoTextColor) => {
 
 type RyogoTextProps = {
   children: React.ReactNode
-  color?: RyogoTextColor
-  weight?: RyogoTextWeight
+  color?: RyogoTextColorType
+  weight?: RyogoTextWeightType
   className?: string
 }
 

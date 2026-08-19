@@ -22,16 +22,13 @@ import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.serv
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
-type AddDriverPageComponentProps = {
+export default function AddDriverPageComponent(props: {
   agencyId: string
   agencyName: string
   userId: string
   userStatus: UserStatusEnum
   allDrivers: FindAllUsersByRoleType
-}
-export default function AddDriverPageComponent(
-  props: AddDriverPageComponentProps,
-) {
+}) {
   const t = useTranslations("Onboarding.AddDriverPage")
 
   const [finalData, setFinalData] = useState<AddDriverRequestType>({

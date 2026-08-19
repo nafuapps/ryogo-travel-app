@@ -34,7 +34,7 @@ import {
 } from "@/components/page/pageWrappers"
 import Link from "next/link"
 
-type NewBookingStep3Props = {
+export default function NewBookingStep3(props: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingFormDataType
@@ -46,8 +46,7 @@ type NewBookingStep3Props = {
   limited: boolean
   isSubscribed: boolean
   hasTriedSubscription: boolean
-}
-export default function NewBookingStep3(props: NewBookingStep3Props) {
+}) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step3")
 
   const step3Schema = z.object({

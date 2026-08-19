@@ -3,17 +3,12 @@ import { cookies } from "next/headers"
 import DashboardSidebar from "@/components/sidebar/dashboardSidebar"
 import { getCurrentUser, logout, updateCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import {
-  AgencyStatusEnum,
-  UserRolesEnum,
-  UserStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 // import CommandCenter from "@/components/command/commandCenter"
 import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export default async function DashboardLayout({
   children,
@@ -44,26 +39,22 @@ export default async function DashboardLayout({
     redirect("/rider", RedirectType.replace)
   }
 
-  //Get agency Data
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   //New user
   if (currentUser.status === UserStatusEnum.NEW) {
     if (isOwner) {
-      if (!currentUser.isVerified) {
-        //This is the first owner and agency which are being onboarded
-        if (agency.status === AgencyStatusEnum.NEW) {
+      //This is the creator owner, need to verify and continue onboarding
+      if (currentUser.isAdmin) {
+        if (!currentUser.isVerified) {
           redirect("/onboarding/verify-account", RedirectType.replace)
         }
-        //This is an added owner to an active agency, go for password change
+        redirect("/onboarding/add-vehicle", RedirectType.replace)
+      }
+      //Otherwise, it is an added owner, need to change password
+      if (!currentUser.isVerified) {
         redirect("/onboarding/change-password", RedirectType.replace)
       }
-      redirect("/onboarding/add-vehicle", RedirectType.replace)
     } else {
       //Else, go to change-password
       redirect("/onboarding/change-password", RedirectType.replace)

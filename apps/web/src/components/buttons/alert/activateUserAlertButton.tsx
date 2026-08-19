@@ -11,14 +11,11 @@ import { activateUserAction } from "@/app/actions/users/activateUserAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption } from "@/components/typography"
 
-type ActivateUserAlertButtonProps = {
+export default function ActivateUserAlertButton(props: {
   userId: string
   agencyId: string
   role: UserRolesEnum
-}
-export default function ActivateUserAlertButton(
-  props: ActivateUserAlertButtonProps,
-) {
+}) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.ActivateUser")
   const router = useRouter()

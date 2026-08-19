@@ -44,15 +44,14 @@ import {
 } from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
-type NewBookingStep2Props = {
+export default function NewBookingStep2(props: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
   >
-}
-export default function NewBookingStep2(props: NewBookingStep2Props) {
+}) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step2")
   const [selectedTripType, setSelectedTripType] = useState<BookingTypeEnum>(
     props.newBookingFormData.tripType,

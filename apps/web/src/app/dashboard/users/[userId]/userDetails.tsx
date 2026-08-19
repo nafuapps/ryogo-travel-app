@@ -109,10 +109,13 @@ export default async function UserDetailsPageComponent({
           />
           {user.userRole === UserRolesEnum.OWNER &&
             user.id !== currentUserId &&
+            ![UserStatusEnum.NEW, UserStatusEnum.SUSPENDED].includes(
+              user.status,
+            ) &&
             isCurrentUserAdmin && (
               <TransferAdminAlertButton
                 currentUserId={currentUserId}
-                userId={user.id}
+                otherUserId={user.id}
                 agencyId={user.agencyId}
               />
             )}

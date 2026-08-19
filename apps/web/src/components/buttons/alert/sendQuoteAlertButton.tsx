@@ -14,13 +14,12 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SEND_QUOTE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import { RyogoCaption } from "@/components/typography"
 
-type SendQuoteAlertButtonProps = {
+export default function SendQuoteAlertButton(props: {
   bookingId: string
   agencyId: string
   assignedUserId: string
   quoteSentOn: Date | null
-}
-export default function SendQuoteAlertButton(props: SendQuoteAlertButtonProps) {
+}) {
   const t = useTranslations("Dashboard.Buttons.SendQuote")
   const router = useRouter()
   const [isSendPending, startSendTransition] = useTransition()

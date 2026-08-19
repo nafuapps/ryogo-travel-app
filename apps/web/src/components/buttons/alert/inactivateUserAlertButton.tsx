@@ -11,14 +11,11 @@ import { inactivateUserAction } from "@/app/actions/users/inactivateUserAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption } from "@/components/typography"
 
-type InactivateUserAlertButtonProps = {
+export default function InactivateUserAlertButton(props: {
   userId: string
   agencyId: string
   role: UserRolesEnum
-}
-export default function InactivateUserAlertButton(
-  props: InactivateUserAlertButtonProps,
-) {
+}) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.InactivateUser")
   const router = useRouter()

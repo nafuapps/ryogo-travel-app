@@ -12,7 +12,7 @@ import { RyogoCaption } from "@/components/typography"
 
 export default function TransferAdminAlertButton(props: {
   currentUserId: string
-  userId: string
+  otherUserId: string
   agencyId: string
 }) {
   const [isPending, startTransition] = useTransition()
@@ -24,7 +24,7 @@ export default function TransferAdminAlertButton(props: {
       if (
         await transferAdminAction(
           props.currentUserId,
-          props.userId,
+          props.otherUserId,
           props.agencyId,
         )
       ) {

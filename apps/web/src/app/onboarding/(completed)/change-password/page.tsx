@@ -4,13 +4,8 @@ import { getCurrentUser } from "@/lib/auth"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ChangePasswordPageComponent from "./changePassword"
 import { redirect, RedirectType } from "next/navigation"
-import {
-  AgencyStatusEnum,
-  UserRolesEnum,
-  UserStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: `Change Password - ${pageTitle}`,
@@ -24,26 +19,18 @@ export default async function ChangePasswordPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  //Get agency Data
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
   // Owner
   if (currentUser.userRole === UserRolesEnum.OWNER) {
     if (currentUser.status === UserStatusEnum.NEW) {
-      //Owner not verified
-      if (!currentUser.isVerified) {
-        //This is the first owner and agency which are being onboarded
-        if (agency.status === AgencyStatusEnum.NEW) {
+      //This is the creator owner, need to verify and continue onboarding
+      if (currentUser.isAdmin) {
+        if (!currentUser.isVerified) {
           redirect("/onboarding/verify-account", RedirectType.replace)
         }
-        //Otherwise, it is a newly added owner to an active agency, can continue
-      } else {
         //Verified new owner, go to vehicle onboarding
         redirect("/onboarding/add-vehicle", RedirectType.replace)
       }
+      //Otherwise, it is an added owner, must continue to change password
     } else {
       //Activated owner, go to dashboard
       redirect("/dashboard", RedirectType.replace)

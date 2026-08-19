@@ -12,7 +12,7 @@ import {
 } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 
-export type CommandType = {
+type CommandType = {
   label: string
   icon: LucideIcon
   action: (term?: string) => void

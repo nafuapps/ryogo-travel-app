@@ -19,11 +19,7 @@ import { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
-export default function RyogoSidebar({
-  contentItems,
-  footerItems,
-  isOwner,
-}: {
+export default function RyogoSidebar(props: {
   contentItems: MenuItemType
   footerItems: MenuItemType
   isOwner: boolean
@@ -43,10 +39,10 @@ export default function RyogoSidebar({
         <RyoGoSidebarLogo open={sidebarOpen} />
       </SidebarHeader>
       <SidebarContent className="p-2">
-        {contentItems.map(
+        {props.contentItems.map(
           (item) =>
             //Show onlyOwner items only if isOwner
-            (item.onlyOwner ? isOwner : true) && (
+            (item.onlyOwner ? props.isOwner : true) && (
               <MenuButton
                 key={item.title}
                 {...item}
@@ -57,7 +53,7 @@ export default function RyogoSidebar({
         )}
       </SidebarContent>
       <SidebarFooter className="mb-3">
-        {footerItems.map((item) => (
+        {props.footerItems.map((item) => (
           <MenuButton
             key={item.title}
             {...item}

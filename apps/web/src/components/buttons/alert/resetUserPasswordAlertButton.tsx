@@ -10,10 +10,7 @@ import RyogoAlertDialog from "./ryogoAlertDialog"
 import { resetUserPasswordAction } from "@/app/actions/users/resetUserPasswordAction"
 import { RyogoCaption } from "@/components/typography"
 
-export default function ResetUserPasswordAlertButton({
-  userId,
-  agencyId,
-}: {
+export default function ResetUserPasswordAlertButton(props: {
   userId: string
   agencyId: string
 }) {
@@ -23,7 +20,7 @@ export default function ResetUserPasswordAlertButton({
 
   const reset = async () => {
     startTransition(async () => {
-      if (await resetUserPasswordAction(userId, agencyId)) {
+      if (await resetUserPasswordAction(props.userId, props.agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

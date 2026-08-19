@@ -12,11 +12,10 @@ import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
-type NewVehicleFormProps = {
+export default function NewVehicleForm(props: {
   agencyId: string
   existingVehicles: FindExistingVehiclesInAgencyType
-}
-export default function NewVehicleForm(props: NewVehicleFormProps) {
+}) {
   const [newVehicleFormData, setNewVehicleFormData] =
     useState<AddVehicleRequestType>({
       agencyId: props.agencyId,

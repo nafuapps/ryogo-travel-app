@@ -385,6 +385,9 @@ export const userServices = {
     const otherUser = await userRepository.readUserById(currentUserId)
     if (
       !otherUser ||
+      [UserStatusEnum.NEW, UserStatusEnum.SUSPENDED].includes(
+        otherUser.status,
+      ) ||
       otherUser.userRole !== UserRolesEnum.OWNER ||
       otherUser.agencyId !== agencyId
     ) {

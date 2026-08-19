@@ -13,9 +13,15 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption } from "@/components/typography"
 
-type RyogoPillColor = "slate" | "brand" | "green" | "red" | "yellow" | "light"
+type RyogoPillColorType =
+  | "slate"
+  | "brand"
+  | "green"
+  | "red"
+  | "yellow"
+  | "light"
 
-function getPillColor(color?: RyogoPillColor) {
+function getPillColor(color?: RyogoPillColorType) {
   switch (color) {
     case "light":
       return "bg-slate-400 dark:bg-slate-500"
@@ -35,7 +41,7 @@ function getPillColor(color?: RyogoPillColor) {
 
 export function RyogoPill(props: {
   label: string
-  bgColor: RyogoPillColor
+  bgColor: RyogoPillColorType
   className?: string
 }) {
   return (

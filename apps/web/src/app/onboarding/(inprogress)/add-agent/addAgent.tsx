@@ -19,15 +19,12 @@ import { AddAgentConfirm } from "./addAgentStep2"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 
-type AddAgentPageComponentProps = {
+export default function AddAgentPageComponent(props: {
   agencyId: string
   agencyName: string
   ownerId: string
   allAgents: FindAllUsersByRoleType
-}
-export default function AddAgentPageComponent(
-  props: AddAgentPageComponentProps,
-) {
+}) {
   const t = useTranslations("Onboarding.AddAgentPage")
 
   const [finalData, setFinalData] = useState<AddAgentRequestType>({

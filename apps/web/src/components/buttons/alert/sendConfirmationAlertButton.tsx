@@ -14,15 +14,12 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SEND_CONFIRMATION_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import { RyogoCaption } from "@/components/typography"
 
-type SendConfirmationAlertButtonProps = {
+export default function SendConfirmationAlertButton(props: {
   bookingId: string
   agencyId: string
   assignedUserId: string
   confirmationSentOn: Date | null
-}
-export default function SendConfirmationAlertButton(
-  props: SendConfirmationAlertButtonProps,
-) {
+}) {
   const t = useTranslations("Dashboard.Buttons.SendConfirmation")
   const router = useRouter()
 

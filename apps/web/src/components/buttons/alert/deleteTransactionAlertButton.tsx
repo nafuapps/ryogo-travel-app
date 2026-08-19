@@ -10,15 +10,12 @@ import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { RyogoCaption } from "@/components/typography"
 
-type DeleteTransactionAlertButtonProps = {
+export default function DeleteTransactionAlertButton(props: {
   bookingId: string
   transactionId: string
   agencyId: string
   assignedUserId: string
-}
-export default function DeleteTransactionAlertButton(
-  props: DeleteTransactionAlertButtonProps,
-) {
+}) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteTransaction")
   const router = useRouter()

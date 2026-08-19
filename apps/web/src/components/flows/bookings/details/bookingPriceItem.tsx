@@ -4,12 +4,11 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 
-type BookingPriceItemType = {
+export default function BookingPriceItem(props: {
   title: string
   value: string
   subtitle?: string
-}
-export default function BookingPriceItem(props: BookingPriceItemType) {
+}) {
   return (
     <SectionRowWrapper center>
       <RyogoCaption color="light">{props.title}</RyogoCaption>

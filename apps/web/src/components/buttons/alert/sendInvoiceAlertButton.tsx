@@ -14,15 +14,12 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SEND_INVOICE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import { RyogoCaption } from "@/components/typography"
 
-type SendInvoiceAlertButtonProps = {
+export default function SendInvoiceAlertButton(props: {
   bookingId: string
   agencyId: string
   assignedUserId: string
   invoiceSentOn: Date | null
-}
-export default function SendInvoiceAlertButton(
-  props: SendInvoiceAlertButtonProps,
-) {
+}) {
   const t = useTranslations("Dashboard.Buttons.SendInvoice")
   const router = useRouter()
 

@@ -10,16 +10,13 @@ import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { RyogoCaption } from "@/components/typography"
 
-type DeleteExpenseAlertButtonProps = {
+export default function DeleteExpenseAlertButton(props: {
   bookingId: string
   expenseId: string
   agencyId: string
   assignedUserId: string
   byDriver?: boolean
-}
-export default function DeleteExpenseAlertButton(
-  props: DeleteExpenseAlertButtonProps,
-) {
+}) {
   const [isCancelPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteExpense")
 

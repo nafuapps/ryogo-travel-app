@@ -116,14 +116,11 @@ export function OnboardingStepPrimaryAction(props: {
   )
 }
 
-export type OnboardingStepSecondaryActionProps = {
+export function OnboardingStepSecondaryAction(props: {
   children: React.ReactNode
   disabled?: boolean
   onClick?: () => void
-}
-export function OnboardingStepSecondaryAction(
-  props: OnboardingStepSecondaryActionProps,
-) {
+}) {
   return (
     <Button
       variant={"outline"}
@@ -137,10 +134,7 @@ export function OnboardingStepSecondaryAction(
   )
 }
 
-export type OnboardingSuccessIconProps = {
-  iconId: string
-}
-export function OnboardingSuccessIcon(props: OnboardingSuccessIconProps) {
+export function OnboardingSuccessIcon(props: { iconId: string }) {
   return (
     <div
       id={props.iconId}

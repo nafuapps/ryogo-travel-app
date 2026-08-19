@@ -10,12 +10,11 @@ import { NewDriverConfirm } from "./newDriverConfirm"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
-type NewDriverFormProps = {
+export default function NewDriverForm(props: {
   agencyId: string
   agencyName: string
   allDrivers: FindAllUsersByRoleType
-}
-export default function NewDriverForm(props: NewDriverFormProps) {
+}) {
   const [newDriverFormData, setNewDriverFormData] =
     useState<AddDriverRequestType>({
       agencyId: props.agencyId,

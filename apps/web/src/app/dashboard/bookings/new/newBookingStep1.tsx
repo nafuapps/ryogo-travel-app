@@ -32,7 +32,7 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 
-type NewBookingStep1Props = {
+export default function NewBookingStep1(props: {
   onNext: () => void
   newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
@@ -40,8 +40,7 @@ type NewBookingStep1Props = {
   >
   agencyId: string
   customers: FindCustomersInAgencyType
-}
-export default function NewBookingStep1(props: NewBookingStep1Props) {
+}) {
   const t = useTranslations("Dashboard.NewBooking.Form.Step1")
   const [existingCustomer, setExistingCustomer] = useState<
     FindCustomersInAgencyType[number] | undefined

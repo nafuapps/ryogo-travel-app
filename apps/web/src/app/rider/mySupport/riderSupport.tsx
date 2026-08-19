@@ -24,6 +24,7 @@ import SupportSectionHeader from "@/components/flows/support/supportSectionHeade
 import {
   SupportFAQWrapper,
   SupportFAQItem,
+  SupportFAQItemType,
 } from "@/components/flows/support/supportFAQWrapper"
 
 export default async function MySupportPageComponent({
@@ -32,6 +33,33 @@ export default async function MySupportPageComponent({
   isPremium: boolean
 }) {
   const t = await getTranslations("Rider.MySupport")
+
+  const faqItems: SupportFAQItemType[] = [
+    {
+      question: t("FAQs.GetHelp.Question"),
+      answer: t("FAQs.GetHelp.Answer"),
+    },
+    {
+      question: t("FAQs.Learn.Question"),
+      answer: t("FAQs.Learn.Answer"),
+    },
+    {
+      question: t("FAQs.Started.Question"),
+      answer: t("FAQs.Started.Answer"),
+    },
+    {
+      question: t("FAQs.Account.Question"),
+      answer: t("FAQs.Account.Answer"),
+    },
+    {
+      question: t("FAQs.Bookings.Question"),
+      answer: t("FAQs.Bookings.Answer"),
+    },
+    {
+      question: t("FAQs.Vehicle.Question"),
+      answer: t("FAQs.Vehicle.Answer"),
+    },
+  ]
 
   return (
     <DoubleContentWrapper>
@@ -87,18 +115,13 @@ export default async function MySupportPageComponent({
           description={t("FAQs.Description")}
         />
         <SupportFAQWrapper>
-          <SupportFAQItem
-            question={t("FAQs.Q1.Question")}
-            answer={t("FAQs.Q1.Answer")}
-          />
-          <SupportFAQItem
-            question={t("FAQs.Q2.Question")}
-            answer={t("FAQs.Q2.Answer")}
-          />
-          <SupportFAQItem
-            question={t("FAQs.Q3.Question")}
-            answer={t("FAQs.Q3.Answer")}
-          />
+          {faqItems.map((item) => (
+            <SupportFAQItem
+              key={item.question}
+              question={item.question}
+              answer={item.answer}
+            />
+          ))}
         </SupportFAQWrapper>
       </PageWrapper>
       <SideWrapper>

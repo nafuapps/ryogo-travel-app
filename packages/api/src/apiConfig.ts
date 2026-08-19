@@ -9,7 +9,7 @@ export const SESSION_COOKIE_UPDATE_HOURS = 1
 export const BASIC_BOOKINGS_SEARCH_DAYS = 30
 export const PREMIUM_BOOKINGS_SEARCH_DAYS = 365
 
-export const UPDATE_PRICE_DISTANCE_FACTOR = 0.9
+export const UPDATE_PRICE_DISTANCE_FACTOR = 1.1 //Actual distance = 1.1x estimated distance
 
 export const BOOKING_ASSIGNMENT_CRITICAL_DAYS = 1
 

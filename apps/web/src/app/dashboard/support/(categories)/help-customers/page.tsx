@@ -107,16 +107,16 @@ export default async function SupportHelpCustomersPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.Tracking.Question"),
+      answer: t("FAQs.Tracking.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.Rating.Question"),
+      answer: t("FAQs.Rating.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.AddingDetails.Question"),
+      answer: t("FAQs.AddingDetails.Answer"),
     },
   ]
 

@@ -1,5 +1,6 @@
 "use client"
 
+import { useRef } from "react"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import {
@@ -19,6 +20,7 @@ export default function SupportSideAccordionWrapper({
 }) {
   const isLargeScreen = window.innerWidth >= 1024
   const labelString = useTranslations("SupportAccordion")(label)
+  const accordionItemRef = useRef<HTMLDivElement>(null)
 
   return (
     <SectionWrapper id={label}>
@@ -26,8 +28,18 @@ export default function SupportSideAccordionWrapper({
         type="single"
         collapsible
         defaultValue={isLargeScreen ? label : undefined}
+        onValueChange={(value) => {
+          if (value === label) {
+            setTimeout(() => {
+              accordionItemRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+              })
+            }, 200)
+          }
+        }}
       >
-        <AccordionItem value={label}>
+        <AccordionItem ref={accordionItemRef} value={label}>
           <AccordionTrigger className="flex items-center justify-between gap-2.5 lg:gap-3 py-0">
             <RyogoCaption color="light">{labelString}</RyogoCaption>
           </AccordionTrigger>

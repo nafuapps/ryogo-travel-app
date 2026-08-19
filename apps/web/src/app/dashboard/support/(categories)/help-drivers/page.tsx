@@ -45,17 +45,12 @@ import {
   SupportTableTextRow,
 } from "@/components/flows/support/supportTableWrapper"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import {
-  CustomerStatusPill,
-  DriverStatusPill,
-} from "@/components/pills/ryogoPills"
-import {
-  CustomerStatusEnum,
-  DriverStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { DriverStatusPill } from "@/components/pills/ryogoPills"
+import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import SupportRelatedArticleLinkButton, {
   SupportRelatedArticleType,
 } from "@/components/flows/support/supportRelatedArticleType"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 
 /*
   - Overview
@@ -122,28 +117,28 @@ export default async function SupportHelpDriversPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.Overlap.Question"),
+      answer: t("FAQs.Overlap.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.Rating.Question"),
+      answer: t("FAQs.Rating.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.LoginDriverApp.Question"),
+      answer: t("FAQs.LoginDriverApp.Answer"),
     },
   ]
 
   const quickActions: SupportQuickActionType[] = [
     {
-      label: t("QuickActions.AddCustomer"),
-      href: "/dashboard/customers/new",
+      label: t("QuickActions.AddDriver"),
+      href: "/dashboard/drivers/new",
       icon: Plus,
     },
     {
-      label: t("QuickActions.AllCustomers"),
-      href: "/dashboard/customers",
+      label: t("QuickActions.AllDrivers"),
+      href: "/dashboard/drivers",
       icon: ChevronRight,
     },
   ]
@@ -373,6 +368,13 @@ async function EditingContent() {
       <RyogoCaption color="slate">
         {t("ModifyingDriver.Description")}
       </RyogoCaption>
+      {/* //TODO: Add ModifyingDriver page snapshot */}
+      <RyogoImage
+        alt="ModifyingDriver"
+        imageSize="xl"
+        src="/logoPWA.png"
+        className="self-center"
+      />
     </SupportContentSectionWrapper>
   )
 }
@@ -400,6 +402,7 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("Reassignment.Description")}
         </RyogoCaption>
+        <SupportWarningWrapper text={t("Reassignment.Warning")} />
       </SupportContentSectionWrapper>
     </>
   )
@@ -470,6 +473,9 @@ async function LeavesContent() {
       <SupportContentSectionWrapper title={t("EditingDriverLeave.Title")}>
         <RyogoCaption color="slate">
           {t("EditingDriverLeave.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("EditingDriverLeave.MarkCompleted")}
         </RyogoCaption>
         {/* //TODO: Add EditingDriverLeave page snapshot */}
         <RyogoImage

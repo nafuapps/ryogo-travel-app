@@ -25,7 +25,10 @@ import {
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { getCurrentUser } from "@/lib/auth"
-import { SESSION_COOKIE_EXPIRATION_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import {
+  PREMIUM_TRIAL_DAYS,
+  SESSION_COOKIE_EXPIRATION_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
 import {
   AgencyStatusEnum,
   UserRolesEnum,
@@ -116,16 +119,28 @@ export default async function SupportHelpAccountPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.AddUsers.Question"),
+      answer: t("FAQs.AddUsers.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.LoginMethod.Question"),
+      answer: t("FAQs.LoginMethod.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.ChangeAgency.Question"),
+      answer: t("FAQs.ChangeAgency.Answer"),
+    },
+    {
+      question: t("FAQs.WhySubscription.Question"),
+      answer: t("FAQs.WhySubscription.Answer"),
+    },
+    {
+      question: t("FAQs.PaymentMethod.Question"),
+      answer: t("FAQs.PaymentMethod.Answer"),
+    },
+    {
+      question: t("FAQs.CancelSubscription.Question"),
+      answer: t("FAQs.CancelSubscription.Answer"),
     },
   ]
 
@@ -411,6 +426,19 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
           label={t("PlanDetails.CTA")}
         />
       </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("PlanList.Title")}>
+        <RyogoCaption color="slate">{t("PlanList.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("PlanList.Caption")}>
+          <SupportTableTextRow
+            label={t("PlanList.Basic")}
+            desc={t("PlanList.BasicDescription")}
+          />
+          <SupportTableTextRow
+            label={t("PlanList.Premium")}
+            desc={t("PlanList.PremiumDescription")}
+          />
+        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
       {isOwner && (
         <SupportContentSectionWrapper title={t("GettingSubscription.Title")}>
           <RyogoCaption color="slate">
@@ -418,6 +446,9 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
           </RyogoCaption>
           <RyogoCaption color="slate">
             {t("GettingSubscription.PlanTerms")}
+          </RyogoCaption>
+          <RyogoCaption color="slate">
+            {t("GettingSubscription.Trial", { trialDays: PREMIUM_TRIAL_DAYS })}
           </RyogoCaption>
           {/* //TODO: Add subscription buy page snapshot */}
           <RyogoImage
@@ -432,16 +463,32 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
           />
         </SupportContentSectionWrapper>
       )}
-      <SupportContentSectionWrapper title={t("PlanList.Title")}>
-        <RyogoCaption color="slate">{t("PlanList.Description")}</RyogoCaption>
-        <SupportTableWrapper label={t("PlanList.Caption")}>
+      <SupportContentSectionWrapper title={t("Benefits.Title")}>
+        <RyogoCaption color="slate">{t("Benefits.Description")}</RyogoCaption>
+        <SupportTableWrapper label={t("Benefits.Caption")}>
           <SupportTableTextRow
-            label={t("PlanList.Basic")}
-            desc={t("PlanList.BasicDescription")}
+            label={t("Benefits.Unlimited")}
+            desc={t("Benefits.UnlimitedDesc")}
           />
           <SupportTableTextRow
-            label={t("PlanList.Premium")}
-            desc={t("PlanList.PremiumDescription")}
+            label={t("Benefits.Search")}
+            desc={t("Benefits.SearchDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Benefits.Support")}
+            desc={t("Benefits.SupportDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Benefits.Analytics")}
+            desc={t("Benefits.AnalyticsDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Benefits.AppAccess")}
+            desc={t("Benefits.AppAccessDesc")}
+          />
+          <SupportTableTextRow
+            label={t("Benefits.FinerControl")}
+            desc={t("Benefits.FinerControlDesc")}
           />
         </SupportTableWrapper>
       </SupportContentSectionWrapper>

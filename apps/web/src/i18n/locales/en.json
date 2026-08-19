@@ -2790,36 +2790,65 @@
           "CTA": "View subscription details"
         },
         "GettingSubscription": {
-          "Title": "Getting a subscription",
+          "Title": "Getting a Premium subscription",
           "Description": "As owner, you can buy or renew your Premium subscription.",
-          "PlanTerms": "You can get subscription for Monthly, Quarterly or Annual plan.",
+          "PlanTerms": "You can buy or renew your subscription for either Monthly, Quarterly or Annual period.",
+          "Trial": "You can try Premium subscription for free for {trialDays} days and see for yourself.",
           "CTA": "Get Premium"
         },
         "PlanList": {
           "Title": "Subscription plans",
-          "Description": "RyoGo provides two subscription plans: BASIC and PREMIUM. By default, when an account is created, it is Basic and free forever. You can upgrade to PREMIUM plan at any time.",
+          "Description": "RyoGo provides two subscription plans: Basic and Premium. By default, when an account is created, it is Basic and free forever. You can upgrade to Premium plan at any time.",
           "Caption": "A list of subscription plans for your agency.",
           "Basic": "BASIC",
           "BasicDescription": "Free forever plan with basic features and limited entities. Perfect for small and starter agencies.",
           "Premium": "PREMIUM",
           "PremiumDescription": "Paid plan with advanced features and unlimited capacity. For large and growing agencies."
         },
-        "PremiumFeatures": {}
+        "Benefits": {
+          "Title": "Benefits of Premium subscription",
+          "Description": "Although can you run your agency effectively under Basic plan, Premium plan provides you with additional features and unlimited capacity.",
+          "Caption": "A list of benefits of a subscription plan.",
+          "Unlimited": "Unlimited",
+          "UnlimitedDesc": "Add unlimited bookings, drivers, vehicles, users to your agency",
+          "Search": "Search",
+          "SearchDesc": "Greater search range of upto past 1 year of data.",
+          "Support": "Support",
+          "SupportDesc": "Priority 24x7 support over phone and ability to raise support tickets",
+          "Analytics": "Analytics",
+          "AnalyticsDesc": "Get advanced analytics and AI suggestions to maximize your growth",
+          "AppAccess": "App Access",
+          "AppAccessDesc": "Full and unrestricted app access and priority access to new features.",
+          "FinerControl": "Finer Control",
+          "FinerControlDesc": "Get finer control on your agency like custom reminders, adding more owners, etc."
+        }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common account and subscription related queries",
-        "Q1": {
-          "Question": "Can I add more users to my agency?",
-          "Answer": "Yes, you can add drivers and agents to your account. However, under Basic plan, you can only add/assign limited number of users. You can upgrade to Premium plan to add unlimited users. Also, you can add more owners to your agency under Premium plan."
+        "AddUsers": {
+          "Question": "Can I add more users to the agency?",
+          "Answer": "Yes, as an agent, you can add drivers to the agency. And as an owner, you can add more agents and drivers to the agency. However, under Basic plan, you can only add/assign limited number of users. You can upgrade to Premium plan to add unlimited users. Also, if you are the agency admin, you can add more owners to your agency (only under Premium plan)."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "LoginMethod": {
+          "Question": "What are different methods of logging into my account?",
+          "Answer": "Currently, the only method for logging into your account is using phone number and password. We will enable OTP and other methods soon."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "ChangeAgency": {
+          "Question": "Can I change my agency details?",
+          "Answer": "Only owner can change agency details."
+        },
+        "WhySubscription": {
+          "Question": "Why should I get Premium subscription plan?",
+          "Answer": "Premium subscription provides many additional features and unlimited capacity. It is perfect for large and growing agencies."
+        },
+        "PaymentMethod": {
+          "Question": "What payment methods do you accept? Is it safe and secure?",
+          "Answer": "We work with Razorpay to accept payments through various methods including UPI, cards, net banking, and digital wallets. All payments are processed securely using SSL encryption."
+        },
+        "CancelSubscription": {
+          "Question": "Can I cancel my subscription?",
+          "Answer": "No. Once bought, you cannot cancel your subscription. However, when current subscription period expires, your account will be automatically downgraded to Basic plan."
         }
       },
       "QuickActions": {
@@ -2902,7 +2931,7 @@
         },
         "Elements": {
           "Title": "Booking elements",
-          "Description": "A booking consists of the various elements.",
+          "Description": "A booking consists of various elements to describe its details.",
           "Caption": "A list of booking elements",
           "BasicInfo": "BASIC INFO",
           "BasicInfoDesc": "Basic details about the booking like booking ID, status, assigned agent, etc.",
@@ -2972,7 +3001,7 @@
         "FinalPrice": {
           "Title": "Final Price",
           "Description": "The final price is calculated based on the distance between source and destination, trip type, vehicle raet per km, driver allowance per day and commission rate.",
-          "Example": "For example, if the trip is one-way with a distance of 100 km, the final price will be 100 x 10 (vehicle rate per km) + 500 (driver allowance for one day) with a 10% (commission rate) = Rs. 1650"
+          "Example": "For a simple example, if the trip is one-way with a distance of 100 km, the final price will be 100 x 10 (vehicle rate per km) + 500 (driver allowance for one day) with a 10% (commission rate) = Rs. 1650"
         },
         "Elements": {
           "Title": "Price Elements",
@@ -3005,7 +3034,7 @@
           "Title": "Cancelling a booking",
           "Description": "A booking can be cancelled by the assigned agent (or owner).",
           "Step": "You can cancel a trip by going to the booking details page and clicking on 'Cancel Trip'. A booking once cancelled, cannot be undone.",
-          "Warning": " A booking which has started cannot be cancelled. That is, only a LEAD or CONFIRMED booking can be cancelled.",
+          "Warning": " A booking which has been started by the driver cannot be cancelled. That is, only a LEAD or CONFIRMED booking can be cancelled.",
           "Share": "If a confirmed booking is cancelled, a cancellation message can be shared with the customer over Whatsapp."
         }
       },
@@ -3014,10 +3043,11 @@
         "WhyReconcile": {
           "Title": "Why reconcile a booking",
           "Description": "Once a booking is completed, it can be reconciled by the owner. This is an optional step to ensure the authenticity of the trip completion and the final amount.",
-          "Reason": "Reconciling helps make sure all the bills and expenses are added correctly for the booking and the final amount is calculated correctly. It also helps to get a complete picture of your revenue."
+          "Reason": "Reconciling helps make sure all the bills and expenses are added correctly for the booking and the final amount is calculated correctly. It also helps to get a complete picture of your revenue.",
+          "OnlyPremium": "This feature is available only in Premium plan."
         },
         "Reconciling": {
-          "Title": "Reconciling a booking",
+          "Title": "Reconciling process",
           "Step": "You can reconcile a trip by going to the completed booking details page and clicking on 'Reconcile Trip'.",
           "Process": "As part of reconciling, you can add any additional expenses incurred during the trip and mark the trip as reconciled. Once a trip is reconciled, it cannot be undone."
         }
@@ -3149,17 +3179,25 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to bookings",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "Reassign": {
+          "Question": "Can I reassign a booking?",
+          "Answer": "Yes, owner can reassign bookings to another user (or himself)."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Lead": {
+          "Question": "What happens to a lead booking if it is not confirmed?",
+          "Answer": "If a lead booking is not confirmed within {days} days of the trip start date, it is automatically cancelled."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Price": {
+          "Question": "How is the price calculated for a booking? Can I change it?",
+          "Answer": "No, you cannot change the price of a booking after it is created. (This is to prevent chances of fraud. You can cancel the current booking and create a new booking with different prices.) The price is calculated based on factors such as distance, vehicle rate per km, driver allowance per day, commission rate, etc. The default values for all these factors can be overridden and changed at the time of booking creation."
+        },
+        "Expenses": {
+          "Question": "Do expenses get added to the invoice at the completion of the booking?",
+          "Answer": "Yes, approved expenses are used in final price adjusment when an invoice is being generated for a completed trip."
+        },
+        "Transactions": {
+          "Question": "Do transactions get added to the invoice at the completion of the booking?",
+          "Answer": "No, transactions are purely for tracking of money transactions. They are not used for invoice final amount adjustment."
         }
       },
       "QuickActions": {
@@ -3247,17 +3285,17 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to customers",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "Tracking": {
+          "Question": "Can I share the booking status with the customer?",
+          "Answer": "Yes, you can share the live tracking link for a booking (from booking details page) with the customer."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Rating": {
+          "Question": "Can a customer rate the booking?",
+          "Answer": "Yes, at the end of the trip, the customer can rate the vehicle, the driver and the overall booking experience."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "AddingDetails": {
+          "Question": "What details are required to add a customer?",
+          "Answer": "To add a customer, the mandatory details are phone number, name and location (city and state). other details like email, etc. can be added later."
         }
       },
       "QuickActions": {
@@ -3310,7 +3348,7 @@
         "Title": "ADDING DRIVER",
         "AddingDriver": {
           "Title": "Adding a new driver",
-          "Description": "You can add a new driver to your agency by going to the drivers page and clicking on 'Add Driver'.",
+          "Description": "Owner or agent can add a new driver to the agency by going to the drivers page and clicking on 'Add Driver'.",
           "CTA": "Add driver"
         },
         "Step1": {
@@ -3331,11 +3369,11 @@
         },
         "DriverInvite": {
           "Title": "Driver invite",
-          "Description": "As soon as driver is added, an invite is sent to the driver's provided email for them to join the agency."
+          "Description": "As soon as driver is added, an invite is sent to the driver's provided email for them to login and join the agency."
         }
       },
       "Editing": {
-        "Title": "EDITING DRIVER DETAILS",
+        "Title": "EDITING DRIVER",
         "ModifyingDriver": {
           "Title": "Modifying driver details",
           "Description": "You can edit driver information by going to the driver details page and clicking 'Edit Details'."
@@ -3349,12 +3387,13 @@
         },
         "Selection": {
           "Title": "Driver selection",
-          "Description": "You must select a driver from the list of drivers.",
-          "Score": " We also provide a score for each driver to select the recommended driver for a booking. This score is generated based on driver's availability, schedule, license status, rating, type of vehicle he can drive and other such factors."
+          "Description": "You must select a driver from the list of agency drivers during booking assigninment.",
+          "Score": " We also provide a score for each driver to help you in selecting the best driver for a booking. This score is generated based on driver's availability, schedule, license status, rating, type of vehicle he can drive and other such factors."
         },
         "Reassignment": {
           "Title": "Reassigning a booking",
-          "Description": "You can also reassign a booking to another driver. Go to the booking details page and select 'Change driver'. Once a booking has started, it cannot be reassigned."
+          "Description": "You can also reassign a booking to another driver. Go to the booking details page and select 'Change driver'.",
+          "Warning": "A booking which has started cannot be reassigned to another driver."
         }
       },
       "Bookings": {
@@ -3382,7 +3421,8 @@
         },
         "EditingDriverLeave": {
           "Title": "Editing a driver leave",
-          "Description": "You can edit a driver leave details by selecting the leave and clicking on 'Edit'."
+          "Description": "You can edit a driver leave details by selecting the leave and clicking on 'Edit'.",
+          "MarkCompleted": "Make sure to mark the leave as completed once the driver leave is over. You will receive reminder for this in mission control."
         }
       },
       "DriverApp": {
@@ -3416,22 +3456,22 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to drivers",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "Overlap": {
+          "Question": "How do we ensure that a driver is not assigned to multiple bookings at the same time?",
+          "Answer": "Firstly, during assignment, the system shows the status as 'Booked' with a low score for the driver. Secondly, you can check the driver schedule to ensure that the driver is not assigned to another booking or on leave during that time. In case any such instance is found, the bookings schedule will show a red flag for immediate attention."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Rating": {
+          "Question": "Can a driver rate a booking?",
+          "Answer": "Yes, at the end of the trip, the driver can rate the customer and the overall trip experience."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "LoginDriverApp": {
+          "Question": "Can we login to the driver app?",
+          "Answer": "No, only the user with a 'Driver' role can login to the driver app to execute trips. Agents and Owners cannot."
         }
       },
       "QuickActions": {
-        "AddCustomer": "Add customer",
-        "AllCustomers": "View All Customers"
+        "AddDriver": "Add Driver",
+        "AllDrivers": "View All Drivers"
       },
       "RelatedArticles": {
         "Vehicles": "Learn how to manage vehicles",
@@ -3469,8 +3509,8 @@
       "Managing": {
         "Title": "MANAGING MISSIONS",
         "ReadingMission": {
-          "Title": "Reading a mission",
-          "Description": "Once you have read/completed an alert, you can mark is as completed. This action can be undone by clicking on the check mark again."
+          "Title": "Marking a mission as read",
+          "Description": "Once you have read/completed an alert, you can mark it as completed. This action can be undone by clicking on the completed check mark again."
         },
         "ActingMission": {
           "Title": "Acting on a mission",
@@ -3487,6 +3527,7 @@
         "WhatIsCustomMission": {
           "Title": "Understanding custom mission",
           "Description": "Premium plan provides an option to create missions (custom alerts/reminders).",
+          "Need": "You can create custom missions to set reminders for your personal need like you want to be reminded of a calling a customer/driver tomorrow at a specific time.",
           "ViewCustomMissions": "On the mission control page, you can identify if a mission is custom created by the 'Custom' badge."
         },
         "CreatingCustom": {
@@ -3498,7 +3539,7 @@
         "ModifyingCustom": {
           "Title": "Editing a custom mission",
           "Description": "You can modify a custom mission by clicking on the 'Edit' button in a mission card.",
-          "Fields": "You may change all the details."
+          "Fields": "You can change all the details of the customer mission."
         }
       },
       "Feed": {
@@ -3515,17 +3556,17 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "WhatMission": {
+          "Question": "What are mission?",
+          "Answer": "Missions are basically what we call actionable alerts for you. For example, if a booking assigned to you is completed, you will receive an alert for this booking."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Custom": {
+          "Question": "Can I set my own alert reminder?",
+          "Answer": "Yes, you can create custom mission to set reminders for your personal need. This feature is only available for premium plan."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "WhatFeed": {
+          "Question": "What is the notification feed?",
+          "Answer": "The notification feed tells you about all the activities happening across the agency, like a new vehicle getting added, a booking being completed, etc. It is a central hub for all the agency-wide notifications."
         }
       },
       "QuickActions": {
@@ -3717,15 +3758,15 @@
         "Title": "MAIN ENTITIES",
         "WhatIsEntity": {
           "Title": "Understanding Entities",
-          "Description": "Entities are what we call our digital mapping of your physical business. RyoGo mainly tracks 4 entities: Vehicles, Drivers, Bookings and Customers."
+          "Description": "Entities are what we call our digital mapping of your physical business. RyoGo tracks various entities but these are the 5 main ones: Users, Vehicles, Drivers, Bookings and Customers."
         },
         "Drivers": {
           "Title": "Drivers",
-          "Description": "Driver is simply the entity under which a driver is managed and tracked in the app. When a driver is added to the agency, a driver entity is created in the system with a driver ID."
+          "Description": "Driver is simply the entity under which a driver is managed and tracked in the app for trip execution. When a driver is added to the agency, a driver entity is created in the system with a driver ID. (A user entity is also created for the driver.)"
         },
         "Vehicles": {
           "Title": "Vehicles",
-          "Description": "Similarly, Vehicle is the entity under which a vehicle is tracked. When a vehicle is added to the agency, a vehicle entity is created in the system with a vehicle ID."
+          "Description": "Similarly, Vehicle is the entity under which a vehicle is tracked in the app. When a vehicle is added to the agency, a vehicle entity is created in the system with a vehicle ID."
         },
         "Customers": {
           "Title": "Customers",
@@ -3748,7 +3789,7 @@
           "Description": "Apart from these main entities, there are also a few other entities created during regular workflows in the app.",
           "Caption": "A list of other entities",
           "Agency": "AGENCY",
-          "AgencyDesc": "An agency entity is created when your agency was onboarded to the app. It has an unique ID for your agency in the system.",
+          "AgencyDesc": "An agency entity is created when your agency was first onboarded to the app. It has a unique ID for your agency in the system. All other entities are sub-entities of this agency entity.",
           "Expense": "EXPENSE",
           "ExpenseDesc": "An expense entity is created when an expense is added to a booking. An expense entity is a sub-entity of a booking entity.",
           "Transaction": "TRANSACTION",
@@ -3758,38 +3799,38 @@
           "Order": "ORDER",
           "OrderDesc": "An order entity is created when a subscription plan is purchased by the owner.",
           "VehicleRepair": "VEHICLE REPAIR",
-          "VehicleRepairDesc": "A vehicle repair entity is created when a vehicle repair is scheduled for a vehicle. A vehicle repair entity is a sub-entity of a vehicle entity.",
+          "VehicleRepairDesc": "A vehicle repair entity is created when a repair is scheduled for a vehicle. A vehicle repair entity is a sub-entity of a vehicle entity.",
           "DriverLeave": "DRIVER LEAVE",
-          "DriverLeaveDesc": "A driver leave entity is created when a driver leave is added for a driver. A driver leave entity is a sub-entity of a driver entity."
+          "DriverLeaveDesc": "A driver leave entity is created when a leave is added for a driver. A driver leave entity is a sub-entity of a driver entity."
         }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "WhyRyogo": {
+          "Question": "Why do I need RyoGo? How to use RyoGo? What are the features?",
+          "Answer": "Refer to the 'Understand RyoGo' section."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "HowStarted": {
+          "Question": "How do I get started?",
+          "Answer": "Refer to the 'Onboarding Guide' and 'App Overview' sections."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Entities": {
+          "Question": "What are entities? Why do I need them?",
+          "Answer": "Entities are all the elements which can be tracked in the app. They each have a unique ID. Refer to the 'Entities' section for more details."
         }
       },
       "QuickActions": {
-        "ViewAccount": "View Account Details",
-        "ViewBookings": "View all bookings",
-        "ViewDrivers": "View all drivers",
-        "ViewVehicles": "View all vehicles"
+        "ViewAccount": "View ccount Details",
+        "ViewBookings": "View All Bookings",
+        "ViewDrivers": "View All Drivers",
+        "ViewVehicles": "View All Vehicles"
       },
       "RelatedArticles": {
         "Account": "Learn how to manage your account",
         "Bookings": "Learn more about bookings",
-        "Drivers": "Learn how to manage drivers",
-        "Vehicles": "Learn how to manage vehicles",
+        "Drivers": "Learn more about drivers",
+        "Vehicles": "Learn more about vehicles",
         "Videos": "Watch video tutorials"
       }
     },
@@ -3826,28 +3867,40 @@
         },
         "RoleList": {
           "Title": "List of user roles",
-          "Description": ".",
+          "Description": "An agency can have 3 types of users: Owner, Agent and Driver.",
           "Caption": "A list of user roles",
           "Owner": "OWNER",
-          "OwnerDesc": "The owner of the agency. Owner is the superuser who can add and manage other users (like agents, drivers) and manage agency like changing agency details, buying subscription plan, etc.",
+          "OwnerDesc": "Owner can add and manage other users (like agents, drivers) and manage agency wide activities like changing agency details, buying subscription plan, reassigning and reconciling bookings, etc.",
           "Agent": "AGENT",
-          "AgentDesc": "An agent in the agency. Agent can add, manage and assign bookings, vehicles, drivers and perform daily agency workflows.",
+          "AgentDesc": "Agent can add and manage bookings, assign vehicles and drivers and perform daily agency workflows.",
           "Driver": "DRIVER",
-          "DriverDesc": "A driver in the agency. Driver is a user that will receive bookings and fulfill the trip with a customer and vehicle."
+          "DriverDesc": "Driver is the user who will receive assigned bookings and fulfill the trip with a customer."
+        },
+        "Admin": {
+          "Title": "Agency admin",
+          "Description": "Admin is the original owner of the agency, who created the agency. Admin is the super user who can manage all the users (including other owners) in the agency.",
+          "Transfer": "The agency admin can transfer admin rights to another owner by going to the user details page and clicking 'Transfer Admin'."
         },
         "DriverRole": "Driver is also a user because he can login into the platform as well. Therefore, every driver has 2 entities associated with him: a driver ID and a user ID."
       },
       "Managing": {
         "Title": "MANAGING USERS",
+        "AddingOwner": {
+          "Title": "Adding owners",
+          "Description": "The agency admin can add another owner to the agency by going to the users page and clicking 'Add Owner'.",
+          "Fields": "To add another owner, you must provide their name, phone, email, and photo.",
+          "Warning": "This feature is available only for Premium plan.",
+          "CTA": "Add owner"
+        },
         "AddingAgent": {
           "Title": "Adding agents",
-          "Description": "You can add agent to your agency by going to the users page and clicking 'Add Agent'.",
+          "Description": "As an owner, you can add an agent to the agency by going to the users page and clicking 'Add Agent'.",
           "Fields": "To add an agent, you must provide their name, phone, email, and photo.",
           "CTA": "Add agent"
         },
         "AddingDriver": {
           "Title": "Adding drivers",
-          "Description": "You can add driver to your agency by going to the users page and clicking 'Add Driver'.",
+          "Description": "As an owner, you can add a driver to your agency by going to the users page and clicking 'Add Driver'.",
           "CTA": "Add driver",
           "Help": "Check out Drivers Help page to know more about how to manage drivers",
           "HelpCTA": "Visit driver help page"
@@ -3900,6 +3953,7 @@
         }
       },
       "QuickActions": {
+        "AddOwner": "Add Owner",
         "AddAgent": "Add Agent",
         "AddDriver": "Add Driver",
         "AllUsers": "View All Users"
@@ -5249,19 +5303,31 @@
         "Description": "Watch short demo videos to understand more about RyoGo Travel App"
       },
       "FAQs": {
-        "Title": "Top Questions",
-        "Description": "Get answers to frequently asked questions and queries",
-        "Q1": {
-          "Question": "How do I know if I have been assigned a booking",
-          "Answer": ""
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common doubts and queries",
+        "GetHelp": {
+          "Question": "How do I get help in RyoGo?",
+          "Answer": "The fastest way to get answers is to browse through our detailed support documentation pages. If you still need help, you may contact our support team. If you want fast-tracked resolution, you may raise support tickets. This feature is only available in Premium plan."
         },
-        "Q2": {
-          "Question": "How do I know more about my vehicle?",
-          "Answer": ""
+        "Learn": {
+          "Question": "How do I learn more about RyoGo app and its features?",
+          "Answer": "You can find all the learning resources you need in our Help & Support center under categorized pages. Moreover, you can find demo tutorial videos here (and on our YouTube channel). You can always contact our support team for any queries."
         },
-        "Q3": {
-          "Question": "How do I reach out to the customer?",
-          "Answer": ""
+        "Started": {
+          "Question": "How do I get started in RyoGo?",
+          "Answer": "Since you are here, that means you already have an account with us. Now you can visit 'Getting Started' help page to know the next steps."
+        },
+        "Account": {
+          "Question": "How do I know more about my account?",
+          "Answer": "You can visit 'Account & Profile' help page to learn all about how Accounts work in RyoGo."
+        },
+        "Bookings": {
+          "Question": "How do I get bookings?",
+          "Answer": "Please visit 'Bookings' help page to learn about how Bookings work in RyoGo. You will receive bookings when they are assigned to you by the agency. You can find them in 'My Bookings' in sidebar."
+        },
+        "Vehicle": {
+          "Question": "How do I know more about the assigned vehicle?",
+          "Answer": "When you are assigned a booking, a vehicle will also be mapped to it and you can view its details from 'My Vehicle' in sidebar. You can learn more about the vehicle in the 'Vehicle' help page."
         }
       },
       "Contact": {
@@ -5353,17 +5419,17 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common account and subscription related questions",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "AddUsers": {
+          "Question": "Can I add more users to the agency?",
+          "Answer": "No, as a driver, you cannot add more users to the agency. Contact your agency owner for more details."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "LoginMethod": {
+          "Question": "What are different methods of logging into my account?",
+          "Answer": "Currently, the only method for logging into your account is using phone number and password. We will enable OTP and other methods soon."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "ChangeAgency": {
+          "Question": "Can I change my agency details?",
+          "Answer": "Only owner can change agency details."
         }
       },
       "QuickActions": {
@@ -5542,17 +5608,17 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to bookings",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "Reassign": {
+          "Question": "Can bookings be reassigned?",
+          "Answer": "Yes, the agency may choose to reassign driver or vehicle for a booking. This can be done only before the start of a trip."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Expenses": {
+          "Question": "Do expenses get added to the invoice at the completion of the booking?",
+          "Answer": "Yes, expenses (approved by agency) are used in final price adjusment when an invoice is being generated for a completed trip. Therefore, make sure to add all expenses before ending the trip."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Odometer": {
+          "Question": "Do I need to provide odometer reading photo proof for every step in the trip?",
+          "Answer": "The odometer reading photo proof is required at the start and end of the trip. The other steps are optional but it helps the agency keep accuracy of the trip."
         }
       },
       "QuickActions": {
@@ -5593,8 +5659,8 @@
       "Managing": {
         "Title": "MANAGING MISSIONS",
         "ReadingMission": {
-          "Title": "Reading a mission",
-          "Description": "Once you have read/completed an alert, you can mark is as completed. This action can be undone by clicking on the check mark again."
+          "Title": "Marking a mission as read",
+          "Description": "Once you have read/completed an alert, you can mark it as completed. This action can be undone by clicking on the completed check mark again."
         },
         "ActingMission": {
           "Title": "Acting on a mission",
@@ -5611,6 +5677,7 @@
         "WhatIsCustomMission": {
           "Title": "Understanding custom mission",
           "Description": "Premium plan provides an option to create missions (custom alerts/reminders).",
+          "Need": "You can create custom missions to set reminders for your personal need like you want to be reminded of a calling the agency tomorrow at a specific time.",
           "ViewCustomMissions": "On the mission control page, you can identify if a mission is custom created by the 'Custom' badge."
         },
         "CreatingCustom": {
@@ -5622,23 +5689,19 @@
         "ModifyingCustom": {
           "Title": "Editing a custom mission",
           "Description": "You can modify a custom mission by clicking on the 'Edit' button in a mission card.",
-          "Fields": "You may change all the details."
+          "Fields": "You can change all the details of the customer mission."
         }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "WhatMission": {
+          "Question": "What are mission?",
+          "Answer": "Missions are basically what we call actionable alerts for you. For example, if a booking is assigned to you, you will receive an alert for this booking."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
-        },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Custom": {
+          "Question": "Can I set my own alert reminder?",
+          "Answer": "Yes, you can create custom mission to set reminders for your personal need. This feature is only available for premium plan."
         }
       },
       "QuickActions": {
@@ -5755,15 +5818,15 @@
         "Title": "MAIN ENTITIES",
         "WhatIsEntity": {
           "Title": "Understanding Entities",
-          "Description": "Entities are what we call our digital mapping of your physical business. RyoGo mainly tracks 4 entities: Vehicles, Drivers, Bookings and Customers."
+          "Description": "Entities are what we call our digital mapping of your physical business. RyoGo tracks various entities but these are the 5 main ones: Users, Vehicles, Drivers, Bookings and Customers."
         },
         "Drivers": {
           "Title": "Drivers",
-          "Description": "Driver is simply the entity under which a driver is managed and tracked in the app. When a driver is added to the agency, a driver entity is created in the system with a driver ID."
+          "Description": "Driver is simply the entity under which a driver is managed and tracked in the app for trip execution. When a driver is added to the agency, a driver entity is created in the system with a driver ID. (A user entity is also created for the driver.)"
         },
         "Vehicles": {
           "Title": "Vehicles",
-          "Description": "Similarly, Vehicle is the entity under which a vehicle is tracked. When a vehicle is added to the agency, a vehicle entity is created in the system with a vehicle ID."
+          "Description": "Similarly, Vehicle is the entity under which a vehicle is tracked in the app. When a vehicle is added to the agency, a vehicle entity is created in the system with a vehicle ID."
         },
         "Customers": {
           "Title": "Customers",
@@ -5786,7 +5849,7 @@
           "Description": "Apart from these main entities, there are also a few other entities created during regular workflows in the app.",
           "Caption": "A list of other entities",
           "Agency": "AGENCY",
-          "AgencyDesc": "An agency entity is created when your agency was onboarded to the app. It has an unique ID for your agency in the system.",
+          "AgencyDesc": "An agency entity is created when your agency was first onboarded to the app. It has a unique ID for your agency in the system. All other entities are sub-entities of this agency entity.",
           "Expense": "EXPENSE",
           "ExpenseDesc": "An expense entity is created when an expense is added to a booking. An expense entity is a sub-entity of a booking entity.",
           "Transaction": "TRANSACTION",
@@ -5796,31 +5859,31 @@
           "Order": "ORDER",
           "OrderDesc": "An order entity is created when a subscription plan is purchased by the owner.",
           "VehicleRepair": "VEHICLE REPAIR",
-          "VehicleRepairDesc": "A vehicle repair entity is created when a vehicle repair is scheduled for a vehicle. A vehicle repair entity is a sub-entity of a vehicle entity.",
+          "VehicleRepairDesc": "A vehicle repair entity is created when a repair is scheduled for a vehicle. A vehicle repair entity is a sub-entity of a vehicle entity.",
           "DriverLeave": "DRIVER LEAVE",
-          "DriverLeaveDesc": "A driver leave entity is created when a driver leave is added for a driver. A driver leave entity is a sub-entity of a driver entity."
+          "DriverLeaveDesc": "A driver leave entity is created when a leave is added for a driver. A driver leave entity is a sub-entity of a driver entity."
         }
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to getting started",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "WhyRyogo": {
+          "Question": "Why do I need RyoGo? How to use RyoGo? What are the features?",
+          "Answer": "Refer to the 'Understand RyoGo' section."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "HowStarted": {
+          "Question": "How do I get started?",
+          "Answer": "Refer to the 'App Overview' section."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Entities": {
+          "Question": "What are entities? Why do I need them?",
+          "Answer": "Entities are all the elements which can be tracked in the app. They each have a unique ID. Refer to the 'Entities' section for more details."
         }
       },
       "QuickActions": {
         "ViewAccount": "View Account Details",
-        "ViewBookings": "View my bookings",
-        "ViewVehicle": "View my vehicle"
+        "ViewBookings": "View My Bookings",
+        "ViewVehicle": "View My Behicle"
       },
       "RelatedArticles": {
         "Account": "Learn how to manage your account",

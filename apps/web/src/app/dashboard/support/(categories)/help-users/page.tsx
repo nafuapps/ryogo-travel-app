@@ -128,6 +128,11 @@ export default async function SupportHelpUsersPage() {
 
   const quickActions: SupportQuickActionType[] = [
     {
+      label: t("QuickActions.AddOwner"),
+      href: "/dashboard/users/add-owner",
+      icon: Plus,
+    },
+    {
       label: t("QuickActions.AddAgent"),
       href: "/dashboard/users/new",
       icon: Plus,
@@ -289,6 +294,10 @@ async function RolesContent() {
           />
         </SupportTableWrapper>
       </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Admin.Title")}>
+        <RyogoCaption color="slate">{t("Admin.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Admin.Transfer")}</RyogoCaption>
+      </SupportContentSectionWrapper>
       <SupportWarningWrapper text={t("DriverRole")} />
     </>
   )
@@ -298,6 +307,24 @@ async function ManagingContent() {
   const t = await getTranslations("Dashboard.SupportUsersHelp.Managing")
   return (
     <>
+      <SupportContentSectionWrapper title={t("AddingOwner.Title")}>
+        <RyogoCaption color="slate">
+          {t("AddingOwner.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("AddingOwner.Fields")}</RyogoCaption>
+        <SupportWarningWrapper text={t("AddingOwner.Warning")} />
+        {/* //TODO: Add add owner page snapshot */}
+        <RyogoImage
+          alt="AddOwner"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/users/add-owner"}
+          label={t("AddingOwner.CTA")}
+        />
+      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AddingAgent.Title")}>
         <RyogoCaption color="slate">
           {t("AddingAgent.Description")}

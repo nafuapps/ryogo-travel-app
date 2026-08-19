@@ -5,12 +5,12 @@ import {
   HeaderRightWrapper,
   HeaderWrapper,
 } from "@/components/header/headerWrappers"
-import { RyogoP } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Target } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
-import HeaderButton from "./headerButton"
+import HeaderButton, { HeaderBackButton } from "./headerButton"
 
 export default function RiderHeader({ pathName }: { pathName: string }) {
   const t = useTranslations("Rider.Header")
@@ -23,8 +23,11 @@ export default function RiderHeader({ pathName }: { pathName: string }) {
   return (
     <HeaderWrapper>
       <HeaderLeftWrapper>
+        <HeaderBackButton />
         <SidebarTrigger />
-        <RyogoP>{title}</RyogoP>
+        <RyogoSmall weight="font-bold" color="slate">
+          {title}
+        </RyogoSmall>
       </HeaderLeftWrapper>
       <HeaderRightWrapper>
         <Link href="/rider/myMissions">

@@ -10,5 +10,4 @@ export const metadata: Metadata = {
 
 export default async function TrackPage() {
   redirect("/track/booking", RedirectType.replace)
-  // return <div />
 }

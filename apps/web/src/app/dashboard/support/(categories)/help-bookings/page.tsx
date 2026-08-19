@@ -72,6 +72,7 @@ import { Metadata } from "next"
 import SupportRelatedArticleLinkButton, {
   SupportRelatedArticleType,
 } from "@/components/flows/support/supportRelatedArticleType"
+import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 /*
   - Overview
   - Creation
@@ -177,16 +178,24 @@ export default async function SupportHelpBookingsPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.Reassign.Question"),
+      answer: t("FAQs.Reassign.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.Lead.Question"),
+      answer: t("FAQs.Lead.Answer", { days: OLD_LEAD_AUTO_CANCEL_DAYS }),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.Price.Question"),
+      answer: t("FAQs.Price.Answer"),
+    },
+    {
+      question: t("FAQs.Expenses.Question"),
+      answer: t("FAQs.Expenses.Answer"),
+    },
+    {
+      question: t("FAQs.Transactions.Question"),
+      answer: t("FAQs.Transactions.Answer"),
     },
   ]
 
@@ -531,6 +540,7 @@ async function ReconcilingContent({ isOwner }: { isOwner: boolean }) {
           {t("WhyReconcile.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("WhyReconcile.Reason")}</RyogoCaption>
+        <SupportWarningWrapper text={t("WhyReconcile.OnlyPremium")} />
       </SupportContentSectionWrapper>
       {isOwner && (
         <SupportContentSectionWrapper title={t("Reconciling.Title")}>

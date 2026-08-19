@@ -5,11 +5,11 @@ import {
   HeaderRightWrapper,
   HeaderWrapper,
 } from "@/components/header/headerWrappers"
-import { RyogoP } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Plus, Target } from "lucide-react"
 import { useTranslations } from "next-intl"
-import HeaderButton from "./headerButton"
+import HeaderButton, { HeaderBackButton } from "./headerButton"
 import Link from "next/link"
 
 export default function DashboardHeader(props: { pathName: string }) {
@@ -23,7 +23,10 @@ export default function DashboardHeader(props: { pathName: string }) {
     <HeaderWrapper>
       <HeaderLeftWrapper>
         <SidebarTrigger />
-        <RyogoP>{title}</RyogoP>
+        <HeaderBackButton />
+        <RyogoSmall weight="font-bold" color="slate">
+          {title}
+        </RyogoSmall>
       </HeaderLeftWrapper>
       <HeaderRightWrapper>
         {props.pathName !== "/dashboard/bookings/new" && (

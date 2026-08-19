@@ -21,7 +21,7 @@ export default function SupportTableOfContentLinkButton({
   icon: LucideIcon
 }) {
   return (
-    <Link href={href}>
+    <Link href={href} replace>
       <Button variant="ghost" className="w-full justify-start">
         <RyogoIcon icon={icon} size="sm" color="slate" />
         <RyogoCaption

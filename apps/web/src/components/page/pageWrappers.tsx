@@ -6,7 +6,7 @@ import { PageSkeleton } from "./loadingWrappers"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-screen min-h-0 bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-4 lg:pt-5 pb-6 lg:pb-7">
+    <div className="flex flex-col w-full h-screen min-h-0 bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-3 lg:pt-4 pb-6 lg:pb-7">
       {children}
     </div>
   )
@@ -25,7 +25,7 @@ export function PageWrapper({
     <Suspense fallback={<PageSkeleton />}>
       <div
         id={id}
-        className={`w-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll"} no-scrollbar mt-3 lg:mt-4`}
+        className={`w-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll mt-3 lg:mt-4"} no-scrollbar`}
       >
         {children}
       </div>
@@ -35,7 +35,7 @@ export function PageWrapper({
 
 export function SideWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full lg:w-2/5 lg:max-w-xs gap-3 lg:gap-4 pt-3 lg:pt-4 pb-1 lg:overflow-y-scroll no-scrollbar">
+    <div className="flex flex-col w-full lg:w-2/5 lg:max-w-xs gap-3 lg:gap-4 lg:overflow-y-scroll no-scrollbar">
       {children}
     </div>
   )
@@ -50,7 +50,7 @@ export function DoubleContentWrapper({
 }) {
   return (
     <div
-      className={`flex ${sideOnTop ? "flex-col-reverse" : "flex-col"} lg:flex-row gap-5 lg:gap-6 w-full overflow-y-scroll no-scrollbar`}
+      className={`flex ${sideOnTop ? "flex-col-reverse" : "flex-col"} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 w-full overflow-y-scroll no-scrollbar`}
     >
       {children}
     </div>

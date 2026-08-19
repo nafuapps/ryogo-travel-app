@@ -14,7 +14,9 @@ export function HeaderWrapper({ children }: { children: React.ReactNode }) {
 
 export function HeaderLeftWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className={"flex flex-row gap-1.5 lg:gap-2 items-center"}>
+    <div
+      className={"flex flex-row gap-1 lg:gap-1.5 items-center justify-start"}
+    >
       {children}
     </div>
   )
@@ -26,7 +28,7 @@ export function HeaderRightWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className={"flex flex-row gap-3 lg:gap-4 justify-end items-center"}>
+    <div className={"flex flex-row gap-1.5 lg:gap-2 justify-end items-center"}>
       {children}
     </div>
   )

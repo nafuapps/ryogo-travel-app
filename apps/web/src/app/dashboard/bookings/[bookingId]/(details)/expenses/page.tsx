@@ -49,7 +49,7 @@ export default async function BookingExpensesPage({
         bookingId={bookingId}
         bookingExpenses={bookingExpenses}
         canCreateExpense={canCreateExpense}
-        canApproveExpense={currentUser.userRole === UserRolesEnum.OWNER}
+        canApproveExpense={canCreateExpense}
       />
     </MainWrapper>
   )

@@ -81,16 +81,12 @@ export default async function MySupportHelpMissionsPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.WhatMission.Question"),
+      answer: t("FAQs.WhatMission.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
-    },
-    {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.Custom.Question"),
+      answer: t("FAQs.Custom.Answer"),
     },
   ]
 
@@ -269,6 +265,9 @@ async function CustomContent() {
       <SupportContentSectionWrapper title={t("WhatIsCustomMission.Title")}>
         <RyogoCaption color="slate">
           {t("WhatIsCustomMission.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">
+          {t("WhatIsCustomMission.Need")}
         </RyogoCaption>
         <RyogoCaption color="slate">
           {t("WhatIsCustomMission.ViewCustomMissions")}

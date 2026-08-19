@@ -120,16 +120,16 @@ export default async function MySupportHelpBookingsPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.Reassign.Question"),
+      answer: t("FAQs.Reassign.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.Expenses.Question"),
+      answer: t("FAQs.Expenses.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.Odometer.Question"),
+      answer: t("FAQs.Odometer.Answer"),
     },
   ]
 

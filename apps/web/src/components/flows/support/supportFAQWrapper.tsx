@@ -1,4 +1,4 @@
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 
@@ -25,12 +25,14 @@ export function SupportFAQItem({
   return (
     <details className="group flex flex-col gap-1 lg:gap-1.5 w-full px-1.5 lg:px-2 py-3 lg:py-4">
       <summary className="flex items-center gap-2 lg:gap-3">
-        <div
-          className="flex items-center justify-center shrink-0 transition rounded-lg bg-slate-100 dark:bg-slate-800 p-1.5 lg:p-2 
-             group-open:rotate-90"
-        >
-          <RyogoIcon color="black" size="sm" icon={ChevronRight} thick />
-        </div>
+        <RyogoEnclosedIcon
+          size="sm"
+          icon={ChevronRight}
+          color="slate"
+          bgColor="slate"
+          className="transition group-open:rotate-90"
+          thick
+        />
         <RyogoSmall weight="font-bold">{question}</RyogoSmall>
       </summary>
       <RyogoCaption color="slate">{answer}</RyogoCaption>

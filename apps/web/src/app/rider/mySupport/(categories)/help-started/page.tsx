@@ -82,16 +82,16 @@ export default async function MySupportHelpStartedPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.WhyRyogo.Question"),
+      answer: t("FAQs.WhyRyogo.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.HowStarted.Question"),
+      answer: t("FAQs.HowStarted.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.Entities.Question"),
+      answer: t("FAQs.Entities.Answer"),
     },
   ]
 
@@ -407,6 +407,13 @@ async function EntitiesContent() {
           className="w-full aspect-video rounded-lg"
         />
       </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Users.Title")}>
+        <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Types")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Owner")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Agent")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Users.Driver")}</RyogoCaption>
+      </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Drivers.Title")}>
         <RyogoCaption color="slate">{t("Drivers.Description")}</RyogoCaption>
       </SupportContentSectionWrapper>
@@ -418,13 +425,6 @@ async function EntitiesContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Bookings.Title")}>
         <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
-      </SupportContentSectionWrapper>
-      <SupportContentSectionWrapper title={t("Users.Title")}>
-        <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
-        <RyogoCaption color="slate">{t("Users.Types")}</RyogoCaption>
-        <RyogoCaption color="slate">{t("Users.Owner")}</RyogoCaption>
-        <RyogoCaption color="slate">{t("Users.Agent")}</RyogoCaption>
-        <RyogoCaption color="slate">{t("Users.Driver")}</RyogoCaption>
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Others.Title")}>
         <RyogoCaption color="slate">{t("Others.Description")}</RyogoCaption>

@@ -2866,6 +2866,10 @@
     "SupportAnalyticsHelp": {
       "Title": "Analytics",
       "Description": "Get help related to analytics, reports and predictions as part of our Premium analytics feature",
+      "Overview": {
+        "Title": "ANALYTICS OVERVIEW",
+        "Description": "Let's understand how data and analytics works and how it can help you."
+      },
       "Bookings": {
         "Title": "BOOKINGS",
         "Description": "You can view all booking related analytics."
@@ -2893,17 +2897,17 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to analytics",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "Analytics": {
+          "Question": "Can I see performance data and analytics related to my agency?",
+          "Answer": "Yes, refer 'Analytics Overview' section for more details."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Predictions": {
+          "Question": "Do I get predictions like how many bookings will I get in next month?",
+          "Answer": "Yes, we try to predict future bookings based on past date but this is just an estimate. Refer 'Predictions' section for more details."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Reports": {
+          "Question": "Can I download reports?",
+          "Answer": "Yes, you can download reports in PDF or Excel format. Refer 'Reports' section for more details."
         }
       },
       "QuickActions": {
@@ -3817,7 +3821,7 @@
         },
         "Entities": {
           "Question": "What are entities? Why do I need them?",
-          "Answer": "Entities are all the elements which can be tracked in the app. They each have a unique ID. Refer to the 'Entities' section for more details."
+          "Answer": "Entities are all the elements which can be tracked in the app like vehicles, drivers, bookings etc. They each have a unique ID. Refer to the 'Entities' section for more details."
         }
       },
       "QuickActions": {
@@ -3835,7 +3839,7 @@
       }
     },
     "SupportUsersHelp": {
-      "Title": "Users & Agents",
+      "Title": "Users",
       "Description": "Get help related to user management",
       "Overview": {
         "Title": "USER OVERVIEW",
@@ -3867,14 +3871,14 @@
         },
         "RoleList": {
           "Title": "List of user roles",
-          "Description": "An agency can have 3 types of users: Owner, Agent and Driver.",
-          "Caption": "A list of user roles",
+          "Description": "An agency can have 3 user roles: Owner, Agent and Driver.",
+          "Caption": "A list of user roles and permissions",
           "Owner": "OWNER",
-          "OwnerDesc": "Owner can add and manage other users (like agents, drivers) and manage agency wide activities like changing agency details, buying subscription plan, reassigning and reconciling bookings, etc.",
+          "OwnerDesc": "Owner can add and manage other users (like agents, drivers) and manage agency wide activities like changing agency details, buying subscription plan, reassigning agents for a booking and reconciling bookings, etc.",
           "Agent": "AGENT",
-          "AgentDesc": "Agent can add and manage bookings, assign vehicles and drivers and perform daily agency workflows.",
+          "AgentDesc": "Agent can add and manage bookings, assign vehicles and drivers, add customers and perform daily agency workflows.",
           "Driver": "DRIVER",
-          "DriverDesc": "Driver is the user who will receive assigned bookings and fulfill the trip with a customer."
+          "DriverDesc": "Driver can receive assigned bookings and fulfill the trip with a customer by logging into their driver app."
         },
         "Admin": {
           "Title": "Agency admin",
@@ -3900,9 +3904,9 @@
         },
         "AddingDriver": {
           "Title": "Adding drivers",
-          "Description": "As an owner, you can add a driver to your agency by going to the users page and clicking 'Add Driver'.",
+          "Description": "An owner or an agent can add a new driver to the agency. As an owner, you can do this by going to the users page and clicking 'Add Driver'. As an agent, you can do this by going to the drivers page and clicking 'Add Driver'.",
           "CTA": "Add driver",
-          "Help": "Check out Drivers Help page to know more about how to manage drivers",
+          "Help": "Check out Drivers Help page to know more about how to manage drivers.",
           "HelpCTA": "Visit driver help page"
         },
         "UserInvite": {
@@ -3915,7 +3919,7 @@
         },
         "Activity": {
           "Title": "User activity",
-          "Description": "You can view the activity of a user by going to the Activity tab of the user details page. This page shows each and every action performed by the user on the platform."
+          "Description": "You can view the activity of a user by going to the Activity tab of the user details page. This page shows each and every action performed by the user on the platform like modifying booking, adding expense, adding driver leave, etc."
         }
       },
       "Bookings": {
@@ -3939,17 +3943,17 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to users",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "AddUsers": {
+          "Question": "Who all can add other users?",
+          "Answer": "A driver cannot add other users. An agent can add drivers. An owner can add agents and drivers. The agency admin can add other owners as well."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Join": {
+          "Question": "How will newly added users join the platform?",
+          "Answer": "All newly added users receive an email invite with a password and link to join the platform. As an owner, you can reset the password for a user so that they will receive a new password for login."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Communicate": {
+          "Question": "How will users communicate with each other?",
+          "Answer": "We have provided a direct 'Chat' button on every user details page which directly opens your whatsapp chat with the user. Or you can call them on their phone with the 'Call' button"
         }
       },
       "QuickActions": {
@@ -3971,7 +3975,7 @@
         "Title": "VEHICLE OVERVIEW",
         "KnowVehicle": {
           "Title": "Know your vehicle",
-          "Description": "Vehicle is the entity which will be used to manage your fleet and assigned to a booking based on customer's request.",
+          "Description": "Vehicle is the entity which will be used to manage your fleet and assigned to a booking based on customer's preferences.",
           "AllVehicles": "You can view all the vehicles in your agency by going to the vehicles page.",
           "CTA": "View all vehicles"
         },
@@ -3986,9 +3990,9 @@
           "Documents": "DOCUMENTS",
           "DocumentsDesc": "Documents like insurance, RC, PUC along with their expiry dates and photos.",
           "Type": "TYPE",
-          "TypeDesc": "Type of vehicle (car, bus, bike, etc.). Used in selecting vehicle for a new booking based on customer's preferences.",
+          "TypeDesc": "Type of vehicle (car, bus, bike, etc.). Useful in selecting the best vehicle for a booking based on customer's need.",
           "Rate": "RATE",
-          "RateDesc": "Default rate charge per km for this vehicle. This will be used to calculate the booking quote for the customer. This can be changed while create a booking.",
+          "RateDesc": "Default charge per km for a vehicle in INR. It is used to calculate the booking quote price for the customer based on the estimated distance. This can be overriden and changed at the time of creating a new booking.",
           "Rating": "RATING",
           "RatingDesc": "Average vehicle rating. Provided by customers after each booking."
         },
@@ -3996,8 +4000,8 @@
           "Title": "Vehicle status",
           "Description": "A vehicle will have a status to identify its current availability.",
           "Caption": "A list of vehicle status",
-          "Available": "The vehicle is available right now. He is not on a trip.",
-          "OnTrip": "The vehicle is currently working on a trip.",
+          "Available": "The vehicle is available right now. It is not on a trip.",
+          "OnTrip": "The vehicle is currently being used in a trip.",
           "Repair": "The vehicle is in repair.",
           "Inactive": "The vehicle has been inactivated by the agency and cannot be assigned to any booking.",
           "Suspended": "The vehicle has been banned by us and cannot be used on the platform."
@@ -4094,17 +4098,17 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to vehicles",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "HowMany": {
+          "Question": "How many vehicles can I add and manage in RyoGo?",
+          "Answer": "Under basic plan, you can add and manage up to {limit} vehicles. Any exceeding vehicls will not be available for booking assignment. You can upgrade to Premium plan to add and assign from unlimited vehicles."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
+        "Alerts": {
+          "Question": "Do I get any alerts for expiring documents like insurance or RC?",
+          "Answer": "Yes, you will get timely alert for expiring documents like insurance, PUC and RC, given that you have added the expiry date details for the vehicle. Under Premium plan, you can also create any customer reminder alert."
         },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "Repair": {
+          "Question": "How do I ensure that a vehicle which is in repair is not assigned a booking?",
+          "Answer": "You can add a vehicle repair (with dates) under vehicle details page and our system will flag it during booking assignment and ensure there are no conflicts."
         }
       },
       "QuickActions": {
@@ -4531,6 +4535,10 @@
       "SubscriptionPaymentFailed": {
         "Title": "Subscription payment failed",
         "Message": "We see that your last payment failed. Please try again or contact support to get help."
+      },
+      "AdminTransferred": {
+        "Title": "Admin rights transferred",
+        "Message": "You are the admin for the agency now. You can manage other owners and all the users."
       }
     },
     "AddCustomMission": {
@@ -4671,7 +4679,8 @@
         "OwnerCreated": "Agency owner account created for {userName}",
         "AgencyCreated": "Agency has been created by {userName}",
         "AgencyQRCodeChanged": "Agency QR code has been changed by {userName}",
-        "TryPremium": "Trial Premium plan has been activated by {userName}"
+        "TryPremium": "Trial Premium plan has been activated by {userName}",
+        "AdminTransferred": "Agency admin rights has been transferred to {newAdminName} by {userName}"
       }
     },
     "Buttons": {
@@ -5877,7 +5886,7 @@
         },
         "Entities": {
           "Question": "What are entities? Why do I need them?",
-          "Answer": "Entities are all the elements which can be tracked in the app. They each have a unique ID. Refer to the 'Entities' section for more details."
+          "Answer": "Entities are all the elements which can be tracked in the app like vehicles, drivers, bookings etc. They each have a unique ID. Refer to the 'Entities' section for more details."
         }
       },
       "QuickActions": {
@@ -5933,17 +5942,13 @@
       "FAQs": {
         "Title": "Frequently Asked Questions",
         "Description": "Get answers to common questions related to vehicles",
-        "Q1": {
-          "Question": "",
-          "Answer": ""
+        "Alerts": {
+          "Question": "Do I get to know if any vehicle document is expiring like insurance or RC?",
+          "Answer": "Yes, you will see alerts for expiring documents like insurance, PUC and RC, given that the agency has added the expiry date details for the vehicle. Under Premium plan, you can also create any customer reminder alert."
         },
-        "Q2": {
-          "Question": "",
-          "Answer": ""
-        },
-        "Q3": {
-          "Question": "",
-          "Answer": ""
+        "NeedsRepair": {
+          "Question": "What if the vehicle I have been assigned needs a repair?",
+          "Answer": "If the trip has not started yet, you can ask the agency to assign a new vehicle. If the trip is in progress, you can ask the agency to add a vehicle repair schedule for the vehicle so that it is not assigned to another booking until fixed. If you have got something fixed in the vehicle out of your pocket, you can add it as an expense in the ongoing booking."
         }
       },
       "QuickActions": {

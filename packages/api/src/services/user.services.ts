@@ -373,6 +373,8 @@ export const userServices = {
     otherUserId: string,
     agencyId: string,
   ) {
+    if (currentUserId === otherUserId) return
+
     const currentUser = await userRepository.readUserById(currentUserId)
     if (
       !currentUser ||

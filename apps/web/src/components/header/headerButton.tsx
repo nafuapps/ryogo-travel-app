@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Tooltip,
   TooltipContent,
@@ -5,19 +7,30 @@ import {
 } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 import { RyogoCaption } from "@/components/typography"
-import { ChevronLeft, ChevronRight, LucideIcon } from "lucide-react"
+import { ChevronLeft, ChevronRight, Plus, Target } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useRouter } from "next/navigation"
 
+type HeaderButtonType = "newBooking" | "missionControl"
+
+function getHeaderButtonIcon(type: HeaderButtonType) {
+  switch (type) {
+    case "newBooking":
+      return Plus
+    case "missionControl":
+      return Target
+  }
+}
+
 export default function HeaderButton(props: {
   label: string
-  icon: LucideIcon
+  type: HeaderButtonType
 }) {
   return (
     <Tooltip disableHoverableContent>
       <TooltipTrigger asChild>
         <Button variant="outline">
-          <RyogoIcon icon={props.icon} size="sm" />
+          <RyogoIcon icon={getHeaderButtonIcon(props.type)} size="sm" />
           <RyogoCaption color="slate" className="hidden lg:flex">
             {props.label}
           </RyogoCaption>
@@ -37,11 +50,11 @@ export function HeaderBackButton() {
   )
 }
 
-export function HeaderForwardButton() {
-  const router = useRouter()
-  return (
-    <Button variant="ghost" size="icon" onClick={() => router.forward()}>
-      <RyogoIcon icon={ChevronRight} size="md" />
-    </Button>
-  )
-}
+// export function HeaderForwardButton() {
+//   const router = useRouter()
+//   return (
+//     <Button variant="ghost" size="icon" onClick={() => router.forward()}>
+//       <RyogoIcon icon={ChevronRight} size="md" />
+//     </Button>
+//   )
+// }

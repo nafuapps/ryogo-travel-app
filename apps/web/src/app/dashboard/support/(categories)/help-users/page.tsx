@@ -113,16 +113,16 @@ export default async function SupportHelpUsersPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.AddUsers.Question"),
+      answer: t("FAQs.AddUsers.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.Join.Question"),
+      answer: t("FAQs.Join.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.Communicate.Question"),
+      answer: t("FAQs.Communicate.Answer"),
     },
   ]
 
@@ -294,11 +294,11 @@ async function RolesContent() {
           />
         </SupportTableWrapper>
       </SupportContentSectionWrapper>
+      <SupportWarningWrapper text={t("DriverRole")} />
       <SupportContentSectionWrapper title={t("Admin.Title")}>
         <RyogoCaption color="slate">{t("Admin.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Admin.Transfer")}</RyogoCaption>
       </SupportContentSectionWrapper>
-      <SupportWarningWrapper text={t("DriverRole")} />
     </>
   )
 }
@@ -386,11 +386,25 @@ async function BookingsContent() {
         <RyogoCaption color="slate">
           {t("AssignedBookings.Description")}
         </RyogoCaption>
+        {/* //TODO: Add AssignedBookings page snapshot */}
+        <RyogoImage
+          alt="AssignedBookings"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
+        {/* //TODO: Add CompletedBookings page snapshot */}
+        <RyogoImage
+          alt="CompletedBookings"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
       </SupportContentSectionWrapper>
     </>
   )

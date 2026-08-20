@@ -29,6 +29,7 @@ import {
   IdCard,
   IndianRupee,
   LineChart,
+  Telescope,
   Tickets,
   TrendingUpDown,
 } from "lucide-react"
@@ -40,6 +41,7 @@ import { Metadata } from "next"
 
 /*
   TODO
+  - Overview
   - Bookings
   - Vehicles
   - Drivers
@@ -67,6 +69,12 @@ export default async function SupportHelpAnalyticsPage() {
   const t = await getTranslations("Dashboard.SupportAnalyticsHelp")
 
   const contentItems: SupportContentItemType[] = [
+    {
+      id: "overview",
+      title: t("Overview.Title"),
+      icon: Telescope,
+      content: <OverviewContent />,
+    },
     {
       id: "bookings",
       title: t("Bookings.Title"),
@@ -107,16 +115,16 @@ export default async function SupportHelpAnalyticsPage() {
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.Analytics.Question"),
+      answer: t("FAQs.Analytics.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.Predictions.Question"),
+      answer: t("FAQs.Predictions.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.Reports.Question"),
+      answer: t("FAQs.Reports.Answer"),
     },
   ]
 
@@ -182,6 +190,15 @@ export default async function SupportHelpAnalyticsPage() {
         </SideWrapper>
       </DoubleContentWrapper>
     </MainWrapper>
+  )
+}
+
+async function OverviewContent() {
+  const t = await getTranslations("Dashboard.SupportAnalyticsHelp.Overview")
+  return (
+    <>
+      <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+    </>
   )
 }
 

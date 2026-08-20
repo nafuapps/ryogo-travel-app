@@ -119,14 +119,13 @@ export default async function UserDetailsPageComponent({
                 agencyId={user.agencyId}
               />
             )}
-          {user.status !== UserStatusEnum.INACTIVE && (
+          {user.status !== UserStatusEnum.INACTIVE ? (
             <InactivateUserAlertButton
               userId={user.id}
               agencyId={user.agencyId}
               role={user.userRole}
             />
-          )}
-          {user.status === UserStatusEnum.INACTIVE && (
+          ) : (
             <ActivateUserAlertButton
               userId={user.id}
               agencyId={user.agencyId}

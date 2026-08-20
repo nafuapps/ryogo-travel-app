@@ -14,8 +14,7 @@ export async function resetUserPasswordAction(
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== userId) ||
+    currentUser.userRole !== UserRolesEnum.OWNER ||
     currentUser.agencyId !== agencyId
   ) {
     return

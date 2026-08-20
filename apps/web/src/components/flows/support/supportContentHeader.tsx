@@ -19,7 +19,7 @@ export default function SupportContentHeader({
         bgColor="light"
         thick
       />
-      <RyogoP color="dark" weight="font-bold">
+      <RyogoP color="slate" weight="font-bold">
         {title}
       </RyogoP>
     </SectionRowWrapper>
@@ -35,7 +35,7 @@ export function SupportContentSectionWrapper({
 }) {
   return (
     <>
-      <RyogoP color="dark" weight="font-bold" className="mt-2">
+      <RyogoP color="dark" weight="font-bold" className="mt-2 lg:mt-3">
         {title}
       </RyogoP>
       {children}

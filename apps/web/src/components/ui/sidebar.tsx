@@ -267,7 +267,7 @@ function SidebarTrigger({
       variant="ghost"
       size="icon"
       className={cn(
-        "size-10 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg",
+        "size-9 lg:size-10 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg",
         className,
       )}
       onClick={(event) => {

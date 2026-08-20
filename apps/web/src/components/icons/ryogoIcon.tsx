@@ -63,7 +63,7 @@ function getIconSize(size: RyogoIconSizeType) {
     case "md":
       return "size-7 lg:size-8"
     case "sm":
-      return "size-5 lg:size-5.5"
+      return "size-5.5 lg:size-6"
   }
 }
 

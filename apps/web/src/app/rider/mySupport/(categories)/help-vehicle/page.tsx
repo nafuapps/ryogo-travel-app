@@ -6,7 +6,7 @@ import {
   SideWrapper,
 } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
-import { ChevronRight, FileClock, Telescope } from "lucide-react"
+import { ChevronRight, StickyNotes, Telescope } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportQuickActionLinkButton, {
@@ -62,23 +62,19 @@ export default async function MySupportHelpVehiclePage() {
     {
       id: "documents",
       title: t("Documents.Title"),
-      icon: FileClock,
+      icon: StickyNotes,
       content: <DocumentsContent />,
     },
   ]
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.Alerts.Question"),
+      answer: t("FAQs.Alerts.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
-    },
-    {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.NeedsRepair.Question"),
+      answer: t("FAQs.NeedsRepair.Answer"),
     },
   ]
 

@@ -33,7 +33,7 @@ import {
   ChevronRight,
   SquarePlus,
   Wrench,
-  FileClock,
+  StickyNotes,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
@@ -110,23 +110,23 @@ export default async function SupportHelpVehiclesPage() {
     {
       id: "documents",
       title: t("Documents.Title"),
-      icon: FileClock,
+      icon: StickyNotes,
       content: <DocumentsContent />,
     },
   ]
 
   const faqItems: SupportFAQItemType[] = [
     {
-      question: t("FAQs.Q1.Question"),
-      answer: t("FAQs.Q1.Answer"),
+      question: t("FAQs.HowMany.Question"),
+      answer: t("FAQs.HowMany.Answer"),
     },
     {
-      question: t("FAQs.Q2.Question"),
-      answer: t("FAQs.Q2.Answer"),
+      question: t("FAQs.Alerts.Question"),
+      answer: t("FAQs.Alerts.Answer"),
     },
     {
-      question: t("FAQs.Q3.Question"),
-      answer: t("FAQs.Q3.Answer"),
+      question: t("FAQs.Repair.Question"),
+      answer: t("FAQs.Repair.Answer"),
     },
   ]
 

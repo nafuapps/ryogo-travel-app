@@ -331,6 +331,7 @@ export const userRepository = {
       .returning({
         id: users.id,
         isAdmin: users.isAdmin,
+        name: users.name,
       })
   },
 

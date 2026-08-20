@@ -12,7 +12,9 @@ export default function SupportRelatedArticleLinkButton({
 }: SupportRelatedArticleType) {
   return (
     <Link href={href} className="my-1 hover:underline">
-      <RyogoCaption color="slate">{label}</RyogoCaption>
+      <RyogoCaption color="slate" weight="font-medium">
+        {label}
+      </RyogoCaption>
     </Link>
   )
 }

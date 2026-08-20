@@ -1,13 +1,15 @@
 import { RyogoH4, RyogoCaption } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { UserCheck, UserLock } from "lucide-react"
+import { Star, UserCheck, UserLock } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
+import { IconTextTag } from "@/components/tags/IconTextTag"
+import { getAverageRating } from "@/lib/utils"
 
 export default function ExistingCutomerCard({
   existingCustomer,
@@ -50,6 +52,13 @@ export default function ExistingCutomerCard({
             existingCustomer.location.state}
         </RyogoCaption>
         <RyogoCaption color="slate">{existingCustomer.remarks}</RyogoCaption>
+        {existingCustomer.driverRatings &&
+          existingCustomer.driverRatings.length > 0 && (
+            <IconTextTag
+              icon={Star}
+              text={getAverageRating(existingCustomer.driverRatings)}
+            />
+          )}
       </SectionColWrapper>
       <CustomerStatusPill status={customerStatus} />
     </div>

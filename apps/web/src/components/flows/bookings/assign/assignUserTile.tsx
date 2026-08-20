@@ -2,23 +2,24 @@ import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/u
 import { useTranslations } from "next-intl"
 import { FindBookingStatusByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { RyogoP, RyogoCaption } from "@/components/typography"
-import { Bolt, Check, CheckCheck, TriangleAlertIcon, User } from "lucide-react"
-import { IconTextTag } from "@/components/tags/IconTextTag"
+import { Check, CheckCheck, TriangleAlertIcon, User } from "lucide-react"
 import {
   AssignTileWrapper,
   AssignTileContentWrapper,
   AssignTileHeaderWrapper,
-  AssignTileFooterWrapper,
   AssignTileScoreWrapper,
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   getOverlapScore,
   NoOverlapScore,
 } from "@/components/flows/bookings/getBookingScore"
+import { RyogoPill } from "@/components/pills/ryogoPills"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
 
 export default function AssignUserTile({
   userData,
@@ -72,13 +73,19 @@ export default function AssignUserTile({
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
+          {userData.photoUrl ? (
+            <RyogoImage
+              src={getFileUrl(userData.photoUrl)}
+              alt={userData.name}
+              imageSize="sm"
+            />
+          ) : (
+            <RyogoEnclosedIcon icon={User} size="md" />
+          )}
           <RyogoP weight="font-bold"> {userData.name}</RyogoP>
           <RyogoCaption color="slate">{userData.phone}</RyogoCaption>
         </AssignTileHeaderWrapper>
-        <AssignTileFooterWrapper>
-          <IconTextTag icon={User} text={userData.userRole.toUpperCase()} />
-          <IconTextTag icon={Bolt} text={userData.status.toUpperCase()} />
-        </AssignTileFooterWrapper>
+        <RyogoPill bgColor="light" label={userData.userRole.toUpperCase()} />
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />

@@ -83,6 +83,27 @@ export function FormWrapper<T extends FieldValues>({
   )
 }
 
+export function GridWrapper({
+  id,
+  children,
+  className,
+  bgColor,
+}: {
+  id: string
+  children: React.ReactNode
+  className?: string
+  bgColor?: string
+}) {
+  return (
+    <div
+      id={id}
+      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-3 lg:gap-4 p-4 lg:p-5 ${className ?? ""}`}
+    >
+      {children}
+    </div>
+  )
+}
+
 export function SectionWrapper({
   id,
   children,
@@ -216,7 +237,7 @@ export function StickyActionWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 dark:bg-slate-950 sticky mt-auto shadow border-t-slate-200 dark:border-t-slate-700 bottom-0">
+    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 dark:bg-slate-950 sticky mt-auto shadow bottom-0">
       {children}
     </div>
   )

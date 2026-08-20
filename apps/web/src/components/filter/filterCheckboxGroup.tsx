@@ -10,10 +10,10 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 
 export default function FilterCheckboxGroup<V extends string>({
-  enumValueDisplayPairs,
   title,
   selectedFilters,
   setSelectedFilters,
+  enumValueDisplayPairs,
 }: {
   title: string
   selectedFilters: V[]

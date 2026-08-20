@@ -380,10 +380,10 @@ function TripTypeSelectionCard({
       }`}
     >
       <RyogoIcon icon={icon} size="md" color={selected ? "white" : "slate"} />
-      <RyogoCaption weight="font-bold" color={selected ? "white" : "slate"}>
+      <RyogoSmall weight="font-bold" color={selected ? "white" : "slate"}>
         {title}
-      </RyogoCaption>
-      <RyogoCaption color={"light"}>{desc}</RyogoCaption>
+      </RyogoSmall>
+      <RyogoCaption color={selected ? "white" : "slate"}>{desc}</RyogoCaption>
     </div>
   )
 }

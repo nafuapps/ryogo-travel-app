@@ -7,6 +7,7 @@ import {
   Wrench,
   Check,
   TicketX,
+  Star,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { IconTextTag } from "@/components/tags/IconTextTag"
@@ -29,6 +30,9 @@ import {
   getExpiryScore,
   getCustomerRatingScore,
 } from "@/components/flows/bookings/getBookingScore"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { getAverageRating } from "@/lib/utils"
 
 export default function AssignVehicleTile({
   vehicleData,
@@ -132,14 +136,27 @@ export default function AssignVehicleTile({
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
+          {vehicleData.vehiclePhotoUrl ? (
+            <RyogoImage
+              src={getFileUrl(vehicleData.vehiclePhotoUrl)}
+              alt={vehicleData.vehicleNumber}
+              imageSize="sm"
+            />
+          ) : (
+            <GetVehicleIcon vehicleType={vehicleData.type} size="md" />
+          )}
           <RyogoP weight="font-bold"> {vehicleData.vehicleNumber}</RyogoP>
           <RyogoCaption>
             {vehicleData.brand + " " + vehicleData.model}
           </RyogoCaption>
-          <div className="flex flex-row gap-1 lg:gap-1.5 items-center">
-            <GetVehicleIcon vehicleType={vehicleData.type} size="sm" />
-            <RyogoCaption color="slate">{vehicleData.color}</RyogoCaption>
-          </div>
+          <RyogoCaption color="slate">{vehicleData.color}</RyogoCaption>
+          {vehicleData.customerRatings &&
+            vehicleData.customerRatings.length > 0 && (
+              <IconTextTag
+                icon={Star}
+                text={getAverageRating(vehicleData.customerRatings)}
+              />
+            )}
         </AssignTileHeaderWrapper>
         <AssignTileFooterWrapper>
           <IconTextTag

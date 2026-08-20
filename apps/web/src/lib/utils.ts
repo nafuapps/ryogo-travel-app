@@ -151,6 +151,16 @@ export function generateSubscriptionInvoicePathName(
   return `agencies/${agencyId}/orders/${orderId}/${orderId}-ryogo-invoice.pdf`
 }
 
+export function getAverageRating(ratings: number[]) {
+  if (ratings.length === 0) return "0"
+  if (ratings.length === 1 && ratings[0]) {
+    return ratings[0].toString()
+  }
+  return (ratings.reduce((a, c) => a + c, 0) / ratings.length)
+    .toFixed(1)
+    .toString()
+}
+
 //Get trip duration
 export function getTripDuration(startDate: Date, endDate: Date) {
   return differenceInDays(startOfDay(endDate), startOfDay(startDate)) + 1

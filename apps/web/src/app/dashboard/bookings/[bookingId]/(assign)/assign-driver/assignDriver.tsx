@@ -10,9 +10,9 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import {
-  SectionWrapper,
+  GridWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
@@ -79,8 +79,10 @@ export default function AssignDriverPageComponent({
           }
         />
       )}
-      <SectionWrapper id="AssignDriverInfo">
-        <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
+      <RyogoP weight="font-bold">
+        {t("Title", { length: drivers.length })}
+      </RyogoP>
+      <GridWrapper id="AssignDriverInfo">
         {drivers.map((driver, index) => (
           <AssignDriverTile
             key={index}
@@ -98,7 +100,7 @@ export default function AssignDriverPageComponent({
             }
           />
         ))}
-      </SectionWrapper>
+      </GridWrapper>
       <StickyActionWrapper>
         <Button
           variant={"default"}

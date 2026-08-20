@@ -2,16 +2,17 @@ import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.s
 import { useTranslations } from "next-intl"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import {
-  Phone,
   BadgeIndianRupee,
   TicketX,
   CalendarX,
   Check,
   CheckCheck,
+  User,
+  Star,
 } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   getCustomerRatingScore,
@@ -28,6 +29,9 @@ import {
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { getAverageRating } from "@/lib/utils"
 
 export default function AssignDriverTile({
   driverData,
@@ -118,9 +122,25 @@ export default function AssignDriverTile({
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
         <AssignTileHeaderWrapper>
+          {driverData.user.photoUrl ? (
+            <RyogoImage
+              src={getFileUrl(driverData.user.photoUrl)}
+              alt={driverData.name}
+              imageSize="sm"
+            />
+          ) : (
+            <RyogoEnclosedIcon icon={User} size="md" />
+          )}
           <RyogoP weight="font-bold"> {driverData.name}</RyogoP>
           <RyogoCaption color="slate">{driverData.phone}</RyogoCaption>
           <RyogoCaption color="light">{driverData.address}</RyogoCaption>
+          {driverData.customerRatings &&
+            driverData.customerRatings.length > 0 && (
+              <IconTextTag
+                icon={Star}
+                text={getAverageRating(driverData.customerRatings)}
+              />
+            )}
         </AssignTileHeaderWrapper>
         <AssignTileFooterWrapper>
           <IconTextTag

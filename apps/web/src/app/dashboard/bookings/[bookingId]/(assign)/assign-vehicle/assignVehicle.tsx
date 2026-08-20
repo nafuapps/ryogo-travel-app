@@ -10,11 +10,11 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignVehicleAction } from "@/app/actions/bookings/assignVehicleAction"
 import { toast } from "sonner"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import {
-  SectionWrapper,
   PageWrapper,
   StickyActionWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 
@@ -79,8 +79,10 @@ export default function AssignVehiclePageComponent({
           }
         />
       )}
-      <SectionWrapper id="AssignVehicleInfo">
-        <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
+      <RyogoP weight="font-bold">
+        {t("Title", { length: vehicles.length })}
+      </RyogoP>
+      <GridWrapper id="AssignVehicleInfo">
         {vehicles.map((vehicle, index) => (
           <AssignVehicleTile
             key={index}
@@ -99,7 +101,7 @@ export default function AssignVehiclePageComponent({
             }
           />
         ))}
-      </SectionWrapper>
+      </GridWrapper>
       <StickyActionWrapper>
         <Button
           variant={"default"}

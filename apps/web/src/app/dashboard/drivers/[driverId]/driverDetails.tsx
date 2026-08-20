@@ -25,7 +25,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
@@ -72,7 +72,7 @@ export default async function DriverDetailsPageComponent({
               {moment(driver.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
             {driver.customerRatings && driver.customerRatings.length > 1 && (
-              <RyogoRatingDisplay
+              <RyogoAverageRatingDisplay
                 label={t("NumberRatings", {
                   number: driver.customerRatings.length,
                 })}

@@ -131,7 +131,9 @@ export default function NewBookingStep3(props: {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <NewFormContentWrapper>
-          <RyogoP weight="font-bold"> {t("Vehicle.Title")}</RyogoP>
+          <RyogoP weight="font-bold">
+            {t("Vehicle.Title", { length: props.vehicles.length })}
+          </RyogoP>
           <NewStepGridWrapper>
             {props.vehicles
               .sort(
@@ -152,7 +154,9 @@ export default function NewBookingStep3(props: {
           </NewStepGridWrapper>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
-          <RyogoP weight="font-bold"> {t("Driver.Title")}</RyogoP>
+          <RyogoP weight="font-bold">
+            {t("Driver.Title", { length: props.drivers.length })}
+          </RyogoP>
           <NewStepGridWrapper>
             {props.drivers.map((driver, index) => (
               <AssignDriverTile

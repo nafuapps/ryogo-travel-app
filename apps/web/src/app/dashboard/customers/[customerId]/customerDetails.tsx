@@ -25,7 +25,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
 
@@ -71,7 +71,7 @@ export default async function CustomerDetailsPageComponent({
               {moment(customer.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
             {customer.driverRatings && customer.driverRatings.length > 1 && (
-              <RyogoRatingDisplay
+              <RyogoAverageRatingDisplay
                 label={t("NumberRatings", {
                   number: customer.driverRatings.length,
                 })}

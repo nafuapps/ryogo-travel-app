@@ -1,8 +1,9 @@
 import { Star } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoP, RyogoSmall } from "@/components/typography"
+import { getAverageRating } from "@/lib/utils"
 
-export default function RyogoRatingDisplay({
+export default function RyogoAverageRatingDisplay({
   label,
   ratings,
 }: {
@@ -12,9 +13,7 @@ export default function RyogoRatingDisplay({
   return (
     <div className="flex flex-row gap-1 lg:gap-1.5 items-center justify-center">
       <RyogoIcon icon={Star} size="sm" />
-      <RyogoP weight="font-bold">
-        {(ratings.reduce((a, c) => a + c, 0) / ratings.length).toFixed(1)}
-      </RyogoP>
+      <RyogoP weight="font-bold">{getAverageRating(ratings)}</RyogoP>
       <RyogoSmall color="slate">{label}</RyogoSmall>
     </div>
   )

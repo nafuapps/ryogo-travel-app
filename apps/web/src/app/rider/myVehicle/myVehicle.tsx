@@ -7,7 +7,7 @@ import {
   SectionRowWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
-import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -71,7 +71,7 @@ export default async function RiderMyVehiclePageComponent({
               {moment(vehicle.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
             {vehicle.customerRatings && vehicle.customerRatings.length > 1 && (
-              <RyogoRatingDisplay
+              <RyogoAverageRatingDisplay
                 label={t("NumberRatings", {
                   number: vehicle.customerRatings.length,
                 })}

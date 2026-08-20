@@ -1022,7 +1022,7 @@
           "TryCTA": "Try Premium",
           "RenewCTA": "Renew Subscription",
           "Vehicle": {
-            "Title": "Choose a vehicle:",
+            "Title": "Choose a vehicle (out of {length}):",
             "Score": "RyoGo Score",
             "Seats": " {count, plural, =1 {seat} other {seats}}",
             "AC": "AC",
@@ -1032,7 +1032,7 @@
             "PerKm": "/Km"
           },
           "Driver": {
-            "Title": "Choose a driver:",
+            "Title": "Choose a driver (out of {length}):",
             "Score": "RyoGo Score",
             "Booked": "Booked",
             "Leave": "On Leave",
@@ -1459,7 +1459,7 @@
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
-      "Title": "Select a driver to assign for this booking",
+      "Title": "Select a driver (out of {length}) to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
         "CurrentlyAssigned": "Assigned",
@@ -1480,7 +1480,7 @@
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
-      "Title": "Select a vehicle to assign for this booking",
+      "Title": "Select a vehicle (out of {length}) to assign for this booking",
       "Tile": {
         "Title": "Choose vehicle",
         "Score": "RyoGo Score",
@@ -1504,7 +1504,7 @@
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
-      "Title": "Select a user to assign for this booking",
+      "Title": "Select a user (out of {length}) to assign for this booking",
       "Tile": {
         "Score": "RyoGo Score",
         "CurrentlyAssigned": "Assigned",

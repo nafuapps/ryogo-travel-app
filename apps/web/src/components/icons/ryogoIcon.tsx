@@ -27,7 +27,7 @@ function getIconColor(color?: RyogoIconColorType) {
     case "white":
       return "text-white dark:text-slate-950"
     case "light":
-      return "text-slate-400 dark:text-slate-500"
+      return "text-slate-500 dark:text-slate-500"
     case "slate":
     default:
       return "text-slate-700 dark:text-slate-300"

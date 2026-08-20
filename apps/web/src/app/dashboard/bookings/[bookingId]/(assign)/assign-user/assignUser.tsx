@@ -10,9 +10,9 @@ import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import {
-  SectionWrapper,
+  GridWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
@@ -74,8 +74,8 @@ export default function AssignUserPageComponent({
           }
         />
       )}
-      <RyogoSmall weight="font-bold">{t("Title")}</RyogoSmall>
-      <SectionWrapper id="AssignUserInfo">
+      <RyogoP weight="font-bold">{t("Title", { length: users.length })}</RyogoP>
+      <GridWrapper id="AssignUserInfo">
         {users.map((user, index) => (
           <AssignUserTile
             key={index}
@@ -87,7 +87,7 @@ export default function AssignUserPageComponent({
             }
           />
         ))}
-      </SectionWrapper>
+      </GridWrapper>
       <StickyActionWrapper>
         <Button
           variant={"default"}

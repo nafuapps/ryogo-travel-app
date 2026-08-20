@@ -51,7 +51,7 @@ export default async function SupportSideComponent({
             <RyogoP weight="font-bold" color="white">
               {t("Tickets.Title")}
             </RyogoP>
-            <RyogoCaption color="light" className="text-center">
+            <RyogoCaption color="white" className="text-center">
               {t("Tickets.Description")}
             </RyogoCaption>
             <Link href="/dashboard/support/tickets">
@@ -68,7 +68,7 @@ export default async function SupportSideComponent({
             <RyogoP weight="font-bold" color="white">
               {t("Tickets.Premium.Title")}
             </RyogoP>
-            <RyogoCaption color="light" className="text-center">
+            <RyogoCaption color="white" className="text-center">
               {t("Tickets.Premium.Description")}
             </RyogoCaption>
             {isOwner && (

@@ -19,7 +19,7 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
-import RyogoRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { Separator } from "@/components/ui/separator"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 
@@ -73,7 +73,7 @@ export default async function VehicleDetailsPageComponent({
               {moment(vehicle.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
             {vehicle.customerRatings && vehicle.customerRatings.length > 1 && (
-              <RyogoRatingDisplay
+              <RyogoAverageRatingDisplay
                 label={t("NumberRatings", {
                   number: vehicle.customerRatings.length,
                 })}

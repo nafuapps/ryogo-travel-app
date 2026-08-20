@@ -24,7 +24,7 @@ type RyogoPillColorType =
 function getPillColor(color?: RyogoPillColorType) {
   switch (color) {
     case "light":
-      return "bg-slate-400 dark:bg-slate-500"
+      return "bg-slate-500 dark:bg-slate-500"
     case "brand":
       return "bg-sky-700 dark:bg-sky-200"
     case "green":

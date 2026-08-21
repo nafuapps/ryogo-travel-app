@@ -2,19 +2,14 @@ import {
   deleteWebSession,
   createWebSession,
   decrypt,
-  SessionPayload,
+  SessionPayloadType,
   checkWebSessionInDB,
-  updateWebSessionFromDB,
 } from "./session"
 import { cookies } from "next/headers"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cache } from "react"
-import {
-  SESSION_COOKIE_NAME,
-  SESSION_COOKIE_REFRESH_HOURS,
-} from "@ryogo-travel-app/api/apiConfig"
+import { SESSION_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
 import { redirect, RedirectType } from "next/navigation"
-import { differenceInHours } from "date-fns"
 
 //Get current user session from cookie - for optimistic checks before DB reads
 export const getCurrentUser = cache(async () => {
@@ -23,12 +18,8 @@ export const getCurrentUser = cache(async () => {
   if (!session) return
 
   // S2: Decrypt payload from encrypted session
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+  const payload = (await decrypt(session)) as SessionPayloadType | undefined
   if (!payload) return
-
-  if (payload.expiresAt < new Date()) {
-    await logout()
-  }
 
   // S3: Return payload as current user data
   return payload
@@ -41,21 +32,6 @@ export const verifyCurrentUser = cache(async () => {
 
   return await checkWebSessionInDB(payload.token, payload.userId)
 })
-
-//Update user session in cookie from DB - every X hours
-export const updateCurrentUser = async () => {
-  const payload = await getCurrentUser()
-  if (!payload) return
-
-  if (
-    differenceInHours(new Date(), payload.updatedAt) <
-    SESSION_COOKIE_REFRESH_HOURS
-  ) {
-    return
-  }
-
-  await updateWebSessionFromDB(payload)
-}
 
 // Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {

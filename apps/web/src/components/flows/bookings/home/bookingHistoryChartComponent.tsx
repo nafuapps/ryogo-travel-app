@@ -25,11 +25,13 @@ export default function BookingHistoryChartComponent({
   bookingsHistory14Days: FindBookingHistoryLastDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.History")
-  const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
+  const [selectedTab, setSelectedTab] = useState<SelectableDays>(
+    SelectableDays.SEVEN,
+  )
 
   const bookingsHistory7Days = bookingsHistory14Days.filter(
     (b) =>
-      b.startDate <= new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000),
+      b.startDate <= new Date(new Date().getTime() + 24 * 7 * 60 * 60 * 1000),
   )
 
   const chartData =

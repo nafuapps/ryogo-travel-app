@@ -22,7 +22,7 @@ const SESSION_COOKIE_EXPIRATION_TIME =
   SESSION_COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000
 
 // Don't add any sensitive data like email, password in this payload
-export type SessionPayload = {
+export type SessionPayloadType = {
   sessionId: string
   userId: string
   token: string
@@ -38,7 +38,7 @@ export type SessionPayload = {
 }
 
 //Encrypt session data into a JWT
-async function encrypt(payload: SessionPayload) {
+async function encrypt(payload: SessionPayloadType) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -58,7 +58,7 @@ export async function decrypt(session: string = "") {
 export async function checkWebSessionInDB(token: string, userId: string) {
   const sessionDB = await sessionRepository.readSessionByToken(token)
 
-  //Check if session exists, is not expired and is of the same user
+  //Check if session exists in DB, is not expired and is of the same user
   if (
     !sessionDB ||
     sessionDB.expiresAt < new Date() ||
@@ -66,6 +66,11 @@ export async function checkWebSessionInDB(token: string, userId: string) {
   ) {
     return
   }
+
+  //Check if current user exists in DB and is not suspended
+  const user = await userRepository.readUserById(userId)
+  if (!user || user.status === UserStatusEnum.SUSPENDED) return
+
   return sessionDB
 }
 
@@ -84,7 +89,7 @@ export async function createWebSession(user: SelectUserType) {
   if (!sessionData[0]) return
 
   // 2. Encrypt the session data
-  const newPayload: SessionPayload = {
+  const newPayload: SessionPayloadType = {
     sessionId: sessionData[0].id,
     token: sessionData[0].token,
     userId: sessionData[0].userId,
@@ -133,11 +138,11 @@ export async function createWebSession(user: SelectUserType) {
 }
 
 //Update session from DB
-export async function updateWebSessionFromDB(payload: SessionPayload) {
+export async function updateWebSessionFromDB(payload: SessionPayloadType) {
   const user = await userRepository.readUserById(payload.userId)
   if (!user) return
 
-  const updatedPayload: SessionPayload = {
+  const updatedPayload: SessionPayloadType = {
     sessionId: payload.sessionId,
     userId: payload.userId,
     token: payload.token,
@@ -151,40 +156,14 @@ export async function updateWebSessionFromDB(payload: SessionPayload) {
     status: user.status,
     updatedAt: new Date(), //Updated now
   }
-  const updatedSession = await encrypt(updatedPayload)
-
-  const cookieStore = await cookies()
-  cookieStore.set(SESSION_COOKIE_NAME, updatedSession, {
-    httpOnly: true,
-    secure: true,
-    expires: payload.expiresAt,
-    sameSite: "lax",
-  })
-
-  cookieStore.set(LOCALE_COOKIE_NAME, user.languagePref, {
-    maxAge: 315360000, // 10 years
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
-  })
-
-  cookieStore.set(
-    DARK_MODE_COOKIE_NAME,
-    user.prefersDarkTheme ? "true" : "false",
-    {
-      maxAge: 315360000, // 10 years
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-    },
-  )
+  return await encrypt(updatedPayload)
 }
 
 //Update user status in session
 export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+  const payload = (await decrypt(session)) as SessionPayloadType | undefined
 
   if (!session || !payload) {
     return
@@ -213,7 +192,7 @@ export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
 export async function updateUserVerificationInWebSession(isVerified: boolean) {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+  const payload = (await decrypt(session)) as SessionPayloadType | undefined
 
   if (!session || !payload) {
     return
@@ -242,7 +221,7 @@ export async function updateUserVerificationInWebSession(isVerified: boolean) {
 export async function updateUserAdminInWebSession(isAdmin: boolean) {
   // 1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+  const payload = (await decrypt(session)) as SessionPayloadType | undefined
 
   if (!session || !payload) {
     return
@@ -273,11 +252,13 @@ export async function deleteWebSession() {
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
   if (!session) return
 
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+  const payload = (await decrypt(session)) as SessionPayloadType | undefined
   if (!payload) return
 
   // 2. Delete session from database
-  await userServices.logOutInDB(payload.userId, payload.sessionId)
+  const user = await userServices.logOutInDB(payload.userId, payload.sessionId)
+
+  if (!user) return
 
   // 3. Delete session from cookie
   const cookieStore = await cookies()

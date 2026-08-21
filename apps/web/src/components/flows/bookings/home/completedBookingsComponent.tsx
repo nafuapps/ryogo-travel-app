@@ -6,12 +6,12 @@ export default async function CompletedBookingsComponent({
 }: {
   agencyId: string
 }) {
-  const completedBookings7Days =
-    await bookingServices.findCompletedBookingsPreviousDays(agencyId, 7)
+  const completedBookings14Days =
+    await bookingServices.findCompletedBookingsPreviousDays(agencyId, 14)
 
   return (
     <CompletedBookingsItemComponent
-      completedBookings7Days={completedBookings7Days}
+      completedBookings14Days={completedBookings14Days}
     />
   )
 }

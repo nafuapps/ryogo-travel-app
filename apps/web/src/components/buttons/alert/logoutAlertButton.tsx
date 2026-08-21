@@ -12,7 +12,7 @@ export default function LogoutAlertButton() {
   const t = useTranslations("Dashboard.Buttons.Logout")
   const [isPending, startTransition] = useTransition()
 
-  async function logout() {
+  async function logoutUser() {
     startTransition(async () => {
       await logoutAction()
     })
@@ -28,7 +28,7 @@ export default function LogoutAlertButton() {
         </Button>
       }
     >
-      <Button variant="destructive" onClick={logout} disabled={isPending}>
+      <Button variant="destructive" onClick={logoutUser} disabled={isPending}>
         {isPending && <Spinner />}
         <RyogoCaption color="white">
           {isPending ? t("Loading") : t("YesCTA")}

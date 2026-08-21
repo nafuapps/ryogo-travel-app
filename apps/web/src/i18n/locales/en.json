@@ -13,7 +13,7 @@
         "Loading": "Loading",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric and without spaces",
-        "NotFoundError": "Phone number not registered",
+        "NotFoundError": "Phone number not registered or suspended",
         "ServerError": "Cannot connect to server.. Try again later!",
         "BotError": "Bot/Fraud activity detected."
       },
@@ -880,12 +880,12 @@
       },
       "Upcoming": {
         "Title": "UPCOMING",
-        "24Hrs": "Next 24 Hours",
+        "14Days": "Next 14 Days",
         "7Days": "Next 7 Days"
       },
       "Completed": {
         "Title": "COMPLETED",
-        "24Hrs": "Last 24 Hours",
+        "14Days": "Last 14 Days",
         "7Days": "Last 7 Days"
       },
       "Schedule": {
@@ -895,7 +895,7 @@
       "History": {
         "Title": "BOOKING HISTORY",
         "Photo": "Customer photo",
-        "24Hrs": "Last 24 Hours",
+        "14Days": "Last 14 Days",
         "7Days": "Last 7 Days"
       },
       "Leads": {

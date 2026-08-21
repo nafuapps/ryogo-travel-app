@@ -9,9 +9,12 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { differenceInDays } from "date-fns"
+import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
+import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 
 export const metadata: Metadata = {
-  title: `Confirm Booking - ${pageTitle}`,
+  title: `Confirm Lead Booking - ${pageTitle}`,
   description: pageDescription,
 }
 
@@ -37,6 +40,23 @@ export default async function ConfirmBookingPage({
   //Not a lead booking -> send to details page
   if (booking.status !== BookingStatusEnum.LEAD) {
     redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
+  }
+
+  //If it is an old lead booking, cancel it automatically
+  if (
+    differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
+  ) {
+    if (
+      await cancelBookingAction(
+        booking.id,
+        booking.agencyId,
+        booking.assignedUserId,
+      )
+    ) {
+      redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
+    } else {
+      redirect(`/dashboard/bookings`, RedirectType.replace)
+    }
   }
 
   return (

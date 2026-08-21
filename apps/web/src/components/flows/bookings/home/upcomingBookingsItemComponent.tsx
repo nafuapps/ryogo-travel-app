@@ -21,22 +21,25 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UpcomingBookingCard } from "@/components/cards/booking/bookingCards"
 
+type UpcominBookingsSelectType = "7Days" | "14Days"
+
 export default function UpcomingBookingsItemComponent({
-  upcomingBookings7Days,
+  upcomingBookings14Days,
 }: {
-  upcomingBookings7Days: FindUpcomingBookingsNextDaysType
+  upcomingBookings14Days: FindUpcomingBookingsNextDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Upcoming")
-  const [selectedTab, setSelectedTab] = useState("24hrs")
+  const [selectedTab, setSelectedTab] =
+    useState<UpcominBookingsSelectType>("7Days")
 
-  const upcomingBookings24Hrs = upcomingBookings7Days.filter(
+  const upcomingBookings7Days = upcomingBookings14Days.filter(
     (b) =>
       new Date(b.startDate) <
-      new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+      new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 7),
   )
 
   const trips =
-    selectedTab === "24hrs" ? upcomingBookings24Hrs : upcomingBookings7Days
+    selectedTab === "7Days" ? upcomingBookings7Days : upcomingBookings14Days
 
   return (
     <SectionWrapper id="UpcomingBookingsSection">
@@ -50,15 +53,17 @@ export default function UpcomingBookingsItemComponent({
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
-          onValueChange={(value) => setSelectedTab(value)}
+          onValueChange={(value: UpcominBookingsSelectType) =>
+            setSelectedTab(value)
+          }
         >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="24hrs">{t("24Hrs")}</SelectItem>
               <SelectItem value="7days">{t("7Days")}</SelectItem>
+              <SelectItem value="14Days">{t("14Days")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

@@ -21,20 +21,22 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { CompletedBookingCard } from "@/components/cards/booking/bookingCards"
 
+type CompletedBookingsSelectType = "7Days" | "14Days"
+
 export default function CompletedBookingsItemComponent({
-  completedBookings7Days,
+  completedBookings14Days,
 }: {
-  completedBookings7Days: FindCompletedBookingsPreviousDaysType
+  completedBookings14Days: FindCompletedBookingsPreviousDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Completed")
-  const [selectedTab, setSelectedTab] = useState("24hrs")
+  const [selectedTab, setSelectedTab] = useState<CompletedBookingsSelectType>("7Days")
 
-  const completedBookings24Hrs = completedBookings7Days.filter(
-    (b) => b.updatedAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
+  const completedBookings7Days = completedBookings14Days.filter(
+    (b) => b.updatedAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * 7),
   )
 
   const trips =
-    selectedTab === "24hrs" ? completedBookings24Hrs : completedBookings7Days
+    selectedTab === "7Days" ? completedBookings7Days : completedBookings14Days
 
   return (
     <SectionWrapper id="CompletedBookingsSection">
@@ -48,15 +50,15 @@ export default function CompletedBookingsItemComponent({
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
-          onValueChange={(value) => setSelectedTab(value)}
+          onValueChange={(value: CompletedBookingsSelectType) => setSelectedTab(value)}
         >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="24hrs">{t("24Hrs")}</SelectItem>
-              <SelectItem value="7days">{t("7Days")}</SelectItem>
+              <SelectItem value="7Days">{t("7Days")}</SelectItem>
+              <SelectItem value="14Days">{t("14Days")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

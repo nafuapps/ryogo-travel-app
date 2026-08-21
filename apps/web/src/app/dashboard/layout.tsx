@@ -9,10 +9,6 @@ import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
-import { logoutAction } from "@/app/actions/users/logoutAction"
-import { differenceInHours } from "date-fns"
-import { SESSION_COOKIE_REFRESH_HOURS } from "@ryogo-travel-app/api/apiConfig"
-import { refreshUserSessionAction } from "@/app/actions/users/refreshUserSessionAction"
 
 export default async function DashboardLayout({
   children,
@@ -27,18 +23,6 @@ export default async function DashboardLayout({
   // Redirect to auth if the user is not authenticated
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
-  }
-
-  //Update current user session cookie from DB every X hours
-  if (
-    differenceInHours(new Date(), currentUser.updatedAt) >=
-    SESSION_COOKIE_REFRESH_HOURS
-  ) {
-    await refreshUserSessionAction()
-  }
-  //If suspended, logout user
-  if (currentUser.status === UserStatusEnum.SUSPENDED) {
-    await logoutAction()
   }
 
   //Driver

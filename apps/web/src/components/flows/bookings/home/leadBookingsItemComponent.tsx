@@ -24,19 +24,22 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
+type LeadBookingsSelectType = "24Hrs" | "7Days"
+
 export default function LeadBookingsItemComponent({
   leadBookings7Days,
 }: {
   leadBookings7Days: FindLeadBookingsPreviousDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Leads")
-  const [selectedTab, setSelectedTab] = useState("24hrs")
+  const [selectedTab, setSelectedTab] =
+    useState<LeadBookingsSelectType>("24Hrs")
 
   const leadBookings24Hrs = leadBookings7Days.filter(
     (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
   )
 
-  const trips = selectedTab === "24hrs" ? leadBookings24Hrs : leadBookings7Days
+  const trips = selectedTab === "24Hrs" ? leadBookings24Hrs : leadBookings7Days
 
   return (
     <SectionWrapper id="leadsBookingsSection">
@@ -50,15 +53,17 @@ export default function LeadBookingsItemComponent({
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
-          onValueChange={(value) => setSelectedTab(value)}
+          onValueChange={(value: LeadBookingsSelectType) =>
+            setSelectedTab(value)
+          }
         >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="24hrs">{t("24Hrs")}</SelectItem>
-              <SelectItem value="7days">{t("7Days")}</SelectItem>
+              <SelectItem value="24Hrs">{t("24Hrs")}</SelectItem>
+              <SelectItem value="7Days">{t("7Days")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

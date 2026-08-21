@@ -6,12 +6,12 @@ export default async function UpcomingBookingsComponent({
 }: {
   agencyId: string
 }) {
-  const upcomingBookings7Days =
-    await bookingServices.findUpcomingBookingsNextDays(agencyId, 7)
+  const upcomingBookings14Days =
+    await bookingServices.findUpcomingBookingsNextDays(agencyId, 14)
 
   return (
     <UpcomingBookingsItemComponent
-      upcomingBookings7Days={upcomingBookings7Days}
+      upcomingBookings14Days={upcomingBookings14Days}
     />
   )
 }

@@ -44,7 +44,7 @@ export function NewFormActionWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 pt-3 sticky bg-slate-100 dark:bg-slate-950 mt-auto shadow border-t border-t-slate-200 dark:border-t-slate-800 bottom-0">
+    <div className="flex flex-col gap-2 lg:gap-3 pt-3 sticky bg-slate-100 dark:bg-slate-950 mt-auto shadow bottom-0">
       {children}
     </div>
   )

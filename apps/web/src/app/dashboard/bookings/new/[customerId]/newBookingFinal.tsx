@@ -11,10 +11,7 @@ import StepsTracker from "@/components/form/stepsTracker"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import {
-  CreateNewBookingRequestType,
-  NewBookingFormDataType,
-} from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { IconTextTag } from "@/components/tags/IconTextTag"
@@ -43,9 +40,10 @@ type NewBookingFinalProps = {
   newBookingFormData: NewBookingFormDataType
   userId: string
   agencyId: string
+  customerId: string
 }
 export default function NewBookingFinal(props: NewBookingFinalProps) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Final")
+  const t = useTranslations("Dashboard.NewBookingWithCustomer.Form.Final")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -57,18 +55,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
   //Final form submit to create a new booking
   const onSubmit = async () => {
     startTransition(async () => {
-      const newBookingData: CreateNewBookingRequestType = {
-        agencyId: props.agencyId,
-        userId: props.userId,
-        existingCustomerId: props.newBookingFormData.existingCustomer
-          ? props.newBookingFormData.existingCustomer.id
-          : undefined,
-        customerPhone: props.newBookingFormData.customerPhone,
-        newCustomerName: props.newBookingFormData.newCustomerName,
-        newCustomerLocationState:
-          props.newBookingFormData.newCustomerLocationState,
-        newCustomerLocationCity:
-          props.newBookingFormData.newCustomerLocationCity,
+      const newBookingData: NewBookingFormDataType = {
         tripSourceLocationState:
           props.newBookingFormData.tripSourceLocationState,
         tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
@@ -95,7 +82,12 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         selectedCommissionRate:
           props.newBookingFormData.selectedCommissionRate ?? 0,
       }
-      const createdBooking = await newBookingAction(newBookingData)
+      const createdBooking = await newBookingAction({
+        agencyId: props.agencyId,
+        userId: props.userId,
+        customerId: props.customerId,
+        data: newBookingData,
+      })
       if (createdBooking) {
         router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`)
         toast.success(t("Success"))
@@ -111,7 +103,9 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
           <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 5, total: 5 })}
+          </RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker steps={"booking"} current={4} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>

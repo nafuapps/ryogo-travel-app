@@ -7,7 +7,7 @@ import {
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
-import { CreateNewBookingRequestType } from "../types/booking.types"
+import { NewBookingFormDataType } from "../types/booking.types"
 import { locationRepository } from "../repositories/location.repo"
 import { customerServices } from "./customer.services"
 import { routeServices } from "./route.services"
@@ -318,29 +318,13 @@ export const bookingServices = {
   },
 
   //Create a new Booking
-  async addNewBooking(data: CreateNewBookingRequestType) {
-    //Step1: If no existing customer, create a new customer
-    let customerId = data.existingCustomerId
-    if (!customerId) {
-      if (
-        !data.newCustomerName ||
-        !data.newCustomerLocationCity ||
-        !data.newCustomerLocationState
-      )
-        return
-      const newCustomer = await customerServices.addNewCustomer(
-        data.newCustomerName,
-        data.customerPhone,
-        data.newCustomerLocationCity,
-        data.newCustomerLocationState,
-        data.agencyId,
-        data.userId,
-      )
-      if (!newCustomer) return
-      customerId = newCustomer.id
-    }
-
-    //Step2: Get trip sourceId and destinationId from city & state
+  async addNewBooking(
+    agencyId: string,
+    userId: string,
+    customerId: string,
+    data: NewBookingFormDataType,
+  ) {
+    //Step1: Get trip sourceId and destinationId from city & state
     let sourceId = data.sourceId
     if (!sourceId) {
       const source = await locationRepository.readLocationByCityState(
@@ -378,10 +362,10 @@ export const bookingServices = {
 
     //Step4: Prepare data
     const newBookingData: InsertBookingType = {
-      agencyId: data.agencyId,
+      agencyId: agencyId,
       customerId: customerId,
-      bookedByUserId: data.userId,
-      assignedUserId: data.userId,
+      bookedByUserId: userId,
+      assignedUserId: userId,
       sourceId: sourceId,
       destinationId: destinationId,
       routeId: routeId,

@@ -1,12 +1,7 @@
 "use client"
 
-import {
-  RyogoH3,
-  RyogoP,
-  RyogoSmall,
-  RyogoCaption,
-} from "@/components/typography"
-import { DriverIdRegex, VehicleIdRegex } from "@/lib/regex"
+import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { VehicleIdRegex } from "@/lib/regex"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
@@ -15,8 +10,6 @@ import StepsTracker from "@/components/form/stepsTracker"
 import { Spinner } from "@/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import AssignDriverTile from "@/components/flows/bookings/assign/assignDriverTile"
 import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
 import {
   NewStepHeaderWrapper,
@@ -34,7 +27,7 @@ import {
 } from "@/components/page/pageWrappers"
 import Link from "next/link"
 
-export default function NewBookingStep3(props: {
+export default function NewBookingStepVehicle(props: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingFormDataType
@@ -42,45 +35,40 @@ export default function NewBookingStep3(props: {
     React.SetStateAction<NewBookingFormDataType>
   >
   vehicles: FindVehiclesByAgencyType
-  drivers: FindDriversByAgencyType
   limited: boolean
   isSubscribed: boolean
   hasTriedSubscription: boolean
 }) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step3")
+  const t = useTranslations("Dashboard.NewBookingWithCustomer.Form.StepVehicle")
 
-  const step3Schema = z.object({
-    //Assignment
-    assignedDriverId: DriverIdRegex.optional(),
+  const stepVehicleSchema = z.object({
     assignedVehicleId: VehicleIdRegex.optional(),
   })
 
-  type Step3Type = z.infer<typeof step3Schema>
+  type StepVehicleType = z.infer<typeof stepVehicleSchema>
 
   //Form init
-  const form = useForm<Step3Type>({
-    resolver: zodResolver(step3Schema),
+  const form = useForm<StepVehicleType>({
+    resolver: zodResolver(stepVehicleSchema),
     defaultValues: {
-      assignedDriverId: props.newBookingFormData.assignedDriverId,
       assignedVehicleId: props.newBookingFormData.assignedVehicleId,
     },
   })
 
   //Form submit
-  function onSubmit(values: Step3Type) {
+  function onSubmit(values: StepVehicleType) {
     props.setNewBookingFormData({
       ...props.newBookingFormData,
-      assignedDriverId: values.assignedDriverId,
       assignedVehicleId: values.assignedVehicleId,
-      selectedAcChargePerDay: props.vehicles.find(
-        (vehicle) => vehicle.id === values.assignedVehicleId,
-      )?.defaultAcChargePerDay,
-      selectedRatePerKm: props.vehicles.find(
-        (vehicle) => vehicle.id === values.assignedVehicleId,
-      )?.defaultRatePerKm,
-      selectedAllowancePerDay: props.drivers.find(
-        (driver) => driver.id === values.assignedDriverId,
-      )?.defaultAllowancePerDay,
+      selectedAcChargePerDay:
+        props.vehicles.find(
+          (vehicle) => vehicle.id === values.assignedVehicleId,
+        )?.defaultAcChargePerDay ??
+        props.newBookingFormData.selectedAcChargePerDay,
+      selectedRatePerKm:
+        props.vehicles.find(
+          (vehicle) => vehicle.id === values.assignedVehicleId,
+        )?.defaultRatePerKm ?? props.newBookingFormData.selectedRatePerKm,
     })
     props.onNext()
   }
@@ -90,19 +78,16 @@ export default function NewBookingStep3(props: {
     control: form.control,
   })
 
-  const assignedDriverId = useWatch({
-    name: "assignedDriverId",
-    control: form.control,
-  })
-
   return (
     <NewStepWrapper id="AssignmentStep">
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
           <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 2, total: 5 })}
+          </RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker steps={"booking"} current={2} />
+        <StepsTracker steps={"booking"} current={1} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       {props.limited && (
@@ -125,15 +110,12 @@ export default function NewBookingStep3(props: {
           </SectionRowWrapper>
         </SectionWrapper>
       )}
-      <NewFormWrapper<Step3Type>
-        id="Step3Form"
+      <NewFormWrapper<StepVehicleType>
+        id="StepVehicleForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <NewFormContentWrapper>
-          <RyogoP weight="font-bold">
-            {t("Vehicle.Title", { length: props.vehicles.length })}
-          </RyogoP>
           <NewStepGridWrapper>
             {props.vehicles
               .sort(
@@ -144,31 +126,18 @@ export default function NewBookingStep3(props: {
                   key={index}
                   vehicleData={vehicle}
                   selected={assignedVehicleId === vehicle.id}
-                  onClick={() => form.setValue("assignedVehicleId", vehicle.id)}
+                  onClick={() =>
+                    form.setValue(
+                      "assignedVehicleId",
+                      assignedVehicleId !== vehicle.id ? vehicle.id : undefined,
+                    )
+                  }
                   bookingStartDate={props.newBookingFormData.tripStartDate}
                   bookingEndDate={props.newBookingFormData.tripEndDate}
                   bookingPassengers={props.newBookingFormData.tripPassengers}
                   bookingNeedsAC={props.newBookingFormData.tripNeedsAC}
                 />
               ))}
-          </NewStepGridWrapper>
-        </NewFormContentWrapper>
-        <NewFormContentWrapper>
-          <RyogoP weight="font-bold">
-            {t("Driver.Title", { length: props.drivers.length })}
-          </RyogoP>
-          <NewStepGridWrapper>
-            {props.drivers.map((driver, index) => (
-              <AssignDriverTile
-                key={index}
-                driverData={driver}
-                bookingStartDate={props.newBookingFormData.tripStartDate}
-                bookingEndDate={props.newBookingFormData.tripEndDate}
-                bookingPassengers={props.newBookingFormData.tripPassengers}
-                selected={assignedDriverId === driver.id}
-                onClick={() => form.setValue("assignedDriverId", driver.id)}
-              />
-            ))}
           </NewStepGridWrapper>
         </NewFormContentWrapper>
         <NewFormActionWrapper>

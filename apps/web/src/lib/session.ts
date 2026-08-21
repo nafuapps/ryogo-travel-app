@@ -1,12 +1,13 @@
 import { cookies } from "next/headers"
 import { jwtVerify, SignJWT } from "jose"
 import { sessionRepository } from "@ryogo-travel-app/api/repositories/session.repo"
+import { userRepository } from "@ryogo-travel-app/api/repositories/user.repo"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import {
   SelectUserType,
   UserRolesEnum,
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import {
   DARK_MODE_COOKIE_NAME,
   LOCALE_COOKIE_NAME,
@@ -54,21 +55,14 @@ export async function decrypt(session: string = "") {
 }
 
 //Get session from DB by token
-export async function checkWebSessionInDB() {
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return
-
-  const payload = (await decrypt(session)) as SessionPayload | undefined
-  if (!payload) return
-
-  const token = payload.token
+export async function checkWebSessionInDB(token: string, userId: string) {
   const sessionDB = await sessionRepository.readSessionByToken(token)
 
   //Check if session exists, is not expired and is of the same user
   if (
     !sessionDB ||
     sessionDB.expiresAt < new Date() ||
-    sessionDB.userId !== payload.userId
+    sessionDB.userId !== userId
   ) {
     return
   }
@@ -140,13 +134,14 @@ export async function createWebSession(user: SelectUserType) {
 
 //Update session from DB
 export async function updateWebSessionFromDB(payload: SessionPayload) {
-  const user = await userServices.findUserDetailsById(payload.userId)
+  const user = await userRepository.readUserById(payload.userId)
   if (!user) return
 
   const updatedPayload: SessionPayload = {
     sessionId: payload.sessionId,
     userId: payload.userId,
     token: payload.token,
+    expiresAt: payload.expiresAt,
     agencyId: user.agencyId,
     isAdmin: user.isAdmin,
     isVerified: user.isVerified,
@@ -154,8 +149,7 @@ export async function updateWebSessionFromDB(payload: SessionPayload) {
     name: user.name,
     phone: user.phone,
     status: user.status,
-    updatedAt: new Date(),
-    expiresAt: payload.expiresAt,
+    updatedAt: new Date(), //Updated now
   }
   const updatedSession = await encrypt(updatedPayload)
 

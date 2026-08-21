@@ -43,21 +43,26 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { useRouter } from "next/navigation"
 
-export default function NewBookingStep2(props: {
+export default function NewBookingStepTripDetails(props: {
   onNext: () => void
-  onPrev: () => void
   newBookingFormData: NewBookingFormDataType
   setNewBookingFormData: React.Dispatch<
     React.SetStateAction<NewBookingFormDataType>
   >
 }) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step2")
+  const t = useTranslations(
+    "Dashboard.NewBookingWithCustomer.Form.StepTripDetails",
+  )
+
+  const router = useRouter()
+
   const [selectedTripType, setSelectedTripType] = useState<BookingTypeEnum>(
     props.newBookingFormData.tripType,
   )
 
-  const step2Schema = z
+  const stepTripDetailsSchema = z
     .object({
       //Trip
       tripSourceLocationState: z.string().min(1, t("Field1.Error1")),
@@ -81,22 +86,14 @@ export default function NewBookingStep2(props: {
       tripRemarks: z.string().optional(),
     })
     .superRefine((data, ctx) => {
-      //Start date cannot be after end date
-      if (data.tripStartDate > data.tripEndDate) {
-        ctx.addIssue({
-          code: "custom",
-          message: t("Field6.Error2"),
-          path: ["tripEndDate"],
-        })
-      }
-      //For Multi day trip, end date must be after start date
+      //For non one way trip, end date must be after start date
       if (
-        selectedTripType === BookingTypeEnum.MultiDay &&
-        data.tripEndDate <= data.tripStartDate
+        selectedTripType !== BookingTypeEnum.OneWay &&
+        data.tripEndDate < data.tripStartDate
       ) {
         ctx.addIssue({
           code: "custom",
-          message: t("Field6.Error3"),
+          message: t("Field6.Error2"),
           path: ["tripEndDate"],
         })
       }
@@ -113,11 +110,11 @@ export default function NewBookingStep2(props: {
       }
     })
 
-  type Step2Type = z.infer<typeof step2Schema>
+  type StepTripDetailsType = z.infer<typeof stepTripDetailsSchema>
 
   //Form init
-  const form = useForm<Step2Type>({
-    resolver: zodResolver(step2Schema),
+  const form = useForm<StepTripDetailsType>({
+    resolver: zodResolver(stepTripDetailsSchema),
     defaultValues: {
       tripSourceLocationState: props.newBookingFormData.tripSourceLocationState,
       tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
@@ -135,7 +132,7 @@ export default function NewBookingStep2(props: {
   })
 
   //Form submit
-  async function onSubmit(values: Step2Type) {
+  async function onSubmit(values: StepTripDetailsType) {
     let newRoute
     if (
       values.tripDestinationLocationCity !==
@@ -217,13 +214,15 @@ export default function NewBookingStep2(props: {
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
           <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 1, total: 5 })}
+          </RyogoCaption>
         </NewStepTitleWrapper>
-        <StepsTracker steps={"booking"} current={1} />
+        <StepsTracker steps={"booking"} current={0} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
-      <NewFormWrapper<Step2Type>
-        id="Step2Form"
+      <NewFormWrapper<StepTripDetailsType>
+        id="StepTripDetailsForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
@@ -343,7 +342,7 @@ export default function NewBookingStep2(props: {
             variant={"outline"}
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
           >
             <RyogoCaption color="light">{t("Back")}</RyogoCaption>

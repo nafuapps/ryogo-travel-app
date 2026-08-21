@@ -3,7 +3,7 @@ export const LOCALE_COOKIE_NAME = "locale"
 export const DARK_MODE_COOKIE_NAME = "dark"
 export const SESSION_COOKIE_NAME = "session"
 export const SESSION_COOKIE_EXPIRATION_DAYS = 7
-export const SESSION_COOKIE_UPDATE_HOURS = 1
+export const SESSION_COOKIE_REFRESH_HOURS = 1
 
 //Bookings
 export const BASIC_BOOKINGS_SEARCH_DAYS = 30

@@ -2,36 +2,30 @@
 "use client"
 
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import NewBookingStep1 from "./newBookingStep1"
-import NewBookingStep2 from "./newBookingStep2"
-import NewBookingStep3 from "./newBookingStep3"
-import NewBookingStep4 from "./newBookingStep4"
+import NewBookingStepTripDetails from "./newBookingStepTripDetails"
+import NewBookingStepVehicle from "./newBookingStepVehicle"
+import NewBookingStepDriver from "./newBookingStepDriver"
+import NewBookingStepPrice from "./newBookingStepPrice"
 import NewBookingFinal from "./newBookingFinal"
 import { useState } from "react"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 
 export default function NewBookingForm(props: {
   agency: NonNullable<FindAgencyByIdType>
-  vehicles: FindVehiclesByAgencyType
   drivers: FindDriversByAgencyType
-  commissionRate: number
   userId: string
-  customers: FindCustomersInAgencyType
+  customerId: string
+  vehicles: FindVehiclesByAgencyType
   limited: boolean
   isSubscribed: boolean
   hasTriedSubscription: boolean
 }) {
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingFormDataType>({
-      customerPhone: "",
-      existingCustomer: undefined,
-      newCustomerLocationState: props.agency.location.state,
-      newCustomerLocationCity: props.agency.location.city,
       tripStartDate: new Date(),
       tripEndDate: new Date(),
       tripSourceLocationState: props.agency.location.state,
@@ -41,11 +35,11 @@ export default function NewBookingForm(props: {
       tripNeedsAC: true,
       tripPassengers: 1,
       tripType: BookingTypeEnum.OneWay,
-      selectedCommissionRate: props.commissionRate,
-      selectedDistance: undefined,
-      selectedRatePerKm: undefined,
-      selectedAllowancePerDay: undefined,
-      selectedAcChargePerDay: undefined,
+      selectedCommissionRate: props.agency.defaultCommissionRate,
+      selectedDistance: 0,
+      selectedRatePerKm: 18,
+      selectedAllowancePerDay: 500,
+      selectedAcChargePerDay: 0,
     })
 
   const nextStepHandler = () => {
@@ -57,34 +51,35 @@ export default function NewBookingForm(props: {
   }
 
   const { currentStepIndex, steps, nextStep, prevStep } = useMultiStepForm([
-    <NewBookingStep1
+    <NewBookingStepTripDetails
       key={0}
       onNext={nextStepHandler}
       newBookingFormData={newBookingFormData}
       setNewBookingFormData={setNewBookingFormData}
-      agencyId={props.agency.id}
-      customers={props.customers}
     />,
-    <NewBookingStep2
+    <NewBookingStepVehicle
       key={1}
       onNext={nextStepHandler}
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
       setNewBookingFormData={setNewBookingFormData}
+      vehicles={props.vehicles}
+      limited={props.limited}
+      isSubscribed={props.isSubscribed}
+      hasTriedSubscription={props.hasTriedSubscription}
     />,
-    <NewBookingStep3
+    <NewBookingStepDriver
       key={2}
       onNext={nextStepHandler}
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
       setNewBookingFormData={setNewBookingFormData}
-      vehicles={props.vehicles}
       drivers={props.drivers}
       limited={props.limited}
       isSubscribed={props.isSubscribed}
       hasTriedSubscription={props.hasTriedSubscription}
     />,
-    <NewBookingStep4
+    <NewBookingStepPrice
       key={3}
       onNext={nextStepHandler}
       onPrev={prevStepHandler}
@@ -95,6 +90,7 @@ export default function NewBookingForm(props: {
       key={4}
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
+      customerId={props.customerId}
       userId={props.userId}
       agencyId={props.agency.id}
     />,

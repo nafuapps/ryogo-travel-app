@@ -11,11 +11,12 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cache } from "react"
 import {
   SESSION_COOKIE_NAME,
-  SESSION_COOKIE_UPDATE_HOURS,
+  SESSION_COOKIE_REFRESH_HOURS,
 } from "@ryogo-travel-app/api/apiConfig"
+import { redirect, RedirectType } from "next/navigation"
 import { differenceInHours } from "date-fns"
 
-// Get current user session from cookie - for optimistic checks before DB reads
+//Get current user session from cookie - for optimistic checks before DB reads
 export const getCurrentUser = cache(async () => {
   // S1. Get session from cookie
   const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
@@ -25,30 +26,36 @@ export const getCurrentUser = cache(async () => {
   const payload = (await decrypt(session)) as SessionPayload | undefined
   if (!payload) return
 
+  if (payload.expiresAt < new Date()) {
+    await logout()
+  }
+
   // S3: Return payload as current user data
   return payload
 })
 
-//Verify User session in DB - For strict checking before any DB writes in server actions
+//Verify User session in DB - For strict checking before any DB writes
 export const verifyCurrentUser = cache(async () => {
-  return await checkWebSessionInDB()
+  const payload = await getCurrentUser()
+  if (!payload) return
+
+  return await checkWebSessionInDB(payload.token, payload.userId)
 })
 
-//Update current user session from DB
-export const updateCurrentUser = cache(async () => {
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return
-
-  const payload = (await decrypt(session)) as SessionPayload | undefined
+//Update user session in cookie from DB - every X hours
+export const updateCurrentUser = async () => {
+  const payload = await getCurrentUser()
   if (!payload) return
 
   if (
-    differenceInHours(new Date(), payload.updatedAt) >
-    SESSION_COOKIE_UPDATE_HOURS
+    differenceInHours(new Date(), payload.updatedAt) <
+    SESSION_COOKIE_REFRESH_HOURS
   ) {
-    return await updateWebSessionFromDB(payload)
+    return
   }
-})
+
+  await updateWebSessionFromDB(payload)
+}
 
 // Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {
@@ -75,4 +82,5 @@ export async function login(userId: string, password: string) {
 // Logout user - Delete session and log last logout time in DB
 export async function logout() {
   await deleteWebSession()
+  redirect("/auth/login", RedirectType.replace)
 }

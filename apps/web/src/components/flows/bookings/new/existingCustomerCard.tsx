@@ -2,7 +2,6 @@ import { RyogoH4, RyogoCaption } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Star, UserCheck, UserLock } from "lucide-react"
-import { useTranslations } from "next-intl"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
@@ -10,23 +9,34 @@ import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { getAverageRating } from "@/lib/utils"
+import Link from "next/link"
+import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 export default function ExistingCutomerCard({
   existingCustomer,
 }: {
   existingCustomer: FindCustomersInAgencyType[number]
 }) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step1")
+  const t = useTranslations("Dashboard.NewBooking")
   const customerStatus = existingCustomer.status
+  const isNotActive = customerStatus !== CustomerStatusEnum.ACTIVE
   return (
-    <div
-      id="ExistingCustomer"
-      className={`flex items-center gap-3 lg:gap-4 bg-white dark:bg-slate-900 border ${customerStatus === CustomerStatusEnum.INACTIVE ? "border-yellow-700 dark:border-yellow-200" : "border-sky-700 dark:border-sky-200"} rounded-lg p-3 lg:p-4`}
+    <Link
+      aria-disabled={isNotActive}
+      onClick={(e) => {
+        if (isNotActive) {
+          e.preventDefault()
+          toast.warning(t("CustomerMustBeActive"))
+        }
+      }}
+      href={`/dashboard/bookings/new/${existingCustomer.id}`}
+      className={`flex items-center gap-3 lg:gap-4 border ${isNotActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950" : "hover:bg-sky-50 dark:hover:bg-sky-950"} rounded-lg p-3 lg:p-4`}
     >
       {existingCustomer.photoUrl ? (
         <RyogoImage
           src={getFileUrl(existingCustomer.photoUrl)}
-          alt={t("Photo") + " " + existingCustomer.id}
+          alt={existingCustomer.name}
           imageSize="sm"
         />
       ) : customerStatus === CustomerStatusEnum.ACTIVE ? (
@@ -46,6 +56,7 @@ export default function ExistingCutomerCard({
       )}
       <SectionColWrapper small wFull>
         <RyogoH4>{existingCustomer.name}</RyogoH4>
+        <RyogoCaption>{existingCustomer.phone}</RyogoCaption>
         <RyogoCaption color="light">
           {existingCustomer.location.city +
             ", " +
@@ -61,6 +72,6 @@ export default function ExistingCutomerCard({
           )}
       </SectionColWrapper>
       <CustomerStatusPill status={customerStatus} />
-    </div>
+    </Link>
   )
 }

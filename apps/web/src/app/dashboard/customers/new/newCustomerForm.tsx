@@ -44,7 +44,11 @@ export default function NewCustomerForm({
 
   const newCustomerSchema = z.object({
     name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
-    phone: z.string().length(10, t("Field2.Error1")),
+    phone: z
+      .string()
+      .trim()
+      .length(10, t("Field2.Error1"))
+      .regex(/^[0-9]+$/, t("Field2.Error2")),
     email: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")).optional(),
     photo: z
       .instanceof(FileList)

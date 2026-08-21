@@ -6,7 +6,7 @@ import { PageSkeleton } from "./loadingWrappers"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-screen min-h-0 bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-3 lg:pt-4 pb-6 lg:pb-7">
+    <div className="flex flex-col w-full h-dvh min-h-0 bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-3 lg:pt-4 pb-6 lg:pb-7">
       {children}
     </div>
   )

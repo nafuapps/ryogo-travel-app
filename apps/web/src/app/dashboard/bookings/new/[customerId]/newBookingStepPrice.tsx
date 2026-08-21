@@ -20,7 +20,7 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 
-export default function NewBookingStep4(props: {
+export default function NewBookingStepPrice(props: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingFormDataType
@@ -28,9 +28,9 @@ export default function NewBookingStep4(props: {
     React.SetStateAction<NewBookingFormDataType>
   >
 }) {
-  const t = useTranslations("Dashboard.NewBooking.Form.Step4")
+  const t = useTranslations("Dashboard.NewBookingWithCustomer.Form.StepPrice")
 
-  const step4Schema = z.object({
+  const stepPriceSchema = z.object({
     //Cost
     selectedRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
@@ -69,11 +69,11 @@ export default function NewBookingStep4(props: {
       .nonoptional(),
   })
 
-  type Step4Type = z.infer<typeof step4Schema>
+  type StepPriceType = z.infer<typeof stepPriceSchema>
 
   //Form init
-  const form = useForm<Step4Type>({
-    resolver: zodResolver(step4Schema),
+  const form = useForm<StepPriceType>({
+    resolver: zodResolver(stepPriceSchema),
     defaultValues: {
       selectedRatePerKm: props.newBookingFormData.selectedRatePerKm,
       selectedAllowancePerDay: props.newBookingFormData.selectedAllowancePerDay,
@@ -84,12 +84,14 @@ export default function NewBookingStep4(props: {
   })
 
   //Form submit
-  function onSubmit(values: Step4Type) {
+  function onSubmit(values: StepPriceType) {
     props.setNewBookingFormData({
       ...props.newBookingFormData,
       selectedRatePerKm: values.selectedRatePerKm,
       selectedAllowancePerDay: values.selectedAllowancePerDay,
-      selectedAcChargePerDay: values.selectedAcChargePerDay,
+      selectedAcChargePerDay:
+        values.selectedAcChargePerDay ??
+        props.newBookingFormData.selectedAcChargePerDay,
       selectedCommissionRate: values.selectedCommissionRate,
       selectedDistance: values.selectedDistance,
     })
@@ -101,13 +103,15 @@ export default function NewBookingStep4(props: {
       <NewStepHeaderWrapper>
         <NewStepTitleWrapper>
           <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 4, total: 5 })}
+          </RyogoCaption>
         </NewStepTitleWrapper>
         <StepsTracker steps={"booking"} current={3} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
-      <NewFormWrapper<Step4Type>
-        id="Step4Form"
+      <NewFormWrapper<StepPriceType>
+        id="StepPriceForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >

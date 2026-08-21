@@ -1,7 +1,7 @@
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { cookies } from "next/headers"
 import DashboardSidebar from "@/components/sidebar/dashboardSidebar"
-import { getCurrentUser, logout, updateCurrentUser } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 // import CommandCenter from "@/components/command/commandCenter"
@@ -9,6 +9,10 @@ import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
+import { logoutAction } from "@/app/actions/users/logoutAction"
+import { differenceInHours } from "date-fns"
+import { SESSION_COOKIE_REFRESH_HOURS } from "@ryogo-travel-app/api/apiConfig"
+import { refreshUserSessionAction } from "@/app/actions/users/refreshUserSessionAction"
 
 export default async function DashboardLayout({
   children,
@@ -26,11 +30,15 @@ export default async function DashboardLayout({
   }
 
   //Update current user session cookie from DB every X hours
-  await updateCurrentUser()
-
+  if (
+    differenceInHours(new Date(), currentUser.updatedAt) >=
+    SESSION_COOKIE_REFRESH_HOURS
+  ) {
+    await refreshUserSessionAction()
+  }
   //If suspended, logout user
   if (currentUser.status === UserStatusEnum.SUSPENDED) {
-    await logout()
+    await logoutAction()
   }
 
   //Driver

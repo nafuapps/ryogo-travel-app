@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 import { RyogoCaption } from "@/components/typography"
-import { ChevronLeft, ChevronRight, Plus, Target } from "lucide-react"
+import { BellDot, ChevronLeft, Plus } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useRouter } from "next/navigation"
 
@@ -18,7 +18,7 @@ function getHeaderButtonIcon(type: HeaderButtonType) {
     case "newBooking":
       return Plus
     case "missionControl":
-      return Target
+      return BellDot
   }
 }
 
@@ -49,12 +49,3 @@ export function HeaderBackButton() {
     </Button>
   )
 }
-
-// export function HeaderForwardButton() {
-//   const router = useRouter()
-//   return (
-//     <Button variant="ghost" size="icon" onClick={() => router.forward()}>
-//       <RyogoIcon icon={ChevronRight} size="md" />
-//     </Button>
-//   )
-// }

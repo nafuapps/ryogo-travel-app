@@ -759,6 +759,7 @@
         "/dashboard/analytics": "Analytics",
         "/dashboard/bookings": "Bookings",
         "/dashboard/bookings/new": "New Booking",
+        "/dashboard/bookings/new/[id]": "Create Booking",
         "/dashboard/bookings/[id]": "Booking Details",
         "/dashboard/bookings/[id]/confirm": "Confirm Lead Booking",
         "/dashboard/bookings/[id]/expenses": "Booking Expenses",
@@ -905,6 +906,49 @@
       }
     },
     "NewBooking": {
+      "Title": "Search customer",
+      "Description": "Find customer by phone number to create a booking",
+      "Phone": "Enter phone number to search",
+      "Placeholder": "9876543210",
+      "Error1": "Enter atleast 4 digits to search customer",
+      "Error2": "Phone number cannot be longer than 10 digits",
+      "SearchCTA": "Search",
+      "CreateCTA": "Add Customer",
+      "NotFound": "No customer found.. Add a new customer to proceed",
+      "CustomerMustBeActive": "Customer must be active to creating a booking",
+      "AddCustomer": {
+        "Title": "Add Customer",
+        "Description": "Creating a customer to add new booking",
+        "Field1": {
+          "Title": "New customer name",
+          "Placeholder": "Raj Sharma",
+          "Error1": "Customer name must be atleast 5 characters",
+          "Error2": "Customer name must be less than 30 characters"
+        },
+        "Field2": {
+          "Title": "Customer Phone number",
+          "Placeholder": "9876543210",
+          "Error1": "Phone number must be 10 digits",
+          "Error2": "Invalid phone number"
+        },
+        "Field3": {
+          "Title": "Customer State",
+          "Error1": "State is required to proceed"
+        },
+        "Field4": {
+          "Title": "Customer City",
+          "Error1": "City is required to proceed"
+        },
+        "Loading": "Loading",
+        "AddCTA": "Add Customer and Book Now",
+        "Exists": "Customer with this phone number already exists",
+        "ClearCTA": "Clear Form",
+        "BackCTA": "Back to Search",
+        "Success": "Customer added successfully!",
+        "Error": "Cannot add customer.. Try again later!"
+      }
+    },
+    "NewBookingWithCustomer": {
       "BookingTrialWarning": "You have reached the monthly booking limit for basic plan.",
       "BookingExpiredWarning": "Your subscription plan has expired and you have reached the monthly booking limit.",
       "BookingTrialAction": "Please upgrade your subscription plan to create bookings!",
@@ -919,38 +963,9 @@
       "Form": {
         "Km": " Km",
         "Days": " {count, plural, =1 {day} other {days}}",
-        "Step1": {
-          "Title": "Customer information",
-          "Subtitle": "Step 1 of 5",
-          "Description": "Find customer by phone number or add a new customer",
-          "Field1": {
-            "Title": "Enter customer phone number",
-            "Placeholder": "9876543210",
-            "Error1": "Invalid phone number"
-          },
-          "Field2": {
-            "Title": "New customer name",
-            "Placeholder": "Raj Sharma",
-            "Error1": "Customer name must be atleast 5 characters"
-          },
-          "Field3": {
-            "Title": "Customer State",
-            "Error1": "State is required to proceed"
-          },
-          "Field4": {
-            "Title": "Customer City",
-            "Error1": "City is required to proceed"
-          },
-          "Loading": "Loading",
-          "FindCTA": "Find Customer",
-          "PrimaryCTA": "Next",
-          "CustomerNotFound": "No customer found.. Adding a new one",
-          "CustomerMustBeActive": "Customer must be active to creating a booking",
-          "Photo": "View photo"
-        },
-        "Step2": {
+        "StepTripDetails": {
           "Title": "Trip details",
-          "Subtitle": "Step 2 of 5",
+          "Subtitle": "Step {current} of {total}",
           "Description": "Capture customer's trip preferences",
           "Field1": {
             "Title": "From ",
@@ -980,8 +995,7 @@
             "Title": "End Date",
             "Placeholder": "Select end date",
             "Error1": "End date is required",
-            "Error2": "Start date cannot be after end date",
-            "Error3": "For Multi day tour, end date must be greater than start date. If returning on same day, select Round trip instead"
+            "Error2": "Start date cannot be after end date"
           },
           "Field7": {
             "Title": "Number of passengers",
@@ -1012,17 +1026,16 @@
           "PrimaryCTA": "Continue",
           "Back": "Back"
         },
-        "Step3": {
-          "Title": "Assignment options",
-          "Subtitle": "Step 3 of 5",
-          "Description": "Assign vehicle and driver for the trip",
-          "TrialWarning": "You are seeing limited list of vehicles and drivers in basic plan. Subscribe to add more!",
-          "ExpiredWarning": "You are seeing limited list of vehicles and drivers because your subscription plan has expired.",
+        "StepVehicle": {
+          "Title": "Select vehicle",
+          "Subtitle": "Step {current} of {total}",
+          "Description": "Assign a vehicle for the trip",
+          "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to choose from more vehicles!",
+          "ExpiredWarning": "You are seeing limited list of vehicles because your subscription plan has expired.",
           "BuyCTA": "Buy Premium",
           "TryCTA": "Try Premium",
           "RenewCTA": "Renew Subscription",
           "Vehicle": {
-            "Title": "Choose a vehicle (out of {length}):",
             "Score": "RyoGo Score",
             "Seats": " {count, plural, =1 {seat} other {seats}}",
             "AC": "AC",
@@ -1031,8 +1044,20 @@
             "Available": "Available",
             "PerKm": "/Km"
           },
+          "Loading": "Loading..",
+          "PrimaryCTA": "Continue",
+          "Back": "Back"
+        },
+        "StepDriver": {
+          "Title": "Select driver",
+          "Subtitle": "Step {current} of {total}",
+          "Description": "Assign a driver for the trip",
+          "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to choose from more drivers!",
+          "ExpiredWarning": "You are seeing limited list of drivers because your subscription plan has expired.",
+          "BuyCTA": "Buy Premium",
+          "TryCTA": "Try Premium",
+          "RenewCTA": "Renew Subscription",
           "Driver": {
-            "Title": "Choose a driver (out of {length}):",
             "Score": "RyoGo Score",
             "Booked": "Booked",
             "Leave": "On Leave",
@@ -1043,9 +1068,9 @@
           "PrimaryCTA": "Continue",
           "Back": "Back"
         },
-        "Step4": {
-          "Title": "Cost info",
-          "Subtitle": "Step 4 of 5",
+        "StepPrice": {
+          "Title": "Price details",
+          "Subtitle": "Step {current} of {total}",
           "Description": "Provide cost details for final price calculation",
           "Field1": {
             "Title": "Vehicle charge (per Km)",
@@ -1103,7 +1128,7 @@
         },
         "Final": {
           "Title": "Final summary",
-          "Subtitle": "Step 5 of 5",
+          "Subtitle": "Step {current} of {total}",
           "Description": "Review booking with total cost estimate",
           "DriverAllowance": "Driver Allowance",
           "DriverSubtitle": "(₹{allowance} for {days} day)",
@@ -2268,7 +2293,8 @@
         "Title": "Enter customer phone number",
         "Placeholder": "9876543210",
         "Description": "Provide customer's phone number",
-        "Error1": "Phone number must be 10 digits"
+        "Error1": "Phone number must be 10 digits",
+        "Error2": "Invalid phone number"
       },
       "Field3": {
         "Title": "Enter customer email",

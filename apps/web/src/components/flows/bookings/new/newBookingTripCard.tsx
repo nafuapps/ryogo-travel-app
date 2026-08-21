@@ -16,8 +16,13 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getTripDuration } from "@/lib/utils"
 
 export default function NewBookingTripCard(props: NewBookingFormDataType) {
-  const t = useTranslations("Dashboard.NewBooking.Form")
-  const duration = getTripDuration(props.tripEndDate, props.tripStartDate)
+  const t = useTranslations("Dashboard.NewBookingWithCustomer.Form")
+  const duration =
+    props.tripType === BookingTypeEnum.OneWay
+      ? 1
+      : props.tripType === BookingTypeEnum.Round
+        ? 2
+        : getTripDuration(props.tripEndDate, props.tripStartDate)
 
   return (
     <div id="tripInfo" className="flex flex-col">

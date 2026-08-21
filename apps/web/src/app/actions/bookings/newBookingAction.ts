@@ -9,20 +9,30 @@ import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { CreateNewBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 import { addDays } from "date-fns"
 
-export async function newBookingAction(data: CreateNewBookingRequestType) {
+export async function newBookingAction({
+  agencyId,
+  userId,
+  customerId,
+  data,
+}: {
+  agencyId: string
+  userId: string
+  customerId: string
+  data: NewBookingFormDataType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    currentUser.userId !== data.userId ||
+    currentUser.userId !== userId ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
-    currentUser.agencyId !== data.agencyId
+    currentUser.agencyId !== agencyId
   ) {
     return
   }
@@ -31,7 +41,12 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
     return
   }
 
-  const booking = await bookingServices.addNewBooking(data)
+  const booking = await bookingServices.addNewBooking(
+    agencyId,
+    userId,
+    customerId,
+    data,
+  )
   if (!booking) return
 
   const leadBooking = await bookingServices.findBookingDetailsById(booking.id)
@@ -68,7 +83,7 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
 
   //Add mission to confirm this new booking
   await missionServices.addMission({
-    agencyId: data.agencyId,
+    agencyId: agencyId,
     userId: booking.assignedUserId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,
@@ -82,7 +97,7 @@ export async function newBookingAction(data: CreateNewBookingRequestType) {
 
   //Add notification
   await notificationServices.addNotification({
-    agencyId: data.agencyId,
+    agencyId: agencyId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,
     isFeed: true,

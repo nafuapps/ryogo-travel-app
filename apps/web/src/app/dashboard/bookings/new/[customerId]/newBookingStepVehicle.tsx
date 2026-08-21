@@ -20,19 +20,23 @@ import {
   NewFormActionWrapper,
   NewStepGridWrapper,
 } from "@/components/form/newFormWrappers"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import Link from "next/link"
+import {
+  NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
+  NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
+} from "@/lib/uiConfig"
 
 export default function NewBookingStepVehicle(props: {
   onNext: () => void
   onPrev: () => void
-  newBookingFormData: NewBookingFormDataType
+  newBookingFormData: NewBookingRequestDataType
   setNewBookingFormData: React.Dispatch<
-    React.SetStateAction<NewBookingFormDataType>
+    React.SetStateAction<NewBookingRequestDataType>
   >
   vehicles: FindVehiclesByAgencyType
   limited: boolean
@@ -57,18 +61,18 @@ export default function NewBookingStepVehicle(props: {
 
   //Form submit
   function onSubmit(values: StepVehicleType) {
+    const selectedVehicle = props.vehicles.find(
+      (vehicle) => vehicle.id === values.assignedVehicleId,
+    )
     props.setNewBookingFormData({
       ...props.newBookingFormData,
       assignedVehicleId: values.assignedVehicleId,
-      selectedAcChargePerDay:
-        props.vehicles.find(
-          (vehicle) => vehicle.id === values.assignedVehicleId,
-        )?.defaultAcChargePerDay ??
-        props.newBookingFormData.selectedAcChargePerDay,
-      selectedRatePerKm:
-        props.vehicles.find(
-          (vehicle) => vehicle.id === values.assignedVehicleId,
-        )?.defaultRatePerKm ?? props.newBookingFormData.selectedRatePerKm,
+      selectedAcChargePerDay: selectedVehicle
+        ? selectedVehicle.defaultAcChargePerDay
+        : NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
+      selectedRatePerKm: selectedVehicle
+        ? selectedVehicle.defaultRatePerKm
+        : NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
     })
     props.onNext()
   }

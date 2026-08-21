@@ -12,7 +12,13 @@ import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
+import {
+  NEW_BOOKING_DEFAULT_DISTANCE,
+  NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
+  NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
+  NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
+} from "@/lib/uiConfig"
 
 export default function NewBookingForm(props: {
   agency: NonNullable<FindAgencyByIdType>
@@ -25,7 +31,7 @@ export default function NewBookingForm(props: {
   hasTriedSubscription: boolean
 }) {
   const [newBookingFormData, setNewBookingFormData] =
-    useState<NewBookingFormDataType>({
+    useState<NewBookingRequestDataType>({
       tripStartDate: new Date(),
       tripEndDate: new Date(),
       tripSourceLocationState: props.agency.location.state,
@@ -36,10 +42,10 @@ export default function NewBookingForm(props: {
       tripPassengers: 1,
       tripType: BookingTypeEnum.OneWay,
       selectedCommissionRate: props.agency.defaultCommissionRate,
-      selectedDistance: 0,
-      selectedRatePerKm: 18,
-      selectedAllowancePerDay: 500,
-      selectedAcChargePerDay: 0,
+      selectedDistance: NEW_BOOKING_DEFAULT_DISTANCE,
+      selectedRatePerKm: NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
+      selectedAllowancePerDay: NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
+      selectedAcChargePerDay: NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
     })
 
   const nextStepHandler = () => {

@@ -1,6 +1,6 @@
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export type NewBookingFormDataType = {
+export type NewBookingRequestDataType = {
   tripSourceLocationState: string
   tripSourceLocationCity: string
   tripDestinationLocationState: string

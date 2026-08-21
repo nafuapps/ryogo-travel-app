@@ -9,7 +9,7 @@ import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
 import { addDays } from "date-fns"
@@ -23,7 +23,7 @@ export async function newBookingAction({
   agencyId: string
   userId: string
   customerId: string
-  data: NewBookingFormDataType
+  data: NewBookingRequestDataType
 }) {
   const currentUser = await getCurrentUser()
   if (

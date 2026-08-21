@@ -10,7 +10,7 @@ import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
@@ -23,9 +23,9 @@ import {
 export default function NewBookingStepPrice(props: {
   onNext: () => void
   onPrev: () => void
-  newBookingFormData: NewBookingFormDataType
+  newBookingFormData: NewBookingRequestDataType
   setNewBookingFormData: React.Dispatch<
-    React.SetStateAction<NewBookingFormDataType>
+    React.SetStateAction<NewBookingRequestDataType>
   >
 }) {
   const t = useTranslations("Dashboard.NewBookingWithCustomer.Form.StepPrice")

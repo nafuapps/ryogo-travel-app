@@ -1,4 +1,4 @@
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
 import { differenceInDays, startOfDay } from "date-fns"
@@ -200,7 +200,7 @@ function getEstimatedTripDistance(
 }
 
 //Calculate estimated total price
-export function getEstimatedTotalPrice(data: NewBookingFormDataType) {
+export function getEstimatedTotalPrice(data: NewBookingRequestDataType) {
   const days = getTripDuration(data.tripStartDate, data.tripEndDate)
   const commissionRate = data.selectedCommissionRate ?? 0
 
@@ -208,7 +208,7 @@ export function getEstimatedTotalPrice(data: NewBookingFormDataType) {
   const totalDistance = getEstimatedTripDistance(
     data.tripType,
     days,
-    data.selectedDistance!,
+    data.selectedDistance,
   )
 
   const totalAcPrice =
@@ -216,7 +216,7 @@ export function getEstimatedTotalPrice(data: NewBookingFormDataType) {
       ? Math.round(data.selectedAcChargePerDay * totalAllowanceDays)
       : 0
 
-  const totalVehiclePrice = Math.round(totalDistance * data.selectedRatePerKm!)
+  const totalVehiclePrice = Math.round(totalDistance * data.selectedRatePerKm)
   const totalDriverAllowance = data.selectedAllowancePerDay
     ? Math.round(totalAllowanceDays * data.selectedAllowancePerDay)
     : 0

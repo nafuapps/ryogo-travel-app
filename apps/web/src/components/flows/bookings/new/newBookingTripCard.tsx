@@ -9,13 +9,13 @@ import {
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { useTranslations } from "next-intl"
 import { format } from "date-fns"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getTripDuration } from "@/lib/utils"
 
-export default function NewBookingTripCard(props: NewBookingFormDataType) {
+export default function NewBookingTripCard(props: NewBookingRequestDataType) {
   const t = useTranslations("Dashboard.NewBookingWithCustomer.Form")
   const duration =
     props.tripType === BookingTypeEnum.OneWay

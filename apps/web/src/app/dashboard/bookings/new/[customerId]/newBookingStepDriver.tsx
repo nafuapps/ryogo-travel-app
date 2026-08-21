@@ -20,19 +20,20 @@ import {
   NewFormActionWrapper,
   NewStepGridWrapper,
 } from "@/components/form/newFormWrappers"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import Link from "next/link"
+import { NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY } from "@/lib/uiConfig"
 
 export default function NewBookingStepDriver(props: {
   onNext: () => void
   onPrev: () => void
-  newBookingFormData: NewBookingFormDataType
+  newBookingFormData: NewBookingRequestDataType
   setNewBookingFormData: React.Dispatch<
-    React.SetStateAction<NewBookingFormDataType>
+    React.SetStateAction<NewBookingRequestDataType>
   >
   drivers: FindDriversByAgencyType
   limited: boolean
@@ -57,14 +58,15 @@ export default function NewBookingStepDriver(props: {
 
   //Form submit
   function onSubmit(values: StepDriverType) {
+    const selectedDriver = props.drivers.find(
+      (driver) => driver.id === values.assignedDriverId,
+    )
     props.setNewBookingFormData({
       ...props.newBookingFormData,
       assignedDriverId: values.assignedDriverId,
-
-      selectedAllowancePerDay:
-        props.drivers.find((driver) => driver.id === values.assignedDriverId)
-          ?.defaultAllowancePerDay ??
-        props.newBookingFormData.selectedAllowancePerDay,
+      selectedAllowancePerDay: selectedDriver
+        ? selectedDriver.defaultAllowancePerDay
+        : NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
     })
     props.onNext()
   }

@@ -7,7 +7,7 @@ import {
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
-import { NewBookingFormDataType } from "../types/booking.types"
+import { NewBookingRequestDataType } from "../types/booking.types"
 import { locationRepository } from "../repositories/location.repo"
 import { customerServices } from "./customer.services"
 import { routeServices } from "./route.services"
@@ -322,7 +322,7 @@ export const bookingServices = {
     agencyId: string,
     userId: string,
     customerId: string,
-    data: NewBookingFormDataType,
+    data: NewBookingRequestDataType,
   ) {
     //Step1: Get trip sourceId and destinationId from city & state
     let sourceId = data.sourceId

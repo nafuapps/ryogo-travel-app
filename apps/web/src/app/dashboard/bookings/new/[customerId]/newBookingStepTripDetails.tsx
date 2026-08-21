@@ -33,7 +33,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   NewStepHeaderWrapper,
   NewStepTitleWrapper,
@@ -44,12 +44,13 @@ import {
 } from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useRouter } from "next/navigation"
+import { NEW_BOOKING_DEFAULT_DISTANCE } from "@/lib/uiConfig"
 
 export default function NewBookingStepTripDetails(props: {
   onNext: () => void
-  newBookingFormData: NewBookingFormDataType
+  newBookingFormData: NewBookingRequestDataType
   setNewBookingFormData: React.Dispatch<
-    React.SetStateAction<NewBookingFormDataType>
+    React.SetStateAction<NewBookingRequestDataType>
   >
 }) {
   const t = useTranslations(
@@ -133,62 +134,52 @@ export default function NewBookingStepTripDetails(props: {
 
   //Form submit
   async function onSubmit(values: StepTripDetailsType) {
-    let newRoute
-    if (
-      values.tripDestinationLocationCity !==
-        props.newBookingFormData.tripDestinationLocationCity ||
-      values.tripDestinationLocationState !==
-        props.newBookingFormData.tripDestinationLocationState ||
-      values.tripSourceLocationCity !==
-        props.newBookingFormData.tripSourceLocationCity ||
-      values.tripSourceLocationState !==
-        props.newBookingFormData.tripSourceLocationState
-    ) {
-      //If route info has changed, fetch route data
-      newRoute = await findOrCreateRouteAction(
-        values.tripSourceLocationCity,
-        values.tripSourceLocationState,
-        values.tripDestinationLocationCity,
-        values.tripDestinationLocationState,
-      )
-    }
-    if (newRoute) {
-      props.setNewBookingFormData({
-        ...props.newBookingFormData,
-        tripSourceLocationState: values.tripSourceLocationState,
-        tripSourceLocationCity: values.tripSourceLocationCity,
-        tripDestinationLocationState: values.tripDestinationLocationState,
-        tripDestinationLocationCity: values.tripDestinationLocationCity,
-        tripType: selectedTripType,
-        tripStartDate: values.tripStartDate,
-        tripEndDate:
-          selectedTripType === BookingTypeEnum.OneWay
-            ? values.tripStartDate
-            : values.tripEndDate,
-        tripPassengers: values.tripPassengers,
-        tripNeedsAC: values.tripNeedsAC,
-        routeId: newRoute.id,
-        sourceId: newRoute.sourceId,
-        destinationId: newRoute.destinationId,
-        selectedDistance: newRoute.distance,
-      })
-    } else {
-      props.setNewBookingFormData({
-        ...props.newBookingFormData,
-        tripSourceLocationState: values.tripSourceLocationState,
-        tripSourceLocationCity: values.tripSourceLocationCity,
-        tripDestinationLocationState: values.tripDestinationLocationState,
-        tripDestinationLocationCity: values.tripDestinationLocationCity,
-        tripType: selectedTripType,
-        tripStartDate: values.tripStartDate,
-        tripEndDate:
-          selectedTripType === BookingTypeEnum.OneWay
-            ? values.tripStartDate
-            : values.tripEndDate,
-        tripPassengers: values.tripPassengers,
-        tripNeedsAC: values.tripNeedsAC,
-      })
-    }
+    //Check if the route has changed
+    const routeInputsUnchanged =
+      props.newBookingFormData.routeId !== undefined &&
+      props.newBookingFormData.tripSourceLocationCity ===
+        values.tripSourceLocationCity &&
+      props.newBookingFormData.tripSourceLocationState ===
+        values.tripSourceLocationState &&
+      props.newBookingFormData.tripDestinationLocationCity ===
+        values.tripDestinationLocationCity &&
+      props.newBookingFormData.tripDestinationLocationState ===
+        values.tripDestinationLocationState
+
+    //If route has changed, fetch new route data from DB, otherwise save previous data
+    const newRoute = routeInputsUnchanged
+      ? {
+          id: props.newBookingFormData.routeId,
+          sourceId: props.newBookingFormData.sourceId,
+          destinationId: props.newBookingFormData.destinationId,
+          distance: props.newBookingFormData.selectedDistance,
+        }
+      : await findOrCreateRouteAction(
+          values.tripSourceLocationCity,
+          values.tripSourceLocationState,
+          values.tripDestinationLocationCity,
+          values.tripDestinationLocationState,
+        )
+
+    props.setNewBookingFormData({
+      ...props.newBookingFormData,
+      tripSourceLocationState: values.tripSourceLocationState,
+      tripSourceLocationCity: values.tripSourceLocationCity,
+      tripDestinationLocationState: values.tripDestinationLocationState,
+      tripDestinationLocationCity: values.tripDestinationLocationCity,
+      tripType: selectedTripType,
+      tripStartDate: values.tripStartDate,
+      tripEndDate:
+        selectedTripType === BookingTypeEnum.OneWay
+          ? values.tripStartDate
+          : values.tripEndDate,
+      tripPassengers: values.tripPassengers,
+      tripNeedsAC: values.tripNeedsAC,
+      routeId: newRoute?.id,
+      sourceId: newRoute?.sourceId,
+      destinationId: newRoute?.destinationId,
+      selectedDistance: newRoute?.distance ?? NEW_BOOKING_DEFAULT_DISTANCE,
+    })
     props.onNext()
   }
 

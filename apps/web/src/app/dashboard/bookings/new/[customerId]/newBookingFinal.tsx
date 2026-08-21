@@ -11,7 +11,7 @@ import StepsTracker from "@/components/form/stepsTracker"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import { NewBookingFormDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { IconTextTag } from "@/components/tags/IconTextTag"
@@ -37,7 +37,7 @@ import { getEstimatedTotalPrice } from "@/lib/utils"
 
 type NewBookingFinalProps = {
   onPrev: () => void
-  newBookingFormData: NewBookingFormDataType
+  newBookingFormData: NewBookingRequestDataType
   userId: string
   agencyId: string
   customerId: string
@@ -47,7 +47,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<NewBookingFormDataType>()
+  const form = useForm<NewBookingRequestDataType>()
 
   //Calculate estimated final price to show (actual price is calculated in server when booking is created)
   const finalAmount = getEstimatedTotalPrice(props.newBookingFormData)
@@ -55,7 +55,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
   //Final form submit to create a new booking
   const onSubmit = async () => {
     startTransition(async () => {
-      const newBookingData: NewBookingFormDataType = {
+      const newBookingData: NewBookingRequestDataType = {
         tripSourceLocationState:
           props.newBookingFormData.tripSourceLocationState,
         tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
@@ -73,14 +73,12 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         tripNeedsAC: props.newBookingFormData.tripNeedsAC,
         assignedDriverId: props.newBookingFormData.assignedDriverId,
         assignedVehicleId: props.newBookingFormData.assignedVehicleId,
-        selectedRatePerKm: props.newBookingFormData.selectedRatePerKm ?? 18,
-        selectedDistance: props.newBookingFormData.selectedDistance ?? 1,
-        selectedAcChargePerDay:
-          props.newBookingFormData.selectedAcChargePerDay ?? 0,
+        selectedRatePerKm: props.newBookingFormData.selectedRatePerKm,
+        selectedDistance: props.newBookingFormData.selectedDistance,
+        selectedAcChargePerDay: props.newBookingFormData.selectedAcChargePerDay,
         selectedAllowancePerDay:
-          props.newBookingFormData.selectedAllowancePerDay ?? 0,
-        selectedCommissionRate:
-          props.newBookingFormData.selectedCommissionRate ?? 0,
+          props.newBookingFormData.selectedAllowancePerDay,
+        selectedCommissionRate: props.newBookingFormData.selectedCommissionRate,
       }
       const createdBooking = await newBookingAction({
         agencyId: props.agencyId,
@@ -110,7 +108,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         <StepsTracker steps={"booking"} current={4} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
-      <NewFormWrapper<NewBookingFormDataType>
+      <NewFormWrapper<NewBookingRequestDataType>
         id="FinalForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
@@ -125,7 +123,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </RyogoSmall>
               <RyogoCaption color="light">
                 {t("VehicleSubtitle", {
-                  charge: props.newBookingFormData.selectedRatePerKm ?? 0,
+                  charge: props.newBookingFormData.selectedRatePerKm,
                   distance: finalAmount.totalDistance,
                 })}
               </RyogoCaption>
@@ -140,7 +138,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                 </RyogoSmall>
                 <RyogoCaption color="light">
                   {t("ACSubtitle", {
-                    ac: props.newBookingFormData.selectedAcChargePerDay ?? 0,
+                    ac: props.newBookingFormData.selectedAcChargePerDay,
                     days: finalAmount.totalAllowanceDays,
                   })}
                 </RyogoCaption>
@@ -155,8 +153,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </RyogoSmall>
               <RyogoCaption color="light">
                 {t("DriverSubtitle", {
-                  allowance:
-                    props.newBookingFormData.selectedAllowancePerDay ?? 0,
+                  allowance: props.newBookingFormData.selectedAllowancePerDay,
                   days: finalAmount.totalAllowanceDays,
                 })}
               </RyogoCaption>

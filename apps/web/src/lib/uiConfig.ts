@@ -36,8 +36,8 @@ export const MAX_USER_COMMENTS_PER_TICKET = 5
 export const SUPPORT_HELPLINE_NUMBER = "9840774089"
 export const SUPPORT_CHAT_NUMBER = "9840774089"
 export const SUPPORT_EMAIL = "ryogo.in@gmail.com"
-//RyoGo logo in email footer
-export const EmailLogoSrc =
+//RyoGo logo in email and pdf footer
+export const RyogoLogoSrc =
   "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png"
 
 //TODO: Social Media

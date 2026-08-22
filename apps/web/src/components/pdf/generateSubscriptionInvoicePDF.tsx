@@ -6,7 +6,11 @@ import ReactPDF, {
   View,
 } from "@react-pdf/renderer"
 import { styles } from "./commonStyles"
-import { SUPPORT_EMAIL, SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
+import {
+  RyogoLogoSrc,
+  SUPPORT_EMAIL,
+  SUPPORT_HELPLINE_NUMBER,
+} from "@/lib/uiConfig"
 import { FindOrderByRPIdType } from "@ryogo-travel-app/api/services/order.services"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { GST_PERCENTAGE } from "@ryogo-travel-app/api/apiConfig"
@@ -25,7 +29,7 @@ export function SubscriptionInvoiceDocument({
     <Document>
       <Page size="A4" style={styles.page}>
         <View id="header" style={styles.header}>
-          <Image src={"/logoPWA.png"} style={styles.agencyLogo} />
+          <Image src={RyogoLogoSrc} style={styles.agencyLogo} />
           <View id="headerLeft" style={styles.headerLeft}>
             <Text id="CompanyName" style={styles.h2}>
               {"RyoGo Travel App"}

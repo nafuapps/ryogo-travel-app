@@ -56,18 +56,22 @@ export default function NewBookingStepDriver(props: {
     },
   })
 
-  //Form submit
-  function onSubmit(values: StepDriverType) {
+  //Save selected driver
+  function onSelectDriver(selectedDriverId: string | undefined) {
+    form.setValue("assignedDriverId", selectedDriverId)
     const selectedDriver = props.drivers.find(
-      (driver) => driver.id === values.assignedDriverId,
+      (driver) => driver.id === selectedDriverId,
     )
     props.setNewBookingFormData({
       ...props.newBookingFormData,
-      assignedDriverId: values.assignedDriverId,
+      assignedDriverId: selectedDriverId,
       selectedAllowancePerDay: selectedDriver
         ? selectedDriver.defaultAllowancePerDay
         : NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
     })
+  }
+
+  function onSubmit() {
     props.onNext()
   }
 
@@ -124,9 +128,8 @@ export default function NewBookingStepDriver(props: {
                 bookingPassengers={props.newBookingFormData.tripPassengers}
                 selected={assignedDriverId === driver.id}
                 onClick={() =>
-                  form.setValue(
-                    "assignedDriverId",
-                    assignedDriverId !== driver.id ? driver.id : undefined,
+                  onSelectDriver(
+                    assignedDriverId === driver.id ? undefined : driver.id,
                   )
                 }
               />
@@ -142,7 +145,11 @@ export default function NewBookingStepDriver(props: {
           >
             {form.formState.isSubmitting && <Spinner />}
             <RyogoCaption color="white">
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+              {form.formState.isSubmitting
+                ? t("Loading")
+                : assignedDriverId
+                  ? t("PrimaryCTA")
+                  : t("WithoutCTA")}
             </RyogoCaption>
           </Button>
           <Button

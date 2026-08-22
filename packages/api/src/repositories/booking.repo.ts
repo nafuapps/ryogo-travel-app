@@ -929,6 +929,7 @@ export const bookingRepository = {
             businessEmail: true,
             businessAddress: true,
             logoUrl: true,
+            qrCodeUrl: true,
           },
         },
         assignedUser: {
@@ -1038,6 +1039,7 @@ export const bookingRepository = {
             businessEmail: true,
             businessAddress: true,
             logoUrl: true,
+            qrCodeUrl: true,
           },
         },
         assignedUser: {

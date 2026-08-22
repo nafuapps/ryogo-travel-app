@@ -160,6 +160,7 @@ export function SectionColWrapper({
   justifyBetween,
   overflowScroll,
   wFull,
+  hFull,
 }: {
   children: React.ReactNode
   small?: boolean
@@ -168,10 +169,11 @@ export function SectionColWrapper({
   justifyBetween?: boolean
   overflowScroll?: boolean
   wFull?: boolean
+  hFull?: boolean
 }) {
   return (
     <div
-      className={`flex flex-col ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""} ${overflowScroll ? "overflow-y-scroll m-1 scrollbar-none" : ""} ${wFull ? "w-full" : ""}`}
+      className={`flex flex-col ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""} ${overflowScroll ? "overflow-y-scroll m-1 scrollbar-none" : ""} ${wFull ? "w-full" : ""} ${hFull ? "h-full" : ""}`}
     >
       {children}
     </div>

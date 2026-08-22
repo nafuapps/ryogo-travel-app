@@ -40,7 +40,12 @@ export default async function RootLayout({
     >
       <body className={` antialiased`}>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
-        <Toaster position="top-center" richColors />
+        <Toaster
+          position="top-center"
+          richColors
+          closeButton
+          toastOptions={{ duration: 3000 }}
+        />
       </body>
     </html>
   )

@@ -27,6 +27,8 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useState } from "react"
 import ExistingCutomerCard from "@/components/flows/bookings/new/existingCustomerCard"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { ChevronLeft } from "lucide-react"
 
 export default function NewBookingAddCustomerPageComponent(props: {
   agency: NonNullable<FindAgencyByIdType>
@@ -157,7 +159,11 @@ export default function NewBookingAddCustomerPageComponent(props: {
         </NewFormContentWrapper>
         {existingCustomer && (
           <NewFormContentWrapper>
-            <RyogoCaption color="slate" className="text-center">
+            <RyogoCaption
+              className="text-center"
+              color="light"
+              weight="font-medium"
+            >
               {t("Exists")}
             </RyogoCaption>
             <ExistingCutomerCard existingCustomer={existingCustomer} />
@@ -173,19 +179,30 @@ export default function NewBookingAddCustomerPageComponent(props: {
             }
           >
             {form.formState.isSubmitting && <Spinner />}
-            <RyogoCaption color="white">
+            <RyogoSmall color="white">
               {form.formState.isSubmitting ? t("Loading") : t("AddCTA")}
-            </RyogoCaption>
+            </RyogoSmall>
           </Button>
           <Button
             variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={reset}
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+          >
+            <RyogoSmall color="slate">{t("ClearCTA")}</RyogoSmall>
+          </Button>
+          <Button
+            variant={"ghost"}
+            size={"lg"}
             type="button"
             onClick={() => props.setAddingCustomer(false)}
+            disabled={form.formState.isSubmitting}
           >
-            <RyogoCaption color="slate">{t("BackCTA")}</RyogoCaption>
-          </Button>
-          <Button variant={"ghost"} type="button" onClick={reset}>
-            <RyogoCaption color="slate">{t("ClearCTA")}</RyogoCaption>
+            <RyogoIcon icon={ChevronLeft} size="sm" color="light" thick />
+            <RyogoCaption color="light" weight="font-bold">
+              {t("BackCTA")}
+            </RyogoCaption>
           </Button>
         </NewFormActionWrapper>
       </NewFormWrapper>

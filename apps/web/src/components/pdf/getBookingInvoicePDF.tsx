@@ -5,10 +5,13 @@ import ReactPDF, {
   Text,
   View,
   Image,
+  Link,
 } from "@react-pdf/renderer"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
+import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
+import { getBookingTrackingLink } from "@/lib/utils"
 
 export function BookingInvoiceDocument({
   booking,
@@ -16,6 +19,7 @@ export function BookingInvoiceDocument({
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const agencyLogoUrl = booking.agency.logoUrl
+  const bookingLink = getBookingTrackingLink(booking.id)
 
   //Calculate expenses amount
   const expensesAmount = booking.expenses
@@ -57,7 +61,9 @@ export function BookingInvoiceDocument({
           </View>
           <View id="BookingID" style={styles.detailsSection}>
             <Text style={styles.pBold}>Booking ID: </Text>
-            <Text style={styles.p}>{booking.id}</Text>
+            <Link href={bookingLink} style={styles.p}>
+              {booking.id}
+            </Link>
           </View>
           <View id="CustomerName" style={styles.detailsSection}>
             <Text style={styles.pBold}>Customer Name: </Text>
@@ -158,10 +164,15 @@ export function BookingInvoiceDocument({
           </View>
         </View>
         <View id="footer" style={styles.footer}>
-          <View id="PoweredBy" style={styles.powered}>
-            <Text style={styles.caption}>Powered by</Text>
-            <Image src={"/logo.png"} style={styles.ryoGoLogo}></Image>
-          </View>
+          {booking.agency.qrCodeUrl && (
+            <View id="QRCode" style={styles.qrCode}>
+              <Text style={styles.caption}>Pay Agency</Text>
+              <Image
+                src={getFileUrl(booking.agency.qrCodeUrl)}
+                style={styles.qrCodeImage}
+              />
+            </View>
+          )}
           <View id="BookedBy" style={styles.booked}>
             <Text style={styles.pBold}>{booking.assignedUser.name}</Text>
             <Text style={styles.p}>{booking.assignedUser.phone}</Text>
@@ -171,20 +182,27 @@ export function BookingInvoiceDocument({
           </View>
         </View>
         <View style={styles.divider} />
-        <View id="terms" style={styles.terms}>
-          <Text style={styles.pBold}>Terms and Conditions:</Text>
-          <Text style={styles.caption}>
-            1. This invoice is auto generated based on the booking details
-            provided by the aforementioned agency.
-          </Text>
-          <Text style={styles.caption}>
-            2. For any invoice related queries, please contact the agency.
-          </Text>
-          <Text style={styles.caption}>
-            {
-              "3. Cancellation and refund policies apply as per the agency's terms and conditions."
-            }
-          </Text>
+        <View id="bottom" style={styles.bottom}>
+          <View id="terms" style={styles.terms}>
+            <Text style={styles.pBold}>Terms and Conditions:</Text>
+            <Text style={styles.caption}>
+              1. This invoice is auto generated based on the booking details
+              provided by the aforementioned agency.
+            </Text>
+            <Text style={styles.caption}>
+              2. For any invoice related queries, please contact the agency.
+            </Text>
+            <Text style={styles.caption}>
+              {
+                "3. Cancellation and refund policies apply as per the agency's terms and conditions."
+              }
+            </Text>
+          </View>
+          <View id="PoweredBy" style={styles.powered}>
+            <Text style={styles.caption}>Powered By</Text>
+            <Image src={RyogoLogoSrc} style={styles.ryoGoLogo} />
+            <Text style={styles.xs}>{HOMEPAGE_URL}</Text>
+          </View>
         </View>
       </Page>
     </Document>

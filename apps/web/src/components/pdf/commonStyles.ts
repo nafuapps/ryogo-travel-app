@@ -92,7 +92,34 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 16,
+  },
+  qrCode: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 4,
+  },
+  qrCodeImage: {
+    height: 48,
+    aspectRatio: 1,
+  },
+  booked: {
+    flexDirection: "column",
+    marginLeft: "auto",
     alignItems: "flex-end",
+    gap: 4,
+  },
+  divider: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#ddd",
+  },
+  bottom: {
+    flexDirection: "column",
+    gap: 16,
+  },
+  terms: {
+    flexDirection: "column",
+    gap: 2,
   },
   powered: {
     flexDirection: "column",
@@ -101,20 +128,6 @@ export const styles = StyleSheet.create({
   },
   ryoGoLogo: {
     height: 32,
-  },
-  booked: {
-    flexDirection: "column",
-    alignItems: "flex-end",
-    gap: 2,
-  },
-  divider: {
-    height: 1,
-    width: "100%",
-    backgroundColor: "#ddd",
-  },
-  terms: {
-    flexDirection: "column",
-    gap: 2,
   },
   h1: {
     fontSize: 24,
@@ -136,6 +149,10 @@ export const styles = StyleSheet.create({
   },
   captionLight: {
     fontSize: 10,
+    color: "#666",
+  },
+  xs: {
+    fontSize: 8,
     color: "#666",
   },
 })

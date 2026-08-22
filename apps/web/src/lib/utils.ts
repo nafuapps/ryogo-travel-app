@@ -148,6 +148,10 @@ export function generateSubscriptionInvoicePathName(
   return `agencies/${agencyId}/orders/${orderId}/${orderId}-ryogo-invoice.pdf`
 }
 
+export function getBookingTrackingLink(id: string) {
+  return `${window.location.origin}/track/booking/${id}`
+}
+
 export function getAverageRating(ratings: number[]) {
   if (ratings.length === 0) return "0"
   if (ratings.length === 1 && ratings[0]) {

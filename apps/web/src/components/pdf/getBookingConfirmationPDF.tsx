@@ -5,10 +5,13 @@ import ReactPDF, {
   Image,
   Text,
   View,
+  Link,
 } from "@react-pdf/renderer"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
+import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
+import { getBookingTrackingLink } from "@/lib/utils"
 
 export function BookingConfirmationDocument({
   booking,
@@ -16,6 +19,8 @@ export function BookingConfirmationDocument({
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const agencyLogoUrl = booking.agency.logoUrl
+  const bookingLink = getBookingTrackingLink(booking.id)
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -48,7 +53,9 @@ export function BookingConfirmationDocument({
           </View>
           <View id="BookingID" style={styles.detailsSection}>
             <Text style={styles.pBold}>Booking ID: </Text>
-            <Text style={styles.p}>{booking.id}</Text>
+            <Link href={bookingLink} style={styles.p}>
+              {booking.id}
+            </Link>
           </View>
           <View id="CustomerName" style={styles.detailsSection}>
             <Text style={styles.pBold}>Customer Name: </Text>
@@ -154,10 +161,15 @@ export function BookingConfirmationDocument({
           </View>
         </View>
         <View id="footer" style={styles.footer}>
-          <View id="PoweredBy" style={styles.powered}>
-            <Text style={styles.caption}>Powered by</Text>
-            <Image src={"/logo.png"} style={styles.ryoGoLogo}></Image>
-          </View>
+          {booking.agency.qrCodeUrl && (
+            <View id="QRCode" style={styles.qrCode}>
+              <Text style={styles.caption}>Pay Agency</Text>
+              <Image
+                src={getFileUrl(booking.agency.qrCodeUrl)}
+                style={styles.qrCodeImage}
+              />
+            </View>
+          )}
           <View id="BookedBy" style={styles.booked}>
             <Text style={styles.pBold}>{booking.assignedUser.name}</Text>
             <Text style={styles.p}>{booking.assignedUser.phone}</Text>
@@ -167,29 +179,36 @@ export function BookingConfirmationDocument({
           </View>
         </View>
         <View style={styles.divider} />
-        <View id="terms" style={styles.terms}>
-          <Text style={styles.pBold}>Terms and Conditions:</Text>
-          <Text style={styles.caption}>
-            1. This booking confirmation is auto-generated on behalf of the
-            aforementioned agency. Any descrepancies or issues regarding the
-            booking details should be reported to the agency within 24 hours of
-            receiving this confirmation.
-          </Text>
-          <Text style={styles.caption}>
-            2. The prices quoted above are an estimate and are based on the
-            details provided and may change if there are any changes in the trip
-            details or requirements.
-          </Text>
-          <Text style={styles.caption}>
-            3. A final invoice will be provided at the end of the trip with the
-            actual charges based on the services used and additional expenses
-            incurred during the trip like fuel, parking, toll, etc.
-          </Text>
-          <Text style={styles.caption}>
-            {
-              "4. Cancellation and refund policies apply as per the agency's terms and conditions."
-            }
-          </Text>
+        <View id="bottom" style={styles.bottom}>
+          <View id="terms" style={styles.terms}>
+            <Text style={styles.pBold}>Terms and Conditions:</Text>
+            <Text style={styles.caption}>
+              1. This booking confirmation is auto-generated on behalf of the
+              aforementioned agency. Any descrepancies or issues regarding the
+              booking details should be reported to the agency within 24 hours
+              of receiving this confirmation.
+            </Text>
+            <Text style={styles.caption}>
+              2. The prices quoted above are an estimate and are based on the
+              details provided and may change if there are any changes in the
+              trip details or requirements.
+            </Text>
+            <Text style={styles.caption}>
+              3. A final invoice will be provided at the end of the trip with
+              the actual charges based on the services used and additional
+              expenses incurred during the trip like fuel, parking, toll, etc.
+            </Text>
+            <Text style={styles.caption}>
+              {
+                "4. Cancellation and refund policies apply as per the agency's terms and conditions."
+              }
+            </Text>
+          </View>
+          <View id="PoweredBy" style={styles.powered}>
+            <Text style={styles.caption}>Powered By</Text>
+            <Image src={RyogoLogoSrc} style={styles.ryoGoLogo} />
+            <Text style={styles.xs}>{HOMEPAGE_URL}</Text>
+          </View>
         </View>
       </Page>
     </Document>

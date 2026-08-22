@@ -117,15 +117,17 @@ export default async function BookingDetailsPageComponent({
                   />
                 )
               }
-              {/* {
-                //Share cancel message link with customer over whatsapp for a cancelled booking
-                bookingDetails.status === BookingStatusEnum.CANCELLED && (
-                  <SendCancelMessageAlertButton
-                    bookingId={bookingDetails.id}
-                    phone={bookingDetails.customer.phone}
-                    label={t("ShareCancelMessage")}
-                  />)
-              } */}
+              {bookingDetails.status === BookingStatusEnum.CANCELLED && (
+                <Link
+                  href={`/dashboard/bookings/new/${bookingDetails.customerId}`}
+                >
+                  <Button variant={"default"} className="w-full">
+                    <RyogoCaption color="white">
+                      {t("CreateAnotherBooking")}
+                    </RyogoCaption>
+                  </Button>
+                </Link>
+              )}
             </>
           )}
         </BookingSection>

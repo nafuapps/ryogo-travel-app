@@ -62,7 +62,7 @@ export default function UpcomingBookingsItemComponent({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="7days">{t("7Days")}</SelectItem>
+              <SelectItem value="7Days">{t("7Days")}</SelectItem>
               <SelectItem value="14Days">{t("14Days")}</SelectItem>
             </SelectGroup>
           </SelectContent>

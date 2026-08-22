@@ -5,10 +5,13 @@ import ReactPDF, {
   Image,
   Text,
   View,
+  Link,
 } from "@react-pdf/renderer"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
+import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
+import { getBookingTrackingLink } from "@/lib/utils"
 
 export function LeadQuoteDocument({
   booking,
@@ -16,6 +19,8 @@ export function LeadQuoteDocument({
   booking: NonNullable<FindLeadBookingByIdType>
 }) {
   const agencyLogoUrl = booking.agency.logoUrl
+  const bookingLink = getBookingTrackingLink(booking.id)
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -48,7 +53,9 @@ export function LeadQuoteDocument({
           </View>
           <View id="BookingID" style={styles.detailsSection}>
             <Text style={styles.pBold}>Booking ID: </Text>
-            <Text style={styles.p}>{booking.id}</Text>
+            <Link style={styles.p} href={bookingLink}>
+              {booking.id}
+            </Link>
           </View>
           <View id="CustomerName" style={styles.detailsSection}>
             <Text style={styles.pBold}>Customer Name: </Text>
@@ -151,10 +158,15 @@ export function LeadQuoteDocument({
           </View>
         </View>
         <View id="footer" style={styles.footer}>
-          <View id="PoweredBy" style={styles.powered}>
-            <Text style={styles.caption}>Powered by</Text>
-            <Image src={"/logo.png"} style={styles.ryoGoLogo}></Image>
-          </View>
+          {booking.agency.qrCodeUrl && (
+            <View id="QRCode" style={styles.qrCode}>
+              <Text style={styles.caption}>Pay Agency</Text>
+              <Image
+                src={getFileUrl(booking.agency.qrCodeUrl)}
+                style={styles.qrCodeImage}
+              />
+            </View>
+          )}
           <View id="BookedBy" style={styles.booked}>
             <Text style={styles.pBold}>{booking.assignedUser.name}</Text>
             <Text style={styles.p}>{booking.assignedUser.phone}</Text>
@@ -164,26 +176,34 @@ export function LeadQuoteDocument({
           </View>
         </View>
         <View style={styles.divider} />
-        <View id="terms" style={styles.terms}>
-          <Text style={styles.pBold}>Terms and Conditions:</Text>
-          <Text style={styles.caption}>
-            1. This quotation is auto-generated on behalf of the aforementioned
-            agency and is valid for 30 days from the date of issue.
-          </Text>
-          <Text style={styles.caption}>
-            2. The assigned vehicle and driver is subject to availability and
-            may change at the time of booking confirmation.
-          </Text>
-          <Text style={styles.caption}>
-            3. The prices quoted above are an estimate and are based on the
-            details provided and may change if there are any changes in the trip
-            details or requirements.
-          </Text>
-          <Text style={styles.caption}>
-            4. A final invoice will be provided at the end of the trip with the
-            actual charges based on the services used and additional expenses
-            incurred like fuel, parking or toll, etc.
-          </Text>
+        <View id="bottom" style={styles.bottom}>
+          <View id="terms" style={styles.terms}>
+            <Text style={styles.pBold}>Terms and Conditions:</Text>
+            <Text style={styles.caption}>
+              1. This quotation is auto-generated on behalf of the
+              aforementioned agency and is valid for 30 days from the date of
+              issue.
+            </Text>
+            <Text style={styles.caption}>
+              2. The assigned vehicle and driver is subject to availability and
+              may change at the time of booking confirmation.
+            </Text>
+            <Text style={styles.caption}>
+              3. The prices quoted above are an estimate and are based on the
+              details provided and may change if there are any changes in the
+              trip details or requirements.
+            </Text>
+            <Text style={styles.caption}>
+              4. A final invoice will be provided at the end of the trip with
+              the actual charges based on the services used and additional
+              expenses incurred like fuel, parking or toll, etc.
+            </Text>
+          </View>
+          <View id="PoweredBy" style={styles.powered}>
+            <Text style={styles.caption}>Powered By</Text>
+            <Image src={RyogoLogoSrc} style={styles.ryoGoLogo} />
+            <Text style={styles.xs}>{HOMEPAGE_URL}</Text>
+          </View>
         </View>
       </Page>
     </Document>

@@ -24,6 +24,7 @@ import { RyogoCaption } from "@/components/typography"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
+// import LeadPDFViewer from "@/components/pdf/leadPDFViewer"
 
 export default async function ConfirmBookingPageComponent({
   booking,

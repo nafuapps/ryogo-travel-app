@@ -4,7 +4,12 @@
 import { useState } from "react"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import ExistingCutomerCard from "@/components/flows/bookings/new/existingCustomerCard"
-import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
+import {
+  RyogoH3,
+  RyogoSmall,
+  RyogoCaption,
+  RyogoP,
+} from "@/components/typography"
 import { useTranslations } from "next-intl"
 import z from "zod"
 import { Button } from "@/components/ui/button"
@@ -19,7 +24,7 @@ import {
 } from "@/components/form/newFormWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Plus } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { GridWrapper } from "@/components/page/pageWrappers"
 
 export default function NewBookingSearchCustomerPageComponent({
@@ -29,7 +34,7 @@ export default function NewBookingSearchCustomerPageComponent({
   customers: FindCustomersInAgencyType
   onClick: () => void
 }) {
-  const [searchingCustomer, setSearchingCustomer] = useState(false)
+  const [searchingDone, setSearchingDone] = useState(false)
 
   const t = useTranslations("Dashboard.NewBooking")
 
@@ -58,7 +63,7 @@ export default function NewBookingSearchCustomerPageComponent({
 
   //Find customers by phone
   const onSubmit = (values: SearchCustomerType) => {
-    setSearchingCustomer(true)
+    setSearchingDone(true)
     const foundCustomers = customers.filter((c) =>
       c.phone.includes(values.enteredPhone),
     )
@@ -66,6 +71,14 @@ export default function NewBookingSearchCustomerPageComponent({
     //Show found customers
     setFoundCustomers(foundCustomers)
   }
+
+  function reset() {
+    form.reset()
+    setSearchingDone(false)
+    setFoundCustomers([])
+  }
+
+  const phone = form.watch("enteredPhone")
 
   return (
     <NewStepWrapper id="SearchCustomerStep">
@@ -93,28 +106,53 @@ export default function NewBookingSearchCustomerPageComponent({
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            <RyogoCaption color="white">{t("SearchCTA")}</RyogoCaption>
+            <RyogoSmall color="white">{t("SearchCTA")}</RyogoSmall>
+          </Button>
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            type="button"
+            onClick={reset}
+            disabled={!phone || phone.length < 1 || form.formState.isSubmitting}
+          >
+            <RyogoSmall color="slate">{t("ClearCTA")}</RyogoSmall>
+          </Button>
+          <Button
+            variant={"ghost"}
+            size={"lg"}
+            onClick={onClick}
+            disabled={form.formState.isSubmitting}
+          >
+            <RyogoCaption color="light" weight="font-bold">
+              {t("CreateCTA")}
+            </RyogoCaption>
+            <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
           </Button>
         </NewFormContentWrapper>
         {foundCustomers.length > 0 && (
-          <GridWrapper id="ExistingCustomersGrid">
-            {foundCustomers.map((c) => (
-              <ExistingCutomerCard key={c.id} existingCustomer={c} />
-            ))}
-          </GridWrapper>
+          <>
+            <RyogoSmall
+              className="text-center"
+              color="light"
+              weight="font-medium"
+            >
+              {t("Found", { count: foundCustomers.length })}
+            </RyogoSmall>
+            <GridWrapper id="ExistingCustomersGrid">
+              {foundCustomers.map((c) => (
+                <ExistingCutomerCard key={c.id} existingCustomer={c} />
+              ))}
+            </GridWrapper>
+          </>
         )}
-        {foundCustomers.length === 0 && searchingCustomer && (
-          <NewFormContentWrapper>
-            <>
-              <RyogoSmall className="text-center" color="light">
-                {t("NotFound")}
-              </RyogoSmall>
-              <Button variant={"outline"} size={"lg"} onClick={onClick}>
-                <RyogoIcon icon={Plus} size="sm" color="slate" />
-                <RyogoCaption color="slate">{t("CreateCTA")}</RyogoCaption>
-              </Button>
-            </>
-          </NewFormContentWrapper>
+        {foundCustomers.length === 0 && searchingDone && (
+          <RyogoSmall
+            className="text-center"
+            color="light"
+            weight="font-medium"
+          >
+            {t("NotFound")}
+          </RyogoSmall>
         )}
       </NewFormWrapper>
     </NewStepWrapper>

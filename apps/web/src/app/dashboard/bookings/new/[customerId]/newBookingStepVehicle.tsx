@@ -59,14 +59,15 @@ export default function NewBookingStepVehicle(props: {
     },
   })
 
-  //Form submit
-  function onSubmit(values: StepVehicleType) {
+  //Save selected vehicle
+  function onSelectVehicle(selectedVehicleId: string | undefined) {
+    form.setValue("assignedVehicleId", selectedVehicleId)
     const selectedVehicle = props.vehicles.find(
-      (vehicle) => vehicle.id === values.assignedVehicleId,
+      (vehicle) => vehicle.id === selectedVehicleId,
     )
     props.setNewBookingFormData({
       ...props.newBookingFormData,
-      assignedVehicleId: values.assignedVehicleId,
+      assignedVehicleId: selectedVehicleId,
       selectedAcChargePerDay: selectedVehicle
         ? selectedVehicle.defaultAcChargePerDay
         : NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
@@ -74,6 +75,9 @@ export default function NewBookingStepVehicle(props: {
         ? selectedVehicle.defaultRatePerKm
         : NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
     })
+  }
+
+  function onSubmit() {
     props.onNext()
   }
 
@@ -131,9 +135,8 @@ export default function NewBookingStepVehicle(props: {
                   vehicleData={vehicle}
                   selected={assignedVehicleId === vehicle.id}
                   onClick={() =>
-                    form.setValue(
-                      "assignedVehicleId",
-                      assignedVehicleId !== vehicle.id ? vehicle.id : undefined,
+                    onSelectVehicle(
+                      assignedVehicleId === vehicle.id ? undefined : vehicle.id,
                     )
                   }
                   bookingStartDate={props.newBookingFormData.tripStartDate}
@@ -153,7 +156,11 @@ export default function NewBookingStepVehicle(props: {
           >
             {form.formState.isSubmitting && <Spinner />}
             <RyogoCaption color="white">
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+              {form.formState.isSubmitting
+                ? t("Loading")
+                : assignedVehicleId
+                  ? t("PrimaryCTA")
+                  : t("WithoutCTA")}
             </RyogoCaption>
           </Button>
           <Button

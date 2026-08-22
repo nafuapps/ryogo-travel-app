@@ -94,6 +94,13 @@ export default async function CustomerDetailsPageComponent({
         </SectionColWrapper>
       </SectionWrapper>
       <SectionWrapper id={"CustomerActions"}>
+        {customer.status === CustomerStatusEnum.ACTIVE && (
+          <Link href={`/dashboard/bookings/new/${customer.id}`}>
+            <Button variant={"default"} className="w-full">
+              <RyogoCaption color="white">{t("CreateBooking")}</RyogoCaption>
+            </Button>
+          </Link>
+        )}
         <Link href={`/dashboard/customers/${customer.id}/modify`}>
           <Button variant={"outline"} className="w-full">
             <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>

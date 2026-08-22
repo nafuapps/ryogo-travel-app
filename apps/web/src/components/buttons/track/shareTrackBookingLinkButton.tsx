@@ -6,6 +6,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
+import { getBookingTrackingLink } from "@/lib/utils"
 
 export default function ShareTrackBookingLinkButton(props: {
   bookingId: string
@@ -16,7 +17,7 @@ export default function ShareTrackBookingLinkButton(props: {
 
   // Send track booking link to customer over whatsapp
   function sendTrackingLink() {
-    const bookingLink = `${window.location.origin}/track/booking/${props.bookingId}`
+    const bookingLink = getBookingTrackingLink(props.bookingId)
     const message = t("TrackBooking", {
       bookingLink: bookingLink,
     })

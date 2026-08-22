@@ -49,7 +49,7 @@ export function RyogoImage(props: {
 }) {
   return (
     <div
-      className={`relative ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 ${props.className ?? ""}`}
+      className={`relative ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 ${props.className ?? ""}`}
     >
       <Image
         loading="eager"

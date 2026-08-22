@@ -24,8 +24,8 @@ export default async function BookingsPageComponent({
   return (
     <PageWrapper id="BookingsPage">
       <OngoingBookingsComponent ongoingTrips={ongoingTrips} />
-      <CompletedBookingsComponent agencyId={agencyId} />
       <UpcomingBookingsComponent agencyId={agencyId} />
+      <CompletedBookingsComponent agencyId={agencyId} />
       <LeadBookingsComponent agencyId={agencyId} />
       <BookingScheduleComponent agencyId={agencyId} />
       <BookingHistoryComponent agencyId={agencyId} />

@@ -1,5 +1,5 @@
 import {
-  EmailLogoSrc,
+  RyogoLogoSrc,
   SUPPORT_EMAIL,
   SUPPORT_HELPLINE_NUMBER,
 } from "@/lib/uiConfig"
@@ -16,7 +16,7 @@ export default function EmailFooter() {
       </small>
       <br />
       <br />
-      <img src={EmailLogoSrc} alt="RyoGo Logo" height={"80px"} />
+      <img src={RyogoLogoSrc} alt="RyoGo Logo" height={"80px"} />
     </>
   )
 }

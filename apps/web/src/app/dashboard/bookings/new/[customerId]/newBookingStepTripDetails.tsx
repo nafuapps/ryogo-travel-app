@@ -45,6 +45,7 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useRouter } from "next/navigation"
 import { NEW_BOOKING_DEFAULT_DISTANCE } from "@/lib/uiConfig"
+import { Separator } from "@/components/ui/separator"
 
 export default function NewBookingStepTripDetails(props: {
   onNext: () => void
@@ -236,6 +237,7 @@ export default function NewBookingStepTripDetails(props: {
               placeholder={t("Field2.Placeholder")}
             />
           </SectionColWrapper>
+          <Separator />
           <SectionColWrapper small>
             <RyogoCombobox
               name="tripDestinationLocationState"
@@ -363,16 +365,16 @@ function TripTypeSelectionCard({
     <div
       id={type}
       onClick={onClick}
-      className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full transition-all ${
+      className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-2 lg:gap-3 w-full transition-all ${
         selected
           ? "bg-slate-950 dark:bg-white"
           : "border hover:bg-slate-50 dark:hover:bg-slate-800 "
       }`}
     >
-      <RyogoIcon icon={icon} size="md" color={selected ? "white" : "slate"} />
       <RyogoSmall weight="font-bold" color={selected ? "white" : "slate"}>
         {title}
       </RyogoSmall>
+      <RyogoIcon icon={icon} size="sm" color={selected ? "white" : "slate"} />
       <RyogoCaption color={selected ? "white" : "slate"}>{desc}</RyogoCaption>
     </div>
   )

@@ -1,9 +1,9 @@
 import { RyogoH4, RyogoCaption } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Star, UserCheck, UserLock } from "lucide-react"
+import { ChevronRight, Star, UserCheck, Lock as LockIcon } from "lucide-react"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
@@ -31,7 +31,7 @@ export default function ExistingCutomerCard({
         }
       }}
       href={`/dashboard/bookings/new/${existingCustomer.id}`}
-      className={`flex items-center gap-3 lg:gap-4 border ${isNotActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950" : "hover:bg-sky-50 dark:hover:bg-sky-950"} rounded-lg p-3 lg:p-4`}
+      className={`flex items-center gap-3 lg:gap-4 border ${isNotActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950 opacity-50" : "hover:bg-sky-50 dark:hover:bg-sky-950"} rounded-lg p-3 lg:p-4`}
     >
       {existingCustomer.photoUrl ? (
         <RyogoImage
@@ -39,24 +39,19 @@ export default function ExistingCutomerCard({
           alt={existingCustomer.name}
           imageSize="sm"
         />
-      ) : customerStatus === CustomerStatusEnum.ACTIVE ? (
+      ) : (
         <RyogoEnclosedIcon
           icon={UserCheck}
           size="md"
-          color={"brand"}
-          bgColor={"brand"}
-        />
-      ) : (
-        <RyogoEnclosedIcon
-          icon={UserLock}
-          size="md"
-          color={"yellow"}
-          bgColor={"yellow"}
+          color={"slate"}
+          bgColor={"slate"}
         />
       )}
       <SectionColWrapper small wFull>
         <RyogoH4>{existingCustomer.name}</RyogoH4>
-        <RyogoCaption>{existingCustomer.phone}</RyogoCaption>
+        <RyogoCaption color="light" weight="font-bold">
+          {existingCustomer.phone}
+        </RyogoCaption>
         <RyogoCaption color="light">
           {existingCustomer.location.city +
             ", " +
@@ -71,7 +66,14 @@ export default function ExistingCutomerCard({
             />
           )}
       </SectionColWrapper>
-      <CustomerStatusPill status={customerStatus} />
+      <SectionColWrapper end hFull justifyBetween>
+        <CustomerStatusPill status={customerStatus} />
+        <RyogoIcon
+          icon={isNotActive ? LockIcon : ChevronRight}
+          size="sm"
+          color={isNotActive ? "light" : "slate"}
+        />
+      </SectionColWrapper>
     </Link>
   )
 }

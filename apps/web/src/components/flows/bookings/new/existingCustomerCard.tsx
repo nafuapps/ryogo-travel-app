@@ -1,7 +1,7 @@
 import { RyogoH4, RyogoCaption } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ChevronRight, Star, UserCheck, Lock as LockIcon } from "lucide-react"
+import { ChevronRight, Star, User, Lock as LockIcon } from "lucide-react"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
@@ -46,7 +46,7 @@ export default function ExistingCutomerCard({
             />
           ) : (
             <RyogoEnclosedIcon
-              icon={UserCheck}
+              icon={User}
               size="md"
               color={"slate"}
               bgColor={"slate"}

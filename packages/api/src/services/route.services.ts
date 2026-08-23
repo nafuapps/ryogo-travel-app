@@ -1,4 +1,8 @@
-import { MIN_USER_DISTANCE_RATIO, MAX_USER_DISTANCE_RATIO } from "../apiConfig"
+import {
+  MIN_USER_DISTANCE_RATIO,
+  MAX_USER_DISTANCE_RATIO,
+  DISTANCE_RATIO_CHECK_THRESHOLD,
+} from "../apiConfig"
 import { locationRepository } from "../repositories/location.repo"
 import { routeRepository } from "../repositories/route.repo"
 
@@ -75,19 +79,22 @@ export const routeServices = {
       destinationId,
     )
 
-    // Check if user entered distance is close to postgis distance
-    // If close enough, take user entered distance otherwise take postgis distance
-    const ratio = distance / dbDistance
     let newDistance: number
-    if (
-      !dbDistance ||
-      dbDistance < 1 ||
-      (ratio > MIN_USER_DISTANCE_RATIO && ratio < MAX_USER_DISTANCE_RATIO)
-    ) {
+
+    if (!dbDistance || dbDistance < DISTANCE_RATIO_CHECK_THRESHOLD) {
+      //If distance not found in db or is less than check threshold, just accept user distance
       newDistance = distance
     } else {
-      newDistance = dbDistance
+      // Check if user entered distance is close to postgis distance
+      // If close enough, take user entered distance otherwise take postgis distance
+      const ratio = distance / dbDistance
+      if (ratio > MIN_USER_DISTANCE_RATIO && ratio < MAX_USER_DISTANCE_RATIO) {
+        newDistance = distance
+      } else {
+        newDistance = dbDistance
+      }
     }
+
     const newRoute = await routeRepository.createRoute(
       sourceId,
       destinationId,

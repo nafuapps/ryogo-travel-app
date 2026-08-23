@@ -13,6 +13,8 @@ export const UPDATE_PRICE_DISTANCE_FACTOR = 1.1 //Actual distance = 1.1x estimat
 
 export const BOOKING_ASSIGNMENT_CRITICAL_DAYS = 1
 
+export const MULTI_DAY_TRIP_INTERMEDIATE_DAYS_DISTANCE = 50 //Km
+
 //Orders
 export const EXISTING_ORDER_SEARCH_HOURS = 24
 
@@ -35,6 +37,7 @@ export const ANNUAL_SUBSCRIPTION_FINAL_PRICE = 7999
 export const GST_PERCENTAGE = 18
 
 //Route
+export const DISTANCE_RATIO_CHECK_THRESHOLD = 10 //Km
 export const MIN_USER_DISTANCE_RATIO = 0.8
 export const MAX_USER_DISTANCE_RATIO = 1.2
 

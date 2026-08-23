@@ -139,25 +139,33 @@ export function BookingConfirmationDocument({
           </View>
           <View id="vehicleRow" style={styles.tableRow}>
             <Text style={styles.p}>Vehicle Charge</Text>
-            <Text style={styles.p}>{booking.totalVehicleRate.toFixed(2)}</Text>
+            <Text style={styles.p}>
+              {booking.estimatedTotalVehicleRate.toFixed(2)}
+            </Text>
           </View>
           <View id="driverRow" style={styles.tableRow}>
             <Text style={styles.p}>Driver Allowance</Text>
             <Text style={styles.p}>
-              {booking.totalDriverAllowance.toFixed(2)}
+              {booking.estimatedTotalDriverAllowance.toFixed(2)}
             </Text>
           </View>
           <View id="acRow" style={styles.tableRow}>
             <Text style={styles.p}>AC Charge</Text>
-            <Text style={styles.p}>{booking.totalAcCharge.toFixed(2)}</Text>
+            <Text style={styles.p}>
+              {booking.estimatedTotalAcCharge.toFixed(2)}
+            </Text>
           </View>
           <View id="commissionRow" style={styles.tableRow}>
             <Text style={styles.p}>Service charge</Text>
-            <Text style={styles.p}>{booking.totalCommission.toFixed(2)}</Text>
+            <Text style={styles.p}>
+              {booking.estimatedCommissionAmount.toFixed(2)}
+            </Text>
           </View>
           <View id="tableFooter" style={styles.tableFooter}>
             <Text style={styles.pBold}>Estimated Amount</Text>
-            <Text style={styles.pBold}>{booking.totalAmount.toFixed(2)}</Text>
+            <Text style={styles.pBold}>
+              {booking.estimatedTotalAmount.toFixed(2)}
+            </Text>
           </View>
         </View>
         <View id="footer" style={styles.footer}>

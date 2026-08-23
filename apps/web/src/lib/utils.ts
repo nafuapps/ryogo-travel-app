@@ -1,7 +1,8 @@
+import { MULTI_DAY_TRIP_INTERMEDIATE_DAYS_DISTANCE } from "@ryogo-travel-app/api/apiConfig"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
-import { differenceInDays, startOfDay } from "date-fns"
+import { differenceInDays } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -164,7 +165,7 @@ export function getAverageRating(ratings: number[]) {
 
 //Get trip duration
 export function getTripDuration(startDate: Date, endDate: Date) {
-  return differenceInDays(startOfDay(endDate), startOfDay(startDate)) + 1
+  return differenceInDays(endDate, startDate) + 1
 }
 
 //Calculate driver allowance days
@@ -195,8 +196,12 @@ function getEstimatedTripDistance(
     //For round trip, double the distance
     return distance * 2
   } else if (tripType === BookingTypeEnum.MultiDay) {
-    //For multi day trip, include intermediate tour days @ X(50) km
-    return distance * 2 + (days - 2) * 50
+    if (days < 3) {
+      //Treat like round trip
+      return distance * 2
+    }
+    //For longer multi day trip, add extra tour distance for intermediate days @ X(50) km/day
+    return distance * 2 + (days - 2) * MULTI_DAY_TRIP_INTERMEDIATE_DAYS_DISTANCE
   }
   //One way
   return distance

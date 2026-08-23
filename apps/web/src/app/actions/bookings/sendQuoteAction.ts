@@ -59,7 +59,7 @@ export async function sendQuoteAction(
     source: bookingDetails.source.city,
     destination: bookingDetails.destination.city,
     startDate: bookingDetails.startDate.toLocaleDateString(),
-    amount: bookingDetails.totalAmount.toString(),
+    amount: bookingDetails.estimatedTotalAmount.toString(),
     agencyPhone: bookingDetails.assignedUser.phone,
     quoteLink: getFileUrl(quoteUrl),
   })

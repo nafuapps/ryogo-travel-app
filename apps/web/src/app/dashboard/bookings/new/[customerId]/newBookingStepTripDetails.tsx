@@ -46,6 +46,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useRouter } from "next/navigation"
 import { NEW_BOOKING_DEFAULT_DISTANCE } from "@/lib/uiConfig"
 import { Separator } from "@/components/ui/separator"
+import { differenceInDays } from "date-fns"
 
 export default function NewBookingStepTripDetails(props: {
   onNext: () => void
@@ -88,10 +89,12 @@ export default function NewBookingStepTripDetails(props: {
       tripRemarks: z.string().optional(),
     })
     .superRefine((data, ctx) => {
-      //For non one way trip, end date must be after start date
+      //For round and multi day trip, end date must be after start date
       if (
-        selectedTripType !== BookingTypeEnum.OneWay &&
-        data.tripEndDate < data.tripStartDate
+        (selectedTripType === BookingTypeEnum.Round &&
+          differenceInDays(data.tripEndDate, data.tripStartDate) < 0) ||
+        (selectedTripType === BookingTypeEnum.MultiDay &&
+          differenceInDays(data.tripEndDate, data.tripStartDate) < 1)
       ) {
         ctx.addIssue({
           code: "custom",

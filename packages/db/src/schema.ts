@@ -196,8 +196,8 @@ export const orders = pgTable(
       .references(() => users.id, { onDelete: "cascade" })
       .notNull(),
     amount: integer("amount").notNull(), // in currency
-    invoiceUrl: text("invoice_url"),
-    emailSentAt: timestamp("email_sent_at", { withTimezone: true }),
+    orderInvoiceUrl: text("order_invoice_url"),
+    orderEmailSentAt: timestamp("order_email_sent_at", { withTimezone: true }),
     orderType: orderType().notNull().default(OrderTypeEnum.MONTHLY),
     status: orderStatus().notNull().default(OrderStatusEnum.CREATED),
     attempts: integer("attempts"),
@@ -906,6 +906,9 @@ export const bookings = pgTable(
     invoiceUrl: text("invoice_url"),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
     completedAt: timestamp("completed_at", { withTimezone: true }),
+    reviewCompletedByAgencyAt: timestamp("review_completed_by_agency_at", {
+      withTimezone: true,
+    }),
     ...timestamps,
   },
   (t) => [

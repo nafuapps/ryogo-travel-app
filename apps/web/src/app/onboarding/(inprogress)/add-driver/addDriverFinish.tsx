@@ -50,7 +50,7 @@ export function AddDriverFinish(props: {
   return (
     <OnboardingStepForm formId="Step6Form">
       <OnboardingStepContent contentId="Step6Content" success>
-        <OnboardingSuccessIcon iconId="Step6Icon" />
+        <OnboardingSuccessIcon />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
         <RyogoCaption color="slate">

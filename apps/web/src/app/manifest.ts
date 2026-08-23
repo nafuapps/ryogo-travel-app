@@ -13,12 +13,11 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         src: "/logoPWA.png",
         sizes: "160x160",
-        type: "image/png",
       },
       {
-        src: "/logoPWALight.png",
+        src: "/logoPWAMono.png",
         sizes: "160x160",
-        type: "image/png",
+        purpose: "monochrome",
       },
     ],
   }

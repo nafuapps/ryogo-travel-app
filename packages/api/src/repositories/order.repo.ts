@@ -92,12 +92,12 @@ export const orderRepository = {
 
   async updateInvoiceUrlAndEmailSentTime(
     id: string,
-    invoiceUrl: string,
-    emailSentAt: Date | null,
+    orderInvoiceUrl: string,
+    orderEmailSentAt: Date | null,
   ) {
     return await db
       .update(orders)
-      .set({ invoiceUrl, emailSentAt })
+      .set({ orderInvoiceUrl, orderEmailSentAt })
       .where(eq(orders.id, id))
       .returning()
   },

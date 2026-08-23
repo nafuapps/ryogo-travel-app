@@ -74,7 +74,7 @@ export function AssignTileStatusWrapper({
 }) {
   return (
     <div
-      className={`flex flex-row gap-1 lg:gap-1.5 items-center justify-center text-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-full border ${selected ? "border-slate-700 dark:border-slate-300" : "border-slate-300 dark:border-slate-700"}`}
+      className={`flex flex-row gap-1 lg:gap-1.5 items-center justify-center text-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-lg border ${selected ? "border-slate-700 dark:border-slate-300" : "border-slate-300 dark:border-slate-700"}`}
     >
       {children}
     </div>

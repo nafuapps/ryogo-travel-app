@@ -9,6 +9,7 @@ import { getTranslations } from "next-intl/server"
 import PaymentButton from "./paymentButton"
 import moment from "moment"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { getSubscriptionPlanPrice } from "@/lib/utils"
 
 export default async function PlanExpiryDetails({
   userDetails,
@@ -29,6 +30,8 @@ export default async function PlanExpiryDetails({
   )
   const needExpiryReminder = daysToExpiry <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
 
+  const planToRenew = lastPaidOrderType ?? OrderTypeEnum.MONTHLY
+
   return (
     <div
       id="PlanExpiry"
@@ -36,7 +39,7 @@ export default async function PlanExpiryDetails({
     >
       {needExpiryReminder ? (
         <>
-          <RyogoSmall
+          <RyogoCaption
             color={daysToExpiry < 0 ? "red" : "yellow"}
             weight="font-bold"
           >
@@ -47,19 +50,22 @@ export default async function PlanExpiryDetails({
                   ),
                 })
               : t("SubscriptionExpiresIn", { days: daysToExpiry })}
-          </RyogoSmall>
+          </RyogoCaption>
           {isOwner && (
             <PaymentButton
               agencyId={agencyDetails.id}
               userId={userDetails.id}
-              plan={lastPaidOrderType ?? OrderTypeEnum.MONTHLY}
+              plan={planToRenew}
               ownerName={userDetails.name}
               ownerEmail={userDetails.email}
               ownerPhone={userDetails.phone}
               icon={
                 <RyogoIcon icon={CalendarSync} size="sm" color="white" thick />
               }
-              renewLabel={t("RenewCTA")}
+              renewLabel={t("RenewCTA", {
+                plan: planToRenew.toUpperCase(),
+                price: getSubscriptionPlanPrice(planToRenew),
+              })}
             />
           )}
         </>

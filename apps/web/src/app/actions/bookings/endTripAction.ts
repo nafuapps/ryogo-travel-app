@@ -1,12 +1,7 @@
 "use server"
-import { EndTripBookingEmailTemplate } from "@/components/email/endTripBookingEmailTemplate"
-import sendEmail from "@/components/email/sendEmail"
-import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
+
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
-import {
-  generateBookingInvoicePathName,
-  generateTripLogPhotoPathName,
-} from "@/lib/utils"
+import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -17,18 +12,13 @@ import {
   TripLogTypesEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
-import {
-  getFileUrl,
-  uploadFile,
-  uploadPDFBlob,
-} from "@ryogo-travel-app/db/storage"
+import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function endTripAction(
   data: AddTripLogRequestType,
   customerId: string,
   customerRatingData?: number,
   bookingRatingData?: number,
-  customerEmail?: string | null,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -87,40 +77,6 @@ export async function endTripAction(
   //Update actual total price and other values based on trip logs
   await bookingServices.updateBookingActualValues(data.bookingId)
 
-  if (customerEmail) {
-    //Generate and upload invoice
-    const bookingDetails = await bookingServices.findBookingDetailsById(
-      data.bookingId,
-    )
-    if (!bookingDetails) return
-
-    const invoiceFile = await getBookingInvoicePDF(bookingDetails)
-
-    //Upload file and get storage url
-    const invoiceUrl = (
-      await uploadPDFBlob(
-        invoiceFile,
-        generateBookingInvoicePathName(data.bookingId),
-      )
-    ).path
-    if (!invoiceUrl) return
-
-    //Update invoice url in DB
-    await bookingServices.addInvoiceUrl(data.bookingId, invoiceUrl)
-
-    //Share invoice over email with customer
-    sendEmail({
-      receipientEmail: [customerEmail],
-      subject: "Booking Compeleted - Invoice | RyoGo",
-      element: EndTripBookingEmailTemplate({
-        name: bookingChanged.customer.name,
-        bookingId: bookingChanged.id,
-        downloadUrl: getFileUrl(invoiceUrl),
-        route: `${bookingChanged.source.city} - ${bookingChanged.destination.city}`,
-      }),
-    })
-  }
-
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     entityType: EntityTypeEnum.BOOKING,
@@ -149,6 +105,14 @@ export async function endTripAction(
     isCritical: true,
     link: `/rider/myBookings/${bookingChanged.id}`,
   })
+
+  //Remove trip started mission
+  await missionServices.removePreviousMissionsByEntityKey(
+    data.agencyId,
+    EntityTypeEnum.BOOKING,
+    bookingChanged.id,
+    "TripStarted.Title",
+  )
 
   return newTripLog
 }

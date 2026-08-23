@@ -88,7 +88,7 @@ export function RyoGoSidebarLogo(props: RyogoSidebarLogoProps) {
         />
         <Image
           loading="eager"
-          src="/logoPWALight.png"
+          src="/logoPWA.png"
           fill
           alt={"Logo Icon for Ryogo - Travel Agency App"}
           sizes="40px"

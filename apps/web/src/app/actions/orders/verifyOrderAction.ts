@@ -2,6 +2,7 @@
 
 import generateAndSendSubscriptionInvoiceEmail from "@/components/email/generateAndSendSubscriptionInvoiceEmail"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -57,6 +58,7 @@ export async function verifyOrderAction({
   const updatedRecord = await orderServices.changeOrderToPaid(rpOrderId, false)
   if (!updatedRecord) return //Handle failed DB update on the client
 
+  //Add feed for subscription purchase
   await notificationServices.addNotification({
     agencyId: agencyId,
     entityType: EntityTypeEnum.ORDER,
@@ -69,6 +71,14 @@ export async function verifyOrderAction({
     },
     link: `/dashboard/account/agency`,
   })
+
+  //Remove any subscription payment failed missions for this order
+  await missionServices.removePreviousMissionsByEntityKey(
+    agencyId,
+    EntityTypeEnum.ORDER,
+    updatedRecord.id,
+    "SubscriptionPaymentFailed.Title",
+  )
 
   // 4. Send invoice to user
   generateAndSendSubscriptionInvoiceEmail(rpOrderId, agencyId, userId)

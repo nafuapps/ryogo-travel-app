@@ -4226,7 +4226,7 @@
         "ValidTill": "VALID TILL",
         "SubscriptionExpiresIn": "Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
         "SubscriptionExpired": "Subscription expired on {date}",
-        "RenewCTA": "Renew Plan"
+        "RenewCTA": "Renew {plan} @ ₹{price}"
       },
       "PlanUsage": {
         "Header": "PLAN USAGE",
@@ -4725,6 +4725,16 @@
         "Error": "Cannot cancel booking.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Cancel"
+      },
+      "ReviewCompletedBooking": {
+        "Label": "Review Booking And Genrate Invoice",
+        "Title": "Are you sure you want to review this booking as completed and generate an invoice?",
+        "Desc": "Make sure the booking has actually been completed with the customer and review all the transactions and expenses. This action will close this booking.",
+        "NoCTA": "No",
+        "Success": "Invoice generated!",
+        "Error": "Cannot generate invoice.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Review and Generate Invoice"
       },
       "SendInvoice": {
         "Label": "Send Invoice to Customer",

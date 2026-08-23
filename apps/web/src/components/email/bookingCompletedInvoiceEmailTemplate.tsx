@@ -1,5 +1,6 @@
 import EmailFooter from "./emailFooter"
-export function EndTripBookingEmailTemplate({
+
+export function BookingCompletedInvoiceEmailTemplate({
   name,
   bookingId,
   route,

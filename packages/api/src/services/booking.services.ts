@@ -635,28 +635,34 @@ export const bookingServices = {
     }
   },
 
+  async changeReviewedByAgency(bookingId: string) {
+    const updatedBooking =
+      await bookingRepository.updateReviewCompletedAt(bookingId)
+    return updatedBooking[0]
+  },
+
   async addQuoteUrl(id: string, url: string) {
-    return bookingRepository.updateQuoteUrl(id, url)
+    return await bookingRepository.updateQuoteUrl(id, url)
   },
 
   async changeQuoteSent(id: string) {
-    return bookingRepository.updateQuoteSent(id)
+    return await bookingRepository.updateQuoteSent(id)
   },
 
   async addConfirmationUrl(id: string, url: string) {
-    return bookingRepository.updateConfirmationUrl(id, url)
+    return await bookingRepository.updateConfirmationUrl(id, url)
   },
 
   async changeConfirmationSent(id: string) {
-    return bookingRepository.updateConfirmationSent(id)
+    return await bookingRepository.updateConfirmationSent(id)
   },
 
   async addInvoiceUrl(id: string, url: string) {
-    return bookingRepository.updateInvoiceUrl(id, url)
+    return await bookingRepository.updateInvoiceUrl(id, url)
   },
 
   async changeInvoiceSent(id: string) {
-    return bookingRepository.updateInvoiceSent(id)
+    return await bookingRepository.updateInvoiceSent(id)
   },
 }
 

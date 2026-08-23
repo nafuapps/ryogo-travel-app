@@ -80,6 +80,14 @@ export async function confirmBookingAction(
     })
   }
 
+  //Remove any lead mission for this booking
+  await missionServices.removePreviousMissionsByEntityKey(
+    agencyId,
+    EntityTypeEnum.BOOKING,
+    bookingDetails.id,
+    "LeadBooking.Title",
+  )
+
   //Generate confirmation pdf file
   const confirmationFile = await getBookingConfirmationPDF(bookingDetails)
 

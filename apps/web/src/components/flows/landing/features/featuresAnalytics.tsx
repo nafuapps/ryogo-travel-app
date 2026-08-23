@@ -24,22 +24,22 @@ export default async function FeaturesAnalyticsSection() {
           <FeatureItem
             title={t("A1.Title")}
             description={t("A1.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("A2.Title")}
             description={t("A2.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("A3.Title")}
             description={t("A3.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("A4.Title")}
             description={t("A4.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
         </FeatureGrid>
       </LandingContentWrapper>

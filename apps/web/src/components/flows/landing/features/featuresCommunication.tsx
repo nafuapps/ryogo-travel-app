@@ -24,23 +24,23 @@ export default async function FeaturesCommunicationSection() {
           <FeatureItem
             title={t("C1.Title")}
             description={t("C1.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
             long
           />
           <FeatureItem
             title={t("C2.Title")}
             description={t("C2.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("C3.Title")}
             description={t("C3.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("C4.Title")}
             description={t("C4.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
             longReverse
           />
         </FeatureGrid>

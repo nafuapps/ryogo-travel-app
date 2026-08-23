@@ -28,7 +28,7 @@ export function SlideshowWrapper({
       className={`mt-4 flex flex-col items-center gap-6 w-full ${reverse ? "md:flex-row-reverse" : "md:flex-row"}`}
     >
       <SlideshowSideImageWrapper
-        imageSrc={items[activeIndex]?.src ?? "/logoPWALight.png"}
+        imageSrc={items[activeIndex]?.src ?? "/logoPWA.png"}
       />
       <SlideshowCardList
         items={items}

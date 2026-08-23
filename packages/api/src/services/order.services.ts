@@ -15,6 +15,7 @@ import {
 } from "../apiConfig"
 import { agencyRepository } from "../repositories/agency.repo"
 import { addDays, max } from "date-fns"
+import { missionRepository } from "../repositories/mission.repo"
 
 export const orderServices = {
   async findAllOrdersByAgencyId(agencyId: string) {
@@ -140,6 +141,7 @@ export const orderServices = {
       newSubscriptionExpiryDate,
       updatedOrder[0].id,
     )
+
     return updatedOrder[0]
   },
 

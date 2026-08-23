@@ -69,7 +69,7 @@ export default function OnboardingSidebar({
             <div key={index} className="flex flex-row gap-2 md:gap-3">
               <div className={`flex flex-col gap-2 md:gap-3 items-center`}>
                 <div
-                  className={`rounded-full
+                  className={`rounded-lg
           ${
             currentProcess > index || (currentProcess === index && isLastStep)
               ? "bg-slate-950 dark:bg-white shadow"
@@ -93,7 +93,7 @@ export default function OnboardingSidebar({
                 </div>
                 {index < items.length - 1 && (
                   <div
-                    className={`w-0.5 h-10 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-200" : "bg-slate-200  dark:bg-slate-700"} rounded-full`}
+                    className={`w-0.5 h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-200" : "bg-slate-200  dark:bg-slate-700"} rounded-full`}
                   ></div>
                 )}
               </div>

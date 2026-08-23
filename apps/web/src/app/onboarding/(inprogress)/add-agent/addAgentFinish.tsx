@@ -50,7 +50,7 @@ export function AddAgentFinish(props: {
   return (
     <OnboardingStepForm formId="FinishForm">
       <OnboardingStepContent contentId="FinishContent" success>
-        <OnboardingSuccessIcon iconId="FinishIcon" />
+        <OnboardingSuccessIcon />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
         <RyogoSmall color="slate">

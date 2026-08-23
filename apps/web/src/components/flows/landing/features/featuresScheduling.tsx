@@ -39,31 +39,31 @@ export default async function FeaturesSchedulingSection() {
           <FeatureItem
             title={t("S1.Title")}
             description={t("S1.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
             long
           />
           <FeatureItem
             title={t("S2.Title")}
             description={t("S2.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
             longReverse
           />
           <FeatureItem
             title={t("S3.Title")}
             description={t("S3.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
             long
           />
           <FeatureItem
             title={t("S4.Title")}
             description={t("S4.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
             longReverse
           />
           <FeatureItem
             title={t("S5.Title")}
             description={t("S5.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
             long
           />
         </FeatureGrid>

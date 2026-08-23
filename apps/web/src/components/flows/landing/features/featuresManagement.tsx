@@ -39,32 +39,32 @@ export default async function FeaturesManagementSection() {
           <FeatureItem
             title={t("M1.Title")}
             description={t("M1.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("M2.Title")}
             description={t("M2.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("M3.Title")}
             description={t("M3.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("M4.Title")}
             description={t("M4.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("M5.Title")}
             description={t("M5.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
           <FeatureItem
             title={t("M6.Title")}
             description={t("M6.Description")}
-            src="/logoPWALight.png"
+            src="/logoPWA.png"
           />
         </FeatureGrid>
       </LandingContentWrapper>

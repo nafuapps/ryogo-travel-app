@@ -2,7 +2,7 @@ import { SubmitEventHandler } from "react"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 
 export const CreateAccountTotalSteps = 5
@@ -134,13 +134,14 @@ export function OnboardingStepSecondaryAction(props: {
   )
 }
 
-export function OnboardingSuccessIcon(props: { iconId: string }) {
+export function OnboardingSuccessIcon() {
   return (
-    <div
-      id={props.iconId}
-      className="bg-slate-950 dark:bg-white rounded-full size-12 lg:size-16 flex justify-center items-center"
-    >
-      <RyogoIcon icon={Check} size="md" color="white" />
-    </div>
+    <RyogoEnclosedIcon
+      icon={Check}
+      size="md"
+      color="white"
+      bgColor="black"
+      circular
+    />
   )
 }

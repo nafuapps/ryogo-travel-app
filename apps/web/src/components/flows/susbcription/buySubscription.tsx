@@ -7,6 +7,7 @@ import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoPill } from "@/components/pills/ryogoPills"
 import {
   RyogoH2,
   RyogoH3,
@@ -174,13 +175,10 @@ function PaymentOptionCard({
           {t("ForMonths", { months: months })}
         </RyogoCaption>
         {best && (
-          <div
-            className={`flex items-center justify-center rounded-full gap-1 lg:gap-1.5 px-2 lg:px-3 py-1 lg:py-1.5 ${currentlySelected ? "bg-white dark:bg-slate-900" : "bg-sky-700 dark:bg-sky-200"}`}
-          >
-            <RyogoCaption color={currentlySelected ? "brand" : "white"}>
-              {t("BestValue")}
-            </RyogoCaption>
-          </div>
+          <RyogoPill
+            label={t("BestValue")}
+            bgColor={currentlySelected ? "brand" : "light"}
+          />
         )}
       </SectionRowWrapper>
     </div>

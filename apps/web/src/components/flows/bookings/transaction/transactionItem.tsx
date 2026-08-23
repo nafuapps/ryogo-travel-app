@@ -8,7 +8,7 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
 
 export default async function TransactionItem({
@@ -29,6 +29,8 @@ export default async function TransactionItem({
     fileUrl = getFileUrl(transaction.transactionPhotoUrl)
   }
 
+  const isDebit = transaction.type === TransactionTypesEnum.DEBIT
+
   return (
     <div className="flex flex-col">
       <div
@@ -37,22 +39,15 @@ export default async function TransactionItem({
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
         <div className="flex flex-col gap-1.5 lg:gap-2 min-w-1/5">
-          {transaction.type === TransactionTypesEnum.DEBIT ? (
-            <div className="flex size-7 lg:size-8 bg-red-100 dark:bg-red-800 rounded-full items-center justify-center">
-              <RyogoIcon icon={Maximize2} size="sm" color="red" />
-            </div>
-          ) : (
-            <div className="flex size-7 lg:size-8 bg-green-100 dark:bg-green-800 rounded-full items-center justify-center">
-              <RyogoIcon icon={Minimize2} size="sm" color="green" />
-            </div>
-          )}
-          {transaction.type === TransactionTypesEnum.DEBIT ? (
-            <RyogoSmall color="red">
-              {transaction.otherParty.toUpperCase()}
-            </RyogoSmall>
-          ) : (
-            <RyogoSmall>{transaction.otherParty.toUpperCase()}</RyogoSmall>
-          )}
+          <RyogoEnclosedIcon
+            icon={isDebit ? Maximize2 : Minimize2}
+            size="sm"
+            color={isDebit ? "red" : "green"}
+            bgColor={isDebit ? "red" : "green"}
+          />
+          <RyogoSmall color={isDebit ? "red" : "slate"}>
+            {transaction.otherParty.toUpperCase()}
+          </RyogoSmall>
           <RyogoCaption color="light">{transaction.id}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-2 lg:gap-3 w-full">

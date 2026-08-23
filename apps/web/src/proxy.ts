@@ -36,9 +36,11 @@ export default async function proxy(request: NextRequest) {
       return response
     }
 
-    response.cookies.set({
-      name: SESSION_COOKIE_NAME,
-      value: newSessionCookie,
+    response.cookies.set(SESSION_COOKIE_NAME, newSessionCookie, {
+      httpOnly: true,
+      secure: true,
+      expires: payload.expiresAt,
+      sameSite: "lax",
     })
   }
 
@@ -47,12 +49,9 @@ export default async function proxy(request: NextRequest) {
     payload.expiresAt < new Date() ||
     payload.status === UserStatusEnum.SUSPENDED
   ) {
-    console.log(payload.expiresAt)
-    console.log("-----------Ran cookie delete-----------")
-    response.cookies.delete({
-      name: SESSION_COOKIE_NAME,
-    })
+    response.cookies.delete(SESSION_COOKIE_NAME)
   }
+
   return response
 }
 

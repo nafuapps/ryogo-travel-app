@@ -120,7 +120,6 @@ export default function EndTripSheet({
           booking.customerId,
           customerRatingData,
           bookingRatingData,
-          booking.customer.email,
         )
       ) {
         router.refresh()

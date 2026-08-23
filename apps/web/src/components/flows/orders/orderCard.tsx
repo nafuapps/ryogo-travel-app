@@ -67,9 +67,12 @@ export default function OrderCard({
             <RyogoCaption color="light" weight="font-bold">
               {order.user.name}
             </RyogoCaption>
-            {order.invoiceUrl && (
+            {order.orderInvoiceUrl && (
               <SectionRowWrapper small center>
-                <a href={getFileUrl(order.invoiceUrl) + "?download"} download>
+                <a
+                  href={getFileUrl(order.orderInvoiceUrl) + "?download"}
+                  download
+                >
                   <Button variant="outline">
                     <RyogoIcon size="sm" icon={Download} color="slate" />
                     <RyogoCaption color="slate">

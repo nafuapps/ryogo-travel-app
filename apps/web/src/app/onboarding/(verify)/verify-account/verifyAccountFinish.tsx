@@ -27,7 +27,7 @@ export function VerifyAccountFinish() {
   return (
     <OnboardingStepForm formId="Step2Form">
       <OnboardingStepContent contentId="Step2Content" success>
-        <OnboardingSuccessIcon iconId="Step2Icon" />
+        <OnboardingSuccessIcon />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoP>{t("Subtitle")}</RyogoP>
       </OnboardingStepContent>

@@ -1,6 +1,11 @@
-import { MULTI_DAY_TRIP_INTERMEDIATE_DAYS_DISTANCE } from "@ryogo-travel-app/api/apiConfig"
+import {
+  ANNUAL_SUBSCRIPTION_FINAL_PRICE,
+  MONTHLY_SUBSCRIPTION_FINAL_PRICE,
+  MULTI_DAY_TRIP_INTERMEDIATE_DAYS_DISTANCE,
+  QUARTERLY_SUBSCRIPTION_FINAL_PRICE,
+} from "@ryogo-travel-app/api/apiConfig"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
-import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
+import { BookingTypeEnum, OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
 import { differenceInDays } from "date-fns"
 import { twMerge } from "tailwind-merge"
@@ -276,5 +281,17 @@ export function getActualTotalPrice(
     totalACPrice,
     totalCommission,
     totalAmount,
+  }
+}
+
+export function getSubscriptionPlanPrice(plan: OrderTypeEnum) {
+  switch (plan) {
+    case OrderTypeEnum.ANNUAL:
+      return ANNUAL_SUBSCRIPTION_FINAL_PRICE
+    case OrderTypeEnum.QUARTERLY:
+      return QUARTERLY_SUBSCRIPTION_FINAL_PRICE
+    case OrderTypeEnum.MONTHLY:
+    default:
+      return MONTHLY_SUBSCRIPTION_FINAL_PRICE
   }
 }

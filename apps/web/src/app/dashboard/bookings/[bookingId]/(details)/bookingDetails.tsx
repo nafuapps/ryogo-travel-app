@@ -26,6 +26,7 @@ import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import { RyogoCaption } from "@/components/typography"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import ShareTrackBookingLinkButton from "@/components/buttons/track/shareTrackBookingLinkButton"
+import ReviewCompletedBookingAlertButton from "@/components/buttons/alert/reviewCompletedBookingAlertButton"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -412,15 +413,22 @@ export default async function BookingDetailsPageComponent({
             value={"₹" + totalAmount}
           />
           {(isOwner || isAssignedUser) &&
-            //Invoice can be sent for a completed booking only
-            bookingDetails.status === BookingStatusEnum.COMPLETED && (
+            //Invoice can be sent for a completed and reviewed booking only
+            bookingDetails.status === BookingStatusEnum.COMPLETED &&
+            (bookingDetails.reviewCompletedByAgencyAt ? (
               <SendInvoiceAlertButton
                 bookingId={bookingDetails.id}
                 agencyId={bookingDetails.agencyId}
                 assignedUserId={bookingDetails.assignedUserId}
                 invoiceSentOn={bookingDetails.invoiceSentOn}
               />
-            )}
+            ) : (
+              <ReviewCompletedBookingAlertButton
+                bookingId={bookingDetails.id}
+                agencyId={bookingDetails.agencyId}
+                assignedUserId={bookingDetails.assignedUserId}
+              />
+            ))}
           {(isOwner || isAssignedUser) &&
             //Confirmation can be sent for a confirmed booking only
             bookingDetails.status === BookingStatusEnum.CONFIRMED && (

@@ -112,7 +112,6 @@ export default function MissionCard({
               )}
         </RyogoCaption>
       )}
-      <div></div>
       {mission.link && !isRead && (
         <Link href={mission.link as React.ComponentProps<typeof Link>["href"]}>
           <Button variant={"default"} disabled={isPending} className="w-full">

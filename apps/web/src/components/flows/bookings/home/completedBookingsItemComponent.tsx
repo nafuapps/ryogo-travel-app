@@ -20,6 +20,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { CompletedBookingCard } from "@/components/cards/booking/bookingCards"
+import { differenceInDays } from "date-fns"
 
 type CompletedBookingsSelectType = "7Days" | "14Days"
 
@@ -29,10 +30,11 @@ export default function CompletedBookingsItemComponent({
   completedBookings14Days: FindCompletedBookingsPreviousDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Completed")
-  const [selectedTab, setSelectedTab] = useState<CompletedBookingsSelectType>("7Days")
+  const [selectedTab, setSelectedTab] =
+    useState<CompletedBookingsSelectType>("7Days")
 
   const completedBookings7Days = completedBookings14Days.filter(
-    (b) => b.updatedAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000 * 7),
+    (b) => differenceInDays(new Date(), b.updatedAt) < 7,
   )
 
   const trips =
@@ -50,7 +52,9 @@ export default function CompletedBookingsItemComponent({
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
-          onValueChange={(value: CompletedBookingsSelectType) => setSelectedTab(value)}
+          onValueChange={(value: CompletedBookingsSelectType) =>
+            setSelectedTab(value)
+          }
         >
           <SelectTrigger>
             <SelectValue />

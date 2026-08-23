@@ -61,16 +61,16 @@ export default function AssignVehicleTile({
     .filter((b) => b.id !== bookingId)
     .map((other) => {
       return getOverlapScore(
-        new Date(other.startDate),
-        new Date(other.endDate),
+        other.startDate,
+        other.endDate,
         bookingStartDate,
         bookingEndDate,
       )
     })
   const repairOverLapScores = vehicleData.vehicleRepairs.map((repair) => {
     return getOverlapScore(
-      new Date(repair.startDate),
-      new Date(repair.endDate),
+      repair.startDate,
+      repair.endDate,
       bookingStartDate,
       bookingEndDate,
     )

@@ -14,12 +14,10 @@ import {
   SESSION_COOKIE_EXPIRATION_DAYS,
   SESSION_COOKIE_NAME,
 } from "@ryogo-travel-app/api/apiConfig"
+import { addDays } from "date-fns"
 
 const secretKey = process.env.AUTH_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
-
-const SESSION_COOKIE_EXPIRATION_TIME =
-  SESSION_COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000
 
 // Don't add any sensitive data like email, password in this payload
 export type SessionPayloadType = {
@@ -55,7 +53,7 @@ export async function decrypt(session: string = "") {
 }
 
 //Get session from DB by token
-export async function checkWebSessionInDB(token: string, userId: string) {
+export async function verifyWebSessionInDB(token: string, userId: string) {
   const sessionDB = await sessionRepository.readSessionByToken(token)
 
   //Check if session exists in DB, is not expired and is of the same user
@@ -76,7 +74,7 @@ export async function checkWebSessionInDB(token: string, userId: string) {
 
 //Create session both in cookie and database
 export async function createWebSession(user: SelectUserType) {
-  const expiresAt = new Date(Date.now() + SESSION_COOKIE_EXPIRATION_TIME)
+  const expiresAt = createNewExpiryDate()
   const token = crypto.randomUUID()
 
   // 1. Create a session in the database
@@ -138,7 +136,7 @@ export async function createWebSession(user: SelectUserType) {
 }
 
 //Update session from DB
-export async function updateWebSessionFromDB(payload: SessionPayloadType) {
+export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
   const user = await userRepository.readUserById(payload.userId)
   if (!user) return
 
@@ -161,13 +159,9 @@ export async function updateWebSessionFromDB(payload: SessionPayloadType) {
 
 //Update user status in session
 export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
-  // 1. Get session from cookie
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayloadType | undefined
-
-  if (!session || !payload) {
-    return
-  }
+  // 1. Get session payload from cookie
+  const payload = await getSessionPayloadFromCookie()
+  if (!payload) return
 
   // 2. Update user status in payload
   const newSession = await encrypt({
@@ -176,7 +170,7 @@ export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
   })
 
   // 3. Update New expiry in DB
-  const newExpiresAt = await updateSessionExpiry(payload.sessionId)
+  const newExpiresAt = await updateSessionExpiryInDB(payload.sessionId)
 
   // 4. Update session expiry in cookie
   const cookieStore = await cookies()
@@ -190,13 +184,9 @@ export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
 
 //Update user verification status in session
 export async function updateUserVerificationInWebSession(isVerified: boolean) {
-  // 1. Get session from cookie
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayloadType | undefined
-
-  if (!session || !payload) {
-    return
-  }
+  // 1. Get session payload from cookie
+  const payload = await getSessionPayloadFromCookie()
+  if (!payload) return
 
   // 2. Update verification status in payload
   const newSession = await encrypt({
@@ -205,7 +195,7 @@ export async function updateUserVerificationInWebSession(isVerified: boolean) {
   })
 
   // 3. Update New expiry in DB
-  const newExpiresAt = await updateSessionExpiry(payload.sessionId)
+  const newExpiresAt = await updateSessionExpiryInDB(payload.sessionId)
 
   // 4. Update session expiry in cookie
   const cookieStore = await cookies()
@@ -219,13 +209,9 @@ export async function updateUserVerificationInWebSession(isVerified: boolean) {
 
 //Update user admin status in session
 export async function updateUserAdminInWebSession(isAdmin: boolean) {
-  // 1. Get session from cookie
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  const payload = (await decrypt(session)) as SessionPayloadType | undefined
-
-  if (!session || !payload) {
-    return
-  }
+  // 1. Get session payload from cookie
+  const payload = await getSessionPayloadFromCookie()
+  if (!payload) return
 
   // 2. Update verification status in payload
   const newSession = await encrypt({
@@ -234,7 +220,7 @@ export async function updateUserAdminInWebSession(isAdmin: boolean) {
   })
 
   // 3. Update New expiry in DB
-  const newExpiresAt = await updateSessionExpiry(payload.sessionId)
+  const newExpiresAt = await updateSessionExpiryInDB(payload.sessionId)
 
   // 4. Update session expiry in cookie
   const cookieStore = await cookies()
@@ -248,11 +234,8 @@ export async function updateUserAdminInWebSession(isAdmin: boolean) {
 
 //Delete session both from db and cookie
 export async function deleteWebSession() {
-  // 1. Get session from cookie
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return
-
-  const payload = (await decrypt(session)) as SessionPayloadType | undefined
+  // 1. Get session payload from cookie
+  const payload = await getSessionPayloadFromCookie()
   if (!payload) return
 
   // 2. Delete session from database
@@ -265,9 +248,21 @@ export async function deleteWebSession() {
   cookieStore.delete(SESSION_COOKIE_NAME)
 }
 
-async function updateSessionExpiry(sessionId: string) {
-  // 2. New expiry
-  const newExpiresAt = new Date(Date.now() + SESSION_COOKIE_EXPIRATION_TIME)
+async function updateSessionExpiryInDB(sessionId: string) {
+  const newExpiresAt = createNewExpiryDate()
   await sessionRepository.updateSessionExpiringTime(sessionId, newExpiresAt)
   return newExpiresAt
+}
+
+//Expiry date is X days from now
+function createNewExpiryDate() {
+  return addDays(new Date(), SESSION_COOKIE_EXPIRATION_DAYS)
+}
+
+export async function getSessionPayloadFromCookie() {
+  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
+  if (!session) return
+  const payload = (await decrypt(session)) as SessionPayloadType | undefined
+  if (!payload) return
+  return payload
 }

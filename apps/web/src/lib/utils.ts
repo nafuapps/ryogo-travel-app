@@ -173,10 +173,9 @@ function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
     if (days > 1) {
       //For round trip, double the driver allowance if not returning same day
       return 2
-    } else {
-      //If returning same day, give 1 day allowance
-      return 1
     }
+    //If returning same day, give 1 day allowance
+    return 1
   }
   if (tripType === BookingTypeEnum.MultiDay) {
     //For multi day trip, driver allowance is for each day
@@ -242,8 +241,8 @@ export function getEstimatedTotalPrice(data: NewBookingRequestDataType) {
   }
 }
 
-//Calculate final total price
-export function getFinalTotalPrice(
+//Calculate actual total price
+export function getActualTotalPrice(
   tripType: BookingTypeEnum,
   startDate: Date,
   endDate: Date,

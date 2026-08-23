@@ -135,6 +135,7 @@ export const userRepository = {
             id: true,
             status: true,
             startDate: true,
+            actualStartDate: true,
             endDate: true,
           },
           where: (assignedBookings, { inArray }) =>

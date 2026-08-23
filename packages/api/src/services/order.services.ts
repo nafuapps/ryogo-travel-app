@@ -14,6 +14,7 @@ import {
   QUARTERLY_SUBSCRIPTION_FINAL_PRICE,
 } from "../apiConfig"
 import { agencyRepository } from "../repositories/agency.repo"
+import { addDays, max } from "date-fns"
 
 export const orderServices = {
   async findAllOrdersByAgencyId(agencyId: string) {
@@ -118,33 +119,25 @@ export const orderServices = {
     if (orderDetails.status === OrderStatusEnum.PAID) return
 
     //Trigger subscription upgrade
-    const orderType = updatedOrder[0].orderType
+    const orderSubscriptionDays = getSubscriptionDays(updatedOrder[0].orderType)
 
-    let subscriptionDays = MONTHLY_SUBSCRIPTION_DAYS
-    if (orderType === OrderTypeEnum.QUARTERLY) {
-      subscriptionDays = QUARTERLY_SUBSCRIPTION_DAYS
-    }
-    if (orderType === OrderTypeEnum.ANNUAL) {
-      subscriptionDays = ANNUAL_SUBSCRIPTION_DAYS
-    }
+    //For basic to premium upgrade, subscription starts today.
+    //For premium renewal, if plan has not expired yet, add on the current expiry date
+    const subscriptionStartDate =
+      agencyDetails.subscriptionPlan === SubscriptionPlanEnum.BASIC
+        ? new Date()
+        : max([agencyDetails.subscriptionExpiresOn, new Date()])
 
-    let startDate = new Date()
-
-    //If premium subscription has not expired yet, extend from current expiry date
-    if (
-      agencyDetails.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
-      agencyDetails.subscriptionExpiresOn > new Date()
-    ) {
-      startDate = agencyDetails.subscriptionExpiresOn
-    }
-
-    const newExpiryTime = new Date(
-      startDate.getTime() + subscriptionDays * 24 * 60 * 60 * 1000,
+    //Calculate new expiry date based on order type
+    const newSubscriptionExpiryDate = addDays(
+      subscriptionStartDate,
+      orderSubscriptionDays,
     )
+
     await agencyRepository.updateAgencySubscriptionWithOrder(
       updatedOrder[0].agencyId,
       SubscriptionPlanEnum.PREMIUM,
-      newExpiryTime,
+      newSubscriptionExpiryDate,
       updatedOrder[0].id,
     )
     return updatedOrder[0]
@@ -165,6 +158,12 @@ export const orderServices = {
       emailSentAt,
     )
   },
+}
+
+function getSubscriptionDays(orderType: OrderTypeEnum) {
+  if (orderType === OrderTypeEnum.ANNUAL) return ANNUAL_SUBSCRIPTION_DAYS
+  if (orderType === OrderTypeEnum.QUARTERLY) return QUARTERLY_SUBSCRIPTION_DAYS
+  return MONTHLY_SUBSCRIPTION_DAYS
 }
 
 export type FindAllOrdersByAgencyIdType = Awaited<

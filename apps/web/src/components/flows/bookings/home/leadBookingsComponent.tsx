@@ -6,10 +6,10 @@ export default async function LeadsBookingsComponent({
 }: {
   agencyId: string
 }) {
-  const leadBookings7Days = await bookingServices.findLeadBookingsPreviousDays(
+  const leadBookings14Days = await bookingServices.findLeadBookingsNextDays(
     agencyId,
-    7
+    14,
   )
 
-  return <LeadBookingsItemComponent leadBookings7Days={leadBookings7Days} />
+  return <LeadBookingsItemComponent leadBookings14Days={leadBookings14Days} />
 }

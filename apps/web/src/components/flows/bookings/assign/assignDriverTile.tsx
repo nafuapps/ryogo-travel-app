@@ -58,8 +58,8 @@ export default function AssignDriverTile({
     .filter((b) => b.id !== bookingId)
     .map((other) => {
       return getOverlapScore(
-        new Date(other.startDate),
-        new Date(other.endDate),
+        other.startDate,
+        other.endDate,
         bookingStartDate,
         bookingEndDate,
       )
@@ -67,8 +67,8 @@ export default function AssignDriverTile({
 
   const leaveOverLapScores = driverData.driverLeaves.map((leave) => {
     return getOverlapScore(
-      new Date(leave.startDate),
-      new Date(leave.endDate),
+      leave.startDate,
+      leave.endDate,
       bookingStartDate,
       bookingEndDate,
     )

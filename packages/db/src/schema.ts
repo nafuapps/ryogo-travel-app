@@ -39,6 +39,7 @@ export const missionInitial = "M"
 export const notificationInitial = "N"
 export const supportQueryInitial = "SQ"
 export const supportTicketInitial = "ST"
+export const productFeedbackInitial = "PB"
 
 //Common timestamps
 const timestamps = {
@@ -153,6 +154,7 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
   missions: many(missions),
   notifications: many(notifications),
   supportTickets: many(supportTickets),
+  productFeedbacks: many(productFeedbacks),
 }))
 
 export enum OrderStatusEnum {
@@ -448,6 +450,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   sessions: many(sessions),
   missions: many(missions),
   supportTickets: many(supportTickets),
+  productFeedbacks: many(productFeedbacks),
 }))
 
 //Sessions table
@@ -851,7 +854,9 @@ export const bookings = pgTable(
       onDelete: "set null",
     }),
     startDate: date("start_date", { mode: "date" }).notNull(),
+    actualStartDate: date("actual_start_date", { mode: "date" }), // actual start date of the trip
     endDate: date("end_date", { mode: "date" }).notNull(),
+    actualEndDate: date("actual_end_date", { mode: "date" }), // actual end date of the trip
     startTime: time("start_time", { withTimezone: false }),
     pickupAddress: varchar("pickup_address", { length: 300 }),
     dropAddress: varchar("drop_address", { length: 300 }),
@@ -860,18 +865,34 @@ export const bookings = pgTable(
     needsAc: boolean("needs_ac").notNull().default(true),
     remarks: text("remarks"),
     citydistance: integer("city_distance").notNull().default(1), // in kilometers (distance between cities)
-    totalDistance: integer("total_distance").notNull().default(1), // in kilometers (total distance of the trip)
-    acChargePerDay: integer("ac_charge_per_day").notNull().default(0), // in currency
-    totalAcCharge: integer("total_ac_charge").notNull().default(0), // in currency
-    ratePerKm: integer("rate_per_km").notNull().default(18), // in currency
-    totalVehicleRate: integer("total_vehicle_rate").notNull().default(0), // in currency
-    allowancePerDay: integer("allowance_per_day").notNull().default(500), // in currency
-    totalDriverAllowance: integer("total_driver_allowance")
+    estimatedTotalDistance: integer("estimated_total_distance")
       .notNull()
-      .default(0), // in currency
+      .default(1), // in kilometers (estimated total distance at the time of booking creation)
+    actualTotalDistance: integer("actual_total_distance"), // in kilometers (actual total distance calculated at the end of the trip)
+    acChargePerDay: integer("ac_charge_per_day").notNull().default(0), // in currency
+    estimatedTotalAcCharge: integer("estimated_total_ac_charge")
+      .notNull()
+      .default(0), // in currency (estimated at the time of booking creation)
+    actualTotalAcCharge: integer("actual_total_ac_charge"), // in currency (updated at the end of the trip)
+    ratePerKm: integer("rate_per_km").notNull().default(18), // in currency
+    estimatedTotalVehicleRate: integer("estimated_total_vehicle_rate")
+      .notNull()
+      .default(0), // in currency (estimated at the time of booking creation)
+    actualTotalVehicleRate: integer("actual_total_vehicle_rate"), // in currency (updated at the end of the trip)
+    allowancePerDay: integer("allowance_per_day").notNull().default(500), // in currency
+    estimatedTotalDriverAllowance: integer("estimated_total_driver_allowance")
+      .notNull()
+      .default(0), // in currency (estimated at the time of booking creation)
+    actualTotalDriverAllowance: integer("actual_total_driver_allowance"), // in currency (updated at the end of the trip)
     commissionRate: integer("commission_rate").notNull().default(15), // in percentage
-    totalCommission: integer("total_commission").notNull().default(0), // in currency
-    totalAmount: integer("total_amount").notNull().default(0), // in currency
+    estimatedCommissionAmount: integer("estimated_commission_amount")
+      .notNull()
+      .default(0), // in currency (estimated at the time of booking creation)
+    actualCommissionAmount: integer("actual_commission_amount"), // in currency (updated at the end of the trip)
+    estimatedTotalAmount: integer("estimated_total_amount")
+      .notNull()
+      .default(0), // in currency (estimated at the time of booking creation)
+    actualTotalAmount: integer("actual_total_amount"), // in currency (updated at the end of the trip)
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
     isReconciled: boolean("is_reconciled").notNull().default(false),
@@ -914,8 +935,12 @@ export const bookings = pgTable(
     ),
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
     check(
-      "total_amount >= 1 and <= 1000000",
-      sql`${t.totalAmount} >= 1 AND ${t.totalAmount} <= 1000000`,
+      "estimated_total_amount >= 1 and <= 1000000",
+      sql`${t.estimatedTotalAmount} >= 1 AND ${t.estimatedTotalAmount} <= 1000000`,
+    ),
+    check(
+      "actual_total_amount >= 1 and <= 1000000",
+      sql`${t.actualTotalAmount} >= 1 AND ${t.actualTotalAmount} <= 1000000`,
     ),
     check(
       "driver rating >=1 and rating <=5",
@@ -1547,6 +1572,71 @@ export const supportTicketRelations = relations(supportTickets, ({ one }) => ({
     references: [users.id],
   }),
 }))
+
+export enum ProductFeedbackTypeEnum {
+  ONBOARDING = "onboarding",
+  NEW_BOOKING = "new booking",
+  NEW_CUSTOMER = "new customer",
+  NEW_DRIVER = "new driver",
+  NEW_VEHICLE = "new vehicle",
+  NEW_ORDER = "new order",
+}
+export const productFeedbackType = pgEnum("product_feedback_type", [
+  ProductFeedbackTypeEnum.ONBOARDING,
+  ProductFeedbackTypeEnum.NEW_BOOKING,
+  ProductFeedbackTypeEnum.NEW_CUSTOMER,
+  ProductFeedbackTypeEnum.NEW_DRIVER,
+  ProductFeedbackTypeEnum.NEW_VEHICLE,
+  ProductFeedbackTypeEnum.NEW_ORDER,
+])
+//Product Feedback table
+export const productFeedbackIdSequence = pgSequence("product_feedback_id_seq", {
+  ...sequenceValues,
+})
+export const productFeedbacks = pgTable(
+  "product_feedbacks",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => {
+        return sql`${productFeedbackInitial} || nextval(${"product_feedback_id_seq"})`
+      }),
+    agencyId: text("agency_id")
+      .references(() => agencies.id, { onDelete: "cascade" })
+      .notNull(),
+    userId: text("user_id").references(() => users.id, {
+      onDelete: "cascade",
+    }),
+    entityId: text("entity_id"),
+    feedbackType: productFeedbackType("feedback_type").notNull(),
+    rating: integer("rating"),
+    review: boolean("review"),
+    comment: varchar("comment", { length: 300 }),
+    ...timestamps,
+  },
+  (t) => [
+    check(
+      "rating >=1 and rating <=5",
+      sql`${t.rating} >=1 AND ${t.rating} <=5`,
+    ),
+    index("product_feedbacks_agency_idx").on(t.agencyId), // to quickly filter feedbacks by agency
+    index("product_feedbacks_user_idx").on(t.userId), // to quickly filter feedbacks by user
+    index("product_feedbacks_type_idx").on(t.feedbackType), // to quickly filter feedbacks by type
+  ],
+)
+export const productFeedbackRelations = relations(
+  productFeedbacks,
+  ({ one }) => ({
+    agency: one(agencies, {
+      fields: [productFeedbacks.agencyId],
+      references: [agencies.id],
+    }),
+    user: one(users, {
+      fields: [productFeedbacks.userId],
+      references: [users.id],
+    }),
+  }),
+)
 
 //Export types
 export type SelectAgencyType = typeof agencies.$inferSelect

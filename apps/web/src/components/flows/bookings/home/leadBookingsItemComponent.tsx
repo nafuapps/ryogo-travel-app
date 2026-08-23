@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 import moment from "moment"
-import { FindLeadBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindLeadBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
   GridItemWrapper,
   HoverGridWrapper,
@@ -23,23 +23,25 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { differenceInDays } from "date-fns"
 
-type LeadBookingsSelectType = "24Hrs" | "7Days"
+type LeadBookingsSelectType = "14Days" | "7Days"
 
 export default function LeadBookingsItemComponent({
-  leadBookings7Days,
+  leadBookings14Days,
 }: {
-  leadBookings7Days: FindLeadBookingsPreviousDaysType
+  leadBookings14Days: FindLeadBookingsNextDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Leads")
   const [selectedTab, setSelectedTab] =
-    useState<LeadBookingsSelectType>("24Hrs")
+    useState<LeadBookingsSelectType>("7Days")
 
-  const leadBookings24Hrs = leadBookings7Days.filter(
-    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
+  const leadBookings7Days = leadBookings14Days.filter(
+    (b) => differenceInDays(b.startDate, new Date()) < 7,
   )
 
-  const trips = selectedTab === "24Hrs" ? leadBookings24Hrs : leadBookings7Days
+  const trips =
+    selectedTab === "14Days" ? leadBookings14Days : leadBookings7Days
 
   return (
     <SectionWrapper id="leadsBookingsSection">
@@ -62,8 +64,8 @@ export default function LeadBookingsItemComponent({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="24Hrs">{t("24Hrs")}</SelectItem>
               <SelectItem value="7Days">{t("7Days")}</SelectItem>
+              <SelectItem value="14Days">{t("14Days")}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -75,9 +77,7 @@ export default function LeadBookingsItemComponent({
   )
 }
 
-function LeadBookingsComponent(
-  props: FindLeadBookingsPreviousDaysType[number],
-) {
+function LeadBookingsComponent(props: FindLeadBookingsNextDaysType[number]) {
   const t = useTranslations("Dashboard.Bookings.Leads")
   return (
     <Link href={`/dashboard/bookings/${props.bookingId}`}>
@@ -105,7 +105,7 @@ function LeadBookingsComponent(
             {props.passengers + " " + t("Passengers")}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {moment(props.createdAt).fromNow()}
+            {moment(props.startDate).fromNow()}
           </RyogoP>
         </GridItemWrapper>
       </HoverGridWrapper>

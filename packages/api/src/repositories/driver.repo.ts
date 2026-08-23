@@ -68,6 +68,7 @@ export const driverRepository = {
             status: true,
             startDate: true,
             endDate: true,
+            actualStartDate: true,
           },
           where: (assignedBookings, { inArray }) =>
             inArray(assignedBookings.status, [
@@ -105,6 +106,7 @@ export const driverRepository = {
             id: true,
             startDate: true,
             endDate: true,
+            actualStartDate: true,
           },
           where: (assignedBookings, { eq }) =>
             eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
@@ -186,6 +188,7 @@ export const driverRepository = {
             id: true,
             status: true,
             startDate: true,
+            actualStartDate: true,
             endDate: true,
             type: true,
             updatedAt: true,

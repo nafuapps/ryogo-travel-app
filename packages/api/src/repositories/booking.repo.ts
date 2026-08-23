@@ -76,7 +76,8 @@ export const bookingRepository = {
         id: true,
         status: true,
         createdAt: true,
-        totalAmount: true,
+        estimatedTotalAmount: true,
+        actualTotalAmount: true,
         commissionRate: true,
       },
       where: and(
@@ -500,6 +501,7 @@ export const bookingRepository = {
       ),
       columns: {
         startDate: true,
+        actualStartDate: true,
         startTime: true,
         endDate: true,
         updatedAt: true,
@@ -556,6 +558,7 @@ export const bookingRepository = {
       ),
       columns: {
         startDate: true,
+        actualStartDate: true,
         startTime: true,
         endDate: true,
         updatedAt: true,
@@ -634,6 +637,7 @@ export const bookingRepository = {
       ),
       columns: {
         startDate: true,
+        actualStartDate: true,
         startTime: true,
         endDate: true,
         updatedAt: true,
@@ -690,6 +694,7 @@ export const bookingRepository = {
       ),
       columns: {
         startDate: true,
+        actualStartDate: true,
         startTime: true,
         endDate: true,
         updatedAt: true,
@@ -748,6 +753,7 @@ export const bookingRepository = {
       ),
       columns: {
         startDate: true,
+        actualStartDate: true,
         endDate: true,
         updatedAt: true,
         type: true,
@@ -800,7 +806,9 @@ export const bookingRepository = {
       ),
       columns: {
         startDate: true,
+        actualStartDate: true,
         endDate: true,
+        actualEndDate: true,
         updatedAt: true,
         type: true,
         id: true,
@@ -847,13 +855,13 @@ export const bookingRepository = {
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.LEAD),
-        gte(bookings.createdAt, queryStartDate),
-        lte(bookings.createdAt, queryEndDate),
+        gte(bookings.startDate, queryStartDate),
+        lte(bookings.startDate, queryEndDate),
       ),
       columns: {
-        totalAmount: true,
+        estimatedTotalAmount: true,
         passengers: true,
-        createdAt: true,
+        startDate: true,
         type: true,
         id: true,
       },
@@ -1021,7 +1029,9 @@ export const bookingRepository = {
         passengers: true,
         needsAc: true,
         startDate: true,
+        actualStartDate: true,
         endDate: true,
+        actualEndDate: true,
       },
     })
     return booking
@@ -1190,6 +1200,7 @@ export const bookingRepository = {
         .update(bookings)
         .set({
           status: BookingStatusEnum.IN_PROGRESS,
+          actualStartDate: new Date(),
         })
         .where(eq(bookings.id, bookingId))
       await tx
@@ -1228,6 +1239,7 @@ export const bookingRepository = {
         .update(bookings)
         .set({
           status: BookingStatusEnum.COMPLETED,
+          actualEndDate: new Date(),
           completedAt: new Date(),
           ratingByDriver: bookingRating,
         })
@@ -1438,24 +1450,24 @@ export const bookingRepository = {
     bookingId: string,
     startDate: Date,
     endDate: Date,
-    totalDistance: number,
-    totalVehicleRate: number,
-    totalAcCharge: number,
-    totalDriverAllowance: number,
-    totalCommission: number,
-    totalAmount: number,
+    actualTotalDistance: number,
+    actualTotalVehicleRate: number,
+    actualTotalAcCharge: number,
+    actualTotalDriverAllowance: number,
+    actualCommissionAmount: number,
+    actualTotalAmount: number,
   ) {
     return await db
       .update(bookings)
       .set({
         startDate,
         endDate,
-        totalDistance,
-        totalVehicleRate,
-        totalAcCharge,
-        totalDriverAllowance,
-        totalCommission,
-        totalAmount,
+        actualTotalDistance,
+        actualTotalVehicleRate,
+        actualTotalAcCharge,
+        actualTotalDriverAllowance,
+        actualCommissionAmount,
+        actualTotalAmount,
       })
       .where(eq(bookings.id, bookingId))
   },

@@ -288,6 +288,13 @@
       "when": 1786605288738,
       "tag": "0040_useful_harrier",
       "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "7",
+      "when": 1787471109874,
+      "tag": "0041_adorable_prism",
+      "breakpoints": true
     }
   ]
 }

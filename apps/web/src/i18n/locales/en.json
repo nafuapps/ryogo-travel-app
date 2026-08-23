@@ -900,27 +900,27 @@
       },
       "Leads": {
         "Title": "LEADS",
-        "24Hrs": "Last 24 Hours",
-        "7Days": "Last 7 Days",
+        "7Days": "Next 7 Days",
+        "14Days": "Next 14 Days",
         "Passengers": "pax"
       }
     },
     "NewBooking": {
-      "Title": "Search customer",
+      "Title": "Create Booking",
       "Description": "Find customer by phone number to create a booking",
       "Phone": "Enter phone number to search",
       "Placeholder": "9876543210",
       "Error1": "Enter atleast 4 digits to search customer",
       "Error2": "Phone number cannot be longer than 10 digits",
-      "SearchCTA": "Search",
+      "SearchCTA": "Search Customer",
       "ClearCTA": "Clear",
       "CreateCTA": "ADD A NEW CUSTOMER",
       "Found": "{count, plural, =1 {# matching customer} other {# matching customers}} found",
-      "NotFound": "No matching customer found.. Add a new customer to proceed with booking creation",
-      "CustomerMustBeActive": "Customer must be active to creating a booking",
+      "NotFound": "No matching customer found.. You may add a new customer to create booking",
+      "CustomerMustBeActive": "Customer must be active to create a booking",
       "AddCustomer": {
-        "Title": "Add Customer",
-        "Description": "Creating a customer for new booking",
+        "Title": "Create Booking",
+        "Description": "Adding a new customer with phone number",
         "Field1": {
           "Title": "New customer name",
           "Placeholder": "Raj Sharma",
@@ -942,7 +942,7 @@
           "Error1": "City is required to proceed"
         },
         "Loading": "Loading",
-        "AddCTA": "Add Customer and Start Booking",
+        "AddCTA": "Add Customer and Proceed",
         "Exists": "Customer with this phone number already exists",
         "ClearCTA": "Reset Form",
         "BackCTA": "BACK TO SEARCH",

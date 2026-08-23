@@ -17,6 +17,7 @@ import { User } from "lucide-react"
 import { BookingSchedulePopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { differenceInDays } from "date-fns"
 
 export default function BookingScheduleChartComponent({
   bookings14Days,
@@ -27,8 +28,7 @@ export default function BookingScheduleChartComponent({
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
   const bookings7Days = bookings14Days.filter(
-    (b) =>
-      b.startDate <= new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000),
+    (b) => differenceInDays(b.startDate, new Date()) < 7,
   )
 
   const chartData =

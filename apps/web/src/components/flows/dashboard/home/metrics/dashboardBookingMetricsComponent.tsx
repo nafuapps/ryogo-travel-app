@@ -11,6 +11,7 @@ import {
   DashboardMetricSubTitle,
 } from "./dashboardMetricsWrappers"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInDays } from "date-fns"
 
 export default async function DashboardBookingMetricsComponent({
   agencyId,
@@ -23,7 +24,7 @@ export default async function DashboardBookingMetricsComponent({
   const confirmedBookingsThisWeek =
     await bookingServices.findConfirmedBookingsPreviousDays(agencyId, 7)
   const confirmed24HrsBookings = confirmedBookingsThisWeek.filter(
-    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
+    (b) => differenceInDays(new Date(), b.createdAt) <= 1,
   )
 
   //Get In progress bookings

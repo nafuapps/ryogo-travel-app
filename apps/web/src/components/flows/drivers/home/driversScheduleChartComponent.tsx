@@ -22,6 +22,7 @@ import {
 } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { addDays } from "date-fns"
 
 export default function DriversScheduleChartComponent({
   driverSchedule14Days,
@@ -32,7 +33,7 @@ export default function DriversScheduleChartComponent({
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
   const driverSchedule7Days = driverSchedule14Days.filter((d) => {
-    const filterDate = new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000)
+    const filterDate = addDays(new Date(), 7)
     const bookings = d.assignedBookings.filter((b) => {
       b.startDate <= filterDate
     })

@@ -481,7 +481,7 @@ export const userServices = {
   },
 
   //Validate user login with userId and password
-  async checkLoginInDB(userId: string, password: string) {
+  async checkUserCredentialsInDB(userId: string, password: string) {
     //Step1: Find user with userID
     const userFound = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot login
@@ -504,6 +504,9 @@ export const userServices = {
         error: "passwordNotMatching",
       }
     }
+
+    //CHECK SUCCESSFUL
+
     //Step3: Update last login
     await userRepository.updateLastLogin(userFound.id, new Date())
 

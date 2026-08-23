@@ -12,7 +12,7 @@ import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
 import { EXPIRATION_ALERT_WINDOW_DAYS, PREMIUM_TRIAL_DAYS } from "../apiConfig"
 import { ModifyAgencyRequestType } from "../types/agency.types"
-import { differenceInDays } from "date-fns"
+import { addDays, differenceInDays, subDays } from "date-fns"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 
@@ -67,7 +67,7 @@ export const agencyServices = {
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
     const bookings = await bookingRepository.readBookingsSearchData(
       agencyId,
-      new Date(new Date().getTime() - searchDays * 24 * 60 * 60 * 1000),
+      subDays(new Date(), searchDays),
     )
     const customers = await customerRepository.readCustomersSearchData(agencyId)
 
@@ -231,9 +231,7 @@ export const agencyServices = {
 }
 
 export function getSubscriptionExpirationDate() {
-  return new Date(
-    new Date().getTime() + PREMIUM_TRIAL_DAYS * 24 * 60 * 60 * 1000,
-  )
+  return addDays(new Date(), PREMIUM_TRIAL_DAYS)
 }
 
 export type FindAllAgenciesType = Awaited<

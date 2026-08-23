@@ -11,6 +11,7 @@ import { userRepository } from "../repositories/user.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
 import { ModifyDriverRequestType } from "../types/driver.types"
+import { addDays } from "date-fns"
 
 export const driverServices = {
   //Get all drivers in an agency
@@ -29,8 +30,8 @@ export const driverServices = {
 
   //Get drivers schedule
   async findDriversScheduleNextDays(agencyId: string, days: number = 7) {
-    //Day N days later
-    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const endDate = addDays(new Date(), days)
+
     const driversScheduleData = await driverRepository.readDriversScheduleData(
       agencyId,
       endDate,

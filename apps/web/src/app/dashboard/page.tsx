@@ -95,7 +95,7 @@ async function SubscriptionReminderStrip({
 
   return (
     <div
-      className={`w-full bg-linear-to-r ${days <= 0 ? "from-red-700 to-red-800 dark:from-red-200 dark:to-red-300" : "from-yellow-700 to-yellow-800 dark:from-yellow-200 dark:to-yellow-300"} ${days <= 0 ? "bg-red-700 dark:bg-red-300" : "bg-yellow-700 dark:bg-yellow-300"} ${days <= 0 ? "bg-red-800 dark:bg-red-200" : "bg-yellow-800 dark:bg-yellow-200"} px-5 lg:px-6 py-1 lg:py-1.5 flex items-center justify-between gap-2 lg:gap-3`}
+      className={`w-full bg-linear-to-r ${days <= 0 ? "from-red-600 to-red-800 dark:from-red-100 dark:to-red-300" : "from-yellow-700 to-yellow-800 dark:from-yellow-200 dark:to-yellow-300"} ${days <= 0 ? "bg-red-700 dark:bg-red-300" : "bg-yellow-700 dark:bg-yellow-300"} ${days <= 0 ? "bg-red-800 dark:bg-red-200" : "bg-yellow-800 dark:bg-yellow-200"} px-5 lg:px-6 py-1 lg:py-1.5 flex items-center justify-between gap-2 lg:gap-3`}
     >
       <RyogoCaption color="white" weight="font-medium">
         {days < 0 ? t("Expired") : t("NotExpired", { days: days })}
@@ -116,7 +116,7 @@ async function SubscriptionTrialStrip({ isOwner }: { isOwner: boolean }) {
 
   return (
     <div
-      className={`w-full bg-linear-to-r from-sky-700 to-sky-800 dark:from-sky-200 dark:to-sky-300 px-5 lg:px-6 py-1 lg:py-1.5 flex items-center justify-between gap-2 lg:gap-3`}
+      className={`w-full bg-linear-to-r from-sky-600 to-sky-800 dark:from-sky-100 dark:to-sky-300 px-5 lg:px-6 py-1 lg:py-1.5 flex items-center justify-between gap-2 lg:gap-3`}
     >
       <RyogoCaption color="white" weight="font-medium">
         {t("TryPremium", { days: PREMIUM_TRIAL_DAYS })}

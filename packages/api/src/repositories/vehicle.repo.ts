@@ -59,6 +59,7 @@ export const vehicleRepository = {
             id: true,
             status: true,
             startDate: true,
+            actualStartDate: true,
             endDate: true,
           },
           where: (assignedBookings) =>
@@ -79,7 +80,7 @@ export const vehicleRepository = {
     })
   },
 
-  //Get all vehicles data for a new booking in an agency
+  //Get all vehicles data for ongoing bookings in an agency
   async readOnTripVehiclesDataByAgencyId(agencyId: string) {
     return await db.query.vehicles.findMany({
       where: and(
@@ -91,6 +92,7 @@ export const vehicleRepository = {
           columns: {
             id: true,
             startDate: true,
+            actualStartDate: true,
             endDate: true,
           },
           where: (assignedBookings, { eq }) =>
@@ -172,6 +174,7 @@ export const vehicleRepository = {
             id: true,
             status: true,
             startDate: true,
+            actualStartDate: true,
             endDate: true,
             type: true,
             updatedAt: true,

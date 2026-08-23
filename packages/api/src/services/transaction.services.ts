@@ -4,16 +4,13 @@ import {
   AddTransactionRequestType,
   UpdateTransactionRequestType,
 } from "../types/transaction.types"
+import { subDays } from "date-fns"
 
 export const transactionServices = {
   //Get previous N days transactions
   async findTransactionsPreviousDays(agencyId: string, days: number = 1) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
     const endDate = new Date()
+    const startDate = subDays(endDate, days)
 
     const transactions =
       await transactionRepository.readTransactionsByCreatedRange(

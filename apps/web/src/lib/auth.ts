@@ -1,46 +1,35 @@
 import {
   deleteWebSession,
   createWebSession,
-  decrypt,
-  SessionPayloadType,
-  checkWebSessionInDB,
+  verifyWebSessionInDB,
+  getSessionPayloadFromCookie,
 } from "./session"
-import { cookies } from "next/headers"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cache } from "react"
-import { SESSION_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
 import { redirect, RedirectType } from "next/navigation"
 
 //Get current user session from cookie - for optimistic checks before DB reads
 export const getCurrentUser = cache(async () => {
-  // S1. Get session from cookie
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value
-  if (!session) return
-
-  // S2: Decrypt payload from encrypted session
-  const payload = (await decrypt(session)) as SessionPayloadType | undefined
-  if (!payload) return
-
-  // S3: Return payload as current user data
-  return payload
+  return await getSessionPayloadFromCookie()
 })
 
 //Verify User session in DB - For strict checking before any DB writes
 export const verifyCurrentUser = cache(async () => {
-  const payload = await getCurrentUser()
+  const payload = await getSessionPayloadFromCookie()
   if (!payload) return
 
-  return await checkWebSessionInDB(payload.token, payload.userId)
+  return await verifyWebSessionInDB(payload.token, payload.userId)
 })
 
 // Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {
-  //1. Try login
-  const userData = await userServices.checkLoginInDB(userId, password)
+  //1. Check user credentials in DB
+  const userData = await userServices.checkUserCredentialsInDB(userId, password)
   if (userData.error) {
     return { error: userData.error }
   }
 
+  //Credentials are valid
   if (userData.data) {
     //2. create session
     const token = await createWebSession(userData.data)

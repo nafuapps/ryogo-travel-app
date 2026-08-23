@@ -9,7 +9,6 @@ import {
 import { bookingRepository } from "../repositories/booking.repo"
 import { NewBookingRequestDataType } from "../types/booking.types"
 import { locationRepository } from "../repositories/location.repo"
-import { customerServices } from "./customer.services"
 import { routeServices } from "./route.services"
 import { customerRepository } from "../repositories/customer.repo"
 import { expenseRepository } from "../repositories/expense.repo"
@@ -18,17 +17,15 @@ import { transactionRepository } from "../repositories/transaction.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import { UPDATE_PRICE_DISTANCE_FACTOR } from "../apiConfig"
-import { getEstimatedTotalPrice, getFinalTotalPrice } from "@/lib/utils"
+import { getEstimatedTotalPrice, getActualTotalPrice } from "@/lib/utils"
 import { userRepository } from "../repositories/user.repo"
+import { addDays, subDays } from "date-fns"
 
 export const bookingServices = {
   async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
     const endDate = new Date()
+    const startDate = subDays(endDate, days)
+
     const bookings =
       await bookingRepository.readBookingsByStatusCreatedDateRange(
         agencyId,
@@ -50,12 +47,9 @@ export const bookingServices = {
     agencyId: string,
     days: number = 1,
   ) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
     const endDate = new Date()
+    const startDate = subDays(endDate, days)
+
     const bookings =
       await bookingRepository.readBookingsByStatusCreatedDateRange(
         agencyId,
@@ -71,12 +65,8 @@ export const bookingServices = {
   },
 
   async findBookingsRevenuePreviousDays(agencyId: string, days: number = 1) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
     const endDate = new Date()
+    const startDate = subDays(endDate, days)
 
     const bookings =
       await bookingRepository.readBookingsByStatusCreatedDateRange(
@@ -89,19 +79,15 @@ export const bookingServices = {
       return {
         id: booking.id,
         createdAt: booking.createdAt,
-        totalAmount: booking.totalAmount,
+        totalAmount: booking.estimatedTotalAmount,
         commissionRate: booking.commissionRate,
       }
     })
   },
 
   async findBookingsUpdatedPreviousDays(agencyId: string, days: number = 1) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
     const endDate = new Date()
+    const startDate = subDays(endDate, days)
 
     const bookings = await bookingRepository.readBookingsByUpdatedDateRange(
       startDate,
@@ -150,12 +136,9 @@ export const bookingServices = {
   },
 
   async findCompletedBookingsPreviousDays(agencyId: string, days: number = 1) {
-    //Day N days ago
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
-    //Day today
     const endDate = new Date()
+    const startDate = subDays(endDate, days)
+
     const bookings = await bookingRepository.readCompletedBookingsData(
       agencyId,
       startDate,
@@ -177,8 +160,8 @@ export const bookingServices = {
   },
 
   async findUpcomingBookingsNextDays(agencyId: string, days: number = 1) {
-    //Day N days later
-    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const endDate = addDays(new Date(), days)
+
     const bookings = await bookingRepository.readUpcomingBookingsData(
       agencyId,
       endDate,
@@ -199,8 +182,8 @@ export const bookingServices = {
   },
 
   async findBookingsScheduleNextDays(agencyId: string, days: number = 7) {
-    //Day N days later
-    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const endDate = addDays(new Date(), days)
+
     const bookings = await bookingRepository.readBookingsScheduleData(
       agencyId,
       endDate,
@@ -222,10 +205,8 @@ export const bookingServices = {
   },
 
   async findBookingsHistoryLastDays(agencyId: string, days: number = 7) {
-    //Day N days earlier
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
+    const startDate = subDays(new Date(), days)
+
     const bookings = await bookingRepository.readBookingsHistoryData(
       agencyId,
       startDate,
@@ -246,12 +227,10 @@ export const bookingServices = {
     })
   },
 
-  async findLeadBookingsPreviousDays(agencyId: string, days: number = 1) {
-    const startDate = new Date(
-      new Date().getTime() - days * 24 * 60 * 60 * 1000,
-    )
+  async findLeadBookingsNextDays(agencyId: string, days: number = 1) {
+    const startDate = new Date()
     //Day today
-    const endDate = new Date()
+    const endDate = addDays(startDate, days)
     const bookings = await bookingRepository.readLeadBookingsData(
       agencyId,
       startDate,
@@ -263,10 +242,10 @@ export const bookingServices = {
         route: booking.source.city + " - " + booking.destination.city,
         customerName: booking.customer.name,
         bookingId: booking.id,
-        createdAt: booking.createdAt,
+        startDate: booking.startDate,
         assignedUser: booking.assignedUser.name,
         passengers: booking.passengers,
-        amount: booking.totalAmount,
+        amount: booking.estimatedTotalAmount,
       }
     })
   },
@@ -379,16 +358,16 @@ export const bookingServices = {
       passengers: data.tripPassengers,
       needsAc: data.tripNeedsAC,
       citydistance: data.selectedDistance,
-      totalDistance: finalPrice.totalDistance,
+      estimatedTotalDistance: finalPrice.totalDistance,
       acChargePerDay: data.selectedAcChargePerDay,
-      totalAcCharge: finalPrice.totalAcPrice,
+      estimatedTotalAcCharge: finalPrice.totalAcPrice,
       ratePerKm: data.selectedRatePerKm,
-      totalVehicleRate: finalPrice.totalVehiclePrice,
+      estimatedTotalVehicleRate: finalPrice.totalVehiclePrice,
       allowancePerDay: data.selectedAllowancePerDay,
-      totalDriverAllowance: finalPrice.totalDriverAllowance,
+      estimatedTotalDriverAllowance: finalPrice.totalDriverAllowance,
       commissionRate: data.selectedCommissionRate,
-      totalCommission: finalPrice.totalCommission,
-      totalAmount: finalPrice.totalAmount,
+      estimatedCommissionAmount: finalPrice.totalCommission,
+      estimatedTotalAmount: finalPrice.totalAmount,
     }
 
     //Step5: Create a new booking
@@ -464,47 +443,55 @@ export const bookingServices = {
   },
 
   //Update booking values on trip completion like total distance, total amount etc
-  async updateBookingCompletedValues(bookingId: string) {
+  async updateBookingActualValues(bookingId: string) {
     const booking = await bookingRepository.readBookingDetailsById(bookingId)
     if (!booking) return
+
+    let actualStartDate = booking.actualStartDate
+    let actualEndDate = booking.actualEndDate
 
     const logs = await tripLogRepository.readTripLogsByBookingId(bookingId)
     const startLog = logs.find((log) => log.type === TripLogTypesEnum.STARTED)
     const endLog = logs.find((log) => log.type === TripLogTypesEnum.ENDED)
     if (!startLog || !endLog) return
-
-    const startDate = startLog.createdAt
-    const endDate = endLog.createdAt
+    if (!actualStartDate) {
+      actualStartDate = startLog.createdAt
+    }
+    if (!actualEndDate) {
+      actualEndDate = endLog.createdAt
+    }
 
     //Get actual distance from trip log odometer readings
-    const actualDistance = Math.max(
-      endLog.odometerReading - startLog.odometerReading,
-      booking.totalDistance * UPDATE_PRICE_DISTANCE_FACTOR,
+    const actualTotalDistance = Math.max(
+      startLog && endLog
+        ? endLog.odometerReading - startLog.odometerReading
+        : 0,
+      booking.estimatedTotalDistance * UPDATE_PRICE_DISTANCE_FACTOR,
     )
 
-    //Calculate final total price based on actual distance and trip duration for driver allowance and ac charge
-    const finalTotals = getFinalTotalPrice(
+    //Calculate actual total price based on actual distance and trip duration for driver allowance and ac charge
+    const actualTotals = getActualTotalPrice(
       booking.type,
-      startDate,
-      endDate,
+      actualStartDate,
+      actualEndDate,
       booking.ratePerKm,
       booking.acChargePerDay,
       booking.commissionRate,
       booking.allowancePerDay,
-      actualDistance,
+      actualTotalDistance,
     )
 
     //Update actuals in DB
     await bookingRepository.updateBookingTotals(
       bookingId,
-      startDate,
-      endDate,
-      actualDistance,
-      finalTotals.totalVehiclePrice,
-      finalTotals.totalACPrice,
-      finalTotals.totalDriverAllowance,
-      finalTotals.totalCommission,
-      finalTotals.totalAmount,
+      actualStartDate,
+      actualEndDate,
+      actualTotalDistance,
+      actualTotals.totalVehiclePrice,
+      actualTotals.totalACPrice,
+      actualTotals.totalDriverAllowance,
+      actualTotals.totalCommission,
+      actualTotals.totalAmount,
     )
   },
 
@@ -709,8 +696,8 @@ export type FindBookingHistoryLastDaysType = Awaited<
   ReturnType<typeof bookingServices.findBookingsHistoryLastDays>
 >
 
-export type FindLeadBookingsPreviousDaysType = Awaited<
-  ReturnType<typeof bookingServices.findLeadBookingsPreviousDays>
+export type FindLeadBookingsNextDaysType = Awaited<
+  ReturnType<typeof bookingServices.findLeadBookingsNextDays>
 >
 
 export type FindAssignedUserIdByBookingIdType = Awaited<

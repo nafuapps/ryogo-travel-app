@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server"
 import {
   decrypt,
   SessionPayloadType,
-  updateWebSessionFromDB,
+  refreshWebSessionFromDB,
 } from "./lib/session"
 import { differenceInMinutes } from "date-fns"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -31,7 +31,7 @@ export default async function proxy(request: NextRequest) {
     differenceInMinutes(new Date(), payload.updatedAt) >=
     SESSION_COOKIE_REFRESH_MINUTES
   ) {
-    const newSessionCookie = await updateWebSessionFromDB(payload)
+    const newSessionCookie = await refreshWebSessionFromDB(payload)
     if (!newSessionCookie) {
       return response
     }
@@ -47,6 +47,8 @@ export default async function proxy(request: NextRequest) {
     payload.expiresAt < new Date() ||
     payload.status === UserStatusEnum.SUSPENDED
   ) {
+    console.log(payload.expiresAt)
+    console.log("-----------Ran cookie delete-----------")
     response.cookies.delete({
       name: SESSION_COOKIE_NAME,
     })

@@ -38,6 +38,32 @@ export default async function BookingDetailsPageComponent({
 }) {
   const t = await getTranslations("Dashboard.BookingDetails")
 
+  const isCompleted = bookingDetails.status === BookingStatusEnum.COMPLETED
+  const totalDistance =
+    isCompleted && bookingDetails.actualTotalDistance
+      ? bookingDetails.actualTotalDistance
+      : bookingDetails.estimatedTotalDistance
+  const totalVehicleCharge =
+    isCompleted && bookingDetails.actualTotalVehicleRate
+      ? bookingDetails.actualTotalVehicleRate
+      : bookingDetails.estimatedTotalVehicleRate
+  const totalDriverAllowance =
+    isCompleted && bookingDetails.actualTotalDriverAllowance
+      ? bookingDetails.actualTotalDriverAllowance
+      : bookingDetails.estimatedTotalDriverAllowance
+  const totalCommission =
+    isCompleted && bookingDetails.actualCommissionAmount
+      ? bookingDetails.actualCommissionAmount
+      : bookingDetails.estimatedCommissionAmount
+  const totalAcCharge =
+    isCompleted && bookingDetails.actualTotalAcCharge
+      ? bookingDetails.actualTotalAcCharge
+      : bookingDetails.estimatedTotalAcCharge
+  const totalAmount =
+    isCompleted && bookingDetails.actualTotalAmount
+      ? bookingDetails.actualTotalAmount
+      : bookingDetails.estimatedTotalAmount
+
   return (
     <PageWrapper id="BookingDetailsPage">
       <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Booking" />
@@ -352,16 +378,16 @@ export default async function BookingDetailsPageComponent({
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>
           <BookingPriceItem
             title={t("VehicleCharge")}
-            value={"₹" + bookingDetails.totalVehicleRate}
+            value={"₹" + totalVehicleCharge}
             subtitle={t("RatePerKm", {
               rate: bookingDetails.ratePerKm,
-              km: bookingDetails.totalDistance,
+              km: totalDistance,
             })}
           />
-          {bookingDetails.totalAcCharge > 0 && (
+          {totalAcCharge > 0 && (
             <BookingPriceItem
               title={t("ACCharge")}
-              value={"₹" + bookingDetails.totalAcCharge}
+              value={"₹" + totalAcCharge}
               subtitle={t("ACPerDay", {
                 charge: bookingDetails.acChargePerDay,
               })}
@@ -369,21 +395,21 @@ export default async function BookingDetailsPageComponent({
           )}
           <BookingPriceItem
             title={t("DriverAllowance")}
-            value={"₹" + bookingDetails.totalDriverAllowance}
+            value={"₹" + totalDriverAllowance}
             subtitle={t("AllowancePerDay", {
               allowance: bookingDetails.allowancePerDay,
             })}
           />
           <BookingPriceItem
             title={t("Commission")}
-            value={"₹" + bookingDetails.totalCommission}
+            value={"₹" + totalCommission}
             subtitle={t("CommissionRate", {
               rate: bookingDetails.commissionRate,
             })}
           />
           <BookingPriceItem
             title={t("TotalAmount")}
-            value={"₹" + bookingDetails.totalAmount}
+            value={"₹" + totalAmount}
           />
           {(isOwner || isAssignedUser) &&
             //Invoice can be sent for a completed booking only

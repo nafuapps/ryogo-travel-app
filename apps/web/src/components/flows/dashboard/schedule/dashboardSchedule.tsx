@@ -23,6 +23,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { addDays, differenceInDays, subDays } from "date-fns"
 
 export enum SelectableDays {
   SEVEN = "7Days",
@@ -120,13 +121,15 @@ export default function DashboardScheduleDayAxis({
           <RyogoCaption color="light">
             {moment(
               isHistory
-                ? new Date(
-                    chartStartDate.getTime() -
-                      (selectedDays - index) * 24 * 60 * 60 * 1000,
-                  )
-                : new Date(
-                    chartStartDate.getTime() + index * 24 * 60 * 60 * 1000,
-                  ),
+                ? subDays(chartStartDate, selectedDays - index)
+                : // new Date(
+                  //     chartStartDate.getTime() -
+                  //       (selectedDays - index) * 24 * 60 * 60 * 1000,
+                  //   )
+                  addDays(chartStartDate, index),
+              // new Date(
+              //     chartStartDate.getTime() + index * 24 * 60 * 60 * 1000,
+              //   ),
             ).format("D MMM")}
           </RyogoCaption>
         </div>
@@ -225,13 +228,21 @@ function getHistoryStartEndIndex(
   endDate: Date,
   selectedDays: number,
 ) {
-  const chartStartTime = new Date(
-    new Date().getTime() - selectedDays * 24 * 60 * 60 * 1000,
-  ).getTime()
+  const chartStartDate = subDays(new Date(), selectedDays)
+  // new Date(
+  //   new Date().getTime() - selectedDays * 24 * 60 * 60 * 1000,
+  // ).getTime()
   return {
-    startIndex:
-      Math.ceil((startDate.getTime() - chartStartTime) / 86400000) + 1,
-    endIndex: Math.ceil((endDate.getTime() - chartStartTime) / 86400000) + 2,
+    startIndex: Math.max(
+      differenceInDays(startDate, new Date(chartStartDate)),
+      1,
+    ),
+    // Math.ceil((startDate.getTime() - chartStartTime) / 86400000) + 1,
+    endIndex: Math.min(
+      differenceInDays(endDate, new Date(chartStartDate)),
+      selectedDays + 1,
+    ),
+    // Math.ceil((endDate.getTime() - chartStartTime) / 86400000) + 2,
   }
 }
 

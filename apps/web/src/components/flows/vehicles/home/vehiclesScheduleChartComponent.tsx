@@ -20,6 +20,7 @@ import {
 } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import { addDays } from "date-fns"
 
 export default function VehiclesScheduleChartComponent({
   vehicleSchedule14Days,
@@ -30,7 +31,7 @@ export default function VehiclesScheduleChartComponent({
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
   const vehicleSchedule7Days = vehicleSchedule14Days.filter((v) => {
-    const filterDate = new Date(new Date().getTime() + 24 * 6 * 60 * 60 * 1000)
+    const filterDate = addDays(new Date(), 7)
     const bookings = v.assignedBookings.filter((b) => {
       b.startDate <= filterDate
     })

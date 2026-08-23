@@ -10,6 +10,7 @@ import {
   ModifyVehicleRequestType,
 } from "../types/vehicle.types"
 import { bookingRepository } from "../repositories/booking.repo"
+import { addDays } from "date-fns"
 
 export const vehicleServices = {
   //Get all vehicles of an agency
@@ -34,8 +35,8 @@ export const vehicleServices = {
 
   //Get vehicles schedule
   async findVehiclesScheduleNextDays(agencyId: string, days: number = 7) {
-    //Day N days later
-    const endDate = new Date(new Date().getTime() + days * 24 * 60 * 60 * 1000)
+    const endDate = addDays(new Date(), days)
+
     const vehiclesScheduleData =
       await vehicleRepository.readVehiclesScheduleData(agencyId, endDate)
 

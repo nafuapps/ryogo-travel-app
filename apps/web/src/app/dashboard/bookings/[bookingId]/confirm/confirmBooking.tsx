@@ -204,32 +204,32 @@ export default async function ConfirmBookingPageComponent({
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>
           <BookingPriceItem
             title={t("VehicleCharge")}
-            value={"₹" + booking.totalVehicleRate}
+            value={"₹" + booking.estimatedTotalVehicleRate}
             subtitle={t("RatePerKm", {
               rate: booking.ratePerKm,
-              km: booking.totalDistance,
+              km: booking.estimatedTotalDistance,
             })}
           />
           <BookingPriceItem
             title={t("ACCharge")}
-            value={"₹" + booking.totalAcCharge}
+            value={"₹" + booking.estimatedTotalAcCharge}
             subtitle={t("ACPerDay", { charge: booking.acChargePerDay })}
           />
           <BookingPriceItem
             title={t("DriverAllowance")}
-            value={"₹" + booking.totalDriverAllowance}
+            value={"₹" + booking.estimatedTotalDriverAllowance}
             subtitle={t("AllowancePerDay", {
               allowance: booking.allowancePerDay,
             })}
           />
           <BookingPriceItem
             title={t("Commission")}
-            value={"₹" + booking.totalCommission}
+            value={"₹" + booking.estimatedCommissionAmount}
             subtitle={t("CommissionRate", { rate: booking.commissionRate })}
           />
           <BookingPriceItem
             title={t("TotalAmount")}
-            value={"₹" + booking.totalAmount}
+            value={"₹" + booking.estimatedTotalAmount}
           />
           {(isOwner || isAssignedUser) && (
             <SendQuoteAlertButton

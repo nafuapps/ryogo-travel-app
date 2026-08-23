@@ -36,15 +36,15 @@ export default function AssignUserTile({
 
   const isCurrentlyAssigned = booking.assignedUserId === userData.id
 
-  const bookingStartDate = new Date(booking.startDate)
-  const bookingEndDate = new Date(booking.endDate)
+  const bookingStartDate = booking.startDate
+  const bookingEndDate = booking.endDate
 
   const bookingOverLapScores = userData.bookingsAssigned
     .filter((b) => b.id !== booking.id)
     .map((other) => {
       return getOverlapScore(
-        new Date(other.startDate),
-        new Date(other.endDate),
+        other.startDate,
+        other.endDate,
         bookingStartDate,
         bookingEndDate,
       )

@@ -12,6 +12,7 @@ import {
   DashboardMetricWrapper,
 } from "./dashboardMetricsWrappers"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInDays } from "date-fns"
 
 export default async function DashboardRevenueMetricsComponent({
   agencyId,
@@ -23,7 +24,7 @@ export default async function DashboardRevenueMetricsComponent({
   const revenueBookingsThisWeek =
     await bookingServices.findBookingsRevenuePreviousDays(agencyId, 7)
   const revenueBookings24Hrs = revenueBookingsThisWeek.filter(
-    (b) => b.createdAt > new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
+    (b) => differenceInDays(new Date(), b.createdAt) <= 1,
   )
 
   const transactions =

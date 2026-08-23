@@ -97,7 +97,12 @@ export default async function RiderMyBookingDetails({
         />
         <BookingItem
           title={t("TotalDistance")}
-          value={booking.totalDistance + t("Km")}
+          value={
+            (booking.status === BookingStatusEnum.COMPLETED &&
+            booking.actualTotalDistance
+              ? booking.actualTotalDistance
+              : booking.estimatedTotalDistance) + t("Km")
+          }
         />
         <BookingItem title={t("Type")} value={booking.type.toUpperCase()} />
         <BookingItem

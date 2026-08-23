@@ -18,6 +18,7 @@ import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { FindBookingHistoryLastDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInDays } from "date-fns"
 
 export default function BookingHistoryChartComponent({
   bookingsHistory14Days,
@@ -30,8 +31,7 @@ export default function BookingHistoryChartComponent({
   )
 
   const bookingsHistory7Days = bookingsHistory14Days.filter(
-    (b) =>
-      b.startDate <= new Date(new Date().getTime() + 24 * 7 * 60 * 60 * 1000),
+    (b) => differenceInDays(new Date(), b.startDate) < 7,
   )
 
   const chartData =

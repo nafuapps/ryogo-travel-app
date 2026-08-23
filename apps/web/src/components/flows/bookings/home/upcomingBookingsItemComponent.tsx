@@ -20,6 +20,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UpcomingBookingCard } from "@/components/cards/booking/bookingCards"
+import { differenceInDays } from "date-fns"
 
 type UpcominBookingsSelectType = "7Days" | "14Days"
 
@@ -33,9 +34,7 @@ export default function UpcomingBookingsItemComponent({
     useState<UpcominBookingsSelectType>("7Days")
 
   const upcomingBookings7Days = upcomingBookings14Days.filter(
-    (b) =>
-      new Date(b.startDate) <
-      new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 7),
+    (b) => differenceInDays(b.startDate, new Date()) < 7,
   )
 
   const trips =

@@ -84,8 +84,8 @@ export async function endTripAction(
   )
   if (!bookingChanged) return
 
-  //Update final total price and other values based on trip logs
-  await bookingServices.updateBookingCompletedValues(data.bookingId)
+  //Update actual total price and other values based on trip logs
+  await bookingServices.updateBookingActualValues(data.bookingId)
 
   if (customerEmail) {
     //Generate and upload invoice

@@ -4917,12 +4917,12 @@
         "Loading": "Loading..",
         "YesCTA": "Agree & Start Free Trial"
       },
-      "DeleteCustomMission": {
-        "Label": "Delete Reminder",
-        "Title": "Are you sure you want to delete this custom reminder?",
+      "DeleteMission": {
+        "Label": "DELETE MISSION",
+        "Title": "Are you sure you want to delete this mission?",
         "Desc": "When deleted, this reminder cannot be recovered later.",
         "NoCTA": "No",
-        "Success": "Custom reminder deleted!",
+        "Success": "Reminder deleted!",
         "Error": "Cannot delete reminder.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Delete"

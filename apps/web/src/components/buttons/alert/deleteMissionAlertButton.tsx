@@ -7,28 +7,24 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { deleteCustomMissionAction } from "@/app/actions/missions/deleteCustomMissionAction"
+import { deleteMissionAction } from "@/app/actions/missions/deleteMissionAction"
 import { RyogoCaption } from "@/components/typography"
 
-export default function DeleteCustomMissionAlertButton(props: {
+export default function DeleteMissionAlertButton(props: {
   missionId: string
   userId: string
   agencyId: string
   isRider?: boolean
 }) {
   const [isCancelPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.DeleteCustomMission")
+  const t = useTranslations("Dashboard.Buttons.DeleteMission")
 
   const router = useRouter()
 
-  async function deleteCustomMission() {
+  async function deleteMission() {
     startCancelTransition(async () => {
       if (
-        await deleteCustomMissionAction(
-          props.missionId,
-          props.userId,
-          props.agencyId,
-        )
+        await deleteMissionAction(props.missionId, props.userId, props.agencyId)
       ) {
         toast.success(t("Success"))
         router.replace(
@@ -53,7 +49,7 @@ export default function DeleteCustomMissionAlertButton(props: {
     >
       <Button
         variant={"destructive"}
-        onClick={deleteCustomMission}
+        onClick={deleteMission}
         disabled={isCancelPending}
       >
         {isCancelPending && <Spinner />}

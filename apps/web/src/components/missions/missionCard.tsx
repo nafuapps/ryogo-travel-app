@@ -17,13 +17,18 @@ import { markUnreadMissionAction } from "@/app/actions/missions/markUnreadMissio
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import { Separator } from "@/components/ui/separator"
 import { CarouselItem } from "@/components/ui/carousel"
+import { useRouter } from "next/navigation"
+import DeleteMissionAlertButton from "../buttons/alert/deleteMissionAlertButton"
 
 export default function MissionCard({
   mission,
+  isRider,
 }: {
   mission: FindMissionsByUserIdType[number]
+  isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.MissionControl")
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [isRead, setIsRead] = useState(mission.isRead)
 
@@ -59,7 +64,7 @@ export default function MissionCard({
 
   return (
     <CarouselItem
-      className={`flex flex-col gap-2 lg:gap-3 p-4 lg:p-5 basis-full md:basis-1/2 xl:basis-1/3 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-200 dark:bg-slate-700 shadow-sm" : "bg-white dark:bg-slate-900 shadow"} ${!isRead ? (mission.isCritical ? "border-l-6 border-red-700 dark:border-red-300" : "border-l-6 border-sky-700 dark:border-sky-300") : ""}`}
+      className={`flex flex-col gap-2 lg:gap-3 p-4 lg:p-5 basis-full md:basis-1/2 xl:basis-1/3 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-200 dark:bg-slate-900 shadow-sm" : "bg-white dark:bg-slate-800 shadow"} ${!isRead ? (mission.isCritical ? "border-l-6 border-red-700 dark:border-red-300" : "border-l-6 border-sky-700 dark:border-sky-300") : ""}`}
     >
       <SectionRowWrapper center>
         <SectionRowWrapper justifyStart center>
@@ -80,7 +85,7 @@ export default function MissionCard({
           </div>
         </SectionRowWrapper>
         {isRead ? (
-          <Button variant={"white"} onClick={markUnread} disabled={isPending}>
+          <Button variant={"ghost"} onClick={markUnread} disabled={isPending}>
             <RyogoIcon icon={CircleCheckBig} size={"sm"} color="light" />
             <RyogoCaption color="light">{t("Card.Read")}</RyogoCaption>
           </Button>
@@ -126,6 +131,12 @@ export default function MissionCard({
           <RyogoCaption color={"slate"}>{t("Card.MarkRead")}</RyogoCaption>
         </Button>
       )}
+      <DeleteMissionAlertButton
+        isRider={isRider}
+        missionId={mission.id}
+        userId={mission.userId}
+        agencyId={mission.agencyId}
+      />
       {mission.isCustom && (
         <>
           <Separator />
@@ -134,22 +145,18 @@ export default function MissionCard({
               label={t("Card.Custom")}
               bgColor={isRead ? "light" : "slate"}
             />
-            <Link
-              href={`/dashboard/mission-control/${mission.id}/modify`}
-              className="flex items-center gap-0.5"
+            <Button
+              variant={"outline"}
+              size="sm"
+              disabled={isPending || isRead}
+              onClick={() =>
+                router.push(`/dashboard/mission-control/${mission.id}/modify`)
+              }
+              className="hover:bg-slate-100 dark:hover:bg-slate-800"
             >
-              <Button
-                variant={"ghost"}
-                size="sm"
-                disabled={isPending || isRead}
-                className="hover:bg-slate-100 dark:hover:bg-slate-800"
-              >
-                <RyogoCaption color="slate">
-                  {t("Card.EditMission")}
-                </RyogoCaption>
-                <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
-              </Button>
-            </Link>
+              <RyogoCaption color="slate">{t("Card.EditMission")}</RyogoCaption>
+              <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
+            </Button>
           </div>
         </>
       )}

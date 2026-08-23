@@ -29,7 +29,7 @@ import {
   getDateTime,
   extractTimeFromDate,
 } from "@/components/missions/missionCommons"
-import DeleteCustomMissionAlertButton from "@/components/buttons/alert/deleteCustomMissionAlertButton"
+import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
 
 export default function ModifyCustomMissionPageComponent({
   mission,
@@ -170,7 +170,7 @@ export default function ModifyCustomMissionPageComponent({
         >
           <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
         </Button>
-        <DeleteCustomMissionAlertButton
+        <DeleteMissionAlertButton
           missionId={mission.id}
           userId={mission.userId}
           agencyId={mission.agencyId}

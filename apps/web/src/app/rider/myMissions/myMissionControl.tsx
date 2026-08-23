@@ -60,7 +60,7 @@ export default async function MyMissionControlPageComponent({
           count={t("CriticalMissions", { count: criticalMissions.length })}
         >
           {criticalMissions.map((mission) => (
-            <MissionCard key={mission.id} mission={mission} />
+            <MissionCard key={mission.id} mission={mission} isRider />
           ))}
         </RyogoCarouselWrapper>
       )}
@@ -111,7 +111,7 @@ export default async function MyMissionControlPageComponent({
           count={t("OtherMissions", { count: otherMissions.length })}
         >
           {otherMissions.map((mission) => (
-            <MissionCard key={mission.id} mission={mission} />
+            <MissionCard key={mission.id} mission={mission} isRider />
           ))}
         </RyogoCarouselWrapper>
       )}

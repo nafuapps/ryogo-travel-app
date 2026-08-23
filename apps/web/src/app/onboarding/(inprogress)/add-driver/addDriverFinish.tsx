@@ -1,3 +1,5 @@
+"use client"
+
 import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {

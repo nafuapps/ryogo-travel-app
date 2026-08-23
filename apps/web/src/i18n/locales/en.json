@@ -4727,7 +4727,7 @@
         "YesCTA": "Yes, Cancel"
       },
       "ReviewCompletedBooking": {
-        "Label": "Review Booking And Genrate Invoice",
+        "Label": "Review Booking And Generate Invoice",
         "Title": "Are you sure you want to review this booking as completed and generate an invoice?",
         "Desc": "Make sure the booking has actually been completed with the customer and review all the transactions and expenses. This action will close this booking.",
         "NoCTA": "No",

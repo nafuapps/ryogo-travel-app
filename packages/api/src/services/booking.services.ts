@@ -636,6 +636,8 @@ export const bookingServices = {
   },
 
   async changeReviewedByAgency(bookingId: string) {
+    //TODO: Update total amount with added expenses as well
+
     const updatedBooking =
       await bookingRepository.updateReviewCompletedAt(bookingId)
     return updatedBooking[0]

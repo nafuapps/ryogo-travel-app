@@ -30,15 +30,15 @@ export async function reviewCompletedBookingAction(
     return
   }
 
+  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
+  if (!bookingDetails) return
+
   const updatedBooking = await bookingServices.changeReviewedByAgency(bookingId)
   if (!updatedBooking) {
     return
   }
 
-  //Generate and upload invoice
-  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-  if (!bookingDetails) return
-
+  //Generate invoice pdf
   const invoiceFile = await getBookingInvoicePDF(bookingDetails)
 
   //Upload file and get storage url

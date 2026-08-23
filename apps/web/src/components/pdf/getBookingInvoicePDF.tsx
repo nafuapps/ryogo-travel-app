@@ -21,7 +21,7 @@ export function BookingInvoiceDocument({
   const agencyLogoUrl = booking.agency.logoUrl
   const bookingLink = getBookingTrackingLink(booking.id)
 
-  //Calculate expenses amount
+  //TODO: Show approved expenses in a table
   const expensesAmount = booking.expenses
     .filter((exp) => exp.isApproved)
     .reduce((acc, expense) => acc + expense.amount, 0)

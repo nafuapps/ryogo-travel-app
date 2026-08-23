@@ -1,5 +1,6 @@
 import {
   ANNUAL_SUBSCRIPTION_FINAL_PRICE,
+  HOST_URL,
   MONTHLY_SUBSCRIPTION_FINAL_PRICE,
   MULTI_DAY_TRIP_INTERMEDIATE_DAYS_DISTANCE,
   QUARTERLY_SUBSCRIPTION_FINAL_PRICE,
@@ -154,8 +155,8 @@ export function generateSubscriptionInvoicePathName(
   return `agencies/${agencyId}/orders/${orderId}/${orderId}-ryogo-invoice.pdf`
 }
 
-export function getBookingTrackingLink(id: string) {
-  return `${window.location.origin}/track/booking/${id}`
+export function getBookingTrackingLink(id: string, hostUrl?: string) {
+  return `${hostUrl ?? HOST_URL}/track/booking/${id}`
 }
 
 export function getAverageRating(ratings: number[]) {

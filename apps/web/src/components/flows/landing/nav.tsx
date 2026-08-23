@@ -37,7 +37,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const t = useTranslations("Landing.Navbar")
   const path = usePathname()
-  console.log(path)
 
   const navLinks: NavLinkType[] = [
     { navId: "features", href: "/features", label: t("Features") },

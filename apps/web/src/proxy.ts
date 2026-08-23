@@ -39,7 +39,7 @@ export default async function proxy(request: NextRequest) {
     response.cookies.set(SESSION_COOKIE_NAME, newSessionCookie, {
       httpOnly: true,
       secure: true,
-      expires: payload.expiresAt,
+      expires: new Date(payload.expiresAt),
       sameSite: "lax",
     })
   }

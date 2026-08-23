@@ -117,8 +117,9 @@ export default async function BookingDetailsPageComponent({
           {(isOwner || isAssignedUser) && (
             <>
               {
-                //Only owner can reconcile a completed booking
+                //Only owner can reconcile a completed and reviewed booking
                 bookingDetails.status === BookingStatusEnum.COMPLETED &&
+                  bookingDetails.reviewCompletedByAgencyAt &&
                   !bookingDetails.isReconciled &&
                   isOwner && (
                     <Button variant={"default"}>

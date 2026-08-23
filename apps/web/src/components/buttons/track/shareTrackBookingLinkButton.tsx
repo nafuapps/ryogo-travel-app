@@ -17,7 +17,10 @@ export default function ShareTrackBookingLinkButton(props: {
 
   // Send track booking link to customer over whatsapp
   function sendTrackingLink() {
-    const bookingLink = getBookingTrackingLink(props.bookingId)
+    const bookingLink = getBookingTrackingLink(
+      props.bookingId,
+      window.location.origin,
+    )
     const message = t("TrackBooking", {
       bookingLink: bookingLink,
     })

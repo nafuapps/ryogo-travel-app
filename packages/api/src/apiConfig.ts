@@ -1,3 +1,5 @@
+export const HOST_URL = "https://ryogo.in"
+
 //Cookies
 export const LOCALE_COOKIE_NAME = "locale"
 export const DARK_MODE_COOKIE_NAME = "dark"

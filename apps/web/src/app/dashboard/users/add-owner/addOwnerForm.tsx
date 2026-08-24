@@ -15,6 +15,7 @@ import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { addOwnerAction } from "@/app/actions/users/addOwnerAction"
+import { FileRegex } from "@/lib/regex"
 
 export default function AddOwnerForm({
   agencyId,
@@ -36,12 +37,10 @@ export default function AddOwnerForm({
       .max(30, t("Field1.Error2")),
     ownerPhone: z.string().length(10, t("Field2.Error1")),
     ownerEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
-    ownerPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field4.Error1"))
+    ownerPhotos: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

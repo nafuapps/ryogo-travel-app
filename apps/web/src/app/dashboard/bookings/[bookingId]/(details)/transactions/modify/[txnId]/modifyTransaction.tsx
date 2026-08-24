@@ -27,6 +27,7 @@ import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/t
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { FileRegex } from "@/lib/regex"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
@@ -50,12 +51,10 @@ export default function ModifyTransactionPageComponent({
     mode: z.enum(TransactionModesEnum).nonoptional(t("Field3.Error1")),
     otherParty: z.enum(TransactionsPartiesEnum).nonoptional(t("Field4.Error1")),
     remarks: z.string().max(300, t("Field5.Error1")).optional(),
-    txnPhoto: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field6.Error1"))
+    txnPhoto: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field6.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

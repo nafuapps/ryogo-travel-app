@@ -23,6 +23,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
 import { RyogoCaption } from "@/components/typography"
+import { FileRegex } from "@/lib/regex"
 
 export default function ModifyDriverPageComponent({
   driver,
@@ -56,12 +57,10 @@ export default function ModifyDriverPageComponent({
       .date(t("Field5.Error1"))
       .min(driver.licenseExpiresOn ?? new Date(), t("Field5.Error2"))
       .nonoptional(t("Field5.Error1")),
-    licensePhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field6.Error2"))
+    licensePhotos: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field6.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

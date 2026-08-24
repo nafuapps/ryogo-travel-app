@@ -27,6 +27,7 @@ import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { useLocation } from "@/hooks/useLocation"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption } from "@/components/typography"
+import { FileRegex } from "@/lib/regex"
 
 export default function StartTripSheet({
   booking,
@@ -49,11 +50,9 @@ export default function StartTripSheet({
       .multipleOf(1, t("Field1.Error4"))
       .nonnegative(t("Field1.Error5"))
       .nonoptional(t("Field1.Error1")),
-    tripLogPhoto: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file.length > 0
-      }, t("Field2.Error3"))
+    tripLogPhoto: FileRegex.refine((file) => {
+      return file.length > 0
+    }, t("Field2.Error3"))
       .refine((file) => {
         return file[0] && file[0].size < 1000000
       }, t("Field2.Error1"))

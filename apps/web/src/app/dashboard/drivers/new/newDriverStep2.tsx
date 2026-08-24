@@ -23,6 +23,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import { FileRegex } from "@/lib/regex"
 
 export function NewDriverStep2(props: {
   onNext: () => void
@@ -41,11 +42,9 @@ export function NewDriverStep2(props: {
       .date(t("Field2.Error1"))
       .min(new Date(), t("Field2.Error2"))
       .nonoptional(t("Field2.Error1")),
-    licensePhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file.length >= 1
-      }, t("Field3.Error1"))
+    licensePhotos: FileRegex.refine((file) => {
+      return file.length >= 1
+    }, t("Field3.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
         return file[0] && file[0].size < 1000000

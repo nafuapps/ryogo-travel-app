@@ -21,6 +21,7 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
+import { FileRegex } from "@/lib/regex"
 
 export function NewDriverStep1(props: {
   onNext: () => void
@@ -47,12 +48,10 @@ export function NewDriverStep1(props: {
           )
         }, t("APIError1")),
       driverEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
-      driverPhotos: z
-        .instanceof(FileList)
-        .refine((file) => {
-          if (file.length < 1) return true
-          return file[0] && file[0].size < 1000000
-        }, t("Field4.Error1"))
+      driverPhotos: FileRegex.refine((file) => {
+        if (file.length < 1) return true
+        return file[0] && file[0].size < 1000000
+      }, t("Field4.Error1"))
         .refine((file) => {
           if (file.length < 1) return true
           return (

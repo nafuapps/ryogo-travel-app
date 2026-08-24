@@ -27,6 +27,7 @@ import { midTripAction } from "@/app/actions/bookings/midTripAction"
 import { useLocation } from "@/hooks/useLocation"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { RyogoCaption } from "@/components/typography"
+import { FileRegex } from "@/lib/regex"
 
 export default function MidTripSheet({
   booking,
@@ -58,12 +59,10 @@ export default function MidTripSheet({
       .multipleOf(1, t("Field1.Error4"))
       .nonnegative(t("Field1.Error5"))
       .nonoptional(t("Field1.Error1")),
-    tripLogPhoto: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field2.Error1"))
+    tripLogPhoto: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field2.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

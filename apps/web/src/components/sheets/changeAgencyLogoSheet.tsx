@@ -20,6 +20,7 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeAgencyLogoAction } from "@/app/actions/agencies/changeAgencyLogoAction"
+import { FileRegex } from "@/lib/regex"
 
 export default function ChangeAgencyLogoSheet({
   agencyId,
@@ -34,23 +35,20 @@ export default function ChangeAgencyLogoSheet({
   const router = useRouter()
 
   const schema = z.object({
-    logo: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file[0] && file[0].size < 1000000
-      }, t("Error1"))
-      .refine((file) => {
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
-        )
-      }, t("Error2")),
+    logo: FileRegex.refine((file) => {
+      return file[0] && file[0].size < 1000000
+    }, t("Error1")).refine((file) => {
+      return (
+        file[0] &&
+        [
+          "image/jpeg",
+          "image/png",
+          "image/jpg",
+          "image/bmp",
+          "image/webp",
+        ].includes(file[0].type)
+      )
+    }, t("Error2")),
   })
 
   type SchemaType = z.infer<typeof schema>

@@ -15,9 +15,9 @@ const withSerwist = withSerwistInit({
 const nextConfig: NextConfig = {
   /* config options here */
   allowedDevOrigins: ["192.168.29.143"],
-  partialPrefetching: false,
-  reactStrictMode: true,
   cacheComponents: false, //TODO
+  partialPrefetching: false, //TODO
+  reactStrictMode: true,
   typedRoutes: true,
   experimental: {
     externalDir: true,

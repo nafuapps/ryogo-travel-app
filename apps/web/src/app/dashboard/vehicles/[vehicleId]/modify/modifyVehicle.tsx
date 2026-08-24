@@ -27,6 +27,7 @@ import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { RyogoCaption } from "@/components/typography"
+import { FileRegex } from "@/lib/regex"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -58,12 +59,10 @@ export default function ModifyVehiclePageComponent({
       .date(t("Field7.Error1"))
       .min(vehicle.rcExpiresOn ?? new Date(), t("Field7.Error2"))
       .nonoptional(t("Field7.Error1")),
-    rcPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field8.Error2"))
+    rcPhotos: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field8.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
         return (
@@ -83,12 +82,10 @@ export default function ModifyVehiclePageComponent({
       .date(t("Field9.Error1"))
       .min(vehicle.insuranceExpiresOn ?? new Date(), t("Field9.Error2"))
       .nonoptional(t("Field9.Error1")),
-    insurancePhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field10.Error2"))
+    insurancePhotos: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field10.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
         return (
@@ -108,12 +105,10 @@ export default function ModifyVehiclePageComponent({
       .date(t("Field11.Error1"))
       .min(vehicle.pucExpiresOn ?? new Date(), t("Field11.Error2"))
       .nonoptional(t("Field11.Error1")),
-    pucPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field12.Error2"))
+    pucPhotos: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field12.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

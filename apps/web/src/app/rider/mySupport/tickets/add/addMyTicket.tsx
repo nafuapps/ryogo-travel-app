@@ -22,6 +22,7 @@ import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
+import { FileRegex } from "@/lib/regex"
 
 export default function AddMySupportTicketPageComponent({
   userId,
@@ -40,12 +41,10 @@ export default function AddMySupportTicketPageComponent({
       entityId: z.string().max(12, t("Field2.Error1")).optional(),
       issue: z.string().min(5, t("Field3.Error1")).max(100, t("Field3.Error2")),
       details: z.string().max(300, t("Field4.Error1")).optional(),
-      photo: z
-        .instanceof(FileList)
-        .refine((file) => {
-          if (file.length < 1) return true
-          return file[0] && file[0].size < 1000000
-        }, t("Field5.Error1"))
+      photo: FileRegex.refine((file) => {
+        if (file.length < 1) return true
+        return file[0] && file[0].size < 1000000
+      }, t("Field5.Error1"))
         .refine((file) => {
           if (file.length < 1) return true
           return (

@@ -20,6 +20,7 @@ import { addExpenseAction } from "@/app/actions/expenses/addExpenseAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { FileRegex } from "@/lib/regex"
 
 export default function RiderAddExpensePageComponent({
   bookingId,
@@ -45,12 +46,10 @@ export default function RiderAddExpensePageComponent({
       .multipleOf(1, t("Field2.Error4"))
       .positive(t("Field2.Error5")),
     remarks: z.string().max(300, t("Field3.Error1")).optional(),
-    expensePhoto: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field4.Error1"))
+    expensePhoto: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

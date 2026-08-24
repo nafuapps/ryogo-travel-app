@@ -20,6 +20,7 @@ import {
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { FileRegex } from "@/lib/regex"
 
 export function AddVehicleStep2(props: {
   onNext: () => void
@@ -42,11 +43,9 @@ export function AddVehicleStep2(props: {
       .max(1000000, t("Field2.Error3"))
       .multipleOf(1, t("Field2.Error4"))
       .nonnegative(t("Field2.Error5")),
-    rcPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file.length >= 1
-      }, t("Field3.Error1"))
+    rcPhotos: FileRegex.refine((file) => {
+      return file.length >= 1
+    }, t("Field3.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
         return file[0] && file[0].size < 1000000
@@ -65,11 +64,9 @@ export function AddVehicleStep2(props: {
           ].includes(file[0].type)
         )
       }, t("Field3.Error3")),
-    vehiclePhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file.length >= 1
-      }, t("Field4.Error1"))
+    vehiclePhotos: FileRegex.refine((file) => {
+      return file.length >= 1
+    }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
         return file[0] && file[0].size < 1000000

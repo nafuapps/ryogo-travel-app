@@ -15,6 +15,7 @@ import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { FileRegex } from "@/lib/regex"
 
 export default function NewAgentForm({
   agencyId,
@@ -36,12 +37,10 @@ export default function NewAgentForm({
       .max(30, t("Field1.Error2")),
     agentPhone: z.string().length(10, t("Field2.Error1")),
     agentEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
-    agentPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field4.Error1"))
+    agentPhotos: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

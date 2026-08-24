@@ -20,6 +20,7 @@ import z from "zod"
 import { changeCustomerPhotoAction } from "@/app/actions/customers/changeCustomerPhotoAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { FileRegex } from "@/lib/regex"
 
 export default function ChangeCustomerPhotoSheet({
   customerId,
@@ -34,23 +35,20 @@ export default function ChangeCustomerPhotoSheet({
   const router = useRouter()
 
   const schema = z.object({
-    customerPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file[0] && file[0].size < 1000000
-      }, t("Error1"))
-      .refine((file) => {
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
-        )
-      }, t("Error2")),
+    customerPhotos: FileRegex.refine((file) => {
+      return file[0] && file[0].size < 1000000
+    }, t("Error1")).refine((file) => {
+      return (
+        file[0] &&
+        [
+          "image/jpeg",
+          "image/png",
+          "image/jpg",
+          "image/bmp",
+          "image/webp",
+        ].includes(file[0].type)
+      )
+    }, t("Error2")),
   })
 
   type SchemaType = z.infer<typeof schema>

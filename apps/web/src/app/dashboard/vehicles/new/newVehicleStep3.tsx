@@ -22,6 +22,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import { FileRegex } from "@/lib/regex"
 
 export function NewVehicleStep3(props: {
   onNext: () => void
@@ -35,11 +36,9 @@ export function NewVehicleStep3(props: {
       .date(t("Field1.Error1"))
       .min(new Date(), t("Field1.Error2"))
       .nonoptional(t("Field1.Error1")),
-    insurancePhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file.length >= 1
-      }, t("Field2.Error1"))
+    insurancePhotos: FileRegex.refine((file) => {
+      return file.length >= 1
+    }, t("Field2.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
         return file[0] && file[0].size < 1000000
@@ -62,11 +61,9 @@ export function NewVehicleStep3(props: {
       .date(t("Field3.Error1"))
       .min(new Date(), t("Field3.Error2"))
       .nonoptional(t("Field3.Error1")),
-    pucPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        return file.length >= 1
-      }, t("Field4.Error1"))
+    pucPhotos: FileRegex.refine((file) => {
+      return file.length >= 1
+    }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
         return file[0] && file[0].size < 1000000

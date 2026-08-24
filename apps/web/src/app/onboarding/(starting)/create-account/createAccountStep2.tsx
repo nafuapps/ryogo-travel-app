@@ -23,6 +23,7 @@ import {
 import { Form } from "@/components/ui/form"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { FileRegex } from "@/lib/regex"
 
 export function CreateAccountStep2(props: {
   onNext: () => void
@@ -42,12 +43,10 @@ export function CreateAccountStep2(props: {
       .string()
       .min(20, t("Field3.Error1"))
       .max(300, t("Field3.Error2")),
-    ownerPhoto: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field4.Error1"))
+    ownerPhoto: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

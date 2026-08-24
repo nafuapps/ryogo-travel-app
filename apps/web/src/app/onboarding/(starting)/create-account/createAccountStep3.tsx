@@ -25,6 +25,7 @@ import {
   getStringValueDisplayPairs,
 } from "@/lib/utils"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { FileRegex } from "@/lib/regex"
 
 export function CreateAccountStep3(props: {
   onNext: () => void
@@ -34,12 +35,10 @@ export function CreateAccountStep3(props: {
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step3")
   const step3Schema = z.object({
-    agencyLogo: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field1.Error1"))
+    agencyLogo: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field1.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (
@@ -63,12 +62,10 @@ export function CreateAccountStep3(props: {
       .optional(),
     agencyState: z.string().min(1, t("Field3.Error1")),
     agencyCity: z.string().min(1, t("Field4.Error1")),
-    qrCode: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field5.Error1"))
+    qrCode: FileRegex.refine((file) => {
+      if (file.length < 1) return true
+      return file[0] && file[0].size < 1000000
+    }, t("Field5.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
         return (

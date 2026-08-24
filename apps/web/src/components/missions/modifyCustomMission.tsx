@@ -1,5 +1,6 @@
 "use client"
 
+import { FindMissionByIdType } from "@ryogo-travel-app/api/services/mission.services"
 import {
   RyogoDatePicker,
   RyogoInput,
@@ -20,31 +21,36 @@ import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { addCustomMissionAction } from "@/app/actions/missions/addCustomMissionAction"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { modifyCustomMissionAction } from "@/app/actions/missions/modifyCustomMissionAction"
 import {
   regexCheckIDByEntityType,
   getDateTime,
+  extractTimeFromDate,
 } from "@/components/missions/missionCommons"
+import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
 
-export default function AddCustomMissionPageComponent({
-  userId,
-  agencyId,
+export default function ModifyCustomMissionPageComponent({
+  mission,
+  isRider,
 }: {
-  userId: string
-  agencyId: string
+  mission: NonNullable<FindMissionByIdType>
+  isRider?: boolean
 }) {
-  const t = useTranslations("Dashboard.AddCustomMission")
+  const t = useTranslations("Dashboard.ModifyCustomMission")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  const addCustomMissionSchema = z
+  const modifyCustomMissionSchema = z
     .object({
       entityType: z.enum(EntityTypeEnum).nonoptional(t("Field1.Error1")),
       entityId: z.string().max(12, t("Field2.Error1")).optional(),
-      title: z.string().min(5, t("Field3.Error1")).max(100, t("Field3.Error2")),
-      message: z.string().max(300, t("Field4.Error1")).optional(),
+      titleKey: z
+        .string()
+        .min(5, t("Field3.Error1"))
+        .max(100, t("Field3.Error2")),
+      messageKey: z.string().max(300, t("Field4.Error1")).optional(),
       dueDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
       dueTime: z.iso.time(t("Field6.Error1")).nonempty(t("Field6.Error1")),
       isCritical: z.boolean(),
@@ -68,27 +74,31 @@ export default function AddCustomMissionPageComponent({
         })
       }
     })
-  type AddCustomMissionType = z.infer<typeof addCustomMissionSchema>
-
-  const formData = useForm<AddCustomMissionType>({
-    resolver: zodResolver(addCustomMissionSchema),
+  type ModifyCustomMissionType = z.infer<typeof modifyCustomMissionSchema>
+  const formData = useForm<ModifyCustomMissionType>({
+    resolver: zodResolver(modifyCustomMissionSchema),
     defaultValues: {
-      entityType: EntityTypeEnum.USER,
-      title: "",
-      dueDate: new Date(),
-      dueTime: "10:00",
-      isCritical: false,
+      entityType: mission.entityType,
+      entityId: mission.entityId,
+      titleKey: mission.titleKey,
+      messageKey: mission.messageKey ?? undefined,
+      dueDate: mission.dueDate ?? new Date(),
+      dueTime: extractTimeFromDate(mission.dueDate ?? new Date()) ?? "10:00",
+      isCritical: mission.isCritical,
     },
   })
 
-  async function onSubmit(values: AddCustomMissionType) {
+  async function onSubmit(values: ModifyCustomMissionType) {
     startTransition(async () => {
       if (
-        await addCustomMissionAction(userId, agencyId, {
+        await modifyCustomMissionAction({
+          missionId: mission.id,
+          userId: mission.userId,
+          agencyId: mission.agencyId,
           entityType: values.entityType,
           entityId: values.entityId,
-          title: values.title,
-          message: values.message,
+          titleKey: values.titleKey,
+          messageKey: values.messageKey,
           dueDate: getDateTime(values.dueDate, values.dueTime),
           isCritical: values.isCritical,
         })
@@ -97,16 +107,18 @@ export default function AddCustomMissionPageComponent({
       } else {
         toast.error(t("Error"))
       }
-      router.replace(`/dashboard/mission-control`)
+      router.replace(
+        isRider ? `/rider/myMissions` : "/dashboard/mission-control",
+      )
     })
   }
   return (
-    <PageWrapper id="AddCustomMissionPage">
+    <PageWrapper id="ModifyCustomMissionPage">
       <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
-      <FormWrapper<AddCustomMissionType>
+      <FormWrapper<ModifyCustomMissionType>
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
-        id="addCustomMissionForm"
+        id="modifyCustomMissionForm"
       >
         <RyogoSelect
           name="entityType"
@@ -125,14 +137,14 @@ export default function AddCustomMissionPageComponent({
         />
         <RyogoSwitch name={"isCritical"} label={t("Field7.Title")} />
         <RyogoInput
-          name="title"
+          name="titleKey"
           label={t("Field3.Title")}
           placeholder={t("Field3.Placeholder")}
           description={t("Field3.Description")}
           type="text"
         />
         <RyogoTextarea
-          name="message"
+          name="messageKey"
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
         />
@@ -161,8 +173,14 @@ export default function AddCustomMissionPageComponent({
           disabled={isPending}
           onClick={() => router.back()}
         >
-          <RyogoCaption color="white">{t("CancelCTA")}</RyogoCaption>
+          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
         </Button>
+        <DeleteMissionAlertButton
+          missionId={mission.id}
+          userId={mission.userId}
+          agencyId={mission.agencyId}
+          isRider
+        />
       </FormWrapper>
     </PageWrapper>
   )

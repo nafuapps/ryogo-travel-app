@@ -3,15 +3,11 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import {
-  EntityTypeEnum,
-  InsertDriverLeaveType,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driverLeave.types"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function modifyDriverLeaveAction(
-  id: string,
-  data: Partial<InsertDriverLeaveType>,
+  data: ModifyDriverLeaveRequestType,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -28,7 +24,7 @@ export async function modifyDriverLeaveAction(
     return
   }
 
-  const leave = await driverServices.modifyDriverLeave(id, data)
+  const leave = await driverServices.modifyDriverLeave(data)
   if (!leave) return
 
   await notificationServices.addNotification({

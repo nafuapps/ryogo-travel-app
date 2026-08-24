@@ -5,6 +5,10 @@ import {
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
 import { locationRepository } from "../repositories/location.repo"
+import {
+  ModifyCustomerRequestType,
+  NewCustomerRequestType,
+} from "../types/customer.types"
 
 export const customerServices = {
   async findCustomersInAgency(agencyId: string) {
@@ -19,9 +23,9 @@ export const customerServices = {
   },
 
   //Get customer's upcoming bookings
-  async findCustomerUpcomingBookingsById(id: string) {
+  async findCustomerUpcomingBookingsById(customerId: string) {
     const bookings =
-      await bookingRepository.readUpcomingBookingsByCustomerId(id)
+      await bookingRepository.readUpcomingBookingsByCustomerId(customerId)
 
     return bookings.map((booking) => {
       return {
@@ -40,9 +44,9 @@ export const customerServices = {
   },
 
   //Get customer's completed bookings
-  async findCustomerCompletedBookingsById(id: string) {
+  async findCustomerCompletedBookingsById(customerId: string) {
     const bookings =
-      await bookingRepository.readCompletedBookingsByCustomerId(id)
+      await bookingRepository.readCompletedBookingsByCustomerId(customerId)
 
     return bookings.map((booking) => {
       return {
@@ -59,40 +63,33 @@ export const customerServices = {
     })
   },
 
-  async addNewCustomer(
-    name: string,
-    phone: string,
-    locationCity: string,
-    locationState: string,
-    agencyId: string,
-    userId: string,
-    email?: string,
-    address?: string,
-    remarks?: string,
-  ) {
+  async addNewCustomer(data: NewCustomerRequestType) {
     //Check if a customer with same phone already exists in this agency
     const existingCustomer =
-      await customerRepository.readCustomerByPhoneInAgency(phone, agencyId)
+      await customerRepository.readCustomerByPhoneInAgency(
+        data.phone,
+        data.agencyId,
+      )
     if (existingCustomer.length > 0) {
       return
     }
 
     const location = await locationRepository.readLocationByCityState(
-      locationCity,
-      locationState,
+      data.city,
+      data.state,
     )
     if (!location) {
       return
     }
     const newCustomerData: InsertCustomerType = {
-      name: name,
-      phone: phone,
+      name: data.name,
+      phone: data.phone,
       locationId: location.id,
-      agencyId: agencyId,
-      addedByUserId: userId,
-      address: address,
-      email: email,
-      remarks: remarks,
+      agencyId: data.agencyId,
+      addedByUserId: data.addedByUserId,
+      address: data.address,
+      email: data.email,
+      remarks: data.remarks,
       status: CustomerStatusEnum.ACTIVE,
     }
     const newCustomer = await customerRepository.createCustomer(newCustomerData)
@@ -100,52 +97,47 @@ export const customerServices = {
     return newCustomer[0]
   },
 
-  async modifyCustomer(
-    id: string,
-    state: string,
-    city: string,
-    name?: string,
-    email?: string,
-    address?: string,
-    remarks?: string,
-  ) {
+  async modifyCustomer(data: ModifyCustomerRequestType) {
     //Find location
     const location = await locationRepository.readLocationByCityState(
-      city,
-      state,
+      data.city,
+      data.state,
     )
     if (!location) {
       return
     }
     const customer = await customerRepository.updateCustomer(
-      id,
+      data.customerId,
       location.id,
-      name,
-      email,
-      address,
-      remarks,
+      data.name,
+      data.email,
+      data.address,
+      data.remarks,
     )
     return customer[0]
   },
   //Update customer photo url
-  async updateCustomerPhoto(userId: string, url: string) {
-    const updatedCustomer = await customerRepository.updatePhotoUrl(userId, url)
+  async updateCustomerPhoto(customerId: string, url: string) {
+    const updatedCustomer = await customerRepository.updatePhotoUrl(
+      customerId,
+      url,
+    )
     return updatedCustomer[0]
   },
 
   //Activate Customer
-  async activateCustomer(id: string) {
+  async activateCustomer(customerId: string) {
     const customer = await customerRepository.updateStatus(
-      id,
+      customerId,
       CustomerStatusEnum.ACTIVE,
     )
     return customer[0]
   },
 
   //Inctivate Customer
-  async inactivateCustomer(id: string) {
+  async inactivateCustomer(customerId: string) {
     const customer = await customerRepository.updateStatus(
-      id,
+      customerId,
       CustomerStatusEnum.INACTIVE,
     )
     return customer[0]

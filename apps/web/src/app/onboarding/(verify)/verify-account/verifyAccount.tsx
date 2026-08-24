@@ -4,11 +4,8 @@
 import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import { RyogoCaption, RyogoH2 } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import {
   OnboardingStepHeader,
-  OnboardingStepHeaderTopLine,
   OnboardingStepPage,
   VerifyAccountTotalSteps,
 } from "@/components/flows/onboarding/onboardingSteps"
@@ -56,21 +53,16 @@ export default function VerifyAccountPageComponent(props: {
     <>
       <OnboardingStepPage pageId="VerifyAccountPage">
         {currentStepIndex < VerifyAccountTotalSteps && (
-          <OnboardingStepHeader headerId="VerifyAccountHeader">
-            <OnboardingStepHeaderTopLine>
-              <RyogoH2>{t("Title")}</RyogoH2>
-            </OnboardingStepHeaderTopLine>
-            <StepsTracker
-              steps={VerifyAccountTotalSteps}
-              current={currentStepIndex}
-            />
-            <RyogoCaption color="light">
-              {t("Description", {
-                step: currentStepIndex + 1,
-                total: VerifyAccountTotalSteps,
-              })}
-            </RyogoCaption>
-          </OnboardingStepHeader>
+          <OnboardingStepHeader
+            headerId="VerifyAccountHeader"
+            totalSteps={VerifyAccountTotalSteps}
+            currentStepIndex={currentStepIndex}
+            title={t("Title")}
+            stepLabel={t("Description", {
+              step: currentStepIndex + 1,
+              total: VerifyAccountTotalSteps,
+            })}
+          />
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>

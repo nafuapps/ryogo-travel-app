@@ -4,8 +4,6 @@
 import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import { RyogoCaption, RyogoH2 } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import { CreateAccountFinish } from "./createAccountFinish"
 import { CreateAccountStep1 } from "./createAccountStep1"
 import { CreateAccountStep2 } from "./createAccountStep2"
@@ -16,7 +14,6 @@ import { useState } from "react"
 import {
   CreateAccountTotalSteps,
   OnboardingStepHeader,
-  OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
@@ -113,21 +110,16 @@ export default function CreateAccountPageComponent({
     <>
       <OnboardingStepPage pageId="CreateAccountPage">
         {currentStepIndex < CreateAccountTotalSteps && (
-          <OnboardingStepHeader headerId="CreateAccountHeader">
-            <OnboardingStepHeaderTopLine>
-              <RyogoH2>{t("Title")}</RyogoH2>
-            </OnboardingStepHeaderTopLine>
-            <StepsTracker
-              steps={CreateAccountTotalSteps}
-              current={currentStepIndex}
-            />
-            <RyogoCaption color="light">
-              {t("Description", {
-                step: currentStepIndex + 1,
-                total: CreateAccountTotalSteps,
-              })}
-            </RyogoCaption>
-          </OnboardingStepHeader>
+          <OnboardingStepHeader
+            headerId="CreateAccountHeader"
+            totalSteps={CreateAccountTotalSteps}
+            currentStepIndex={currentStepIndex}
+            title={t("Title")}
+            stepLabel={t("Description", {
+              step: currentStepIndex + 1,
+              total: CreateAccountTotalSteps,
+            })}
+          />
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>

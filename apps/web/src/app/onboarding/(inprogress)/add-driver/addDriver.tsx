@@ -4,13 +4,10 @@
 import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import { RyogoCaption, RyogoH2 } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import { useState } from "react"
 import {
   AddDriverTotalSteps,
   OnboardingStepHeader,
-  OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { AddDriverStep1 } from "./addDriverStep1"
@@ -97,21 +94,16 @@ export default function AddDriverPageComponent(props: {
     <>
       <OnboardingStepPage pageId="AddDriverPage">
         {currentStepIndex < AddDriverTotalSteps && (
-          <OnboardingStepHeader headerId="AddDriverHeader">
-            <OnboardingStepHeaderTopLine>
-              <RyogoH2>{t("Title")}</RyogoH2>
-            </OnboardingStepHeaderTopLine>
-            <StepsTracker
-              steps={AddDriverTotalSteps}
-              current={currentStepIndex}
-            />
-            <RyogoCaption color="light">
-              {t("Description", {
-                step: currentStepIndex + 1,
-                total: AddDriverTotalSteps,
-              })}
-            </RyogoCaption>
-          </OnboardingStepHeader>
+          <OnboardingStepHeader
+            headerId="AddDriverHeader"
+            totalSteps={AddDriverTotalSteps}
+            currentStepIndex={currentStepIndex}
+            title={t("Title")}
+            stepLabel={t("Description", {
+              step: currentStepIndex + 1,
+              total: AddDriverTotalSteps,
+            })}
+          />
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>

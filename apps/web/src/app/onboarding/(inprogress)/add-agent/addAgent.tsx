@@ -4,13 +4,10 @@
 import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import { RyogoCaption, RyogoH2 } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import { useState } from "react"
 import {
   AddAgentTotalSteps,
   OnboardingStepHeader,
-  OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { AddAgentStep1 } from "./addAgentStep1"
@@ -72,21 +69,16 @@ export default function AddAgentPageComponent(props: {
     <>
       <OnboardingStepPage pageId="AddAgentPage">
         {currentStepIndex < AddAgentTotalSteps && (
-          <OnboardingStepHeader headerId="AddAgentHeader">
-            <OnboardingStepHeaderTopLine>
-              <RyogoH2>{t("Title")}</RyogoH2>
-            </OnboardingStepHeaderTopLine>
-            <StepsTracker
-              steps={AddAgentTotalSteps}
-              current={currentStepIndex}
-            />
-            <RyogoCaption color="light">
-              {t("Description", {
-                step: currentStepIndex + 1,
-                total: AddAgentTotalSteps,
-              })}
-            </RyogoCaption>
-          </OnboardingStepHeader>
+          <OnboardingStepHeader
+            headerId="AddAgentHeader"
+            totalSteps={AddAgentTotalSteps}
+            currentStepIndex={currentStepIndex}
+            title={t("Title")}
+            stepLabel={t("Description", {
+              step: currentStepIndex + 1,
+              total: AddAgentTotalSteps,
+            })}
+          />
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>

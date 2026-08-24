@@ -1,4 +1,5 @@
 import {
+  InsertOrderType,
   OrderStatusEnum,
   OrderTypeEnum,
   SubscriptionPlanEnum,
@@ -6,16 +7,12 @@ import {
 import { orderRepository } from "../repositories/order.repo"
 import {
   ANNUAL_SUBSCRIPTION_DAYS,
-  ANNUAL_SUBSCRIPTION_FINAL_PRICE,
   EXISTING_ORDER_SEARCH_HOURS,
   MONTHLY_SUBSCRIPTION_DAYS,
-  MONTHLY_SUBSCRIPTION_FINAL_PRICE,
   QUARTERLY_SUBSCRIPTION_DAYS,
-  QUARTERLY_SUBSCRIPTION_FINAL_PRICE,
 } from "../apiConfig"
 import { agencyRepository } from "../repositories/agency.repo"
 import { addDays, max } from "date-fns"
-import { missionRepository } from "../repositories/mission.repo"
 
 export const orderServices = {
   async findAllOrdersByAgencyId(agencyId: string) {
@@ -50,27 +47,12 @@ export const orderServices = {
     return existingOrder
   },
 
-  getAmountByPlan(plan: OrderTypeEnum) {
-    if (plan === OrderTypeEnum.ANNUAL) {
-      return ANNUAL_SUBSCRIPTION_FINAL_PRICE
-    }
-    if (plan === OrderTypeEnum.QUARTERLY) {
-      return QUARTERLY_SUBSCRIPTION_FINAL_PRICE
-    }
-    return MONTHLY_SUBSCRIPTION_FINAL_PRICE
-  },
-
-  async addOrder(
-    agencyId: string,
-    userId: string,
-    amount: number,
-    rpOrderId: string,
-  ) {
+  async addOrder(data: InsertOrderType) {
     const order = await orderRepository.createOrder({
-      agencyId: agencyId,
-      userId: userId,
-      amount: amount,
-      rpOrderId: rpOrderId,
+      agencyId: data.agencyId,
+      userId: data.userId,
+      amount: data.amount,
+      rpOrderId: data.rpOrderId,
       status: OrderStatusEnum.CREATED,
     })
     if (!order || order.length < 1) return
@@ -145,17 +127,17 @@ export const orderServices = {
     return updatedOrder[0]
   },
 
-  async confirmOrderWebhookStatus(id: string) {
-    return await orderRepository.updateOrderWebhookConfirmed(id, true)
+  async confirmOrderWebhookStatus(orderId: string) {
+    return await orderRepository.updateOrderWebhookConfirmed(orderId, true)
   },
 
   async addInvoiceUrlAndEmailSentTime(
-    id: string,
+    orderId: string,
     invoiceUrl: string,
     emailSentAt: Date | null,
   ) {
     await orderRepository.updateInvoiceUrlAndEmailSentTime(
-      id,
+      orderId,
       invoiceUrl,
       emailSentAt,
     )

@@ -4,6 +4,7 @@ import Razorpay from "razorpay"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { OrderTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
+import { getSubscriptionPlanPrice } from "@/lib/utils"
 
 const razorpay = new Razorpay({
   key_id:
@@ -35,7 +36,7 @@ export async function createOrderAction(
     return
   }
 
-  const amountInRs = orderServices.getAmountByPlan(plan)
+  const amountInRs = getSubscriptionPlanPrice(plan)
 
   //If an order already exists by this user for this plan in last X hours, use it for payment
   const existingOrder = await orderServices.findExistingCreatedOrder(
@@ -61,12 +62,12 @@ export async function createOrderAction(
   })
 
   //Store order in DB
-  const newOrder = await orderServices.addOrder(
-    agencyId,
-    currentUser.userId,
-    amountInRs,
-    rpOrder.id,
-  )
+  const newOrder = await orderServices.addOrder({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    amount: amountInRs,
+    rpOrderId: rpOrder.id,
+  })
 
   return newOrder
 }

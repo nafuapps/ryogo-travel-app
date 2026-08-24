@@ -1,6 +1,7 @@
 import { missionRepository } from "../repositories/mission.repo"
 import { MISSION_WINDOW_DAYS } from "../apiConfig"
 import { EntityTypeEnum, InsertMissionType } from "@ryogo-travel-app/db/schema"
+import { ModifyMissionRequestType } from "../types/mission.types"
 
 export const missionServices = {
   async findMissionsByUserId(userId: string) {
@@ -32,23 +33,15 @@ export const missionServices = {
     return newMission[0]
   },
 
-  async modifyMission(
-    missionId: string,
-    entityType: EntityTypeEnum,
-    entityId: string,
-    titleKey: string,
-    dueDate: Date,
-    isCritical: boolean,
-    messageKey?: string,
-  ) {
+  async modifyMission(data: ModifyMissionRequestType) {
     const updatedMission = await missionRepository.updateMission(
-      missionId,
-      entityType,
-      entityId,
-      titleKey,
-      dueDate,
-      isCritical,
-      messageKey,
+      data.missionId,
+      data.entityId ? data.entityType : EntityTypeEnum.USER, //If no entity id, default to type User with userId
+      data.entityId ?? data.userId,
+      data.titleKey,
+      data.dueDate,
+      data.isCritical,
+      data.messageKey,
     )
     return updatedMission[0]
   },

@@ -3,10 +3,10 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
-import ModifyCustomMissionPageComponent from "./modifyCustomMission"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { MissionIdRegex } from "@/lib/regex"
 import RiderHeader from "@/components/header/riderHeader"
+import ModifyCustomMissionPageComponent from "@/components/missions/modifyCustomMission"
 
 export const metadata: Metadata = {
   title: `Modify Custom Mission - ${pageTitle}`,
@@ -44,7 +44,7 @@ export default async function ModifyCustomMissionPage({
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myMissions/modify"} />
-      <ModifyCustomMissionPageComponent mission={mission} />
+      <ModifyCustomMissionPageComponent mission={mission} isRider />
     </MainWrapper>
   )
 }

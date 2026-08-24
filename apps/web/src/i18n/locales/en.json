@@ -147,7 +147,7 @@
     },
     "CreateAccountPage": {
       "Title": "Create Account",
-      "Description": "Step {step} of {total}",
+      "Description": "STEP {step} OF {total}",
       "Step1": {
         "Field1": {
           "Title": "Enter agency name",
@@ -304,7 +304,7 @@
     },
     "VerifyAccountPage": {
       "Title": "Verify Account",
-      "Description": "Step {step} of {total}",
+      "Description": "STEP {step} OF {total}",
       "Step1": {
         "Field1": {
           "Title": "Enter verification code",
@@ -331,7 +331,7 @@
     },
     "AddVehiclePage": {
       "Title": "Add Vehicle",
-      "Description": "Step {step} of {total}",
+      "Description": "STEP {step} OF {total}",
       "Step1": {
         "Field1": {
           "Title": "Enter vehicle number",
@@ -509,7 +509,7 @@
     },
     "AddDriverPage": {
       "Title": "Add Driver",
-      "Description": "Step {step} of {total}",
+      "Description": "STEP {step} OF {total}",
       "Step1": {
         "Field1": {
           "Title": "Driver name",
@@ -623,7 +623,7 @@
     },
     "AddAgentPage": {
       "Title": "Add Agent",
-      "Description": "Step {step} of {total}",
+      "Description": "STEP {step} OF {total}",
       "Step1": {
         "Field1": {
           "Title": "Agent name",

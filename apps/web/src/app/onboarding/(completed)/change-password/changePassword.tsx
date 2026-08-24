@@ -1,16 +1,13 @@
 "use client"
 
-import { RyogoP, RyogoH2 } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepHeader,
-  OnboardingStepHeaderTopLine,
   OnboardingStepPage,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { ChangePasswordStep1 } from "./changePasswordStep1"
-import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import RyoGoLogo from "@/components/logo"
+import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 
 export default function ChangePasswordPageComponent(props: {
   userId: string
@@ -18,33 +15,23 @@ export default function ChangePasswordPageComponent(props: {
   role: UserRolesEnum
 }) {
   const t = useTranslations("Onboarding.ChangePasswordPage")
-  const { isMobile } = useSidebar()
 
   return (
     <>
       <OnboardingStepPage pageId="ChangePassword">
-        <OnboardingStepHeader headerId="ChangePasswordHeader">
-          <OnboardingStepHeaderTopLine>
-            <RyogoH2>{t("Title")}</RyogoH2>
-          </OnboardingStepHeaderTopLine>
-        </OnboardingStepHeader>
-        <RyogoP color="slate"> {t("Subtitle")}</RyogoP>
+        <OnboardingStepHeader
+          headerId="ChangePasswordHeader"
+          title={t("Title")}
+          stepLabel={t("Subtitle")}
+        />
+
         <ChangePasswordStep1
           userId={props.userId}
           role={props.role}
           agencyId={props.agencyId}
         />
       </OnboardingStepPage>
-      <Sidebar side="right" collapsible={isMobile ? "offcanvas" : "none"}>
-        <SidebarContent>
-          <div
-            id="SidebarSection"
-            className="w-full flex px-8 py-10 md:p-12 lg:p-16 h-full flex-col items-center justify-center gap-8 lg:gap-10 bg-slate-50 dark:bg-slate-950"
-          >
-            <RyoGoLogo />
-          </div>
-        </SidebarContent>
-      </Sidebar>
+      <OnboardingSidebar showLogout />
     </>
   )
 }

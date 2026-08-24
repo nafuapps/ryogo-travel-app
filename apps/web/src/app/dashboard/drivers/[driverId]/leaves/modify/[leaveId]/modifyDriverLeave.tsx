@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindDriverLeaveByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import { InsertDriverLeaveType } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -19,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driverLeave.types"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -47,10 +47,10 @@ export default function ModifyDriverLeavePageComponent({
       }
     })
 
-  type ModifyDriverLeaveType = z.infer<typeof modifyDriverleaveSchema>
+  type ModifyDriverLeaveFormType = z.infer<typeof modifyDriverleaveSchema>
 
   //Form init
-  const formData = useForm<ModifyDriverLeaveType>({
+  const formData = useForm<ModifyDriverLeaveFormType>({
     resolver: zodResolver(modifyDriverleaveSchema),
     defaultValues: {
       startDate: leave.startDate,
@@ -61,15 +61,17 @@ export default function ModifyDriverLeavePageComponent({
   })
 
   //Form submit
-  async function onSubmit(values: ModifyDriverLeaveType) {
+  async function onSubmit(values: ModifyDriverLeaveFormType) {
     startTransition(async () => {
-      const modifyLeave: Partial<InsertDriverLeaveType> = {
+      const modifyLeave: ModifyDriverLeaveRequestType = {
+        leaveId: leave.id,
+        agencyId: leave.agencyId,
         startDate: values.startDate,
         endDate: values.endDate,
         isCompleted: values.isCompleted,
         remarks: values.remarks,
       }
-      const modifiedLeave = await modifyDriverLeaveAction(leave.id, modifyLeave)
+      const modifiedLeave = await modifyDriverLeaveAction(modifyLeave)
       if (modifiedLeave) {
         router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)
         toast.success(t("Success"))
@@ -81,7 +83,7 @@ export default function ModifyDriverLeavePageComponent({
   }
   return (
     <PageWrapper id="ModifyDriverLeavePage">
-      <FormWrapper<ModifyDriverLeaveType>
+      <FormWrapper<ModifyDriverLeaveFormType>
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
         id="newDriverLeaveForm"

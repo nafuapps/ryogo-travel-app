@@ -11,6 +11,7 @@ import {
 } from "../types/vehicle.types"
 import { bookingRepository } from "../repositories/booking.repo"
 import { addDays } from "date-fns"
+import { ModifyVehicleRepairRequestType } from "../types/vehicleRepair.types"
 
 export const vehicleServices = {
   //Get all vehicles of an agency
@@ -44,15 +45,15 @@ export const vehicleServices = {
   },
 
   //Get vehicle details
-  async findVehicleDetailsById(id: string) {
-    const vehicle = await vehicleRepository.readVehicleById(id)
+  async findVehicleDetailsById(vehicleId: string) {
+    const vehicle = await vehicleRepository.readVehicleById(vehicleId)
     return vehicle
   },
 
   //Get vehicle's assigned bookings
-  async findVehicleAssignedBookingsById(id: string) {
+  async findVehicleAssignedBookingsById(vehicleId: string) {
     const bookings =
-      await bookingRepository.readAllAssignedBookingsByVehicleId(id)
+      await bookingRepository.readAllAssignedBookingsByVehicleId(vehicleId)
 
     return bookings.map((booking) => {
       return {
@@ -71,9 +72,9 @@ export const vehicleServices = {
   },
 
   //Get vehicle's completed bookings
-  async findVehicleCompletedBookingsById(id: string) {
+  async findVehicleCompletedBookingsById(vehicleId: string) {
     const bookings =
-      await bookingRepository.readCompletedBookingsByVehicleId(id)
+      await bookingRepository.readCompletedBookingsByVehicleId(vehicleId)
 
     return bookings.map((booking) => {
       return {
@@ -108,15 +109,15 @@ export const vehicleServices = {
   },
 
   //Get all vehicle repairs by vehicleId
-  async findAllVehicleRepairsByVehicleId(id: string) {
+  async findAllVehicleRepairsByVehicleId(vehicleId: string) {
     const repairs =
-      await vehicleRepairRepository.readVehicleRepairsByVehicleId(id)
+      await vehicleRepairRepository.readVehicleRepairsByVehicleId(vehicleId)
     return repairs
   },
 
   //Get vehicle repair by id
-  async findVehicleRepairById(id: string) {
-    return await vehicleRepairRepository.readRepairById(id)
+  async findVehicleRepairById(repairId: string) {
+    return await vehicleRepairRepository.readRepairById(repairId)
   },
 
   //Add vehicle to agency
@@ -165,12 +166,9 @@ export const vehicleServices = {
   },
 
   //Modify vehicle repair
-  async modifyVehicleRepair(
-    id: string,
-    data: Partial<InsertVehicleRepairType>,
-  ) {
+  async modifyVehicleRepair(data: ModifyVehicleRepairRequestType) {
     const repair = await vehicleRepairRepository.updateRepair(
-      id,
+      data.repairId,
       data.startDate,
       data.endDate,
       data.isCompleted,
@@ -187,14 +185,14 @@ export const vehicleServices = {
 
   //Modify vehicle details
   async modifyVehicle(
-    id: string,
+    vehicleId: string,
     data: ModifyVehicleRequestType,
     rcPhotoUrl?: string,
     pucPhotoUrl?: string,
     insurancePhotoUrl?: string,
   ) {
     const vehicle = await vehicleRepository.updateVehicle(
-      id,
+      vehicleId,
       data.type,
       data.brand,
       data.color,
@@ -202,10 +200,10 @@ export const vehicleServices = {
       data.capacity,
       data.odometerReading,
       data.rcExpiresOn,
-      data.insuranceExpiresOn,
       data.pucExpiresOn,
-      data.defaultRatePerKm,
+      data.insuranceExpiresOn,
       data.hasAC,
+      data.defaultRatePerKm,
       data.defaultAcChargePerDay,
       rcPhotoUrl,
       pucPhotoUrl,
@@ -241,18 +239,18 @@ export const vehicleServices = {
   },
 
   //Activate Vehicle
-  async activateVehicle(id: string) {
+  async activateVehicle(vehicleId: string) {
     const vehicle = await vehicleRepository.updateStatus(
-      id,
+      vehicleId,
       VehicleStatusEnum.AVAILABLE,
     )
     return vehicle[0]
   },
 
   //Inctivate Vehicle
-  async inactivateVehicle(id: string) {
+  async inactivateVehicle(vehicleId: string) {
     const vehicle = await vehicleRepository.updateStatus(
-      id,
+      vehicleId,
       VehicleStatusEnum.INACTIVE,
     )
     return vehicle[0]

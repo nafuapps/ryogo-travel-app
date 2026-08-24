@@ -12,6 +12,7 @@ import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
 import { ModifyDriverRequestType } from "../types/driver.types"
 import { addDays } from "date-fns"
+import { ModifyDriverLeaveRequestType } from "../types/driverLeave.types"
 
 export const driverServices = {
   //Get all drivers in an agency
@@ -41,15 +42,15 @@ export const driverServices = {
   },
 
   //Get driver details
-  async findDriverDetailsById(id: string) {
-    const driver = await driverRepository.readDriverById(id)
+  async findDriverDetailsById(driverId: string) {
+    const driver = await driverRepository.readDriverById(driverId)
     return driver
   },
 
   //Get driver's assigned bookings
-  async findDriverAssignedBookingsById(id: string) {
+  async findDriverAssignedBookingsById(driverId: string) {
     const bookings =
-      await bookingRepository.readAllAssignedBookingsByDriverId(id)
+      await bookingRepository.readAllAssignedBookingsByDriverId(driverId)
 
     return bookings.map((booking) => {
       return {
@@ -68,8 +69,9 @@ export const driverServices = {
   },
 
   //Get driver's completed bookings
-  async findDriverCompletedBookingsById(id: string) {
-    const bookings = await bookingRepository.readCompletedBookingsByDriverId(id)
+  async findDriverCompletedBookingsById(driverId: string) {
+    const bookings =
+      await bookingRepository.readCompletedBookingsByDriverId(driverId)
 
     return bookings.map((booking) => {
       return {
@@ -107,14 +109,15 @@ export const driverServices = {
   },
 
   //Get all driver leaves by driverId
-  async findAllDriverLeavesByDriverId(id: string) {
-    const leaves = await driverLeaveRepository.readDriverLeavesByDriverId(id)
+  async findAllDriverLeavesByDriverId(driverId: string) {
+    const leaves =
+      await driverLeaveRepository.readDriverLeavesByDriverId(driverId)
     return leaves
   },
 
   //Get driver leave by id
-  async findDriverLeaveById(id: string) {
-    return await driverLeaveRepository.readLeaveById(id)
+  async findDriverLeaveById(leaveId: string) {
+    return await driverLeaveRepository.readLeaveById(leaveId)
   },
 
   //Create driver
@@ -145,12 +148,12 @@ export const driverServices = {
 
   //Modify driver details
   async modifyDriver(
-    id: string,
+    driverId: string,
     data: ModifyDriverRequestType,
     licensePhotoUrl?: string,
   ) {
     const driver = await driverRepository.updateDriver(
-      id,
+      driverId,
       data.address,
       data.canDriveVehicleTypes,
       data.defaultAllowancePerDay,
@@ -175,9 +178,9 @@ export const driverServices = {
   },
 
   //Modify driver leave
-  async modifyDriverLeave(id: string, data: Partial<InsertDriverLeaveType>) {
+  async modifyDriverLeave(data: ModifyDriverLeaveRequestType) {
     const leave = await driverLeaveRepository.updateLeave(
-      id,
+      data.leaveId,
       data.startDate,
       data.endDate,
       data.isCompleted,
@@ -195,23 +198,23 @@ export const driverServices = {
   },
 
   //Activate Driver
-  async activateDriver(id: string, userId: string) {
+  async activateDriver(driverId: string, userId: string) {
     //Cannot activate if the corresponding user is inactive
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.INACTIVE) {
       return
     }
     const driver = await driverRepository.updateStatus(
-      id,
+      driverId,
       DriverStatusEnum.AVAILABLE,
     )
     return driver[0]
   },
 
   //Inactivate Driver
-  async inactivateDriver(id: string) {
+  async inactivateDriver(driverId: string) {
     const driver = await driverRepository.updateStatus(
-      id,
+      driverId,
       DriverStatusEnum.INACTIVE,
     )
     return driver[0]

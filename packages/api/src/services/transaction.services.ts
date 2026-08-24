@@ -29,8 +29,8 @@ export const transactionServices = {
   },
 
   //Get transaction details by transaction id
-  async findTransactionDetailsById(txnId: string) {
-    return await transactionRepository.readTransactionById(txnId)
+  async findTransactionDetailsById(transactionId: string) {
+    return await transactionRepository.readTransactionById(transactionId)
   },
 
   //Add a transaction
@@ -66,24 +66,31 @@ export const transactionServices = {
   },
 
   //Modify a transaction approval status
-  async modifyTransactionApprovalStatus(txnId: string, status: boolean) {
+  async modifyTransactionApprovalStatus(
+    transactionId: string,
+    status: boolean,
+  ) {
     const transaction =
-      await transactionRepository.updateTransactionApprovalStatus(txnId, status)
+      await transactionRepository.updateTransactionApprovalStatus(
+        transactionId,
+        status,
+      )
     return transaction[0]
   },
 
   //Upload transaction photo
-  async changeTransactionPhotoUrl(txnId: string, url: string) {
-    const txn = await transactionRepository.updateTransactionPhotoUrl(
-      txnId,
+  async changeTransactionPhotoUrl(transactionId: string, url: string) {
+    const transaction = await transactionRepository.updateTransactionPhotoUrl(
+      transactionId,
       url,
     )
-    return txn[0]
+    return transaction[0]
   },
 
   //Delete a transaction
-  async removeTransaction(txnId: string) {
-    const transaction = await transactionRepository.deleteTransaction(txnId)
+  async removeTransaction(transactionId: string) {
+    const transaction =
+      await transactionRepository.deleteTransaction(transactionId)
     return transaction[0]
   },
 }

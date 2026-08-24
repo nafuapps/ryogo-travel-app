@@ -24,11 +24,11 @@ export const paymentServices = {
   },
 
   async changePaymentDetailsByRPId(
-    rpId: string,
+    rpPaymentId: string,
     data: UpdatePaymentDetailsType,
   ) {
     const updatedPayment = await paymentRepository.updatePaymentDetailsByRpId(
-      rpId,
+      rpPaymentId,
       data,
     )
     return updatedPayment[0]

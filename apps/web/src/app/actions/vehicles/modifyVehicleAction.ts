@@ -63,8 +63,8 @@ export async function modifyVehicleAction(
     id,
     data,
     rcUrl,
-    insuranceUrl,
     pucUrl,
+    insuranceUrl,
   )
   if (!vehicle) return
 

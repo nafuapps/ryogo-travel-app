@@ -36,8 +36,8 @@ export const agencyServices = {
   },
 
   //Find agency by id
-  async findAgencyById(id: string) {
-    const agency = await agencyRepository.readAgencyById(id)
+  async findAgencyById(agencyId: string) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
     return agency
   },
 
@@ -166,9 +166,9 @@ export const agencyServices = {
   },
 
   //Activate an agency
-  async activateAgency(id: string, updateSubscriptionExpiry?: boolean) {
+  async activateAgency(agencyId: string, updateSubscriptionExpiry?: boolean) {
     const updatedAgency = await agencyRepository.updateAgencyStatus(
-      id,
+      agencyId,
       AgencyStatusEnum.ACTIVE,
       updateSubscriptionExpiry ? getSubscriptionExpirationDate() : undefined,
     )
@@ -176,9 +176,9 @@ export const agencyServices = {
   },
 
   //Inactivate an agency
-  async inactivateAgency(id: string) {
+  async inactivateAgency(agencyId: string) {
     const updatedAgency = await agencyRepository.updateAgencyStatus(
-      id,
+      agencyId,
       AgencyStatusEnum.INACTIVE,
     )
     return updatedAgency[0]

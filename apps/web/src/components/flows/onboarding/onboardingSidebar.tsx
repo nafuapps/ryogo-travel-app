@@ -27,8 +27,8 @@ export default function OnboardingSidebar({
   isLastStep,
   showLogout,
 }: {
-  currentProcess: number
-  isLastStep: boolean
+  currentProcess?: number
+  isLastStep?: boolean
   showLogout?: boolean
 }) {
   const t = useTranslations("Onboarding.Sidebar")
@@ -77,15 +77,16 @@ export default function OnboardingSidebar({
         <RyogoH4 weight="font-bold" color="light">
           {t("Heading")}
         </RyogoH4>
-        <div
-          id="OnboardingSidebarSteps"
-          className="flex flex-col gap-2 lg:gap-3"
-        >
-          {items.map((item, index) => (
-            <div key={index} className="flex flex-row gap-2 md:gap-3">
-              <div className={`flex flex-col gap-2 md:gap-3 items-center`}>
-                <div
-                  className={`rounded-lg
+        {currentProcess && (
+          <div
+            id="OnboardingSidebarSteps"
+            className="flex flex-col gap-2 lg:gap-3"
+          >
+            {items.map((item, index) => (
+              <div key={index} className="flex flex-row gap-2 md:gap-3">
+                <div className={`flex flex-col gap-2 md:gap-3 items-center`}>
+                  <div
+                    className={`rounded-lg
           ${
             currentProcess > index || (currentProcess === index && isLastStep)
               ? "bg-slate-950 dark:bg-white shadow"
@@ -93,55 +94,58 @@ export default function OnboardingSidebar({
                 ? "bg-white  dark:bg-slate-950 border border-sky-700 dark:border-sky-300 shadow"
                 : "bg-slate-200  dark:bg-slate-700"
           } flex shrink-0 justify-center items-center size-9 lg:size-10`}
-                >
-                  {currentProcess > index ||
-                  (currentProcess === index && isLastStep) ? (
-                    <RyogoIcon icon={Check} size="sm" color="white" />
-                  ) : (
-                    <RyogoP
-                      weight="font-bold"
-                      color={currentProcess === index ? "brand" : "light"}
-                    >
-                      {index + 1}
-                    </RyogoP>
+                  >
+                    {currentProcess > index ||
+                    (currentProcess === index && isLastStep) ? (
+                      <RyogoIcon icon={Check} size="sm" color="white" />
+                    ) : (
+                      <RyogoP
+                        weight="font-bold"
+                        color={currentProcess === index ? "brand" : "light"}
+                      >
+                        {index + 1}
+                      </RyogoP>
+                    )}
+                  </div>
+                  {index < items.length - 1 && (
+                    <div
+                      className={`w-0.5 h-14 lg:h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-200" : "bg-slate-200  dark:bg-slate-700"} rounded-full`}
+                    ></div>
                   )}
                 </div>
-                {index < items.length - 1 && (
-                  <div
-                    className={`w-0.5 h-14 lg:h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-200" : "bg-slate-200  dark:bg-slate-700"} rounded-full`}
-                  ></div>
-                )}
+                <div className="flex flex-col gap-1 lg:gap-1.5">
+                  <RyogoP
+                    weight={"font-bold"}
+                    color={
+                      currentProcess > index
+                        ? "dark"
+                        : currentProcess === index
+                          ? "brand"
+                          : "light"
+                    }
+                  >
+                    {item.title}
+                  </RyogoP>
+                  <RyogoSmall
+                    color={currentProcess >= index ? "slate" : "light"}
+                  >
+                    {item.description}
+                  </RyogoSmall>
+                  <RyogoCaption color={"light"} weight="font-bold">
+                    {item.steps}
+                  </RyogoCaption>
+                </div>
               </div>
-              <div className="flex flex-col gap-1 lg:gap-1.5">
-                <RyogoP
-                  weight={"font-bold"}
-                  color={
-                    currentProcess > index
-                      ? "dark"
-                      : currentProcess === index
-                        ? "brand"
-                        : "light"
-                  }
-                >
-                  {item.title}
-                </RyogoP>
-                <RyogoSmall color={currentProcess >= index ? "slate" : "light"}>
-                  {item.description}
-                </RyogoSmall>
-                <RyogoCaption color={"light"} weight="font-bold">
-                  {item.steps}
-                </RyogoCaption>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-auto flex flex-col gap-2 lg:gap-3">
+            ))}
+          </div>
+        )}
+        <div className="mt-auto flex flex-col gap-3 md:gap-4">
           {showLogout && (
             <Button
               variant="outline"
               onClick={logoutUser}
               disabled={isPending}
-              className="self-start"
+              className="md:self-start"
             >
               <RyogoCaption weight="font-bold" color="light">
                 {t("Logout")}

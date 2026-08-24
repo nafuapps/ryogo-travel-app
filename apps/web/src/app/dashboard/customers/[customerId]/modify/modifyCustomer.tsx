@@ -23,6 +23,7 @@ import {
 } from "@/lib/utils"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { ModifyCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 
 export default function ModifyCustomerPageComponent({
   customer,
@@ -62,7 +63,9 @@ export default function ModifyCustomerPageComponent({
   //Submit actions
   async function onSubmit(data: ModifyCustomerType) {
     startTransition(async () => {
-      const modifyCustomerData = {
+      const modifyCustomerData: ModifyCustomerRequestType = {
+        customerId: customer.id,
+        agencyId: customer.agencyId,
         name: data.name,
         email: data.email ?? undefined,
         address: data.address ?? undefined,
@@ -70,13 +73,7 @@ export default function ModifyCustomerPageComponent({
         state: data.state,
         city: data.city,
       }
-      if (
-        await modifyCustomerAction(
-          customer.id,
-          customer.agencyId,
-          modifyCustomerData,
-        )
-      ) {
+      if (await modifyCustomerAction(modifyCustomerData)) {
         router.replace(`/dashboard/customers/${customer.id}`)
         toast.success(t("Success"))
       } else {

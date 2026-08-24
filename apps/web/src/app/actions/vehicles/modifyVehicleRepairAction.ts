@@ -3,15 +3,11 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import {
-  EntityTypeEnum,
-  InsertVehicleRepairType,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { ModifyVehicleRepairRequestType } from "@ryogo-travel-app/api/types/vehicleRepair.types"
 
 export async function modifyVehicleRepairAction(
-  id: string,
-  data: Partial<InsertVehicleRepairType>,
+  data: ModifyVehicleRepairRequestType,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -28,7 +24,7 @@ export async function modifyVehicleRepairAction(
     return
   }
 
-  const repair = await vehicleServices.modifyVehicleRepair(id, data)
+  const repair = await vehicleServices.modifyVehicleRepair(data)
   if (!repair) return
 
   await notificationServices.addNotification({

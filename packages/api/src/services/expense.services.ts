@@ -37,9 +37,9 @@ export const expenseServices = {
   },
 
   //Modify an expense approval status
-  async modifyExpenseApprovalStatus(expId: string, status: boolean) {
+  async modifyExpenseApprovalStatus(expenseId: string, status: boolean) {
     const expense = await expenseRepository.updateExpenseApprovalStatus(
-      expId,
+      expenseId,
       status,
     )
     return expense[0]

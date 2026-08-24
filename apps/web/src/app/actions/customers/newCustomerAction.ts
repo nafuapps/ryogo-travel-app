@@ -25,17 +25,7 @@ export async function newCustomerAction(data: NewCustomerRequestType) {
     return
   }
 
-  const customer = await customerServices.addNewCustomer(
-    data.name,
-    data.phone,
-    data.city,
-    data.state,
-    data.agencyId,
-    data.addedByUserId,
-    data.email,
-    data.address,
-    data.remarks,
-  )
+  const customer = await customerServices.addNewCustomer(data)
   if (!customer) return
 
   if (data.photo && data.photo[0]) {

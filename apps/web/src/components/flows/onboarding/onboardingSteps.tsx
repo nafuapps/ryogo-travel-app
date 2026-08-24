@@ -2,8 +2,9 @@ import { SubmitEventHandler } from "react"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoCaption, RyogoH2 } from "@/components/typography"
+import StepsTracker from "@/components/form/stepsTracker"
 
 export const CreateAccountTotalSteps = 5
 export const VerifyAccountTotalSteps = 1
@@ -27,22 +28,27 @@ export function OnboardingStepPage(props: {
 
 export function OnboardingStepHeader(props: {
   headerId: string
-  children: React.ReactNode
+  title: string
+  stepLabel: string
+  totalSteps?: number
+  currentStepIndex?: number
 }) {
   return (
     <div id={props.headerId} className="flex flex-col gap-1.5 lg:gap-2 w-full">
-      {props.children}
-    </div>
-  )
-}
-
-export function OnboardingStepHeaderTopLine(props: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-row gap-3 justify-between items-center">
-      {props.children}
-      <SidebarTrigger className="md:hidden" />
+      <div className="flex flex-row gap-3 justify-between items-center">
+        <RyogoH2>{props.title}</RyogoH2>
+        <SidebarTrigger className="md:hidden" />
+      </div>
+      {props.totalSteps !== undefined &&
+        props.currentStepIndex !== undefined && (
+          <StepsTracker
+            steps={props.totalSteps}
+            current={props.currentStepIndex}
+          />
+        )}
+      <RyogoCaption color="light" weight="font-bold">
+        {props.stepLabel}
+      </RyogoCaption>
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import AddCustomMissionPageComponent from "./addCustomMission"
+import AddCustomMissionPageComponent from "@/components/missions/addCustomMission"
 
 export const metadata: Metadata = {
   title: `Add Custom Mission - ${pageTitle}`,

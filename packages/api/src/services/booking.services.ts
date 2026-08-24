@@ -643,28 +643,28 @@ export const bookingServices = {
     return updatedBooking[0]
   },
 
-  async addQuoteUrl(id: string, url: string) {
-    return await bookingRepository.updateQuoteUrl(id, url)
+  async addQuoteUrl(bookingId: string, url: string) {
+    return await bookingRepository.updateQuoteUrl(bookingId, url)
   },
 
-  async changeQuoteSent(id: string) {
-    return await bookingRepository.updateQuoteSent(id)
+  async changeQuoteSent(bookingId: string) {
+    return await bookingRepository.updateQuoteSent(bookingId)
   },
 
-  async addConfirmationUrl(id: string, url: string) {
-    return await bookingRepository.updateConfirmationUrl(id, url)
+  async addConfirmationUrl(bookingId: string, url: string) {
+    return await bookingRepository.updateConfirmationUrl(bookingId, url)
   },
 
-  async changeConfirmationSent(id: string) {
-    return await bookingRepository.updateConfirmationSent(id)
+  async changeConfirmationSent(bookingId: string) {
+    return await bookingRepository.updateConfirmationSent(bookingId)
   },
 
-  async addInvoiceUrl(id: string, url: string) {
-    return await bookingRepository.updateInvoiceUrl(id, url)
+  async addInvoiceUrl(bookingId: string, url: string) {
+    return await bookingRepository.updateInvoiceUrl(bookingId, url)
   },
 
-  async changeInvoiceSent(id: string) {
-    return await bookingRepository.updateInvoiceSent(id)
+  async changeInvoiceSent(bookingId: string) {
+    return await bookingRepository.updateInvoiceSent(bookingId)
   },
 }
 

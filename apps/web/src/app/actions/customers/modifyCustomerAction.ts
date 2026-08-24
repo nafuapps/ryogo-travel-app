@@ -3,27 +3,17 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { ModifyCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function modifyCustomerAction(
-  id: string,
-  agencyId: string,
-  data: {
-    name?: string
-    email?: string
-    address?: string
-    remarks?: string
-    state: string
-    city: string
-  },
-) {
+export async function modifyCustomerAction(data: ModifyCustomerRequestType) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
-    currentUser.agencyId !== agencyId
+    currentUser.agencyId !== data.agencyId
   ) {
     return
   }
@@ -32,19 +22,11 @@ export async function modifyCustomerAction(
     return
   }
 
-  const customer = await customerServices.modifyCustomer(
-    id,
-    data.state,
-    data.city,
-    data.name,
-    data.email,
-    data.address,
-    data.remarks,
-  )
+  const customer = await customerServices.modifyCustomer(data)
   if (!customer) return
 
   await notificationServices.addNotification({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     entityType: EntityTypeEnum.CUSTOMER,
     entityId: customer.id,
     isFeed: true,

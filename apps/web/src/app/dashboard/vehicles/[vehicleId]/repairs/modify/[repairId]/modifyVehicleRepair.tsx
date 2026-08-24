@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { InsertVehicleRepairType } from "@ryogo-travel-app/db/schema"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -20,6 +19,7 @@ import { FindVehicleRepairByIdType } from "@ryogo-travel-app/api/services/vehicl
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { ModifyVehicleRepairRequestType } from "@ryogo-travel-app/api/types/vehicleRepair.types"
 
 export default function ModifyVehicleRepairPageComponent({
   repair,
@@ -72,17 +72,16 @@ export default function ModifyVehicleRepairPageComponent({
   //Form submit
   async function onSubmit(values: ModifyVehicleRepairType) {
     startTransition(async () => {
-      const modifyRepair: Partial<InsertVehicleRepairType> = {
+      const modifyRepair: ModifyVehicleRepairRequestType = {
+        repairId: repair.id,
+        agencyId: repair.agencyId,
         startDate: values.startDate,
         endDate: values.endDate,
         isCompleted: values.isCompleted,
         remarks: values.remarks,
         cost: values.cost,
       }
-      const modifiedRepair = await modifyVehicleRepairAction(
-        repair.id,
-        modifyRepair,
-      )
+      const modifiedRepair = await modifyVehicleRepairAction(modifyRepair)
       if (modifiedRepair) {
         router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
         toast.success(t("Success"))

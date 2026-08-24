@@ -90,8 +90,9 @@ export const userServices = {
   },
 
   //Get user's assigned bookings
-  async findUserAssignedBookingsById(id: string) {
-    const bookings = await bookingRepository.readAssignedBookingsByUserId(id)
+  async findUserAssignedBookingsById(userId: string) {
+    const bookings =
+      await bookingRepository.readAssignedBookingsByUserId(userId)
 
     return bookings.map((booking) => {
       return {
@@ -110,8 +111,9 @@ export const userServices = {
   },
 
   //Get user's completed bookings
-  async findUserCompletedBookingsById(id: string) {
-    const bookings = await bookingRepository.readCompletedBookingsByUserId(id)
+  async findUserCompletedBookingsById(userId: string) {
+    const bookings =
+      await bookingRepository.readCompletedBookingsByUserId(userId)
 
     return bookings.map((booking) => {
       return {
@@ -144,27 +146,28 @@ export const userServices = {
   },
 
   //Get user's activity
-  async findUserActivityById(id: string) {
+  async findUserActivityById(userId: string) {
     //Get added bookings
-    const bookings = await bookingRepository.readBookingsByBookedUserId(id)
+    const bookings = await bookingRepository.readBookingsByBookedUserId(userId)
 
     //Get added transactions
     const transactions =
-      await transactionRepository.readTransactionsByAddedUserId(id)
+      await transactionRepository.readTransactionsByAddedUserId(userId)
 
     //Get added expenses
-    const expenses = await expenseRepository.readExpensesByAddedUserId(id)
+    const expenses = await expenseRepository.readExpensesByAddedUserId(userId)
 
     //Get added customers
-    const customers = await customerRepository.readCustomersByAddedUserId(id)
+    const customers =
+      await customerRepository.readCustomersByAddedUserId(userId)
 
     //Get added driver leaves
     const driverLeaves =
-      await driverLeaveRepository.readDriverLeavesByAddedUserId(id)
+      await driverLeaveRepository.readDriverLeavesByAddedUserId(userId)
 
     //Get added vehicle repairs
     const vehicleRepairs =
-      await vehicleRepairRepository.readVehicleRepairsByAddedUserId(id)
+      await vehicleRepairRepository.readVehicleRepairsByAddedUserId(userId)
 
     return {
       bookings,
@@ -706,13 +709,16 @@ export const userServices = {
   },
 
   //Inactivate User
-  async inactivateUser(id: string, role: UserRolesEnum) {
+  async inactivateUser(userId: string, role: UserRolesEnum) {
     const user = await userRepository.updateUserStatus(
-      id,
+      userId,
       UserStatusEnum.INACTIVE,
     )
     if (role === UserRolesEnum.DRIVER) {
-      await driverRepository.updateStatusByUserId(id, DriverStatusEnum.INACTIVE)
+      await driverRepository.updateStatusByUserId(
+        userId,
+        DriverStatusEnum.INACTIVE,
+      )
     }
     return user[0]
   },

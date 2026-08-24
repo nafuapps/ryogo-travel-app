@@ -35,6 +35,7 @@ import { Label } from "@/components/ui/label"
 import {
   Combobox,
   ComboboxContent,
+  ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
@@ -285,7 +286,9 @@ export function RyogoCombobox(props: {
           </FormLabel>
           <Combobox
             items={props.array}
-            itemToStringValue={(item) => item.display}
+            itemToStringValue={(item: { value: string; display: string }) =>
+              item.display
+            }
             {...props.register}
             onValueChange={(value) => {
               field.onChange(value)
@@ -295,6 +298,7 @@ export function RyogoCombobox(props: {
           >
             <ComboboxInput placeholder={props.placeholder} />
             <ComboboxContent>
+              <ComboboxEmpty />
               <ComboboxList>
                 {(item) => (
                   <ComboboxItem key={item.value} value={item.value}>

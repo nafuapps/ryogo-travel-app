@@ -14,9 +14,14 @@ import {
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { useTranslations } from "next-intl"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  VehicleTypesEnum,
+  VehicleBrandEnum,
+  VehicleColorEnum,
+} from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 
 export function AddVehicleStep1(props: {
   onNext: () => void
@@ -31,8 +36,8 @@ export function AddVehicleStep1(props: {
       .min(7, t("Field1.Error1"))
       .max(15, t("Field1.Error2")),
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field2.Error1")),
-    brand: z.string().min(3, t("Field3.Error1")).max(15, t("Field3.Error2")),
-    color: z.string().min(3, t("Field4.Error1")).max(15, t("Field4.Error2")),
+    brand: z.enum(VehicleBrandEnum).nonoptional(t("Field3.Error1")),
+    color: z.enum(VehicleColorEnum).nonoptional(t("Field4.Error1")),
     model: z.string().min(3, t("Field5.Error1")).max(30, t("Field5.Error2")),
   })
   type Step1Type = z.infer<typeof step1Schema>
@@ -85,19 +90,19 @@ export function AddVehicleStep1(props: {
             title={t("Field2.Title")}
             placeholder={t("Field2.Title")}
           />
-          <RyogoInput
+          <RyogoSelect
             name={"brand"}
-            type="text"
-            label={t("Field3.Title")}
+            register={formData.register("brand")}
+            array={getEnumValueDisplayPairs(VehicleBrandEnum)}
+            title={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
           />
-          <RyogoInput
+          <RyogoSelect
             name={"color"}
-            type="text"
-            label={t("Field4.Title")}
+            register={formData.register("color")}
+            array={getEnumValueDisplayPairs(VehicleColorEnum)}
+            title={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
           />
           <RyogoInput
             name={"model"}
@@ -114,6 +119,18 @@ export function AddVehicleStep1(props: {
             {formData.formState.isSubmitting && <Spinner />}
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
+          <QuickAddVehicleAlertButton
+            agencyId={props.finalData.agencyId}
+            vehicleNumber={formData.getValues("vehicleNumber")}
+            type={formData.getValues("type")}
+            brand={formData.getValues("brand")}
+            color={formData.getValues("color")}
+            model={formData.getValues("model")}
+            disabled={
+              !formData.formState.isValid || formData.formState.isSubmitting
+            }
+            isOnboarding
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

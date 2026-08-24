@@ -20,6 +20,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
 
 export function NewDriverStep1(props: {
   onNext: () => void
@@ -30,34 +31,57 @@ export function NewDriverStep1(props: {
 }) {
   const t = useTranslations("Dashboard.NewDriver.Step1")
 
-  const step1Schema = z.object({
-    driverName: z
-      .string()
-      .min(5, t("Field1.Error1"))
-      .max(30, t("Field1.Error2")),
-    driverPhone: z.string().length(10, t("Field2.Error1")),
-    driverEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
-    driverPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field4.Error1"))
-      .refine((file) => {
-        if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
+  const step1Schema = z
+    .object({
+      driverName: z
+        .string()
+        .min(5, t("Field1.Error1"))
+        .max(30, t("Field1.Error2")),
+      driverPhone: z
+        .string()
+        .length(10, t("Field2.Error1"))
+        .refine((value) => {
+          // Check if a driver with same phone exists in this agency
+          return !props.allDrivers.some(
+            (u) => u.phone === value && u.agencyId === props.agencyId,
+          )
+        }, t("APIError1")),
+      driverEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
+      driverPhotos: z
+        .instanceof(FileList)
+        .refine((file) => {
+          if (file.length < 1) return true
+          return file[0] && file[0].size < 1000000
+        }, t("Field4.Error1"))
+        .refine((file) => {
+          if (file.length < 1) return true
+          return (
+            file[0] &&
+            [
+              "image/jpeg",
+              "image/png",
+              "image/jpg",
+              "image/bmp",
+              "image/webp",
+            ].includes(file[0].type)
+          )
+        }, t("Field4.Error2"))
+        .optional(),
+    })
+    .superRefine((data, ctx) => {
+      // Check if a driver with same phone and email exists in entire DB
+      if (
+        props.allDrivers.some(
+          (u) => u.phone === data.driverPhone && u.email === data.driverEmail,
         )
-      }, t("Field4.Error2"))
-      .optional(),
-  })
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          message: t("APIError2"),
+          path: ["driverEmail"],
+        })
+      }
+    })
 
   type Step1Type = z.infer<typeof step1Schema>
 
@@ -73,39 +97,17 @@ export function NewDriverStep1(props: {
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    if (
-      props.allDrivers.some(
-        (u) => u.phone === data.driverPhone && u.agencyId === props.agencyId,
-      )
-    ) {
-      // Check if a driver with same phone exists in this agency
-      formData.setError("driverPhone", {
-        type: "manual",
-        message: t("APIError1"),
-      })
-    } else if (
-      props.allDrivers.some(
-        (u) => u.phone === data.driverPhone && u.email === data.driverEmail,
-      )
-    ) {
-      // Check if a driver with same phone and email exists in entire DB
-      formData.setError("driverPhone", {
-        type: "manual",
-        message: t("APIError2"),
-      })
-    } else {
-      props.setNewDriverFormData({
-        agencyId: props.newDriverFormData.agencyId,
-        data: {
-          ...props.newDriverFormData.data,
-          name: data.driverName,
-          phone: data.driverPhone,
-          email: data.driverEmail,
-          userPhotos: data.driverPhotos,
-        },
-      })
-      props.onNext()
-    }
+    props.setNewDriverFormData({
+      agencyId: props.newDriverFormData.agencyId,
+      data: {
+        ...props.newDriverFormData.data,
+        name: data.driverName,
+        phone: data.driverPhone,
+        email: data.driverEmail,
+        userPhotos: data.driverPhotos,
+      },
+    })
+    props.onNext()
   }
 
   return (
@@ -165,6 +167,16 @@ export function NewDriverStep1(props: {
               {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             </RyogoCaption>
           </Button>
+          <QuickAddDriverAlertButton
+            name={formData.getValues("driverName")}
+            email={formData.getValues("driverEmail")}
+            phone={formData.getValues("driverPhone")}
+            photo={formData.getValues("driverPhotos")}
+            agencyId={props.agencyId}
+            disabled={
+              !formData.formState.isValid || formData.formState.isSubmitting
+            }
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

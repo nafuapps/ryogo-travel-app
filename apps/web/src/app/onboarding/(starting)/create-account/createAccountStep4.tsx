@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
@@ -30,7 +30,6 @@ export function CreateAccountStep4(props: {
   updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Step4")
-  const [wantsPremiumTrial, setWantsPremiumTrial] = useState(true)
 
   const step4Schema = z
     .object({
@@ -42,7 +41,6 @@ export function CreateAccountStep4(props: {
         .string()
         .min(8, t("Field2.Error1"))
         .refine((s) => !s.includes(" "), t("Field2.Error3")),
-      wantsPremium: z.boolean(),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: t("Field2.Error2"),
@@ -61,7 +59,6 @@ export function CreateAccountStep4(props: {
     props.updateFinalData({
       agency: {
         ...props.finalData.agency,
-        tryPremium: wantsPremiumTrial,
       },
       owner: {
         ...props.finalData.owner,
@@ -70,6 +67,7 @@ export function CreateAccountStep4(props: {
     })
     props.onNext()
   }
+
   return (
     <Form {...formData}>
       <OnboardingStepForm
@@ -95,11 +93,19 @@ export function CreateAccountStep4(props: {
           <RyogoSmall weight="font-bold">{t("Field3.Title")}</RyogoSmall>
           {/* <div className="flex flex-col gap-2 lg:gap-3 border rounded-lg p-4 lg:p-5"> */}
           <PlanSelectionCard
-            type={SubscriptionPlanEnum.BASIC}
+            type={SubscriptionPlanEnum.PREMIUM}
             onClick={() => {
-              setWantsPremiumTrial(true)
+              props.updateFinalData({
+                agency: {
+                  ...props.finalData.agency,
+                  tryPremium: true,
+                },
+                owner: {
+                  ...props.finalData.owner,
+                },
+              })
             }}
-            selected={wantsPremiumTrial}
+            selected={props.finalData.agency.tryPremium}
             icon={BadgeCheck}
             title={t("Field3.PremiumTitle")}
             desc={t("Field3.PremiumDesc", { day: PREMIUM_TRIAL_DAYS })}
@@ -107,9 +113,17 @@ export function CreateAccountStep4(props: {
           <PlanSelectionCard
             type={SubscriptionPlanEnum.BASIC}
             onClick={() => {
-              setWantsPremiumTrial(false)
+              props.updateFinalData({
+                agency: {
+                  ...props.finalData.agency,
+                  tryPremium: false,
+                },
+                owner: {
+                  ...props.finalData.owner,
+                },
+              })
             }}
-            selected={!wantsPremiumTrial}
+            selected={!props.finalData.agency.tryPremium}
             icon={Disc}
             title={t("Field3.BasicTitle")}
             desc={t("Field3.BasicDesc")}

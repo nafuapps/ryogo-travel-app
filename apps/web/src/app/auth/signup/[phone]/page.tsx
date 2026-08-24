@@ -24,9 +24,9 @@ export default async function SignupExistingPage({
   }
   const accounts = await userServices.findUserAccountsByPhone(phone)
 
-  //If not accounts found, go for onboarding
+  //If not accounts found, go for onboarding with this phone
   if (accounts.length < 1) {
-    redirect("/onboarding", RedirectType.replace)
+    redirect(`/onboarding?phone=${phone}`, RedirectType.replace)
   }
 
   return <SignupExistingPageComponent accounts={accounts} phone={phone} />

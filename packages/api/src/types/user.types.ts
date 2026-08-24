@@ -8,10 +8,10 @@ export type CreateOwnerAccountRequestType = {
     businessAddress: string
     agencyCity: string
     agencyState: string
+    tryPremium: boolean
     commissionRate?: number | undefined
     logo?: FileList
     qrCode?: FileList
-    tryPremium?: boolean
   }
   owner: {
     email: string
@@ -29,10 +29,10 @@ export type AddDriverRequestType = {
     name: string
     phone: string
     email: string
-    licenseNumber: string
+    licenseNumber?: string
     licenseExpiresOn?: Date
-    address: string
-    canDriveVehicleTypes: VehicleTypesEnum[]
+    address?: string
+    canDriveVehicleTypes?: VehicleTypesEnum[]
     defaultAllowancePerDay?: number | undefined
     licensePhotos?: FileList
     userPhotos?: FileList

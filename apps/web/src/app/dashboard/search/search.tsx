@@ -143,13 +143,6 @@ export default function SearchPageComponent({
           d.phone,
           d.status,
         ])
-        // return (
-        //   d.address.toUpperCase().includes(searchTerm) ||
-        //   d.licenseNumber.toUpperCase().includes(searchTerm) ||
-        //   d.name.toUpperCase().includes(searchTerm) ||
-        //   d.phone.toUpperCase().includes(searchTerm) ||
-        //   d.status.toUpperCase().includes(searchTerm)
-        // )
       })
     }
   }
@@ -167,14 +160,6 @@ export default function SearchPageComponent({
           v.vehicleNumber,
           v.status,
         ])
-        // return (
-        //   v.brand.toUpperCase().includes(searchTerm) ||
-        //   v.color.toUpperCase().includes(searchTerm) ||
-        //   v.model.toUpperCase().includes(searchTerm) ||
-        //   v.type.toUpperCase().includes(searchTerm) ||
-        //   v.vehicleNumber.toUpperCase().includes(searchTerm) ||
-        //   v.status.toUpperCase().includes(searchTerm)
-        // )
       })
     }
   }
@@ -193,16 +178,6 @@ export default function SearchPageComponent({
           c.remarks ?? "",
           c.status,
         ])
-        // return (
-        //   c.location.city.toUpperCase().includes(searchTerm) ||
-        //   c.location.state.toUpperCase().includes(searchTerm) ||
-        //   c.name.toUpperCase().includes(searchTerm) ||
-        //   c.phone.toUpperCase().includes(searchTerm) ||
-        //   c.remarks?.toUpperCase().includes(searchTerm) ||
-        //   c.address?.toUpperCase().includes(searchTerm) ||
-        //   c.email?.toUpperCase().includes(searchTerm) ||
-        //   c.status.toUpperCase().includes(searchTerm)
-        // )
       })
     }
   }
@@ -237,31 +212,6 @@ export default function SearchPageComponent({
           b.dropAddress ?? "",
           b.remarks ?? "",
         ])
-        // return (
-        //   b.source.city.toUpperCase().includes(searchTerm) ||
-        //   b.source.state.toUpperCase().includes(searchTerm) ||
-        //   b.destination.city.toUpperCase().includes(searchTerm) ||
-        //   b.destination.state.toUpperCase().includes(searchTerm) ||
-        //   b.assignedVehicle?.vehicleNumber.toUpperCase().includes(searchTerm) ||
-        //   b.assignedVehicleId?.toUpperCase().includes(searchTerm) ||
-        //   b.assignedDriver?.name.toUpperCase().includes(searchTerm) ||
-        //   b.assignedDriver?.phone.toUpperCase().includes(searchTerm) ||
-        //   b.assignedDriverId?.toUpperCase().includes(searchTerm) ||
-        //   b.assignedUser.name.toUpperCase().includes(searchTerm) ||
-        //   b.assignedUser.phone.toUpperCase().includes(searchTerm) ||
-        //   b.assignedUserId.toUpperCase().includes(searchTerm) ||
-        //   b.bookedByUser.name.toUpperCase().includes(searchTerm) ||
-        //   b.bookedByUser.phone.toUpperCase().includes(searchTerm) ||
-        //   b.bookedByUserId.toUpperCase().includes(searchTerm) ||
-        //   b.customer.name.toUpperCase().includes(searchTerm) ||
-        //   b.customer.phone.toUpperCase().includes(searchTerm) ||
-        //   b.customerId.toUpperCase().includes(searchTerm) ||
-        //   b.type.toUpperCase().includes(searchTerm) ||
-        //   b.status.toUpperCase().includes(searchTerm) ||
-        //   b.pickupAddress?.toUpperCase().includes(searchTerm) ||
-        //   b.dropAddress?.toUpperCase().includes(searchTerm) ||
-        //   b.remarks?.toUpperCase().includes(searchTerm)
-        // )
       })
     }
   }

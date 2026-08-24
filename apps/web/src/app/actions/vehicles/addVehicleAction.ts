@@ -32,46 +32,46 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   const vehicle = await vehicleServices.addVehicle(data)
   if (!vehicle) return
 
-  if (vehicle.id) {
-    let rcUrl
-    let pucUrl
-    let insuranceUrl
-    let vehiclePhotoUrl
+  let rcUrl
+  let pucUrl
+  let insuranceUrl
+  let vehiclePhotoUrl
 
-    // Upload files to Supabase Storage
-    if (data.data.rcPhotos && data.data.rcPhotos[0]) {
-      const rc = data.data.rcPhotos[0]
-      const uploadedFile = await uploadFile(
-        rc,
-        generateRCPhotoPathName(vehicle.id, rc),
-      )
-      rcUrl = uploadedFile.path
-    }
-    if (data.data.pucPhotos && data.data.pucPhotos[0]) {
-      const puc = data.data.pucPhotos[0]
-      const uploadedFile = await uploadFile(
-        puc,
-        generatePUCPhotoPathName(vehicle.id, puc),
-      )
-      pucUrl = uploadedFile.path
-    }
-    if (data.data.insurancePhotos && data.data.insurancePhotos[0]) {
-      const insurance = data.data.insurancePhotos[0]
-      const uploadedFile = await uploadFile(
-        insurance,
-        generateInsurancePhotoPathName(vehicle.id, insurance),
-      )
-      insuranceUrl = uploadedFile.path
-    }
-    if (data.data.vehiclePhotos && data.data.vehiclePhotos[0]) {
-      const vehiclePhoto = data.data.vehiclePhotos[0]
-      const uploadedFile = await uploadFile(
-        vehiclePhoto,
-        generateVehiclePhotoPathName(vehicle.id, vehiclePhoto),
-      )
-      vehiclePhotoUrl = uploadedFile.path
-    }
+  // Upload files to Supabase Storage
+  if (data.data.rcPhotos && data.data.rcPhotos[0]) {
+    const rc = data.data.rcPhotos[0]
+    const uploadedFile = await uploadFile(
+      rc,
+      generateRCPhotoPathName(vehicle.id, rc),
+    )
+    rcUrl = uploadedFile.path
+  }
+  if (data.data.pucPhotos && data.data.pucPhotos[0]) {
+    const puc = data.data.pucPhotos[0]
+    const uploadedFile = await uploadFile(
+      puc,
+      generatePUCPhotoPathName(vehicle.id, puc),
+    )
+    pucUrl = uploadedFile.path
+  }
+  if (data.data.insurancePhotos && data.data.insurancePhotos[0]) {
+    const insurance = data.data.insurancePhotos[0]
+    const uploadedFile = await uploadFile(
+      insurance,
+      generateInsurancePhotoPathName(vehicle.id, insurance),
+    )
+    insuranceUrl = uploadedFile.path
+  }
+  if (data.data.vehiclePhotos && data.data.vehiclePhotos[0]) {
+    const vehiclePhoto = data.data.vehiclePhotos[0]
+    const uploadedFile = await uploadFile(
+      vehiclePhoto,
+      generateVehiclePhotoPathName(vehicle.id, vehiclePhoto),
+    )
+    vehiclePhotoUrl = uploadedFile.path
+  }
 
+  if (rcUrl || pucUrl || insuranceUrl || vehiclePhotoUrl) {
     await vehicleServices.renewVehicleDocURLs(
       vehicle.id,
       rcUrl,

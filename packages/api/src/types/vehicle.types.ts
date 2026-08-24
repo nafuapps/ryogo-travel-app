@@ -1,19 +1,23 @@
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  VehicleBrandEnum,
+  VehicleColorEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 
 export type AddVehicleRequestType = {
   agencyId: string
   data: {
     vehicleNumber: string
     type: VehicleTypesEnum
-    brand: string
-    color: string
+    brand: VehicleBrandEnum
+    color: VehicleColorEnum
     model: string
     capacity?: number | undefined
-    odometerReading: number | undefined
+    odometerReading?: number | undefined
     insuranceExpiresOn?: Date
     pucExpiresOn?: Date
     rcExpiresOn?: Date
-    hasAC: boolean
+    hasAC?: boolean
     defaultRatePerKm?: number | undefined
     defaultAcChargePerDay?: number | undefined
     rcPhotos?: FileList | undefined
@@ -25,8 +29,8 @@ export type AddVehicleRequestType = {
 
 export type ModifyVehicleRequestType = {
   type?: VehicleTypesEnum
-  brand?: string
-  color?: string
+  brand?: VehicleBrandEnum
+  color?: VehicleColorEnum
   model?: string
   capacity?: number
   odometerReading?: number

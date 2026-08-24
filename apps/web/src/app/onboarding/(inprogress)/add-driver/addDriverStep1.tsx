@@ -16,6 +16,7 @@ import {
 import { Form } from "@/components/ui/form"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
 
 export function AddDriverStep1(props: {
   onNext: () => void
@@ -25,34 +26,49 @@ export function AddDriverStep1(props: {
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Step1")
 
-  const step1Schema = z.object({
-    driverName: z
-      .string()
-      .min(5, t("Field1.Error1"))
-      .max(30, t("Field1.Error2")),
-    driverPhone: z.string().length(10, t("Field2.Error1")),
-    driverEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
-    driverPhotos: z
-      .instanceof(FileList)
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
-      }, t("Field4.Error1"))
-      .refine((file) => {
-        if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
+  const step1Schema = z
+    .object({
+      driverName: z
+        .string()
+        .min(5, t("Field1.Error1"))
+        .max(30, t("Field1.Error2")),
+      driverPhone: z.string().length(10, t("Field2.Error1")),
+      driverEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
+      driverPhotos: z
+        .instanceof(FileList)
+        .refine((file) => {
+          if (file.length < 1) return true
+          return file[0] && file[0].size < 1000000
+        }, t("Field4.Error1"))
+        .refine((file) => {
+          if (file.length < 1) return true
+          return (
+            file[0] &&
+            [
+              "image/jpeg",
+              "image/png",
+              "image/jpg",
+              "image/bmp",
+              "image/webp",
+            ].includes(file[0].type)
+          )
+        }, t("Field4.Error2"))
+        .optional(),
+    })
+    .superRefine((data, ctx) => {
+      // Check if a driver with same phone and email exists in entire DB
+      if (
+        props.allDrivers.some(
+          (u) => u.phone === data.driverPhone && u.email === data.driverEmail,
         )
-      }, t("Field4.Error2"))
-      .optional(),
-  })
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          message: t("APIError"),
+          path: ["driverEmail"],
+        })
+      }
+    })
 
   type Step1Type = z.infer<typeof step1Schema>
 
@@ -68,17 +84,6 @@ export function AddDriverStep1(props: {
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    if (
-      props.allDrivers.some(
-        (d) => d.email === data.driverEmail && d.phone === data.driverPhone,
-      )
-    ) {
-      //If driver exists with same email and phone already in system, show error
-      formData.setError("driverPhone", {
-        type: "manual",
-        message: t("APIError"),
-      })
-    }
     props.updateFinalData({
       agencyId: props.finalData.agencyId,
       data: {
@@ -121,7 +126,7 @@ export function AddDriverStep1(props: {
             description={t("Field3.Description")}
           />
           <RyogoFileInput
-            name={"agenctPhotos"}
+            name={"driverPhotos"}
             register={formData.register("driverPhotos")}
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
@@ -135,6 +140,17 @@ export function AddDriverStep1(props: {
             {formData.formState.isSubmitting && <Spinner />}
             {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           </OnboardingStepPrimaryAction>
+          <QuickAddDriverAlertButton
+            name={formData.getValues("driverName")}
+            email={formData.getValues("driverEmail")}
+            phone={formData.getValues("driverPhone")}
+            photo={formData.getValues("driverPhotos")}
+            agencyId={props.finalData.agencyId}
+            disabled={
+              !formData.formState.isValid || formData.formState.isSubmitting
+            }
+            isOnboarding
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

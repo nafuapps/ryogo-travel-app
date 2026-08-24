@@ -6,11 +6,19 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Dispatch, SetStateAction } from "react"
-import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
+import {
+  RyogoCombobox,
+  RyogoInput,
+  RyogoSelect,
+} from "@/components/form/ryogoFormFields"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import { Button } from "@/components/ui/button"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  VehicleTypesEnum,
+  VehicleBrandEnum,
+  VehicleColorEnum,
+} from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
@@ -22,6 +30,7 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 
 export function NewVehicleStep1(props: {
   onNext: () => void
@@ -37,10 +46,16 @@ export function NewVehicleStep1(props: {
       .string()
       .trim()
       .min(7, t("Field1.Error1"))
-      .max(15, t("Field1.Error2")),
+      .max(15, t("Field1.Error2"))
+      .refine((value) => {
+        //Check that vehicleNumber does not already exist in this agency
+        return !props.existingVehicles.some(
+          (v) => v.vehicleNumber.toUpperCase() === value.toUpperCase(),
+        )
+      }, t("APIError")),
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field2.Error1")),
-    brand: z.string().min(3, t("Field3.Error1")).max(15, t("Field3.Error2")),
-    color: z.string().min(3, t("Field4.Error1")).max(15, t("Field4.Error2")),
+    brand: z.enum(VehicleBrandEnum).nonoptional(t("Field3.Error1")),
+    color: z.enum(VehicleColorEnum).nonoptional(t("Field4.Error1")),
     model: z.string().min(3, t("Field5.Error1")).max(30, t("Field5.Error2")),
   })
 
@@ -59,31 +74,18 @@ export function NewVehicleStep1(props: {
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    // Check if a vehicle with same number exists in this agency
-    if (
-      props.existingVehicles.some(
-        (v) =>
-          v.vehicleNumber.toUpperCase() === data.vehicleNumber.toUpperCase(),
-      )
-    ) {
-      formData.setError("vehicleNumber", {
-        type: "manual",
-        message: t("APIError"),
-      })
-    } else {
-      props.setNewVehicleFormData({
-        agencyId: props.agencyId,
-        data: {
-          ...props.newVehicleFormData.data,
-          vehicleNumber: data.vehicleNumber,
-          type: data.type,
-          brand: data.brand,
-          color: data.color,
-          model: data.model,
-        },
-      })
-      props.onNext()
-    }
+    props.setNewVehicleFormData({
+      agencyId: props.agencyId,
+      data: {
+        ...props.newVehicleFormData.data,
+        vehicleNumber: data.vehicleNumber,
+        type: data.type,
+        brand: data.brand,
+        color: data.color,
+        model: data.model,
+      },
+    })
+    props.onNext()
   }
 
   return (
@@ -116,19 +118,19 @@ export function NewVehicleStep1(props: {
             title={t("Field2.Title")}
             placeholder={t("Field2.Title")}
           />
-          <RyogoInput
+          <RyogoCombobox
             name={"brand"}
-            type="text"
-            label={t("Field3.Title")}
+            register={formData.register("brand")}
+            title={t("Field3.Title")}
+            array={getEnumValueDisplayPairs(VehicleBrandEnum)}
             placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
           />
-          <RyogoInput
+          <RyogoCombobox
             name={"color"}
-            type="text"
-            label={t("Field4.Title")}
+            register={formData.register("color")}
+            array={getEnumValueDisplayPairs(VehicleColorEnum)}
+            title={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
           />
           <RyogoInput
             name={"model"}
@@ -150,6 +152,18 @@ export function NewVehicleStep1(props: {
               {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             </RyogoCaption>
           </Button>
+
+          <QuickAddVehicleAlertButton
+            vehicleNumber={formData.getValues("vehicleNumber")}
+            type={formData.getValues("type")}
+            brand={formData.getValues("brand")}
+            color={formData.getValues("color")}
+            model={formData.getValues("model")}
+            agencyId={props.agencyId}
+            disabled={
+              !formData.formState.isValid || formData.formState.isSubmitting
+            }
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

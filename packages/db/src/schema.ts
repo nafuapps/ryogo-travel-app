@@ -483,6 +483,61 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   }),
 }))
 
+export enum VehicleColorEnum {
+  Black = "Black",
+  Blue = "Blue",
+  Brown = "Brown",
+  Gray = "Gray",
+  Green = "Green",
+  Orange = "Orange",
+  Pink = "Pink",
+  Purple = "Purple",
+  Red = "Red",
+  Silver = "Silver",
+  White = "White",
+  Yellow = "Yellow",
+}
+export const vehicleColors = pgEnum("vehicle_colors", [
+  VehicleColorEnum.Black,
+  VehicleColorEnum.Blue,
+  VehicleColorEnum.Brown,
+  VehicleColorEnum.Gray,
+  VehicleColorEnum.Green,
+  VehicleColorEnum.Orange,
+  VehicleColorEnum.Pink,
+  VehicleColorEnum.Purple,
+  VehicleColorEnum.Red,
+  VehicleColorEnum.Silver,
+  VehicleColorEnum.White,
+  VehicleColorEnum.Yellow,
+])
+
+export enum VehicleBrandEnum {
+  Ford = "Ford",
+  Honda = "Honda",
+  Hyundai = "Hyundai",
+  Kia = "Kia",
+  Maruti = "Maruti",
+  Mahindra = "Mahindra",
+  MG = "MG",
+  Renault = "Renault",
+  Skoda = "Skoda",
+  Tata = "Tata",
+  Toyota = "Toyota",
+}
+export const vehicleBrands = pgEnum("vehicle_brands", [
+  VehicleBrandEnum.Ford,
+  VehicleBrandEnum.Honda,
+  VehicleBrandEnum.Hyundai,
+  VehicleBrandEnum.Kia,
+  VehicleBrandEnum.Maruti,
+  VehicleBrandEnum.Mahindra,
+  VehicleBrandEnum.MG,
+  VehicleBrandEnum.Renault,
+  VehicleBrandEnum.Skoda,
+  VehicleBrandEnum.Tata,
+  VehicleBrandEnum.Toyota,
+])
 export enum VehicleTypesEnum {
   CAR = "car",
   BIKE = "bike",
@@ -527,16 +582,16 @@ export const vehicles = pgTable(
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
     vehicleNumber: varchar("vehicle_number", { length: 15 }).notNull(),
-    brand: varchar("brand", { length: 15 }).notNull(),
+    type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
+    brand: vehicleBrands().notNull().default(VehicleBrandEnum.Honda),
+    color: vehicleColors().notNull().default(VehicleColorEnum.White),
     model: varchar("model", { length: 30 }).notNull(),
-    color: varchar("color", { length: 15 }).notNull(),
     insuranceExpiresOn: date("insurance_expires_on", { mode: "date" }),
     pucExpiresOn: date("puc_expires_on", { mode: "date" }),
     rcExpiresOn: date("rc_expires_on", { mode: "date" }),
     odometerReading: integer("odometer_reading").notNull().default(0), // in kilometers
     capacity: integer("capacity").notNull().default(4), //number of seats
-    hasAC: boolean("has_ac").notNull(),
-    type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
+    hasAC: boolean("has_ac").notNull().default(true),
     status: vehicleStatus().notNull().default(VehicleStatusEnum.AVAILABLE),
     insurancePhotoUrl: text("insurance_photo_url"),
     pucPhotoUrl: text("puc_photo_url"),
@@ -623,8 +678,8 @@ export const drivers = pgTable(
       .unique(),
     name: varchar("name", { length: 30 }).notNull(),
     phone: varchar("phone", { length: 10 }).notNull(),
-    address: varchar("address", { length: 300 }).notNull(),
-    licenseNumber: varchar("license_number", { length: 20 }).notNull(),
+    address: varchar("address", { length: 300 }),
+    licenseNumber: varchar("license_number", { length: 20 }),
     licenseExpiresOn: date("license_expires_on", { mode: "date" }),
     status: driverStatus().notNull().default(DriverStatusEnum.AVAILABLE),
     licensePhotoUrl: text("license_photo_url"),

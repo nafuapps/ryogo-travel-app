@@ -8,7 +8,11 @@ import { NewVehicleStep2 } from "./newVehicleStep2"
 import { NewVehicleStep3 } from "./newVehicleStep3"
 import { NewVehicleStep4 } from "./newVehicleStep4"
 import { NewVehicleConfirm } from "./newVehicleConfirm"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  VehicleBrandEnum,
+  VehicleColorEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
@@ -22,8 +26,8 @@ export default function NewVehicleForm(props: {
       data: {
         vehicleNumber: "",
         type: VehicleTypesEnum.CAR,
-        brand: "",
-        color: "",
+        brand: VehicleBrandEnum.Honda,
+        color: VehicleColorEnum.White,
         model: "",
         capacity: undefined,
         odometerReading: undefined,

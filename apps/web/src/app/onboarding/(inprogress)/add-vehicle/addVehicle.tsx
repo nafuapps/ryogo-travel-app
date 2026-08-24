@@ -19,7 +19,11 @@ import { AddVehicleStep2 } from "./addVehicleStep2"
 import { AddVehicleStep3 } from "./addVehicleStep3"
 import { AddVehicleStep4 } from "./addVehicleStep4"
 import { AddVehicleConfirm } from "./addVehicleStep5"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  VehicleBrandEnum,
+  VehicleColorEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 
 export default function AddVehiclePageComponent(props: {
@@ -32,8 +36,8 @@ export default function AddVehiclePageComponent(props: {
     data: {
       vehicleNumber: "",
       type: VehicleTypesEnum.CAR,
-      brand: "",
-      color: "",
+      brand: VehicleBrandEnum.Honda,
+      color: VehicleColorEnum.White,
       model: "",
       capacity: undefined,
       odometerReading: undefined,
@@ -118,7 +122,11 @@ export default function AddVehiclePageComponent(props: {
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>
-      <OnboardingSidebar currentProcess={2} isLastStep={isLastStep} />
+      <OnboardingSidebar
+        currentProcess={2}
+        isLastStep={isLastStep}
+        showLogout
+      />
     </>
   )
 }

@@ -2,6 +2,8 @@ import { db } from "@ryogo-travel-app/db"
 import {
   BookingStatusEnum,
   InsertVehicleType,
+  VehicleBrandEnum,
+  VehicleColorEnum,
   vehicles,
   VehicleStatusEnum,
   VehicleTypesEnum,
@@ -253,8 +255,8 @@ export const vehicleRepository = {
   async updateVehicle(
     id: string,
     type?: VehicleTypesEnum,
-    brand?: string,
-    color?: string,
+    brand?: VehicleBrandEnum,
+    color?: VehicleColorEnum,
     model?: string,
     capacity?: number,
     odometerReading?: number,

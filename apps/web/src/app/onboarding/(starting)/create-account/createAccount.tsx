@@ -45,7 +45,7 @@ export default function CreateAccountPageComponent({
       agencyState: "",
       agencyCity: "",
       qrCode: undefined,
-      tryPremium: false,
+      tryPremium: true,
     },
     owner: {
       name: "",

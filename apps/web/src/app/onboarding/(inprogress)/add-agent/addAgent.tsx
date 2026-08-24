@@ -90,7 +90,11 @@ export default function AddAgentPageComponent(props: {
         )}
         {steps[currentStepIndex]}
       </OnboardingStepPage>
-      <OnboardingSidebar currentProcess={4} isLastStep={isLastStep} />
+      <OnboardingSidebar
+        currentProcess={4}
+        isLastStep={isLastStep}
+        showLogout
+      />
     </>
   )
 }

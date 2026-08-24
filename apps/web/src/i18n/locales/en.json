@@ -704,27 +704,28 @@
     "Sidebar": {
       "Logo": "RyoGo Logo",
       "Heading": "Setting up your account",
-      "NumberSteps": "{number, plural, =1 {[1 step]} other {[# steps]}}",
+      "NumberSteps": "{number, plural, =1 {[1 STEP]} other {[# STEPS]}}",
       "Step1": {
         "Title": "Create Account",
-        "Description": "Create owner account and agency profile"
+        "Description": "Add owner account and agency profile details"
       },
       "Step2": {
         "Title": "Verify Account",
-        "Description": "Authenticate your email address"
+        "Description": "Authenticate with OTP in your email"
       },
       "Step3": {
         "Title": "Add Vehicle",
-        "Description": "Add a vehicle to your agency"
+        "Description": "Provide vehicle details to add to your agency"
       },
       "Step4": {
         "Title": "Add Driver",
-        "Description": "Onboard a driver in your agency"
+        "Description": "Onboard a driver with details to your agency"
       },
       "Step5": {
         "Title": "Add Agent",
-        "Description": "Add an agent to run daily operations (optional)"
-      }
+        "Description": "Add an agent to run day-to-day operations (optional)"
+      },
+      "Logout": "LOGOUT"
     }
   },
   "Dashboard": {
@@ -2033,7 +2034,7 @@
         "Field2": {
           "Title": "Driver phone number",
           "Placeholder": "9876543210",
-          "Description": "Enter the driver's phone number (to be used for login). You can provide owner's phone number for now and change this later.",
+          "Description": "Enter the driver's phone number (to be used for login).",
           "Error1": "Phone number must be 10 digits"
         },
         "Field3": {
@@ -4725,6 +4726,26 @@
         "Error": "Cannot cancel booking.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Cancel"
+      },
+      "QuickAddVehicle": {
+        "Label": "Quick Add Vehicle",
+        "Title": "Are you sure you want to add this vehicle without other details?",
+        "Desc": "All other details will be set as system defaults. You can modify them later.",
+        "NoCTA": "No",
+        "Success": "Vehicle added!",
+        "Error": "Cannot add vehicle.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Add Vehicle without details"
+      },
+      "QuickAddDriver": {
+        "Label": "Quick Add Driver",
+        "Title": "Are you sure you want to add this driver without other details?",
+        "Desc": "All other details will be set as system defaults. You can modify them later.",
+        "NoCTA": "No",
+        "Success": "Driver added!",
+        "Error": "Cannot add driver.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Add Driver without details"
       },
       "ReviewCompletedBooking": {
         "Label": "Review Booking And Generate Invoice",

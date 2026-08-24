@@ -96,6 +96,8 @@ export default function ModifyDriverPageComponent({
   async function onSubmit(data: ModifyDriverType) {
     startTransition(async () => {
       const modifyDriverData: ModifyDriverRequestType = {
+        driverId: driver.id,
+        agencyId: driver.agencyId,
         address: data.address,
         canDriveVehicleTypes: data.canDriveVehicleTypes,
         defaultAllowancePerDay: data.defaultAllowancePerDay,
@@ -103,9 +105,7 @@ export default function ModifyDriverPageComponent({
         licenseExpiresOn: data.licenseExpiresOn,
         licensePhotos: data.licensePhotos,
       }
-      if (
-        await modifyDriverAction(driver.id, driver.agencyId, modifyDriverData)
-      ) {
+      if (await modifyDriverAction(modifyDriverData)) {
         router.replace(`/dashboard/drivers/${driver.id}`)
         toast.success(t("Success"))
       } else {

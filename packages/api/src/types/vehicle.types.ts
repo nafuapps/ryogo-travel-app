@@ -12,22 +12,24 @@ export type AddVehicleRequestType = {
     brand: VehicleBrandEnum
     color: VehicleColorEnum
     model: string
-    capacity?: number | undefined
-    odometerReading?: number | undefined
+    capacity?: number
+    odometerReading?: number
     insuranceExpiresOn?: Date
     pucExpiresOn?: Date
     rcExpiresOn?: Date
     hasAC?: boolean
-    defaultRatePerKm?: number | undefined
-    defaultAcChargePerDay?: number | undefined
-    rcPhotos?: FileList | undefined
-    vehiclePhotos?: FileList | undefined
-    insurancePhotos?: FileList | undefined
-    pucPhotos?: FileList | undefined
+    defaultRatePerKm?: number
+    defaultAcChargePerDay?: number
+    rcPhotos?: FileList
+    vehiclePhotos?: FileList
+    insurancePhotos?: FileList
+    pucPhotos?: FileList
   }
 }
 
 export type ModifyVehicleRequestType = {
+  vehicleId: string
+  agencyId: string
   type?: VehicleTypesEnum
   brand?: VehicleBrandEnum
   color?: VehicleColorEnum

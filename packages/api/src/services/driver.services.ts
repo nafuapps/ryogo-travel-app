@@ -147,15 +147,11 @@ export const driverServices = {
   },
 
   //Modify driver details
-  async modifyDriver(
-    driverId: string,
-    data: ModifyDriverRequestType,
-    licensePhotoUrl?: string,
-  ) {
+  async modifyDriver(data: ModifyDriverRequestType, licensePhotoUrl?: string) {
     const driver = await driverRepository.updateDriver(
-      driverId,
-      data.address,
+      data.driverId,
       data.canDriveVehicleTypes,
+      data.address,
       data.defaultAllowancePerDay,
       data.licenseNumber,
       data.licenseExpiresOn,

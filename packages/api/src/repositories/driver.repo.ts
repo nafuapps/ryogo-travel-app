@@ -266,8 +266,8 @@ export const driverRepository = {
   //Update driver
   async updateDriver(
     id: string,
-    address?: string,
     canDriveVehicleTypes?: VehicleTypesEnum[],
+    address?: string,
     defaultAllowancePerDay?: number,
     licenseNumber?: string,
     licenseExpiresOn?: Date,
@@ -276,8 +276,8 @@ export const driverRepository = {
     return await db
       .update(drivers)
       .set({
-        address,
         canDriveVehicleTypes,
+        address,
         defaultAllowancePerDay,
         licenseNumber,
         licenseExpiresOn,

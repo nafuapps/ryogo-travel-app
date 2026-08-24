@@ -23,7 +23,7 @@ export default function NewDriverForm(props: {
         phone: "",
         email: "",
         userPhotos: undefined,
-        licenseNumber: "",
+        licenseNumber: undefined,
         licenseExpiresOn: undefined,
         licensePhotos: undefined,
         address: "",

@@ -173,6 +173,8 @@ export default function ModifyVehiclePageComponent({
   async function onSubmit(data: ModifyVehicleType) {
     startTransition(async () => {
       const modifyVehicleData: ModifyVehicleRequestType = {
+        vehicleId: vehicle.id,
+        agencyId: vehicle.agencyId,
         type: data.type,
         brand: data.brand,
         color: data.color,
@@ -189,11 +191,7 @@ export default function ModifyVehiclePageComponent({
         pucPhotos: data.pucPhotos,
         insurancePhotos: data.insurancePhotos,
       }
-      const modifiedVehicle = await modifyVehicleAction(
-        vehicle.id,
-        vehicle.agencyId,
-        modifyVehicleData,
-      )
+      const modifiedVehicle = await modifyVehicleAction(modifyVehicleData)
       if (modifiedVehicle) {
         router.replace(`/dashboard/vehicles/${vehicle.id}`)
         toast.success(t("Success"))

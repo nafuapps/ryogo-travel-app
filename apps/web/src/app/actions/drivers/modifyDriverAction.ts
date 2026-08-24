@@ -8,18 +8,14 @@ import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.type
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function modifyDriverAction(
-  id: string,
-  agencyId: string,
-  data: ModifyDriverRequestType,
-) {
+export async function modifyDriverAction(data: ModifyDriverRequestType) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
-    currentUser.agencyId !== agencyId
+    currentUser.agencyId !== data.agencyId
   ) {
     return
   }
@@ -35,16 +31,16 @@ export async function modifyDriverAction(
     const license = data.licensePhotos[0]
     const uploadedFile = await uploadFile(
       license,
-      generateLicensePhotoPathName(id, license),
+      generateLicensePhotoPathName(data.driverId, license),
     )
     licenseUrl = uploadedFile.path
   }
 
-  const driver = await driverServices.modifyDriver(id, data, licenseUrl)
+  const driver = await driverServices.modifyDriver(data, licenseUrl)
   if (!driver) return
 
   await notificationServices.addNotification({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     entityType: EntityTypeEnum.DRIVER,
     entityId: driver.id,
     isFeed: true,

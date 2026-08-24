@@ -57,7 +57,7 @@ export default function NewBookingStepDriver(props: {
   })
 
   //Save selected driver
-  function onSelectDriver(selectedDriverId: string | undefined) {
+  function onSelectDriver(selectedDriverId?: string) {
     form.setValue("assignedDriverId", selectedDriverId)
     const selectedDriver = props.drivers.find(
       (driver) => driver.id === selectedDriverId,

@@ -82,24 +82,31 @@ export function AddDriverConfirm(props: {
             name={t("DriverEmail")}
             value={props.finalData.data.email}
           />
-          <ConfirmValues
-            name={t("LicenseNumber")}
-            value={props.finalData.data.licenseNumber}
-          />
+          {props.finalData.data.licenseNumber && (
+            <ConfirmValues
+              name={t("LicenseNumber")}
+              value={props.finalData.data.licenseNumber}
+            />
+          )}
           {props.finalData.data.licenseExpiresOn && (
             <ConfirmValues
               name={t("LicenseExpiresOn")}
               value={props.finalData.data.licenseExpiresOn.toDateString()}
             />
           )}
-          <ConfirmValues
-            name={t("DriverAddress")}
-            value={props.finalData.data.address}
-          />
-          <ConfirmValues
-            name={t("CanDriveVehicleTypes")}
-            value={props.finalData.data.canDriveVehicleTypes.join(", ")}
-          />
+          {props.finalData.data.address && (
+            <ConfirmValues
+              name={t("DriverAddress")}
+              value={props.finalData.data.address}
+            />
+          )}
+          {props.finalData.data.canDriveVehicleTypes &&
+            props.finalData.data.canDriveVehicleTypes.length > 0 && (
+              <ConfirmValues
+                name={t("CanDriveVehicleTypes")}
+                value={props.finalData.data.canDriveVehicleTypes.join(", ")}
+              />
+            )}
           {props.finalData.data.defaultAllowancePerDay && (
             <ConfirmValues
               name={t("DefaultAllowancePerDay")}

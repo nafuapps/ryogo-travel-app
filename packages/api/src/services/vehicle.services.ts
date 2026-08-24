@@ -185,14 +185,13 @@ export const vehicleServices = {
 
   //Modify vehicle details
   async modifyVehicle(
-    vehicleId: string,
     data: ModifyVehicleRequestType,
     rcPhotoUrl?: string,
     pucPhotoUrl?: string,
     insurancePhotoUrl?: string,
   ) {
     const vehicle = await vehicleRepository.updateVehicle(
-      vehicleId,
+      data.vehicleId,
       data.type,
       data.brand,
       data.color,

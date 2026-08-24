@@ -12,18 +12,14 @@ import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.ty
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function modifyVehicleAction(
-  id: string,
-  agencyId: string,
-  data: ModifyVehicleRequestType,
-) {
+export async function modifyVehicleAction(data: ModifyVehicleRequestType) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
-    currentUser.agencyId !== agencyId
+    currentUser.agencyId !== data.agencyId
   ) {
     return
   }
@@ -39,14 +35,17 @@ export async function modifyVehicleAction(
   // Upload files to Supabase Storage
   if (data.rcPhotos && data.rcPhotos[0]) {
     const rc = data.rcPhotos[0]
-    const uploadedFile = await uploadFile(rc, generateRCPhotoPathName(id, rc))
+    const uploadedFile = await uploadFile(
+      rc,
+      generateRCPhotoPathName(data.vehicleId, rc),
+    )
     rcUrl = uploadedFile.path
   }
   if (data.pucPhotos && data.pucPhotos[0]) {
     const puc = data.pucPhotos[0]
     const uploadedFile = await uploadFile(
       puc,
-      generatePUCPhotoPathName(id, puc),
+      generatePUCPhotoPathName(data.vehicleId, puc),
     )
     pucUrl = uploadedFile.path
   }
@@ -54,13 +53,12 @@ export async function modifyVehicleAction(
     const insurance = data.insurancePhotos[0]
     const uploadedFile = await uploadFile(
       insurance,
-      generateInsurancePhotoPathName(id, insurance),
+      generateInsurancePhotoPathName(data.vehicleId, insurance),
     )
     insuranceUrl = uploadedFile.path
   }
 
   const vehicle = await vehicleServices.modifyVehicle(
-    id,
     data,
     rcUrl,
     pucUrl,
@@ -69,7 +67,7 @@ export async function modifyVehicleAction(
   if (!vehicle) return
 
   await notificationServices.addNotification({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     entityType: EntityTypeEnum.VEHICLE,
     entityId: vehicle.id,
     isFeed: true,

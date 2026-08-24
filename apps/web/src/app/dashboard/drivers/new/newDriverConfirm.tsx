@@ -99,24 +99,33 @@ export function NewDriverConfirm(props: {
             name={t("DriverEmail")}
             value={props.newDriverFormData.data.email}
           />
-          <ConfirmValues
-            name={t("LicenseNumber")}
-            value={props.newDriverFormData.data.licenseNumber}
-          />
+          {props.newDriverFormData.data.licenseNumber && (
+            <ConfirmValues
+              name={t("LicenseNumber")}
+              value={props.newDriverFormData.data.licenseNumber}
+            />
+          )}
           {props.newDriverFormData.data.licenseExpiresOn && (
             <ConfirmValues
               name={t("LicenseExpiresOn")}
               value={props.newDriverFormData.data.licenseExpiresOn.toDateString()}
             />
           )}
-          <ConfirmValues
-            name={t("DriverAddress")}
-            value={props.newDriverFormData.data.address}
-          />
-          <ConfirmValues
-            name={t("CanDriveVehicleTypes")}
-            value={props.newDriverFormData.data.canDriveVehicleTypes.join(", ")}
-          />
+          {props.newDriverFormData.data.address && (
+            <ConfirmValues
+              name={t("DriverAddress")}
+              value={props.newDriverFormData.data.address}
+            />
+          )}
+          {props.newDriverFormData.data.canDriveVehicleTypes &&
+            props.newDriverFormData.data.canDriveVehicleTypes.length > 0 && (
+              <ConfirmValues
+                name={t("CanDriveVehicleTypes")}
+                value={props.newDriverFormData.data.canDriveVehicleTypes.join(
+                  ", ",
+                )}
+              />
+            )}
           {props.newDriverFormData.data.defaultAllowancePerDay && (
             <ConfirmValues
               name={t("DefaultAllowancePerDay")}

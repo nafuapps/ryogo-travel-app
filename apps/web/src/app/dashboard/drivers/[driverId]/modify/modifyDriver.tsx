@@ -78,15 +78,16 @@ export default function ModifyDriverPageComponent({
       }, t("Field6.Error3"))
       .optional(),
   })
+
   type ModifyDriverType = z.infer<typeof modifyDriverSchema>
 
   const formData = useForm<ModifyDriverType>({
     resolver: zodResolver(modifyDriverSchema),
     defaultValues: {
-      address: driver.address,
+      address: driver.address ?? undefined,
       canDriveVehicleTypes: driver.canDriveVehicleTypes,
       defaultAllowancePerDay: driver.defaultAllowancePerDay,
-      licenseNumber: driver.licenseNumber,
+      licenseNumber: driver.licenseNumber ?? undefined,
       licenseExpiresOn: driver.licenseExpiresOn ?? undefined,
     },
   })

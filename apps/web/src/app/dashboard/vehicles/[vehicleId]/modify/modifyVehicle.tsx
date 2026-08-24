@@ -7,7 +7,11 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  VehicleBrandEnum,
+  VehicleColorEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { modifyVehicleAction } from "@/app/actions/vehicles/modifyVehicleAction"
@@ -35,8 +39,8 @@ export default function ModifyVehiclePageComponent({
 
   const modifyVehicleSchema = z.object({
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field1.Error1")),
-    brand: z.string().min(3, t("Field2.Error1")).max(15, t("Field2.Error2")),
-    color: z.string().min(3, t("Field3.Error1")).max(15, t("Field3.Error2")),
+    brand: z.enum(VehicleBrandEnum).nonoptional(t("Field2.Error1")),
+    color: z.enum(VehicleColorEnum).nonoptional(t("Field3.Error1")),
     model: z.string().min(3, t("Field4.Error1")).max(30, t("Field4.Error2")),
     capacity: z.coerce
       .number<number>(t("Field5.Error1"))

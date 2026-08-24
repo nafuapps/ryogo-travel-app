@@ -137,8 +137,8 @@ export default function SearchPageComponent({
     } else {
       return searchData.drivers.filter((d) => {
         return hasTerm(searchTerm, [
-          d.licenseNumber,
-          d.address,
+          d.licenseNumber ?? "",
+          d.address ?? "",
           d.name,
           d.phone,
           d.status,

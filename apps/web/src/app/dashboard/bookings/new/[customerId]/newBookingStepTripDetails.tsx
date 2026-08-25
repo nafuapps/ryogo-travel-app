@@ -17,12 +17,6 @@ import {
 } from "@/components/form/ryogoFormFields"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import {
-  ArrowRightFromLine,
-  ArrowRightLeft,
-  Waypoints,
-  LucideIcon,
-} from "lucide-react"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import {
   getArrayValueDisplayPairs,
@@ -42,11 +36,11 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useRouter } from "next/navigation"
 import { NEW_BOOKING_DEFAULT_DISTANCE } from "@/lib/uiConfig"
 import { Separator } from "@/components/ui/separator"
 import { differenceInDays } from "date-fns"
+import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 
 export default function NewBookingStepTripDetails(props: {
   onNext: () => void
@@ -270,7 +264,6 @@ export default function NewBookingStepTripDetails(props: {
                 form.setValue("tripEndDate", form.getValues("tripStartDate"))
               }}
               selected={selectedTripType === BookingTypeEnum.OneWay}
-              icon={ArrowRightFromLine}
               title={BookingTypeEnum.OneWay.toUpperCase()}
               desc={t("Field8.OneWayDesc")}
             />
@@ -280,7 +273,6 @@ export default function NewBookingStepTripDetails(props: {
                 setSelectedTripType(BookingTypeEnum.Round)
               }}
               selected={selectedTripType === BookingTypeEnum.Round}
-              icon={ArrowRightLeft}
               title={BookingTypeEnum.Round.toUpperCase()}
               desc={t("Field8.RoundTripDesc")}
             />
@@ -289,7 +281,6 @@ export default function NewBookingStepTripDetails(props: {
               type={BookingTypeEnum.MultiDay}
               onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
               selected={selectedTripType === BookingTypeEnum.MultiDay}
-              icon={Waypoints}
               title={BookingTypeEnum.MultiDay.toUpperCase()}
               desc={t("Field8.MultiDayDesc")}
             />
@@ -355,14 +346,12 @@ function TripTypeSelectionCard({
   selected,
   title,
   desc,
-  icon,
 }: {
   type: BookingTypeEnum
   onClick: () => void
   selected: boolean
   title: string
   desc: string
-  icon: LucideIcon
 }) {
   return (
     <div
@@ -377,7 +366,11 @@ function TripTypeSelectionCard({
       <RyogoSmall weight="font-bold" color={selected ? "white" : "slate"}>
         {title}
       </RyogoSmall>
-      <RyogoIcon icon={icon} size="sm" color={selected ? "white" : "slate"} />
+      <GetTripTypeIcon
+        tripType={type}
+        size="sm"
+        color={selected ? "white" : "slate"}
+      />
       <RyogoCaption color={selected ? "white" : "slate"}>{desc}</RyogoCaption>
     </div>
   )

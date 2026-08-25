@@ -15,6 +15,11 @@ import { addDays } from "date-fns"
 import { ModifyDriverLeaveRequestType } from "../types/driverLeave.types"
 
 export const driverServices = {
+  async findDashboardDrivers(agencyId: string) {
+    const drivers = await driverRepository.readDriversByAgencyId(agencyId)
+    return drivers
+  },
+
   //Get all drivers in an agency
   async findDriversByAgency(agencyId: string) {
     const drivers =
@@ -219,6 +224,10 @@ export const driverServices = {
 
 export type FindDriversByAgencyType = Awaited<
   ReturnType<typeof driverServices.findDriversByAgency>
+>
+
+export type FindDashboardDriversType = Awaited<
+  ReturnType<typeof driverServices.findDashboardDrivers>
 >
 
 export type FindDriversOnTripType = Awaited<

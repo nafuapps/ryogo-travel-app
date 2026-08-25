@@ -838,21 +838,17 @@
         "Completed": "Completed",
         "Cancelled": "Cancelled"
       },
-      "DriverMetrics": {
-        "Title": "DRIVERS",
-        "Subtitle": "{rate} utilization rate",
-        "Available": "Available",
-        "InTrip": "In Trip",
-        "Leave": "Leave",
-        "Inactive": "Inactive"
+      "Drivers": {
+        "Available": "AVAILABLE",
+        "OnTrip": "ON TRIP",
+        "Leave": "LEAVE",
+        "Inactive": "INACTIVE"
       },
-      "VehicleMetrics": {
-        "Title": "VEHICLES",
-        "Subtitle": "{rate} utilization rate",
-        "Available": "Available",
-        "InTrip": "In Trip",
-        "Repair": "Repair",
-        "Inactive": "Inactive"
+      "Vehicles": {
+        "Available": "AVAILABLE",
+        "OnTrip": "ON TRIP",
+        "Repair": "REPAIR",
+        "Inactive": "INACTIVE"
       },
       "RevenueMetrics": {
         "Title": "REVENUE (24H)",
@@ -861,9 +857,13 @@
         "Out": "Debit",
         "Commission": "Avg commission rate"
       },
-      "OngoingTrips": {
-        "Title": "ONGOING TRIPS",
-        "Assigned": "ASSIGNED"
+      "Trips": {
+        "StartingToday": "STARTING TODAY",
+        "EndingToday": "ENDING TODAY",
+        "Ongoing": "ONGOING"
+      },
+      "Leads": {
+        "Title": "LEADS (THIS WEEK)"
       },
       "SubscriptionReminderStrip": {
         "NotExpired": "Subscription expiring {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",

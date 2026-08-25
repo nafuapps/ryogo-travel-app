@@ -34,50 +34,50 @@ export default async function DashboardHomePage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
+
   //Get agency Data
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+
+  const daysToExpiry = differenceInDays(
+    agency.subscriptionExpiresOn,
+    new Date(),
+  )
+
   if (
-    agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
-    differenceInDays(new Date(), agency.subscriptionExpiresOn) >
-      SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS
+    !isBasic &&
+    daysToExpiry + SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS < 0
   ) {
     await downgradeAgencyToBasicAction(currentUser.userId, agency.id)
   }
 
-  const days = differenceInDays(agency.subscriptionExpiresOn, new Date())
-
+  //Subscribed agency which is about to expire, show reminder strip
   const showReminderStrip =
     !APP_TRIAL_MODE &&
-    agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
-    days <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
+    !isBasic &&
+    daysToExpiry <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
 
+  //Basic agency which has not tried premium, show trial strip
   const showTrialStrip =
-    !APP_TRIAL_MODE &&
-    agency.subscriptionPlan === SubscriptionPlanEnum.BASIC &&
-    !agency.hasTriedSubscription
+    !APP_TRIAL_MODE && isBasic && !agency.hasTriedSubscription
 
   return (
     <>
       {showReminderStrip && (
-        <SubscriptionReminderStrip
-          days={days}
-          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-        />
+        <SubscriptionReminderStrip days={daysToExpiry} isOwner={isOwner} />
       )}
-      {showTrialStrip && (
-        <SubscriptionTrialStrip
-          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-        />
-      )}
+      {showTrialStrip && <SubscriptionTrialStrip isOwner={isOwner} />}
       <MainWrapper>
         <DashboardHeader pathName={"/dashboard"} />
         <DashboardHomePageComponent
           agencyId={currentUser.agencyId}
           userId={currentUser.userId}
+          isOwner={isOwner}
         />
       </MainWrapper>
     </>

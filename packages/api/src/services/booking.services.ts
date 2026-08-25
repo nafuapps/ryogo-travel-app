@@ -22,6 +22,20 @@ import { userRepository } from "../repositories/user.repo"
 import { addDays, subDays } from "date-fns"
 
 export const bookingServices = {
+  async findDashboardTrips(agencyId: string) {
+    const bookings =
+      await bookingRepository.readDashboardTripsByAgencyId(agencyId)
+    return bookings
+  },
+
+  async findDashboardLeads(agencyId: string, days: number = 7) {
+    const bookings = await bookingRepository.readDashboardLeadsByAgencyId(
+      agencyId,
+      days,
+    )
+    return bookings
+  },
+
   async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
     const endDate = new Date()
     const startDate = subDays(endDate, days)
@@ -667,6 +681,14 @@ export const bookingServices = {
     return await bookingRepository.updateInvoiceSent(bookingId)
   },
 }
+
+export type FindDashboardTripsType = Awaited<
+  ReturnType<typeof bookingServices.findDashboardTrips>
+>
+
+export type FindDashboardLeadsType = Awaited<
+  ReturnType<typeof bookingServices.findDashboardLeads>
+>
 
 export type FindConfirmedBookingsPreviousDaysType = Awaited<
   ReturnType<typeof bookingServices.findConfirmedBookingsPreviousDays>

@@ -131,20 +131,24 @@ export function SectionRowWrapper({
   center,
   end,
   justifyStart,
+  justifyEnd,
   wFull,
   onClick,
+  reverse,
 }: {
   children: React.ReactNode
   small?: boolean
   center?: boolean
   end?: boolean
   justifyStart?: boolean
+  justifyEnd?: boolean
   wFull?: boolean
   onClick?: () => void
+  reverse?: boolean
 }) {
   return (
     <div
-      className={`flex flex-row ${wFull ? "w-full" : ""} ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${justifyStart ? "justify-start" : "justify-between"} ${center ? "items-center" : ""} ${end ? "items-end" : ""}`}
+      className={`flex ${reverse ? "flex-row-reverse" : "flex-row"} ${wFull ? "w-full" : ""} ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${justifyStart ? "justify-start" : justifyEnd ? "justify-end" : "justify-between"} ${center ? "items-center" : ""} ${end ? "items-end" : ""} `}
       onClick={onClick}
     >
       {children}

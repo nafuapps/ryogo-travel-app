@@ -10,14 +10,16 @@ import {
   DashboardMetricSubTitle,
   DashboardMetricTopWrapper,
   DashboardMetricWrapper,
-} from "./dashboardMetricsWrappers"
+} from "../metrics/dashboardMetricsWrappers"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 
-export default async function DashboardRevenueMetricsComponent({
+export default async function DashboardRevenueComponent({
   agencyId,
+  userId,
 }: {
   agencyId: string
+  userId: string
 }) {
   const t = await getTranslations("Dashboard.Home.RevenueMetrics")
 

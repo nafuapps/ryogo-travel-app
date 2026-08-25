@@ -1,19 +1,13 @@
 import { RyogoP, RyogoCaption, RyogoSmall } from "@/components/typography"
-import {
-  ArrowRightFromLine,
-  ArrowRightLeft,
-  CalendarDays,
-  Users,
-  Waypoints,
-} from "lucide-react"
+import { CalendarDays, Users } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { useTranslations } from "next-intl"
 import { format } from "date-fns"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getTripDuration } from "@/lib/utils"
+import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 
 export default function NewBookingTripCard(props: NewBookingRequestDataType) {
   const t = useTranslations("Dashboard.NewBookingWithCustomer.Form")
@@ -72,16 +66,7 @@ export default function NewBookingTripCard(props: NewBookingRequestDataType) {
       >
         <TripTagWrapper>
           <SectionRowWrapper small center>
-            <RyogoIcon
-              icon={
-                props.tripType === BookingTypeEnum.OneWay
-                  ? ArrowRightFromLine
-                  : props.tripType === BookingTypeEnum.Round
-                    ? ArrowRightLeft
-                    : Waypoints
-              }
-              size={"sm"}
-            />
+            <GetTripTypeIcon tripType={props.tripType} size={"sm"} />
             <RyogoCaption color="slate">
               {props.tripType.toUpperCase()}
             </RyogoCaption>

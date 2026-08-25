@@ -37,7 +37,7 @@ function getNextImageSizes(size: RyogoImageSizeType) {
     case "sm":
       return "(max-width: 1024px) 48px,64px"
     case "xs":
-      return "(max-width: 1024px) 28px,32px"
+      return "(max-width: 1024px) 24px,28px"
   }
 }
 

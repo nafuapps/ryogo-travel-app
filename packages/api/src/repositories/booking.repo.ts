@@ -12,8 +12,120 @@ import {
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, or, gte, lte, inArray, sql } from "drizzle-orm"
+import { addDays, subDays } from "date-fns"
 
 export const bookingRepository = {
+  async readDashboardTripsByAgencyId(agencyId: string) {
+    return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
+      where: and(
+        eq(bookings.agencyId, agencyId),
+        or(
+          eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+          and(
+            eq(bookings.status, BookingStatusEnum.CONFIRMED),
+            eq(bookings.startDate, new Date()),
+          ),
+        ),
+      ),
+      columns: {
+        id: true,
+        startDate: true,
+        endDate: true,
+        status: true,
+        startTime: true,
+        type: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
+          },
+        },
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+      },
+    })
+  },
+
+  async readDashboardLeadsByAgencyId(agencyId: string, days: number = 7) {
+    return await db.query.bookings.findMany({
+      orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
+      where: and(
+        eq(bookings.agencyId, agencyId),
+        and(
+          eq(bookings.status, BookingStatusEnum.LEAD),
+          or(
+            gte(bookings.createdAt, subDays(new Date(), days)),
+            lte(bookings.startDate, addDays(new Date(), days)),
+          ),
+        ),
+      ),
+      columns: {
+        type: true,
+        id: true,
+        startDate: true,
+        endDate: true,
+        status: true,
+        startTime: true,
+        estimatedTotalAmount: true,
+      },
+      with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+            phone: true,
+            photoUrl: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+      },
+    })
+  },
+
   async readBookingsSearchData(agencyId: string, queryStartDate: Date) {
     return await db.query.bookings.findMany({
       where: and(

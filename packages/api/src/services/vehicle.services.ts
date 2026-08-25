@@ -14,6 +14,11 @@ import { addDays } from "date-fns"
 import { ModifyVehicleRepairRequestType } from "../types/vehicleRepair.types"
 
 export const vehicleServices = {
+  async findDashboardVehicles(agencyId: string) {
+    const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
+    return vehicles
+  },
+
   //Get all vehicles of an agency
   async findVehiclesByAgency(agencyId: string) {
     const vehicles =
@@ -255,6 +260,10 @@ export const vehicleServices = {
     return vehicle[0]
   },
 }
+
+export type FindDashboardVehiclesType = Awaited<
+  ReturnType<typeof vehicleServices.findDashboardVehicles>
+>
 
 export type FindVehiclesByAgencyType = Awaited<
   ReturnType<typeof vehicleServices.findVehiclesByAgency>

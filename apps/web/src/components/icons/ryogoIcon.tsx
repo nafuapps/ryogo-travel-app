@@ -10,7 +10,7 @@ type RyogoIconColorType =
   | "white"
   | "light"
 
-export type RyogoIconSizeType = "sm" | "md" | "lg" | "xl"
+type RyogoIconSizeType = "sm" | "md" | "lg" | "xl"
 
 function getIconColor(color?: RyogoIconColorType) {
   switch (color) {
@@ -67,32 +67,43 @@ function getIconSize(size: RyogoIconSizeType) {
   }
 }
 
-export function RyogoIcon(props: {
+function getBGIconSize(size: RyogoIconSizeType) {
+  switch (size) {
+    case "xl":
+      return "size-28 lg:size-32"
+    case "lg":
+      return "size-15 lg:size-16"
+    case "md":
+      return "size-9 lg:size-10"
+    case "sm":
+      return "size-7 lg:size-8"
+  }
+}
+
+export type RyogoIconType = {
   icon: LucideIcon
   size: RyogoIconSizeType
   color?: RyogoIconColorType
   thick?: boolean
   onClick?: () => void
   className?: string
-}) {
+}
+
+export function RyogoIcon(props: RyogoIconType) {
   const className = `shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${getIconSize(props.size)} ${getIconColor(props.color)} ${props.className ?? ""}`
   return <props.icon onClick={props.onClick} className={className} />
 }
 
-export function RyogoEnclosedIcon(props: {
-  icon: LucideIcon
-  size: RyogoIconSizeType
-  color?: RyogoIconColorType
-  thick?: boolean
-  onClick?: () => void
+export type RyogoEnclosedIconType = RyogoIconType & {
   circular?: boolean
   bgColor?: RyogoIconColorType
-  className?: string
-}) {
+}
+
+export function RyogoEnclosedIcon(props: RyogoEnclosedIconType) {
   return (
     <div
       onClick={props.onClick}
-      className={`${getBGColor(props.bgColor)} ${props.circular ? "rounded-full" : "rounded-lg"} ${props.size === "xl" ? "size-28 lg:size-32" : props.size === "lg" ? "size-15 lg:size-16" : props.size === "md" ? "size-11 lg:size-12" : "size-9 lg:size-10"} flex shrink-0 justify-center items-center`}
+      className={`${getBGColor(props.bgColor)} ${props.circular ? "rounded-full" : "rounded-lg"} ${getBGIconSize(props.size)} flex shrink-0 justify-center items-center`}
     >
       <RyogoIcon
         icon={props.icon}

@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { History, Search, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import {
   InputGroup,
   InputGroupAddon,
@@ -42,7 +41,6 @@ import {
   GridItemWrapper,
   HoverGridWrapper,
   PageWrapper,
-  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -51,6 +49,11 @@ import {
   BASIC_BOOKINGS_SEARCH_DAYS,
   PREMIUM_BOOKINGS_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
+import {
+  RyogoGhostButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
+import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -254,27 +257,19 @@ export default function SearchPageComponent({
   return (
     <PageWrapper id="SearchPage">
       {!isSubscribed && (
-        <SectionWrapper id="SubscribeAction">
-          <SectionRowWrapper center>
-            <RyogoCaption color="yellow">
-              {t("BasicWarning", {
-                basicDays: BASIC_BOOKINGS_SEARCH_DAYS,
-                premiumDays: PREMIUM_BOOKINGS_SEARCH_DAYS,
-              })}
-            </RyogoCaption>
-            <Link href="/dashboard/account/subscription">
-              <Button variant={"outline"}>
-                <RyogoCaption color="light">
-                  {isPremium
-                    ? t("RenewCTA")
-                    : hasTriedSubscription
-                      ? t("BuyCTA")
-                      : t("TryCTA")}
-                </RyogoCaption>
-              </Button>
-            </Link>
-          </SectionRowWrapper>
-        </SectionWrapper>
+        <SubscriptionReminderButton
+          warningText={t("BasicWarning", {
+            basicDays: BASIC_BOOKINGS_SEARCH_DAYS,
+            premiumDays: PREMIUM_BOOKINGS_SEARCH_DAYS,
+          })}
+          ctaText={
+            isPremium
+              ? t("RenewCTA")
+              : hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+          }
+        />
       )}
       <SectionWrapper id="SearchControls">
         <div
@@ -320,32 +315,24 @@ export default function SearchPageComponent({
                       placeholder={t("Field1.Placeholder")}
                       {...field}
                     />
-                    <Button
-                      variant="ghost"
-                      size="sm"
+                    <RyogoGhostButton
                       type="button"
                       aria-label="Clear"
                       onClick={() => formData.setValue("searchTerm", "")}
                       disabled={formData.getValues("searchTerm") === ""}
-                    >
-                      <RyogoCaption
-                        color={
-                          formData.getValues("searchTerm") === ""
-                            ? "light"
-                            : "slate"
-                        }
-                      >
-                        {t("Clear")}
-                      </RyogoCaption>
-                    </Button>
-                    <Button
+                      labelColor={
+                        formData.getValues("searchTerm") === ""
+                          ? "light"
+                          : "slate"
+                      }
+                      label={t("Clear")}
+                    />
+                    <RyogoDefaultButton
                       type="submit"
-                      variant="default"
                       aria-label="Search"
                       disabled={formData.getValues("searchTerm").length < 3}
-                    >
-                      <RyogoCaption color="white">{t("Search")}</RyogoCaption>
-                    </Button>
+                      label={t("Search")}
+                    />
                   </InputGroup>
                   <FormMessage />
                 </FormItem>

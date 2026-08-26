@@ -6,8 +6,6 @@ import {
   RyogoFileInput,
   RyogoCombobox,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { useTranslations } from "next-intl"
@@ -21,8 +19,11 @@ import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function NewCustomerForm({
   agencyId,
@@ -192,25 +193,20 @@ export default function NewCustomerForm({
           array={getArrayValueDisplayPairs(cityOptions)}
           placeholder={t("Field8.Title")}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
-          disabled={isPending}
           onClick={() => router.back()}
-        >
-          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+          disabled={isPending}
+        />
       </FormWrapper>
     </PageWrapper>
   )

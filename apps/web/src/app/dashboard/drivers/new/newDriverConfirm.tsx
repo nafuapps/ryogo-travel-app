@@ -1,12 +1,10 @@
 "use client"
 
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
@@ -20,6 +18,10 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function NewDriverConfirm(props: {
   onNext: () => void
@@ -134,26 +136,20 @@ export function NewDriverConfirm(props: {
           )}
         </NewFormContentWrapper>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
+            label={isPending ? t("Loading") : t("PrimaryCTA")}
             type="submit"
             disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={isPending}
+          />
+          <RyogoOutlineButton
             size={"lg"}
+            label={t("SecondaryCTA")}
             type="button"
             onClick={props.onPrev}
             disabled={isPending}
-          >
-            <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-          </Button>
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

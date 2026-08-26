@@ -11,13 +11,13 @@ import {
 } from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { Button } from "@/components/ui/button"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useTransition } from "react"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useRouter } from "next/navigation"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export function AddDriverFinish(props: {
   finalData: AddDriverRequestType
@@ -58,16 +58,15 @@ export function AddDriverFinish(props: {
         <RyogoCaption color="slate">
           {t("Email", { email: props.finalData.data.email })}
         </RyogoCaption>
-        <Button
-          variant={"outline"}
+        <RyogoOutlineButton
           onClick={(e) => {
             e.preventDefault()
             window.open(whatsappInviteLink, "_blank", "noreferrer")
           }}
+          label={t("SendInvite")}
         >
-          <RyogoCaption color="slate">{t("SendInvite")}</RyogoCaption>
           <RyogoIcon icon={MessageSquareShare} size="sm" />
-        </Button>
+        </RyogoOutlineButton>
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step6Actions">
         <RyogoSmall>{t("Description1")}</RyogoSmall>
@@ -75,14 +74,12 @@ export function AddDriverFinish(props: {
         <OnboardingStepPrimaryAction disabled={false}>
           <Link href="/onboarding/add-agent">{t("PrimaryCTA")}</Link>
         </OnboardingStepPrimaryAction>
-        <Button
-          variant={"outline"}
+        <RyogoOutlineButton
           size={"lg"}
           disabled={isPending}
           onClick={goToDashboard}
-        >
-          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+          label={t("SecondaryCTA")}
+        />
       </OnboardingStepActions>
     </OnboardingStepForm>
   )

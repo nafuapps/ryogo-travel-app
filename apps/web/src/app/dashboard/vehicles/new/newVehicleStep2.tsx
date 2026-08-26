@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
@@ -11,7 +10,6 @@ import {
   RyogoFileInput,
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
@@ -24,6 +22,10 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function NewVehicleStep2(props: {
   onNext: () => void
@@ -174,26 +176,22 @@ export function NewVehicleStep2(props: {
           />
         </NewFormContentWrapper>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
             type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            <RyogoCaption color="white">
-              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={formData.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
             size={"lg"}
+            label={t("SecondaryCTA")}
             type="button"
             onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
-          >
-            <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-          </Button>
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

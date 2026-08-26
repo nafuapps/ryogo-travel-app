@@ -15,8 +15,6 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import {
   getArrayValueDisplayPairs,
@@ -41,6 +39,10 @@ import { NEW_BOOKING_DEFAULT_DISTANCE } from "@/lib/uiConfig"
 import { Separator } from "@/components/ui/separator"
 import { differenceInDays } from "date-fns"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function NewBookingStepTripDetails(props: {
   onNext: () => void
@@ -314,26 +316,20 @@ export default function NewBookingStepTripDetails(props: {
           />
         </NewFormContentWrapper>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
             type="submit"
             disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            <RyogoCaption color="white">
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={form.formState.isSubmitting}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          />
+          <RyogoOutlineButton
             size={"lg"}
             type="button"
             onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
-          >
-            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
-          </Button>
+            label={t("Back")}
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

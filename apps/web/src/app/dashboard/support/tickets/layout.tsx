@@ -11,13 +11,13 @@ import {
   PageWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoH4 } from "@/components/typography"
 import { Hourglass } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 
 export default async function SupportTicketsLayout({
   children,
@@ -60,15 +60,16 @@ export default async function SupportTicketsLayout({
             </RyogoH4>
             {currentUser.userRole === UserRolesEnum.OWNER && (
               <Link href="/dashboard/account/subscription">
-                <Button variant={"brand"} size="lg">
-                  <RyogoCaption color="white">
-                    {isBasic
+                <RyogoBrandButton
+                  size="lg"
+                  label={
+                    isBasic
                       ? agency.hasTriedSubscription
                         ? t("BuyCTA")
                         : t("TryCTA")
-                      : t("RenewCTA")}
-                  </RyogoCaption>
-                </Button>
+                      : t("RenewCTA")
+                  }
+                ></RyogoBrandButton>
               </Link>
             )}
           </SectionWrapper>

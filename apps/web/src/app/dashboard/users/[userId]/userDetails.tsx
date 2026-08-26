@@ -5,7 +5,6 @@ import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { CircleSmall, User } from "lucide-react"
 import moment from "moment"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateUserAlertButton from "@/components/buttons/alert/inactivateUserAlertButton"
@@ -33,6 +32,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -123,18 +123,16 @@ export default async function UserDetailsPageComponent({
             agencyId={user.agencyId}
           />
           <Link href={`/dashboard/users/${user.id}/change-email`}>
-            <Button variant={"outline"} className="w-full">
-              <RyogoCaption color="slate">
-                {t("ChangeEmail.Title")}
-              </RyogoCaption>
-            </Button>
+            <RyogoOutlineButton
+              className="w-full"
+              label={t("ChangeEmail.Title")}
+            />
           </Link>
           <Link href={`/dashboard/users/${user.id}/change-phone`}>
-            <Button variant={"outline"} className="w-full">
-              <RyogoCaption color="slate">
-                {t("ChangePhone.Title")}
-              </RyogoCaption>
-            </Button>
+            <RyogoOutlineButton
+              className="w-full"
+              label={t("ChangePhone.Title")}
+            />
           </Link>
           <ResetUserPasswordAlertButton
             userId={user.id}

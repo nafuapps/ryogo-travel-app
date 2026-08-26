@@ -1,10 +1,10 @@
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import { RyogoWhiteButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SectionWrapper, SideWrapper } from "@/components/page/pageWrappers"
 import { RyogoP, RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import {
   SUPPORT_HELPLINE_NUMBER,
   SUPPORT_CHAT_NUMBER,
@@ -55,12 +55,9 @@ export default async function SupportSideComponent({
               {t("Tickets.Description")}
             </RyogoCaption>
             <Link href="/dashboard/support/tickets">
-              <Button variant="white">
-                <RyogoCaption color="slate">
-                  {t("Tickets.ViewCTA")}
-                </RyogoCaption>
+              <RyogoWhiteButton label={t("Tickets.ViewCTA")}>
                 <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
-              </Button>
+              </RyogoWhiteButton>
             </Link>
           </>
         ) : (
@@ -73,17 +70,14 @@ export default async function SupportSideComponent({
             </RyogoCaption>
             {isOwner && (
               <Link href="/dashboard/account/subscription">
-                <Button variant="white">
-                  <RyogoCaption color="slate">
-                    {t("Tickets.Premium.CTA")}
-                  </RyogoCaption>
+                <RyogoWhiteButton label={t("Tickets.Premium.CTA")}>
                   <RyogoIcon
                     icon={ChevronRight}
                     size="sm"
                     color="slate"
                     thick
                   />
-                </Button>
+                </RyogoWhiteButton>
               </Link>
             )}
           </>

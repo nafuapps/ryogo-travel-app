@@ -3,7 +3,6 @@ import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.se
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { User, Plus, IdCard, UserKey, UserRoundCog } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import moment from "moment"
@@ -17,6 +16,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function UsersPageComponent({
   allUsers,
@@ -42,12 +42,9 @@ export default async function UsersPageComponent({
           </RyogoSmall>
           {isPremium && (
             <Link href={`/dashboard/users/add-owner`} className="ml-auto">
-              <Button variant={"outline"}>
+              <RyogoOutlineButton label={t("Owners.AddOwner")}>
                 <RyogoIcon icon={Plus} size="sm" />
-                <RyogoCaption color="slate">
-                  {t("Owners.AddOwner")}
-                </RyogoCaption>
-              </Button>
+              </RyogoOutlineButton>
             </Link>
           )}
         </SectionHeaderWrapper>
@@ -63,10 +60,9 @@ export default async function UsersPageComponent({
             {agents.length}
           </RyogoSmall>
           <Link href={`/dashboard/users/new`} className="ml-auto">
-            <Button variant={"outline"}>
+            <RyogoOutlineButton label={t("Agents.AddAgent")}>
               <RyogoIcon icon={Plus} size="sm" />
-              <RyogoCaption color="slate">{t("Agents.AddAgent")}</RyogoCaption>
-            </Button>
+            </RyogoOutlineButton>
           </Link>
         </SectionHeaderWrapper>
         {agents.map((user) => (
@@ -81,12 +77,9 @@ export default async function UsersPageComponent({
             {drivers.length}
           </RyogoSmall>
           <Link href={`/dashboard/drivers/new`} className="ml-auto">
-            <Button variant={"outline"}>
+            <RyogoOutlineButton label={t("Drivers.AddDriver")}>
               <RyogoIcon icon={Plus} size="sm" />
-              <RyogoCaption color="slate">
-                {t("Drivers.AddDriver")}
-              </RyogoCaption>
-            </Button>
+            </RyogoOutlineButton>
           </Link>
         </SectionHeaderWrapper>
         {drivers.map((user) => (

@@ -17,11 +17,11 @@ import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import { Hourglass } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { differenceInDays } from "date-fns"
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 
 export default async function NewBookingWithCustomerPageComponent({
   userId,
@@ -41,6 +41,8 @@ export default async function NewBookingWithCustomerPageComponent({
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+
   //Find last X days confirmed bookings
   const confirmedBookingsLength =
     await bookingServices.findSubscriptionBookingsLengthPreviousDays(
@@ -52,7 +54,7 @@ export default async function NewBookingWithCustomerPageComponent({
   if (
     !APP_TRIAL_MODE &&
     confirmedBookingsLength >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+    (isBasic ||
       //Check if premium expired more than X days ago
       differenceInDays(new Date(), agency.subscriptionExpiresOn) >
         BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS)
@@ -67,26 +69,23 @@ export default async function NewBookingWithCustomerPageComponent({
             bgColor="yellow"
           />
           <RyogoSmall color="yellow">
-            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-              ? t("BookingTrialWarning")
-              : t("BookingExpiredWarning")}
+            {isBasic ? t("BookingTrialWarning") : t("BookingExpiredWarning")}
           </RyogoSmall>
           <RyogoH4>
-            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-              ? t("BookingTrialAction")
-              : t("BookingExpiredAction")}
+            {isBasic ? t("BookingTrialAction") : t("BookingExpiredAction")}
           </RyogoH4>
           {isOwner && (
             <Link href="/dashboard/account/subscription">
-              <Button variant={"brand"} size="lg">
-                <RyogoCaption color="white">
-                  {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+              <RyogoBrandButton
+                size="lg"
+                label={
+                  isBasic
                     ? agency.hasTriedSubscription
                       ? t("BuyCTA")
                       : t("TryCTA")
-                    : t("RenewCTA")}
-                </RyogoCaption>
-              </Button>
+                    : t("RenewCTA")
+                }
+              />
             </Link>
           )}
         </SectionWrapper>
@@ -108,8 +107,7 @@ export default async function NewBookingWithCustomerPageComponent({
   //SUBSCRIPTION BLOCKER: Limited agents can creating bookings
   if (
     !APP_TRIAL_MODE &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date())
+    (isBasic || agency.subscriptionExpiresOn < new Date())
   ) {
     if (allDashboardUsers.length > BASIC_PLAN_AGENT_LIMIT) {
       const preferredAgents = allDashboardUsers
@@ -126,24 +124,23 @@ export default async function NewBookingWithCustomerPageComponent({
                 bgColor="yellow"
               />
               <RyogoSmall color="yellow">
-                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? t("AgentTrialWarning")
-                  : t("AgentExpiredWarning")}
+                {isBasic ? t("AgentTrialWarning") : t("AgentExpiredWarning")}
               </RyogoSmall>
               <RyogoH4>
-                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? t("AgentTrialAction")
-                  : t("AgentExpiredAction")}
+                {isBasic ? t("AgentTrialAction") : t("AgentExpiredAction")}
               </RyogoH4>
               {isOwner && (
                 <Link href="/dashboard/account/subscription">
-                  <Button variant={"brand"} size="lg">
-                    <RyogoCaption color="white">
-                      {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                        ? t("BuyCTA")
-                        : t("RenewCTA")}
-                    </RyogoCaption>
-                  </Button>
+                  <RyogoBrandButton
+                    size="lg"
+                    label={
+                      isBasic
+                        ? agency.hasTriedSubscription
+                          ? t("BuyCTA")
+                          : t("TryCTA")
+                        : t("RenewCTA")
+                    }
+                  />
                 </Link>
               )}
             </SectionWrapper>
@@ -171,7 +168,7 @@ export default async function NewBookingWithCustomerPageComponent({
         vehicles={vehicles}
         drivers={drivers}
         limited={limited}
-        isSubscribed={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        isSubscribed={!isBasic}
         hasTriedSubscription={agency.hasTriedSubscription}
       />
     </PageWrapper>

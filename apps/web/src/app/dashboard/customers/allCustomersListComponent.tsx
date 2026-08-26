@@ -6,7 +6,6 @@ import { User, Plus, Rows3 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/components/ui/field"
 import { ButtonGroup } from "@/components/ui/button-group"
@@ -23,6 +22,10 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 const CUSTOMERS_PER_PAGE = 20
 
@@ -74,10 +77,9 @@ export default function AllCustomersListComponent({
           {allCustomers.length}
         </RyogoSmall>
         <Link href={`/dashboard/customers/new`} className="ml-auto">
-          <Button variant={"outline"}>
+          <RyogoOutlineButton label={t("AddCustomer")}>
             <RyogoIcon icon={Plus} size="sm" color="slate" />
-            <RyogoCaption color="slate">{t("AddCustomer")}</RyogoCaption>
-          </Button>
+          </RyogoOutlineButton>
         </Link>
       </SectionHeaderWrapper>
       <Field>
@@ -93,8 +95,7 @@ export default function AllCustomersListComponent({
               setSearchTerm(e.target.value)
             }}
           />
-          <Button
-            variant="outline"
+          <RyogoOutlineButton
             type="button"
             aria-label="Clear"
             onClick={() => {
@@ -102,18 +103,14 @@ export default function AllCustomersListComponent({
               searchCustomer("")
             }}
             disabled={searchTerm.length < 0}
-          >
-            <RyogoCaption color={searchTerm.length < 0 ? "light" : "slate"}>
-              {t("Clear")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant="default"
+            label={t("Clear")}
+            labelColor={searchTerm.length < 0 ? "light" : "slate"}
+          />
+          <RyogoDefaultButton
             aria-label="Search"
             onClick={() => searchCustomer(searchTerm)}
-          >
-            <RyogoCaption color="white">{t("Search")}</RyogoCaption>
-          </Button>
+            label={t("Search")}
+          />
         </ButtonGroup>
       </Field>
       {currentItems.map((customer) => (

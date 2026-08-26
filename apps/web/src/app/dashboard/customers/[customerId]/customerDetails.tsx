@@ -10,7 +10,6 @@ import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
 import moment from "moment"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateCustomerAlertButton from "@/components/buttons/alert/inactivateCustomerAlertButton"
@@ -28,6 +27,10 @@ import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -96,15 +99,19 @@ export default async function CustomerDetailsPageComponent({
       <SectionWrapper id={"CustomerActions"}>
         {customer.status === CustomerStatusEnum.ACTIVE && (
           <Link href={`/dashboard/bookings/new/${customer.id}`}>
-            <Button variant={"default"} className="w-full">
-              <RyogoCaption color="white">{t("CreateBooking")}</RyogoCaption>
-            </Button>
+            <RyogoDefaultButton
+              variant={"default"}
+              className="w-full"
+              label={t("CreateBooking")}
+            />
           </Link>
         )}
         <Link href={`/dashboard/customers/${customer.id}/modify`}>
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            variant={"outline"}
+            className="w-full"
+            label={t("EditDetails")}
+          />
         </Link>
         {customer.status !== CustomerStatusEnum.INACTIVE && (
           <InactivateCustomerAlertButton

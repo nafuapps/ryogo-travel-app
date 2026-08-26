@@ -9,12 +9,12 @@ import {
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { BASIC_PLAN_DRIVER_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
-import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { Hourglass } from "lucide-react"
 import Link from "next/link"
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 
 export default async function NewDriverPageComponent({
   agencyId,
@@ -33,6 +33,7 @@ export default async function NewDriverPageComponent({
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   const currentDriverUsers = allDriverUsers.filter(
     (driver) =>
@@ -44,8 +45,7 @@ export default async function NewDriverPageComponent({
   if (
     !APP_TRIAL_MODE &&
     currentDriverUsers >= BASIC_PLAN_DRIVER_LIMIT &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date())
+    (isBasic || agency.subscriptionExpiresOn < new Date())
   ) {
     return (
       <PageWrapper id="NewDriverPage">
@@ -57,26 +57,21 @@ export default async function NewDriverPageComponent({
             bgColor="yellow"
           />
           <RyogoSmall color="yellow">
-            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-              ? t("TrialWarning")
-              : t("ExpiredWarning")}
+            {isBasic ? t("TrialWarning") : t("ExpiredWarning")}
           </RyogoSmall>
-          <RyogoH4>
-            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-              ? t("TrialAction")
-              : t("ExpiredAction")}
-          </RyogoH4>
+          <RyogoH4>{isBasic ? t("TrialAction") : t("ExpiredAction")}</RyogoH4>
           {isOwner && (
             <Link href="/dashboard/account/subscription">
-              <Button variant={"brand"} size="lg">
-                <RyogoCaption color="white">
-                  {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+              <RyogoBrandButton
+                size="lg"
+                label={
+                  isBasic
                     ? agency.hasTriedSubscription
                       ? t("BuyCTA")
                       : t("TryCTA")
-                    : t("RenewCTA")}
-                </RyogoCaption>
-              </Button>
+                    : t("RenewCTA")
+                }
+              />
             </Link>
           )}
         </SectionWrapper>

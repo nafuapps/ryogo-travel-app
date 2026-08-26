@@ -4,7 +4,6 @@ import { RyogoP, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import {
   SectionWrapper,
   GridItemWrapper,
@@ -36,10 +35,13 @@ export default async function AllDriverLeavesPageComponent({
           href={`/dashboard/drivers/${driverId}/leaves/new`}
           className="md:w-1/2 w-full self-center"
         >
-          <Button variant={"outline"} className="w-full">
+          <RyogoOutlineButton
+            variant={"outline"}
+            className="w-full"
+            label={t("AddLeave")}
+          >
             <RyogoIcon icon={Plus} size="sm" />
-            <RyogoCaption>{t("AddLeave")}</RyogoCaption>
-          </Button>
+          </RyogoOutlineButton>
         </Link>
         {leaves.map((leave) => (
           <DriverLeaveComponent

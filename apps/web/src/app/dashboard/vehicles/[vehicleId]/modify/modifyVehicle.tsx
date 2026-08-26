@@ -6,13 +6,11 @@ import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
 import {
   VehicleBrandEnum,
   VehicleColorEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { modifyVehicleAction } from "@/app/actions/vehicles/modifyVehicleAction"
 import {
@@ -26,8 +24,11 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -301,26 +302,20 @@ export default function ModifyVehiclePageComponent({
           description={t("Field15.Description")}
           disabled={!acWatch}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+        />
       </FormWrapper>
     </PageWrapper>
   )

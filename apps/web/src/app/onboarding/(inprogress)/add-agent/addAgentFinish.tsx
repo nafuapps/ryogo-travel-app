@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import {
   OnboardingStepContent,
@@ -9,13 +9,13 @@ import {
   OnboardingSuccessIcon,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { Button } from "@/components/ui/button"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { MessageSquareShare } from "lucide-react"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export function AddAgentFinish(props: {
   finalData: AddAgentRequestType
@@ -56,26 +56,23 @@ export function AddAgentFinish(props: {
         <RyogoSmall color="slate">
           {t("Email", { email: props.finalData.data.email })}
         </RyogoSmall>
-        <Button
-          variant={"outline"}
+        <RyogoOutlineButton
           onClick={(e) => {
             e.preventDefault()
             window.open(whatsappInviteLink, "_blank", "noreferrer")
           }}
+          label={t("SendInvite")}
         >
-          <RyogoCaption color="slate">{t("SendInvite")}</RyogoCaption>
-          <RyogoIcon icon={MessageSquareShare} size="sm" color="slate" />
-        </Button>
+          <RyogoIcon icon={MessageSquareShare} size="sm" />
+        </RyogoOutlineButton>
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="FinishActions">
-        <Button
-          variant={"default"}
+        <RyogoOutlineButton
           size={"lg"}
           disabled={isPending}
           onClick={goToDashboard}
-        >
-          <RyogoCaption color="white">{t("PrimaryCTA")}</RyogoCaption>
-        </Button>
+          label={t("PrimaryCTA")}
+        />
       </OnboardingStepActions>
     </OnboardingStepForm>
   )

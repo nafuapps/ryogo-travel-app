@@ -1,11 +1,11 @@
 "use client"
 
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import FilterCheckboxGroup from "@/components/filter/filterCheckboxGroup"
 import SupportTicketItem from "@/components/flows/support/supportTicketItem"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoSmall } from "@/components/typography"
 import { Switch } from "@/components/ui/switch"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import {
@@ -51,10 +51,9 @@ export default function SupportTicketsPageComponent({
         href={`/dashboard/support/tickets/add`}
         className="w-full md:w-1/2 self-center"
       >
-        <Button variant={"outline"} className="w-full">
+        <RyogoOutlineButton label={t("AddTicket")} className="w-full">
           <RyogoIcon icon={Plus} size="sm" color="slate" />
-          <RyogoCaption color="slate">{t("AddTicket")}</RyogoCaption>
-        </Button>
+        </RyogoOutlineButton>
       </Link>
       <FilterCheckboxGroup<TicketStatusEnum>
         enumValueDisplayPairs={ticketStatusPairs}

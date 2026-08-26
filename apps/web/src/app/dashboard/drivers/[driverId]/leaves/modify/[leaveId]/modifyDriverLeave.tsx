@@ -13,12 +13,13 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { Spinner } from "@/components/ui/spinner"
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
 import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driverLeave.types"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -106,26 +107,20 @@ export default function ModifyDriverLeavePageComponent({
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("Back")}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="white">{t("Back")}</RyogoCaption>
-        </Button>
+        />
       </FormWrapper>
     </PageWrapper>
   )

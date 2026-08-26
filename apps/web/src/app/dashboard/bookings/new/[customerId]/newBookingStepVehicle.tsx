@@ -7,8 +7,6 @@ import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import StepsTracker from "@/components/form/stepsTracker"
-import { Spinner } from "@/components/ui/spinner"
-import { Button } from "@/components/ui/button"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
 import {
@@ -22,14 +20,14 @@ import {
 } from "@/components/form/newFormWrappers"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
-  SectionRowWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import Link from "next/link"
-import {
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
   NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
 } from "@/lib/uiConfig"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 
 export default function NewBookingStepVehicle(props: {
   onNext: () => void
@@ -99,24 +97,18 @@ export default function NewBookingStepVehicle(props: {
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
       {props.limited && (
-        <SectionWrapper id="SubscribeAction">
-          <SectionRowWrapper center>
-            <RyogoCaption color="yellow">
-              {props.isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
-            </RyogoCaption>
-            <Link href="/dashboard/account/subscription">
-              <Button variant={"outline"}>
-                <RyogoCaption color="light">
-                  {props.isSubscribed
-                    ? t("RenewCTA")
-                    : props.hasTriedSubscription
-                      ? t("BuyCTA")
-                      : t("TryCTA")}
-                </RyogoCaption>
-              </Button>
-            </Link>
-          </SectionRowWrapper>
-        </SectionWrapper>
+        <SubscriptionReminderButton
+          warningText={
+            props.isSubscribed ? t("ExpiredWarning") : t("TrialWarning")
+          }
+          ctaText={
+            props.isSubscribed
+              ? t("RenewCTA")
+              : props.hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+          }
+        />
       )}
       <NewFormWrapper<StepVehicleType>
         id="StepVehicleForm"
@@ -148,30 +140,26 @@ export default function NewBookingStepVehicle(props: {
           </NewStepGridWrapper>
         </NewFormContentWrapper>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
             type="submit"
             disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            <RyogoCaption color="white">
-              {form.formState.isSubmitting
+            showSpinner={form.formState.isSubmitting}
+            label={
+              form.formState.isSubmitting
                 ? t("Loading")
                 : assignedVehicleId
                   ? t("PrimaryCTA")
-                  : t("WithoutCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+                  : t("WithoutCTA")
+            }
+          />
+          <RyogoOutlineButton
             size={"lg"}
             type="button"
             onClick={props.onPrev}
             disabled={form.formState.isSubmitting}
-          >
-            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
-          </Button>
+            label={t("Back")}
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

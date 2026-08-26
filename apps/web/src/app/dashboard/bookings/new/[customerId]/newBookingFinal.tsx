@@ -9,8 +9,6 @@ import {
 import { useTranslations } from "next-intl"
 import StepsTracker from "@/components/form/stepsTracker"
 import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -34,6 +32,10 @@ import {
 } from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getEstimatedTotalPrice } from "@/lib/utils"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 type NewBookingFinalProps = {
   onPrev: () => void
@@ -180,26 +182,20 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <RyogoCaption color="light">{t("CreateInfo")}</RyogoCaption>
         </Alert>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
             type="submit"
             disabled={isPending}
-          >
-            {isPending && <Spinner />}
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={isPending}
+            label={isPending ? t("Loading") : t("PrimaryCTA")}
+          />
+          <RyogoOutlineButton
             size={"lg"}
             type="button"
             onClick={props.onPrev}
             disabled={isPending}
-          >
-            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
-          </Button>
+            label={t("Back")}
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

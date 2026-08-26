@@ -7,8 +7,6 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import StepsTracker from "@/components/form/stepsTracker"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
@@ -19,6 +17,10 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function NewBookingStepPrice(props: {
   onNext: () => void
@@ -156,26 +158,20 @@ export default function NewBookingStepPrice(props: {
           />
         </NewFormContentWrapper>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
             type="submit"
             disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            <RyogoCaption color="white">
-              {form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={form.formState.isSubmitting}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          />
+          <RyogoOutlineButton
             size={"lg"}
             type="button"
             onClick={props.onPrev}
             disabled={form.formState.isSubmitting}
-          >
-            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
-          </Button>
+            label={t("Back")}
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

@@ -9,8 +9,6 @@ import {
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
@@ -22,8 +20,11 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
-import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ModifyDriverPageComponent({
   driver,
@@ -159,26 +160,20 @@ export default function ModifyDriverPageComponent({
           placeholder={t("Field6.Placeholder")}
           description={t("Field6.Description")}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+        />
       </FormWrapper>
     </PageWrapper>
   )

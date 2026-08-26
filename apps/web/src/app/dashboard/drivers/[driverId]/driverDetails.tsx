@@ -31,6 +31,7 @@ import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import { Separator } from "@/components/ui/separator"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -125,9 +126,11 @@ export default async function DriverDetailsPageComponent({
       </SectionWrapper>
       <SectionWrapper id="DriverActions">
         <Link href={`/dashboard/drivers/${driver.id}/modify`}>
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            variant={"outline"}
+            className="w-full"
+            label={t("EditDetails")}
+          />
         </Link>
         {driver.status !== DriverStatusEnum.INACTIVE &&
           driver.status !== DriverStatusEnum.ON_TRIP && (

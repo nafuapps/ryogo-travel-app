@@ -1,15 +1,16 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { RyogoCaption } from "@/components/typography"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import {
+  RyogoOutlineButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function QuickAddDriverAlertButton(props: {
   agencyId: string
@@ -58,17 +59,16 @@ export default function QuickAddDriverAlertButton(props: {
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button variant={"outline"} disabled={props.disabled}>
-          <RyogoCaption color="slate">{t("Label")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton disabled={props.disabled} label={t("Label")} />
       }
     >
-      <Button variant={"default"} onClick={quickAddDriver} disabled={isPending}>
-        {isPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+      <RyogoDefaultButton
+        variant={"default"}
+        onClick={quickAddDriver}
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

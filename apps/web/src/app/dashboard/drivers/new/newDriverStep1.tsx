@@ -22,6 +22,7 @@ import {
 } from "@/components/form/newFormWrappers"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
 import { FileRegex } from "@/lib/regex"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export function NewDriverStep1(props: {
   onNext: () => void
@@ -155,17 +156,15 @@ export function NewDriverStep1(props: {
           />
         </NewFormContentWrapper>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
             type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            <RyogoCaption color="white">
-              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
           <QuickAddDriverAlertButton
             name={formData.getValues("driverName")}
             email={formData.getValues("driverEmail")}

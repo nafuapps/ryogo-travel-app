@@ -1,8 +1,6 @@
 "use client"
 
 import { RyogoInput, RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
@@ -13,9 +11,12 @@ import z from "zod"
 import { AddOwnerRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
 import { addOwnerAction } from "@/app/actions/users/addOwnerAction"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AddOwnerForm({
   agencyId,
@@ -145,25 +146,20 @@ export default function AddOwnerForm({
         placeholder={t("Field4.Placeholder")}
         description={t("Field4.Description")}
       />
-      <Button
-        variant={"default"}
+      <RyogoDefaultButton
         size={"lg"}
+        label={isPending ? t("Loading") : t("PrimaryCTA")}
         type="submit"
         disabled={isPending}
-      >
-        {isPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isPending ? t("Loading") : t("PrimaryCTA")}
-        </RyogoCaption>
-      </Button>
-      <Button
-        variant={"outline"}
+        showSpinner={isPending}
+      />
+      <RyogoOutlineButton
+        size={"lg"}
+        label={t("SecondaryCTA")}
         type="button"
-        disabled={isPending}
         onClick={() => router.back()}
-      >
-        <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-      </Button>
+        disabled={isPending}
+      />
     </FormWrapper>
   )
 }

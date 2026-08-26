@@ -1,13 +1,10 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { RyogoCaption } from "@/components/typography"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   VehicleTypesEnum,
@@ -15,6 +12,10 @@ import {
   VehicleColorEnum,
 } from "@ryogo-travel-app/db/schema"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
+import {
+  RyogoOutlineButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function QuickAddVehicleAlertButton(props: {
   agencyId: string
@@ -65,21 +66,16 @@ export default function QuickAddVehicleAlertButton(props: {
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button variant={"outline"} disabled={props.disabled}>
-          <RyogoCaption color="slate">{t("Label")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton disabled={props.disabled} label={t("Label")} />
       }
     >
-      <Button
+      <RyogoDefaultButton
         variant={"default"}
         onClick={quickAddVehicle}
         disabled={isPending}
-      >
-        {isPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

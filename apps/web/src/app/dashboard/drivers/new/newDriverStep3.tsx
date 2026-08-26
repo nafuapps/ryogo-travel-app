@@ -1,12 +1,10 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { Button } from "@/components/ui/button"
 import {
   RyogoInput,
   RyogoMultipleCheckbox,
@@ -25,6 +23,10 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function NewDriverStep3(props: {
   onNext: () => void
@@ -109,26 +111,22 @@ export function NewDriverStep3(props: {
           />
         </NewFormContentWrapper>
         <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
             size={"lg"}
             type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            <RyogoCaption color="white">
-              {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
+          <RyogoOutlineButton
             size={"lg"}
             type="button"
             onClick={props.onPrev}
             disabled={formData.formState.isSubmitting}
-          >
-            <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-          </Button>
+            label={t("SecondaryCTA")}
+          />
         </NewFormActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>

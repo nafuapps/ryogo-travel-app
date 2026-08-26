@@ -5,7 +5,6 @@ import { getTranslations } from "next-intl/server"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
@@ -21,6 +20,7 @@ import { User } from "lucide-react"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AccountPageComponent({
   userDetails,
@@ -73,16 +73,16 @@ export default async function AccountPageComponent({
           agencyId={userDetails.agencyId}
         />
         <Link href="/dashboard/account/change-email">
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">{t("ChangeEmail.Title")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            className="w-full"
+            label={t("ChangeEmail.Title")}
+          />
         </Link>
         <Link href="/dashboard/account/change-password">
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">
-              {t("ChangePassword.Title")}
-            </RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            className="w-full"
+            label={t("ChangePassword.Title")}
+          />
         </Link>
         <LogoutAlertButton />
         <RyogoCaption color="light">

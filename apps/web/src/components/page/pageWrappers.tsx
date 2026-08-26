@@ -88,16 +88,18 @@ export function GridWrapper({
   children,
   className,
   bgColor,
+  overflowScroll,
 }: {
   id: string
   children: React.ReactNode
   className?: string
   bgColor?: string
+  overflowScroll?: boolean
 }) {
   return (
     <div
       id={id}
-      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-3 lg:gap-4 p-4 lg:p-5 ${className ?? ""}`}
+      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-3 lg:gap-4 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
     >
       {children}
     </div>

@@ -41,7 +41,7 @@ export default async function DashboardVehiclesComponent({
   )
 
   return (
-    <SectionWrapper id="DashboardTrips">
+    <SectionWrapper id="DashboardVehicles">
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Available")}</RyogoCaption>
         <RyogoCaption color="light">{availableVehicles.length}</RyogoCaption>

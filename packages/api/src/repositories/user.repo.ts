@@ -336,6 +336,17 @@ export const userRepository = {
       })
   },
 
+  //Update last seen
+  async updateLastSeen(userId: string) {
+    return (
+      await db
+        .update(users)
+        .set({ lastSeen: new Date() })
+        .where(eq(users.id, userId))
+        .returning()
+    )[0]
+  },
+
   //Delete user
   async deleteUser(userId: string) {
     return await db

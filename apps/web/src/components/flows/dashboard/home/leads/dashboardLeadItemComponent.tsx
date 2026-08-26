@@ -5,7 +5,7 @@ import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardLeadsType } from "@ryogo-travel-app/api/services/booking.services"
 import { User } from "lucide-react"
 import Link from "next/link"
-import { DashboardLabelImageChip } from "../../dashboardCommon"
+import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 

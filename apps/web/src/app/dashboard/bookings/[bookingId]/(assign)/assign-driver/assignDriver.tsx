@@ -5,18 +5,20 @@ import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.s
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
 import AssignDriverTile from "@/components/flows/bookings/assign/assignDriverTile"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignDriverAction } from "@/app/actions/bookings/assignDriverAction"
 import { toast } from "sonner"
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoP } from "@/components/typography"
 import {
   GridWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AssignDriverPageComponent({
   bookingId,
@@ -102,26 +104,19 @@ export default function AssignDriverPageComponent({
         ))}
       </GridWrapper>
       <StickyActionWrapper>
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           onClick={handleAssignDriver}
           disabled={!canAssignDriver}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
-          type="button"
+          label={t("CancelCTA")}
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+        />
       </StickyActionWrapper>
     </PageWrapper>
   )

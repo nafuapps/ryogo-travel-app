@@ -2,8 +2,14 @@
   "$schema": "https://v2-10-0.turborepo.dev/schema.json",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", ".dist/**"],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        ".dist/**"
+      ],
       "env": [
         "DATABASE_URL",
         "AUTH_SECRET",
@@ -13,6 +19,7 @@
         "VAPID_PRIVATE_KEY",
         "VAPID_PUBLIC_KEY",
         "RESEND_API_KEY",
+        "SUPER_PASSWORD",
         "RAZORPAY_TEST_KEY_SECRET",
         "RAZORPAY_LIVE_KEY_SECRET",
         "RAZORPAY_TEST_WEBHOOK_SECRET",
@@ -20,7 +27,9 @@
       ]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": [
+        "^check-types"
+      ]
     },
     "dev": {
       "persistent": true,

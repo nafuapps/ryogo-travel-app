@@ -5,10 +5,8 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { Button } from "@/components/ui/button"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 import { useTransition } from "react"
 import {
@@ -20,6 +18,10 @@ import { setNewPasswordAction } from "@/app/actions/users/setNewPasswordAction"
 import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { Separator } from "@/components/ui/separator"
 import { useBotDetection } from "@/hooks/useBotDetection"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ResetWithCodePageComponent({
   userId,
@@ -111,22 +113,21 @@ export default function ResetWithCodePageComponent({
           description={t("Field3.Description")}
         />
         <AuthActionWrapper>
-          <Button variant={"default"} size={"lg"} disabled={isPending || isBot}>
-            {isPending && <Spinner />}
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"ghost"}
-            type="button"
+          <RyogoDefaultButton
+            label={isPending ? t("Loading") : t("PrimaryCTA")}
             size="lg"
+            type="submit"
+            disabled={isPending || isBot}
+          />
+          <RyogoGhostButton
+            label={t("DidnotReceiveCode")}
+            size="lg"
+            type="button"
+            disabled={isPending}
             onClick={() => {
               router.push(`/auth/forgot-password/${userId}`)
             }}
-          >
-            <RyogoCaption color="light">{t("DidnotReceiveCode")}</RyogoCaption>
-          </Button>
+          />
         </AuthActionWrapper>
       </AuthFormWrapper>
     </AuthPageWrapper>

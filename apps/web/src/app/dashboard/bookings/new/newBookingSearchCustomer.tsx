@@ -4,15 +4,9 @@
 import { useState } from "react"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import ExistingCutomerCard from "@/components/flows/bookings/new/existingCustomerCard"
-import {
-  RyogoH3,
-  RyogoSmall,
-  RyogoCaption,
-  RyogoP,
-} from "@/components/typography"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import z from "zod"
-import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -25,7 +19,15 @@ import {
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronRight } from "lucide-react"
-import { GridWrapper } from "@/components/page/pageWrappers"
+import {
+  GridWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function NewBookingSearchCustomerPageComponent({
   customers,
@@ -93,67 +95,69 @@ export default function NewBookingSearchCustomerPageComponent({
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
-          <RyogoInput
-            name="enteredPhone"
-            label={t("Phone")}
-            placeholder={t("Placeholder")}
-            type="tel"
-          />
-          <Button
-            variant={"default"}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            <RyogoSmall color="white">{t("SearchCTA")}</RyogoSmall>
-          </Button>
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            type="button"
-            onClick={reset}
-            disabled={!phone || phone.length < 1 || form.formState.isSubmitting}
-          >
-            <RyogoSmall color="slate">{t("ClearCTA")}</RyogoSmall>
-          </Button>
-          <Button
-            variant={"ghost"}
-            size={"lg"}
-            onClick={onClick}
-            disabled={form.formState.isSubmitting}
-          >
-            <RyogoCaption color="light" weight="font-bold">
-              {t("CreateCTA")}
-            </RyogoCaption>
-            <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
-          </Button>
-        </NewFormContentWrapper>
-        {foundCustomers.length > 0 && (
-          <>
+        <div className="flex flex-col gap-3 lg:gap-4 my-auto">
+          {foundCustomers.length > 0 && (
+            <>
+              <RyogoSmall
+                className="text-center"
+                color="light"
+                weight="font-medium"
+              >
+                {t("Found", { count: foundCustomers.length })}
+              </RyogoSmall>
+              <GridWrapper id="ExistingCustomersGrid" overflowScroll>
+                {foundCustomers.map((c) => (
+                  <ExistingCutomerCard key={c.id} existingCustomer={c} />
+                ))}
+              </GridWrapper>
+            </>
+          )}
+          {foundCustomers.length === 0 && searchingDone && (
             <RyogoSmall
               className="text-center"
               color="light"
               weight="font-medium"
             >
-              {t("Found", { count: foundCustomers.length })}
+              {t("NotFound")}
             </RyogoSmall>
-            <GridWrapper id="ExistingCustomersGrid">
-              {foundCustomers.map((c) => (
-                <ExistingCutomerCard key={c.id} existingCustomer={c} />
-              ))}
-            </GridWrapper>
-          </>
-        )}
-        {foundCustomers.length === 0 && searchingDone && (
-          <RyogoSmall
-            className="text-center"
-            color="light"
-            weight="font-medium"
+          )}
+        </div>
+
+        <StickyActionWrapper>
+          <NewFormContentWrapper>
+            <RyogoInput
+              name="enteredPhone"
+              label={t("Phone")}
+              placeholder={t("Placeholder")}
+              type="tel"
+            />
+          </NewFormContentWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
+            label={t("SearchCTA")}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            type="button"
+            onClick={reset}
+            disabled={!phone || phone.length < 1 || form.formState.isSubmitting}
+            label={t("ClearCTA")}
+          />
+          <RyogoGhostButton
+            variant={"ghost"}
+            type="button"
+            onClick={onClick}
+            disabled={form.formState.isSubmitting}
+            label={t("CreateCTA")}
+            labelColor="light"
+            labelClassName="font-bold"
           >
-            {t("NotFound")}
-          </RyogoSmall>
-        )}
+            <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
+          </RyogoGhostButton>
+        </StickyActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>
   )

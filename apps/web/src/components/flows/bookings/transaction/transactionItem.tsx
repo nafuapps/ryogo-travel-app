@@ -1,6 +1,6 @@
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
-import { Maximize2, Minimize2 } from "lucide-react"
+import { ChevronRight, Maximize2, Minimize2 } from "lucide-react"
 import { format } from "date-fns"
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
@@ -9,7 +9,7 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function TransactionItem({
   transaction,
@@ -80,7 +80,9 @@ export default async function TransactionItem({
               <Link
                 href={`/dashboard/bookings/${id}/transactions/modify/${txnId}`}
               >
-                <RyogoIconButton label={t("Modify")} />
+                <RyogoOutlineButton label={t("Modify")}>
+                  <RyogoIcon icon={ChevronRight} size="sm" />
+                </RyogoOutlineButton>
               </Link>
             )}
           </div>

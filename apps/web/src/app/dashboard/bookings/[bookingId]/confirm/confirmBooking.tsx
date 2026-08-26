@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import Link from "next/link"
 import moment from "moment"
@@ -20,10 +19,10 @@ import { getTranslations } from "next-intl/server"
 import ConfirmBookingForm from "./confirmBookingForm"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
-import { RyogoCaption } from "@/components/typography"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 // import LeadPDFViewer from "@/components/pdf/leadPDFViewer"
 
 export default async function ConfirmBookingPageComponent({
@@ -59,14 +58,12 @@ export default async function ConfirmBookingPageComponent({
           />
           <BookingStatusPill status={booking.status} />
           {isOwner && (
-            <Button variant={"outline"}>
-              <Link
-                href={`/dashboard/bookings/${booking.id}/assign-user`}
+            <Link href={`/dashboard/bookings/${booking.id}/assign-user`}>
+              <RyogoOutlineButton
+                label={t("AssignAgent")}
                 className={"w-full"}
-              >
-                <RyogoCaption color="slate">{t("AssignAgent")}</RyogoCaption>
-              </Link>
-            </Button>
+              />
+            </Link>
           )}
           {(isOwner || isAssignedUser) && (
             <CancelBookingAlertButton
@@ -111,16 +108,12 @@ export default async function ConfirmBookingPageComponent({
               value={booking.customer.remarks}
             />
           )}
-          <Button variant={"outline"}>
-            <Link
-              href={`/dashboard/customers/${booking.customer.id}`}
+          <Link href={`/dashboard/customers/${booking.customer.id}`}>
+            <RyogoOutlineButton
+              label={t("ViewCustomerDetails")}
               className={"w-full"}
-            >
-              <RyogoCaption color="slate">
-                {t("ViewCustomerDetails")}
-              </RyogoCaption>
-            </Link>
-          </Button>
+            />
+          </Link>
           {(isOwner || isAssignedUser) && (
             <>
               <RyogoPhoneButton
@@ -174,32 +167,28 @@ export default async function ConfirmBookingPageComponent({
                 : "-"
             }
           />
-          <Button variant={"outline"}>
-            <Link
-              href={`/dashboard/bookings/${booking.id}/assign-vehicle`}
-              className={"w-full"}
-            >
-              <RyogoCaption color="slate">
-                {booking.assignedVehicle
+          <Link href={`/dashboard/bookings/${booking.id}/assign-vehicle`}>
+            <RyogoOutlineButton
+              label={
+                booking.assignedVehicle
                   ? t("ChangeVehicle")
-                  : t("AssignVehicle")}
-              </RyogoCaption>
-            </Link>
-          </Button>
+                  : t("AssignVehicle")
+              }
+              className={"w-full"}
+            />
+          </Link>
           <BookingItem
             title={t("AssignedDriver")}
             value={booking.assignedDriver ? booking.assignedDriver.name : "-"}
           />
-          <Button variant={"outline"}>
-            <Link
-              href={`/dashboard/bookings/${booking.id}/assign-driver`}
+          <Link href={`/dashboard/bookings/${booking.id}/assign-driver`}>
+            <RyogoOutlineButton
+              label={
+                booking.assignedDriver ? t("ChangeDriver") : t("AssignDriver")
+              }
               className={"w-full"}
-            >
-              <RyogoCaption color="slate">
-                {booking.assignedDriver ? t("ChangeDriver") : t("AssignDriver")}
-              </RyogoCaption>
-            </Link>
-          </Button>
+            />
+          </Link>
         </BookingSection>
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>
           <BookingPriceItem

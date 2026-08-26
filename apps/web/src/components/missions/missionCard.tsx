@@ -18,7 +18,7 @@ import { RyogoPill } from "@/components/pills/ryogoPills"
 import { Separator } from "@/components/ui/separator"
 import { CarouselItem } from "@/components/ui/carousel"
 import { useRouter } from "next/navigation"
-import DeleteMissionAlertButton from "../buttons/alert/deleteMissionAlertButton"
+import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
 
 export default function MissionCard({
   mission,

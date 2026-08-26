@@ -12,9 +12,9 @@ import {
   PlainGridWrapper,
 } from "@/components/page/pageWrappers"
 import { LeaveStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Plus } from "lucide-react"
+import { ChevronRight, Plus } from "lucide-react"
 
 export default async function AllDriverLeavesPageComponent({
   leaves,
@@ -90,7 +90,9 @@ async function DriverLeaveComponent({
           <Link
             href={`/dashboard/drivers/${leave.driverId}/leaves/modify/${leave.id}`}
           >
-            <RyogoIconButton label={t("Edit")} />
+            <RyogoOutlineButton label={t("Edit")}>
+              <RyogoIcon icon={ChevronRight} size="sm" />
+            </RyogoOutlineButton>
           </Link>
         )}
       </GridItemWrapper>

@@ -31,25 +31,25 @@ export default async function proxy(request: NextRequest) {
     differenceInMinutes(new Date(), payload.updatedAt) >=
     SESSION_COOKIE_REFRESH_MINUTES
   ) {
-    const newSessionCookie = await refreshWebSessionFromDB(payload)
-    if (!newSessionCookie) {
-      return response
+    //Check for session expiry or suspended user
+    if (
+      payload.expiresAt < new Date() ||
+      payload.status === UserStatusEnum.SUSPENDED
+    ) {
+      response.cookies.delete(SESSION_COOKIE_NAME)
+    } else {
+      //Else, update last seen and get latest user data into session cookie
+      const newSessionCookie = await refreshWebSessionFromDB(payload)
+      if (!newSessionCookie) {
+        return response
+      }
+      response.cookies.set(SESSION_COOKIE_NAME, newSessionCookie, {
+        httpOnly: true,
+        secure: true,
+        expires: new Date(payload.expiresAt),
+        sameSite: "lax",
+      })
     }
-
-    response.cookies.set(SESSION_COOKIE_NAME, newSessionCookie, {
-      httpOnly: true,
-      secure: true,
-      expires: new Date(payload.expiresAt),
-      sameSite: "lax",
-    })
-  }
-
-  //Check for session expiry or suspended user
-  if (
-    payload.expiresAt < new Date() ||
-    payload.status === UserStatusEnum.SUSPENDED
-  ) {
-    response.cookies.delete(SESSION_COOKIE_NAME)
   }
 
   return response

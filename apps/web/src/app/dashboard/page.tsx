@@ -15,13 +15,13 @@ import { differenceInDays } from "date-fns"
 import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import {
   SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { downgradeAgencyToBasicAction } from "@/app/actions/agencies/downgradeAgencyToBasicAction"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export const metadata: Metadata = {
   title: `Dashboard - ${pageTitle}`,
@@ -102,9 +102,7 @@ async function SubscriptionReminderStrip({
       </RyogoCaption>
       {isOwner && (
         <Link href="/dashboard/account/subscription">
-          <Button variant={"outline"} size="sm">
-            <RyogoCaption color={"white"}>{t("RenewCTA")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton label={t("RenewCTA")} labelColor="white" />
         </Link>
       )}
     </div>
@@ -123,9 +121,7 @@ async function SubscriptionTrialStrip({ isOwner }: { isOwner: boolean }) {
       </RyogoCaption>
       {isOwner && (
         <Link href="/dashboard/account/subscription">
-          <Button variant={"outline"} size="sm">
-            <RyogoCaption color={"white"}>{t("TryCTA")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton label={t("TryCTA")} />
         </Link>
       )}
     </div>

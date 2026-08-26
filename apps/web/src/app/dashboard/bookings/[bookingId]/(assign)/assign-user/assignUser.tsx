@@ -5,18 +5,20 @@ import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/u
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
 import AssignUserTile from "@/components/flows/bookings/assign/assignUserTile"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignUserAction } from "@/app/actions/bookings/assignUserAction"
 import { toast } from "sonner"
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoP } from "@/components/typography"
 import {
   GridWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AssignUserPageComponent({
   bookingId,
@@ -89,26 +91,19 @@ export default function AssignUserPageComponent({
         ))}
       </GridWrapper>
       <StickyActionWrapper>
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           onClick={handleAssignUser}
           disabled={!canAssignUser}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
-          type="button"
+          label={t("CancelCTA")}
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="slate">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+        />
       </StickyActionWrapper>
     </PageWrapper>
   )

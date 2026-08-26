@@ -11,7 +11,7 @@ import {
   UserStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoTiny } from "@/components/typography"
 
 type RyogoPillColorType =
   | "slate"
@@ -21,7 +21,9 @@ type RyogoPillColorType =
   | "yellow"
   | "light"
 
-function getPillColor(color?: RyogoPillColorType) {
+type RyogoPillSizeType = "lg" | "md" | "sm"
+
+function getPillColor(color: RyogoPillColorType) {
   switch (color) {
     case "light":
       return "bg-slate-500 dark:bg-slate-500"
@@ -34,150 +36,445 @@ function getPillColor(color?: RyogoPillColorType) {
     case "yellow":
       return "bg-yellow-700 dark:bg-yellow-200"
     case "slate":
-    case undefined:
       return "bg-slate-700 dark:bg-slate-200"
   }
 }
 
-export function RyogoPill(props: {
+function getPillSize(size: RyogoPillSizeType = "md") {
+  switch (size) {
+    case "lg":
+      return "px-3 py-1.5 lg:px-4 lg:py-2"
+    case "md":
+      return "px-2 py-1 lg:px-2.5 lg:py-1.25"
+    case "sm":
+      return "px-1.5 py-0.75 lg:px-2 lg:py-1"
+  }
+}
+
+export type RyogoPillType = {
   label: string
   bgColor: RyogoPillColorType
+  size?: RyogoPillSizeType
   className?: string
-}) {
+}
+
+export function RyogoPill(props: RyogoPillType) {
   return (
     <div
-      className={`flex items-center justify-center rounded-full ${getPillColor(props.bgColor)} px-2 py-1 lg:px-3 lg:py-1.5 shrink-0 text-nowrap ${props.className ?? ""}`}
+      className={`flex items-center justify-center rounded-full ${getPillColor(props.bgColor)} ${getPillSize(props.size)} shrink-0 text-nowrap ${props.className ?? ""}`}
     >
-      <RyogoCaption color="white">{props.label}</RyogoCaption>
+      {props.size === "sm" ? (
+        <RyogoTiny color="white">{props.label}</RyogoTiny>
+      ) : (
+        <RyogoCaption color="white">{props.label}</RyogoCaption>
+      )}
     </div>
   )
 }
 
-export function BookingStatusPill(props: { status: BookingStatusEnum }) {
+export function BookingStatusPill(
+  props: { status: BookingStatusEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case BookingStatusEnum.IN_PROGRESS:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case BookingStatusEnum.COMPLETED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"green"}
+        />
+      )
     case BookingStatusEnum.CANCELLED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"red"}
+        />
+      )
     case BookingStatusEnum.LEAD:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case BookingStatusEnum.CONFIRMED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function VehicleStatusPill(props: { status: VehicleStatusEnum }) {
+export function VehicleStatusPill(
+  props: { status: VehicleStatusEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case VehicleStatusEnum.AVAILABLE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"green"}
+        />
+      )
     case VehicleStatusEnum.REPAIR:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case VehicleStatusEnum.ON_TRIP:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case VehicleStatusEnum.SUSPENDED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"red"}
+        />
+      )
     case VehicleStatusEnum.INACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function DriverStatusPill(props: { status: DriverStatusEnum }) {
+export function DriverStatusPill(
+  props: { status: DriverStatusEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case DriverStatusEnum.AVAILABLE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"green"}
+        />
+      )
     case DriverStatusEnum.LEAVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case DriverStatusEnum.ON_TRIP:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case DriverStatusEnum.SUSPENDED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"red"}
+        />
+      )
     case DriverStatusEnum.INACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function AgencyStatusPill(props: { status: AgencyStatusEnum }) {
+export function AgencyStatusPill(
+  props: { status: AgencyStatusEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case AgencyStatusEnum.ACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case AgencyStatusEnum.INACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case AgencyStatusEnum.SUSPENDED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"red"}
+        />
+      )
     case AgencyStatusEnum.NEW:
     default:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function UserStatusPill(props: { status: UserStatusEnum }) {
+export function UserStatusPill(
+  props: { status: UserStatusEnum } & Omit<RyogoPillType, "label" | "bgColor">,
+) {
   switch (props.status) {
     case UserStatusEnum.ACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case UserStatusEnum.INACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case UserStatusEnum.SUSPENDED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"red"}
+        />
+      )
     case UserStatusEnum.NEW:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function CustomerStatusPill(props: { status: CustomerStatusEnum }) {
+export function CustomerStatusPill(
+  props: { status: CustomerStatusEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case CustomerStatusEnum.ACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case CustomerStatusEnum.INACTIVE:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case CustomerStatusEnum.SUSPENDED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"red"}
+        />
+      )
   }
 }
 
-export function OrderStatusPill(props: { status: OrderStatusEnum }) {
+export function OrderStatusPill(
+  props: { status: OrderStatusEnum } & Omit<RyogoPillType, "label" | "bgColor">,
+) {
   switch (props.status) {
     case OrderStatusEnum.PAID:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"green"}
+        />
+      )
     case OrderStatusEnum.ATTEMPTED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case OrderStatusEnum.CREATED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function PaymentStatusPill(props: { status: PaymentStatusEnum }) {
+export function PaymentStatusPill(
+  props: { status: PaymentStatusEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case PaymentStatusEnum.CAPTURED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"green"}
+        />
+      )
     case PaymentStatusEnum.AUTHORIZED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case PaymentStatusEnum.FAILED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"red"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"red"}
+        />
+      )
     case PaymentStatusEnum.REFUNDED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case PaymentStatusEnum.CREATED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function TripLogStatusPill(props: { status: TripLogTypesEnum }) {
+export function TripLogStatusPill(
+  props: { status: TripLogTypesEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case TripLogTypesEnum.ENDED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"green"}
+        />
+      )
     case TripLogTypesEnum.DROPPED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case TripLogTypesEnum.PICKED_UP:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case TripLogTypesEnum.ARRIVED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"light"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"light"}
+        />
+      )
     case TripLogTypesEnum.STARTED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function LeaveStatusPill(props: { status: string; completed: boolean }) {
+export function LeaveStatusPill(
+  props: { status: string; completed: boolean } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   return (
     <RyogoPill
       label={props.status}
@@ -186,10 +483,12 @@ export function LeaveStatusPill(props: { status: string; completed: boolean }) {
   )
 }
 
-export function RepairStatusPill(props: {
-  status: string
-  completed: boolean
-}) {
+export function RepairStatusPill(
+  props: {
+    status: string
+    completed: boolean
+  } & Omit<RyogoPillType, "label" | "bgColor">,
+) {
   return (
     <RyogoPill
       label={props.status}
@@ -198,24 +497,70 @@ export function RepairStatusPill(props: {
   )
 }
 
-export function SupportTicketStatusPill(props: { status: TicketStatusEnum }) {
+export function SupportTicketStatusPill(
+  props: { status: TicketStatusEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.status) {
     case TicketStatusEnum.CLOSED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
     case TicketStatusEnum.RESOLVED:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"green"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"green"}
+        />
+      )
     case TicketStatusEnum.IN_PROGRESS:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"yellow"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"yellow"}
+        />
+      )
     case TicketStatusEnum.OPEN:
-      return <RyogoPill label={props.status.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.status.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
   }
 }
 
-export function SubscriptionPlanPill(props: { plan: SubscriptionPlanEnum }) {
+export function SubscriptionPlanPill(
+  props: { plan: SubscriptionPlanEnum } & Omit<
+    RyogoPillType,
+    "label" | "bgColor"
+  >,
+) {
   switch (props.plan) {
     case SubscriptionPlanEnum.BASIC:
-      return <RyogoPill label={props.plan.toUpperCase()} bgColor={"slate"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.plan.toUpperCase()}
+          bgColor={"slate"}
+        />
+      )
     case SubscriptionPlanEnum.PREMIUM:
-      return <RyogoPill label={props.plan.toUpperCase()} bgColor={"brand"} />
+      return (
+        <RyogoPill
+          {...props}
+          label={props.plan.toUpperCase()}
+          bgColor={"brand"}
+        />
+      )
   }
 }

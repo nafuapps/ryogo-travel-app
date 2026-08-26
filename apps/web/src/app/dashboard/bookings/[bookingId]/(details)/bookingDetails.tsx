@@ -2,7 +2,6 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { getTranslations } from "next-intl/server"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import { format } from "date-fns"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import moment from "moment"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -23,10 +22,13 @@ import { PageWrapper } from "@/components/page/pageWrappers"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
-import { RyogoCaption } from "@/components/typography"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import ShareTrackBookingLinkButton from "@/components/buttons/track/shareTrackBookingLinkButton"
 import ReviewCompletedBookingAlertButton from "@/components/buttons/alert/reviewCompletedBookingAlertButton"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -105,14 +107,14 @@ export default async function BookingDetailsPageComponent({
               BookingStatusEnum.CONFIRMED,
               BookingStatusEnum.IN_PROGRESS,
             ].includes(bookingDetails.status) && (
-              <Button variant={"outline"}>
-                <Link
-                  href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
+              <Link
+                href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
+              >
+                <RyogoOutlineButton
+                  label={t("AssignAgent")}
                   className={"w-full"}
-                >
-                  <RyogoCaption color="slate">{t("AssignAgent")}</RyogoCaption>
-                </Link>
-              </Button>
+                />
+              </Link>
             )}
           {(isOwner || isAssignedUser) && (
             <>
@@ -122,16 +124,14 @@ export default async function BookingDetailsPageComponent({
                   bookingDetails.reviewCompletedByAgencyAt &&
                   !bookingDetails.isReconciled &&
                   isOwner && (
-                    <Button variant={"default"}>
-                      <Link
-                        href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}
+                    <Link
+                      href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}
+                    >
+                      <RyogoOutlineButton
+                        label={t("Reconcile")}
                         className={"w-full"}
-                      >
-                        <RyogoCaption color="white">
-                          {t("Reconcile")}
-                        </RyogoCaption>
-                      </Link>
-                    </Button>
+                      />
+                    </Link>
                   )
               }
               {
@@ -149,11 +149,10 @@ export default async function BookingDetailsPageComponent({
                 <Link
                   href={`/dashboard/bookings/new/${bookingDetails.customerId}`}
                 >
-                  <Button variant={"default"} className="w-full">
-                    <RyogoCaption color="white">
-                      {t("CreateAnotherBooking")}
-                    </RyogoCaption>
-                  </Button>
+                  <RyogoOutlineButton
+                    label={t("CreateAnotherBooking")}
+                    className={"w-full"}
+                  />
                 </Link>
               )}
             </>
@@ -188,16 +187,12 @@ export default async function BookingDetailsPageComponent({
               value={bookingDetails.customer.remarks}
             />
           )}
-          <Button variant={"outline"}>
-            <Link
-              href={`/dashboard/customers/${bookingDetails.customer.id}`}
+          <Link href={`/dashboard/customers/${bookingDetails.customer.id}`}>
+            <RyogoOutlineButton
+              label={t("ViewCustomerDetails")}
               className={"w-full"}
-            >
-              <RyogoCaption color="slate">
-                {t("ViewCustomerDetails")}
-              </RyogoCaption>
-            </Link>
-          </Button>
+            />
+          </Link>
           {(isOwner || isAssignedUser) &&
             bookingDetails.status !== BookingStatusEnum.CANCELLED && (
               <>
@@ -295,34 +290,31 @@ export default async function BookingDetailsPageComponent({
             }
           />
           {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
-            <Button
-              variant={bookingDetails.assignedVehicle ? "outline" : "default"}
+            <Link
+              href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
             >
-              <Link
-                href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
-                className={"w-full"}
-              >
-                <RyogoCaption
-                  color={bookingDetails.assignedVehicle ? "light" : "white"}
-                >
-                  {bookingDetails.assignedVehicle
-                    ? t("ChangeVehicle")
-                    : t("AssignVehicle")}
-                </RyogoCaption>
-              </Link>
-            </Button>
+              {bookingDetails.assignedVehicle ? (
+                <RyogoOutlineButton
+                  label={t("ChangeVehicle")}
+                  className={"w-full"}
+                />
+              ) : (
+                <RyogoDefaultButton
+                  label={t("AssignVehicle")}
+                  className={"w-full"}
+                />
+              )}
+            </Link>
           ) : (
             bookingDetails.assignedVehicle && (
-              <Button variant={"outline"}>
-                <Link
-                  href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
+              <Link
+                href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
+              >
+                <RyogoOutlineButton
+                  label={t("ViewVehicleDetails")}
                   className={"w-full"}
-                >
-                  <RyogoCaption color="slate">
-                    {t("ViewVehicleDetails")}
-                  </RyogoCaption>
-                </Link>
-              </Button>
+                />
+              </Link>
             )
           )}
           <BookingItem
@@ -334,34 +326,31 @@ export default async function BookingDetailsPageComponent({
             }
           />
           {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
-            <Button
-              variant={bookingDetails.assignedDriver ? "outline" : "default"}
+            <Link
+              href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
             >
-              <Link
-                href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
-                className={"w-full"}
-              >
-                <RyogoCaption
-                  color={bookingDetails.assignedDriver ? "light" : "white"}
-                >
-                  {bookingDetails.assignedDriver
-                    ? t("ChangeDriver")
-                    : t("AssignDriver")}
-                </RyogoCaption>
-              </Link>
-            </Button>
+              {bookingDetails.assignedDriver ? (
+                <RyogoOutlineButton
+                  label={t("ChangeDriver")}
+                  className={"w-full"}
+                />
+              ) : (
+                <RyogoDefaultButton
+                  label={t("AssignDriver")}
+                  className={"w-full"}
+                />
+              )}
+            </Link>
           ) : (
             bookingDetails.assignedDriver && (
-              <Button variant={"outline"}>
-                <Link
-                  href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
+              <Link
+                href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
+              >
+                <RyogoOutlineButton
+                  label={t("ViewDriverDetails")}
                   className={"w-full"}
-                >
-                  <RyogoCaption color="light">
-                    {t("ViewDriverDetails")}
-                  </RyogoCaption>
-                </Link>
-              </Button>
+                />
+              </Link>
             )
           )}
           {bookingDetails.assignedDriver && (isOwner || isAssignedUser) && (

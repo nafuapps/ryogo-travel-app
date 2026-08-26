@@ -34,7 +34,7 @@ export default function ExistingCutomerCard({
         }
       }}
       href={`/dashboard/bookings/new/${existingCustomer.id}`}
-      className={`flex items-center gap-3 lg:gap-4 border ${isNotActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950 opacity-50" : "hover:bg-sky-50 dark:hover:bg-sky-950"} rounded-lg p-3 lg:p-4`}
+      className={`flex items-center gap-3 lg:gap-4 border ${isNotActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950 opacity-50" : "hover:bg-slate-50 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
     >
       <SectionColWrapper wFull>
         <SectionRowWrapper justifyStart center>
@@ -76,7 +76,7 @@ export default function ExistingCutomerCard({
           )}
       </SectionColWrapper>
       <SectionColWrapper end hFull justifyBetween>
-        <CustomerStatusPill status={customerStatus} />
+        <CustomerStatusPill status={customerStatus} size="sm" />
         <RyogoIcon
           icon={isNotActive ? LockIcon : ChevronRight}
           size="sm"

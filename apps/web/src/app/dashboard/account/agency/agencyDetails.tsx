@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator"
 import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgencyAlertButton"
 import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
 import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -98,23 +99,19 @@ export default async function AgencyDetailsPageComponent({
       {isOwner && (
         <SectionWrapper id="AgencyActions">
           <Link href="/dashboard/account/agency/modify">
-            <Button variant={"outline"} className="w-full">
-              <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
-            </Button>
+            <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
           </Link>
           <Link href={`/dashboard/account/agency/change-email`}>
-            <Button variant={"outline"} className="w-full">
-              <RyogoCaption color="slate">
-                {t("ChangeEmail.Title")}
-              </RyogoCaption>
-            </Button>
+            <RyogoOutlineButton
+              className="w-full"
+              label={t("ChangeEmail.Title")}
+            />
           </Link>
           <Link href={`/dashboard/account/agency/change-phone`}>
-            <Button variant={"outline"} className="w-full">
-              <RyogoCaption color="slate">
-                {t("ChangePhone.Title")}
-              </RyogoCaption>
-            </Button>
+            <RyogoOutlineButton
+              className="w-full"
+              label={t("ChangePhone.Title")}
+            />
           </Link>
           {agency.status === AgencyStatusEnum.INACTIVE && (
             <ActivateAgencyAlertButton agencyId={agency.id} />

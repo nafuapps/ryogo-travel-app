@@ -2,7 +2,6 @@
 import { Metadata } from "next"
 import LoginPageComponent from "./login"
 import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
@@ -10,6 +9,7 @@ import {
   AuthFooterWrapper,
   AuthSectionWrapper,
 } from "@/components/flows/auth/authWrappers"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export const metadata: Metadata = {
   title: `Login - ${pageTitle}`,
@@ -24,9 +24,7 @@ export default async function LoginPage() {
       <AuthFooterWrapper>
         <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
         <Link href={"/auth/signup"}>
-          <Button variant="outline" size="lg">
-            <RyogoCaption color="light">{t("SignupCTA")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton label={t("SignupCTA")} />
         </Link>
       </AuthFooterWrapper>
     </AuthSectionWrapper>

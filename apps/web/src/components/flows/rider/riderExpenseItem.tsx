@@ -6,7 +6,9 @@ import { format } from "date-fns"
 import Link from "next/link"
 import ExpenseIcon from "@/components/icons/expenseIcon"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { ChevronRight } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function RiderExpenseItem({
   expense,
@@ -53,7 +55,9 @@ export default async function RiderExpenseItem({
             <Link
               href={`/rider/myBookings/${bookingId}/modify-expense/${expense.id}`}
             >
-              <RyogoIconButton label={t("Modify")} />
+              <RyogoOutlineButton label={t("Modify")}>
+                <RyogoIcon icon={ChevronRight} size="sm" />
+              </RyogoOutlineButton>{" "}
             </Link>
           )}
         </div>

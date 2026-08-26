@@ -1,14 +1,14 @@
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import AccountCard from "@/components/flows/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
   AuthAccountsWrapper,
   AuthActionWrapper,
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function LoginAccountsPageComponent({
   accounts,
@@ -28,9 +28,11 @@ export default async function LoginAccountsPageComponent({
       </AuthAccountsWrapper>
       <AuthActionWrapper>
         <Link href={"/auth/login"}>
-          <Button variant={"outline"} size={"lg"} className="w-full">
-            <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            label={t("SecondaryCTA")}
+            size="lg"
+            className="w-full"
+          />
         </Link>
       </AuthActionWrapper>
     </AuthPageWrapper>

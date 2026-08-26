@@ -5,18 +5,20 @@ import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
 import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { assignVehicleAction } from "@/app/actions/bookings/assignVehicleAction"
 import { toast } from "sonner"
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoP } from "@/components/typography"
 import {
   PageWrapper,
   StickyActionWrapper,
   GridWrapper,
 } from "@/components/page/pageWrappers"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AssignVehiclePageComponent({
   bookingId,
@@ -103,26 +105,19 @@ export default function AssignVehiclePageComponent({
         ))}
       </GridWrapper>
       <StickyActionWrapper>
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           onClick={handleAssignVehicle}
           disabled={!canAssignVehicle}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
-          type="button"
+          label={t("CancelCTA")}
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+        />
       </StickyActionWrapper>
     </PageWrapper>
   )

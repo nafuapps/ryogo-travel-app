@@ -2,12 +2,12 @@ import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/book
 import { getTranslations } from "next-intl/server"
 import BookindDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Plus } from "lucide-react"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function BookingExpensesPageComponent({
   bookingId,
@@ -30,10 +30,9 @@ export default async function BookingExpensesPageComponent({
           href={`/dashboard/bookings/${bookingId}/expenses/new`}
           className="w-full md:w-1/2 self-center"
         >
-          <Button variant={"outline"} className="w-full">
-            <RyogoIcon icon={Plus} size="sm" color="slate" />
-            <RyogoCaption>{t("AddExpense")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton label={t("AddExpense")} className="w-full">
+            <RyogoIcon icon={Plus} size="sm" />
+          </RyogoOutlineButton>
         </Link>
       )}
       <SectionColWrapper>

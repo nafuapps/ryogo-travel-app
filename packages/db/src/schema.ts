@@ -409,6 +409,7 @@ export const users = pgTable(
     ignoreNotifications: entityType().array().default([]), //TODO: Implement notification settings feature
     userRole: userRoles().notNull().default(UserRolesEnum.AGENT),
     status: userStatus().notNull().default(UserStatusEnum.NEW),
+    lastSeen: timestamp("last_seen", { withTimezone: true }),
     lastLogin: timestamp("last_login", { withTimezone: true }),
     lastLogout: timestamp("last_logout", { withTimezone: true }),
     ...timestamps,

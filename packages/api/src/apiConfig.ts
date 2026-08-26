@@ -28,19 +28,19 @@ export const QUARTERLY_SUBSCRIPTION_DAYS = 90
 export const ANNUAL_SUBSCRIPTION_DAYS = 365
 
 //Billing
-export const MONTHLY_SUBSCRIPTION_MRP = 999
+export const MONTHLY_SUBSCRIPTION_MRP = 999 //MRP (to show with discount)
 export const QUARTERLY_SUBSCRIPTION_MRP = MONTHLY_SUBSCRIPTION_MRP * 3
 export const ANNUAL_SUBSCRIPTION_MRP = MONTHLY_SUBSCRIPTION_MRP * 12
 
-export const MONTHLY_SUBSCRIPTION_FINAL_PRICE = 799
-export const QUARTERLY_SUBSCRIPTION_FINAL_PRICE = 2199
-export const ANNUAL_SUBSCRIPTION_FINAL_PRICE = 7999
+export const MONTHLY_SUBSCRIPTION_FINAL_PRICE = 799 //Final prices actually used for payment
+export const QUARTERLY_SUBSCRIPTION_FINAL_PRICE = 1999
+export const ANNUAL_SUBSCRIPTION_FINAL_PRICE = 6999
 
 export const GST_PERCENTAGE = 18
 
 //Route
-export const DISTANCE_RATIO_CHECK_THRESHOLD = 10 //Km
-export const MIN_USER_DISTANCE_RATIO = 0.8
+export const DISTANCE_RATIO_CHECK_THRESHOLD = 10 //Less than this, don't check user distance input for new booking
+export const MIN_USER_DISTANCE_RATIO = 0.8 //User distance input should be within this ratio of db value
 export const MAX_USER_DISTANCE_RATIO = 1.2
 
 //Missions
@@ -50,6 +50,3 @@ export const EXPIRATION_ALERT_WINDOW_DAYS = 15
 //Notifications
 export const NOTIFICATION_FEED_WINDOW_DAYS = 30
 export const NOTIFICATION_FEED_LIMIT = 100
-
-//Users
-export const NEW_USER_DEFAULT_PASSWORD = "12345678"

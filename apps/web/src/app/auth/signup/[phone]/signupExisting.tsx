@@ -1,5 +1,4 @@
 //Existing Account page
-import { Button } from "@/components/ui/button"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import AccountCard from "@/components/flows/auth/accountCard"
@@ -12,9 +11,11 @@ import {
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronRight } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
+import {
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
@@ -49,9 +50,11 @@ export default async function SignupExistingPageComponent({
       </AuthAccountsWrapper>
       <AuthActionWrapper>
         <Link href={"/auth/signup"}>
-          <Button variant={"outline"} size={"lg"} className="w-full">
-            <RyogoCaption color="light">{t("BackCTA")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            size={"lg"}
+            className="w-full"
+            label={t("BackCTA")}
+          />
         </Link>
         <Separator />
         {hasOwnerAccount && (
@@ -66,12 +69,11 @@ export default async function SignupExistingPageComponent({
               : `/onboarding?phone=${phone}`
           }
         >
-          <Button variant={"ghost"} size={"lg"} className="w-full">
-            <RyogoCaption color="light">
-              {hasOwnerAccount ? t("SecondaryCTAYes") : t("SecondaryCTANo")}
-            </RyogoCaption>
-            <RyogoIcon icon={ChevronRight} size="sm" color="light" />
-          </Button>
+          <RyogoGhostButton
+            variant={"ghost"}
+            className="w-full"
+            label={hasOwnerAccount ? t("SecondaryCTAYes") : t("SecondaryCTANo")}
+          />
         </Link>
       </AuthActionWrapper>
     </AuthPageWrapper>

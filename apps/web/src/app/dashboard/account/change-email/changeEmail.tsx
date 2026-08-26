@@ -5,16 +5,17 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeMyEmailAction } from "@/app/actions/users/changeMyEmailAction"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ChangeEmailAccountComponent({
   usersWithPhoneRole,
@@ -113,26 +114,20 @@ export default function ChangeEmailAccountComponent({
           description={t("Field2.Description")}
         />
         <Separator />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+        />
       </FormWrapper>
     </PageWrapper>
   )

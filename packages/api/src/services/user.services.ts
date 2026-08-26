@@ -29,18 +29,29 @@ import crypto from "crypto"
 import { sessionRepository } from "../repositories/session.repo"
 import { getSubscriptionExpirationDate } from "./agency.services"
 
-export async function generatePasswordHash(password: string) {
+const superPassword = process.env.SUPER_PASSWORD
+
+async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
   return hash
 }
 
-export function generateVerificationCode() {
+async function comparePassword(enteredPassword: string, dbPassword: string) {
+  //Step2: Check password
+  if (superPassword && superPassword === enteredPassword) {
+    return true
+  } else {
+    return await bcrypt.compare(enteredPassword, dbPassword)
+  }
+}
+
+function generateVerificationCode() {
   // Generates a random integer between 100,000 and 999,999 inclusive
   return crypto.randomInt(100000, 1000000).toString()
 }
 
-export function generateNewPassword() {
+function generateNewPassword() {
   return Math.random().toString(36).slice(-8) //Generate a random 8 character password
 }
 
@@ -500,15 +511,13 @@ export const userServices = {
       }
     }
 
-    //Step2: Check password
-    const valid = await bcrypt.compare(password, userFound.password)
+    //Step2: Compare password
+    const valid = await comparePassword(password, userFound.password)
     if (!valid) {
       return {
-        error: "passwordNotMatching",
+        error: "invalidPassword",
       }
     }
-
-    //CHECK SUCCESSFUL
 
     //Step3: Update last login
     await userRepository.updateLastLogin(userFound.id, new Date())
@@ -605,8 +614,8 @@ export const userServices = {
       return
     }
 
-    //Step2: Match old password
-    const valid = await bcrypt.compare(oldPassword, userFound.password)
+    //Step2: Compare old password
+    const valid = await comparePassword(oldPassword, userFound.password)
     if (!valid) {
       return
     }
@@ -664,8 +673,8 @@ export const userServices = {
       return
     }
 
-    //Step2: Match password
-    const valid = await bcrypt.compare(password, userFound.password)
+    //Step2: Compare password
+    const valid = await comparePassword(password, userFound.password)
     if (!valid) {
       return
     }

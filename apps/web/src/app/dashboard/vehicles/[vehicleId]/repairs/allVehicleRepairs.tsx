@@ -3,7 +3,7 @@ import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicl
 import { getTranslations } from "next-intl/server"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import Link from "next/link"
-import { Plus } from "lucide-react"
+import { ChevronRight, Plus } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,7 +13,7 @@ import {
   PlainGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RepairStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function AllVehicleRepairsPageComponent({
@@ -94,7 +94,9 @@ async function VehicleRepairComponent({
           <Link
             href={`/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}`}
           >
-            <RyogoIconButton label={t("Edit")} />
+            <RyogoOutlineButton label={t("Edit")}>
+              <RyogoIcon icon={ChevronRight} size="sm" />
+            </RyogoOutlineButton>
           </Link>
         )}
       </GridItemWrapper>

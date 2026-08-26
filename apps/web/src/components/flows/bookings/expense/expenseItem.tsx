@@ -7,7 +7,9 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import ExpenseIcon from "@/components/icons/expenseIcon"
 import { ExpenseApprovalButton } from "./expenseApprovalButton"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoIconButton } from "@/components/buttons/ryogoButtons"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { ChevronRight } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function ExpenseItem({
   expense,
@@ -59,7 +61,9 @@ export default async function ExpenseItem({
               <Link
                 href={`/dashboard/bookings/${expense.bookingId}/expenses/modify/${expense.id}`}
               >
-                <RyogoIconButton label={t("Modify")} />
+                <RyogoOutlineButton label={t("Modify")}>
+                  <RyogoIcon icon={ChevronRight} size="sm" />
+                </RyogoOutlineButton>
               </Link>
             )}
           </div>

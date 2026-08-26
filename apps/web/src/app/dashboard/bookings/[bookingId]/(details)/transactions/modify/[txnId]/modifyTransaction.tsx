@@ -7,7 +7,6 @@ import {
   RyogoTextarea,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   TransactionModesEnum,
@@ -19,15 +18,17 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { Button } from "@/components/ui/button"
 import DeleteTransactionAlertButton from "@/components/buttons/alert/deleteTransactionAlertButton"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
 import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
@@ -157,25 +158,20 @@ export default function ModifyTransactionPageComponent({
           placeholder={t("Field6.Placeholder")}
           description={t("Field6.Description")}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          label={t("CancelCTA")}
           type="button"
-          disabled={isPending}
           onClick={() => router.back()}
-        >
-          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+          disabled={isPending}
+        />
         <DeleteTransactionAlertButton
           bookingId={transactionDetails.bookingId}
           transactionId={transactionDetails.id}

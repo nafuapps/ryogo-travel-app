@@ -101,7 +101,7 @@
           "Title": "Enter your phone number to sign up",
           "Placeholder": "9876543210"
         },
-        "PrimaryCTA": "Create agency account",
+        "PrimaryCTA": "Create account",
         "Loading": "Loading..",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric",
@@ -109,12 +109,12 @@
       },
       "Step2": {
         "PageTitle": "Hello there!",
-        "InfoYes": "You already have an agency account with us:",
+        "InfoYes": "You already have an owner account with us:",
         "InfoNo": "{count, plural, =1 {You already have an account with us:} other {You already have # accounts with us:}}",
         "SecondaryCTANo": "Create agency account as owner",
         "SecondaryCTAYes": "Contact support",
         "BackCTA": "Back",
-        "Description": "Want to create another agency account?"
+        "Description": "To create another agency account, reach out to our support team."
       }
     }
   },
@@ -850,6 +850,15 @@
         "Repair": "REPAIR",
         "Inactive": "INACTIVE"
       },
+      "Users": {
+        "Owners": "OWNERS",
+        "Agents": "AGENTS",
+        "Drivers": "DRIVERS",
+        "LastSeen": "Last seen {time}",
+        "Away": "Away",
+        "Online": "Online",
+        "Offline": "Offline"
+      },
       "RevenueMetrics": {
         "Title": "REVENUE (24H)",
         "Subtitle": "{revenueChange} {more} revenue than weekly avg",
@@ -909,7 +918,7 @@
     "NewBooking": {
       "Title": "Create Booking",
       "Description": "Find customer by phone number to create a booking",
-      "Phone": "Enter phone number to search",
+      "Phone": "Enter customer phone number to search",
       "Placeholder": "9876543210",
       "Error1": "Enter atleast 4 digits to search customer",
       "Error2": "Phone number cannot be longer than 10 digits",
@@ -4320,6 +4329,10 @@
       }
     },
     "UserDetails": {
+      "LastSeen": "Last seen {time}",
+      "Away": "Away",
+      "Online": "Online",
+      "Offline": "Offline",
       "Photo": "User photo",
       "Admin": " (Admin)",
       "CallUser": "Call User",

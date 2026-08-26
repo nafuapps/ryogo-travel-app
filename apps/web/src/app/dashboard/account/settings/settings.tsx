@@ -4,8 +4,6 @@ import { useTranslations } from "next-intl"
 import { RyogoSelect, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -16,8 +14,11 @@ import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPrefe
 import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
-import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AccountSettingsPageComponent({
   userDetails,
@@ -79,26 +80,20 @@ export default function AccountSettingsPageComponent({
           placeholder={t("Field2.Title")}
         />
         <Separator />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
           disabled={isPending}
-        >
-          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+        />
       </FormWrapper>
     </PageWrapper>
   )

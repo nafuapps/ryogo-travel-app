@@ -3,20 +3,24 @@ export const HOMEPAGE_URL = "https://ryogo.in"
 export const SLIDESHOW_TIMER_MS = 5000
 
 //Onboarding
-export const VERIFY_CODE_TIMEOUT_MINUTES = 5
+export const VERIFY_CODE_TIMEOUT_MINUTES = 3 //Waiting before resending code
+
+//Dashboard
+export const DASHBOARD_USER_ONLINE_MINUTES = 10
+export const DASHBOARD_USER_AWAY_MINUTES = 30
 
 //Bookings
-export const OLD_LEAD_AUTO_CANCEL_DAYS = 3
-export const SEND_QUOTE_TIMEOUT_MINUTES = 60
-export const SEND_CONFIRMATION_TIMEOUT_MINUTES = 60
-export const SEND_INVOICE_TIMEOUT_MINUTES = 60
+export const OLD_LEAD_AUTO_CANCEL_DAYS = 3 //Auto cancel lead booking after this many days
+export const SEND_QUOTE_TIMEOUT_MINUTES = 60 //Waiting before resending lead booking quote to customer
+export const SEND_CONFIRMATION_TIMEOUT_MINUTES = 60 //Waiting before resending booking confirmation to customer
+export const SEND_INVOICE_TIMEOUT_MINUTES = 60 //Waiting before resending invoice to customer
 export const NEW_BOOKING_DEFAULT_DISTANCE = 1
 export const NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY = 0
 export const NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM = 18
 export const NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY = 500
 
 //Subscription
-export const APP_TRIAL_MODE = false
+export const APP_TRIAL_MODE = false //If this is true, all Premium features are unlocked for every user
 
 export const BASIC_PLAN_DRIVER_LIMIT = 3
 export const BASIC_PLAN_AGENT_LIMIT = 3

@@ -11,9 +11,9 @@ import {
   AuthSectionWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export const metadata: Metadata = {
   title: `Forgot Password - ${pageTitle}`,
@@ -43,9 +43,7 @@ export default async function ConfirmEmailPage({
       <AuthFooterWrapper>
         <RyogoCaption color="light">{t("RememberTitle")}</RyogoCaption>
         <Link href={`/auth/login/password/${userId}`}>
-          <Button variant="outline" size="lg">
-            <RyogoCaption color="light">{t("RememberCTA")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton label={t("RememberCTA")} />
         </Link>
       </AuthFooterWrapper>
     </AuthSectionWrapper>

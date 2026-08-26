@@ -137,8 +137,10 @@ export async function createWebSession(user: SelectUserType) {
 
 //Update session from DB
 export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
-  const user = await userRepository.readUserById(payload.userId)
+  const user = await userRepository.updateLastSeen(payload.userId)
   if (!user) return
+
+  console.log("saw" + { user })
 
   const updatedPayload: SessionPayloadType = {
     sessionId: payload.sessionId,
@@ -152,7 +154,7 @@ export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
     name: user.name,
     phone: user.phone,
     status: user.status,
-    updatedAt: new Date(), //Updated now
+    updatedAt: user.lastSeen ?? new Date(), //Updated now
   }
   return await encrypt(updatedPayload)
 }

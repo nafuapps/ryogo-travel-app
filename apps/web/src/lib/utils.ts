@@ -8,11 +8,27 @@ import {
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { BookingTypeEnum, OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
-import { differenceInDays } from "date-fns"
+import { differenceInDays, differenceInMinutes } from "date-fns"
 import { twMerge } from "tailwind-merge"
+import {
+  DASHBOARD_USER_AWAY_MINUTES,
+  DASHBOARD_USER_ONLINE_MINUTES,
+} from "./uiConfig"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function getOnlineStatus(time?: Date | null) {
+  if (!time) return "Offline"
+  const minutes = differenceInMinutes(new Date(), time)
+  if (minutes <= DASHBOARD_USER_ONLINE_MINUTES) {
+    return "Online"
+  }
+  if (minutes <= DASHBOARD_USER_AWAY_MINUTES) {
+    return "Away"
+  }
+  return "Offline"
 }
 
 export function getEnumValueDisplayPairs<T extends object>(

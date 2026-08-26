@@ -2,15 +2,13 @@
 
 import { confirmBookingAction } from "@/app/actions/bookings/confirmBookingAction"
 import RyogoAlertDialog from "@/components/buttons/alert/ryogoAlertDialog"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { NewFormWrapper } from "@/components/form/newFormWrappers"
 import {
   RyogoTextarea,
   RyogoCheckbox,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
@@ -125,21 +123,19 @@ export default function ConfirmBookingForm({
             desc={t("Confirm.Desc")}
             noCTA={t("Confirm.NoCTA")}
             labelChild={
-              <Button variant={"default"} className="w-full">
-                <RyogoCaption color="white">{t("Confirm.Label")}</RyogoCaption>
-              </Button>
+              <RyogoDefaultButton
+                label={t("Confirm.Label")}
+                className="w-full"
+              />
             }
           >
-            <Button
+            <RyogoDefaultButton
+              size={"lg"}
+              label={isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
               onClick={() => form.handleSubmit(confirm)()}
-              variant={"default"}
               disabled={isConfirmPending}
-            >
-              {isConfirmPending && <Spinner />}
-              <RyogoCaption color="white">
-                {isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
-              </RyogoCaption>
-            </Button>
+              showSpinner={isConfirmPending}
+            />
           </RyogoAlertDialog>
         </>
       )}

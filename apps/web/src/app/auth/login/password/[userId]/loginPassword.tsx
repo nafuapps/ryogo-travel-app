@@ -5,11 +5,9 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { Button } from "@/components/ui/button"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Spinner } from "@/components/ui/spinner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useTransition } from "react"
@@ -23,6 +21,11 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import UserCard from "@/components/flows/auth/userCard"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { toast } from "sonner"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function LoginPasswordPageComponent({
   user,
@@ -96,32 +99,29 @@ export default function LoginPasswordPageComponent({
           description={t("Input.Description")}
         />
         <AuthActionWrapper>
-          <Button
-            variant={"default"}
+          <RyogoDefaultButton
+            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            size={"lg"}
             type="submit"
-            size={"lg"}
             disabled={isPending || isBot}
-          >
-            {isPending && <Spinner />}
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={isPending}
+          />
+          <RyogoOutlineButton
+            label={t("Back")}
+            size="lg"
             type="button"
-            size={"lg"}
             onClick={() => {
               router.back()
             }}
-          >
-            <RyogoCaption color="light">{t("Back")}</RyogoCaption>
-          </Button>
-          <Button variant={"ghost"} type="button" size="lg">
-            <Link href={`/auth/forgot-password/${user.id}`}>
-              <RyogoCaption color="light">{t("ForgotCTA")}</RyogoCaption>
-            </Link>
-          </Button>
+          />
+          <Link href={`/auth/forgot-password/${user.id}`}>
+            <RyogoGhostButton
+              label={t("ForgotCTA")}
+              type="button"
+              className="w-full"
+              labelColor="light"
+            />
+          </Link>
         </AuthActionWrapper>
       </AuthFormWrapper>
     </AuthPageWrapper>

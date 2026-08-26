@@ -6,8 +6,6 @@ import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { RyogoCombobox, RyogoInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import stateCityData from "@/lib/states_cities.json"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import {
@@ -29,6 +27,12 @@ import { useState } from "react"
 import ExistingCutomerCard from "@/components/flows/bookings/new/existingCustomerCard"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronLeft } from "lucide-react"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { StickyActionWrapper } from "@/components/page/pageWrappers"
 
 export default function NewBookingAddCustomerPageComponent(props: {
   agency: NonNullable<FindAgencyByIdType>
@@ -169,42 +173,36 @@ export default function NewBookingAddCustomerPageComponent(props: {
             <ExistingCutomerCard existingCustomer={existingCustomer} />
           </NewFormContentWrapper>
         )}
-        <NewFormActionWrapper>
-          <Button
-            variant={"default"}
+        <StickyActionWrapper>
+          <RyogoDefaultButton
             size={"lg"}
             type="submit"
             disabled={
               form.formState.isSubmitting || existingCustomer !== undefined
             }
-          >
-            {form.formState.isSubmitting && <Spinner />}
-            <RyogoSmall color="white">
-              {form.formState.isSubmitting ? t("Loading") : t("AddCTA")}
-            </RyogoSmall>
-          </Button>
-          <Button
-            variant={"outline"}
+            showSpinner={form.formState.isSubmitting}
+            label={form.formState.isSubmitting ? t("Loading") : t("AddCTA")}
+          />
+          <RyogoOutlineButton
             size={"lg"}
             type="button"
             onClick={reset}
             disabled={form.formState.isSubmitting || !form.formState.isDirty}
-          >
-            <RyogoSmall color="slate">{t("ClearCTA")}</RyogoSmall>
-          </Button>
-          <Button
+            label={t("ClearCTA")}
+          />
+          <RyogoGhostButton
             variant={"ghost"}
-            size={"lg"}
             type="button"
             onClick={() => props.setAddingCustomer(false)}
             disabled={form.formState.isSubmitting}
+            label={t("BackCTA")}
+            labelClassName="font-bold"
+            labelColor="light"
+            className="flex-row-reverse"
           >
             <RyogoIcon icon={ChevronLeft} size="sm" color="light" thick />
-            <RyogoCaption color="light" weight="font-bold">
-              {t("BackCTA")}
-            </RyogoCaption>
-          </Button>
-        </NewFormActionWrapper>
+          </RyogoGhostButton>
+        </StickyActionWrapper>
       </NewFormWrapper>
     </NewStepWrapper>
   )

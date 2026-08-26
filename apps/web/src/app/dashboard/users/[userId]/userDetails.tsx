@@ -3,7 +3,7 @@ import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetai
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
+import { CircleSmall, User } from "lucide-react"
 import moment from "moment"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -21,12 +21,18 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
 import TransferAdminAlertButton from "@/components/buttons/alert/transferAdminAlertButton"
+import { getOnlineStatus } from "@/lib/utils"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -38,14 +44,41 @@ export default async function UserDetailsPageComponent({
   isCurrentUserAdmin: boolean
 }) {
   const t = await getTranslations("Dashboard.UserDetails")
+  const onlineStatus = getOnlineStatus(user.lastSeen)
 
   return (
     <PageWrapper id="UserDetailsPage">
       <UserDetailHeaderTabs selectedTab={"User"} id={user.id} />
       <SectionWrapper id="UserDetailsInfo">
-        <SectionRowWrapper justifyStart>
-          <RyogoH3 color="brand">{user.id}</RyogoH3>
-          <CopyClipboardButton label={user.id} />
+        <SectionRowWrapper>
+          <SectionRowWrapper justifyStart center>
+            <RyogoH3 color="brand">{user.id}</RyogoH3>
+            <CopyClipboardButton label={user.id} />
+          </SectionRowWrapper>
+          <Tooltip disableHoverableContent>
+            <TooltipTrigger className="bg-slate-50 dark:bg-slate-800 px-2 py-1.5 lg:px-2.5 lg:py-2 flex items-center justify-center gap-1 lg:gap-1.5 rounded-lg">
+              <SectionRowWrapper justifyEnd small center>
+                <RyogoCaption color="light">{t(onlineStatus)}</RyogoCaption>
+                <RyogoIcon
+                  icon={CircleSmall}
+                  thick
+                  size={"sm"}
+                  color={
+                    onlineStatus === "Away"
+                      ? "yellow"
+                      : onlineStatus === "Online"
+                        ? "green"
+                        : "light"
+                  }
+                />
+              </SectionRowWrapper>
+            </TooltipTrigger>
+            <TooltipContent>
+              {user.lastSeen
+                ? t("LastSeen", { time: moment(user.lastSeen).fromNow() })
+                : t("Offline")}
+            </TooltipContent>
+          </Tooltip>
         </SectionRowWrapper>
         <Separator />
         <SectionRowWrapper>

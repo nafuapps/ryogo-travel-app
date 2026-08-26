@@ -5,10 +5,8 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { Button } from "@/components/ui/button"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 import { useState, useTransition } from "react"
 import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
@@ -25,6 +23,10 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { X, Info } from "lucide-react"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ForgotPasswordPageComponent({
   user,
@@ -109,31 +111,29 @@ export default function ForgotPasswordPageComponent({
         )}
         <AuthActionWrapper>
           {/* Disable CTA if code was sent recently */}
-          <Button
-            variant={"default"}
-            size={"lg"}
-            disabled={isPending || codeSentRecently || isBot}
-          >
-            {isPending && <Spinner />}
-            <RyogoCaption color="white">
-              {isPending
+          <RyogoDefaultButton
+            label={
+              isPending
                 ? t("Loading")
                 : codeSentRecently
                   ? t("CodeSentRecently", {
                       count: VERIFY_CODE_TIMEOUT_MINUTES,
                     })
-                  : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant={"outline"}
+                  : t("PrimaryCTA")
+            }
+            size={"lg"}
+            type="submit"
+            disabled={isPending || codeSentRecently || isBot}
+            showSpinner={isPending}
+          />
+          <RyogoOutlineButton
+            label={t("Back")}
+            size="lg"
             type="button"
             onClick={() => {
               router.back()
             }}
-          >
-            <RyogoCaption color="slate">{t("Back")}</RyogoCaption>
-          </Button>
+          />
         </AuthActionWrapper>
       </AuthFormWrapper>
     </AuthPageWrapper>

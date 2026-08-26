@@ -4,10 +4,8 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { Button } from "@/components/ui/button"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { Spinner } from "@/components/ui/spinner"
 import { useTransition } from "react"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import {
@@ -18,6 +16,7 @@ import {
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 /*
 1. Find user by phone number
@@ -86,12 +85,12 @@ export default function LoginPageComponent() {
           placeholder={t("Input.Placeholder")}
         />
         <AuthActionWrapper>
-          <Button variant={"default"} size={"lg"} disabled={isPending || isBot}>
-            {isPending && <Spinner />}
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("PrimaryCTA")}
-            </RyogoCaption>
-          </Button>
+          <RyogoDefaultButton
+            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            size="lg"
+            type="submit"
+            disabled={isPending || isBot}
+          />
         </AuthActionWrapper>
       </AuthFormWrapper>
     </AuthPageWrapper>

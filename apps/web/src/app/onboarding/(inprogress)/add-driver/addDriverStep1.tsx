@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
@@ -11,13 +10,13 @@ import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepPrimaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
 import { FileRegex } from "@/lib/regex"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export function AddDriverStep1(props: {
   onNext: () => void
@@ -133,12 +132,15 @@ export function AddDriverStep1(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step1Actions">
-          <OnboardingStepPrimaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
           <QuickAddDriverAlertButton
             name={formData.getValues("driverName")}
             email={formData.getValues("driverEmail")}

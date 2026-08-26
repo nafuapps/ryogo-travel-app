@@ -7,9 +7,9 @@ import {
   OnboardingSuccessIcon,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { useTransition } from "react"
-import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export function VerifyAccountFinish() {
   const t = useTranslations("Onboarding.VerifyAccountPage.Finish")
@@ -34,14 +34,12 @@ export function VerifyAccountFinish() {
       <OnboardingStepActions actionsId="Step2Actions">
         <RyogoP>{t("Description1")}</RyogoP>
         <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
           disabled={isPending}
           onClick={goToVehicleOnboarding}
-        >
-          <RyogoCaption color="white">{t("PrimaryCTA")}</RyogoCaption>
-        </Button>
+          label={t("PrimaryCTA")}
+        />
       </OnboardingStepActions>
     </OnboardingStepForm>
   )

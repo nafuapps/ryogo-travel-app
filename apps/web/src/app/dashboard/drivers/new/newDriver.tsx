@@ -1,4 +1,4 @@
-import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import NewDriverForm from "./newDriverForm"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import {
@@ -9,12 +9,8 @@ import {
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { BASIC_PLAN_DRIVER_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
-import { RyogoH4, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { Hourglass } from "lucide-react"
-import Link from "next/link"
-import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export default async function NewDriverPageComponent({
   agencyId,
@@ -41,7 +37,7 @@ export default async function NewDriverPageComponent({
       driver.status !== UserStatusEnum.SUSPENDED,
   ).length
 
-  //Only allow subscribed agencies to add more than X drivers
+  //SUBSCRIPTION BLOCKER: Only allow subscribed agencies to add more than X drivers
   if (
     !APP_TRIAL_MODE &&
     currentDriverUsers >= BASIC_PLAN_DRIVER_LIMIT &&
@@ -49,32 +45,18 @@ export default async function NewDriverPageComponent({
   ) {
     return (
       <PageWrapper id="NewDriverPage">
-        <SectionWrapper id="DriverLimitSection" center>
-          <RyogoEnclosedIcon
-            icon={Hourglass}
-            size="md"
-            color="yellow"
-            bgColor="yellow"
-          />
-          <RyogoSmall color="yellow">
-            {isBasic ? t("TrialWarning") : t("ExpiredWarning")}
-          </RyogoSmall>
-          <RyogoH4>{isBasic ? t("TrialAction") : t("ExpiredAction")}</RyogoH4>
-          {isOwner && (
-            <Link href="/dashboard/account/subscription">
-              <RyogoBrandButton
-                size="lg"
-                label={
-                  isBasic
-                    ? agency.hasTriedSubscription
-                      ? t("BuyCTA")
-                      : t("TryCTA")
-                    : t("RenewCTA")
-                }
-              />
-            </Link>
-          )}
-        </SectionWrapper>
+        <SubscriptionBlockerSection
+          warningText={isBasic ? t("TrialWarning") : t("ExpiredWarning")}
+          actionText={isBasic ? t("TrialAction") : t("ExpiredAction")}
+          isOwner={isOwner}
+          ctaLabel={
+            isBasic
+              ? agency.hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+              : t("RenewCTA")
+          }
+        />
       </PageWrapper>
     )
   }

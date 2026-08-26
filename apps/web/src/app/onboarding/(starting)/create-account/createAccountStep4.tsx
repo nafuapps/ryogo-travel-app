@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
@@ -11,8 +10,6 @@ import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepPrimaryAction,
-  OnboardingStepSecondaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -22,6 +19,10 @@ import { BadgeCheck, Disc, LucideIcon } from "lucide-react"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function CreateAccountStep4(props: {
   onNext: () => void
@@ -91,7 +92,6 @@ export function CreateAccountStep4(props: {
           />
           <Separator />
           <RyogoSmall weight="font-bold">{t("Field3.Title")}</RyogoSmall>
-          {/* <div className="flex flex-col gap-2 lg:gap-3 border rounded-lg p-4 lg:p-5"> */}
           <PlanSelectionCard
             type={SubscriptionPlanEnum.PREMIUM}
             onClick={() => {
@@ -128,21 +128,25 @@ export function CreateAccountStep4(props: {
             title={t("Field3.BasicTitle")}
             desc={t("Field3.BasicDesc")}
           />
-          {/* </div> */}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step4Actions">
-          <OnboardingStepPrimaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
-          <OnboardingStepSecondaryAction
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            type="button"
             onClick={props.onPrev}
+            className="w-full"
             disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </OnboardingStepSecondaryAction>
+            label={t("SecondaryCTA")}
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

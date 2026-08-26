@@ -3,7 +3,7 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
-import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import {
   BASIC_PLAN_AGENT_LIMIT,
   BASIC_PLAN_DRIVER_LIMIT,
@@ -12,16 +12,12 @@ import {
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@/lib/uiConfig"
-import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import { Hourglass } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { differenceInDays } from "date-fns"
-import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export default async function NewBookingWithCustomerPageComponent({
   userId,
@@ -61,34 +57,22 @@ export default async function NewBookingWithCustomerPageComponent({
   ) {
     return (
       <PageWrapper id="NewBookingLimitBlockerPage">
-        <SectionWrapper id="BookingLimitBlockerSection" center>
-          <RyogoEnclosedIcon
-            icon={Hourglass}
-            size="md"
-            color="yellow"
-            bgColor="yellow"
-          />
-          <RyogoSmall color="yellow">
-            {isBasic ? t("BookingTrialWarning") : t("BookingExpiredWarning")}
-          </RyogoSmall>
-          <RyogoH4>
-            {isBasic ? t("BookingTrialAction") : t("BookingExpiredAction")}
-          </RyogoH4>
-          {isOwner && (
-            <Link href="/dashboard/account/subscription">
-              <RyogoBrandButton
-                size="lg"
-                label={
-                  isBasic
-                    ? agency.hasTriedSubscription
-                      ? t("BuyCTA")
-                      : t("TryCTA")
-                    : t("RenewCTA")
-                }
-              />
-            </Link>
-          )}
-        </SectionWrapper>
+        <SubscriptionBlockerSection
+          warningText={
+            isBasic ? t("BookingTrialWarning") : t("BookingExpiredWarning")
+          }
+          actionText={
+            isBasic ? t("BookingTrialAction") : t("BookingExpiredAction")
+          }
+          isOwner={isOwner}
+          ctaLabel={
+            isBasic
+              ? agency.hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+              : t("RenewCTA")
+          }
+        />
       </PageWrapper>
     )
   }
@@ -116,34 +100,22 @@ export default async function NewBookingWithCustomerPageComponent({
       if (!preferredAgents.find((user) => user.id === userId)) {
         return (
           <PageWrapper id="NewBookingLimitBlockerPage">
-            <SectionWrapper id="NewBookingLimitBlockerSection" center>
-              <RyogoEnclosedIcon
-                icon={Hourglass}
-                size="md"
-                color="yellow"
-                bgColor="yellow"
-              />
-              <RyogoSmall color="yellow">
-                {isBasic ? t("AgentTrialWarning") : t("AgentExpiredWarning")}
-              </RyogoSmall>
-              <RyogoH4>
-                {isBasic ? t("AgentTrialAction") : t("AgentExpiredAction")}
-              </RyogoH4>
-              {isOwner && (
-                <Link href="/dashboard/account/subscription">
-                  <RyogoBrandButton
-                    size="lg"
-                    label={
-                      isBasic
-                        ? agency.hasTriedSubscription
-                          ? t("BuyCTA")
-                          : t("TryCTA")
-                        : t("RenewCTA")
-                    }
-                  />
-                </Link>
-              )}
-            </SectionWrapper>
+            <SubscriptionBlockerSection
+              warningText={
+                isBasic ? t("AgentTrialWarning") : t("AgentExpiredWarning")
+              }
+              actionText={
+                isBasic ? t("AgentTrialAction") : t("AgentExpiredAction")
+              }
+              isOwner={isOwner}
+              ctaLabel={
+                isBasic
+                  ? agency.hasTriedSubscription
+                    ? t("BuyCTA")
+                    : t("TryCTA")
+                  : t("RenewCTA")
+              }
+            />
           </PageWrapper>
         )
       }

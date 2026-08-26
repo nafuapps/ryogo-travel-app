@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -10,7 +9,6 @@ import {
   OnboardingStepActions,
   OnboardingStepContent,
   OnboardingStepForm,
-  OnboardingStepPrimaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { useTranslations } from "next-intl"
@@ -22,6 +20,7 @@ import {
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export function AddVehicleStep1(props: {
   onNext: () => void
@@ -113,12 +112,15 @@ export function AddVehicleStep1(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step1Actions">
-          <OnboardingStepPrimaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
           <QuickAddVehicleAlertButton
             agencyId={props.finalData.agencyId}
             vehicleNumber={formData.getValues("vehicleNumber")}

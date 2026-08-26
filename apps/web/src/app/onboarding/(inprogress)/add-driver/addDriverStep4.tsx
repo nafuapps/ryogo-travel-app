@@ -1,14 +1,11 @@
 "use client"
 
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepPrimaryAction,
-  OnboardingStepSecondaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { RyogoH3 } from "@/components/typography"
@@ -19,6 +16,10 @@ import { toast } from "sonner"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import { useTransition } from "react"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function AddDriverConfirm(props: {
   onNext: () => void
@@ -115,16 +116,21 @@ export function AddDriverConfirm(props: {
           )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step4Actions">
-          <OnboardingStepPrimaryAction disabled={isPending}>
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
-          <OnboardingStepSecondaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            disabled={formData.formState.isSubmitting}
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
+          <RyogoOutlineButton
+            size={"lg"}
             onClick={props.onPrev}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </OnboardingStepSecondaryAction>
+            className="w-full"
+            disabled={formData.formState.isSubmitting}
+            label={t("SecondaryCTA")}
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

@@ -8,8 +8,6 @@ import {
   RyogoTextarea,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -21,12 +19,13 @@ import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { addCustomMissionAction } from "@/app/actions/missions/addCustomMissionAction"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import {
   regexCheckIDByEntityType,
   getDateTime,
 } from "@/components/missions/missionCommons"
+import { RyogoDefaultButton, RyogoOutlineButton } from "../buttons/ryogoButtons"
 
 export default function AddCustomMissionPageComponent({
   userId,
@@ -148,25 +147,20 @@ export default function AddCustomMissionPageComponent({
         />
         <RyogoTimePicker name="dueTime" label={t("Field6.Title")} />
         <Separator />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          label={t("CancelCTA")}
           type="button"
-          disabled={isPending}
           onClick={() => router.back()}
-        >
-          <RyogoCaption color="white">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+          disabled={isPending}
+        />
       </FormWrapper>
     </PageWrapper>
   )

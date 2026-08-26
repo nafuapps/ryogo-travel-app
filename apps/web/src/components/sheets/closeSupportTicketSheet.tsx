@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoRatingInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -21,6 +20,7 @@ import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { RyogoCaption } from "@/components/typography"
 import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
+import { RyogoDefaultButton } from "../buttons/ryogoButtons"
 
 export default function CloseSupportTicketSheet({
   ticketId,
@@ -68,9 +68,7 @@ export default function CloseSupportTicketSheet({
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <Button variant="default" className="w-full">
-          <RyogoCaption color="white">{t("Title")}</RyogoCaption>
-        </Button>
+        <RyogoDefaultButton className="w-full" label={t("Title")} />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -96,9 +94,12 @@ export default function CloseSupportTicketSheet({
           </form>
         </Form>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="closeSupportTicket">
-            {isPending ? t("Loading") : t("CloseTicket")}
-          </Button>
+          <RyogoDefaultButton
+            type="submit"
+            disabled={isPending}
+            form="closeSupportTicket"
+            label={isPending ? t("Loading") : t("CloseTicket")}
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

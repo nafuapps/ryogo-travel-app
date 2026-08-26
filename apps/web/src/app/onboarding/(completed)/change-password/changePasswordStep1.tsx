@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -10,14 +9,13 @@ import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepPrimaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { useTransition } from "react"
 import { newUserSetPasswordAction } from "@/app/actions/users/newUserSetPasswordAction"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export function ChangePasswordStep1(props: {
   userId: string
@@ -26,7 +24,6 @@ export function ChangePasswordStep1(props: {
 }) {
   const t = useTranslations("Onboarding.ChangePasswordPage.Step1")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const step1Schema = z
     .object({
@@ -50,25 +47,23 @@ export function ChangePasswordStep1(props: {
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    startTransition(async () => {
-      const result = await newUserSetPasswordAction(
-        props.userId,
-        props.agencyId,
-        data.newPassword,
-      )
-      if (result) {
-        //If success, redirect
-        toast.success(t("Success"))
-        if (props.role === UserRolesEnum.DRIVER) {
-          router.replace("/rider")
-        } else {
-          router.replace("/dashboard")
-        }
+    const result = await newUserSetPasswordAction(
+      props.userId,
+      props.agencyId,
+      data.newPassword,
+    )
+    if (result) {
+      //If success, redirect
+      toast.success(t("Success"))
+      if (props.role === UserRolesEnum.DRIVER) {
+        router.replace("/rider")
       } else {
-        //If failed, show error
-        toast.error(t("APIError"))
+        router.replace("/dashboard")
       }
-    })
+    } else {
+      //If failed, show error
+      toast.error(t("APIError"))
+    }
   }
 
   return (
@@ -94,10 +89,15 @@ export function ChangePasswordStep1(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step1Actions">
-          <OnboardingStepPrimaryAction disabled={isPending}>
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
+            disabled={formData.formState.isSubmitting}
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

@@ -9,7 +9,8 @@ import {
 import { useTransition } from "react"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+
 export function CreateAccountFinish({
   id,
   password,
@@ -44,9 +45,12 @@ export function CreateAccountFinish({
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step6Actions">
         <RyogoSmall>{t("Description1")}</RyogoSmall>
-        <Button disabled={isPending} onClick={onSubmit} type="submit">
-          {t("PrimaryCTA")}
-        </Button>
+        <RyogoDefaultButton
+          disabled={isPending}
+          onClick={onSubmit}
+          type="submit"
+          label={t("PrimaryCTA")}
+        />
       </OnboardingStepActions>
     </OnboardingStepForm>
   )

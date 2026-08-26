@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
   Sheet,
@@ -20,7 +19,11 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserNameAction } from "@/app/actions/users/changeUserNameAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ChangeUserNameSheet({
   userId,
@@ -66,9 +69,7 @@ export default function ChangeUserNameSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" className="w-full">
-          <RyogoCaption color="slate">{t("Title")}</RyogoCaption>
-        </Button>
+        <RyogoGhostButton label={t("Title")} />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -87,16 +88,18 @@ export default function ChangeUserNameSheet({
           </form>
         </Form>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="changeName">
-            {t("Save")}
-          </Button>
-          <Button
-            variant="outline"
+          <RyogoDefaultButton
+            type="submit"
             disabled={isPending}
+            form="changeName"
+            label={t("Save")}
+          />
+          <RyogoOutlineButton
+            disabled={isPending}
+            type="button"
             onClick={() => setOpen(false)}
-          >
-            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
-          </Button>
+            label={t("Close")}
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

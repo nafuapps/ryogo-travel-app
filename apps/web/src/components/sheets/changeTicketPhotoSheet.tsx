@@ -1,8 +1,6 @@
 "use client"
 
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
   Sheet,
@@ -21,6 +19,11 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeSupportTicketPhotoAction } from "@/app/actions/support/changeSupportTicketPhotoAction"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoGhostButton,
+  RyogoOutlineButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ChangeTicketPhotoSheet({
   ticketId,
@@ -74,11 +77,9 @@ export default function ChangeTicketPhotoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="hover:underline">
-        <Button variant="outline">
-          <RyogoCaption color="slate">
-            {newPhoto ? t("UploadButton") : t("ChangeButton")}
-          </RyogoCaption>
-        </Button>
+        <RyogoGhostButton
+          label={newPhoto ? t("UploadButton") : t("ChangeButton")}
+        />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -97,16 +98,18 @@ export default function ChangeTicketPhotoSheet({
           </form>
         </Form>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="changePhoto">
-            {t("Save")}
-          </Button>
-          <Button
-            variant="outline"
+          <RyogoDefaultButton
+            type="submit"
             disabled={isPending}
+            form="changePhoto"
+            label={t("Save")}
+          />
+          <RyogoOutlineButton
+            disabled={isPending}
+            type="button"
             onClick={() => setOpen(false)}
-          >
-            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
-          </Button>
+            label={t("Close")}
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

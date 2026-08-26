@@ -3,16 +3,10 @@ import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
-import {
-  MainWrapper,
-  PageWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { RyogoSmall, RyogoH4 } from "@/components/typography"
-import { Hourglass } from "lucide-react"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
 import { APP_TRIAL_MODE } from "@/lib/uiConfig"
+import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export default async function MySupportTicketsLayout({
   children,
@@ -40,20 +34,14 @@ export default async function MySupportTicketsLayout({
       <MainWrapper>
         <RiderHeader pathName={"/rider/mySupport/tickets"} />
         <PageWrapper id="SupportTicketsBlockerPage">
-          <SectionWrapper id="SupportTicketsBlockerSection" center>
-            <RyogoEnclosedIcon
-              icon={Hourglass}
-              size="md"
-              color="yellow"
-              bgColor="yellow"
-            />
-            <RyogoSmall color="yellow">
-              {isBasic ? t("TicketsTrialWarning") : t("TicketsExpiredWarning")}
-            </RyogoSmall>
-            <RyogoH4>
-              {isBasic ? t("TicketsTrialAction") : t("TicketsExpiredAction")}
-            </RyogoH4>
-          </SectionWrapper>
+          <SubscriptionBlockerSection
+            warningText={
+              isBasic ? t("TicketsTrialWarning") : t("TicketsExpiredWarning")
+            }
+            actionText={
+              isBasic ? t("TicketsTrialAction") : t("TicketsExpiredAction")
+            }
+          />
         </PageWrapper>
       </MainWrapper>
     )

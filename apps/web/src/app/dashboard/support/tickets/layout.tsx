@@ -5,19 +5,11 @@ import {
   SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import {
-  MainWrapper,
-  PageWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoH4 } from "@/components/typography"
-import { Hourglass } from "lucide-react"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { APP_TRIAL_MODE } from "@/lib/uiConfig"
-import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export default async function SupportTicketsLayout({
   children,
@@ -45,34 +37,22 @@ export default async function SupportTicketsLayout({
       <MainWrapper>
         <DashboardHeader pathName={"/dashboard/support/tickets"} />
         <PageWrapper id="SupportTicketsBlockerPage">
-          <SectionWrapper id="SupportTicketsBlockerSection" center>
-            <RyogoEnclosedIcon
-              icon={Hourglass}
-              size="md"
-              color="yellow"
-              bgColor="yellow"
-            />
-            <RyogoSmall color="yellow">
-              {isBasic ? t("TicketsTrialWarning") : t("TicketsExpiredWarning")}
-            </RyogoSmall>
-            <RyogoH4>
-              {isBasic ? t("TicketsTrialAction") : t("TicketsExpiredAction")}
-            </RyogoH4>
-            {currentUser.userRole === UserRolesEnum.OWNER && (
-              <Link href="/dashboard/account/subscription">
-                <RyogoBrandButton
-                  size="lg"
-                  label={
-                    isBasic
-                      ? agency.hasTriedSubscription
-                        ? t("BuyCTA")
-                        : t("TryCTA")
-                      : t("RenewCTA")
-                  }
-                ></RyogoBrandButton>
-              </Link>
-            )}
-          </SectionWrapper>
+          <SubscriptionBlockerSection
+            warningText={
+              isBasic ? t("TicketsTrialWarning") : t("TicketsExpiredWarning")
+            }
+            actionText={
+              isBasic ? t("TicketsTrialAction") : t("TicketsExpiredAction")
+            }
+            isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+            ctaLabel={
+              isBasic
+                ? agency.hasTriedSubscription
+                  ? t("BuyCTA")
+                  : t("TryCTA")
+                : t("RenewCTA")
+            }
+          />
         </PageWrapper>
       </MainWrapper>
     )

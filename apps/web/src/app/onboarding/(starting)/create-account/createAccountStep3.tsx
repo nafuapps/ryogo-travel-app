@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm, useWatch } from "react-hook-form"
@@ -15,8 +14,6 @@ import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepSecondaryAction,
-  OnboardingStepPrimaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import stateCityData from "@/lib/states_cities.json"
 import { Form } from "@/components/ui/form"
@@ -26,6 +23,10 @@ import {
 } from "@/lib/utils"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function CreateAccountStep3(props: {
   onNext: () => void
@@ -164,18 +165,23 @@ export function CreateAccountStep3(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step3Actions">
-          <OnboardingStepPrimaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
-          <OnboardingStepSecondaryAction
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            type="button"
             onClick={props.onPrev}
+            className="w-full"
             disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </OnboardingStepSecondaryAction>
+            label={t("SecondaryCTA")}
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

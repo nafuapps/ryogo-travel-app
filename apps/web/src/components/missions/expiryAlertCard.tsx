@@ -4,7 +4,6 @@ import moment from "moment"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { differenceInDays } from "date-fns"
 import {
   AlarmSmoke,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react"
 import { EXPIRY_WARNING_DAYS } from "@/lib/uiConfig"
 import { CarouselItem } from "@/components/ui/carousel"
+import { RyogoDefaultButton } from "../buttons/ryogoButtons"
 
 type ExpiryType = "License" | "PUC" | "RC" | "Insurance" | "Leave" | "Repair"
 
@@ -80,11 +80,7 @@ export default async function ExpiryAlertCard({
         }
         className="mt-auto"
       >
-        <Button variant="default" className="w-full">
-          <RyogoCaption color="white" weight="font-bold">
-            {t("CheckNow")}
-          </RyogoCaption>
-        </Button>
+        <RyogoDefaultButton className="w-full" label={t("CheckNow")} />
       </Link>
     </CarouselItem>
   )

@@ -1,8 +1,6 @@
 "use client"
 
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import {
   Sheet,
@@ -21,6 +19,11 @@ import { changeCustomerPhotoAction } from "@/app/actions/customers/changeCustome
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ChangeCustomerPhotoSheet({
   customerId,
@@ -78,7 +81,7 @@ export default function ChangeCustomerPhotoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="hover:underline">
-        <RyogoCaption color="light">{t("Button")}</RyogoCaption>
+        <RyogoGhostButton label={t("Button")} />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -97,16 +100,18 @@ export default function ChangeCustomerPhotoSheet({
           </form>
         </Form>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="changePhoto">
-            <RyogoCaption color="slate">{t("Save")}</RyogoCaption>
-          </Button>
-          <Button
-            variant="outline"
+          <RyogoDefaultButton
+            type="submit"
             disabled={isPending}
+            form="changePhoto"
+            label={t("Save")}
+          />
+          <RyogoOutlineButton
+            disabled={isPending}
+            type="button"
             onClick={() => setOpen(false)}
-          >
-            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
-          </Button>
+            label={t("Close")}
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

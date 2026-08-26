@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoTextarea } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -16,11 +15,14 @@ import { useRouter } from "next/navigation"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
-import { RyogoCaption } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import z from "zod"
 import { addUserCommentInSupportTicketAction } from "@/app/actions/support/addUserCommentInSupportTicketAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AddSupportTicketCommentSheet({
   ticketId,
@@ -70,9 +72,7 @@ export default function AddSupportTicketCommentSheet({
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <Button variant="outline" className="w-full">
-          <RyogoCaption>{t("Title")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton className="w-full" label={t("Title")} />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -89,9 +89,12 @@ export default function AddSupportTicketCommentSheet({
           </form>
         </Form>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="closeSupportTicket">
-            {isPending ? t("Loading") : t("Save")}
-          </Button>
+          <RyogoDefaultButton
+            type="submit"
+            disabled={isPending}
+            form="closeSupportTicket"
+            label={isPending ? t("Loading") : t("Save")}
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -1,7 +1,6 @@
 //Onboarding home page
 
 import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import {
   AtSign,
   Camera,
@@ -22,6 +21,7 @@ import Link from "next/link"
 import RyoGoLogo from "@/components/logo"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { PhoneRegex } from "@/lib/regex"
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
@@ -49,7 +49,7 @@ export default async function OnboardingHomePage({
         <RyogoH1 weight="font-bold">{t("Header.Title")}</RyogoH1>
         <RyogoSmall color="light">{t("Header.Description")}</RyogoSmall>
       </div>
-      <div id="OnboardingHomeFooter" className="w-full md:w-1/2">
+      <div id="OnboardingHomeCTA" className="w-full md:w-1/2">
         <Link
           href={
             PhoneRegex.safeParse(phone).success
@@ -57,9 +57,11 @@ export default async function OnboardingHomePage({
               : "/onboarding/create-account"
           }
         >
-          <Button variant={"brand"} size={"lg"} className="w-full">
-            <RyogoSmall color="white">{t("Footer.PrimaryCTA")}</RyogoSmall>
-          </Button>
+          <RyogoBrandButton
+            size={"lg"}
+            className="w-full"
+            label={t("Footer.PrimaryCTA")}
+          />
         </Link>
       </div>
       <div

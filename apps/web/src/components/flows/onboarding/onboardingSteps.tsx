@@ -1,5 +1,4 @@
 import { SubmitEventHandler } from "react"
-import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -99,44 +98,6 @@ export function OnboardingStepActions(props: {
     >
       {props.children}
     </div>
-  )
-}
-
-const buttonClassName = "w-full"
-export function OnboardingStepPrimaryAction(props: {
-  children: React.ReactNode
-  disabled: boolean
-}) {
-  return (
-    <Button
-      variant={"default"}
-      size={"lg"}
-      type="submit"
-      className={buttonClassName}
-      disabled={props.disabled}
-    >
-      <RyogoCaption color="white" className="items-center gap-2">
-        {props.children}
-      </RyogoCaption>
-    </Button>
-  )
-}
-
-export function OnboardingStepSecondaryAction(props: {
-  children: React.ReactNode
-  disabled?: boolean
-  onClick?: () => void
-}) {
-  return (
-    <Button
-      variant={"outline"}
-      size={"lg"}
-      onClick={props.onClick}
-      className={buttonClassName}
-      disabled={props.disabled}
-    >
-      <RyogoCaption color="light">{props.children}</RyogoCaption>
-    </Button>
   )
 }
 

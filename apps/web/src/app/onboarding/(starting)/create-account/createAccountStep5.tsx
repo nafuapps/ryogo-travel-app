@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoH3 } from "@/components/typography"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import ConfirmValues from "@/components/form/confirmValues"
@@ -9,15 +8,17 @@ import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepPrimaryAction,
-  OnboardingStepSecondaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { createOwnerAccountAction } from "@/app/actions/users/createOwnerAccountAction"
-import { Dispatch, SetStateAction, useTransition } from "react"
+import { Dispatch, SetStateAction } from "react"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function CreateAccountConfirm(props: {
   onNext: () => void
@@ -27,54 +28,51 @@ export function CreateAccountConfirm(props: {
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Confirm")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const formData = useForm<CreateOwnerAccountRequestType>()
 
   const onSubmit = async () => {
-    startTransition(async () => {
-      // Create Agency and Owner Account
-      const newAccountData: CreateOwnerAccountRequestType = {
+    // Create Agency and Owner Account
+    const newAccountData: CreateOwnerAccountRequestType = {
+      agency: {
+        businessEmail: props.finalData.agency.businessEmail,
+        businessPhone: props.finalData.agency.businessPhone,
+        businessName: props.finalData.agency.businessName,
+        businessAddress: props.finalData.agency.businessAddress,
+        agencyCity: props.finalData.agency.agencyCity,
+        agencyState: props.finalData.agency.agencyState,
+        commissionRate: props.finalData.agency.commissionRate,
+        logo: props.finalData.agency.logo,
+        qrCode: props.finalData.agency.qrCode,
+        tryPremium: props.finalData.agency.tryPremium,
+      },
+      owner: {
+        email: props.finalData.owner.email,
+        phone: props.finalData.owner.phone,
+        name: props.finalData.owner.name,
+        password: props.finalData.owner.password,
+        photos: props.finalData.owner.photos,
+      },
+    }
+
+    const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
+    if (createdOwnerAccount) {
+      //If success, update userid and move to next success page
+      props.updateFinalData({
         agency: {
-          businessEmail: props.finalData.agency.businessEmail,
-          businessPhone: props.finalData.agency.businessPhone,
-          businessName: props.finalData.agency.businessName,
-          businessAddress: props.finalData.agency.businessAddress,
-          agencyCity: props.finalData.agency.agencyCity,
-          agencyState: props.finalData.agency.agencyState,
-          commissionRate: props.finalData.agency.commissionRate,
-          logo: props.finalData.agency.logo,
-          qrCode: props.finalData.agency.qrCode,
-          tryPremium: props.finalData.agency.tryPremium,
+          ...props.finalData.agency,
         },
         owner: {
-          email: props.finalData.owner.email,
-          phone: props.finalData.owner.phone,
-          name: props.finalData.owner.name,
-          password: props.finalData.owner.password,
-          photos: props.finalData.owner.photos,
+          ...props.finalData.owner,
+          id: createdOwnerAccount.userId,
         },
-      }
-
-      const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
-      if (createdOwnerAccount) {
-        //If success, update userid and move to next success page
-        props.updateFinalData({
-          agency: {
-            ...props.finalData.agency,
-          },
-          owner: {
-            ...props.finalData.owner,
-            id: createdOwnerAccount.userId,
-          },
-        })
-        props.onNext()
-      } else {
-        //If failed, Take to onboarding page and show error
-        toast.error(t("APIError"))
-        router.replace("/onboarding")
-      }
-    })
+      })
+      props.onNext()
+    } else {
+      //If failed, Take to onboarding page and show error
+      toast.error(t("APIError"))
+      router.replace("/onboarding")
+    }
   }
   return (
     <Form {...formData}>
@@ -124,16 +122,23 @@ export function CreateAccountConfirm(props: {
           )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step5Actions">
-          <OnboardingStepPrimaryAction disabled={isPending}>
-            {isPending && <Spinner />}
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
-          <OnboardingStepSecondaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
+            disabled={formData.formState.isSubmitting}
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            type="button"
             onClick={props.onPrev}
-            disabled={isPending}
-          >
-            {t("SecondaryCTA")}
-          </OnboardingStepSecondaryAction>
+            className="w-full"
+            disabled={formData.formState.isSubmitting}
+            label={t("SecondaryCTA")}
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

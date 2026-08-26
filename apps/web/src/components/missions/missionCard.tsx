@@ -19,6 +19,7 @@ import { Separator } from "@/components/ui/separator"
 import { CarouselItem } from "@/components/ui/carousel"
 import { useRouter } from "next/navigation"
 import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function MissionCard({
   mission,
@@ -145,18 +146,16 @@ export default function MissionCard({
               label={t("Card.Custom")}
               bgColor={isRead ? "light" : "slate"}
             />
-            <Button
-              variant={"outline"}
-              size="sm"
+            <RyogoOutlineButton
               disabled={isPending || isRead}
               onClick={() =>
                 router.push(`/dashboard/mission-control/${mission.id}/modify`)
               }
               className="hover:bg-slate-100 dark:hover:bg-slate-800"
+              label={t("Card.EditMission")}
             >
-              <RyogoCaption color="slate">{t("Card.EditMission")}</RyogoCaption>
               <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
-            </Button>
+            </RyogoOutlineButton>
           </div>
         </>
       )}

@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
@@ -15,12 +14,14 @@ import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepPrimaryAction,
-  OnboardingStepSecondaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function AddVehicleStep2(props: {
   onNext: () => void
@@ -161,18 +162,23 @@ export function AddVehicleStep2(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step2Actions">
-          <OnboardingStepPrimaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
             disabled={formData.formState.isSubmitting}
-          >
-            {formData.formState.isSubmitting && <Spinner />}
-            {formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
-          <OnboardingStepSecondaryAction
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            type="button"
             onClick={props.onPrev}
+            className="w-full"
             disabled={formData.formState.isSubmitting}
-          >
-            {t("SecondaryCTA")}
-          </OnboardingStepSecondaryAction>
+            label={t("SecondaryCTA")}
+          />
         </OnboardingStepActions>
       </OnboardingStepForm>
     </Form>

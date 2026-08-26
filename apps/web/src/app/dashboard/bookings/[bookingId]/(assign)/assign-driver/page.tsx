@@ -63,6 +63,7 @@ export default async function AssignDriverBookingPage({
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   //Get driver data with their bookings and leaves from DB
   const allDrivers = await driverServices.findDriversByAgency(
@@ -75,8 +76,7 @@ export default async function AssignDriverBookingPage({
   //SUBSCRIPTION BLOCKER: Limit the drivers available for assignment
   if (
     !APP_TRIAL_MODE &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date()) &&
+    (isBasic || agency.subscriptionExpiresOn < new Date()) &&
     allDrivers.length > BASIC_PLAN_DRIVER_LIMIT
   ) {
     limited = true
@@ -102,7 +102,7 @@ export default async function AssignDriverBookingPage({
         drivers={limited ? drivers : allDrivers}
         booking={booking}
         limited={limited}
-        isSubscribed={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        isSubscribed={!isBasic}
         hasTriedSubscription={agency.hasTriedSubscription}
       />
     </MainWrapper>

@@ -63,6 +63,7 @@ export default async function AssignVehicleBookingPage({
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   //Get vehicle data with their bookings and repairs
   const allVehicles = await vehicleServices.findVehiclesByAgency(
@@ -75,8 +76,7 @@ export default async function AssignVehicleBookingPage({
   //SUBSCRIPTION BLOCKER: Limit the vehicles available for assignment
   if (
     !APP_TRIAL_MODE &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date()) &&
+    (isBasic || agency.subscriptionExpiresOn < new Date()) &&
     allVehicles.length > BASIC_PLAN_VEHICLE_LIMIT
   ) {
     limited = true
@@ -102,7 +102,7 @@ export default async function AssignVehicleBookingPage({
         vehicles={limited ? vehicles : allVehicles}
         booking={booking}
         limited={limited}
-        isSubscribed={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        isSubscribed={!isBasic}
         hasTriedSubscription={agency.hasTriedSubscription}
       />
     </MainWrapper>

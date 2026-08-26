@@ -7,8 +7,6 @@ import {
   OnboardingStepForm,
   OnboardingStepContent,
   OnboardingStepActions,
-  OnboardingStepPrimaryAction,
-  OnboardingStepSecondaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import { Form } from "@/components/ui/form"
 import { useTransition } from "react"
@@ -17,6 +15,10 @@ import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeActi
 import { RyogoCaption } from "@/components/typography"
 import { SUPPORT_EMAIL, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import Link from "next/link"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function VerifyAccountStep1(props: {
   onNext: () => void
@@ -78,24 +80,31 @@ export function VerifyAccountStep1(props: {
           />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step1Actions">
-          <OnboardingStepPrimaryAction disabled={isPending}>
-            {t("PrimaryCTA")}
-          </OnboardingStepPrimaryAction>
-          <OnboardingStepSecondaryAction
+          <RyogoDefaultButton
+            className="w-full"
+            type="submit"
+            disabled={isPending}
+            label={t("PrimaryCTA")}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            type="button"
             onClick={resendCode}
+            className="w-full"
             disabled={
               isPending || props.resendDifference < VERIFY_CODE_TIMEOUT_MINUTES
             }
-          >
-            {isPending
-              ? t("Sending")
-              : props.resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
-                ? t("SecondaryCTA")
-                : t("Timeout", {
-                    difference:
-                      VERIFY_CODE_TIMEOUT_MINUTES - props.resendDifference,
-                  })}
-          </OnboardingStepSecondaryAction>
+            label={
+              isPending
+                ? t("Sending")
+                : props.resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
+                  ? t("SecondaryCTA")
+                  : t("Timeout", {
+                      difference:
+                        VERIFY_CODE_TIMEOUT_MINUTES - props.resendDifference,
+                    })
+            }
+          />
           <Link href={`mailto:${SUPPORT_EMAIL}`}>
             <RyogoCaption color="light">{t("Help")}</RyogoCaption>
           </Link>

@@ -9,8 +9,6 @@ import {
   RyogoTextarea,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -21,7 +19,7 @@ import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { modifyCustomMissionAction } from "@/app/actions/missions/modifyCustomMissionAction"
 import {
@@ -30,6 +28,7 @@ import {
   extractTimeFromDate,
 } from "@/components/missions/missionCommons"
 import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
+import { RyogoDefaultButton, RyogoOutlineButton } from "../buttons/ryogoButtons"
 
 export default function ModifyCustomMissionPageComponent({
   mission,
@@ -156,25 +155,20 @@ export default function ModifyCustomMissionPageComponent({
         />
         <RyogoTimePicker name="dueTime" label={t("Field6.Title")} />
         <Separator />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={isPending ? t("Loading") : t("PrimaryCTA")}
           type="submit"
           disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          showSpinner={isPending}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          label={t("CancelCTA")}
           type="button"
-          disabled={isPending}
           onClick={() => router.back()}
-        >
-          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+          disabled={isPending}
+        />
         <DeleteMissionAlertButton
           missionId={mission.id}
           userId={mission.userId}

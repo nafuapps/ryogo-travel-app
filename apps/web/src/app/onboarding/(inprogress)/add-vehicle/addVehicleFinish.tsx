@@ -5,9 +5,10 @@ import {
   OnboardingStepActions,
   OnboardingStepForm,
   OnboardingSuccessIcon,
-  OnboardingStepPrimaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+
 export function AddVehicleFinish() {
   const t = useTranslations("Onboarding.AddVehiclePage.Finish")
 
@@ -20,9 +21,9 @@ export function AddVehicleFinish() {
       </OnboardingStepContent>
       <OnboardingStepActions actionsId="Step6Actions">
         <RyogoSmall>{t("Description1")}</RyogoSmall>
-        <OnboardingStepPrimaryAction disabled={false}>
-          <Link href="/onboarding/add-driver">{t("PrimaryCTA")}</Link>
-        </OnboardingStepPrimaryAction>
+        <Link href="/onboarding/add-driver">
+          <RyogoDefaultButton label={t("PrimaryCTA")} />
+        </Link>
       </OnboardingStepActions>
     </OnboardingStepForm>
   )

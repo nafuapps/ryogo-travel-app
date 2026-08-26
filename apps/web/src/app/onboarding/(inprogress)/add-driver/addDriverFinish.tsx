@@ -7,7 +7,6 @@ import {
   OnboardingStepActions,
   OnboardingStepForm,
   OnboardingSuccessIcon,
-  OnboardingStepPrimaryAction,
 } from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -17,7 +16,10 @@ import { useTransition } from "react"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useRouter } from "next/navigation"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export function AddDriverFinish(props: {
   finalData: AddDriverRequestType
@@ -71,9 +73,9 @@ export function AddDriverFinish(props: {
       <OnboardingStepActions actionsId="Step6Actions">
         <RyogoSmall>{t("Description1")}</RyogoSmall>
         <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
-        <OnboardingStepPrimaryAction disabled={false}>
-          <Link href="/onboarding/add-agent">{t("PrimaryCTA")}</Link>
-        </OnboardingStepPrimaryAction>
+        <Link href="/onboarding/add-agent">
+          <RyogoDefaultButton label={t("PrimaryCTA")} />
+        </Link>
         <RyogoOutlineButton
           size={"lg"}
           disabled={isPending}

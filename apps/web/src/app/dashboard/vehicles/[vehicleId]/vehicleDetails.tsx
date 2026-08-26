@@ -2,7 +2,6 @@ import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehic
 import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Button } from "@/components/ui/button"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import moment from "moment"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -22,6 +21,7 @@ import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { Separator } from "@/components/ui/separator"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function VehicleDetailsPageComponent({
   vehicle,
@@ -172,9 +172,7 @@ export default async function VehicleDetailsPageComponent({
       </SectionWrapper>
       <SectionWrapper id="VehiclActions">
         <Link href={`/dashboard/vehicles/${vehicle.id}/modify`}>
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">{t("EditDetails")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
         </Link>
         {vehicle.status !== VehicleStatusEnum.INACTIVE &&
           vehicle.status !== VehicleStatusEnum.ON_TRIP && (

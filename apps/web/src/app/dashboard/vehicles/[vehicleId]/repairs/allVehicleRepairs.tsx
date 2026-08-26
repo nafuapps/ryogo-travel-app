@@ -5,7 +5,6 @@ import { RyogoP, RyogoCaption } from "@/components/typography"
 import Link from "next/link"
 import { ChevronRight, Plus } from "lucide-react"
 import moment from "moment"
-import { Button } from "@/components/ui/button"
 import {
   SectionWrapper,
   GridItemWrapper,
@@ -37,10 +36,9 @@ export default async function AllVehicleRepairsPageComponent({
           href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
           className="w-full md:w-1/2 self-center"
         >
-          <Button variant={"outline"} className="w-full">
+          <RyogoOutlineButton label={t("AddRepair")} className="w-full">
             <RyogoIcon icon={Plus} size="sm" />
-            <RyogoCaption color="slate">{t("AddRepair")}</RyogoCaption>
-          </Button>
+          </RyogoOutlineButton>
         </Link>
         {repairs.map((repair) => (
           <VehicleRepairComponent

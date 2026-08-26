@@ -1,18 +1,14 @@
-import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import NewAgentForm from "./newAgentForm"
 import {
   SubscriptionPlanEnum,
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { BASIC_PLAN_AGENT_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
-import { Hourglass } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export default async function NewAgentPageComponent({
   agency,
@@ -28,44 +24,28 @@ export default async function NewAgentPageComponent({
       agent.agencyId === agency.id && agent.status !== UserStatusEnum.SUSPENDED,
   ).length
 
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+
   //SUBSCRIPTION BLOCKER: Only Premium agencies can add more than X agents
   if (
     !APP_TRIAL_MODE &&
     currentAgentUsers >= BASIC_PLAN_AGENT_LIMIT &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date())
+    (isBasic || agency.subscriptionExpiresOn < new Date())
   ) {
     return (
       <PageWrapper id="NewAgentPage">
-        <SectionWrapper id="AgentLimitSection" center>
-          <RyogoEnclosedIcon
-            icon={Hourglass}
-            size="md"
-            color="yellow"
-            bgColor="yellow"
-          />
-          <RyogoSmall color="yellow">
-            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-              ? t("TrialWarning")
-              : t("ExpiredWarning")}
-          </RyogoSmall>
-          <RyogoH4>
-            {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-              ? t("TrialAction")
-              : t("ExpiredAction")}
-          </RyogoH4>
-          <Link href="/dashboard/account/subscription">
-            <Button variant={"brand"} size="lg">
-              <RyogoCaption color="white">
-                {agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-                  ? agency.hasTriedSubscription
-                    ? t("BuyCTA")
-                    : t("TryCTA")
-                  : t("RenewCTA")}
-              </RyogoCaption>
-            </Button>
-          </Link>
-        </SectionWrapper>
+        <SubscriptionBlockerSection
+          warningText={isBasic ? t("TrialWarning") : t("ExpiredWarning")}
+          actionText={isBasic ? t("TrialAction") : t("ExpiredAction")}
+          isOwner
+          ctaLabel={
+            isBasic
+              ? agency.hasTriedSubscription
+                ? t("BuyCTA")
+                : t("TryCTA")
+              : t("RenewCTA")
+          }
+        />
       </PageWrapper>
     )
   }

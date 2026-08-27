@@ -19,7 +19,11 @@ import { Separator } from "@/components/ui/separator"
 import { CarouselItem } from "@/components/ui/carousel"
 import { useRouter } from "next/navigation"
 import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function MissionCard({
   mission,
@@ -86,10 +90,14 @@ export default function MissionCard({
           </div>
         </SectionRowWrapper>
         {isRead ? (
-          <Button variant={"ghost"} onClick={markUnread} disabled={isPending}>
+          <RyogoGhostButton
+            onClick={markUnread}
+            disabled={isPending}
+            label={t("Card.Read")}
+            labelColor="light"
+          >
             <RyogoIcon icon={CircleCheckBig} size={"sm"} color="light" />
-            <RyogoCaption color="light">{t("Card.Read")}</RyogoCaption>
-          </Button>
+          </RyogoGhostButton>
         ) : (
           mission.dueDate && (
             <RyogoCaption
@@ -120,17 +128,19 @@ export default function MissionCard({
       )}
       {mission.link && !isRead && (
         <Link href={mission.link as React.ComponentProps<typeof Link>["href"]}>
-          <Button variant={"default"} disabled={isPending} className="w-full">
-            <RyogoCaption color={"white"} weight="font-bold">
-              {t("Card.CheckNow")}
-            </RyogoCaption>
-          </Button>
+          <RyogoDefaultButton
+            label={t("Card.CheckNow")}
+            disabled={isPending}
+            className="w-full"
+          />
         </Link>
       )}
       {!isRead && (
-        <Button variant={"outline"} onClick={markRead} disabled={isPending}>
-          <RyogoCaption color={"slate"}>{t("Card.MarkRead")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton
+          label={t("Card.MarkRead")}
+          onClick={markRead}
+          disabled={isPending}
+        />
       )}
       <DeleteMissionAlertButton
         isRider={isRider}

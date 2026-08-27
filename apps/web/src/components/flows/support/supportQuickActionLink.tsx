@@ -1,6 +1,5 @@
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { LucideIcon } from "lucide-react"
 import Link from "next/link"
 
@@ -17,10 +16,9 @@ export default function SupportQuickActionLinkButton({
 }: SupportQuickActionType) {
   return (
     <Link href={href}>
-      <Button variant="outline" className="w-full justify-between">
-        <RyogoCaption color="slate">{label}</RyogoCaption>
+      <RyogoOutlineButton label={label} className="w-full justify-between">
         <RyogoIcon icon={icon} size="sm" color="slate" />
-      </Button>
+      </RyogoOutlineButton>
     </Link>
   )
 }

@@ -22,7 +22,7 @@ function getImageSizeClassName(size: RyogoImageSizeType) {
     case "sm":
       return "size-10 lg:size-12"
     case "xs":
-      return "size-7 lg:size-8"
+      return "size-8 lg:size-9"
   }
 }
 
@@ -35,9 +35,9 @@ function getNextImageSizes(size: RyogoImageSizeType) {
     case "md":
       return "(max-width: 1024px) 72px,80px"
     case "sm":
-      return "(max-width: 1024px) 48px,64px"
+      return "(max-width: 1024px) 40px,48px"
     case "xs":
-      return "(max-width: 1024px) 24px,28px"
+      return "(max-width: 1024px) 32px,36px"
   }
 }
 

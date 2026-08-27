@@ -33,7 +33,7 @@ export default function SupportSideAccordionWrapper({
             setTimeout(() => {
               accordionItemRef.current?.scrollIntoView({
                 behavior: "smooth",
-                block: "nearest",
+                block: "start",
               })
             }, 200)
           }

@@ -2,10 +2,10 @@
 
 import { Search, Zap } from "lucide-react"
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import useCommandCenter from "./useCommandCenter"
 import { RyogoCaption } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function CommandCenter() {
   const [isOpen, setIsOpen] = useState(false)
@@ -44,13 +44,16 @@ export default function CommandCenter() {
             </div>
           )}
 
-          <Button
-            size="icon"
+          <RyogoOutlineButton
             onClick={() => setIsOpen(!isOpen)}
             className="bg-white hover:bg-sky-50 text-sky-700 p-3 rounded-lg transition-colors"
           >
-            <Zap className={`size-5 ${isOpen ? "fill-current" : ""}`} />
-          </Button>
+            <RyogoIcon
+              icon={Zap}
+              size="sm"
+              className={`${isOpen ? "fill-current" : ""}`}
+            />
+          </RyogoOutlineButton>
         </div>
       </div>
     </div>

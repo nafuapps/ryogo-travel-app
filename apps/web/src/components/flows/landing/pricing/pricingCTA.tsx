@@ -1,6 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { ChevronRight, Video } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -10,6 +9,10 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
+import {
+  RyogoOutlineButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function PricingCTASection() {
   const t = await getTranslations("Landing.Pricing.CTA")
@@ -29,10 +32,14 @@ export default async function PricingCTASection() {
           </RyogoP>
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
             <Link href="/onboarding">
-              <Button size="lg" variant="white" className="w-full md:w-auto ">
-                <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
+              <RyogoWhiteButton
+                size="lg"
+                label={t("PrimaryCTA")}
+                labelColor="brand"
+                className="w-full md:w-auto "
+              >
                 <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
-              </Button>
+              </RyogoWhiteButton>
             </Link>
             {/* //TODO: Demo video source*/}
             <RyogoDialogVideo
@@ -40,10 +47,14 @@ export default async function PricingCTASection() {
               title="RyoGo Demo video"
               className="w-full aspect-video"
             >
-              <Button size="lg" variant="outline" className="w-full md:w-auto">
-                <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
+              <RyogoOutlineButton
+                size="lg"
+                label={t("SecondaryCTA")}
+                labelColor="white"
+                className="w-full md:w-auto"
+              >
                 <RyogoIcon icon={Video} color="white" size="sm" thick />
-              </Button>
+              </RyogoOutlineButton>
             </RyogoDialogVideo>
           </div>
         </div>

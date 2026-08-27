@@ -18,9 +18,9 @@ import {
   VerifyAccountTotalSteps,
 } from "./onboardingSteps"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Button } from "@/components/ui/button"
 import { logoutAction } from "@/app/actions/users/logoutAction"
 import { useTransition } from "react"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function OnboardingSidebar({
   currentProcess,
@@ -141,16 +141,13 @@ export default function OnboardingSidebar({
         )}
         <div className="mt-auto flex flex-col gap-3 md:gap-4">
           {showLogout && (
-            <Button
-              variant="outline"
+            <RyogoOutlineButton
               onClick={logoutUser}
+              label={t("Logout")}
+              labelColor="light"
               disabled={isPending}
               className="md:self-start"
-            >
-              <RyogoCaption weight="font-bold" color="light">
-                {t("Logout")}
-              </RyogoCaption>
-            </Button>
+            ></RyogoOutlineButton>
           )}
           <RyoGoLogo />
         </div>

@@ -1,15 +1,16 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { deleteSupportTicketAction } from "@/app/actions/support/deleteSupportTicketAction"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoGhostButton,
+  RyogoDestructiveButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function DeleteSupportTicketAlertButton(props: {
   ticketId: string
@@ -18,7 +19,7 @@ export default function DeleteSupportTicketAlertButton(props: {
   status: TicketStatusEnum
   isRider?: boolean
 }) {
-  const [isCancelPending, startCancelTransition] = useTransition()
+  const [isPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteSupportTicket")
 
   const router = useRouter()
@@ -50,20 +51,14 @@ export default function DeleteSupportTicketAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <Button variant={"ghost"}>
-          <RyogoCaption>{t("Label")}</RyogoCaption>
-        </Button>
-      }
+      labelChild={<RyogoGhostButton label={t("Label")} />}
     >
-      <Button
-        variant={"destructive"}
+      <RyogoDestructiveButton
         onClick={deleteCustomMission}
-        disabled={isCancelPending}
-      >
-        {isCancelPending && <Spinner />}
-        {isCancelPending ? t("Loading") : t("YesCTA")}
-      </Button>
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

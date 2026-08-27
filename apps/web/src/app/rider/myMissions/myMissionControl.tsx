@@ -3,8 +3,6 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
 import MissionCard from "@/components/missions/missionCard"
 import { PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -13,6 +11,7 @@ import { CalendarPlus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function MyMissionControlPageComponent({
   missions,
@@ -49,10 +48,9 @@ export default async function MyMissionControlPageComponent({
     <PageWrapper id="MyMissionControlPage">
       {isPremium && (
         <Link href={`/rider/myMissions/add`} className="self-center">
-          <Button variant={"outline"} className="w-full">
+          <RyogoOutlineButton className="w-full" label={t("AddCustomMission")}>
             <RyogoIcon icon={CalendarPlus} color="slate" size="sm" />
-            <RyogoCaption color="slate">{t("AddCustomMission")}</RyogoCaption>
-          </Button>
+          </RyogoOutlineButton>
         </Link>
       )}
       {criticalMissions.length > 0 && (

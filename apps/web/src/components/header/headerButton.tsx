@@ -5,11 +5,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Button } from "@/components/ui/button"
-import { RyogoCaption } from "@/components/typography"
 import { BellDot, ChevronLeft, Plus } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useRouter } from "next/navigation"
+import {
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 type HeaderButtonType = "newBooking" | "missionControl"
 
@@ -29,12 +31,13 @@ export default function HeaderButton(props: {
   return (
     <Tooltip disableHoverableContent>
       <TooltipTrigger asChild>
-        <Button variant="outline">
+        <RyogoOutlineButton
+          label={props.label}
+          labelClassName="hidden lg:flex"
+          className="flex-row-reverse"
+        >
           <RyogoIcon icon={getHeaderButtonIcon(props.type)} size="sm" />
-          <RyogoCaption color="slate" className="hidden lg:flex">
-            {props.label}
-          </RyogoCaption>
-        </Button>
+        </RyogoOutlineButton>
       </TooltipTrigger>
       <TooltipContent className="flex lg:hidden">{props.label}</TooltipContent>
     </Tooltip>
@@ -44,8 +47,11 @@ export default function HeaderButton(props: {
 export function HeaderBackButton() {
   const router = useRouter()
   return (
-    <Button variant="ghost" size="icon" onClick={() => router.back()}>
+    <RyogoGhostButton
+      onClick={() => router.back()}
+      className="has-[>svg]:px-1 has-[>svg]:lg:px-1"
+    >
       <RyogoIcon icon={ChevronLeft} size="md" />
-    </Button>
+    </RyogoGhostButton>
   )
 }

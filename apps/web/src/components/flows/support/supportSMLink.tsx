@@ -1,5 +1,4 @@
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 
 export type SupportSMLinkType = {
   label: string
@@ -9,9 +8,7 @@ export type SupportSMLinkType = {
 export function SupportSMLink(props: SupportSMLinkType) {
   return (
     <a href={props.href} target="_blank">
-      <Button variant="ghost" className="w-full justify-start">
-        <RyogoCaption>{props.label}</RyogoCaption>
-      </Button>
+      <RyogoGhostButton label={props.label} className="w-full justify-start" />
     </a>
   )
 }

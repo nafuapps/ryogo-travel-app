@@ -1,6 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -9,6 +8,10 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import {
+  RyogoOutlineButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function ResourcesCTASection() {
   const t = await getTranslations("Landing.Resources.CTA")
@@ -27,19 +30,21 @@ export default async function ResourcesCTASection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <Link href="/onboarding">
-            <Button size="lg" variant="white" className="w-full md:w-auto ">
-              <RyogoSmall color="slate">{t("PrimaryCTA")}</RyogoSmall>
+            <RyogoWhiteButton
+              size="lg"
+              label={t("PrimaryCTA")}
+              className="w-full md:w-auto "
+            >
               <RyogoIcon icon={ChevronRight} color="slate" size="sm" thick />
-            </Button>
+            </RyogoWhiteButton>
           </Link>
           <Link href="/features">
-            <Button
+            <RyogoOutlineButton
               size="lg"
-              variant="outline"
+              labelColor="white"
+              label={t("SecondaryCTA")}
               className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
-            >
-              <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
-            </Button>
+            />
           </Link>
         </div>
       </LandingContentWrapper>

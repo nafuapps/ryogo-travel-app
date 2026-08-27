@@ -4,12 +4,11 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
@@ -22,6 +21,10 @@ import {
   UserKey,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function HowItWorksOnboardingSection() {
   const t = useTranslations("Landing.HowItWorks.Onboarding")
@@ -80,23 +83,21 @@ export default function HowItWorksOnboardingSection() {
         </RyogoP>
         <SlideshowWrapper items={items} />
         <Link href="/auth/signup">
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white" weight="font-medium">
-              {t("MoreCTA")}
-            </RyogoSmall>
-          </Button>
+          <RyogoDefaultButton
+            size="lg"
+            className="w-full md:w-auto"
+            label={t("MoreCTA")}
+          />
         </Link>
         <Link href="#bookings">
-          <Button
+          <RyogoGhostButton
             size="lg"
-            variant="ghost"
+            label={t("ContinueCTA")}
+            labelColor="light"
             className="gap-1 lg:gap-1.5 hover:bg-slate-100/80 dark:hover:bg-slate-800/80"
           >
-            <RyogoSmall color="light" weight="font-medium">
-              {t("ContinueCTA")}
-            </RyogoSmall>
             <RyogoIcon icon={ChevronDown} size="sm" color="light" thick />
-          </Button>
+          </RyogoGhostButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

@@ -147,7 +147,6 @@ export default function NewBookingSearchCustomerPageComponent({
             label={t("ClearCTA")}
           />
           <RyogoGhostButton
-            variant={"ghost"}
             type="button"
             onClick={onClick}
             disabled={form.formState.isSubmitting}

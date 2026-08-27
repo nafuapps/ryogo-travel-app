@@ -4,12 +4,11 @@ import Script from "next/script"
 import { createOrderAction } from "@/app/actions/orders/createOrderAction"
 import { verifyOrderAction } from "@/app/actions/orders/verifyOrderAction"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { useTransition } from "react"
 import { toast } from "sonner"
-import { RyogoCaption } from "@/components/typography"
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 
 export default function PaymentButton({
   agencyId,
@@ -97,10 +96,14 @@ export default function PaymentButton({
   return (
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      <Button onClick={handlePayment} variant={"brand"} disabled={isPending}>
-        <RyogoCaption color="white">{renewLabel}</RyogoCaption>
+      <RyogoBrandButton
+        label={renewLabel}
+        onClick={handlePayment}
+        showSpinner={isPending}
+        disabled={isPending}
+      >
         {icon}
-      </Button>
+      </RyogoBrandButton>
     </>
   )
 }

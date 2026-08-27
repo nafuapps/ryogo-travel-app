@@ -1,14 +1,17 @@
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronDown } from "lucide-react"
 import Image from "next/image"
+import {
+  RyogoWhiteButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function HowItWorksHeroSection() {
   const t = await getTranslations("Landing.HowItWorks.Hero")
@@ -26,19 +29,21 @@ export default async function HowItWorksHeroSection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center mb-4">
           <Link href="#onboarding">
-            <Button size="lg" variant="white" className="w-full md:w-auto">
-              <RyogoSmall color="slate" weight="font-medium">
-                {t("PrimaryCTA")}
-              </RyogoSmall>
+            <RyogoWhiteButton
+              size="lg"
+              label={t("PrimaryCTA")}
+              className="w-full md:w-auto"
+            >
               <RyogoIcon icon={ChevronDown} color="slate" size="sm" thick />
-            </Button>
+            </RyogoWhiteButton>
           </Link>
           <Link href="/resources#support">
-            <Button size="lg" variant="outline" className="w-full md:w-auto">
-              <RyogoSmall color="white" weight="font-medium">
-                {t("SecondaryCTA")}
-              </RyogoSmall>
-            </Button>
+            <RyogoOutlineButton
+              size="lg"
+              label={t("SecondaryCTA")}
+              labelColor="white"
+              className="w-full md:w-auto"
+            />
           </Link>
         </div>
         <div className="bg-white dark:bg-slate-900 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">

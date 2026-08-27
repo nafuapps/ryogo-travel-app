@@ -10,19 +10,20 @@ import {
 } from "@/components/form/ryogoFormFields"
 import { regexCheckIDByEntityType } from "@/components/missions/missionCommons"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoH3 } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { Spinner } from "@/components/ui/spinner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { useRouter } from "next/navigation"
-import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AddMySupportTicketPageComponent({
   userId,
@@ -33,7 +34,6 @@ export default function AddMySupportTicketPageComponent({
 }) {
   const t = useTranslations("Dashboard.AddSupportTicket")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const addTicketSchema = z
     .object({
@@ -82,22 +82,20 @@ export default function AddMySupportTicketPageComponent({
   })
 
   async function onSubmit(values: AddTicketType) {
-    startTransition(async () => {
-      const newTicket = await addSupportTicketAction(userId, agencyId, {
-        entityType: values.entityType,
-        entityId: values.entityId,
-        issue: values.issue,
-        details: values.details,
-        photo: values.photo,
-      })
-      if (newTicket) {
-        toast.success(t("Success"))
-        router.replace(`/rider/mySupport/tickets/${newTicket.id}`)
-      } else {
-        toast.error(t("Error"))
-        router.replace(`/rider/mySupport/tickets`)
-      }
+    const newTicket = await addSupportTicketAction(userId, agencyId, {
+      entityType: values.entityType,
+      entityId: values.entityId,
+      issue: values.issue,
+      details: values.details,
+      photo: values.photo,
     })
+    if (newTicket) {
+      toast.success(t("Success"))
+      router.replace(`/rider/mySupport/tickets/${newTicket.id}`)
+    } else {
+      toast.error(t("Error"))
+      router.replace(`/rider/mySupport/tickets`)
+    }
   }
 
   return (
@@ -143,25 +141,22 @@ export default function AddMySupportTicketPageComponent({
           description={t("Field5.Description")}
         />
         <Separator />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
           type="submit"
-          disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          label={t("CancelCTA")}
           type="button"
-          disabled={isPending}
           onClick={() => router.back()}
-        >
-          <RyogoCaption color="white">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+          disabled={formData.formState.isSubmitting}
+        />
       </FormWrapper>
     </PageWrapper>
   )

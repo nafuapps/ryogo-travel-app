@@ -1,6 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import {
@@ -9,6 +8,7 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
 import { getTranslations } from "next-intl/server"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function HowItWorksFAQSection() {
   const t = await getTranslations("Landing.HowItWorks.FAQ")
@@ -56,12 +56,13 @@ export default async function HowItWorksFAQSection() {
           />
         </FAQWrapper>
         <Link href="/resources">
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white" weight="font-medium">
-              {t("MoreCTA")}
-            </RyogoSmall>
+          <RyogoDefaultButton
+            size="lg"
+            className="w-full md:w-auto"
+            label={t("MoreCTA")}
+          >
             <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </Button>
+          </RyogoDefaultButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

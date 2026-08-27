@@ -18,7 +18,6 @@ import {
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import {
@@ -26,6 +25,7 @@ import {
   SupportFAQItem,
   SupportFAQItemType,
 } from "@/components/flows/support/supportFAQWrapper"
+import { RyogoWhiteButton } from "@/components/buttons/ryogoButtons"
 
 export default async function MySupportPageComponent({
   isPremium,
@@ -159,12 +159,9 @@ export default async function MySupportPageComponent({
                 {t("Tickets.Description")}
               </RyogoCaption>
               <Link href="/rider/mySupport/tickets">
-                <Button variant="white">
-                  <RyogoCaption color="slate">
-                    {t("Tickets.ViewCTA")}
-                  </RyogoCaption>
+                <RyogoWhiteButton label={t("Tickets.ViewCTA")}>
                   <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
-                </Button>
+                </RyogoWhiteButton>
               </Link>
             </>
           ) : (

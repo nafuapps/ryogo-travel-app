@@ -7,7 +7,6 @@ import { Rows3, Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Button } from "@/components/ui/button"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
@@ -18,6 +17,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllVehiclesListComponent({
   agencyId,
@@ -36,10 +36,9 @@ export default async function AllVehiclesListComponent({
           {allVehicles.length}
         </RyogoSmall>
         <Link href={`/dashboard/vehicles/new`} className="ml-auto">
-          <Button variant={"outline"}>
+          <RyogoOutlineButton label={t("AddVehicle")}>
             <RyogoIcon icon={Plus} size="sm" color="slate" />
-            <RyogoCaption color="slate">{t("AddVehicle")}</RyogoCaption>
-          </Button>
+          </RyogoOutlineButton>
         </Link>
       </SectionHeaderWrapper>
       {allVehicles.map((vehicle) => (

@@ -2,9 +2,8 @@
 
 import { MessageSquare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import getWhatsappChatLink from "@/components/whatsapp/getWhatsappChatLink"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function RyogoChatButton({
   label,
@@ -18,9 +17,8 @@ export default function RyogoChatButton({
   }
 
   return (
-    <Button variant="outline" onClick={startChat}>
+    <RyogoOutlineButton label={label} onClick={startChat}>
       <RyogoIcon icon={MessageSquare} size="sm" color="slate" />
-      <RyogoCaption color="slate">{label}</RyogoCaption>
-    </Button>
+    </RyogoOutlineButton>
   )
 }

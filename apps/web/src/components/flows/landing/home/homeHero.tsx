@@ -1,5 +1,4 @@
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { ChevronRight, Video } from "lucide-react"
@@ -10,6 +9,10 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
+import {
+  RyogoBrandButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
@@ -36,12 +39,13 @@ export default async function HomeHeroSection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Link href="/auth/signup">
-            <Button size="lg" variant="brand" className="w-full md:w-auto">
-              <RyogoSmall color="white" weight="font-medium">
-                {t("PrimaryCTA")}
-              </RyogoSmall>
+            <RyogoBrandButton
+              size="lg"
+              label={t("PrimaryCTA")}
+              className="w-full md:w-auto"
+            >
               <RyogoIcon icon={ChevronRight} color="white" size="sm" thick />
-            </Button>
+            </RyogoBrandButton>
           </Link>
           {/* // TODO: Demo video source */}
           <RyogoDialogVideo
@@ -49,16 +53,14 @@ export default async function HomeHeroSection() {
             title="RyoGo Demo video"
             className="w-full aspect-video"
           >
-            <Button
+            <RyogoWhiteButton
               size="lg"
-              variant="white"
+              label={t("SecondaryCTA")}
+              labelColor="brand"
               className="w-full gap-1 lg:gap-2 md:w-auto"
             >
-              <RyogoSmall color="brand" weight="font-medium">
-                {t("SecondaryCTA")}
-              </RyogoSmall>
               <RyogoIcon icon={Video} color="brand" size="sm" thick />
-            </Button>
+            </RyogoWhiteButton>
           </RyogoDialogVideo>
         </div>
         <div className="flex items-end mt-auto gap-8 justify-center w-full">

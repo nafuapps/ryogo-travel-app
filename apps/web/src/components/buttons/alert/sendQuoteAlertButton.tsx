@@ -2,17 +2,17 @@
 
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { Button } from "@/components/ui/button"
-import { useEffect, useTransition } from "react"
+import { useTransition } from "react"
 import { sendQuoteAction } from "@/app/actions/bookings/sendQuoteAction"
 import { toast } from "sonner"
-import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
-import { differenceInMinutes } from "date-fns"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { SEND_QUOTE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoOutlineButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
+import { useRefreshPage } from "@/hooks/useRefreshPage"
 
 export default function SendQuoteAlertButton(props: {
   bookingId: string
@@ -22,21 +22,10 @@ export default function SendQuoteAlertButton(props: {
 }) {
   const t = useTranslations("Dashboard.Buttons.SendQuote")
   const router = useRouter()
-  const [isSendPending, startSendTransition] = useTransition()
+  const [isPending, startSendTransition] = useTransition()
 
   //Can send quote if either not sent before or sent more than X minutes ago
-  const canSendQuote =
-    !props.quoteSentOn ||
-    differenceInMinutes(new Date(), props.quoteSentOn) >
-      SEND_QUOTE_TIMEOUT_MINUTES
-
-  //Refresh page every 10 minutes to check if the send quote timer is up
-  useEffect(() => {
-    const interval = setInterval(() => {
-      router.refresh()
-    }, 600000)
-    return () => clearInterval(interval) // Cleanup on unmount
-  }, [router])
+  const canSendQuote = useRefreshPage(props.quoteSentOn)
 
   // Send quote to customer over whatsapp
   async function sendQuote() {
@@ -62,18 +51,17 @@ export default function SendQuoteAlertButton(props: {
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button variant={"outline"} disabled={!canSendQuote}>
-          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
+        <RyogoOutlineButton label={t("Label")} disabled={!canSendQuote}>
           <RyogoIcon icon={MessageSquareShare} size="sm" />
-        </Button>
+        </RyogoOutlineButton>
       }
     >
-      <Button variant={"default"} onClick={sendQuote} disabled={isSendPending}>
-        {isSendPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isSendPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+      <RyogoDefaultButton
+        onClick={sendQuote}
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

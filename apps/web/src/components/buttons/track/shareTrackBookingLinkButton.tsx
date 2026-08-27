@@ -1,12 +1,11 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { MapPinned } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getBookingTrackingLink } from "@/lib/utils"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function ShareTrackBookingLinkButton(props: {
   bookingId: string
@@ -29,9 +28,8 @@ export default function ShareTrackBookingLinkButton(props: {
   }
 
   return (
-    <Button variant={"outline"} onClick={sendTrackingLink}>
+    <RyogoOutlineButton label={props.label} onClick={sendTrackingLink}>
       <RyogoIcon icon={MapPinned} size="sm" color="slate" />
-      <RyogoCaption color="slate">{props.label}</RyogoCaption>
-    </Button>
+    </RyogoOutlineButton>
   )
 }

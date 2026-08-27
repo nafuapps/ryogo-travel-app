@@ -13,10 +13,10 @@ import { ChevronDown, Dot, Download } from "lucide-react"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import PaymentCard from "./paymentCard"
 import ViewInvoiceDialog from "./viewInvoiceDialog"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function OrderCard({
   order,
@@ -73,12 +73,9 @@ export default function OrderCard({
                   href={getFileUrl(order.orderInvoiceUrl) + "?download"}
                   download
                 >
-                  <Button variant="outline">
+                  <RyogoOutlineButton label={t("DownloadInvoice")}>
                     <RyogoIcon size="sm" icon={Download} color="slate" />
-                    <RyogoCaption color="slate">
-                      {t("DownloadInvoice")}
-                    </RyogoCaption>
-                  </Button>
+                  </RyogoOutlineButton>
                 </a>
                 <ViewInvoiceDialog order={order} agency={agency} />
               </SectionRowWrapper>

@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
   Select,
@@ -47,6 +46,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export function RyogoInput(props: {
   name: string
@@ -476,22 +476,17 @@ export function RyogoDatePicker(props: {
           <Popover>
             <PopoverTrigger asChild disabled={props.disabled}>
               <FormControl>
-                <Button
-                  variant={"outline"}
+                <RyogoOutlineButton
                   className={cn(
                     "w-full pl-3 text-left font-normal",
                     !field.value && "text-muted-foreground",
                   )}
+                  label={
+                    field.value ? format(field.value, "PPP") : props.placeholder
+                  }
                 >
-                  {field.value ? (
-                    format(field.value, "PPP")
-                  ) : (
-                    <RyogoCaption color="light">
-                      {props.placeholder}
-                    </RyogoCaption>
-                  )}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                </Button>
+                </RyogoOutlineButton>
               </FormControl>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">

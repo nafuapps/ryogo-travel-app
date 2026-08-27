@@ -4,8 +4,6 @@ import { useTranslations } from "next-intl"
 import { RyogoSelect, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -13,10 +11,12 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function MyProfileSettingsPageComponent({
   userDetails,
@@ -25,7 +25,6 @@ export default function MyProfileSettingsPageComponent({
 }) {
   const t = useTranslations("Rider.MyProfileSettings")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const schema = z.object({
     dark: z.boolean(),
@@ -42,22 +41,20 @@ export default function MyProfileSettingsPageComponent({
   })
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
-    startTransition(async () => {
-      const newPreferences = {
-        prefersDarkTheme: data.dark,
-        languagePref: data.lang,
-      }
-      const updatedUser = await changeUserPreferencesAction(
-        userDetails.id,
-        userDetails.agencyId,
-        newPreferences,
-      )
-      if (updatedUser) {
-        toast.success(t("Success"))
-      } else {
-        toast.error(t("Error"))
-      }
-    })
+    const newPreferences = {
+      prefersDarkTheme: data.dark,
+      languagePref: data.lang,
+    }
+    const updatedUser = await changeUserPreferencesAction(
+      userDetails.id,
+      userDetails.agencyId,
+      newPreferences,
+    )
+    if (updatedUser) {
+      toast.success(t("Success"))
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   const languages = getEnumValueDisplayPairs(UserLangEnum)
@@ -77,26 +74,22 @@ export default function MyProfileSettingsPageComponent({
           title={t("Field2.Title")}
           placeholder={t("Field2.Title")}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
           type="submit"
-          disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
-        >
-          <RyogoCaption color="white">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+          disabled={formData.formState.isSubmitting}
+        />
       </FormWrapper>
     </PageWrapper>
   )

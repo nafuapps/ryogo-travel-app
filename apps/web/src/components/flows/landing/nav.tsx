@@ -19,6 +19,10 @@ import {
 } from "@/components/ui/select"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { usePathname, useRouter } from "next/navigation"
+import {
+  RyogoOutlineButton,
+  RyogoBrandButton,
+} from "@/components/buttons/ryogoButtons"
 
 type NavbarItemType =
   | "home"
@@ -78,14 +82,10 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden md:flex md:items-center md:gap-1.5 lg:gap-2">
             <Link href="/auth/login">
-              <Button variant="outline">
-                <RyogoCaption color="slate">{t("Login")}</RyogoCaption>
-              </Button>
+              <RyogoOutlineButton label={t("Login")} />
             </Link>
             <Link href="/auth/signup">
-              <Button variant="brand">
-                <RyogoCaption color="white">{t("Signup")}</RyogoCaption>
-              </Button>
+              <RyogoBrandButton label={t("Signup")} />
             </Link>
           </div>
 
@@ -118,14 +118,10 @@ export default function Navbar() {
               <div className="flex flex-col gap-2 pt-4 border-t">
                 {/* <LanguageSwitcher /> */}
                 <Link href="/auth/login" className="w-full">
-                  <Button variant="outline" className="w-full">
-                    <RyogoCaption color="slate">{t("Login")}</RyogoCaption>
-                  </Button>
+                  <RyogoOutlineButton label={t("Login")} />
                 </Link>
                 <Link href="/auth/signup" className="w-full">
-                  <Button variant="brand" className="w-full">
-                    <RyogoCaption color="white">{t("Signup")}</RyogoCaption>
-                  </Button>
+                  <RyogoBrandButton label={t("Signup")} />
                 </Link>
               </div>
             </div>

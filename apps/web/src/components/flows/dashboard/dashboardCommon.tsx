@@ -11,7 +11,7 @@ export function DashboardLabelImageChip({
   end?: boolean
 }) {
   return (
-    <SectionRowWrapper small center justifyEnd={end} reverse={end}>
+    <SectionRowWrapper center justifyEnd={end} reverse={end}>
       {children}
       <RyogoCaption color="slate">{label}</RyogoCaption>
     </SectionRowWrapper>

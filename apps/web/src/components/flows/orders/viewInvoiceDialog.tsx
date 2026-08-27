@@ -7,11 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
 import { Eye } from "lucide-react"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function ViewInvoiceDialog({
   order,
@@ -23,9 +23,9 @@ export default function ViewInvoiceDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <RyogoOutlineButton>
           <RyogoIcon size="sm" icon={Eye} color="slate" />
-        </Button>
+        </RyogoOutlineButton>
       </DialogTrigger>
       <DialogContent className="size-5/6 overflow-scroll">
         <DialogHeader>

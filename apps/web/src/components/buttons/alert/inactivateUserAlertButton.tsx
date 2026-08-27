@@ -1,15 +1,16 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { inactivateUserAction } from "@/app/actions/users/inactivateUserAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoGhostButton,
+  RyogoDestructiveButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function InactivateUserAlertButton(props: {
   userId: string
@@ -38,18 +39,14 @@ export default function InactivateUserAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <Button variant={"ghost"}>
-          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
-        </Button>
-      }
+      labelChild={<RyogoGhostButton label={t("Label")} />}
     >
-      <Button variant={"destructive"} onClick={inactivate} disabled={isPending}>
-        {isPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+      <RyogoDestructiveButton
+        onClick={inactivate}
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

@@ -1,8 +1,7 @@
 import { Phone } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function RyogoPhoneButton({
   label,
@@ -13,10 +12,9 @@ export default function RyogoPhoneButton({
 }) {
   return (
     <Link href={`tel:${phone}`}>
-      <Button variant="outline" className="w-full">
+      <RyogoOutlineButton label={label} className="w-full">
         <RyogoIcon icon={Phone} size="sm" color="slate" />
-        <RyogoCaption color="slate">{label}</RyogoCaption>
-      </Button>
+      </RyogoOutlineButton>
     </Link>
   )
 }

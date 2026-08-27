@@ -1,8 +1,7 @@
 "use client"
 
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import {
   Blocks,
   Car,
@@ -19,6 +18,7 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import { SlideshowWrapper } from "@/components/flows/landing/slideshowWrapper"
 import { useTranslations } from "next-intl"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default function HomeWorkingSection() {
   const t = useTranslations("Landing.Home.Working")
@@ -74,12 +74,13 @@ export default function HomeWorkingSection() {
         </RyogoP>
         <SlideshowWrapper items={items} />
         <Link href="/how-it-works">
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white" weight="font-medium">
-              {t("MoreCTA")}
-            </RyogoSmall>
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          >
             <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </Button>
+          </RyogoDefaultButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

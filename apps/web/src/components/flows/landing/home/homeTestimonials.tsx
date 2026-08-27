@@ -9,7 +9,6 @@ import {
   RyogoSmall,
   RyogoCaption,
 } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { ChevronRight, Quote } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -17,6 +16,7 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function HomeTestimonialsSection() {
   const t = await getTranslations("Landing.Home.Testimonials")
@@ -56,12 +56,13 @@ export default async function HomeTestimonialsSection() {
           />
         </div>
         <Link href="/resources">
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white" weight="font-medium">
-              {t("MoreCTA")}
-            </RyogoSmall>
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          >
             <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </Button>
+          </RyogoDefaultButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

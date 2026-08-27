@@ -35,11 +35,7 @@ export default async function AllDriverLeavesPageComponent({
           href={`/dashboard/drivers/${driverId}/leaves/new`}
           className="md:w-1/2 w-full self-center"
         >
-          <RyogoOutlineButton
-            variant={"outline"}
-            className="w-full"
-            label={t("AddLeave")}
-          >
+          <RyogoOutlineButton className="w-full" label={t("AddLeave")}>
             <RyogoIcon icon={Plus} size="sm" />
           </RyogoOutlineButton>
         </Link>

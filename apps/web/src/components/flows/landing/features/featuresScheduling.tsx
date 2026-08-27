@@ -3,19 +3,19 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { FeatureGrid, FeatureItem } from "./featureWrappers"
-import { Button } from "@/components/ui/button"
 import { Video } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function FeaturesSchedulingSection() {
   const t = await getTranslations("Landing.Features.Scheduling")
   return (
     <LandingSectionWrapper
       id="scheduling"
-      className="bg-slate-50 dark:bg-slate-950"
+      className="bg-slate-100 dark:bg-slate-950"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
@@ -30,10 +30,13 @@ export default async function FeaturesSchedulingSection() {
           title="RyoGo Demo video"
           className="w-full aspect-video"
         >
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white">{t("WatchDemo")}</RyogoSmall>
+          <RyogoDefaultButton
+            size="lg"
+            label={t("WatchDemo")}
+            className="w-full md:w-auto"
+          >
             <RyogoIcon icon={Video} size="sm" color="white" thick />
-          </Button>
+          </RyogoDefaultButton>
         </RyogoDialogVideo>
         <FeatureGrid>
           <FeatureItem

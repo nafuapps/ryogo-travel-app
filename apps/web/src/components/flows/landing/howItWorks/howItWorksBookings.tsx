@@ -14,15 +14,18 @@ import {
   Pin,
   ScanSearch,
 } from "lucide-react"
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
 import { useTranslations } from "next-intl"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function HowItWorksBookingsSection() {
   const t = useTranslations("Landing.HowItWorks.Bookings")
@@ -76,7 +79,7 @@ export default function HowItWorksBookingsSection() {
   return (
     <LandingSectionWrapper
       id="bookings"
-      className="bg-sky-50 dark:bg-sky-950/70"
+      className="bg-sky-100 dark:bg-sky-950/70"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
@@ -87,23 +90,20 @@ export default function HowItWorksBookingsSection() {
         </RyogoP>
         <SlideshowWrapper items={items} reverse />
         <Link href="/auth/signup">
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white" weight="font-medium">
-              {t("MoreCTA")}
-            </RyogoSmall>
-          </Button>
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          />
         </Link>
         <Link href="#entities">
-          <Button
+          <RyogoGhostButton
             size="lg"
-            variant="ghost"
-            className="gap-1 lg:gap-1.5 hover:bg-sky-100/80 dark:hover:bg-sky-900/80"
+            label={t("ContinueCTA")}
+            className="gap-1 lg:gap-1.5 hover:bg-sky-50/80 dark:hover:bg-sky-900/80"
           >
-            <RyogoSmall color="light" weight="font-medium">
-              {t("ContinueCTA")}
-            </RyogoSmall>
             <RyogoIcon icon={ChevronDown} size="sm" color="light" thick />
-          </Button>
+          </RyogoGhostButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

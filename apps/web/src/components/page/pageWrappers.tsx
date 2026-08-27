@@ -50,7 +50,7 @@ export function DoubleContentWrapper({
 }) {
   return (
     <div
-      className={`flex ${sideOnTop ? "flex-col-reverse" : "flex-col"} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 w-full overflow-y-scroll no-scrollbar`}
+      className={`flex flex-col ${sideOnTop ? "[&>*:first-child]:order-2 [&>*:last-child]:order-1 lg:[&>*:first-child]:order-0 lg:[&>*:last-child]:order-0" : ""} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 w-full overflow-y-scroll no-scrollbar`}
     >
       {children}
     </div>
@@ -120,7 +120,7 @@ export function SectionWrapper({
   return (
     <div
       id={id}
-      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-3 lg:gap-4 p-4 lg:p-5`}
+      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-4 lg:gap-5 p-4 lg:p-5`}
     >
       {children}
     </div>

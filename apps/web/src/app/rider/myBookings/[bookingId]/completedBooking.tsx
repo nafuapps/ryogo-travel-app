@@ -1,12 +1,12 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
 import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function RiderMyCompletedBookingPageComponent({
   booking,
@@ -40,9 +40,7 @@ export default async function RiderMyCompletedBookingPageComponent({
         </SectionWrapper>
       )}
       <Link href="/rider/myBookings">
-        <Button variant="default" className="w-full">
-          <RyogoCaption color="white">{t("Back")}</RyogoCaption>
-        </Button>
+        <RyogoDefaultButton label={t("Back")} className="w-full" />
       </Link>
     </PageWrapper>
   )

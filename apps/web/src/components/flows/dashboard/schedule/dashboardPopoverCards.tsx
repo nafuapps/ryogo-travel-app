@@ -1,10 +1,13 @@
 import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { FindBookingScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -64,15 +67,11 @@ export function BookingSchedulePopoverCard(
             props.vehicle ? "assign-driver" : "assign-vehicle"
           }`}
         >
-          <Button variant={"default"} type="button" className="w-full">
-            <RyogoCaption color="white">{t("Assign")}</RyogoCaption>
-          </Button>
+          <RyogoDefaultButton label={t("Assign")} className="w-full" />
         </Link>
       )}
       <Link href={`/dashboard/bookings/${props.bookingId}`}>
-        <Button variant={"outline"} type="button" className="w-full">
-          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>
   )
@@ -121,9 +120,7 @@ export function AssignedBookingPopoverCard(
         </SectionColWrapper>
       </SectionRowWrapper>
       <Link href={`/dashboard/bookings/${props.id}`}>
-        <Button variant={"outline"} type="button" className="w-full">
-          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>
   )
@@ -149,9 +146,7 @@ export function RepairPopoverCard(
         <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
       </SectionColWrapper>
       <Link href={`/dashboard/vehicles/${props.vehicleId}/repairs`}>
-        <Button variant={"outline"} type="button" className="w-full">
-          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>
   )
@@ -177,9 +172,7 @@ export function LeavePopoverCard(
         <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
       </SectionColWrapper>
       <Link href={`/dashboard/drivers/${props.driverId}/leaves`}>
-        <Button variant={"outline"} type="button" className="w-full">
-          <RyogoCaption color="light">{t("ViewDetails")}</RyogoCaption>
-        </Button>
+        <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>
   )

@@ -1,17 +1,16 @@
 "use client"
 
 import { sendSupportQueryAction } from "@/app/actions/support/sendSupportQueryAction"
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 import { RyogoInput, RyogoTextarea } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH4 } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import { Spinner } from "@/components/ui/spinner"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CheckCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useRef, useState, useTransition } from "react"
+import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -19,7 +18,6 @@ import { z } from "zod"
 export default function QueryForm() {
   const t = useTranslations("Landing.Resources.Support.QueryForm")
   const [messageSent, setMessageSent] = useState(false)
-  const [isPending, startTransition] = useTransition()
   const honeypotRef = useRef<HTMLInputElement>(null)
   const { checkBotActivity, isBot } = useBotDetection()
 
@@ -61,15 +59,13 @@ export default function QueryForm() {
       toast.error(t("BotError"))
       return
     }
-    startTransition(async () => {
-      const query = await sendSupportQueryAction(data)
-      if (query) {
-        setMessageSent(true)
-        toast.success(t("Success"))
-      } else {
-        toast.error(t("Error"))
-      }
-    })
+    const query = await sendSupportQueryAction(data)
+    if (query) {
+      setMessageSent(true)
+      toast.success(t("Success"))
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   return (
@@ -121,24 +117,26 @@ export default function QueryForm() {
             autoComplete="off"
           />
         </div>
-        <Button
-          variant={messageSent ? "outline" : "brand"}
+        <RyogoBrandButton
           size={"lg"}
           type="submit"
-          disabled={messageSent || isPending || isBot}
+          disabled={messageSent || form.formState.isSubmitting || isBot}
+          showSpinner={form.formState.isSubmitting}
+          label={
+            messageSent
+              ? t("SentCTA")
+              : form.formState.isSubmitting
+                ? t("Loading")
+                : t("SubmitCTA")
+          }
         >
           {messageSent && (
             <RyogoIcon icon={CheckCircle} size="sm" color="green" thick />
           )}
-          {isPending && <Spinner />}
-          <RyogoCaption color={messageSent ? "slate" : "white"}>
-            {messageSent
-              ? t("SentCTA")
-              : isPending
-                ? t("Loading")
-                : t("SubmitCTA")}
-          </RyogoCaption>
-        </Button>
+        </RyogoBrandButton>
+        <RyogoCaption color="light" className="text-center">
+          {t("Disclaimer")}
+        </RyogoCaption>
       </form>
     </Form>
   )

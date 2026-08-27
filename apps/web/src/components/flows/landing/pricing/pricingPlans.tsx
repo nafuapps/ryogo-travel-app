@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -12,6 +11,11 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import {
+  RyogoDefaultButton,
+  RyogoBrandButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function PricingPlansSection() {
   const t = await getTranslations("Landing.Pricing.Plans")
@@ -42,11 +46,11 @@ export default async function PricingPlansSection() {
             ]}
           >
             <Link href="/auth/signup" className="w-full">
-              <Button size="lg" className="w-full">
-                <RyogoSmall color="white" weight="font-medium">
-                  {t("Basic.CTA")}
-                </RyogoSmall>
-              </Button>
+              <RyogoDefaultButton
+                size="lg"
+                className="w-full"
+                label={t("Basic.CTA")}
+              />
             </Link>
           </PricingPlanCard>
           <PricingPlanCard
@@ -66,25 +70,24 @@ export default async function PricingPlansSection() {
             ]}
           >
             <Link href="/onboarding" className="w-full">
-              <Button size="lg" variant="brand" className="w-full">
-                <RyogoSmall color="white" weight="font-medium">
-                  {t("Premium.CTA", { days: PREMIUM_TRIAL_DAYS })}
-                </RyogoSmall>
-              </Button>
+              <RyogoBrandButton
+                size="lg"
+                labelColor="white"
+                className="w-full"
+                label={t("Premium.CTA", { days: PREMIUM_TRIAL_DAYS })}
+              />
             </Link>
           </PricingPlanCard>
         </div>
         <Link href="#comparision">
-          <Button
+          <RyogoGhostButton
             size="lg"
-            variant="ghost"
             className="gap-1 lg:gap-1.5 hover:bg-sky-100/80 dark:hover:bg-sky-800/80"
+            label={t("CompareCTA")}
+            labelColor="brand"
           >
-            <RyogoSmall color="brand" weight="font-medium">
-              {t("CompareCTA")}
-            </RyogoSmall>
             <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
-          </Button>
+          </RyogoGhostButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

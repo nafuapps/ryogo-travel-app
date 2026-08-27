@@ -70,7 +70,6 @@ export default function QuickAddVehicleAlertButton(props: {
       }
     >
       <RyogoDefaultButton
-        variant={"default"}
         onClick={quickAddVehicle}
         disabled={isPending}
         showSpinner={isPending}

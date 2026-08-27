@@ -1,6 +1,5 @@
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { LucideIcon } from "lucide-react"
 import Link from "next/link"
 
@@ -22,16 +21,13 @@ export default function SupportTableOfContentLinkButton({
 }) {
   return (
     <Link href={href} replace>
-      <Button variant="ghost" className="w-full justify-start">
+      <RyogoGhostButton
+        label={label}
+        className="w-full justify-end flex-row-reverse"
+        labelColor="slate"
+      >
         <RyogoIcon icon={icon} size="sm" color="slate" />
-        <RyogoCaption
-          color="slate"
-          weight="font-normal"
-          className="text-wrap text-left"
-        >
-          {label}
-        </RyogoCaption>
-      </Button>
+      </RyogoGhostButton>
     </Link>
   )
 }

@@ -1,11 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  RyogoCaption,
-  RyogoH1,
-  RyogoP,
-  RyogoSmall,
-} from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoCaption, RyogoH1, RyogoP } from "@/components/typography"
 import { SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { Check } from "lucide-react"
@@ -15,6 +9,10 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import {
+  RyogoWhiteButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function HomeCTASection() {
   const t = await getTranslations("Landing.Home.CTA")
@@ -33,14 +31,19 @@ export default async function HomeCTASection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Link href="/onboarding">
-            <Button size="lg" variant="white" className="w-full md:w-auto">
-              <RyogoSmall color="brand">{t("PrimaryCTA")}</RyogoSmall>
-            </Button>
+            <RyogoWhiteButton
+              size="lg"
+              label={t("PrimaryCTA")}
+              className="w-full md:w-auto"
+            />
           </Link>
           <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`}>
-            <Button size="lg" variant="outline" className="w-full md:w-auto">
-              <RyogoSmall color="white">{t("SecondaryCTA")}</RyogoSmall>
-            </Button>
+            <RyogoOutlineButton
+              size="lg"
+              label={t("SecondaryCTA")}
+              className="w-full md:w-auto"
+              labelColor="white"
+            />
           </Link>
         </div>
         <div className="flex flex-col md:flex-row gap-3 lg:gap-4 items-center">

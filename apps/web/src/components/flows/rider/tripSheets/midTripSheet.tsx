@@ -5,7 +5,6 @@ import {
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -26,8 +25,11 @@ import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { midTripAction } from "@/app/actions/bookings/midTripAction"
 import { useLocation } from "@/hooks/useLocation"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
-import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function MidTripSheet({
   booking,
@@ -120,11 +122,7 @@ export default function MidTripSheet({
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <Button variant="default" className="w-full">
-          <RyogoCaption color="white">
-            {t("Title", { type: type })}
-          </RyogoCaption>
-        </Button>
+        <RyogoDefaultButton label={t("Title")} className="w-full" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -156,18 +154,19 @@ export default function MidTripSheet({
           />
         </TripSheetFormWrapper>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="midTrip">
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("Mid", { type: type })}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant="outline"
+          <RyogoDefaultButton
+            type="submit"
+            disabled={isPending}
+            showSpinner={isPending}
+            form="midTrip"
+            label={isPending ? t("Loading") : t("Mid", { type: type })}
+          />
+          <RyogoOutlineButton
+            label={t("Close")}
+            type="button"
             disabled={isPending}
             onClick={() => setOpen(false)}
-          >
-            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
-          </Button>
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

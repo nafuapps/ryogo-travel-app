@@ -99,19 +99,11 @@ export default async function CustomerDetailsPageComponent({
       <SectionWrapper id={"CustomerActions"}>
         {customer.status === CustomerStatusEnum.ACTIVE && (
           <Link href={`/dashboard/bookings/new/${customer.id}`}>
-            <RyogoDefaultButton
-              variant={"default"}
-              className="w-full"
-              label={t("CreateBooking")}
-            />
+            <RyogoDefaultButton className="w-full" label={t("CreateBooking")} />
           </Link>
         )}
         <Link href={`/dashboard/customers/${customer.id}/modify`}>
-          <RyogoOutlineButton
-            variant={"outline"}
-            className="w-full"
-            label={t("EditDetails")}
-          />
+          <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
         </Link>
         {customer.status !== CustomerStatusEnum.INACTIVE && (
           <InactivateCustomerAlertButton

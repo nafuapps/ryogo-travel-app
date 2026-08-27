@@ -5,7 +5,6 @@ import {
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -26,8 +25,11 @@ import { startTripAction } from "@/app/actions/bookings/startTripAction"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { useLocation } from "@/hooks/useLocation"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function StartTripSheet({
   booking,
@@ -112,9 +114,7 @@ export default function StartTripSheet({
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <Button variant="default" className="w-full">
-          <RyogoCaption color="white">{t("Title")}</RyogoCaption>
-        </Button>
+        <RyogoDefaultButton label={t("Title")} className="w-full" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -146,18 +146,19 @@ export default function StartTripSheet({
           />
         </TripSheetFormWrapper>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="startTrip">
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("Start")}
-            </RyogoCaption>
-          </Button>
-          <Button
-            variant="outline"
+          <RyogoDefaultButton
+            type="submit"
+            disabled={isPending}
+            showSpinner={isPending}
+            form="startTrip"
+            label={isPending ? t("Loading") : t("Start")}
+          />
+          <RyogoOutlineButton
+            label={t("Close")}
+            type="button"
             disabled={isPending}
             onClick={() => setOpen(false)}
-          >
-            <RyogoCaption color="slate">{t("Close")}</RyogoCaption>
-          </Button>
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

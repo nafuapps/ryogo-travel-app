@@ -1,13 +1,12 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { BookingTypeEnum, TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
 import EndTripSheet from "@/components/flows/rider/tripSheets/endTripSheet"
 import MidTripSheet from "@/components/flows/rider/tripSheets/midTripSheet"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
 import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
 import { getCurrentUser } from "@/lib/auth"
@@ -22,6 +21,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Plus } from "lucide-react"
 import { getTripDuration } from "@/lib/utils"
 import { differenceInDays } from "date-fns"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -60,10 +60,9 @@ export default async function RiderMyOngoingBookingPageComponent({
             href={`/rider/myBookings/${booking.id}/add-expense`}
             className="ml-auto"
           >
-            <Button variant={"outline"}>
+            <RyogoOutlineButton label={t("AddExpense")}>
               <RyogoIcon icon={Plus} size="sm" />
-              <RyogoCaption color="slate">{t("AddExpense")}</RyogoCaption>
-            </Button>
+            </RyogoOutlineButton>
           </Link>
         </SectionHeaderWrapper>
         {booking.expenses.map((e) => {

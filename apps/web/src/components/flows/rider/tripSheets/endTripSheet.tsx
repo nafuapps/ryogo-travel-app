@@ -6,7 +6,6 @@ import {
   RyogoRatingInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -32,6 +31,11 @@ import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
 import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function EndTripSheet({
   booking,
@@ -133,9 +137,7 @@ export default function EndTripSheet({
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <Button variant="default" className="w-full">
-          <RyogoCaption color="white">{t("Title")}</RyogoCaption>
-        </Button>
+        <RyogoDefaultButton label={t("Title")} className="w-full" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
@@ -184,29 +186,28 @@ export default function EndTripSheet({
           />
         </TripSheetFormWrapper>
         <SheetFooter>
-          <Button type="submit" disabled={isPending} form="endTrip">
-            <RyogoCaption color="white">
-              {isPending ? t("Loading") : t("End")}
-            </RyogoCaption>
-          </Button>
+          <RyogoDefaultButton
+            type="submit"
+            label={isPending ? t("Loading") : t("End")}
+            disabled={isPending}
+            showSpinner={isPending}
+            form="endTrip"
+          />
+          <RyogoOutlineButton
+            label={t("Close")}
+            type="button"
+            disabled={isPending}
+            onClick={() => setOpen(false)}
+          />
           <Link href={`/rider/myBookings/${booking.id}/add-expense`}>
-            <Button
+            <RyogoGhostButton
               type="button"
-              variant={"outline"}
               disabled={isPending}
               form="endTrip"
               className="w-full"
-            >
-              <RyogoCaption color="light">{t("AddExpense")}</RyogoCaption>
-            </Button>
+              label={t("AddExpense")}
+            />
           </Link>
-          <Button
-            variant="ghost"
-            disabled={isPending}
-            onClick={() => setOpen(false)}
-          >
-            <RyogoCaption color="light">{t("Close")}</RyogoCaption>
-          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -70,7 +70,6 @@ export default async function SignupExistingPageComponent({
           }
         >
           <RyogoGhostButton
-            variant={"ghost"}
             className="w-full"
             label={hasOwnerAccount ? t("SecondaryCTAYes") : t("SecondaryCTANo")}
           />

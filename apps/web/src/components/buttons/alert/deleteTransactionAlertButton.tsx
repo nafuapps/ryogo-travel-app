@@ -1,14 +1,15 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { deleteTransactionAction } from "@/app/actions/transactions/deleteTransactionAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoGhostButton,
+  RyogoDestructiveButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function DeleteTransactionAlertButton(props: {
   bookingId: string
@@ -45,22 +46,14 @@ export default function DeleteTransactionAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <Button variant={"ghost"}>
-          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
-        </Button>
-      }
+      labelChild={<RyogoGhostButton label={t("Label")} />}
     >
-      <Button
-        variant={"destructive"}
+      <RyogoDestructiveButton
         onClick={deleteTransaction}
         disabled={isPending}
-      >
-        {isPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

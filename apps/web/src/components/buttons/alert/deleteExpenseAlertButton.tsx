@@ -1,14 +1,15 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { deleteExpenseAction } from "@/app/actions/expenses/deleteExpenseAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoGhostButton,
+  RyogoDestructiveButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function DeleteExpenseAlertButton(props: {
   bookingId: string
@@ -17,7 +18,7 @@ export default function DeleteExpenseAlertButton(props: {
   assignedUserId: string
   byDriver?: boolean
 }) {
-  const [isCancelPending, startCancelTransition] = useTransition()
+  const [isPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteExpense")
 
   const router = useRouter()
@@ -48,22 +49,14 @@ export default function DeleteExpenseAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <Button variant={"ghost"}>
-          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
-        </Button>
-      }
+      labelChild={<RyogoGhostButton label={t("Label")} />}
     >
-      <Button
-        variant={"destructive"}
+      <RyogoDestructiveButton
         onClick={deleteExpense}
-        disabled={isCancelPending}
-      >
-        {isCancelPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isCancelPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

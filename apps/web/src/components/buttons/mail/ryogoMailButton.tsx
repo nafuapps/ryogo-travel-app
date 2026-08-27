@@ -1,8 +1,7 @@
 import { Mail } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function RyogoMailButton({
   label,
@@ -13,10 +12,9 @@ export default function RyogoMailButton({
 }) {
   return (
     <Link href={`mailto:${email}`}>
-      <Button variant="outline" className="w-full">
+      <RyogoOutlineButton label={label} className="w-full">
         <RyogoIcon icon={Mail} size="sm" color="slate" />
-        <RyogoCaption color="slate">{label}</RyogoCaption>
-      </Button>
+      </RyogoOutlineButton>
     </Link>
   )
 }

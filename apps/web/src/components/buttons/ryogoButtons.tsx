@@ -6,38 +6,42 @@ import {
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 
-type RyogoButtonType = React.ComponentProps<"button"> & {
-  label: string
+type ButtonType = React.ComponentProps<"button"> & {
   size?: "default" | "lg"
   variant?: "white" | "brand" | "default" | "destructive" | "outline" | "ghost"
+  label?: string
   labelColor?: RyogoTextColorType
   labelClassName?: string
   showSpinner?: boolean
   children?: React.ReactNode
 }
 
-export function RyogoButton(props: RyogoButtonType) {
+function RyogoButton(props: ButtonType) {
   return (
     <Button {...props}>
-      {props.size === "lg" ? (
-        <RyogoSmall
-          color={props.labelColor}
-          className={props.labelClassName ?? ""}
-        >
-          {props.label}
-        </RyogoSmall>
-      ) : (
-        <RyogoCaption
-          color={props.labelColor}
-          className={props.labelClassName ?? ""}
-        >
-          {props.label}
-        </RyogoCaption>
-      )}
+      {props.label &&
+        (props.size === "lg" ? (
+          <RyogoSmall
+            color={props.labelColor}
+            className={props.labelClassName ?? ""}
+          >
+            {props.label}
+          </RyogoSmall>
+        ) : (
+          <RyogoCaption
+            color={props.labelColor}
+            className={props.labelClassName ?? ""}
+          >
+            {props.label}
+          </RyogoCaption>
+        ))}
       {props.children}
     </Button>
   )
 }
+
+//Variant will be set by individual buttons
+type RyogoButtonType = Omit<ButtonType, "variant">
 
 export function RyogoDefaultButton(props: RyogoButtonType) {
   return (
@@ -69,7 +73,7 @@ export function RyogoBrandButton(props: RyogoButtonType) {
   )
 }
 
-export function RyogoDesctructiveButton(props: RyogoButtonType) {
+export function RyogoDestructiveButton(props: RyogoButtonType) {
   return (
     <RyogoButton
       {...props}
@@ -104,7 +108,7 @@ export function RyogoOutlineButton(props: RyogoButtonType) {
     <RyogoButton
       {...props}
       variant="outline"
-      labelColor={props.labelColor ?? "light"}
+      labelColor={props.labelColor ?? "slate"}
     >
       {props.showSpinner && (
         <Spinner className="text-slate-500 dark:text-slate-500" />

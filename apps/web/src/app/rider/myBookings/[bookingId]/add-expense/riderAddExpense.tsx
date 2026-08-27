@@ -6,8 +6,6 @@ import {
   RyogoSelect,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
@@ -17,10 +15,12 @@ import z from "zod"
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { addExpenseAction } from "@/app/actions/expenses/addExpenseAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
 import { FileRegex } from "@/lib/regex"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function RiderAddExpensePageComponent({
   bookingId,
@@ -35,7 +35,6 @@ export default function RiderAddExpensePageComponent({
 }) {
   const t = useTranslations("Rider.AddRiderExpense")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const newExpenseSchema = z.object({
     type: z.enum(ExpenseTypesEnum).nonoptional(t("Field1.Error1")),
@@ -78,26 +77,23 @@ export default function RiderAddExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: NewExpenseType) {
-    startTransition(async () => {
-      if (
-        await addExpenseAction(
-          {
-            agencyId,
-            bookingId,
-            userId,
-            assignedUserId,
-            ...values,
-          },
-          true,
-        )
-      ) {
-        toast.success(t("Success"))
-        router.replace(`/rider/myBookings/${bookingId}`)
-      } else {
-        toast.error(t("Error"))
-        router.back()
-      }
-    })
+    const result = await addExpenseAction(
+      {
+        agencyId,
+        bookingId,
+        userId,
+        assignedUserId,
+        ...values,
+      },
+      true,
+    )
+    if (result) {
+      toast.success(t("Success"))
+      router.replace(`/rider/myBookings/${bookingId}`)
+    } else {
+      toast.error(t("Error"))
+      router.back()
+    }
   }
 
   return (
@@ -132,25 +128,22 @@ export default function RiderAddExpensePageComponent({
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
           type="submit"
-          disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          label={t("CancelCTA")}
           type="button"
-          disabled={isPending}
           onClick={() => router.back()}
-        >
-          <RyogoCaption color="light">{t("CancelCTA")}</RyogoCaption>
-        </Button>
+          disabled={formData.formState.isSubmitting}
+        />
       </FormWrapper>
     </PageWrapper>
   )

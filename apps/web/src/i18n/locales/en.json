@@ -875,7 +875,7 @@
         "Title": "LEADS (THIS WEEK)"
       },
       "SubscriptionReminderStrip": {
-        "NotExpired": "Subscription expiring {days,plural, =0 {today} =1 {in 1 day} other {in # days}}.",
+        "NotExpired": "Subscription expiring {days,plural, =0 {today} =1 {tomorrow} other {in # days}}.",
         "Expired": "Subscription has expired.",
         "RenewCTA": "Recharge Now"
       },
@@ -4234,7 +4234,7 @@
       },
       "PlanExpiry": {
         "ValidTill": "VALID TILL",
-        "SubscriptionExpiresIn": "Subscription expires {days,plural, =0 {today} =1 {in 1 day} other {in # days}}",
+        "SubscriptionExpiresIn": "Subscription expires {days,plural, =0 {today} =1 {tomorrow} other {in # days}}",
         "SubscriptionExpired": "Subscription expired on {date}",
         "RenewCTA": "Renew {plan} @ ₹{price}"
       },
@@ -4952,7 +4952,7 @@
         "YesCTA": "Agree & Start Free Trial"
       },
       "DeleteMission": {
-        "Label": "DELETE MISSION",
+        "Label": "DELETE",
         "Title": "Are you sure you want to delete this mission?",
         "Desc": "When deleted, this reminder cannot be recovered later.",
         "NoCTA": "No",
@@ -6865,7 +6865,7 @@
     "Resources": {
       "Hero": {
         "Title": "Explore our resource library",
-        "Subtitle": "Feeling lost? Don't worry. Go through our resources like demo videos, blogs, support center, FAQs and get to know more about us.",
+        "Subtitle": "Feeling lost? Don't worry. Go through resources like demo videos, blogs, support center, FAQs and get to know more about us.",
         "PrimaryCTA": "Explore FAQs",
         "SecondaryCTA": "Go To Support Center",
         "ScrollCTA": "Scroll to see more videos"
@@ -6947,7 +6947,7 @@
           "Help4": "Understand how RyoGo works",
           "CallCTA": "Call Our Support Team",
           "EmailCTA": "Email Us",
-          "Disclaimer": "* Please note that response from our support team is subject to availablility during business hours."
+          "Disclaimer": "Please note that response from our support team is subject to availablility during business hours."
         },
         "QueryForm": {
           "Title": "Submit your query",
@@ -6986,7 +6986,8 @@
           "Loading": "Loading...",
           "SentCTA": "Message Sent",
           "Success": "You message has been sent successfully!",
-          "Error": "Something went wrong. Please try again later."
+          "Error": "Something went wrong. Please try again later.",
+          "Disclaimer": "We protect your privacy and security. Your details are safe with us."
         }
       },
       "Blogs": {

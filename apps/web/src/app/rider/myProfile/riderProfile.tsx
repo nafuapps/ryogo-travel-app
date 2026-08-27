@@ -4,7 +4,6 @@ import { User } from "lucide-react"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
@@ -21,6 +20,7 @@ import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { Separator } from "@/components/ui/separator"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function RiderProfilePageComponent({
   userDetails,
@@ -73,16 +73,16 @@ export default async function RiderProfilePageComponent({
           agencyId={userDetails.agencyId}
         />
         <Link href="/rider/myProfile/change-email">
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">{t("ChangeEmail.Title")}</RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            label={t("ChangeEmail.Title")}
+            className="w-full"
+          />
         </Link>
         <Link href="/rider/myProfile/change-password">
-          <Button variant={"outline"} className="w-full">
-            <RyogoCaption color="slate">
-              {t("ChangePassword.Title")}
-            </RyogoCaption>
-          </Button>
+          <RyogoOutlineButton
+            label={t("ChangePassword.Title")}
+            className="w-full"
+          />
         </Link>
         <LogoutAlertButton />
         <RyogoCaption color="light">

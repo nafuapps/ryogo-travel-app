@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeMyEmailAction } from "@/app/actions/users/changeMyEmailAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ChangeEmailMyProfileComponent({
   usersWithPhoneRole,
@@ -26,7 +26,6 @@ export default function ChangeEmailMyProfileComponent({
 }) {
   const t = useTranslations("Rider.MyProfile.ChangeEmail")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const schema = z.object({
     password: z
@@ -68,26 +67,24 @@ export default function ChangeEmailMyProfileComponent({
         message: t("Field2.Error4"),
       })
     } else {
-      startTransition(async () => {
-        const result = await changeMyEmailAction(
-          userId,
-          data.password,
-          data.newEmail,
-          agencyId,
-        )
-        if (result) {
-          //If success, redirect
-          toast.success(t("Success"))
-          router.replace("/rider/myProfile")
-        } else {
-          //If failed, show error
-          formData.setError("password", {
-            type: "manual",
-            message: t("APIError"),
-          })
-          // formData.reset();
-        }
-      })
+      const result = await changeMyEmailAction(
+        userId,
+        data.password,
+        data.newEmail,
+        agencyId,
+      )
+      if (result) {
+        //If success, redirect
+        toast.success(t("Success"))
+        router.replace("/rider/myProfile")
+      } else {
+        //If failed, show error
+        formData.setError("password", {
+          type: "manual",
+          message: t("APIError"),
+        })
+        // formData.reset();
+      }
     }
   }
   return (
@@ -112,26 +109,22 @@ export default function ChangeEmailMyProfileComponent({
           description={t("Field2.Description")}
         />
 
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
           type="submit"
-          disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
-        >
-          <RyogoCaption color="white">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+          disabled={formData.formState.isSubmitting}
+        />
       </FormWrapper>
     </PageWrapper>
   )

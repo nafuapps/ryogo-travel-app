@@ -191,7 +191,6 @@ export default function NewBookingAddCustomerPageComponent(props: {
             label={t("ClearCTA")}
           />
           <RyogoGhostButton
-            variant={"ghost"}
             type="button"
             onClick={() => props.setAddingCustomer(false)}
             disabled={form.formState.isSubmitting}

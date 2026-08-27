@@ -112,7 +112,7 @@ function SlideshowCard({
           />
         </div>
       ) : (
-        <div className="w-full h-px lg:h-0.5 rounded bg-slate-200 dark:bg-slate-700" />
+        <div className="w-full h-px lg:h-0.5 rounded bg-slate-300 dark:bg-slate-700" />
       )}
     </div>
   )

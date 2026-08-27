@@ -12,10 +12,10 @@ import {
 
 export default function RyogoAlertDialog(props: {
   title: string
-  desc: string
   noCTA: string
   labelChild: React.ReactNode
   children: React.ReactNode
+  desc?: string
 }) {
   return (
     <AlertDialog>
@@ -23,7 +23,9 @@ export default function RyogoAlertDialog(props: {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{props.title}</AlertDialogTitle>
-          <AlertDialogDescription>{props.desc}</AlertDialogDescription>
+          {props.desc && (
+            <AlertDialogDescription>{props.desc}</AlertDialogDescription>
+          )}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{props.noCTA}</AlertDialogCancel>

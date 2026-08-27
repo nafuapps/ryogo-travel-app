@@ -10,9 +10,9 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { Disc, BadgeCheck, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { RyogoPill } from "@/components/pills/ryogoPills"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function CurrentPlanDetails({
   subscriptionPlan,
@@ -50,10 +50,9 @@ export default async function CurrentPlanDetails({
       />
       {isOwner && (
         <Link href="/dashboard/account/subscription/orders">
-          <Button variant={"outline"} size="sm" className="w-full">
-            <RyogoCaption color="slate">{t("ViewOrders")}</RyogoCaption>
+          <RyogoOutlineButton label={t("ViewOrders")} className="w-full">
             <RyogoIcon icon={ChevronRight} size="sm" />
-          </Button>
+          </RyogoOutlineButton>
         </Link>
       )}
     </SectionColWrapper>

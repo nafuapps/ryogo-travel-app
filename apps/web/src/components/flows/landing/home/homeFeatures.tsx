@@ -1,6 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
@@ -9,6 +8,7 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function HomeFeaturesSection() {
   const t = await getTranslations("Landing.Home.Features")
@@ -44,12 +44,13 @@ export default async function HomeFeaturesSection() {
           />
         </div>
         <Link href="/features">
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white" weight="font-medium">
-              {t("MoreCTA")}
-            </RyogoSmall>
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          >
             <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </Button>
+          </RyogoDefaultButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

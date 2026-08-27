@@ -1,6 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH2, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import {
   BASIC_PLAN_AGENT_LIMIT,
   BASIC_PLAN_DRIVER_LIMIT,
@@ -19,6 +18,7 @@ import {
   BASIC_BOOKINGS_SEARCH_DAYS,
   PREMIUM_BOOKINGS_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function PricingComparisionSection() {
   const t = await getTranslations("Landing.Pricing.Comparision")
@@ -213,12 +213,13 @@ export default async function PricingComparisionSection() {
           />
         </ComparisionGroup>
         <Link href="/features">
-          <Button size="lg" className="w-full md:w-auto">
-            <RyogoSmall color="white" weight="font-medium">
-              {t("MoreCTA")}
-            </RyogoSmall>
+          <RyogoDefaultButton
+            size="lg"
+            className="w-full md:w-auto"
+            label={t("MoreCTA")}
+          >
             <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </Button>
+          </RyogoDefaultButton>
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>

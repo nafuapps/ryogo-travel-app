@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Spinner } from "@/components/ui/spinner"
 import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { Button } from "@/components/ui/button"
 import { changeMyPasswordAction } from "@/app/actions/users/changeMyPasswordAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ChangePasswordMyProfileComponent({
   userId,
@@ -23,7 +23,6 @@ export default function ChangePasswordMyProfileComponent({
 }) {
   const t = useTranslations("Rider.MyProfile.ChangePassword")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const schema = z
     .object({
@@ -61,27 +60,25 @@ export default function ChangePasswordMyProfileComponent({
 
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
-    startTransition(async () => {
-      const result = await changeMyPasswordAction(
-        userId,
-        agencyId,
-        data.oldPassword,
-        data.newPassword,
-      )
-      if (result) {
-        //If success, redirect
-        toast.success(t("Success"))
-        router.replace("/rider/myProfile")
-      } else {
-        //If failed, show error
-        formData.setError("oldPassword", {
-          type: "manual",
-          message: t("APIError"),
-        })
-        // formData.reset();
-      }
-    })
+    const result = await changeMyPasswordAction(
+      userId,
+      agencyId,
+      data.oldPassword,
+      data.newPassword,
+    )
+    if (result) {
+      //If success, redirect
+      toast.success(t("Success"))
+      router.replace("/rider/myProfile")
+    } else {
+      //If failed, show error
+      formData.setError("oldPassword", {
+        type: "manual",
+        message: t("APIError"),
+      })
+    }
   }
+
   return (
     <PageWrapper id="RiderChangePassword">
       <FormWrapper<SchemaType>
@@ -110,26 +107,22 @@ export default function ChangePasswordMyProfileComponent({
           placeholder={t("Field3.Placeholder")}
           description={t("Field3.Description")}
         />
-        <Button
-          variant={"default"}
+        <RyogoDefaultButton
           size={"lg"}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
           type="submit"
-          disabled={isPending}
-        >
-          {isPending && <Spinner />}
-          <RyogoCaption color="white">
-            {isPending ? t("Loading") : t("PrimaryCTA")}
-          </RyogoCaption>
-        </Button>
-        <Button
-          variant={"outline"}
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+        />
+        <RyogoOutlineButton
           size={"lg"}
+          label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
-        >
-          <RyogoCaption color="light">{t("SecondaryCTA")}</RyogoCaption>
-        </Button>
+          disabled={formData.formState.isSubmitting}
+        />
       </FormWrapper>
     </PageWrapper>
   )

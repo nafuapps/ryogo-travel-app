@@ -1,14 +1,15 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { Spinner } from "@/components/ui/spinner"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoOutlineButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function CancelBookingAlertButton(props: {
   bookingId: string
@@ -16,7 +17,7 @@ export default function CancelBookingAlertButton(props: {
   assignedUserId: string
   isConfirmedBooking?: boolean
 }) {
-  const [isCancelPending, startCancelTransition] = useTransition()
+  const [isPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.CancelBooking")
   const router = useRouter()
 
@@ -52,20 +53,14 @@ export default function CancelBookingAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <Button variant={"outline"}>
-          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
-        </Button>
-      }
+      labelChild={<RyogoOutlineButton label={t("Label")} />}
     >
-      <Button
-        variant={"destructive"}
+      <RyogoDefaultButton
         onClick={cancel}
-        disabled={isCancelPending}
-      >
-        {isCancelPending && <Spinner />}
-        {isCancelPending ? t("Loading") : t("YesCTA")}
-      </Button>
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

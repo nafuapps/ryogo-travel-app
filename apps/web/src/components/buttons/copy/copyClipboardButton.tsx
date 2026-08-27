@@ -1,13 +1,14 @@
 "use client"
 
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Button } from "@/components/ui/button"
 import { CheckCheck, Copy } from "lucide-react"
 import { useEffect, useState } from "react"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function CopyClipboardButton({ label }: { label?: string }) {
   const [isCopied, setIsCopied] = useState(false)
 
+  //Ping for 1 second
   useEffect(() => {
     if (isCopied) {
       setTimeout(() => {
@@ -23,14 +24,13 @@ export default function CopyClipboardButton({ label }: { label?: string }) {
 
   return (
     //Animate the copy button
-    <Button variant="outline" onClick={() => handleCopy()} size="icon">
-      <div className={` ${isCopied ? "animate-ping scale-75" : ""}`}>
-        <RyogoIcon
-          icon={isCopied ? CheckCheck : Copy}
-          size="sm"
-          color={isCopied ? "green" : "slate"}
-        />
-      </div>
-    </Button>
+    <RyogoOutlineButton onClick={() => handleCopy()}>
+      <RyogoIcon
+        icon={isCopied ? CheckCheck : Copy}
+        size="sm"
+        color={isCopied ? "green" : "slate"}
+        className={` ${isCopied ? "animate-ping scale-75" : ""}`}
+      />
+    </RyogoOutlineButton>
   )
 }

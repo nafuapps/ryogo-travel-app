@@ -35,11 +35,7 @@ export default async function MissionControlPageComponent({
     <PageWrapper id="MissionControlPage">
       {isPremium && (
         <Link href={`/dashboard/mission-control/add`} className="self-center">
-          <RyogoOutlineButton
-            variant={"outline"}
-            className="w-full"
-            label={t("AddCustomMission")}
-          >
+          <RyogoOutlineButton className="w-full" label={t("AddCustomMission")}>
             <RyogoIcon icon={CalendarPlus} color="slate" size="sm" />
           </RyogoOutlineButton>
         </Link>

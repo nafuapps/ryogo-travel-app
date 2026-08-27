@@ -11,7 +11,7 @@ export default async function FeaturesAnalyticsSection() {
   return (
     <LandingSectionWrapper
       id="analytics"
-      className="bg-slate-50 dark:bg-slate-950"
+      className="bg-slate-100 dark:bg-slate-950"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">

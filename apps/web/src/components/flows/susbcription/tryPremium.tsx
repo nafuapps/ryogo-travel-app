@@ -1,7 +1,10 @@
 import TryPremiumAlertButton from "@/components/buttons/alert/tryPremiumAlertButton"
+import {
+  RyogoWhiteButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH2, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { ArrowRight, ChevronDown, Gift } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -37,17 +40,25 @@ export default async function TryPremiumComponent({
             agencyId={agencyId}
             userId={userId}
             displayButton={
-              <Button variant={"white"} size="lg" className="w-full sm:w-auto">
-                <RyogoSmall color="brand">{t("TryCTA")}</RyogoSmall>
+              <RyogoWhiteButton
+                labelColor="brand"
+                label={t("TryCTA")}
+                size="lg"
+                className="w-full sm:w-auto"
+              >
                 <RyogoIcon icon={ArrowRight} size="sm" color="brand" thick />
-              </Button>
+              </RyogoWhiteButton>
             }
           />
           <Link href="#PremiumAdvantageInfo" className="w-full sm:w-auto">
-            <Button variant="outline" size="lg" className="w-full">
-              <RyogoSmall color="white">{t("ViewFeatures")}</RyogoSmall>
+            <RyogoOutlineButton
+              labelColor="white"
+              label={t("ViewFeatures")}
+              size="lg"
+              className="w-full"
+            >
               <RyogoIcon icon={ChevronDown} size="sm" color="white" thick />
-            </Button>
+            </RyogoOutlineButton>
           </Link>
         </div>
       </div>

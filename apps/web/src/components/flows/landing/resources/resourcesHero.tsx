@@ -6,9 +6,13 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoVideo } from "@/components/video/ryogoVideo"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { ChevronDown } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import {
+  RyogoWhiteButton,
+  RyogoOutlineButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default async function ResourcesHeroSection() {
   const t = await getTranslations("Landing.Resources.Hero")
@@ -31,21 +35,21 @@ export default async function ResourcesHeroSection() {
           </RyogoP>
           <div className="flex gap-4 flex-col sm:flex-row items-center justify-center lg:justify-start">
             <Link href="#faq">
-              <Button size="lg" variant="white" className="w-full md:w-auto">
-                <RyogoSmall weight="font-medium">{t("PrimaryCTA")}</RyogoSmall>
-              </Button>
+              <RyogoWhiteButton
+                size="lg"
+                label={t("PrimaryCTA")}
+                className="w-full md:w-auto"
+              />
             </Link>
             <Link href="#support">
-              <Button
+              <RyogoOutlineButton
                 size="lg"
-                variant="outline"
+                labelColor="white"
+                label={t("SecondaryCTA")}
                 className="w-full md:w-auto gap-1 mg:gap-1.5"
               >
-                <RyogoSmall color="white" weight="font-medium">
-                  {t("SecondaryCTA")}
-                </RyogoSmall>
                 <RyogoIcon icon={ChevronDown} color="white" size="sm" thick />
-              </Button>
+              </RyogoOutlineButton>
             </Link>
           </div>
         </div>
@@ -57,14 +61,14 @@ export default async function ResourcesHeroSection() {
             className="w-full aspect-video"
           />
           <Link href="#videos">
-            <Button
+            <RyogoGhostButton
               size="lg"
-              variant="ghost"
+              label={t("ScrollCTA")}
+              labelColor="light"
               className="gap-1 lg:gap-1.5 hover:bg-slate-700/80 dark:hover:bg-slate-300/80"
             >
-              <RyogoSmall color="light">{t("ScrollCTA")}</RyogoSmall>
               <RyogoIcon icon={ChevronDown} color="light" size="sm" thick />
-            </Button>
+            </RyogoGhostButton>
           </Link>
         </div>
       </LandingContentWrapper>

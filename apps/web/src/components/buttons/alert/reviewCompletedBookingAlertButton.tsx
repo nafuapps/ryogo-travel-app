@@ -2,15 +2,16 @@
 
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { Button } from "@/components/ui/button"
 import { useTransition } from "react"
 import { toast } from "sonner"
-import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { ListCheck } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
 import { reviewCompletedBookingAction } from "@/app/actions/bookings/reviewCompletedBookingAction"
+import {
+  RyogoOutlineButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function SendInvoiceAlertButton(props: {
   bookingId: string
@@ -20,7 +21,7 @@ export default function SendInvoiceAlertButton(props: {
   const t = useTranslations("Dashboard.Buttons.ReviewCompletedBooking")
   const router = useRouter()
 
-  const [isSendPending, startSendTransition] = useTransition()
+  const [isPending, startSendTransition] = useTransition()
 
   // Mark booking as reviewed and generate invoice
   async function reviewAndGenerateInvoice() {
@@ -45,22 +46,17 @@ export default function SendInvoiceAlertButton(props: {
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <Button variant={"outline"}>
-          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
+        <RyogoOutlineButton label={t("Label")}>
           <RyogoIcon icon={ListCheck} size="sm" />
-        </Button>
+        </RyogoOutlineButton>
       }
     >
-      <Button
-        variant={"default"}
+      <RyogoDefaultButton
         onClick={reviewAndGenerateInvoice}
-        disabled={isSendPending}
-      >
-        {isSendPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isSendPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

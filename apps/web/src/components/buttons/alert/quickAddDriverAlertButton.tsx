@@ -63,7 +63,6 @@ export default function QuickAddDriverAlertButton(props: {
       }
     >
       <RyogoDefaultButton
-        variant={"default"}
         onClick={quickAddDriver}
         disabled={isPending}
         showSpinner={isPending}

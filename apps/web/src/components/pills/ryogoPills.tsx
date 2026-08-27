@@ -45,9 +45,9 @@ function getPillSize(size: RyogoPillSizeType = "md") {
     case "lg":
       return "px-3 py-1.5 lg:px-4 lg:py-2"
     case "md":
-      return "px-2 py-1 lg:px-2.5 lg:py-1.25"
+      return "px-2.5 py-1 lg:px-3 lg:py-1.25"
     case "sm":
-      return "px-1.5 py-0.75 lg:px-2 lg:py-1"
+      return "px-2 py-0.75 lg:px-2.5 lg:py-1"
   }
 }
 

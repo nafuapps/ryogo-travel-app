@@ -1,18 +1,19 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { logoutAction } from "@/app/actions/users/logoutAction"
 import { useTranslations } from "next-intl"
 import { useTransition } from "react"
-import { Spinner } from "@/components/ui/spinner"
-import { RyogoCaption } from "@/components/typography"
+import {
+  RyogoGhostButton,
+  RyogoDestructiveButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function LogoutAlertButton() {
   const t = useTranslations("Dashboard.Buttons.Logout")
   const [isPending, startTransition] = useTransition()
 
-  async function logoutUser() {
+  async function logout() {
     startTransition(async () => {
       await logoutAction()
     })
@@ -20,20 +21,15 @@ export default function LogoutAlertButton() {
   return (
     <RyogoAlertDialog
       title={t("Title")}
-      desc={""}
       noCTA={t("NoCTA")}
-      labelChild={
-        <Button variant={"ghost"}>
-          <RyogoCaption color="light">{t("Label")}</RyogoCaption>
-        </Button>
-      }
+      labelChild={<RyogoGhostButton label={t("Label")} />}
     >
-      <Button variant="destructive" onClick={logoutUser} disabled={isPending}>
-        {isPending && <Spinner />}
-        <RyogoCaption color="white">
-          {isPending ? t("Loading") : t("YesCTA")}
-        </RyogoCaption>
-      </Button>
+      <RyogoDestructiveButton
+        onClick={logout}
+        disabled={isPending}
+        showSpinner={isPending}
+        label={isPending ? t("Loading") : t("YesCTA")}
+      />
     </RyogoAlertDialog>
   )
 }

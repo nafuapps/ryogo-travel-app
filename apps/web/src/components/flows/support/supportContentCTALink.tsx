@@ -1,6 +1,5 @@
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 
@@ -13,12 +12,9 @@ export default function SupportContentCTALinkButton({
 }) {
   return (
     <Link href={href} className="self-center">
-      <Button variant="ghost" type="button" size="sm">
-        <RyogoCaption weight="font-bold" color="brand">
-          {label}
-        </RyogoCaption>
+      <RyogoGhostButton label={label} labelColor="brand">
         <RyogoIcon icon={ChevronRight} size="sm" color="brand" thick />
-      </Button>
+      </RyogoGhostButton>
     </Link>
   )
 }

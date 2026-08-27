@@ -126,11 +126,7 @@ export default async function DriverDetailsPageComponent({
       </SectionWrapper>
       <SectionWrapper id="DriverActions">
         <Link href={`/dashboard/drivers/${driver.id}/modify`}>
-          <RyogoOutlineButton
-            variant={"outline"}
-            className="w-full"
-            label={t("EditDetails")}
-          />
+          <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
         </Link>
         {driver.status !== DriverStatusEnum.INACTIVE &&
           driver.status !== DriverStatusEnum.ON_TRIP && (

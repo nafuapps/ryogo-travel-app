@@ -5,18 +5,21 @@ import {
 import { getTranslations } from "next-intl/server"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
 import { RyogoCaption } from "@/components/typography"
-import Link from "next/link"
-import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
+import {
+  DashboardItemWrapper,
+  DashboardLabelImageChip,
+  DashboardSectionHeader,
+} from "@/components/flows/dashboard/dashboardCommon"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import { Route } from "next"
 
 export default async function DashboardVehiclesComponent({
   agencyId,
@@ -42,53 +45,70 @@ export default async function DashboardVehiclesComponent({
 
   return (
     <SectionWrapper id="DashboardVehicles">
+      <DashboardSectionHeader title={t("Title")} />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Available")}</RyogoCaption>
         <RyogoCaption color="light">{availableVehicles.length}</RyogoCaption>
       </SectionRowWrapper>
-      {availableVehicles.map((vehicle, index) => (
-        <DashboardVehicleChipComponent
-          key={index}
-          vehicle={vehicle}
-          type="available"
-        />
-      ))}
+      {availableVehicles.length > 0 && (
+        <SectionColWrapper small>
+          {availableVehicles.map((vehicle, index) => (
+            <DashboardVehicleChipComponent
+              key={index}
+              vehicle={vehicle}
+              type="available"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("OnTrip")}</RyogoCaption>
         <RyogoCaption color="light">{onTripVehicles.length}</RyogoCaption>
       </SectionRowWrapper>
-      {onTripVehicles.map((vehicle, index) => (
-        <DashboardVehicleChipComponent
-          key={index}
-          vehicle={vehicle}
-          type="onTrip"
-        />
-      ))}
+      {onTripVehicles.length > 0 && (
+        <SectionColWrapper small>
+          {onTripVehicles.map((vehicle, index) => (
+            <DashboardVehicleChipComponent
+              key={index}
+              vehicle={vehicle}
+              type="onTrip"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Repair")}</RyogoCaption>
         <RyogoCaption color="light">{repairVehicles.length}</RyogoCaption>
       </SectionRowWrapper>
-      {repairVehicles.map((vehicle, index) => (
-        <DashboardVehicleChipComponent
-          key={index}
-          vehicle={vehicle}
-          type="repair"
-        />
-      ))}
+      {repairVehicles.length > 0 && (
+        <SectionColWrapper small>
+          {repairVehicles.map((vehicle, index) => (
+            <DashboardVehicleChipComponent
+              key={index}
+              vehicle={vehicle}
+              type="repair"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Inactive")}</RyogoCaption>
         <RyogoCaption color="light">{inactiveVehicles.length}</RyogoCaption>
       </SectionRowWrapper>
-      {inactiveVehicles.map((vehicle, index) => (
-        <DashboardVehicleChipComponent
-          key={index}
-          vehicle={vehicle}
-          type="inactive"
-        />
-      ))}
+      {inactiveVehicles.length > 0 && (
+        <SectionColWrapper small>
+          {inactiveVehicles.map((vehicle, index) => (
+            <DashboardVehicleChipComponent
+              key={index}
+              vehicle={vehicle}
+              type="inactive"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
     </SectionWrapper>
   )
 }
@@ -103,22 +123,21 @@ function DashboardVehicleChipComponent({
   const vehicleImageUrl = vehicle.vehiclePhotoUrl
 
   return (
-    <Link href={`/dashboard/vehicles/${vehicle.id}`} className="flex">
-      <div
-        className={`flex flex-row justify-between gap-1 lg:gap-1.5 w-full border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg p-1.5 lg:p-2`}
-      >
-        <DashboardLabelImageChip label={vehicle.vehicleNumber}>
-          {vehicleImageUrl ? (
-            <RyogoImage
-              src={getFileUrl(vehicleImageUrl)}
-              alt={vehicle.vehicleNumber}
-              imageSize="xs"
-            />
-          ) : (
-            <GetVehicleIcon vehicleType={vehicle.type} size="sm" />
-          )}
-        </DashboardLabelImageChip>
-      </div>
-    </Link>
+    <DashboardItemWrapper href={`/dashboard/vehicles/${vehicle.id}` as Route}>
+      <DashboardLabelImageChip label={vehicle.vehicleNumber}>
+        {vehicleImageUrl ? (
+          <RyogoImage
+            src={getFileUrl(vehicleImageUrl)}
+            alt={vehicle.vehicleNumber}
+            imageSize="xs"
+          />
+        ) : (
+          <GetVehicleIcon vehicleType={vehicle.type} size="sm" />
+        )}
+      </DashboardLabelImageChip>
+      <RyogoCaption color="light" weight="font-bold">
+        {vehicle.brand + " " + vehicle.model}
+      </RyogoCaption>
+    </DashboardItemWrapper>
   )
 }

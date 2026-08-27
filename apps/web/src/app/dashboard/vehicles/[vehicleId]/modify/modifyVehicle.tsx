@@ -19,6 +19,7 @@ import {
   RyogoDatePicker,
   RyogoFileInput,
   RyogoSwitch,
+  RyogoCombobox,
 } from "@/components/form/ryogoFormFields"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { useTransition } from "react"
@@ -59,7 +60,7 @@ export default function ModifyVehiclePageComponent({
     rcExpiresOn: z
       .date(t("Field7.Error1"))
       .min(vehicle.rcExpiresOn ?? new Date(), t("Field7.Error2"))
-      .nonoptional(t("Field7.Error1")),
+      .optional(),
     rcPhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
       return file[0] && file[0].size < 1000000
@@ -82,7 +83,7 @@ export default function ModifyVehiclePageComponent({
     insuranceExpiresOn: z
       .date(t("Field9.Error1"))
       .min(vehicle.insuranceExpiresOn ?? new Date(), t("Field9.Error2"))
-      .nonoptional(t("Field9.Error1")),
+      .optional(),
     insurancePhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
       return file[0] && file[0].size < 1000000
@@ -105,7 +106,7 @@ export default function ModifyVehiclePageComponent({
     pucExpiresOn: z
       .date(t("Field11.Error1"))
       .min(vehicle.pucExpiresOn ?? new Date(), t("Field11.Error2"))
-      .nonoptional(t("Field11.Error1")),
+      .optional(),
     pucPhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
       return file[0] && file[0].size < 1000000
@@ -212,19 +213,19 @@ export default function ModifyVehiclePageComponent({
           title={t("Field1.Title")}
           placeholder={t("Field1.Title")}
         />
-        <RyogoInput
+        <RyogoCombobox
           name={"brand"}
-          type="text"
-          label={t("Field2.Title")}
+          register={formData.register("brand")}
+          title={t("Field2.Title")}
+          array={getEnumValueDisplayPairs(VehicleBrandEnum)}
           placeholder={t("Field2.Placeholder")}
-          description={t("Field2.Description")}
         />
-        <RyogoInput
+        <RyogoCombobox
           name={"color"}
-          type="text"
-          label={t("Field3.Title")}
+          register={formData.register("color")}
+          array={getEnumValueDisplayPairs(VehicleColorEnum)}
+          title={t("Field3.Title")}
           placeholder={t("Field3.Placeholder")}
-          description={t("Field3.Description")}
         />
         <RyogoInput
           name={"model"}

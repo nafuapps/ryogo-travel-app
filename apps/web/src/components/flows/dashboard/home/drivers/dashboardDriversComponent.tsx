@@ -5,17 +5,23 @@ import {
 import { getTranslations } from "next-intl/server"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
 import { RyogoCaption } from "@/components/typography"
-import Link from "next/link"
-import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
+import {
+  DashboardItemWrapper,
+  DashboardLabelImageChip,
+  DashboardSectionHeader,
+} from "@/components/flows/dashboard/dashboardCommon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { IdCard } from "lucide-react"
+import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
+import { Route } from "next"
 
 export default async function DashboardDriversComponent({
   agencyId,
@@ -41,53 +47,71 @@ export default async function DashboardDriversComponent({
 
   return (
     <SectionWrapper id="DashboardDrivers">
+      <DashboardSectionHeader title={t("Title")} />
+
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Available")}</RyogoCaption>
         <RyogoCaption color="light">{availableDrivers.length}</RyogoCaption>
       </SectionRowWrapper>
-      {availableDrivers.map((driver, index) => (
-        <DashboardDriverChipComponent
-          key={index}
-          driver={driver}
-          type="available"
-        />
-      ))}
+      {availableDrivers.length > 0 && (
+        <SectionColWrapper small>
+          {availableDrivers.map((driver, index) => (
+            <DashboardDriverChipComponent
+              key={index}
+              driver={driver}
+              type="available"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("OnTrip")}</RyogoCaption>
         <RyogoCaption color="light">{onTripDrivers.length}</RyogoCaption>
       </SectionRowWrapper>
-      {onTripDrivers.map((driver, index) => (
-        <DashboardDriverChipComponent
-          key={index}
-          driver={driver}
-          type="onTrip"
-        />
-      ))}
+      {onTripDrivers.length > 0 && (
+        <SectionColWrapper small>
+          {onTripDrivers.map((driver, index) => (
+            <DashboardDriverChipComponent
+              key={index}
+              driver={driver}
+              type="onTrip"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Leave")}</RyogoCaption>
         <RyogoCaption color="light">{leaveDrivers.length}</RyogoCaption>
       </SectionRowWrapper>
-      {leaveDrivers.map((driver, index) => (
-        <DashboardDriverChipComponent
-          key={index}
-          driver={driver}
-          type="leave"
-        />
-      ))}
+      {leaveDrivers.length > 0 && (
+        <SectionColWrapper small>
+          {leaveDrivers.map((driver, index) => (
+            <DashboardDriverChipComponent
+              key={index}
+              driver={driver}
+              type="leave"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Inactive")}</RyogoCaption>
         <RyogoCaption color="light">{inactiveDrivers.length}</RyogoCaption>
       </SectionRowWrapper>
-      {inactiveDrivers.map((driver, index) => (
-        <DashboardDriverChipComponent
-          key={index}
-          driver={driver}
-          type="inactive"
-        />
-      ))}
+      {inactiveDrivers.length > 0 && (
+        <SectionColWrapper small>
+          {inactiveDrivers.map((driver, index) => (
+            <DashboardDriverChipComponent
+              key={index}
+              driver={driver}
+              type="inactive"
+            />
+          ))}
+        </SectionColWrapper>
+      )}
     </SectionWrapper>
   )
 }
@@ -102,22 +126,19 @@ function DashboardDriverChipComponent({
   const driverImageUrl = driver.user.photoUrl
 
   return (
-    <Link href={`/dashboard/drivers/${driver.id}`} className="flex">
-      <div
-        className={`flex flex-row justify-between gap-1 lg:gap-1.5 w-full border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg p-1.5 lg:p-2`}
-      >
-        <DashboardLabelImageChip label={driver.name}>
-          {driverImageUrl ? (
-            <RyogoImage
-              src={getFileUrl(driverImageUrl)}
-              alt={driver.name}
-              imageSize="xs"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={IdCard} size="sm" />
-          )}
-        </DashboardLabelImageChip>
-      </div>
-    </Link>
+    <DashboardItemWrapper href={`/dashboard/drivers/${driver.id}` as Route}>
+      <DashboardLabelImageChip label={driver.name}>
+        {driverImageUrl ? (
+          <RyogoImage
+            src={getFileUrl(driverImageUrl)}
+            alt={driver.name}
+            imageSize="xs"
+          />
+        ) : (
+          <RyogoEnclosedIcon icon={IdCard} size="sm" />
+        )}
+      </DashboardLabelImageChip>
+      <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
+    </DashboardItemWrapper>
   )
 }

@@ -1,4 +1,4 @@
-import { RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoH4 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {
@@ -8,6 +8,7 @@ import {
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Separator } from "@/components/ui/separator"
 import DashboardTripItemComponent from "./dashboardTripItemComponent"
+import { DashboardSectionHeader } from "@/components/flows/dashboard/dashboardCommon"
 
 // Trips (starting today, ending today, ongoing)
 
@@ -46,6 +47,7 @@ export default async function DashboardTripsComponent({
 
   return (
     <SectionWrapper id="DashboardTrips">
+      <DashboardSectionHeader title={t("Title")} />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("StartingToday")}</RyogoCaption>
         <RyogoCaption color="light">{startingTodayTrips.length}</RyogoCaption>

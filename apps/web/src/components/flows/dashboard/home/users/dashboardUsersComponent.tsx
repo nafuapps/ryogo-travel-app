@@ -1,13 +1,18 @@
 import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
 import { RyogoCaption } from "@/components/typography"
-import Link from "next/link"
-import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
+import type { Route } from "next"
+import {
+  DashboardItemWrapper,
+  DashboardLabelImageChip,
+  DashboardSectionHeader,
+} from "@/components/flows/dashboard/dashboardCommon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -17,11 +22,6 @@ import {
   userServices,
 } from "@ryogo-travel-app/api/services/user.services"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
-import { differenceInMinutes } from "date-fns"
-import {
-  DASHBOARD_USER_AWAY_MINUTES,
-  DASHBOARD_USER_ONLINE_MINUTES,
-} from "@/lib/uiConfig"
 import {
   Tooltip,
   TooltipContent,
@@ -47,29 +47,42 @@ export default async function DashboardUsersComponent({
 
   return (
     <SectionWrapper id="DashboardUsers">
+      <DashboardSectionHeader title={t("Title")} />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Owners")}</RyogoCaption>
         <RyogoCaption color="light">{owners.length}</RyogoCaption>
       </SectionRowWrapper>
-      {owners.map((user, index) => (
-        <DashboardUserChipComponent key={index} user={user} />
-      ))}
+      {owners.length > 0 && (
+        <SectionColWrapper small>
+          {owners.map((user, index) => (
+            <DashboardUserChipComponent key={index} user={user} />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Agents")}</RyogoCaption>
         <RyogoCaption color="light">{agents.length}</RyogoCaption>
       </SectionRowWrapper>
-      {agents.map((user, index) => (
-        <DashboardUserChipComponent key={index} user={user} />
-      ))}
+      {agents.length > 0 && (
+        <SectionColWrapper small>
+          {agents.map((user, index) => (
+            <DashboardUserChipComponent key={index} user={user} />
+          ))}
+        </SectionColWrapper>
+      )}
       <Separator />
       <SectionRowWrapper>
         <RyogoCaption color="light">{t("Drivers")}</RyogoCaption>
         <RyogoCaption color="light">{drivers.length}</RyogoCaption>
       </SectionRowWrapper>
-      {drivers.map((user, index) => (
-        <DashboardUserChipComponent key={index} user={user} />
-      ))}
+      {drivers.length > 0 && (
+        <SectionColWrapper small>
+          {drivers.map((user, index) => (
+            <DashboardUserChipComponent key={index} user={user} />
+          ))}
+        </SectionColWrapper>
+      )}
     </SectionWrapper>
   )
 }
@@ -84,48 +97,40 @@ async function DashboardUserChipComponent({
   const onlineStatus = getOnlineStatus(user.lastSeen)
 
   return (
-    <Link href={`/dashboard/users/${user.id}`} className="flex">
-      <div
-        className={`flex flex-row justify-between gap-1 lg:gap-1.5 w-full border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg p-1.5 lg:p-2`}
-      >
-        <DashboardLabelImageChip label={user.name}>
-          <Tooltip disableHoverableContent>
-            <TooltipTrigger>
-              <RyogoIcon
-                icon={CircleSmall}
-                thick={onlineStatus !== "Offline"}
-                size={"sm"}
-                color={
-                  onlineStatus === "Away"
-                    ? "yellow"
-                    : onlineStatus === "Online"
-                      ? "green"
-                      : "light"
-                }
-              />
-            </TooltipTrigger>
-            <TooltipContent>
-              {user.lastSeen
-                ? t("LastSeen", { time: moment(user.lastSeen).fromNow() })
-                : t("Offline")}
-            </TooltipContent>
-          </Tooltip>
-          {userImageUrl ? (
-            <RyogoImage
-              src={getFileUrl(userImageUrl)}
-              alt={user.name}
-              imageSize="xs"
+    <DashboardItemWrapper href={`/dashboard/users/${user.id}` as Route}>
+      <DashboardLabelImageChip label={user.name}>
+        <Tooltip>
+          <TooltipTrigger>
+            <RyogoIcon
+              icon={CircleSmall}
+              thick={onlineStatus !== "Offline"}
+              size={"sm"}
+              color={
+                onlineStatus === "Away"
+                  ? "yellow"
+                  : onlineStatus === "Online"
+                    ? "green"
+                    : "light"
+              }
             />
-          ) : (
-            <RyogoEnclosedIcon icon={IdCard} size="sm" />
-          )}
-        </DashboardLabelImageChip>
-        <UserStatusPill
-          status={user.status}
-          size="sm"
-          className="self-center"
-        />
-      </div>
-    </Link>
+          </TooltipTrigger>
+          <TooltipContent>
+            {user.lastSeen
+              ? t("LastSeen", { time: moment(user.lastSeen).fromNow() })
+              : t("Offline")}
+          </TooltipContent>
+        </Tooltip>
+        {userImageUrl ? (
+          <RyogoImage
+            src={getFileUrl(userImageUrl)}
+            alt={user.name}
+            imageSize="xs"
+          />
+        ) : (
+          <RyogoEnclosedIcon icon={IdCard} size="sm" />
+        )}
+      </DashboardLabelImageChip>
+      <UserStatusPill status={user.status} size="sm" className="self-center" />
+    </DashboardItemWrapper>
   )
 }

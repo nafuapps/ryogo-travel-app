@@ -830,27 +830,22 @@
       }
     },
     "Home": {
-      "BookingMetrics": {
-        "Title": "BOOKINGS (24H)",
-        "Subtitle": "{createdChange} {more} confirmed than weekly avg",
-        "Leads": "Leads",
-        "Ongoing": "Ongoing",
-        "Completed": "Completed",
-        "Cancelled": "Cancelled"
-      },
       "Drivers": {
+        "Title": "Drivers",
         "Available": "AVAILABLE",
         "OnTrip": "ON TRIP",
         "Leave": "LEAVE",
         "Inactive": "INACTIVE"
       },
       "Vehicles": {
+        "Title": "Vehicles",
         "Available": "AVAILABLE",
         "OnTrip": "ON TRIP",
         "Repair": "REPAIR",
         "Inactive": "INACTIVE"
       },
       "Users": {
+        "Title": "Users",
         "Owners": "OWNERS",
         "Agents": "AGENTS",
         "Drivers": "DRIVERS",
@@ -859,20 +854,25 @@
         "Online": "Online",
         "Offline": "Offline"
       },
-      "RevenueMetrics": {
-        "Title": "REVENUE (24H)",
-        "Subtitle": "{revenueChange} {more} revenue than weekly avg",
-        "In": "Credit",
-        "Out": "Debit",
-        "Commission": "Avg commission rate"
+      "Revenue": {
+        "Title": "Revenue"
       },
       "Trips": {
+        "Title": "Bookings",
         "StartingToday": "STARTING TODAY",
         "EndingToday": "ENDING TODAY",
-        "Ongoing": "ONGOING"
+        "Ongoing": "ONGOING TRIPS"
       },
       "Leads": {
-        "Title": "LEADS (THIS WEEK)"
+        "Title": "Leads",
+        "StartingThisWeek": "STARTING THIS WEEK",
+        "CreatedThisWeek": "CREATED THIS WEEK"
+      },
+      "Alerts": {
+        "Title": "Alerts"
+      },
+      "PendingPayments": {
+        "Title": "Pending payments"
       },
       "SubscriptionReminderStrip": {
         "NotExpired": "Subscription expiring {days,plural, =0 {today} =1 {tomorrow} other {in # days}}.",

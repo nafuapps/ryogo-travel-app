@@ -1,18 +1,11 @@
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
-import { TrendingUp, BadgeIndianRupee, TrendingDown } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import {
-  DashboardMetricGridItem,
-  DashboardMetricGridWrapper,
-  DashboardMetricHeader,
-  DashboardMetricMain,
-  DashboardMetricSubTitle,
-  DashboardMetricTopWrapper,
-  DashboardMetricWrapper,
-} from "../metrics/dashboardMetricsWrappers"
+
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
+import { SectionWrapper } from "@/components/page/pageWrappers"
+import { DashboardSectionHeader } from "../../dashboardCommon"
 
 export default async function DashboardRevenueComponent({
   agencyId,
@@ -21,7 +14,7 @@ export default async function DashboardRevenueComponent({
   agencyId: string
   userId: string
 }) {
-  const t = await getTranslations("Dashboard.Home.RevenueMetrics")
+  const t = await getTranslations("Dashboard.Home.Revenue")
 
   const revenueBookingsThisWeek =
     await bookingServices.findBookingsRevenuePreviousDays(agencyId, 7)
@@ -69,63 +62,8 @@ export default async function DashboardRevenueComponent({
     }, 0)
 
   return (
-    <DashboardMetricWrapper>
-      <DashboardMetricTopWrapper>
-        <DashboardMetricHeader label={t("Title")} icon={BadgeIndianRupee} />
-        <DashboardMetricMain
-          mainValue={revenue24HrsAmount.toLocaleString("en-IN", {
-            style: "currency",
-            currency: "INR",
-            minimumFractionDigits: 0,
-          })}
-        >
-          {revenueWeeklyAvg !== 0 && (
-            <DashboardMetricSubTitle
-              icon={more ? TrendingUp : TrendingDown}
-              subtitle={t("Subtitle", {
-                revenueChange: revenueChange.toLocaleString("en-IN", {
-                  style: "percent",
-                  maximumFractionDigits: 1,
-                }),
-                more: more ? "more" : "less",
-              })}
-            />
-          )}
-        </DashboardMetricMain>
-      </DashboardMetricTopWrapper>
-      <DashboardMetricGridWrapper>
-        <DashboardMetricGridItem
-          label={t("In")}
-          value={transactionsInAmount.toLocaleString("en-IN", {
-            style: "currency",
-            currency: "INR",
-            minimumFractionDigits: 0,
-          })}
-          borderBottom
-        />
-        <DashboardMetricGridItem
-          label={t("Out")}
-          value={transactionsOutAmount.toLocaleString("en-IN", {
-            style: "currency",
-            currency: "INR",
-            minimumFractionDigits: 0,
-          })}
-          borderLeft
-          borderBottom
-        />
-        <DashboardMetricGridItem
-          label={t("Commission")}
-          value={
-            revenueBookingsThisWeek.length == 0
-              ? "-"
-              : avgCommisionRateThisWeek.toLocaleString("en-IN", {
-                  style: "percent",
-                  minimumFractionDigits: 1,
-                })
-          }
-          spanTwo
-        />
-      </DashboardMetricGridWrapper>
-    </DashboardMetricWrapper>
+    <SectionWrapper id="DashboardRevenue">
+      <DashboardSectionHeader title={t("Title")} />
+    </SectionWrapper>
   )
 }

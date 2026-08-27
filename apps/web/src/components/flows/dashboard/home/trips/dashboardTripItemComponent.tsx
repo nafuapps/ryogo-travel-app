@@ -42,11 +42,9 @@ export default async function DashboardTripItemComponent({
           </RyogoCaption>
         </SectionRowWrapper>
         <SectionRowWrapper>
-          <RyogoP weight="font-bold">{trip.source.city.toUpperCase()}</RyogoP>
+          <RyogoP weight="font-bold">{trip.source.city}</RyogoP>
           <GetTripTypeIcon tripType={trip.type} size="sm" thick />
-          <RyogoP weight="font-bold">
-            {trip.destination.city.toUpperCase()}
-          </RyogoP>
+          <RyogoP weight="font-bold">{trip.destination.city}</RyogoP>
         </SectionRowWrapper>
         <SectionRowWrapper wFull>
           {trip.assignedVehicle && (

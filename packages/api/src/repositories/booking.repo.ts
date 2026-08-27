@@ -76,7 +76,7 @@ export const bookingRepository = {
     })
   },
 
-  async readDashboardLeadsByAgencyId(agencyId: string, days: number = 7) {
+  async readDashboardLeadsByAgencyId(agencyId: string, days: number) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -92,6 +92,7 @@ export const bookingRepository = {
       columns: {
         type: true,
         id: true,
+        createdAt: true,
         startDate: true,
         endDate: true,
         status: true,

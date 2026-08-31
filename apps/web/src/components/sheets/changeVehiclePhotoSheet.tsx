@@ -76,7 +76,7 @@ export default function ChangeVehiclePhotoSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className="hover:underline">
+      <SheetTrigger asChild>
         <RyogoGhostButton className="w-full" label={t("Button")} />
       </SheetTrigger>
       <SheetContent side="bottom">

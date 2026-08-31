@@ -41,10 +41,10 @@ export const vehicleServices = {
 
   //Get vehicles schedule
   async findVehiclesScheduleNextDays(agencyId: string, days: number = 7) {
-    const endDate = addDays(new Date(), days)
+    const queryDate = addDays(new Date(), days)
 
     const vehiclesScheduleData =
-      await vehicleRepository.readVehiclesScheduleData(agencyId, endDate)
+      await vehicleRepository.readVehiclesScheduleData(agencyId, queryDate)
 
     return vehiclesScheduleData
   },

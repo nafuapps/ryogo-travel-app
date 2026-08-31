@@ -17,8 +17,9 @@ type ButtonType = React.ComponentProps<"button"> & {
 }
 
 function RyogoButton(props: ButtonType) {
+  const { labelColor, labelClassName, showSpinner, ...originalProps } = props
   return (
-    <Button {...props}>
+    <Button {...originalProps}>
       {props.label &&
         (props.size === "lg" ? (
           <RyogoSmall

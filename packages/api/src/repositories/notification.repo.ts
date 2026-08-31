@@ -9,8 +9,8 @@ import { subDays } from "date-fns"
 export const notificationRepository = {
   async readFeedNotificationsByAgencyId(
     agencyId: string,
-    days: number = 30,
     limit: number = 100,
+    days: number = 30,
   ) {
     return await db.query.notifications.findMany({
       orderBy: (notifications, { desc }) => [desc(notifications.createdAt)],

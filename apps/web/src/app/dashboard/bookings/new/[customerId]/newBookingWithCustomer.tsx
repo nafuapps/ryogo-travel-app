@@ -40,8 +40,8 @@ export default async function NewBookingWithCustomerPageComponent({
   const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   //Find last X days confirmed bookings
-  const confirmedBookingsLength =
-    await bookingServices.findSubscriptionBookingsLengthPreviousDays(
+  const confirmedBookings =
+    await bookingServices.findAccountableBookingsPreviousDays(
       agencyId,
       BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
     )
@@ -49,7 +49,7 @@ export default async function NewBookingWithCustomerPageComponent({
   //SUBSCRIPTION BLOCKER: Monthly booking limit reached
   if (
     !APP_TRIAL_MODE &&
-    confirmedBookingsLength >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
+    confirmedBookings.length >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
     (isBasic ||
       //Check if premium expired more than X days ago
       differenceInDays(new Date(), agency.subscriptionExpiresOn) >

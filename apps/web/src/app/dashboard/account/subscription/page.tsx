@@ -35,8 +35,8 @@ export default async function SubscriptionPage() {
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
 
   //Find last X days confirmed bookings
-  const confirmedBookingsLength =
-    await bookingServices.findSubscriptionBookingsLengthPreviousDays(
+  const confirmedBookings =
+    await bookingServices.findAccountableBookingsPreviousDays(
       currentUser.agencyId,
       BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
     )
@@ -52,7 +52,7 @@ export default async function SubscriptionPage() {
         userDetails={userDetails}
         agencyDetails={agencyDetails}
         agencyData={agencyData}
-        confirmedBookingsLength={confirmedBookingsLength}
+        confirmedBookingsLength={confirmedBookings.length}
         lastPaidOrder={lastPaidOrder}
       />
     </MainWrapper>

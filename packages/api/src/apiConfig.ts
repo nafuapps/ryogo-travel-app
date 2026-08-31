@@ -44,7 +44,7 @@ export const MIN_USER_DISTANCE_RATIO = 0.8 //User distance input should be withi
 export const MAX_USER_DISTANCE_RATIO = 1.2
 
 //Missions
-export const MISSION_WINDOW_DAYS = 3
+export const READ_MISSION_WINDOW_DAYS = 3
 export const EXPIRATION_ALERT_WINDOW_DAYS = 15
 
 //Notifications

@@ -10,7 +10,7 @@ import { subDays } from "date-fns"
 export const missionRepository = {
   async readMissionsByUserId(userId: string, days: number) {
     return await db.query.missions.findMany({
-      orderBy: (missions, { desc }) => [desc(missions.updatedAt)],
+      orderBy: (missions, { asc }) => [asc(missions.dueDate)],
       where: and(
         eq(missions.userId, userId),
         or(
@@ -20,6 +20,16 @@ export const missionRepository = {
             gte(missions.updatedAt, subDays(new Date(), days)),
           ),
         ),
+      ),
+    })
+  },
+
+  async readUnreadCriticalMissionsByUserId(userId: string) {
+    return await db.query.missions.findMany({
+      orderBy: (missions, { asc }) => [asc(missions.dueDate)],
+      where: and(
+        eq(missions.userId, userId),
+        and(eq(missions.isRead, false), eq(missions.isCritical, true)),
       ),
     })
   },

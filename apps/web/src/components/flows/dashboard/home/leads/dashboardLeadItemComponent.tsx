@@ -9,7 +9,7 @@ import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardC
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 
-export default async function DashboardTripItemComponent({
+export default async function DashboardLeadItemComponent({
   trip,
   userId,
   isOwner,
@@ -23,11 +23,11 @@ export default async function DashboardTripItemComponent({
   const customerImageUrl = trip.customer.photoUrl
 
   return (
-    <Link href={`/dashboard/bookings/${trip.id}`} className="flex">
+    <Link href={`/dashboard/bookings/${trip.id}`}>
       <div
-        className={`flex flex-col gap-2 lg:gap-3 justify-between w-full border ${highlight ? "border-sky-200 dark:border-sky-800 hover:bg-sky-100 dark:hover:bg-sky-950" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-2.5 lg:p-3`}
+        className={`flex flex-col gap-2 lg:gap-3 justify-between w-full border ${highlight ? "border-sky-200 dark:border-sky-800 hover:bg-sky-100 dark:hover:bg-sky-950" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
       >
-        <SectionRowWrapper wFull>
+        <SectionRowWrapper center>
           <RyogoCaption color="light" weight="font-bold">
             {trip.id}
           </RyogoCaption>
@@ -40,7 +40,7 @@ export default async function DashboardTripItemComponent({
           <GetTripTypeIcon tripType={trip.type} size="sm" thick />
           <RyogoP weight="font-bold">{trip.destination.city}</RyogoP>
         </SectionRowWrapper>
-        <SectionRowWrapper wFull>
+        <SectionRowWrapper center>
           <SectionRowWrapper>
             <DashboardLabelImageChip label={trip.customer.name}>
               {customerImageUrl ? (
@@ -54,7 +54,9 @@ export default async function DashboardTripItemComponent({
               )}
             </DashboardLabelImageChip>
           </SectionRowWrapper>
-          <RyogoP color="slate">{"₹" + trip.estimatedTotalAmount}</RyogoP>
+          <RyogoP color="slate" weight="font-medium">
+            {"₹" + trip.estimatedTotalAmount}
+          </RyogoP>
         </SectionRowWrapper>
       </div>
     </Link>

@@ -3,7 +3,7 @@ import {
   driverLeaves,
   InsertDriverLeaveType,
 } from "@ryogo-travel-app/db/schema"
-import { eq } from "drizzle-orm"
+import { and, eq, gte, lte, or } from "drizzle-orm"
 
 export const driverLeaveRepository = {
   //Read all driver leaves by driver id
@@ -19,6 +19,50 @@ export const driverLeaveRepository = {
       },
     })
   },
+
+  async readUpcomingDriverLeavesSchedule(agencyId: string, queryDate: Date) {
+    return await db.query.driverLeaves.findMany({
+      columns: {
+        id: true,
+        startDate: true,
+        endDate: true,
+        addedByUserId: true,
+      },
+      with: {
+        driver: {
+          columns: {
+            id: true,
+            name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
+        },
+      },
+      where: and(
+        eq(driverLeaves.agencyId, agencyId),
+        or(
+          and(
+            lte(driverLeaves.startDate, queryDate),
+            gte(driverLeaves.startDate, new Date()),
+          ),
+          and(
+            lte(driverLeaves.endDate, queryDate),
+            gte(driverLeaves.endDate, new Date()),
+          ),
+          and(
+            lte(driverLeaves.startDate, new Date()),
+            gte(driverLeaves.endDate, queryDate),
+          ),
+        ),
+      ),
+    })
+  },
+
   //Ready a leave by id
   async readLeaveById(id: string) {
     return await db.query.driverLeaves.findFirst({

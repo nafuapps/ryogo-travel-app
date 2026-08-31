@@ -1,14 +1,13 @@
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { RyogoCaption } from "@/components/typography"
-import {
-  SectionRowWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 import DashboardLeadItemComponent from "./dashboardLeadItemComponent"
 import { addDays } from "date-fns"
 import { Separator } from "@/components/ui/separator"
-import { DashboardSectionHeader } from "@/components/flows/dashboard/dashboardCommon"
+import {
+  DashboardRowHeader,
+  DashboardSectionHeader,
+} from "@/components/flows/dashboard/dashboardCommon"
 
 const days = 7
 
@@ -41,11 +40,14 @@ export default async function DashboardLeadsComponent({
 
   return (
     <SectionWrapper id="DashboardLeads">
-      <DashboardSectionHeader title={t("Title")} />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("StartingThisWeek")}</RyogoCaption>
-        <RyogoCaption color="light">{startingThisWeek.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardSectionHeader
+        title={t("Title")}
+        href={"/dashboard/bookings#leadsBookingsSection"}
+      />
+      <DashboardRowHeader
+        title={t("StartingThisWeek")}
+        count={startingThisWeek.length}
+      />
       {startingThisWeek.map((trip, index) => (
         <DashboardLeadItemComponent
           key={index}
@@ -55,10 +57,10 @@ export default async function DashboardLeadsComponent({
         />
       ))}
       <Separator />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("CreatedThisWeek")}</RyogoCaption>
-        <RyogoCaption color="light">{createdThisWeek.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardRowHeader
+        title={t("CreatedThisWeek")}
+        count={createdThisWeek.length}
+      />
       {createdThisWeek.map((trip, index) => (
         <DashboardLeadItemComponent
           key={index}

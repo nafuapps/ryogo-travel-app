@@ -11,7 +11,7 @@ import {
   vehicles,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, or, gte, lte, inArray, sql } from "drizzle-orm"
+import { eq, and, or, gte, lte, inArray, sql, isNull } from "drizzle-orm"
 import { addDays, subDays } from "date-fns"
 
 export const bookingRepository = {
@@ -127,6 +127,123 @@ export const bookingRepository = {
     })
   },
 
+  async readPendingPaymentBookings(agencyId: string) {
+    return await db.query.bookings.findMany({
+      columns: {
+        id: true,
+        status: true,
+        startDate: true,
+        endDate: true,
+        type: true,
+        actualStartDate: true,
+        actualEndDate: true,
+        estimatedTotalAmount: true,
+        actualTotalAmount: true,
+      },
+      where: and(
+        eq(bookings.agencyId, agencyId),
+        or(
+          eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+          and(
+            eq(bookings.status, BookingStatusEnum.COMPLETED),
+            isNull(bookings.reviewCompletedByAgencyAt),
+          ),
+        ),
+      ),
+      with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
+        transactions: {
+          columns: {
+            id: true,
+            otherParty: true,
+            type: true,
+            amount: true,
+            isApproved: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+        customer: {
+          columns: {
+            name: true,
+            phone: true,
+            photoUrl: true,
+          },
+        },
+      },
+    })
+  },
+
+  async readUpcomingBookingsSchedule(agencyId: string, queryDate: Date) {
+    return await db.query.bookings.findMany({
+      columns: {
+        id: true,
+        status: true,
+        startDate: true,
+        endDate: true,
+        assignedUserId: true,
+      },
+      with: {
+        assignedDriver: {
+          columns: {
+            id: true,
+            name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            id: true,
+            vehicleNumber: true,
+            vehiclePhotoUrl: true,
+          },
+        },
+      },
+      where: and(
+        eq(bookings.agencyId, agencyId),
+        or(
+          eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+          and(
+            eq(bookings.status, BookingStatusEnum.CONFIRMED),
+            or(
+              and(
+                lte(bookings.startDate, queryDate),
+                gte(bookings.startDate, new Date()),
+              ),
+              and(
+                lte(bookings.endDate, queryDate),
+                gte(bookings.endDate, new Date()),
+              ),
+              and(
+                lte(bookings.startDate, new Date()),
+                gte(bookings.endDate, queryDate),
+              ),
+            ),
+          ),
+        ),
+      ),
+    })
+  },
+
   async readBookingsSearchData(agencyId: string, queryStartDate: Date) {
     return await db.query.bookings.findMany({
       where: and(
@@ -178,7 +295,8 @@ export const bookingRepository = {
       },
     })
   },
-  async readBookingsByStatusCreatedDateRange(
+
+  async readCreatedBookingsByStatusDateRange(
     agencyId: string,
     queryStartDate: Date,
     queryEndDate: Date,
@@ -191,7 +309,8 @@ export const bookingRepository = {
         createdAt: true,
         estimatedTotalAmount: true,
         actualTotalAmount: true,
-        commissionRate: true,
+        estimatedCommissionAmount: true,
+        actualCommissionAmount: true,
       },
       where: and(
         gte(bookings.createdAt, queryStartDate),
@@ -199,34 +318,6 @@ export const bookingRepository = {
         eq(bookings.agencyId, agencyId),
         inArray(bookings.status, status),
       ),
-    })
-  },
-
-  async readBookingsByUpdatedDateRange(
-    queryStartDate: Date,
-    queryEndDate: Date,
-    agencyId: string,
-  ) {
-    return await db.query.bookings.findMany({
-      columns: {
-        id: true,
-        status: true,
-        updatedAt: true,
-      },
-      where: and(
-        gte(bookings.createdAt, queryStartDate),
-        lte(bookings.createdAt, queryEndDate),
-        eq(bookings.agencyId, agencyId),
-      ),
-    })
-  },
-
-  async readBookingsByStatus(status: BookingStatusEnum, agencyId: string) {
-    return await db.query.bookings.findMany({
-      columns: {
-        id: true,
-      },
-      where: and(eq(bookings.status, status), eq(bookings.agencyId, agencyId)),
     })
   },
 
@@ -555,13 +646,13 @@ export const bookingRepository = {
     })
   },
 
-  async readUpcomingBookingsData(agencyId: string, queryEndDate: Date) {
+  async readUpcomingBookingsData(agencyId: string, queryStartDate: Date) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
-        lte(bookings.startDate, queryEndDate),
+        lte(bookings.startDate, queryStartDate),
       ),
       columns: {
         startDate: true,
@@ -851,7 +942,7 @@ export const bookingRepository = {
     })
   },
 
-  async readBookingsScheduleData(agencyId: string, queryEndDate: Date) {
+  async readBookingsScheduleData(agencyId: string, queryStartDate: Date) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -859,7 +950,7 @@ export const bookingRepository = {
         or(
           and(
             eq(bookings.status, BookingStatusEnum.CONFIRMED),
-            lte(bookings.startDate, queryEndDate),
+            lte(bookings.startDate, queryStartDate),
           ),
           eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
         ),

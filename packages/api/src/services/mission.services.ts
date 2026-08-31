@@ -1,5 +1,5 @@
 import { missionRepository } from "../repositories/mission.repo"
-import { MISSION_WINDOW_DAYS } from "../apiConfig"
+import { READ_MISSION_WINDOW_DAYS } from "../apiConfig"
 import { EntityTypeEnum, InsertMissionType } from "@ryogo-travel-app/db/schema"
 import { ModifyMissionRequestType } from "../types/mission.types"
 
@@ -7,8 +7,14 @@ export const missionServices = {
   async findMissionsByUserId(userId: string) {
     const missions = await missionRepository.readMissionsByUserId(
       userId,
-      MISSION_WINDOW_DAYS,
+      READ_MISSION_WINDOW_DAYS,
     )
+    return missions
+  },
+
+  async findDashboardMissionsByUserId(userId: string) {
+    const missions =
+      await missionRepository.readUnreadCriticalMissionsByUserId(userId)
     return missions
   },
 

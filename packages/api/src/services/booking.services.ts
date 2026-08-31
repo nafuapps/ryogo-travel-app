@@ -2,6 +2,8 @@ import {
   BookingStatusEnum,
   DriverStatusEnum,
   InsertBookingType,
+  TransactionsPartiesEnum,
+  TransactionTypesEnum,
   TripLogTypesEnum,
   UserStatusEnum,
   VehicleStatusEnum,
@@ -20,6 +22,8 @@ import { UPDATE_PRICE_DISTANCE_FACTOR } from "../apiConfig"
 import { getEstimatedTotalPrice, getActualTotalPrice } from "@/lib/utils"
 import { userRepository } from "../repositories/user.repo"
 import { addDays, subDays } from "date-fns"
+import { driverLeaveRepository } from "../repositories/driverLeave.repo"
+import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 
 export const bookingServices = {
   async findDashboardTrips(agencyId: string) {
@@ -36,28 +40,28 @@ export const bookingServices = {
     return bookings
   },
 
-  async findConfirmedBookingsPreviousDays(agencyId: string, days: number = 1) {
-    const endDate = new Date()
-    const startDate = subDays(endDate, days)
-
+  async findDashboardPendingPayments(agencyId: string) {
     const bookings =
-      await bookingRepository.readBookingsByStatusCreatedDateRange(
-        agencyId,
-        startDate,
-        endDate,
-        [BookingStatusEnum.CONFIRMED],
-      )
+      await bookingRepository.readPendingPaymentBookings(agencyId)
     return bookings.map((booking) => {
       return {
-        id: booking.id,
-        status: booking.status,
-        createdAt: booking.createdAt,
+        ...booking,
+        customerPaidAmount: booking.transactions.reduce((acc, curr) => {
+          if (curr.otherParty === TransactionsPartiesEnum.CUSTOMER) {
+            if (curr.type === TransactionTypesEnum.CREDIT) {
+              return acc + curr.amount
+            } else {
+              return acc - curr.amount
+            }
+          }
+          return acc
+        }, 0),
       }
     })
   },
 
-  //Find bookings created in last N days which are countable towards subscription limit (atleast confirmed)
-  async findSubscriptionBookingsLengthPreviousDays(
+  //Find bookings created in last N days which are accountable for revenue (atleast confirmed)
+  async findAccountableBookingsPreviousDays(
     agencyId: string,
     days: number = 1,
   ) {
@@ -65,7 +69,7 @@ export const bookingServices = {
     const startDate = subDays(endDate, days)
 
     const bookings =
-      await bookingRepository.readBookingsByStatusCreatedDateRange(
+      await bookingRepository.readCreatedBookingsByStatusDateRange(
         agencyId,
         startDate,
         endDate,
@@ -75,59 +79,77 @@ export const bookingServices = {
           BookingStatusEnum.COMPLETED,
         ],
       )
-    return bookings.length
+    return bookings
   },
 
-  async findBookingsRevenuePreviousDays(agencyId: string, days: number = 1) {
-    const endDate = new Date()
-    const startDate = subDays(endDate, days)
+  async findDashboardScheduleConflicts(agencyId: string, days: number = 7) {
+    const queryDate = addDays(new Date(), days)
+    const bookings = await bookingRepository.readUpcomingBookingsSchedule(
+      agencyId,
+      queryDate,
+    )
 
-    const bookings =
-      await bookingRepository.readBookingsByStatusCreatedDateRange(
+    const leaves = await driverLeaveRepository.readUpcomingDriverLeavesSchedule(
+      agencyId,
+      queryDate,
+    )
+    const repairs =
+      await vehicleRepairRepository.readUpcomingVehicleRepairsSchedule(
         agencyId,
-        startDate,
-        endDate,
-        [BookingStatusEnum.CONFIRMED],
+        queryDate,
       )
-    return bookings.map((booking) => {
+
+    const bookingsSchedule = bookings.map((item) => {
       return {
-        id: booking.id,
-        createdAt: booking.createdAt,
-        totalAmount: booking.estimatedTotalAmount,
-        commissionRate: booking.commissionRate,
+        id: item.id,
+        startDate: item.startDate,
+        endDate: item.endDate,
+        userId: item.assignedUserId,
+        assignedVehicle: {
+          id: item.assignedVehicle?.id,
+          label: item.assignedVehicle?.vehicleNumber,
+          photoUrl: item.assignedVehicle?.vehiclePhotoUrl,
+        },
+        assignedDriver: {
+          id: item.assignedDriver?.id,
+          label: item.assignedDriver?.name,
+          photoUrl: item.assignedDriver?.user.photoUrl,
+        },
       }
     })
-  },
 
-  async findBookingsUpdatedPreviousDays(agencyId: string, days: number = 1) {
-    const endDate = new Date()
-    const startDate = subDays(endDate, days)
-
-    const bookings = await bookingRepository.readBookingsByUpdatedDateRange(
-      startDate,
-      endDate,
-      agencyId,
-    )
-
-    return bookings.map((booking) => {
+    const repairsSchedule = repairs.map((item) => {
       return {
-        id: booking.id,
-        status: booking.status,
-        updatedAt: booking.updatedAt,
+        id: item.id,
+        startDate: item.startDate,
+        endDate: item.endDate,
+        userId: item.addedByUserId,
+        vehicle: {
+          id: item.vehicle.id,
+          label: item.vehicle.vehicleNumber,
+          photoUrl: item.vehicle.vehiclePhotoUrl,
+        },
       }
     })
-  },
-
-  async findInProgressBookings(agencyId: string) {
-    const bookings = await bookingRepository.readBookingsByStatus(
-      BookingStatusEnum.IN_PROGRESS,
-      agencyId,
-    )
-    return bookings.map((booking) => {
+    const leavesSchedule = leaves.map((item) => {
       return {
-        id: booking.id,
+        id: item.id,
+        startDate: item.startDate,
+        endDate: item.endDate,
+        userId: item.addedByUserId,
+        driver: {
+          id: item.driver.id,
+          label: item.driver.name,
+          photoUrl: item.driver.user.photoUrl,
+        },
       }
     })
+
+    return {
+      bookingsSchedule,
+      leavesSchedule,
+      repairsSchedule,
+    }
   },
 
   async findOngoingTrips(agencyId: string) {
@@ -174,11 +196,11 @@ export const bookingServices = {
   },
 
   async findUpcomingBookingsNextDays(agencyId: string, days: number = 1) {
-    const endDate = addDays(new Date(), days)
+    const queryDate = addDays(new Date(), days)
 
     const bookings = await bookingRepository.readUpcomingBookingsData(
       agencyId,
-      endDate,
+      queryDate,
     )
     return bookings.map((booking) => {
       return {
@@ -196,11 +218,11 @@ export const bookingServices = {
   },
 
   async findBookingsScheduleNextDays(agencyId: string, days: number = 7) {
-    const endDate = addDays(new Date(), days)
+    const queryDate = addDays(new Date(), days)
 
     const bookings = await bookingRepository.readBookingsScheduleData(
       agencyId,
-      endDate,
+      queryDate,
     )
     return bookings.map((booking) => {
       return {
@@ -690,20 +712,16 @@ export type FindDashboardLeadsType = Awaited<
   ReturnType<typeof bookingServices.findDashboardLeads>
 >
 
-export type FindConfirmedBookingsPreviousDaysType = Awaited<
-  ReturnType<typeof bookingServices.findConfirmedBookingsPreviousDays>
+export type FindDashboardPendingPaymentsType = Awaited<
+  ReturnType<typeof bookingServices.findDashboardPendingPayments>
 >
 
-export type FindBookingsRevenuePreviousDaysType = Awaited<
-  ReturnType<typeof bookingServices.findBookingsRevenuePreviousDays>
+export type FindAccountableBookingsPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findAccountableBookingsPreviousDays>
 >
 
-export type FindBookingsUpdatedPreviousDaysType = Awaited<
-  ReturnType<typeof bookingServices.findBookingsUpdatedPreviousDays>
->
-
-export type FindInProgressBookingsType = Awaited<
-  ReturnType<typeof bookingServices.findInProgressBookings>
+export type FindDashboardScheduleConflictsType = Awaited<
+  ReturnType<typeof bookingServices.findDashboardScheduleConflicts>
 >
 
 export type FindOngoingTripsType = Awaited<

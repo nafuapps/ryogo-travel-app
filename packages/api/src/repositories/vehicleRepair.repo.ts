@@ -3,7 +3,7 @@ import {
   InsertVehicleRepairType,
   vehicleRepairs,
 } from "@ryogo-travel-app/db/schema"
-import { eq } from "drizzle-orm"
+import { and, eq, gte, lte, or } from "drizzle-orm"
 
 export const vehicleRepairRepository = {
   //Read all vehicle repairs by vehicle id
@@ -17,6 +17,43 @@ export const vehicleRepairRepository = {
           },
         },
       },
+    })
+  },
+
+  async readUpcomingVehicleRepairsSchedule(agencyId: string, queryDate: Date) {
+    return await db.query.vehicleRepairs.findMany({
+      columns: {
+        id: true,
+        startDate: true,
+        endDate: true,
+        addedByUserId: true,
+      },
+      with: {
+        vehicle: {
+          columns: {
+            id: true,
+            vehicleNumber: true,
+            vehiclePhotoUrl: true,
+          },
+        },
+      },
+      where: and(
+        eq(vehicleRepairs.agencyId, agencyId),
+        or(
+          and(
+            lte(vehicleRepairs.startDate, queryDate),
+            gte(vehicleRepairs.startDate, new Date()),
+          ),
+          and(
+            lte(vehicleRepairs.endDate, queryDate),
+            gte(vehicleRepairs.endDate, new Date()),
+          ),
+          and(
+            lte(vehicleRepairs.startDate, new Date()),
+            gte(vehicleRepairs.endDate, queryDate),
+          ),
+        ),
+      ),
     })
   },
 

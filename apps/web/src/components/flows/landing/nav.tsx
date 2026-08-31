@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { RyoGoLandingLogo } from "@/components/logo"
 import { useLocale, useTranslations } from "next-intl"
@@ -117,11 +116,11 @@ export default function Navbar() {
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t">
                 {/* <LanguageSwitcher /> */}
-                <Link href="/auth/login" className="w-full">
-                  <RyogoOutlineButton label={t("Login")} />
+                <Link href="/auth/login">
+                  <RyogoOutlineButton label={t("Login")} className="w-full" />
                 </Link>
-                <Link href="/auth/signup" className="w-full">
-                  <RyogoBrandButton label={t("Signup")} />
+                <Link href="/auth/signup">
+                  <RyogoBrandButton label={t("Signup")} className="w-full" />
                 </Link>
               </div>
             </div>

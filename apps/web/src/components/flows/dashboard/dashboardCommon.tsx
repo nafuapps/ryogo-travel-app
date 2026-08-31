@@ -1,14 +1,36 @@
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoH4 } from "@/components/typography"
+import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
+import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 
-export function DashboardSectionHeader(props: { title: string }) {
+export async function DashboardSectionHeader(props: {
+  title: string
+  href?: React.ComponentProps<typeof Link>["href"]
+}) {
   return (
-    <RyogoH4 weight="font-bold" color="slate">
-      {props.title}
-    </RyogoH4>
+    <SectionRowWrapper center>
+      <RyogoH4 weight="font-bold" color="light">
+        {props.title}
+      </RyogoH4>
+      {props.href && (
+        <Link href={props.href}>
+          <RyogoEnclosedIcon icon={ChevronRight} size="sm" color="slate" />
+        </Link>
+      )}
+    </SectionRowWrapper>
   )
 }
+
+export function DashboardRowHeader(props: { title: string; count: number }) {
+  return (
+    <SectionRowWrapper>
+      <RyogoCaption color="light">{props.title}</RyogoCaption>
+      <RyogoCaption color="light">{props.count}</RyogoCaption>
+    </SectionRowWrapper>
+  )
+}
+
 export function DashboardLabelImageChip({
   label,
   children,

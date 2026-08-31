@@ -76,7 +76,7 @@ export default function ChangeTicketPhotoSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className="hover:underline">
+      <SheetTrigger asChild>
         <RyogoGhostButton
           label={newPhoto ? t("UploadButton") : t("ChangeButton")}
         />

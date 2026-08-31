@@ -585,7 +585,7 @@
           "Placeholder": "500",
           "Description": "How much do you pay driver per day? This will be used to calculate the booking quote for the customer. You can always change it later.",
           "Error1": "Driver allowance must be a number",
-          "Error2": "Driver allowance must be atleast ₹1",
+          "Error2": "Driver allowance must be atleast ₹0",
           "Error3": "Driver allowance must be less than ₹10000",
           "Error4": "Driver allowance cannot be in decimals",
           "Error5": "Driver allowance must be a positive number"
@@ -855,24 +855,43 @@
         "Offline": "Offline"
       },
       "Revenue": {
-        "Title": "Revenue"
+        "Title": "Revenue",
+        "7Days": "LAST 7 DAYS",
+        "30Days": "LAST 30 DAYS",
+        "24Hrs": "LAST 24 HRS",
+        "Revenue": "Revenue",
+        "Commission": "Commission"
       },
       "Trips": {
-        "Title": "Bookings",
+        "Title": "Trips",
         "StartingToday": "STARTING TODAY",
         "EndingToday": "ENDING TODAY",
-        "Ongoing": "ONGOING TRIPS"
+        "Ongoing": "ONGOING"
       },
       "Leads": {
         "Title": "Leads",
         "StartingThisWeek": "STARTING THIS WEEK",
         "CreatedThisWeek": "CREATED THIS WEEK"
       },
+      "ScheduleConflicts": {
+        "Title": "Schedule Conflicts",
+        "VehicleAssignments": "VEHICLE ASSIGNMENTS",
+        "DriverAssignments": "DRIVER ASSIGNMENTS",
+        "VehicleRepairs": "VEHICLE REPAIRS",
+        "DriverLeaves": "DRIVER LEAVES"
+      },
       "Alerts": {
         "Title": "Alerts"
       },
+      "Activity": {
+        "Title": "Recent Activity"
+      },
       "PendingPayments": {
-        "Title": "Pending payments"
+        "Title": "Pending Payments",
+        "Completed": "COMPLETED BOOKINGS",
+        "InProgress": "ONGOING BOOKINGS",
+        "Due": "₹{amount} due",
+        "Total": "Total: ₹{amount}"
       },
       "SubscriptionReminderStrip": {
         "NotExpired": "Subscription expiring {days,plural, =0 {today} =1 {tomorrow} other {in # days}}.",
@@ -1091,7 +1110,7 @@
             "Placeholder": "₹18",
             "Description": "How much is the vehicle rental charge per Km (in ₹)?",
             "Error1": "Vehicle Charge must be a number",
-            "Error2": "Vehicle Charge must be atleast ₹1",
+            "Error2": "Vehicle Charge must be atleast ₹0",
             "Error3": "Vehicle Charge must be less than ₹100",
             "Error4": "Vehicle Charge cannot be in decimals",
             "Error5": "Vehicle Charge must be a positive number"
@@ -2114,7 +2133,7 @@
           "Placeholder": "500",
           "Description": "How much do you pay driver per day? This will be used to calculate the booking quote for the customer. You can always change it later.",
           "Error1": "Driver allowance must be a number",
-          "Error2": "Driver allowance must be atleast ₹1",
+          "Error2": "Driver allowance must be atleast ₹0",
           "Error3": "Driver allowance must be less than ₹10000",
           "Error4": "Driver allowance cannot be in decimals",
           "Error5": "Driver allowance must be a positive number"
@@ -2189,7 +2208,7 @@
         "Placeholder": "500",
         "Description": "How much do you pay driver per day? This will be used to calculate the booking quote for the customer.",
         "Error1": "Driver allowance must be a number",
-        "Error2": "Driver allowance must be atleast ₹1",
+        "Error2": "Driver allowance must be atleast ₹0",
         "Error3": "Driver allowance must be less than ₹10000",
         "Error4": "Driver allowance cannot be in decimals",
         "Error5": "Driver allowance must be a positive number"

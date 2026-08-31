@@ -1,6 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import {

@@ -45,7 +45,7 @@ export function NewDriverStep3(props: {
       .min(1, t("Field2.Error1")),
     defaultAllowancePerDay: z.coerce
       .number<number>(t("Field3.Error1"))
-      .min(1, t("Field3.Error2"))
+      .min(0, t("Field3.Error2"))
       .max(10000, t("Field3.Error3"))
       .positive(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5")),

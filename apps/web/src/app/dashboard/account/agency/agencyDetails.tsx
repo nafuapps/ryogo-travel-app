@@ -1,7 +1,6 @@
 import { AgencyStatusPill } from "@/components/pills/ryogoPills"
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Building } from "lucide-react"

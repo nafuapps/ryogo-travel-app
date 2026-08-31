@@ -4,39 +4,29 @@ import DashboardLeadsComponent from "@/components/flows/dashboard/home/leads/das
 import DashboardDriversComponent from "@/components/flows/dashboard/home/drivers/dashboardDriversComponent"
 import DashboardVehiclesComponent from "@/components/flows/dashboard/home/vehicles/dashboardVehiclesComponent"
 import DashboardRevenueComponent from "@/components/flows/dashboard/home/revenue/dashboardRevenueComponent"
-import DashboardAlertsComponent from "@/components/flows/dashboard/home/alerts/dashboardAlertsComponent"
 import DashboardPendingPaymentsComponent from "@/components/flows/dashboard/home/payments/dashboardPendingPaymentsComponent"
-import DashboardScheduleComponent from "@/components/flows/dashboard/home/schedule/dashboardScheduleComponent"
-import DashboardActivityComponent from "@/components/flows/dashboard/home/activity/dashboardActivityComponent"
+import DashboardScheduleConflictsComponent from "@/components/flows/dashboard/home/schedule/dashboardScheduleConflictsComponent"
 import DashboardUsersComponent from "@/components/flows/dashboard/home/users/dashboardUsersComponent"
 
 /*
 Agent:
   - Trips (starting today, ending today, ongoing - only assigned)
-  - Pending payments (only assigned)
+  - Leads (only assigned)
   - Vehicles (Available, In trip, Repair)
   - Drivers (Available, In trip, Leave)
-  - Critical alerts, missions, actions (for userId)
-  - Recent activity feed (only assigned)
-  - Schedule (with conflicts - only assigned)
-  - Leads (only assigned)
+  // - Recent activity feed
+  // - Critical alerts, missions, actions (for user)
+  - Pending payments (only assigned)
+  - //TODO Schedule (with conflicts - only assigned)
   
   Owner:
   + Trips (overall)
-  + Pending payments (overall)
-  + Recent activity feed (overall)
-  + Schedule (with conflicts - overall)
   + Leads (overall)
-  - Users (with login status)
+  + //TODO Schedule (with conflicts - overall)
+  + Pending payments (overall)
   - Earnings (30Days/MTD)
+  - Users (with login status)
 
- 
- - 
- * Bookings - Confirmed (Lead, In progress, Completed, Cancelled)
- * Vehicles - total (Available, In trip, Repair, Inactive)
- * Drivers - total (Available, In trip, Leave, Inactive)
- * Revenue - Last 24 hrs [based on confirmed bookings] (Transactions In/out  )
- * Ongoing trips list
  */
 
 export default function DashboardHomePageComponent({
@@ -66,28 +56,20 @@ export default function DashboardHomePageComponent({
         />
         <DashboardVehiclesComponent agencyId={agencyId} />
         <DashboardDriversComponent agencyId={agencyId} />
-        <DashboardAlertsComponent agencyId={agencyId} userId={userId} />
+        {/* <DashboardAlertsComponent userId={userId} /> */}
+        {/* <DashboardActivityComponent agencyId={agencyId} /> */}
         <DashboardPendingPaymentsComponent
           agencyId={agencyId}
           userId={userId}
           isOwner={isOwner}
         />
-        <DashboardActivityComponent
+        <DashboardScheduleConflictsComponent
           agencyId={agencyId}
           userId={userId}
           isOwner={isOwner}
         />
-        <DashboardScheduleComponent
-          agencyId={agencyId}
-          userId={userId}
-          isOwner={isOwner}
-        />
-        {isOwner && (
-          <DashboardRevenueComponent agencyId={agencyId} userId={userId} />
-        )}
-        {isOwner && (
-          <DashboardUsersComponent agencyId={agencyId} userId={userId} />
-        )}
+        {isOwner && <DashboardRevenueComponent agencyId={agencyId} />}
+        {isOwner && <DashboardUsersComponent agencyId={agencyId} />}
       </div>
     </PageWrapper>
   )

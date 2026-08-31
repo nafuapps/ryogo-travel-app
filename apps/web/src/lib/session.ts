@@ -140,8 +140,6 @@ export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
   const user = await userRepository.updateLastSeen(payload.userId)
   if (!user) return
 
-  console.log("saw" + { user })
-
   const updatedPayload: SessionPayloadType = {
     sessionId: payload.sessionId,
     userId: payload.userId,

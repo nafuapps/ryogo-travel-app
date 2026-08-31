@@ -500,6 +500,7 @@ export function RyogoDatePicker(props: {
                     ? { before: new Date(2025, 1, 1) }
                     : { before: new Date() }
                 }
+                timeZone="UTC"
                 captionLayout="dropdown"
                 reverseYears
                 endMonth={new Date(2040, 0)}

@@ -1,25 +1,16 @@
-import {
-  vehicleServices,
-  FindDashboardVehiclesType,
-} from "@ryogo-travel-app/api/services/vehicle.services"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { getTranslations } from "next-intl/server"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   SectionColWrapper,
-  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
-import { RyogoCaption } from "@/components/typography"
 import {
-  DashboardItemWrapper,
-  DashboardLabelImageChip,
+  DashboardRowHeader,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
-import { Route } from "next"
+import DashboardVehicleChipComponent from "./dashboardVehicleChipComponent"
 
 export default async function DashboardVehiclesComponent({
   agencyId,
@@ -45,11 +36,11 @@ export default async function DashboardVehiclesComponent({
 
   return (
     <SectionWrapper id="DashboardVehicles">
-      <DashboardSectionHeader title={t("Title")} />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("Available")}</RyogoCaption>
-        <RyogoCaption color="light">{availableVehicles.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardSectionHeader title={t("Title")} href={"/dashboard/vehicles"} />
+      <DashboardRowHeader
+        title={t("Available")}
+        count={availableVehicles.length}
+      />
       {availableVehicles.length > 0 && (
         <SectionColWrapper small>
           {availableVehicles.map((vehicle, index) => (
@@ -62,10 +53,7 @@ export default async function DashboardVehiclesComponent({
         </SectionColWrapper>
       )}
       <Separator />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("OnTrip")}</RyogoCaption>
-        <RyogoCaption color="light">{onTripVehicles.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardRowHeader title={t("OnTrip")} count={onTripVehicles.length} />
       {onTripVehicles.length > 0 && (
         <SectionColWrapper small>
           {onTripVehicles.map((vehicle, index) => (
@@ -78,10 +66,7 @@ export default async function DashboardVehiclesComponent({
         </SectionColWrapper>
       )}
       <Separator />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("Repair")}</RyogoCaption>
-        <RyogoCaption color="light">{repairVehicles.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardRowHeader title={t("Repair")} count={repairVehicles.length} />
       {repairVehicles.length > 0 && (
         <SectionColWrapper small>
           {repairVehicles.map((vehicle, index) => (
@@ -94,10 +79,10 @@ export default async function DashboardVehiclesComponent({
         </SectionColWrapper>
       )}
       <Separator />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("Inactive")}</RyogoCaption>
-        <RyogoCaption color="light">{inactiveVehicles.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardRowHeader
+        title={t("Inactive")}
+        count={inactiveVehicles.length}
+      />
       {inactiveVehicles.length > 0 && (
         <SectionColWrapper small>
           {inactiveVehicles.map((vehicle, index) => (
@@ -110,34 +95,5 @@ export default async function DashboardVehiclesComponent({
         </SectionColWrapper>
       )}
     </SectionWrapper>
-  )
-}
-
-function DashboardVehicleChipComponent({
-  vehicle,
-  type,
-}: {
-  vehicle: FindDashboardVehiclesType[number]
-  type: "available" | "onTrip" | "repair" | "inactive"
-}) {
-  const vehicleImageUrl = vehicle.vehiclePhotoUrl
-
-  return (
-    <DashboardItemWrapper href={`/dashboard/vehicles/${vehicle.id}` as Route}>
-      <DashboardLabelImageChip label={vehicle.vehicleNumber}>
-        {vehicleImageUrl ? (
-          <RyogoImage
-            src={getFileUrl(vehicleImageUrl)}
-            alt={vehicle.vehicleNumber}
-            imageSize="xs"
-          />
-        ) : (
-          <GetVehicleIcon vehicleType={vehicle.type} size="sm" />
-        )}
-      </DashboardLabelImageChip>
-      <RyogoCaption color="light" weight="font-bold">
-        {vehicle.brand + " " + vehicle.model}
-      </RyogoCaption>
-    </DashboardItemWrapper>
   )
 }

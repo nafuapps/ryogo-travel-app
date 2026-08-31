@@ -985,8 +985,8 @@ export const bookings = pgTable(
       sql`${t.acChargePerDay} >= 0 AND ${t.acChargePerDay} <= 10000`,
     ),
     check(
-      "rate per km >= 1 and <= 100",
-      sql`${t.ratePerKm} >= 1 AND ${t.ratePerKm} <= 100`,
+      "rate per km >= 0 and <= 100",
+      sql`${t.ratePerKm} >= 0 AND ${t.ratePerKm} <= 100`,
     ),
     check(
       "allowance >= 0 and allowance <= 10000",
@@ -994,12 +994,12 @@ export const bookings = pgTable(
     ),
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
     check(
-      "estimated_total_amount >= 1 and <= 1000000",
-      sql`${t.estimatedTotalAmount} >= 1 AND ${t.estimatedTotalAmount} <= 1000000`,
+      "estimated_total_amount >= 0 and <= 1000000",
+      sql`${t.estimatedTotalAmount} >= 0 AND ${t.estimatedTotalAmount} <= 1000000`,
     ),
     check(
-      "actual_total_amount >= 1 and <= 1000000",
-      sql`${t.actualTotalAmount} >= 1 AND ${t.actualTotalAmount} <= 1000000`,
+      "actual_total_amount >= 0 and <= 1000000",
+      sql`${t.actualTotalAmount} >= 0 AND ${t.actualTotalAmount} <= 1000000`,
     ),
     check(
       "driver rating >=1 and rating <=5",

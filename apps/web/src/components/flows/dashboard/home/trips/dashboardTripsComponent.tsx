@@ -1,14 +1,13 @@
-import { RyogoCaption, RyogoH4 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import {
-  SectionRowWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Separator } from "@/components/ui/separator"
 import DashboardTripItemComponent from "./dashboardTripItemComponent"
-import { DashboardSectionHeader } from "@/components/flows/dashboard/dashboardCommon"
+import {
+  DashboardRowHeader,
+  DashboardSectionHeader,
+} from "@/components/flows/dashboard/dashboardCommon"
 
 // Trips (starting today, ending today, ongoing)
 
@@ -47,11 +46,11 @@ export default async function DashboardTripsComponent({
 
   return (
     <SectionWrapper id="DashboardTrips">
-      <DashboardSectionHeader title={t("Title")} />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("StartingToday")}</RyogoCaption>
-        <RyogoCaption color="light">{startingTodayTrips.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardSectionHeader title={t("Title")} href={"/dashboard/bookings"} />
+      <DashboardRowHeader
+        title={t("StartingToday")}
+        count={startingTodayTrips.length}
+      />
       {startingTodayTrips.map((trip, index) => (
         <DashboardTripItemComponent
           key={index}
@@ -62,10 +61,10 @@ export default async function DashboardTripsComponent({
         />
       ))}
       <Separator />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("EndingToday")}</RyogoCaption>
-        <RyogoCaption color="light">{endingTodayTrips.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardRowHeader
+        title={t("EndingToday")}
+        count={endingTodayTrips.length}
+      />
       {endingTodayTrips.map((trip, index) => (
         <DashboardTripItemComponent
           key={index}
@@ -76,10 +75,7 @@ export default async function DashboardTripsComponent({
         />
       ))}
       <Separator />
-      <SectionRowWrapper>
-        <RyogoCaption color="light">{t("Ongoing")}</RyogoCaption>
-        <RyogoCaption color="light">{ongoingTrips.length}</RyogoCaption>
-      </SectionRowWrapper>
+      <DashboardRowHeader title={t("Ongoing")} count={ongoingTrips.length} />
       {ongoingTrips.map((trip, index) => (
         <DashboardTripItemComponent
           key={index}

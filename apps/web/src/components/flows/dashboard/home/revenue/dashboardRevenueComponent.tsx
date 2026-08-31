@@ -1,69 +1,110 @@
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
+import {
+  bookingServices,
+  FindAccountableBookingsPreviousDaysType,
+} from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-
-import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import { SectionWrapper } from "@/components/page/pageWrappers"
-import { DashboardSectionHeader } from "../../dashboardCommon"
+import {
+  DashboardRowHeader,
+  DashboardSectionHeader,
+} from "@/components/flows/dashboard/dashboardCommon"
+import { Separator } from "@/components/ui/separator"
+import DashboardRevenueItemComponent from "./dashboardRevenueItemComponent"
 
 export default async function DashboardRevenueComponent({
   agencyId,
-  userId,
 }: {
   agencyId: string
-  userId: string
 }) {
   const t = await getTranslations("Dashboard.Home.Revenue")
 
-  const revenueBookingsThisWeek =
-    await bookingServices.findBookingsRevenuePreviousDays(agencyId, 7)
-  const revenueBookings24Hrs = revenueBookingsThisWeek.filter(
+  //30 Days
+  const revenueBookings30Days =
+    await bookingServices.findAccountableBookingsPreviousDays(agencyId, 30)
+
+  const revenue30DaysAmount = calculateTotalAmount(revenueBookings30Days)
+  const commission30DaysAmount = calculateCommissionAmount(
+    revenueBookings30Days,
+  )
+
+  //7 Days
+  const revenueBookings7Days = revenueBookings30Days.filter(
+    (b) => differenceInDays(new Date(), b.createdAt) <= 7,
+  )
+  const revenue7DaysAmount = calculateTotalAmount(revenueBookings7Days)
+  const commission7DaysAmount = calculateCommissionAmount(revenueBookings7Days)
+
+  //24 Hrs
+  const revenueBookings24Hrs = revenueBookings7Days.filter(
     (b) => differenceInDays(new Date(), b.createdAt) <= 1,
   )
-
-  const transactions =
-    await transactionServices.findTransactionsPreviousDays(agencyId)
-
-  const revenueThisWeekAmount = revenueBookingsThisWeek.reduce(
-    (total, booking) => {
-      return total + booking.totalAmount
-    },
-    0,
-  )
-
-  const revenue24HrsAmount = revenueBookings24Hrs.reduce((total, booking) => {
-    return total + booking.totalAmount
-  }, 0)
-
-  const revenueWeeklyAvg = revenueThisWeekAmount / 7
-
-  const more = revenue24HrsAmount > revenueWeeklyAvg
-  const revenueChange = more
-    ? (revenue24HrsAmount - revenueWeeklyAvg) / revenueWeeklyAvg
-    : (revenueWeeklyAvg - revenue24HrsAmount) / revenueWeeklyAvg
-
-  const avgCommisionRateThisWeek =
-    revenueBookingsThisWeek.reduce((total, booking) => {
-      return total + booking.commissionRate
-    }, 0) /
-    (revenueBookingsThisWeek.length * 100)
-
-  const transactionsInAmount = transactions
-    .filter((transaction) => transaction.type === TransactionTypesEnum.CREDIT)
-    .reduce((total, transaction) => {
-      return total + transaction.amount
-    }, 0)
-
-  const transactionsOutAmount = transactions
-    .filter((transaction) => transaction.type === TransactionTypesEnum.DEBIT)
-    .reduce((total, transaction) => {
-      return total + transaction.amount
-    }, 0)
+  const revenue24HrsAmount = calculateTotalAmount(revenueBookings24Hrs)
+  const commission24HrsAmount = calculateCommissionAmount(revenueBookings24Hrs)
 
   return (
     <SectionWrapper id="DashboardRevenue">
       <DashboardSectionHeader title={t("Title")} />
+      <DashboardRowHeader
+        title={t("30Days")}
+        count={revenueBookings30Days.length}
+      />
+      <DashboardRevenueItemComponent
+        label={t("Revenue")}
+        amount={revenue30DaysAmount}
+      />
+      <DashboardRevenueItemComponent
+        label={t("Commission")}
+        amount={commission30DaysAmount}
+      />
+
+      <Separator />
+      <DashboardRowHeader
+        title={t("7Days")}
+        count={revenueBookings7Days.length}
+      />
+      <DashboardRevenueItemComponent
+        label={t("Revenue")}
+        amount={revenue7DaysAmount}
+      />
+      <DashboardRevenueItemComponent
+        label={t("Commission")}
+        amount={commission7DaysAmount}
+      />
+      <Separator />
+      <DashboardRowHeader
+        title={t("24Hrs")}
+        count={revenueBookings24Hrs.length}
+      />
+      <DashboardRevenueItemComponent
+        label={t("Revenue")}
+        amount={revenue24HrsAmount}
+      />
+      <DashboardRevenueItemComponent
+        label={t("Commission")}
+        amount={commission24HrsAmount}
+      />
     </SectionWrapper>
   )
+}
+
+function calculateTotalAmount(
+  bookings: FindAccountableBookingsPreviousDaysType,
+) {
+  if (bookings.length < 1) return 0
+  return bookings.reduce((total, booking) => {
+    return total + (booking.actualTotalAmount ?? booking.estimatedTotalAmount)
+  }, 0)
+}
+
+function calculateCommissionAmount(
+  bookings: FindAccountableBookingsPreviousDaysType,
+) {
+  if (bookings.length < 1) return 0
+  return bookings.reduce((total, booking) => {
+    return (
+      total +
+      (booking.actualCommissionAmount ?? booking.estimatedCommissionAmount)
+    )
+  }, 0)
 }

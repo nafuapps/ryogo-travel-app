@@ -25,7 +25,7 @@ export default async function SignupLayout({
 
   return (
     <LayoutWrapper id="SignupLayout">
-      <AuthMainWrapper>{children}</AuthMainWrapper>
+      <AuthMainWrapper src={"/signupBG.png"}>{children}</AuthMainWrapper>
       <AuthSideWrapper>
         <AuthImage src={"/signupBG.png"} alt="Signup Page Cover Image" />
       </AuthSideWrapper>

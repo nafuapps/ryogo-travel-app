@@ -4,7 +4,6 @@ import UpcomingBookingsComponent from "@/components/flows/bookings/home/upcoming
 import LeadBookingsComponent from "@/components/flows/bookings/home/leadBookingsComponent"
 import BookingScheduleComponent from "@/components/flows/bookings/home/bookingScheduleComponent"
 import BookingHistoryComponent from "@/components/flows/bookings/home/bookingHistoryComponent"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { PageWrapper } from "@/components/page/pageWrappers"
 
 /**
@@ -20,10 +19,9 @@ export default async function BookingsPageComponent({
 }: {
   agencyId: string
 }) {
-  const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
   return (
     <PageWrapper id="BookingsPage">
-      <OngoingBookingsComponent ongoingTrips={ongoingTrips} />
+      <OngoingBookingsComponent agencyId={agencyId} />
       <UpcomingBookingsComponent agencyId={agencyId} />
       <CompletedBookingsComponent agencyId={agencyId} />
       <LeadBookingsComponent agencyId={agencyId} />

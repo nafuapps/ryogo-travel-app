@@ -25,7 +25,9 @@ export default async function LoginLayout({
 
   return (
     <LayoutWrapper id="ForgotPasswordLayout">
-      <AuthMainWrapper>{children}</AuthMainWrapper>
+      <AuthMainWrapper src={"/forgotPasswordBG.png"}>
+        {children}
+      </AuthMainWrapper>
       <AuthSideWrapper>
         <AuthImage
           src={"/forgotPasswordBG.png"}

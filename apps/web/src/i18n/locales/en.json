@@ -1,7 +1,7 @@
 {
   "Auth": {
     "LoginPage": {
-      "SignupTitle": "Want to create an account for your agency?",
+      "SignupTitle": "Want to create a new agency account?",
       "SignupCTA": "Sign up for free",
       "Step1": {
         "PageTitle": "Log into RyoGo",
@@ -23,7 +23,7 @@
         "SecondaryCTA": "Back to login"
       },
       "Step3": {
-        "PageTitle": "Log into your account",
+        "PageTitle": "Hello!",
         "Input": {
           "Title": "Enter your password",
           "Placeholder": "********",
@@ -3202,7 +3202,8 @@
           "Arrived": "The driver has arrived at the pickup location of the customer.",
           "PickedUp": "The customer has been picked up by the driver.",
           "Dropped": "The customer has been dropped by the driver at the destination location.",
-          "Ended": "The trip has been ended by the driver. The booking is now considered as completed."
+          "Ended": "The trip has been ended by the driver. The booking is now considered as completed.",
+          "Other": "These are auto generated logs at regular interval. (You can ignore them, but they are useful for tracking the location of the driver.)"
         }
       },
       "Communication": {
@@ -5188,7 +5189,7 @@
         "Error": "Cannot end trip now.. please try again later"
       },
       "MidTrip": {
-        "Title": "{type, select, Arrived {Reached Customer Address} Pickup {Pickup Customer} Drop {Drop Customer} other {End Trip}}",
+        "Title": "{type, select, Arrived {Reached Customer Address} Pickup {Pickup Customer} Drop {Drop Customer} other {Drop Customer}}",
         "Field1": {
           "Title": "Enter odometer reading (Km)",
           "Placeholder": "10000",
@@ -5211,7 +5212,7 @@
           "Placeholder": "Enter any remarks regarding this trip",
           "Error1": "Remarks must be less than 300 characters"
         },
-        "Mid": "{type, select, Arrived {Confirm Arrival} Pickup {Confirm Pickup} Drop {Confirm Drop} other {Confirm End Trip}}",
+        "Mid": "{type, select, Arrived {Confirm Arrival} Pickup {Confirm Pickup} Drop {Confirm Drop} other {Confirm Drop}}",
         "Close": "Cancel",
         "Loading": "Loading",
         "Error": "Cannot mark {type} now.. please try again later"
@@ -5623,7 +5624,8 @@
           "Arrived": "The driver has arrived at the pickup location of the customer.",
           "PickedUp": "The customer has been picked up by the driver.",
           "Dropped": "The customer has been dropped by the driver at the destination location.",
-          "Ended": "The trip has been ended by the driver. The booking is now considered as completed."
+          "Ended": "The trip has been ended by the driver. The booking is now considered as completed.",
+          "Other": "These are auto generated logs at regular interval. (You can ignore them.)"
         },
         "StartTrip": {
           "Title": "Start trip",

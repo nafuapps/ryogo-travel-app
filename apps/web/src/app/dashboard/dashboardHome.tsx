@@ -17,12 +17,12 @@ Agent:
   // - Recent activity feed
   // - Critical alerts, missions, actions (for user)
   - Pending payments (only assigned)
-  - //TODO Schedule (with conflicts - only assigned)
+  - Schedule (with conflicts - only assigned)
   
   Owner:
   + Trips (overall)
   + Leads (overall)
-  + //TODO Schedule (with conflicts - overall)
+  + Schedule (with conflicts - overall)
   + Pending payments (overall)
   - Earnings (30Days/MTD)
   - Users (with login status)

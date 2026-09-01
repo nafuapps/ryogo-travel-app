@@ -61,7 +61,7 @@ export function RyogoInput(props: {
     <FormField
       name={props.name}
       render={({ field }) => (
-        <FormItem className="w-full relative lg:gap-2.5">
+        <FormItem className="w-full relative">
           <FormLabel>
             <RyogoSmall
               weight="font-bold"

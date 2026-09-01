@@ -30,10 +30,14 @@ export const tripLogServices = {
           : undefined,
     }
     const tripLog = await tripLogRepository.createTripLog(startTripLog)
-    await vehicleRepository.updateOdometerReading(
-      data.vehicleId,
-      data.odometerReading,
-    )
+
+    //Update vehicle odometer reading if provided
+    if (data.odometerReading) {
+      await vehicleRepository.updateOdometerReading(
+        data.vehicleId,
+        data.odometerReading,
+      )
+    }
     return tripLog[0]
   },
 

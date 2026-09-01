@@ -1,14 +1,15 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { Menu, Moon, Sun, X } from "lucide-react"
 import { RyoGoLandingLogo } from "@/components/logo"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { setLocaleAction } from "@/app/actions/setLocaleAction"
+import { setDarkModeAction } from "@/app/actions/setDarkModeAction"
 import {
   Select,
   SelectContent,
@@ -17,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import {
   RyogoOutlineButton,
   RyogoBrandButton,
@@ -36,7 +37,13 @@ type NavLinkType = {
   label: string
 }
 
-export default function Navbar() {
+export default function Navbar({
+  isDarkMode,
+  locale,
+}: {
+  isDarkMode: boolean
+  locale: string | undefined
+}) {
   const [isOpen, setIsOpen] = useState(false)
   const t = useTranslations("Landing.Navbar")
   const path = usePathname()
@@ -50,7 +57,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
-      <div className="w-full max-w-5xl bg-white dark:bg-slate-950 border border-sky-100 dark:border-sky-900 opacity-99 shadow rounded-lg px-3 md:px-4 lg:px-5">
+      <div className="w-full max-w-5xl bg-white dark:bg-slate-950 border border-sky-100 dark:border-sky-950 opacity-99 shadow rounded-lg px-3 md:px-4 lg:px-5">
         <div className="flex flex-wrap justify-between items-center py-3 w-full gap-1 lg:gap-3">
           {/* Logo */}
           <Link href="/">
@@ -58,12 +65,12 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex md:items-center md:gap-1 lg:gap-2">
+          <div className="hidden lg:flex lg:items-center lg:gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.navId}
                 href={link.href}
-                className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-800" : "bg-sky-100 dark:bg-sky-900"} py-2 px-3 rounded-lg transition-all duration-300`}
+                className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-800" : "bg-sky-100 dark:bg-sky-950"} py-2 px-3 rounded-lg transition-all duration-300`}
               >
                 <RyogoSmall
                   color={path !== link.href ? "slate" : "brand"}
@@ -76,10 +83,16 @@ export default function Navbar() {
             ))}
           </div>
 
-          <LanguageSwitcher />
+          {/* Language Selector */}
+          <LanguageSelector
+            locale={locale ? (locale as UserLangEnum) : UserLangEnum.ENGLISH}
+          />
+
+          {/* Dark Mode Switch */}
+          <DarkModeSwitch isDarkMode={isDarkMode} />
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex md:items-center md:gap-1.5 lg:gap-2">
+          <div className="hidden lg:flex lg:items-center lg:gap-2">
             <Link href="/auth/login">
               <RyogoOutlineButton label={t("Login")} />
             </Link>
@@ -90,7 +103,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -100,7 +113,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden top-12 pb-4 border-t">
+          <div className="lg:hidden top-12 pb-4 border-t">
             <div className="flex flex-col gap-6 pt-4">
               {navLinks.map((link) => (
                 <Link
@@ -115,7 +128,6 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t">
-                {/* <LanguageSwitcher /> */}
                 <Link href="/auth/login">
                   <RyogoOutlineButton label={t("Login")} className="w-full" />
                 </Link>
@@ -131,24 +143,19 @@ export default function Navbar() {
   )
 }
 
-function LanguageSwitcher() {
-  const [isPending, startTransition] = useTransition()
-  const router = useRouter()
-  const locale = useLocale() as UserLangEnum
+function LanguageSelector({ locale }: { locale: UserLangEnum }) {
+  const [selectedLocale, setSelectedLocale] = useState<UserLangEnum>(locale)
 
-  const handleLocaleChange = (nextLocale: UserLangEnum) => {
-    startTransition(async () => {
-      await setLocaleAction(nextLocale)
-      router.refresh()
-    })
+  const handleLocaleChange = async (nextLocale: UserLangEnum) => {
+    await setLocaleAction(nextLocale)
+    setSelectedLocale(nextLocale)
   }
   return (
     <Select
-      defaultValue={locale}
-      disabled={isPending}
+      defaultValue={selectedLocale}
       onValueChange={(value) => handleLocaleChange(value as UserLangEnum)}
     >
-      <SelectTrigger className="ml-auto mr-2 md:mx-0 h-9 py-1.5 px-2 lg:py-2 lg:px-3 gap-2 font-medium bg-white dark:bg-slate-900 border focus:ring-sky-700 dark:focus:ring-sky-200">
+      <SelectTrigger className="ml-auto mr-2 lg:mx-0 h-9 py-1.5 px-2 lg:py-2 lg:px-3 gap-2 font-medium bg-white dark:bg-slate-900 border focus:ring-sky-700 dark:focus:ring-sky-200">
         <SelectValue />
       </SelectTrigger>
       <SelectContent align="end" className="bg-white dark:bg-slate-900">
@@ -163,5 +170,30 @@ function LanguageSwitcher() {
         ))}
       </SelectContent>
     </Select>
+  )
+}
+
+function DarkModeSwitch({ isDarkMode }: { isDarkMode: boolean }) {
+  const [isDarkModeState, setIsDarkModeState] = useState<boolean>(isDarkMode)
+
+  const toggleDarkMode = async () => {
+    await setDarkModeAction(!isDarkModeState)
+    setIsDarkModeState(!isDarkModeState)
+  }
+
+  return (
+    <switch
+      onClick={toggleDarkMode}
+      className={`flex items-center gap-1 ${isDarkModeState ? "dark:bg-slate-800 justify-end" : "bg-slate-50 justify-start"} border rounded-full h-7 aspect-video`}
+    >
+      <RyogoEnclosedIcon
+        icon={isDarkModeState ? Moon : Sun}
+        size="sm"
+        color="brand"
+        bgColor="white"
+        circular
+        thick
+      />
+    </switch>
   )
 }

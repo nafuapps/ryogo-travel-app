@@ -6,7 +6,7 @@ export type AddTripLogRequestType = {
   vehicleId: string
   agencyId: string
   type: TripLogTypesEnum
-  odometerReading: number
+  odometerReading?: number
   remarks?: string
   lat?: number | null
   long?: number | null

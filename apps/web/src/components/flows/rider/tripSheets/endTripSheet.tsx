@@ -137,7 +137,7 @@ export default function EndTripSheet({
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <RyogoDefaultButton label={t("Title")} className="w-full" />
+        <RyogoDefaultButton label={t("Title")} size="lg" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

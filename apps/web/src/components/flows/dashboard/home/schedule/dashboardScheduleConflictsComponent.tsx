@@ -30,7 +30,7 @@ export default async function DashboardScheduleConflictsComponent({
     )
   }
 
-  const vehicleBookingConflicts = findConflicts(
+  const vehicleBookingConflicts = getOverlappingConflicts(
     bookingsSchedule.map((item) => ({
       ...item,
       entity: item.assignedVehicle,
@@ -41,7 +41,7 @@ export default async function DashboardScheduleConflictsComponent({
     })),
   )
 
-  const vehicleRepairConflicts = findConflicts(
+  const vehicleRepairConflicts = getOverlappingConflicts(
     bookingsSchedule.map((item) => ({
       ...item,
       entity: item.assignedVehicle,
@@ -52,7 +52,7 @@ export default async function DashboardScheduleConflictsComponent({
     })),
   )
 
-  const driverBookingConflicts = findConflicts(
+  const driverBookingConflicts = getOverlappingConflicts(
     bookingsSchedule.map((item) => ({
       ...item,
       entity: item.assignedDriver,
@@ -63,7 +63,7 @@ export default async function DashboardScheduleConflictsComponent({
     })),
   )
 
-  const driverLeaveConflicts = findConflicts(
+  const driverLeaveConflicts = getOverlappingConflicts(
     bookingsSchedule.map((item) => ({
       ...item,
       entity: item.assignedDriver,
@@ -120,7 +120,7 @@ export default async function DashboardScheduleConflictsComponent({
   )
 }
 
-function findConflicts(
+function getOverlappingConflicts(
   firstArray: {
     id: string
     startDate: Date

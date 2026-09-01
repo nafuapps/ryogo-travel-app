@@ -20,8 +20,9 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Plus } from "lucide-react"
 import { getTripDuration } from "@/lib/utils"
-import { differenceInDays } from "date-fns"
+import { differenceInDays, differenceInMinutes } from "date-fns"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { OTHER_TRIP_LOG_INTERVAL_MINUTES } from "@ryogo-travel-app/api/apiConfig"
 
 export default async function RiderMyOngoingBookingPageComponent({
   booking,
@@ -44,14 +45,38 @@ export default async function RiderMyOngoingBookingPageComponent({
     booking.tripLogs,
   )
 
+  //Regularly capture location in a trip log (OTHER)
+  const otherTripLogs = booking.tripLogs.filter(
+    (log) => log.type === TripLogTypesEnum.OTHER,
+  )
+  let captureOtherTripLog = false
+  if (otherTripLogs.length < 1) {
+    captureOtherTripLog = true
+  } else {
+    const lastOtherTripLog = otherTripLogs[otherTripLogs.length - 1]
+    if (!lastOtherTripLog) {
+      captureOtherTripLog = true
+    } else {
+      const diffInMinutes = differenceInMinutes(
+        new Date(),
+        lastOtherTripLog.createdAt,
+      )
+      if (diffInMinutes > OTHER_TRIP_LOG_INTERVAL_MINUTES) {
+        captureOtherTripLog = true
+      }
+    }
+  }
+
   return (
     <PageWrapper id="RiderCurrentBookingPage">
       <RiderMyBookingDetails booking={booking} canCallCustomer={true} />
       <SectionWrapper id="CurrentBookingTripLogs">
         <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
-        {booking.tripLogs.map((t) => {
-          return <RiderTripLogItem key={t.id} tripLog={t} />
-        })}
+        {booking.tripLogs
+          .filter((t) => t.type !== TripLogTypesEnum.OTHER) //Don't show OTHER trip logs in the list
+          .map((t) => {
+            return <RiderTripLogItem key={t.id} tripLog={t} />
+          })}
       </SectionWrapper>
       <SectionWrapper id="CurrentBookingExpenses">
         <SectionHeaderWrapper>
@@ -82,7 +107,11 @@ export default async function RiderMyOngoingBookingPageComponent({
         ) : nextStep === TripLogTypesEnum.ENDED ? (
           <EndTripSheet booking={booking} />
         ) : (
-          <MidTripSheet booking={booking} tripType={nextStep} />
+          <MidTripSheet
+            booking={booking}
+            tripType={nextStep}
+            captureOtherTripLog={captureOtherTripLog}
+          />
         )}
       </StickyActionWrapper>
     </PageWrapper>
@@ -107,6 +136,7 @@ function getNextStep(
       [TripLogTypesEnum.PICKED_UP]: 0,
       [TripLogTypesEnum.DROPPED]: 0,
       [TripLogTypesEnum.ENDED]: 0,
+      [TripLogTypesEnum.OTHER]: 0,
     } as Record<TripLogTypesEnum, number>,
   )
 

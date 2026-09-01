@@ -1,13 +1,4 @@
 import { RyogoSmall, RyogoCaption } from "@/components/typography"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  CheckCheck,
-  FlagTriangleRight,
-  Handshake,
-  MapPinCheck,
-  Pin,
-  Play,
-} from "lucide-react"
 import { format } from "date-fns"
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
@@ -34,9 +25,11 @@ export default async function TripLogItem({
           <RyogoSmall>
             {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
           </RyogoSmall>
-          <RyogoCaption color="slate">
-            {tripLog.odometerReading + t("Km")}
-          </RyogoCaption>
+          {tripLog.odometerReading && (
+            <RyogoCaption color="slate">
+              {tripLog.odometerReading + t("Km")}
+            </RyogoCaption>
+          )}
           <RyogoCaption color="light">{tripLog.latLong}</RyogoCaption>
         </div>
         <div className="flex flex-col gap-1.5 lg:gap-2 w-full">

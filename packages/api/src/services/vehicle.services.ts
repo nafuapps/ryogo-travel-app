@@ -91,7 +91,6 @@ export const vehicleServices = {
         driver: booking.assignedDriver?.name,
         customerName: booking.customer.name,
         bookingId: booking.id,
-        createdAt: booking.tripLogs[0]?.createdAt,
       }
     })
   },

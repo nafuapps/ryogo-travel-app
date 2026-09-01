@@ -1,5 +1,3 @@
-//Signup page
-
 import { Metadata } from "next"
 import SignupPageComponent from "./signup"
 import Link from "next/link"
@@ -24,7 +22,7 @@ export default async function SignupPage() {
     <AuthSectionWrapper>
       <SignupPageComponent />
       <AuthFooterWrapper>
-        <RyogoCaption color="light">{t("LoginTitle")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("LoginTitle")}</RyogoCaption>
         <Link href={"/auth/login"}>
           <RyogoOutlineButton label={t("LoginCTA")} />
         </Link>

@@ -190,7 +190,6 @@ export const bookingServices = {
         driver: booking.assignedDriver?.name,
         customerName: booking.customer?.name,
         bookingId: booking.id,
-        createdAt: booking.tripLogs[0]?.createdAt,
       }
     })
   },
@@ -499,7 +498,7 @@ export const bookingServices = {
 
     //Get actual distance from trip log odometer readings
     const actualTotalDistance = Math.max(
-      startLog && endLog
+      startLog.odometerReading && endLog.odometerReading
         ? endLog.odometerReading - startLog.odometerReading
         : 0,
       booking.estimatedTotalDistance * UPDATE_PRICE_DISTANCE_FACTOR,

@@ -27,7 +27,9 @@ export default async function RiderTripLogItem({
           <RyogoCaption color="slate">
             {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
           </RyogoCaption>
-          <RyogoSmall>{tripLog.odometerReading + t("Km")}</RyogoSmall>
+          {tripLog.odometerReading && (
+            <RyogoSmall>{tripLog.odometerReading + t("Km")}</RyogoSmall>
+          )}
           {tripLog.latLong && (
             <RyogoCaption color="light">{tripLog.latLong}</RyogoCaption>
           )}

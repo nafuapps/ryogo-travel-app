@@ -5,13 +5,30 @@ import Image from "next/image"
 import Link from "next/link"
 import RyoGoLogo from "@/components/logo"
 
-export function AuthMainWrapper({ children }: { children: React.ReactNode }) {
+export function AuthMainWrapper({
+  children,
+  src,
+}: {
+  children: React.ReactNode
+  src?: string
+}) {
   return (
-    <div className="flex flex-col gap-10 md:gap-12 min-h-full overflow-scroll no-scrollbar items-center bg-slate-50 dark:bg-slate-950 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
-      <Link href="/">
-        <RyoGoLogo />
-      </Link>
-      {children}
+    <div className="relative flex flex-col gap-10 md:gap-12 min-h-full overflow-scroll no-scrollbar items-center bg-slate-50 dark:bg-slate-950 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
+      {src ? (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
+            style={{ backgroundImage: `url(${src})` }}
+          />
+          <div className="absolute inset-0 bg-slate-50/80 dark:bg-slate-950/80 md:hidden" />
+        </>
+      ) : null}
+      <div className="z-10 flex w-full h-full flex-col items-center gap-10 md:gap-12">
+        <Link href="/">
+          <RyoGoLogo />
+        </Link>
+        {children}
+      </div>
     </div>
   )
 }
@@ -82,7 +99,7 @@ export function AuthFormWrapper<T extends FieldValues>({
       <form
         id={id}
         onSubmit={onSubmit}
-        className="flex flex-col gap-3 md:gap-4"
+        className="flex flex-col gap-4 md:gap-5"
       >
         {children}
       </form>

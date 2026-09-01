@@ -2,6 +2,8 @@ import { db } from "@ryogo-travel-app/db"
 import {
   BookingStatusEnum,
   InsertVehicleType,
+  tripLogs,
+  TripLogTypesEnum,
   VehicleBrandEnum,
   VehicleColorEnum,
   vehicles,
@@ -120,6 +122,7 @@ export const vehicleRepository = {
               columns: {
                 type: true,
               },
+              where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
               limit: 1,
             },
           },

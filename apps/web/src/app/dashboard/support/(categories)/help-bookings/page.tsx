@@ -794,6 +794,9 @@ async function TripLogsContent() {
           <SupportTableStatusRow desc={t("TypeList.Ended")}>
             <TripLogStatusPill status={TripLogTypesEnum.ENDED} />
           </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("TypeList.Other")}>
+            <TripLogStatusPill status={TripLogTypesEnum.OTHER} />
+          </SupportTableStatusRow>
         </SupportTableWrapper>
       </SupportContentSectionWrapper>
     </>

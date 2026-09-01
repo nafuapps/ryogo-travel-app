@@ -7,6 +7,7 @@ import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
 import Link from "next/link"
 import { SectionWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function RiderMyCompletedBookingPageComponent({
   booking,
@@ -20,9 +21,11 @@ export default async function RiderMyCompletedBookingPageComponent({
       <RiderMyBookingDetails booking={booking} canCallCustomer={false} />
       <SectionWrapper id="CompletedBookingTripLogs">
         <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
-        {booking.tripLogs.map((t) => {
-          return <RiderTripLogItem key={t.id} tripLog={t} />
-        })}
+        {booking.tripLogs
+          .filter((t) => t.type !== TripLogTypesEnum.OTHER) //Don't show OTHER trip logs in the list
+          .map((t) => {
+            return <RiderTripLogItem key={t.id} tripLog={t} />
+          })}
       </SectionWrapper>
       {booking.expenses.length > 0 && (
         <SectionWrapper id="CompletedBookingExpenses">

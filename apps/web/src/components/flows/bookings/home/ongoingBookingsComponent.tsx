@@ -1,5 +1,5 @@
 import { RyogoSmall } from "@/components/typography"
-import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import {
@@ -10,11 +10,12 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { OngoingBookingCard } from "@/components/cards/booking/bookingCards"
 
 export default async function OngoingBookingsComponent({
-  ongoingTrips,
+  agencyId,
 }: {
-  ongoingTrips: FindOngoingTripsType
+  agencyId: string
 }) {
   const t = await getTranslations("Dashboard.Bookings.Ongoing")
+  const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
 
   return (
     <SectionWrapper id="OngoingBookingsSection">

@@ -28,7 +28,7 @@ export default async function LoginLayout({
       <AuthSideWrapper>
         <AuthImage src={"/loginBG.png"} alt="Login Page Cover Image" />
       </AuthSideWrapper>
-      <AuthMainWrapper>{children}</AuthMainWrapper>
+      <AuthMainWrapper src={"/loginBG.png"}>{children}</AuthMainWrapper>
     </LayoutWrapper>
   )
 }

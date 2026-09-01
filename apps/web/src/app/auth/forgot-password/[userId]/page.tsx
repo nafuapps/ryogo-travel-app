@@ -41,7 +41,7 @@ export default async function ConfirmEmailPage({
     <AuthSectionWrapper>
       <ForgotPasswordPageComponent user={user} />
       <AuthFooterWrapper>
-        <RyogoCaption color="light">{t("RememberTitle")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("RememberTitle")}</RyogoCaption>
         <Link href={`/auth/login/password/${userId}`}>
           <RyogoOutlineButton label={t("RememberCTA")} />
         </Link>

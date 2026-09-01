@@ -4,6 +4,8 @@ import {
   drivers,
   DriverStatusEnum,
   InsertDriverType,
+  tripLogs,
+  TripLogTypesEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, notInArray, or, lte, not } from "drizzle-orm"
@@ -133,6 +135,7 @@ export const driverRepository = {
               columns: {
                 type: true,
               },
+              where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
               limit: 1,
             },
           },

@@ -136,7 +136,6 @@ export const userServices = {
         driver: booking.assignedDriver?.name,
         customerName: booking.customer.name,
         bookingId: booking.id,
-        createdAt: booking.tripLogs[0]?.createdAt,
       }
     })
   },

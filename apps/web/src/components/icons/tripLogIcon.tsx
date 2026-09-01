@@ -1,10 +1,11 @@
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   Play,
-  MapPinCheck,
+  MapPinHouse,
   Handshake,
   FlagTriangleRight,
   CheckCheck,
+  Signpost,
 } from "lucide-react"
 
 export default function getTripLogIcon(type: TripLogTypesEnum) {
@@ -12,12 +13,14 @@ export default function getTripLogIcon(type: TripLogTypesEnum) {
     case TripLogTypesEnum.STARTED:
       return Play
     case TripLogTypesEnum.ARRIVED:
-      return MapPinCheck
+      return MapPinHouse
     case TripLogTypesEnum.PICKED_UP:
       return Handshake
     case TripLogTypesEnum.DROPPED:
       return FlagTriangleRight
     case TripLogTypesEnum.ENDED:
       return CheckCheck
+    case TripLogTypesEnum.OTHER:
+      return Signpost
   }
 }

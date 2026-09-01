@@ -11,7 +11,7 @@ import {
   vehicles,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, or, gte, lte, inArray, sql, isNull } from "drizzle-orm"
+import { eq, and, or, gte, lte, inArray, sql, isNull, not } from "drizzle-orm"
 import { addDays, subDays } from "date-fns"
 
 export const bookingRepository = {
@@ -371,6 +371,7 @@ export const bookingRepository = {
           columns: {
             type: true,
           },
+          where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
           limit: 1,
         },
       },
@@ -422,13 +423,6 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
-        },
-        tripLogs: {
-          where: eq(tripLogs.type, TripLogTypesEnum.ENDED),
-          columns: {
-            createdAt: true,
-          },
-          limit: 1,
         },
       },
     })
@@ -743,6 +737,7 @@ export const bookingRepository = {
           columns: {
             type: true,
           },
+          where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
           limit: 1,
         },
       },
@@ -800,6 +795,7 @@ export const bookingRepository = {
           columns: {
             type: true,
           },
+          where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
           limit: 1,
         },
       },
@@ -879,6 +875,7 @@ export const bookingRepository = {
           columns: {
             type: true,
           },
+          where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
           limit: 1,
         },
       },
@@ -936,6 +933,7 @@ export const bookingRepository = {
           columns: {
             type: true,
           },
+          where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
           limit: 1,
         },
       },

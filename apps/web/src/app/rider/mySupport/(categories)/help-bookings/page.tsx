@@ -384,6 +384,9 @@ async function ExecutionContent() {
           <SupportTableStatusRow desc={t("Steps.Ended")}>
             <TripLogStatusPill status={TripLogTypesEnum.ENDED} />
           </SupportTableStatusRow>
+          <SupportTableStatusRow desc={t("Steps.Other")}>
+            <TripLogStatusPill status={TripLogTypesEnum.OTHER} />
+          </SupportTableStatusRow>
         </SupportTableWrapper>
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StartTrip.Title")}>

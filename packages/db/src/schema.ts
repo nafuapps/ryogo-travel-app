@@ -1146,10 +1146,11 @@ export const expenseRelations = relations(expenses, ({ one }) => ({
 
 export enum TripLogTypesEnum {
   STARTED = "trip started",
-  ENDED = "trip ended",
   ARRIVED = "arrived",
   PICKED_UP = "picked up",
   DROPPED = "dropped",
+  ENDED = "trip ended",
+  OTHER = "other",
 }
 export const tripLogTypes = pgEnum("trip_log_types", [
   TripLogTypesEnum.STARTED,
@@ -1157,6 +1158,7 @@ export const tripLogTypes = pgEnum("trip_log_types", [
   TripLogTypesEnum.ARRIVED,
   TripLogTypesEnum.PICKED_UP,
   TripLogTypesEnum.DROPPED,
+  TripLogTypesEnum.OTHER,
 ])
 //Trip Logs table
 export const tripLogIdSequence = pgSequence("trip_log_id_seq", {
@@ -1182,7 +1184,7 @@ export const tripLogs = pgTable(
     driverId: text("driver_id")
       .references(() => drivers.id, { onDelete: "no action" })
       .notNull(),
-    odometerReading: integer("odometer_reading").notNull(), // in kilometers
+    odometerReading: integer("odometer_reading"), // in kilometers
     type: tripLogTypes().notNull(),
     remarks: text("remarks"),
     tripLogPhotoUrl: text("trip_log_photo_url"),

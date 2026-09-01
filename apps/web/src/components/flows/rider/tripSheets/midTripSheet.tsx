@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -30,13 +30,16 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { otherTripLogAction } from "@/app/actions/bookings/otherTripLogAction"
 
 export default function MidTripSheet({
   booking,
   tripType,
+  captureOtherTripLog,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
   tripType: TripLogTypesEnum
+  captureOtherTripLog?: boolean
 }) {
   const t = useTranslations("Rider.MyBooking.MidTrip")
   const [isPending, startTransition] = useTransition()
@@ -95,6 +98,23 @@ export default function MidTripSheet({
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId
 
+  useEffect(() => {
+    const triggerAction = async () => {
+      if (captureOtherTripLog && latLong.latitude && latLong.longitude) {
+        await otherTripLogAction({
+          agencyId: booking.agencyId,
+          bookingId: booking.id,
+          driverId: driverId,
+          vehicleId: vehicleId,
+          type: TripLogTypesEnum.OTHER,
+          lat: latLong.latitude,
+          long: latLong.longitude,
+        })
+      }
+    }
+    triggerAction()
+  }, [latLong])
+
   const onSubmit = async (data: SchemaType) => {
     const midTripData = {
       agencyId: booking.agencyId,
@@ -122,7 +142,7 @@ export default function MidTripSheet({
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <RyogoDefaultButton label={t("Title")} className="w-full" />
+        <RyogoDefaultButton label={t("Title", { type: type })} size="lg" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

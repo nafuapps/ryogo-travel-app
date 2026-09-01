@@ -22,7 +22,7 @@ export default async function LoginPage() {
     <AuthSectionWrapper>
       <LoginPageComponent />
       <AuthFooterWrapper>
-        <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("SignupTitle")}</RyogoCaption>
         <Link href={"/auth/signup"}>
           <RyogoOutlineButton label={t("SignupCTA")} />
         </Link>

@@ -16,7 +16,7 @@ export async function sendSupportQueryAction(data: {
 }) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   //Add the query to the database

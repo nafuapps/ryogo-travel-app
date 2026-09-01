@@ -20,7 +20,7 @@ export default async function AnalyticsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   return (

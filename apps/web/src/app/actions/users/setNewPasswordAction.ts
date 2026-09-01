@@ -10,9 +10,9 @@ export async function setNewPasswordAction(userId: string, password: string) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider")
+      redirect("/rider/home")
     } else {
-      redirect("/dashboard")
+      redirect("/dashboard/home")
     }
   }
 

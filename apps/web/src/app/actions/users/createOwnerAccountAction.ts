@@ -24,9 +24,9 @@ export async function createOwnerAccountAction(
   const currentUser = await getCurrentUser()
   if (currentUser) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider", RedirectType.replace)
+      redirect("/rider/home", RedirectType.replace)
     }
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   //Try to create a new user and agency account

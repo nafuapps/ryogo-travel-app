@@ -16,15 +16,15 @@ export default async function OnboardingStartingLayout({
         redirect("/onboarding/change-password", RedirectType.replace)
       }
       if (currentUser.userRole === UserRolesEnum.DRIVER) {
-        redirect("/rider", RedirectType.replace)
+        redirect("/rider/home", RedirectType.replace)
       }
-      redirect("/dashboard", RedirectType.replace)
+      redirect("/dashboard/home", RedirectType.replace)
     }
     if (!currentUser.isVerified) {
       redirect("/onboarding/verify-account", RedirectType.replace)
     }
     if (currentUser.status !== UserStatusEnum.NEW) {
-      redirect("/dashboard", RedirectType.replace)
+      redirect("/dashboard/home", RedirectType.replace)
     }
     redirect("/onboarding/add-vehicle", RedirectType.replace)
   }

@@ -28,7 +28,7 @@ export default async function AddVehiclePage() {
     if (agencyData.agents.length < 1) {
       redirect("/onboarding/add-agent", RedirectType.replace)
     }
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   return (

@@ -28,7 +28,7 @@ export default async function DashboardLayout({
   //Driver
   if (currentUser.userRole === UserRolesEnum.DRIVER) {
     //Go to rider page
-    redirect("/rider", RedirectType.replace)
+    redirect("/rider/home", RedirectType.replace)
   }
 
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER

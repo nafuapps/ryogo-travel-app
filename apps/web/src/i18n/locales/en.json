@@ -746,7 +746,7 @@
       "NewBooking": "New Booking",
       "MissionControl": "Mission Control",
       "Title": {
-        "/dashboard": "Home",
+        "/dashboard/home": "Home",
         "/dashboard/account": "Account",
         "/dashboard/account/agency": "Agency Details",
         "/dashboard/account/agency/change-email": "Change Agency Email",
@@ -5050,7 +5050,7 @@
     "Header": {
       "MissionControl": "Mission Control",
       "Title": {
-        "/rider": "Home",
+        "/rider/home": "Home",
         "/rider/myMissions": "Mission Control",
         "/rider/myMissions/add": "Add Custom Mission",
         "/rider/myMissions/modify": "Modify Custom Mission",

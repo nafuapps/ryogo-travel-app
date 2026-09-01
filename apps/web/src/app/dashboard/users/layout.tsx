@@ -15,7 +15,7 @@ export default async function UsersLayout({
 
   //Only owner can access users pages
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   return children

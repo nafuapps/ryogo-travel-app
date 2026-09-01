@@ -36,7 +36,7 @@ export default async function ModifyCustomerPage({
     currentUser.userRole !== UserRolesEnum.OWNER &&
     customer.addedByUserId !== currentUser.userId
   ) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   return (

@@ -56,9 +56,9 @@ export function ChangePasswordStep1(props: {
       //If success, redirect
       toast.success(t("Success"))
       if (props.role === UserRolesEnum.DRIVER) {
-        router.replace("/rider")
+        router.replace("/rider/home")
       } else {
-        router.replace("/dashboard")
+        router.replace("/dashboard/home")
       }
     } else {
       //If failed, show error

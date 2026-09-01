@@ -17,7 +17,7 @@ export default function RiderSidebar() {
   const contentItems: MenuItemType = [
     {
       title: t("Home"),
-      url: "/rider",
+      url: "/rider/home",
       icon: House,
     },
     {

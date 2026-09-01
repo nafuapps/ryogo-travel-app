@@ -29,16 +29,16 @@ export default async function VerifyAccountPage() {
     //Not new users
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
       //If driver, go to rider page
-      redirect("/rider", RedirectType.replace)
+      redirect("/rider/home", RedirectType.replace)
     }
     //Else, go to dashboard
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   //Not new Owner
   if (currentUser.status !== UserStatusEnum.NEW) {
     //If already activated, go to dashboard
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   //If owner already verified

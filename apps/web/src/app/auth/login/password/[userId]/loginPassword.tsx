@@ -73,10 +73,10 @@ export default function LoginPasswordPageComponent({
         //Login user
         if (loginResponse.userRole === UserRolesEnum.DRIVER) {
           //Redirect to Rider page
-          router.replace("/rider")
+          router.replace("/rider/home")
         } else {
           //Redirect to Dashboard
-          router.replace("/dashboard")
+          router.replace("/dashboard/home")
         }
       }
     })

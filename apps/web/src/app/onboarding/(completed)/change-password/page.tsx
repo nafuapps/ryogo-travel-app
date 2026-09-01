@@ -33,17 +33,17 @@ export default async function ChangePasswordPage() {
       //Otherwise, it is an added owner, must continue to change password
     } else {
       //Activated owner, go to dashboard
-      redirect("/dashboard", RedirectType.replace)
+      redirect("/dashboard/home", RedirectType.replace)
     }
   } else {
     // Active non-owner
     if (currentUser.status !== UserStatusEnum.NEW) {
       if (currentUser.userRole === UserRolesEnum.DRIVER) {
         //If driver, go to rider
-        redirect("/rider", RedirectType.replace)
+        redirect("/rider/home", RedirectType.replace)
       } else {
         //If not driver, go to dashboard
-        redirect("/dashboard", RedirectType.replace)
+        redirect("/dashboard/home", RedirectType.replace)
       }
     }
   }

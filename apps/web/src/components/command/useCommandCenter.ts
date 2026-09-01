@@ -22,7 +22,7 @@ export default function useCommandCenter(): CommandType[] {
   const path = usePathname()
   const router = useRouter()
 
-  if (path === "/dashboard")
+  if (path === "/dashboard/home")
     return [
       {
         label: "Booking Details",

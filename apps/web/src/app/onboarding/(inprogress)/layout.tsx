@@ -23,10 +23,10 @@ export default async function OnboardingInprogressLayout({
     //Not new users
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
       //If driver, go to rider page
-      redirect("/rider", RedirectType.replace)
+      redirect("/rider/home", RedirectType.replace)
     }
     //Else, go to dashboard
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   //Not verified owner
@@ -36,7 +36,7 @@ export default async function OnboardingInprogressLayout({
 
   //Not new owner, needs redirection to dashboard
   if (currentUser.status !== UserStatusEnum.NEW) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   //Only verified new owner can continue with onboarding steps

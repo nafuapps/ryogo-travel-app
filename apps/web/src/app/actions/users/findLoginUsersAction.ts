@@ -9,9 +9,9 @@ export async function findLoginUsersAction(phone: string) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider", RedirectType.replace)
+      redirect("/rider/home", RedirectType.replace)
     }
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
   const users = await userServices.findValidUsersByPhone(phone)
   return users

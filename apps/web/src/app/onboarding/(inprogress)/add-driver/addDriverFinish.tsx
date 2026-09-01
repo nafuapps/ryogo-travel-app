@@ -33,7 +33,7 @@ export function AddDriverFinish(props: {
     startTransition(async () => {
       //Activate user and take to dashboard
       await onboardingCompleteAction()
-      router.push("/dashboard")
+      router.push("/dashboard/home")
     })
   }
 

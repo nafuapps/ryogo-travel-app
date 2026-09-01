@@ -35,7 +35,7 @@ export default async function AddAgentPage() {
     redirect("/onboarding/add-driver", RedirectType.replace)
   }
   if (agencyData.agents.length > 0) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   const allAgents = await userServices.findAllUsersByRole([UserRolesEnum.AGENT])

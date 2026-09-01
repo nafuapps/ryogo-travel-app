@@ -47,7 +47,7 @@ export default function RyogoSidebar(props: {
                 key={item.title}
                 {...item}
                 open={sidebarOpen}
-                active={pathname === item.url}
+                active={pathname.includes(item.url as string)}
               />
             ),
         )}
@@ -58,7 +58,7 @@ export default function RyogoSidebar(props: {
             key={item.title}
             {...item}
             open={sidebarOpen}
-            active={pathname === item.url}
+            active={pathname.includes(item.url as string)}
           />
         ))}
       </SidebarFooter>

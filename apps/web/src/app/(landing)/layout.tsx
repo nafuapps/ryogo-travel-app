@@ -19,9 +19,9 @@ export default async function LandingLayout({
   // Redirect to private route if the user is already authenticated
   if (currentUser) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider", RedirectType.replace)
+      redirect("/rider/home", RedirectType.replace)
     }
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   const cookieStore = await cookies()

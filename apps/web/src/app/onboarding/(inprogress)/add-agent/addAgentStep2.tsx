@@ -47,7 +47,7 @@ export function AddAgentConfirm(props: {
     } else {
       //Take to dashboard page and show error
       toast.error(t("APIError"))
-      router.replace("/dashboard")
+      router.replace("/dashboard/home")
     }
   }
   return (

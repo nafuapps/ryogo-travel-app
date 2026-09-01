@@ -23,7 +23,7 @@ export default function DashboardSidebar({ isOwner }: { isOwner: boolean }) {
   const contentItems: MenuItemType = [
     {
       title: t("Home"),
-      url: "/dashboard",
+      url: "/dashboard/home",
       icon: House,
     },
     {

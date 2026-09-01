@@ -26,7 +26,7 @@ export default async function RiderLayout({
 
   //If not driver, go to dashboard
   if (currentUser.userRole !== UserRolesEnum.DRIVER) {
-    redirect("/dashboard", RedirectType.replace)
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   //New driver

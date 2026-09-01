@@ -6225,9 +6225,10 @@
       },
       "Support": {
         "Title": "SUPPORT",
-        "Customer": "Customer Support",
-        "FAQ": "FAQ",
-        "Email": "Email Us"
+        "FAQ": "FAQs",
+        "Call": "Call Support",
+        "Email": "Email Us",
+        "Chat": "Chat with Us"
       },
       "Social": {
         "Title": "SOCIAL MEDIA",

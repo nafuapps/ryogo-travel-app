@@ -16,7 +16,7 @@ const getTextColor = (color?: RyogoTextColorType) => {
     case "light":
       return "text-slate-500 dark:text-slate-500"
     case "slate":
-      return "text-slate-700 dark:text-slate-200"
+      return "text-slate-700 dark:text-slate-300"
     case "red":
       return "text-red-700 dark:text-red-300"
     case "yellow":

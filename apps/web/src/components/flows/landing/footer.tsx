@@ -6,6 +6,8 @@ import {
   IG_LINK,
   LI_LINK,
   NAFUAPPS_LINK,
+  SUPPORT_CHAT_NUMBER,
+  SUPPORT_EMAIL,
   SUPPORT_HELPLINE_NUMBER,
   YT_LINK,
 } from "@/lib/uiConfig"
@@ -27,67 +29,46 @@ export default async function Footer() {
 
           {/* Product //TODO: Add Download PWA Link */}
           <SectionColWrapper>
-            <RyogoSmall color="light" weight="font-bold">
-              {t("Product.Title")}
-            </RyogoSmall>
-            <Link href="/features" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Product.Features")}</RyogoSmall>
-            </Link>
-            <Link href="/pricing" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Product.Pricing")}</RyogoSmall>
-            </Link>
-            <Link href="/how-it-works" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Product.HowItWorks")}</RyogoSmall>
-            </Link>
-            <Link href="/resources" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Product.Resources")}</RyogoSmall>
-            </Link>
+            <FooterTitle title={t("Product.Title")} />
+            <FooterLink href="/features" label={t("Product.Features")} />
+            <FooterLink href="/pricing" label={t("Product.Pricing")} />
+            <FooterLink href="/how-it-works" label={t("Product.HowItWorks")} />
+            <FooterLink href="/resources" label={t("Product.Resources")} />
           </SectionColWrapper>
 
           {/* Support */}
           <SectionColWrapper>
-            <RyogoSmall color="light" weight="font-bold">
-              {t("Support.Title")}
-            </RyogoSmall>
-            <Link href="/resources#faq" className="hover:underline transition">
-              <RyogoSmall color="white">{t("Support.FAQ")}</RyogoSmall>
-            </Link>
-            <Link
+            <FooterTitle title={t("Support.Title")} />
+            <FooterLink href="/resources#faq" label={t("Support.FAQ")} />
+            <FooterLink
               href={`tel:${SUPPORT_HELPLINE_NUMBER}`}
-              className="hover:underline transition"
-            >
-              <RyogoSmall color="white">{t("Support.Customer")}</RyogoSmall>
-            </Link>
-            <Link
-              href="mailto:ryogo.in@gmail.com"
-              className="hover:underline transition"
-            >
-              <RyogoSmall color="white">{t("Support.Email")}</RyogoSmall>
-            </Link>
+              label={t("Support.Call")}
+              otherTab
+            />
+            <FooterLink
+              href={`mailto:${SUPPORT_EMAIL}`}
+              label={t("Support.Email")}
+              otherTab
+            />
+            <FooterLink
+              href={`https://wa.me/91${SUPPORT_CHAT_NUMBER}`}
+              label={t("Support.Chat")}
+              otherTab
+            />
           </SectionColWrapper>
 
           {/* Social Media */}
           <SectionColWrapper>
-            <RyogoSmall color="light" weight="font-bold">
-              {t("Social.Title")}
-            </RyogoSmall>
-            <Link href={YT_LINK} className="hover:underline transition">
-              <RyogoSmall color="white">{t("Social.YouTube")}</RyogoSmall>
-            </Link>
-            <Link href={IG_LINK} className="hover:underline transition">
-              <RyogoSmall color="white">{t("Social.Instagram")}</RyogoSmall>
-            </Link>
-            <Link href={FB_LINK} className="hover:underline transition">
-              <RyogoSmall color="white">{t("Social.Facebook")}</RyogoSmall>
-            </Link>
-            <Link href={LI_LINK} className="hover:underline transition">
-              <RyogoSmall color="white">{t("Social.LinkedIn")}</RyogoSmall>
-            </Link>
+            <FooterTitle title={t("Social.Title")} />
+            <FooterLink href={YT_LINK} label={t("Social.YouTube")} otherTab />
+            <FooterLink href={IG_LINK} label={t("Social.Instagram")} otherTab />
+            <FooterLink href={FB_LINK} label={t("Social.Facebook")} otherTab />
+            <FooterLink href={LI_LINK} label={t("Social.LinkedIn")} otherTab />
           </SectionColWrapper>
         </div>
 
         {/* Bottom section */}
-        <div className="border-t border-sky-700 dark:border-sky-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-sky-700 dark:border-sky-300 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <RyogoCaption color="light">
             {t("Copyright", { year: new Date().getFullYear() })}
           </RyogoCaption>
@@ -101,5 +82,33 @@ export default async function Footer() {
         </div>
       </div>
     </footer>
+  )
+}
+
+function FooterTitle({ title }: { title: string }) {
+  return (
+    <RyogoSmall color="light" weight="font-bold">
+      {title}
+    </RyogoSmall>
+  )
+}
+
+function FooterLink({
+  href,
+  label,
+  otherTab,
+}: {
+  href: React.ComponentProps<typeof Link>["href"]
+  label: string
+  otherTab?: boolean
+}) {
+  return (
+    <Link
+      href={href}
+      className="hover:opacity-70 transition"
+      target={otherTab ? "_blank" : "_self"}
+    >
+      <RyogoSmall color="white">{label}</RyogoSmall>
+    </Link>
   )
 }

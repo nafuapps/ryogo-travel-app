@@ -1,4 +1,4 @@
-import { RyogoH4, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { ChevronRight, Star, User, Lock as LockIcon } from "lucide-react"
@@ -42,28 +42,28 @@ export default function ExistingCutomerCard({
             <RyogoImage
               src={getFileUrl(existingCustomer.photoUrl)}
               alt={existingCustomer.name}
-              imageSize="sm"
+              imageSize="md"
             />
           ) : (
             <RyogoEnclosedIcon
               icon={User}
-              size="md"
+              size="lg"
               color={"slate"}
               bgColor={"slate"}
             />
           )}
           <SectionColWrapper small wFull>
-            <RyogoH4>{existingCustomer.name}</RyogoH4>
+            <RyogoP weight="font-bold">{existingCustomer.name}</RyogoP>
             <RyogoCaption color="light" weight="font-bold">
               {existingCustomer.phone}
             </RyogoCaption>
+            <RyogoCaption color="light">
+              {existingCustomer.location.city +
+                ", " +
+                existingCustomer.location.state}
+            </RyogoCaption>
           </SectionColWrapper>
         </SectionRowWrapper>
-        <RyogoCaption color="light">
-          {existingCustomer.location.city +
-            ", " +
-            existingCustomer.location.state}
-        </RyogoCaption>
         {existingCustomer.remarks && (
           <RyogoCaption color="slate">{existingCustomer.remarks}</RyogoCaption>
         )}

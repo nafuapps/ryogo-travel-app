@@ -49,7 +49,7 @@ export function RyogoImage(props: {
 }) {
   return (
     <div
-      className={`relative ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 ${props.className ?? ""}`}
+      className={`relative ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden shrink-0 border border-slate-300 dark:border-slate-700 ${props.className ?? ""}`}
     >
       <Image
         loading="eager"
@@ -67,7 +67,7 @@ export function RyogoDialogImage(props: {
   alt: string
   imageSize: RyogoImageSizeType
 }) {
-  let className = `relative flex justify-center items-center ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 hover:border-slate-600 dark:hover:border-slate-300`
+  let className = `relative flex justify-center items-center ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 hover:border-slate-600 dark:hover:border-slate-300`
   return (
     <Dialog>
       <DialogTrigger className={className}>
@@ -100,7 +100,7 @@ export function RyogoDialogImage(props: {
 
 export function RyogoChinImage(props: { src: string; alt: string }) {
   return (
-    <div className="flex justify-center items-center overflow-hidden bg-slate-200 dark:bg-slate-700 rounded-b-lg p-1.5 lg:p-2">
+    <div className="flex justify-center items-center overflow-hidden bg-slate-300 dark:bg-slate-700 rounded-b-lg p-1.5 lg:p-2">
       <Dialog>
         <DialogTrigger className="w-full hover:underline">
           <RyogoCaption color="slate">{props.alt}</RyogoCaption>

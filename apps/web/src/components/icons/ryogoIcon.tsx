@@ -63,18 +63,18 @@ function getIconSize(size: RyogoIconSizeType) {
     case "md":
       return "size-7 lg:size-8"
     case "sm":
-      return "size-5 lg:size-5.5"
+      return "size-5.5 lg:size-6"
   }
 }
 
 function getBGIconSize(size: RyogoIconSizeType) {
   switch (size) {
     case "xl":
-      return "size-28 lg:size-32"
+      return "size-32 lg:size-36"
     case "lg":
-      return "size-15 lg:size-16"
+      return "size-18 lg:size-20"
     case "md":
-      return "size-10 lg:size-11"
+      return "size-10 lg:size-12"
     case "sm":
       return "size-8 lg:size-9"
   }

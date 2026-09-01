@@ -13,7 +13,7 @@ export function AssignTileWrapper({
     <div
       className={`flex flex-row justify-between gap-2 lg:gap-3 rounded-lg p-3 lg:p-4 border ${
         selected
-          ? "border-sky-700 dark:border-sky-200 bg-sky-50 dark:bg-sky-950"
+          ? "border-sky-700 dark:border-sky-300 bg-sky-50 dark:bg-sky-950"
           : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800"
       }`}
       onClick={onClick}

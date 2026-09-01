@@ -41,14 +41,16 @@ export default function DashboardScheduleConflictItemComponent({
   const isDriverLeave = DriverLeaveIdRegex.safeParse(
     conflict.secondItem.id,
   ).success
-  const href = isVehicleRepair
+
+  const firstHref = `/dashboard/bookings/${conflict.firstItem.id}`
+  const secondHref = isVehicleRepair
     ? `/dashboard/vehicles/${conflict.entity.id}/repairs`
     : isDriverLeave
       ? `/dashboard/drivers/${conflict.entity.id}/leaves`
       : `/dashboard/bookings/${conflict.secondItem.id}`
   return (
     <div
-      className={`flex flex-col gap-2 lg:gap-3 w-full border ${highlight ? "border-sky-200 dark:border-sky-800" : "border-slate-100 dark:border-slate-800"} rounded-lg p-3 lg:p-4`}
+      className={`flex flex-col gap-2 lg:gap-3 w-full border ${highlight ? "border-sky-300 dark:border-sky-700" : "border-slate-100 dark:border-slate-800"} rounded-lg p-3 lg:p-4`}
     >
       <SectionRowWrapper center>
         {conflict.entity.label && (
@@ -63,34 +65,44 @@ export default function DashboardScheduleConflictItemComponent({
           </DashboardLabelImageChip>
         )}
       </SectionRowWrapper>
-      <Link
-        href={`/dashboard/bookings/${conflict.firstItem.id}`}
-        className="flex items-center justify-between p-1.5 lg:p-2 rounded bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700"
-      >
-        <RyogoCaption color="slate">
-          {format(conflict.firstItem.startDate, "dd MMM")}
-        </RyogoCaption>
-        <RyogoCaption color="slate" weight="font-bold">
-          {conflict.firstItem.id}
-        </RyogoCaption>
-        <RyogoCaption color="slate">
-          {format(conflict.firstItem.endDate, "dd MMM")}
-        </RyogoCaption>
-      </Link>
-      <Link
-        href={href as Route}
-        className="flex items-center justify-between p-1.5 lg:p-2 rounded bg-yellow-50 dark:bg-yellow-800 hover:bg-yellow-100 dark:hover:bg-yellow-700"
-      >
-        <RyogoCaption color="slate">
-          {format(conflict.secondItem.startDate, "dd MMM")}
-        </RyogoCaption>
-        <RyogoCaption color="slate" weight="font-bold">
-          {conflict.secondItem.id}
-        </RyogoCaption>
-        <RyogoCaption color="slate">
-          {format(conflict.secondItem.endDate, "dd MMM")}
-        </RyogoCaption>
-      </Link>
+      <ConflictItemRow
+        startDate={conflict.firstItem.startDate}
+        endDate={conflict.firstItem.endDate}
+        id={conflict.firstItem.id}
+        href={firstHref}
+      />
+      <ConflictItemRow
+        startDate={conflict.secondItem.startDate}
+        endDate={conflict.secondItem.endDate}
+        id={conflict.secondItem.id}
+        href={secondHref}
+        highlight
+      />
     </div>
+  )
+}
+
+function ConflictItemRow(props: {
+  startDate: Date
+  endDate: Date
+  id: string
+  href: string
+  highlight?: boolean
+}) {
+  return (
+    <Link
+      href={props.href as Route}
+      className={`flex items-center justify-between p-1.5 lg:p-2 rounded-md ${props.highlight ? "bg-yellow-50 dark:bg-yellow-800 hover:bg-yellow-100 dark:hover:bg-yellow-700" : "bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700"}`}
+    >
+      <RyogoCaption color="slate">
+        {format(props.startDate, "dd MMM")}
+      </RyogoCaption>
+      <RyogoCaption color="slate" weight="font-bold">
+        {props.id}
+      </RyogoCaption>
+      <RyogoCaption color="slate">
+        {format(props.endDate, "dd MMM")}
+      </RyogoCaption>
+    </Link>
   )
 }

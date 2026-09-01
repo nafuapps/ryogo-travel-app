@@ -26,15 +26,15 @@ function getPillColor(color: RyogoPillColorType = "slate") {
     case "light":
       return "bg-slate-500 dark:bg-slate-500"
     case "brand":
-      return "bg-sky-700 dark:bg-sky-200"
+      return "bg-sky-700 dark:bg-sky-300"
     case "green":
-      return "bg-green-700 dark:bg-green-200"
+      return "bg-green-700 dark:bg-green-300"
     case "red":
-      return "bg-red-700 dark:bg-red-200"
+      return "bg-red-700 dark:bg-red-300"
     case "yellow":
-      return "bg-yellow-700 dark:bg-yellow-200"
+      return "bg-yellow-700 dark:bg-yellow-300"
     case "slate":
-      return "bg-slate-700 dark:bg-slate-200"
+      return "bg-slate-700 dark:bg-slate-300"
   }
 }
 
@@ -223,7 +223,7 @@ export function TripLogStatusPill(
     case TripLogTypesEnum.STARTED:
       return <RyogoPill {...props} label={label} bgColor={"slate"} />
     case TripLogTypesEnum.OTHER:
-      return <RyogoPill {...props} label={label} bgColor={"slate"} />
+      return <RyogoPill {...props} label={label} bgColor={"red"} />
   }
 }
 

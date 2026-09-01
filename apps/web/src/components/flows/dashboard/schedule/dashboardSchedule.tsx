@@ -272,12 +272,12 @@ export function DashboardScheduleItemBar({
         <div
           className={`flex flex-row p-1 ${className} ${
             endIndex > selectedDays + 1
-              ? "lg:rounded-bl-2xl rounded-b-none lg:rounded-r-none"
-              : "rounded-b-2xl lg:rounded-r-2xl"
+              ? "lg:rounded-bl-xl rounded-b-none lg:rounded-r-none"
+              : "rounded-b-xl lg:rounded-r-xl"
           } ${
             startIndex < 1
-              ? "lg:rounded-tr-2xl rounded-t-none lg:rounded-l-none"
-              : "rounded-t-2xl lg:rounded-l-2xl"
+              ? "lg:rounded-tr-xl rounded-t-none lg:rounded-l-none"
+              : "rounded-t-xl lg:rounded-l-xl"
           } justify-center items-center min-w-0
                     col-start-1
                     col-end-2

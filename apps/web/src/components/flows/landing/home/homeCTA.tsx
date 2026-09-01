@@ -46,11 +46,9 @@ export default async function HomeCTASection() {
             />
           </Link>
         </div>
-        <div className="flex flex-col md:flex-row gap-3 lg:gap-4 items-center">
+        <div className="flex flex-col md:flex-row gap-3 lg:gap-8 items-center">
           <PropItem label={t("Prop1")} />
-          <PropDot />
           <PropItem label={t("Prop2")} />
-          <PropDot />
           <PropItem label={t("Prop3")} />
         </div>
       </LandingContentWrapper>
@@ -64,11 +62,5 @@ function PropItem({ label }: { label: string }) {
       <RyogoIcon icon={Check} size="sm" color="white" thick />
       <RyogoCaption color="white">{label}</RyogoCaption>
     </div>
-  )
-}
-
-function PropDot() {
-  return (
-    <div className="hidden md:flex bg-sky-200 dark:bg-sky-800 size-1 lg:size-1.5 rounded-full" />
   )
 }

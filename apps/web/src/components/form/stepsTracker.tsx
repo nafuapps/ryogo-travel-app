@@ -31,7 +31,7 @@ export default function StepsTracker({
           className={`w-full h-1 lg:h-1.5 rounded-full ${
             index <= current
               ? "bg-slate-950 dark:bg-white"
-              : "bg-slate-200 dark:bg-slate-700"
+              : "bg-slate-300 dark:bg-slate-700"
           }`}
         />
       ))}

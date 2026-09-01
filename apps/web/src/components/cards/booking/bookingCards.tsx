@@ -128,7 +128,7 @@ export function OngoingBookingCard({
         )}
       </HoverGridWrapper>
       {rider && (
-        <div className="bg-slate-200 dark:bg-slate-700 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
+        <div className="bg-slate-300 dark:bg-slate-700 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
           <RyogoSmall>{startLabel}</RyogoSmall>
           <RyogoIcon icon={ChevronRight} size="sm" color="black" />
         </div>
@@ -195,7 +195,7 @@ export function UpcomingBookingCard({
           )}
         </GridItemWrapper>
         {rider && canStart && (
-          <div className="bg-slate-200 dark:bg-slate-700 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
+          <div className="bg-slate-300 dark:bg-slate-700 col-span-2 rounded-b-lg flex items-center justify-center gap-1 lg:gap-1.5 px-3 py-2 lg:px-4 lg:py-3">
             <RyogoSmall>{startLabel}</RyogoSmall>
             <RyogoIcon icon={ChevronRight} size="sm" color="black" />
           </div>

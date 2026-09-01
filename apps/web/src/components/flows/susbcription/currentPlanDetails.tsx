@@ -48,7 +48,7 @@ export default async function CurrentPlanDetails({
         }
         bgColor="slate"
       />
-      {isOwner && (
+      {isOwner && lastPaidPlan && (
         <Link href="/dashboard/account/subscription/orders">
           <RyogoOutlineButton label={t("ViewOrders")} className="w-full">
             <RyogoIcon icon={ChevronRight} size="sm" />

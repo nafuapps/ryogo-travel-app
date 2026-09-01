@@ -57,7 +57,7 @@ export default function Navbar({
 
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
-      <div className="w-full max-w-5xl bg-white dark:bg-slate-950 border border-sky-100 dark:border-sky-950 opacity-99 shadow rounded-lg px-3 md:px-4 lg:px-5">
+      <div className="w-full max-w-5xl bg-white dark:bg-slate-950 border border-sky-50 dark:border-sky-950 opacity-99 shadow-lg rounded-lg px-3 md:px-4 lg:px-5">
         <div className="flex flex-wrap justify-between items-center py-3 w-full gap-1 lg:gap-3">
           {/* Logo */}
           <Link href="/">
@@ -155,7 +155,7 @@ function LanguageSelector({ locale }: { locale: UserLangEnum }) {
       defaultValue={selectedLocale}
       onValueChange={(value) => handleLocaleChange(value as UserLangEnum)}
     >
-      <SelectTrigger className="ml-auto mr-2 lg:mx-0 h-9 py-1.5 px-2 lg:py-2 lg:px-3 gap-2 font-medium bg-white dark:bg-slate-900 border focus:ring-sky-700 dark:focus:ring-sky-200">
+      <SelectTrigger className="ml-auto mr-2 lg:mx-0 h-9 py-1.5 px-2 lg:py-2 lg:px-3 gap-2 font-medium bg-white dark:bg-slate-900 border focus:ring-sky-700 dark:focus:ring-sky-300">
         <SelectValue />
       </SelectTrigger>
       <SelectContent align="end" className="bg-white dark:bg-slate-900">
@@ -184,7 +184,7 @@ function DarkModeSwitch({ isDarkMode }: { isDarkMode: boolean }) {
   return (
     <switch
       onClick={toggleDarkMode}
-      className={`flex items-center gap-1 ${isDarkModeState ? "dark:bg-slate-800 justify-end" : "bg-slate-50 justify-start"} border rounded-full h-7 aspect-video`}
+      className={`flex items-center gap-1 ${isDarkModeState ? "dark:bg-slate-800 justify-end" : "bg-slate-50 justify-start"} border-2 rounded-full h-6 lg:h-7 w-12 lg:w-14`}
     >
       <RyogoEnclosedIcon
         icon={isDarkModeState ? Moon : Sun}

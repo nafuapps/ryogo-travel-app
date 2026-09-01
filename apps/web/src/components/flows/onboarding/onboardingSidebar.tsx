@@ -92,7 +92,7 @@ export default function OnboardingSidebar({
               ? "bg-slate-950 dark:bg-white shadow"
               : currentProcess === index
                 ? "bg-white  dark:bg-slate-950 border border-sky-700 dark:border-sky-300 shadow"
-                : "bg-slate-200  dark:bg-slate-700"
+                : "bg-slate-300  dark:bg-slate-700"
           } flex shrink-0 justify-center items-center size-9 lg:size-10`}
                   >
                     {currentProcess > index ||
@@ -109,7 +109,7 @@ export default function OnboardingSidebar({
                   </div>
                   {index < items.length - 1 && (
                     <div
-                      className={`w-0.5 h-14 lg:h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-200" : "bg-slate-200  dark:bg-slate-700"} rounded-full`}
+                      className={`w-0.5 h-14 lg:h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-300" : "bg-slate-300  dark:bg-slate-700"} rounded-full`}
                     ></div>
                   )}
                 </div>

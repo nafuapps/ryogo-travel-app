@@ -53,62 +53,66 @@ export default function VehiclesScheduleChartComponent({
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
-      <DashboardScheduleChart>
-        <DashboardScheduleDayAxis selectedDays={selectedDays} />
-        <DashboardScheduleContent>
-          {chartData.map((vehicle, index) => {
-            return (
-              <DashboardScheduleItem key={index}>
-                <DashboardScheduleItemID
-                  icon={<GetVehicleIcon vehicleType={vehicle.type} size="md" />}
-                  imageAlt={t("Photo")}
-                  title={vehicle.vehicleNumber}
-                  photoUrl={vehicle.vehiclePhotoUrl}
-                />
-                <DashboardScheduleItemGrid numberGrids={selectedDays}>
-                  {vehicle.assignedBookings.map((b) => {
-                    return (
-                      <DashboardScheduleItemBar
-                        key={b.id}
-                        startDate={b.startDate}
-                        endDate={b.endDate}
-                        id={b.id}
-                        selectedDays={selectedDays}
-                        className={
-                          (b.status === BookingStatusEnum.CONFIRMED &&
-                            b.startDate < new Date()) ||
-                          (b.status === BookingStatusEnum.IN_PROGRESS &&
-                            b.endDate < new Date())
-                            ? "bg-red-200 dark:bg-red-700 hover:bg-red-300 dark:hover:bg-red-600"
-                            : "bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
-                        }
-                      >
-                        <AssignedBookingPopoverCard {...b} />
-                      </DashboardScheduleItemBar>
-                    )
-                  })}
-                  {vehicle.vehicleRepairs.map((r) => {
-                    return (
-                      <DashboardScheduleItemBar
-                        key={r.id}
-                        startDate={r.startDate}
-                        endDate={r.endDate}
-                        id={r.id}
-                        selectedDays={selectedDays}
-                        className={
-                          "bg-yellow-200 dark:bg-yellow-700 hover:bg-yellow-300 dark:hover:bg-yellow-600"
-                        }
-                      >
-                        <RepairPopoverCard {...r} />
-                      </DashboardScheduleItemBar>
-                    )
-                  })}
-                </DashboardScheduleItemGrid>
-              </DashboardScheduleItem>
-            )
-          })}
-        </DashboardScheduleContent>
-      </DashboardScheduleChart>
+      {chartData.length > 0 && (
+        <DashboardScheduleChart>
+          <DashboardScheduleDayAxis selectedDays={selectedDays} />
+          <DashboardScheduleContent>
+            {chartData.map((vehicle, index) => {
+              return (
+                <DashboardScheduleItem key={index}>
+                  <DashboardScheduleItemID
+                    icon={
+                      <GetVehicleIcon vehicleType={vehicle.type} size="md" />
+                    }
+                    imageAlt={t("Photo")}
+                    title={vehicle.vehicleNumber}
+                    photoUrl={vehicle.vehiclePhotoUrl}
+                  />
+                  <DashboardScheduleItemGrid numberGrids={selectedDays}>
+                    {vehicle.assignedBookings.map((b) => {
+                      return (
+                        <DashboardScheduleItemBar
+                          key={b.id}
+                          startDate={b.startDate}
+                          endDate={b.endDate}
+                          id={b.id}
+                          selectedDays={selectedDays}
+                          className={
+                            (b.status === BookingStatusEnum.CONFIRMED &&
+                              b.startDate < new Date()) ||
+                            (b.status === BookingStatusEnum.IN_PROGRESS &&
+                              b.endDate < new Date())
+                              ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
+                              : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                          }
+                        >
+                          <AssignedBookingPopoverCard {...b} />
+                        </DashboardScheduleItemBar>
+                      )
+                    })}
+                    {vehicle.vehicleRepairs.map((r) => {
+                      return (
+                        <DashboardScheduleItemBar
+                          key={r.id}
+                          startDate={r.startDate}
+                          endDate={r.endDate}
+                          id={r.id}
+                          selectedDays={selectedDays}
+                          className={
+                            "bg-yellow-300 dark:bg-yellow-700 hover:bg-yellow-400 dark:hover:bg-yellow-600"
+                          }
+                        >
+                          <RepairPopoverCard {...r} />
+                        </DashboardScheduleItemBar>
+                      )
+                    })}
+                  </DashboardScheduleItemGrid>
+                </DashboardScheduleItem>
+              )
+            })}
+          </DashboardScheduleContent>
+        </DashboardScheduleChart>
+      )}
     </SectionWrapper>
   )
 }

@@ -17,7 +17,7 @@ export default function CommandCenter() {
       <div className="bg-sky-700 shadow-xl rounded-xl overflow-hidden p-2">
         {/*  Quick Actions */}
         {isOpen && (
-          <div className="border-b border-sky-200 pb-2 flex flex-row flex-wrap gap-2">
+          <div className="border-b border-sky-300 pb-2 flex flex-row flex-wrap gap-2">
             {commands.map((c) => {
               return (
                 <QuickActionBtn

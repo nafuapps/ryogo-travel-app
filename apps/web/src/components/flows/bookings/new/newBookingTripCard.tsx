@@ -38,11 +38,11 @@ export default function NewBookingTripCard(props: NewBookingRequestDataType) {
             id="tripDistance"
             className="flex flex-row items-center justify-center text-center gap-1.5 lg:gap-2"
           >
-            <div className="h-0.5 w-4 lg:w-6 bg-slate-200 dark:bg-slate-700" />
+            <div className="h-0.5 w-4 lg:w-6 bg-slate-300 dark:bg-slate-700" />
             <RyogoSmall color="slate">
               {props.selectedDistance + t("Km")}
             </RyogoSmall>
-            <div className="h-0.5 w-4 lg:w-6 bg-slate-200 dark:bg-slate-700" />
+            <div className="h-0.5 w-4 lg:w-6 bg-slate-300 dark:bg-slate-700" />
           </div>
         )}
         <div
@@ -62,7 +62,7 @@ export default function NewBookingTripCard(props: NewBookingRequestDataType) {
       </div>
       <div
         id="tripFooter"
-        className="bg-slate-200 dark:bg-slate-700 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
+        className="bg-slate-300 dark:bg-slate-700 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
       >
         <TripTagWrapper>
           <SectionRowWrapper small center>

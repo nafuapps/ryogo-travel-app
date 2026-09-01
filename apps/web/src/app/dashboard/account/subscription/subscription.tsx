@@ -120,7 +120,7 @@ export default async function SubscriptionPageComponent({
         <div className="bg-linear-to-b from-sky-700 dark:from-sky-300 to-sky-500 dark:to-sky-500 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -bottom-10 md:-left-14 md:-bottom-14 lg:-left-16 lg:-bottom-16"></div>
         <div className="bg-linear-to-b from-sky-700 dark:from-sky-300 to-sky-500 dark:to-sky-500 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -bottom-10 md:-right-14 md:-bottom-14 lg:-right-16 lg:-bottom-16"></div>
         <SectionRowWrapper small center>
-          <div className="w-6 lg:w-8 grow-0 h-px bg-sky-700 dark:bg-sky-200" />
+          <div className="w-6 lg:w-8 grow-0 h-px bg-sky-700 dark:bg-sky-300" />
           <RyogoIcon color="brand" size="sm" icon={Sparkle} thick />
           <RyogoP
             color="brand"
@@ -130,7 +130,7 @@ export default async function SubscriptionPageComponent({
             {t("PremiumAdvantage")}
           </RyogoP>
           <RyogoIcon color="brand" size="sm" icon={Sparkle} thick />
-          <div className="w-6 lg:w-8 grow-0 h-px bg-sky-700 dark:bg-sky-200" />
+          <div className="w-6 lg:w-8 grow-0 h-px bg-sky-700 dark:bg-sky-300" />
         </SectionRowWrapper>
         <RyogoCaption color="slate" className="text-center">
           {t("PremiumSubtitle")}

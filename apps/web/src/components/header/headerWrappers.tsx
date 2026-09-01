@@ -4,7 +4,7 @@ export function HeaderWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={
-        "flex flex-row gap-3 lg:gap-4 pb-3 lg:pb-4 justify-between items-center border-b border-slate-200 dark:border-slate-700"
+        "flex flex-row gap-3 lg:gap-4 pb-3 lg:pb-4 justify-between items-center border-b border-slate-300 dark:border-slate-700"
       }
     >
       {children}

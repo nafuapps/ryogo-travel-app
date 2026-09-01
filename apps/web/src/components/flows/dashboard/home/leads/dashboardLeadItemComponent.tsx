@@ -25,7 +25,7 @@ export default async function DashboardLeadItemComponent({
   return (
     <Link href={`/dashboard/bookings/${trip.id}`}>
       <div
-        className={`flex flex-col gap-2 lg:gap-3 justify-between w-full border ${highlight ? "border-sky-200 dark:border-sky-800 hover:bg-sky-100 dark:hover:bg-sky-950" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
+        className={`flex flex-col gap-2 lg:gap-3 justify-between w-full border ${highlight ? "border-sky-300 dark:border-sky-700 hover:bg-sky-100 dark:hover:bg-sky-950" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
       >
         <SectionRowWrapper center>
           <RyogoCaption color="light" weight="font-bold">

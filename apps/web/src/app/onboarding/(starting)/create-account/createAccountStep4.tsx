@@ -174,7 +174,7 @@ function PlanSelectionCard({
       onClick={onClick}
       className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
         selected
-          ? "bg-sky-100 dark:bg-sky-800 border-sky-700 dark:border-sky-200"
+          ? "bg-sky-100 dark:bg-sky-800 border-sky-100 dark:border-sky-800"
           : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 "
       }`}
     >

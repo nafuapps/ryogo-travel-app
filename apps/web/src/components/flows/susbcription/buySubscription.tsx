@@ -127,7 +127,7 @@ function PaymentOptionCard({
   const currentlySelected = selectedOption === plan
   return (
     <div
-      className={`flex w-full flex-col p-3 lg:p-4 gap-2 shadow lg:gap-3 rounded-lg justify-between transition ${currentlySelected ? "bg-sky-700 dark:bg-sky-200" : " hover:bg-sky-200 dark:hover:bg-sky-700 bg-white dark:bg-slate-900"}`}
+      className={`flex w-full flex-col p-3 lg:p-4 gap-2 shadow lg:gap-3 rounded-lg justify-between transition ${currentlySelected ? "bg-sky-700 dark:bg-sky-300" : " hover:bg-sky-300 dark:hover:bg-sky-700 bg-white dark:bg-slate-900"}`}
       onClick={onClick}
     >
       <SectionRowWrapper>

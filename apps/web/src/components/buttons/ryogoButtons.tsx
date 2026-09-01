@@ -127,7 +127,7 @@ export function RyogoGhostButton(props: RyogoButtonType) {
       labelColor={props.labelColor ?? "slate"}
     >
       {props.showSpinner && (
-        <Spinner className="text-slate-700 dark:text-slate-200" />
+        <Spinner className="text-slate-700 dark:text-slate-300" />
       )}
       {props.children}
     </RyogoButton>

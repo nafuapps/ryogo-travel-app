@@ -49,42 +49,44 @@ export default function BookingHistoryChartComponent({
         setSelectedTab={setSelectedTab}
         isHistory
       />
-      <DashboardScheduleChart>
-        <DashboardScheduleDayAxis selectedDays={selectedDays} isHistory />
-        <DashboardScheduleContent>
-          {chartData.map((b, index) => {
-            return (
-              <DashboardScheduleItem key={index} isHistory>
-                <DashboardScheduleItemID
-                  icon={<RyogoIcon icon={User} size="md" />}
-                  imageAlt={t("Photo")}
-                  title={b.customerName}
-                  photoUrl={b.customerPhotoUrl}
-                />
-                <DashboardScheduleItemGrid numberGrids={selectedDays}>
-                  <DashboardScheduleItemBar
-                    startDate={b.startDate}
-                    endDate={b.endDate}
-                    id={b.bookingId}
-                    selectedDays={selectedDays}
-                    className={
-                      !b.driver ||
-                      !b.vehicle ||
-                      (b.endDate < new Date() &&
-                        b.status === BookingStatusEnum.IN_PROGRESS)
-                        ? "bg-red-200 dark:bg-red-700 hover:bg-red-300 dark:hover:bg-red-600"
-                        : "bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
-                    }
-                    isHistory
-                  >
-                    <BookingSchedulePopoverCard {...b} />
-                  </DashboardScheduleItemBar>
-                </DashboardScheduleItemGrid>
-              </DashboardScheduleItem>
-            )
-          })}
-        </DashboardScheduleContent>
-      </DashboardScheduleChart>
+      {chartData.length > 0 && (
+        <DashboardScheduleChart>
+          <DashboardScheduleDayAxis selectedDays={selectedDays} isHistory />
+          <DashboardScheduleContent>
+            {chartData.map((b, index) => {
+              return (
+                <DashboardScheduleItem key={index} isHistory>
+                  <DashboardScheduleItemID
+                    icon={<RyogoIcon icon={User} size="md" />}
+                    imageAlt={t("Photo")}
+                    title={b.customerName}
+                    photoUrl={b.customerPhotoUrl}
+                  />
+                  <DashboardScheduleItemGrid numberGrids={selectedDays}>
+                    <DashboardScheduleItemBar
+                      startDate={b.startDate}
+                      endDate={b.endDate}
+                      id={b.bookingId}
+                      selectedDays={selectedDays}
+                      className={
+                        !b.driver ||
+                        !b.vehicle ||
+                        (b.endDate < new Date() &&
+                          b.status === BookingStatusEnum.IN_PROGRESS)
+                          ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
+                          : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                      }
+                      isHistory
+                    >
+                      <BookingSchedulePopoverCard {...b} />
+                    </DashboardScheduleItemBar>
+                  </DashboardScheduleItemGrid>
+                </DashboardScheduleItem>
+              )
+            })}
+          </DashboardScheduleContent>
+        </DashboardScheduleChart>
+      )}
     </SectionWrapper>
   )
 }

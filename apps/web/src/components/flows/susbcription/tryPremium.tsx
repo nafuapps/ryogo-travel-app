@@ -6,7 +6,7 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH2, RyogoSmall } from "@/components/typography"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { ArrowRight, ChevronDown, Gift } from "lucide-react"
+import { ChevronDown, Gift, Play } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
@@ -46,7 +46,7 @@ export default async function TryPremiumComponent({
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                <RyogoIcon icon={ArrowRight} size="sm" color="brand" thick />
+                <RyogoIcon icon={Play} size="sm" color="brand" thick />
               </RyogoWhiteButton>
             }
           />

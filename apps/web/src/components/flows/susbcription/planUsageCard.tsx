@@ -33,17 +33,14 @@ export default async function PlanUsageCard({
   const agentLength = agencyData.agents.length
 
   const bookingsRatio =
-    (confirmedBookingsLength * 100) / BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
+    confirmedBookingsLength / BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
 
   const vehiclesRatio = (vehicleLength * 100) / BASIC_PLAN_VEHICLE_LIMIT
   const driversRatio = (driverLength * 100) / BASIC_PLAN_DRIVER_LIMIT
   const agentsRatio = (agentLength * 100) / BASIC_PLAN_AGENT_LIMIT
 
   const needsWarning =
-    bookingsRatio >= 1 ||
-    vehiclesRatio >= 1 ||
-    driversRatio >= 1 ||
-    agentsRatio >= 1
+    Math.max(bookingsRatio, vehiclesRatio, driversRatio, agentsRatio) >= 1
 
   return (
     <SectionWrapper id="UsageSection">
@@ -114,7 +111,7 @@ function UsageElement({
         <RyogoSmall weight="font-bold">{label}</RyogoSmall>
         <RyogoSmall weight="font-bold">{usageNumber}</RyogoSmall>
       </SectionRowWrapper>
-      <div className="rounded-full overflow-hidden h-2 lg:h-2.5 bg-slate-200 dark:bg-slate-700">
+      <div className="rounded-full overflow-hidden h-2 lg:h-2.5 bg-slate-300 dark:bg-slate-700">
         <div
           className={`h-full rounded-full ${bgColor}`}
           style={{ width: (ratio > 100 ? 100 : ratio) + "%" }}

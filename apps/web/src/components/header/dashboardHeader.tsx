@@ -17,9 +17,9 @@ export default async function DashboardHeader(props: { pathName: string }) {
           <HeaderButton label={t("NewBooking")} type="newBooking" />
         </Link>
       )}
-      {props.pathName !== "/dashboard/mission-control" && (
-        <Link href="/dashboard/mission-control">
-          <HeaderButton label={t("MissionControl")} type="missionControl" />
+      {props.pathName !== "/dashboard/missions" && (
+        <Link href="/dashboard/missions">
+          <HeaderButton label={t("Missions")} type="missions" />
         </Link>
       )}
     </RyogoHeader>

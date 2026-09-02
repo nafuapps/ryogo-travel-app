@@ -510,7 +510,7 @@ async function DocumentsContent() {
         className="self-center"
       />
       <SupportContentCTALinkButton
-        href={"/dashboard/mission-control"}
+        href={"/dashboard/missions"}
         label={t("WhatIsDocument.CTA")}
       />
     </SupportContentSectionWrapper>

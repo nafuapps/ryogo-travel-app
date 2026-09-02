@@ -11,14 +11,19 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { CheckCircle, Mail, Phone } from "lucide-react"
+import { CheckCircle, Mail, Phone, MessageSquare } from "lucide-react"
 import QueryForm from "./queryForm"
 import Link from "next/link"
-import { SUPPORT_EMAIL, SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
+import {
+  SUPPORT_CHAT_NUMBER,
+  SUPPORT_EMAIL,
+  SUPPORT_HELPLINE_NUMBER,
+} from "@/lib/uiConfig"
 import {
   RyogoOutlineButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import { Separator } from "@/components/ui/separator"
 
 export default async function ResourcesSupportSection() {
   const t = await getTranslations("Landing.Resources.Support")
@@ -46,11 +51,11 @@ export default async function ResourcesSupportSection() {
 async function HelpBlock() {
   const t = await getTranslations("Landing.Resources.Support.HelpBlock")
   return (
-    <div className="flex flex-col gap-5 md:gap-6 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-300 p-6 lg:p-8 rounded-lg">
+    <div className="flex flex-col gap-4 md:gap-5 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-300 p-6 lg:p-8 rounded-lg">
       <RyogoH4 color="white" weight="font-bold">
         {t("Title")}
       </RyogoH4>
-      <RyogoCaption color="white">{t("Description")}</RyogoCaption>
+      <RyogoCaption color="light">{t("Description")}</RyogoCaption>
       <HelpItem label={t("Help1")} />
       <HelpItem label={t("Help2")} />
       <HelpItem label={t("Help3")} />
@@ -70,6 +75,22 @@ async function HelpBlock() {
           <RyogoIcon icon={Mail} size="sm" color="white" thick />
         </RyogoOutlineButton>
       </Link>
+      <Link
+        href={`https://wa.me/91${SUPPORT_CHAT_NUMBER}`}
+        className="w-full"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <RyogoOutlineButton
+          size="lg"
+          label={t("ChatCTA")}
+          labelColor="white"
+          className="w-full"
+        >
+          <RyogoIcon icon={MessageSquare} size="sm" color="white" thick />
+        </RyogoOutlineButton>
+      </Link>
+      <Separator className="bg-slate-500" />
       <RyogoCaption color="light" className="text-center">
         {t("Disclaimer")}
       </RyogoCaption>

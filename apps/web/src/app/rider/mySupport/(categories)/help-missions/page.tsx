@@ -195,9 +195,9 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatAreMissions.AllMissions")}
         </RyogoCaption>
-        {/* //TODO: Add MissionControl snapshot */}
+        {/* //TODO: Add Missions snapshot */}
         <RyogoImage
-          alt="MissionControl"
+          alt="Missions"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"

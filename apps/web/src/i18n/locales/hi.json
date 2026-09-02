@@ -293,7 +293,7 @@
                 },
                 "Alerts": {
                     "Question": "How do we get alerted about vehicle document, driver license expirations or insurance renewals, etc. without manually checking every day?",
-                    "Answer": "RyoGo dynamically checks for such expiration alerts in real-time and adds them to Mission Control. Critical alerts will also be highlighted on your dashboard."
+                    "Answer": "RyoGo dynamically checks for such expiration alerts in real-time and adds them to Missions. Critical alerts will also be highlighted on your dashboard."
                 },
                 "Conflict": {
                     "Question": "When creating a new booking, do we get to know if a vehicle or driver is available or already assigned to another booking?",

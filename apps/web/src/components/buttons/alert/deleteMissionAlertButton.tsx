@@ -29,7 +29,7 @@ export default function DeleteMissionAlertButton(props: {
       ) {
         toast.success(t("Success"))
         router.replace(
-          props.isRider ? `/rider/myMissions` : `/dashboard/mission-control`,
+          props.isRider ? `/rider/myMissions` : `/dashboard/missions`,
         )
       } else {
         toast.error(t("Error"))

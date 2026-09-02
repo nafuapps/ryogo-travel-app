@@ -32,7 +32,7 @@ export default async function ExpiryAlertCard({
   dueDate: Date
   isDriver?: boolean
 }) {
-  const t = await getTranslations("Dashboard.MissionControl.ExpiryAlerts")
+  const t = await getTranslations("Dashboard.Missions.ExpiryAlerts")
   const expiryDays = differenceInDays(dueDate, new Date())
   return (
     <CarouselItem

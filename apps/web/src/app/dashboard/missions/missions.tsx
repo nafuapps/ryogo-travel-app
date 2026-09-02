@@ -10,7 +10,7 @@ import { CalendarPlus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
-export default async function MissionControlPageComponent({
+export default async function MissionsPageComponent({
   missions,
   isPremium,
   expiryAlerts,
@@ -19,7 +19,7 @@ export default async function MissionControlPageComponent({
   isPremium: boolean
   expiryAlerts?: FindAgencyExpiryAlertsType
 }) {
-  const t = await getTranslations("Dashboard.MissionControl")
+  const t = await getTranslations("Dashboard.Missions")
   const criticalMissions = missions.filter((mission) => mission.isCritical)
   const otherMissions = missions.filter((mission) => !mission.isCritical)
 
@@ -32,9 +32,9 @@ export default async function MissionControlPageComponent({
     : 0
 
   return (
-    <PageWrapper id="MissionControlPage">
+    <PageWrapper id="MissionsPage">
       {isPremium && (
-        <Link href={`/dashboard/mission-control/add`} className="self-center">
+        <Link href={`/dashboard/missions/add`} className="self-center">
           <RyogoOutlineButton className="w-full" label={t("AddCustomMission")}>
             <RyogoIcon icon={CalendarPlus} color="slate" size="sm" />
           </RyogoOutlineButton>

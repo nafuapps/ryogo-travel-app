@@ -9,7 +9,7 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import MyMissionControlPageComponent from "./myMissionControl"
+import MyMissionsPageComponent from "./myMissions"
 
 export const metadata: Metadata = {
   title: `My Missions - ${pageTitle}`,
@@ -44,7 +44,7 @@ export default async function MyMissionsPage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myMissions"} />
-      <MyMissionControlPageComponent
+      <MyMissionsPageComponent
         missions={missions}
         isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
         driver={driver}

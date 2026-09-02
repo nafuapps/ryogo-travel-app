@@ -4,16 +4,17 @@ import { getCurrentUser } from "@/lib/auth"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
+import MissionsPageComponent from "./missions"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import AddCustomMissionPageComponent from "@/components/missions/addCustomMission"
 
 export const metadata: Metadata = {
-  title: `Add Custom Mission - ${pageTitle}`,
+  title: `Missions - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function AddCustomMissionPage() {
+export default async function MissionsPage() {
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
@@ -25,17 +26,22 @@ export default async function AddCustomMissionPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  //Only Premium agencies can add custom missions
-  if (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC) {
-    redirect("/dashboard/mission-control", RedirectType.replace)
-  }
+  const missions = await missionServices.findMissionsByUserId(
+    currentUser.userId,
+  )
+
+  const expiryAlerts = await agencyServices.findAgencyExpiryAlerts(
+    currentUser.agencyId,
+    currentUser.userId,
+  )
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/mission-control/add"} />
-      <AddCustomMissionPageComponent
-        userId={currentUser.userId}
-        agencyId={currentUser.agencyId}
+      <DashboardHeader pathName={"/dashboard/missions"} />
+      <MissionsPageComponent
+        missions={missions}
+        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        expiryAlerts={expiryAlerts}
       />
     </MainWrapper>
   )

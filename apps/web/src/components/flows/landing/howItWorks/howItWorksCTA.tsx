@@ -30,13 +30,8 @@ export default async function HowItWorksCTASection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <Link href="/onboarding">
-            <RyogoWhiteButton
-              size="lg"
-              label={t("PrimaryCTA")}
-              labelColor="brand"
-              className="w-full md:w-auto "
-            >
-              <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
+            <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+              <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
             </RyogoWhiteButton>
           </Link>
           {/* //TODO: Demo video */}
@@ -45,7 +40,6 @@ export default async function HowItWorksCTASection() {
               size="lg"
               label={t("SecondaryCTA")}
               labelColor="white"
-              className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
             >
               <RyogoIcon icon={Video} color="white" size="sm" thick />
             </RyogoOutlineButton>

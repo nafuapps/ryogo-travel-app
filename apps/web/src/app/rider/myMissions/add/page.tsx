@@ -27,12 +27,12 @@ export default async function AddCustomMissionPage() {
 
   //Only Premium agencies can add custom missions
   if (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC) {
-    redirect("/dashboard/mission-control", RedirectType.replace)
+    redirect("/dashboard/missions", RedirectType.replace)
   }
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/mission-control/add"} />
+      <DashboardHeader pathName={"/dashboard/missions/add"} />
       <AddCustomMissionPageComponent
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}

@@ -30,12 +30,8 @@ export default async function ResourcesCTASection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <Link href="/onboarding">
-            <RyogoWhiteButton
-              size="lg"
-              label={t("PrimaryCTA")}
-              className="w-full md:w-auto "
-            >
-              <RyogoIcon icon={ChevronRight} color="slate" size="sm" thick />
+            <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+              <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
             </RyogoWhiteButton>
           </Link>
           <Link href="/features">
@@ -43,7 +39,6 @@ export default async function ResourcesCTASection() {
               size="lg"
               labelColor="white"
               label={t("SecondaryCTA")}
-              className="w-full md:w-auto border-white dark:border-slate-950 hover:bg-white/20 dark:hover:bg-slate-950/20"
             />
           </Link>
         </div>

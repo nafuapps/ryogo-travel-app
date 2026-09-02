@@ -105,12 +105,12 @@ export default async function SupportHelpMissionsPage() {
 
   const quickActions: SupportQuickActionType[] = [
     {
-      href: `/dashboard/mission-control/add`,
+      href: `/dashboard/missions/add`,
       icon: Plus,
       label: t("QuickActions.CreateCustomMission"),
     },
     {
-      href: `/dashboard/mission-control`,
+      href: `/dashboard/missions`,
       icon: ChevronRight,
       label: t("QuickActions.ViewMissions"),
     },
@@ -213,15 +213,15 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatAreMissions.AllMissions")}
         </RyogoCaption>
-        {/* //TODO: Add MissionControl snapshot */}
+        {/* //TODO: Add Missions snapshot */}
         <RyogoImage
-          alt="MissionControl"
+          alt="Missions"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/mission-control"}
+          href={"/dashboard/missions"}
           label={t("WhatAreMissions.CTA")}
         />
       </SupportContentSectionWrapper>
@@ -304,7 +304,7 @@ async function CustomContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/mission-control/add"}
+          href={"/dashboard/missions/add"}
           label={t("CreatingCustom.CTA")}
         />
       </SupportContentSectionWrapper>

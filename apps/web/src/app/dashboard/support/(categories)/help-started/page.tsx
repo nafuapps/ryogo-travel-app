@@ -575,7 +575,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/mission-control"}
+          href={"/dashboard/missions"}
           label={t("Missions.CTA")}
         />
       </SupportContentSectionWrapper>

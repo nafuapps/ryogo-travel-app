@@ -14,7 +14,7 @@ export default async function RiderHeader({ pathName }: { pathName: string }) {
   return (
     <RyogoHeader title={title}>
       <Link href="/rider/myMissions">
-        <HeaderButton label={t("MissionControl")} type="missionControl" />
+        <HeaderButton label={t("Missions")} type="missions" />
       </Link>
     </RyogoHeader>
   )

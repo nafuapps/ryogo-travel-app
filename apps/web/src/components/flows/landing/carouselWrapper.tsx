@@ -44,10 +44,10 @@ export function BlogCarouselItem({
   blogId: string
 }) {
   return (
-    <CarouselItem className="group basis-full md:basis-1/2 lg:basis-1/3 px-0.5 md:px-1">
+    <CarouselItem className="group basis-full md:basis-1/2 lg:basis-1/3 px-0.5 md:px-1 hover:opacity-70">
       <Link
         href={`/resources/blog/${blogId}`}
-        className="flex flex-col gap-1.5 md:gap-2"
+        className="flex flex-col gap-2 md:gap-3"
       >
         <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
           <Image
@@ -58,7 +58,7 @@ export function BlogCarouselItem({
             sizes="672px"
           />
         </div>
-        <RyogoPill label={type} bgColor={"light"} />
+        <RyogoPill label={type} bgColor={"light"} className="self-center" />
         <RyogoP weight="font-bold">{title}</RyogoP>
       </Link>
     </CarouselItem>

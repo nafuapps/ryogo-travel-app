@@ -98,9 +98,7 @@ export default function AddCustomMissionPageComponent({
       } else {
         toast.error(t("Error"))
       }
-      router.replace(
-        isRider ? `/rider/myMissions` : "/dashboard/mission-control",
-      )
+      router.replace(isRider ? `/rider/myMissions` : "/dashboard/missions")
     })
   }
   return (

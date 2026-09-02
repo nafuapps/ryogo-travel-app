@@ -37,12 +37,12 @@ export default async function ModifyCustomMissionPage({
     currentUser.userId !== mission.userId ||
     mission.agencyId !== currentUser.agencyId
   ) {
-    redirect("/dashboard/mission-control", RedirectType.replace)
+    redirect("/dashboard/missions", RedirectType.replace)
   }
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/mission-control/modify"} />
+      <DashboardHeader pathName={"/dashboard/missions/modify"} />
       <ModifyCustomMissionPageComponent mission={mission} />
     </MainWrapper>
   )

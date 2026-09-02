@@ -13,13 +13,13 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-type HeaderButtonType = "newBooking" | "missionControl"
+type HeaderButtonType = "newBooking" | "missions"
 
 function getHeaderButtonIcon(type: HeaderButtonType) {
   switch (type) {
     case "newBooking":
       return Plus
-    case "missionControl":
+    case "missions":
       return BellDot
   }
 }

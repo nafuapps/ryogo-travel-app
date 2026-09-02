@@ -13,7 +13,7 @@ import Link from "next/link"
 import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
-export default async function MyMissionControlPageComponent({
+export default async function MyMissionsPageComponent({
   missions,
   isPremium,
   driver,
@@ -24,7 +24,7 @@ export default async function MyMissionControlPageComponent({
   driver: NonNullable<FindDriverByUserIdType>
   assignedVehicle: FindAssignedVehicleByDriverIdType
 }) {
-  const t = await getTranslations("Dashboard.MissionControl")
+  const t = await getTranslations("Dashboard.Missions")
   const criticalMissions = missions.filter((mission) => mission.isCritical)
   const otherMissions = missions.filter((mission) => !mission.isCritical)
 
@@ -45,7 +45,7 @@ export default async function MyMissionControlPageComponent({
   }
 
   return (
-    <PageWrapper id="MyMissionControlPage">
+    <PageWrapper id="MyMissionsPage">
       {isPremium && (
         <Link href={`/rider/myMissions/add`} className="self-center">
           <RyogoOutlineButton className="w-full" label={t("AddCustomMission")}>

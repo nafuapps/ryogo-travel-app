@@ -30,15 +30,10 @@ export default async function PricingCTASection() {
           <RyogoP color="white" className="max-w-4xl text-center opacity-80">
             {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
           </RyogoP>
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col md:flex-row gap-4 justify-center items-center w-full">
             <Link href="/onboarding">
-              <RyogoWhiteButton
-                size="lg"
-                label={t("PrimaryCTA")}
-                labelColor="brand"
-                className="w-full md:w-auto "
-              >
-                <RyogoIcon icon={ChevronRight} color="brand" size="sm" thick />
+              <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+                <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
               </RyogoWhiteButton>
             </Link>
             {/* //TODO: Demo video source*/}
@@ -51,7 +46,6 @@ export default async function PricingCTASection() {
                 size="lg"
                 label={t("SecondaryCTA")}
                 labelColor="white"
-                className="w-full md:w-auto"
               >
                 <RyogoIcon icon={Video} color="white" size="sm" thick />
               </RyogoOutlineButton>

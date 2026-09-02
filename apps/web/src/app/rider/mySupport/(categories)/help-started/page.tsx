@@ -385,7 +385,7 @@ async function OverviewContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/mission-control"}
+          href={"/dashboard/missions"}
           label={t("Missions.CTA")}
         />
       </SupportContentSectionWrapper>

@@ -6,6 +6,7 @@ import { RyogoInput, RyogoTextarea } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH4 } from "@/components/typography"
 import { Form } from "@/components/ui/form"
+import { Separator } from "@/components/ui/separator"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CheckCircle } from "lucide-react"
@@ -73,7 +74,7 @@ export default function QueryForm() {
       <form
         id={"queryForm"}
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 w-full shadow-md bg-white dark:bg-sky-950/70"
+        className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 md:gap-5 w-full shadow-md bg-white dark:bg-sky-950/70"
       >
         <RyogoH4 color="brand" weight="font-bold">
           {t("Title")}
@@ -134,6 +135,7 @@ export default function QueryForm() {
             <RyogoIcon icon={CheckCircle} size="sm" color="green" thick />
           )}
         </RyogoBrandButton>
+        <Separator />
         <RyogoCaption color="light" className="text-center">
           {t("Disclaimer")}
         </RyogoCaption>

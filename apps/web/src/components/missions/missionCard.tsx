@@ -31,7 +31,7 @@ export default function MissionCard({
   mission: FindMissionsByUserIdType[number]
   isRider?: boolean
 }) {
-  const t = useTranslations("Dashboard.MissionControl")
+  const t = useTranslations("Dashboard.Missions")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [isRead, setIsRead] = useState(mission.isRead)
@@ -158,7 +158,7 @@ export default function MissionCard({
             <RyogoOutlineButton
               disabled={isPending || isRead}
               onClick={() =>
-                router.push(`/dashboard/mission-control/${mission.id}/modify`)
+                router.push(`/dashboard/missions/${mission.id}/modify`)
               }
               className="hover:bg-slate-100 dark:hover:bg-slate-800"
               label={t("Card.EditMission")}

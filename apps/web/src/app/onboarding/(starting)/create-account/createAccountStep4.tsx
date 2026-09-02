@@ -24,7 +24,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function CreateAccountStep4(props: {
+export function CreateAccountStep4({
+  onNext,
+  onPrev,
+  finalData,
+  updateFinalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: CreateOwnerAccountRequestType
@@ -51,22 +56,22 @@ export function CreateAccountStep4(props: {
   const formData = useForm<Step4Type>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      password: props.finalData.owner.password,
+      password: finalData.owner.password,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step4Type) => {
-    props.updateFinalData({
+    updateFinalData({
       agency: {
-        ...props.finalData.agency,
+        ...finalData.agency,
       },
       owner: {
-        ...props.finalData.owner,
+        ...finalData.owner,
         password: data.password,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -95,17 +100,17 @@ export function CreateAccountStep4(props: {
           <PlanSelectionCard
             type={SubscriptionPlanEnum.PREMIUM}
             onClick={() => {
-              props.updateFinalData({
+              updateFinalData({
                 agency: {
-                  ...props.finalData.agency,
+                  ...finalData.agency,
                   tryPremium: true,
                 },
                 owner: {
-                  ...props.finalData.owner,
+                  ...finalData.owner,
                 },
               })
             }}
-            selected={props.finalData.agency.tryPremium}
+            selected={finalData.agency.tryPremium}
             icon={BadgeCheck}
             title={t("Field3.PremiumTitle")}
             desc={t("Field3.PremiumDesc", { day: PREMIUM_TRIAL_DAYS })}
@@ -113,17 +118,17 @@ export function CreateAccountStep4(props: {
           <PlanSelectionCard
             type={SubscriptionPlanEnum.BASIC}
             onClick={() => {
-              props.updateFinalData({
+              updateFinalData({
                 agency: {
-                  ...props.finalData.agency,
+                  ...finalData.agency,
                   tryPremium: false,
                 },
                 owner: {
-                  ...props.finalData.owner,
+                  ...finalData.owner,
                 },
               })
             }}
-            selected={!props.finalData.agency.tryPremium}
+            selected={!finalData.agency.tryPremium}
             icon={Disc}
             title={t("Field3.BasicTitle")}
             desc={t("Field3.BasicDesc")}
@@ -142,7 +147,7 @@ export function CreateAccountStep4(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

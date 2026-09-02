@@ -8,7 +8,6 @@ import { toast } from "sonner"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
-import { useTransition } from "react"
 import ConfirmValues from "@/components/form/confirmValues"
 import {
   NewStepHeaderWrapper,
@@ -23,7 +22,13 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function NewDriverConfirm(props: {
+export function NewDriverConfirm({
+  onNext,
+  onPrev,
+  newDriverFormData,
+  agencyId,
+  agencyName,
+}: {
   onNext: () => void
   onPrev: () => void
   newDriverFormData: AddDriverRequestType
@@ -31,47 +36,41 @@ export function NewDriverConfirm(props: {
   agencyName: string
 }) {
   const t = useTranslations("Dashboard.NewDriver.Confirm")
-  const formData = useForm<AddDriverRequestType>()
+  const form = useForm<AddDriverRequestType>()
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
-  //Submit action
   const onSubmit = async () => {
-    startTransition(async () => {
-      // Add driver
-      const newDriverData: AddDriverRequestType = {
-        agencyId: props.agencyId,
-        data: {
-          name: props.newDriverFormData.data.name,
-          email: props.newDriverFormData.data.email,
-          phone: props.newDriverFormData.data.phone,
-          address: props.newDriverFormData.data.address,
-          canDriveVehicleTypes:
-            props.newDriverFormData.data.canDriveVehicleTypes,
-          defaultAllowancePerDay:
-            props.newDriverFormData.data.defaultAllowancePerDay,
-          licenseNumber: props.newDriverFormData.data.licenseNumber,
-          licenseExpiresOn: props.newDriverFormData.data.licenseExpiresOn,
-          licensePhotos: props.newDriverFormData.data.licensePhotos,
-          userPhotos: props.newDriverFormData.data.userPhotos,
-        },
-      }
-      const addedDriver = await addDriverAction(newDriverData, props.agencyName)
-      if (addedDriver) {
-        //Send to driver details page
-        toast.success(t("APISuccess"))
-        window.open(
-          addedDriver.whatsappInviteLink,
-          "_blank",
-          "noopener,noreferrer",
-        )
-        router.replace(`/dashboard/drivers/${addedDriver.id}`)
-      } else {
-        //If failed, Take back to driver page and show error
-        toast.error(t("APIError"))
-        router.replace("/dashboard/drivers")
-      }
-    })
+    // Add driver
+    const newDriverData: AddDriverRequestType = {
+      agencyId: agencyId,
+      data: {
+        name: newDriverFormData.data.name,
+        email: newDriverFormData.data.email,
+        phone: newDriverFormData.data.phone,
+        address: newDriverFormData.data.address,
+        canDriveVehicleTypes: newDriverFormData.data.canDriveVehicleTypes,
+        defaultAllowancePerDay: newDriverFormData.data.defaultAllowancePerDay,
+        licenseNumber: newDriverFormData.data.licenseNumber,
+        licenseExpiresOn: newDriverFormData.data.licenseExpiresOn,
+        licensePhotos: newDriverFormData.data.licensePhotos,
+        userPhotos: newDriverFormData.data.userPhotos,
+      },
+    }
+    const addedDriver = await addDriverAction(newDriverData, agencyName)
+    if (addedDriver) {
+      //Send to driver details page
+      toast.success(t("APISuccess"))
+      window.open(
+        addedDriver.whatsappInviteLink,
+        "_blank",
+        "noopener,noreferrer",
+      )
+      router.replace(`/dashboard/drivers/${addedDriver.id}`)
+    } else {
+      //If failed, Take back to driver page and show error
+      toast.error(t("APIError"))
+      router.replace("/dashboard/drivers")
+    }
   }
   return (
     <NewStepWrapper id="NewDriverConfirmStep">
@@ -85,70 +84,68 @@ export function NewDriverConfirm(props: {
       </NewStepHeaderWrapper>
       <NewFormWrapper<AddDriverRequestType>
         id="ConfirmForm"
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <NewFormContentWrapper>
           <ConfirmValues
             name={t("DriverName")}
-            value={props.newDriverFormData.data.name}
+            value={newDriverFormData.data.name}
           />
           <ConfirmValues
             name={t("DriverPhone")}
-            value={props.newDriverFormData.data.phone}
+            value={newDriverFormData.data.phone}
           />
           <ConfirmValues
             name={t("DriverEmail")}
-            value={props.newDriverFormData.data.email}
+            value={newDriverFormData.data.email}
           />
-          {props.newDriverFormData.data.licenseNumber && (
+          {newDriverFormData.data.licenseNumber && (
             <ConfirmValues
               name={t("LicenseNumber")}
-              value={props.newDriverFormData.data.licenseNumber}
+              value={newDriverFormData.data.licenseNumber}
             />
           )}
-          {props.newDriverFormData.data.licenseExpiresOn && (
+          {newDriverFormData.data.licenseExpiresOn && (
             <ConfirmValues
               name={t("LicenseExpiresOn")}
-              value={props.newDriverFormData.data.licenseExpiresOn.toDateString()}
+              value={newDriverFormData.data.licenseExpiresOn.toDateString()}
             />
           )}
-          {props.newDriverFormData.data.address && (
+          {newDriverFormData.data.address && (
             <ConfirmValues
               name={t("DriverAddress")}
-              value={props.newDriverFormData.data.address}
+              value={newDriverFormData.data.address}
             />
           )}
-          {props.newDriverFormData.data.canDriveVehicleTypes &&
-            props.newDriverFormData.data.canDriveVehicleTypes.length > 0 && (
+          {newDriverFormData.data.canDriveVehicleTypes &&
+            newDriverFormData.data.canDriveVehicleTypes.length > 0 && (
               <ConfirmValues
                 name={t("CanDriveVehicleTypes")}
-                value={props.newDriverFormData.data.canDriveVehicleTypes.join(
-                  ", ",
-                )}
+                value={newDriverFormData.data.canDriveVehicleTypes.join(", ")}
               />
             )}
-          {props.newDriverFormData.data.defaultAllowancePerDay && (
+          {newDriverFormData.data.defaultAllowancePerDay && (
             <ConfirmValues
               name={t("DefaultAllowancePerDay")}
-              value={`${props.newDriverFormData.data.defaultAllowancePerDay}`}
+              value={`${newDriverFormData.data.defaultAllowancePerDay}`}
             />
           )}
         </NewFormContentWrapper>
         <NewFormActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
-            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             type="submit"
-            disabled={isPending}
-            showSpinner={isPending}
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
           />
           <RyogoOutlineButton
             size={"lg"}
             label={t("SecondaryCTA")}
             type="button"
-            onClick={props.onPrev}
-            disabled={isPending}
+            onClick={onPrev}
+            disabled={form.formState.isSubmitting}
           />
         </NewFormActionWrapper>
       </NewFormWrapper>

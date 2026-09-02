@@ -27,7 +27,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function NewVehicleStep2(props: {
+export function NewVehicleStep2({
+  onNext,
+  onPrev,
+  newVehicleFormData,
+  setNewVehicleFormData,
+}: {
   onNext: () => void
   onPrev: () => void
   newVehicleFormData: AddVehicleRequestType
@@ -99,20 +104,20 @@ export function NewVehicleStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      capacity: props.newVehicleFormData.data.capacity,
-      odometerReading: props.newVehicleFormData.data.odometerReading,
-      rcPhotos: props.newVehicleFormData.data.rcPhotos,
-      vehiclePhotos: props.newVehicleFormData.data.vehiclePhotos,
-      rcExpiresOn: props.newVehicleFormData.data.rcExpiresOn,
+      capacity: newVehicleFormData.data.capacity,
+      odometerReading: newVehicleFormData.data.odometerReading,
+      rcPhotos: newVehicleFormData.data.rcPhotos,
+      vehiclePhotos: newVehicleFormData.data.vehiclePhotos,
+      rcExpiresOn: newVehicleFormData.data.rcExpiresOn,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
-    props.setNewVehicleFormData({
-      agencyId: props.newVehicleFormData.agencyId,
+    setNewVehicleFormData({
+      agencyId: newVehicleFormData.agencyId,
       data: {
-        ...props.newVehicleFormData.data,
+        ...newVehicleFormData.data,
         capacity: data.capacity,
         odometerReading: data.odometerReading,
         rcPhotos: data.rcPhotos,
@@ -120,7 +125,7 @@ export function NewVehicleStep2(props: {
         rcExpiresOn: data.rcExpiresOn,
       },
     })
-    props.onNext()
+    onNext()
   }
   return (
     <NewStepWrapper id="NewVehicleStep2">
@@ -189,7 +194,7 @@ export function NewVehicleStep2(props: {
             size={"lg"}
             label={t("SecondaryCTA")}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={formData.formState.isSubmitting}
           />
         </NewFormActionWrapper>

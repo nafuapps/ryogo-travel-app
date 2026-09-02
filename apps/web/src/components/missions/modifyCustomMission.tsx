@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
@@ -28,7 +27,10 @@ import {
   extractTimeFromDate,
 } from "@/components/missions/missionCommons"
 import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
-import { RyogoDefaultButton, RyogoOutlineButton } from "../buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ModifyCustomMissionPageComponent({
   mission,
@@ -39,7 +41,6 @@ export default function ModifyCustomMissionPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyCustomMission")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyCustomMissionSchema = z
     .object({
@@ -74,7 +75,7 @@ export default function ModifyCustomMissionPageComponent({
       }
     })
   type ModifyCustomMissionType = z.infer<typeof modifyCustomMissionSchema>
-  const formData = useForm<ModifyCustomMissionType>({
+  const form = useForm<ModifyCustomMissionType>({
     resolver: zodResolver(modifyCustomMissionSchema),
     defaultValues: {
       entityType: mission.entityType,
@@ -88,39 +89,36 @@ export default function ModifyCustomMissionPageComponent({
   })
 
   async function onSubmit(values: ModifyCustomMissionType) {
-    startTransition(async () => {
-      if (
-        await modifyCustomMissionAction({
-          missionId: mission.id,
-          userId: mission.userId,
-          agencyId: mission.agencyId,
-          entityType: values.entityType,
-          entityId: values.entityId,
-          titleKey: values.titleKey,
-          messageKey: values.messageKey,
-          dueDate: getDateTime(values.dueDate, values.dueTime),
-          isCritical: values.isCritical,
-        })
-      ) {
-        toast.success(t("Success"))
-      } else {
-        toast.error(t("Error"))
-      }
-      router.replace(isRider ? `/rider/myMissions` : "/dashboard/missions")
+    const updatedMission = await modifyCustomMissionAction({
+      missionId: mission.id,
+      userId: mission.userId,
+      agencyId: mission.agencyId,
+      entityType: values.entityType,
+      entityId: values.entityId,
+      titleKey: values.titleKey,
+      messageKey: values.messageKey,
+      dueDate: getDateTime(values.dueDate, values.dueTime),
+      isCritical: values.isCritical,
     })
+    if (updatedMission) {
+      toast.success(t("Success"))
+    } else {
+      toast.error(t("Error"))
+    }
+    router.replace(isRider ? `/rider/myMissions` : "/dashboard/missions")
   }
   return (
     <PageWrapper id="ModifyCustomMissionPage">
       <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
       <FormWrapper<ModifyCustomMissionType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="modifyCustomMissionForm"
       >
         <RyogoSelect
           name="entityType"
           title={t("Field1.Title")}
-          register={formData.register("entityType")}
+          register={form.register("entityType")}
           array={getEnumValueDisplayPairs(EntityTypeEnum)}
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
@@ -155,17 +153,17 @@ export default function ModifyCustomMissionPageComponent({
         <Separator />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("CancelCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
         <DeleteMissionAlertButton
           missionId={mission.id}

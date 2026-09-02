@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { newVehicleRepairAction } from "@/app/actions/vehicles/newVehicleRepairAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import {
   RyogoDefaultButton,
@@ -32,7 +31,6 @@ export default function NewVehicleRepairPageComponent({
 }) {
   const t = useTranslations("Dashboard.NewVehicleRepair")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const newDriverleaveSchema = z
     .object({
@@ -61,42 +59,38 @@ export default function NewVehicleRepairPageComponent({
 
   type NewVehicleRepairType = z.infer<typeof newDriverleaveSchema>
 
-  //Form init
-  const formData = useForm<NewVehicleRepairType>({
+  const form = useForm<NewVehicleRepairType>({
     resolver: zodResolver(newDriverleaveSchema),
     defaultValues: {
       isCompleted: false,
     },
   })
 
-  //Form submit
   async function onSubmit(values: NewVehicleRepairType) {
-    startTransition(async () => {
-      const newLeave: InsertVehicleRepairType = {
-        agencyId: agencyId,
-        vehicleId: vehicleId,
-        addedByUserId: userId,
-        startDate: values.startDate,
-        endDate: values.endDate,
-        isCompleted: values.isCompleted,
-        remarks: values.remarks,
-        cost: values.cost,
-      }
-      const createdLeave = await newVehicleRepairAction(newLeave)
-      if (createdLeave) {
-        router.replace(`/dashboard/vehicles/${vehicleId}/repairs`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
-    })
+    const newLeave: InsertVehicleRepairType = {
+      agencyId: agencyId,
+      vehicleId: vehicleId,
+      addedByUserId: userId,
+      startDate: values.startDate,
+      endDate: values.endDate,
+      isCompleted: values.isCompleted,
+      remarks: values.remarks,
+      cost: values.cost,
+    }
+    const createdLeave = await newVehicleRepairAction(newLeave)
+    if (createdLeave) {
+      router.replace(`/dashboard/vehicles/${vehicleId}/repairs`)
+      toast.success(t("Success"))
+    } else {
+      router.back()
+      toast.error(t("Error"))
+    }
   }
   return (
     <PageWrapper id="NewVehicleRepairPage">
       <FormWrapper<NewVehicleRepairType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="newVehicleRepairForm"
       >
         <RyogoDatePicker
@@ -126,17 +120,16 @@ export default function NewVehicleRepairPageComponent({
 
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("Back")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

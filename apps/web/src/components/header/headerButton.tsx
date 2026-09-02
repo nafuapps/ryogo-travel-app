@@ -24,7 +24,10 @@ function getHeaderButtonIcon(type: HeaderButtonType) {
   }
 }
 
-export default function HeaderButton(props: {
+export default function HeaderButton({
+  label,
+  type,
+}: {
   label: string
   type: HeaderButtonType
 }) {
@@ -32,14 +35,14 @@ export default function HeaderButton(props: {
     <Tooltip disableHoverableContent>
       <TooltipTrigger asChild>
         <RyogoOutlineButton
-          label={props.label}
+          label={label}
           labelClassName="hidden lg:flex"
           className="flex-row-reverse"
         >
-          <RyogoIcon icon={getHeaderButtonIcon(props.type)} size="sm" />
+          <RyogoIcon icon={getHeaderButtonIcon(type)} size="sm" />
         </RyogoOutlineButton>
       </TooltipTrigger>
-      <TooltipContent className="flex lg:hidden">{props.label}</TooltipContent>
+      <TooltipContent className="flex lg:hidden">{label}</TooltipContent>
     </Tooltip>
   )
 }

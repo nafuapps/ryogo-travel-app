@@ -46,14 +46,14 @@ export function RyoGoLightLogo() {
   )
 }
 
-export function RyoGoLandingLogo(props: { alt: string }) {
+export function RyoGoLandingLogo({ alt }: { alt: string }) {
   return (
     <div className="relative w-16 md:w-18 lg:w-20 aspect-2/1">
       <Image
         loading="eager"
         src="/logo.png"
         fill
-        alt={props.alt}
+        alt={alt}
         sizes="(max-width: 768px) 64px, (max-width: 1024px) 72px, 80px"
         className={"dark:hidden"}
       />
@@ -61,7 +61,7 @@ export function RyoGoLandingLogo(props: { alt: string }) {
         loading="eager"
         src="/logoLight.png"
         fill
-        alt={props.alt}
+        alt={alt}
         sizes="(max-width: 768px) 64px, (max-width: 1024px) 72px, 80px"
         className={"hidden dark:block"}
       />
@@ -69,13 +69,10 @@ export function RyoGoLandingLogo(props: { alt: string }) {
   )
 }
 
-interface RyogoSidebarLogoProps {
-  open: boolean
-}
-export function RyoGoSidebarLogo(props: RyogoSidebarLogoProps) {
+export function RyoGoSidebarLogo({ open }: { open: boolean }) {
   return (
     <div
-      className={` ${props.open ? "py-2.5" : "py-3"} px-1 flex gap-3 items-center`}
+      className={` ${open ? "py-2.5" : "py-3"} px-1 flex gap-3 items-center`}
     >
       <div className={`relative size-10 aspect-square`}>
         <Image
@@ -95,9 +92,7 @@ export function RyoGoSidebarLogo(props: RyogoSidebarLogoProps) {
           className={"hidden dark:block"}
         />
       </div>
-      <div
-        className={`relative h-11 ${props.open ? "flex" : "hidden"} aspect-2/1`}
-      >
+      <div className={`relative h-11 ${open ? "flex" : "hidden"} aspect-2/1`}>
         <Image
           loading="eager"
           src="/logo.png"

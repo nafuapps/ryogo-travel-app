@@ -13,7 +13,6 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driverLeave.types"
 import {
@@ -28,7 +27,6 @@ export default function ModifyDriverLeavePageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyDriverLeave")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyDriverleaveSchema = z
     .object({
@@ -50,8 +48,7 @@ export default function ModifyDriverLeavePageComponent({
 
   type ModifyDriverLeaveFormType = z.infer<typeof modifyDriverleaveSchema>
 
-  //Form init
-  const formData = useForm<ModifyDriverLeaveFormType>({
+  const form = useForm<ModifyDriverLeaveFormType>({
     resolver: zodResolver(modifyDriverleaveSchema),
     defaultValues: {
       startDate: leave.startDate,
@@ -61,32 +58,29 @@ export default function ModifyDriverLeavePageComponent({
     },
   })
 
-  //Form submit
   async function onSubmit(values: ModifyDriverLeaveFormType) {
-    startTransition(async () => {
-      const modifyLeave: ModifyDriverLeaveRequestType = {
-        leaveId: leave.id,
-        agencyId: leave.agencyId,
-        startDate: values.startDate,
-        endDate: values.endDate,
-        isCompleted: values.isCompleted,
-        remarks: values.remarks,
-      }
-      const modifiedLeave = await modifyDriverLeaveAction(modifyLeave)
-      if (modifiedLeave) {
-        router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
-    })
+    const modifyLeave: ModifyDriverLeaveRequestType = {
+      leaveId: leave.id,
+      agencyId: leave.agencyId,
+      startDate: values.startDate,
+      endDate: values.endDate,
+      isCompleted: values.isCompleted,
+      remarks: values.remarks,
+    }
+    const modifiedLeave = await modifyDriverLeaveAction(modifyLeave)
+    if (modifiedLeave) {
+      router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)
+      toast.success(t("Success"))
+    } else {
+      router.back()
+      toast.error(t("Error"))
+    }
   }
   return (
     <PageWrapper id="ModifyDriverLeavePage">
       <FormWrapper<ModifyDriverLeaveFormType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="newDriverLeaveForm"
       >
         <RyogoDatePicker
@@ -109,17 +103,17 @@ export default function ModifyDriverLeavePageComponent({
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("Back")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

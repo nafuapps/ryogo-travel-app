@@ -15,7 +15,6 @@ import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
@@ -33,7 +32,6 @@ export default function ModifyDriverPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyDriver")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyDriverSchema = z.object({
     address: z
@@ -81,7 +79,7 @@ export default function ModifyDriverPageComponent({
 
   type ModifyDriverType = z.infer<typeof modifyDriverSchema>
 
-  const formData = useForm<ModifyDriverType>({
+  const form = useForm<ModifyDriverType>({
     resolver: zodResolver(modifyDriverSchema),
     defaultValues: {
       address: driver.address ?? undefined,
@@ -94,33 +92,31 @@ export default function ModifyDriverPageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyDriverType) {
-    startTransition(async () => {
-      const modifyDriverData: ModifyDriverRequestType = {
-        driverId: driver.id,
-        agencyId: driver.agencyId,
-        address: data.address,
-        canDriveVehicleTypes: data.canDriveVehicleTypes,
-        defaultAllowancePerDay: data.defaultAllowancePerDay,
-        licenseNumber: data.licenseNumber,
-        licenseExpiresOn: data.licenseExpiresOn,
-        licensePhotos: data.licensePhotos,
-      }
-      if (await modifyDriverAction(modifyDriverData)) {
-        router.replace(`/dashboard/drivers/${driver.id}`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
-    })
+    const modifyDriverData: ModifyDriverRequestType = {
+      driverId: driver.id,
+      agencyId: driver.agencyId,
+      address: data.address,
+      canDriveVehicleTypes: data.canDriveVehicleTypes,
+      defaultAllowancePerDay: data.defaultAllowancePerDay,
+      licenseNumber: data.licenseNumber,
+      licenseExpiresOn: data.licenseExpiresOn,
+      licensePhotos: data.licensePhotos,
+    }
+    const updatedDriver = await modifyDriverAction(modifyDriverData)
+    if (updatedDriver) {
+      router.replace(`/dashboard/drivers/${driver.id}`)
+      toast.success(t("Success"))
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   return (
     <PageWrapper id="ModifyDriver">
       <FormWrapper<ModifyDriverType>
-        form={formData}
+        form={form}
         id="ModifyDriverForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <RyogoTextarea
           name={"address"}
@@ -131,7 +127,6 @@ export default function ModifyDriverPageComponent({
           array={getEnumValueDisplayPairs(VehicleTypesEnum)}
           name={"canDriveVehicleTypes"}
           label={t("Field2.Title")}
-          register={formData.register("canDriveVehicleTypes")}
         />
         <RyogoInput
           name={"defaultAllowancePerDay"}
@@ -155,24 +150,24 @@ export default function ModifyDriverPageComponent({
         />
         <RyogoFileInput
           name={"licensePhotos"}
-          register={formData.register("licensePhotos")}
+          register={form.register("licensePhotos")}
           label={t("Field6.Title")}
           placeholder={t("Field6.Placeholder")}
           description={t("Field6.Description")}
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

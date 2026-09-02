@@ -8,7 +8,6 @@ import { toast } from "sonner"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
-import { useTransition } from "react"
 import ConfirmValues from "@/components/form/confirmValues"
 import {
   NewStepHeaderWrapper,
@@ -23,56 +22,51 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function NewVehicleConfirm(props: {
-  onNext: () => void
+export function NewVehicleConfirm({
+  onPrev,
+  newVehicleFormData,
+  agencyId,
+}: {
   onPrev: () => void
   newVehicleFormData: AddVehicleRequestType
   agencyId: string
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Confirm")
-  const formData = useForm<AddVehicleRequestType>()
+  const form = useForm<AddVehicleRequestType>()
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
-  //Submit actions
   const onSubmit = async () => {
-    startTransition(async () => {
-      // Add vehicle
-      const newVehicleData: AddVehicleRequestType = {
-        agencyId: props.agencyId,
-        data: {
-          vehicleNumber: props.newVehicleFormData.data.vehicleNumber,
-          type: props.newVehicleFormData.data.type,
-          brand: props.newVehicleFormData.data.brand,
-          color: props.newVehicleFormData.data.color,
-          model: props.newVehicleFormData.data.model,
-          capacity: props.newVehicleFormData.data.capacity,
-          odometerReading: props.newVehicleFormData.data.odometerReading,
-          insuranceExpiresOn: props.newVehicleFormData.data.insuranceExpiresOn,
-          pucExpiresOn: props.newVehicleFormData.data.pucExpiresOn,
-          rcExpiresOn: props.newVehicleFormData.data.rcExpiresOn,
-          hasAC: props.newVehicleFormData.data.hasAC,
-          defaultRatePerKm: props.newVehicleFormData.data.defaultRatePerKm,
-          defaultAcChargePerDay:
-            props.newVehicleFormData.data.defaultAcChargePerDay,
-          insurancePhotos: props.newVehicleFormData.data.insurancePhotos,
-          pucPhotos: props.newVehicleFormData.data.pucPhotos,
-          rcPhotos: props.newVehicleFormData.data.rcPhotos,
-          vehiclePhotos: props.newVehicleFormData.data.vehiclePhotos,
-        },
-      }
-      const addedVehicle = await addVehicleAction(newVehicleData)
+    const newVehicleData: AddVehicleRequestType = {
+      agencyId: agencyId,
+      data: {
+        vehicleNumber: newVehicleFormData.data.vehicleNumber,
+        type: newVehicleFormData.data.type,
+        brand: newVehicleFormData.data.brand,
+        color: newVehicleFormData.data.color,
+        model: newVehicleFormData.data.model,
+        capacity: newVehicleFormData.data.capacity,
+        odometerReading: newVehicleFormData.data.odometerReading,
+        insuranceExpiresOn: newVehicleFormData.data.insuranceExpiresOn,
+        pucExpiresOn: newVehicleFormData.data.pucExpiresOn,
+        rcExpiresOn: newVehicleFormData.data.rcExpiresOn,
+        hasAC: newVehicleFormData.data.hasAC,
+        defaultRatePerKm: newVehicleFormData.data.defaultRatePerKm,
+        defaultAcChargePerDay: newVehicleFormData.data.defaultAcChargePerDay,
+        insurancePhotos: newVehicleFormData.data.insurancePhotos,
+        pucPhotos: newVehicleFormData.data.pucPhotos,
+        rcPhotos: newVehicleFormData.data.rcPhotos,
+        vehiclePhotos: newVehicleFormData.data.vehiclePhotos,
+      },
+    }
+    const addedVehicle = await addVehicleAction(newVehicleData)
 
-      if (addedVehicle) {
-        //Send to added vehicle details page
-        toast.success(t("APISuccess"))
-        router.replace(`/dashboard/vehicles/${addedVehicle.id}`)
-      } else {
-        //If failed, Take back to vehicle page and show error
-        toast.error(t("APIError"))
-        router.replace("/dashboard/vehicles")
-      }
-    })
+    if (addedVehicle) {
+      toast.success(t("APISuccess"))
+      router.replace(`/dashboard/vehicles/${addedVehicle.id}`)
+    } else {
+      toast.error(t("APIError"))
+      router.replace("/dashboard/vehicles")
+    }
   }
   return (
     <NewStepWrapper id="NewVehicleConfirm">
@@ -86,92 +80,92 @@ export function NewVehicleConfirm(props: {
       </NewStepHeaderWrapper>
       <NewFormWrapper<AddVehicleRequestType>
         id="ConfirmForm"
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <NewFormContentWrapper>
           <ConfirmValues
             name={t("VehicleNumber")}
-            value={props.newVehicleFormData.data.vehicleNumber}
+            value={newVehicleFormData.data.vehicleNumber}
           />
           <ConfirmValues
             name={t("Type")}
-            value={props.newVehicleFormData.data.type}
+            value={newVehicleFormData.data.type}
           />
           <ConfirmValues
             name={t("Brand")}
-            value={props.newVehicleFormData.data.brand}
+            value={newVehicleFormData.data.brand}
           />
           <ConfirmValues
             name={t("Model")}
-            value={props.newVehicleFormData.data.model}
+            value={newVehicleFormData.data.model}
           />
           <ConfirmValues
             name={t("Color")}
-            value={props.newVehicleFormData.data.color}
+            value={newVehicleFormData.data.color}
           />
-          {props.newVehicleFormData.data.capacity && (
+          {newVehicleFormData.data.capacity && (
             <ConfirmValues
               name={t("Capacity")}
-              value={`${props.newVehicleFormData.data.capacity}`}
+              value={`${newVehicleFormData.data.capacity}`}
             />
           )}
-          {props.newVehicleFormData.data.odometerReading && (
+          {newVehicleFormData.data.odometerReading && (
             <ConfirmValues
               name={t("OdometerReading")}
-              value={`${props.newVehicleFormData.data.odometerReading}`}
+              value={`${newVehicleFormData.data.odometerReading}`}
             />
           )}
-          {props.newVehicleFormData.data.insuranceExpiresOn && (
+          {newVehicleFormData.data.insuranceExpiresOn && (
             <ConfirmValues
               name={t("InsuranceExpiresOn")}
-              value={props.newVehicleFormData.data.insuranceExpiresOn.toDateString()}
+              value={newVehicleFormData.data.insuranceExpiresOn.toDateString()}
             />
           )}
-          {props.newVehicleFormData.data.pucExpiresOn && (
+          {newVehicleFormData.data.pucExpiresOn && (
             <ConfirmValues
               name={t("PUCExpiresOn")}
-              value={props.newVehicleFormData.data.pucExpiresOn.toDateString()}
+              value={newVehicleFormData.data.pucExpiresOn.toDateString()}
             />
           )}
-          {props.newVehicleFormData.data.rcExpiresOn && (
+          {newVehicleFormData.data.rcExpiresOn && (
             <ConfirmValues
               name={t("RCExpiresOn")}
-              value={props.newVehicleFormData.data.rcExpiresOn.toDateString()}
+              value={newVehicleFormData.data.rcExpiresOn.toDateString()}
             />
           )}
-          {props.newVehicleFormData.data.defaultRatePerKm && (
+          {newVehicleFormData.data.defaultRatePerKm && (
             <ConfirmValues
               name={t("RatePerKm")}
-              value={`${props.newVehicleFormData.data.defaultRatePerKm}`}
+              value={`${newVehicleFormData.data.defaultRatePerKm}`}
             />
           )}
           <ConfirmValues
             name={t("HasAC")}
-            value={props.newVehicleFormData.data.hasAC ? "Yes" : "No"}
+            value={newVehicleFormData.data.hasAC ? "Yes" : "No"}
           />
-          {props.newVehicleFormData.data.hasAC &&
-            props.newVehicleFormData.data.defaultAcChargePerDay && (
+          {newVehicleFormData.data.hasAC &&
+            newVehicleFormData.data.defaultAcChargePerDay && (
               <ConfirmValues
                 name={t("ACChagePerDay")}
-                value={`${props.newVehicleFormData.data.defaultAcChargePerDay}`}
+                value={`${newVehicleFormData.data.defaultAcChargePerDay}`}
               />
             )}
         </NewFormContentWrapper>
         <NewFormActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
-            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             type="submit"
-            disabled={isPending}
-            showSpinner={isPending}
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
           />
           <RyogoOutlineButton
             size={"lg"}
             label={t("SecondaryCTA")}
             type="button"
-            onClick={props.onPrev}
-            disabled={isPending}
+            onClick={onPrev}
+            disabled={form.formState.isSubmitting}
           />
         </NewFormActionWrapper>
       </NewFormWrapper>

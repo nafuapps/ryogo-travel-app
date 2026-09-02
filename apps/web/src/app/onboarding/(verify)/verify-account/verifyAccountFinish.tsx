@@ -6,26 +6,24 @@ import {
   OnboardingStepForm,
   OnboardingSuccessIcon,
 } from "@/components/flows/onboarding/onboardingSteps"
-import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { useForm } from "react-hook-form"
 
 export function VerifyAccountFinish() {
   const t = useTranslations("Onboarding.VerifyAccountPage.Finish")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const form = useForm()
 
-  const goToVehicleOnboarding = async () => {
-    startTransition(async () => {
-      //Verify user in cookies and take to vehicle onboarding
-      await verifyAccountAction()
-      router.push("/onboarding/add-vehicle")
-    })
+  const onSubmit = async () => {
+    //Verify user in cookies and take to vehicle onboarding
+    await verifyAccountAction()
+    router.push("/onboarding/add-vehicle")
   }
 
   return (
-    <OnboardingStepForm formId="Step2Form">
+    <OnboardingStepForm formId="Step2Form" submit={form.handleSubmit(onSubmit)}>
       <OnboardingStepContent contentId="Step2Content" success>
         <OnboardingSuccessIcon />
         <RyogoH3>{t("Title")}</RyogoH3>
@@ -36,8 +34,8 @@ export function VerifyAccountFinish() {
         <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
         <RyogoDefaultButton
           size={"lg"}
-          disabled={isPending}
-          onClick={goToVehicleOnboarding}
+          type="submit"
+          disabled={form.formState.isSubmitting}
           label={t("PrimaryCTA")}
         />
       </OnboardingStepActions>

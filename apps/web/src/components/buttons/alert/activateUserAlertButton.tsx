@@ -12,7 +12,11 @@ import {
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function ActivateUserAlertButton(props: {
+export default function ActivateUserAlertButton({
+  userId,
+  agencyId,
+  role,
+}: {
   userId: string
   agencyId: string
   role: UserRolesEnum
@@ -23,7 +27,7 @@ export default function ActivateUserAlertButton(props: {
 
   async function activate() {
     startTransition(async () => {
-      if (await activateUserAction(props.userId, props.agencyId, props.role)) {
+      if (await activateUserAction(userId, agencyId, role)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -6,10 +6,9 @@ import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.se
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { CircleSmall, IdCard } from "lucide-react"
 import moment from "moment"
-import { Route } from "next"
 import { getTranslations } from "next-intl/server"
 import {
-  DashboardItemWrapper,
+  DashboardChipItemWrapper,
   DashboardLabelImageChip,
 } from "@/components/flows/dashboard/dashboardCommon"
 import {
@@ -17,6 +16,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import Link from "next/link"
 
 export default async function DashboardUserChipComponent({
   user,
@@ -28,40 +28,46 @@ export default async function DashboardUserChipComponent({
   const onlineStatus = getOnlineStatus(user.lastSeen)
 
   return (
-    <DashboardItemWrapper href={`/dashboard/users/${user.id}` as Route}>
-      <DashboardLabelImageChip label={user.name}>
-        <Tooltip>
-          <TooltipTrigger>
-            <RyogoIcon
-              icon={CircleSmall}
-              thick={onlineStatus !== "Offline"}
-              size={"sm"}
-              color={
-                onlineStatus === "Away"
-                  ? "yellow"
-                  : onlineStatus === "Online"
-                    ? "green"
-                    : "light"
-              }
+    <Link href={`/dashboard/users/${user.id}`}>
+      <DashboardChipItemWrapper>
+        <DashboardLabelImageChip label={user.name}>
+          <Tooltip>
+            <TooltipTrigger>
+              <RyogoIcon
+                icon={CircleSmall}
+                thick
+                size={"sm"}
+                color={
+                  onlineStatus === "Away"
+                    ? "yellow"
+                    : onlineStatus === "Online"
+                      ? "green"
+                      : "light"
+                }
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              {user.lastSeen
+                ? t("LastSeen", { time: moment(user.lastSeen).fromNow() })
+                : t("Offline")}
+            </TooltipContent>
+          </Tooltip>
+          {userImageUrl ? (
+            <RyogoImage
+              src={getFileUrl(userImageUrl)}
+              alt={user.name}
+              imageSize="xs"
             />
-          </TooltipTrigger>
-          <TooltipContent>
-            {user.lastSeen
-              ? t("LastSeen", { time: moment(user.lastSeen).fromNow() })
-              : t("Offline")}
-          </TooltipContent>
-        </Tooltip>
-        {userImageUrl ? (
-          <RyogoImage
-            src={getFileUrl(userImageUrl)}
-            alt={user.name}
-            imageSize="xs"
-          />
-        ) : (
-          <RyogoEnclosedIcon icon={IdCard} size="sm" />
-        )}
-      </DashboardLabelImageChip>
-      <UserStatusPill status={user.status} size="sm" className="self-center" />
-    </DashboardItemWrapper>
+          ) : (
+            <RyogoEnclosedIcon icon={IdCard} size="sm" />
+          )}
+        </DashboardLabelImageChip>
+        <UserStatusPill
+          status={user.status}
+          size="sm"
+          className="self-center"
+        />
+      </DashboardChipItemWrapper>
+    </Link>
   )
 }

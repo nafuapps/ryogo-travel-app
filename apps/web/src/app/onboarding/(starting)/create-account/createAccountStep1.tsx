@@ -18,7 +18,12 @@ import { useBotDetection } from "@/hooks/useBotDetection"
 import { toast } from "sonner"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
-export function CreateAccountStep1(props: {
+export function CreateAccountStep1({
+  onNext,
+  finalData,
+  updateFinalData,
+  allOwners,
+}: {
   onNext: () => void
   finalData: CreateOwnerAccountRequestType
   updateFinalData: Dispatch<SetStateAction<CreateOwnerAccountRequestType>>
@@ -43,10 +48,10 @@ export function CreateAccountStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      agencyName: props.finalData.agency.businessName,
-      ownerName: props.finalData.owner.name,
-      ownerPhone: props.finalData.owner.phone,
-      ownerEmail: props.finalData.owner.email,
+      agencyName: finalData.agency.businessName,
+      ownerName: finalData.owner.name,
+      ownerPhone: finalData.owner.phone,
+      ownerEmail: finalData.owner.email,
     },
   })
 
@@ -57,7 +62,7 @@ export function CreateAccountStep1(props: {
       return
     }
     if (
-      props.allOwners.some(
+      allOwners.some(
         (o) => o.email === data.ownerEmail && o.phone === data.ownerPhone,
       )
     ) {
@@ -66,19 +71,19 @@ export function CreateAccountStep1(props: {
         message: t("APIError"),
       })
     } else {
-      props.updateFinalData({
+      updateFinalData({
         agency: {
-          ...props.finalData.agency,
+          ...finalData.agency,
           businessName: data.agencyName,
         },
         owner: {
-          ...props.finalData.owner,
+          ...finalData.owner,
           name: data.ownerName,
           phone: data.ownerPhone,
           email: data.ownerEmail,
         },
       })
-      props.onNext()
+      onNext()
     }
   }
 

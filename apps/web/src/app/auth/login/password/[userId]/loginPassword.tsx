@@ -5,12 +5,11 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoH3 } from "@/components/typography"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
-import { useTransition } from "react"
 import {
   AuthActionWrapper,
   AuthFormWrapper,
@@ -34,7 +33,6 @@ export default function LoginPasswordPageComponent({
 }) {
   const t = useTranslations("Auth.LoginPage.Step3")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
   const { checkBotActivity, isBot } = useBotDetection()
 
   const formSchema = z.object({
@@ -42,7 +40,7 @@ export default function LoginPasswordPageComponent({
   })
 
   type SchemaType = z.infer<typeof formSchema>
-  const methods = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
@@ -55,39 +53,37 @@ export default function LoginPasswordPageComponent({
       toast.error(t("BotError"))
       return
     }
-    startTransition(async () => {
-      const loginResponse = await loginAction(user.id, data.password)
-      if (loginResponse.error === "passwordNotMatching") {
-        // Show password match error
-        methods.setError("password", {
-          type: "manual",
-          message: t("APIError1"),
-        })
-      } else if (loginResponse.error) {
-        // Show user not found error
-        methods.setError("password", {
-          type: "manual",
-          message: t("APIError2"),
-        })
+    const loginResponse = await loginAction(user.id, data.password)
+    if (loginResponse.error === "passwordNotMatching") {
+      // Show password match error
+      form.setError("password", {
+        type: "manual",
+        message: t("APIError1"),
+      })
+    } else if (loginResponse.error) {
+      // Show user not found error
+      form.setError("password", {
+        type: "manual",
+        message: t("APIError2"),
+      })
+    } else {
+      //Login user
+      if (loginResponse.userRole === UserRolesEnum.DRIVER) {
+        //Redirect to Rider page
+        router.replace("/rider/home")
       } else {
-        //Login user
-        if (loginResponse.userRole === UserRolesEnum.DRIVER) {
-          //Redirect to Rider page
-          router.replace("/rider/home")
-        } else {
-          //Redirect to Dashboard
-          router.replace("/dashboard/home")
-        }
+        //Redirect to Dashboard
+        router.replace("/dashboard/home")
       }
-    })
+    }
   }
 
   return (
     <AuthPageWrapper>
       <AuthFormWrapper<SchemaType>
         id="LoginPasswordForm"
-        onSubmit={methods.handleSubmit(onSubmit)}
-        form={methods}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <UserCard user={user} />
@@ -100,11 +96,11 @@ export default function LoginPasswordPageComponent({
         />
         <AuthActionWrapper>
           <RyogoDefaultButton
-            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             size={"lg"}
             type="submit"
-            disabled={isPending || isBot}
-            showSpinner={isPending}
+            disabled={form.formState.isSubmitting || isBot}
+            showSpinner={form.formState.isSubmitting}
           />
           <RyogoOutlineButton
             label={t("Back")}

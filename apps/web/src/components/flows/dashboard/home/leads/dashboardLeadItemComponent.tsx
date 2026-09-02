@@ -4,10 +4,13 @@ import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardLeadsType } from "@ryogo-travel-app/api/services/booking.services"
 import { User } from "lucide-react"
-import Link from "next/link"
-import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
+import {
+  DashboardBoxItemWrapper,
+  DashboardLabelImageChip,
+} from "@/components/flows/dashboard/dashboardCommon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import Link from "next/link"
 
 export default async function DashboardLeadItemComponent({
   trip,
@@ -24,10 +27,8 @@ export default async function DashboardLeadItemComponent({
 
   return (
     <Link href={`/dashboard/bookings/${trip.id}`}>
-      <div
-        className={`flex flex-col gap-2 lg:gap-3 justify-between w-full border ${highlight ? "border-sky-300 dark:border-sky-700 hover:bg-sky-100 dark:hover:bg-sky-950" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
-      >
-        <SectionRowWrapper center>
+      <DashboardBoxItemWrapper highlight={highlight}>
+        <SectionRowWrapper small center>
           <RyogoCaption color="light" weight="font-bold">
             {trip.id}
           </RyogoCaption>
@@ -35,12 +36,12 @@ export default async function DashboardLeadItemComponent({
             {trip.startDate.toLocaleDateString()}
           </RyogoCaption>
         </SectionRowWrapper>
-        <SectionRowWrapper>
+        <SectionRowWrapper small center>
           <RyogoP weight="font-bold">{trip.source.city}</RyogoP>
-          <GetTripTypeIcon tripType={trip.type} size="sm" thick />
+          <GetTripTypeIcon tripType={trip.type} size="sm" color="light" thick />
           <RyogoP weight="font-bold">{trip.destination.city}</RyogoP>
         </SectionRowWrapper>
-        <SectionRowWrapper center>
+        <SectionRowWrapper small center>
           <SectionRowWrapper>
             <DashboardLabelImageChip label={trip.customer.name}>
               {customerImageUrl ? (
@@ -58,7 +59,7 @@ export default async function DashboardLeadItemComponent({
             {"₹" + trip.estimatedTotalAmount}
           </RyogoP>
         </SectionRowWrapper>
-      </div>
+      </DashboardBoxItemWrapper>
     </Link>
   )
 }

@@ -17,7 +17,6 @@ import {
   NewStepWrapper,
   NewFormWrapper,
   NewFormContentWrapper,
-  NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
@@ -34,7 +33,12 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { StickyActionWrapper } from "@/components/page/pageWrappers"
 
-export default function NewBookingAddCustomerPageComponent(props: {
+export default function NewBookingAddCustomerPageComponent({
+  agency,
+  customers,
+  userId,
+  setAddingCustomer,
+}: {
   agency: NonNullable<FindAgencyByIdType>
   customers: FindCustomersInAgencyType
   userId: string
@@ -69,15 +73,15 @@ export default function NewBookingAddCustomerPageComponent(props: {
     defaultValues: {
       newCustomerPhone: "",
       newCustomerName: "",
-      newCustomerState: props.agency.location.state,
-      newCustomerCity: props.agency.location.city,
+      newCustomerState: agency.location.state,
+      newCustomerCity: agency.location.city,
     },
   })
 
   //Form submit
   async function onSubmit(values: AddCustomerType) {
     //Check for existing customer
-    const foundCustomer = props.customers.find(
+    const foundCustomer = customers.find(
       (customer) => customer.phone === values.newCustomerPhone,
     )
 
@@ -93,8 +97,8 @@ export default function NewBookingAddCustomerPageComponent(props: {
       name: values.newCustomerName,
       state: values.newCustomerState,
       city: values.newCustomerCity,
-      agencyId: props.agency.id,
-      addedByUserId: props.userId,
+      agencyId: agency.id,
+      addedByUserId: userId,
     })
     if (newCustomer) {
       //Go to new booking with customer page
@@ -192,7 +196,7 @@ export default function NewBookingAddCustomerPageComponent(props: {
           />
           <RyogoGhostButton
             type="button"
-            onClick={() => props.setAddingCustomer(false)}
+            onClick={() => setAddingCustomer(false)}
             disabled={form.formState.isSubmitting}
             label={t("BackCTA")}
             labelClassName="font-bold"

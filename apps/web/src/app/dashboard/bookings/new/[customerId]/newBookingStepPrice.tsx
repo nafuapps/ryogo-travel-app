@@ -22,7 +22,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function NewBookingStepPrice(props: {
+export default function NewBookingStepPrice({
+  onNext,
+  onPrev,
+  newBookingFormData,
+  setNewBookingFormData,
+}: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingRequestDataType
@@ -77,27 +82,27 @@ export default function NewBookingStepPrice(props: {
   const form = useForm<StepPriceType>({
     resolver: zodResolver(stepPriceSchema),
     defaultValues: {
-      selectedRatePerKm: props.newBookingFormData.selectedRatePerKm,
-      selectedAllowancePerDay: props.newBookingFormData.selectedAllowancePerDay,
-      selectedAcChargePerDay: props.newBookingFormData.selectedAcChargePerDay,
-      selectedCommissionRate: props.newBookingFormData.selectedCommissionRate,
-      selectedDistance: props.newBookingFormData.selectedDistance,
+      selectedRatePerKm: newBookingFormData.selectedRatePerKm,
+      selectedAllowancePerDay: newBookingFormData.selectedAllowancePerDay,
+      selectedAcChargePerDay: newBookingFormData.selectedAcChargePerDay,
+      selectedCommissionRate: newBookingFormData.selectedCommissionRate,
+      selectedDistance: newBookingFormData.selectedDistance,
     },
   })
 
   //Form submit
   function onSubmit(values: StepPriceType) {
-    props.setNewBookingFormData({
-      ...props.newBookingFormData,
+    setNewBookingFormData({
+      ...newBookingFormData,
       selectedRatePerKm: values.selectedRatePerKm,
       selectedAllowancePerDay: values.selectedAllowancePerDay,
       selectedAcChargePerDay:
         values.selectedAcChargePerDay ??
-        props.newBookingFormData.selectedAcChargePerDay,
+        newBookingFormData.selectedAcChargePerDay,
       selectedCommissionRate: values.selectedCommissionRate,
       selectedDistance: values.selectedDistance,
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -117,7 +122,7 @@ export default function NewBookingStepPrice(props: {
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewBookingTripCard {...props.newBookingFormData} />
+        <NewBookingTripCard {...newBookingFormData} />
         <NewFormContentWrapper>
           <RyogoInput
             name="selectedDistance"
@@ -125,7 +130,7 @@ export default function NewBookingStepPrice(props: {
             placeholder={t("Field5.Placeholder")}
             description={t("Field5.Description")}
             type="tel"
-            disabled={props.newBookingFormData.routeId ? true : false}
+            disabled={newBookingFormData.routeId ? true : false}
           />
           <RyogoInput
             name="selectedRatePerKm"
@@ -147,7 +152,7 @@ export default function NewBookingStepPrice(props: {
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
             type="tel"
-            disabled={props.newBookingFormData.tripNeedsAC === false}
+            disabled={newBookingFormData.tripNeedsAC === false}
           />
           <RyogoInput
             name="selectedCommissionRate"
@@ -168,7 +173,7 @@ export default function NewBookingStepPrice(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />

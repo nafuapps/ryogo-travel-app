@@ -35,9 +35,9 @@ export default async function PlanUsageCard({
   const bookingsRatio =
     confirmedBookingsLength / BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
 
-  const vehiclesRatio = (vehicleLength * 100) / BASIC_PLAN_VEHICLE_LIMIT
-  const driversRatio = (driverLength * 100) / BASIC_PLAN_DRIVER_LIMIT
-  const agentsRatio = (agentLength * 100) / BASIC_PLAN_AGENT_LIMIT
+  const vehiclesRatio = vehicleLength / BASIC_PLAN_VEHICLE_LIMIT
+  const driversRatio = driverLength / BASIC_PLAN_DRIVER_LIMIT
+  const agentsRatio = agentLength / BASIC_PLAN_AGENT_LIMIT
 
   const needsWarning =
     Math.max(bookingsRatio, vehiclesRatio, driversRatio, agentsRatio) >= 1
@@ -98,9 +98,9 @@ function UsageElement({
   ratio: number
 }) {
   let bgColor = `bg-gradient-to-r`
-  if (ratio >= 100) {
+  if (ratio >= 1) {
     bgColor += " from-red-800 to-red-500"
-  } else if (ratio >= 80) {
+  } else if (ratio >= 0.8) {
     bgColor += " from-yellow-800 to-yellow-500"
   } else {
     bgColor += " from-sky-800 to-sky-500"
@@ -114,7 +114,7 @@ function UsageElement({
       <div className="rounded-full overflow-hidden h-2 lg:h-2.5 bg-slate-300 dark:bg-slate-700">
         <div
           className={`h-full rounded-full ${bgColor}`}
-          style={{ width: (ratio > 100 ? 100 : ratio) + "%" }}
+          style={{ width: Math.min(1, ratio) * 100 + "%" }}
         />
       </div>
     </div>

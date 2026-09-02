@@ -12,7 +12,13 @@ import {
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function DeleteSupportTicketAlertButton(props: {
+export default function DeleteSupportTicketAlertButton({
+  ticketId,
+  userId,
+  agencyId,
+  status,
+  isRider,
+}: {
   ticketId: string
   userId: string
   agencyId: string
@@ -26,19 +32,10 @@ export default function DeleteSupportTicketAlertButton(props: {
 
   async function deleteCustomMission() {
     startCancelTransition(async () => {
-      if (
-        await deleteSupportTicketAction(
-          props.ticketId,
-          props.userId,
-          props.agencyId,
-          props.status,
-        )
-      ) {
+      if (await deleteSupportTicketAction(ticketId, userId, agencyId, status)) {
         toast.success(t("Success"))
         router.replace(
-          props.isRider
-            ? `/rider/mySupport/tickets`
-            : `/dashboard/support/tickets`,
+          isRider ? `/rider/mySupport/tickets` : `/dashboard/support/tickets`,
         )
       } else {
         toast.error(t("Error"))

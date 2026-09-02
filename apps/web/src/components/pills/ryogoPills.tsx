@@ -51,14 +51,14 @@ function getPillSize(size: RyogoPillSizeType = "md") {
   }
 }
 
-type RyogoPillType = {
+type PillType = {
   label: string
   bgColor: RyogoPillColorType
   size?: RyogoPillSizeType
   className?: string
 }
 
-export function RyogoPill(props: RyogoPillType) {
+export function RyogoPill(props: PillType) {
   return (
     <div
       className={`flex items-center justify-center rounded-full ${getPillColor(props.bgColor)} ${getPillSize(props.size)} shrink-0 text-nowrap ${props.className ?? ""}`}
@@ -72,10 +72,10 @@ export function RyogoPill(props: RyogoPillType) {
   )
 }
 
-type PillType = Omit<RyogoPillType, "label" | "bgColor">
+type RyogoPillType = Omit<PillType, "label" | "bgColor">
 
 export function BookingStatusPill(
-  props: { status: BookingStatusEnum } & PillType,
+  props: { status: BookingStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -93,7 +93,7 @@ export function BookingStatusPill(
 }
 
 export function VehicleStatusPill(
-  props: { status: VehicleStatusEnum } & PillType,
+  props: { status: VehicleStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -111,7 +111,7 @@ export function VehicleStatusPill(
 }
 
 export function DriverStatusPill(
-  props: { status: DriverStatusEnum } & PillType,
+  props: { status: DriverStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -129,7 +129,7 @@ export function DriverStatusPill(
 }
 
 export function AgencyStatusPill(
-  props: { status: AgencyStatusEnum } & PillType,
+  props: { status: AgencyStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -146,7 +146,7 @@ export function AgencyStatusPill(
 }
 
 export function UserStatusPill(
-  props: { status: UserStatusEnum } & Omit<RyogoPillType, "label" | "bgColor">,
+  props: { status: UserStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -162,7 +162,7 @@ export function UserStatusPill(
 }
 
 export function CustomerStatusPill(
-  props: { status: CustomerStatusEnum } & PillType,
+  props: { status: CustomerStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -176,7 +176,7 @@ export function CustomerStatusPill(
 }
 
 export function OrderStatusPill(
-  props: { status: OrderStatusEnum } & Omit<RyogoPillType, "label" | "bgColor">,
+  props: { status: OrderStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -190,7 +190,7 @@ export function OrderStatusPill(
 }
 
 export function PaymentStatusPill(
-  props: { status: PaymentStatusEnum } & PillType,
+  props: { status: PaymentStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -208,7 +208,7 @@ export function PaymentStatusPill(
 }
 
 export function TripLogStatusPill(
-  props: { status: TripLogTypesEnum } & PillType,
+  props: { status: TripLogTypesEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -228,7 +228,7 @@ export function TripLogStatusPill(
 }
 
 export function LeaveStatusPill(
-  props: { status: string; completed: boolean } & PillType,
+  props: { status: string; completed: boolean } & RyogoPillType,
 ) {
   return (
     <RyogoPill
@@ -242,7 +242,7 @@ export function RepairStatusPill(
   props: {
     status: string
     completed: boolean
-  } & Omit<RyogoPillType, "label" | "bgColor">,
+  } & RyogoPillType,
 ) {
   return (
     <RyogoPill
@@ -253,7 +253,7 @@ export function RepairStatusPill(
 }
 
 export function SupportTicketStatusPill(
-  props: { status: TicketStatusEnum } & PillType,
+  props: { status: TicketStatusEnum } & RyogoPillType,
 ) {
   const label = props.status.toUpperCase()
   switch (props.status) {
@@ -269,7 +269,7 @@ export function SupportTicketStatusPill(
 }
 
 export function SubscriptionPlanPill(
-  props: { plan: SubscriptionPlanEnum } & PillType,
+  props: { plan: SubscriptionPlanEnum } & RyogoPillType,
 ) {
   const label = props.plan.toUpperCase()
   switch (props.plan) {

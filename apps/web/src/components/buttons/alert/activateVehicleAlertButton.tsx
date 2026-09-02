@@ -11,7 +11,10 @@ import {
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function ActivateVehicleAlertButton(props: {
+export default function ActivateVehicleAlertButton({
+  vehicleId,
+  agencyId,
+}: {
   vehicleId: string
   agencyId: string
 }) {
@@ -21,7 +24,7 @@ export default function ActivateVehicleAlertButton(props: {
 
   async function activate() {
     startTransition(async () => {
-      if (await activateVehicleAction(props.vehicleId, props.agencyId)) {
+      if (await activateVehicleAction(vehicleId, agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

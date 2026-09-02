@@ -1,12 +1,9 @@
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { getTranslations } from "next-intl/server"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 import {
-  SectionColWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import { Separator } from "@/components/ui/separator"
-import {
+  DashboardRow,
   DashboardRowHeader,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
@@ -20,6 +17,10 @@ export default async function DashboardVehiclesComponent({
   const t = await getTranslations("Dashboard.Home.Vehicles")
 
   const vehicles = await vehicleServices.findDashboardVehicles(agencyId)
+
+  if (vehicles.length === 0) {
+    return null
+  }
 
   const availableVehicles = vehicles.filter(
     (vehicle) => vehicle.status === VehicleStatusEnum.AVAILABLE,
@@ -37,12 +38,12 @@ export default async function DashboardVehiclesComponent({
   return (
     <SectionWrapper id="DashboardVehicles">
       <DashboardSectionHeader title={t("Title")} href={"/dashboard/vehicles"} />
-      <DashboardRowHeader
-        title={t("Available")}
-        count={availableVehicles.length}
-      />
       {availableVehicles.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("Available")}
+            count={availableVehicles.length}
+          />
           {availableVehicles.map((vehicle, index) => (
             <DashboardVehicleChipComponent
               key={index}
@@ -50,12 +51,14 @@ export default async function DashboardVehiclesComponent({
               type="available"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader title={t("OnTrip")} count={onTripVehicles.length} />
       {onTripVehicles.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("OnTrip")}
+            count={onTripVehicles.length}
+          />
           {onTripVehicles.map((vehicle, index) => (
             <DashboardVehicleChipComponent
               key={index}
@@ -63,12 +66,14 @@ export default async function DashboardVehiclesComponent({
               type="onTrip"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader title={t("Repair")} count={repairVehicles.length} />
       {repairVehicles.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("Repair")}
+            count={repairVehicles.length}
+          />
           {repairVehicles.map((vehicle, index) => (
             <DashboardVehicleChipComponent
               key={index}
@@ -76,15 +81,14 @@ export default async function DashboardVehiclesComponent({
               type="repair"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader
-        title={t("Inactive")}
-        count={inactiveVehicles.length}
-      />
       {inactiveVehicles.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("Inactive")}
+            count={inactiveVehicles.length}
+          />
           {inactiveVehicles.map((vehicle, index) => (
             <DashboardVehicleChipComponent
               key={index}
@@ -92,7 +96,7 @@ export default async function DashboardVehiclesComponent({
               type="inactive"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
     </SectionWrapper>
   )

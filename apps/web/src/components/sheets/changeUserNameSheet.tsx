@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -37,7 +37,6 @@ export default function ChangeUserNameSheet({
   userRole: UserRolesEnum
 }) {
   const t = useTranslations("Sheets.ChangeName")
-  const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -47,7 +46,7 @@ export default function ChangeUserNameSheet({
 
   type SchemaType = z.infer<typeof schema>
 
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: userName,
@@ -56,14 +55,18 @@ export default function ChangeUserNameSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    startTransition(async () => {
-      if (await changeUserNameAction(userId, agencyId, data.name, userRole)) {
-        toast.success(t("Success"))
-        router.refresh()
-      } else {
-        toast.error(t("Error"))
-      }
-    })
+    const updatedUser = await changeUserNameAction(
+      userId,
+      agencyId,
+      data.name,
+      userRole,
+    )
+    if (updatedUser) {
+      toast.success(t("Success"))
+      router.refresh()
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   return (
@@ -75,8 +78,8 @@ export default function ChangeUserNameSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...formData}>
-          <form id="changeName" onSubmit={formData.handleSubmit(onSubmit)}>
+        <Form {...form}>
+          <form id="changeName" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
               <RyogoInput
                 name={"name"}
@@ -90,12 +93,12 @@ export default function ChangeUserNameSheet({
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             form="changeName"
             label={t("Save")}
           />
           <RyogoOutlineButton
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             type="button"
             onClick={() => setOpen(false)}
             label={t("Close")}

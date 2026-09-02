@@ -11,7 +11,12 @@ import {
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function DeleteMissionAlertButton(props: {
+export default function DeleteMissionAlertButton({
+  missionId,
+  userId,
+  agencyId,
+  isRider,
+}: {
   missionId: string
   userId: string
   agencyId: string
@@ -24,13 +29,9 @@ export default function DeleteMissionAlertButton(props: {
 
   async function deleteMission() {
     startCancelTransition(async () => {
-      if (
-        await deleteMissionAction(props.missionId, props.userId, props.agencyId)
-      ) {
+      if (await deleteMissionAction(missionId, userId, agencyId)) {
         toast.success(t("Success"))
-        router.replace(
-          props.isRider ? `/rider/myMissions` : `/dashboard/missions`,
-        )
+        router.replace(isRider ? `/rider/myMissions` : `/dashboard/missions`)
       } else {
         toast.error(t("Error"))
       }

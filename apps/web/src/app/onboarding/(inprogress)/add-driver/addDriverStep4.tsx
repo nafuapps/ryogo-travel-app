@@ -15,53 +15,51 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
-import { useTransition } from "react"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function AddDriverConfirm(props: {
+export function AddDriverConfirm({
+  onNext,
+  onPrev,
+  finalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: AddDriverRequestType
-  ownerId: string
-  userStatus: UserStatusEnum
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Confirm")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const formData = useForm<AddDriverRequestType>()
   //Submit actions
   const onSubmit = async () => {
-    startTransition(async () => {
-      // Add driver
-      const newDriverData: AddDriverRequestType = {
-        agencyId: props.finalData.agencyId,
-        data: {
-          name: props.finalData.data.name,
-          email: props.finalData.data.email,
-          phone: props.finalData.data.phone,
-          address: props.finalData.data.address,
-          canDriveVehicleTypes: props.finalData.data.canDriveVehicleTypes,
-          defaultAllowancePerDay: props.finalData.data.defaultAllowancePerDay,
-          licenseNumber: props.finalData.data.licenseNumber,
-          licenseExpiresOn: props.finalData.data.licenseExpiresOn,
-          licensePhotos: props.finalData.data.licensePhotos,
-          userPhotos: props.finalData.data.userPhotos,
-        },
-      }
-      const addedDriver = await addDriverAction(newDriverData)
-      if (addedDriver) {
-        //Move to next step
-        props.onNext()
-      } else {
-        //If failed, Take back to driver onboarding page and show error
-        toast.error(t("APIError"))
-        router.refresh()
-      }
-    })
+    // Add driver
+    const newDriverData: AddDriverRequestType = {
+      agencyId: finalData.agencyId,
+      data: {
+        name: finalData.data.name,
+        email: finalData.data.email,
+        phone: finalData.data.phone,
+        address: finalData.data.address,
+        canDriveVehicleTypes: finalData.data.canDriveVehicleTypes,
+        defaultAllowancePerDay: finalData.data.defaultAllowancePerDay,
+        licenseNumber: finalData.data.licenseNumber,
+        licenseExpiresOn: finalData.data.licenseExpiresOn,
+        licensePhotos: finalData.data.licensePhotos,
+        userPhotos: finalData.data.userPhotos,
+      },
+    }
+    const addedDriver = await addDriverAction(newDriverData)
+    if (addedDriver) {
+      //Move to next step
+      onNext()
+    } else {
+      //If failed, Take back to driver onboarding page and show error
+      toast.error(t("APIError"))
+      router.refresh()
+    }
   }
   return (
     <Form {...formData}>
@@ -71,47 +69,38 @@ export function AddDriverConfirm(props: {
       >
         <OnboardingStepContent contentId="Step4Content">
           <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-          <ConfirmValues
-            name={t("DriverName")}
-            value={props.finalData.data.name}
-          />
-          <ConfirmValues
-            name={t("DriverPhone")}
-            value={props.finalData.data.phone}
-          />
-          <ConfirmValues
-            name={t("DriverEmail")}
-            value={props.finalData.data.email}
-          />
-          {props.finalData.data.licenseNumber && (
+          <ConfirmValues name={t("DriverName")} value={finalData.data.name} />
+          <ConfirmValues name={t("DriverPhone")} value={finalData.data.phone} />
+          <ConfirmValues name={t("DriverEmail")} value={finalData.data.email} />
+          {finalData.data.licenseNumber && (
             <ConfirmValues
               name={t("LicenseNumber")}
-              value={props.finalData.data.licenseNumber}
+              value={finalData.data.licenseNumber}
             />
           )}
-          {props.finalData.data.licenseExpiresOn && (
+          {finalData.data.licenseExpiresOn && (
             <ConfirmValues
               name={t("LicenseExpiresOn")}
-              value={props.finalData.data.licenseExpiresOn.toDateString()}
+              value={finalData.data.licenseExpiresOn.toDateString()}
             />
           )}
-          {props.finalData.data.address && (
+          {finalData.data.address && (
             <ConfirmValues
               name={t("DriverAddress")}
-              value={props.finalData.data.address}
+              value={finalData.data.address}
             />
           )}
-          {props.finalData.data.canDriveVehicleTypes &&
-            props.finalData.data.canDriveVehicleTypes.length > 0 && (
+          {finalData.data.canDriveVehicleTypes &&
+            finalData.data.canDriveVehicleTypes.length > 0 && (
               <ConfirmValues
                 name={t("CanDriveVehicleTypes")}
-                value={props.finalData.data.canDriveVehicleTypes.join(", ")}
+                value={finalData.data.canDriveVehicleTypes.join(", ")}
               />
             )}
-          {props.finalData.data.defaultAllowancePerDay && (
+          {finalData.data.defaultAllowancePerDay && (
             <ConfirmValues
               name={t("DefaultAllowancePerDay")}
-              value={`${props.finalData.data.defaultAllowancePerDay}`}
+              value={`${finalData.data.defaultAllowancePerDay}`}
             />
           )}
         </OnboardingStepContent>
@@ -126,7 +115,7 @@ export function AddDriverConfirm(props: {
           />
           <RyogoOutlineButton
             size={"lg"}
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

@@ -6,7 +6,11 @@ import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/custom
 import NewBookingAddCustomerPageComponent from "./newBookingAddCustomer"
 import NewBookingSearchCustomerPageComponent from "./newBookingSearchCustomer"
 
-export default function NewBookingPageComponent(props: {
+export default function NewBookingPageComponent({
+  agency,
+  customers,
+  userId,
+}: {
   agency: NonNullable<FindAgencyByIdType>
   customers: FindCustomersInAgencyType
   userId: string
@@ -16,9 +20,9 @@ export default function NewBookingPageComponent(props: {
   if (addingCustomer) {
     return (
       <NewBookingAddCustomerPageComponent
-        userId={props.userId}
-        agency={props.agency}
-        customers={props.customers}
+        userId={userId}
+        agency={agency}
+        customers={customers}
         setAddingCustomer={setAddingCustomer}
       />
     )
@@ -26,7 +30,7 @@ export default function NewBookingPageComponent(props: {
 
   return (
     <NewBookingSearchCustomerPageComponent
-      customers={props.customers}
+      customers={customers}
       onClick={() => setAddingCustomer(true)}
     />
   )

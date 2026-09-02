@@ -11,7 +11,10 @@ import {
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function InactivateDriverAlertButton(props: {
+export default function InactivateDriverAlertButton({
+  driverId,
+  agencyId,
+}: {
   driverId: string
   agencyId: string
 }) {
@@ -21,7 +24,7 @@ export default function InactivateDriverAlertButton(props: {
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateDriverAction(props.driverId, props.agencyId)) {
+      if (await inactivateDriverAction(driverId, agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -11,14 +11,18 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function ActivateAgencyAlertButton(props: { agencyId: string }) {
+export default function ActivateAgencyAlertButton({
+  agencyId,
+}: {
+  agencyId: string
+}) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.ActivateAgency")
   const router = useRouter()
 
   async function activate() {
     startTransition(async () => {
-      if (await activateAgencyAction(props.agencyId)) {
+      if (await activateAgencyAction(agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

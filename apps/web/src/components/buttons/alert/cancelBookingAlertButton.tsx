@@ -11,7 +11,12 @@ import {
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function CancelBookingAlertButton(props: {
+export default function CancelBookingAlertButton({
+  bookingId,
+  agencyId,
+  assignedUserId,
+  isConfirmedBooking,
+}: {
   bookingId: string
   agencyId: string
   assignedUserId: string
@@ -26,20 +31,20 @@ export default function CancelBookingAlertButton(props: {
     startCancelTransition(async () => {
       //If cancel is successful, show cancel success message and redirect to cancelled booking details
       const cancelMessage = await cancelBookingAction(
-        props.bookingId,
-        props.agencyId,
-        props.assignedUserId,
-        props.isConfirmedBooking,
+        bookingId,
+        agencyId,
+        assignedUserId,
+        isConfirmedBooking,
       )
       if (cancelMessage) {
         toast.success(t("Success"))
-        if (typeof cancelMessage === "string" && props.isConfirmedBooking) {
+        if (typeof cancelMessage === "string" && isConfirmedBooking) {
           //Confirmed booking being cancelled
           window.open(cancelMessage, "_blank", "noopener,noreferrer")
           router.refresh()
         } else {
           //Lead booking being cancelled
-          router.replace(`/dashboard/bookings/${props.bookingId}`)
+          router.replace(`/dashboard/bookings/${bookingId}`)
         }
       } else {
         //If cancel is not successful, show error message

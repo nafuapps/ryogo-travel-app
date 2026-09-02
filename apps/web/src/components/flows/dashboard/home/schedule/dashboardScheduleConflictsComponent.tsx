@@ -1,11 +1,11 @@
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { getTranslations } from "next-intl/server"
 import {
+  DashboardRow,
   DashboardRowHeader,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { Separator } from "@/components/ui/separator"
 import DashboardScheduleConflictItemComponent, {
   DashboardScheduleConflictItemType,
 } from "./dashboardScheduleConflictItemComponent"
@@ -74,48 +74,75 @@ export default async function DashboardScheduleConflictsComponent({
     })),
   )
 
+  if (
+    vehicleBookingConflicts.length === 0 &&
+    vehicleRepairConflicts.length === 0 &&
+    driverBookingConflicts.length === 0 &&
+    driverLeaveConflicts.length === 0
+  ) {
+    return null
+  }
+
   return (
     <SectionWrapper id="DashboardScheduleConflicts">
       <DashboardSectionHeader title={t("Title")} />
-      <DashboardRowHeader
-        title={t("VehicleAssignments")}
-        count={vehicleBookingConflicts.length}
-      />
-      {vehicleBookingConflicts.length > 0 &&
-        vehicleBookingConflicts.map((item, index) => (
-          <DashboardScheduleConflictItemComponent
-            key={index}
-            conflict={item}
-            highlight={isOwner && item.firstItem.userId === userId}
+      {vehicleBookingConflicts.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("VehicleAssignments")}
+            count={vehicleBookingConflicts.length}
           />
-        ))}
-      <Separator />
-      <DashboardRowHeader
-        title={t("VehicleRepairs")}
-        count={vehicleRepairConflicts.length}
-      />
-      {vehicleRepairConflicts.length > 0 &&
-        vehicleRepairConflicts.map((item, index) => (
-          <DashboardScheduleConflictItemComponent key={index} conflict={item} />
-        ))}
-      <Separator />
-      <DashboardRowHeader
-        title={t("DriverAssignments")}
-        count={driverBookingConflicts.length}
-      />
-      {driverBookingConflicts.length > 0 &&
-        driverBookingConflicts.map((item, index) => (
-          <DashboardScheduleConflictItemComponent key={index} conflict={item} />
-        ))}
-      <Separator />
-      <DashboardRowHeader
-        title={t("DriverLeaves")}
-        count={driverLeaveConflicts.length}
-      />
-      {driverLeaveConflicts.length > 0 &&
-        driverLeaveConflicts.map((item, index) => (
-          <DashboardScheduleConflictItemComponent key={index} conflict={item} />
-        ))}
+          {vehicleBookingConflicts.map((item, index) => (
+            <DashboardScheduleConflictItemComponent
+              key={index}
+              conflict={item}
+              highlight={isOwner && item.firstItem.userId === userId}
+            />
+          ))}
+        </DashboardRow>
+      )}
+      {vehicleRepairConflicts.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("VehicleRepairs")}
+            count={vehicleRepairConflicts.length}
+          />
+          {vehicleRepairConflicts.map((item, index) => (
+            <DashboardScheduleConflictItemComponent
+              key={index}
+              conflict={item}
+            />
+          ))}
+        </DashboardRow>
+      )}
+      {driverBookingConflicts.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("DriverAssignments")}
+            count={driverBookingConflicts.length}
+          />
+          {driverBookingConflicts.map((item, index) => (
+            <DashboardScheduleConflictItemComponent
+              key={index}
+              conflict={item}
+            />
+          ))}
+        </DashboardRow>
+      )}
+      {driverLeaveConflicts.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("DriverLeaves")}
+            count={driverLeaveConflicts.length}
+          />
+          {driverLeaveConflicts.map((item, index) => (
+            <DashboardScheduleConflictItemComponent
+              key={index}
+              conflict={item}
+            />
+          ))}
+        </DashboardRow>
+      )}
     </SectionWrapper>
   )
 }

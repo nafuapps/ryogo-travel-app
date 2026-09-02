@@ -48,7 +48,15 @@ import {
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
-export function RyogoInput(props: {
+export function RyogoInput({
+  name,
+  label,
+  placeholder,
+  description,
+  type,
+  disabled,
+  fadeLabel,
+}: {
   name: string
   label: string
   placeholder: string
@@ -59,28 +67,28 @@ export function RyogoInput(props: {
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
             <RyogoSmall
               weight="font-bold"
-              color={props.disabled || props.fadeLabel ? "light" : "dark"}
+              color={disabled || fadeLabel ? "light" : "dark"}
             >
-              {props.label}
+              {label}
             </RyogoSmall>
           </FormLabel>
           <FormControl>
             <Input
-              type={props.type}
-              placeholder={props.placeholder}
+              type={type}
+              placeholder={placeholder}
               {...field}
-              disabled={props.disabled ?? false}
+              disabled={disabled ?? false}
             />
           </FormControl>
-          {props.description && (
+          {description && (
             <FormDescription>
-              <RyogoCaption color="light">{props.description}</RyogoCaption>
+              <RyogoCaption color="light">{description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -90,26 +98,30 @@ export function RyogoInput(props: {
   )
 }
 
-export function RyogoOTPInput(props: {
+export function RyogoOTPInput({
+  name,
+  label,
+  description,
+  disabled,
+  fadeLabel,
+}: {
   name: string
   label: string
-  placeholder: string
   description?: string
-  type: React.HTMLInputTypeAttribute | undefined
   disabled?: boolean
   fadeLabel?: boolean
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
             <RyogoSmall
               weight="font-bold"
-              color={props.disabled || props.fadeLabel ? "light" : "dark"}
+              color={disabled || fadeLabel ? "light" : "dark"}
             >
-              {props.label}
+              {label}
             </RyogoSmall>
           </FormLabel>
           <FormControl>
@@ -124,9 +136,9 @@ export function RyogoOTPInput(props: {
               </InputOTPGroup>
             </InputOTP>
           </FormControl>
-          {props.description && (
+          {description && (
             <FormDescription>
-              <RyogoCaption color="light">{props.description}</RyogoCaption>
+              <RyogoCaption color="light">{description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -136,7 +148,14 @@ export function RyogoOTPInput(props: {
   )
 }
 
-export function RyogoFileInput(props: {
+export function RyogoFileInput({
+  name,
+  label,
+  placeholder,
+  description,
+  register,
+  fadeLabel,
+}: {
   name: string
   label: string
   placeholder: string
@@ -146,27 +165,20 @@ export function RyogoFileInput(props: {
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={() => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.label}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {label}
             </RyogoSmall>
           </FormLabel>
           <FormControl>
-            <Input
-              {...props.register}
-              type="file"
-              placeholder={props.placeholder}
-            />
+            <Input {...register} type="file" placeholder={placeholder} />
           </FormControl>
-          {props.description && (
+          {description && (
             <FormDescription>
-              <RyogoCaption color="light">{props.description}</RyogoCaption>
+              <RyogoCaption color="light">{description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -176,7 +188,12 @@ export function RyogoFileInput(props: {
   )
 }
 
-export function RyogoTextarea(props: {
+export function RyogoTextarea({
+  name,
+  label,
+  placeholder,
+  fadeLabel,
+}: {
   name: string
   label: string
   placeholder: string
@@ -184,19 +201,16 @@ export function RyogoTextarea(props: {
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.label}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {label}
             </RyogoSmall>
           </FormLabel>
           <FormControl>
-            <Textarea placeholder={props.placeholder} {...field} />
+            <Textarea placeholder={placeholder} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -205,7 +219,16 @@ export function RyogoTextarea(props: {
   )
 }
 
-export function RyogoSelect(props: {
+export function RyogoSelect({
+  name,
+  title,
+  array,
+  placeholder,
+  description,
+  register,
+  resetField,
+  fadeLabel,
+}: {
   name: string
   title?: string
   array: { value: string; display: string }[]
@@ -217,41 +240,38 @@ export function RyogoSelect(props: {
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.title}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {title}
             </RyogoSmall>
           </FormLabel>
           <Select
-            {...props.register}
+            {...register}
             onValueChange={(value) => {
               field.onChange(value)
-              props.resetField && props.resetField()
+              resetField && resetField()
             }}
             value={field.value}
           >
             <FormControl>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder={props.placeholder} />
+                <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {props.array.map((item, index) => (
+              {array.map((item, index) => (
                 <SelectItem key={index} value={item.value}>
                   {item.display}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          {props.description && (
+          {description && (
             <FormDescription>
-              <RyogoCaption color="light">{props.description}</RyogoCaption>
+              <RyogoCaption color="light">{description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -261,7 +281,15 @@ export function RyogoSelect(props: {
   )
 }
 
-export function RyogoCombobox(props: {
+export function RyogoCombobox({
+  name,
+  title,
+  array,
+  placeholder,
+  register,
+  resetField,
+  fadeLabel,
+}: {
   name: string
   title?: string
   array: { value: string; display: string }[]
@@ -272,31 +300,28 @@ export function RyogoCombobox(props: {
 }) {
   return (
     <FormField
-      name={props.name}
-      key={props.name}
+      name={name}
+      key={name}
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.title}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {title}
             </RyogoSmall>
           </FormLabel>
           <Combobox
-            items={props.array}
+            items={array}
             itemToStringValue={(item: { value: string; display: string }) =>
               item.display
             }
-            {...props.register}
+            {...register}
             onValueChange={(value) => {
               field.onChange(value)
-              props.resetField && props.resetField()
+              resetField && resetField()
             }}
             value={field.value}
           >
-            <ComboboxInput placeholder={props.placeholder} />
+            <ComboboxInput placeholder={placeholder} />
             <ComboboxContent>
               <ComboboxEmpty />
               <ComboboxList>
@@ -315,7 +340,15 @@ export function RyogoCombobox(props: {
   )
 }
 
-export function RyogoRadio(props: {
+export function RyogoRadio({
+  name,
+  title,
+  array,
+  register,
+  defaultValue,
+  description,
+  fadeLabel,
+}: {
   name: string
   title?: string
   array: { value: string; display: string }[]
@@ -326,23 +359,20 @@ export function RyogoRadio(props: {
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.title}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {title}
             </RyogoSmall>
           </FormLabel>
           <RadioGroup
-            {...props.register}
+            {...register}
             onValueChange={field.onChange}
-            defaultValue={props.defaultValue}
+            defaultValue={defaultValue}
           >
-            {props.array.map((item, index) => (
+            {array.map((item, index) => (
               <div className="flex items-center gap-3" key={index}>
                 <RadioGroupItem value={item.value} id={`r${index}`} />
                 <Label htmlFor={`r${index}`}>{item.display}</Label>
@@ -350,7 +380,7 @@ export function RyogoRadio(props: {
             ))}
           </RadioGroup>
           <FormDescription>
-            <RyogoCaption color="light">{props.description}</RyogoCaption>
+            <RyogoCaption color="light">{description}</RyogoCaption>
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -359,15 +389,18 @@ export function RyogoRadio(props: {
   )
 }
 
-export function RyogoCheckbox(props: {
+export function RyogoCheckbox({
+  name,
+  label,
+  fadeLabel,
+}: {
   name: string
   label: string
-  register: UseFormRegisterReturn<string>
   fadeLabel?: boolean
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => {
         return (
           <FormItem className="flex flex-row items-center gap-2 lg:gap-3 w-full px-2">
@@ -380,9 +413,9 @@ export function RyogoCheckbox(props: {
             <FormLabel>
               <RyogoSmall
                 weight="font-bold"
-                color={props.fadeLabel ? "light" : "dark"}
+                color={fadeLabel ? "light" : "dark"}
               >
-                {props.label}
+                {label}
               </RyogoSmall>
             </FormLabel>
           </FormItem>
@@ -392,30 +425,31 @@ export function RyogoCheckbox(props: {
   )
 }
 
-export function RyogoMultipleCheckbox(props: {
+export function RyogoMultipleCheckbox({
+  name,
+  label,
+  array,
+  fadeLabel,
+}: {
   name: string
   label: string
   array: { value: string; display: string }[]
-  register: UseFormRegisterReturn<string>
   fadeLabel?: boolean
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={() => (
         <FormItem className="flex flex-col gap-2 lg:gap-3 w-full">
           <FormLabel className="text-base">
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.label}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {label}
             </RyogoSmall>
           </FormLabel>
-          {props.array.map((item) => (
+          {array.map((item) => (
             <FormField
               key={item.value}
-              name={props.name}
+              name={name}
               render={({ field }) => {
                 return (
                   <FormItem
@@ -451,7 +485,15 @@ export function RyogoMultipleCheckbox(props: {
   )
 }
 
-export function RyogoDatePicker(props: {
+export function RyogoDatePicker({
+  name,
+  label,
+  placeholder,
+  description,
+  disabled,
+  pastAllowed,
+  fadeLabel,
+}: {
   name: string
   label: string
   placeholder: string
@@ -462,28 +504,26 @@ export function RyogoDatePicker(props: {
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
             <RyogoSmall
               weight="font-bold"
-              color={props.disabled || props.fadeLabel ? "light" : "dark"}
+              color={disabled || fadeLabel ? "light" : "dark"}
             >
-              {props.label}
+              {label}
             </RyogoSmall>
           </FormLabel>
           <Popover>
-            <PopoverTrigger asChild disabled={props.disabled}>
+            <PopoverTrigger asChild disabled={disabled}>
               <FormControl>
                 <RyogoOutlineButton
                   className={cn(
                     "w-full pl-3 text-left font-normal",
                     !field.value && "text-muted-foreground",
                   )}
-                  label={
-                    field.value ? format(field.value, "PPP") : props.placeholder
-                  }
+                  label={field.value ? format(field.value, "PPP") : placeholder}
                 >
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </RyogoOutlineButton>
@@ -496,7 +536,7 @@ export function RyogoDatePicker(props: {
                 onSelect={field.onChange}
                 disabled={
                   //If past allowed, disable dates before 2025, else disable dates before today
-                  props.pastAllowed
+                  pastAllowed
                     ? { before: new Date(2025, 1, 1) }
                     : { before: new Date() }
                 }
@@ -507,9 +547,9 @@ export function RyogoDatePicker(props: {
               />
             </PopoverContent>
           </Popover>
-          {props.description && (
+          {description && (
             <FormDescription>
-              <RyogoCaption color="light">{props.description}</RyogoCaption>
+              <RyogoCaption color="light">{description}</RyogoCaption>
             </FormDescription>
           )}
           <FormMessage />
@@ -519,22 +559,23 @@ export function RyogoDatePicker(props: {
   )
 }
 
-export function RyogoSwitch(props: {
+export function RyogoSwitch({
+  name,
+  label,
+  fadeLabel,
+}: {
   name: string
   label: string
   fadeLabel?: boolean
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="flex flex-row items-center justify-between gap-2 lg:gap-3 w-full py-1.5 lg:py-2">
           <FormLabel>
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.label}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {label}
             </RyogoSmall>
           </FormLabel>
           <FormControl>
@@ -546,24 +587,25 @@ export function RyogoSwitch(props: {
   )
 }
 
-export function RyogoTimePicker(props: {
+export function RyogoTimePicker({
+  name,
+  label,
+  description,
+  fadeLabel,
+}: {
   name: string
   label: string
   description?: string
-  disabled?: boolean
   fadeLabel?: boolean
 }) {
   return (
     <FormField
-      name={props.name}
+      name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
-            <RyogoSmall
-              weight="font-bold"
-              color={props.fadeLabel ? "light" : "dark"}
-            >
-              {props.label}
+            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+              {label}
             </RyogoSmall>
           </FormLabel>
           <Input
@@ -573,7 +615,7 @@ export function RyogoTimePicker(props: {
             className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
           />
           <FormDescription>
-            <RyogoCaption color="light">{props.description}</RyogoCaption>
+            <RyogoCaption color="light">{description}</RyogoCaption>
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -582,7 +624,15 @@ export function RyogoTimePicker(props: {
   )
 }
 
-export function RyogoRatingInput(props: {
+export function RyogoRatingInput({
+  name,
+  label,
+  selectedStars,
+  setSelectedStars,
+  totalStars,
+  disabled,
+  fadeLabel,
+}: {
   name: string
   label: string
   selectedStars: number
@@ -593,30 +643,30 @@ export function RyogoRatingInput(props: {
 }) {
   return (
     <FormField
-      name={props.name}
-      disabled={props.disabled}
+      name={name}
+      disabled={disabled}
       render={({}) => (
         <FormItem className="flex flex-row justify-between items-center gap-1 lg:gap-1.5 w-full">
           <FormLabel>
             <RyogoSmall
               weight="font-bold"
-              color={props.disabled || props.fadeLabel ? "light" : "dark"}
+              color={disabled || fadeLabel ? "light" : "dark"}
             >
-              {props.label}
+              {label}
             </RyogoSmall>
           </FormLabel>
           <div className="flex flex-row gap-2 lg:gap-3 items-center">
-            {Array.from({ length: props.totalStars }).map((_, index) => {
+            {Array.from({ length: totalStars }).map((_, index) => {
               return (
                 <RyogoIcon
                   key={index + 1}
                   icon={Star}
                   size="sm"
-                  color={`${props.selectedStars > index ? "yellow" : "slate"}`}
+                  color={`${selectedStars > index ? "yellow" : "slate"}`}
                   onClick={
-                    props.selectedStars !== index + 1
-                      ? () => props.setSelectedStars(index + 1)
-                      : () => props.setSelectedStars(0)
+                    selectedStars !== index + 1
+                      ? () => setSelectedStars(index + 1)
+                      : () => setSelectedStars(0)
                   }
                 />
               )

@@ -8,7 +8,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { useTranslations } from "next-intl"
-import { useTransition } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
@@ -36,7 +35,6 @@ export default function ModifyAgencyPageForm({
 }) {
   const t = useTranslations("Dashboard.ModifyAgency")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
   const schema = z.object({
     agencyName: z
       .string()
@@ -58,7 +56,7 @@ export default function ModifyAgencyPageForm({
   })
 
   type SchemaType = z.infer<typeof schema>
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
       agencyName: agency.businessName,
@@ -79,21 +77,20 @@ export default function ModifyAgencyPageForm({
       agencyState: data.agencyState,
       agencyCity: data.agencyCity,
     }
-    startTransition(async () => {
-      if (await modifyAgencyAction(userId, modifyAgencyData)) {
-        router.replace(`/dashboard/account/agency`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
-    })
+    const updatedAgency = await modifyAgencyAction(userId, modifyAgencyData)
+    if (updatedAgency) {
+      router.replace(`/dashboard/account/agency`)
+      toast.success(t("Success"))
+    } else {
+      router.back()
+      toast.error(t("Error"))
+    }
   }
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = useWatch({
     name: "agencyState",
-    control: formData.control,
+    control: form.control,
   })
   const cityOptions = data[selectedState] ?? [t("Field5.Title")]
 
@@ -101,8 +98,8 @@ export default function ModifyAgencyPageForm({
     <PageWrapper id="ModifyAgencyPage">
       <FormWrapper<SchemaType>
         id="ModifyAgencyForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
-        form={formData}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoInput
           name={"agencyName"}
@@ -125,17 +122,17 @@ export default function ModifyAgencyPageForm({
         />
         <RyogoCombobox
           name={"agencyState"}
-          register={formData.register("agencyState")}
+          register={form.register("agencyState")}
           title={t("Field4.Title")}
           array={getArrayValueDisplayPairs(data)}
           placeholder={t("Field4.Title")}
           resetField={() => {
-            formData.setValue("agencyCity", "")
+            form.setValue("agencyCity", "")
           }}
         />
         <RyogoCombobox
           name={"agencyCity"}
-          register={formData.register("agencyCity")}
+          register={form.register("agencyCity")}
           title={t("Field5.Title")}
           array={getStringValueDisplayPairs(cityOptions)}
           placeholder={t("Field5.Title")}
@@ -143,17 +140,17 @@ export default function ModifyAgencyPageForm({
         <Separator />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

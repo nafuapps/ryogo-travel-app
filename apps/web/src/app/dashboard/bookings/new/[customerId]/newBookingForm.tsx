@@ -20,7 +20,16 @@ import {
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
 } from "@/lib/uiConfig"
 
-export default function NewBookingForm(props: {
+export default function NewBookingForm({
+  agency,
+  drivers,
+  userId,
+  customerId,
+  vehicles,
+  limited,
+  isSubscribed,
+  hasTriedSubscription,
+}: {
   agency: NonNullable<FindAgencyByIdType>
   drivers: FindDriversByAgencyType
   userId: string
@@ -34,14 +43,14 @@ export default function NewBookingForm(props: {
     useState<NewBookingRequestDataType>({
       tripStartDate: new Date(),
       tripEndDate: new Date(),
-      tripSourceLocationState: props.agency.location.state,
-      tripSourceLocationCity: props.agency.location.city,
-      tripDestinationLocationState: props.agency.location.state,
+      tripSourceLocationState: agency.location.state,
+      tripSourceLocationCity: agency.location.city,
+      tripDestinationLocationState: agency.location.state,
       tripDestinationLocationCity: "",
       tripNeedsAC: true,
       tripPassengers: 1,
       tripType: BookingTypeEnum.OneWay,
-      selectedCommissionRate: props.agency.defaultCommissionRate,
+      selectedCommissionRate: agency.defaultCommissionRate,
       selectedDistance: NEW_BOOKING_DEFAULT_DISTANCE,
       selectedRatePerKm: NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
       selectedAllowancePerDay: NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
@@ -69,10 +78,10 @@ export default function NewBookingForm(props: {
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
       setNewBookingFormData={setNewBookingFormData}
-      vehicles={props.vehicles}
-      limited={props.limited}
-      isSubscribed={props.isSubscribed}
-      hasTriedSubscription={props.hasTriedSubscription}
+      vehicles={vehicles}
+      limited={limited}
+      isSubscribed={isSubscribed}
+      hasTriedSubscription={hasTriedSubscription}
     />,
     <NewBookingStepDriver
       key={2}
@@ -80,10 +89,10 @@ export default function NewBookingForm(props: {
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
       setNewBookingFormData={setNewBookingFormData}
-      drivers={props.drivers}
-      limited={props.limited}
-      isSubscribed={props.isSubscribed}
-      hasTriedSubscription={props.hasTriedSubscription}
+      drivers={drivers}
+      limited={limited}
+      isSubscribed={isSubscribed}
+      hasTriedSubscription={hasTriedSubscription}
     />,
     <NewBookingStepPrice
       key={3}
@@ -96,9 +105,9 @@ export default function NewBookingForm(props: {
       key={4}
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
-      customerId={props.customerId}
-      userId={props.userId}
-      agencyId={props.agency.id}
+      customerId={customerId}
+      userId={userId}
+      agencyId={agency.id}
     />,
   ])
 

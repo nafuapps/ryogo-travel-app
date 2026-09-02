@@ -31,7 +31,13 @@ import {
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
-export function NewVehicleStep1(props: {
+export function NewVehicleStep1({
+  onNext,
+  newVehicleFormData,
+  setNewVehicleFormData,
+  agencyId,
+  existingVehicles,
+}: {
   onNext: () => void
   newVehicleFormData: AddVehicleRequestType
   setNewVehicleFormData: Dispatch<SetStateAction<AddVehicleRequestType>>
@@ -48,7 +54,7 @@ export function NewVehicleStep1(props: {
       .max(15, t("Field1.Error2"))
       .refine((value) => {
         //Check that vehicleNumber does not already exist in this agency
-        return !props.existingVehicles.some(
+        return !existingVehicles.some(
           (v) => v.vehicleNumber.toUpperCase() === value.toUpperCase(),
         )
       }, t("APIError")),
@@ -63,20 +69,20 @@ export function NewVehicleStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      vehicleNumber: props.newVehicleFormData.data.vehicleNumber,
-      type: props.newVehicleFormData.data.type,
-      brand: props.newVehicleFormData.data.brand,
-      color: props.newVehicleFormData.data.color,
-      model: props.newVehicleFormData.data.model,
+      vehicleNumber: newVehicleFormData.data.vehicleNumber,
+      type: newVehicleFormData.data.type,
+      brand: newVehicleFormData.data.brand,
+      color: newVehicleFormData.data.color,
+      model: newVehicleFormData.data.model,
     },
   })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    props.setNewVehicleFormData({
-      agencyId: props.agencyId,
+    setNewVehicleFormData({
+      agencyId: agencyId,
       data: {
-        ...props.newVehicleFormData.data,
+        ...newVehicleFormData.data,
         vehicleNumber: data.vehicleNumber,
         type: data.type,
         brand: data.brand,
@@ -84,7 +90,7 @@ export function NewVehicleStep1(props: {
         model: data.model,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -156,7 +162,7 @@ export function NewVehicleStep1(props: {
             brand={formData.getValues("brand")}
             color={formData.getValues("color")}
             model={formData.getValues("model")}
-            agencyId={props.agencyId}
+            agencyId={agencyId}
             disabled={
               !formData.formState.isValid || formData.formState.isSubmitting
             }

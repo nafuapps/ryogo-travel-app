@@ -17,7 +17,11 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { newUserSetPasswordAction } from "@/app/actions/users/newUserSetPasswordAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
-export function ChangePasswordStep1(props: {
+export function ChangePasswordStep1({
+  userId,
+  agencyId,
+  role,
+}: {
   userId: string
   agencyId: string
   role: UserRolesEnum
@@ -48,14 +52,14 @@ export function ChangePasswordStep1(props: {
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     const result = await newUserSetPasswordAction(
-      props.userId,
-      props.agencyId,
+      userId,
+      agencyId,
       data.newPassword,
     )
     if (result) {
       //If success, redirect
       toast.success(t("Success"))
-      if (props.role === UserRolesEnum.DRIVER) {
+      if (role === UserRolesEnum.DRIVER) {
         router.replace("/rider/home")
       } else {
         router.replace("/dashboard/home")

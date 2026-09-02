@@ -11,7 +11,12 @@ import {
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function DeleteTransactionAlertButton(props: {
+export default function DeleteTransactionAlertButton({
+  bookingId,
+  transactionId,
+  agencyId,
+  assignedUserId,
+}: {
   bookingId: string
   transactionId: string
   agencyId: string
@@ -26,14 +31,10 @@ export default function DeleteTransactionAlertButton(props: {
     startTransition(async () => {
       //If delete is successful, show delete success message and redirect to transactions
       if (
-        await deleteTransactionAction(
-          props.transactionId,
-          props.agencyId,
-          props.assignedUserId,
-        )
+        await deleteTransactionAction(transactionId, agencyId, assignedUserId)
       ) {
         toast.success(t("Success"))
-        router.replace(`/dashboard/bookings/${props.bookingId}/transactions`)
+        router.replace(`/dashboard/bookings/${bookingId}/transactions`)
       } else {
         //If delete is not successful, show error message
         toast.error(t("Error"))

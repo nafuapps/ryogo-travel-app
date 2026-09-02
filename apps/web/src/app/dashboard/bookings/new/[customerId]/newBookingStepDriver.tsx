@@ -26,7 +26,16 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 
-export default function NewBookingStepDriver(props: {
+export default function NewBookingStepDriver({
+  onNext,
+  onPrev,
+  newBookingFormData,
+  setNewBookingFormData,
+  drivers,
+  limited,
+  isSubscribed,
+  hasTriedSubscription,
+}: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingRequestDataType
@@ -50,18 +59,18 @@ export default function NewBookingStepDriver(props: {
   const form = useForm<StepDriverType>({
     resolver: zodResolver(stepDriverSchema),
     defaultValues: {
-      assignedDriverId: props.newBookingFormData.assignedDriverId,
+      assignedDriverId: newBookingFormData.assignedDriverId,
     },
   })
 
   //Save selected driver
   function onSelectDriver(selectedDriverId?: string) {
     form.setValue("assignedDriverId", selectedDriverId)
-    const selectedDriver = props.drivers.find(
+    const selectedDriver = drivers.find(
       (driver) => driver.id === selectedDriverId,
     )
-    props.setNewBookingFormData({
-      ...props.newBookingFormData,
+    setNewBookingFormData({
+      ...newBookingFormData,
       assignedDriverId: selectedDriverId,
       selectedAllowancePerDay: selectedDriver
         ? selectedDriver.defaultAllowancePerDay
@@ -70,7 +79,7 @@ export default function NewBookingStepDriver(props: {
   }
 
   function onSubmit() {
-    props.onNext()
+    onNext()
   }
 
   const assignedDriverId = useWatch({
@@ -90,15 +99,13 @@ export default function NewBookingStepDriver(props: {
         <StepsTracker steps={"booking"} current={2} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
-      {props.limited && (
+      {limited && (
         <SubscriptionReminderButton
-          warningText={
-            props.isSubscribed ? t("ExpiredWarning") : t("TrialWarning")
-          }
+          warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
           ctaText={
-            props.isSubscribed
+            isSubscribed
               ? t("RenewCTA")
-              : props.hasTriedSubscription
+              : hasTriedSubscription
                 ? t("BuyCTA")
                 : t("TryCTA")
           }
@@ -111,13 +118,13 @@ export default function NewBookingStepDriver(props: {
       >
         <NewFormContentWrapper>
           <NewStepGridWrapper>
-            {props.drivers.map((driver, index) => (
+            {drivers.map((driver, index) => (
               <AssignDriverTile
                 key={index}
                 driverData={driver}
-                bookingStartDate={props.newBookingFormData.tripStartDate}
-                bookingEndDate={props.newBookingFormData.tripEndDate}
-                bookingPassengers={props.newBookingFormData.tripPassengers}
+                bookingStartDate={newBookingFormData.tripStartDate}
+                bookingEndDate={newBookingFormData.tripEndDate}
+                bookingPassengers={newBookingFormData.tripPassengers}
                 selected={assignedDriverId === driver.id}
                 onClick={() =>
                   onSelectDriver(
@@ -145,7 +152,7 @@ export default function NewBookingStepDriver(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />

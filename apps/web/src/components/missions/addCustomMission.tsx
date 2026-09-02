@@ -14,7 +14,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
@@ -25,7 +24,10 @@ import {
   regexCheckIDByEntityType,
   getDateTime,
 } from "@/components/missions/missionCommons"
-import { RyogoDefaultButton, RyogoOutlineButton } from "../buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function AddCustomMissionPageComponent({
   userId,
@@ -38,7 +40,6 @@ export default function AddCustomMissionPageComponent({
 }) {
   const t = useTranslations("Dashboard.AddCustomMission")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const addCustomMissionSchema = z
     .object({
@@ -71,7 +72,7 @@ export default function AddCustomMissionPageComponent({
     })
   type AddCustomMissionType = z.infer<typeof addCustomMissionSchema>
 
-  const formData = useForm<AddCustomMissionType>({
+  const form = useForm<AddCustomMissionType>({
     resolver: zodResolver(addCustomMissionSchema),
     defaultValues: {
       entityType: EntityTypeEnum.USER,
@@ -83,36 +84,34 @@ export default function AddCustomMissionPageComponent({
   })
 
   async function onSubmit(values: AddCustomMissionType) {
-    startTransition(async () => {
-      if (
-        await addCustomMissionAction(userId, agencyId, {
-          entityType: values.entityType,
-          entityId: values.entityId,
-          title: values.title,
-          message: values.message,
-          dueDate: getDateTime(values.dueDate, values.dueTime),
-          isCritical: values.isCritical,
-        })
-      ) {
-        toast.success(t("Success"))
-      } else {
-        toast.error(t("Error"))
-      }
-      router.replace(isRider ? `/rider/myMissions` : "/dashboard/missions")
+    const addedMission = await addCustomMissionAction(userId, agencyId, {
+      entityType: values.entityType,
+      entityId: values.entityId,
+      title: values.title,
+      message: values.message,
+      dueDate: getDateTime(values.dueDate, values.dueTime),
+      isCritical: values.isCritical,
     })
+    if (addedMission) {
+      toast.success(t("Success"))
+    } else {
+      toast.error(t("Error"))
+    }
+    router.replace(isRider ? `/rider/myMissions` : "/dashboard/missions")
   }
+
   return (
     <PageWrapper id="AddCustomMissionPage">
       <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
       <FormWrapper<AddCustomMissionType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="addCustomMissionForm"
       >
         <RyogoSelect
           name="entityType"
           title={t("Field1.Title")}
-          register={formData.register("entityType")}
+          register={form.register("entityType")}
           array={getEnumValueDisplayPairs(EntityTypeEnum)}
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
@@ -147,17 +146,17 @@ export default function AddCustomMissionPageComponent({
         <Separator />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("CancelCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

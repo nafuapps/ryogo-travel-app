@@ -15,7 +15,10 @@ import { differenceInMinutes } from "date-fns"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 
-export default function VerifyAccountPageComponent(props: {
+export default function VerifyAccountPageComponent({
+  code,
+  codeSentAt,
+}: {
   code: string
   codeSentAt?: Date | null
 }) {
@@ -40,11 +43,9 @@ export default function VerifyAccountPageComponent(props: {
       key={0}
       onNext={nextStepHandler}
       resendDifference={
-        props.codeSentAt
-          ? differenceInMinutes(new Date(), props.codeSentAt)
-          : 999
+        codeSentAt ? differenceInMinutes(new Date(), codeSentAt) : 999
       }
-      code={props.code}
+      code={code}
     />,
     <VerifyAccountFinish key={1} />,
   ])

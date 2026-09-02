@@ -3,9 +3,9 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import DashboardLeadItemComponent from "./dashboardLeadItemComponent"
 import { addDays } from "date-fns"
-import { Separator } from "@/components/ui/separator"
 import {
   DashboardRowHeader,
+  DashboardRow,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
 
@@ -29,6 +29,9 @@ export default async function DashboardLeadsComponent({
       (trip) => trip.assignedUser.id === userId,
     )
   }
+  if (dashboardLeads.length === 0) {
+    return null
+  }
 
   const startingThisWeek = dashboardLeads.filter(
     (lead) => lead.startDate <= addDays(new Date(), days),
@@ -44,31 +47,38 @@ export default async function DashboardLeadsComponent({
         title={t("Title")}
         href={"/dashboard/bookings#leadsBookingsSection"}
       />
-      <DashboardRowHeader
-        title={t("StartingThisWeek")}
-        count={startingThisWeek.length}
-      />
-      {startingThisWeek.map((trip, index) => (
-        <DashboardLeadItemComponent
-          key={index}
-          trip={trip}
-          userId={userId}
-          isOwner={isOwner}
-        />
-      ))}
-      <Separator />
-      <DashboardRowHeader
-        title={t("CreatedThisWeek")}
-        count={createdThisWeek.length}
-      />
-      {createdThisWeek.map((trip, index) => (
-        <DashboardLeadItemComponent
-          key={index}
-          trip={trip}
-          userId={userId}
-          isOwner={isOwner}
-        />
-      ))}
+      {startingThisWeek.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("StartingThisWeek")}
+            count={startingThisWeek.length}
+          />
+          {startingThisWeek.map((trip, index) => (
+            <DashboardLeadItemComponent
+              key={index}
+              trip={trip}
+              userId={userId}
+              isOwner={isOwner}
+            />
+          ))}
+        </DashboardRow>
+      )}
+      {createdThisWeek.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("CreatedThisWeek")}
+            count={createdThisWeek.length}
+          />
+          {createdThisWeek.map((trip, index) => (
+            <DashboardLeadItemComponent
+              key={index}
+              trip={trip}
+              userId={userId}
+              isOwner={isOwner}
+            />
+          ))}
+        </DashboardRow>
+      )}
     </SectionWrapper>
   )
 }

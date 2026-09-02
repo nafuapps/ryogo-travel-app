@@ -9,14 +9,16 @@ import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getTripDuration } from "@/lib/utils"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 
-export default function NewBookingTripCard(props: NewBookingRequestDataType) {
+export default function NewBookingTripCard(
+  newBooking: NewBookingRequestDataType,
+) {
   const t = useTranslations("Dashboard.NewBookingWithCustomer.Form")
   const duration =
-    props.tripType === BookingTypeEnum.OneWay
+    newBooking.tripType === BookingTypeEnum.OneWay
       ? 1
-      : props.tripType === BookingTypeEnum.Round
+      : newBooking.tripType === BookingTypeEnum.Round
         ? 2
-        : getTripDuration(props.tripEndDate, props.tripStartDate)
+        : getTripDuration(newBooking.tripEndDate, newBooking.tripStartDate)
 
   return (
     <div id="tripInfo" className="flex flex-col">
@@ -25,22 +27,24 @@ export default function NewBookingTripCard(props: NewBookingRequestDataType) {
         className="flex flex-row bg-white dark:bg-slate-900 justify-between items-center p-3 lg:p-4 rounded-t-lg"
       >
         <div className="flex flex-col gap-1 lg:gap-1.5">
-          <RyogoP weight="font-bold"> {props.tripSourceLocationCity}</RyogoP>
+          <RyogoP weight="font-bold">
+            {newBooking.tripSourceLocationCity}
+          </RyogoP>
           <RyogoCaption color="light">
-            {props.tripSourceLocationState}
+            {newBooking.tripSourceLocationState}
           </RyogoCaption>
           <RyogoSmall color="slate">
-            {format(props.tripStartDate, "MMM dd")}
+            {format(newBooking.tripStartDate, "MMM dd")}
           </RyogoSmall>
         </div>
-        {props.routeId && (
+        {newBooking.routeId && (
           <div
             id="tripDistance"
             className="flex flex-row items-center justify-center text-center gap-1.5 lg:gap-2"
           >
             <div className="h-0.5 w-4 lg:w-6 bg-slate-300 dark:bg-slate-700" />
             <RyogoSmall color="slate">
-              {props.selectedDistance + t("Km")}
+              {newBooking.selectedDistance + t("Km")}
             </RyogoSmall>
             <div className="h-0.5 w-4 lg:w-6 bg-slate-300 dark:bg-slate-700" />
           </div>
@@ -50,13 +54,13 @@ export default function NewBookingTripCard(props: NewBookingRequestDataType) {
           className="flex flex-col gap-1 lg:gap-1.5 items-end text-end"
         >
           <RyogoP weight="font-bold">
-            {props.tripDestinationLocationCity}
+            {newBooking.tripDestinationLocationCity}
           </RyogoP>
           <RyogoCaption color="light">
-            {props.tripDestinationLocationState}
+            {newBooking.tripDestinationLocationState}
           </RyogoCaption>
           <RyogoSmall color="slate">
-            {format(props.tripEndDate, "MMM dd")}
+            {format(newBooking.tripEndDate, "MMM dd")}
           </RyogoSmall>
         </div>
       </div>
@@ -66,14 +70,17 @@ export default function NewBookingTripCard(props: NewBookingRequestDataType) {
       >
         <TripTagWrapper>
           <SectionRowWrapper small center>
-            <GetTripTypeIcon tripType={props.tripType} size={"sm"} />
+            <GetTripTypeIcon tripType={newBooking.tripType} size={"sm"} />
             <RyogoCaption color="slate">
-              {props.tripType.toUpperCase()}
+              {newBooking.tripType.toUpperCase()}
             </RyogoCaption>
           </SectionRowWrapper>
         </TripTagWrapper>
         <TripTagWrapper>
-          <IconTextTag icon={Users} text={props.tripPassengers.toString()} />
+          <IconTextTag
+            icon={Users}
+            text={newBooking.tripPassengers.toString()}
+          />
         </TripTagWrapper>
         <TripTagWrapper>
           <IconTextTag

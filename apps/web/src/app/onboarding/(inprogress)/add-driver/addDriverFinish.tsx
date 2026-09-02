@@ -12,7 +12,6 @@ import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { MessageSquareShare } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { useTransition } from "react"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useRouter } from "next/navigation"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
@@ -20,45 +19,47 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { useForm } from "react-hook-form"
 
-export function AddDriverFinish(props: {
+export function AddDriverFinish({
+  finalData,
+  agencyName,
+}: {
   finalData: AddDriverRequestType
   agencyName: string
 }) {
   const t = useTranslations("Onboarding.AddDriverPage.Finish")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const form = useForm()
 
-  const goToDashboard = async () => {
-    startTransition(async () => {
-      //Activate user and take to dashboard
-      await onboardingCompleteAction()
-      router.push("/dashboard/home")
-    })
+  const submit = async () => {
+    //Activate user and take to dashboard
+    await onboardingCompleteAction()
+    router.push("/dashboard/home")
   }
 
   const u = useTranslations("Dashboard.Whatsapp")
   const inviteLink = `${window.location.origin}/auth/login`
   const message = u("DriverInvite", {
-    driverName: props.finalData.data.name,
-    agencyName: props.agencyName,
-    emailId: props.finalData.data.email,
+    driverName: finalData.data.name,
+    agencyName: agencyName,
+    emailId: finalData.data.email,
     inviteLink: inviteLink,
   })
 
   const whatsappInviteLink = getWhatsappMessageLink(
-    props.finalData.data.phone,
+    finalData.data.phone,
     message,
   )
 
   return (
-    <OnboardingStepForm formId="Step6Form">
+    <OnboardingStepForm formId="Step6Form" submit={form.handleSubmit(submit)}>
       <OnboardingStepContent contentId="Step6Content" success>
         <OnboardingSuccessIcon />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
         <RyogoCaption color="slate">
-          {t("Email", { email: props.finalData.data.email })}
+          {t("Email", { email: finalData.data.email })}
         </RyogoCaption>
         <RyogoOutlineButton
           onClick={(e) => {
@@ -74,12 +75,12 @@ export function AddDriverFinish(props: {
         <RyogoSmall>{t("Description1")}</RyogoSmall>
         <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
         <Link href="/onboarding/add-agent">
-          <RyogoDefaultButton label={t("PrimaryCTA")} />
+          <RyogoDefaultButton type="button" label={t("PrimaryCTA")} />
         </Link>
         <RyogoOutlineButton
           size={"lg"}
-          disabled={isPending}
-          onClick={goToDashboard}
+          disabled={form.formState.isSubmitting}
+          type="submit"
           label={t("SecondaryCTA")}
         />
       </OnboardingStepActions>

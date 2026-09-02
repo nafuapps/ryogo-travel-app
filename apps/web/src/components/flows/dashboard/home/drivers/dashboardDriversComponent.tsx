@@ -1,12 +1,9 @@
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { getTranslations } from "next-intl/server"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 import {
-  SectionColWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import { Separator } from "@/components/ui/separator"
-import {
+  DashboardRow,
   DashboardRowHeader,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
@@ -20,6 +17,10 @@ export default async function DashboardDriversComponent({
   const t = await getTranslations("Dashboard.Home.Drivers")
 
   const drivers = await driverServices.findDashboardDrivers(agencyId)
+
+  if (drivers.length === 0) {
+    return null
+  }
 
   const availableDrivers = drivers.filter(
     (driver) => driver.status === DriverStatusEnum.AVAILABLE,
@@ -37,12 +38,12 @@ export default async function DashboardDriversComponent({
   return (
     <SectionWrapper id="DashboardDrivers">
       <DashboardSectionHeader title={t("Title")} href={"/dashboard/drivers"} />
-      <DashboardRowHeader
-        title={t("Available")}
-        count={availableDrivers.length}
-      />
       {availableDrivers.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("Available")}
+            count={availableDrivers.length}
+          />
           {availableDrivers.map((driver, index) => (
             <DashboardDriverChipComponent
               key={index}
@@ -50,12 +51,14 @@ export default async function DashboardDriversComponent({
               type="available"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader title={t("OnTrip")} count={onTripDrivers.length} />
       {onTripDrivers.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("OnTrip")}
+            count={onTripDrivers.length}
+          />
           {onTripDrivers.map((driver, index) => (
             <DashboardDriverChipComponent
               key={index}
@@ -63,12 +66,11 @@ export default async function DashboardDriversComponent({
               type="onTrip"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader title={t("Leave")} count={leaveDrivers.length} />
       {leaveDrivers.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader title={t("Leave")} count={leaveDrivers.length} />
           {leaveDrivers.map((driver, index) => (
             <DashboardDriverChipComponent
               key={index}
@@ -76,15 +78,14 @@ export default async function DashboardDriversComponent({
               type="leave"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader
-        title={t("Inactive")}
-        count={inactiveDrivers.length}
-      />
       {inactiveDrivers.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("Inactive")}
+            count={inactiveDrivers.length}
+          />
           {inactiveDrivers.map((driver, index) => (
             <DashboardDriverChipComponent
               key={index}
@@ -92,7 +93,7 @@ export default async function DashboardDriversComponent({
               type="inactive"
             />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
     </SectionWrapper>
   )

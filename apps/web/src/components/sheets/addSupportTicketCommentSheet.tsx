@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -36,7 +36,6 @@ export default function AddSupportTicketCommentSheet({
   status: TicketStatusEnum
 }) {
   const t = useTranslations("Sheets.AddSupportTicketComment")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const [open, setOpen] = useState(false)
 
@@ -46,27 +45,24 @@ export default function AddSupportTicketCommentSheet({
 
   type SchemaType = z.infer<typeof schema>
 
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
   })
 
   const onSubmit = async (data: SchemaType) => {
-    startTransition(async () => {
-      if (
-        await addUserCommentInSupportTicketAction(
-          ticketId,
-          userId,
-          agencyId,
-          status,
-          data.comment,
-        )
-      ) {
-        setOpen(false)
-      } else {
-        toast.error(t("Error"))
-      }
-      router.refresh()
-    })
+    const addedComment = await addUserCommentInSupportTicketAction(
+      ticketId,
+      userId,
+      agencyId,
+      status,
+      data.comment,
+    )
+    if (addedComment) {
+      setOpen(false)
+    } else {
+      toast.error(t("Error"))
+    }
+    router.refresh()
   }
 
   return (
@@ -78,11 +74,8 @@ export default function AddSupportTicketCommentSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...formData}>
-          <form
-            id="closeSupportTicket"
-            onSubmit={formData.handleSubmit(onSubmit)}
-          >
+        <Form {...form}>
+          <form id="closeSupportTicket" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
               <RyogoTextarea name="comment" label={t("Title")} placeholder="" />
             </div>
@@ -91,9 +84,9 @@ export default function AddSupportTicketCommentSheet({
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             form="closeSupportTicket"
-            label={isPending ? t("Loading") : t("Save")}
+            label={form.formState.isSubmitting ? t("Loading") : t("Save")}
           />
         </SheetFooter>
       </SheetContent>

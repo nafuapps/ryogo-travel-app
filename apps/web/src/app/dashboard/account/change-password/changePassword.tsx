@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { changeMyPasswordAction } from "@/app/actions/users/changeMyPasswordAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -25,7 +24,6 @@ export default function ChangePasswordAccountComponent({
 }) {
   const t = useTranslations("Dashboard.Account.ChangePassword")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const schema = z
     .object({
@@ -52,7 +50,7 @@ export default function ChangePasswordAccountComponent({
     })
 
   type SchemaType = z.infer<typeof schema>
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
       oldPassword: "",
@@ -63,34 +61,32 @@ export default function ChangePasswordAccountComponent({
 
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
-    startTransition(async () => {
-      const result = await changeMyPasswordAction(
-        userId,
-        agencyId,
-        data.oldPassword,
-        data.newPassword,
-      )
-      if (result) {
-        //If success, redirect
-        toast.success(t("Success"))
+    const result = await changeMyPasswordAction(
+      userId,
+      agencyId,
+      data.oldPassword,
+      data.newPassword,
+    )
+    if (result) {
+      //If success, redirect
+      toast.success(t("Success"))
 
-        router.replace("/dashboard/account")
-      } else {
-        //If failed, show error
-        formData.setError("oldPassword", {
-          type: "manual",
-          message: t("APIError"),
-        })
-        // formData.reset();
-      }
-    })
+      router.replace("/dashboard/account")
+    } else {
+      //If failed, show error
+      form.setError("oldPassword", {
+        type: "manual",
+        message: t("APIError"),
+      })
+      // formData.reset();
+    }
   }
   return (
     <PageWrapper id="ChangePassword">
       <FormWrapper<SchemaType>
         id="ChangePasswordForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
-        form={formData}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoInput
           name={"oldPassword"}
@@ -116,17 +112,17 @@ export default function ChangePasswordAccountComponent({
         <Separator />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

@@ -19,11 +19,14 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function AddAgentConfirm(props: {
+export function AddAgentConfirm({
+  onNext,
+  onPrev,
+  finalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: AddAgentRequestType
-  ownerId: string
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm")
   const router = useRouter()
@@ -33,17 +36,17 @@ export function AddAgentConfirm(props: {
   const onSubmit = async () => {
     // Add agent
     const newAgentData: AddAgentRequestType = {
-      agencyId: props.finalData.agencyId,
+      agencyId: finalData.agencyId,
       data: {
-        name: props.finalData.data.name,
-        email: props.finalData.data.email,
-        phone: props.finalData.data.phone,
-        photos: props.finalData.data.photos,
+        name: finalData.data.name,
+        email: finalData.data.email,
+        phone: finalData.data.phone,
+        photos: finalData.data.photos,
       },
     }
     const addAgent = await addAgentAction(newAgentData)
     if (addAgent) {
-      props.onNext()
+      onNext()
     } else {
       //Take to dashboard page and show error
       toast.error(t("APIError"))
@@ -58,18 +61,9 @@ export function AddAgentConfirm(props: {
       >
         <OnboardingStepContent contentId="Step2Content">
           <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-          <ConfirmValues
-            name={t("AgentName")}
-            value={props.finalData.data.name}
-          />
-          <ConfirmValues
-            name={t("AgentPhone")}
-            value={props.finalData.data.phone}
-          />
-          <ConfirmValues
-            name={t("AgentEmail")}
-            value={props.finalData.data.email}
-          />
+          <ConfirmValues name={t("AgentName")} value={finalData.data.name} />
+          <ConfirmValues name={t("AgentPhone")} value={finalData.data.phone} />
+          <ConfirmValues name={t("AgentEmail")} value={finalData.data.email} />
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step2Actions">
           <RyogoDefaultButton
@@ -84,7 +78,7 @@ export function AddAgentConfirm(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

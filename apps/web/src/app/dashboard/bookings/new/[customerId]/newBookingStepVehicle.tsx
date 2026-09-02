@@ -29,7 +29,16 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 
-export default function NewBookingStepVehicle(props: {
+export default function NewBookingStepVehicle({
+  onNext,
+  onPrev,
+  newBookingFormData,
+  setNewBookingFormData,
+  vehicles,
+  limited,
+  isSubscribed,
+  hasTriedSubscription,
+}: {
   onNext: () => void
   onPrev: () => void
   newBookingFormData: NewBookingRequestDataType
@@ -53,18 +62,18 @@ export default function NewBookingStepVehicle(props: {
   const form = useForm<StepVehicleType>({
     resolver: zodResolver(stepVehicleSchema),
     defaultValues: {
-      assignedVehicleId: props.newBookingFormData.assignedVehicleId,
+      assignedVehicleId: newBookingFormData.assignedVehicleId,
     },
   })
 
   //Save selected vehicle
   function onSelectVehicle(selectedVehicleId: string | undefined) {
     form.setValue("assignedVehicleId", selectedVehicleId)
-    const selectedVehicle = props.vehicles.find(
+    const selectedVehicle = vehicles.find(
       (vehicle) => vehicle.id === selectedVehicleId,
     )
-    props.setNewBookingFormData({
-      ...props.newBookingFormData,
+    setNewBookingFormData({
+      ...newBookingFormData,
       assignedVehicleId: selectedVehicleId,
       selectedAcChargePerDay: selectedVehicle
         ? selectedVehicle.defaultAcChargePerDay
@@ -76,7 +85,7 @@ export default function NewBookingStepVehicle(props: {
   }
 
   function onSubmit() {
-    props.onNext()
+    onNext()
   }
 
   const assignedVehicleId = useWatch({
@@ -96,15 +105,13 @@ export default function NewBookingStepVehicle(props: {
         <StepsTracker steps={"booking"} current={1} />
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
       </NewStepHeaderWrapper>
-      {props.limited && (
+      {limited && (
         <SubscriptionReminderButton
-          warningText={
-            props.isSubscribed ? t("ExpiredWarning") : t("TrialWarning")
-          }
+          warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
           ctaText={
-            props.isSubscribed
+            isSubscribed
               ? t("RenewCTA")
-              : props.hasTriedSubscription
+              : hasTriedSubscription
                 ? t("BuyCTA")
                 : t("TryCTA")
           }
@@ -117,7 +124,7 @@ export default function NewBookingStepVehicle(props: {
       >
         <NewFormContentWrapper>
           <NewStepGridWrapper>
-            {props.vehicles
+            {vehicles
               .sort(
                 (a, b) => a.assignedBookings.length - b.assignedBookings.length,
               )
@@ -131,10 +138,10 @@ export default function NewBookingStepVehicle(props: {
                       assignedVehicleId === vehicle.id ? undefined : vehicle.id,
                     )
                   }
-                  bookingStartDate={props.newBookingFormData.tripStartDate}
-                  bookingEndDate={props.newBookingFormData.tripEndDate}
-                  bookingPassengers={props.newBookingFormData.tripPassengers}
-                  bookingNeedsAC={props.newBookingFormData.tripNeedsAC}
+                  bookingStartDate={newBookingFormData.tripStartDate}
+                  bookingEndDate={newBookingFormData.tripEndDate}
+                  bookingPassengers={newBookingFormData.tripPassengers}
+                  bookingNeedsAC={newBookingFormData.tripNeedsAC}
                 />
               ))}
           </NewStepGridWrapper>
@@ -156,7 +163,7 @@ export default function NewBookingStepVehicle(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />

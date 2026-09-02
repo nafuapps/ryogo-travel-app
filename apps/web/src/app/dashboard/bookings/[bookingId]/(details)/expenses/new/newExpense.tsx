@@ -15,7 +15,6 @@ import z from "zod"
 import { addExpenseAction } from "@/app/actions/expenses/addExpenseAction"
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { FileRegex } from "@/lib/regex"
 import {
@@ -36,7 +35,6 @@ export default function NewExpensePageComponent({
 }) {
   const t = useTranslations("Dashboard.NewExpense")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const newExpenseSchema = z.object({
     type: z.enum(ExpenseTypesEnum).nonoptional(t("Field1.Error1")),
@@ -70,7 +68,7 @@ export default function NewExpensePageComponent({
   type NewExpenseType = z.infer<typeof newExpenseSchema>
 
   //Form init
-  const formData = useForm<NewExpenseType>({
+  const form = useForm<NewExpenseType>({
     resolver: zodResolver(newExpenseSchema),
     defaultValues: {
       type: ExpenseTypesEnum.FUEL,
@@ -79,35 +77,32 @@ export default function NewExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: NewExpenseType) {
-    startTransition(async () => {
-      if (
-        await addExpenseAction({
-          bookingId,
-          userId,
-          agencyId,
-          assignedUserId,
-          ...values,
-        })
-      ) {
-        toast.success(t("Success"))
-        router.replace(`/dashboard/bookings/${bookingId}/expenses`)
-      } else {
-        toast.error(t("Error"))
-      }
+    const addedExpense = await addExpenseAction({
+      bookingId,
+      userId,
+      agencyId,
+      assignedUserId,
+      ...values,
     })
+    if (addedExpense) {
+      toast.success(t("Success"))
+      router.replace(`/dashboard/bookings/${bookingId}/expenses`)
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   return (
     <PageWrapper id="NewExpensePage">
       <FormWrapper<NewExpenseType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="newExpenseForm"
       >
         <RyogoSelect
           name="type"
           title={t("Field1.Title")}
-          register={formData.register("type")}
+          register={form.register("type")}
           array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
           placeholder={t("Field1.Description")}
         />
@@ -124,24 +119,24 @@ export default function NewExpensePageComponent({
         />
         <RyogoFileInput
           name={"expensePhoto"}
-          register={formData.register("expensePhoto")}
+          register={form.register("expensePhoto")}
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("CancelCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

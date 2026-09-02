@@ -28,7 +28,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function CreateAccountStep3(props: {
+export function CreateAccountStep3({
+  onNext,
+  onPrev,
+  finalData,
+  updateFinalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: CreateOwnerAccountRequestType
@@ -86,29 +91,29 @@ export function CreateAccountStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      agencyLogo: props.finalData.agency.logo,
-      commissionRate: props.finalData.agency.commissionRate,
-      agencyState: props.finalData.agency.agencyState,
-      agencyCity: props.finalData.agency.agencyCity,
-      qrCode: props.finalData.agency.qrCode,
+      agencyLogo: finalData.agency.logo,
+      commissionRate: finalData.agency.commissionRate,
+      agencyState: finalData.agency.agencyState,
+      agencyCity: finalData.agency.agencyCity,
+      qrCode: finalData.agency.qrCode,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    props.updateFinalData({
+    updateFinalData({
       agency: {
-        ...props.finalData.agency,
+        ...finalData.agency,
         logo: data.agencyLogo,
         commissionRate: data.commissionRate,
         agencyState: data.agencyState,
         agencyCity: data.agencyCity,
       },
       owner: {
-        ...props.finalData.owner,
+        ...finalData.owner,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   const data: Record<string, string[]> = stateCityData
@@ -177,7 +182,7 @@ export function CreateAccountStep3(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

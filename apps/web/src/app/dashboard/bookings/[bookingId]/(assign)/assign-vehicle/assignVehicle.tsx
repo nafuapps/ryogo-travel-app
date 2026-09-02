@@ -50,20 +50,21 @@ export default function AssignVehiclePageComponent({
   const handleAssignVehicle = async () => {
     if (selectedVehicleId) {
       startTransition(async () => {
-        if (
-          await assignVehicleAction(
-            bookingId,
-            selectedVehicleId,
-            booking.agencyId,
-            booking.assignedUserId,
-          )
-        ) {
+        const updatedVehicle = await assignVehicleAction(
+          bookingId,
+          selectedVehicleId,
+          booking.agencyId,
+          booking.assignedUserId,
+        )
+        if (updatedVehicle) {
           toast.success(t("Success"))
           router.replace(`/dashboard/bookings/${bookingId}`)
         } else {
           toast.error(t("Error"))
         }
       })
+    } else {
+      toast.warning(t("SelectWarning"))
     }
   }
 

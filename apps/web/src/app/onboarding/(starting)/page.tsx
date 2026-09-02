@@ -126,25 +126,28 @@ export default async function OnboardingHomePage({
   )
 }
 
-function OnboardingHomeDocumentItem(props: {
+function OnboardingHomeDocumentItem({
+  icon,
+  label,
+}: {
   icon: LucideIcon
   label: string
 }) {
   return (
     <div className="flex flex-row gap-3 md:gap-4 items-center">
-      <RyogoEnclosedIcon
-        icon={props.icon}
-        color="brand"
-        bgColor="brand"
-        size="sm"
-      />
+      <RyogoEnclosedIcon icon={icon} color="brand" bgColor="brand" size="sm" />
 
-      <RyogoSmall color="slate">{props.label}</RyogoSmall>
+      <RyogoSmall color="slate">{label}</RyogoSmall>
     </div>
   )
 }
 
-function OnboardingHomeStepItem(props: {
+function OnboardingHomeStepItem({
+  icon,
+  label,
+  first,
+  last,
+}: {
   icon: LucideIcon
   label: string
   first?: boolean
@@ -154,14 +157,14 @@ function OnboardingHomeStepItem(props: {
     <div className="flex flex-row gap-3 md:gap-4 items-center">
       <div className="flex flex-col items-center">
         <div
-          className={`w-1 h-2 md:h-3 ${!props.first && `bg-slate-100 dark:bg-slate-800`}`}
+          className={`w-1 h-2 md:h-3 ${!first && `bg-slate-100 dark:bg-slate-800`}`}
         ></div>
-        <RyogoEnclosedIcon icon={props.icon} size="sm" color="slate" circular />
+        <RyogoEnclosedIcon icon={icon} size="sm" color="slate" circular />
         <div
-          className={`w-1 h-2 md:h-3 ${!props.last && `bg-slate-100 dark:bg-slate-800`}`}
+          className={`w-1 h-2 md:h-3 ${!last && `bg-slate-100 dark:bg-slate-800`}`}
         ></div>
       </div>
-      <RyogoSmall color="slate">{props.label}</RyogoSmall>
+      <RyogoSmall color="slate">{label}</RyogoSmall>
     </div>
   )
 }

@@ -22,7 +22,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function AddVehicleStep3(props: {
+export function AddVehicleStep3({
+  onNext,
+  onPrev,
+  finalData,
+  updateFinalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: AddVehicleRequestType
@@ -85,26 +90,26 @@ export function AddVehicleStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      insuranceExpiresOn: props.finalData.data.insuranceExpiresOn,
-      insurancePhotos: props.finalData.data.insurancePhotos,
-      pucExpiresOn: props.finalData.data.pucExpiresOn,
-      pucPhotos: props.finalData.data.pucPhotos,
+      insuranceExpiresOn: finalData.data.insuranceExpiresOn,
+      insurancePhotos: finalData.data.insurancePhotos,
+      pucExpiresOn: finalData.data.pucExpiresOn,
+      pucPhotos: finalData.data.pucPhotos,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    props.updateFinalData({
-      agencyId: props.finalData.agencyId,
+    updateFinalData({
+      agencyId: finalData.agencyId,
       data: {
-        ...props.finalData.data,
+        ...finalData.data,
         insuranceExpiresOn: data.insuranceExpiresOn,
         insurancePhotos: data.insurancePhotos,
         pucExpiresOn: data.pucExpiresOn,
         pucPhotos: data.pucPhotos,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -154,7 +159,7 @@ export function AddVehicleStep3(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

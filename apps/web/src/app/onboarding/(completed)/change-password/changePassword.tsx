@@ -9,7 +9,11 @@ import { ChangePasswordStep1 } from "./changePasswordStep1"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 
-export default function ChangePasswordPageComponent(props: {
+export default function ChangePasswordPageComponent({
+  userId,
+  agencyId,
+  role,
+}: {
   userId: string
   agencyId: string
   role: UserRolesEnum
@@ -25,11 +29,7 @@ export default function ChangePasswordPageComponent(props: {
           stepLabel={t("Subtitle")}
         />
 
-        <ChangePasswordStep1
-          userId={props.userId}
-          role={props.role}
-          agencyId={props.agencyId}
-        />
+        <ChangePasswordStep1 userId={userId} role={role} agencyId={agencyId} />
       </OnboardingStepPage>
       <OnboardingSidebar showLogout />
     </>

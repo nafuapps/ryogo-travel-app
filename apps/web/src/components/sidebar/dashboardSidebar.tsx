@@ -20,7 +20,7 @@ export default function DashboardSidebar({ isOwner }: { isOwner: boolean }) {
   const t = useTranslations("Dashboard.Sidebar")
 
   // Content Menu items
-  const contentItems: MenuItemType = [
+  const contentItems: MenuItemType[] = [
     {
       title: t("Home"),
       url: "/dashboard/home",
@@ -61,7 +61,7 @@ export default function DashboardSidebar({ isOwner }: { isOwner: boolean }) {
   ]
 
   //Footer menu items
-  const footerItems: MenuItemType = [
+  const footerItems: MenuItemType[] = [
     {
       title: t("Search"),
       url: "/dashboard/search",

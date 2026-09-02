@@ -80,6 +80,19 @@ function getBGIconSize(size: RyogoIconSizeType) {
   }
 }
 
+function getBGIconRounded(size: RyogoIconSizeType) {
+  switch (size) {
+    case "xl":
+      return "rounded-xl"
+    case "lg":
+      return "rounded-lg"
+    case "md":
+      return "rounded-md"
+    case "sm":
+      return "rounded-sm"
+  }
+}
+
 export type RyogoIconType = {
   icon: LucideIcon
   size: RyogoIconSizeType
@@ -103,7 +116,7 @@ export function RyogoEnclosedIcon(props: RyogoEnclosedIconType) {
   return (
     <div
       onClick={props.onClick}
-      className={`${getBGColor(props.bgColor)} ${props.circular ? "rounded-full" : "rounded-lg"} ${getBGIconSize(props.size)} flex shrink-0 justify-center items-center`}
+      className={`${getBGColor(props.bgColor)} ${props.circular ? "rounded-full" : getBGIconRounded(props.size)} ${getBGIconSize(props.size)} flex shrink-0 justify-center items-center`}
     >
       <RyogoIcon
         icon={props.icon}

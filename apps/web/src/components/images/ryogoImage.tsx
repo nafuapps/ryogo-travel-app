@@ -14,15 +14,15 @@ type RyogoImageSizeType = "xs" | "sm" | "md" | "lg" | "xl"
 function getImageSizeClassName(size: RyogoImageSizeType) {
   switch (size) {
     case "xl":
-      return "size-72 lg:size-80"
+      return "size-72 lg:size-80 rounded-2xl"
     case "lg":
-      return "size-32 lg:size-36"
+      return "size-32 lg:size-36 rounded-xl"
     case "md":
-      return "size-18 lg:size-20"
+      return "size-18 lg:size-20 rounded-lg"
     case "sm":
-      return "size-10 lg:size-12"
+      return "size-10 lg:size-12 rounded-md"
     case "xs":
-      return "size-8 lg:size-9"
+      return "size-8 lg:size-9 rounded-sm"
   }
 }
 
@@ -41,7 +41,12 @@ function getNextImageSizes(size: RyogoImageSizeType) {
   }
 }
 
-export function RyogoImage(props: {
+export function RyogoImage({
+  src,
+  alt,
+  imageSize,
+  className,
+}: {
   src: string
   alt: string
   imageSize: RyogoImageSizeType
@@ -49,35 +54,39 @@ export function RyogoImage(props: {
 }) {
   return (
     <div
-      className={`relative ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden shrink-0 border border-slate-300 dark:border-slate-700 ${props.className ?? ""}`}
+      className={`relative ${getImageSizeClassName(imageSize)} overflow-hidden shrink-0 ${className ?? ""}`}
     >
       <Image
         loading="eager"
-        src={props.src}
-        alt={props.alt}
+        src={src}
+        alt={alt}
         fill
-        sizes={getNextImageSizes(props.imageSize)}
+        sizes={getNextImageSizes(imageSize)}
       />
     </div>
   )
 }
 
-export function RyogoDialogImage(props: {
+export function RyogoDialogImage({
+  src,
+  alt,
+  imageSize,
+}: {
   src: string
   alt: string
   imageSize: RyogoImageSizeType
 }) {
-  let className = `relative flex justify-center items-center ${getImageSizeClassName(props.imageSize)} rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 hover:border-slate-600 dark:hover:border-slate-300`
+  let className = `relative flex justify-center items-center ${getImageSizeClassName(imageSize)} rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 hover:border-slate-600 dark:hover:border-slate-300`
   return (
     <Dialog>
       <DialogTrigger className={className}>
         <Image
           loading="eager"
-          src={props.src}
-          alt={props.alt}
+          src={src}
+          alt={alt}
           fill
           className="object-contain"
-          sizes={getNextImageSizes(props.imageSize)}
+          sizes={getNextImageSizes(imageSize)}
         />
       </DialogTrigger>
       <DialogContent className="size-5/6">
@@ -87,8 +96,8 @@ export function RyogoDialogImage(props: {
         </DialogHeader>
         <Image
           loading="eager"
-          src={props.src}
-          alt={props.alt}
+          src={src}
+          alt={alt}
           fill
           className="object-contain"
           sizes="5/6"
@@ -98,12 +107,12 @@ export function RyogoDialogImage(props: {
   )
 }
 
-export function RyogoChinImage(props: { src: string; alt: string }) {
+export function RyogoChinImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="flex justify-center items-center overflow-hidden bg-slate-300 dark:bg-slate-700 rounded-b-lg p-1.5 lg:p-2">
       <Dialog>
         <DialogTrigger className="w-full hover:underline">
-          <RyogoCaption color="slate">{props.alt}</RyogoCaption>
+          <RyogoCaption color="slate">{alt}</RyogoCaption>
         </DialogTrigger>
         <DialogContent className="size-5/6">
           <DialogHeader>
@@ -112,8 +121,8 @@ export function RyogoChinImage(props: { src: string; alt: string }) {
           </DialogHeader>
           <Image
             loading="eager"
-            src={props.src}
-            alt={props.alt}
+            src={src}
+            alt={alt}
             fill
             className="object-contain"
             sizes="5/6"

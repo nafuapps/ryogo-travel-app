@@ -20,7 +20,6 @@ import z from "zod"
 import { addTransactionAction } from "@/app/actions/transactions/addTransactionAction"
 import { toast } from "sonner"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { FileRegex } from "@/lib/regex"
 import {
@@ -41,7 +40,6 @@ export default function NewTransactionPageComponent({
 }) {
   const t = useTranslations("Dashboard.NewTransaction")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const newTransactionSchema = z.object({
     type: z.enum(TransactionTypesEnum).nonoptional(t("Field1.Error1")),
@@ -77,7 +75,7 @@ export default function NewTransactionPageComponent({
   type NewTransactionType = z.infer<typeof newTransactionSchema>
 
   //Form init
-  const formData = useForm<NewTransactionType>({
+  const form = useForm<NewTransactionType>({
     resolver: zodResolver(newTransactionSchema),
     defaultValues: {
       type: TransactionTypesEnum.CREDIT,
@@ -88,35 +86,32 @@ export default function NewTransactionPageComponent({
 
   //Form submit
   async function onSubmit(values: NewTransactionType) {
-    startTransition(async () => {
-      if (
-        await addTransactionAction({
-          agencyId,
-          bookingId,
-          userId,
-          assignedUserId,
-          ...values,
-        })
-      ) {
-        toast.success(t("Success"))
-        router.replace(`/dashboard/bookings/${bookingId}/transactions`)
-      } else {
-        toast.error(t("Error"))
-      }
+    const addedTransaction = await addTransactionAction({
+      agencyId,
+      bookingId,
+      userId,
+      assignedUserId,
+      ...values,
     })
+    if (addedTransaction) {
+      toast.success(t("Success"))
+      router.replace(`/dashboard/bookings/${bookingId}/transactions`)
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   return (
     <PageWrapper id="NewTransactionPage">
       <FormWrapper<NewTransactionType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="newTransactionForm"
       >
         <RyogoRadio
           name="type"
           title={t("Field1.Title")}
-          register={formData.register("type")}
+          register={form.register("type")}
           defaultValue={TransactionTypesEnum.CREDIT}
           array={getEnumValueDisplayPairs(TransactionTypesEnum)}
           description={t("Field1.Description")}
@@ -129,14 +124,14 @@ export default function NewTransactionPageComponent({
         />
         <RyogoSelect
           name="mode"
-          register={formData.register("mode")}
+          register={form.register("mode")}
           title={t("Field3.Title")}
           array={getEnumValueDisplayPairs(TransactionModesEnum)}
           placeholder={t("Field3.Placeholder")}
         />
         <RyogoSelect
           name="otherParty"
-          register={formData.register("otherParty")}
+          register={form.register("otherParty")}
           title={t("Field4.Title")}
           array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
           placeholder={t("Field4.Placeholder")}
@@ -148,24 +143,24 @@ export default function NewTransactionPageComponent({
         />
         <RyogoFileInput
           name={"txnPhoto"}
-          register={formData.register("txnPhoto")}
+          register={form.register("txnPhoto")}
           label={t("Field6.Title")}
           placeholder={t("Field6.Placeholder")}
           description={t("Field6.Description")}
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("CancelCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

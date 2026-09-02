@@ -20,7 +20,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function CreateAccountConfirm(props: {
+export function CreateAccountConfirm({
+  onNext,
+  onPrev,
+  finalData,
+  updateFinalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: CreateOwnerAccountRequestType
@@ -35,39 +40,39 @@ export function CreateAccountConfirm(props: {
     // Create Agency and Owner Account
     const newAccountData: CreateOwnerAccountRequestType = {
       agency: {
-        businessEmail: props.finalData.agency.businessEmail,
-        businessPhone: props.finalData.agency.businessPhone,
-        businessName: props.finalData.agency.businessName,
-        businessAddress: props.finalData.agency.businessAddress,
-        agencyCity: props.finalData.agency.agencyCity,
-        agencyState: props.finalData.agency.agencyState,
-        commissionRate: props.finalData.agency.commissionRate,
-        logo: props.finalData.agency.logo,
-        qrCode: props.finalData.agency.qrCode,
-        tryPremium: props.finalData.agency.tryPremium,
+        businessEmail: finalData.agency.businessEmail,
+        businessPhone: finalData.agency.businessPhone,
+        businessName: finalData.agency.businessName,
+        businessAddress: finalData.agency.businessAddress,
+        agencyCity: finalData.agency.agencyCity,
+        agencyState: finalData.agency.agencyState,
+        commissionRate: finalData.agency.commissionRate,
+        logo: finalData.agency.logo,
+        qrCode: finalData.agency.qrCode,
+        tryPremium: finalData.agency.tryPremium,
       },
       owner: {
-        email: props.finalData.owner.email,
-        phone: props.finalData.owner.phone,
-        name: props.finalData.owner.name,
-        password: props.finalData.owner.password,
-        photos: props.finalData.owner.photos,
+        email: finalData.owner.email,
+        phone: finalData.owner.phone,
+        name: finalData.owner.name,
+        password: finalData.owner.password,
+        photos: finalData.owner.photos,
       },
     }
 
     const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
     if (createdOwnerAccount) {
       //If success, update userid and move to next success page
-      props.updateFinalData({
+      updateFinalData({
         agency: {
-          ...props.finalData.agency,
+          ...finalData.agency,
         },
         owner: {
-          ...props.finalData.owner,
+          ...finalData.owner,
           id: createdOwnerAccount.userId,
         },
       })
-      props.onNext()
+      onNext()
     } else {
       //If failed, Take to onboarding page and show error
       toast.error(t("APIError"))
@@ -84,40 +89,31 @@ export function CreateAccountConfirm(props: {
           <RyogoH3 color="slate">{t("Title")}</RyogoH3>
           <ConfirmValues
             name={t("AgencyName")}
-            value={props.finalData.agency.businessName}
+            value={finalData.agency.businessName}
           />
-          <ConfirmValues
-            name={t("OwnerName")}
-            value={props.finalData.owner.name}
-          />
-          <ConfirmValues
-            name={t("OwnerPhone")}
-            value={props.finalData.owner.phone}
-          />
-          <ConfirmValues
-            name={t("OwnerEmail")}
-            value={props.finalData.owner.email}
-          />
+          <ConfirmValues name={t("OwnerName")} value={finalData.owner.name} />
+          <ConfirmValues name={t("OwnerPhone")} value={finalData.owner.phone} />
+          <ConfirmValues name={t("OwnerEmail")} value={finalData.owner.email} />
           <ConfirmValues
             name={t("AgencyPhone")}
-            value={props.finalData.agency.businessPhone}
+            value={finalData.agency.businessPhone}
           />
           <ConfirmValues
             name={t("AgencyEmail")}
-            value={props.finalData.agency.businessEmail}
+            value={finalData.agency.businessEmail}
           />
           <ConfirmValues
             name={t("AgencyAddress")}
-            value={props.finalData.agency.businessAddress}
+            value={finalData.agency.businessAddress}
           />
           <ConfirmValues
             name={t("Location")}
-            value={`${props.finalData.agency.agencyCity}, ${props.finalData.agency.agencyState}`}
+            value={`${finalData.agency.agencyCity}, ${finalData.agency.agencyState}`}
           />
-          {props.finalData.agency.commissionRate && (
+          {finalData.agency.commissionRate && (
             <ConfirmValues
               name={t("CommissionRate")}
-              value={`${props.finalData.agency.commissionRate}`}
+              value={`${finalData.agency.commissionRate}`}
             />
           )}
         </OnboardingStepContent>
@@ -134,7 +130,7 @@ export function CreateAccountConfirm(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

@@ -17,7 +17,12 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { FileRegex } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
-export function AddAgentStep1(props: {
+export function AddAgentStep1({
+  onNext,
+  finalData,
+  updateFinalData,
+  allAgents,
+}: {
   onNext: () => void
   finalData: AddAgentRequestType
   updateFinalData: Dispatch<SetStateAction<AddAgentRequestType>>
@@ -54,17 +59,17 @@ export function AddAgentStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      agentName: props.finalData.data.name,
-      agentPhone: props.finalData.data.phone,
-      agentEmail: props.finalData.data.email,
-      agentPhotos: props.finalData.data.photos,
+      agentName: finalData.data.name,
+      agentPhone: finalData.data.phone,
+      agentEmail: finalData.data.email,
+      agentPhotos: finalData.data.photos,
     },
   })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     if (
-      props.allAgents.some(
+      allAgents.some(
         (a) => a.email === data.agentEmail && a.phone === data.agentPhone,
       )
     ) {
@@ -75,17 +80,17 @@ export function AddAgentStep1(props: {
       })
     } else {
       //If no errors, move ahead
-      props.updateFinalData({
-        agencyId: props.finalData.agencyId,
+      updateFinalData({
+        agencyId: finalData.agencyId,
         data: {
-          ...props.finalData.data,
+          ...finalData.data,
           name: data.agentName,
           phone: data.agentPhone,
           email: data.agentEmail,
           photos: data.agentPhotos,
         },
       })
-      props.onNext()
+      onNext()
     }
   }
 

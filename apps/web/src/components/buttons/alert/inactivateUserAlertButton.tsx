@@ -12,7 +12,11 @@ import {
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function InactivateUserAlertButton(props: {
+export default function InactivateUserAlertButton({
+  userId,
+  agencyId,
+  role,
+}: {
   userId: string
   agencyId: string
   role: UserRolesEnum
@@ -23,9 +27,7 @@ export default function InactivateUserAlertButton(props: {
 
   async function inactivate() {
     startTransition(async () => {
-      if (
-        await inactivateUserAction(props.userId, props.agencyId, props.role)
-      ) {
+      if (await inactivateUserAction(userId, agencyId, role)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

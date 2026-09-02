@@ -12,7 +12,15 @@ import {
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function QuickAddDriverAlertButton(props: {
+export default function QuickAddDriverAlertButton({
+  agencyId,
+  name,
+  email,
+  phone,
+  photo,
+  disabled,
+  isOnboarding,
+}: {
   agencyId: string
   name: string
   email: string
@@ -29,12 +37,12 @@ export default function QuickAddDriverAlertButton(props: {
   async function quickAddDriver() {
     startTransition(async () => {
       const newDriverData: AddDriverRequestType = {
-        agencyId: props.agencyId,
+        agencyId: agencyId,
         data: {
-          name: props.name,
-          email: props.email,
-          phone: props.phone,
-          userPhotos: props.photo,
+          name: name,
+          email: email,
+          phone: phone,
+          userPhotos: photo,
         },
       }
       const addedDriver = await addDriverAction(newDriverData)
@@ -42,7 +50,7 @@ export default function QuickAddDriverAlertButton(props: {
       if (addedDriver) {
         toast.success(t("Success"))
         router.replace(
-          props.isOnboarding
+          isOnboarding
             ? `/onboarding/add-agent`
             : `/dashboard/drivers/${addedDriver.id}`,
         )
@@ -58,9 +66,7 @@ export default function QuickAddDriverAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <RyogoOutlineButton disabled={props.disabled} label={t("Label")} />
-      }
+      labelChild={<RyogoOutlineButton disabled={disabled} label={t("Label")} />}
     >
       <RyogoDefaultButton
         onClick={quickAddDriver}

@@ -17,60 +17,60 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 
 export function BookingSchedulePopoverCard(
-  props: FindBookingScheduleNextDaysType[number],
+  booking: FindBookingScheduleNextDaysType[number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Booking")
   const isDelayed =
-    (props.status === BookingStatusEnum.CONFIRMED &&
-      props.startDate < new Date()) ||
-    (props.status === BookingStatusEnum.IN_PROGRESS &&
-      props.endDate < new Date())
+    (booking.status === BookingStatusEnum.CONFIRMED &&
+      booking.startDate < new Date()) ||
+    (booking.status === BookingStatusEnum.IN_PROGRESS &&
+      booking.endDate < new Date())
   return (
     <SectionColWrapper>
-      <BookingStatusPill status={props.status} />
+      <BookingStatusPill status={booking.status} />
       <SectionRowWrapper>
         <SectionColWrapper small>
           <RyogoCaption weight="font-bold">
-            {props.type.toUpperCase()}
+            {booking.type.toUpperCase()}
           </RyogoCaption>
-          <RyogoH4>{props.route}</RyogoH4>
+          <RyogoH4>{booking.route}</RyogoH4>
         </SectionColWrapper>
         <SectionColWrapper small end>
           <RyogoCaption color={isDelayed ? "red" : "slate"}>
-            {moment(props.startDate).format("DD MMM") +
+            {moment(booking.startDate).format("DD MMM") +
               " - " +
-              moment(props.endDate).format("DD MMM")}
+              moment(booking.endDate).format("DD MMM")}
           </RyogoCaption>
         </SectionColWrapper>
       </SectionRowWrapper>
       <SectionRowWrapper end>
         <SectionColWrapper small>
-          <RyogoSmall>{props.customerName}</RyogoSmall>
-          <RyogoCaption weight="font-bold">{props.bookingId}</RyogoCaption>
+          <RyogoSmall>{booking.customerName}</RyogoSmall>
+          <RyogoCaption weight="font-bold">{booking.bookingId}</RyogoCaption>
         </SectionColWrapper>
         <SectionColWrapper small end>
-          {props.vehicle ? (
-            <RyogoSmall>{props.vehicle}</RyogoSmall>
+          {booking.vehicle ? (
+            <RyogoSmall>{booking.vehicle}</RyogoSmall>
           ) : (
             <RyogoSmall color="red">{t("NotAssigned")}</RyogoSmall>
           )}
-          {props.driver ? (
-            <RyogoCaption weight="font-bold">{props.driver}</RyogoCaption>
+          {booking.driver ? (
+            <RyogoCaption weight="font-bold">{booking.driver}</RyogoCaption>
           ) : (
             <RyogoCaption color="red">{t("NotAssigned")}</RyogoCaption>
           )}
         </SectionColWrapper>
       </SectionRowWrapper>
-      {(!props.driver || !props.vehicle) && (
+      {(!booking.driver || !booking.vehicle) && (
         <Link
-          href={`/dashboard/bookings/${props.bookingId}/${
-            props.vehicle ? "assign-driver" : "assign-vehicle"
+          href={`/dashboard/bookings/${booking.bookingId}/${
+            booking.vehicle ? "assign-driver" : "assign-vehicle"
           }`}
         >
           <RyogoDefaultButton label={t("Assign")} className="w-full" />
         </Link>
       )}
-      <Link href={`/dashboard/bookings/${props.bookingId}`}>
+      <Link href={`/dashboard/bookings/${booking.bookingId}`}>
         <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>
@@ -78,48 +78,48 @@ export function BookingSchedulePopoverCard(
 }
 
 export function AssignedBookingPopoverCard(
-  props:
+  booking:
     | FindDriversScheduleNextDaysType[number]["assignedBookings"][number]
     | FindVehiclesScheduleNextDaysType[number]["assignedBookings"][number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.AssignedBooking")
   const isDelayed =
-    (props.status === BookingStatusEnum.CONFIRMED &&
-      props.startDate < new Date()) ||
-    (props.status === BookingStatusEnum.IN_PROGRESS &&
-      props.endDate < new Date())
+    (booking.status === BookingStatusEnum.CONFIRMED &&
+      booking.startDate < new Date()) ||
+    (booking.status === BookingStatusEnum.IN_PROGRESS &&
+      booking.endDate < new Date())
   return (
     <SectionColWrapper>
       <SectionRowWrapper>
         <SectionColWrapper small>
           <RyogoCaption weight="font-bold">
-            {props.type.toUpperCase()}
+            {booking.type.toUpperCase()}
           </RyogoCaption>
           <RyogoH4>
-            {props.source.city + " - " + props.destination.city}
+            {booking.source.city + " - " + booking.destination.city}
           </RyogoH4>
         </SectionColWrapper>
         <SectionColWrapper small end>
           <RyogoCaption color={isDelayed ? "red" : "slate"}>
-            {moment(props.startDate).format("DD MMM") +
+            {moment(booking.startDate).format("DD MMM") +
               " - " +
-              moment(props.endDate).format("DD MMM")}
+              moment(booking.endDate).format("DD MMM")}
           </RyogoCaption>
         </SectionColWrapper>
       </SectionRowWrapper>
       <SectionRowWrapper end>
         <SectionColWrapper small>
-          <RyogoSmall>{props.customer.name}</RyogoSmall>
-          <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
+          <RyogoSmall>{booking.customer.name}</RyogoSmall>
+          <RyogoCaption weight="font-bold">{booking.id}</RyogoCaption>
         </SectionColWrapper>
         <SectionColWrapper small end>
-          <RyogoSmall>{props.assignedVehicle?.vehicleNumber}</RyogoSmall>
+          <RyogoSmall>{booking.assignedVehicle?.vehicleNumber}</RyogoSmall>
           <RyogoCaption weight="font-bold">
-            {props.assignedDriver?.name}
+            {booking.assignedDriver?.name}
           </RyogoCaption>
         </SectionColWrapper>
       </SectionRowWrapper>
-      <Link href={`/dashboard/bookings/${props.id}`}>
+      <Link href={`/dashboard/bookings/${booking.id}`}>
         <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>
@@ -127,25 +127,27 @@ export function AssignedBookingPopoverCard(
 }
 
 export function RepairPopoverCard(
-  props: FindVehiclesScheduleNextDaysType[number]["vehicleRepairs"][number],
+  repair: FindVehiclesScheduleNextDaysType[number]["vehicleRepairs"][number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Repair")
-  const isDelayed = props.endDate < new Date()
+  const isDelayed = repair.endDate < new Date()
   return (
     <SectionColWrapper>
       <SectionColWrapper small>
-        <RyogoCaption color="slate">{props.vehicle.vehicleNumber}</RyogoCaption>
+        <RyogoCaption color="slate">
+          {repair.vehicle.vehicleNumber}
+        </RyogoCaption>
         <RyogoH4 color={isDelayed ? "red" : "slate"}>
-          {moment(props.startDate).format("DD MMM") +
+          {moment(repair.startDate).format("DD MMM") +
             " - " +
-            moment(props.endDate).format("DD MMM")}
+            moment(repair.endDate).format("DD MMM")}
         </RyogoH4>
       </SectionColWrapper>
       <SectionColWrapper small>
-        <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
-        <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
+        <RyogoSmall>{repair.addedByUser.name}</RyogoSmall>
+        <RyogoCaption weight="font-bold">{repair.id}</RyogoCaption>
       </SectionColWrapper>
-      <Link href={`/dashboard/vehicles/${props.vehicleId}/repairs`}>
+      <Link href={`/dashboard/vehicles/${repair.vehicleId}/repairs`}>
         <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>
@@ -153,25 +155,25 @@ export function RepairPopoverCard(
 }
 
 export function LeavePopoverCard(
-  props: FindDriversScheduleNextDaysType[number]["driverLeaves"][number],
+  leave: FindDriversScheduleNextDaysType[number]["driverLeaves"][number],
 ) {
   const t = useTranslations("Dashboard.PopoverCards.Leave")
-  const isDelayed = props.endDate < new Date()
+  const isDelayed = leave.endDate < new Date()
   return (
     <SectionColWrapper>
       <SectionColWrapper small>
-        <RyogoCaption color="slate">{props.driver.name}</RyogoCaption>
+        <RyogoCaption color="slate">{leave.driver.name}</RyogoCaption>
         <RyogoH4 color={isDelayed ? "red" : "slate"}>
-          {moment(props.startDate).format("DD MMM") +
+          {moment(leave.startDate).format("DD MMM") +
             " - " +
-            moment(props.endDate).format("DD MMM")}
+            moment(leave.endDate).format("DD MMM")}
         </RyogoH4>
       </SectionColWrapper>
       <SectionColWrapper small>
-        <RyogoSmall>{props.addedByUser.name}</RyogoSmall>
-        <RyogoCaption weight="font-bold">{props.id}</RyogoCaption>
+        <RyogoSmall>{leave.addedByUser.name}</RyogoSmall>
+        <RyogoCaption weight="font-bold">{leave.id}</RyogoCaption>
       </SectionColWrapper>
-      <Link href={`/dashboard/drivers/${props.driverId}/leaves`}>
+      <Link href={`/dashboard/drivers/${leave.driverId}/leaves`}>
         <RyogoOutlineButton label={t("ViewDetails")} className="w-full" />
       </Link>
     </SectionColWrapper>

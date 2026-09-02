@@ -26,7 +26,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function NewVehicleStep3(props: {
+export function NewVehicleStep3({
+  onNext,
+  onPrev,
+  newVehicleFormData,
+  setNewVehicleFormData,
+}: {
   onNext: () => void
   onPrev: () => void
   newVehicleFormData: AddVehicleRequestType
@@ -89,26 +94,26 @@ export function NewVehicleStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      insuranceExpiresOn: props.newVehicleFormData.data.insuranceExpiresOn,
-      insurancePhotos: props.newVehicleFormData.data.insurancePhotos,
-      pucExpiresOn: props.newVehicleFormData.data.pucExpiresOn,
-      pucPhotos: props.newVehicleFormData.data.pucPhotos,
+      insuranceExpiresOn: newVehicleFormData.data.insuranceExpiresOn,
+      insurancePhotos: newVehicleFormData.data.insurancePhotos,
+      pucExpiresOn: newVehicleFormData.data.pucExpiresOn,
+      pucPhotos: newVehicleFormData.data.pucPhotos,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    props.setNewVehicleFormData({
-      agencyId: props.newVehicleFormData.agencyId,
+    setNewVehicleFormData({
+      agencyId: newVehicleFormData.agencyId,
       data: {
-        ...props.newVehicleFormData.data,
+        ...newVehicleFormData.data,
         insuranceExpiresOn: data.insuranceExpiresOn,
         insurancePhotos: data.insurancePhotos,
         pucExpiresOn: data.pucExpiresOn,
         pucPhotos: data.pucPhotos,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -170,7 +175,7 @@ export function NewVehicleStep3(props: {
             size={"lg"}
             label={t("SecondaryCTA")}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={formData.formState.isSubmitting}
           />
         </NewFormActionWrapper>

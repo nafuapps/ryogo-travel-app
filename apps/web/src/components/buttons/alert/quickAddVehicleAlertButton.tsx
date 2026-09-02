@@ -17,7 +17,16 @@ import {
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function QuickAddVehicleAlertButton(props: {
+export default function QuickAddVehicleAlertButton({
+  agencyId,
+  vehicleNumber,
+  type,
+  brand,
+  color,
+  model,
+  disabled,
+  isOnboarding,
+}: {
   agencyId: string
   vehicleNumber: string
   type: VehicleTypesEnum
@@ -35,13 +44,13 @@ export default function QuickAddVehicleAlertButton(props: {
   async function quickAddVehicle() {
     startTransition(async () => {
       const newVehicleData: AddVehicleRequestType = {
-        agencyId: props.agencyId,
+        agencyId: agencyId,
         data: {
-          vehicleNumber: props.vehicleNumber,
-          type: props.type,
-          brand: props.brand,
-          color: props.color,
-          model: props.model,
+          vehicleNumber: vehicleNumber,
+          type: type,
+          brand: brand,
+          color: color,
+          model: model,
         },
       }
       const addedVehicle = await addVehicleAction(newVehicleData)
@@ -49,7 +58,7 @@ export default function QuickAddVehicleAlertButton(props: {
       if (addedVehicle) {
         toast.success(t("Success"))
         router.replace(
-          props.isOnboarding
+          isOnboarding
             ? `/onboarding/add-driver`
             : `/dashboard/vehicles/${addedVehicle.id}`,
         )
@@ -65,9 +74,7 @@ export default function QuickAddVehicleAlertButton(props: {
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <RyogoOutlineButton disabled={props.disabled} label={t("Label")} />
-      }
+      labelChild={<RyogoOutlineButton disabled={disabled} label={t("Label")} />}
     >
       <RyogoDefaultButton
         onClick={quickAddVehicle}

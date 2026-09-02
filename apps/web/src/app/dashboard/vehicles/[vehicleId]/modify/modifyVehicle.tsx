@@ -22,7 +22,6 @@ import {
   RyogoCombobox,
 } from "@/components/form/ryogoFormFields"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { FileRegex } from "@/lib/regex"
@@ -38,7 +37,6 @@ export default function ModifyVehiclePageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyVehicle")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyVehicleSchema = z.object({
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field1.Error1")),
@@ -143,7 +141,7 @@ export default function ModifyVehiclePageComponent({
 
   type ModifyVehicleType = z.infer<typeof modifyVehicleSchema>
 
-  const formData = useForm<ModifyVehicleType>({
+  const form = useForm<ModifyVehicleType>({
     resolver: zodResolver(modifyVehicleSchema),
     defaultValues: {
       type: vehicle.type,
@@ -163,66 +161,64 @@ export default function ModifyVehiclePageComponent({
 
   const acWatch = useWatch({
     name: "hasAC",
-    control: formData.control,
+    control: form.control,
   })
 
   //Submit actions
   async function onSubmit(data: ModifyVehicleType) {
-    startTransition(async () => {
-      const modifyVehicleData: ModifyVehicleRequestType = {
-        vehicleId: vehicle.id,
-        agencyId: vehicle.agencyId,
-        type: data.type,
-        brand: data.brand,
-        color: data.color,
-        model: data.model,
-        capacity: data.capacity,
-        odometerReading: data.odometerReading,
-        defaultRatePerKm: data.defaultRatePerKm,
-        hasAC: data.hasAC,
-        defaultAcChargePerDay: data.defaultAcChargePerDay,
-        rcExpiresOn: data.rcExpiresOn,
-        pucExpiresOn: data.pucExpiresOn,
-        insuranceExpiresOn: data.insuranceExpiresOn,
-        rcPhotos: data.rcPhotos,
-        pucPhotos: data.pucPhotos,
-        insurancePhotos: data.insurancePhotos,
-      }
-      const modifiedVehicle = await modifyVehicleAction(modifyVehicleData)
-      if (modifiedVehicle) {
-        router.replace(`/dashboard/vehicles/${vehicle.id}`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
-    })
+    const modifyVehicleData: ModifyVehicleRequestType = {
+      vehicleId: vehicle.id,
+      agencyId: vehicle.agencyId,
+      type: data.type,
+      brand: data.brand,
+      color: data.color,
+      model: data.model,
+      capacity: data.capacity,
+      odometerReading: data.odometerReading,
+      defaultRatePerKm: data.defaultRatePerKm,
+      hasAC: data.hasAC,
+      defaultAcChargePerDay: data.defaultAcChargePerDay,
+      rcExpiresOn: data.rcExpiresOn,
+      pucExpiresOn: data.pucExpiresOn,
+      insuranceExpiresOn: data.insuranceExpiresOn,
+      rcPhotos: data.rcPhotos,
+      pucPhotos: data.pucPhotos,
+      insurancePhotos: data.insurancePhotos,
+    }
+    const modifiedVehicle = await modifyVehicleAction(modifyVehicleData)
+    if (modifiedVehicle) {
+      router.replace(`/dashboard/vehicles/${vehicle.id}`)
+      toast.success(t("Success"))
+    } else {
+      router.back()
+      toast.error(t("Error"))
+    }
   }
 
   return (
     <PageWrapper id="ModifyVehiclePage">
       <FormWrapper<ModifyVehicleType>
         id="ModifyVehicleForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
-        form={formData}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoSelect
           name={"type"}
-          register={formData.register("type")}
+          register={form.register("type")}
           array={getEnumValueDisplayPairs(VehicleTypesEnum)}
           title={t("Field1.Title")}
           placeholder={t("Field1.Title")}
         />
         <RyogoCombobox
           name={"brand"}
-          register={formData.register("brand")}
+          register={form.register("brand")}
           title={t("Field2.Title")}
           array={getEnumValueDisplayPairs(VehicleBrandEnum)}
           placeholder={t("Field2.Placeholder")}
         />
         <RyogoCombobox
           name={"color"}
-          register={formData.register("color")}
+          register={form.register("color")}
           array={getEnumValueDisplayPairs(VehicleColorEnum)}
           title={t("Field3.Title")}
           placeholder={t("Field3.Placeholder")}
@@ -256,7 +252,7 @@ export default function ModifyVehiclePageComponent({
         />
         <RyogoFileInput
           name={"rcPhotos"}
-          register={formData.register("rcPhotos")}
+          register={form.register("rcPhotos")}
           label={t("Field8.Title")}
           placeholder={t("Field8.Placeholder")}
           description={t("Field8.Description")}
@@ -269,7 +265,7 @@ export default function ModifyVehiclePageComponent({
         />
         <RyogoFileInput
           name={"insurancePhotos"}
-          register={formData.register("insurancePhotos")}
+          register={form.register("insurancePhotos")}
           label={t("Field10.Title")}
           placeholder={t("Field10.Placeholder")}
           description={t("Field10.Description")}
@@ -282,7 +278,7 @@ export default function ModifyVehiclePageComponent({
         />
         <RyogoFileInput
           name={"pucPhotos"}
-          register={formData.register("pucPhotos")}
+          register={form.register("pucPhotos")}
           label={t("Field12.Title")}
           placeholder={t("Field12.Placeholder")}
           description={t("Field12.Description")}
@@ -305,17 +301,17 @@ export default function ModifyVehiclePageComponent({
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

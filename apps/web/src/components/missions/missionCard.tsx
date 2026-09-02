@@ -158,7 +158,7 @@ export default function MissionCard({
             <RyogoOutlineButton
               disabled={isPending || isRead}
               onClick={() =>
-                router.push(`/dashboard/missions/${mission.id}/modify`)
+                router.push(`/dashboard/missions/modify/${mission.id}`)
               }
               className="hover:bg-slate-100 dark:hover:bg-slate-800"
               label={t("Card.EditMission")}

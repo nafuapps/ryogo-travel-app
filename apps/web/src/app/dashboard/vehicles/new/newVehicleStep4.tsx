@@ -22,7 +22,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function NewVehicleStep4(props: {
+export function NewVehicleStep4({
+  onNext,
+  onPrev,
+  newVehicleFormData,
+  setNewVehicleFormData,
+}: {
   onNext: () => void
   onPrev: () => void
   newVehicleFormData: AddVehicleRequestType
@@ -50,10 +55,9 @@ export function NewVehicleStep4(props: {
   const formData = useForm<Step4Type>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      defaultRatePerKm: props.newVehicleFormData.data.defaultRatePerKm,
-      hasAC: props.newVehicleFormData.data.hasAC,
-      defaultAcChargePerDay:
-        props.newVehicleFormData.data.defaultAcChargePerDay,
+      defaultRatePerKm: newVehicleFormData.data.defaultRatePerKm,
+      hasAC: newVehicleFormData.data.hasAC,
+      defaultAcChargePerDay: newVehicleFormData.data.defaultAcChargePerDay,
     },
   })
 
@@ -64,16 +68,16 @@ export function NewVehicleStep4(props: {
 
   //Submit actions
   const onSubmit = (data: Step4Type) => {
-    props.setNewVehicleFormData({
-      agencyId: props.newVehicleFormData.agencyId,
+    setNewVehicleFormData({
+      agencyId: newVehicleFormData.agencyId,
       data: {
-        ...props.newVehicleFormData.data,
+        ...newVehicleFormData.data,
         defaultRatePerKm: data.defaultRatePerKm,
         hasAC: data.hasAC,
         defaultAcChargePerDay: data.defaultAcChargePerDay,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -123,7 +127,7 @@ export function NewVehicleStep4(props: {
             size={"lg"}
             label={t("SecondaryCTA")}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={formData.formState.isSubmitting}
           />
         </NewFormActionWrapper>

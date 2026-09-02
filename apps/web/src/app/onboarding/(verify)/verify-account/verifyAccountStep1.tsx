@@ -20,7 +20,11 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function VerifyAccountStep1(props: {
+export function VerifyAccountStep1({
+  onNext,
+  resendDifference,
+  code,
+}: {
   onNext: () => void
   resendDifference: number
   code: string
@@ -39,14 +43,14 @@ export function VerifyAccountStep1(props: {
     },
   })
 
-  //Submit actions
+  //Submit action
   const onSubmit = (data: Step1Type) => {
-    setTimeout(() => {
-      formData.setValue("userEnteredcode", "")
-    }, 1000)
-    if (data.userEnteredcode === props.code) {
-      props.onNext()
+    if (data.userEnteredcode === code) {
+      onNext()
     } else {
+      setTimeout(() => {
+        formData.setValue("userEnteredcode", "")
+      }, 1000)
       formData.setError("userEnteredcode", {
         type: "manual",
         message: t("APIError"),
@@ -54,8 +58,11 @@ export function VerifyAccountStep1(props: {
     }
   }
 
-  //Submit actions
+  //Resend code action
   const resendCode = async () => {
+    setTimeout(() => {
+      formData.setValue("userEnteredcode", "")
+    }, 1000)
     startTransition(async () => {
       if (await resendVerificationCodeAction()) {
         toast.success(t("ResendSuccess"))
@@ -73,9 +80,7 @@ export function VerifyAccountStep1(props: {
         <OnboardingStepContent contentId="Step1Content">
           <RyogoOTPInput
             name={"userEnteredcode"}
-            type="tel"
             label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
         </OnboardingStepContent>
@@ -92,16 +97,16 @@ export function VerifyAccountStep1(props: {
             onClick={resendCode}
             className="w-full"
             disabled={
-              isPending || props.resendDifference < VERIFY_CODE_TIMEOUT_MINUTES
+              isPending || resendDifference < VERIFY_CODE_TIMEOUT_MINUTES
             }
             label={
               isPending
                 ? t("Sending")
-                : props.resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
+                : resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
                   ? t("SecondaryCTA")
                   : t("Timeout", {
                       difference:
-                        VERIFY_CODE_TIMEOUT_MINUTES - props.resendDifference,
+                        VERIFY_CODE_TIMEOUT_MINUTES - resendDifference,
                     })
             }
           />

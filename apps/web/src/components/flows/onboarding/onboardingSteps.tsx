@@ -11,21 +11,30 @@ export const AddVehicleTotalSteps = 5
 export const AddDriverTotalSteps = 4
 export const AddAgentTotalSteps = 2
 
-export function OnboardingStepPage(props: {
+export function OnboardingStepPage({
+  pageId,
+  children,
+}: {
   pageId: string
   children: React.ReactNode
 }) {
   return (
     <div
-      id={props.pageId}
+      id={pageId}
       className="flex flex-col gap-4 lg:gap-5 w-full h-full overflow-y-scroll no-scrollbar md:w-1/2 px-8 py-10 md:px-10 md:py-12"
     >
-      {props.children}
+      {children}
     </div>
   )
 }
 
-export function OnboardingStepHeader(props: {
+export function OnboardingStepHeader({
+  headerId,
+  title,
+  stepLabel,
+  totalSteps,
+  currentStepIndex,
+}: {
   headerId: string
   title: string
   stepLabel: string
@@ -33,70 +42,77 @@ export function OnboardingStepHeader(props: {
   currentStepIndex?: number
 }) {
   return (
-    <div id={props.headerId} className="flex flex-col gap-1.5 lg:gap-2 w-full">
+    <div id={headerId} className="flex flex-col gap-1.5 lg:gap-2 w-full">
       <div className="flex flex-row gap-3 justify-between items-center">
-        <RyogoH2>{props.title}</RyogoH2>
+        <RyogoH2>{title}</RyogoH2>
         <SidebarTrigger className="md:hidden" />
       </div>
-      {props.totalSteps !== undefined &&
-        props.currentStepIndex !== undefined && (
-          <StepsTracker
-            steps={props.totalSteps}
-            current={props.currentStepIndex}
-          />
-        )}
+      {totalSteps !== undefined && currentStepIndex !== undefined && (
+        <StepsTracker steps={totalSteps} current={currentStepIndex} />
+      )}
       <RyogoCaption color="light" weight="font-bold">
-        {props.stepLabel}
+        {stepLabel}
       </RyogoCaption>
     </div>
   )
 }
 
-export function OnboardingStepForm(props: {
+export function OnboardingStepForm({
+  formId,
+  children,
+  submit,
+}: {
   formId: string
   children: React.ReactNode
   submit?: SubmitEventHandler<HTMLFormElement> | undefined
 }) {
   return (
     <form
-      id={props.formId}
-      onSubmit={props.submit}
+      id={formId}
+      onSubmit={submit}
       className="flex flex-col gap-4 lg:gap-5 w-full h-full justify-between"
     >
-      {props.children}
+      {children}
     </form>
   )
 }
 
-export function OnboardingStepContent(props: {
+export function OnboardingStepContent({
+  contentId,
+  children,
+  success,
+}: {
   contentId: string
   children: React.ReactNode
   success?: boolean
 }) {
   return (
     <div
-      id={props.contentId}
+      id={contentId}
       className={
-        props.success
+        success
           ? "flex flex-col gap-3 lg:gap-4 w-full items-center text-center my-20 lg:my-24"
           : "flex flex-col gap-3 lg:gap-4 w-full"
       }
     >
-      {props.children}
+      {children}
     </div>
   )
 }
 
-export function OnboardingStepActions(props: {
+export function OnboardingStepActions({
+  actionsId,
+  children,
+}: {
   actionsId: string
   children: React.ReactNode
 }) {
   return (
     <div
-      id={props.actionsId}
+      id={actionsId}
       className="flex flex-col gap-3 lg:gap-4 w-full mt-auto justify-end"
     >
-      {props.children}
+      {children}
     </div>
   )
 }

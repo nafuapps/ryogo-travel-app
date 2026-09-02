@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { useTransition } from "react"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import {
   AuthActionWrapper,
@@ -27,7 +26,6 @@ import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 export default function LoginPageComponent() {
   const t = useTranslations("Auth.LoginPage.Step1")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
   const { checkBotActivity, isBot } = useBotDetection()
 
   const formSchema = z.object({
@@ -38,7 +36,7 @@ export default function LoginPageComponent() {
   })
 
   type SchemaType = z.infer<typeof formSchema>
-  const methods = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       phoneNumber: "",
@@ -51,31 +49,30 @@ export default function LoginPageComponent() {
       toast.error(t("BotError"))
       return
     }
-    startTransition(async () => {
-      const users = await findLoginUsersAction(data.phoneNumber)
-      if (!users) {
-        toast.error(t("ServerError")) // Show server error if API call fails
+
+    const users = await findLoginUsersAction(data.phoneNumber)
+    if (!users) {
+      toast.error(t("ServerError")) // Show server error if API call fails
+    } else {
+      if (users.length > 0) {
+        // If atleast 1 user found, go to accounts page
+        router.push(`/auth/login/${data.phoneNumber}`)
       } else {
-        if (users.length > 0) {
-          // If atleast 1 user found, go to accounts page
-          router.push(`/auth/login/${data.phoneNumber}`)
-        } else {
-          // Else, Show no user found error
-          methods.setError("phoneNumber", {
-            type: "manual",
-            message: t("NotFoundError"),
-          })
-        }
+        // Else, Show no user found error
+        form.setError("phoneNumber", {
+          type: "manual",
+          message: t("NotFoundError"),
+        })
       }
-    })
+    }
   }
 
   return (
     <AuthPageWrapper>
       <AuthFormWrapper<SchemaType>
         id="LoginForm"
-        form={methods}
-        onSubmit={methods.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <RyogoInput
@@ -86,10 +83,10 @@ export default function LoginPageComponent() {
         />
         <AuthActionWrapper>
           <RyogoDefaultButton
-            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             size="lg"
             type="submit"
-            disabled={isPending || isBot}
+            disabled={form.formState.isSubmitting || isBot}
           />
         </AuthActionWrapper>
       </AuthFormWrapper>

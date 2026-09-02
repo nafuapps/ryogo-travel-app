@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeMyEmailAction } from "@/app/actions/users/changeMyEmailAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -28,7 +27,6 @@ export default function ChangeEmailAccountComponent({
 }) {
   const t = useTranslations("Dashboard.Account.ChangeEmail")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const schema = z.object({
     password: z
@@ -39,7 +37,7 @@ export default function ChangeEmailAccountComponent({
   })
 
   type SchemaType = z.infer<typeof schema>
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
       password: "",
@@ -56,7 +54,7 @@ export default function ChangeEmailAccountComponent({
           u.email.toLowerCase() === data.newEmail.toLowerCase(),
       )
     ) {
-      formData.setError("newEmail", {
+      form.setError("newEmail", {
         type: "manual",
         message: t("Field2.Error3"),
       })
@@ -65,39 +63,37 @@ export default function ChangeEmailAccountComponent({
         (u) => u.email.toLowerCase() === data.newEmail.toLowerCase(),
       )
     ) {
-      formData.setError("newEmail", {
+      form.setError("newEmail", {
         type: "manual",
         message: t("Field2.Error4"),
       })
     } else {
-      startTransition(async () => {
-        const result = await changeMyEmailAction(
-          userId,
-          data.password,
-          data.newEmail,
-          agencyId,
-        )
-        if (result) {
-          //If success, redirect
-          toast.success(t("Success"))
-          router.replace("/dashboard/account")
-        } else {
-          //If failed, show error
-          formData.setError("password", {
-            type: "manual",
-            message: t("APIError"),
-          })
-          // formData.reset();
-        }
-      })
+      const result = await changeMyEmailAction(
+        userId,
+        data.password,
+        data.newEmail,
+        agencyId,
+      )
+      if (result) {
+        //If success, redirect
+        toast.success(t("Success"))
+        router.replace("/dashboard/account")
+      } else {
+        //If failed, show error
+        form.setError("password", {
+          type: "manual",
+          message: t("APIError"),
+        })
+        // formData.reset();
+      }
     }
   }
   return (
     <PageWrapper id="ChangePassword">
       <FormWrapper<SchemaType>
         id="ChangePasswordForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
-        form={formData}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoInput
           name={"password"}
@@ -116,17 +112,17 @@ export default function ChangeEmailAccountComponent({
         <Separator />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

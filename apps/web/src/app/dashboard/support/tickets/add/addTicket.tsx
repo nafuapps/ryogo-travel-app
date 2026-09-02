@@ -16,7 +16,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
@@ -35,7 +34,6 @@ export default function AddSupportTicketPageComponent({
 }) {
   const t = useTranslations("Dashboard.AddSupportTicket")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const addTicketSchema = z
     .object({
@@ -75,7 +73,7 @@ export default function AddSupportTicketPageComponent({
 
   type AddTicketType = z.infer<typeof addTicketSchema>
 
-  const formData = useForm<AddTicketType>({
+  const form = useForm<AddTicketType>({
     resolver: zodResolver(addTicketSchema),
     defaultValues: {
       entityType: EntityTypeEnum.USER,
@@ -84,36 +82,34 @@ export default function AddSupportTicketPageComponent({
   })
 
   async function onSubmit(values: AddTicketType) {
-    startTransition(async () => {
-      const newTicket = await addSupportTicketAction(userId, agencyId, {
-        entityType: values.entityType,
-        entityId: values.entityId,
-        issue: values.issue,
-        details: values.details,
-        photo: values.photo,
-      })
-      if (newTicket) {
-        toast.success(t("Success"))
-        router.replace(`/dashboard/support/tickets/${newTicket.id}`)
-      } else {
-        toast.error(t("Error"))
-        router.replace(`/dashboard/support/tickets`)
-      }
+    const newTicket = await addSupportTicketAction(userId, agencyId, {
+      entityType: values.entityType,
+      entityId: values.entityId,
+      issue: values.issue,
+      details: values.details,
+      photo: values.photo,
     })
+    if (newTicket) {
+      toast.success(t("Success"))
+      router.replace(`/dashboard/support/tickets/${newTicket.id}`)
+    } else {
+      toast.error(t("Error"))
+      router.replace(`/dashboard/support/tickets`)
+    }
   }
 
   return (
     <PageWrapper id="AddSupportTicketPage">
       <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
       <FormWrapper<AddTicketType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="addTicketForm"
       >
         <RyogoSelect
           name="entityType"
           title={t("Field1.Title")}
-          register={formData.register("entityType")}
+          register={form.register("entityType")}
           array={getEnumValueDisplayPairs(EntityTypeEnum)}
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
@@ -139,7 +135,7 @@ export default function AddSupportTicketPageComponent({
         />
         <RyogoFileInput
           name={"photo"}
-          register={formData.register("photo")}
+          register={form.register("photo")}
           label={t("Field5.Title")}
           placeholder={t("Field5.Placeholder")}
           description={t("Field5.Description")}
@@ -147,17 +143,17 @@ export default function AddSupportTicketPageComponent({
         <Separator />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("CancelCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

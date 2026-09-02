@@ -7,7 +7,11 @@ import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink
 import { getBookingTrackingLink } from "@/lib/utils"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
-export default function ShareTrackBookingLinkButton(props: {
+export default function ShareTrackBookingLinkButton({
+  bookingId,
+  phone,
+  label,
+}: {
   bookingId: string
   phone: string
   label: string
@@ -17,18 +21,18 @@ export default function ShareTrackBookingLinkButton(props: {
   // Send track booking link to customer over whatsapp
   function sendTrackingLink() {
     const bookingLink = getBookingTrackingLink(
-      props.bookingId,
+      bookingId,
       window.location.origin,
     )
     const message = t("TrackBooking", {
       bookingLink: bookingLink,
     })
-    const messageLink = getWhatsappMessageLink(props.phone, message)
+    const messageLink = getWhatsappMessageLink(phone, message)
     window.open(messageLink, "_blank", "noopener,noreferrer")
   }
 
   return (
-    <RyogoOutlineButton label={props.label} onClick={sendTrackingLink}>
+    <RyogoOutlineButton label={label} onClick={sendTrackingLink}>
       <RyogoIcon icon={MapPinned} size="sm" color="slate" />
     </RyogoOutlineButton>
   )

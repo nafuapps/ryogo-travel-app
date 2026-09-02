@@ -11,7 +11,11 @@ import {
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function ActivateDriverAlertButton(props: {
+export default function ActivateDriverAlertButton({
+  driverId,
+  userId,
+  agencyId,
+}: {
   driverId: string
   userId: string
   agencyId: string
@@ -22,9 +26,7 @@ export default function ActivateDriverAlertButton(props: {
 
   async function activate() {
     startTransition(async () => {
-      if (
-        await activateDriverAction(props.driverId, props.userId, props.agencyId)
-      ) {
+      if (await activateDriverAction(driverId, userId, agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

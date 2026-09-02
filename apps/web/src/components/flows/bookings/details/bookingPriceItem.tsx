@@ -4,19 +4,21 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 
-export default function BookingPriceItem(props: {
+export default function BookingPriceItem({
+  title,
+  value,
+  subtitle,
+}: {
   title: string
   value: string
   subtitle?: string
 }) {
   return (
     <SectionRowWrapper center>
-      <RyogoCaption color="light">{props.title}</RyogoCaption>
+      <RyogoCaption color="light">{title}</RyogoCaption>
       <SectionColWrapper end small>
-        <RyogoP>{props.value}</RyogoP>
-        {props.subtitle && (
-          <RyogoCaption color="light">{props.subtitle}</RyogoCaption>
-        )}
+        <RyogoP>{value}</RyogoP>
+        {subtitle && <RyogoCaption color="light">{subtitle}</RyogoCaption>}
       </SectionColWrapper>
     </SectionRowWrapper>
   )

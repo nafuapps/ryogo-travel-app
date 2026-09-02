@@ -11,7 +11,9 @@ import {
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function InactivateAgencyAlertButton(props: {
+export default function InactivateAgencyAlertButton({
+  agencyId,
+}: {
   agencyId: string
 }) {
   const [isPending, startTransition] = useTransition()
@@ -20,7 +22,7 @@ export default function InactivateAgencyAlertButton(props: {
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateAgencyAction(props.agencyId)) {
+      if (await inactivateAgencyAction(agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

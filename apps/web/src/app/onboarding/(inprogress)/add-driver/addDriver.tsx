@@ -16,20 +16,21 @@ import { AddDriverStep2 } from "./addDriverStep2"
 import { AddDriverStep3 } from "./addDriverStep3"
 import { AddDriverConfirm } from "./addDriverStep4"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
-export default function AddDriverPageComponent(props: {
+export default function AddDriverPageComponent({
+  agencyId,
+  agencyName,
+  allDrivers,
+}: {
   agencyId: string
   agencyName: string
-  userId: string
-  userStatus: UserStatusEnum
   allDrivers: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Onboarding.AddDriverPage")
 
   const [finalData, setFinalData] = useState<AddDriverRequestType>({
-    agencyId: props.agencyId,
+    agencyId: agencyId,
     data: {
       name: "",
       phone: "",
@@ -59,7 +60,7 @@ export default function AddDriverPageComponent(props: {
         onNext={nextStepHandler}
         finalData={finalData}
         updateFinalData={setFinalData}
-        allDrivers={props.allDrivers}
+        allDrivers={allDrivers}
       />,
       <AddDriverStep2
         key={1}
@@ -80,14 +81,8 @@ export default function AddDriverPageComponent(props: {
         onNext={nextStepHandler}
         onPrev={prevStepHandler}
         finalData={finalData}
-        ownerId={props.userId}
-        userStatus={props.userStatus}
       />,
-      <AddDriverFinish
-        key={4}
-        finalData={finalData}
-        agencyName={props.agencyName}
-      />,
+      <AddDriverFinish key={4} finalData={finalData} agencyName={agencyName} />,
     ])
 
   return (

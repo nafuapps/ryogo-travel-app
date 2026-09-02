@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl"
 import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { useTransition } from "react"
 import {
   AuthActionWrapper,
   AuthFormWrapper,
@@ -33,7 +32,6 @@ export default function ResetWithCodePageComponent({
   const t = useTranslations("Auth.ForgotPassword.Step2")
 
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
   const { checkBotActivity, isBot } = useBotDetection()
 
   const formSchema = z
@@ -58,7 +56,7 @@ export default function ResetWithCodePageComponent({
     }) //Both passwords should match
 
   type SchemaType = z.infer<typeof formSchema>
-  const methods = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       code: "",
@@ -73,28 +71,25 @@ export default function ResetWithCodePageComponent({
       toast.error(t("BotError"))
       return
     }
-    startTransition(async () => {
-      if (await setNewPasswordAction(userId, data.password)) {
-        toast.success(t("Success"))
-      } else {
-        toast.error(t("Error"))
-      }
-    })
+    const updatedUser = await setNewPasswordAction(userId, data.password)
+    if (updatedUser) {
+      toast.success(t("Success"))
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   return (
     <AuthPageWrapper>
       <AuthFormWrapper<SchemaType>
         id="ForgorPasswordForm"
-        onSubmit={methods.handleSubmit(onSubmit)}
-        form={methods}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <RyogoOTPInput
           name={"code"}
-          type="tel"
           label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
         />
         <Separator />
@@ -114,16 +109,16 @@ export default function ResetWithCodePageComponent({
         />
         <AuthActionWrapper>
           <RyogoDefaultButton
-            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
             size="lg"
             type="submit"
-            disabled={isPending || isBot}
+            disabled={form.formState.isSubmitting || isBot}
           />
           <RyogoGhostButton
             label={t("DidnotReceiveCode")}
             size="lg"
             type="button"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             onClick={() => {
               router.push(`/auth/forgot-password/${userId}`)
             }}

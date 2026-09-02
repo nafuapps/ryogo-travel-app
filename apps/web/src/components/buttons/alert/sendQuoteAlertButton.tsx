@@ -14,7 +14,12 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
 
-export default function SendQuoteAlertButton(props: {
+export default function SendQuoteAlertButton({
+  bookingId,
+  agencyId,
+  assignedUserId,
+  quoteSentOn,
+}: {
   bookingId: string
   agencyId: string
   assignedUserId: string
@@ -25,15 +30,15 @@ export default function SendQuoteAlertButton(props: {
   const [isPending, startSendTransition] = useTransition()
 
   //Can send quote if either not sent before or sent more than X minutes ago
-  const canSendQuote = useRefreshPage(props.quoteSentOn)
+  const canSendQuote = useRefreshPage(quoteSentOn)
 
   // Send quote to customer over whatsapp
   async function sendQuote() {
     startSendTransition(async () => {
       const quoteMessage = await sendQuoteAction(
-        props.bookingId,
-        props.agencyId,
-        props.assignedUserId,
+        bookingId,
+        agencyId,
+        assignedUserId,
       )
       if (quoteMessage) {
         toast.success(t("Success"))

@@ -22,7 +22,11 @@ import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
-export function AddVehicleStep1(props: {
+export function AddVehicleStep1({
+  onNext,
+  finalData,
+  updateFinalData,
+}: {
   onNext: () => void
   finalData: AddVehicleRequestType
   updateFinalData: Dispatch<SetStateAction<AddVehicleRequestType>>
@@ -44,20 +48,20 @@ export function AddVehicleStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      vehicleNumber: props.finalData.data.vehicleNumber,
-      type: props.finalData.data.type,
-      brand: props.finalData.data.brand,
-      color: props.finalData.data.color,
-      model: props.finalData.data.model,
+      vehicleNumber: finalData.data.vehicleNumber,
+      type: finalData.data.type,
+      brand: finalData.data.brand,
+      color: finalData.data.color,
+      model: finalData.data.model,
     },
   })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    props.updateFinalData({
-      agencyId: props.finalData.agencyId,
+    updateFinalData({
+      agencyId: finalData.agencyId,
       data: {
-        ...props.finalData.data,
+        ...finalData.data,
         vehicleNumber: data.vehicleNumber,
         type: data.type,
         brand: data.brand,
@@ -65,7 +69,7 @@ export function AddVehicleStep1(props: {
         model: data.model,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -122,7 +126,7 @@ export function AddVehicleStep1(props: {
             }
           />
           <QuickAddVehicleAlertButton
-            agencyId={props.finalData.agencyId}
+            agencyId={finalData.agencyId}
             vehicleNumber={formData.getValues("vehicleNumber")}
             type={formData.getValues("type")}
             brand={formData.getValues("brand")}

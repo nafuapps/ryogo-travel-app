@@ -95,7 +95,7 @@ export async function createOwnerAccountAction(
   const absoluteUrl = `${protocol}://${host}/onboarding/verify-account`
 
   //Send welcome email with verification code to the owner
-  sendEmail({
+  await sendEmail({
     receipientEmail: [user.email],
     bcc: [SUPPORT_EMAIL],
     subject: "Welcome to RyoGo",

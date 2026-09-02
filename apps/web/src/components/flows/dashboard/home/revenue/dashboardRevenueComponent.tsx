@@ -6,10 +6,10 @@ import { getTranslations } from "next-intl/server"
 import { differenceInDays } from "date-fns"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import {
+  DashboardRow,
   DashboardRowHeader,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
-import { Separator } from "@/components/ui/separator"
 import DashboardRevenueItemComponent from "./dashboardRevenueItemComponent"
 
 export default async function DashboardRevenueComponent({
@@ -45,45 +45,48 @@ export default async function DashboardRevenueComponent({
   return (
     <SectionWrapper id="DashboardRevenue">
       <DashboardSectionHeader title={t("Title")} />
-      <DashboardRowHeader
-        title={t("30Days")}
-        count={revenueBookings30Days.length}
-      />
-      <DashboardRevenueItemComponent
-        label={t("Revenue")}
-        amount={revenue30DaysAmount}
-      />
-      <DashboardRevenueItemComponent
-        label={t("Commission")}
-        amount={commission30DaysAmount}
-      />
-
-      <Separator />
-      <DashboardRowHeader
-        title={t("7Days")}
-        count={revenueBookings7Days.length}
-      />
-      <DashboardRevenueItemComponent
-        label={t("Revenue")}
-        amount={revenue7DaysAmount}
-      />
-      <DashboardRevenueItemComponent
-        label={t("Commission")}
-        amount={commission7DaysAmount}
-      />
-      <Separator />
-      <DashboardRowHeader
-        title={t("24Hrs")}
-        count={revenueBookings24Hrs.length}
-      />
-      <DashboardRevenueItemComponent
-        label={t("Revenue")}
-        amount={revenue24HrsAmount}
-      />
-      <DashboardRevenueItemComponent
-        label={t("Commission")}
-        amount={commission24HrsAmount}
-      />
+      <DashboardRow>
+        <DashboardRowHeader
+          title={t("30Days")}
+          count={revenueBookings30Days.length}
+        />
+        <DashboardRevenueItemComponent
+          label={t("Revenue")}
+          amount={revenue30DaysAmount}
+        />
+        <DashboardRevenueItemComponent
+          label={t("Commission")}
+          amount={commission30DaysAmount}
+        />
+      </DashboardRow>
+      <DashboardRow>
+        <DashboardRowHeader
+          title={t("7Days")}
+          count={revenueBookings7Days.length}
+        />
+        <DashboardRevenueItemComponent
+          label={t("Revenue")}
+          amount={revenue7DaysAmount}
+        />
+        <DashboardRevenueItemComponent
+          label={t("Commission")}
+          amount={commission7DaysAmount}
+        />
+      </DashboardRow>
+      <DashboardRow>
+        <DashboardRowHeader
+          title={t("24Hrs")}
+          count={revenueBookings24Hrs.length}
+        />
+        <DashboardRevenueItemComponent
+          label={t("Revenue")}
+          amount={revenue24HrsAmount}
+        />
+        <DashboardRevenueItemComponent
+          label={t("Commission")}
+          amount={commission24HrsAmount}
+        />
+      </DashboardRow>
     </SectionWrapper>
   )
 }

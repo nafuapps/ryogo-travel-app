@@ -1,14 +1,17 @@
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardTripsType } from "@ryogo-travel-app/api/services/booking.services"
-import Link from "next/link"
-import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
+import {
+  DashboardBoxItemWrapper,
+  DashboardLabelImageChip,
+} from "@/components/flows/dashboard/dashboardCommon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { IdCard } from "lucide-react"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
+import Link from "next/link"
 
 export default async function DashboardTripItemComponent({
   trip,
@@ -28,10 +31,8 @@ export default async function DashboardTripItemComponent({
 
   return (
     <Link href={`/dashboard/bookings/${trip.id}`}>
-      <div
-        className={`flex flex-col gap-2 lg:gap-3 w-full border ${highlight ? "border-sky-300 dark:border-sky-700 hover:bg-sky-100 dark:hover:bg-sky-950" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
-      >
-        <SectionRowWrapper center>
+      <DashboardBoxItemWrapper highlight={highlight}>
+        <SectionRowWrapper small center>
           <RyogoCaption color="light" weight="font-bold">
             {trip.id}
           </RyogoCaption>
@@ -41,12 +42,12 @@ export default async function DashboardTripItemComponent({
               : trip.endDate.toLocaleDateString()}
           </RyogoCaption>
         </SectionRowWrapper>
-        <SectionRowWrapper center>
+        <SectionRowWrapper small center>
           <RyogoP weight="font-bold">{trip.source.city}</RyogoP>
-          <GetTripTypeIcon tripType={trip.type} size="sm" thick />
+          <GetTripTypeIcon tripType={trip.type} size="sm" color="light" thick />
           <RyogoP weight="font-bold">{trip.destination.city}</RyogoP>
         </SectionRowWrapper>
-        <SectionRowWrapper center>
+        <SectionRowWrapper small center>
           {trip.assignedVehicle && (
             <DashboardLabelImageChip label={trip.assignedVehicle.vehicleNumber}>
               {vehicleImageUrl ? (
@@ -77,7 +78,7 @@ export default async function DashboardTripItemComponent({
             </DashboardLabelImageChip>
           )}
         </SectionRowWrapper>
-      </div>
+      </DashboardBoxItemWrapper>
     </Link>
   )
 }

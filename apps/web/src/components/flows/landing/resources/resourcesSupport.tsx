@@ -90,7 +90,7 @@ async function HelpBlock() {
           <RyogoIcon icon={MessageSquare} size="sm" color="white" thick />
         </RyogoOutlineButton>
       </Link>
-      <Separator className="bg-slate-500" />
+      <Separator className="bg-slate-500 dark:bg-slate-500" />
       <RyogoCaption color="light" className="text-center">
         {t("Disclaimer")}
       </RyogoCaption>

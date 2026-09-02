@@ -45,7 +45,6 @@ export default async function AddAgentPage() {
     <AddAgentPageComponent
       agencyId={currentUser.agencyId}
       agencyName={agency.businessName}
-      ownerId={currentUser.userId}
       allAgents={allAgents}
     />
   )

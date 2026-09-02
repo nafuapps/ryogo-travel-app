@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 import { EXPIRY_WARNING_DAYS } from "@/lib/uiConfig"
 import { CarouselItem } from "@/components/ui/carousel"
-import { RyogoDefaultButton } from "../buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 type ExpiryType = "License" | "PUC" | "RC" | "Insurance" | "Leave" | "Repair"
 

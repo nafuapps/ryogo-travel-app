@@ -14,7 +14,6 @@ import { toast } from "sonner"
 import z from "zod"
 import { modifyVehicleRepairAction } from "@/app/actions/vehicles/modifyVehicleRepairAction"
 import { FindVehicleRepairByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { ModifyVehicleRepairRequestType } from "@ryogo-travel-app/api/types/vehicleRepair.types"
 import {
@@ -29,7 +28,6 @@ export default function ModifyVehicleRepairPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyVehicleRepair")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyVehicleRepairSchema = z
     .object({
@@ -58,8 +56,7 @@ export default function ModifyVehicleRepairPageComponent({
 
   type ModifyVehicleRepairType = z.infer<typeof modifyVehicleRepairSchema>
 
-  //Form init
-  const formData = useForm<ModifyVehicleRepairType>({
+  const form = useForm<ModifyVehicleRepairType>({
     resolver: zodResolver(modifyVehicleRepairSchema),
     defaultValues: {
       startDate: repair.startDate,
@@ -70,33 +67,30 @@ export default function ModifyVehicleRepairPageComponent({
     },
   })
 
-  //Form submit
   async function onSubmit(values: ModifyVehicleRepairType) {
-    startTransition(async () => {
-      const modifyRepair: ModifyVehicleRepairRequestType = {
-        repairId: repair.id,
-        agencyId: repair.agencyId,
-        startDate: values.startDate,
-        endDate: values.endDate,
-        isCompleted: values.isCompleted,
-        remarks: values.remarks,
-        cost: values.cost,
-      }
-      const modifiedRepair = await modifyVehicleRepairAction(modifyRepair)
-      if (modifiedRepair) {
-        router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
-    })
+    const modifyRepair: ModifyVehicleRepairRequestType = {
+      repairId: repair.id,
+      agencyId: repair.agencyId,
+      startDate: values.startDate,
+      endDate: values.endDate,
+      isCompleted: values.isCompleted,
+      remarks: values.remarks,
+      cost: values.cost,
+    }
+    const modifiedRepair = await modifyVehicleRepairAction(modifyRepair)
+    if (modifiedRepair) {
+      router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
+      toast.success(t("Success"))
+    } else {
+      router.back()
+      toast.error(t("Error"))
+    }
   }
   return (
     <PageWrapper id="ModifyVehicleRepairPage">
       <FormWrapper<ModifyVehicleRepairType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="modifyVehicleRepairForm"
       >
         <RyogoDatePicker
@@ -125,17 +119,17 @@ export default function ModifyVehicleRepairPageComponent({
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("Back")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

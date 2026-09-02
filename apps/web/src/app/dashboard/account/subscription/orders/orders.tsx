@@ -80,7 +80,10 @@ export default function OrdersPageComponent({
   )
 }
 
-function OrderFilterSelect(props: {
+function OrderFilterSelect({
+  selectedOrderStatus,
+  setSelectedOrderStatus,
+}: {
   selectedOrderStatus: OrderFilterType
   setSelectedOrderStatus: (value: OrderFilterType) => void
 }) {
@@ -88,10 +91,8 @@ function OrderFilterSelect(props: {
 
   return (
     <Select
-      value={props.selectedOrderStatus}
-      onValueChange={(value: OrderFilterType) =>
-        props.setSelectedOrderStatus(value)
-      }
+      value={selectedOrderStatus}
+      onValueChange={(value: OrderFilterType) => setSelectedOrderStatus(value)}
     >
       <SelectTrigger className="self-end">
         <SelectValue />

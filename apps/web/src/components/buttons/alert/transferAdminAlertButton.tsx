@@ -11,7 +11,11 @@ import {
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function TransferAdminAlertButton(props: {
+export default function TransferAdminAlertButton({
+  currentUserId,
+  otherUserId,
+  agencyId,
+}: {
   currentUserId: string
   otherUserId: string
   agencyId: string
@@ -22,13 +26,7 @@ export default function TransferAdminAlertButton(props: {
 
   async function transferAdmin() {
     startTransition(async () => {
-      if (
-        await transferAdminAction(
-          props.currentUserId,
-          props.otherUserId,
-          props.agencyId,
-        )
-      ) {
+      if (await transferAdminAction(currentUserId, otherUserId, agencyId)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

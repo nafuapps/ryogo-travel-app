@@ -2,9 +2,9 @@ import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import { Separator } from "@/components/ui/separator"
 import DashboardTripItemComponent from "./dashboardTripItemComponent"
 import {
+  DashboardRow,
   DashboardRowHeader,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
@@ -29,6 +29,10 @@ export default async function DashboardTripsComponent({
     )
   }
 
+  if (dashboardTrips.length === 0) {
+    return null
+  }
+
   const startingTodayTrips = dashboardTrips.filter(
     (trip) => trip.status === BookingStatusEnum.CONFIRMED,
   )
@@ -47,44 +51,57 @@ export default async function DashboardTripsComponent({
   return (
     <SectionWrapper id="DashboardTrips">
       <DashboardSectionHeader title={t("Title")} href={"/dashboard/bookings"} />
-      <DashboardRowHeader
-        title={t("StartingToday")}
-        count={startingTodayTrips.length}
-      />
-      {startingTodayTrips.map((trip, index) => (
-        <DashboardTripItemComponent
-          key={index}
-          trip={trip}
-          userId={userId}
-          isOwner={isOwner}
-          type="starting"
-        />
-      ))}
-      <Separator />
-      <DashboardRowHeader
-        title={t("EndingToday")}
-        count={endingTodayTrips.length}
-      />
-      {endingTodayTrips.map((trip, index) => (
-        <DashboardTripItemComponent
-          key={index}
-          trip={trip}
-          userId={userId}
-          isOwner={isOwner}
-          type="ending"
-        />
-      ))}
-      <Separator />
-      <DashboardRowHeader title={t("Ongoing")} count={ongoingTrips.length} />
-      {ongoingTrips.map((trip, index) => (
-        <DashboardTripItemComponent
-          key={index}
-          trip={trip}
-          userId={userId}
-          isOwner={isOwner}
-          type="ongoing"
-        />
-      ))}
+      {startingTodayTrips.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("StartingToday")}
+            count={startingTodayTrips.length}
+          />
+          {startingTodayTrips.map((trip, index) => (
+            <DashboardTripItemComponent
+              key={index}
+              trip={trip}
+              userId={userId}
+              isOwner={isOwner}
+              type="starting"
+            />
+          ))}
+        </DashboardRow>
+      )}
+      {endingTodayTrips.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("EndingToday")}
+            count={endingTodayTrips.length}
+          />
+          {endingTodayTrips.map((trip, index) => (
+            <DashboardTripItemComponent
+              key={index}
+              trip={trip}
+              userId={userId}
+              isOwner={isOwner}
+              type="ending"
+            />
+          ))}
+        </DashboardRow>
+      )}
+      {ongoingTrips.length > 0 && (
+        <DashboardRow>
+          <DashboardRowHeader
+            title={t("Ongoing")}
+            count={ongoingTrips.length}
+          />
+          {ongoingTrips.map((trip, index) => (
+            <DashboardTripItemComponent
+              key={index}
+              trip={trip}
+              userId={userId}
+              isOwner={isOwner}
+              type="ongoing"
+            />
+          ))}
+        </DashboardRow>
+      )}
     </SectionWrapper>
   )
 }

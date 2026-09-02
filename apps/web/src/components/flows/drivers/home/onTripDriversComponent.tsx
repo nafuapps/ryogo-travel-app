@@ -40,8 +40,8 @@ export default async function OnTripDriversComponent({
   )
 }
 
-function OnTripDriverComponent(props: FindDriversOnTripType[number]) {
-  const booking = props.assignedBookings[0]
+function OnTripDriverComponent(driver: FindDriversOnTripType[number]) {
+  const booking = driver.assignedBookings[0]
   if (!booking) {
     return <></>
   }
@@ -49,8 +49,8 @@ function OnTripDriverComponent(props: FindDriversOnTripType[number]) {
     <Link href={`/dashboard/bookings/${booking.id}`}>
       <HoverGridWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{props.phone}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.name}</RyogoP>
+          <RyogoCaption color="slate">{driver.phone}</RyogoCaption>
+          <RyogoP weight="font-bold"> {driver.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{booking.id}</RyogoCaption>

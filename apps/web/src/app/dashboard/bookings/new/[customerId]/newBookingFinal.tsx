@@ -17,7 +17,6 @@ import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
 import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
-import { useTransition } from "react"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -37,65 +36,65 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-type NewBookingFinalProps = {
+export default function NewBookingFinal({
+  onPrev,
+  newBookingFormData,
+  userId,
+  agencyId,
+  customerId,
+}: {
   onPrev: () => void
   newBookingFormData: NewBookingRequestDataType
   userId: string
   agencyId: string
   customerId: string
-}
-export default function NewBookingFinal(props: NewBookingFinalProps) {
+}) {
   const t = useTranslations("Dashboard.NewBookingWithCustomer.Form.Final")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const form = useForm<NewBookingRequestDataType>()
 
   //Calculate estimated final price to show (actual price is calculated in server when booking is created)
-  const finalAmount = getEstimatedTotalPrice(props.newBookingFormData)
+  const finalAmount = getEstimatedTotalPrice(newBookingFormData)
 
   //Final form submit to create a new booking
   const onSubmit = async () => {
-    startTransition(async () => {
-      const newBookingData: NewBookingRequestDataType = {
-        tripSourceLocationState:
-          props.newBookingFormData.tripSourceLocationState,
-        tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
-        tripDestinationLocationState:
-          props.newBookingFormData.tripDestinationLocationState,
-        tripDestinationLocationCity:
-          props.newBookingFormData.tripDestinationLocationCity!,
-        routeId: props.newBookingFormData.routeId,
-        sourceId: props.newBookingFormData.sourceId,
-        destinationId: props.newBookingFormData.destinationId,
-        tripType: props.newBookingFormData.tripType,
-        tripStartDate: props.newBookingFormData.tripStartDate,
-        tripEndDate: props.newBookingFormData.tripEndDate,
-        tripPassengers: props.newBookingFormData.tripPassengers,
-        tripNeedsAC: props.newBookingFormData.tripNeedsAC,
-        assignedDriverId: props.newBookingFormData.assignedDriverId,
-        assignedVehicleId: props.newBookingFormData.assignedVehicleId,
-        selectedRatePerKm: props.newBookingFormData.selectedRatePerKm,
-        selectedDistance: props.newBookingFormData.selectedDistance,
-        selectedAcChargePerDay: props.newBookingFormData.selectedAcChargePerDay,
-        selectedAllowancePerDay:
-          props.newBookingFormData.selectedAllowancePerDay,
-        selectedCommissionRate: props.newBookingFormData.selectedCommissionRate,
-      }
-      const createdBooking = await newBookingAction({
-        agencyId: props.agencyId,
-        userId: props.userId,
-        customerId: props.customerId,
-        data: newBookingData,
-      })
-      if (createdBooking) {
-        router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`)
-        toast.success(t("Success"))
-      } else {
-        router.replace(`/dashboard/bookings`)
-        toast.error(t("Error"))
-      }
+    const newBookingData: NewBookingRequestDataType = {
+      tripSourceLocationState: newBookingFormData.tripSourceLocationState,
+      tripSourceLocationCity: newBookingFormData.tripSourceLocationCity,
+      tripDestinationLocationState:
+        newBookingFormData.tripDestinationLocationState,
+      tripDestinationLocationCity:
+        newBookingFormData.tripDestinationLocationCity!,
+      routeId: newBookingFormData.routeId,
+      sourceId: newBookingFormData.sourceId,
+      destinationId: newBookingFormData.destinationId,
+      tripType: newBookingFormData.tripType,
+      tripStartDate: newBookingFormData.tripStartDate,
+      tripEndDate: newBookingFormData.tripEndDate,
+      tripPassengers: newBookingFormData.tripPassengers,
+      tripNeedsAC: newBookingFormData.tripNeedsAC,
+      assignedDriverId: newBookingFormData.assignedDriverId,
+      assignedVehicleId: newBookingFormData.assignedVehicleId,
+      selectedRatePerKm: newBookingFormData.selectedRatePerKm,
+      selectedDistance: newBookingFormData.selectedDistance,
+      selectedAcChargePerDay: newBookingFormData.selectedAcChargePerDay,
+      selectedAllowancePerDay: newBookingFormData.selectedAllowancePerDay,
+      selectedCommissionRate: newBookingFormData.selectedCommissionRate,
+    }
+    const createdBooking = await newBookingAction({
+      agencyId: agencyId,
+      userId: userId,
+      customerId: customerId,
+      data: newBookingData,
     })
+    if (createdBooking) {
+      router.replace(`/dashboard/bookings/${createdBooking.id}/confirm`)
+      toast.success(t("Success"))
+    } else {
+      router.replace(`/dashboard/bookings`)
+      toast.error(t("Error"))
+    }
   }
 
   return (
@@ -115,7 +114,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewBookingTripCard {...props.newBookingFormData} />
+        <NewBookingTripCard {...newBookingFormData} />
         <NewFormContentWrapper>
           <SectionRowWrapper>
             <IconTextTag icon={Car} text={t("VehicleCharge")} />
@@ -125,13 +124,13 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </RyogoSmall>
               <RyogoCaption color="light">
                 {t("VehicleSubtitle", {
-                  charge: props.newBookingFormData.selectedRatePerKm,
+                  charge: newBookingFormData.selectedRatePerKm,
                   distance: finalAmount.totalDistance,
                 })}
               </RyogoCaption>
             </SectionColWrapper>
           </SectionRowWrapper>
-          {props.newBookingFormData.tripNeedsAC && (
+          {newBookingFormData.tripNeedsAC && (
             <SectionRowWrapper>
               <IconTextTag icon={AirVent} text={t("ACCharge")} />
               <SectionColWrapper end small>
@@ -140,7 +139,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                 </RyogoSmall>
                 <RyogoCaption color="light">
                   {t("ACSubtitle", {
-                    ac: props.newBookingFormData.selectedAcChargePerDay,
+                    ac: newBookingFormData.selectedAcChargePerDay,
                     days: finalAmount.totalAllowanceDays,
                   })}
                 </RyogoCaption>
@@ -155,7 +154,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
               </RyogoSmall>
               <RyogoCaption color="light">
                 {t("DriverSubtitle", {
-                  allowance: props.newBookingFormData.selectedAllowancePerDay,
+                  allowance: newBookingFormData.selectedAllowancePerDay,
                   days: finalAmount.totalAllowanceDays,
                 })}
               </RyogoCaption>
@@ -168,7 +167,7 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
                 {"₹" + finalAmount.totalCommission}
               </RyogoSmall>
               <RyogoCaption color="light">
-                {props.newBookingFormData.selectedCommissionRate + "%"}
+                {newBookingFormData.selectedCommissionRate + "%"}
               </RyogoCaption>
             </SectionColWrapper>
           </SectionRowWrapper>
@@ -185,15 +184,15 @@ export default function NewBookingFinal(props: NewBookingFinalProps) {
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
-            disabled={isPending}
-            showSpinner={isPending}
-            label={isPending ? t("Loading") : t("PrimaryCTA")}
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           />
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
-            disabled={isPending}
+            onClick={onPrev}
+            disabled={form.formState.isSubmitting}
             label={t("Back")}
           />
         </NewFormActionWrapper>

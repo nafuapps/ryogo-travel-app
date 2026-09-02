@@ -27,7 +27,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function NewDriverStep2(props: {
+export function NewDriverStep2({
+  onNext,
+  onPrev,
+  newDriverFormData,
+  setNewDriverFormData,
+}: {
   onNext: () => void
   onPrev: () => void
   newDriverFormData: AddDriverRequestType
@@ -70,24 +75,24 @@ export function NewDriverStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      licenseNumber: props.newDriverFormData.data.licenseNumber,
-      licenseExpiresOn: props.newDriverFormData.data.licenseExpiresOn,
-      licensePhotos: props.newDriverFormData.data.licensePhotos,
+      licenseNumber: newDriverFormData.data.licenseNumber,
+      licenseExpiresOn: newDriverFormData.data.licenseExpiresOn,
+      licensePhotos: newDriverFormData.data.licensePhotos,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step2Type) => {
-    props.setNewDriverFormData({
-      agencyId: props.newDriverFormData.agencyId,
+    setNewDriverFormData({
+      agencyId: newDriverFormData.agencyId,
       data: {
-        ...props.newDriverFormData.data,
+        ...newDriverFormData.data,
         licenseNumber: data.licenseNumber,
         licenseExpiresOn: data.licenseExpiresOn,
         licensePhotos: data.licensePhotos,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -140,7 +145,7 @@ export function NewDriverStep2(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}
           />

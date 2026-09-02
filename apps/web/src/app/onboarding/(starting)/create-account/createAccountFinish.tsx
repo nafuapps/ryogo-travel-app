@@ -6,38 +6,36 @@ import {
   OnboardingStepForm,
   OnboardingSuccessIcon,
 } from "@/components/flows/onboarding/onboardingSteps"
-import { useTransition } from "react"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useRouter } from "next/navigation"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { useForm } from "react-hook-form"
 
 export function CreateAccountFinish({
-  id,
   password,
+  id,
 }: {
-  id?: string
   password: string
+  id?: string
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Finish")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const form = useForm()
 
   const onSubmit = async () => {
     if (!id) {
-      router.replace("/auth/login")
+      router.replace("/onboarding")
       return
     }
-    startTransition(async () => {
-      //Login the user and take to verification step
-      const loginResult = await loginAction(id, password)
-      if (loginResult.id) {
-        router.replace("/onboarding/verify-account")
-      }
-    })
+    //Login the user and take to verification step
+    const loginResult = await loginAction(id, password)
+    if (loginResult.id) {
+      router.replace("/onboarding/verify-account")
+    }
   }
 
   return (
-    <OnboardingStepForm formId="Step6Form">
+    <OnboardingStepForm formId="Step6Form" submit={form.handleSubmit(onSubmit)}>
       <OnboardingStepContent contentId="Step6Content" success>
         <OnboardingSuccessIcon />
         <RyogoH3>{t("Title")}</RyogoH3>
@@ -46,7 +44,7 @@ export function CreateAccountFinish({
       <OnboardingStepActions actionsId="Step6Actions">
         <RyogoSmall>{t("Description1")}</RyogoSmall>
         <RyogoDefaultButton
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
           onClick={onSubmit}
           type="submit"
           label={t("PrimaryCTA")}

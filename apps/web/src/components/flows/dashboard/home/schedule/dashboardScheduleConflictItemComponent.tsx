@@ -1,7 +1,10 @@
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
+import {
+  DashboardBoxItemWrapper,
+  DashboardLabelImageChip,
+} from "@/components/flows/dashboard/dashboardCommon"
 import Link from "next/link"
 import { RyogoCaption } from "@/components/typography"
 import { format } from "date-fns"
@@ -49,9 +52,7 @@ export default function DashboardScheduleConflictItemComponent({
       ? `/dashboard/drivers/${conflict.entity.id}/leaves`
       : `/dashboard/bookings/${conflict.secondItem.id}`
   return (
-    <div
-      className={`flex flex-col gap-2 lg:gap-3 w-full border ${highlight ? "border-sky-300 dark:border-sky-700" : "border-slate-100 dark:border-slate-800"} rounded-lg p-3 lg:p-4`}
-    >
+    <DashboardBoxItemWrapper highlight={highlight}>
       <SectionRowWrapper center>
         {conflict.entity.label && (
           <DashboardLabelImageChip label={conflict.entity.label}>
@@ -78,11 +79,17 @@ export default function DashboardScheduleConflictItemComponent({
         href={secondHref}
         highlight
       />
-    </div>
+    </DashboardBoxItemWrapper>
   )
 }
 
-function ConflictItemRow(props: {
+function ConflictItemRow({
+  startDate,
+  endDate,
+  id,
+  href,
+  highlight,
+}: {
   startDate: Date
   endDate: Date
   id: string
@@ -91,18 +98,14 @@ function ConflictItemRow(props: {
 }) {
   return (
     <Link
-      href={props.href as Route}
-      className={`flex items-center justify-between p-1.5 lg:p-2 rounded-md ${props.highlight ? "bg-yellow-200 dark:bg-yellow-800 hover:bg-yellow-300 dark:hover:bg-yellow-700" : "bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700"}`}
+      href={href as Route}
+      className={`flex items-center justify-between p-1.5 lg:p-2 rounded-md ${highlight ? "bg-yellow-200 dark:bg-yellow-800 hover:bg-yellow-300 dark:hover:bg-yellow-700" : "bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700"}`}
     >
-      <RyogoCaption color="slate">
-        {format(props.startDate, "dd MMM")}
-      </RyogoCaption>
+      <RyogoCaption color="slate">{format(startDate, "dd MMM")}</RyogoCaption>
       <RyogoCaption color="slate" weight="font-bold">
-        {props.id}
+        {id}
       </RyogoCaption>
-      <RyogoCaption color="slate">
-        {format(props.endDate, "dd MMM")}
-      </RyogoCaption>
+      <RyogoCaption color="slate">{format(endDate, "dd MMM")}</RyogoCaption>
     </Link>
   )
 }

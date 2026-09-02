@@ -10,7 +10,6 @@ import { toast } from "sonner"
 import z from "zod"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
-import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import { FileRegex } from "@/lib/regex"
 import {
@@ -29,7 +28,6 @@ export default function NewAgentForm({
 }) {
   const t = useTranslations("Dashboard.NewAgent")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const newAgentSchema = z.object({
     agentName: z
@@ -59,12 +57,10 @@ export default function NewAgentForm({
   })
   type NewAgentType = z.infer<typeof newAgentSchema>
 
-  //Form init
-  const formData = useForm<NewAgentType>({
+  const form = useForm<NewAgentType>({
     resolver: zodResolver(newAgentSchema),
   })
 
-  //Form submit
   async function onSubmit(values: NewAgentType) {
     if (
       allAgents.some(
@@ -72,7 +68,7 @@ export default function NewAgentForm({
       )
     ) {
       // Check if an agent with same phone exists in this agency
-      formData.setError("agentPhone", {
+      form.setError("agentPhone", {
         type: "manual",
         message: t("APIError1"),
       })
@@ -82,42 +78,40 @@ export default function NewAgentForm({
       )
     ) {
       // Check if an agent with same phone and email exists in entire DB
-      formData.setError("agentPhone", {
+      form.setError("agentPhone", {
         type: "manual",
         message: t("APIError2"),
       })
     } else {
-      startTransition(async () => {
-        const newAgentData: AddAgentRequestType = {
-          agencyId: agencyId,
-          data: {
-            name: values.agentName,
-            phone: values.agentPhone,
-            email: values.agentEmail,
-            photos: values.agentPhotos,
-          },
-        }
-        const createdAgent = await addAgentAction(newAgentData, agencyName)
-        if (createdAgent && createdAgent.whatsappInviteLink) {
-          toast.success(t("Success"))
-          window.open(
-            createdAgent.whatsappInviteLink,
-            "_blank",
-            "noopener,noreferrer",
-          )
-          router.replace(`/dashboard/users/${createdAgent.id}`)
-        } else {
-          toast.error(t("Error"))
-          router.replace(`/dashboard/users`)
-        }
-      })
+      const newAgentData: AddAgentRequestType = {
+        agencyId: agencyId,
+        data: {
+          name: values.agentName,
+          phone: values.agentPhone,
+          email: values.agentEmail,
+          photos: values.agentPhotos,
+        },
+      }
+      const createdAgent = await addAgentAction(newAgentData, agencyName)
+      if (createdAgent && createdAgent.whatsappInviteLink) {
+        toast.success(t("Success"))
+        window.open(
+          createdAgent.whatsappInviteLink,
+          "_blank",
+          "noopener,noreferrer",
+        )
+        router.replace(`/dashboard/users/${createdAgent.id}`)
+      } else {
+        toast.error(t("Error"))
+        router.replace(`/dashboard/users`)
+      }
     }
   }
 
   return (
     <FormWrapper<NewAgentType>
-      form={formData}
-      onSubmit={formData.handleSubmit(onSubmit)}
+      form={form}
+      onSubmit={form.handleSubmit(onSubmit)}
       id="newAgentForm"
     >
       <RyogoInput
@@ -143,24 +137,24 @@ export default function NewAgentForm({
       />
       <RyogoFileInput
         name={"agenctPhotos"}
-        register={formData.register("agentPhotos")}
+        register={form.register("agentPhotos")}
         label={t("Field4.Title")}
         placeholder={t("Field4.Placeholder")}
         description={t("Field4.Description")}
       />
       <RyogoDefaultButton
         size={"lg"}
-        label={isPending ? t("Loading") : t("PrimaryCTA")}
+        label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
         type="submit"
-        disabled={isPending}
-        showSpinner={isPending}
+        disabled={form.formState.isSubmitting}
+        showSpinner={form.formState.isSubmitting}
       />
       <RyogoOutlineButton
         size={"lg"}
         label={t("SecondaryCTA")}
         type="button"
         onClick={() => router.back()}
-        disabled={isPending}
+        disabled={form.formState.isSubmitting}
       />
     </FormWrapper>
   )

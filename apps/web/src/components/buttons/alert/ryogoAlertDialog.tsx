@@ -10,7 +10,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-export default function RyogoAlertDialog(props: {
+export default function RyogoAlertDialog({
+  title,
+  noCTA,
+  labelChild,
+  children,
+  desc,
+}: {
   title: string
   noCTA: string
   labelChild: React.ReactNode
@@ -19,17 +25,15 @@ export default function RyogoAlertDialog(props: {
 }) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>{props.labelChild}</AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{labelChild}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{props.title}</AlertDialogTitle>
-          {props.desc && (
-            <AlertDialogDescription>{props.desc}</AlertDialogDescription>
-          )}
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          {desc && <AlertDialogDescription>{desc}</AlertDialogDescription>}
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{props.noCTA}</AlertDialogCancel>
-          <AlertDialogAction asChild>{props.children}</AlertDialogAction>
+          <AlertDialogCancel>{noCTA}</AlertDialogCancel>
+          <AlertDialogAction asChild>{children}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

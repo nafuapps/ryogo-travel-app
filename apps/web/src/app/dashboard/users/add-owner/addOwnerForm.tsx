@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { AddOwnerRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { useTransition } from "react"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import { addOwnerAction } from "@/app/actions/users/addOwnerAction"
 import { FileRegex } from "@/lib/regex"
@@ -29,7 +28,6 @@ export default function AddOwnerForm({
 }) {
   const t = useTranslations("Dashboard.AddOwner")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const addOwnerSchema = z.object({
     ownerName: z
@@ -59,7 +57,7 @@ export default function AddOwnerForm({
   })
   type AddOwnerType = z.infer<typeof addOwnerSchema>
 
-  const formData = useForm<AddOwnerType>({
+  const form = useForm<AddOwnerType>({
     resolver: zodResolver(addOwnerSchema),
   })
 
@@ -70,7 +68,7 @@ export default function AddOwnerForm({
       )
     ) {
       // Check if an owner with same phone exists in this agency
-      formData.setError("ownerPhone", {
+      form.setError("ownerPhone", {
         type: "manual",
         message: t("APIError1"),
       })
@@ -80,42 +78,40 @@ export default function AddOwnerForm({
       )
     ) {
       // Check if an owner with same phone and email exists in entire DB
-      formData.setError("ownerPhone", {
+      form.setError("ownerPhone", {
         type: "manual",
         message: t("APIError2"),
       })
     } else {
-      startTransition(async () => {
-        const addOwnerData: AddOwnerRequestType = {
-          agencyId: agencyId,
-          data: {
-            name: values.ownerName,
-            phone: values.ownerPhone,
-            email: values.ownerEmail,
-            photos: values.ownerPhotos,
-          },
-        }
-        const createdOwner = await addOwnerAction(addOwnerData, agencyName)
-        if (createdOwner) {
-          toast.success(t("Success"))
-          window.open(
-            createdOwner.whatsappInviteLink,
-            "_blank",
-            "noopener,noreferrer",
-          )
-          router.replace(`/dashboard/users/${createdOwner.id}`)
-        } else {
-          toast.error(t("Error"))
-          router.replace(`/dashboard/users`)
-        }
-      })
+      const addOwnerData: AddOwnerRequestType = {
+        agencyId: agencyId,
+        data: {
+          name: values.ownerName,
+          phone: values.ownerPhone,
+          email: values.ownerEmail,
+          photos: values.ownerPhotos,
+        },
+      }
+      const createdOwner = await addOwnerAction(addOwnerData, agencyName)
+      if (createdOwner) {
+        toast.success(t("Success"))
+        window.open(
+          createdOwner.whatsappInviteLink,
+          "_blank",
+          "noopener,noreferrer",
+        )
+        router.replace(`/dashboard/users/${createdOwner.id}`)
+      } else {
+        toast.error(t("Error"))
+        router.replace(`/dashboard/users`)
+      }
     }
   }
 
   return (
     <FormWrapper<AddOwnerType>
-      form={formData}
-      onSubmit={formData.handleSubmit(onSubmit)}
+      form={form}
+      onSubmit={form.handleSubmit(onSubmit)}
       id="addOwnerForm"
     >
       <RyogoInput
@@ -141,24 +137,24 @@ export default function AddOwnerForm({
       />
       <RyogoFileInput
         name={"agenctPhotos"}
-        register={formData.register("ownerPhotos")}
+        register={form.register("ownerPhotos")}
         label={t("Field4.Title")}
         placeholder={t("Field4.Placeholder")}
         description={t("Field4.Description")}
       />
       <RyogoDefaultButton
         size={"lg"}
-        label={isPending ? t("Loading") : t("PrimaryCTA")}
+        label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
         type="submit"
-        disabled={isPending}
-        showSpinner={isPending}
+        disabled={form.formState.isSubmitting}
+        showSpinner={form.formState.isSubmitting}
       />
       <RyogoOutlineButton
         size={"lg"}
         label={t("SecondaryCTA")}
         type="button"
         onClick={() => router.back()}
-        disabled={isPending}
+        disabled={form.formState.isSubmitting}
       />
     </FormWrapper>
   )

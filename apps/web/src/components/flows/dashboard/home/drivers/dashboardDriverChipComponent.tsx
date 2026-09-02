@@ -4,11 +4,11 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { FindDashboardDriversType } from "@ryogo-travel-app/api/services/driver.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { IdCard } from "lucide-react"
-import { Route } from "next"
 import {
-  DashboardItemWrapper,
+  DashboardChipItemWrapper,
   DashboardLabelImageChip,
 } from "@/components/flows/dashboard/dashboardCommon"
+import Link from "next/link"
 
 export default function DashboardDriverChipComponent({
   driver,
@@ -20,19 +20,21 @@ export default function DashboardDriverChipComponent({
   const driverImageUrl = driver.user.photoUrl
 
   return (
-    <DashboardItemWrapper href={`/dashboard/drivers/${driver.id}` as Route}>
-      <DashboardLabelImageChip label={driver.name}>
-        {driverImageUrl ? (
-          <RyogoImage
-            src={getFileUrl(driverImageUrl)}
-            alt={driver.name}
-            imageSize="xs"
-          />
-        ) : (
-          <RyogoEnclosedIcon icon={IdCard} size="sm" />
-        )}
-      </DashboardLabelImageChip>
-      <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
-    </DashboardItemWrapper>
+    <Link href={`/dashboard/drivers/${driver.id}`}>
+      <DashboardChipItemWrapper>
+        <DashboardLabelImageChip label={driver.name}>
+          {driverImageUrl ? (
+            <RyogoImage
+              src={getFileUrl(driverImageUrl)}
+              alt={driver.name}
+              imageSize="xs"
+            />
+          ) : (
+            <RyogoEnclosedIcon icon={IdCard} size="sm" />
+          )}
+        </DashboardLabelImageChip>
+        <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
+      </DashboardChipItemWrapper>
+    </Link>
   )
 }

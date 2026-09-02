@@ -12,7 +12,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { changeUserEmailAction } from "@/app/actions/users/changeUserEmailAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import {
   RyogoDefaultButton,
@@ -28,22 +27,20 @@ export default function ChangeUserEmailPageComponent({
 }) {
   const t = useTranslations("Dashboard.UserDetails.ChangeEmail")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyUserSchema = z.object({
     newEmail: z.email(t("Field1.Error1")).max(60, t("Field1.Error2")),
   })
   type ModifyUserType = z.infer<typeof modifyUserSchema>
 
-  const formData = useForm<ModifyUserType>({
+  const form = useForm<ModifyUserType>({
     resolver: zodResolver(modifyUserSchema),
   })
 
-  //Submit actions
   async function onSubmit(data: ModifyUserType) {
     //Check if same email has been entered
     if (data.newEmail === user.email) {
-      formData.setError("newEmail", {
+      form.setError("newEmail", {
         type: "manual",
         message: t("Field1.Error3"),
       })
@@ -51,25 +48,23 @@ export default function ChangeUserEmailPageComponent({
       //check if another user has this email
       allUsers.some((u) => u.email === data.newEmail)
     ) {
-      formData.setError("newEmail", {
+      form.setError("newEmail", {
         type: "manual",
         message: t("Field1.Error4"),
       })
     } else {
-      startTransition(async () => {
-        const modifiedUser = await changeUserEmailAction(
-          user.id,
-          user.agencyId,
-          data.newEmail,
-        )
-        if (modifiedUser) {
-          router.replace(`/dashboard/users/${user.id}`)
-          toast.success(t("Success"))
-        } else {
-          router.back()
-          toast.error(t("Error"))
-        }
-      })
+      const modifiedUser = await changeUserEmailAction(
+        user.id,
+        user.agencyId,
+        data.newEmail,
+      )
+      if (modifiedUser) {
+        router.replace(`/dashboard/users/${user.id}`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
     }
   }
 
@@ -77,8 +72,8 @@ export default function ChangeUserEmailPageComponent({
     <PageWrapper id="ChangeUserEmailPage">
       <FormWrapper<ModifyUserType>
         id="ChangeUserEmailForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
-        form={formData}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoInput
           name={"newEmail"}
@@ -89,17 +84,17 @@ export default function ChangeUserEmailPageComponent({
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

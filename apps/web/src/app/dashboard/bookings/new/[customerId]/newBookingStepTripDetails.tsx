@@ -44,7 +44,11 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function NewBookingStepTripDetails(props: {
+export default function NewBookingStepTripDetails({
+  onNext,
+  newBookingFormData,
+  setNewBookingFormData,
+}: {
   onNext: () => void
   newBookingFormData: NewBookingRequestDataType
   setNewBookingFormData: React.Dispatch<
@@ -58,7 +62,7 @@ export default function NewBookingStepTripDetails(props: {
   const router = useRouter()
 
   const [selectedTripType, setSelectedTripType] = useState<BookingTypeEnum>(
-    props.newBookingFormData.tripType,
+    newBookingFormData.tripType,
   )
 
   const stepTripDetailsSchema = z
@@ -117,18 +121,18 @@ export default function NewBookingStepTripDetails(props: {
   const form = useForm<StepTripDetailsType>({
     resolver: zodResolver(stepTripDetailsSchema),
     defaultValues: {
-      tripSourceLocationState: props.newBookingFormData.tripSourceLocationState,
-      tripSourceLocationCity: props.newBookingFormData.tripSourceLocationCity,
+      tripSourceLocationState: newBookingFormData.tripSourceLocationState,
+      tripSourceLocationCity: newBookingFormData.tripSourceLocationCity,
       tripDestinationLocationState:
-        props.newBookingFormData.tripDestinationLocationState,
+        newBookingFormData.tripDestinationLocationState,
       tripDestinationLocationCity:
-        props.newBookingFormData.tripDestinationLocationCity,
-      tripType: props.newBookingFormData.tripType,
-      tripStartDate: props.newBookingFormData.tripStartDate,
-      tripEndDate: props.newBookingFormData.tripEndDate,
-      tripPassengers: props.newBookingFormData.tripPassengers,
-      tripNeedsAC: props.newBookingFormData.tripNeedsAC,
-      tripRemarks: props.newBookingFormData.tripRemarks,
+        newBookingFormData.tripDestinationLocationCity,
+      tripType: newBookingFormData.tripType,
+      tripStartDate: newBookingFormData.tripStartDate,
+      tripEndDate: newBookingFormData.tripEndDate,
+      tripPassengers: newBookingFormData.tripPassengers,
+      tripNeedsAC: newBookingFormData.tripNeedsAC,
+      tripRemarks: newBookingFormData.tripRemarks,
     },
   })
 
@@ -136,23 +140,23 @@ export default function NewBookingStepTripDetails(props: {
   async function onSubmit(values: StepTripDetailsType) {
     //Check if the route has changed
     const routeInputsUnchanged =
-      props.newBookingFormData.routeId !== undefined &&
-      props.newBookingFormData.tripSourceLocationCity ===
+      newBookingFormData.routeId !== undefined &&
+      newBookingFormData.tripSourceLocationCity ===
         values.tripSourceLocationCity &&
-      props.newBookingFormData.tripSourceLocationState ===
+      newBookingFormData.tripSourceLocationState ===
         values.tripSourceLocationState &&
-      props.newBookingFormData.tripDestinationLocationCity ===
+      newBookingFormData.tripDestinationLocationCity ===
         values.tripDestinationLocationCity &&
-      props.newBookingFormData.tripDestinationLocationState ===
+      newBookingFormData.tripDestinationLocationState ===
         values.tripDestinationLocationState
 
     //If route has changed, fetch new route data from DB, otherwise save previous data
     const newRoute = routeInputsUnchanged
       ? {
-          id: props.newBookingFormData.routeId,
-          sourceId: props.newBookingFormData.sourceId,
-          destinationId: props.newBookingFormData.destinationId,
-          distance: props.newBookingFormData.selectedDistance,
+          id: newBookingFormData.routeId,
+          sourceId: newBookingFormData.sourceId,
+          destinationId: newBookingFormData.destinationId,
+          distance: newBookingFormData.selectedDistance,
         }
       : await findOrCreateRouteAction(
           values.tripSourceLocationCity,
@@ -161,8 +165,8 @@ export default function NewBookingStepTripDetails(props: {
           values.tripDestinationLocationState,
         )
 
-    props.setNewBookingFormData({
-      ...props.newBookingFormData,
+    setNewBookingFormData({
+      ...newBookingFormData,
       tripSourceLocationState: values.tripSourceLocationState,
       tripSourceLocationCity: values.tripSourceLocationCity,
       tripDestinationLocationState: values.tripDestinationLocationState,
@@ -180,7 +184,7 @@ export default function NewBookingStepTripDetails(props: {
       destinationId: newRoute?.destinationId,
       selectedDistance: newRoute?.distance ?? NEW_BOOKING_DEFAULT_DISTANCE,
     })
-    props.onNext()
+    onNext()
   }
 
   const data: Record<string, string[]> = stateCityData

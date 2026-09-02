@@ -1531,7 +1531,8 @@
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
       "Success": "Driver assigned successfully!",
-      "Error": "Cannot assign driver.. Try again later!"
+      "Error": "Cannot assign driver.. Try again later!",
+      "SelectWarning": "Select a driver to assign!"
     },
     "AssignVehicle": {
       "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to add more vehicles!",
@@ -1555,7 +1556,8 @@
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
       "Success": "Vehicle assigned successfully!",
-      "Error": "Cannot assign vehicle.. Try again later!"
+      "Error": "Cannot assign vehicle.. Try again later!",
+      "SelectWarning": "Select a vehicle to assign!"
     },
     "AssignUser": {
       "TrialWarning": "You are seeing limited list of agents in basic plan. Subscribe to add more agents!",
@@ -1574,7 +1576,8 @@
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
       "Success": "User assigned successfully!",
-      "Error": "Cannot assign user.. Try again later!"
+      "Error": "Cannot assign user.. Try again later!",
+      "SelectWarning": "Select a user to assign!"
     },
     "Vehicles": {
       "All": {

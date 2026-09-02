@@ -14,7 +14,6 @@ import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import { useTransition } from "react"
 import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
@@ -33,7 +32,6 @@ export default function ModifyCustomerPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyCustomer")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyCustomerSchema = z.object({
     name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
@@ -49,7 +47,7 @@ export default function ModifyCustomerPageComponent({
   })
   type ModifyCustomerType = z.infer<typeof modifyCustomerSchema>
 
-  const formData = useForm<ModifyCustomerType>({
+  const form = useForm<ModifyCustomerType>({
     resolver: zodResolver(modifyCustomerSchema),
     defaultValues: {
       name: customer.name,
@@ -63,40 +61,39 @@ export default function ModifyCustomerPageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyCustomerType) {
-    startTransition(async () => {
-      const modifyCustomerData: ModifyCustomerRequestType = {
-        customerId: customer.id,
-        agencyId: customer.agencyId,
-        name: data.name,
-        email: data.email ?? undefined,
-        address: data.address ?? undefined,
-        remarks: data.remarks ?? undefined,
-        state: data.state,
-        city: data.city,
-      }
-      if (await modifyCustomerAction(modifyCustomerData)) {
-        router.replace(`/dashboard/customers/${customer.id}`)
-        toast.success(t("Success"))
-      } else {
-        router.back()
-        toast.error(t("Error"))
-      }
-    })
+    const modifyCustomerData: ModifyCustomerRequestType = {
+      customerId: customer.id,
+      agencyId: customer.agencyId,
+      name: data.name,
+      email: data.email,
+      address: data.address,
+      remarks: data.remarks,
+      state: data.state,
+      city: data.city,
+    }
+    const updatedCustomer = await modifyCustomerAction(modifyCustomerData)
+    if (updatedCustomer) {
+      router.replace(`/dashboard/customers/${customer.id}`)
+      toast.success(t("Success"))
+    } else {
+      router.back()
+      toast.error(t("Error"))
+    }
   }
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = useWatch({
     name: "state",
-    control: formData.control,
+    control: form.control,
   })
   const cityOptions = data[selectedState] ?? [t("Field6.Title")]
 
   return (
     <PageWrapper id="ModifyCustomerPage">
       <FormWrapper<ModifyCustomerType>
-        form={formData}
+        form={form}
         id="ModifyCustomerForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <RyogoInput
           name={"name"}
@@ -124,34 +121,34 @@ export default function ModifyCustomerPageComponent({
         />
         <RyogoCombobox
           name={"state"}
-          register={formData.register("state")}
+          register={form.register("state")}
           title={t("Field5.Title")}
           array={getArrayValueDisplayPairs(data)}
           placeholder={t("Field5.Title")}
           resetField={() => {
-            formData.setValue("city", "")
+            form.setValue("city", "")
           }}
         />
         <RyogoCombobox
           name={"city"}
-          register={formData.register("city")}
+          register={form.register("city")}
           title={t("Field6.Title")}
           array={getStringValueDisplayPairs(cityOptions)}
           placeholder={t("Field6.Title")}
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

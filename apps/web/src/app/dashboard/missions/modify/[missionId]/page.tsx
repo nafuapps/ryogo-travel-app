@@ -21,7 +21,7 @@ export default async function ModifyCustomMissionPage({
   const { missionId } = await params
 
   if (!MissionIdRegex.safeParse(missionId).success) {
-    redirect("/rider/myMissions", RedirectType.replace)
+    redirect("/dashboard/missions", RedirectType.replace)
   }
 
   const currentUser = await getCurrentUser()

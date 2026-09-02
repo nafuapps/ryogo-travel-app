@@ -12,7 +12,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { changeAgencyPhoneAction } from "@/app/actions/agencies/changeAgencyPhoneAction"
-import { useTransition } from "react"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import {
   RyogoDefaultButton,
@@ -30,14 +29,13 @@ export default function ChangeAgencyPhonePageComponent({
 }) {
   const t = useTranslations("Dashboard.AccountAgency.ChangePhone")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const modifyAgencySchema = z.object({
     newPhone: z.string().length(10, t("Field1.Error1")),
   })
   type ModifyAgencyType = z.infer<typeof modifyAgencySchema>
 
-  const formData = useForm<ModifyAgencyType>({
+  const form = useForm<ModifyAgencyType>({
     resolver: zodResolver(modifyAgencySchema),
   })
 
@@ -45,7 +43,7 @@ export default function ChangeAgencyPhonePageComponent({
   async function onSubmit(data: ModifyAgencyType) {
     //Check if same phone has been entered
     if (data.newPhone === agency.businessPhone) {
-      formData.setError("newPhone", {
+      form.setError("newPhone", {
         type: "manual",
         message: t("Field1.Error2"),
       })
@@ -57,20 +55,23 @@ export default function ChangeAgencyPhonePageComponent({
           u.businessEmail === agency.businessEmail,
       )
     ) {
-      formData.setError("newPhone", {
+      form.setError("newPhone", {
         type: "manual",
         message: t("Field1.Error3"),
       })
     } else {
-      startTransition(async () => {
-        if (await changeAgencyPhoneAction(agency.id, userId, data.newPhone)) {
-          router.replace(`/dashboard/account/agency`)
-          toast.success(t("Success"))
-        } else {
-          router.back()
-          toast.error(t("Error"))
-        }
-      })
+      const updatedAgency = await changeAgencyPhoneAction(
+        agency.id,
+        userId,
+        data.newPhone,
+      )
+      if (updatedAgency) {
+        router.replace(`/dashboard/account/agency`)
+        toast.success(t("Success"))
+      } else {
+        router.back()
+        toast.error(t("Error"))
+      }
     }
   }
 
@@ -78,8 +79,8 @@ export default function ChangeAgencyPhonePageComponent({
     <PageWrapper id="ChangeAgencyPhonePage">
       <FormWrapper<ModifyAgencyType>
         id="ChangeAgencyPhoneForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
-        form={formData}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoInput
           name={"newPhone"}
@@ -90,16 +91,16 @@ export default function ChangeAgencyPhonePageComponent({
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

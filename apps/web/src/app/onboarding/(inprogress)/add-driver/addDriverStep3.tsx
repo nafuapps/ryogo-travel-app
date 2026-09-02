@@ -24,7 +24,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function AddDriverStep3(props: {
+export function AddDriverStep3({
+  onNext,
+  onPrev,
+  finalData,
+  updateFinalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: AddDriverRequestType
@@ -50,24 +55,24 @@ export function AddDriverStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      driverAddress: props.finalData.data.address,
-      canDriveVehicleTypes: props.finalData.data.canDriveVehicleTypes,
-      defaultAllowancePerDay: props.finalData.data.defaultAllowancePerDay,
+      driverAddress: finalData.data.address,
+      canDriveVehicleTypes: finalData.data.canDriveVehicleTypes,
+      defaultAllowancePerDay: finalData.data.defaultAllowancePerDay,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    props.updateFinalData({
-      agencyId: props.finalData.agencyId,
+    updateFinalData({
+      agencyId: finalData.agencyId,
       data: {
-        ...props.finalData.data,
+        ...finalData.data,
         address: data.driverAddress,
         canDriveVehicleTypes: data.canDriveVehicleTypes,
         defaultAllowancePerDay: data.defaultAllowancePerDay,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -86,7 +91,6 @@ export function AddDriverStep3(props: {
             array={getEnumValueDisplayPairs(VehicleTypesEnum)}
             name={"canDriveVehicleTypes"}
             label={t("Field2.Title")}
-            register={formData.register("canDriveVehicleTypes")}
           />
           <RyogoInput
             name={"defaultAllowancePerDay"}
@@ -109,7 +113,7 @@ export function AddDriverStep3(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

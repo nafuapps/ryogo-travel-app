@@ -14,7 +14,12 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
 
-export default function SendInvoiceAlertButton(props: {
+export default function SendInvoiceAlertButton({
+  bookingId,
+  agencyId,
+  assignedUserId,
+  invoiceSentOn,
+}: {
   bookingId: string
   agencyId: string
   assignedUserId: string
@@ -26,15 +31,15 @@ export default function SendInvoiceAlertButton(props: {
   const [isPending, startSendTransition] = useTransition()
 
   //Can send invoice if either not sent before or sent more than X minutes ago
-  const canSendInvoice = useRefreshPage(props.invoiceSentOn)
+  const canSendInvoice = useRefreshPage(invoiceSentOn)
 
   // Send invoice to customer over whatsapp
   async function sendInvoice() {
     startSendTransition(async () => {
       const invoiceMessage = await sendInvoiceAction(
-        props.bookingId,
-        props.agencyId,
-        props.assignedUserId,
+        bookingId,
+        agencyId,
+        assignedUserId,
       )
       if (invoiceMessage) {
         toast.success(t("Success"))

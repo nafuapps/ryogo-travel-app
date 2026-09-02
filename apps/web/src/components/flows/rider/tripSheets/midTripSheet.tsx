@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useEffect, useState, useTransition } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -42,8 +42,8 @@ export default function MidTripSheet({
   captureOtherTripLog?: boolean
 }) {
   const t = useTranslations("Rider.MyBooking.MidTrip")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+
   const [open, setOpen] = useState(false)
   const latLong = useLocation()
 
@@ -87,7 +87,7 @@ export default function MidTripSheet({
 
   type SchemaType = z.infer<typeof schema>
 
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
   })
 
@@ -128,15 +128,14 @@ export default function MidTripSheet({
       lat: latLong.latitude,
       long: latLong.longitude,
     }
-    startTransition(async () => {
-      if (await midTripAction(midTripData)) {
-        router.refresh()
-        setOpen(false)
-      } else {
-        toast.error(t("Error", { type: type }))
-        router.replace("/rider/myBookings")
-      }
-    })
+    const result = await midTripAction(midTripData)
+    if (result) {
+      router.refresh()
+      setOpen(false)
+    } else {
+      toast.error(t("Error", { type: type }))
+      router.replace("/rider/myBookings")
+    }
   }
 
   return (
@@ -150,8 +149,8 @@ export default function MidTripSheet({
         </SheetHeader>
         <TripSheetFormWrapper<SchemaType>
           id="midTrip"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          form={formData}
+          onSubmit={form.handleSubmit(onSubmit)}
+          form={form}
         >
           <RyogoInput
             name={"odometerReading"}
@@ -162,7 +161,7 @@ export default function MidTripSheet({
           />
           <RyogoFileInput
             name={"tripLogPhoto"}
-            register={formData.register("tripLogPhoto")}
+            register={form.register("tripLogPhoto")}
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description", { type: type })}
@@ -176,15 +175,19 @@ export default function MidTripSheet({
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
-            disabled={isPending}
-            showSpinner={isPending}
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
             form="midTrip"
-            label={isPending ? t("Loading") : t("Mid", { type: type })}
+            label={
+              form.formState.isSubmitting
+                ? t("Loading")
+                : t("Mid", { type: type })
+            }
           />
           <RyogoOutlineButton
             label={t("Close")}
             type="button"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             onClick={() => setOpen(false)}
           />
         </SheetFooter>

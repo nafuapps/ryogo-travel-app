@@ -14,7 +14,7 @@ export default function RiderSidebar() {
   const t = useTranslations("Rider.Sidebar")
 
   // Content Menu items
-  const contentItems: MenuItemType = [
+  const contentItems: MenuItemType[] = [
     {
       title: t("Home"),
       url: "/rider/home",
@@ -33,7 +33,7 @@ export default function RiderSidebar() {
   ]
 
   //Footer menu items
-  const footerItems: MenuItemType = [
+  const footerItems: MenuItemType[] = [
     {
       title: t("Support"),
       url: "/rider/mySupport",

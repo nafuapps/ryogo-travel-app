@@ -3,11 +3,17 @@ import { RyogoCaption } from "@/components/typography"
 import { LucideIcon } from "lucide-react"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
-export function IconTextTag(props: { icon: LucideIcon; text: string }) {
+export function IconTextTag({
+  icon,
+  text,
+}: {
+  icon: LucideIcon
+  text: string
+}) {
   return (
     <SectionRowWrapper justifyStart center small>
-      <RyogoIcon icon={props.icon} size={"sm"} />
-      <RyogoCaption color="slate">{props.text}</RyogoCaption>
+      <RyogoIcon icon={icon} size={"sm"} />
+      <RyogoCaption color="slate">{text}</RyogoCaption>
     </SectionRowWrapper>
   )
 }

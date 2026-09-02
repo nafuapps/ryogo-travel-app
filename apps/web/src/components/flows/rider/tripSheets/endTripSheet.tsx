@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -43,8 +43,8 @@ export default function EndTripSheet({
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const t = useTranslations("Rider.MyBooking.EndTrip")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+
   const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
   const [open, setOpen] = useState(false)
   const latLong = useLocation()
@@ -84,7 +84,7 @@ export default function EndTripSheet({
 
   type SchemaType = z.infer<typeof schema>
 
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
   })
 
@@ -116,22 +116,19 @@ export default function EndTripSheet({
       bookingRating > 0 && bookingRating <= TOTAL_RATING_STARS
         ? bookingRating
         : undefined
-    startTransition(async () => {
-      if (
-        await endTripAction(
-          endTripData,
-          booking.customerId,
-          customerRatingData,
-          bookingRatingData,
-        )
-      ) {
-        router.refresh()
-        setOpen(false)
-      } else {
-        toast.error(t("Error"))
-        router.replace("/rider/myBookings")
-      }
-    })
+    const result = await endTripAction(
+      endTripData,
+      booking.customerId,
+      customerRatingData,
+      bookingRatingData,
+    )
+    if (result) {
+      router.refresh()
+      setOpen(false)
+    } else {
+      toast.error(t("Error"))
+      router.replace("/rider/myBookings")
+    }
   }
 
   return (
@@ -148,8 +145,8 @@ export default function EndTripSheet({
         </SheetHeader>
         <TripSheetFormWrapper<SchemaType>
           id="endTrip"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          form={formData}
+          onSubmit={form.handleSubmit(onSubmit)}
+          form={form}
         >
           <RyogoInput
             name={"odometerReading"}
@@ -160,7 +157,7 @@ export default function EndTripSheet({
           />
           <RyogoFileInput
             name={"tripLogPhoto"}
-            register={formData.register("tripLogPhoto")}
+            register={form.register("tripLogPhoto")}
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
@@ -188,21 +185,21 @@ export default function EndTripSheet({
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
-            label={isPending ? t("Loading") : t("End")}
-            disabled={isPending}
-            showSpinner={isPending}
+            label={form.formState.isSubmitting ? t("Loading") : t("End")}
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
             form="endTrip"
           />
           <RyogoOutlineButton
             label={t("Close")}
             type="button"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             onClick={() => setOpen(false)}
           />
           <Link href={`/rider/myBookings/${booking.id}/add-expense`}>
             <RyogoGhostButton
               type="button"
-              disabled={isPending}
+              disabled={form.formState.isSubmitting}
               form="endTrip"
               className="w-full"
               label={t("AddExpense")}

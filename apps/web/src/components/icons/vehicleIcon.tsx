@@ -52,9 +52,7 @@ export function GetCanDriveIcons({
   return (
     <div className="flex flex-row gap-1 lg:gap-1.5">
       {icons.map((Icon, index) => {
-        return (
-          <RyogoIcon key={index} icon={Icon} size="sm" color="light" thick />
-        )
+        return <RyogoIcon key={index} icon={Icon} size="sm" color="light" />
       })}
     </div>
   )

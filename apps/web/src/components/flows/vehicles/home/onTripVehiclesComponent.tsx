@@ -40,8 +40,8 @@ export default async function OnTripVehiclesComponent({
   )
 }
 
-function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
-  const booking = props.assignedBookings[0]
+function OnTripVehicleComponent(vehicle: FindVehiclesOnTripType[number]) {
+  const booking = vehicle.assignedBookings[0]
   if (!booking) {
     return <></>
   }
@@ -50,9 +50,9 @@ function OnTripVehicleComponent(props: FindVehiclesOnTripType[number]) {
       <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
-            {props.brand + " " + props.model}
+            {vehicle.brand + " " + vehicle.model}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {props.vehicleNumber}</RyogoP>
+          <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{booking.id}</RyogoCaption>

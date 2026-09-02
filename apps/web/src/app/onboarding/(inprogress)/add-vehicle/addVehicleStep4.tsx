@@ -18,7 +18,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function AddVehicleStep4(props: {
+export function AddVehicleStep4({
+  onNext,
+  onPrev,
+  finalData,
+  updateFinalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: AddVehicleRequestType
@@ -46,9 +51,9 @@ export function AddVehicleStep4(props: {
   const formData = useForm<Step4Type>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      defaultRatePerKm: props.finalData.data.defaultRatePerKm,
-      hasAC: props.finalData.data.hasAC,
-      defaultAcChargePerDay: props.finalData.data.defaultAcChargePerDay,
+      defaultRatePerKm: finalData.data.defaultRatePerKm,
+      hasAC: finalData.data.hasAC,
+      defaultAcChargePerDay: finalData.data.defaultAcChargePerDay,
     },
   })
 
@@ -59,16 +64,16 @@ export function AddVehicleStep4(props: {
 
   //Submit actions
   const onSubmit = (data: Step4Type) => {
-    props.updateFinalData({
-      agencyId: props.finalData.agencyId,
+    updateFinalData({
+      agencyId: finalData.agencyId,
       data: {
-        ...props.finalData.data,
+        ...finalData.data,
         defaultRatePerKm: data.defaultRatePerKm,
         hasAC: data.hasAC,
         defaultAcChargePerDay: data.defaultAcChargePerDay,
       },
     })
-    props.onNext()
+    onNext()
   }
   return (
     <Form {...formData}>
@@ -107,7 +112,7 @@ export function AddVehicleStep4(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

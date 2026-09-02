@@ -1,11 +1,8 @@
 import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 import {
-  SectionColWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import { Separator } from "@/components/ui/separator"
-import {
+  DashboardRow,
   DashboardRowHeader,
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
@@ -28,31 +25,29 @@ export default async function DashboardUsersComponent({
   return (
     <SectionWrapper id="DashboardUsers">
       <DashboardSectionHeader title={t("Title")} href={"/dashboard/users"} />
-      <DashboardRowHeader title={t("Owners")} count={owners.length} />
       {owners.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader title={t("Owners")} count={owners.length} />
           {owners.map((user, index) => (
             <DashboardUserChipComponent key={index} user={user} />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader title={t("Agents")} count={agents.length} />
       {agents.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader title={t("Agents")} count={agents.length} />
           {agents.map((user, index) => (
             <DashboardUserChipComponent key={index} user={user} />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
-      <Separator />
-      <DashboardRowHeader title={t("Drivers")} count={drivers.length} />
       {drivers.length > 0 && (
-        <SectionColWrapper small>
+        <DashboardRow>
+          <DashboardRowHeader title={t("Drivers")} count={drivers.length} />
           {drivers.map((user, index) => (
             <DashboardUserChipComponent key={index} user={user} />
           ))}
-        </SectionColWrapper>
+        </DashboardRow>
       )}
     </SectionWrapper>
   )

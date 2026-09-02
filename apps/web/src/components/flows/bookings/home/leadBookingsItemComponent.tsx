@@ -77,36 +77,34 @@ export default function LeadBookingsItemComponent({
   )
 }
 
-function LeadBookingsComponent(props: FindLeadBookingsNextDaysType[number]) {
+function LeadBookingsComponent(lead: FindLeadBookingsNextDaysType[number]) {
   const t = useTranslations("Dashboard.Bookings.Leads")
   return (
-    <Link href={`/dashboard/bookings/${props.bookingId}`}>
+    <Link href={`/dashboard/bookings/${lead.bookingId}`}>
       <HoverGridWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{props.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.customerName}</RyogoP>
+          <RyogoCaption color="slate">{lead.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {lead.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{props.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold"> {props.route}</RyogoP>
+          <RyogoCaption color="slate">{lead.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold"> {lead.route}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
-            {props.amount.toLocaleString("en-IN", {
+            {lead.amount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {props.assignedUser}</RyogoP>
+          <RyogoP weight="font-bold"> {lead.assignedUser}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
-            {props.passengers + " " + t("Passengers")}
+            {lead.passengers + " " + t("Passengers")}
           </RyogoCaption>
-          <RyogoP weight="font-bold">
-            {moment(props.startDate).fromNow()}
-          </RyogoP>
+          <RyogoP weight="font-bold">{moment(lead.startDate).fromNow()}</RyogoP>
         </GridItemWrapper>
       </HoverGridWrapper>
     </Link>

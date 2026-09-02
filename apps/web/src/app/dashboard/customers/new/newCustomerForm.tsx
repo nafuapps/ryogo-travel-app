@@ -14,7 +14,6 @@ import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import { useTransition } from "react"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
@@ -42,7 +41,6 @@ export default function NewCustomerForm({
 }) {
   const t = useTranslations("Dashboard.NewCustomer")
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
 
   const newCustomerSchema = z.object({
     name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
@@ -82,8 +80,7 @@ export default function NewCustomerForm({
   })
   type NewCustomerType = z.infer<typeof newCustomerSchema>
 
-  //Form init
-  const formData = useForm<NewCustomerType>({
+  const form = useForm<NewCustomerType>({
     resolver: zodResolver(newCustomerSchema),
     defaultValues: {
       state: agencyLocation.state,
@@ -91,51 +88,48 @@ export default function NewCustomerForm({
     },
   })
 
-  //Form submit
   async function onSubmit(values: NewCustomerType) {
     if (allCustomers.some((c) => c.phone === values.phone)) {
       //If customer with this phone exists in agency, show error
-      formData.setError("phone", {
+      form.setError("phone", {
         type: "manual",
         message: t("APIError"),
       })
     } else {
-      startTransition(async () => {
-        const newCustomerData: NewCustomerRequestType = {
-          agencyId: agencyId,
-          addedByUserId: userId,
-          name: values.name,
-          phone: values.phone,
-          state: values.state,
-          city: values.city,
-          email: values.email,
-          address: values.address,
-          remarks: values.remarks,
-          photo: values.photo,
-        }
-        const createdCustomer = await newCustomerAction(newCustomerData)
-        if (createdCustomer) {
-          toast.success(t("Success"))
-          router.replace(`/dashboard/customers/${createdCustomer.id}`)
-        } else {
-          toast.error(t("Error"))
-        }
-      })
+      const newCustomerData: NewCustomerRequestType = {
+        agencyId: agencyId,
+        addedByUserId: userId,
+        name: values.name,
+        phone: values.phone,
+        state: values.state,
+        city: values.city,
+        email: values.email,
+        address: values.address,
+        remarks: values.remarks,
+        photo: values.photo,
+      }
+      const createdCustomer = await newCustomerAction(newCustomerData)
+      if (createdCustomer) {
+        toast.success(t("Success"))
+        router.replace(`/dashboard/customers/${createdCustomer.id}`)
+      } else {
+        toast.error(t("Error"))
+      }
     }
   }
 
   const data: Record<string, string[]> = stateCityData
   const selectedState = useWatch({
     name: "state",
-    control: formData.control,
+    control: form.control,
   })
   const cityOptions = data[selectedState] ?? [t("Field8.Title")]
 
   return (
     <PageWrapper id="NewCustomerPage">
       <FormWrapper<NewCustomerType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="newCustomerForm"
       >
         <RyogoInput
@@ -161,7 +155,7 @@ export default function NewCustomerForm({
         />
         <RyogoFileInput
           name={"photo"}
-          register={formData.register("photo")}
+          register={form.register("photo")}
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
@@ -178,34 +172,34 @@ export default function NewCustomerForm({
         />
         <RyogoCombobox
           name={"state"}
-          register={formData.register("state")}
+          register={form.register("state")}
           title={t("Field7.Title")}
           array={getArrayValueDisplayPairs(data)}
           placeholder={t("Field7.Title")}
           resetField={() => {
-            formData.setValue("city", "")
+            form.setValue("city", "")
           }}
         />
         <RyogoCombobox
           name={"city"}
-          register={formData.register("city")}
+          register={form.register("city")}
           title={t("Field8.Title")}
           array={getArrayValueDisplayPairs(cityOptions)}
           placeholder={t("Field8.Title")}
         />
         <RyogoDefaultButton
           size={"lg"}
-          label={isPending ? t("Loading") : t("PrimaryCTA")}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={isPending}
-          showSpinner={isPending}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("SecondaryCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={isPending}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

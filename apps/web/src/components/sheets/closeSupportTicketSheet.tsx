@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { closeSupportTicketAction } from "@/app/actions/support/closeSupportTicketAction"
@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { RyogoCaption } from "@/components/typography"
 import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
-import { RyogoDefaultButton } from "../buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default function CloseSupportTicketSheet({
   ticketId,
@@ -34,35 +34,31 @@ export default function CloseSupportTicketSheet({
   status: TicketStatusEnum
 }) {
   const t = useTranslations("Sheets.CloseSupportTicket")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const form = useForm()
+
   const [open, setOpen] = useState(false)
 
   const [resolutionRating, setResolutionRating] = useState(0)
-
-  const formData = useForm()
 
   const onSubmit = async () => {
     const resolutionRatingData =
       resolutionRating > 0 && resolutionRating <= TOTAL_RATING_STARS
         ? resolutionRating
         : undefined
-    startTransition(async () => {
-      if (
-        await closeSupportTicketAction(
-          ticketId,
-          userId,
-          agencyId,
-          status,
-          resolutionRatingData,
-        )
-      ) {
-        setOpen(false)
-      } else {
-        toast.error(t("Error"))
-      }
-      router.refresh()
-    })
+    const closedTicket = await closeSupportTicketAction(
+      ticketId,
+      userId,
+      agencyId,
+      status,
+      resolutionRatingData,
+    )
+    if (closedTicket) {
+      setOpen(false)
+    } else {
+      toast.error(t("Error"))
+    }
+    router.refresh()
   }
 
   return (
@@ -77,11 +73,8 @@ export default function CloseSupportTicketSheet({
             <RyogoCaption color="light">{t("Warning")}</RyogoCaption>
           </SheetDescription>
         </SheetHeader>
-        <Form {...formData}>
-          <form
-            id="closeSupportTicket"
-            onSubmit={formData.handleSubmit(onSubmit)}
-          >
+        <Form {...form}>
+          <form id="closeSupportTicket" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
               <RyogoRatingInput
                 name="resolutionRating"
@@ -96,9 +89,11 @@ export default function CloseSupportTicketSheet({
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             form="closeSupportTicket"
-            label={isPending ? t("Loading") : t("CloseTicket")}
+            label={
+              form.formState.isSubmitting ? t("Loading") : t("CloseTicket")
+            }
           />
         </SheetFooter>
       </SheetContent>

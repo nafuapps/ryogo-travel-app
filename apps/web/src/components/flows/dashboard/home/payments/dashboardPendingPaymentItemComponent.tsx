@@ -9,10 +9,13 @@ import { RyogoCaption, RyogoH4, RyogoP } from "@/components/typography"
 import { FindDashboardPendingPaymentsType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
-import { DashboardLabelImageChip } from "@/components/flows/dashboard/dashboardCommon"
-import Link from "next/link"
+import {
+  DashboardBoxItemWrapper,
+  DashboardLabelImageChip,
+} from "@/components/flows/dashboard/dashboardCommon"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function DashboardPendingPaymentComponent({
   trip,
@@ -33,9 +36,7 @@ export default async function DashboardPendingPaymentComponent({
 
   return (
     <Link href={`/dashboard/bookings/${trip.id}/transactions`}>
-      <div
-        className={`flex flex-col gap-2 lg:gap-3 justify-between w-full border ${highlight ? "border-sky-300 dark:border-sky-700 hover:bg-sky-100 dark:hover:bg-sky-950" : "border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
-      >
+      <DashboardBoxItemWrapper highlight={highlight}>
         <SectionRowWrapper>
           <RyogoCaption color="light" weight="font-bold">
             {trip.id}
@@ -70,7 +71,7 @@ export default async function DashboardPendingPaymentComponent({
             <RyogoP color="dark">{t("Due", { amount: pendingAmount })}</RyogoP>
           </SectionColWrapper>
         </SectionRowWrapper>
-      </div>
+      </DashboardBoxItemWrapper>
     </Link>
   )
 }

@@ -57,7 +57,7 @@ export default async function RiderExpenseItem({
             >
               <RyogoOutlineButton label={t("Modify")}>
                 <RyogoIcon icon={ChevronRight} size="sm" />
-              </RyogoOutlineButton>{" "}
+              </RyogoOutlineButton>
             </Link>
           )}
         </div>

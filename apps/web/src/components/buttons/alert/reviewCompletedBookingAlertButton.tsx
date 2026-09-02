@@ -13,7 +13,11 @@ import {
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function SendInvoiceAlertButton(props: {
+export default function SendInvoiceAlertButton({
+  bookingId,
+  agencyId,
+  assignedUserId,
+}: {
   bookingId: string
   agencyId: string
   assignedUserId: string
@@ -27,9 +31,9 @@ export default function SendInvoiceAlertButton(props: {
   async function reviewAndGenerateInvoice() {
     startSendTransition(async () => {
       const reviewedBooking = await reviewCompletedBookingAction(
-        props.bookingId,
-        props.agencyId,
-        props.assignedUserId,
+        bookingId,
+        agencyId,
+        assignedUserId,
       )
       if (reviewedBooking) {
         toast.success(t("Success"))

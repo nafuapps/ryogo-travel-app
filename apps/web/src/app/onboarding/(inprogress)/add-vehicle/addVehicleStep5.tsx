@@ -19,7 +19,11 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function AddVehicleConfirm(props: {
+export function AddVehicleConfirm({
+  onNext,
+  onPrev,
+  finalData,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: AddVehicleRequestType
@@ -32,29 +36,29 @@ export function AddVehicleConfirm(props: {
   //Submit actions
   const onSubmit = async () => {
     const newVehicleData: AddVehicleRequestType = {
-      agencyId: props.finalData.agencyId,
+      agencyId: finalData.agencyId,
       data: {
-        vehicleNumber: props.finalData.data.vehicleNumber,
-        type: props.finalData.data.type,
-        brand: props.finalData.data.brand,
-        color: props.finalData.data.color,
-        model: props.finalData.data.model,
-        capacity: props.finalData.data.capacity,
-        odometerReading: props.finalData.data.odometerReading,
-        insuranceExpiresOn: props.finalData.data.insuranceExpiresOn,
-        pucExpiresOn: props.finalData.data.pucExpiresOn,
-        rcExpiresOn: props.finalData.data.rcExpiresOn,
-        hasAC: props.finalData.data.hasAC,
-        defaultRatePerKm: props.finalData.data.defaultRatePerKm,
-        defaultAcChargePerDay: props.finalData.data.defaultAcChargePerDay,
-        rcPhotos: props.finalData.data.rcPhotos,
-        pucPhotos: props.finalData.data.pucPhotos,
-        insurancePhotos: props.finalData.data.insurancePhotos,
-        vehiclePhotos: props.finalData.data.vehiclePhotos,
+        vehicleNumber: finalData.data.vehicleNumber,
+        type: finalData.data.type,
+        brand: finalData.data.brand,
+        color: finalData.data.color,
+        model: finalData.data.model,
+        capacity: finalData.data.capacity,
+        odometerReading: finalData.data.odometerReading,
+        insuranceExpiresOn: finalData.data.insuranceExpiresOn,
+        pucExpiresOn: finalData.data.pucExpiresOn,
+        rcExpiresOn: finalData.data.rcExpiresOn,
+        hasAC: finalData.data.hasAC,
+        defaultRatePerKm: finalData.data.defaultRatePerKm,
+        defaultAcChargePerDay: finalData.data.defaultAcChargePerDay,
+        rcPhotos: finalData.data.rcPhotos,
+        pucPhotos: finalData.data.pucPhotos,
+        insurancePhotos: finalData.data.insurancePhotos,
+        vehiclePhotos: finalData.data.vehiclePhotos,
       },
     }
     if (await addVehicleAction(newVehicleData)) {
-      props.onNext()
+      onNext()
     } else {
       //If failed, Take back to vehicle onboarding page and show error
       toast.error(t("APIError"))
@@ -72,62 +76,61 @@ export function AddVehicleConfirm(props: {
           <RyogoH3 color="slate">{t("Title")}</RyogoH3>
           <ConfirmValues
             name={t("VehicleNumber")}
-            value={props.finalData.data.vehicleNumber}
+            value={finalData.data.vehicleNumber}
           />
           <ConfirmValues
             name={t("Type")}
-            value={props.finalData.data.type.toUpperCase()}
+            value={finalData.data.type.toUpperCase()}
           />
-          <ConfirmValues name={t("Brand")} value={props.finalData.data.brand} />
-          <ConfirmValues name={t("Model")} value={props.finalData.data.model} />
-          <ConfirmValues name={t("Color")} value={props.finalData.data.color} />
-          {props.finalData.data.capacity && (
+          <ConfirmValues name={t("Brand")} value={finalData.data.brand} />
+          <ConfirmValues name={t("Model")} value={finalData.data.model} />
+          <ConfirmValues name={t("Color")} value={finalData.data.color} />
+          {finalData.data.capacity && (
             <ConfirmValues
               name={t("Capacity")}
-              value={`${props.finalData.data.capacity}`}
+              value={`${finalData.data.capacity}`}
             />
           )}
-          {props.finalData.data.odometerReading && (
+          {finalData.data.odometerReading && (
             <ConfirmValues
               name={t("OdometerReading")}
-              value={`${props.finalData.data.odometerReading}`}
+              value={`${finalData.data.odometerReading}`}
             />
           )}
-          {props.finalData.data.insuranceExpiresOn && (
+          {finalData.data.insuranceExpiresOn && (
             <ConfirmValues
               name={t("InsuranceExpiresOn")}
-              value={props.finalData.data.insuranceExpiresOn.toDateString()}
+              value={finalData.data.insuranceExpiresOn.toDateString()}
             />
           )}
-          {props.finalData.data.pucExpiresOn && (
+          {finalData.data.pucExpiresOn && (
             <ConfirmValues
               name={t("PUCExpiresOn")}
-              value={props.finalData.data.pucExpiresOn.toDateString()}
+              value={finalData.data.pucExpiresOn.toDateString()}
             />
           )}
-          {props.finalData.data.rcExpiresOn && (
+          {finalData.data.rcExpiresOn && (
             <ConfirmValues
               name={t("RCExpiresOn")}
-              value={props.finalData.data.rcExpiresOn.toDateString()}
+              value={finalData.data.rcExpiresOn.toDateString()}
             />
           )}
-          {props.finalData.data.defaultRatePerKm && (
+          {finalData.data.defaultRatePerKm && (
             <ConfirmValues
               name={t("RatePerKm")}
-              value={`${props.finalData.data.defaultRatePerKm}`}
+              value={`${finalData.data.defaultRatePerKm}`}
             />
           )}
           <ConfirmValues
             name={t("HasAC")}
-            value={props.finalData.data.hasAC ? "Yes" : "No"}
+            value={finalData.data.hasAC ? "Yes" : "No"}
           />
-          {props.finalData.data.hasAC &&
-            props.finalData.data.defaultAcChargePerDay && (
-              <ConfirmValues
-                name={t("ACChagePerDay")}
-                value={`${props.finalData.data.defaultAcChargePerDay}`}
-              />
-            )}
+          {finalData.data.hasAC && finalData.data.defaultAcChargePerDay && (
+            <ConfirmValues
+              name={t("ACChagePerDay")}
+              value={`${finalData.data.defaultAcChargePerDay}`}
+            />
+          )}
         </OnboardingStepContent>
         <OnboardingStepActions actionsId="Step5Actions">
           <RyogoDefaultButton
@@ -142,7 +145,7 @@ export function AddVehicleConfirm(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

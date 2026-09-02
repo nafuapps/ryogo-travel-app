@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -37,8 +37,8 @@ export default function StartTripSheet({
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const t = useTranslations("Rider.MyBooking.StartTrip")
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
+
   const [open, setOpen] = useState(false)
   const latLong = useLocation()
 
@@ -76,7 +76,7 @@ export default function StartTripSheet({
 
   type SchemaType = z.infer<typeof schema>
 
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
   })
 
@@ -100,15 +100,14 @@ export default function StartTripSheet({
       lat: latLong.latitude,
       long: latLong.longitude,
     }
-    startTransition(async () => {
-      if (await startTripAction(startTripData)) {
-        router.refresh()
-        setOpen(false)
-      } else {
-        toast.error(t("Error"))
-        router.replace("/rider/myBookings")
-      }
-    })
+    const result = await startTripAction(startTripData)
+    if (result) {
+      setOpen(false)
+      router.refresh()
+    } else {
+      toast.error(t("Error"))
+      router.replace("/rider/myBookings")
+    }
   }
 
   return (
@@ -122,8 +121,8 @@ export default function StartTripSheet({
         </SheetHeader>
         <TripSheetFormWrapper<SchemaType>
           id="startTrip"
-          onSubmit={formData.handleSubmit(onSubmit)}
-          form={formData}
+          onSubmit={form.handleSubmit(onSubmit)}
+          form={form}
         >
           <RyogoInput
             name={"odometerReading"}
@@ -134,7 +133,7 @@ export default function StartTripSheet({
           />
           <RyogoFileInput
             name={"tripLogPhoto"}
-            register={formData.register("tripLogPhoto")}
+            register={form.register("tripLogPhoto")}
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
@@ -148,15 +147,15 @@ export default function StartTripSheet({
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
-            disabled={isPending}
-            showSpinner={isPending}
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
             form="startTrip"
-            label={isPending ? t("Loading") : t("Start")}
+            label={form.formState.isSubmitting ? t("Loading") : t("Start")}
           />
           <RyogoOutlineButton
             label={t("Close")}
             type="button"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             onClick={() => setOpen(false)}
           />
         </SheetFooter>

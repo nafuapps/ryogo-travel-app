@@ -28,7 +28,12 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function NewDriverStep3(props: {
+export function NewDriverStep3({
+  onNext,
+  onPrev,
+  newDriverFormData,
+  setNewDriverFormData,
+}: {
   onNext: () => void
   onPrev: () => void
   newDriverFormData: AddDriverRequestType
@@ -54,25 +59,24 @@ export function NewDriverStep3(props: {
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      driverAddress: props.newDriverFormData.data.address,
-      canDriveVehicleTypes: props.newDriverFormData.data.canDriveVehicleTypes,
-      defaultAllowancePerDay:
-        props.newDriverFormData.data.defaultAllowancePerDay,
+      driverAddress: newDriverFormData.data.address,
+      canDriveVehicleTypes: newDriverFormData.data.canDriveVehicleTypes,
+      defaultAllowancePerDay: newDriverFormData.data.defaultAllowancePerDay,
     },
   })
 
   //Submit actions
   const onSubmit = (data: Step3Type) => {
-    props.setNewDriverFormData({
-      agencyId: props.newDriverFormData.agencyId,
+    setNewDriverFormData({
+      agencyId: newDriverFormData.agencyId,
       data: {
-        ...props.newDriverFormData.data,
+        ...newDriverFormData.data,
         address: data.driverAddress,
         canDriveVehicleTypes: data.canDriveVehicleTypes,
         defaultAllowancePerDay: data.defaultAllowancePerDay,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -100,7 +104,6 @@ export function NewDriverStep3(props: {
             array={getEnumValueDisplayPairs(VehicleTypesEnum)}
             name={"canDriveVehicleTypes"}
             label={t("Field2.Title")}
-            register={formData.register("canDriveVehicleTypes")}
           />
           <RyogoInput
             name={"defaultAllowancePerDay"}
@@ -123,7 +126,7 @@ export function NewDriverStep3(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}
           />

@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
 import {
   AuthActionWrapper,
@@ -36,7 +36,7 @@ export default function ForgotPasswordPageComponent({
   const t = useTranslations("Auth.ForgotPassword.Step1")
 
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
+
   const { checkBotActivity, isBot } = useBotDetection()
   const [giveHelp, setGiveHelp] = useState(false)
 
@@ -54,7 +54,7 @@ export default function ForgotPasswordPageComponent({
   })
 
   type SchemaType = z.infer<typeof formSchema>
-  const methods = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(formSchema),
   })
 
@@ -65,17 +65,19 @@ export default function ForgotPasswordPageComponent({
       return
     }
     if (data.email.toLowerCase().trim() !== user.email.toLowerCase().trim()) {
-      methods.setError("email", { type: "manual", message: t("APIError") })
+      form.setError("email", { type: "manual", message: t("APIError") })
       setGiveHelp(true)
     } else {
-      startTransition(async () => {
-        if (await forgotPasswordAction(user.id, forgotPasswordLink)) {
-          toast.success(t("Success"))
-          router.push(`/auth/forgot-password/${user.id}/reset`)
-        } else {
-          toast.error(t("Error"))
-        }
-      })
+      const updatedUser = await forgotPasswordAction(
+        user.id,
+        forgotPasswordLink,
+      )
+      if (updatedUser) {
+        toast.success(t("Success"))
+        router.push(`/auth/forgot-password/${user.id}/reset`)
+      } else {
+        toast.error(t("Error"))
+      }
     }
   }
 
@@ -83,8 +85,8 @@ export default function ForgotPasswordPageComponent({
     <AuthPageWrapper>
       <AuthFormWrapper<SchemaType>
         id="ForgorPasswordForm"
-        onSubmit={methods.handleSubmit(onSubmit)}
-        form={methods}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <UserCard user={user} />
@@ -113,7 +115,7 @@ export default function ForgotPasswordPageComponent({
           {/* Disable CTA if code was sent recently */}
           <RyogoDefaultButton
             label={
-              isPending
+              form.formState.isSubmitting
                 ? t("Loading")
                 : codeSentRecently
                   ? t("CodeSentRecently", {
@@ -123,8 +125,8 @@ export default function ForgotPasswordPageComponent({
             }
             size={"lg"}
             type="submit"
-            disabled={isPending || codeSentRecently || isBot}
-            showSpinner={isPending}
+            disabled={form.formState.isSubmitting || codeSentRecently || isBot}
+            showSpinner={form.formState.isSubmitting}
           />
           <RyogoOutlineButton
             label={t("Back")}

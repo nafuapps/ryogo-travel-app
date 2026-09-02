@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -35,7 +35,6 @@ export default function ChangeTicketPhotoSheet({
   newPhoto: boolean
 }) {
   const t = useTranslations("Sheets.ChangeTicketPhoto")
-  const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -58,20 +57,23 @@ export default function ChangeTicketPhotoSheet({
 
   type SchemaType = z.infer<typeof schema>
 
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
   })
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    startTransition(async () => {
-      if (await changeSupportTicketPhotoAction(ticketId, userId, data.photo)) {
-        toast.success(t("Success"))
-        router.refresh()
-      } else {
-        toast.error(t("Error"))
-      }
-    })
+    const updatedTicket = await changeSupportTicketPhotoAction(
+      ticketId,
+      userId,
+      data.photo,
+    )
+    if (updatedTicket) {
+      toast.success(t("Success"))
+      router.refresh()
+    } else {
+      toast.error(t("Error"))
+    }
   }
 
   return (
@@ -85,12 +87,12 @@ export default function ChangeTicketPhotoSheet({
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>
         </SheetHeader>
-        <Form {...formData}>
-          <form id="changePhoto" onSubmit={formData.handleSubmit(onSubmit)}>
+        <Form {...form}>
+          <form id="changePhoto" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
               <RyogoFileInput
                 name={"photo"}
-                register={formData.register("photo")}
+                register={form.register("photo")}
                 label={t("Title")}
                 placeholder={t("Placeholder")}
               />
@@ -100,12 +102,12 @@ export default function ChangeTicketPhotoSheet({
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             form="changePhoto"
             label={t("Save")}
           />
           <RyogoOutlineButton
-            disabled={isPending}
+            disabled={form.formState.isSubmitting}
             type="button"
             onClick={() => setOpen(false)}
             label={t("Close")}

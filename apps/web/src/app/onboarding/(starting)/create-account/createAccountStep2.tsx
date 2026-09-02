@@ -26,7 +26,13 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-export function CreateAccountStep2(props: {
+export function CreateAccountStep2({
+  onNext,
+  onPrev,
+  finalData,
+  updateFinalData,
+  allAgencies,
+}: {
   onNext: () => void
   onPrev: () => void
   finalData: CreateOwnerAccountRequestType
@@ -67,12 +73,12 @@ export function CreateAccountStep2(props: {
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      agencyPhone: props.finalData.agency.businessPhone,
+      agencyPhone: finalData.agency.businessPhone,
       sameAsOwnerPhone: false,
-      agencyEmail: props.finalData.agency.businessEmail,
+      agencyEmail: finalData.agency.businessEmail,
       sameAsOwnerEmail: false,
-      agencyAddress: props.finalData.agency.businessAddress,
-      ownerPhoto: props.finalData.owner.photos,
+      agencyAddress: finalData.agency.businessAddress,
+      ownerPhoto: finalData.owner.photos,
     },
   })
 
@@ -82,13 +88,13 @@ export function CreateAccountStep2(props: {
     name: "sameAsOwnerPhone",
     control: formData.control,
   })
-  const phoneSourceValue = props.finalData.owner.phone
+  const phoneSourceValue = finalData.owner.phone
 
   const emailCopySelection = useWatch({
     name: "sameAsOwnerEmail",
     control: formData.control,
   })
-  const emailSourceValue = props.finalData.owner.email
+  const emailSourceValue = finalData.owner.email
 
   useEffect(() => {
     if (phoneCopySelection) {
@@ -113,7 +119,7 @@ export function CreateAccountStep2(props: {
   //Submit actions
   const onSubmit = async (data: Step2Type) => {
     if (
-      props.allAgencies.some(
+      allAgencies.some(
         (a) =>
           a.businessEmail === data.agencyEmail &&
           a.businessPhone === data.agencyPhone,
@@ -124,19 +130,19 @@ export function CreateAccountStep2(props: {
         message: t("APIError"),
       })
     } else {
-      props.updateFinalData({
+      updateFinalData({
         agency: {
-          ...props.finalData.agency,
+          ...finalData.agency,
           businessPhone: data.agencyPhone,
           businessEmail: data.agencyEmail,
           businessAddress: data.agencyAddress,
         },
         owner: {
-          ...props.finalData.owner,
+          ...finalData.owner,
           photos: data.ownerPhoto,
         },
       })
-      props.onNext()
+      onNext()
     }
   }
 
@@ -155,7 +161,6 @@ export function CreateAccountStep2(props: {
             description={t("Field1.Description")}
           />
           <RyogoCheckbox
-            register={formData.register("sameAsOwnerPhone")}
             name={"sameAsOwnerPhone"}
             label={t("Field1.Checkbox")}
           />
@@ -167,7 +172,6 @@ export function CreateAccountStep2(props: {
             description={t("Field2.Description")}
           />
           <RyogoCheckbox
-            register={formData.register("sameAsOwnerEmail")}
             name={"sameAsOwnerEmail"}
             label={t("Field2.Checkbox")}
           />
@@ -197,7 +201,7 @@ export function CreateAccountStep2(props: {
           <RyogoOutlineButton
             size={"lg"}
             type="button"
-            onClick={props.onPrev}
+            onClick={onPrev}
             className="w-full"
             disabled={formData.formState.isSubmitting}
             label={t("SecondaryCTA")}

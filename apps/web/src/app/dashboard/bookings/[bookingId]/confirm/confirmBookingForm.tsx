@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useEffect, useTransition } from "react"
+import { useEffect } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
@@ -25,10 +25,8 @@ export default function ConfirmBookingForm({
   booking: NonNullable<FindLeadBookingByIdType>
   canConfirm: boolean
 }) {
-  const router = useRouter()
   const t = useTranslations("Dashboard.ConfirmBooking")
-
-  const [isConfirmPending, startConfirmTransition] = useTransition()
+  const router = useRouter()
 
   const confirmBookingSchema = z.object({
     pickupAddress: z
@@ -54,26 +52,24 @@ export default function ConfirmBookingForm({
   })
 
   //Confirm booking
-  async function confirm(values: ConfirmBookingType) {
-    startConfirmTransition(async () => {
-      const confirmedBookingMessage = await confirmBookingAction(
-        booking.id,
-        booking.agencyId,
-        booking.assignedUserId,
-        values.startTime,
-        values.pickupAddress,
-        values.dropAddress,
-        booking.customer.address ? false : true,
-        booking.customer.id,
-      )
-      if (confirmedBookingMessage) {
-        toast.success(t("ConfirmSuccess"))
-        window.open(confirmedBookingMessage, "_blank", "noopener,noreferrer")
-        router.replace(`/dashboard/bookings/${booking.id}`)
-      } else {
-        toast.error(t("ConfirmError"))
-      }
-    })
+  async function submit(values: ConfirmBookingType) {
+    const confirmedBookingMessage = await confirmBookingAction(
+      booking.id,
+      booking.agencyId,
+      booking.assignedUserId,
+      values.startTime,
+      values.pickupAddress,
+      values.dropAddress,
+      booking.customer.address ? false : true,
+      booking.customer.id,
+    )
+    if (confirmedBookingMessage) {
+      toast.success(t("ConfirmSuccess"))
+      window.open(confirmedBookingMessage, "_blank", "noopener,noreferrer")
+      router.replace(`/dashboard/bookings/${booking.id}`)
+    } else {
+      toast.error(t("ConfirmError"))
+    }
   }
 
   const setValue = form.setValue
@@ -97,7 +93,7 @@ export default function ConfirmBookingForm({
   return (
     <NewFormWrapper<ConfirmBookingType>
       id="confirmBookingForm"
-      onSubmit={form.handleSubmit(confirm)}
+      onSubmit={form.handleSubmit(submit)}
       form={form}
     >
       <RyogoTextarea
@@ -106,7 +102,6 @@ export default function ConfirmBookingForm({
         placeholder={t("PickupAddressPlaceholder")}
       />
       <RyogoCheckbox
-        register={form.register("sameAsCustomerAddress")}
         name={"sameAsCustomerAddress"}
         label={t("SameAsCustomerAddress")}
       />
@@ -131,10 +126,12 @@ export default function ConfirmBookingForm({
           >
             <RyogoDefaultButton
               size={"lg"}
-              label={isConfirmPending ? t("Loading") : t("Confirm.YesCTA")}
-              onClick={() => form.handleSubmit(confirm)()}
-              disabled={isConfirmPending}
-              showSpinner={isConfirmPending}
+              label={
+                form.formState.isSubmitting ? t("Loading") : t("Confirm.YesCTA")
+              }
+              onClick={() => form.handleSubmit(submit)()}
+              disabled={form.formState.isSubmitting}
+              showSpinner={form.formState.isSubmitting}
             />
           </RyogoAlertDialog>
         </>

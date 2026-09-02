@@ -18,7 +18,12 @@ import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriver
 import { FileRegex } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
-export function AddDriverStep1(props: {
+export function AddDriverStep1({
+  onNext,
+  finalData,
+  updateFinalData,
+  allDrivers,
+}: {
   onNext: () => void
   finalData: AddDriverRequestType
   updateFinalData: Dispatch<SetStateAction<AddDriverRequestType>>
@@ -56,7 +61,7 @@ export function AddDriverStep1(props: {
     .superRefine((data, ctx) => {
       // Check if a driver with same phone and email exists in entire DB
       if (
-        props.allDrivers.some(
+        allDrivers.some(
           (u) => u.phone === data.driverPhone && u.email === data.driverEmail,
         )
       ) {
@@ -73,26 +78,26 @@ export function AddDriverStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      driverName: props.finalData.data.name,
-      driverPhone: props.finalData.data.phone,
-      driverEmail: props.finalData.data.email,
-      driverPhotos: props.finalData.data.userPhotos,
+      driverName: finalData.data.name,
+      driverPhone: finalData.data.phone,
+      driverEmail: finalData.data.email,
+      driverPhotos: finalData.data.userPhotos,
     },
   })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    props.updateFinalData({
-      agencyId: props.finalData.agencyId,
+    updateFinalData({
+      agencyId: finalData.agencyId,
       data: {
-        ...props.finalData.data,
+        ...finalData.data,
         name: data.driverName,
         phone: data.driverPhone,
         email: data.driverEmail,
         userPhotos: data.driverPhotos,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -146,7 +151,7 @@ export function AddDriverStep1(props: {
             email={formData.getValues("driverEmail")}
             phone={formData.getValues("driverPhone")}
             photo={formData.getValues("driverPhotos")}
-            agencyId={props.finalData.agencyId}
+            agencyId={finalData.agencyId}
             disabled={
               !formData.formState.isValid || formData.formState.isSubmitting
             }

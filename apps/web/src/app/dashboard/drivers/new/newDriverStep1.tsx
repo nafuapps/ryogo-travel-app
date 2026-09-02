@@ -22,7 +22,13 @@ import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriver
 import { FileRegex } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
-export function NewDriverStep1(props: {
+export function NewDriverStep1({
+  onNext,
+  newDriverFormData,
+  setNewDriverFormData,
+  agencyId,
+  allDrivers,
+}: {
   onNext: () => void
   newDriverFormData: AddDriverRequestType
   setNewDriverFormData: Dispatch<SetStateAction<AddDriverRequestType>>
@@ -42,8 +48,8 @@ export function NewDriverStep1(props: {
         .length(10, t("Field2.Error1"))
         .refine((value) => {
           // Check if a driver with same phone exists in this agency
-          return !props.allDrivers.some(
-            (u) => u.phone === value && u.agencyId === props.agencyId,
+          return !allDrivers.some(
+            (u) => u.phone === value && u.agencyId === agencyId,
           )
         }, t("APIError1")),
       driverEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
@@ -69,7 +75,7 @@ export function NewDriverStep1(props: {
     .superRefine((data, ctx) => {
       // Check if a driver with same phone and email exists in entire DB
       if (
-        props.allDrivers.some(
+        allDrivers.some(
           (u) => u.phone === data.driverPhone && u.email === data.driverEmail,
         )
       ) {
@@ -86,26 +92,26 @@ export function NewDriverStep1(props: {
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      driverName: props.newDriverFormData.data.name,
-      driverPhone: props.newDriverFormData.data.phone,
-      driverEmail: props.newDriverFormData.data.email,
-      driverPhotos: props.newDriverFormData.data.userPhotos,
+      driverName: newDriverFormData.data.name,
+      driverPhone: newDriverFormData.data.phone,
+      driverEmail: newDriverFormData.data.email,
+      driverPhotos: newDriverFormData.data.userPhotos,
     },
   })
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    props.setNewDriverFormData({
-      agencyId: props.newDriverFormData.agencyId,
+    setNewDriverFormData({
+      agencyId: newDriverFormData.agencyId,
       data: {
-        ...props.newDriverFormData.data,
+        ...newDriverFormData.data,
         name: data.driverName,
         phone: data.driverPhone,
         email: data.driverEmail,
         userPhotos: data.driverPhotos,
       },
     })
-    props.onNext()
+    onNext()
   }
 
   return (
@@ -168,7 +174,7 @@ export function NewDriverStep1(props: {
             email={formData.getValues("driverEmail")}
             phone={formData.getValues("driverPhone")}
             photo={formData.getValues("driverPhotos")}
-            agencyId={props.agencyId}
+            agencyId={agencyId}
             disabled={
               !formData.formState.isValid || formData.formState.isSubmitting
             }

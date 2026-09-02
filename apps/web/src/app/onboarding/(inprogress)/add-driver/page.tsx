@@ -44,8 +44,6 @@ export default async function AddDriverPage() {
     <AddDriverPageComponent
       agencyId={currentUser.agencyId}
       agencyName={agency.businessName}
-      userId={currentUser.userId}
-      userStatus={currentUser.status}
       allDrivers={allDrivers}
     />
   )

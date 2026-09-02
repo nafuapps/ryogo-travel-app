@@ -1,14 +1,17 @@
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall } from "@/components/typography"
+import { RyogoP, RyogoSmall } from "@/components/typography"
+import { DashboardChipItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 
-export default function DashboardRevenueItemComponent(props: {
+export default function DashboardRevenueItemComponent({
+  label,
+  amount,
+}: {
   label: string
   amount: number
 }) {
   return (
-    <SectionRowWrapper center>
-      <RyogoSmall>{props.label}</RyogoSmall>
-      <RyogoSmall>{"₹" + props.amount}</RyogoSmall>
-    </SectionRowWrapper>
+    <DashboardChipItemWrapper>
+      <RyogoSmall color="slate">{label}</RyogoSmall>
+      <RyogoP>{"₹" + amount}</RyogoP>
+    </DashboardChipItemWrapper>
   )
 }

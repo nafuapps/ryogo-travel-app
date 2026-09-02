@@ -14,7 +14,12 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
 
-export default function SendConfirmationAlertButton(props: {
+export default function SendConfirmationAlertButton({
+  bookingId,
+  agencyId,
+  assignedUserId,
+  confirmationSentOn,
+}: {
   bookingId: string
   agencyId: string
   assignedUserId: string
@@ -26,15 +31,15 @@ export default function SendConfirmationAlertButton(props: {
   const [isPending, startSendTransition] = useTransition()
 
   //Can send confirmation if either not sent before or sent more than X minutes ago
-  const canSendConfirmation = useRefreshPage(props.confirmationSentOn)
+  const canSendConfirmation = useRefreshPage(confirmationSentOn)
 
   // Send confirmation to customer over whatsapp
   async function sendConfirmation() {
     startSendTransition(async () => {
       const confirmationMessage = await sendConfirmationAction(
-        props.bookingId,
-        props.agencyId,
-        props.assignedUserId,
+        bookingId,
+        agencyId,
+        assignedUserId,
       )
       if (confirmationMessage) {
         toast.success(t("Success"))

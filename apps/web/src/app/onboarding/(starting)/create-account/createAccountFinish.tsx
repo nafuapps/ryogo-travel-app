@@ -10,6 +10,7 @@ import { loginAction } from "@/app/actions/users/loginAction"
 import { useRouter } from "next/navigation"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { useForm } from "react-hook-form"
+import { PasswordRegex } from "@/lib/regex"
 
 export function CreateAccountFinish({
   password,
@@ -23,7 +24,7 @@ export function CreateAccountFinish({
   const form = useForm()
 
   const onSubmit = async () => {
-    if (!id) {
+    if (!id || !PasswordRegex.safeParse(password).success) {
       router.replace("/onboarding")
       return
     }

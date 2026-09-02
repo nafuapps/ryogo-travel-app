@@ -24,7 +24,6 @@ export const SupportTicketIdRegex = getStringRegex(9).regex(/ST\d{7}/)
 export const ProductFeedbackIdRegex = getStringRegex(9).regex(/PB\d{7}/)
 
 export const PhoneRegex = getStringRegex(10).regex(/^[0-9]+$/)
-export const EmailRegex = z.email()
 export const PasswordRegex = z.string().trim().min(8)
 
 export const FileRegex = z.custom<FileList>(

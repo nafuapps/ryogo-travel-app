@@ -21,9 +21,10 @@ import { changeUserNameAction } from "@/app/actions/users/changeUserNameAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { Type } from "lucide-react"
 
 export default function ChangeUserNameSheet({
   userId,
@@ -72,7 +73,11 @@ export default function ChangeUserNameSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton label={t("Title")} />
+        <RyogoDetailedIconButton
+          label={t("Title")}
+          icon={Type}
+          subtitle={t("Subtitle")}
+        />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

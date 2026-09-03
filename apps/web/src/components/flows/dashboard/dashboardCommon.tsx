@@ -27,7 +27,7 @@ export async function DashboardSectionHeader({
 
 export function DashboardRow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full divide-y divide-slate-50 dark:divide-slate-800 border border-slate-50 dark:border-slate-800 rounded-md overflow-hidden">
+    <div className="flex flex-col w-full divide-y divide-slate-100 dark:divide-slate-800 border border-slate-100 dark:border-slate-800 rounded-md overflow-hidden">
       {children}
     </div>
   )
@@ -41,7 +41,7 @@ export function DashboardRowHeader({
   count: number
 }) {
   return (
-    <div className="flex flex-row p-2 lg:p-3 bg-slate-50 dark:bg-slate-800 justify-between items-center">
+    <div className="flex flex-row p-2 lg:p-3 bg-slate-100 dark:bg-slate-800 justify-between items-center">
       <RyogoCaption color="light">{title}</RyogoCaption>
       <RyogoCaption color="light">{count}</RyogoCaption>
     </div>

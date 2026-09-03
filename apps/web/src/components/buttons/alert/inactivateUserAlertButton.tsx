@@ -7,10 +7,9 @@ import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { inactivateUserAction } from "@/app/actions/users/inactivateUserAction"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  RyogoGhostButton,
-  RyogoDestructiveButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDestructiveButton } from "@/components/buttons/ryogoButtons"
+import { ZapOff } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function InactivateUserAlertButton({
   userId,
@@ -41,7 +40,13 @@ export default function InactivateUserAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoGhostButton label={t("Label")} />}
+      labelChild={
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={ZapOff}
+          subtitle={t("Subtitle")}
+        />
+      }
     >
       <RyogoDestructiveButton
         onClick={inactivate}

@@ -3,7 +3,7 @@ import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetai
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { CircleSmall, User } from "lucide-react"
+import { CircleSmall, Mail, Phone, User } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -18,6 +18,7 @@ import {
   PageWrapper,
   SectionRowWrapper,
   SectionColWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -32,7 +33,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -115,7 +116,7 @@ export default async function UserDetailsPageComponent({
       {(user.userRole !== UserRolesEnum.OWNER ||
         user.id === currentUserId ||
         isCurrentUserAdmin) && (
-        <SectionWrapper id="UserActions">
+        <GridWrapper id="UserActions">
           <ChangeUserNameSheet
             userId={user.id}
             userName={user.name}
@@ -123,33 +124,23 @@ export default async function UserDetailsPageComponent({
             agencyId={user.agencyId}
           />
           <Link href={`/dashboard/users/${user.id}/change-email`}>
-            <RyogoOutlineButton
-              className="w-full"
+            <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}
+              icon={Mail}
+              subtitle={t("ChangeEmail.Subtitle")}
             />
           </Link>
           <Link href={`/dashboard/users/${user.id}/change-phone`}>
-            <RyogoOutlineButton
-              className="w-full"
+            <RyogoDetailedIconButton
               label={t("ChangePhone.Title")}
+              icon={Phone}
+              subtitle={t("ChangePhone.Subtitle")}
             />
           </Link>
           <ResetUserPasswordAlertButton
             userId={user.id}
             agencyId={user.agencyId}
           />
-          {user.userRole === UserRolesEnum.OWNER &&
-            user.id !== currentUserId &&
-            ![UserStatusEnum.NEW, UserStatusEnum.SUSPENDED].includes(
-              user.status,
-            ) &&
-            isCurrentUserAdmin && (
-              <TransferAdminAlertButton
-                currentUserId={currentUserId}
-                otherUserId={user.id}
-                agencyId={user.agencyId}
-              />
-            )}
           {user.status !== UserStatusEnum.INACTIVE ? (
             <InactivateUserAlertButton
               userId={user.id}
@@ -163,7 +154,19 @@ export default async function UserDetailsPageComponent({
               role={user.userRole}
             />
           )}
-        </SectionWrapper>
+          {user.userRole === UserRolesEnum.OWNER &&
+            user.id !== currentUserId &&
+            ![UserStatusEnum.NEW, UserStatusEnum.SUSPENDED].includes(
+              user.status,
+            ) &&
+            isCurrentUserAdmin && (
+              <TransferAdminAlertButton
+                currentUserId={currentUserId}
+                otherUserId={user.id}
+                agencyId={user.agencyId}
+              />
+            )}
+        </GridWrapper>
       )}
     </PageWrapper>
   )

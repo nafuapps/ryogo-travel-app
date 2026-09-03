@@ -16,6 +16,7 @@ import {
   LifeBuoy,
   ReceiptIndianRupee,
   Route,
+  UserRoundArrowLeft,
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
 import { PageWrapper } from "@/components/page/pageWrappers"
@@ -29,6 +30,8 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { Separator } from "@/components/ui/separator"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -102,6 +105,7 @@ export default async function BookingDetailsPageComponent({
                 value={bookingDetails.ratingByDriver.toString()}
               />
             )}
+          <Separator />
           {isOwner &&
             [
               BookingStatusEnum.CONFIRMED,
@@ -110,9 +114,10 @@ export default async function BookingDetailsPageComponent({
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
               >
-                <RyogoOutlineButton
-                  label={t("AssignAgent")}
-                  className={"w-full"}
+                <RyogoDetailedIconButton
+                  label={t("AssignAgent.Title")}
+                  icon={UserRoundArrowLeft}
+                  subtitle={t("AssignAgent.Subtitle")}
                 />
               </Link>
             )}

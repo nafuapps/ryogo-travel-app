@@ -24,8 +24,10 @@ export default function SubscriptionBlockerSection({
         color="yellow"
         bgColor="yellow"
       />
-      <RyogoSmall color="yellow">{warningText}</RyogoSmall>
-      <RyogoH4>{actionText}</RyogoH4>
+      <RyogoSmall color="yellow" className="text-center">
+        {warningText}
+      </RyogoSmall>
+      <RyogoH4 className="text-center">{actionText}</RyogoH4>
       {isOwner && ctaLabel && (
         <Link href="/dashboard/account/subscription">
           <RyogoBrandButton size="lg" label={ctaLabel} />

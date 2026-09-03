@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { resetUserPasswordAction } from "@/app/actions/users/resetUserPasswordAction"
-import {
-  RyogoOutlineButton,
-  RyogoDefaultButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { KeyRound } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function ResetUserPasswordAlertButton({
   userId,
@@ -38,7 +37,13 @@ export default function ResetUserPasswordAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoOutlineButton label={t("Label")} />}
+      labelChild={
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={KeyRound}
+          subtitle={t("Subtitle")}
+        />
+      }
     >
       <RyogoDefaultButton
         onClick={reset}

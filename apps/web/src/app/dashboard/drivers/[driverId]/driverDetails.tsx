@@ -8,7 +8,7 @@ import {
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
+import { SquarePen, User } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
@@ -21,6 +21,7 @@ import {
   PageWrapper,
   SectionColWrapper,
   SectionRowWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -30,7 +31,7 @@ import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import { Separator } from "@/components/ui/separator"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -123,9 +124,13 @@ export default async function DriverDetailsPageComponent({
         <RyogoPhoneButton label={t("CallDriver")} phone={driver.phone} />
         <RyogoChatButton label={t("ChatDriver")} phone={driver.phone} />
       </SectionWrapper>
-      <SectionWrapper id="DriverActions">
+      <GridWrapper id="DriverActions">
         <Link href={`/dashboard/drivers/${driver.id}/modify`}>
-          <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
+          <RyogoDetailedIconButton
+            label={t("EditDetails.Title")}
+            icon={SquarePen}
+            subtitle={t("EditDetails.Subtitle")}
+          />
         </Link>
         {driver.status !== DriverStatusEnum.INACTIVE &&
           driver.status !== DriverStatusEnum.ON_TRIP && (
@@ -141,7 +146,7 @@ export default async function DriverDetailsPageComponent({
             agencyId={driver.agencyId}
           />
         )}
-      </SectionWrapper>
+      </GridWrapper>
     </PageWrapper>
   )
 }

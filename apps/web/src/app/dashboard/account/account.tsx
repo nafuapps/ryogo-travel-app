@@ -14,18 +14,20 @@ import {
   PageWrapper,
   SectionRowWrapper,
   SectionColWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { User } from "lucide-react"
+import { User, Mail, KeyRound, Phone } from "lucide-react"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function AccountPageComponent({
-  userDetails,
+  account,
 }: {
-  userDetails: NonNullable<FindUserDetailsByIdType>
+  account: NonNullable<FindUserDetailsByIdType>
 }) {
   const t = await getTranslations("Dashboard.Account")
 
@@ -34,15 +36,15 @@ export default async function AccountPageComponent({
       <AccountDetailHeaderTabs selectedTab="Account" />
       <SectionWrapper id="AccountDetailsInfo">
         <SectionRowWrapper justifyStart center>
-          <RyogoH3 color="brand">{userDetails.id}</RyogoH3>
-          <CopyClipboardButton label={userDetails.id} />
+          <RyogoH3 color="brand">{account.id}</RyogoH3>
+          <CopyClipboardButton label={account.id} />
         </SectionRowWrapper>
         <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>
-            {userDetails.photoUrl ? (
+            {account.photoUrl ? (
               <RyogoImage
-                src={getFileUrl(userDetails.photoUrl)}
+                src={getFileUrl(account.photoUrl)}
                 alt={t("Photo")}
                 imageSize="lg"
               />
@@ -50,49 +52,66 @@ export default async function AccountPageComponent({
               <RyogoEnclosedIcon icon={User} size="xl" />
             )}
             <ChangeUserPhotoSheet
-              userId={userDetails.id}
-              agencyId={userDetails.agencyId}
+              userId={account.id}
+              agencyId={account.agencyId}
             />
           </SectionColWrapper>
           <SectionColWrapper end>
-            <RyogoH3>{userDetails.name}</RyogoH3>
-            <RyogoCaption color="slate">{userDetails.phone}</RyogoCaption>
-            <RyogoCaption color="slate">{userDetails.email}</RyogoCaption>
+            <RyogoH3>{account.name}</RyogoH3>
+            <RyogoCaption color="slate">{account.phone}</RyogoCaption>
+            <RyogoCaption color="slate">{account.email}</RyogoCaption>
             <RyogoCaption color="slate">
-              {moment(userDetails.createdAt).format("DD MMM YYYY")}
+              {moment(account.createdAt).format("DD MMM YYYY")}
             </RyogoCaption>
-            <UserStatusPill status={userDetails.status} />
+            <UserStatusPill status={account.status} />
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionWrapper>
-      <SectionWrapper id="AccountActions">
+      <GridWrapper id="AccountActions">
         <ChangeUserNameSheet
-          userId={userDetails.id}
-          userName={userDetails.name}
-          userRole={userDetails.userRole}
-          agencyId={userDetails.agencyId}
+          userId={account.id}
+          userName={account.name}
+          userRole={account.userRole}
+          agencyId={account.agencyId}
         />
-        <Link href="/dashboard/account/change-email">
-          <RyogoOutlineButton
-            className="w-full"
+        <Link
+          href="/dashboard/account/change-email"
+          className="flex items-center w-full gap-2 lg:gap-3"
+        >
+          <RyogoDetailedIconButton
             label={t("ChangeEmail.Title")}
+            icon={Mail}
+            subtitle={t("ChangeEmail.Subtitle")}
           />
         </Link>
+        {account.userRole === UserRolesEnum.OWNER && (
+          <Link
+            href={`/dashboard/users/${account.id}/change-phone`}
+            className="flex items-center w-full gap-2 lg:gap-3"
+          >
+            <RyogoDetailedIconButton
+              label={t("ChangePhone.Title")}
+              icon={Phone}
+              subtitle={t("ChangePhone.Subtitle")}
+            />
+          </Link>
+        )}
         <Link href="/dashboard/account/change-password">
-          <RyogoOutlineButton
-            className="w-full"
+          <RyogoDetailedIconButton
             label={t("ChangePassword.Title")}
+            icon={KeyRound}
+            subtitle={t("ChangePassword.Subtitle")}
           />
         </Link>
         <LogoutAlertButton />
-        <RyogoCaption color="light">
-          {t("LastLogin", {
-            loginTime: moment(userDetails.lastLogin).format(
-              "MMMM Do YYYY, h:mm:ss a",
-            ),
-          })}
-        </RyogoCaption>
-      </SectionWrapper>
+      </GridWrapper>
+      <RyogoCaption color="light" className="text-center">
+        {t("LastLogin", {
+          loginTime: moment(account.lastLogin).format(
+            "MMMM Do YYYY, h:mm:ss a",
+          ),
+        })}
+      </RyogoCaption>
     </PageWrapper>
   )
 }

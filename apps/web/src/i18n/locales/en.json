@@ -858,7 +858,7 @@
         "Title": "Revenue",
         "7Days": "LAST 7 DAYS",
         "30Days": "LAST 30 DAYS",
-        "24Hrs": "LAST 24 HRS",
+        "24Hrs": "LAST 24 HOURS",
         "Revenue": "Revenue",
         "Commission": "Commission"
       },
@@ -1264,7 +1264,10 @@
       "AssignedTo": "Assigned Agent",
       "CustomerRating": "Customer Rating",
       "DriverRating": "Driver Rating",
-      "AssignAgent": "Change Agent",
+      "AssignAgent": {
+        "Title": "Change Agent",
+        "Subtitle": "Assign another user to manage this booking"
+      },
       "CreateAnotherBooking": "New Booking with Same Customer",
       "CustomerInfo": "CUSTOMER INFO",
       "CustomerName": "Name",
@@ -1824,7 +1827,10 @@
       "AgencyInfo": "Agency related info",
       "ACCharge": "AC ₹{ac}/day",
       "RatePerKm": "₹{rate}/Km",
-      "EditDetails": "Edit Details",
+      "EditDetails": {
+        "Title": "Edit Details",
+        "Subtitle": "Change vehicle details like basic details, capacity, odometer, default rate per km"
+      },
       "Inactivate": "Inactivate Driver"
     },
     "ModifyVehicle": {
@@ -2192,8 +2198,10 @@
       "ValidTill": "Valid till: ",
       "AgencyInfo": "Agency related info",
       "PerDay": "₹{allowance}/day",
-      "EditDetails": "Edit Details",
-      "Inactivate": "Inactivate Driver"
+      "EditDetails": {
+        "Title": "Edit Details",
+        "Subtitle": "Change driver details like address, license, default allowance"
+      }
     },
     "ModifyDriver": {
       "Field1": {
@@ -2430,8 +2438,14 @@
       },
       "NumberRatings": "[{number}]",
       "AgencyInfo": "Agency related info",
-      "EditDetails": "Edit Details",
-      "CreateBooking": "Create Booking"
+      "EditDetails": {
+        "Title": "Edit Details",
+        "Subtitle": "Change customer details like name, email, address, etc."
+      },
+      "CreateBooking": {
+        "Title": "Create Booking",
+        "Subtitle": "Add a new booking for this customer"
+      }
     },
     "CustomerDetailsHeaderTabs": {
       "Customer": "Customer",
@@ -2452,8 +2466,13 @@
     },
     "Account": {
       "Photo": "View photo",
+      "ChangePhone": {
+        "Title": "Change Phone",
+        "Subtitle": "Your phone number is crucial for account login and communication"
+      },
       "ChangePassword": {
         "Title": "Change Password",
+        "Subtitle": "Manage your password for logging into your account",
         "Field1": {
           "Title": "Current Password",
           "Placeholder": "********",
@@ -2485,6 +2504,7 @@
       },
       "ChangeEmail": {
         "Title": "Change Email",
+        "Subtitle": "Set your email address to receive important updates",
         "Field1": {
           "Title": "Enter Password",
           "Placeholder": "********",
@@ -2532,10 +2552,14 @@
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "ViewCTA": "View Subscription",
-      "EditDetails": "Edit Agency Details",
+      "Edit": {
+        "Title": "Edit Agency Details",
+        "Subtitle": "Update agency details like name, address, default commission rate, etc."
+      },
       "QRCode": "QR Code",
       "ChangeEmail": {
         "Title": "Change Agency Email",
+        "Subtitle": "Set email address to receive agency related updates and communication",
         "Field1": {
           "Title": "Enter new business email",
           "Placeholder": "awesometours@gmail.com",
@@ -2553,6 +2577,7 @@
       },
       "ChangePhone": {
         "Title": "Change Agency Phone",
+        "Subtitle": "Business phone number is used in booking documents sent to customers",
         "Field1": {
           "Title": "Enter new business phone",
           "Placeholder": "9876543210",
@@ -4362,6 +4387,7 @@
       "ChatUser": "Chat with User",
       "ChangeEmail": {
         "Title": "Change Email",
+        "Subtitle": "Set user email address for receiving updates",
         "Field1": {
           "Title": "Enter new email",
           "Placeholder": "raj.sharma@gmail.com",
@@ -4379,6 +4405,7 @@
       },
       "ChangePhone": {
         "Title": "Change Phone",
+        "Subtitle": "User phone number is crucial for account login and communication",
         "Field1": {
           "Title": "Enter new phone",
           "Placeholder": "9876543210",
@@ -4846,6 +4873,7 @@
       },
       "InactivateDriver": {
         "Label": "Inactivate Driver",
+        "Subtitle": "Set driver to inactive to stop them from receiving bookings",
         "Title": "Are you sure you want to inactivate this driver?",
         "Desc": "When inactivated, this driver cannot be assigned any booking.",
         "NoCTA": "No",
@@ -4856,6 +4884,7 @@
       },
       "ActivateDriver": {
         "Label": "Activate Driver",
+        "Subtitle": "Set driver to active to let them receive bookings",
         "Title": "Are you sure you want to activate this driver?",
         "Desc": "When activated, this driver will start receiving bookings.",
         "NoCTA": "No",
@@ -4866,6 +4895,7 @@
       },
       "InactivateVehicle": {
         "Label": "Inactivate Vehicle",
+        "Subtitle": "Set vehicle to inactive to stop it from booking assignments",
         "Title": "Are you sure you want to inactivate this vehicle?",
         "Desc": "When inactivated, this vehicle cannot receive booking.",
         "NoCTA": "No",
@@ -4876,6 +4906,7 @@
       },
       "ActivateVehicle": {
         "Label": "Activate Vehicle",
+        "Subtitle": "Set vehicle to active to let it be assigned bookings",
         "Title": "Are you sure you want to activate this vehicle?",
         "Desc": "When activated, this vehicle will start receiving bookings.",
         "NoCTA": "No",
@@ -4886,6 +4917,7 @@
       },
       "InactivateAgency": {
         "Label": "Inactivate Agency",
+        "Subtitle": "Set agency to inactive to stop users from using app features",
         "Title": "Are you sure you want to inactivate this agency?",
         "Desc": "When inactivated, creation/modification of bookings, vehicles, drivers, users, etc. will stop. You can activate agency later.",
         "NoCTA": "No",
@@ -4896,6 +4928,7 @@
       },
       "ActivateAgency": {
         "Label": "Activate Agency",
+        "Subtitle": "Set agency to active to let users use the app features",
         "Title": "Are you sure you want to activate this agency?",
         "Desc": "When activated, all creation/modification operations will resume.",
         "NoCTA": "No",
@@ -4906,6 +4939,7 @@
       },
       "InactivateCustomer": {
         "Label": "Inactivate Customer",
+        "Subtitle": "Set customer to inactive to stop them from creating bookings",
         "Title": "Are you sure you want to inactivate this customer?",
         "Desc": "When inactivated, this customer cannot make any booking.",
         "NoCTA": "No",
@@ -4916,6 +4950,7 @@
       },
       "ActivateCustomer": {
         "Label": "Activate Customer",
+        "Subtitle": "Set customer to active to let them create bookings",
         "Title": "Are you sure you want to activate this customer?",
         "Desc": "When activated, this customer can start making bookings.",
         "NoCTA": "No",
@@ -4926,8 +4961,9 @@
       },
       "InactivateUser": {
         "Label": "Inactivate User",
+        "Subtitle": "Set user to inactive to stop them from using app features",
         "Title": "Are you sure you want to inactivate this user?",
-        "Desc": "When inactivated, this user cannot use the app.",
+        "Desc": "When inactivated, this user cannot use any app features like adding bookings, vehicles, etc.",
         "NoCTA": "No",
         "Success": "User inactivated!",
         "Error": "Cannot inactivate user.. Try again later!",
@@ -4936,8 +4972,9 @@
       },
       "ActivateUser": {
         "Label": "Activate User",
+        "Subtitle": "Set user to active to let them use the app features",
         "Title": "Are you sure you want to activate this user?",
-        "Desc": "When activated, this user can start using the app.",
+        "Desc": "When activated, this user can start using all the app features like adding bookings, vehicles, etc.",
         "NoCTA": "No",
         "Success": "User activated!",
         "Error": "Cannot activate user.. Try again later!",
@@ -4946,6 +4983,7 @@
       },
       "TransferAdmin": {
         "Label": "Transfer Admin",
+        "Subtitle": "Relinquish agency admin rights to another user",
         "Title": "Are you sure you want to transfer admin rights to this user?",
         "Desc": "When transferred, you will no longer be the admin of this agency.",
         "NoCTA": "No",
@@ -4956,6 +4994,7 @@
       },
       "ResetUserPassword": {
         "Label": "Reset User Password",
+        "Subtitle": "Send a new password to the user's email address",
         "Title": "Are you sure you want to reset the password for this user?",
         "Desc": "Old password will not work for login anymore. User will receive an email with the new password.",
         "NoCTA": "No",
@@ -4996,6 +5035,7 @@
       },
       "Logout": {
         "Label": "Logout",
+        "Subtitle": "End session and securely log out from this device",
         "Title": "Are you sure you want to logout?",
         "NoCTA": "No",
         "Loading": "Loading..",
@@ -5322,6 +5362,7 @@
       "Photo": "View photo",
       "ChangeEmail": {
         "Title": "Change Email",
+        "Subtitle": "Set your email address to receive important updates",
         "Field1": {
           "Title": "Enter your Password",
           "Placeholder": "********",
@@ -5346,6 +5387,7 @@
       },
       "ChangePassword": {
         "Title": "Change Password",
+        "Subtitle": "Manage your password for logging into your account",
         "Field1": {
           "Title": "Current Password",
           "Placeholder": "********",
@@ -6130,6 +6172,7 @@
   "Sheets": {
     "ChangeName": {
       "Title": "Change Name",
+      "Subtitle": "Set your display name",
       "InputTitle": "Enter User Name",
       "Placeholder": "Raj Sharma",
       "Error1": "Name must be atleast 5 characters",

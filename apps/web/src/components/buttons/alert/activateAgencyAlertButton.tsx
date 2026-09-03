@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { activateAgencyAction } from "@/app/actions/agencies/activateAgencyAction"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { Zap } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function ActivateAgencyAlertButton({
   agencyId,
@@ -36,7 +35,13 @@ export default function ActivateAgencyAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoOutlineButton label={t("Label")} />}
+      labelChild={
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={Zap}
+          subtitle={t("Subtitle")}
+        />
+      }
     >
       <RyogoDefaultButton
         onClick={activate}

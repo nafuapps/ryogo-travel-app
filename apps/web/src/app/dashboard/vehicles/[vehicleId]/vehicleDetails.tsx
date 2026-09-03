@@ -16,12 +16,15 @@ import {
   PageWrapper,
   SectionRowWrapper,
   SectionColWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import { Separator } from "@/components/ui/separator"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { SquarePen } from "lucide-react"
 
 export default async function VehicleDetailsPageComponent({
   vehicle,
@@ -170,9 +173,13 @@ export default async function VehicleDetailsPageComponent({
           </RyogoSmall>
         </SectionColWrapper>
       </SectionWrapper>
-      <SectionWrapper id="VehiclActions">
+      <GridWrapper id="VehiclActions">
         <Link href={`/dashboard/vehicles/${vehicle.id}/modify`}>
-          <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
+          <RyogoDetailedIconButton
+            label={t("EditDetails.Title")}
+            icon={SquarePen}
+            subtitle={t("EditDetails.Subtitle")}
+          />
         </Link>
         {vehicle.status !== VehicleStatusEnum.INACTIVE &&
           vehicle.status !== VehicleStatusEnum.ON_TRIP && (
@@ -187,7 +194,7 @@ export default async function VehicleDetailsPageComponent({
             agencyId={vehicle.agencyId}
           />
         )}
-      </SectionWrapper>
+      </GridWrapper>
     </PageWrapper>
   )
 }

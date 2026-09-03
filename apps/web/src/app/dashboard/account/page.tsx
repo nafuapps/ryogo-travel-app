@@ -29,7 +29,7 @@ export default async function AccountPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account"} />
-      <AccountPageComponent userDetails={userDetails} />
+      <AccountPageComponent account={userDetails} />
     </MainWrapper>
   )
 }

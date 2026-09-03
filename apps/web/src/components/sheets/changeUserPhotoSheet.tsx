@@ -77,7 +77,7 @@ export default function ChangeUserPhotoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton label={t("Button")} />
+        <RyogoGhostButton label={t("Button")} labelColor="light" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

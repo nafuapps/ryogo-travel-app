@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { inactivateVehicleAction } from "@/app/actions/vehicles/inactivateVehicleAction"
-import {
-  RyogoGhostButton,
-  RyogoDestructiveButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDestructiveButton } from "@/components/buttons/ryogoButtons"
+import { ZapOff } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function InactivateVehicleAlertButton({
   vehicleId,
@@ -38,7 +37,13 @@ export default function InactivateVehicleAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoGhostButton label={t("Label")} />}
+      labelChild={
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={ZapOff}
+          subtitle={t("Subtitle")}
+        />
+      }
     >
       <RyogoDestructiveButton
         onClick={inactivate}

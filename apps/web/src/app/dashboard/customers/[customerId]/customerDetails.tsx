@@ -8,7 +8,7 @@ import {
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
+import { CalendarPlus, SquarePen, User } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -21,16 +21,14 @@ import {
   PageWrapper,
   SectionRowWrapper,
   SectionColWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -96,28 +94,35 @@ export default async function CustomerDetailsPageComponent({
           <RyogoCaption color="light">{customer.remarks}</RyogoCaption>
         </SectionColWrapper>
       </SectionWrapper>
-      <SectionWrapper id={"CustomerActions"}>
+      <GridWrapper id={"CustomerActions"}>
         {customer.status === CustomerStatusEnum.ACTIVE && (
           <Link href={`/dashboard/bookings/new/${customer.id}`}>
-            <RyogoDefaultButton className="w-full" label={t("CreateBooking")} />
+            <RyogoDetailedIconButton
+              label={t("CreateBooking.Title")}
+              icon={CalendarPlus}
+              subtitle={t("CreateBooking.Subtitle")}
+            />
           </Link>
         )}
         <Link href={`/dashboard/customers/${customer.id}/modify`}>
-          <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
+          <RyogoDetailedIconButton
+            label={t("EditDetails.Title")}
+            icon={SquarePen}
+            subtitle={t("EditDetails.Subtitle")}
+          />
         </Link>
-        {customer.status !== CustomerStatusEnum.INACTIVE && (
+        {customer.status !== CustomerStatusEnum.INACTIVE ? (
           <InactivateCustomerAlertButton
             customerId={customer.id}
             agencyId={customer.agencyId}
           />
-        )}
-        {customer.status === CustomerStatusEnum.INACTIVE && (
+        ) : (
           <ActivateCustomerAlertButton
             customerId={customer.id}
             agencyId={customer.agencyId}
           />
         )}
-      </SectionWrapper>
+      </GridWrapper>
     </PageWrapper>
   )
 }

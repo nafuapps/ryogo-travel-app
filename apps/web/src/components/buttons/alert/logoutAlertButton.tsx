@@ -4,10 +4,9 @@ import RyogoAlertDialog from "./ryogoAlertDialog"
 import { logoutAction } from "@/app/actions/users/logoutAction"
 import { useTranslations } from "next-intl"
 import { useTransition } from "react"
-import {
-  RyogoGhostButton,
-  RyogoDestructiveButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDestructiveButton } from "@/components/buttons/ryogoButtons"
+import { LogOut } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function LogoutAlertButton() {
   const t = useTranslations("Dashboard.Buttons.Logout")
@@ -22,7 +21,13 @@ export default function LogoutAlertButton() {
     <RyogoAlertDialog
       title={t("Title")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoGhostButton label={t("Label")} />}
+      labelChild={
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={LogOut}
+          subtitle={t("Subtitle")}
+        />
+      }
     >
       <RyogoDestructiveButton
         onClick={logout}

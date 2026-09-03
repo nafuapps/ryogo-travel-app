@@ -1,3 +1,4 @@
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import {
   AlertDialogHeader,
   AlertDialogFooter,
@@ -28,11 +29,19 @@ export default function RyogoAlertDialog({
       <AlertDialogTrigger asChild>{labelChild}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          {desc && <AlertDialogDescription>{desc}</AlertDialogDescription>}
+          <AlertDialogTitle>
+            <RyogoP weight="font-bold">{title}</RyogoP>
+          </AlertDialogTitle>
+          {desc && (
+            <AlertDialogDescription>
+              <RyogoCaption color="light">{desc}</RyogoCaption>
+            </AlertDialogDescription>
+          )}
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{noCTA}</AlertDialogCancel>
+          <AlertDialogCancel>
+            <RyogoCaption color="slate">{noCTA}</RyogoCaption>
+          </AlertDialogCancel>
           <AlertDialogAction asChild>{children}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

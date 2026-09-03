@@ -1,6 +1,6 @@
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
-import { User } from "lucide-react"
+import { KeyRound, Mail, User } from "lucide-react"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
@@ -14,13 +14,14 @@ import {
   PageWrapper,
   SectionRowWrapper,
   SectionColWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { Separator } from "@/components/ui/separator"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default async function RiderProfilePageComponent({
   userDetails,
@@ -65,7 +66,7 @@ export default async function RiderProfilePageComponent({
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionWrapper>
-      <SectionWrapper id="RiderAccountActions">
+      <GridWrapper id="RiderAccountActions">
         <ChangeUserNameSheet
           userId={userDetails.id}
           userName={userDetails.name}
@@ -73,26 +74,28 @@ export default async function RiderProfilePageComponent({
           agencyId={userDetails.agencyId}
         />
         <Link href="/rider/myProfile/change-email">
-          <RyogoOutlineButton
+          <RyogoDetailedIconButton
             label={t("ChangeEmail.Title")}
-            className="w-full"
+            icon={Mail}
+            subtitle={t("ChangeEmail.Subtitle")}
           />
         </Link>
         <Link href="/rider/myProfile/change-password">
-          <RyogoOutlineButton
+          <RyogoDetailedIconButton
             label={t("ChangePassword.Title")}
-            className="w-full"
+            icon={KeyRound}
+            subtitle={t("ChangePassword.Subtitle")}
           />
         </Link>
         <LogoutAlertButton />
-        <RyogoCaption color="light">
-          {t("LastLogin", {
-            loginTime: moment(userDetails.lastLogin).format(
-              "MMMM Do YYYY, h:mm:ss a",
-            ),
-          })}
-        </RyogoCaption>
-      </SectionWrapper>
+      </GridWrapper>
+      <RyogoCaption color="light">
+        {t("LastLogin", {
+          loginTime: moment(userDetails.lastLogin).format(
+            "MMMM Do YYYY, h:mm:ss a",
+          ),
+        })}
+      </RyogoCaption>
     </PageWrapper>
   )
 }

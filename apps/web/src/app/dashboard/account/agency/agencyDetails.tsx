@@ -3,7 +3,7 @@ import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accoun
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Building } from "lucide-react"
+import { Building, Building2, Mail, Phone } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -12,6 +12,7 @@ import {
   PageWrapper,
   SectionRowWrapper,
   SectionColWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -23,6 +24,7 @@ import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgency
 import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
 import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -96,20 +98,26 @@ export default async function AgencyDetailsPageComponent({
         </SectionWrapper>
       )}
       {isOwner && (
-        <SectionWrapper id="AgencyActions">
+        <GridWrapper id="AgencyActions">
           <Link href="/dashboard/account/agency/modify">
-            <RyogoOutlineButton className="w-full" label={t("EditDetails")} />
+            <RyogoDetailedIconButton
+              label={t("Edit.Title")}
+              icon={Building2}
+              subtitle={t("Edit.Subtitle")}
+            />
           </Link>
           <Link href={`/dashboard/account/agency/change-email`}>
-            <RyogoOutlineButton
-              className="w-full"
+            <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}
+              icon={Mail}
+              subtitle={t("ChangeEmail.Subtitle")}
             />
           </Link>
           <Link href={`/dashboard/account/agency/change-phone`}>
-            <RyogoOutlineButton
-              className="w-full"
+            <RyogoDetailedIconButton
               label={t("ChangePhone.Title")}
+              icon={Phone}
+              subtitle={t("ChangePhone.Subtitle")}
             />
           </Link>
           {agency.status === AgencyStatusEnum.INACTIVE && (
@@ -118,7 +126,7 @@ export default async function AgencyDetailsPageComponent({
           {agency.status === AgencyStatusEnum.ACTIVE && (
             <InactivateAgencyAlertButton agencyId={agency.id} />
           )}
-        </SectionWrapper>
+        </GridWrapper>
       )}
     </PageWrapper>
   )

@@ -13,11 +13,11 @@ export const useRefreshPage = (time: Date | null) => {
     ? SEND_REFRESH_TIMEOUT_MINUTES
     : SEND_REFRESH_TIMEOUT_MINUTES - minutesSince
 
-  //Refresh page every X seconds to check if the send quote timer is up
+  //Refresh page every X minutes to check if the send quote timer is up
   useEffect(() => {
     const interval = setInterval(() => {
       router.refresh()
-    }, refreshMinutes * 60)
+    }, refreshMinutes * 60000)
     return () => clearInterval(interval) // Cleanup on unmount
   }, [router])
 

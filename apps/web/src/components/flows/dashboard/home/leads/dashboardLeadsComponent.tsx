@@ -45,7 +45,7 @@ export default async function DashboardLeadsComponent({
     <SectionWrapper id="DashboardLeads">
       <DashboardSectionHeader
         title={t("Title")}
-        href={"/dashboard/bookings#leadsBookingsSection"}
+        href={"/dashboard/bookings/leads"}
       />
       {startingThisWeek.length > 0 && (
         <DashboardRow>

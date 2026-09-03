@@ -176,13 +176,13 @@ export default function AssignVehicleTile({
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper selected={selected}>
           {isCurrentlyAssigned ? (
-            <RyogoIcon color="brand" icon={CheckCheck} size="sm" />
+            <RyogoIcon color="brand" icon={CheckCheck} size="sm" thick />
           ) : isBooked ? (
-            <RyogoIcon color="red" icon={TicketX} size="sm" />
+            <RyogoIcon color="red" icon={TicketX} size="sm" thick />
           ) : isRepairScheduled ? (
-            <RyogoIcon color="red" icon={Wrench} size="sm" />
+            <RyogoIcon color="yellow" icon={Wrench} size="sm" thick />
           ) : (
-            <RyogoIcon color="green" icon={Check} size="sm" />
+            <RyogoIcon color="green" icon={Check} size="sm" thick />
           )}
           <RyogoCaption color="slate">
             {isCurrentlyAssigned

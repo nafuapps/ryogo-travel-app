@@ -12,10 +12,14 @@ import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceIt
 import BookingSection from "@/components/flows/bookings/details/bookingSection"
 import {
   BriefcaseBusiness,
+  CalendarPlus,
+  Car,
   Contact,
+  IdCard,
   LifeBuoy,
   ReceiptIndianRupee,
   Route,
+  Scale,
   UserRoundArrowLeft,
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
@@ -32,6 +36,11 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { Separator } from "@/components/ui/separator"
+import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
+import { RyogoCaption } from "@/components/typography"
+import BookingDriverCard from "@/components/flows/bookings/details/bookingDriverCard"
+import BookingActionWrapper from "@/components/flows/bookings/details/bookingActionWrapper"
+import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -105,121 +114,84 @@ export default async function BookingDetailsPageComponent({
                 value={bookingDetails.ratingByDriver.toString()}
               />
             )}
-          <Separator />
-          {isOwner &&
-            [
-              BookingStatusEnum.CONFIRMED,
-              BookingStatusEnum.IN_PROGRESS,
-            ].includes(bookingDetails.status) && (
-              <Link
-                href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
-              >
-                <RyogoDetailedIconButton
-                  label={t("AssignAgent.Title")}
-                  icon={UserRoundArrowLeft}
-                  subtitle={t("AssignAgent.Subtitle")}
-                />
-              </Link>
-            )}
-          {(isOwner || isAssignedUser) && (
-            <>
-              {
-                //Only owner can reconcile a completed and reviewed booking
-                bookingDetails.status === BookingStatusEnum.COMPLETED &&
-                  bookingDetails.reviewCompletedByAgencyAt &&
-                  !bookingDetails.isReconciled &&
-                  isOwner && (
-                    <Link
-                      href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}
-                    >
-                      <RyogoOutlineButton
-                        label={t("Reconcile")}
-                        className={"w-full"}
-                      />
-                    </Link>
-                  )
-              }
-              {
-                //Only confirmed booking can be cancelled here
-                bookingDetails.status === BookingStatusEnum.CONFIRMED && (
-                  <CancelBookingAlertButton
-                    bookingId={bookingDetails.id}
-                    agencyId={bookingDetails.agencyId}
-                    assignedUserId={bookingDetails.assignedUserId}
-                    isConfirmedBooking
-                  />
-                )
-              }
-              {bookingDetails.status === BookingStatusEnum.CANCELLED && (
+          <BookingActionWrapper>
+            {isOwner &&
+              //Only owner can reassign user to a booking
+              [
+                BookingStatusEnum.CONFIRMED,
+                BookingStatusEnum.IN_PROGRESS,
+              ].includes(bookingDetails.status) && (
                 <Link
-                  href={`/dashboard/bookings/new/${bookingDetails.customerId}`}
+                  href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
                 >
-                  <RyogoOutlineButton
-                    label={t("CreateAnotherBooking")}
-                    className={"w-full"}
+                  <RyogoDetailedIconButton
+                    label={t("AssignAgent.Title")}
+                    icon={UserRoundArrowLeft}
+                    subtitle={t("AssignAgent.Subtitle")}
                   />
                 </Link>
               )}
-            </>
-          )}
+            {isOwner &&
+              //Only owner can reconcile a completed and reviewed booking
+              bookingDetails.status === BookingStatusEnum.COMPLETED &&
+              bookingDetails.reviewCompletedByAgencyAt &&
+              !bookingDetails.isReconciled && (
+                <Link
+                  href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}
+                >
+                  <RyogoDetailedIconButton
+                    label={t("Reconcile.Title")}
+                    icon={Scale}
+                    subtitle={t("Reconcile.Subtitle")}
+                  />
+                </Link>
+              )}
+            {(isOwner || isAssignedUser) &&
+              //Only confirmed booking can be cancelled
+              bookingDetails.status === BookingStatusEnum.CONFIRMED && (
+                <CancelBookingAlertButton
+                  bookingId={bookingDetails.id}
+                  agencyId={bookingDetails.agencyId}
+                  assignedUserId={bookingDetails.assignedUserId}
+                  isConfirmedBooking
+                />
+              )}
+            {bookingDetails.status === BookingStatusEnum.CANCELLED && (
+              <Link
+                href={`/dashboard/bookings/new/${bookingDetails.customerId}`}
+              >
+                <RyogoDetailedIconButton
+                  label={t("CreateAnotherBooking.Title")}
+                  icon={CalendarPlus}
+                  subtitle={t("CreateAnotherBooking.Subtitle")}
+                />
+              </Link>
+            )}
+          </BookingActionWrapper>
         </BookingSection>
         <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
-          <BookingItem
-            title={t("CustomerName")}
-            value={bookingDetails.customer.name}
-          />
-          <BookingItem
-            title={t("CustomerLocation")}
-            value={
-              bookingDetails.customer.location.city +
-              ", " +
-              bookingDetails.customer.location.state
-            }
-          />
-          <BookingItem
-            title={t("CustomerPhone")}
-            value={bookingDetails.customer.phone}
-          />
-          {bookingDetails.customer.address && (
-            <BookingItem
-              title={t("CustomerAddress")}
-              value={bookingDetails.customer.address}
-            />
-          )}
-          {bookingDetails.customer.remarks && (
-            <BookingItem
-              title={t("CustomerRemarks")}
-              value={bookingDetails.customer.remarks}
-            />
-          )}
           <Link href={`/dashboard/customers/${bookingDetails.customer.id}`}>
-            <RyogoOutlineButton
-              label={t("ViewCustomerDetails")}
-              className={"w-full"}
-            />
+            <BookingCustomerCard customer={bookingDetails.customer} />
           </Link>
           {(isOwner || isAssignedUser) &&
             bookingDetails.status !== BookingStatusEnum.CANCELLED && (
-              <>
+              <BookingActionWrapper>
                 <RyogoPhoneButton
                   label={t("CallCustomer")}
                   phone={bookingDetails.customer.phone}
                 />
                 <RyogoChatButton
-                  label={t("ChatCustomer")}
+                  label={t("ChatCustomer.Title")}
                   phone={bookingDetails.customer.phone}
+                  subtitle={t("ChatCustomer.Subtitle")}
                 />
-                {[
-                  BookingStatusEnum.IN_PROGRESS,
-                  BookingStatusEnum.COMPLETED,
-                ].includes(bookingDetails.status) && (
-                  <ShareTrackBookingLinkButton
-                    bookingId={bookingDetails.id}
-                    phone={bookingDetails.customer.phone}
-                    label={t("ShareTrackingLink")}
-                  />
-                )}
-              </>
+                <ShareTrackBookingLinkButton
+                  bookingId={bookingDetails.id}
+                  phone={bookingDetails.customer.phone}
+                  label={t("ShareTrackingLink.Title")}
+                  subtitle={t("ShareTrackingLink.Subtitle")}
+                />
+              </BookingActionWrapper>
             )}
         </BookingSection>
         <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
@@ -286,15 +258,15 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("AssignmentInfo")} icon={LifeBuoy}>
-          <BookingItem
-            title={t("AssignedVehicle")}
-            value={
-              bookingDetails.assignedVehicle
-                ? bookingDetails.assignedVehicle.vehicleNumber
-                : "-"
-            }
-          />
-          {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
+          <RyogoCaption color="light">{t("AssignedVehicle")}</RyogoCaption>
+          {bookingDetails.assignedVehicle && (
+            <Link
+              href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
+            >
+              <BookingVehicleCard vehicle={bookingDetails.assignedVehicle} />
+            </Link>
+          )}
+          {bookingDetails.status === BookingStatusEnum.CONFIRMED && (
             <Link
               href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
             >
@@ -304,33 +276,24 @@ export default async function BookingDetailsPageComponent({
                   className={"w-full"}
                 />
               ) : (
-                <RyogoDefaultButton
-                  label={t("AssignVehicle")}
-                  className={"w-full"}
+                <RyogoDetailedIconButton
+                  label={t("AssignVehicle.Title")}
+                  icon={Car}
+                  subtitle={t("AssignVehicle.Subtitle")}
                 />
               )}
             </Link>
-          ) : (
-            bookingDetails.assignedVehicle && (
-              <Link
-                href={`/dashboard/vehicles/${bookingDetails.assignedVehicleId}`}
-              >
-                <RyogoOutlineButton
-                  label={t("ViewVehicleDetails")}
-                  className={"w-full"}
-                />
-              </Link>
-            )
           )}
-          <BookingItem
-            title={t("AssignedDriver")}
-            value={
-              bookingDetails.assignedDriver
-                ? bookingDetails.assignedDriver.name
-                : "-"
-            }
-          />
-          {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
+          <Separator />
+          <RyogoCaption color="light">{t("AssignedDriver")}</RyogoCaption>
+          {bookingDetails.assignedDriver && (
+            <Link
+              href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
+            >
+              <BookingDriverCard driver={bookingDetails.assignedDriver} />
+            </Link>
+          )}
+          {bookingDetails.status === BookingStatusEnum.CONFIRMED && (
             <Link
               href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
             >
@@ -340,35 +303,26 @@ export default async function BookingDetailsPageComponent({
                   className={"w-full"}
                 />
               ) : (
-                <RyogoDefaultButton
-                  label={t("AssignDriver")}
-                  className={"w-full"}
+                <RyogoDetailedIconButton
+                  label={t("AssignDriver.Title")}
+                  icon={IdCard}
+                  subtitle={t("AssignDriver.Subtitle")}
                 />
               )}
             </Link>
-          ) : (
-            bookingDetails.assignedDriver && (
-              <Link
-                href={`/dashboard/drivers/${bookingDetails.assignedDriverId}`}
-              >
-                <RyogoOutlineButton
-                  label={t("ViewDriverDetails")}
-                  className={"w-full"}
-                />
-              </Link>
-            )
           )}
           {bookingDetails.assignedDriver && (isOwner || isAssignedUser) && (
-            <div className="flex flex-col gap-2 lg:gap-3 mt-auto">
+            <BookingActionWrapper>
               <RyogoPhoneButton
                 label={t("CallDriver")}
                 phone={bookingDetails.assignedDriver.phone}
               />
               <RyogoChatButton
-                label={t("ChatDriver")}
+                label={t("ChatDriver.Title")}
                 phone={bookingDetails.assignedDriver.phone}
+                subtitle={t("ChatDriver.Subtitle")}
               />
-            </div>
+            </BookingActionWrapper>
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>

@@ -1,24 +1,28 @@
 "use client"
 
 import { MessageSquare } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import getWhatsappChatLink from "@/components/whatsapp/getWhatsappChatLink"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function RyogoChatButton({
   label,
   phone,
+  subtitle,
 }: {
   label: string
   phone: string
+  subtitle?: string
 }) {
   function startChat() {
     window.open(getWhatsappChatLink(phone), "_blank", "noopener,noreferrer")
   }
 
   return (
-    <RyogoOutlineButton label={label} onClick={startChat}>
-      <RyogoIcon icon={MessageSquare} size="sm" color="slate" />
-    </RyogoOutlineButton>
+    <RyogoDetailedIconButton
+      label={label}
+      icon={MessageSquare}
+      subtitle={subtitle}
+      onClick={startChat}
+    />
   )
 }

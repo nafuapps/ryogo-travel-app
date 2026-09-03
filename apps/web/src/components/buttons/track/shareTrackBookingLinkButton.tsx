@@ -1,20 +1,21 @@
 "use client"
 
 import { MapPinned } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { useTranslations } from "next-intl"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getBookingTrackingLink } from "@/lib/utils"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function ShareTrackBookingLinkButton({
   bookingId,
   phone,
   label,
+  subtitle,
 }: {
   bookingId: string
   phone: string
   label: string
+  subtitle?: string
 }) {
   const t = useTranslations("Dashboard.Whatsapp")
 
@@ -32,8 +33,11 @@ export default function ShareTrackBookingLinkButton({
   }
 
   return (
-    <RyogoOutlineButton label={label} onClick={sendTrackingLink}>
-      <RyogoIcon icon={MapPinned} size="sm" color="slate" />
-    </RyogoOutlineButton>
+    <RyogoDetailedIconButton
+      label={label}
+      icon={MapPinned}
+      onClick={sendTrackingLink}
+      subtitle={subtitle}
+    />
   )
 }

@@ -61,6 +61,7 @@ export function RyogoImage({
         src={src}
         alt={alt}
         fill
+        className="object-cover"
         sizes={getNextImageSizes(imageSize)}
       />
     </div>

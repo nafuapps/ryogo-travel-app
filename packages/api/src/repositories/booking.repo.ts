@@ -428,6 +428,52 @@ export const bookingRepository = {
     })
   },
 
+  async readCancelledBookingsData(
+    agencyId: string,
+    queryStartDate: Date,
+    queryEndDate: Date,
+  ) {
+    return await db.query.bookings.findMany({
+      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
+      where: and(
+        eq(bookings.agencyId, agencyId),
+        eq(bookings.status, BookingStatusEnum.CANCELLED),
+        gte(bookings.completedAt, queryStartDate),
+        lte(bookings.completedAt, queryEndDate),
+      ),
+      columns: {
+        id: true,
+        type: true,
+        status: true,
+        updatedAt: true,
+        remarks: true,
+        estimatedTotalAmount: true,
+      },
+      with: {
+        customer: {
+          columns: {
+            name: true,
+          },
+        },
+        source: {
+          columns: {
+            city: true,
+          },
+        },
+        destination: {
+          columns: {
+            city: true,
+          },
+        },
+        assignedUser: {
+          columns: {
+            name: true,
+          },
+        },
+      },
+    })
+  },
+
   //Read Completed bookings by driver id
   async readCompletedBookingsByDriverId(driverId: string) {
     return await db.query.bookings.findMany({
@@ -1268,6 +1314,14 @@ export const bookingRepository = {
             name: true,
             phone: true,
             userId: true,
+            canDriveVehicleTypes: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
           },
         },
         assignedVehicle: {
@@ -1277,6 +1331,11 @@ export const bookingRepository = {
             odometerReading: true,
             brand: true,
             model: true,
+            type: true,
+            capacity: true,
+            hasAC: true,
+            color: true,
+            vehiclePhotoUrl: true,
           },
         },
         bookedByUser: {
@@ -1305,6 +1364,7 @@ export const bookingRepository = {
             phone: true,
             address: true,
             email: true,
+            photoUrl: true,
           },
           with: {
             location: {

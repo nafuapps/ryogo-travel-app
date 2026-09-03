@@ -759,6 +759,9 @@
         "/dashboard/account/subscription/orders": "Subscription Orders",
         "/dashboard/analytics": "Analytics",
         "/dashboard/bookings": "Bookings",
+        "/dashboard/bookings/leads": "Booking Leads",
+        "/dashboard/bookings/completed": "Completed Bookings",
+        "/dashboard/bookings/cancelled": "Cancelled Bookings",
         "/dashboard/bookings/new": "New Booking",
         "/dashboard/bookings/new/[id]": "Create Booking",
         "/dashboard/bookings/[id]": "Booking Details",
@@ -917,6 +920,11 @@
         "14Days": "Last 14 Days",
         "7Days": "Last 7 Days"
       },
+      "Cancelled": {
+        "Title": "CANCELLED",
+        "14Days": "Last 14 Days",
+        "7Days": "Last 7 Days"
+      },
       "Schedule": {
         "Title": "BOOKING SCHEDULE",
         "Photo": "Customer photo"
@@ -933,6 +941,12 @@
         "14Days": "Next 14 Days",
         "Passengers": "pax"
       }
+    },
+    "AllBookingsHeaderTabs": {
+      "Bookings": "Bookings",
+      "Leads": "Leads",
+      "Completed": "Completed",
+      "Cancelled": "Cancelled"
     },
     "NewBooking": {
       "Title": "Create Booking",
@@ -1265,10 +1279,13 @@
       "CustomerRating": "Customer Rating",
       "DriverRating": "Driver Rating",
       "AssignAgent": {
-        "Title": "Change Agent",
+        "Title": "Change Assigned User",
         "Subtitle": "Assign another user to manage this booking"
       },
-      "CreateAnotherBooking": "New Booking with Same Customer",
+      "CreateAnotherBooking": {
+        "Title": "Create Another Booking",
+        "Subtitle": "Add a new booking for this customer"
+      },
       "CustomerInfo": "CUSTOMER INFO",
       "CustomerName": "Name",
       "CustomerPhone": "Phone",
@@ -1276,7 +1293,10 @@
       "CustomerAddress": "Address",
       "CustomerRemarks": "Remarks",
       "CallCustomer": "Call Customer",
-      "ChatCustomer": "Chat with Customer",
+      "ChatCustomer": {
+        "Title": "Chat with Customer",
+        "Subtitle": "Start a Whatsapp chat with customer"
+      },
       "ViewCustomerDetails": "View Customer Details",
       "TripInfo": "TRIP INFO",
       "From": "From",
@@ -1295,16 +1315,25 @@
       "Km": " Km",
       "Remarks": "Remarks",
       "AssignmentInfo": "ASSIGNMENT INFO",
-      "AssignedVehicle": "Vehicle",
+      "AssignedVehicle": "VEHICLE",
       "ChangeVehicle": "Change Vehicle",
-      "AssignVehicle": "Assign Vehicle",
+      "AssignVehicle": {
+        "Title": "Assign Vehicle",
+        "Subtitle": "Assign a vehicle for this booking"
+      },
       "ViewVehicleDetails": "View Vehicle Details",
-      "AssignedDriver": "Driver",
+      "AssignedDriver": "DRIVER",
       "ChangeDriver": "Change Driver",
-      "AssignDriver": "Assign Driver",
+      "AssignDriver": {
+        "Title": "Assign Driver",
+        "Subtitle": "Assign a driver for this booking"
+      },
       "ViewDriverDetails": "View Driver Details",
       "CallDriver": "Call Driver",
-      "ChatDriver": "Chat with Driver",
+      "ChatDriver": {
+        "Title": "Chat with Driver",
+        "Subtitle": "Start a Whatsapp chat with assigned driver"
+      },
       "PriceInfo": "PRICE INFO",
       "VehicleCharge": "Vehicle Charge",
       "RatePerKm": "(₹{rate} for {km} Km)",
@@ -1316,7 +1345,10 @@
       "CommissionRate": "({rate}%)",
       "TotalAmount": "Total Amount",
       "Reconcile": "Reconcile Booking",
-      "ShareTrackingLink": "Share Tracking Link"
+      "ShareTrackingLink": {
+        "Title": "Share Tracking Link",
+        "Subtitle": "Send a link to the customer to track their trip"
+      }
     },
     "BookingTransactions": {
       "NoTransactions": "No transactions found for this booking.",
@@ -1516,7 +1548,7 @@
       "Error": "Cannot modify expense.. Try again later!"
     },
     "AssignDriver": {
-      "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to add more drivers!",
+      "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to choose from more drivers.",
       "ExpiredWarning": "You are seeing limited list of drivers because your subscription plan has expired.",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
@@ -1538,7 +1570,7 @@
       "SelectWarning": "Select a driver to assign!"
     },
     "AssignVehicle": {
-      "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to add more vehicles!",
+      "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to choose from more vehicles!",
       "ExpiredWarning": "You are seeing limited list of vehicles because your subscription plan has expired.",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
@@ -1563,8 +1595,8 @@
       "SelectWarning": "Select a vehicle to assign!"
     },
     "AssignUser": {
-      "TrialWarning": "You are seeing limited list of agents in basic plan. Subscribe to add more agents!",
-      "ExpiredWarning": "You are seeing limited list of agents because your subscription plan has expired.",
+      "TrialWarning": "You are seeing limited list of users in basic plan. Subscribe to choose from more users!",
+      "ExpiredWarning": "You are seeing limited list of users because your subscription plan has expired.",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
@@ -4782,6 +4814,7 @@
     "Buttons": {
       "CancelBooking": {
         "Label": "Cancel Booking",
+        "Subtitle": "",
         "Title": "Are you sure you want to cancel this booking?",
         "Desc": "When cancelled, this booking cannot be modified later.",
         "NoCTA": "No",

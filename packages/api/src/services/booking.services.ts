@@ -194,6 +194,30 @@ export const bookingServices = {
     })
   },
 
+  async findCancelledBookingsPreviousDays(agencyId: string, days: number = 1) {
+    const endDate = new Date()
+    const startDate = subDays(endDate, days)
+
+    const bookings = await bookingRepository.readCancelledBookingsData(
+      agencyId,
+      startDate,
+      endDate,
+    )
+    return bookings.map((booking) => {
+      return {
+        status: booking.status.toString(),
+        updatedAt: booking.updatedAt,
+        type: booking.type.toString(),
+        route: booking.source.city + " - " + booking.destination.city,
+        customerName: booking.customer?.name,
+        bookingId: booking.id,
+        amount: booking.estimatedTotalAmount,
+        assignedUser: booking.assignedUser.name,
+        remarks: booking.remarks,
+      }
+    })
+  },
+
   async findUpcomingBookingsNextDays(agencyId: string, days: number = 1) {
     const queryDate = addDays(new Date(), days)
 
@@ -729,6 +753,10 @@ export type FindOngoingTripsType = Awaited<
 
 export type FindCompletedBookingsPreviousDaysType = Awaited<
   ReturnType<typeof bookingServices.findCompletedBookingsPreviousDays>
+>
+
+export type FindCancelledBookingsPreviousDaysType = Awaited<
+  ReturnType<typeof bookingServices.findCancelledBookingsPreviousDays>
 >
 
 export type FindUpcomingBookingsNextDaysType = Awaited<

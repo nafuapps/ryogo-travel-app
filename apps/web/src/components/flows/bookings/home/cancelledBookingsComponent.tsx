@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 import moment from "moment"
-import { FindLeadBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindCancelledBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
   GridItemWrapper,
   HoverGridWrapper,
@@ -25,26 +25,26 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { differenceInDays } from "date-fns"
 
-type LeadBookingsSelectType = "14Days" | "7Days"
+type CancelledBookingsSelectType = "14Days" | "7Days"
 
-export default function LeadBookingsItemComponent({
-  leadBookings14Days,
+export default function CancelledBookingsComponent({
+  cancelledBookings14Days,
 }: {
-  leadBookings14Days: FindLeadBookingsNextDaysType
+  cancelledBookings14Days: FindCancelledBookingsPreviousDaysType
 }) {
-  const t = useTranslations("Dashboard.Bookings.Leads")
+  const t = useTranslations("Dashboard.Bookings.Cancelled")
   const [selectedTab, setSelectedTab] =
-    useState<LeadBookingsSelectType>("7Days")
+    useState<CancelledBookingsSelectType>("7Days")
 
-  const leadBookings7Days = leadBookings14Days.filter(
-    (b) => differenceInDays(b.startDate, new Date()) < 7,
+  const cancelledBookings7Days = cancelledBookings14Days.filter(
+    (b) => differenceInDays(new Date(), b.updatedAt) < 7,
   )
 
   const trips =
-    selectedTab === "14Days" ? leadBookings14Days : leadBookings7Days
+    selectedTab === "14Days" ? cancelledBookings14Days : cancelledBookings7Days
 
   return (
-    <SectionWrapper id="leadsBookingsSection">
+    <SectionWrapper id="cancelledBookingsSection">
       <SectionRowWrapper center>
         <SectionHeaderWrapper>
           <RyogoIcon icon={BookOpenText} size="sm" color="light" />
@@ -55,7 +55,7 @@ export default function LeadBookingsItemComponent({
         </SectionHeaderWrapper>
         <Select
           value={selectedTab}
-          onValueChange={(value: LeadBookingsSelectType) =>
+          onValueChange={(value: CancelledBookingsSelectType) =>
             setSelectedTab(value)
           }
         >
@@ -71,40 +71,46 @@ export default function LeadBookingsItemComponent({
         </Select>
       </SectionRowWrapper>
       {trips.map((trip) => (
-        <LeadBookingsComponent key={trip.bookingId} {...trip} />
+        <CancelledBookingItemComponent key={trip.bookingId} {...trip} />
       ))}
     </SectionWrapper>
   )
 }
 
-function LeadBookingsComponent(lead: FindLeadBookingsNextDaysType[number]) {
-  const t = useTranslations("Dashboard.Bookings.Leads")
+function CancelledBookingItemComponent(
+  cancelled: FindCancelledBookingsPreviousDaysType[number],
+) {
+  const t = useTranslations("Dashboard.Bookings.Cancelled")
   return (
-    <Link href={`/dashboard/bookings/${lead.bookingId}`}>
+    <Link href={`/dashboard/bookings/${cancelled.bookingId}`}>
       <HoverGridWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{lead.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.customerName}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{lead.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.route}</RyogoP>
+          <RyogoCaption color="slate">{cancelled.bookingId}</RyogoCaption>
+          <RyogoP weight="font-bold"> {cancelled.customerName}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
-            {lead.amount.toLocaleString("en-IN", {
+            {cancelled.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {cancelled.route}</RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">
+            {cancelled.amount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.assignedUser}</RyogoP>
+          <RyogoP weight="font-bold"> {cancelled.assignedUser}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {lead.passengers + " " + t("Passengers")}
-          </RyogoCaption>
-          <RyogoP weight="font-bold">{moment(lead.startDate).fromNow()}</RyogoP>
+          {cancelled.remarks && (
+            <RyogoCaption color="slate">{cancelled.remarks}</RyogoCaption>
+          )}
+          <RyogoP weight="font-bold">
+            {moment(cancelled.updatedAt).fromNow()}
+          </RyogoP>
         </GridItemWrapper>
       </HoverGridWrapper>
     </Link>

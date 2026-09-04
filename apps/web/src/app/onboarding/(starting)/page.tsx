@@ -1,6 +1,11 @@
 //Onboarding home page
 
-import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoH1,
+  RyogoP,
+  RyogoSmall,
+} from "@/components/typography"
 import {
   AtSign,
   Camera,
@@ -9,7 +14,6 @@ import {
   FingerprintPattern,
   IdCard,
   Image,
-  LifeBuoy,
   LucideIcon,
   User,
   UserKey,
@@ -86,7 +90,7 @@ export default async function OnboardingHomePage({
             <OnboardingHomeStepItem label={t("BodySteps.Step3")} icon={Car} />
             <OnboardingHomeStepItem
               label={t("BodySteps.Step4")}
-              icon={LifeBuoy}
+              icon={IdCard}
             />
             <OnboardingHomeStepItem
               label={t("BodySteps.Step5")}
@@ -120,6 +124,14 @@ export default async function OnboardingHomePage({
             label={t("BodyChecklist.Item5")}
             icon={User}
           />
+          <div className="border rounded-md p-2 lg:p-3 flex flex-col gap-1 lg:gap-1.5">
+            <RyogoCaption color="light">
+              {t("BodyChecklist.Optional")}
+            </RyogoCaption>
+            <RyogoCaption color="light">
+              {t("BodyChecklist.Format")}
+            </RyogoCaption>
+          </div>
         </div>
       </div>
     </div>
@@ -136,7 +148,6 @@ function OnboardingHomeDocumentItem({
   return (
     <div className="flex flex-row gap-3 md:gap-4 items-center">
       <RyogoEnclosedIcon icon={icon} color="brand" bgColor="brand" size="sm" />
-
       <RyogoSmall color="slate">{label}</RyogoSmall>
     </div>
   )

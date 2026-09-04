@@ -76,7 +76,6 @@ export default function NewBookingStepTripDetails({
       tripDestinationLocationCity: z
         .string(t("Field4.Error1"))
         .min(1, t("Field4.Error1")),
-      tripType: z.enum(BookingTypeEnum),
       tripStartDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
       tripEndDate: z.date(t("Field6.Error1")),
       tripPassengers: z.coerce
@@ -85,8 +84,9 @@ export default function NewBookingStepTripDetails({
         .max(100, t("Field7.Error3"))
         .multipleOf(1, t("Field7.Error4"))
         .nonnegative(t("Field7.Error5")),
+      tripType: z.enum(BookingTypeEnum),
       tripNeedsAC: z.boolean(),
-      tripRemarks: z.string().optional(),
+      tripRemarks: z.string().max(300, t("Field10.Error1")).optional(),
     })
     .superRefine((data, ctx) => {
       //For round and multi day trip, end date must be after start date

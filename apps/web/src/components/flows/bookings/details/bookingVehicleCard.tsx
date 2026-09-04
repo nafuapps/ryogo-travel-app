@@ -1,7 +1,7 @@
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 
@@ -13,7 +13,7 @@ export default function BookingVehicleCard({
   >
 }) {
   return (
-    <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+    <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
       {vehicle.vehiclePhotoUrl ? (
         <RyogoImage
           src={getFileUrl(vehicle.vehiclePhotoUrl)}
@@ -24,7 +24,7 @@ export default function BookingVehicleCard({
         <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
       )}
       <SectionColWrapper wFull small>
-        <RyogoSmall weight="font-bold">{vehicle.vehicleNumber}</RyogoSmall>
+        <RyogoP weight="font-bold">{vehicle.vehicleNumber}</RyogoP>
         <RyogoCaption color="slate">
           {vehicle.brand + " " + vehicle.model}
         </RyogoCaption>

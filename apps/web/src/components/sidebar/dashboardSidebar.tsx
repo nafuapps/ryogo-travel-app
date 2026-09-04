@@ -11,7 +11,7 @@ import {
   Users,
   Search,
   Megaphone,
-  UserRoundCog,
+  UserCog,
   CircleQuestionMark,
 } from "lucide-react"
 import RyogoSidebar, { MenuItemType } from "./ryogoSidebar"
@@ -80,7 +80,7 @@ export default function DashboardSidebar({ isOwner }: { isOwner: boolean }) {
     {
       title: t("Account"),
       url: "/dashboard/account",
-      icon: UserRoundCog,
+      icon: UserCog,
     },
   ]
 

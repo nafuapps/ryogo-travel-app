@@ -725,6 +725,22 @@ export const bookingServices = {
   async changeInvoiceSent(bookingId: string) {
     return await bookingRepository.updateInvoiceSent(bookingId)
   },
+
+  async changeStartTime(bookingId: string, startTime: string) {
+    return await bookingRepository.updateStartTime(bookingId, startTime)
+  },
+
+  async changeBookingRemarks(bookingId: string, remarks: string) {
+    return await bookingRepository.updateRemarks(bookingId, remarks)
+  },
+
+  async changePickupAddress(bookingId: string, pickupAddress: string) {
+    return await bookingRepository.updatePickupAddress(bookingId, pickupAddress)
+  },
+
+  async changeDropAddress(bookingId: string, dropAddress: string) {
+    return await bookingRepository.updateDropAddress(bookingId, dropAddress)
+  },
 }
 
 export type FindDashboardTripsType = Awaited<

@@ -39,6 +39,14 @@ export const userRepository = {
       columns: {
         password: false,
       },
+      with: {
+        agency: {
+          columns: {
+            id: true,
+            businessName: true,
+          },
+        },
+      },
       where: eq(users.id, id),
     })
   },

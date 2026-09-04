@@ -58,7 +58,7 @@ export default function Navbar({
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
       <div className="w-full max-w-5xl bg-white dark:bg-slate-950 border border-sky-50 dark:border-sky-950 opacity-99 shadow-lg rounded-lg px-3 md:px-4 lg:px-5">
-        <div className="flex flex-wrap justify-between items-center py-3 w-full gap-1 lg:gap-3">
+        <div className="flex flex-wrap justify-between items-center py-3 w-full gap-2.5 lg:gap-3">
           {/* Logo */}
           <Link href="/">
             <RyoGoLandingLogo alt={t("Logo")} />

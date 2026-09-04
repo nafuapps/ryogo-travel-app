@@ -17,7 +17,7 @@ import {
   GridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { User, Mail, KeyRound, Phone } from "lucide-react"
+import { User, MailPen, KeyRound, Phone } from "lucide-react"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
@@ -80,7 +80,7 @@ export default async function AccountPageComponent({
         >
           <RyogoDetailedIconButton
             label={t("ChangeEmail.Title")}
-            icon={Mail}
+            icon={MailPen}
             subtitle={t("ChangeEmail.Subtitle")}
           />
         </Link>

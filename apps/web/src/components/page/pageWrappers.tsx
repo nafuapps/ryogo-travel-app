@@ -179,7 +179,7 @@ export function SectionColWrapper({
 }) {
   return (
     <div
-      className={`flex flex-col ${small ? "gap-1.5 lg:gap-2" : "gap-2 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""} ${overflowScroll ? "overflow-y-scroll m-1 scrollbar-none" : ""} ${wFull ? "w-full" : ""} ${hFull ? "h-full" : ""}`}
+      className={`flex flex-col ${small ? "gap-1.5 lg:gap-2" : "gap-2.5 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""} ${overflowScroll ? "overflow-y-scroll m-1 scrollbar-none" : ""} ${wFull ? "w-full" : ""} ${hFull ? "h-full" : ""}`}
     >
       {children}
     </div>

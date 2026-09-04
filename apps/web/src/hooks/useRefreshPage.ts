@@ -21,5 +21,5 @@ export const useRefreshPage = (time: Date | null) => {
     return () => clearInterval(interval) // Cleanup on unmount
   }, [router])
 
-  return canSend
+  return { canSend, refreshMinutes }
 }

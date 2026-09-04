@@ -9,6 +9,7 @@ import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { getDisplayTime } from "@/lib/utils"
 
 export default async function RiderMyBookingDetails({
   booking,
@@ -33,7 +34,7 @@ export default async function RiderMyBookingDetails({
         {booking.startTime && (
           <BookingItem
             title={t("StartTime")}
-            value={moment(booking.startTime, "hh:mm:ss").format("h:mm a")}
+            value={getDisplayTime(booking.startTime)}
           />
         )}
         {booking.dropAddress && (

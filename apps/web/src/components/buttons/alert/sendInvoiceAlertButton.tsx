@@ -7,12 +7,9 @@ import { sendInvoiceAction } from "@/app/actions/bookings/sendInvoiceAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { MessageSquareShare } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  RyogoOutlineButton,
-  RyogoDefaultButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function SendInvoiceAlertButton({
   bookingId,
@@ -31,7 +28,7 @@ export default function SendInvoiceAlertButton({
   const [isPending, startSendTransition] = useTransition()
 
   //Can send invoice if either not sent before or sent more than X minutes ago
-  const canSendInvoice = useRefreshPage(invoiceSentOn)
+  const { canSend, refreshMinutes } = useRefreshPage(invoiceSentOn)
 
   // Send invoice to customer over whatsapp
   async function sendInvoice() {
@@ -57,9 +54,14 @@ export default function SendInvoiceAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoOutlineButton label={t("Label")} disabled={!canSendInvoice}>
-          <RyogoIcon icon={MessageSquareShare} size="sm" />
-        </RyogoOutlineButton>
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={MessageSquareShare}
+          subtitle={
+            canSend ? t("Subtitle") : t("Disabled", { count: refreshMinutes })
+          }
+          disabled={!canSend}
+        />
       }
     >
       <RyogoDefaultButton

@@ -1,6 +1,6 @@
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
-import { KeyRound, Mail, User } from "lucide-react"
+import { KeyRound, MailPen, User } from "lucide-react"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
@@ -76,7 +76,7 @@ export default async function RiderProfilePageComponent({
         <Link href="/rider/myProfile/change-email">
           <RyogoDetailedIconButton
             label={t("ChangeEmail.Title")}
-            icon={Mail}
+            icon={MailPen}
             subtitle={t("ChangeEmail.Subtitle")}
           />
         </Link>

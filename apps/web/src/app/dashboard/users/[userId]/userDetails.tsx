@@ -3,7 +3,7 @@ import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetai
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { CircleSmall, Mail, Phone, User } from "lucide-react"
+import { CircleSmall, MailPen, Phone, User } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -111,7 +111,11 @@ export default async function UserDetailsPageComponent({
       </SectionWrapper>
       <SectionWrapper id="UserCommunication">
         <RyogoPhoneButton label={t("CallUser")} phone={user.phone} />
-        <RyogoChatButton label={t("ChatUser")} phone={user.phone} />
+        <RyogoChatButton
+          label={t("ChatUser.Title")}
+          phone={user.phone}
+          subtitle={t("ChatUser.Subtitle")}
+        />
       </SectionWrapper>
       {(user.userRole !== UserRolesEnum.OWNER ||
         user.id === currentUserId ||
@@ -126,7 +130,7 @@ export default async function UserDetailsPageComponent({
           <Link href={`/dashboard/users/${user.id}/change-email`}>
             <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}
-              icon={Mail}
+              icon={MailPen}
               subtitle={t("ChangeEmail.Subtitle")}
             />
           </Link>

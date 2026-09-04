@@ -1,13 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import {
-  House,
-  Tickets,
-  Car,
-  CircleQuestionMark,
-  UserRoundCog,
-} from "lucide-react"
+import { House, Tickets, Car, CircleQuestionMark, UserCog } from "lucide-react"
 import RyogoSidebar, { MenuItemType } from "./ryogoSidebar"
 
 export default function RiderSidebar() {
@@ -42,7 +36,7 @@ export default function RiderSidebar() {
     {
       title: t("Profile"),
       url: "/rider/myProfile",
-      icon: UserRoundCog,
+      icon: UserCog,
     },
   ]
 

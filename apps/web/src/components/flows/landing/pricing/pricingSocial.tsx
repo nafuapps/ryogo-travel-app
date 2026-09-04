@@ -1,9 +1,4 @@
-import {
-  RyogoCaption,
-  RyogoSmall,
-  RyogoH1,
-  RyogoH4,
-} from "@/components/typography"
+import { RyogoSmall, RyogoH1, RyogoP } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
@@ -18,12 +13,14 @@ export default async function PricingSocialSection() {
         <RyogoH1 weight="font-bold" className="max-w-4xl text-center">
           {t("Title")}
         </RyogoH1>
-        <div className="flex flex-col gap-1 lg:gap-1.5 items-center max-w-4xl rounded-lg p-6 lg:p-8 bg-slate-50 dark:bg-slate-950 text-center">
-          <RyogoH4 color="brand" className="italic">
+        <div className="flex flex-col gap-1 lg:gap-1.5 items-center max-w-4xl rounded-lg p-6 lg:p-8 bg-slate-100 dark:bg-slate-800 text-center">
+          <RyogoP color="brand" className="italic">
             {t("Testimonial")}
-          </RyogoH4>
-          <RyogoSmall color="slate">{t("Author")}</RyogoSmall>
-          <RyogoCaption color="light">{t("Role")}</RyogoCaption>
+          </RyogoP>
+          <RyogoSmall color="slate" weight="font-bold">
+            {t("Author")}
+          </RyogoSmall>
+          <RyogoSmall color="light">{t("Role")}</RyogoSmall>
         </div>
       </LandingContentWrapper>
     </LandingSectionWrapper>

@@ -42,7 +42,7 @@ export default function DashboardHomePageComponent({
     <PageWrapper id="DashboardPage">
       <div
         id="DashboardSections"
-        className="grid grid-flow-row-dense gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+        className="grid grid-flow-row-dense gap-3 lg:gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
       >
         <DashboardTripsComponent
           agencyId={agencyId}

@@ -15,7 +15,7 @@ import {
   Building2,
   Car,
   ChevronDown,
-  LifeBuoy,
+  IdCard,
   MonitorPlay,
   ShieldCheck,
   UserKey,
@@ -51,7 +51,7 @@ export default function HowItWorksOnboardingSection() {
     },
     {
       src: "/Onboarding3.png",
-      icon: LifeBuoy,
+      icon: IdCard,
       title: t("O3.Title"),
       description: t("O3.Description"),
     },

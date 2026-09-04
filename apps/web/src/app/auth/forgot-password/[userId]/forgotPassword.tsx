@@ -23,10 +23,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { X, Info } from "lucide-react"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default function ForgotPasswordPageComponent({
   user,
@@ -98,15 +95,15 @@ export default function ForgotPasswordPageComponent({
           description={t("Input.Description")}
         />
         {giveHelp && maskedEmail && (
-          <div className="bg-yellow-50 p-2 rounded-lg flex gap-2 lg:gap-3 item-center">
-            <RyogoIcon color="yellow" icon={Info} size={"md"} />
-            <RyogoCaption>
+          <div className="bg-yellow-50 dark:bg-yellow-900 p-2 rounded-lg flex gap-2 lg:gap-3 items-center">
+            <RyogoIcon color="yellow" icon={Info} size={"sm"} />
+            <RyogoCaption color="yellow" className="mr-auto">
               {t("GiveHelp", { maskedEmail: maskedEmail })}
             </RyogoCaption>
             <RyogoIcon
-              color="slate"
+              color="yellow"
               icon={X}
-              size={"md"}
+              size={"sm"}
               onClick={() => setGiveHelp(false)}
             />
           </div>
@@ -127,14 +124,6 @@ export default function ForgotPasswordPageComponent({
             type="submit"
             disabled={form.formState.isSubmitting || codeSentRecently || isBot}
             showSpinner={form.formState.isSubmitting}
-          />
-          <RyogoOutlineButton
-            label={t("Back")}
-            size="lg"
-            type="button"
-            onClick={() => {
-              router.back()
-            }}
           />
         </AuthActionWrapper>
       </AuthFormWrapper>

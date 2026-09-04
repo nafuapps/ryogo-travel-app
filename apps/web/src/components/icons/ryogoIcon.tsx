@@ -57,26 +57,26 @@ function getBGColor(bgColor?: RyogoIconColorType) {
 function getIconSize(size: RyogoIconSizeType) {
   switch (size) {
     case "xl":
-      return "size-20 lg:size-24"
+      return "size-20 md:size-24"
     case "lg":
-      return "size-11 lg:size-12"
+      return "size-11 md:size-12"
     case "md":
-      return "size-7 lg:size-8"
+      return "size-7 md:size-8"
     case "sm":
-      return "size-5.5 lg:size-6"
+      return "size-5 md:size-6"
   }
 }
 
 function getBGIconSize(size: RyogoIconSizeType) {
   switch (size) {
     case "xl":
-      return "size-32 lg:size-36"
+      return "size-32 md:size-36"
     case "lg":
-      return "size-18 lg:size-20"
+      return "size-18 md:size-20"
     case "md":
-      return "size-10 lg:size-12"
+      return "size-10 md:size-12"
     case "sm":
-      return "size-8 lg:size-9"
+      return "size-8 md:size-9"
   }
 }
 

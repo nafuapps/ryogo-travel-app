@@ -1306,6 +1306,7 @@ export const bookingRepository = {
             userRole: true,
             name: true,
             phone: true,
+            photoUrl: true,
           },
         },
         assignedDriver: {
@@ -1686,6 +1687,58 @@ export const bookingRepository = {
       .returning({
         id: bookings.id,
         invoiceSentOn: bookings.invoiceSentOn,
+      })
+  },
+
+  async updateStartTime(id: string, startTime: string) {
+    return await db
+      .update(bookings)
+      .set({
+        startTime,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        startTime: bookings.startTime,
+      })
+  },
+
+  async updateRemarks(id: string, remarks: string) {
+    return await db
+      .update(bookings)
+      .set({
+        remarks,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        remarks: bookings.remarks,
+      })
+  },
+
+  async updatePickupAddress(id: string, pickupAddress: string) {
+    return await db
+      .update(bookings)
+      .set({
+        pickupAddress,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        pickupAddress: bookings.pickupAddress,
+      })
+  },
+
+  async updateDropAddress(id: string, dropAddress: string) {
+    return await db
+      .update(bookings)
+      .set({
+        dropAddress,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        dropAddress: bookings.dropAddress,
       })
   },
 

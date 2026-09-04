@@ -7,7 +7,7 @@ import {
   CreditCard,
   HandCoins,
   IdCard,
-  UserRound,
+  User,
 } from "lucide-react"
 
 export default function getEntityIcon(entityType: EntityTypeEnum) {
@@ -27,6 +27,6 @@ export default function getEntityIcon(entityType: EntityTypeEnum) {
     case EntityTypeEnum.EXPENSE:
       return HandCoins
     case EntityTypeEnum.USER:
-      return UserRound
+      return User
   }
 }

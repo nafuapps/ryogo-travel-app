@@ -97,7 +97,7 @@ function MenuButton({
       <Tooltip disableHoverableContent>
         <TooltipTrigger className="w-full">
           <div
-            className={`flex flex-row gap-3 lg:gap-4 items-center rounded-lg ${active ? "bg-sky-700 dark:bg-sky-300" : "hover:bg-sky-100 dark:hover:bg-sky-800"} w-full px-2.5 lg:px-3 py-3 transition
+            className={`flex flex-row gap-3 md:gap-4 items-center rounded-lg ${active ? "bg-sky-700 dark:bg-sky-300" : "hover:bg-sky-100 dark:hover:bg-sky-800"} w-full px-2.5 md:px-3 py-3 transition
             `}
           >
             <RyogoIcon

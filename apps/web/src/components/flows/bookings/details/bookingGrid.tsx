@@ -4,7 +4,7 @@ export default function BookingGrid({
   children: React.ReactNode
 }) {
   return (
-    <div className="grid gap-3 md:gap-4 grid-cols-1 lg:grid-cols-2">
+    <div className="grid gap-3 md:gap-4 grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
       {children}
     </div>
   )

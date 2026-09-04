@@ -77,7 +77,7 @@ export default function OnboardingSidebar({
         <RyogoH4 weight="font-bold" color="light">
           {t("Heading")}
         </RyogoH4>
-        {currentProcess && (
+        {currentProcess !== undefined && (
           <div
             id="OnboardingSidebarSteps"
             className="flex flex-col gap-2 lg:gap-3"

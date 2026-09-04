@@ -27,7 +27,7 @@ export function FAQItem({
           <RyogoIcon color="black" size="sm" icon={ChevronRight} thick />
         </div>
 
-        <RyogoP weight="font-bold">{question}</RyogoP>
+        <RyogoSmall weight="font-bold">{question}</RyogoSmall>
       </summary>
       <RyogoSmall color="slate">{answer}</RyogoSmall>
     </details>

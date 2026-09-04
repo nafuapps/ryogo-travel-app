@@ -1,7 +1,7 @@
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { User, Plus, IdCard, UserKey, UserRoundCog } from "lucide-react"
+import { User, Plus, IdCard, UserKey, UserCog } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -54,7 +54,7 @@ export default async function UsersPageComponent({
       </SectionWrapper>
       <SectionWrapper id="AgentsSection">
         <SectionHeaderWrapper>
-          <RyogoIcon icon={UserRoundCog} size="sm" color="light" />
+          <RyogoIcon icon={UserCog} size="sm" color="light" />
           <RyogoSmall color="light">{t("Agents.Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {agents.length}

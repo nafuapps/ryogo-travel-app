@@ -41,6 +41,7 @@ export default async function FeaturesHeroSection() {
             <RyogoWhiteButton
               size="lg"
               label={t("SecondaryCTA")}
+              labelColor="brand"
               className="w-full gap-1 lg:gap-2 md:w-auto"
             />
           </Link>

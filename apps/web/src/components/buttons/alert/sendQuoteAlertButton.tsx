@@ -7,12 +7,9 @@ import { sendQuoteAction } from "@/app/actions/bookings/sendQuoteAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { MessageSquareShare } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  RyogoOutlineButton,
-  RyogoDefaultButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function SendQuoteAlertButton({
   bookingId,
@@ -30,7 +27,7 @@ export default function SendQuoteAlertButton({
   const [isPending, startSendTransition] = useTransition()
 
   //Can send quote if either not sent before or sent more than X minutes ago
-  const canSendQuote = useRefreshPage(quoteSentOn)
+  const { canSend, refreshMinutes } = useRefreshPage(quoteSentOn)
 
   // Send quote to customer over whatsapp
   async function sendQuote() {
@@ -56,9 +53,14 @@ export default function SendQuoteAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoOutlineButton label={t("Label")} disabled={!canSendQuote}>
-          <RyogoIcon icon={MessageSquareShare} size="sm" />
-        </RyogoOutlineButton>
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={MessageSquareShare}
+          subtitle={
+            canSend ? t("Subtitle") : t("Disabled", { count: refreshMinutes })
+          }
+          disabled={!canSend}
+        />
       }
     >
       <RyogoDefaultButton

@@ -1,5 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH2, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
 import {
   BASIC_PLAN_AGENT_LIMIT,
   BASIC_PLAN_DRIVER_LIMIT,
@@ -28,8 +28,11 @@ export default async function PricingComparisionSection() {
       className="bg-white dark:bg-slate-900"
     >
       <LandingContentWrapper>
+        <RyogoH1 weight="font-bold" className="text-center">
+          {t("Title")}
+        </RyogoH1>
         <ComparisionRow
-          title={<RyogoH2 weight="font-bold">{t("Header")}</RyogoH2>}
+          title={<RyogoH4 weight="font-bold">{t("Header")}</RyogoH4>}
           basicItem={<RyogoP weight="font-bold">{t("Basic")}</RyogoP>}
           premiumItem={
             <RyogoP weight="font-bold" color="brand">
@@ -82,7 +85,7 @@ export default async function PricingComparisionSection() {
           <ComparisionRow
             title={
               <RyogoSmall>
-                {t("ConfrimedBookings", {
+                {t("ConfirmedBookings", {
                   days: BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
                 })}
               </RyogoSmall>
@@ -248,7 +251,9 @@ function ComparisionGroup({
   return (
     <div className="w-full flex flex-col divide-y border-b">
       <div className="w-full px-1 lg:px-2 py-3 lg:py-4 flex items-center">
-        <RyogoH4 weight="font-bold">{title}</RyogoH4>
+        <RyogoP color="light" weight="font-bold">
+          {title}
+        </RyogoP>
       </div>
       {children}
     </div>

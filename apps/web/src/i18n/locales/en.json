@@ -45,9 +45,9 @@
       "Step1": {
         "PageTitle": "Forgot password?",
         "Input": {
-          "Title": "Verify your email address",
+          "Title": "Confirm your email address",
           "Placeholder": "abcd@gmail.com",
-          "Description": "We will confirm your identity and send you a code to set a new password"
+          "Description": "We will verify your identity and send you a code to reset password"
         },
         "GiveHelp": "Your email looks something like: {maskedEmail}",
         "PrimaryCTA": "Get verification code",
@@ -135,11 +135,13 @@
       },
       "BodyChecklist": {
         "Title": "Document checklist",
-        "Item1": "Your business logo (optional)",
-        "Item2": "Photo of a vehicle (with visible number plate)",
+        "Item1": "Your agency/business logo and payment QR code",
+        "Item2": "Photo of the vehicle (preferrably with visible number plate)",
         "Item3": "Document photocopy of vehicle RC, Insurance policy and PUC certificate",
-        "Item4": "Driving license photo of a driver",
-        "Item5": "Photo of your driver and agent (optional)"
+        "Item4": "Driver's license photocopy of the driver",
+        "Item5": "User photos (owner, driver and agent)",
+        "Optional": "* All the above documents are optional. However, we recommend uploading them for better app experience",
+        "Format": "** Image format must be either: .jpg/jpeg, .png, .avif, .webp"
       },
       "Footer": {
         "PrimaryCTA": "Get Started"
@@ -1065,7 +1067,8 @@
           },
           "Field10": {
             "Title": "Customer remarks (optional)",
-            "Placeholder": "Enter any request or preference from the customer"
+            "Placeholder": "Enter any request or preference from the customer",
+            "Error1": "Remarks must be less than 300 characters"
           },
           "Loading": "Loading..",
           "PrimaryCTA": "Continue",
@@ -1275,60 +1278,52 @@
       "Status": "Status",
       "Created": "Created On",
       "BookedBy": "Booked By",
-      "AssignedTo": "Assigned Agent",
       "CustomerRating": "Customer Rating",
       "DriverRating": "Driver Rating",
+      "AssignedUserInfo": "ASSIGNED USER",
+      "CallAssignedUser": "Call User",
       "AssignAgent": {
-        "Title": "Change Assigned User",
+        "Title": "Change User",
         "Subtitle": "Assign another user to manage this booking"
       },
       "CreateAnotherBooking": {
         "Title": "Create Another Booking",
         "Subtitle": "Add a new booking for this customer"
       },
-      "CustomerInfo": "CUSTOMER INFO",
-      "CustomerName": "Name",
-      "CustomerPhone": "Phone",
-      "CustomerLocation": "Location",
-      "CustomerAddress": "Address",
-      "CustomerRemarks": "Remarks",
+      "CustomerInfo": "CUSTOMER",
       "CallCustomer": "Call Customer",
       "ChatCustomer": {
         "Title": "Chat with Customer",
         "Subtitle": "Start a Whatsapp chat with customer"
       },
-      "ViewCustomerDetails": "View Customer Details",
       "TripInfo": "TRIP INFO",
-      "From": "From",
-      "To": "To",
-      "Distance": "Distance",
-      "StartDate": "Start Date",
-      "EndDate": "End Date",
       "StartTime": "Start Time",
+      "AddStartTime": "Add Start Time",
       "PickupAddress": "Pickup Address",
+      "AddPickupAddress": "Add Pickup Address",
       "DropAddress": "Drop Address",
-      "Type": "Trip Type",
-      "Passengers": "Passengers",
-      "NeedsAC": "Needs AC",
-      "Yes": "Yes",
-      "No": "No",
-      "Km": " Km",
+      "AddDropAddress": "Add Drop Address",
       "Remarks": "Remarks",
-      "AssignmentInfo": "ASSIGNMENT INFO",
-      "AssignedVehicle": "VEHICLE",
-      "ChangeVehicle": "Change Vehicle",
+      "AddRemarks": "Add Remarks",
+      "Km": " Km",
+      "VehicleInfo": "ASSIGNED VEHICLE",
+      "ChangeVehicle": {
+        "Title": "Change Vehicle",
+        "Subtitle": "Assign another vehicle for this booking"
+      },
       "AssignVehicle": {
         "Title": "Assign Vehicle",
-        "Subtitle": "Assign a vehicle for this booking"
+        "Subtitle": "Allot a vehicle for this booking"
       },
-      "ViewVehicleDetails": "View Vehicle Details",
-      "AssignedDriver": "DRIVER",
-      "ChangeDriver": "Change Driver",
+      "DriverInfo": "ASSIGNED DRIVER",
+      "ChangeDriver": {
+        "Title": "Change Driver",
+        "Subtitle": "Assign another driver for this booking"
+      },
       "AssignDriver": {
         "Title": "Assign Driver",
-        "Subtitle": "Assign a driver for this booking"
+        "Subtitle": "Allot a driver for this booking"
       },
-      "ViewDriverDetails": "View Driver Details",
       "CallDriver": "Call Driver",
       "ChatDriver": {
         "Title": "Chat with Driver",
@@ -1347,7 +1342,7 @@
       "Reconcile": "Reconcile Booking",
       "ShareTrackingLink": {
         "Title": "Share Tracking Link",
-        "Subtitle": "Send a link to the customer to track their trip"
+        "Subtitle": "Send a link to the customer on Whatsapp to track their trip"
       }
     },
     "BookingTransactions": {
@@ -4416,7 +4411,10 @@
       "Photo": "User photo",
       "Admin": " (Admin)",
       "CallUser": "Call User",
-      "ChatUser": "Chat with User",
+      "ChatUser": {
+        "Title": "Chat with User",
+        "Subtitle": "Start a Whatsapp chat with the user"
+      },
       "ChangeEmail": {
         "Title": "Change Email",
         "Subtitle": "Set user email address for receiving updates",
@@ -4808,7 +4806,11 @@
         "AgencyCreated": "Agency has been created by {userName}",
         "AgencyQRCodeChanged": "Agency QR code has been changed by {userName}",
         "TryPremium": "Trial Premium plan has been activated by {userName}",
-        "AdminTransferred": "Agency admin rights has been transferred to {newAdminName} by {userName}"
+        "AdminTransferred": "Agency admin rights has been transferred to {newAdminName} by {userName}",
+        "StartTimeChanged": "Booking #{bookingId} start time has been changed by {userName}",
+        "PickupAddressChanged": "Booking #{bookingId} pickup address has been changed by {userName}",
+        "DropAddressChanged": "Booking #{bookingId} drop address has been changed by {userName}",
+        "BookingRemarksChanged": "Booking #{bookingId} remarks have been changed by {userName}"
       }
     },
     "Buttons": {
@@ -4855,6 +4857,8 @@
       },
       "SendInvoice": {
         "Label": "Send Invoice to Customer",
+        "Subtitle": "Share booking invoice with customer on Whatsapp",
+        "Disabled": "Wait {count} minutes to resend invoice",
         "Title": "Are you sure you want to send invoice to customer?",
         "Desc": "If you have sent an invoice already, refrain from sending it again.. It might look like spam to the customer",
         "NoCTA": "No",
@@ -4866,6 +4870,8 @@
       },
       "SendQuote": {
         "Label": "Send Quote to Customer",
+        "Subtitle": "Share a booking quotation with customer on Whatsapp",
+        "Disabled": "Wait {count} minutes to resend quotation",
         "Title": "Are you sure you want to send quote to customer?",
         "Desc": "If you have sent a quote already, refrain from sending it again.. It might look like spam to the customer",
         "NoCTA": "No",
@@ -4876,6 +4882,8 @@
       },
       "SendConfirmation": {
         "Label": "Send Confirmation to Customer",
+        "Subtitle": "Share booking confirmation with customer on Whatsapp",
+        "Disabled": "Wait {count} minutes to resend confirmation",
         "Title": "Are you sure you want to send booking confirmation to customer?",
         "Desc": "If you have sent a booking confirmation already, refrain from sending it again.. It might look like spam to the customer",
         "NoCTA": "No",
@@ -6215,6 +6223,48 @@
       "Success": "Name changed successfully!",
       "Error": "Cannot change name.. please try again after some time."
     },
+    "ChangeStartTime": {
+      "Title": "Change Start Time",
+      "PickupTime": "Enter Customer Pickup Time",
+      "PickupTimeError": "Pickup Time is required",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Trip start time changed successfully!",
+      "Error": "Cannot change pickup time.. please try again after some time."
+    },
+    "ChangeBookingRemarks": {
+      "Title": "Change Booking Remarks",
+      "Remarks": "Enter remarks for this booking",
+      "RemarksPlaceHolder": "Any special request from customer or any notes for this booking",
+      "RemarksError": "Remarks should be less than 300 characters",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Trip start time changed successfully!",
+      "Error": "Cannot change pickup time.. please try again after some time."
+    },
+    "ChangePickupAddress": {
+      "Title": "Change Pickup Address",
+      "PickupAddress": "Enter Customer Pickup Address",
+      "AddressError1": "Address should be atleast 10 characters",
+      "AddressError2": "Address should be less than 300 characters",
+      "SameAsCustomerAddress": "Same as customer address",
+      "PickupAddressPlaceholder": "House number, Street, City",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Pickup address changed successfully!",
+      "Error": "Cannot change pickup address.. please try again after some time."
+    },
+    "ChangeDropAddress": {
+      "Title": "Change Drop Address",
+      "DropAddress": "Enter Customer Drop Address",
+      "AddressError1": "Address should be atleast 10 characters",
+      "AddressError2": "Address should be less than 300 characters",
+      "DropAddressPlaceholder": "House number, Street, City",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Drop address changed successfully!",
+      "Error": "Cannot change drop address.. please try again after some time."
+    },
     "ChangePhoto": {
       "Button": "Change Photo",
       "Title": "Choose a Photo",
@@ -6322,7 +6372,7 @@
     "Home": {
       "Hero": {
         "Title1": "Stop everyday chaos.",
-        "Title2": "Start growing your travel business.",
+        "Title2": "Start growing your business.",
         "Subtitle": "RyoGo helps travel agencies and tour operators manage their bookings, fleet, drivers, and daily operations online without any hassle or paperwork",
         "PrimaryCTA": "Get started for Free",
         "SecondaryCTA": "Watch Demo"
@@ -6671,39 +6721,40 @@
         "Role": "(Owner, NorthEast Tours)"
       },
       "Comparision": {
-        "Header": "Compare plan features",
+        "Title": "Compare our plans",
+        "Header": "Features",
         "Basic": "Basic",
         "Premium": "Premium",
         "Unlimited": "Unlimited",
-        "Entities": "Entities",
-        "OnboardVehicles": "Onboard vehicles",
-        "OnboardDrivers": "Onboard drivers",
-        "OnboardAgents": "Onboard agents",
-        "Bookings": "Bookings",
-        "ConfrimedBookings": "Confirmed bookings (in last {days} days)",
+        "Entities": "ENTITIES",
+        "OnboardVehicles": "Add and manage vehicles",
+        "OnboardDrivers": "Add and manage drivers",
+        "OnboardAgents": "Add and manage agents",
+        "Bookings": "BOOKINGS",
+        "ConfirmedBookings": "Create and manage bookings (in last {days} days)",
         "AssignmentSuggestions": "Get vehicle and driver assignment suggestion",
         "SendMessages": "Send timely messages and share invoices with customers via WhatsApp",
         "ReconcileBookings": "Reconcile expenses and transactions for completed bookings",
-        "DriverApp": "Driver App",
+        "DriverApp": "DRIVER APP",
         "DriverAppAccess": "Driver can access app to manage trips",
         "DriverExpenses": "Driver can add expenses",
-        "Analytics": "Analytics",
+        "Analytics": "ANALYTICS",
         "BasicAnalytics": "Basic analytics and insights",
         "AdvancedAnalytics": "Access to advanced analytics",
         "AIRecommendations": "AI recommendations and tips to optimize operations",
-        "AgencyControl": "Agency Control",
+        "AgencyControl": "AGENCY CONTROL",
         "GetAlerts": "Get real-time actionable alerts",
         "Feed": "Receive agency-wide activity notifications",
         "MultipleOwners": "Multiple owner accounts",
-        "Search": "Search recent data (days)",
+        "Search": "Data search range (recent days)",
         "NewFeatures": "Priority access to new features",
         "CustomerReminders": "Set custom reminders",
-        "SafetyPrivacy": "Safety & Privacy",
+        "SafetyPrivacy": "SAFETY & PRIVACY",
         "DataSecurity": "Sensitive data secured with end-to-end encryption",
         "DataPrivacy": "All data kept private",
-        "Support": "Support",
-        "EmailSupport": "Basic 48-hr email support",
-        "PrioritySupport": "24x7 Priority support over phone",
+        "Support": "SUPPORT",
+        "EmailSupport": "Basic email and phone support during business hours",
+        "PrioritySupport": "24x7 Priority support",
         "SupportTicket": "Raise support tickets for quick resolution",
         "MoreCTA": "Explore All Features"
       },
@@ -6716,7 +6767,7 @@
         },
         "Upgrade": {
           "Question": "How do I upgrade to the Premium plan?",
-          "Answer": "After creating an account, you can choose to upgrade to the Premium plan by buying our subscription from the subscription page in your account settings. For any help, contact our support team at {contact}"
+          "Answer": "After creating an account, you can choose to buy the Premium plan from the subscription page in your account settings. For any help, contact our support team at {contact}"
         },
         "PaymentMethod": {
           "Question": "What payment methods do you accept? Is it safe and secure",

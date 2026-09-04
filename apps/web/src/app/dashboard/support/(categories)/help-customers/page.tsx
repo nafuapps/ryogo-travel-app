@@ -31,8 +31,8 @@ import {
   SquarePen,
   Telescope,
   Tickets,
-  UserRoundPlus,
-  UserRoundSearch,
+  UserPlus,
+  UserSearch,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
@@ -76,7 +76,7 @@ export default async function SupportHelpCustomersPage() {
     {
       id: "adding",
       title: t("Adding.Title"),
-      icon: UserRoundPlus,
+      icon: UserPlus,
       content: <AddingContent />,
     },
     {
@@ -100,7 +100,7 @@ export default async function SupportHelpCustomersPage() {
     {
       id: "search",
       title: t("Search.Title"),
-      icon: UserRoundSearch,
+      icon: UserSearch,
       content: <SearchContent />,
     },
   ]

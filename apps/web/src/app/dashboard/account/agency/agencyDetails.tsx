@@ -3,7 +3,7 @@ import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accoun
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Building, Building2, Mail, Phone } from "lucide-react"
+import { Building, Building2, MailPen, Phone } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -23,7 +23,6 @@ import { Separator } from "@/components/ui/separator"
 import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgencyAlertButton"
 import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
 import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default async function AgencyDetailsPageComponent({
@@ -109,7 +108,7 @@ export default async function AgencyDetailsPageComponent({
           <Link href={`/dashboard/account/agency/change-email`}>
             <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}
-              icon={Mail}
+              icon={MailPen}
               subtitle={t("ChangeEmail.Subtitle")}
             />
           </Link>

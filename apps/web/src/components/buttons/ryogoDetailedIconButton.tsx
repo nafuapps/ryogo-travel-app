@@ -7,22 +7,29 @@ export default function RyogoDetailedIconButton({
   icon,
   onClick,
   subtitle,
+  disabled,
   className,
 }: {
   label: string
   icon: LucideIcon
   onClick?: () => void
   subtitle?: string
+  disabled?: boolean
   className?: string
 }) {
   return (
     <button
       onClick={onClick}
-      className={`p-2 lg:p-3 gap-2 lg:gap-3 flex hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition w-full ${className ?? ""}`}
+      disabled={disabled}
+      className={`p-2 lg:p-3 gap-2 lg:gap-3 items-center flex hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition w-full ${className ?? ""} ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
     >
       <RyogoEnclosedIcon icon={icon} size="sm" color="black" />
       <div className="flex flex-col justify-center items-start text-start gap-0.75 lg:gap-1 w-full">
-        <RyogoCaption weight="font-bold">{label}</RyogoCaption>
+        <RyogoCaption color="slate" weight="font-bold">
+          {label}
+        </RyogoCaption>
         {subtitle && <RyogoCaption color="light">{subtitle}</RyogoCaption>}
       </div>
       <RyogoIcon icon={ChevronRight} size="sm" color="light" />

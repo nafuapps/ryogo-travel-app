@@ -26,7 +26,7 @@ import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import {
   Telescope,
-  UserRoundPlus,
+  UserPlus,
   SquarePen,
   Plus,
   ChevronRight,
@@ -80,7 +80,7 @@ export default async function SupportHelpDriversPage() {
     {
       id: "adding",
       title: t("Adding.Title"),
-      icon: UserRoundPlus,
+      icon: UserPlus,
       content: <AddingContent />,
     },
     {

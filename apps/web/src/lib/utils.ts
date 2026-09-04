@@ -14,6 +14,7 @@ import {
   DASHBOARD_USER_AWAY_MINUTES,
   DASHBOARD_USER_ONLINE_MINUTES,
 } from "./uiConfig"
+import moment from "moment"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -56,6 +57,10 @@ export function getStringValueDisplayPairs(
     value: key,
     display: key,
   }))
+}
+
+export function getDisplayTime(time: string) {
+  return moment(time, "hh:mm:ss").format("h:mm a")
 }
 
 export function getCombinedDateTime(date: Date, time: string | null) {

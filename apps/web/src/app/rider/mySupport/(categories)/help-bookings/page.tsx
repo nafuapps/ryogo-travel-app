@@ -10,9 +10,9 @@ import {
   BanknoteArrowDown,
   CalendarCheck,
   ChevronRight,
+  ClipboardCopy,
   PhoneCall,
   Tickets,
-  UserRoundArrowLeft,
   Waypoints,
 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
@@ -89,7 +89,7 @@ export default async function MySupportHelpBookingsPage() {
     {
       id: "assignment",
       title: t("Assignment.Title"),
-      icon: UserRoundArrowLeft,
+      icon: ClipboardCopy,
       content: <AssignmentContent />,
     },
     {

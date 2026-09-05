@@ -15,7 +15,8 @@
         "Error2": "Phone number must be numeric and without spaces",
         "NotFoundError": "Phone number not registered or suspended",
         "ServerError": "Cannot connect to server.. Try again later!",
-        "BotError": "Bot/Fraud activity detected."
+        "BotError": "Bot/Fraud activity detected.",
+        "SecondaryCTA": "I want to create an account"
       },
       "Step2": {
         "PageTitle": "Welcome back!",
@@ -111,10 +112,10 @@
         "PageTitle": "Hello there!",
         "InfoYes": "You already have an owner account with us:",
         "InfoNo": "{count, plural, =1 {You already have an account with us:} other {You already have # accounts with us:}}",
-        "SecondaryCTANo": "Create agency account as owner",
-        "SecondaryCTAYes": "Contact support",
         "BackCTA": "Back",
-        "Description": "To create another agency account, reach out to our support team."
+        "Description": "To create another owner account, reach out to our support team.",
+        "SecondaryCTAYes": "Contact Support",
+        "SecondaryCTANo": "I want to create new agency account as owner"
       }
     }
   },

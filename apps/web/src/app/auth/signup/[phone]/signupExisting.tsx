@@ -1,7 +1,6 @@
 //Existing Account page
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
-import AccountCard from "@/components/flows/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -16,6 +15,9 @@ import {
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import UserCard from "@/components/flows/auth/userCard"
+import { ChevronRight } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
@@ -44,8 +46,10 @@ export default async function SignupExistingPageComponent({
           : t("InfoNo", { count: accounts.length })}
       </RyogoSmall>
       <AuthAccountsWrapper length={accounts.length}>
-        {accounts.map((item, index) => (
-          <AccountCard key={index} account={item} />
+        {accounts.map((account) => (
+          <Link href={`/auth/login/password/${account.id}`}>
+            <UserCard key={account.id} user={account} isLink />
+          </Link>
         ))}
       </AuthAccountsWrapper>
       <AuthActionWrapper>
@@ -57,23 +61,32 @@ export default async function SignupExistingPageComponent({
           />
         </Link>
         <Separator />
-        {hasOwnerAccount && (
-          <RyogoCaption color="light" className="text-center">
-            {t("Description")}
-          </RyogoCaption>
+        {hasOwnerAccount ? (
+          <>
+            <RyogoCaption color="light" className="text-center">
+              {t("Description")}
+            </RyogoCaption>
+            <Link href={`mailto:${SUPPORT_EMAIL}`}>
+              <RyogoGhostButton
+                className="w-full"
+                label={t("SecondaryCTAYes")}
+                labelColor="light"
+              >
+                <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
+              </RyogoGhostButton>
+            </Link>
+          </>
+        ) : (
+          <Link href={`/onboarding?phone=${phone}`}>
+            <RyogoGhostButton
+              className="w-full"
+              label={t("SecondaryCTANo")}
+              labelColor="light"
+            >
+              <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
+            </RyogoGhostButton>
+          </Link>
         )}
-        <Link
-          href={
-            hasOwnerAccount
-              ? `mailto:${SUPPORT_EMAIL}`
-              : `/onboarding?phone=${phone}`
-          }
-        >
-          <RyogoGhostButton
-            className="w-full"
-            label={hasOwnerAccount ? t("SecondaryCTAYes") : t("SecondaryCTANo")}
-          />
-        </Link>
       </AuthActionWrapper>
     </AuthPageWrapper>
   )

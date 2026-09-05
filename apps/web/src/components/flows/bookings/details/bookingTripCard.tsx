@@ -2,7 +2,6 @@ import { RyogoP, RyogoCaption } from "@/components/typography"
 import { Users } from "lucide-react"
 import { IconTextTag } from "@/components/tags/IconTextTag"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import { getTranslations } from "next-intl/server"
 import { format } from "date-fns"
@@ -45,12 +44,7 @@ export default async function BookingTripCard(
             {booking.type.toUpperCase()}
           </RyogoCaption>
         </BorderWrapper>
-        <BorderWrapper>
-          <IconTextTag icon={Users} text={booking.passengers.toString()} />
-        </BorderWrapper>
-        {booking.type !== BookingTypeEnum.OneWay && (
-          <DateWrapper date={endDate} />
-        )}
+        <DateWrapper date={endDate} />
       </div>
       {/* <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 items-center justify-between border-x border-b rounded-b-lg bg-slate-100 dark:bg-slate-800">
         

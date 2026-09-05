@@ -20,7 +20,7 @@ export function AuthMainWrapper({
             className="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
             style={{ backgroundImage: `url(${src})` }}
           />
-          <div className="absolute inset-0 bg-slate-50/80 dark:bg-slate-950/80 md:hidden" />
+          <div className="absolute inset-0 bg-white/70 dark:bg-slate-950/70 md:hidden" />
         </>
       ) : null}
       <div className="z-10 flex w-full h-full flex-col items-center gap-10 md:gap-12">

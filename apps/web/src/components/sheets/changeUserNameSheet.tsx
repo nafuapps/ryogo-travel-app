@@ -79,7 +79,7 @@ export default function ChangeUserNameSheet({
           subtitle={t("Subtitle")}
         />
       </SheetTrigger>
-      <SheetContent side="bottom">
+      <SheetContent side="bottom" className="h-[85vh] max-h-[85vh]">
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>

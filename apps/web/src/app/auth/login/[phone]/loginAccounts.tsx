@@ -1,5 +1,4 @@
 import { RyogoH3, RyogoSmall } from "@/components/typography"
-import AccountCard from "@/components/flows/auth/accountCard"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -9,6 +8,7 @@ import {
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import UserCard from "@/components/flows/auth/userCard"
 
 export default async function LoginAccountsPageComponent({
   accounts,
@@ -23,7 +23,9 @@ export default async function LoginAccountsPageComponent({
       <RyogoSmall weight="font-bold">{t("Info")}</RyogoSmall>
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((account) => (
-          <AccountCard key={account.id} account={account} />
+          <Link href={`/auth/login/password/${account.id}`}>
+            <UserCard key={account.id} user={account} isLink />
+          </Link>
         ))}
       </AuthAccountsWrapper>
       <AuthActionWrapper>

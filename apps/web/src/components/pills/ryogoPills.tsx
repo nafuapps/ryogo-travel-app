@@ -8,6 +8,7 @@ import {
   SubscriptionPlanEnum,
   TicketStatusEnum,
   TripLogTypesEnum,
+  UserRolesEnum,
   UserStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -20,6 +21,7 @@ type RyogoPillColorType =
   | "red"
   | "yellow"
   | "light"
+  | "white"
 
 function getPillColor(color: RyogoPillColorType = "slate") {
   switch (color) {
@@ -35,6 +37,8 @@ function getPillColor(color: RyogoPillColorType = "slate") {
       return "bg-yellow-700 dark:bg-yellow-300"
     case "slate":
       return "bg-slate-700 dark:bg-slate-300"
+    case "white":
+      return "bg-white dark:bg-slate-950"
   }
 }
 
@@ -64,9 +68,13 @@ export function RyogoPill(props: PillType) {
       className={`flex items-center justify-center rounded-full ${getPillColor(props.bgColor)} ${getPillSize(props.size)} shrink-0 text-nowrap ${props.className ?? ""}`}
     >
       {props.size === "sm" ? (
-        <RyogoTiny color="white">{props.label}</RyogoTiny>
+        <RyogoTiny color={props.bgColor === "white" ? "slate" : "white"}>
+          {props.label}
+        </RyogoTiny>
       ) : (
-        <RyogoCaption color="white">{props.label}</RyogoCaption>
+        <RyogoCaption color={props.bgColor === "white" ? "slate" : "white"}>
+          {props.label}
+        </RyogoCaption>
       )}
     </div>
   )
@@ -277,5 +285,17 @@ export function SubscriptionPlanPill(
       return <RyogoPill {...props} label={label} bgColor={"slate"} />
     case SubscriptionPlanEnum.PREMIUM:
       return <RyogoPill {...props} label={label} bgColor={"brand"} />
+  }
+}
+
+export function UserRolePill(props: { role: UserRolesEnum } & RyogoPillType) {
+  const label = props.role.toUpperCase()
+  switch (props.role) {
+    case UserRolesEnum.OWNER:
+      return <RyogoPill {...props} label={label} bgColor={"slate"} />
+    case UserRolesEnum.AGENT:
+      return <RyogoPill {...props} label={label} bgColor={"light"} />
+    case UserRolesEnum.DRIVER:
+      return <RyogoPill {...props} label={label} bgColor={"yellow"} />
   }
 }

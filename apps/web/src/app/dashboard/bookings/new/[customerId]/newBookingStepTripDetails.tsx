@@ -21,10 +21,7 @@ import {
   getStringValueDisplayPairs,
 } from "@/lib/utils"
 import { findOrCreateRouteAction } from "@/app/actions/locations/findOrCreateRouteAction"
-import {
-  SectionColWrapper,
-  SectionRowWrapper,
-} from "@/components/page/pageWrappers"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   NewStepHeaderWrapper,
@@ -262,7 +259,7 @@ export default function NewBookingStepTripDetails({
         </NewFormContentWrapper>
         <NewFormContentWrapper>
           <RyogoSmall weight="font-bold">{t("Field8.Title")}</RyogoSmall>
-          <SectionRowWrapper>
+          <div className="flex flex-col lg:flex-row w-full gap-2 lg:gap-3">
             <TripTypeSelectionCard
               type={BookingTypeEnum.OneWay}
               onClick={() => {
@@ -290,7 +287,7 @@ export default function NewBookingStepTripDetails({
               title={BookingTypeEnum.MultiDay.toUpperCase()}
               desc={t("Field8.MultiDayDesc")}
             />
-          </SectionRowWrapper>
+          </div>
         </NewFormContentWrapper>
         <NewFormContentWrapper>
           <RyogoDatePicker

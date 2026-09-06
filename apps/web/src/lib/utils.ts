@@ -236,7 +236,9 @@ function getEstimatedTripDistance(
 
 //Calculate estimated total price
 export function getEstimatedTotalPrice(data: NewBookingRequestDataType) {
+  console.log(data)
   const days = getTripDuration(data.tripStartDate, data.tripEndDate)
+  console.log(days)
   const commissionRate = data.selectedCommissionRate ?? 0
 
   const totalAllowanceDays = getTripAllowanceDays(data.tripType, days)

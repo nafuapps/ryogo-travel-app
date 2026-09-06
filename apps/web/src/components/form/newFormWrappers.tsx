@@ -32,7 +32,7 @@ export function NewFormContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col relative gap-3 lg:gap-4 bg-white dark:bg-slate-900 rounded-lg shadow p-3 lg:p-4">
+    <div className="flex flex-col relative gap-3 lg:gap-4 bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5">
       {children}
     </div>
   )

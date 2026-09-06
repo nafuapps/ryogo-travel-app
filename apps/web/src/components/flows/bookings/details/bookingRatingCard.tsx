@@ -1,8 +1,33 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Star } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
-export default function BookingRatingCard({
+export default async function BookingRatingWrapper({
+  ratingByCustomer,
+  ratingByDriver,
+}: {
+  ratingByCustomer: number | null
+  ratingByDriver: number | null
+}) {
+  const t = await getTranslations("Dashboard.BookingDetails")
+  return (
+    <SectionRowWrapper>
+      {ratingByCustomer && (
+        <BookingRatingCard
+          label={t("CustomerRating")}
+          rating={ratingByCustomer}
+        />
+      )}
+      {ratingByDriver && (
+        <BookingRatingCard label={t("DriverRating")} rating={ratingByDriver} />
+      )}
+    </SectionRowWrapper>
+  )
+}
+
+function BookingRatingCard({
   label,
   rating,
 }: {

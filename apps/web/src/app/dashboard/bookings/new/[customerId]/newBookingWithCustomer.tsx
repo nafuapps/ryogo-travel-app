@@ -13,7 +13,10 @@ import {
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@/lib/uiConfig"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import {
+  SubscriptionPlanEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { differenceInDays } from "date-fns"
@@ -83,21 +86,27 @@ export default async function NewBookingWithCustomerPageComponent({
   //Get driver Data with their bookings and leaves
   let drivers = await driverServices.findDriversByAgency(agencyId)
 
-  const allDashboardUsers =
-    await userServices.findOwnerAndAgentsByAgency(agencyId)
+  let allUsers = await userServices.findOwnerAndAgentsByAgency(agencyId)
 
   let limited = false
 
-  //SUBSCRIPTION BLOCKER: Limited agents can creating bookings
+  //SUBSCRIPTION BLOCKER: Limited agents can creating bookings (preference for owners first and then oldest agents)
   if (
     !APP_TRIAL_MODE &&
     (isBasic || agency.subscriptionExpiresOn < new Date())
   ) {
-    if (allDashboardUsers.length > BASIC_PLAN_AGENT_LIMIT) {
-      const preferredAgents = allDashboardUsers
-        .sort((u1, u2) => u2.createdAt.getTime() - u1.createdAt.getTime())
-        .splice(0, BASIC_PLAN_AGENT_LIMIT)
-      if (!preferredAgents.find((user) => user.id === userId)) {
+    if (allUsers.length > BASIC_PLAN_AGENT_LIMIT) {
+      const owners = allUsers.filter((u) => u.userRole === UserRolesEnum.OWNER)
+      if (owners.length >= BASIC_PLAN_AGENT_LIMIT) {
+        allUsers = owners.slice(0, BASIC_PLAN_AGENT_LIMIT)
+      } else {
+        const preferredAgents = allUsers
+          .filter((u) => u.userRole === UserRolesEnum.AGENT)
+          .sort((u1, u2) => u2.createdAt.getTime() - u1.createdAt.getTime())
+          .splice(0, BASIC_PLAN_AGENT_LIMIT - owners.length)
+        allUsers = [...owners, ...preferredAgents]
+      }
+      if (!allUsers.find((user) => user.id === userId)) {
         return (
           <PageWrapper id="NewBookingLimitBlockerPage">
             <SubscriptionBlockerSection

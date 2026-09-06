@@ -7,7 +7,7 @@ import ReactPDF, {
   View,
   Link,
 } from "@react-pdf/renderer"
-import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
@@ -16,7 +16,7 @@ import { getBookingTrackingLink } from "@/lib/utils"
 export function LeadQuoteDocument({
   booking,
 }: {
-  booking: NonNullable<FindLeadBookingByIdType>
+  booking: NonNullable<FindBookingDetailsByIdType>
 }) {
   const agencyLogoUrl = booking.agency.logoUrl
   const bookingLink = getBookingTrackingLink(booking.id)
@@ -219,7 +219,7 @@ export function LeadQuoteDocument({
 }
 
 export default async function getLeadQuotePDF(
-  bookingDetails: NonNullable<FindLeadBookingByIdType>,
+  bookingDetails: NonNullable<FindBookingDetailsByIdType>,
 ) {
   return await ReactPDF.pdf(
     <LeadQuoteDocument booking={bookingDetails} />,

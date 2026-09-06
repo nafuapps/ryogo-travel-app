@@ -111,10 +111,12 @@ export default function ChangePickupAddressSheet({
                 label={t("PickupAddress")}
                 placeholder={t("PickupAddressPlaceholder")}
               />
-              <RyogoCheckbox
-                name={"sameAsCustomerAddress"}
-                label={t("SameAsCustomerAddress")}
-              />
+              {customerAddress && (
+                <RyogoCheckbox
+                  name={"sameAsCustomerAddress"}
+                  label={t("SameAsCustomerAddress")}
+                />
+              )}
             </div>
           </form>
         </Form>

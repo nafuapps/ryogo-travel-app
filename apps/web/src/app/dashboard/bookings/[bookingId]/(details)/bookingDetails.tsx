@@ -20,11 +20,10 @@ import {
   UserKey,
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
-import { PageWrapper, SectionRowWrapper } from "@/components/page/pageWrappers"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
-import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import ShareTrackBookingLinkButton from "@/components/buttons/track/shareTrackBookingLinkButton"
 import ReviewCompletedBookingAlertButton from "@/components/buttons/alert/reviewCompletedBookingAlertButton"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
@@ -38,11 +37,14 @@ import BookingStartTimeCard from "@/components/flows/bookings/details/bookingSta
 import BookingDropAddressCard from "@/components/flows/bookings/details/bookingDropAddressCard"
 import BookingPickupAddressCard from "@/components/flows/bookings/details/bookingPickupAddressCard"
 import BookingRemarksCard from "@/components/flows/bookings/details/bookingRemarksCard"
-import BookingRatingCard from "@/components/flows/bookings/details/bookingRatingCard"
 import BookingCreationInfoCard from "@/components/flows/bookings/details/bookingInfoCard"
 import BookingReconcileCard from "@/components/flows/bookings/details/bookingReconcileCard"
 import BookingIDWrapper from "@/components/flows/bookings/details/BookingIDWrapper"
 import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
+import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
+import BookingViewInvoiceButton from "@/components/flows/bookings/details/bookingViewInvoiceButton"
+import BookingViewQuoteButton from "@/components/flows/bookings/details/bookingViewQuoteButton"
+import BookingViewConfirmationButton from "@/components/flows/bookings/details/bookingViewConfirmationButton"
 // import LeadPDFViewer from "@/components/pdf/leadPDFViewer"
 
 export default async function BookingDetailsPageComponent({
@@ -75,6 +77,12 @@ export default async function BookingDetailsPageComponent({
 
   const canSeeTripDetails = isConfirmed || isInProgress
   const canEditTripDetails = (isOwner || isAssignedUser) && isConfirmed
+
+  const canConfirmBooking = (isOwner || isAssignedUser) && isLead
+
+  const canViewQuote = (isOwner || isAssignedUser) && isCompleted
+  const canViewConfirmation = (isOwner || isAssignedUser) && isConfirmed
+  const canViewInvoice = (isOwner || isAssignedUser) && isCompleted
 
   const canReconcileBooking =
     isOwner && isCompleted && bookingDetails.reviewCompletedByAgencyAt
@@ -112,28 +120,31 @@ export default async function BookingDetailsPageComponent({
           sectionTitle={t("BookingInfo")}
           icon={BriefcaseBusiness}
         >
-          <BookingIDWrapper id={bookingDetails.id} />
+          <BookingIDWrapper
+            id={bookingDetails.id}
+            status={bookingDetails.status}
+          />
           <BookingCreationInfoCard
             name={bookingDetails.bookedByUser.name}
             photoUrl={bookingDetails.bookedByUser.photoUrl}
             createdAt={bookingDetails.createdAt}
           />
-          <BookingStatusPill status={bookingDetails.status} />
-          <SectionRowWrapper>
-            {bookingDetails.ratingByCustomer && isCompleted && (
-              <BookingRatingCard
-                label={t("CustomerRating")}
-                rating={bookingDetails.ratingByCustomer}
-              />
-            )}
-            {bookingDetails.ratingByDriver && isCompleted && (
-              <BookingRatingCard
-                label={t("DriverRating")}
-                rating={bookingDetails.ratingByDriver}
-              />
-            )}
-          </SectionRowWrapper>
+          {isCompleted && (
+            <BookingRatingWrapper
+              ratingByCustomer={bookingDetails.ratingByCustomer}
+              ratingByDriver={bookingDetails.ratingByDriver}
+            />
+          )}
           <BookingActionWrapper>
+            {canConfirmBooking && (
+              <Link href={`/dashboard/bookings/${bookingDetails.id}/confirm`}>
+                <RyogoDetailedIconButton
+                  label={t("ConfirmBooking.Title")}
+                  icon={CalendarPlus}
+                  subtitle={t("ConfirmBooking.Subtitle")}
+                />
+              </Link>
+            )}
             {canReconcileBooking && (
               <BookingReconcileCard
                 id={bookingDetails.id}
@@ -286,24 +297,36 @@ export default async function BookingDetailsPageComponent({
             title={t("TotalAmount")}
             value={"₹" + totalAmount}
           />
+          {canViewQuote && bookingDetails.quoteUrl && (
+            <BookingViewQuoteButton bookingDetails={bookingDetails} />
+          )}
+          {canViewConfirmation && bookingDetails.confirmationUrl && (
+            <BookingViewConfirmationButton bookingDetails={bookingDetails} />
+          )}
+          {canViewInvoice && bookingDetails.invoiceUrl && (
+            <BookingViewInvoiceButton bookingDetails={bookingDetails} />
+          )}
           {(isOwner || isAssignedUser) && (
             //Invoice can be sent for a completed and reviewed booking only
             <BookingActionWrapper>
-              {isCompleted &&
-                (bookingDetails.reviewCompletedByAgencyAt ? (
-                  <SendInvoiceAlertButton
-                    bookingId={bookingDetails.id}
-                    agencyId={bookingDetails.agencyId}
-                    assignedUserId={bookingDetails.assignedUserId}
-                    invoiceSentOn={bookingDetails.invoiceSentOn}
-                  />
-                ) : (
-                  <ReviewCompletedBookingAlertButton
-                    bookingId={bookingDetails.id}
-                    agencyId={bookingDetails.agencyId}
-                    assignedUserId={bookingDetails.assignedUserId}
-                  />
-                ))}
+              {isCompleted && (
+                <>
+                  {bookingDetails.reviewCompletedByAgencyAt ? (
+                    <SendInvoiceAlertButton
+                      bookingId={bookingDetails.id}
+                      agencyId={bookingDetails.agencyId}
+                      assignedUserId={bookingDetails.assignedUserId}
+                      invoiceSentOn={bookingDetails.invoiceSentOn}
+                    />
+                  ) : (
+                    <ReviewCompletedBookingAlertButton
+                      bookingId={bookingDetails.id}
+                      agencyId={bookingDetails.agencyId}
+                      assignedUserId={bookingDetails.assignedUserId}
+                    />
+                  )}
+                </>
+              )}
               {isConfirmed && (
                 //Confirmation can be sent for a confirmed booking only
                 <SendConfirmationAlertButton
@@ -323,7 +346,6 @@ export default async function BookingDetailsPageComponent({
               )}
             </BookingActionWrapper>
           )}
-          {/* <InvoicePDFViewer booking={bookingDetails} /> */}
           {/* <LeadPDFViewer booking={booking} /> */}
         </BookingSection>
         <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>

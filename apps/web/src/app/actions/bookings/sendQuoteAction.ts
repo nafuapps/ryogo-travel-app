@@ -29,7 +29,7 @@ export async function sendQuoteAction(
   }
 
   //Get lead booking details
-  const bookingDetails = await bookingServices.findLeadBookingById(id)
+  const bookingDetails = await bookingServices.findBookingDetailsById(id)
   if (!bookingDetails) return
 
   let quoteUrl = bookingDetails.quoteUrl

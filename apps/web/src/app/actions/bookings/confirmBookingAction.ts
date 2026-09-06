@@ -125,7 +125,7 @@ export async function confirmBookingAction(
     })
   }
 
-  //Get booking confirmation pdf link so that it can be shared to customer over whatsapp
+  //Get booking confirmation pdf link so that it can be shared with customer over whatsapp
   const t = await getTranslations("Dashboard.Whatsapp")
   let message
   const messageBody = {

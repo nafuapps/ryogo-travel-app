@@ -39,10 +39,15 @@ export default function NewBookingForm({
   isSubscribed: boolean
   hasTriedSubscription: boolean
 }) {
+  const now = new Date()
+  const today = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+  )
+
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingRequestDataType>({
-      tripStartDate: new Date(),
-      tripEndDate: new Date(),
+      tripStartDate: today,
+      tripEndDate: today,
       tripSourceLocationState: agency.location.state,
       tripSourceLocationCity: agency.location.city,
       tripDestinationLocationState: agency.location.state,

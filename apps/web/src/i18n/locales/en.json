@@ -1095,7 +1095,7 @@
           },
           "Loading": "Loading..",
           "PrimaryCTA": "Continue",
-          "WithoutCTA": "Continue without assigning vehicle",
+          "WithoutCTA": "Continue without vehicle",
           "Back": "Back"
         },
         "StepDriver": {
@@ -1116,7 +1116,7 @@
           },
           "Loading": "Loading..",
           "PrimaryCTA": "Continue",
-          "WithoutCTA": "Continue without assigning driver",
+          "WithoutCTA": "Continue without driver",
           "Back": "Back"
         },
         "StepPrice": {
@@ -1199,7 +1199,8 @@
       }
     },
     "ConfirmBooking": {
-      "ConfirmInfo": "LEAD CONFIRMATION INFO",
+      "Title": "Confirm Lead Booking",
+      "Subtitle": "Add pickup details and confirm the booking",
       "PickupAddress": "Pickup Address",
       "AddressError1": "Address should be atleast 10 characters",
       "AddressError2": "Address should be less than 300 characters",
@@ -1215,10 +1216,11 @@
       "Confirm": {
         "Label": "Confirm Booking",
         "Title": "Are you sure you want to confirm this booking?",
-        "Desc": "Once confirmed, this booking will be visible to the assigned driver and liable for billing.",
+        "Desc": "Once confirmed, this booking will be visible in agency schedule and counted in revenue.",
         "NoCTA": "No",
         "YesCTA": "Yes, Confirm"
-      }
+      },
+      "Back": "Back"
     },
     "ReconcileBooking": {
       "ReconcileTrialWarning": "You cannot use this feature in basic plan.",
@@ -1230,12 +1232,16 @@
       "RenewCTA": "Renew Subscription"
     },
     "BookingDetails": {
-      "BookingInfo": "BOOKING INFO",
-      "Created": "Booking Creation",
+      "BookingInfo": "BASIC DETAILS",
+      "Created": "Booking Creation Info",
       "CustomerRating": "Customer Rating",
       "DriverRating": "Driver Rating",
       "AssignedUserInfo": "ASSIGNED USER",
       "CallAssignedUser": "Call User",
+      "ConfirmBooking": {
+        "Title": "Confirm Booking",
+        "Subtitle": "Add booking to schedule and make it visible to the assigned driver"
+      },
       "AssignAgent": {
         "Title": "Change User",
         "Subtitle": "Assign another user to manage this booking"
@@ -1286,7 +1292,10 @@
         "Title": "Chat with Driver",
         "Subtitle": "Start a Whatsapp chat with assigned driver"
       },
-      "PriceInfo": "PRICE INFO",
+      "ViewInvoice": "View Booking Invoice",
+      "ViewQuote": "View Booking Quote",
+      "ViewConfirmation": "View Booking Confirmation",
+      "PriceInfo": "PRICE DETAILS",
       "VehicleCharge": "Vehicle Charge",
       "RatePerKm": "(₹{rate} for {km} Km)",
       "DriverAllowance": "Driver Allowance",
@@ -4818,8 +4827,8 @@
         "YesCTA": "Yes, Review and Generate Invoice"
       },
       "SendInvoice": {
-        "Label": "Send Invoice to Customer",
-        "Subtitle": "Share booking invoice with customer on Whatsapp",
+        "Label": "Share invoice with Customer",
+        "Subtitle": "Send booking invoice to customer on Whatsapp and Email",
         "Disabled": "Wait {count} minutes to resend invoice",
         "Title": "Are you sure you want to send invoice to customer?",
         "Desc": "If you have sent an invoice already, refrain from sending it again.. It might look like spam to the customer",
@@ -4831,10 +4840,10 @@
         "InvoiceSent": "Invoice Sent!"
       },
       "SendQuote": {
-        "Label": "Send Quote to Customer",
-        "Subtitle": "Share a booking quotation with customer on Whatsapp",
+        "Label": "Share booking quotation with Customer",
+        "Subtitle": "Send booking quotation to the customer on Whatsapp and Email",
         "Disabled": "Wait {count} minutes to resend quotation",
-        "Title": "Are you sure you want to send quote to customer?",
+        "Title": "Are you sure you want to send booking quotation to customer?",
         "Desc": "If you have sent a quote already, refrain from sending it again.. It might look like spam to the customer",
         "NoCTA": "No",
         "Success": "Quote sent to the customer!",
@@ -4843,8 +4852,8 @@
         "YesCTA": "Yes, Send"
       },
       "SendConfirmation": {
-        "Label": "Send Confirmation to Customer",
-        "Subtitle": "Share booking confirmation with customer on Whatsapp",
+        "Label": "Share confirmation with customer",
+        "Subtitle": "Send booking confirmation to customer on Whatsapp and Email",
         "Disabled": "Wait {count} minutes to resend confirmation",
         "Title": "Are you sure you want to send booking confirmation to customer?",
         "Desc": "If you have sent a booking confirmation already, refrain from sending it again.. It might look like spam to the customer",

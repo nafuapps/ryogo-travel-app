@@ -12,6 +12,7 @@ import { differenceInDays } from "date-fns"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import ConfirmBookingPageComponent from "./confirmBookingForm"
+import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 
 export const metadata: Metadata = {
   title: `Confirm Lead Booking - ${pageTitle}`,
@@ -32,7 +33,7 @@ export default async function ConfirmBookingPage({
   }
 
   //Get lead booking details from DB
-  const booking = await bookingServices.findLeadBookingById(bookingId)
+  const booking = await bookingServices.findBookingDetailsById(bookingId)
   if (!booking) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
@@ -70,7 +71,9 @@ export default async function ConfirmBookingPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/confirm"} />
-      <ConfirmBookingPageComponent booking={booking} />
+      <ConfirmBookingPageComponent booking={booking}>
+        <BookingTripCard booking={booking} />
+      </ConfirmBookingPageComponent>
     </MainWrapper>
   )
 }

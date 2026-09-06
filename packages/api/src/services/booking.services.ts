@@ -316,12 +316,6 @@ export const bookingServices = {
     return booking.assignedUserId
   },
 
-  //Get (lead) booking by id
-  async findLeadBookingById(bookingId: string) {
-    const booking = await bookingRepository.readBookingById(bookingId)
-    return booking
-  },
-
   //Get booking status by id
   async findBookingStatusById(bookingId: string) {
     const booking = await bookingRepository.readBookingStatusById(bookingId)
@@ -793,10 +787,6 @@ export type FindLeadBookingsNextDaysType = Awaited<
 
 export type FindAssignedUserIdByBookingIdType = Awaited<
   ReturnType<typeof bookingServices.findAssignedUserIdByBookingId>
->
-
-export type FindLeadBookingByIdType = Awaited<
-  ReturnType<typeof bookingServices.findLeadBookingById>
 >
 
 export type FindBookingStatusByIdType = Awaited<

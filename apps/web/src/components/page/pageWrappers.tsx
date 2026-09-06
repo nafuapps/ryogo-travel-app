@@ -150,7 +150,7 @@ export function SectionRowWrapper({
 }) {
   return (
     <div
-      className={`flex ${reverse ? "flex-row-reverse" : "flex-row"} ${wFull ? "w-full" : ""} ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${justifyStart ? "justify-start" : justifyEnd ? "justify-end" : "justify-between"} ${center ? "items-center" : ""} ${end ? "items-end" : ""} `}
+      className={`flex ${reverse ? "flex-row-reverse" : "flex-row"} ${wFull ? "w-full" : ""} ${small ? "gap-1 lg:gap-1.5" : "gap-2 lg:gap-3"} ${justifyStart ? "justify-start" : justifyEnd ? "justify-end" : "justify-between"} ${center ? "items-center" : ""} ${end ? "items-end" : ""}  empty:hidden`}
       onClick={onClick}
     >
       {children}

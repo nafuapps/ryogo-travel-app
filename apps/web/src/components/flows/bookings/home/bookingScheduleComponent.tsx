@@ -12,7 +12,7 @@ export default async function BookingScheduleComponent({
   )
 
   if (bookings14Days.length === 0) {
-    return <></>
+    return null
   }
 
   return <BookingScheduleChartComponent bookings14Days={bookings14Days} />

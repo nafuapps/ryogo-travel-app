@@ -29,13 +29,17 @@ export default function ChangeBookingRemarksSheet({
   userId,
   originalRemarks,
   children,
+  canEdit = true,
 }: {
   bookingId: string
   agencyId: string
   userId: string
   originalRemarks: string | null
   children: React.ReactNode
+  canEdit?: boolean
 }) {
+  if (!canEdit) return children
+
   const t = useTranslations("Sheets.ChangeBookingRemarks")
   const [open, setOpen] = useState(false)
   const router = useRouter()

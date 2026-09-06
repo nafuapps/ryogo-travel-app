@@ -10,7 +10,7 @@ export default async function BookingScheduleComponent({
     await bookingServices.findBookingsHistoryLastDays(agencyId, 14)
 
   if (bookingsHistory14Days.length === 0) {
-    return <></>
+    return null
   }
 
   return (

@@ -21,7 +21,7 @@ import {
   LeavePopoverCard,
 } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { addDays } from "date-fns"
 
 export default function DriversScheduleChartComponent({
@@ -63,7 +63,7 @@ export default function DriversScheduleChartComponent({
               return (
                 <DashboardScheduleItem key={index}>
                   <DashboardScheduleItemID
-                    icon={<RyogoIcon icon={User} size="md" />}
+                    icon={<RyogoEnclosedIcon icon={User} size="sm" />}
                     imageAlt={t("Photo")}
                     title={driver.name}
                     photoUrl={driver.user.photoUrl}

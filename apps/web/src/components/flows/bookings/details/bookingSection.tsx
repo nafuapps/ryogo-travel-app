@@ -1,6 +1,6 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { SectionWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import { RyogoSmall } from "@/components/typography"
 import { LucideIcon } from "lucide-react"
 
 export default function BookingSection({
@@ -13,12 +13,17 @@ export default function BookingSection({
   children: React.ReactNode
 }) {
   return (
-    <SectionWrapper id={sectionTitle}>
-      <div className="flex gap-1.5 lg:gap-2 items-center">
+    <div
+      id={sectionTitle}
+      className="flex flex-col gap-4 lg:gap-5 p-4 lg:p-5 w-full mb-4 break-inside-avoid rounded-lg bg-white dark:bg-slate-900 empty:hidden"
+    >
+      <SectionRowWrapper center justifyStart>
         <RyogoIcon icon={icon} size="sm" />
-        <RyogoCaption color="slate">{sectionTitle}</RyogoCaption>
-      </div>
-      <div className="flex flex-col gap-3 lg:gap-4">{children}</div>
-    </SectionWrapper>
+        <RyogoSmall color="light" weight="font-bold">
+          {sectionTitle}
+        </RyogoSmall>
+      </SectionRowWrapper>
+      {children}
+    </div>
   )
 }

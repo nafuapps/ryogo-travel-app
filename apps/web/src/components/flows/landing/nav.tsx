@@ -163,7 +163,7 @@ function LanguageSelector({ locale }: { locale: UserLangEnum }) {
           <SelectItem
             key={lang.value}
             value={lang.value}
-            className="cursor-pointer focus:bg-gray-50 dark:focus:bg-slate-900 text-gray-700 dark:text-gray-200"
+            className="focus:bg-gray-50 dark:focus:bg-slate-900 text-gray-700 dark:text-gray-200"
           >
             <RyogoCaption color="slate">{lang.display}</RyogoCaption>
           </SelectItem>

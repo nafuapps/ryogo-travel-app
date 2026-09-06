@@ -1,7 +1,6 @@
 //bookings/id/confirm page (for lead booking)
 
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import ConfirmBookingPageComponent from "./confirmBooking"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { getCurrentUser } from "@/lib/auth"
@@ -12,6 +11,7 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { differenceInDays } from "date-fns"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
 import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
+import ConfirmBookingPageComponent from "./confirmBookingForm"
 
 export const metadata: Metadata = {
   title: `Confirm Lead Booking - ${pageTitle}`,
@@ -37,7 +37,7 @@ export default async function ConfirmBookingPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Not a lead booking -> send to details page
+  //Not a lead booking -> send to booking details page
   if (booking.status !== BookingStatusEnum.LEAD) {
     redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
   }
@@ -59,14 +59,18 @@ export default async function ConfirmBookingPage({
     }
   }
 
+  //Only owner or assigned user can confirm a booking
+  if (
+    currentUser.userRole !== UserRolesEnum.OWNER ||
+    currentUser.userId !== booking.assignedUserId
+  ) {
+    redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
+  }
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/confirm"} />
-      <ConfirmBookingPageComponent
-        booking={booking}
-        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-        isAssignedUser={booking.assignedUser.id === currentUser.userId}
-      />
+      <ConfirmBookingPageComponent booking={booking} />
     </MainWrapper>
   )
 }

@@ -82,7 +82,7 @@ export default function StartTripSheet({
 
   if (!booking.assignedDriverId || !booking.assignedVehicleId) {
     setOpen(false)
-    return <></>
+    return null
   }
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId

@@ -951,7 +951,9 @@ export const bookings = pgTable(
     actualTotalAmount: integer("actual_total_amount"), // in currency (updated at the end of the trip)
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
-    isReconciled: boolean("is_reconciled").notNull().default(false),
+    reconciledAt: timestamp("reconciled_at", {
+      withTimezone: true,
+    }), //reconciled by owner
     quoteSentOn: timestamp("quote_sent_on", { withTimezone: true }),
     quoteUrl: text("quote_url"),
     confirmationSentOn: timestamp("confirmation_sent_on", {

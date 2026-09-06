@@ -10,7 +10,7 @@ export const DASHBOARD_USER_ONLINE_MINUTES = 10
 export const DASHBOARD_USER_AWAY_MINUTES = 30
 
 //Bookings
-export const OLD_LEAD_AUTO_CANCEL_DAYS = 3 //Auto cancel lead booking after this many days
+export const OLD_LEAD_AUTO_CANCEL_DAYS = 1 //Auto cancel lead booking if start date has elapsed by X days
 export const SEND_REFRESH_TIMEOUT_MINUTES = 15 //Waiting before resending document to customer
 export const NEW_BOOKING_DEFAULT_DISTANCE = 1
 export const NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY = 0

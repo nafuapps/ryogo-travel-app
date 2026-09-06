@@ -1,9 +1,10 @@
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
 import ChangeUserPickupAddressSheet from "@/components/sheets/changePickupAddressSheet"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { MapPinHouse, SquarePen } from "lucide-react"
+import { MapPinHouse } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import {
+  BookingAddTripInfoWrapper,
+  BookingEditTripInfoWrapper,
+} from "./bookingDetailsCommon"
 
 export default async function BookingPickupAddressCard({
   bookingId,
@@ -23,23 +24,21 @@ export default async function BookingPickupAddressCard({
   const t = await getTranslations("Dashboard.BookingDetails")
   if (pickupAddress) {
     return (
-      <div className="border flex p-2 lg:p-3 gap-2 lg:gap-3 justify-between items-center rounded-md">
-        <SectionColWrapper wFull small>
-          <RyogoCaption color="light">{t("PickupAddress")}</RyogoCaption>
-          <RyogoSmall color="slate">{pickupAddress}</RyogoSmall>
-        </SectionColWrapper>
-        {canEdit && (
-          <ChangeUserPickupAddressSheet
-            bookingId={bookingId}
-            agencyId={agencyId}
-            userId={userId}
-            originalPickupAddress={pickupAddress}
-            customerAddress={customerAddress}
-          >
-            <RyogoEnclosedIcon icon={SquarePen} size="sm" />
-          </ChangeUserPickupAddressSheet>
-        )}
-      </div>
+      <ChangeUserPickupAddressSheet
+        bookingId={bookingId}
+        agencyId={agencyId}
+        userId={userId}
+        originalPickupAddress={pickupAddress}
+        customerAddress={customerAddress}
+        canEdit={canEdit}
+      >
+        <BookingEditTripInfoWrapper
+          label={t("PickupAddress")}
+          value={pickupAddress}
+          canEdit={canEdit}
+          icon={MapPinHouse}
+        />
+      </ChangeUserPickupAddressSheet>
     )
   }
 
@@ -52,10 +51,10 @@ export default async function BookingPickupAddressCard({
         originalPickupAddress={pickupAddress}
         customerAddress={customerAddress}
       >
-        <div className="border border-dashed rounded-md flex items-center justify-center p-2 lg:p-3 gap-2 lg:gap-3">
-          <RyogoEnclosedIcon icon={MapPinHouse} size="sm" />
-          <RyogoCaption color="slate">{t("AddPickupAddress")}</RyogoCaption>
-        </div>
+        <BookingAddTripInfoWrapper
+          icon={MapPinHouse}
+          label={t("AddPickupAddress")}
+        />
       </ChangeUserPickupAddressSheet>
     )
   }

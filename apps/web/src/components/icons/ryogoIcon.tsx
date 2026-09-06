@@ -10,7 +10,7 @@ type RyogoIconColorType =
   | "white"
   | "light"
 
-type RyogoIconSizeType = "sm" | "md" | "lg" | "xl"
+type RyogoIconSizeType = "sm" | "md" | "lg" | "xl" | "xs"
 
 function getIconColor(color?: RyogoIconColorType) {
   switch (color) {
@@ -64,6 +64,8 @@ function getIconSize(size: RyogoIconSizeType) {
       return "size-7 md:size-8"
     case "sm":
       return "size-5 md:size-6"
+    case "xs":
+      return "size-3.5 md:size-4"
   }
 }
 
@@ -77,6 +79,8 @@ function getBGIconSize(size: RyogoIconSizeType) {
       return "size-10 md:size-12"
     case "sm":
       return "size-8 md:size-9"
+    case "xs":
+      return "size-5.5 md:size-6"
   }
 }
 
@@ -89,6 +93,8 @@ function getBGIconRounded(size: RyogoIconSizeType) {
     case "md":
       return "rounded-md"
     case "sm":
+      return "rounded-sm"
+    case "xs":
       return "rounded-sm"
   }
 }

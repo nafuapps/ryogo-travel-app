@@ -43,7 +43,7 @@ export default async function OnTripVehiclesComponent({
 function OnTripVehicleComponent(vehicle: FindVehiclesOnTripType[number]) {
   const booking = vehicle.assignedBookings[0]
   if (!booking) {
-    return <></>
+    return null
   }
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>

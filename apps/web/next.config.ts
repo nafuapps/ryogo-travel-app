@@ -14,7 +14,7 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["192.168.29.143"],
+  allowedDevOrigins: ["192.168.29.143", "*.devtunnels.ms"],
   cacheComponents: false, //TODO
   partialPrefetching: false, //TODO
   reactStrictMode: true,

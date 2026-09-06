@@ -9,6 +9,7 @@ import {
   RyogoCheckbox,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
+import { PageWrapper } from "@/components/page/pageWrappers"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindLeadBookingByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
@@ -18,12 +19,10 @@ import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 
-export default function ConfirmBookingForm({
+export default function ConfirmBookingPageComponent({
   booking,
-  canConfirm,
 }: {
   booking: NonNullable<FindLeadBookingByIdType>
-  canConfirm: boolean
 }) {
   const t = useTranslations("Dashboard.ConfirmBooking")
   const router = useRouter()
@@ -91,51 +90,47 @@ export default function ConfirmBookingForm({
   }, [pickupAddressCopySelection, pickupAddressSourceValue, setValue])
 
   return (
-    <NewFormWrapper<ConfirmBookingType>
-      id="confirmBookingForm"
-      onSubmit={form.handleSubmit(submit)}
-      form={form}
-    >
-      <RyogoTextarea
-        name="pickupAddress"
-        label={t("PickupAddress")}
-        placeholder={t("PickupAddressPlaceholder")}
-      />
-      <RyogoCheckbox
-        name={"sameAsCustomerAddress"}
-        label={t("SameAsCustomerAddress")}
-      />
-      <RyogoTextarea
-        name="dropAddress"
-        label={t("DropAddress")}
-        placeholder={t("DropAddressPlaceholder")}
-      />
-      <RyogoTimePicker name="startTime" label={t("PickupTime")} />
-      {canConfirm && (
-        <>
-          <RyogoAlertDialog
-            title={t("Confirm.Title")}
-            desc={t("Confirm.Desc")}
-            noCTA={t("Confirm.NoCTA")}
-            labelChild={
-              <RyogoDefaultButton
-                label={t("Confirm.Label")}
-                className="w-full"
-              />
+    <PageWrapper id="ConfirmBookingPage">
+      <NewFormWrapper<ConfirmBookingType>
+        id="confirmBookingForm"
+        onSubmit={form.handleSubmit(submit)}
+        form={form}
+      >
+        <RyogoTextarea
+          name="pickupAddress"
+          label={t("PickupAddress")}
+          placeholder={t("PickupAddressPlaceholder")}
+        />
+        <RyogoCheckbox
+          name={"sameAsCustomerAddress"}
+          label={t("SameAsCustomerAddress")}
+        />
+        <RyogoTextarea
+          name="dropAddress"
+          label={t("DropAddress")}
+          placeholder={t("DropAddressPlaceholder")}
+        />
+        <RyogoTimePicker name="startTime" label={t("PickupTime")} />
+
+        <RyogoAlertDialog
+          title={t("Confirm.Title")}
+          desc={t("Confirm.Desc")}
+          noCTA={t("Confirm.NoCTA")}
+          labelChild={
+            <RyogoDefaultButton label={t("Confirm.Label")} className="w-full" />
+          }
+        >
+          <RyogoDefaultButton
+            size={"lg"}
+            label={
+              form.formState.isSubmitting ? t("Loading") : t("Confirm.YesCTA")
             }
-          >
-            <RyogoDefaultButton
-              size={"lg"}
-              label={
-                form.formState.isSubmitting ? t("Loading") : t("Confirm.YesCTA")
-              }
-              onClick={() => form.handleSubmit(submit)()}
-              disabled={form.formState.isSubmitting}
-              showSpinner={form.formState.isSubmitting}
-            />
-          </RyogoAlertDialog>
-        </>
-      )}
-    </NewFormWrapper>
+            onClick={() => form.handleSubmit(submit)()}
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
+          />
+        </RyogoAlertDialog>
+      </NewFormWrapper>
+    </PageWrapper>
   )
 }

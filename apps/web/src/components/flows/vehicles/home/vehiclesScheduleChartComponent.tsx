@@ -62,7 +62,7 @@ export default function VehiclesScheduleChartComponent({
                 <DashboardScheduleItem key={index}>
                   <DashboardScheduleItemID
                     icon={
-                      <GetVehicleIcon vehicleType={vehicle.type} size="md" />
+                      <GetVehicleIcon vehicleType={vehicle.type} size="sm" />
                     }
                     imageAlt={t("Photo")}
                     title={vehicle.vehicleNumber}

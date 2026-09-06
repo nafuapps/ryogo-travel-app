@@ -30,6 +30,7 @@ export default function ChangePickupAddressSheet({
   originalPickupAddress,
   children,
   customerAddress,
+  canEdit,
 }: {
   bookingId: string
   agencyId: string
@@ -37,7 +38,10 @@ export default function ChangePickupAddressSheet({
   originalPickupAddress: string | null
   children: React.ReactNode
   customerAddress: string | null
+  canEdit?: boolean
 }) {
+  if (!canEdit) return children
+
   const t = useTranslations("Sheets.ChangePickupAddress")
   const [open, setOpen] = useState(false)
   const router = useRouter()

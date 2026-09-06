@@ -1,5 +1,3 @@
-//Bookings/id/assign-driver page (for a lead/confirmed booking)
-
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {

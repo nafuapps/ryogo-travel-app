@@ -23,7 +23,7 @@ export default function UserCard({
 }) {
   return (
     <div
-      className={`flex gap-2 lg:gap-3 w-full justify-between items-center border border-slate-100 dark:border-slate-800 rounded-lg p-3 lg:p-4 ${isLink ? "cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800" : ""}`}
+      className={`flex gap-2 lg:gap-3 w-full justify-between items-center border border-slate-100 dark:border-slate-800 rounded-lg p-3 lg:p-4 ${isLink ? "hover:bg-slate-50 dark:hover:bg-slate-800" : ""}`}
     >
       {user.photoUrl ? (
         <RyogoImage

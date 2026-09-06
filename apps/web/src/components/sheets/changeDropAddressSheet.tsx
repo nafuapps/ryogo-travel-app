@@ -29,13 +29,17 @@ export default function ChangeDropAddressSheet({
   userId,
   originalDropAddress,
   children,
+  canEdit = true,
 }: {
   bookingId: string
   agencyId: string
   userId: string
   originalDropAddress: string | null
   children: React.ReactNode
+  canEdit?: boolean
 }) {
+  if (!canEdit) return children
+
   const t = useTranslations("Sheets.ChangeDropAddress")
   const [open, setOpen] = useState(false)
   const router = useRouter()

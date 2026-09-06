@@ -1343,6 +1343,7 @@ export const bookingRepository = {
           columns: {
             id: true,
             name: true,
+            photoUrl: true,
           },
         },
         source: {

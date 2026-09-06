@@ -5,7 +5,7 @@ import { CheckCheck, Copy } from "lucide-react"
 import { useEffect, useState } from "react"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
-export default function CopyClipboardButton({ label }: { label?: string }) {
+export default function CopyClipboardButton({ label }: { label: string }) {
   const [isCopied, setIsCopied] = useState(false)
 
   //Ping for 1 second
@@ -19,16 +19,16 @@ export default function CopyClipboardButton({ label }: { label?: string }) {
 
   function handleCopy() {
     setIsCopied(true)
-    navigator.clipboard.writeText(label ?? window.location.href)
+    navigator.clipboard.writeText(label)
   }
 
   return (
-    //Animate the copy button
     <RyogoOutlineButton onClick={() => handleCopy()}>
       <RyogoIcon
         icon={isCopied ? CheckCheck : Copy}
         size="sm"
         color={isCopied ? "green" : "slate"}
+        //Animate the copy button
         className={` ${isCopied ? "animate-ping scale-75" : ""}`}
       />
     </RyogoOutlineButton>

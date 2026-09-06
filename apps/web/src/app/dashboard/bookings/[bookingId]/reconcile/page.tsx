@@ -10,7 +10,7 @@ import {
 import { redirect, RedirectType } from "next/navigation"
 import ReconcileBookingPageComponent from "./reconcileBooking"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { APP_TRIAL_MODE } from "@/lib/uiConfig"
 import { getTranslations } from "next-intl/server"
@@ -33,25 +33,28 @@ export default async function ReconcileBookingPage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-
+  //Get booking data
   const booking = await bookingServices.findBookingDetailsById(bookingId)
   if (!booking) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Only owner can reconcile booking (which must be in completed state)
+  //Only owner can reconcile booking (which must be in reviewed state but not reconciled yet)
   if (
     currentUser.userRole !== UserRolesEnum.OWNER ||
     booking.status !== BookingStatusEnum.COMPLETED ||
-    booking.isReconciled
+    !booking.reviewCompletedByAgencyAt ||
+    booking.reconciledAt
   ) {
     redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
   }
+
+  //Get agency data
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   //SUBSCRIPTION BLOCKER: Only premium agencies can reconcile booking
   if (
@@ -62,22 +65,26 @@ export default async function ReconcileBookingPage({
     return (
       <MainWrapper>
         <DashboardHeader pathName={"/dashboard/bookings/[id]/reconcile"} />
-        <SubscriptionBlockerSection
-          warningText={
-            isBasic ? t("ReconcileTrialWarning") : t("ReconcileExpiredWarning")
-          }
-          actionText={
-            isBasic ? t("ReconcileTrialAction") : t("ReconcileExpiredAction")
-          }
-          isOwner
-          ctaLabel={
-            isBasic
-              ? agency.hasTriedSubscription
-                ? t("BuyCTA")
-                : t("TryCTA")
-              : t("RenewCTA")
-          }
-        />
+        <PageWrapper id="ReconcileBookingPage">
+          <SubscriptionBlockerSection
+            warningText={
+              isBasic
+                ? t("ReconcileTrialWarning")
+                : t("ReconcileExpiredWarning")
+            }
+            actionText={
+              isBasic ? t("ReconcileTrialAction") : t("ReconcileExpiredAction")
+            }
+            isOwner
+            ctaLabel={
+              isBasic
+                ? agency.hasTriedSubscription
+                  ? t("BuyCTA")
+                  : t("TryCTA")
+                : t("RenewCTA")
+            }
+          />
+        </PageWrapper>
       </MainWrapper>
     )
   }

@@ -43,7 +43,7 @@ export default async function OnTripDriversComponent({
 function OnTripDriverComponent(driver: FindDriversOnTripType[number]) {
   const booking = driver.assignedBookings[0]
   if (!booking) {
-    return <></>
+    return null
   }
   return (
     <Link href={`/dashboard/bookings/${booking.id}`}>

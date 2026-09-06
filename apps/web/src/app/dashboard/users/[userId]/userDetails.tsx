@@ -109,14 +109,16 @@ export default async function UserDetailsPageComponent({
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionWrapper>
-      <SectionWrapper id="UserCommunication">
-        <RyogoPhoneButton label={t("CallUser")} phone={user.phone} />
-        <RyogoChatButton
-          label={t("ChatUser.Title")}
-          phone={user.phone}
-          subtitle={t("ChatUser.Subtitle")}
-        />
-      </SectionWrapper>
+      {currentUserId !== user.id && (
+        <SectionWrapper id="UserCommunication">
+          <RyogoPhoneButton label={t("CallUser")} phone={user.phone} />
+          <RyogoChatButton
+            label={t("ChatUser.Title")}
+            phone={user.phone}
+            subtitle={t("ChatUser.Subtitle")}
+          />
+        </SectionWrapper>
+      )}
       {(user.userRole !== UserRolesEnum.OWNER ||
         user.id === currentUserId ||
         isCurrentUserAdmin) && (

@@ -92,7 +92,7 @@ export async function newBookingAction({
     titleKey: "LeadBooking.Title",
     titleObject: { bookingId: booking.id },
     messageKey: "LeadBooking.Message",
-    link: `/dashboard/bookings/${booking.id}/confirm`,
+    link: `/dashboard/bookings/${booking.id}`,
   })
 
   //Add notification
@@ -106,7 +106,7 @@ export async function newBookingAction({
       bookingId: booking.id,
       userName: currentUser.name,
     },
-    link: `/dashboard/bookings/${booking.id}/confirm`,
+    link: `/dashboard/bookings/${booking.id}`,
   })
 
   return booking

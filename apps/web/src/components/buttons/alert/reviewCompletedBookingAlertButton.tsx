@@ -6,12 +6,9 @@ import { useTransition } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { ListCheck } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { reviewCompletedBookingAction } from "@/app/actions/bookings/reviewCompletedBookingAction"
-import {
-  RyogoOutlineButton,
-  RyogoDefaultButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function SendInvoiceAlertButton({
   bookingId,
@@ -50,9 +47,11 @@ export default function SendInvoiceAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoOutlineButton label={t("Label")}>
-          <RyogoIcon icon={ListCheck} size="sm" />
-        </RyogoOutlineButton>
+        <RyogoDetailedIconButton
+          label={t("Label")}
+          icon={ListCheck}
+          subtitle={t("Subtitle")}
+        />
       }
     >
       <RyogoDefaultButton

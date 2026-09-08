@@ -57,9 +57,9 @@ export default function VehiclesScheduleChartComponent({
         <DashboardScheduleChart>
           <DashboardScheduleDayAxis selectedDays={selectedDays} />
           <DashboardScheduleContent>
-            {chartData.map((vehicle, index) => {
+            {chartData.map((vehicle) => {
               return (
-                <DashboardScheduleItem key={index}>
+                <DashboardScheduleItem key={vehicle.id}>
                   <DashboardScheduleItemID
                     icon={
                       <GetVehicleIcon vehicleType={vehicle.type} size="sm" />

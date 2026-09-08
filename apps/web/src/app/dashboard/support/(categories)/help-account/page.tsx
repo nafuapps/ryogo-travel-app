@@ -225,9 +225,9 @@ export default async function SupportHelpAccountPage() {
             ))}
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={"QuickActions"}>
-            {quickActions.map((item, index) => (
+            {quickActions.map((item) => (
               <SupportQuickActionLinkButton
-                key={index}
+                key={item.label}
                 href={item.href}
                 icon={item.icon}
                 label={item.label}

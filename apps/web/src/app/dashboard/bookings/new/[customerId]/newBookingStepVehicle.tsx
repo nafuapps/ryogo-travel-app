@@ -128,9 +128,9 @@ export default function NewBookingStepVehicle({
               .sort(
                 (a, b) => a.assignedBookings.length - b.assignedBookings.length,
               )
-              .map((vehicle, index) => (
+              .map((vehicle) => (
                 <AssignVehicleTile
-                  key={index}
+                  key={vehicle.id}
                   vehicleData={vehicle}
                   selected={assignedVehicleId === vehicle.id}
                   onClick={() =>

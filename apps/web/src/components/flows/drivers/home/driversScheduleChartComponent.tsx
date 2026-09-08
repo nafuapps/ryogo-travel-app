@@ -59,9 +59,9 @@ export default function DriversScheduleChartComponent({
         <DashboardScheduleChart>
           <DashboardScheduleDayAxis selectedDays={selectedDays} />
           <DashboardScheduleContent>
-            {chartData.map((driver, index) => {
+            {chartData.map((driver) => {
               return (
-                <DashboardScheduleItem key={index}>
+                <DashboardScheduleItem key={driver.id}>
                   <DashboardScheduleItemID
                     icon={<RyogoEnclosedIcon icon={User} size="sm" />}
                     imageAlt={t("Photo")}

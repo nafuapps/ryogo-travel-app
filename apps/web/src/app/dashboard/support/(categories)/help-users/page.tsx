@@ -185,9 +185,9 @@ export default async function SupportHelpUsersPage() {
             description={t("FAQs.Description")}
           />
           <SupportFAQWrapper>
-            {faqItems.map((item, index) => (
+            {faqItems.map((item) => (
               <SupportFAQItem
-                key={index}
+                key={item.question}
                 question={item.question}
                 answer={item.answer}
               />

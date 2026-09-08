@@ -53,9 +53,9 @@ export default function BookingHistoryChartComponent({
         <DashboardScheduleChart>
           <DashboardScheduleDayAxis selectedDays={selectedDays} isHistory />
           <DashboardScheduleContent>
-            {chartData.map((b, index) => {
+            {chartData.map((b, ndex) => {
               return (
-                <DashboardScheduleItem key={index} isHistory>
+                <DashboardScheduleItem key={b.bookingId} isHistory>
                   <DashboardScheduleItemID
                     icon={<RyogoIcon icon={User} size="md" />}
                     imageAlt={t("Photo")}

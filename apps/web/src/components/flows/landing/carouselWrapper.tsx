@@ -5,17 +5,19 @@ import Image from "next/image"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import Link from "next/link"
 
+export type VideoCarouselItemType = {
+  src: string
+  title: string
+  desc: string
+  index: number
+}
+
 export function VideoCarouselItem({
   src,
   title,
   desc,
   index,
-}: {
-  src: string
-  title: string
-  desc: string
-  index: number
-}) {
+}: VideoCarouselItemType) {
   return (
     <CarouselItem className="flex flex-col p-3 md:p-4 rounded-xl border gap-2 md:gap-3 basis-full md:basis-1/2 lg:basis-1/3">
       <RyogoVideo src={src} className="w-full aspect-video rounded-lg" />

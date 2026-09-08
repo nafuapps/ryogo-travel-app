@@ -72,6 +72,12 @@ export const userServices = {
     return user
   },
 
+  //Find user account details
+  async findUserDetailsWithDriverById(userId: string) {
+    const user = await userRepository.readUserWithDriverById(userId)
+    return user
+  },
+
   //Find owner and agents by agencyId
   async findOwnerAndAgentsByAgency(agencyId: string) {
     const users =
@@ -785,6 +791,10 @@ export type FindUserAccountsByPhoneRoleType = Awaited<
 
 export type FindUserDetailsByIdType = Awaited<
   ReturnType<typeof userServices.findUserDetailsById>
+>
+
+export type FindUserDetailsWithDriverByIdType = Awaited<
+  ReturnType<typeof userServices.findUserDetailsWithDriverById>
 >
 
 export type FindUserAssignedBookingsByIdType = Awaited<

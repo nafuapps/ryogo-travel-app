@@ -21,7 +21,9 @@ export default async function MyProfilePage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const userDetails = await userServices.findUserDetailsById(currentUser.userId)
+  const userDetails = await userServices.findUserDetailsWithDriverById(
+    currentUser.userId,
+  )
 
   if (!userDetails) {
     redirect("/auth/login", RedirectType.replace)
@@ -30,7 +32,7 @@ export default async function MyProfilePage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile"} />
-      <RiderProfilePageComponent userDetails={userDetails} />
+      <RiderProfilePageComponent account={userDetails} />
     </MainWrapper>
   )
 }

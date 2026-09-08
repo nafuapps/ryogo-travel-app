@@ -262,8 +262,8 @@ export function RyogoSelect({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {array.map((item, index) => (
-                <SelectItem key={index} value={item.value}>
+              {array.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
                   {item.display}
                 </SelectItem>
               ))}
@@ -372,10 +372,10 @@ export function RyogoRadio({
             onValueChange={field.onChange}
             defaultValue={defaultValue}
           >
-            {array.map((item, index) => (
-              <div className="flex items-center gap-3" key={index}>
-                <RadioGroupItem value={item.value} id={`r${index}`} />
-                <Label htmlFor={`r${index}`}>{item.display}</Label>
+            {array.map((item) => (
+              <div className="flex items-center gap-3" key={item.value}>
+                <RadioGroupItem value={item.value} id={item.value} />
+                <Label htmlFor={item.value}>{item.display}</Label>
               </div>
             ))}
           </RadioGroup>

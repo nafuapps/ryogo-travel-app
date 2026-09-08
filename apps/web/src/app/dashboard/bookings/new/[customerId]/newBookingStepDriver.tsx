@@ -118,9 +118,9 @@ export default function NewBookingStepDriver({
       >
         <NewFormContentWrapper>
           <NewStepGridWrapper>
-            {drivers.map((driver, index) => (
+            {drivers.map((driver) => (
               <AssignDriverTile
-                key={index}
+                key={driver.id}
                 driverData={driver}
                 bookingStartDate={newBookingFormData.tripStartDate}
                 bookingEndDate={newBookingFormData.tripEndDate}

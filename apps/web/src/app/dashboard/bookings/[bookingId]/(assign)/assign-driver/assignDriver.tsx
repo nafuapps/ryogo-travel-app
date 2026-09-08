@@ -86,9 +86,9 @@ export default function AssignDriverPageComponent({
         {t("Title", { length: drivers.length })}
       </RyogoP>
       <GridWrapper id="AssignDriverInfo">
-        {drivers.map((driver, index) => (
+        {drivers.map((driver) => (
           <AssignDriverTile
-            key={index}
+            key={driver.id}
             driverData={driver}
             bookingStartDate={booking.startDate}
             bookingEndDate={booking.endDate}

@@ -57,9 +57,9 @@ export default async function DashboardTripsComponent({
             title={t("StartingToday")}
             count={startingTodayTrips.length}
           />
-          {startingTodayTrips.map((trip, index) => (
+          {startingTodayTrips.map((trip) => (
             <DashboardTripItemComponent
-              key={index}
+              key={trip.id}
               trip={trip}
               userId={userId}
               isOwner={isOwner}
@@ -74,9 +74,9 @@ export default async function DashboardTripsComponent({
             title={t("EndingToday")}
             count={endingTodayTrips.length}
           />
-          {endingTodayTrips.map((trip, index) => (
+          {endingTodayTrips.map((trip) => (
             <DashboardTripItemComponent
-              key={index}
+              key={trip.id}
               trip={trip}
               userId={userId}
               isOwner={isOwner}
@@ -91,9 +91,9 @@ export default async function DashboardTripsComponent({
             title={t("Ongoing")}
             count={ongoingTrips.length}
           />
-          {ongoingTrips.map((trip, index) => (
+          {ongoingTrips.map((trip) => (
             <DashboardTripItemComponent
-              key={index}
+              key={trip.id}
               trip={trip}
               userId={userId}
               isOwner={isOwner}

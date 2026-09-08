@@ -9,7 +9,7 @@ import {
   DashboardSectionHeader,
 } from "@/components/flows/dashboard/dashboardCommon"
 
-const days = 7
+const DASHBOARD_LEAD_DAYS = 7
 
 export default async function DashboardLeadsComponent({
   agencyId,
@@ -22,7 +22,10 @@ export default async function DashboardLeadsComponent({
 }) {
   const t = await getTranslations("Dashboard.Home.Leads")
 
-  let dashboardLeads = await bookingServices.findDashboardLeads(agencyId, days)
+  let dashboardLeads = await bookingServices.findDashboardLeads(
+    agencyId,
+    DASHBOARD_LEAD_DAYS,
+  )
 
   if (!isOwner) {
     dashboardLeads = dashboardLeads.filter(
@@ -33,12 +36,14 @@ export default async function DashboardLeadsComponent({
     return null
   }
 
+  const filterDate = addDays(new Date(), DASHBOARD_LEAD_DAYS)
+
   const startingThisWeek = dashboardLeads.filter(
-    (lead) => lead.startDate <= addDays(new Date(), days),
+    (lead) => lead.startDate <= filterDate,
   )
 
   const createdThisWeek = dashboardLeads.filter(
-    (lead) => lead.startDate > addDays(new Date(), days),
+    (lead) => lead.startDate > filterDate,
   )
 
   return (
@@ -53,9 +58,9 @@ export default async function DashboardLeadsComponent({
             title={t("StartingThisWeek")}
             count={startingThisWeek.length}
           />
-          {startingThisWeek.map((trip, index) => (
+          {startingThisWeek.map((trip) => (
             <DashboardLeadItemComponent
-              key={index}
+              key={trip.id}
               trip={trip}
               userId={userId}
               isOwner={isOwner}
@@ -69,9 +74,9 @@ export default async function DashboardLeadsComponent({
             title={t("CreatedThisWeek")}
             count={createdThisWeek.length}
           />
-          {createdThisWeek.map((trip, index) => (
+          {createdThisWeek.map((trip) => (
             <DashboardLeadItemComponent
-              key={index}
+              key={trip.id}
               trip={trip}
               userId={userId}
               isOwner={isOwner}

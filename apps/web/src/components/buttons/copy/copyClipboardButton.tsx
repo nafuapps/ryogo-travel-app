@@ -23,7 +23,10 @@ export default function CopyClipboardButton({ label }: { label: string }) {
   }
 
   return (
-    <RyogoOutlineButton onClick={() => handleCopy()}>
+    <RyogoOutlineButton
+      onClick={() => handleCopy()}
+      className="has-[>svg]:px-2 has-[>svg]:lg:px-1.5"
+    >
       <RyogoIcon
         icon={isCopied ? CheckCheck : Copy}
         size="sm"

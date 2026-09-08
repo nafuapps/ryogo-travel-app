@@ -86,9 +86,9 @@ export default function AssignVehiclePageComponent({
         {t("Title", { length: vehicles.length })}
       </RyogoP>
       <GridWrapper id="AssignVehicleInfo">
-        {vehicles.map((vehicle, index) => (
+        {vehicles.map((vehicle) => (
           <AssignVehicleTile
-            key={index}
+            key={vehicle.id}
             vehicleData={vehicle}
             bookingStartDate={booking.startDate}
             bookingEndDate={booking.endDate}

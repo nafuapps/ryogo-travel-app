@@ -23,8 +23,8 @@ export default async function LoginAccountsPageComponent({
       <RyogoSmall weight="font-bold">{t("Info")}</RyogoSmall>
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((account) => (
-          <Link href={`/auth/login/password/${account.id}`}>
-            <UserCard key={account.id} user={account} isLink />
+          <Link href={`/auth/login/password/${account.id}`} key={account.id}>
+            <UserCard user={account} isLink />
           </Link>
         ))}
       </AuthAccountsWrapper>

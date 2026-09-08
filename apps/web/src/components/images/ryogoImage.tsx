@@ -1,12 +1,5 @@
 import Image from "next/image"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { RyogoCaption } from "@/components/typography"
 
 type RyogoImageSizeType = "xs" | "sm" | "md" | "lg" | "xl"
@@ -86,15 +79,11 @@ export function RyogoDialogImage({
           src={src}
           alt={alt}
           fill
-          className="object-contain"
+          className="object-cover"
           sizes={getNextImageSizes(imageSize)}
         />
       </DialogTrigger>
       <DialogContent className="size-5/6">
-        <DialogHeader>
-          <DialogTitle></DialogTitle>
-          <DialogDescription></DialogDescription>
-        </DialogHeader>
         <Image
           loading="eager"
           src={src}
@@ -116,10 +105,6 @@ export function RyogoChinImage({ src, alt }: { src: string; alt: string }) {
           <RyogoCaption color="slate">{alt}</RyogoCaption>
         </DialogTrigger>
         <DialogContent className="size-5/6">
-          <DialogHeader>
-            <DialogTitle></DialogTitle>
-            <DialogDescription></DialogDescription>
-          </DialogHeader>
           <Image
             loading="eager"
             src={src}

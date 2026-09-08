@@ -45,7 +45,6 @@ import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRat
 import BookingViewInvoiceButton from "@/components/flows/bookings/details/bookingViewInvoiceButton"
 import BookingViewQuoteButton from "@/components/flows/bookings/details/bookingViewQuoteButton"
 import BookingViewConfirmationButton from "@/components/flows/bookings/details/bookingViewConfirmationButton"
-// import LeadPDFViewer from "@/components/pdf/leadPDFViewer"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -307,7 +306,6 @@ export default async function BookingDetailsPageComponent({
             <BookingViewInvoiceButton bookingDetails={bookingDetails} />
           )}
           {(isOwner || isAssignedUser) && (
-            //Invoice can be sent for a completed and reviewed booking only
             <BookingActionWrapper>
               {isCompleted && (
                 <>
@@ -328,7 +326,6 @@ export default async function BookingDetailsPageComponent({
                 </>
               )}
               {isConfirmed && (
-                //Confirmation can be sent for a confirmed booking only
                 <SendConfirmationAlertButton
                   bookingId={bookingDetails.id}
                   agencyId={bookingDetails.agencyId}
@@ -346,7 +343,6 @@ export default async function BookingDetailsPageComponent({
               )}
             </BookingActionWrapper>
           )}
-          {/* <LeadPDFViewer booking={booking} /> */}
         </BookingSection>
         <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>
           <BookingVehicleCard vehicle={bookingDetails.assignedVehicle} />

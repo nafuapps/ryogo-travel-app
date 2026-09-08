@@ -92,9 +92,9 @@ export default async function DashboardScheduleConflictsComponent({
             title={t("VehicleAssignments")}
             count={vehicleBookingConflicts.length}
           />
-          {vehicleBookingConflicts.map((item, index) => (
+          {vehicleBookingConflicts.map((item) => (
             <DashboardScheduleConflictItemComponent
-              key={index}
+              key={item.firstItem.id + item.secondItem.id}
               conflict={item}
               highlight={isOwner && item.firstItem.userId === userId}
             />
@@ -107,9 +107,9 @@ export default async function DashboardScheduleConflictsComponent({
             title={t("VehicleRepairs")}
             count={vehicleRepairConflicts.length}
           />
-          {vehicleRepairConflicts.map((item, index) => (
+          {vehicleRepairConflicts.map((item) => (
             <DashboardScheduleConflictItemComponent
-              key={index}
+              key={item.firstItem.id + item.secondItem.id}
               conflict={item}
             />
           ))}
@@ -121,9 +121,9 @@ export default async function DashboardScheduleConflictsComponent({
             title={t("DriverAssignments")}
             count={driverBookingConflicts.length}
           />
-          {driverBookingConflicts.map((item, index) => (
+          {driverBookingConflicts.map((item) => (
             <DashboardScheduleConflictItemComponent
-              key={index}
+              key={item.firstItem.id + item.secondItem.id}
               conflict={item}
             />
           ))}
@@ -135,9 +135,9 @@ export default async function DashboardScheduleConflictsComponent({
             title={t("DriverLeaves")}
             count={driverLeaveConflicts.length}
           />
-          {driverLeaveConflicts.map((item, index) => (
+          {driverLeaveConflicts.map((item) => (
             <DashboardScheduleConflictItemComponent
-              key={index}
+              key={item.firstItem.id + item.secondItem.id}
               conflict={item}
             />
           ))}

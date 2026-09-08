@@ -95,7 +95,6 @@ export default async function ViewSupportTicketPageComponent({
           )}
         </SectionColWrapper>
       </SectionWrapper>
-
       {userCommentsLength > 0 && (
         <SectionWrapper id="TicketCommentsByUser">
           <RyogoCaption weight="font-bold" color="light">

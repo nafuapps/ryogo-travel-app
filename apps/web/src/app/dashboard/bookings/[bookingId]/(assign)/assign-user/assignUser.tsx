@@ -83,9 +83,9 @@ export default function AssignUserPageComponent({
       )}
       <RyogoP weight="font-bold">{t("Title", { length: users.length })}</RyogoP>
       <GridWrapper id="AssignUserInfo">
-        {users.map((user, index) => (
+        {users.map((user) => (
           <AssignUserTile
-            key={index}
+            key={user.id}
             userData={user}
             booking={booking}
             selected={selectedUserId === user.id}

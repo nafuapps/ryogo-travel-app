@@ -1,77 +1,69 @@
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
-import { KeyRound, MailPen, User } from "lucide-react"
-import { RyogoH3, RyogoCaption } from "@/components/typography"
+import { KeyRound, MailPen } from "lucide-react"
+import { RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
-import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
-import { UserStatusPill } from "@/components/pills/ryogoPills"
-import {
-  SectionWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  SectionColWrapper,
-  GridWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { Separator } from "@/components/ui/separator"
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import { FindUserDetailsWithDriverByIdType } from "@ryogo-travel-app/api/services/user.services"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import UserInfoWrapper from "@/components/flows/account/userInfoWrapper"
+import UserDetailsWrapper from "@/components/flows/account/userDetailsWrapper"
+import DriverDetailsWrapper from "@/components/flows/account/driverDetailsWrapper"
+import LicenseInfoWrapper from "@/components/flows/account/licenseInfoWrapper"
 
 export default async function RiderProfilePageComponent({
-  userDetails,
+  account,
 }: {
-  userDetails: NonNullable<FindUserDetailsByIdType>
+  account: NonNullable<FindUserDetailsWithDriverByIdType>
 }) {
   const t = await getTranslations("Rider.MyProfile")
 
   return (
     <PageWrapper id="RiderProfilePage">
       <MyProfileDetailHeaderTabs selectedTab={"Account"} />
-      <SectionWrapper id="RiderAccountDetailsInfo">
-        <SectionRowWrapper justifyStart>
-          <RyogoH3 color="brand">{userDetails.id}</RyogoH3>
-          <CopyClipboardButton label={userDetails.id} />
-        </SectionRowWrapper>
-        <Separator />
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            {userDetails.photoUrl ? (
-              <RyogoImage
-                src={getFileUrl(userDetails.photoUrl)}
-                alt={t("Photo")}
-                imageSize="lg"
-              />
-            ) : (
-              <RyogoEnclosedIcon icon={User} size="xl" />
-            )}
-            <ChangeUserPhotoSheet
-              userId={userDetails.id}
-              agencyId={userDetails.agencyId}
-            />
-          </SectionColWrapper>
-          <SectionColWrapper end>
-            <RyogoH3>{userDetails.name}</RyogoH3>
-            <RyogoCaption color="slate">{userDetails.phone}</RyogoCaption>
-            <RyogoCaption color="slate">{userDetails.email}</RyogoCaption>
-            <RyogoCaption color="slate">
-              {moment(userDetails.createdAt).format("DD MMM YYYY")}
-            </RyogoCaption>
-            <UserStatusPill status={userDetails.status} />
-          </SectionColWrapper>
-        </SectionRowWrapper>
-      </SectionWrapper>
+      <GridWrapper id="RiderAccountDetails">
+        <UserInfoWrapper
+          id={account.id}
+          photoUrl={account.photoUrl}
+          agencyId={account.agencyId}
+          name={account.name}
+          agencyName={account.agency.businessName}
+          userRole={account.userRole}
+        />
+        <UserDetailsWrapper
+          id={account.id}
+          status={account.status}
+          phone={account.phone}
+          email={account.email}
+          createdAt={account.createdAt}
+        />
+      </GridWrapper>
+      {account.driver && (
+        <GridWrapper id="RiderDriverDetails">
+          <LicenseInfoWrapper
+            licenseNumber={account.driver.licenseNumber}
+            photoUrl={account.driver.licensePhotoUrl}
+            expiryDate={account.driver.licenseExpiresOn}
+          />
+          <DriverDetailsWrapper
+            id={account.driver.id}
+            address={account.driver.address}
+            status={account.driver.status}
+            canDriveVehicles={account.driver.canDriveVehicleTypes}
+            allowance={account.driver.defaultAllowancePerDay}
+            ratings={account.driver.customerRatings}
+          />
+        </GridWrapper>
+      )}
       <GridWrapper id="RiderAccountActions">
         <ChangeUserNameSheet
-          userId={userDetails.id}
-          userName={userDetails.name}
-          userRole={userDetails.userRole}
-          agencyId={userDetails.agencyId}
+          userId={account.id}
+          userName={account.name}
+          userRole={account.userRole}
+          agencyId={account.agencyId}
         />
         <Link href="/rider/myProfile/change-email">
           <RyogoDetailedIconButton
@@ -91,7 +83,7 @@ export default async function RiderProfilePageComponent({
       </GridWrapper>
       <RyogoCaption color="light">
         {t("LastLogin", {
-          loginTime: moment(userDetails.lastLogin).format(
+          loginTime: moment(account.lastLogin).format(
             "MMMM Do YYYY, h:mm:ss a",
           ),
         })}

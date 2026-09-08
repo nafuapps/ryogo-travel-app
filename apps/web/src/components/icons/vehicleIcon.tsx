@@ -5,6 +5,7 @@ import {
   RyogoIcon,
   RyogoIconType,
 } from "@/components/icons/ryogoIcon"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
 export default function GetVehicleIcon({
   vehicleType,
@@ -50,10 +51,10 @@ export function GetCanDriveIcons({
   }
 
   return (
-    <div className="flex flex-row gap-1 lg:gap-1.5">
-      {icons.map((Icon, index) => {
-        return <RyogoIcon key={index} icon={Icon} size="sm" color="light" />
+    <SectionRowWrapper center small>
+      {icons.map((icon, index) => {
+        return <RyogoIcon key={index} icon={icon} size="sm" color="light" />
       })}
-    </div>
+    </SectionRowWrapper>
   )
 }

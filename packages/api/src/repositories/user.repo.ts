@@ -51,6 +51,37 @@ export const userRepository = {
     })
   },
 
+  //Get unique user (driver) by id
+  async readUserWithDriverById(id: string) {
+    return await db.query.users.findFirst({
+      columns: {
+        password: false,
+      },
+      with: {
+        agency: {
+          columns: {
+            id: true,
+            businessName: true,
+          },
+        },
+        driver: {
+          columns: {
+            id: true,
+            address: true,
+            licenseNumber: true,
+            licensePhotoUrl: true,
+            licenseExpiresOn: true,
+            canDriveVehicleTypes: true,
+            defaultAllowancePerDay: true,
+            status: true,
+            customerRatings: true,
+          },
+        },
+      },
+      where: eq(users.id, id),
+    })
+  },
+
   //Get unique user by id
   async readUserWithPasswordById(id: string) {
     return await db.query.users.findFirst({

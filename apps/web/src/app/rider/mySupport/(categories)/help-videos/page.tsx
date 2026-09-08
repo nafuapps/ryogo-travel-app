@@ -39,31 +39,37 @@ export default async function MySupportHelpVideosPage() {
 
   const videoItems: SupportVideoItemType[] = [
     {
+      index: 1,
       title: t("MyBookings.Title"),
       desc: t("MyBookings.Description"),
       src: "https://www.youtube.com/embed/1MobY_vR7-g",
     },
     {
+      index: 2,
       title: t("ExecutingTrip.Title"),
       desc: t("ExecutingTrip.Description"),
       src: "https://www.youtube.com/embed/bMCiAKNUpTY",
     },
     {
+      index: 3,
       title: t("MyVehicle.Title"),
       desc: t("MyVehicle.Description"),
       src: "https://www.youtube.com/embed/1MobY_vR7-g",
     },
     {
+      index: 4,
       title: t("DriverApp.Title"),
       desc: t("DriverApp.Description"),
       src: "https://www.youtube.com/embed/bMCiAKNUpTY",
     },
     {
+      index: 5,
       title: t("MyProfile.Title"),
       desc: t("MyProfile.Description"),
       src: "https://www.youtube.com/embed/bMCiAKNUpTY",
     },
     {
+      index: 6,
       title: t("Communication.Title"),
       desc: t("Communication.Description"),
       src: "https://www.youtube.com/embed/1MobY_vR7-g",
@@ -110,14 +116,14 @@ export default async function MySupportHelpVideosPage() {
             title={t("Title")}
             description={t("Description")}
           />
-          {videoItems.map((item, index) => (
-            <SupportVideoItem key={item.title} {...item} index={index + 1} />
+          {videoItems.map((item) => (
+            <SupportVideoItem key={item.title} {...item} />
           ))}
         </PageWrapper>
         <SideWrapper>
           <SupportSideAccordionWrapper label={"SocialMedia"}>
-            {socialMediaLinks.map((item, index) => (
-              <SupportSMLink key={index} {...item} />
+            {socialMediaLinks.map((item) => (
+              <SupportSMLink key={item.label} {...item} />
             ))}
           </SupportSideAccordionWrapper>
           <SupportSideAccordionWrapper label={"QuickActions"}>

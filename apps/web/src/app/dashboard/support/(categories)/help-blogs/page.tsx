@@ -41,8 +41,8 @@ export default async function SupportHelpBlogsPage() {
           description={t("Description")}
         />
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-5">
-          {blogItems.map((item, index) => (
-            <SupportBlogItem key={index} {...item} />
+          {blogItems.map((item) => (
+            <SupportBlogItem key={item.blogId} {...item} />
           ))}
         </div>
       </PageWrapper>

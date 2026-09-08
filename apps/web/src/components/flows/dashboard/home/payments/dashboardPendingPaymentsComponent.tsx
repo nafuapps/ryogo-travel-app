@@ -48,9 +48,9 @@ export default async function DashboardPendingPaymentsComponent({
             title={t("Completed")}
             count={completedPending.length}
           />
-          {completedPending.map((booking, index) => (
+          {completedPending.map((booking) => (
             <DashboardPendingPaymentComponent
-              key={index}
+              key={booking.id}
               trip={booking}
               userId={userId}
               isOwner={isOwner}
@@ -64,9 +64,9 @@ export default async function DashboardPendingPaymentsComponent({
             title={t("InProgress")}
             count={inProgressPending.length}
           />
-          {inProgressPending.map((booking, index) => (
+          {inProgressPending.map((booking) => (
             <DashboardPendingPaymentComponent
-              key={index}
+              key={booking.id}
               trip={booking}
               userId={userId}
               isOwner={isOwner}

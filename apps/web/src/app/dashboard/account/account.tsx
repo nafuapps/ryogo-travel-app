@@ -1,28 +1,17 @@
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
-import { RyogoH3, RyogoCaption } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
-import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
-import { UserStatusPill } from "@/components/pills/ryogoPills"
-import {
-  SectionWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  SectionColWrapper,
-  GridWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { User, MailPen, KeyRound, Phone } from "lucide-react"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
-import { Separator } from "@/components/ui/separator"
+import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import { MailPen, KeyRound, Phone } from "lucide-react"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import UserInfoWrapper from "@/components/flows/account/userInfoWrapper"
+import UserDetailsWrapper from "@/components/flows/account/userDetailsWrapper"
 
 export default async function AccountPageComponent({
   account,
@@ -34,39 +23,23 @@ export default async function AccountPageComponent({
   return (
     <PageWrapper id="AccountPage">
       <AccountDetailHeaderTabs selectedTab="Account" />
-      <SectionWrapper id="AccountDetailsInfo">
-        <SectionRowWrapper justifyStart center>
-          <RyogoH3 color="brand">{account.id}</RyogoH3>
-          <CopyClipboardButton label={account.id} />
-        </SectionRowWrapper>
-        <Separator />
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            {account.photoUrl ? (
-              <RyogoImage
-                src={getFileUrl(account.photoUrl)}
-                alt={t("Photo")}
-                imageSize="lg"
-              />
-            ) : (
-              <RyogoEnclosedIcon icon={User} size="xl" />
-            )}
-            <ChangeUserPhotoSheet
-              userId={account.id}
-              agencyId={account.agencyId}
-            />
-          </SectionColWrapper>
-          <SectionColWrapper end>
-            <RyogoH3>{account.name}</RyogoH3>
-            <RyogoCaption color="slate">{account.phone}</RyogoCaption>
-            <RyogoCaption color="slate">{account.email}</RyogoCaption>
-            <RyogoCaption color="slate">
-              {moment(account.createdAt).format("DD MMM YYYY")}
-            </RyogoCaption>
-            <UserStatusPill status={account.status} />
-          </SectionColWrapper>
-        </SectionRowWrapper>
-      </SectionWrapper>
+      <GridWrapper id="AccountDetails">
+        <UserInfoWrapper
+          id={account.id}
+          photoUrl={account.photoUrl}
+          agencyId={account.agencyId}
+          name={account.name}
+          agencyName={account.agency.businessName}
+          userRole={account.userRole}
+        />
+        <UserDetailsWrapper
+          id={account.id}
+          status={account.status}
+          phone={account.phone}
+          email={account.email}
+          createdAt={account.createdAt}
+        />
+      </GridWrapper>
       <GridWrapper id="AccountActions">
         <ChangeUserNameSheet
           userId={account.id}

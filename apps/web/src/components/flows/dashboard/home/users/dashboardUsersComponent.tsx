@@ -28,24 +28,24 @@ export default async function DashboardUsersComponent({
       {owners.length > 0 && (
         <DashboardRow>
           <DashboardRowHeader title={t("Owners")} count={owners.length} />
-          {owners.map((user, index) => (
-            <DashboardUserChipComponent key={index} user={user} />
+          {owners.map((user) => (
+            <DashboardUserChipComponent key={user.id} user={user} />
           ))}
         </DashboardRow>
       )}
       {agents.length > 0 && (
         <DashboardRow>
           <DashboardRowHeader title={t("Agents")} count={agents.length} />
-          {agents.map((user, index) => (
-            <DashboardUserChipComponent key={index} user={user} />
+          {agents.map((user) => (
+            <DashboardUserChipComponent key={user.id} user={user} />
           ))}
         </DashboardRow>
       )}
       {drivers.length > 0 && (
         <DashboardRow>
           <DashboardRowHeader title={t("Drivers")} count={drivers.length} />
-          {drivers.map((user, index) => (
-            <DashboardUserChipComponent key={index} user={user} />
+          {drivers.map((user) => (
+            <DashboardUserChipComponent key={user.id} user={user} />
           ))}
         </DashboardRow>
       )}

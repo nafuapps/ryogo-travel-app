@@ -3,6 +3,7 @@ import { RyogoVideo } from "@/components/video/ryogoVideo"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 
 export type SupportVideoItemType = {
+  index: number
   src: string
   title: string
   desc: string
@@ -13,7 +14,7 @@ export function SupportVideoItem({
   title,
   desc,
   index,
-}: SupportVideoItemType & { index: number }) {
+}: SupportVideoItemType) {
   return (
     <SectionWrapper id={title}>
       <div className="flex gap-1.5 md:gap-2 items-center">

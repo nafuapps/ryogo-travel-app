@@ -116,8 +116,8 @@ function PricingPlanCard({
       <RyogoH4 weight="font-bold">{price}</RyogoH4>
       {children}
       <div className="flex flex-col gap-2 lg:gap-3 mb-2">
-        {features.map((feature, index) => (
-          <li key={index} className="flex gap-3">
+        {features.map((feature) => (
+          <li key={feature} className="flex gap-3">
             <RyogoIcon icon={Check} size="sm" color="brand" thick />
             <RyogoSmall>{feature}</RyogoSmall>
           </li>

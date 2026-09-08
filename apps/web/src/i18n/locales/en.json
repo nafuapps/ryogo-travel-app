@@ -2462,7 +2462,10 @@
       "Subscription": "Subscription"
     },
     "Account": {
-      "Photo": "View photo",
+      "UserId": "User ID",
+      "Email": "Email",
+      "Phone": "Phone",
+      "Joined": "Joined",
       "ChangePhone": {
         "Title": "Change Phone",
         "Subtitle": "Your phone number is crucial for account login and communication"
@@ -5371,7 +5374,16 @@
       "NoVehicleAssigned": "No vehicle assigned to you yet."
     },
     "MyProfile": {
-      "Photo": "View photo",
+      "License": "Driver's License",
+      "ExpiresOn": "Expires on",
+      "ExpiredOn": "Expired on",
+      "DriverId": "Driver ID",
+      "Address": "Address",
+      "CanDrive": "Can Drive",
+      "Allowance": "Default Allowance",
+      "PerDay": "₹{allowance} per day",
+      "Rating": "Customer Rating",
+      "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
       "ChangeEmail": {
         "Title": "Change Email",
         "Subtitle": "Set your email address to receive important updates",

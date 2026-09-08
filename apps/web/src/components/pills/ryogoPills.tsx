@@ -22,6 +22,7 @@ type RyogoPillColorType =
   | "yellow"
   | "light"
   | "white"
+  | "black"
 
 function getPillColor(color: RyogoPillColorType = "slate") {
   switch (color) {
@@ -37,6 +38,8 @@ function getPillColor(color: RyogoPillColorType = "slate") {
       return "bg-yellow-700 dark:bg-yellow-300"
     case "slate":
       return "bg-slate-700 dark:bg-slate-300"
+    case "black":
+      return "bg-slate-950 dark:bg-white"
     case "white":
       return "bg-white dark:bg-slate-950"
   }
@@ -225,13 +228,13 @@ export function TripLogStatusPill(
     case TripLogTypesEnum.DROPPED:
       return <RyogoPill {...props} label={label} bgColor={"brand"} />
     case TripLogTypesEnum.PICKED_UP:
-      return <RyogoPill {...props} label={label} bgColor={"yellow"} />
-    case TripLogTypesEnum.ARRIVED:
       return <RyogoPill {...props} label={label} bgColor={"light"} />
+    case TripLogTypesEnum.ARRIVED:
+      return <RyogoPill {...props} label={label} bgColor={"yellow"} />
     case TripLogTypesEnum.STARTED:
       return <RyogoPill {...props} label={label} bgColor={"slate"} />
     case TripLogTypesEnum.OTHER:
-      return <RyogoPill {...props} label={label} bgColor={"red"} />
+      return <RyogoPill {...props} label={label} bgColor={"black"} />
   }
 }
 
@@ -292,7 +295,7 @@ export function UserRolePill(props: { role: UserRolesEnum } & RyogoPillType) {
   const label = props.role.toUpperCase()
   switch (props.role) {
     case UserRolesEnum.OWNER:
-      return <RyogoPill {...props} label={label} bgColor={"slate"} />
+      return <RyogoPill {...props} label={label} bgColor={"black"} />
     case UserRolesEnum.AGENT:
       return <RyogoPill {...props} label={label} bgColor={"light"} />
     case UserRolesEnum.DRIVER:

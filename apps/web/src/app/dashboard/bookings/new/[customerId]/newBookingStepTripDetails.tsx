@@ -32,7 +32,11 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import { useRouter } from "next/navigation"
-import { NEW_BOOKING_DEFAULT_DISTANCE } from "@/lib/uiConfig"
+import {
+  MAX_VEHICLE_CAPCITY,
+  MIN_VEHICLE_CAPCITY,
+  NEW_BOOKING_DEFAULT_DISTANCE,
+} from "@/lib/uiConfig"
 import { Separator } from "@/components/ui/separator"
 import { differenceInDays } from "date-fns"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
@@ -65,20 +69,20 @@ export default function NewBookingStepTripDetails({
   const stepTripDetailsSchema = z
     .object({
       //Trip
-      tripSourceLocationState: z.string().min(1, t("Field1.Error1")),
+      tripSourceLocationState: z.string().nonoptional(t("Field1.Error1")),
       tripSourceLocationCity: z
         .string(t("Field2.Error1"))
-        .min(1, t("Field2.Error1")),
-      tripDestinationLocationState: z.string().min(1, t("Field3.Error1")),
+        .nonoptional(t("Field2.Error1")),
+      tripDestinationLocationState: z.string().nonoptional(t("Field3.Error1")),
       tripDestinationLocationCity: z
         .string(t("Field4.Error1"))
-        .min(1, t("Field4.Error1")),
+        .nonoptional(t("Field4.Error1")),
       tripStartDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
       tripEndDate: z.date(t("Field6.Error1")),
       tripPassengers: z.coerce
         .number<number>(t("Field7.Error1"))
-        .min(0, t("Field7.Error2"))
-        .max(100, t("Field7.Error3"))
+        .min(MIN_VEHICLE_CAPCITY, t("Field7.Error2"))
+        .max(MAX_VEHICLE_CAPCITY, t("Field7.Error3"))
         .multipleOf(1, t("Field7.Error4"))
         .nonnegative(t("Field7.Error5")),
       tripType: z.enum(BookingTypeEnum),

@@ -25,6 +25,14 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MIN_NAME_LENGTH,
+  MAX_NAME_LENGTH,
+  MIN_COMMISSION_RATE,
+  MAX_COMMISSION_RATE,
+  MIN_FIELD_DESC_LENGTH,
+  MAX_FIELD_DESC_LENGTH,
+} from "@/lib/uiConfig"
 
 export default function ModifyAgencyPageForm({
   agency,
@@ -38,21 +46,21 @@ export default function ModifyAgencyPageForm({
   const schema = z.object({
     agencyName: z
       .string()
-      .min(5, t("Field1.Error1"))
-      .max(30, t("Field1.Error2")),
+      .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field1.Error2")),
     agencyAddress: z
       .string()
-      .min(20, t("Field2.Error1"))
-      .max(300, t("Field2.Error2")),
+      .min(MIN_FIELD_DESC_LENGTH, t("Field2.Error1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("Field2.Error2")),
     commissionRate: z.coerce
       .number<number>(t("Field3.Error1"))
-      .min(1, t("Field3.Error2"))
-      .max(100, t("Field3.Error3"))
+      .min(MIN_COMMISSION_RATE, t("Field3.Error2"))
+      .max(MAX_COMMISSION_RATE, t("Field3.Error3"))
       .positive(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5"))
       .optional(),
-    agencyState: z.string().min(1, t("Field4.Error1")),
-    agencyCity: z.string().min(1, t("Field5.Error1")),
+    agencyState: z.string().nonoptional(t("Field4.Error1")),
+    agencyCity: z.string().nonoptional(t("Field5.Error1")),
   })
 
   type SchemaType = z.infer<typeof schema>

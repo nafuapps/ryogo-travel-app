@@ -25,6 +25,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { Type } from "lucide-react"
+import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "@/lib/uiConfig"
 
 export default function ChangeUserNameSheet({
   userId,
@@ -42,7 +43,10 @@ export default function ChangeUserNameSheet({
   const router = useRouter()
 
   const schema = z.object({
-    name: z.string().min(5, t("Error1")).max(30, t("Error2")),
+    name: z
+      .string()
+      .min(MIN_NAME_LENGTH, t("Error1"))
+      .max(MAX_NAME_LENGTH, t("Error2")),
   })
 
   type SchemaType = z.infer<typeof schema>

@@ -21,6 +21,7 @@ import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
 export default function ResetWithCodePageComponent({
   userId,
@@ -39,11 +40,11 @@ export default function ResetWithCodePageComponent({
       code: z.string().length(6, t("Field1.Error1")),
       password: z
         .string()
-        .min(8, t("Field2.Error1"))
+        .min(MIN_PASSWORD_LENGTH, t("Field2.Error1"))
         .refine((s) => !s.includes(" "), t("Field2.Error2")),
       confirmPassword: z
         .string()
-        .min(8, t("Field3.Error1"))
+        .min(MIN_PASSWORD_LENGTH, t("Field3.Error1"))
         .refine((s) => !s.includes(" "), t("Field3.Error2")),
     })
     .refine((data) => data.code === verificationCode, {

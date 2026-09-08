@@ -56,6 +56,7 @@
         "Loading": "Loading",
         "Back": "Back",
         "Error1": "Not a valid email",
+        "Error2": "Email must be less than 60 characters",
         "APIError": "Email address does not match our records",
         "Success": "Verification code sent.. check your inbox!",
         "Error": "Cannot send code.. Try again later!",
@@ -156,14 +157,14 @@
           "Title": "Enter agency name",
           "Placeholder": "Raj Tour & Travels",
           "Description": "Provide your agency's business name",
-          "Error1": "Name must be atleast 5 characters",
+          "Error1": "Name must be atleast 3 characters",
           "Error2": "Name must be less than 30 characters"
         },
         "Field2": {
           "Title": "Enter your name",
           "Placeholder": "Raj Sharma",
           "Description": "Provide owner's name",
-          "Error1": "Name must be atleast 5 characters",
+          "Error1": "Name must be atleast 3 characters",
           "Error2": "Name must be less than 30 characters"
         },
         "Field3": {
@@ -518,7 +519,7 @@
           "Title": "Driver name",
           "Placeholder": "Surender Kumar",
           "Description": "Enter the driver's name",
-          "Error1": "Name must be atleast 5 characters",
+          "Error1": "Name must be atleast 3 characters",
           "Error2": "Name must be less than 30 characters"
         },
         "Field2": {
@@ -632,7 +633,7 @@
           "Title": "Agent name",
           "Placeholder": "Vikram Sharma",
           "Description": "Enter the agent's name",
-          "Error1": "Name must be atleast 5 characters",
+          "Error1": "Name must be atleast 3 characters",
           "Error2": "Name must be less than 30 characters"
         },
         "Field2": {
@@ -970,7 +971,7 @@
         "Field1": {
           "Title": "New customer name",
           "Placeholder": "Raj Sharma",
-          "Error1": "Customer name must be atleast 5 characters",
+          "Error1": "Customer name must be atleast 3 characters",
           "Error2": "Customer name must be less than 30 characters"
         },
         "Field2": {
@@ -2062,7 +2063,7 @@
           "Title": "Driver name",
           "Placeholder": "Surender Kumar",
           "Description": "Enter the driver's name",
-          "Error1": "Name must be atleast 5 characters",
+          "Error1": "Name must be atleast 3 characters",
           "Error2": "Name must be less than 30 characters"
         },
         "Field2": {
@@ -2328,7 +2329,7 @@
         "Title": "Enter customer name",
         "Placeholder": "Raj Sharma",
         "Description": "Provide the customer's name",
-        "Error1": "Name must be atleast 5 characters",
+        "Error1": "Name must be atleast 3 characters",
         "Error2": "Name must be less than 30 characters"
       },
       "Field2": {
@@ -2384,7 +2385,7 @@
         "Title": "Enter customer name",
         "Placeholder": "Raj Sharma",
         "Description": "Provide the customer's name",
-        "Error1": "Name must be atleast 5 characters",
+        "Error1": "Name must be atleast 3 characters",
         "Error2": "Name must be less than 30 characters"
       },
       "Field2": {
@@ -2597,7 +2598,7 @@
         "Title": "Enter business name",
         "Placeholder": "Raj Tour & Travels",
         "Description": "Provide your agency's business name",
-        "Error1": "Name must be atleast 5 characters",
+        "Error1": "Name must be atleast 3 characters",
         "Error2": "Name must be less than 30 characters"
       },
       "Field2": {
@@ -2725,8 +2726,11 @@
         "Title": "Looking for help?",
         "Description": "Get in touch with our specialized support team to assist you with any queries.",
         "CallCTA": "Call Support Team",
+        "CallSubtitle": "Talk to our product experts instantly",
         "ChatCTA": "Chat with Support",
-        "EmailCTA": "Email Support"
+        "ChatSubtitle": "Start a Whatsapp chat with our support team",
+        "EmailCTA": "Email Support",
+        "EmailSubtitle": "Write a message to our support staff"
       },
       "Tickets": {
         "Title": "Support Tickets",
@@ -2734,7 +2738,7 @@
         "ViewCTA": "View Your Tickets",
         "Premium": {
           "Title": "Want Premium Support?",
-          "Description": "Get elite customer support with the help of support ticket feature with Premium plan.",
+          "Description": "Get faster resolution via support tickets in Premium plan",
           "CTA": "Upgrade Now"
         }
       }
@@ -2757,27 +2761,28 @@
       "Field1": {
         "Title": "Entity Type",
         "Placeholder": "Select Entity Type",
-        "Description": "Select type of entity for which reminder is being created. Select User if not sure",
+        "Description": "Select type of entity for which ticket is being created. Select User, if not sure",
         "Error1": "Entity type is required"
       },
       "Field2": {
         "Title": "Entity ID",
         "Placeholder": "U1000001",
-        "Description": "Enter the entity ID for which reminder is being created. Leave blank if not sure",
+        "Description": "Enter the entity ID for which ticket is being created. Leave it blank, if not sure",
         "Error1": "Entity Id must be less than 12 characters",
         "Error2": "Not a valid Entity ID. Leave blank if not sure."
       },
       "Field3": {
         "Title": "Issue",
-        "Placeholder": "Booking Link not working",
+        "Placeholder": "Ex: Booking Link not working",
         "Description": "What problem are you facing?",
-        "Error1": "Issue must be atleast 5 characters",
+        "Error1": "Issue must be atleast 3 characters",
         "Error2": "issue must be less than 100 characters"
       },
       "Field4": {
-        "Title": "Details",
-        "Placeholder": "Enter details (Optional)",
-        "Error1": "Details must be less than 300 characters"
+        "Title": "Details (optional)",
+        "Placeholder": "Explain the problem in detail",
+        "Error1": "Details must be less than 300 characters",
+        "Error2": "Details must be atleast 10 characters"
       },
       "Field5": {
         "Title": "Photo/Screenshot (optional)",
@@ -4435,7 +4440,7 @@
         "Title": "Name",
         "Placeholder": "Vikram Sharma",
         "Description": "Enter the user's name",
-        "Error1": "Name must be atleast 5 characters",
+        "Error1": "Name must be atleast 3 characters",
         "Error2": "Name must be less than 30 characters"
       },
       "Field2": {
@@ -4478,7 +4483,7 @@
         "Title": "Agent name",
         "Placeholder": "Vikram Sharma",
         "Description": "Enter the agent's name",
-        "Error1": "Name must be atleast 5 characters",
+        "Error1": "Name must be atleast 3 characters",
         "Error2": "Name must be less than 30 characters"
       },
       "Field2": {
@@ -4658,13 +4663,14 @@
         "Title": "Title",
         "Placeholder": "Review booking when completed",
         "Description": "What should we call this reminder?",
-        "Error1": "Title must be atleast 5 characters",
+        "Error1": "Title must be atleast 3 characters",
         "Error2": "Title must be less than 100 characters"
       },
       "Field4": {
         "Title": "Message",
         "Placeholder": "Enter details (Optional)",
-        "Error1": "Description must be less than 300 characters"
+        "Error1": "Description must be less than 300 characters",
+        "Error2": "Description must be atleast 10 characters"
       },
       "Field5": {
         "Title": "Due Date",
@@ -4705,13 +4711,14 @@
         "Title": "Title",
         "Placeholder": "Review booking when completed",
         "Description": "What should we call this reminder?",
-        "Error1": "Title must be atleast 5 characters",
+        "Error1": "Title must be atleast 3 characters",
         "Error2": "Title must be less than 100 characters"
       },
       "Field4": {
         "Title": "Message",
         "Placeholder": "Enter details (Optional)",
-        "Error1": "Description must be less than 300 characters"
+        "Error1": "Description must be less than 300 characters",
+        "Error2": "Description must be atleast 10 characters"
       },
       "Field5": {
         "Title": "Due Date",
@@ -4743,7 +4750,7 @@
         "ChangedAgencyPhone": "Agency phone number has been changed by {userName}",
         "ModifiedAgency": "Agency details have been modified by {userName}",
         "AssignedDriver": "Assigned driver for booking #{bookingId} has been changed to {driverName}",
-        "AssignedUser": "Assigned agent for booking #{bookingId} has been changed to {userName}",
+        "AssignedUser": "Assigned user for booking #{bookingId} has been changed to {userName}",
         "AssignedVehicle": "Assigned vehicle for booking #{bookingId} has been changed to {vehicleNumber}",
         "CancelBooking": "Booking #{bookingId} has been cancelled by {userName}",
         "TripEnded": "Trip completed for booking #{bookingId} by {driverName} with {vehicleNumber}",
@@ -4759,23 +4766,23 @@
         "DriverInactivated": "Driver {driverName} has been inactivated by {userName}",
         "DriverAdded": "New driver {driverName} has been added by {userName}",
         "DriverModified": "Driver {driverName} details have been changed by {userName}",
-        "DriverLeaveAdded": "Driver leave added for {driverName} by {userName}",
+        "DriverLeaveAdded": "Driver leave for {driverName} has been added by {userName}",
         "DriverLeaveModified": "Driver leave details changed for {driverName} by {userName}",
         "VehicleActivated": "Vehicle {vehicleNumber} has been activated by {userName}",
         "VehicleInactivated": "Vehicle {vehicleNumber} has been inactivated by {userName}",
         "VehicleAdded": "New vehicle {vehicleNumber} has been added by {userName}",
         "VehiclePhotoChanged": "Vehicle {vehicleNumber} photo has been changed by {userName}",
         "VehicleModified": "Vehicle {vehicleNumber} details have been changed by {userName}",
-        "VehicleRepairAdded": "Vehicle repair added for booking #{bookingId} by {userName}",
-        "VehicleRepairModified": "Vehicle repair details changed for booking #{bookingId} by {userName}",
-        "SubscriptionPurchased": "Premium {plan} subscription plan has been activated by {userName}",
+        "VehicleRepairAdded": "Vehicle repair added for {vehicleNumber} by {userName}",
+        "VehicleRepairModified": "Vehicle repair details changed for {vehicleNumber} by {userName}",
+        "SubscriptionPurchased": "Premium subscription plan ({plan}) has been activated by {userName}",
         "AgentAdded": "New agent {agentName} has been added by {userName}",
         "UserPhotoChanged": "{userName} photo has changed",
-        "DowngradedAgencyToBasic": "Agency has been downgraded to BASIC plan",
+        "DowngradedAgencyToBasic": "Agency has been downgraded to Basic plan",
         "AgencyLogoChanged": "Agency logo has been changed by {userName}",
         "OwnerAdded": "Another owner {addedOwnerName} has been added by {userName}",
         "OwnerCreated": "Agency owner account created for {userName}",
-        "AgencyCreated": "Agency has been created by {userName}",
+        "AgencyCreated": "Agency created by {userName}",
         "AgencyQRCodeChanged": "Agency QR code has been changed by {userName}",
         "TryPremium": "Trial Premium plan has been activated by {userName}",
         "AdminTransferred": "Agency admin rights has been transferred to {newAdminName} by {userName}",
@@ -6200,7 +6207,7 @@
       "Subtitle": "Set your display name",
       "InputTitle": "Enter User Name",
       "Placeholder": "Raj Sharma",
-      "Error1": "Name must be atleast 5 characters",
+      "Error1": "Name must be atleast 3 characters",
       "Error2": "Name must be less than 30 characters",
       "Save": "Save changes",
       "Close": "Cancel",
@@ -7092,7 +7099,7 @@
           "Field1": {
             "Title": "Your Name",
             "Placeholder": "Sanjeev",
-            "Error1": "Name is required and should be atleast 5 characters long",
+            "Error1": "Name is required and should be atleast 3 characters long",
             "Error2": "Name must be less than 30 characters"
           },
           "Field2": {
@@ -7109,7 +7116,7 @@
           "Field4": {
             "Title": "Agency Name (Optional)",
             "Placeholder": "ABCD Tours & Travels",
-            "Error1": "Agency Name must be atleast 5 characters long",
+            "Error1": "Agency Name must be atleast 3 characters long",
             "Error2": "Agency Name must be less than 30 characters"
           },
           "Field5": {

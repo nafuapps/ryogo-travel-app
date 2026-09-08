@@ -18,12 +18,13 @@ import z from "zod"
 import { changeVehiclePhotoAction } from "@/app/actions/vehicles/changeVehiclePhotoAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 
 export default function ChangeVehiclePhotoSheet({
   vehicleId,
@@ -38,18 +39,9 @@ export default function ChangeVehiclePhotoSheet({
 
   const schema = z.object({
     vehiclePhotos: FileRegex.refine((file) => {
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Error1")).refine((file) => {
-      return (
-        file[0] &&
-        [
-          "image/jpeg",
-          "image/png",
-          "image/jpg",
-          "image/bmp",
-          "image/webp",
-        ].includes(file[0].type)
-      )
+      return file[0] && SupportedImageFormats.includes(file[0].type)
     }, t("Error2")),
   })
 

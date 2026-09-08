@@ -15,6 +15,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
 export default function ChangeEmailAccountComponent({
   usersWithPhoneRole,
@@ -31,9 +32,11 @@ export default function ChangeEmailAccountComponent({
   const schema = z.object({
     password: z
       .string()
-      .min(8, t("Field1.Error1"))
+      .min(MIN_PASSWORD_LENGTH, t("Field1.Error1"))
       .refine((s) => !s.includes(" "), t("Field1.Error2")),
-    newEmail: z.email(t("Field2.Error1")).max(60, t("Field2.Error2")),
+    newEmail: z
+      .email(t("Field2.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field2.Error2")),
   })
 
   type SchemaType = z.infer<typeof schema>

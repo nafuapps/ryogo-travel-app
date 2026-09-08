@@ -20,11 +20,18 @@ import {
 import { Form } from "@/components/ui/form"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_FIELD_DESC_LENGTH,
+  MAX_FILE_UPLOAD_SIZE,
+  MIN_FIELD_DESC_LENGTH,
+  PHONE_LENGTH,
+} from "@/lib/uiConfig"
 
 export function CreateAccountStep2({
   onNext,
@@ -42,30 +49,23 @@ export function CreateAccountStep2({
   const t = useTranslations("Onboarding.CreateAccountPage.Step2")
 
   const step2Schema = z.object({
-    agencyPhone: z.string().length(10, t("Field1.Error1")),
+    agencyPhone: z.string().length(PHONE_LENGTH, t("Field1.Error1")),
     sameAsOwnerPhone: z.boolean(),
-    agencyEmail: z.email(t("Field2.Error1")).max(60, t("Field2.Error2")),
+    agencyEmail: z
+      .email(t("Field2.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field2.Error2")),
     sameAsOwnerEmail: z.boolean(),
     agencyAddress: z
       .string()
-      .min(20, t("Field3.Error1"))
-      .max(300, t("Field3.Error2")),
+      .min(MIN_FIELD_DESC_LENGTH, t("Field3.Error1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("Field3.Error2")),
     ownerPhoto: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field4.Error2"))
       .optional(),
   })

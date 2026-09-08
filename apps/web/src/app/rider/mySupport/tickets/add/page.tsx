@@ -2,9 +2,9 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
-import AddMySupportTicketPageComponent from "./addMyTicket"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import AddSupportTicketPageComponent from "@/components/flows/support/addTicketPage"
 
 export const metadata: Metadata = {
   title: `Add Support Ticket - ${pageTitle}`,
@@ -20,9 +20,10 @@ export default async function AddMySupportTicketPage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport/tickets/add"} />
-      <AddMySupportTicketPageComponent
+      <AddSupportTicketPageComponent
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}
+        isRider
       />
     </MainWrapper>
   )

@@ -37,6 +37,7 @@ export function AddVehicleConfirm({
   const onSubmit = async () => {
     const newVehicleData: AddVehicleRequestType = {
       agencyId: finalData.agencyId,
+      addedByUserId: finalData.addedByUserId,
       data: {
         vehicleNumber: finalData.data.vehicleNumber,
         type: finalData.data.type,

@@ -18,14 +18,17 @@ import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types
 
 export default function NewVehicleForm({
   agencyId,
+  userId,
   existingVehicles,
 }: {
   agencyId: string
+  userId: string
   existingVehicles: FindExistingVehiclesInAgencyType
 }) {
   const [newVehicleFormData, setNewVehicleFormData] =
     useState<AddVehicleRequestType>({
       agencyId: agencyId,
+      addedByUserId: userId,
       data: {
         vehicleNumber: "",
         type: VehicleTypesEnum.CAR,
@@ -62,6 +65,7 @@ export default function NewVehicleForm({
       newVehicleFormData={newVehicleFormData}
       setNewVehicleFormData={setNewVehicleFormData}
       agencyId={agencyId}
+      userId={userId}
       existingVehicles={existingVehicles}
     />,
     <NewVehicleStep2
@@ -90,6 +94,7 @@ export default function NewVehicleForm({
       onPrev={prevStepHandler}
       newVehicleFormData={newVehicleFormData}
       agencyId={agencyId}
+      userId={userId}
     />,
   ])
 

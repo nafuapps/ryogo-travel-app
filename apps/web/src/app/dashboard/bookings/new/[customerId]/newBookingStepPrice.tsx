@@ -21,6 +21,14 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MIN_COMMISSION_RATE,
+  MAX_COMMISSION_RATE,
+  MAX_VEHICLE_RATE,
+  MIN_VEHICLE_RATE,
+  MAX_PER_DAY_CHARGE,
+  MIN_PER_DAY_CHARGE,
+} from "@/lib/uiConfig"
 
 export default function NewBookingStepPrice({
   onNext,
@@ -41,29 +49,29 @@ export default function NewBookingStepPrice({
     //Cost
     selectedRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(1, t("Field1.Error2"))
-      .max(100, t("Field1.Error3"))
+      .min(MIN_VEHICLE_RATE, t("Field1.Error2"))
+      .max(MAX_VEHICLE_RATE, t("Field1.Error3"))
       .positive(t("Field1.Error4"))
       .multipleOf(1, t("Field1.Error5"))
       .nonoptional(),
     selectedAllowancePerDay: z.coerce
       .number<number>(t("Field2.Error1"))
-      .min(0, t("Field2.Error2"))
-      .max(10000, t("Field2.Error3"))
+      .min(MIN_PER_DAY_CHARGE, t("Field2.Error2"))
+      .max(MAX_PER_DAY_CHARGE, t("Field2.Error3"))
       .nonnegative(t("Field2.Error4"))
       .multipleOf(1, t("Field2.Error5"))
       .nonoptional(),
     selectedAcChargePerDay: z.coerce
       .number<number>(t("Field3.Error1"))
-      .min(0, t("Field3.Error2"))
-      .max(10000, t("Field3.Error3"))
+      .min(MIN_PER_DAY_CHARGE, t("Field3.Error2"))
+      .max(MAX_PER_DAY_CHARGE, t("Field3.Error3"))
       .nonnegative(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5"))
       .optional(),
     selectedCommissionRate: z.coerce
       .number<number>(t("Field4.Error1"))
-      .min(0, t("Field4.Error2"))
-      .max(100, t("Field4.Error3"))
+      .min(MIN_COMMISSION_RATE, t("Field4.Error2"))
+      .max(MAX_COMMISSION_RATE, t("Field4.Error3"))
       .nonnegative(t("Field4.Error4"))
       .multipleOf(1, t("Field4.Error5"))
       .nonoptional(),

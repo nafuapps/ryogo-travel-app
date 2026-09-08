@@ -27,12 +27,14 @@ export function NewDriverConfirm({
   onPrev,
   newDriverFormData,
   agencyId,
+  userId,
   agencyName,
 }: {
   onNext: () => void
   onPrev: () => void
   newDriverFormData: AddDriverRequestType
   agencyId: string
+  userId: string
   agencyName: string
 }) {
   const t = useTranslations("Dashboard.NewDriver.Confirm")
@@ -43,6 +45,7 @@ export function NewDriverConfirm({
     // Add driver
     const newDriverData: AddDriverRequestType = {
       agencyId: agencyId,
+      addedByUserId: userId,
       data: {
         name: newDriverFormData.data.name,
         email: newDriverFormData.data.email,

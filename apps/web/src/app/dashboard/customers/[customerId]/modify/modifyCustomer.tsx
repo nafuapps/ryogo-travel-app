@@ -24,6 +24,13 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_FIELD_DESC_LENGTH,
+  MAX_NAME_LENGTH,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_NAME_LENGTH,
+} from "@/lib/uiConfig"
 
 export default function ModifyCustomerPageComponent({
   customer,
@@ -34,16 +41,25 @@ export default function ModifyCustomerPageComponent({
   const router = useRouter()
 
   const modifyCustomerSchema = z.object({
-    name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
-    email: z.email(t("Field2.Error1")).max(60, t("Field2.Error2")).optional(),
+    name: z
+      .string()
+      .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field1.Error2")),
+    email: z
+      .email(t("Field2.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field2.Error2"))
+      .optional(),
     address: z
       .string()
-      .min(20, t("Field3.Error1"))
-      .max(300, t("Field3.Error2"))
+      .min(MIN_FIELD_DESC_LENGTH, t("Field3.Error1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("Field3.Error2"))
       .optional(),
-    remarks: z.string().max(300, t("Field4.Error1")).optional(),
-    state: z.string().min(1, t("Field5.Error1")),
-    city: z.string().min(1, t("Field6.Error1")),
+    remarks: z
+      .string()
+      .max(MAX_FIELD_DESC_LENGTH, t("Field4.Error1"))
+      .optional(),
+    state: z.string().nonoptional(t("Field5.Error1")),
+    city: z.string().nonoptional(t("Field6.Error1")),
   })
   type ModifyCustomerType = z.infer<typeof modifyCustomerSchema>
 

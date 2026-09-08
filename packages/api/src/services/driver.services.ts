@@ -138,6 +138,7 @@ export const driverServices = {
     const newDriverData: InsertDriverType = {
       agencyId: data.agencyId,
       userId: data.userId,
+      addedByUserId: data.addedByUserId,
       name: data.name,
       phone: data.phone,
       address: data.address,

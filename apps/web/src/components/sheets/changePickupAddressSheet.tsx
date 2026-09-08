@@ -22,6 +22,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { changePickupAddressAction } from "@/app/actions/bookings/changePickupAddressAction"
+import { MIN_FIELD_DESC_LENGTH, MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 
 export default function ChangePickupAddressSheet({
   bookingId,
@@ -49,8 +50,8 @@ export default function ChangePickupAddressSheet({
   const schema = z.object({
     pickupAddress: z
       .string()
-      .min(10, t("AddressError1"))
-      .max(300, t("AddressError2")),
+      .min(MIN_FIELD_DESC_LENGTH, t("AddressError1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("AddressError2")),
     sameAsCustomerAddress: z.boolean(),
   })
 

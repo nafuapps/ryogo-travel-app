@@ -31,5 +31,10 @@ export default async function AddVehiclePage() {
     redirect("/dashboard/home", RedirectType.replace)
   }
 
-  return <AddVehiclePageComponent agencyId={currentUser.agencyId} />
+  return (
+    <AddVehiclePageComponent
+      agencyId={currentUser.agencyId}
+      userId={currentUser.userId}
+    />
+  )
 }

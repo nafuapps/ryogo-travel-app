@@ -24,6 +24,7 @@ export default async function NewDriverPage() {
       <NewDriverPageComponent
         agencyId={currentUser.agencyId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+        userId={currentUser.userId}
       />
     </MainWrapper>
   )

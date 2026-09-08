@@ -19,20 +19,29 @@ import {
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_NAME_LENGTH,
+  MIN_NAME_LENGTH,
+  PHONE_LENGTH,
+} from "@/lib/uiConfig"
 
 export function NewDriverStep1({
   onNext,
   newDriverFormData,
   setNewDriverFormData,
   agencyId,
+  userId,
   allDrivers,
 }: {
   onNext: () => void
   newDriverFormData: AddDriverRequestType
   setNewDriverFormData: Dispatch<SetStateAction<AddDriverRequestType>>
   agencyId: string
+  userId: string
   allDrivers: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Dashboard.NewDriver.Step1")
@@ -41,34 +50,27 @@ export function NewDriverStep1({
     .object({
       driverName: z
         .string()
-        .min(5, t("Field1.Error1"))
-        .max(30, t("Field1.Error2")),
+        .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+        .max(MAX_NAME_LENGTH, t("Field1.Error2")),
       driverPhone: z
         .string()
-        .length(10, t("Field2.Error1"))
+        .length(PHONE_LENGTH, t("Field2.Error1"))
         .refine((value) => {
           // Check if a driver with same phone exists in this agency
           return !allDrivers.some(
             (u) => u.phone === value && u.agencyId === agencyId,
           )
         }, t("APIError1")),
-      driverEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
+      driverEmail: z
+        .email(t("Field3.Error1"))
+        .max(MAX_EMAIL_LENGTH, t("Field3.Error2")),
       driverPhotos: FileRegex.refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
+        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
       }, t("Field4.Error1"))
         .refine((file) => {
           if (file.length < 1) return true
-          return (
-            file[0] &&
-            [
-              "image/jpeg",
-              "image/png",
-              "image/jpg",
-              "image/bmp",
-              "image/webp",
-            ].includes(file[0].type)
-          )
+          return file[0] && SupportedImageFormats.includes(file[0].type)
         }, t("Field4.Error2"))
         .optional(),
     })
@@ -102,7 +104,7 @@ export function NewDriverStep1({
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     setNewDriverFormData({
-      agencyId: newDriverFormData.agencyId,
+      ...newDriverFormData,
       data: {
         ...newDriverFormData.data,
         name: data.driverName,
@@ -175,6 +177,7 @@ export function NewDriverStep1({
             phone={formData.getValues("driverPhone")}
             photo={formData.getValues("driverPhotos")}
             agencyId={agencyId}
+            addedByUserId={userId}
             disabled={
               !formData.formState.isValid || formData.formState.isSubmitting
             }

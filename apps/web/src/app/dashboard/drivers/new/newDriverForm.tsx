@@ -12,16 +12,19 @@ import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export default function NewDriverForm({
   agencyId,
+  userId,
   agencyName,
   allDrivers,
 }: {
   agencyId: string
+  userId: string
   agencyName: string
   allDrivers: FindAllUsersByRoleType
 }) {
   const [newDriverFormData, setNewDriverFormData] =
     useState<AddDriverRequestType>({
       agencyId: agencyId,
+      addedByUserId: userId,
       data: {
         name: "",
         phone: "",
@@ -51,6 +54,7 @@ export default function NewDriverForm({
       newDriverFormData={newDriverFormData}
       setNewDriverFormData={setNewDriverFormData}
       agencyId={agencyId}
+      userId={userId}
       allDrivers={allDrivers}
     />,
     <NewDriverStep2
@@ -73,6 +77,7 @@ export default function NewDriverForm({
       onPrev={prevStepHandler}
       newDriverFormData={newDriverFormData}
       agencyId={agencyId}
+      userId={userId}
       agencyName={agencyName}
     />,
   ])

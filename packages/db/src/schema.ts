@@ -436,6 +436,8 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   }),
   orders: many(orders),
   payments: many(payments),
+  addedVehicles: many(vehicles),
+  addedDrivers: many(drivers),
   driver: one(drivers),
   bookingsAssigned: many(bookings, {
     relationName: "bookings_assigned_user_fkey",
@@ -582,6 +584,9 @@ export const vehicles = pgTable(
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
+    addedByUserId: text("added_by_user_id")
+      .references(() => users.id, { onDelete: "no action" })
+      .notNull(),
     vehicleNumber: varchar("vehicle_number", { length: 15 }).notNull(),
     type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
     brand: vehicleBrands().notNull().default(VehicleBrandEnum.Honda),
@@ -639,6 +644,10 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
     fields: [vehicles.agencyId],
     references: [agencies.id],
   }),
+  addedByUser: one(users, {
+    fields: [vehicles.addedByUserId],
+    references: [users.id],
+  }),
   assignedBookings: many(bookings),
   vehicleRepairs: many(vehicleRepairs),
   tripLogs: many(tripLogs),
@@ -677,6 +686,9 @@ export const drivers = pgTable(
       .references(() => users.id, { onDelete: "cascade" })
       .notNull()
       .unique(),
+    addedByUserId: text("added_by_user_id")
+      .references(() => users.id, { onDelete: "no action" })
+      .notNull(),
     name: varchar("name", { length: 30 }).notNull(),
     phone: varchar("phone", { length: 10 }).notNull(),
     address: varchar("address", { length: 300 }),
@@ -718,6 +730,10 @@ export const driverRelations = relations(drivers, ({ one, many }) => ({
     references: [agencies.id],
   }),
   user: one(users, { fields: [drivers.userId], references: [users.id] }),
+  addedByUser: one(users, {
+    fields: [drivers.addedByUserId],
+    references: [users.id],
+  }),
   assignedBookings: many(bookings),
   driverLeaves: many(driverLeaves),
   tripLogs: many(tripLogs),
@@ -979,8 +995,8 @@ export const bookings = pgTable(
       sql`${t.citydistance} >= 1 AND ${t.citydistance} <= 5000`,
     ),
     check(
-      "passengers >= 0 and <= 100",
-      sql`${t.passengers} >= 0 AND ${t.passengers} <= 100`,
+      "passengers > 0 and <= 100",
+      sql`${t.passengers} > 0 AND ${t.passengers} <= 100`,
     ),
     check(
       "ac charge per day >=0 and <= 10000",

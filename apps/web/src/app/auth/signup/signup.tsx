@@ -16,6 +16,7 @@ import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { PHONE_LENGTH } from "@/lib/uiConfig"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -25,7 +26,7 @@ export default function SignupPageComponent() {
   const formSchema = z.object({
     phoneNumber: z
       .string()
-      .length(10, t("Error1"))
+      .length(PHONE_LENGTH, t("Error1"))
       .regex(/^[0-9]+$/, t("Error2")),
   })
 

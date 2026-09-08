@@ -28,6 +28,14 @@ export const supportTicketRepository = {
     return await db.query.supportTickets.findMany({
       where: eq(supportTickets.agencyId, agencyId),
       orderBy: (supportTickets, { desc }) => [desc(supportTickets.updatedAt)],
+      with: {
+        user: {
+          columns: {
+            name: true,
+            photoUrl: true,
+          },
+        },
+      },
     })
   },
 

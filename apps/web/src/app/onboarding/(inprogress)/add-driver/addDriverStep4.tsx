@@ -38,6 +38,7 @@ export function AddDriverConfirm({
     // Add driver
     const newDriverData: AddDriverRequestType = {
       agencyId: finalData.agencyId,
+      addedByUserId: finalData.addedByUserId,
       data: {
         name: finalData.data.name,
         email: finalData.data.email,

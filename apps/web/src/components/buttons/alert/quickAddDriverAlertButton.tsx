@@ -14,6 +14,7 @@ import {
 
 export default function QuickAddDriverAlertButton({
   agencyId,
+  addedByUserId,
   name,
   email,
   phone,
@@ -22,6 +23,7 @@ export default function QuickAddDriverAlertButton({
   isOnboarding,
 }: {
   agencyId: string
+  addedByUserId: string
   name: string
   email: string
   phone: string
@@ -38,6 +40,7 @@ export default function QuickAddDriverAlertButton({
     startTransition(async () => {
       const newDriverData: AddDriverRequestType = {
         agencyId: agencyId,
+        addedByUserId: addedByUserId,
         data: {
           name: name,
           email: email,

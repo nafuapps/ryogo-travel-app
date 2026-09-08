@@ -3,7 +3,11 @@ import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import { RyogoWhiteButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { SectionWrapper, SideWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionColWrapper,
+  SectionWrapper,
+  SideWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import {
   SUPPORT_HELPLINE_NUMBER,
@@ -30,20 +34,23 @@ export default async function SupportSideComponent({
         <RyogoCaption color="light" className="text-center">
           {t("Contact.Description")}
         </RyogoCaption>
-        <div className="flex flex-col w-full gap-3 lg:gap-4">
+        <SectionColWrapper wFull>
           <RyogoPhoneButton
             label={t("Contact.CallCTA")}
             phone={SUPPORT_HELPLINE_NUMBER}
-          />
-          <RyogoChatButton
-            label={t("Contact.ChatCTA")}
-            phone={SUPPORT_CHAT_NUMBER}
+            subtitle={t("Contact.CallSubtitle")}
           />
           <RyogoMailButton
             label={t("Contact.EmailCTA")}
             email={SUPPORT_EMAIL}
+            subtitle={t("Contact.EmailSubtitle")}
           />
-        </div>
+          <RyogoChatButton
+            label={t("Contact.ChatCTA")}
+            phone={SUPPORT_CHAT_NUMBER}
+            subtitle={t("Contact.ChatSubtitle")}
+          />
+        </SectionColWrapper>
       </SectionWrapper>
       <SectionWrapper id="Tickets" center bgColor="bg-slate-900 dark:bg-white">
         {isPremium ? (
@@ -74,7 +81,7 @@ export default async function SupportSideComponent({
                   <RyogoIcon
                     icon={ChevronRight}
                     size="sm"
-                    color="slate"
+                    color="black"
                     thick
                   />
                 </RyogoWhiteButton>

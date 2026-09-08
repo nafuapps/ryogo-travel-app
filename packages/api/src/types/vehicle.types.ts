@@ -6,6 +6,7 @@ import {
 
 export type AddVehicleRequestType = {
   agencyId: string
+  addedByUserId: string
   data: {
     vehicleNumber: string
     type: VehicleTypesEnum

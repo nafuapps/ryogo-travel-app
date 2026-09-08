@@ -17,6 +17,12 @@ import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { toast } from "sonner"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_NAME_LENGTH,
+  MIN_NAME_LENGTH,
+  PHONE_LENGTH,
+} from "@/lib/uiConfig"
 
 export function CreateAccountStep1({
   onNext,
@@ -35,14 +41,16 @@ export function CreateAccountStep1({
   const step1Schema = z.object({
     agencyName: z
       .string()
-      .min(5, t("Field1.Error1"))
-      .max(30, t("Field1.Error2")),
+      .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field1.Error2")),
     ownerName: z
       .string()
-      .min(5, t("Field2.Error1"))
-      .max(30, t("Field2.Error2")),
-    ownerPhone: z.string().length(10, t("Field3.Error1")),
-    ownerEmail: z.email(t("Field4.Error1")).max(60, t("Field4.Error2")),
+      .min(MIN_NAME_LENGTH, t("Field2.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field2.Error2")),
+    ownerPhone: z.string().length(PHONE_LENGTH, t("Field3.Error1")),
+    ownerEmail: z
+      .email(t("Field4.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field4.Error2")),
   })
   type Step1Type = z.infer<typeof step1Schema>
   const formData = useForm<Step1Type>({

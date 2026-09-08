@@ -26,10 +26,12 @@ export function NewVehicleConfirm({
   onPrev,
   newVehicleFormData,
   agencyId,
+  userId,
 }: {
   onPrev: () => void
   newVehicleFormData: AddVehicleRequestType
   agencyId: string
+  userId: string
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Confirm")
   const form = useForm<AddVehicleRequestType>()
@@ -38,6 +40,7 @@ export function NewVehicleConfirm({
   const onSubmit = async () => {
     const newVehicleData: AddVehicleRequestType = {
       agencyId: agencyId,
+      addedByUserId: userId,
       data: {
         vehicleNumber: newVehicleFormData.data.vehicleNumber,
         type: newVehicleFormData.data.type,

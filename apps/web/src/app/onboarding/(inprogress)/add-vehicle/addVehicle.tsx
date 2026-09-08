@@ -25,12 +25,15 @@ import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types
 
 export default function AddVehiclePageComponent({
   agencyId,
+  userId,
 }: {
   agencyId: string
+  userId: string
 }) {
   const t = useTranslations("Onboarding.AddVehiclePage")
   const [finalData, setFinalData] = useState<AddVehicleRequestType>({
     agencyId: agencyId,
+    addedByUserId: userId,
     data: {
       vehicleNumber: "",
       type: VehicleTypesEnum.CAR,

@@ -21,6 +21,7 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from "@/lib/uiConfig"
 
 export function AddVehicleStep1({
   onNext,
@@ -41,7 +42,10 @@ export function AddVehicleStep1({
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field2.Error1")),
     brand: z.enum(VehicleBrandEnum).nonoptional(t("Field3.Error1")),
     color: z.enum(VehicleColorEnum).nonoptional(t("Field4.Error1")),
-    model: z.string().min(3, t("Field5.Error1")).max(30, t("Field5.Error2")),
+    model: z
+      .string()
+      .min(MIN_NAME_LENGTH, t("Field5.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field5.Error2")),
   })
   type Step1Type = z.infer<typeof step1Schema>
 
@@ -59,7 +63,7 @@ export function AddVehicleStep1({
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     updateFinalData({
-      agencyId: finalData.agencyId,
+      ...finalData,
       data: {
         ...finalData.data,
         vehicleNumber: data.vehicleNumber,
@@ -127,6 +131,7 @@ export function AddVehicleStep1({
           />
           <QuickAddVehicleAlertButton
             agencyId={finalData.agencyId}
+            addedByUserId={finalData.addedByUserId}
             vehicleNumber={formData.getValues("vehicleNumber")}
             type={formData.getValues("type")}
             brand={formData.getValues("brand")}

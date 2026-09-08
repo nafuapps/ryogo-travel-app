@@ -17,6 +17,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MAX_EMAIL_LENGTH } from "@/lib/uiConfig"
 
 export default function ChangeUserEmailPageComponent({
   user,
@@ -29,7 +30,9 @@ export default function ChangeUserEmailPageComponent({
   const router = useRouter()
 
   const modifyUserSchema = z.object({
-    newEmail: z.email(t("Field1.Error1")).max(60, t("Field1.Error2")),
+    newEmail: z
+      .email(t("Field1.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field1.Error2")),
   })
   type ModifyUserType = z.infer<typeof modifyUserSchema>
 

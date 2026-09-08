@@ -24,11 +24,24 @@ import {
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_NAME_LENGTH,
+  MAX_ODOMETER_LIMIT,
+  MAX_PER_DAY_CHARGE,
+  MAX_VEHICLE_CAPCITY,
+  MAX_VEHICLE_RATE,
+  MIN_NAME_LENGTH,
+  MIN_ODOMETER_LIMIT,
+  MIN_PER_DAY_CHARGE,
+  MIN_VEHICLE_CAPCITY,
+  MIN_VEHICLE_RATE,
+} from "@/lib/uiConfig"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -42,17 +55,20 @@ export default function ModifyVehiclePageComponent({
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field1.Error1")),
     brand: z.enum(VehicleBrandEnum).nonoptional(t("Field2.Error1")),
     color: z.enum(VehicleColorEnum).nonoptional(t("Field3.Error1")),
-    model: z.string().min(3, t("Field4.Error1")).max(30, t("Field4.Error2")),
+    model: z
+      .string()
+      .min(MIN_NAME_LENGTH, t("Field4.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field4.Error2")),
     capacity: z.coerce
       .number<number>(t("Field5.Error1"))
-      .min(0, t("Field5.Error2"))
-      .max(100, t("Field5.Error3"))
+      .min(MIN_VEHICLE_CAPCITY, t("Field5.Error2"))
+      .max(MAX_VEHICLE_CAPCITY, t("Field5.Error3"))
       .multipleOf(1, t("Field5.Error4"))
       .nonnegative(t("Field5.Error5")),
     odometerReading: z.coerce
       .number<number>(t("Field6.Error1"))
-      .min(0, t("Field6.Error2"))
-      .max(1000000, t("Field6.Error3"))
+      .min(MIN_ODOMETER_LIMIT, t("Field6.Error2"))
+      .max(MAX_ODOMETER_LIMIT, t("Field6.Error3"))
       .multipleOf(1, t("Field6.Error4"))
       .nonnegative(t("Field6.Error5")),
     rcExpiresOn: z
@@ -61,21 +77,11 @@ export default function ModifyVehiclePageComponent({
       .optional(),
     rcPhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field8.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field8.Error3"))
       .optional(),
     insuranceExpiresOn: z
@@ -84,21 +90,11 @@ export default function ModifyVehiclePageComponent({
       .optional(),
     insurancePhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field10.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field10.Error3"))
       .optional(),
     pucExpiresOn: z
@@ -107,34 +103,24 @@ export default function ModifyVehiclePageComponent({
       .optional(),
     pucPhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field12.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field12.Error3"))
       .optional(),
     defaultRatePerKm: z.coerce
       .number<number>(t("Field13.Error1"))
-      .min(0, t("Field13.Error2"))
-      .max(50, t("Field13.Error3"))
+      .min(MIN_VEHICLE_RATE, t("Field13.Error2"))
+      .max(MAX_VEHICLE_RATE, t("Field13.Error3"))
       .nonnegative(t("Field13.Error4"))
       .multipleOf(1, t("Field13.Error5")),
     hasAC: z.boolean(),
     defaultAcChargePerDay: z.coerce
       .number<number>()
-      .min(0, t("Field15.Error2"))
-      .max(10000, t("Field15.Error3"))
+      .min(MIN_PER_DAY_CHARGE, t("Field15.Error2"))
+      .max(MAX_PER_DAY_CHARGE, t("Field15.Error3"))
       .nonnegative(t("Field15.Error4"))
       .multipleOf(1, t("Field15.Error5")),
   })

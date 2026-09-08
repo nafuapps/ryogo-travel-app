@@ -11,11 +11,18 @@ import z from "zod"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import { FormWrapper } from "@/components/page/pageWrappers"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_NAME_LENGTH,
+  MIN_NAME_LENGTH,
+  PHONE_LENGTH,
+} from "@/lib/uiConfig"
 
 export default function NewAgentForm({
   agencyId,
@@ -32,26 +39,19 @@ export default function NewAgentForm({
   const newAgentSchema = z.object({
     agentName: z
       .string()
-      .min(5, t("Field1.Error1"))
-      .max(30, t("Field1.Error2")),
-    agentPhone: z.string().length(10, t("Field2.Error1")),
-    agentEmail: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
+      .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field1.Error2")),
+    agentPhone: z.string().length(PHONE_LENGTH, t("Field2.Error1")),
+    agentEmail: z
+      .email(t("Field3.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field3.Error2")),
     agentPhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field4.Error2"))
       .optional(),
   })

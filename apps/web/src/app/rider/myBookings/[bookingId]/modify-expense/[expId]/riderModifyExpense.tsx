@@ -18,12 +18,17 @@ import DeleteExpenseAlertButton from "@/components/buttons/alert/deleteExpenseAl
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { Separator } from "@/components/ui/separator"
+import {
+  MAX_AMOUNT_LIMIT,
+  MAX_FILE_UPLOAD_SIZE,
+  MIN_AMOUNT_LIMIT,
+} from "@/lib/uiConfig"
 
 export default function RiderModifyExpensePageComponent({
   expenseDetails,
@@ -39,28 +44,18 @@ export default function RiderModifyExpensePageComponent({
     type: z.enum(ExpenseTypesEnum).nonoptional(t("Field1.Error1")),
     amount: z.coerce
       .number<number>(t("Field2.Error1"))
-      .min(1, t("Field2.Error2"))
-      .max(1000000, t("Field2.Error3"))
+      .min(MIN_AMOUNT_LIMIT, t("Field2.Error2"))
+      .max(MAX_AMOUNT_LIMIT, t("Field2.Error3"))
       .multipleOf(1, t("Field2.Error4"))
       .positive(t("Field2.Error5")),
     remarks: z.string().max(300, t("Field3.Error1")).optional(),
     expensePhoto: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field4.Error2"))
       .optional(),
   })

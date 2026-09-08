@@ -25,6 +25,7 @@ export type CreateOwnerAccountRequestType = {
 
 export type AddDriverRequestType = {
   agencyId: string
+  addedByUserId: string
   data: {
     name: string
     phone: string

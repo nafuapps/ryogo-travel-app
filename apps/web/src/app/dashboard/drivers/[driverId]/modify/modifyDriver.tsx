@@ -19,11 +19,18 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_FIELD_DESC_LENGTH,
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_PER_DAY_CHARGE,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_PER_DAY_CHARGE,
+} from "@/lib/uiConfig"
 
 export default function ModifyDriverPageComponent({
   driver,
@@ -36,15 +43,15 @@ export default function ModifyDriverPageComponent({
   const modifyDriverSchema = z.object({
     address: z
       .string()
-      .min(20, t("Field1.Error1"))
-      .max(300, t("Field1.Error2")),
+      .min(MIN_FIELD_DESC_LENGTH, t("Field1.Error1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("Field1.Error2")),
     canDriveVehicleTypes: z
       .array(z.enum(VehicleTypesEnum))
       .min(1, t("Field2.Error1")),
     defaultAllowancePerDay: z.coerce
       .number<number>(t("Field3.Error1"))
-      .min(1, t("Field3.Error2"))
-      .max(10000, t("Field3.Error3"))
+      .min(MIN_PER_DAY_CHARGE, t("Field3.Error2"))
+      .max(MAX_PER_DAY_CHARGE, t("Field3.Error3"))
       .positive(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5")),
     licenseNumber: z
@@ -58,21 +65,11 @@ export default function ModifyDriverPageComponent({
       .nonoptional(t("Field5.Error1")),
     licensePhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field6.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field6.Error3"))
       .optional(),
   })

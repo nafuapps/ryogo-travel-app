@@ -20,10 +20,12 @@ import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 
 export default function AddDriverPageComponent({
   agencyId,
+  userId,
   agencyName,
   allDrivers,
 }: {
   agencyId: string
+  userId: string
   agencyName: string
   allDrivers: FindAllUsersByRoleType
 }) {
@@ -31,6 +33,7 @@ export default function AddDriverPageComponent({
 
   const [finalData, setFinalData] = useState<AddDriverRequestType>({
     agencyId: agencyId,
+    addedByUserId: userId,
     data: {
       name: "",
       phone: "",

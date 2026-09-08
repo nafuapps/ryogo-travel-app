@@ -30,18 +30,21 @@ import {
 } from "@/components/form/newFormWrappers"
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "@/lib/uiConfig"
 
 export function NewVehicleStep1({
   onNext,
   newVehicleFormData,
   setNewVehicleFormData,
   agencyId,
+  userId,
   existingVehicles,
 }: {
   onNext: () => void
   newVehicleFormData: AddVehicleRequestType
   setNewVehicleFormData: Dispatch<SetStateAction<AddVehicleRequestType>>
   agencyId: string
+  userId: string
   existingVehicles: FindExistingVehiclesInAgencyType
 }) {
   const t = useTranslations("Dashboard.NewVehicle.Step1")
@@ -61,7 +64,10 @@ export function NewVehicleStep1({
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field2.Error1")),
     brand: z.enum(VehicleBrandEnum).nonoptional(t("Field3.Error1")),
     color: z.enum(VehicleColorEnum).nonoptional(t("Field4.Error1")),
-    model: z.string().min(3, t("Field5.Error1")).max(30, t("Field5.Error2")),
+    model: z
+      .string()
+      .min(MIN_NAME_LENGTH, t("Field5.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field5.Error2")),
   })
 
   type Step1Type = z.infer<typeof step1Schema>
@@ -80,7 +86,7 @@ export function NewVehicleStep1({
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
     setNewVehicleFormData({
-      agencyId: agencyId,
+      ...newVehicleFormData,
       data: {
         ...newVehicleFormData.data,
         vehicleNumber: data.vehicleNumber,
@@ -163,6 +169,7 @@ export function NewVehicleStep1({
             color={formData.getValues("color")}
             model={formData.getValues("model")}
             agencyId={agencyId}
+            addedByUserId={userId}
             disabled={
               !formData.formState.isValid || formData.formState.isSubmitting
             }

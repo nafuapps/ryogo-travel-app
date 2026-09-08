@@ -29,3 +29,11 @@ export const PasswordRegex = z.string().trim().min(8)
 export const FileRegex = z.custom<FileList>(
   (value) => typeof FileList !== "undefined" && value instanceof FileList,
 )
+
+export const SupportedImageFormats = [
+  "image/jpeg",
+  "image/avif",
+  "image/png",
+  "image/gif",
+  "image/webp",
+]

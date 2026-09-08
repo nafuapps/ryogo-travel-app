@@ -28,9 +28,14 @@ import Link from "next/link"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { useLocation } from "@/hooks/useLocation"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
+import {
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_ODOMETER_LIMIT,
+  MIN_ODOMETER_LIMIT,
+  TOTAL_RATING_STARS,
+} from "@/lib/uiConfig"
 import { RyogoCaption } from "@/components/typography"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
@@ -45,7 +50,7 @@ export default function EndTripSheet({
   const t = useTranslations("Rider.MyBooking.EndTrip")
   const router = useRouter()
 
-  const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
+  const minOdo = booking.assignedVehicle?.odometerReading ?? MIN_ODOMETER_LIMIT
   const [open, setOpen] = useState(false)
   const latLong = useLocation()
 
@@ -55,8 +60,8 @@ export default function EndTripSheet({
   const schema = z.object({
     odometerReading: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(maxOdo, t("Field1.Error2", { maxOdo: maxOdo }))
-      .max(1000000, t("Field1.Error3"))
+      .min(minOdo, t("Field1.Error2", { maxOdo: minOdo }))
+      .max(MAX_ODOMETER_LIMIT, t("Field1.Error3"))
       .multipleOf(1, t("Field1.Error4"))
       .nonnegative(t("Field1.Error5"))
       .nonoptional(t("Field1.Error1")),
@@ -64,19 +69,10 @@ export default function EndTripSheet({
       return file.length > 0
     }, t("Field2.Error3"))
       .refine((file) => {
-        return file[0] && file[0].size < 1000000
+        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
       }, t("Field2.Error1"))
       .refine((file) => {
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field2.Error2"))
       .nonoptional(t("Field2.Error3")),
     remarks: z.string().optional(),

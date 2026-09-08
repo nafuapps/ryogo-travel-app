@@ -440,7 +440,7 @@ export const userServices = {
   },
 
   //Create Driver (Onboarding flow)
-  async addDriverUser({ agencyId, data }: AddDriverRequestType) {
+  async addDriverUser({ agencyId, addedByUserId, data }: AddDriverRequestType) {
     //Step1: Check if driver user (phone) already exists in this agency
     const existingUserInAgency =
       await userRepository.readUserByPhoneRolesAgencyId(
@@ -484,6 +484,7 @@ export const userServices = {
     //Step5: Create a driver
     const newDriver = await driverServices.addDriver({
       agencyId: agencyId,
+      addedByUserId: addedByUserId,
       userId: newUser[0].id,
       name: data.name,
       phone: data.phone,

@@ -32,6 +32,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { StickyActionWrapper } from "@/components/page/pageWrappers"
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH, PHONE_LENGTH } from "@/lib/uiConfig"
 
 export default function NewBookingAddCustomerPageComponent({
   agency,
@@ -54,15 +55,15 @@ export default function NewBookingAddCustomerPageComponent({
   const addCustomerSchema = z.object({
     newCustomerName: z
       .string()
-      .min(5, t("Field1.Error1"))
-      .max(30, t("Field1.Error2")),
+      .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field1.Error2")),
     newCustomerPhone: z
       .string()
       .trim()
-      .length(10, t("Field2.Error1"))
+      .length(PHONE_LENGTH, t("Field2.Error1"))
       .regex(/^[0-9]+$/, t("Field2.Error2")),
-    newCustomerState: z.string().min(1, t("Field3.Error1")),
-    newCustomerCity: z.string().min(1, t("Field4.Error1")),
+    newCustomerState: z.string().nonoptional(t("Field3.Error1")),
+    newCustomerCity: z.string().nonoptional(t("Field4.Error1")),
   })
 
   type AddCustomerType = z.infer<typeof addCustomerSchema>

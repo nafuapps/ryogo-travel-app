@@ -14,9 +14,11 @@ import SubscriptionBlockerSection from "@/components/flows/susbcription/subscrip
 
 export default async function NewDriverPageComponent({
   agencyId,
+  userId,
   isOwner,
 }: {
   agencyId: string
+  userId: string
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.NewDriver")
@@ -65,6 +67,7 @@ export default async function NewDriverPageComponent({
     <PageWrapper id="NewDriverPage">
       <NewDriverForm
         agencyId={agencyId}
+        userId={userId}
         allDrivers={allDriverUsers}
         agencyName={agency.businessName}
       />

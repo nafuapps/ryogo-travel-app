@@ -25,6 +25,7 @@ import {
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
 export default function LoginPasswordPageComponent({
   user,
@@ -36,7 +37,7 @@ export default function LoginPasswordPageComponent({
   const { checkBotActivity, isBot } = useBotDetection()
 
   const formSchema = z.object({
-    password: z.string().min(8, t("Error1")),
+    password: z.string().min(MIN_PASSWORD_LENGTH, t("Error1")),
   })
 
   type SchemaType = z.infer<typeof formSchema>

@@ -13,9 +13,11 @@ import SubscriptionBlockerSection from "@/components/flows/susbcription/subscrip
 
 export default async function NewVehiclePageComponent({
   agencyId,
+  userId,
   isOwner,
 }: {
   agencyId: string
+  userId: string
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.NewVehicle")
@@ -58,7 +60,11 @@ export default async function NewVehiclePageComponent({
 
   return (
     <PageWrapper id="NewVehiclePage">
-      <NewVehicleForm agencyId={agencyId} existingVehicles={vehicles} />
+      <NewVehicleForm
+        agencyId={agencyId}
+        existingVehicles={vehicles}
+        userId={userId}
+      />
     </PageWrapper>
   )
 }

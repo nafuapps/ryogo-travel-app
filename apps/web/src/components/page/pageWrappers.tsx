@@ -35,7 +35,7 @@ export function PageWrapper({
 
 export function SideWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full lg:w-2/5 lg:max-w-xs gap-3 lg:gap-4 lg:overflow-y-scroll no-scrollbar">
+    <div className="flex flex-col w-full lg:w-2/5 2xl:max-w-sm lg:max-w-xs lg:min-w-2xs gap-3 lg:gap-4 lg:overflow-y-scroll no-scrollbar">
       {children}
     </div>
   )

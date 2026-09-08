@@ -16,6 +16,7 @@ import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { PHONE_LENGTH } from "@/lib/uiConfig"
 
 /*
 1. Find user by phone number
@@ -31,7 +32,7 @@ export default function LoginPageComponent() {
   const formSchema = z.object({
     phoneNumber: z
       .string()
-      .length(10, t("Error1"))
+      .length(PHONE_LENGTH, t("Error1"))
       .regex(/^[0-9]+$/, t("Error2")),
   })
 

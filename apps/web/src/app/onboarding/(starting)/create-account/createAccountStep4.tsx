@@ -23,6 +23,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
 export function CreateAccountStep4({
   onNext,
@@ -41,11 +42,11 @@ export function CreateAccountStep4({
     .object({
       password: z
         .string()
-        .min(8, t("Field1.Error1"))
+        .min(MIN_PASSWORD_LENGTH, t("Field1.Error1"))
         .refine((s) => !s.includes(" "), t("Field1.Error2")),
       confirmPassword: z
         .string()
-        .min(8, t("Field2.Error1"))
+        .min(MIN_PASSWORD_LENGTH, t("Field2.Error1"))
         .refine((s) => !s.includes(" "), t("Field2.Error3")),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -179,8 +180,8 @@ function PlanSelectionCard({
       onClick={onClick}
       className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-1.5 lg:gap-2 w-full ${
         selected
-          ? "bg-sky-100 dark:bg-sky-800 border-sky-100 dark:border-sky-800"
-          : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 "
+          ? "bg-sky-100 dark:bg-sky-MIN_PASSWORD_LENGTH00 border-sky-100 dark:border-sky-MIN_PASSWORD_LENGTH00"
+          : "border-slate-100 dark:border-slate-MIN_PASSWORD_LENGTH00 hover:bg-slate-50 dark:hover:bg-slate-900 "
       }`}
     >
       <RyogoIcon icon={icon} size="md" />

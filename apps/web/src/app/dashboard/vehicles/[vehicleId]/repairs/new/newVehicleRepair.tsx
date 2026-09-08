@@ -19,6 +19,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MAX_AMOUNT_LIMIT, MIN_AMOUNT_LIMIT } from "@/lib/uiConfig"
 
 export default function NewVehicleRepairPageComponent({
   userId,
@@ -40,8 +41,8 @@ export default function NewVehicleRepairPageComponent({
       remarks: z.string().optional(),
       cost: z.coerce
         .number<number>(t("Field5.Error1"))
-        .min(0, t("Field5.Error2"))
-        .max(1000000, t("Field5.Error3"))
+        .min(MIN_AMOUNT_LIMIT, t("Field5.Error2"))
+        .max(MAX_AMOUNT_LIMIT, t("Field5.Error3"))
         .multipleOf(1, t("Field5.Error4"))
         .nonnegative(t("Field5.Error5"))
         .optional(),

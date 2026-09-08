@@ -22,6 +22,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { changeDropAddressAction } from "@/app/actions/bookings/changeDropAddressAction"
+import { MIN_FIELD_DESC_LENGTH, MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 
 export default function ChangeDropAddressSheet({
   bookingId,
@@ -47,8 +48,8 @@ export default function ChangeDropAddressSheet({
   const schema = z.object({
     dropAddress: z
       .string()
-      .min(10, t("AddressError1"))
-      .max(300, t("AddressError2")),
+      .min(MIN_FIELD_DESC_LENGTH, t("AddressError1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("AddressError2")),
   })
 
   type SchemaType = z.infer<typeof schema>

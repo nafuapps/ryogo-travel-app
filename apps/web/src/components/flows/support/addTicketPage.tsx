@@ -1,6 +1,5 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import { addSupportTicketAction } from "@/app/actions/support/addSupportTicketAction"
 import {
   RyogoFileInput,
@@ -15,22 +14,32 @@ import { Separator } from "@/components/ui/separator"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_FIELD_DESC_LENGTH,
+  MAX_FIELD_TITLE_LENGTH,
+  MAX_FILE_UPLOAD_SIZE,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_FIELD_TITLE_LENGTH,
+} from "@/lib/uiConfig"
 
-export default function AddMySupportTicketPageComponent({
+export default function AddSupportTicketPageComponent({
   userId,
   agencyId,
+  isRider,
 }: {
   userId: string
   agencyId: string
+  isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.AddSupportTicket")
   const router = useRouter()
@@ -39,25 +48,22 @@ export default function AddMySupportTicketPageComponent({
     .object({
       entityType: z.enum(EntityTypeEnum).nonoptional(t("Field1.Error1")),
       entityId: z.string().max(12, t("Field2.Error1")).optional(),
-      issue: z.string().min(5, t("Field3.Error1")).max(100, t("Field3.Error2")),
-      details: z.string().max(300, t("Field4.Error1")).optional(),
+      issue: z
+        .string()
+        .min(MIN_FIELD_TITLE_LENGTH, t("Field3.Error1"))
+        .max(MAX_FIELD_TITLE_LENGTH, t("Field3.Error2")),
+      details: z
+        .string()
+        .min(MIN_FIELD_DESC_LENGTH, t("Field4.Error2"))
+        .max(MAX_FIELD_DESC_LENGTH, t("Field4.Error1"))
+        .optional(),
       photo: FileRegex.refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0].size < 1000000
+        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
       }, t("Field5.Error1"))
         .refine((file) => {
           if (file.length < 1) return true
-          return (
-            file[0] &&
-            [
-              "image/jpeg",
-              "image/png",
-              "image/jpg",
-              "image/bmp",
-              "image/webp",
-              "application/pdf",
-            ].includes(file[0].type)
-          )
+          return file[0] && SupportedImageFormats.includes(file[0].type)
         }, t("Field5.Error2"))
         .optional(),
     })
@@ -73,7 +79,7 @@ export default function AddMySupportTicketPageComponent({
 
   type AddTicketType = z.infer<typeof addTicketSchema>
 
-  const formData = useForm<AddTicketType>({
+  const form = useForm<AddTicketType>({
     resolver: zodResolver(addTicketSchema),
     defaultValues: {
       entityType: EntityTypeEnum.USER,
@@ -91,10 +97,16 @@ export default function AddMySupportTicketPageComponent({
     })
     if (newTicket) {
       toast.success(t("Success"))
-      router.replace(`/rider/mySupport/tickets/${newTicket.id}`)
+      router.replace(
+        isRider
+          ? `/rider/mySupport/tickets/${newTicket.id}`
+          : `/dashboard/support/tickets/${newTicket.id}`,
+      )
     } else {
       toast.error(t("Error"))
-      router.replace(`/rider/mySupport/tickets`)
+      router.replace(
+        isRider ? `/rider/mySupport/tickets` : `/dashboard/support/tickets`,
+      )
     }
   }
 
@@ -102,14 +114,14 @@ export default function AddMySupportTicketPageComponent({
     <PageWrapper id="AddSupportTicketPage">
       <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
       <FormWrapper<AddTicketType>
-        form={formData}
-        onSubmit={formData.handleSubmit(onSubmit)}
+        form={form}
+        onSubmit={form.handleSubmit(onSubmit)}
         id="addTicketForm"
       >
         <RyogoSelect
           name="entityType"
           title={t("Field1.Title")}
-          register={formData.register("entityType")}
+          register={form.register("entityType")}
           array={getEnumValueDisplayPairs(EntityTypeEnum)}
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
@@ -135,7 +147,7 @@ export default function AddMySupportTicketPageComponent({
         />
         <RyogoFileInput
           name={"photo"}
-          register={formData.register("photo")}
+          register={form.register("photo")}
           label={t("Field5.Title")}
           placeholder={t("Field5.Placeholder")}
           description={t("Field5.Description")}
@@ -143,19 +155,17 @@ export default function AddMySupportTicketPageComponent({
         <Separator />
         <RyogoDefaultButton
           size={"lg"}
-          label={
-            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-          }
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
           type="submit"
-          disabled={formData.formState.isSubmitting}
-          showSpinner={formData.formState.isSubmitting}
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
         />
         <RyogoOutlineButton
           size={"lg"}
           label={t("CancelCTA")}
           type="button"
           onClick={() => router.back()}
-          disabled={formData.formState.isSubmitting}
+          disabled={form.formState.isSubmitting}
         />
       </FormWrapper>
     </PageWrapper>

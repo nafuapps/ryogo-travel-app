@@ -19,6 +19,7 @@ import {
 
 export default function QuickAddVehicleAlertButton({
   agencyId,
+  addedByUserId,
   vehicleNumber,
   type,
   brand,
@@ -28,6 +29,7 @@ export default function QuickAddVehicleAlertButton({
   isOnboarding,
 }: {
   agencyId: string
+  addedByUserId: string
   vehicleNumber: string
   type: VehicleTypesEnum
   brand: VehicleBrandEnum
@@ -45,6 +47,7 @@ export default function QuickAddVehicleAlertButton({
     startTransition(async () => {
       const newVehicleData: AddVehicleRequestType = {
         agencyId: agencyId,
+        addedByUserId: addedByUserId,
         data: {
           vehicleNumber: vehicleNumber,
           type: type,

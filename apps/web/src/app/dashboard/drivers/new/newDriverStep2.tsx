@@ -21,11 +21,12 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 
 export function NewDriverStep2({
   onNext,
@@ -54,21 +55,11 @@ export function NewDriverStep2({
     }, t("Field3.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0] && file[0].size < 1000000
+        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
       }, t("Field3.Error2"))
       .refine((file) => {
         if (file.length < 1) return false
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field3.Error3")),
   })
   type Step2Type = z.infer<typeof step2Schema>
@@ -84,7 +75,7 @@ export function NewDriverStep2({
   //Submit actions
   const onSubmit = (data: Step2Type) => {
     setNewDriverFormData({
-      agencyId: newDriverFormData.agencyId,
+      ...newDriverFormData,
       data: {
         ...newDriverFormData.data,
         licenseNumber: data.licenseNumber,

@@ -25,7 +25,7 @@ export default function SupportCategoryCard({
       <SectionWrapper id={title}>
         <SectionRowWrapper justifyStart center>
           <RyogoEnclosedIcon icon={icon} size="sm" />
-          <RyogoSmall color="dark" weight="font-medium">
+          <RyogoSmall color="dark" weight="font-bold">
             {title}
           </RyogoSmall>
           {highlight && (

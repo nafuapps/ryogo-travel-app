@@ -21,6 +21,12 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MIN_VEHICLE_RATE,
+  MAX_VEHICLE_RATE,
+  MAX_PER_DAY_CHARGE,
+  MIN_PER_DAY_CHARGE,
+} from "@/lib/uiConfig"
 
 export function NewVehicleStep4({
   onNext,
@@ -37,16 +43,16 @@ export function NewVehicleStep4({
   const step4Schema = z.object({
     defaultRatePerKm: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(0, t("Field1.Error2"))
-      .max(100, t("Field1.Error3"))
+      .min(MIN_VEHICLE_RATE, t("Field1.Error2"))
+      .max(MAX_VEHICLE_RATE, t("Field1.Error3"))
       .positive(t("Field1.Error4"))
       .multipleOf(1, t("Field1.Error5"))
       .optional(),
     hasAC: z.boolean(),
     defaultAcChargePerDay: z.coerce
       .number<number>()
-      .min(0, t("Field3.Error2"))
-      .max(10000, t("Field3.Error3"))
+      .min(MIN_PER_DAY_CHARGE, t("Field3.Error2"))
+      .max(MAX_PER_DAY_CHARGE, t("Field3.Error3"))
       .nonnegative(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5"))
       .optional(),
@@ -69,7 +75,7 @@ export function NewVehicleStep4({
   //Submit actions
   const onSubmit = (data: Step4Type) => {
     setNewVehicleFormData({
-      agencyId: newVehicleFormData.agencyId,
+      ...newVehicleFormData,
       data: {
         ...newVehicleFormData.data,
         defaultRatePerKm: data.defaultRatePerKm,

@@ -20,11 +20,12 @@ import {
   NewFormContentWrapper,
   NewFormActionWrapper,
 } from "@/components/form/newFormWrappers"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 
 export function NewVehicleStep3({
   onNext,
@@ -48,21 +49,11 @@ export function NewVehicleStep3({
     }, t("Field2.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0] && file[0].size < 1000000
+        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
       }, t("Field2.Error2"))
       .refine((file) => {
         if (file.length < 1) return false
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field2.Error3")),
     pucExpiresOn: z
       .date(t("Field3.Error1"))
@@ -73,21 +64,11 @@ export function NewVehicleStep3({
     }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0] && file[0].size < 1000000
+        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
       }, t("Field4.Error2"))
       .refine((file) => {
         if (file.length < 1) return false
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field4.Error3")),
   })
   type Step3Type = z.infer<typeof step3Schema>
@@ -104,7 +85,7 @@ export function NewVehicleStep3({
   //Submit actions
   const onSubmit = (data: Step3Type) => {
     setNewVehicleFormData({
-      agencyId: newVehicleFormData.agencyId,
+      ...newVehicleFormData,
       data: {
         ...newVehicleFormData.data,
         insuranceExpiresOn: data.insuranceExpiresOn,

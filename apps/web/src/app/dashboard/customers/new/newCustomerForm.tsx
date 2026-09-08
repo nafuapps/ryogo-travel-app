@@ -18,11 +18,20 @@ import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
 import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_FIELD_DESC_LENGTH,
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_NAME_LENGTH,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_NAME_LENGTH,
+  PHONE_LENGTH,
+} from "@/lib/uiConfig"
 
 export default function NewCustomerForm({
   agencyId,
@@ -43,40 +52,39 @@ export default function NewCustomerForm({
   const router = useRouter()
 
   const newCustomerSchema = z.object({
-    name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
+    name: z
+      .string()
+      .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field1.Error2")),
     phone: z
       .string()
       .trim()
-      .length(10, t("Field2.Error1"))
+      .length(PHONE_LENGTH, t("Field2.Error1"))
       .regex(/^[0-9]+$/, t("Field2.Error2")),
-    email: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")).optional(),
+    email: z
+      .email(t("Field3.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field3.Error2"))
+      .optional(),
     photo: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-            "application/pdf",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field4.Error2"))
       .optional(),
     address: z
       .string()
-      .min(20, t("Field5.Error1"))
-      .max(300, t("Field5.Error2"))
+      .min(MIN_FIELD_DESC_LENGTH, t("Field5.Error1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error2"))
       .optional(),
-    remarks: z.string().max(300, t("Field6.Error1")).optional(),
-    state: z.string().min(1, t("Field7.Error1")),
-    city: z.string().min(1, t("Field8.Error1")),
+    remarks: z
+      .string()
+      .max(MAX_FIELD_DESC_LENGTH, t("Field6.Error1"))
+      .optional(),
+    state: z.string().nonoptional(t("Field7.Error1")),
+    city: z.string().nonoptional(t("Field8.Error1")),
   })
   type NewCustomerType = z.infer<typeof newCustomerSchema>
 

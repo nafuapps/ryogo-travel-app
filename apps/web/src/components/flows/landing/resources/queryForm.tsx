@@ -8,6 +8,14 @@ import { RyogoCaption, RyogoH4 } from "@/components/typography"
 import { Form } from "@/components/ui/form"
 import { Separator } from "@/components/ui/separator"
 import { useBotDetection } from "@/hooks/useBotDetection"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_FIELD_DESC_LENGTH,
+  MAX_NAME_LENGTH,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_NAME_LENGTH,
+  PHONE_LENGTH,
+} from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CheckCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -23,18 +31,23 @@ export default function QueryForm() {
   const { checkBotActivity, isBot } = useBotDetection()
 
   const schema = z.object({
-    name: z.string().min(5, t("Field1.Error1")).max(30, t("Field1.Error2")),
-    phone: z.string().length(10, t("Field2.Error1")),
-    email: z.email(t("Field3.Error1")).max(60, t("Field3.Error2")),
+    name: z
+      .string()
+      .min(MIN_NAME_LENGTH, t("Field1.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field1.Error2")),
+    phone: z.string().length(PHONE_LENGTH, t("Field2.Error1")),
+    email: z
+      .email(t("Field3.Error1"))
+      .max(MAX_EMAIL_LENGTH, t("Field3.Error2")),
     agencyName: z
       .string()
-      .min(5, t("Field4.Error1"))
-      .max(30, t("Field4.Error2"))
+      .min(MIN_NAME_LENGTH, t("Field4.Error1"))
+      .max(MAX_NAME_LENGTH, t("Field4.Error2"))
       .optional(),
     message: z
       .string()
-      .min(10, t("Field5.Error1"))
-      .max(300, t("Field5.Error2")),
+      .min(MIN_FIELD_DESC_LENGTH, t("Field5.Error1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error2")),
   })
 
   type FormData = z.infer<typeof schema>

@@ -25,12 +25,17 @@ import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { midTripAction } from "@/app/actions/bookings/midTripAction"
 import { useLocation } from "@/hooks/useLocation"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
-import { FileRegex } from "@/lib/regex"
+import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { otherTripLogAction } from "@/app/actions/bookings/otherTripLogAction"
+import {
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_ODOMETER_LIMIT,
+  MIN_ODOMETER_LIMIT,
+} from "@/lib/uiConfig"
 
 export default function MidTripSheet({
   booking,
@@ -54,32 +59,23 @@ export default function MidTripSheet({
         ? "Pickup"
         : "Drop"
 
-  const maxOdo = booking.assignedVehicle?.odometerReading ?? 1
+  const minOdo = booking.assignedVehicle?.odometerReading ?? MIN_ODOMETER_LIMIT
 
   const schema = z.object({
     odometerReading: z.coerce
       .number<number>(t("Field1.Error1"))
-      .min(maxOdo, t("Field1.Error2", { maxOdo: maxOdo }))
-      .max(1000000, t("Field1.Error3"))
+      .min(minOdo, t("Field1.Error2", { maxOdo: minOdo }))
+      .max(MAX_ODOMETER_LIMIT, t("Field1.Error3"))
       .multipleOf(1, t("Field1.Error4"))
       .nonnegative(t("Field1.Error5"))
       .nonoptional(t("Field1.Error1")),
     tripLogPhoto: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < 1000000
+      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
     }, t("Field2.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return (
-          file[0] &&
-          [
-            "image/jpeg",
-            "image/png",
-            "image/jpg",
-            "image/bmp",
-            "image/webp",
-          ].includes(file[0].type)
-        )
+        return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field2.Error2"))
       .optional(),
     remarks: z.string().optional(),

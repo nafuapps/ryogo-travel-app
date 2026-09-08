@@ -16,6 +16,7 @@ import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { newUserSetPasswordAction } from "@/app/actions/users/newUserSetPasswordAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
 export function ChangePasswordStep1({
   userId,
@@ -33,11 +34,11 @@ export function ChangePasswordStep1({
     .object({
       newPassword: z
         .string()
-        .min(8, t("Field1.Error1"))
+        .min(MIN_PASSWORD_LENGTH, t("Field1.Error1"))
         .refine((s) => !s.includes(" "), t("Field1.Error2")),
       confirmPassword: z
         .string()
-        .min(8, t("Field2.Error1"))
+        .min(MIN_PASSWORD_LENGTH, t("Field2.Error1"))
         .refine((s) => !s.includes(" "), t("Field2.Error2")),
     })
     .refine((data) => data.newPassword === data.confirmPassword, {

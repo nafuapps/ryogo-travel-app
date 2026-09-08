@@ -18,6 +18,7 @@ import {
 } from "@/components/form/ryogoFormFields"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
+import { MAX_FIELD_DESC_LENGTH, MIN_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
@@ -40,13 +41,13 @@ export default function ConfirmBookingPageComponent({
   const confirmBookingSchema = z.object({
     pickupAddress: z
       .string()
-      .min(10, t("AddressError1"))
-      .max(300, t("AddressError2")),
+      .min(MIN_FIELD_DESC_LENGTH, t("AddressError1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("AddressError2")),
     sameAsCustomerAddress: z.boolean(),
     dropAddress: z
       .string()
-      .min(10, t("AddressError1"))
-      .max(300, t("AddressError2"))
+      .min(MIN_FIELD_DESC_LENGTH, t("AddressError1"))
+      .max(MAX_FIELD_DESC_LENGTH, t("AddressError2"))
       .optional(),
     startTime: z.iso.time(t("PickupTimeError")).nonempty(t("PickupTimeError")),
   })

@@ -28,6 +28,12 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  MAX_FIELD_DESC_LENGTH,
+  MAX_FIELD_TITLE_LENGTH,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_FIELD_TITLE_LENGTH,
+} from "@/lib/uiConfig"
 
 export default function AddCustomMissionPageComponent({
   userId,
@@ -45,8 +51,15 @@ export default function AddCustomMissionPageComponent({
     .object({
       entityType: z.enum(EntityTypeEnum).nonoptional(t("Field1.Error1")),
       entityId: z.string().max(12, t("Field2.Error1")).optional(),
-      title: z.string().min(5, t("Field3.Error1")).max(100, t("Field3.Error2")),
-      message: z.string().max(300, t("Field4.Error1")).optional(),
+      title: z
+        .string()
+        .min(MIN_FIELD_TITLE_LENGTH, t("Field3.Error1"))
+        .max(MAX_FIELD_TITLE_LENGTH, t("Field3.Error2")),
+      message: z
+        .string()
+        .min(MIN_FIELD_DESC_LENGTH, t("Field4.Error2"))
+        .max(MAX_FIELD_DESC_LENGTH, t("Field4.Error1"))
+        .optional(),
       dueDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
       dueTime: z.iso.time(t("Field6.Error1")).nonempty(t("Field6.Error1")),
       isCritical: z.boolean(),

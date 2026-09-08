@@ -22,6 +22,7 @@ export default async function NewVehiclePage() {
       <DashboardHeader pathName={"/dashboard/vehicles/new"} />
       <NewVehiclePageComponent
         agencyId={currentUser.agencyId}
+        userId={currentUser.userId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </MainWrapper>

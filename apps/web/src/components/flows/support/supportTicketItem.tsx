@@ -1,5 +1,6 @@
 import getEntityIcon from "@/components/icons/entityIcon"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -11,6 +12,8 @@ import {
   FindSupportTicketsByAgencyIdType,
   FindSupportTicketsByUserIdType,
 } from "@ryogo-travel-app/api/services/support.services"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { User } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 
@@ -63,6 +66,22 @@ export default function SupportTicketItem({
             {moment(ticket.createdAt).format("DD MMM")}
           </RyogoCaption>
         </SectionRowWrapper>
+        {"user" in ticket && (
+          <SectionRowWrapper justifyStart center>
+            {ticket.user.photoUrl ? (
+              <RyogoImage
+                src={getFileUrl(ticket.user.photoUrl)}
+                alt={ticket.user.name}
+                imageSize="xs"
+              />
+            ) : (
+              <RyogoEnclosedIcon icon={User} size="sm" />
+            )}
+            <RyogoCaption color={"slate"} className="text-center">
+              {ticket.user.name}
+            </RyogoCaption>
+          </SectionRowWrapper>
+        )}
       </SectionWrapper>
     </Link>
   )

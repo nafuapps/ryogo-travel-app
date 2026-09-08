@@ -17,6 +17,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { PHONE_LENGTH } from "@/lib/uiConfig"
 
 export default function ChangeAgencyPhonePageComponent({
   agency,
@@ -31,7 +32,7 @@ export default function ChangeAgencyPhonePageComponent({
   const router = useRouter()
 
   const modifyAgencySchema = z.object({
-    newPhone: z.string().length(10, t("Field1.Error1")),
+    newPhone: z.string().length(PHONE_LENGTH, t("Field1.Error1")),
   })
   type ModifyAgencyType = z.infer<typeof modifyAgencySchema>
 

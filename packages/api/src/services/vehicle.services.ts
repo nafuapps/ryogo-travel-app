@@ -125,7 +125,7 @@ export const vehicleServices = {
   },
 
   //Add vehicle to agency
-  async addVehicle({ data, agencyId }: AddVehicleRequestType) {
+  async addVehicle({ data, agencyId, addedByUserId }: AddVehicleRequestType) {
     //Step1: Check if the vehicle already exists in this agency
     const existingVehicleInAgency =
       await vehicleRepository.readVehicleByNumberInAgency(
@@ -138,6 +138,7 @@ export const vehicleServices = {
 
     const newVehicleData: InsertVehicleType = {
       agencyId: agencyId,
+      addedByUserId: addedByUserId,
       vehicleNumber: data.vehicleNumber.toUpperCase(),
       type: data.type,
       brand: data.brand,

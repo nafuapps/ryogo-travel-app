@@ -22,7 +22,7 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { X, Info } from "lucide-react"
 import { useBotDetection } from "@/hooks/useBotDetection"
-import { VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import { MAX_EMAIL_LENGTH, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default function ForgotPasswordPageComponent({
@@ -47,7 +47,7 @@ export default function ForgotPasswordPageComponent({
     : false
 
   const formSchema = z.object({
-    email: z.email(t("Error1")),
+    email: z.email(t("Error1")).max(MAX_EMAIL_LENGTH, t("Error2")),
   })
 
   type SchemaType = z.infer<typeof formSchema>

@@ -63,7 +63,7 @@ export default function SupportTicketsPageComponent({
       />
       {isOwner && (
         <div className="flex items-center gap-2 lg:gap-3 justify-end">
-          <RyogoSmall weight="font-bold">{t("ShowAgencyTickets")}</RyogoSmall>
+          <RyogoSmall color="light">{t("ShowAgencyTickets")}</RyogoSmall>
           <Switch
             id="agencyTickets"
             checked={showAgencyTickets}

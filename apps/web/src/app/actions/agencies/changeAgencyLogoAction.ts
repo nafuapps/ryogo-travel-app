@@ -7,15 +7,10 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function changeAgencyLogoAction(
-  agencyId: string,
-  userId: string,
-  logo: FileList,
-) {
+export async function changeAgencyLogoAction(agencyId: string, logo: FileList) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    currentUser.userId !== userId ||
     currentUser.userRole !== UserRolesEnum.OWNER ||
     currentUser.agencyId !== agencyId
   ) {

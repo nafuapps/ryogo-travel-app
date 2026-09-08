@@ -27,10 +27,8 @@ import {
 
 export default function ChangeAgencyLogoSheet({
   agencyId,
-  userId,
 }: {
   agencyId: string
-  userId: string
 }) {
   const t = useTranslations("Sheets.ChangeLogo")
   const [open, setOpen] = useState(false)
@@ -61,11 +59,7 @@ export default function ChangeAgencyLogoSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedAgency = await changeAgencyLogoAction(
-      agencyId,
-      userId,
-      data.logo,
-    )
+    const updatedAgency = await changeAgencyLogoAction(agencyId, data.logo)
     if (updatedAgency) {
       toast.success(t("Success"))
       router.refresh()
@@ -77,7 +71,7 @@ export default function ChangeAgencyLogoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton label={t("Button")} />
+        <RyogoGhostButton label={t("Button")} labelColor="light" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

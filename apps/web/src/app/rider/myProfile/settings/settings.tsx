@@ -80,7 +80,9 @@ export default function MyProfileSettingsPageComponent({
             formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
           }
           type="submit"
-          disabled={formData.formState.isSubmitting}
+          disabled={
+            formData.formState.isSubmitting || !formData.formState.isDirty
+          }
           showSpinner={formData.formState.isSubmitting}
         />
         <RyogoOutlineButton

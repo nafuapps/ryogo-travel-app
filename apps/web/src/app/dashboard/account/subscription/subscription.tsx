@@ -1,8 +1,8 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  GridWrapper,
   PageWrapper,
   SectionRowWrapper,
-  SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
@@ -65,33 +65,28 @@ export default async function SubscriptionPageComponent({
   return (
     <PageWrapper id="AccountSubscriptionPage">
       <AccountDetailHeaderTabs selectedTab="Subscription" />
-      <SectionWrapper id="AccountSubscriptionInfo">
-        <div
-          id="CurrentPlan"
-          className="flex flex-col md:flex-row gap-3 lg:gap-4 md:justify-between"
-        >
-          <CurrentPlanDetails
-            isBasic={isBasic}
-            isOwner={isOwner}
-            subscriptionPlan={agencyDetails.subscriptionPlan}
-            lastPaidPlan={lastPaidPlan}
-          />
-          {isBasic ? (
-            isOwner && (
-              <PremiumNudge
-                userDetails={userDetails}
-                agencyDetails={agencyDetails}
-              />
-            )
-          ) : (
-            <PlanExpiryDetails
+      <GridWrapper id="AccountSubscriptionInfo">
+        <CurrentPlanDetails
+          isBasic={isBasic}
+          isOwner={isOwner}
+          subscriptionPlan={agencyDetails.subscriptionPlan}
+          lastPaidPlan={lastPaidPlan}
+        />
+        {isBasic ? (
+          isOwner ? (
+            <PremiumNudge
               userDetails={userDetails}
               agencyDetails={agencyDetails}
-              lastPaidOrderType={lastPaidPlan}
             />
-          )}
-        </div>
-      </SectionWrapper>
+          ) : null
+        ) : (
+          <PlanExpiryDetails
+            userDetails={userDetails}
+            agencyDetails={agencyDetails}
+            lastPaidOrderType={lastPaidPlan}
+          />
+        )}
+      </GridWrapper>
       {(isBasic || daysToExpiry < 0) && (
         <PlanUsageCard
           agencyData={agencyData}

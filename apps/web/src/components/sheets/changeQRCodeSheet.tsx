@@ -27,11 +27,9 @@ import {
 
 export default function ChangeQRCodeSheet({
   agencyId,
-  userId,
   newPhoto,
 }: {
   agencyId: string
-  userId: string
   newPhoto: boolean
 }) {
   const t = useTranslations("Sheets.ChangeQRCode")
@@ -63,11 +61,7 @@ export default function ChangeQRCodeSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedAgency = await changeAgencyQRCodeAction(
-      agencyId,
-      userId,
-      data.qrCode,
-    )
+    const updatedAgency = await changeAgencyQRCodeAction(agencyId, data.qrCode)
     if (updatedAgency) {
       toast.success(t("Success"))
       router.refresh()
@@ -81,6 +75,7 @@ export default function ChangeQRCodeSheet({
       <SheetTrigger asChild>
         <RyogoGhostButton
           label={newPhoto ? t("UploadButton") : t("ChangeButton")}
+          labelColor="light"
         />
       </SheetTrigger>
       <SheetContent side="bottom">

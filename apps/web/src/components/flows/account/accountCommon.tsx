@@ -70,7 +70,7 @@ export function AccountInfoWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col items-center lg:flex-row lg:items-start gap-3 lg:gap-4 p-3 lg:p-4">
+    <div className="flex flex-col items-center justify-center lg:flex-row gap-3 lg:gap-4 p-3 lg:p-4">
       {children}
     </div>
   )
@@ -82,7 +82,7 @@ export function AccountInfoContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 items-center lg:items-start">
+    <div className="flex flex-col gap-2 lg:gap-3 items-center lg:items-start my-3">
       {children}
     </div>
   )

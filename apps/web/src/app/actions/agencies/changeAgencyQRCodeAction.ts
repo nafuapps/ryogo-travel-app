@@ -9,13 +9,11 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function changeAgencyQRCodeAction(
   agencyId: string,
-  userId: string,
   qrCode: FileList,
 ) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    currentUser.userId !== userId ||
     currentUser.userRole !== UserRolesEnum.OWNER ||
     currentUser.agencyId !== agencyId
   ) {

@@ -30,11 +30,7 @@ export default async function AgencyDetailsPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/agency"} />
-      <AgencyDetailsPageComponent
-        agency={agency}
-        isOwner={isOwner}
-        userId={currentUser.userId}
-      />
+      <AgencyDetailsPageComponent agency={agency} isOwner={isOwner} />
     </MainWrapper>
   )
 }

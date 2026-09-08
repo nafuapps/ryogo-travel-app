@@ -1,75 +1,55 @@
-import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Building } from "lucide-react"
-import moment from "moment"
-import { getTranslations } from "next-intl/server"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import { FindAssignedUserByDriverIdType } from "@ryogo-travel-app/api/services/user.services"
-import {
-  SectionWrapper,
-  PageWrapper,
-  SectionColWrapper,
-  SectionRowWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
-import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
-import { Separator } from "@/components/ui/separator"
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import AgencyDetailsWrapper from "@/components/flows/account/agencyDetailsWrapper"
+import AgencyInfoWrapper from "@/components/flows/account/agencyInfoWrapper"
+import AgencyQRCodeWrapper from "@/components/flows/account/agencyQRCodeWrapper"
+import AgencyAssignedUserWrapper from "@/components/flows/account/agencyAssignedUserWrapper"
 
-export default async function MyProfileAgencyDetailsPageComponent({
+export default function MyProfileAgencyDetailsPageComponent({
   agency,
   assignedUser,
 }: {
   agency: NonNullable<FindAgencyByIdType>
   assignedUser: FindAssignedUserByDriverIdType
 }) {
-  const t = await getTranslations("Rider.MyProfileAgency")
-
   return (
     <PageWrapper id="RiderMyProfileAgencyPage">
       <MyProfileDetailHeaderTabs selectedTab="Agency" />
-      <SectionWrapper id="MyProfileAgencyDetailsInfo">
-        <SectionRowWrapper justifyStart>
-          <RyogoH3 color="brand">{agency.id}</RyogoH3>
-          <CopyClipboardButton label={agency.id} />
-        </SectionRowWrapper>
-        <Separator />
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            {agency.logoUrl ? (
-              <RyogoImage
-                src={getFileUrl(agency.logoUrl)}
-                alt={t("Photo")}
-                imageSize="lg"
-              />
-            ) : (
-              <RyogoEnclosedIcon icon={Building} size="xl" />
-            )}
-          </SectionColWrapper>
-          <SectionColWrapper end>
-            <RyogoH3>{agency.businessName}</RyogoH3>
-            <RyogoCaption color="slate">{agency.businessPhone}</RyogoCaption>
-            <RyogoCaption color="slate">{agency.businessEmail}</RyogoCaption>
-            <RyogoCaption color="slate">{agency.businessAddress}</RyogoCaption>
-            <RyogoCaption color="slate">
-              {agency.location.city + ", " + agency.location.state}
-            </RyogoCaption>
-            <RyogoCaption color="slate">
-              {moment(agency.createdAt).format("DD MMM YYYY")}
-            </RyogoCaption>
-          </SectionColWrapper>
-        </SectionRowWrapper>
-      </SectionWrapper>
+      <GridWrapper id="AgencyDetails">
+        <AgencyInfoWrapper
+          id={agency.id}
+          logoUrl={agency.logoUrl}
+          agencyName={agency.businessName}
+          city={agency.location.city}
+          state={agency.location.state}
+          isOwner={false}
+        />
+        <AgencyDetailsWrapper
+          id={agency.id}
+          status={agency.status}
+          address={agency.businessAddress}
+          email={agency.businessEmail}
+          phone={agency.businessPhone}
+          commission={agency.defaultCommissionRate}
+          isRider={true}
+          createdAt={agency.createdAt}
+        />
+      </GridWrapper>
+      {agency.qrCodeUrl && (
+        <AgencyQRCodeWrapper
+          agencyId={agency.id}
+          qrCodeUrl={agency.qrCodeUrl}
+          isOwner={false}
+        />
+      )}
       {assignedUser && (
-        <SectionWrapper id="AssignedUserInfo">
-          <RyogoSmall weight="font-bold">{t("AssignedUserInfo")}</RyogoSmall>
-          <RyogoSmall color="slate">{assignedUser.name}</RyogoSmall>
-          <RyogoPhoneButton phone={assignedUser.phone} label={t("CallAgent")} />
-          <RyogoChatButton phone={assignedUser.phone} label={t("ChatAgent")} />
-        </SectionWrapper>
+        <AgencyAssignedUserWrapper
+          name={assignedUser.name}
+          phone={assignedUser.phone}
+          photoUrl={assignedUser.photoUrl}
+        />
       )}
     </PageWrapper>
   )

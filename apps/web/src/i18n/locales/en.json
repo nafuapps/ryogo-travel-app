@@ -2545,18 +2545,17 @@
       "SecondaryCTA": "Back"
     },
     "AccountAgency": {
-      "Photo": "View logo",
-      "SubscriptionInfo": "Subscription info",
-      "ValidTill": "Expires on: ",
-      "BuyCTA": "Buy Premium",
-      "TryCTA": "Try Premium",
-      "RenewCTA": "Renew Subscription",
-      "ViewCTA": "View Subscription",
+      "AgencyId": "Agency ID",
+      "Email": "Email",
+      "Address": "Address",
+      "Phone": "Phone",
+      "Commission": "Default Commission",
+      "Joined": "Joined",
       "Edit": {
         "Title": "Edit Agency Details",
         "Subtitle": "Update agency details like name, address, default commission rate, etc."
       },
-      "QRCode": "QR Code",
+      "QRCode": "Agency Payment QR Code",
       "ChangeEmail": {
         "Title": "Change Agency Email",
         "Subtitle": "Set email address to receive agency related updates and communication",
@@ -2595,22 +2594,22 @@
     },
     "ModifyAgency": {
       "Field1": {
-        "Title": "Enter agency name",
+        "Title": "Enter business name",
         "Placeholder": "Raj Tour & Travels",
         "Description": "Provide your agency's business name",
         "Error1": "Name must be atleast 5 characters",
         "Error2": "Name must be less than 30 characters"
       },
       "Field2": {
-        "Title": "Enter agency address",
+        "Title": "Enter business address",
         "Placeholder": "Address Line 1, Street, City, State, Pincode",
         "Error1": "Address must be atleast 20 characters",
         "Error2": "Address must be less than 300 characters"
       },
       "Field3": {
-        "Title": "Commission rate (in %)",
+        "Title": "Default commission rate (in %)",
         "Placeholder": "15",
-        "Description": "The extra commission that will be added to every booking quote. (Don't worry, you can leave it blank and change it later. Default 15% will be set)",
+        "Description": "The commission that will be set by default for every new booking. You can change it at the time of booking creation. (If left blank, will be set to 15%)",
         "Error1": "Rate must be a number",
         "Error2": "Rate must be atleast 1%",
         "Error3": "Rate must be less than 100%",
@@ -5444,10 +5443,26 @@
       "LastLogin": "Logged in since {loginTime}"
     },
     "MyProfileAgency": {
-      "Photo": "View logo",
-      "AssignedUserInfo": "Assigned agent info",
-      "CallAgent": "Call Agent",
-      "ChatAgent": "Chat with Agent"
+      "AssignedUserInfo": "Agency User",
+      "CallAgent": "Call agency user",
+      "ChatAgent": {
+        "Title": "Chat with agency user",
+        "Subtitle": "Start Whatsapp chat with assigned agency user"
+      }
+    },
+    "MyProfileSettings": {
+      "Field1": {
+        "Title": "Enable dark mode"
+      },
+      "Field2": {
+        "Title": "Preferred Language",
+        "Error1": "Language is required"
+      },
+      "Success": "Preferences updated successfully!",
+      "Error": "Cannot edit preferences.. Try again later!",
+      "PrimaryCTA": "Save preferences",
+      "Loading": "Loading..",
+      "SecondaryCTA": "Back"
     },
     "MySupport": {
       "Title": "Help & Support Center",
@@ -6171,20 +6186,6 @@
       "AddTicket": "Add Support Ticket",
       "TicketStatusFilters": "TICKET STATUS FILTERS",
       "NoTickets": "No support tickets found. Try changing the filter options"
-    },
-    "MyProfileSettings": {
-      "Field1": {
-        "Title": "Enable dark mode"
-      },
-      "Field2": {
-        "Title": "Preferred Language",
-        "Error1": "Language is required"
-      },
-      "Success": "Preferences updated successfully!",
-      "Error": "Cannot edit preferences.. Try again later!",
-      "PrimaryCTA": "Save preferences",
-      "Loading": "Loading..",
-      "SecondaryCTA": "Back"
     }
   },
   "SupportAccordion": {

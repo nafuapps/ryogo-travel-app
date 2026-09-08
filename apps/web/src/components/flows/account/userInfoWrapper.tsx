@@ -26,7 +26,7 @@ export default function UserInfoWrapper({
 }) {
   return (
     <AccountInfoWrapper>
-      <SectionColWrapper center>
+      <SectionColWrapper center small>
         {photoUrl ? (
           <RyogoImage
             src={getFileUrl(photoUrl)}

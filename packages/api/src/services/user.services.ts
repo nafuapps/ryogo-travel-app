@@ -157,8 +157,16 @@ export const userServices = {
         return
       }
     }
-    const assignedUser = userRepository.readUserById(booking.assignedUserId)
-    return assignedUser
+    const assignedUser = await userRepository.readUserById(
+      booking.assignedUserId,
+    )
+    if (!assignedUser) return
+    return {
+      id: assignedUser.id,
+      name: assignedUser.name,
+      phone: assignedUser.phone,
+      photoUrl: assignedUser.photoUrl,
+    }
   },
 
   //Get user's activity

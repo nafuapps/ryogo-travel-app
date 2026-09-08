@@ -30,7 +30,9 @@ export default async function CurrentPlanDetails({
     <SectionColWrapper>
       <RyogoCaption color="light">{t("Header")}</RyogoCaption>
       <SectionRowWrapper justifyStart center>
-        <RyogoH2 weight="font-bold">{subscriptionPlan.toUpperCase()}</RyogoH2>
+        <RyogoH2 color={isBasic ? "slate" : "brand"} weight="font-bold">
+          {subscriptionPlan.toUpperCase()}
+        </RyogoH2>
         <RyogoEnclosedIcon
           icon={isBasic ? Disc : BadgeCheck}
           size="sm"
@@ -46,7 +48,8 @@ export default async function CurrentPlanDetails({
               ? lastPaidPlan.toUpperCase()
               : t("Trial")
         }
-        bgColor="slate"
+        bgColor={isBasic ? "light" : "black"}
+        className="self-start"
       />
       {isOwner && lastPaidPlan && (
         <Link href="/dashboard/account/subscription/orders">

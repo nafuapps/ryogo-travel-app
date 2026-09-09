@@ -4,11 +4,11 @@ import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { redirect, RedirectType } from "next/navigation"
-import ModifyExpensePageComponent from "./modifyExpense"
 import { ExpenseIdRegex } from "@/lib/regex"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import ModifyExpensePageComponent from "@/components/flows/bookings/expense/modifyExpensePage"
 
 export const metadata: Metadata = {
   title: `Modify Booking Expense - ${pageTitle}`,

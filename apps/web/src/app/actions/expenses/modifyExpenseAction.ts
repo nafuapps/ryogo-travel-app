@@ -12,7 +12,7 @@ export async function modifyExpenseAction(
   data: UpdateExpenseRequestType,
   agencyId: string,
   assignedUserId: string,
-  byDriver?: boolean,
+  isRider?: boolean,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -45,7 +45,7 @@ export async function modifyExpenseAction(
   const updatedExpense = await expenseServices.modifyExpense(data)
   if (!updatedExpense) return
 
-  if (byDriver) {
+  if (isRider) {
     await missionServices.removePreviousMissionsByEntityKey(
       agencyId,
       EntityTypeEnum.EXPENSE,

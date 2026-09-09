@@ -1,5 +1,5 @@
 import { RyogoCaption, RyogoSmall, RyogoH3 } from "@/components/typography"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { format } from "date-fns"
@@ -15,7 +15,7 @@ export default async function RiderExpenseItem({
   bookingId,
   canModifyExpense,
 }: {
-  expense: NonNullable<FindBookingDetailsByIdType>["expenses"][number]
+  expense: FindBookingExpensesByIdType[number]
   bookingId: string
   canModifyExpense: boolean
 }) {
@@ -53,7 +53,7 @@ export default async function RiderExpenseItem({
           </div>
           {canModifyExpense && (
             <Link
-              href={`/rider/myBookings/${bookingId}/modify-expense/${expense.id}`}
+              href={`/rider/myBookings/${bookingId}/expenses/modify/${expense.id}`}
             >
               <RyogoOutlineButton label={t("Modify")}>
                 <RyogoIcon icon={ChevronRight} size="sm" />

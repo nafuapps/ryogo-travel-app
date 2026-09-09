@@ -8,8 +8,10 @@ import { User } from "lucide-react"
 
 export default function BookingCustomerCard({
   customer,
+  hidePhone,
 }: {
   customer: NonNullable<NonNullable<FindBookingDetailsByIdType>["customer"]>
+  hidePhone?: boolean
 }) {
   return (
     <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
@@ -24,7 +26,9 @@ export default function BookingCustomerCard({
       )}
       <SectionColWrapper wFull small>
         <RyogoP weight="font-bold">{customer.name}</RyogoP>
-        <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
+        {!hidePhone && (
+          <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
+        )}
         <RyogoCaption color="light">
           {customer.location.city + ", " + customer.location.state}
         </RyogoCaption>

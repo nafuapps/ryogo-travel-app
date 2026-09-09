@@ -1,12 +1,12 @@
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import NewExpensePageComponent from "./newExpense"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { redirect, RedirectType } from "next/navigation"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import NewExpensePageComponent from "@/components/flows/bookings/expense/newExpensePage"
 
 export const metadata: Metadata = {
   title: `New Booking Expense - ${pageTitle}`,

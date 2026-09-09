@@ -1,48 +1,43 @@
+"use client"
+
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
-import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
-import Link from "next/link"
 import { BookingTypeEnum, TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
 import EndTripSheet from "@/components/flows/rider/tripSheets/endTripSheet"
 import MidTripSheet from "@/components/flows/rider/tripSheets/midTripSheet"
-import { RyogoSmall } from "@/components/typography"
-import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
-import RiderTripLogItem from "@/components/flows/rider/riderTripLogItem"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import {
-  SectionWrapper,
-  PageWrapper,
-  StickyActionWrapper,
-  SectionHeaderWrapper,
-} from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Plus } from "lucide-react"
+import { Navigation } from "lucide-react"
 import { getTripDuration } from "@/lib/utils"
 import { differenceInDays, differenceInMinutes } from "date-fns"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { OTHER_TRIP_LOG_INTERVAL_MINUTES } from "@ryogo-travel-app/api/apiConfig"
+import { useTranslations } from "next-intl"
+import { useEffect, useMemo } from "react"
+import { useLocation } from "@/hooks/useLocation"
+import { otherTripLogAction } from "@/app/actions/bookings/otherTripLogAction"
 
-export default async function RiderMyOngoingBookingPageComponent({
+export default function RiderMyOngoingBookingPageComponent({
   booking,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
-  const t = await getTranslations("Rider.MyBooking")
+  const latLong = useLocation()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const tripDays = useMemo(
+    () => getTripDuration(booking.startDate, booking.endDate),
+    [],
+  )
 
-  const tripDays = getTripDuration(booking.startDate, booking.endDate)
+  const tripLogCounts = useMemo(
+    () => getTripLogCounts(booking.tripLogs),
+    [booking.tripLogs],
+  )
 
   const nextStep = getNextStep(
     booking.type,
     booking.endDate,
     tripDays,
-    booking.tripLogs,
+    tripLogCounts,
   )
 
   //Regularly capture location in a trip log (OTHER)
@@ -67,64 +62,60 @@ export default async function RiderMyOngoingBookingPageComponent({
     }
   }
 
+  useEffect(() => {
+    const triggerAction = async () => {
+      if (
+        captureOtherTripLog &&
+        latLong.latitude &&
+        latLong.longitude &&
+        booking.assignedDriverId &&
+        booking.assignedVehicleId
+      ) {
+        await otherTripLogAction({
+          agencyId: booking.agencyId,
+          bookingId: booking.id,
+          driverId: booking.assignedDriverId,
+          vehicleId: booking.assignedVehicleId,
+          type: TripLogTypesEnum.OTHER,
+          lat: latLong.latitude,
+          long: latLong.longitude,
+        })
+      }
+    }
+    triggerAction()
+  }, [latLong])
+
   return (
-    <PageWrapper id="RiderCurrentBookingPage">
-      <RiderMyBookingDetails booking={booking} canCallCustomer={true} />
-      <SectionWrapper id="CurrentBookingTripLogs">
-        <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
-        {booking.tripLogs
-          .filter((t) => t.type !== TripLogTypesEnum.OTHER) //Don't show OTHER trip logs in the list
-          .map((t) => {
-            return <RiderTripLogItem key={t.id} tripLog={t} />
-          })}
-      </SectionWrapper>
-      <SectionWrapper id="CurrentBookingExpenses">
-        <SectionHeaderWrapper>
-          <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
-          <Link
-            href={`/rider/myBookings/${booking.id}/add-expense`}
-            className="ml-auto"
-          >
-            <RyogoOutlineButton label={t("AddExpense")}>
-              <RyogoIcon icon={Plus} size="sm" />
-            </RyogoOutlineButton>
-          </Link>
-        </SectionHeaderWrapper>
-        {booking.expenses.map((e) => {
-          return (
-            <RiderExpenseItem
-              key={e.id}
-              expense={e}
-              bookingId={booking.id}
-              canModifyExpense={currentUser.userId === e.addedByUserId}
-            />
-          )
-        })}
-      </SectionWrapper>
-      <StickyActionWrapper>
-        {nextStep === TripLogTypesEnum.STARTED ? (
-          <StartTripSheet booking={booking} />
-        ) : nextStep === TripLogTypesEnum.ENDED ? (
-          <EndTripSheet booking={booking} />
-        ) : (
-          <MidTripSheet
-            booking={booking}
-            tripType={nextStep}
-            captureOtherTripLog={captureOtherTripLog}
-          />
-        )}
-      </StickyActionWrapper>
-    </PageWrapper>
+    <>
+      {nextStep === TripLogTypesEnum.STARTED ? (
+        <StartTripSheet booking={booking} latLong={latLong} />
+      ) : nextStep === TripLogTypesEnum.ENDED ? (
+        <EndTripSheet booking={booking} latLong={latLong} />
+      ) : (
+        <MidTripSheet booking={booking} latLong={latLong} tripType={nextStep} />
+      )}
+      {showNavigation(
+        nextStep,
+        booking.type,
+        tripLogCounts,
+        booking.pickupAddress,
+        booking.dropAddress,
+      )}
+    </>
   )
 }
 
-function getNextStep(
-  bookingType: BookingTypeEnum,
-  endDate: Date,
-  tripDays: number,
+type TripLogCountsType = {
+  startedCount: number
+  arrivedCount: number
+  pickedUpCount: number
+  droppedCount: number
+  endedCount: number
+}
+
+function getTripLogCounts(
   tripLogs: NonNullable<FindBookingDetailsByIdType>["tripLogs"],
 ) {
-  const now = new Date()
   const counts = tripLogs.reduce(
     (acc, log) => {
       acc[log.type] = (acc[log.type] ?? 0) + 1
@@ -139,11 +130,38 @@ function getNextStep(
       [TripLogTypesEnum.OTHER]: 0,
     } as Record<TripLogTypesEnum, number>,
   )
-
   const startedCount = counts[TripLogTypesEnum.STARTED]
   const arrivedCount = counts[TripLogTypesEnum.ARRIVED]
   const pickedUpCount = counts[TripLogTypesEnum.PICKED_UP]
   const droppedCount = counts[TripLogTypesEnum.DROPPED]
+  const endedCount = counts[TripLogTypesEnum.ENDED]
+
+  const tripLogCounts: TripLogCountsType = {
+    startedCount,
+    arrivedCount,
+    pickedUpCount,
+    droppedCount,
+    endedCount,
+  }
+  return tripLogCounts
+}
+
+function getNextStep(
+  bookingType: BookingTypeEnum,
+  endDate: Date,
+  tripDays: number,
+  tripLogCounts: TripLogCountsType,
+) {
+  const now = new Date()
+  const {
+    startedCount,
+    arrivedCount,
+    pickedUpCount,
+    droppedCount,
+    endedCount,
+  } = tripLogCounts
+
+  if (endedCount > 0) return TripLogTypesEnum.ENDED
 
   if (bookingType === BookingTypeEnum.OneWay) {
     if (droppedCount > 0) return TripLogTypesEnum.ENDED
@@ -179,4 +197,60 @@ function getNextStep(
   if (droppedCount < pickedUpCount) return TripLogTypesEnum.DROPPED
   if (pickedUpCount < arrivedCount) return TripLogTypesEnum.PICKED_UP
   return TripLogTypesEnum.STARTED
+}
+
+function showNavigation(
+  nextStep: TripLogTypesEnum,
+  tripType: BookingTypeEnum,
+  tripLogCounts: TripLogCountsType,
+  sourceAddress: string | null,
+  destinationAddress: string | null,
+) {
+  if (nextStep === TripLogTypesEnum.DROPPED) {
+    if (tripLogCounts.droppedCount === 0 && destinationAddress) {
+      //Dropping at destination address
+      return <NavigationButton address={destinationAddress} />
+    }
+    if (
+      tripLogCounts.droppedCount > 0 &&
+      tripType === BookingTypeEnum.Round &&
+      sourceAddress
+    ) {
+      //Returning back to source address
+      return <NavigationButton address={sourceAddress} />
+    }
+  }
+
+  if (nextStep === TripLogTypesEnum.ARRIVED) {
+    if (tripLogCounts.arrivedCount === 0 && sourceAddress) {
+      //Picking up from source address
+      return <NavigationButton address={sourceAddress} />
+    }
+    if (
+      tripLogCounts.arrivedCount > 0 &&
+      tripType === BookingTypeEnum.Round &&
+      destinationAddress
+    ) {
+      if (destinationAddress) {
+        //Picking up from destination address for return trip
+        return <NavigationButton address={destinationAddress} />
+      }
+    }
+  }
+  return null
+}
+
+function NavigationButton({ address }: { address: string }) {
+  const t = useTranslations("Rider.MyBooking")
+
+  const location = encodeURIComponent(address)
+  const mapUrl = `https://google.com?destination=${location}&travelmode=driving`
+
+  return (
+    <a href={mapUrl} target="_blank">
+      <RyogoOutlineButton label={t("Navigate")} size="lg" className="w-full">
+        <RyogoIcon icon={Navigation} size="sm" color="slate" thick />
+      </RyogoOutlineButton>
+    </a>
+  )
 }

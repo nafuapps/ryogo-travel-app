@@ -4,7 +4,6 @@ import { LeadBookingEmailTemplate } from "@/components/email/leadBookingEmailTem
 import sendEmail from "@/components/email/sendEmail"
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
-import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
@@ -12,7 +11,6 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
-import { addDays } from "date-fns"
 
 export async function newBookingAction({
   agencyId,
@@ -87,7 +85,7 @@ export async function newBookingAction({
     userId: booking.assignedUserId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,
-    dueDate: addDays(data.tripStartDate, OLD_LEAD_AUTO_CANCEL_DAYS),
+    dueDate: data.tripStartDate,
     isCritical: true,
     titleKey: "LeadBooking.Title",
     titleObject: { bookingId: booking.id },

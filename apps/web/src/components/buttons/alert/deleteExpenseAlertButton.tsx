@@ -15,14 +15,14 @@ export default function DeleteExpenseAlertButton({
   bookingId,
   expenseId,
   agencyId,
-  assignedUserId,
-  byDriver,
+  bookingAssignedUserId,
+  isRider,
 }: {
   bookingId: string
   expenseId: string
   agencyId: string
-  assignedUserId: string
-  byDriver?: boolean
+  bookingAssignedUserId: string
+  isRider?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteExpense")
@@ -34,10 +34,19 @@ export default function DeleteExpenseAlertButton({
     startCancelTransition(async () => {
       //If delete is successful, show delete success message and redirect to expenses
       if (
-        await deleteExpenseAction(expenseId, agencyId, assignedUserId, byDriver)
+        await deleteExpenseAction(
+          expenseId,
+          agencyId,
+          bookingAssignedUserId,
+          isRider,
+        )
       ) {
         toast.success(t("Success"))
-        router.replace(`/dashboard/bookings/${bookingId}/expenses`)
+        router.replace(
+          isRider
+            ? `/rider/myBookings/${bookingId}/expenses`
+            : `/dashboard/bookings/${bookingId}/expenses`,
+        )
       } else {
         //If delete is not successful, show error message
         toast.error(t("Error"))

@@ -183,10 +183,17 @@ export default async function BookingDetailsPageComponent({
           {canAssignUser && (
             <BookingActionWrapper>
               {!isAssignedUser && (
-                <RyogoPhoneButton
-                  label={t("CallAssignedUser")}
-                  phone={bookingDetails.assignedUser.phone}
-                />
+                <>
+                  <RyogoPhoneButton
+                    label={t("CallAssignedUser")}
+                    phone={bookingDetails.assignedUser.phone}
+                  />
+                  <RyogoChatButton
+                    label={t("ChatAssignedUser.Title")}
+                    phone={bookingDetails.assignedUser.phone}
+                    subtitle={t("ChatAssignedUser.Subtitle")}
+                  />
+                </>
               )}
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}

@@ -8,7 +8,7 @@ import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 export async function deleteExpenseAction(
   id: string,
   agencyId: string,
-  assignedUserId: string,
+  bookingAssignedUserId: string,
   byDriver?: boolean,
 ) {
   const currentUser = await getCurrentUser()
@@ -16,7 +16,7 @@ export async function deleteExpenseAction(
     !currentUser ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
       currentUser.userRole !== UserRolesEnum.DRIVER &&
-      assignedUserId !== currentUser.userId) ||
+      bookingAssignedUserId !== currentUser.userId) ||
     currentUser.agencyId !== agencyId
   ) {
     return
@@ -44,7 +44,7 @@ export async function deleteExpenseAction(
     )
     await missionServices.addMission({
       agencyId: agencyId,
-      userId: assignedUserId,
+      userId: bookingAssignedUserId,
       entityType: EntityTypeEnum.EXPENSE,
       entityId: deletedExpense.id,
       titleKey: "ExpenseDeletedByDriver.Title",

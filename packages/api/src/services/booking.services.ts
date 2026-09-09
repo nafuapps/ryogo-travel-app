@@ -612,6 +612,7 @@ export const bookingServices = {
       return
     }
 
+    //remove assigned vehicle and driver also
     const updatedBooking =
       await bookingRepository.updateBookingToCancel(bookingId)
     return updatedBooking[0]

@@ -21,9 +21,9 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 import { startTripAction } from "@/app/actions/bookings/startTripAction"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
-import { useLocation } from "@/hooks/useLocation"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
@@ -38,14 +38,15 @@ import {
 
 export default function StartTripSheet({
   booking,
+  latLong,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
+  latLong?: LatLongType
 }) {
   const t = useTranslations("Rider.MyBooking.StartTrip")
   const router = useRouter()
 
   const [open, setOpen] = useState(false)
-  const latLong = useLocation()
 
   const minOdo = booking.assignedVehicle?.odometerReading ?? MIN_ODOMETER_LIMIT
 
@@ -93,8 +94,8 @@ export default function StartTripSheet({
       odometerReading: data.odometerReading,
       remarks: data.remarks,
       tripLogPhoto: data.tripLogPhoto,
-      lat: latLong.latitude,
-      long: latLong.longitude,
+      lat: latLong?.latitude,
+      long: latLong?.longitude,
     }
     const result = await startTripAction(startTripData)
     if (result) {

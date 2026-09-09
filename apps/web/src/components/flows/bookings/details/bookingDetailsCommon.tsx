@@ -49,14 +49,20 @@ export function BookingAddTripInfoWrapper({
   )
 }
 
-export function BookingDateWrapper({ date }: { date: Date }) {
+export function BookingDateWrapper({
+  date,
+  showYear = true,
+}: {
+  date: Date
+  showYear?: boolean
+}) {
   return (
-    <div className="rounded-md aspect-square h-18 lg:h-20 bg-slate-100 dark:bg-slate-800 p-2 lg:p-3 flex flex-col items-center justify-center">
-      <RyogoCaption color="light">{format(date, "MMM")}</RyogoCaption>
+    <div className="rounded-md bg-slate-100 dark:bg-slate-800 py-2 lg:py-3 px-5 lg:px-6 flex flex-col items-center justify-center">
+      <RyogoCaption color="slate">{format(date, "MMM")}</RyogoCaption>
       <RyogoP color="slate" weight="font-bold">
         {format(date, "dd")}
       </RyogoP>
-      <RyogoTiny color="light">{format(date, "yyyy")}</RyogoTiny>
+      {showYear && <RyogoTiny color="light">{format(date, "yyyy")}</RyogoTiny>}
     </div>
   )
 }

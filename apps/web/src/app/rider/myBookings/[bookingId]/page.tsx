@@ -1,5 +1,3 @@
-//MyBooking/[id] page
-
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
@@ -13,10 +11,16 @@ import RiderMyOngoingBookingPageComponent from "./currentBooking"
 import RiderMyUpcomingBookingPageComponent from "./upcomingBooking"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
+import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
 
 export const metadata: Metadata = {
-  title: `Booking Details - ${pageTitle}`,
+  title: `My Booking Details - ${pageTitle}`,
   description: pageDescription,
 }
 
@@ -39,24 +43,40 @@ export default async function MyBookingPage({
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
+  const canStartTrip =
+    bookingDetails.startDate <= new Date() &&
+    bookingDetails.assignedVehicleId !== null &&
+    driver.status === DriverStatusEnum.AVAILABLE
+
   //Render based on booking status
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]"} />
-      {bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
-        <RiderMyUpcomingBookingPageComponent
+      <PageWrapper id="MyBookingPage">
+        <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"Booking"} />
+        <RiderMyBookingDetails
           booking={bookingDetails}
-          canStartTrip={
-            bookingDetails.startDate <= new Date() &&
-            bookingDetails.assignedVehicleId !== null &&
-            driver.status === DriverStatusEnum.AVAILABLE
+          canCommunicateWithCustomer={
+            bookingDetails.status === BookingStatusEnum.IN_PROGRESS
+              ? true
+              : bookingDetails.status === BookingStatusEnum.COMPLETED
+                ? false
+                : canStartTrip
           }
         />
-      ) : bookingDetails.status === BookingStatusEnum.IN_PROGRESS ? (
-        <RiderMyOngoingBookingPageComponent booking={bookingDetails} />
-      ) : (
-        <RiderMyCompletedBookingPageComponent booking={bookingDetails} />
-      )}
+        <StickyActionWrapper>
+          {bookingDetails.status === BookingStatusEnum.IN_PROGRESS ? (
+            <RiderMyOngoingBookingPageComponent booking={bookingDetails} />
+          ) : bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
+            <RiderMyUpcomingBookingPageComponent
+              booking={bookingDetails}
+              canStartTrip={canStartTrip}
+            />
+          ) : (
+            <RiderMyCompletedBookingPageComponent />
+          )}
+        </StickyActionWrapper>
+      </PageWrapper>
     </MainWrapper>
   )
 }

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
@@ -23,34 +23,33 @@ import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { midTripAction } from "@/app/actions/bookings/midTripAction"
-import { useLocation } from "@/hooks/useLocation"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { otherTripLogAction } from "@/app/actions/bookings/otherTripLogAction"
 import {
   MAX_FILE_UPLOAD_SIZE,
   MAX_ODOMETER_LIMIT,
   MIN_ODOMETER_LIMIT,
 } from "@/lib/uiConfig"
+import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 
 export default function MidTripSheet({
   booking,
+  latLong,
+
   tripType,
-  captureOtherTripLog,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
+  latLong: LatLongType
   tripType: TripLogTypesEnum
-  captureOtherTripLog?: boolean
 }) {
   const t = useTranslations("Rider.MyBooking.MidTrip")
   const router = useRouter()
 
   const [open, setOpen] = useState(false)
-  const latLong = useLocation()
 
   const type: string =
     tripType === TripLogTypesEnum.ARRIVED
@@ -91,25 +90,9 @@ export default function MidTripSheet({
     setOpen(false)
     return null
   }
+
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId
-
-  useEffect(() => {
-    const triggerAction = async () => {
-      if (captureOtherTripLog && latLong.latitude && latLong.longitude) {
-        await otherTripLogAction({
-          agencyId: booking.agencyId,
-          bookingId: booking.id,
-          driverId: driverId,
-          vehicleId: vehicleId,
-          type: TripLogTypesEnum.OTHER,
-          lat: latLong.latitude,
-          long: latLong.longitude,
-        })
-      }
-    }
-    triggerAction()
-  }, [latLong])
 
   const onSubmit = async (data: SchemaType) => {
     const midTripData = {

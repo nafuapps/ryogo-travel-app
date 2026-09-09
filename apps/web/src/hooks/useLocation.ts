@@ -1,10 +1,11 @@
+import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 import { useState, useEffect } from "react"
 
 export function useLocation() {
-  const [location, setLocation] = useState({
-    latitude: null as null | number,
-    longitude: null as null | number,
-    error: null as string | null,
+  const [location, setLocation] = useState<LatLongType>({
+    latitude: null,
+    longitude: null,
+    error: null,
   })
 
   useEffect(() => {

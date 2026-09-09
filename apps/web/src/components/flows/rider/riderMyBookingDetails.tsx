@@ -1,121 +1,131 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import BookingSection from "@/components/flows/bookings/details/bookingSection"
-import BookingItem from "@/components/flows/bookings/details/bookingItem"
-import { BriefcaseBusiness, Route } from "lucide-react"
+import {
+  BriefcaseBusiness,
+  ClipboardClock,
+  Contact,
+  MapPinCheck,
+  MapPinHouse,
+  MessageSquarePlus,
+  Route,
+  UserKey,
+} from "lucide-react"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
-import { BookingStatusPill } from "@/components/pills/ryogoPills"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import BookingActionWrapper from "@/components/flows/bookings/details/bookingActionWrapper"
+import BookingAssignedUserCard from "@/components/flows/bookings/details/bookingAssignedUserCard"
+import BookingIDWrapper from "@/components/flows/bookings/details/BookingIDWrapper"
+import BookingCreationInfoCard from "@/components/flows/bookings/details/bookingInfoCard"
+import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
+import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
+import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
+import { BookingEditTripInfoWrapper } from "@/components/flows/bookings/details/bookingDetailsCommon"
 import { getDisplayTime } from "@/lib/utils"
 
-export default async function RiderMyBookingDetails({
+export default async function RiderMybooking({
   booking,
-  canCallCustomer,
+  canCommunicateWithCustomer,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
-  canCallCustomer: boolean
+  canCommunicateWithCustomer: boolean
 }) {
   const t = await getTranslations("Rider.MyBooking")
+
+  const isConfirmed = booking.status === BookingStatusEnum.CONFIRMED
+  const isInProgress = booking.status === BookingStatusEnum.IN_PROGRESS
+  const isCompleted = booking.status === BookingStatusEnum.COMPLETED
+
+  const canSeeTripDetails = isConfirmed || isInProgress
+
   return (
     <BookingGrid>
       <BookingSection sectionTitle={t("BookingInfo")} icon={BriefcaseBusiness}>
-        <BookingStatusPill status={booking.status} />
-        <BookingItem title={t("BookingId")} value={booking.id} />
-        <BookingItem title={t("CustomerName")} value={booking.customer.name} />
-        {booking.pickupAddress && (
-          <BookingItem
-            title={t("PickupAddress")}
-            value={booking.pickupAddress}
+        <BookingIDWrapper id={booking.id} status={booking.status} />
+        <BookingCreationInfoCard
+          name={booking.bookedByUser.name}
+          photoUrl={booking.bookedByUser.photoUrl}
+          createdAt={booking.createdAt}
+        />
+        {isCompleted && (
+          <BookingRatingWrapper
+            ratingByCustomer={booking.ratingByCustomer}
+            ratingByDriver={booking.ratingByDriver}
           />
         )}
-        {booking.startTime && (
-          <BookingItem
-            title={t("StartTime")}
-            value={getDisplayTime(booking.startTime)}
-          />
-        )}
-        {booking.dropAddress && (
-          <BookingItem title={t("DropAddress")} value={booking.dropAddress} />
-        )}
-        {booking.ratingByCustomer &&
-          booking.status === BookingStatusEnum.COMPLETED && (
-            <BookingItem
-              title={t("CustomerRating")}
-              value={booking.ratingByCustomer.toString()}
-            />
-          )}
-        {booking.ratingByDriver &&
-          booking.status === BookingStatusEnum.COMPLETED && (
-            <BookingItem
-              title={t("DriverRating")}
-              value={booking.ratingByDriver.toString()}
-            />
-          )}
-        {canCallCustomer && (
+      </BookingSection>
+      <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
+        <BookingTripCard booking={booking} />
+        {canSeeTripDetails && (
           <>
+            {booking.startTime && (
+              <BookingEditTripInfoWrapper
+                icon={ClipboardClock}
+                label={t("StartTime")}
+                value={getDisplayTime(booking.startTime)}
+                canEdit={false}
+              />
+            )}
+            {booking.pickupAddress && (
+              <BookingEditTripInfoWrapper
+                label={t("PickupAddress")}
+                value={booking.pickupAddress}
+                icon={MapPinHouse}
+                canEdit={false}
+              />
+            )}
+            {booking.dropAddress && (
+              <BookingEditTripInfoWrapper
+                label={t("DropAddress")}
+                value={booking.dropAddress}
+                canEdit={false}
+                icon={MapPinCheck}
+              />
+            )}
+          </>
+        )}
+        {booking.remarks && (
+          <BookingEditTripInfoWrapper
+            label={t("Remarks")}
+            value={booking.remarks}
+            canEdit={false}
+            icon={MessageSquarePlus}
+          />
+        )}
+      </BookingSection>
+      <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
+        <BookingAssignedUserCard user={booking.assignedUser} />
+        <BookingActionWrapper>
+          <RyogoPhoneButton
+            label={t("CallAssignedUser")}
+            phone={booking.assignedUser.phone}
+          />
+          <RyogoChatButton
+            label={t("ChatAssignedUser.Title")}
+            phone={booking.assignedUser.phone}
+            subtitle={t("ChatAssignedUser.Subtitle")}
+          />
+        </BookingActionWrapper>
+      </BookingSection>
+      <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
+        <BookingCustomerCard
+          customer={booking.customer}
+          hidePhone={!canCommunicateWithCustomer}
+        />
+        {canCommunicateWithCustomer && (
+          <BookingActionWrapper>
             <RyogoPhoneButton
               label={t("CallCustomer")}
               phone={booking.customer.phone}
             />
             <RyogoChatButton
-              label={t("ChatCustomer")}
+              label={t("ChatCustomer.Title")}
               phone={booking.customer.phone}
+              subtitle={t("ChatCustomer.Subtitle")}
             />
-          </>
-        )}
-      </BookingSection>
-      <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
-        <RyogoPhoneButton
-          label={t("CallAgent")}
-          phone={booking.assignedUser.phone}
-        />
-        <RyogoChatButton
-          label={t("ChatAgent")}
-          phone={booking.assignedUser.phone}
-        />
-        <BookingItem
-          title={t("From")}
-          value={booking.source.city + ", " + booking.source.state}
-        />
-        <BookingItem
-          title={t("To")}
-          value={booking.destination.city + ", " + booking.destination.state}
-        />
-        <BookingItem
-          title={t("StartDate")}
-          value={moment(booking.startDate).format("DD MMM")}
-        />
-        <BookingItem
-          title={t("EndDate")}
-          value={moment(booking.endDate).format("DD MMM")}
-        />
-        <BookingItem
-          title={t("Distance")}
-          value={booking.citydistance + t("Km")}
-        />
-        <BookingItem
-          title={t("TotalDistance")}
-          value={
-            (booking.status === BookingStatusEnum.COMPLETED &&
-            booking.actualTotalDistance
-              ? booking.actualTotalDistance
-              : booking.estimatedTotalDistance) + t("Km")
-          }
-        />
-        <BookingItem title={t("Type")} value={booking.type.toUpperCase()} />
-        <BookingItem
-          title={t("Passengers")}
-          value={booking.passengers.toString()}
-        />
-        <BookingItem
-          title={t("NeedsAC")}
-          value={booking.needsAc ? t("Yes") : t("No")}
-        />
-        {booking.remarks && (
-          <BookingItem title={t("Remarks")} value={booking.remarks} />
+          </BookingActionWrapper>
         )}
       </BookingSection>
     </BookingGrid>

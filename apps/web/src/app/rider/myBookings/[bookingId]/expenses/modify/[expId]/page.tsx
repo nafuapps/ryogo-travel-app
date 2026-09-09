@@ -1,15 +1,14 @@
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
-import RiderModifyExpensePageComponent from "./riderModifyExpense"
 import { ExpenseIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import ModifyExpensePageComponent from "@/components/flows/bookings/expense/modifyExpensePage"
 
 export const metadata: Metadata = {
   title: `Modify Expense - ${pageTitle}`,
@@ -35,7 +34,7 @@ export default async function RiderModifyExpensePage({
 
   const expenseDetails = await expenseServices.findExpenseDetailsById(expId)
 
-  //If no expense found, or bookingid/user/agency mismatch
+  //If no expense found, or booking/user/agency ID mismatch
   if (
     !expenseDetails ||
     expenseDetails.bookingId !== bookingId ||
@@ -45,27 +44,23 @@ export default async function RiderModifyExpensePage({
     redirect(`/rider/myBookings/${bookingId}`, RedirectType.replace)
   }
 
-  const driver = await driverServices.findDriverByUserId(currentUser.userId)
-  if (!driver) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
   const booking = await bookingServices.findBookingStatusById(bookingId)
   if (!booking) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
-  //Expense can be modified for in-progress booking only
+  //Expense can be modified for in-progress booking only by driver
   if (booking.status !== BookingStatusEnum.IN_PROGRESS) {
     redirect(`/rider/myBookings/${bookingId}`, RedirectType.replace)
   }
 
   return (
     <MainWrapper>
-      <RiderHeader pathName={"/rider/myBookings/[id]/modify-expense"} />
-      <RiderModifyExpensePageComponent
+      <RiderHeader pathName={"/rider/myBookings/[id]/expenses/modify"} />
+      <ModifyExpensePageComponent
         expenseDetails={expenseDetails}
-        assignedUserId={booking.assignedUserId}
+        bookingAssignedUserId={booking.assignedUserId}
+        isRider
       />
     </MainWrapper>
   )

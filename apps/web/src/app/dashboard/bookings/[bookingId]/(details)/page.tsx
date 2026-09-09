@@ -19,14 +19,13 @@ export default async function BookingDetailsPage({
   params: Promise<{ bookingId: string }>
 }) {
   const { bookingId } = await params
-  const currentUser = await getCurrentUser()
 
+  const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-
   if (!bookingDetails) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }

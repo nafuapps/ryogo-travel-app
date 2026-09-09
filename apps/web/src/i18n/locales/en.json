@@ -1239,6 +1239,10 @@
       "DriverRating": "Driver Rating",
       "AssignedUserInfo": "ASSIGNED USER",
       "CallAssignedUser": "Call User",
+      "ChatAssignedUser": {
+        "Title": "Chat with User",
+        "Subtitle": "Start a Whatsapp chat with user"
+      },
       "ConfirmBooking": {
         "Title": "Confirm Booking",
         "Subtitle": "Add booking to schedule and make it visible to the assigned driver"
@@ -5120,8 +5124,10 @@
         "/rider/myMissions/modify": "Modify Custom Mission",
         "/rider/myBookings": "Bookings",
         "/rider/myBookings/[id]": "Booking Details",
-        "/rider/myBookings/[id]/add-expense": "Add Expense",
-        "/rider/myBookings/[id]/modify-expense": "Modify Expense",
+        "/rider/myBookings/[id]/expenses": "Booking Expenses",
+        "/rider/myBookings/[id]/expenses/add": "Add Expense",
+        "/rider/myBookings/[id]/expenses/modify": "Modify Expense",
+        "/rider/myBookings/[id]/trip-logs": "Booking Trip Logs",
         "/rider/myProfile": "Profile",
         "/rider/myProfile/change-email": "Change Email",
         "/rider/myProfile/change-password": "Change Password",
@@ -5154,36 +5160,33 @@
       "Start": "Start Trip"
     },
     "MyBooking": {
-      "BookingInfo": "BOOKING INFO",
-      "BookingId": "Booking ID",
-      "CustomerName": "Customer Name",
+      "BookingInfo": "BASIC DETAILS",
+      "Created": "Booking Creation Info",
       "CustomerRating": "Customer Rating",
       "DriverRating": "Driver Rating",
+      "AssignedUserInfo": "ASSIGNED AGENCY USER",
+      "CallAssignedUser": "Call User",
+      "ChatAssignedUser": {
+        "Title": "Chat with User",
+        "Subtitle": "Start a Whatsapp chat with user"
+      },
+      "CustomerInfo": "CUSTOMER",
       "CallCustomer": "Call Customer",
-      "ChatCustomer": "Chat with Customer",
-      "CallAgent": "Call Agency",
-      "ChatAgent": "Chat with Agency",
-      "TripInfo": "TRIP INFO",
-      "From": "From",
-      "To": "To",
-      "Distance": "City Distance",
-      "TotalDistance": "Estimated Total Distance",
-      "StartDate": "Start Date",
-      "EndDate": "End Date",
+      "ChatCustomer": {
+        "Title": "Chat with Customer",
+        "Subtitle": "Start a Whatsapp chat with customer"
+      },
+      "TripInfo": "TRIP DETAILS",
       "StartTime": "Start Time",
       "PickupAddress": "Pickup Address",
       "DropAddress": "Drop Address",
-      "Type": "Trip Type",
-      "Passengers": "Passengers",
-      "NeedsAC": "Needs AC",
+      "Remarks": "Remarks",
+      "Km": " Km",
       "Yes": "Yes",
       "No": "No",
-      "Km": " Km",
-      "Remarks": "Remarks",
-      "AddExpense": "Add Expense",
-      "Expenses": "Expenses",
-      "TripLogs": "Trip Logs",
+      "Passengers": "{pax} pax",
       "Back": "Back",
+      "Navigate": "Navigate",
       "StartTrip": {
         "Title": "Start Trip",
         "Field1": {
@@ -5286,77 +5289,11 @@
         "Proof": " View Attachment"
       },
       "Expense": {
+        "AddExpense": "Add Expense",
+        "NoExpense": "No expenses found for this trip.",
         "Modify": "Modify",
         "Proof": " View Attachment"
       }
-    },
-    "AddRiderExpense": {
-      "Title": "New Expense",
-      "Field1": {
-        "Title": "Expense type",
-        "Description": "Select type of item purchased",
-        "Error1": "Expense type is required"
-      },
-      "Field2": {
-        "Title": "Amount (in ₹)",
-        "Placeholder": "500",
-        "Error1": "Amount must be a number",
-        "Error2": "Amount must be atleast ₹1",
-        "Error3": "Amount must be less than ₹1000000",
-        "Error4": "Amount cannot be in decimals",
-        "Error5": "Amount must be a positive number"
-      },
-      "Field3": {
-        "Title": "Remarks (optional)",
-        "Placeholder": "Enter any remarks regarding this expense",
-        "Error1": "Remarks must be less than 300 characters"
-      },
-      "Field4": {
-        "Title": "Upload proof (optional)",
-        "Placeholder": "UPLOAD",
-        "Description": "Upload the expense document photo",
-        "Error1": "Image file size should be less than 1MB",
-        "Error2": "Only image or pdf files are allowed"
-      },
-      "PrimaryCTA": "Create Expense",
-      "Loading": "Loading..",
-      "CancelCTA": "Cancel",
-      "Success": "Expense added successfully!",
-      "Error": "Cannot add expense.. Try again later!"
-    },
-    "ModifyRiderExpense": {
-      "Title": "Modify Expense",
-      "Field1": {
-        "Title": "Expense type",
-        "Description": "Select type of item purchased",
-        "Error1": "Expense type is required"
-      },
-      "Field2": {
-        "Title": "Amount (in ₹)",
-        "Placeholder": "500",
-        "Error1": "Amount must be a number",
-        "Error2": "Amount must be atleast ₹1",
-        "Error3": "Amount must be less than ₹1000000",
-        "Error4": "Amount cannot be in decimals",
-        "Error5": "Amount must be a positive number"
-      },
-      "Field3": {
-        "Title": "Remarks (optional)",
-        "Placeholder": "Enter any remarks regarding this expense",
-        "Error1": "Remarks must be less than 300 characters"
-      },
-      "Field4": {
-        "Title": "Upload proof (optional)",
-        "Placeholder": "UPLOAD",
-        "Description": "Upload the expense document photo",
-        "Error1": "Image file size should be less than 1MB",
-        "Error2": "Only image or pdf files are allowed"
-      },
-      "PrimaryCTA": "Save changes",
-      "Loading": "Loading..",
-      "CancelCTA": "Cancel",
-      "Success": "Expense details modified successfully!",
-      "Error": "Cannot modify expense.. Try again later!"
     },
     "MyVehicle": {
       "Photo": "Vehicle photo",

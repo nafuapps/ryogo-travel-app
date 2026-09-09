@@ -33,11 +33,13 @@ export default function NewExpensePageComponent({
   userId,
   agencyId,
   assignedUserId,
+  isRider,
 }: {
   bookingId: string
   userId: string
   agencyId: string
   assignedUserId: string
+  isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.NewExpense")
   const router = useRouter()
@@ -76,16 +78,23 @@ export default function NewExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: NewExpenseType) {
-    const addedExpense = await addExpenseAction({
-      bookingId,
-      userId,
-      agencyId,
-      assignedUserId,
-      ...values,
-    })
+    const addedExpense = await addExpenseAction(
+      {
+        bookingId,
+        userId,
+        agencyId,
+        assignedUserId,
+        ...values,
+      },
+      isRider,
+    )
     if (addedExpense) {
       toast.success(t("Success"))
-      router.replace(`/dashboard/bookings/${bookingId}/expenses`)
+      router.replace(
+        isRider
+          ? `/rider/myBookings/${bookingId}/expenses`
+          : `/dashboard/bookings/${bookingId}/expenses`,
+      )
     } else {
       toast.error(t("Error"))
     }

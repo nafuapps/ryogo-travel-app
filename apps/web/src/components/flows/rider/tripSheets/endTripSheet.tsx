@@ -26,7 +26,6 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { endTripAction } from "@/app/actions/bookings/endTripAction"
 import Link from "next/link"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
-import { useLocation } from "@/hooks/useLocation"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   MAX_FILE_UPLOAD_SIZE,
@@ -41,18 +40,20 @@ import {
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 
 export default function EndTripSheet({
   booking,
+  latLong,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
+  latLong: LatLongType
 }) {
   const t = useTranslations("Rider.MyBooking.EndTrip")
   const router = useRouter()
 
   const minOdo = booking.assignedVehicle?.odometerReading ?? MIN_ODOMETER_LIMIT
   const [open, setOpen] = useState(false)
-  const latLong = useLocation()
 
   const [customerRating, setCustomerRating] = useState(0)
   const [bookingRating, setBookingRating] = useState(0)
@@ -192,7 +193,7 @@ export default function EndTripSheet({
             disabled={form.formState.isSubmitting}
             onClick={() => setOpen(false)}
           />
-          <Link href={`/rider/myBookings/${booking.id}/add-expense`}>
+          <Link href={`/rider/myBookings/${booking.id}/expenses/add`}>
             <RyogoGhostButton
               type="button"
               disabled={form.formState.isSubmitting}

@@ -1,12 +1,12 @@
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { redirect, RedirectType } from "next/navigation"
-import RiderAddExpensePageComponent from "./riderAddExpense"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import RiderHeader from "@/components/header/riderHeader"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import NewExpensePageComponent from "@/components/flows/bookings/expense/newExpensePage"
 
 export const metadata: Metadata = {
   title: `Add Expense - ${pageTitle}`,
@@ -20,15 +20,13 @@ export default async function RiderAddExpensePage({
 }) {
   const { bookingId } = await params
 
-  const bookingDetails = await bookingServices.findBookingStatusById(bookingId)
-  if (!bookingDetails || bookingDetails.assignedDriverId === null) {
-    redirect("/rider/myBookings", RedirectType.replace)
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
   }
 
-  const driver = await driverServices.findDriverDetailsById(
-    bookingDetails.assignedDriverId,
-  )
-  if (!driver) {
+  const bookingDetails = await bookingServices.findBookingStatusById(bookingId)
+  if (!bookingDetails || bookingDetails.assignedDriverId === null) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
@@ -39,12 +37,13 @@ export default async function RiderAddExpensePage({
 
   return (
     <MainWrapper>
-      <RiderHeader pathName={"/rider/myBookings/[id]/add-expense"} />
-      <RiderAddExpensePageComponent
+      <RiderHeader pathName={"/rider/myBookings/[id]/expenses/add"} />
+      <NewExpensePageComponent
         bookingId={bookingDetails.id}
         agencyId={bookingDetails.agencyId}
-        userId={driver.userId}
+        userId={currentUser.userId}
         assignedUserId={bookingDetails.assignedUserId}
+        isRider
       />
     </MainWrapper>
   )

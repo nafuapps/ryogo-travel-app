@@ -5,6 +5,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { differenceInDays } from "date-fns"
 import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function BookingIdLayout({
   children,
@@ -33,6 +34,7 @@ export default async function BookingIdLayout({
 
   //If it is an old lead booking, cancel it automatically
   if (
+    booking.status === BookingStatusEnum.LEAD &&
     differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
     await cancelBookingAction(

@@ -10,7 +10,7 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addExpenseAction(
   data: AddExpenseRequestType,
-  byDriver?: boolean,
+  isRider?: boolean,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -43,7 +43,7 @@ export async function addExpenseAction(
     )
   }
 
-  if (byDriver) {
+  if (isRider) {
     await missionServices.addMission({
       agencyId: data.agencyId,
       userId: data.assignedUserId,

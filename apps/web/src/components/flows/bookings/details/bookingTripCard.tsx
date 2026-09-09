@@ -22,7 +22,7 @@ export default async function BookingTripCard({
 
   return (
     <div id="tripInfo" className="flex flex-col">
-      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 border-x border-t rounded-t-xl rounded-b-md items-center justify-between">
+      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 border-x border-t rounded-t-lg rounded-b-2xl items-center justify-between">
         <LocationWrapper
           city={booking.source.city}
           state={booking.source.state}
@@ -42,8 +42,8 @@ export default async function BookingTripCard({
           state={booking.destination.state}
         />
       </div>
-      <div className="mx-1.5 lg:mx-2 border-t border-dashed h-0" />
-      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x rounded-t-md">
+      <div className="mx-3 lg:mx-4 border-t border-dashed h-0" />
+      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x rounded-t-2xl">
         <BookingDateWrapper date={startDate} />
         <SectionColWrapper center small>
           <RyogoPill bgColor="slate" label={booking.type.toUpperCase()} />

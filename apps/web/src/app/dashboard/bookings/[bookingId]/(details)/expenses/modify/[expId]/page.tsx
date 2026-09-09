@@ -66,7 +66,7 @@ export default async function ModifyExpensePage({
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses/modify"} />
       <ModifyExpensePageComponent
         expenseDetails={expenseDetails}
-        assignedUserId={booking.assignedUserId}
+        bookingAssignedUserId={booking.assignedUserId}
       />
     </MainWrapper>
   )

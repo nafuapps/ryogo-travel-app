@@ -1,4 +1,4 @@
-import { cookies } from "next/headers"
+import { cookies, headers } from "next/headers"
 import { jwtVerify, SignJWT } from "jose"
 import { sessionRepository } from "@ryogo-travel-app/api/repositories/session.repo"
 import { userRepository } from "@ryogo-travel-app/api/repositories/user.repo"
@@ -77,11 +77,18 @@ export async function createWebSession(user: SelectUserType) {
   const expiresAt = createNewExpiryDate()
   const token = crypto.randomUUID()
 
+  const headerList = await headers()
+
+  const ipAddress = headerList.get("x-forwarded-for")
+  const userAgent = headerList.get("user-agent")
+
   // 1. Create a session in the database
   const sessionData = await sessionRepository.createSession({
     userId: user.id,
     token,
     expiresAt,
+    ipAddress,
+    userAgent,
   })
 
   if (!sessionData[0]) return

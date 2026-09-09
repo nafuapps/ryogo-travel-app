@@ -412,6 +412,13 @@ export const users = pgTable(
     lastSeen: timestamp("last_seen", { withTimezone: true }),
     lastLogin: timestamp("last_login", { withTimezone: true }),
     lastLogout: timestamp("last_logout", { withTimezone: true }),
+    latLong: varchar("lat_long", { length: 50 }), // TODO: last known user location
+    locatedAt: timestamp("located_at", { withTimezone: true }), // Timestamp of last location update
+    location: geometry("location", {
+      type: "point",
+      mode: "xy",
+      srid: 4326,
+    }),
     ...timestamps,
   },
   (t) => [
@@ -472,6 +479,8 @@ export const sessions = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
+    ipAddress: varchar("ip_address", { length: 30 }),
+    userAgent: text("user_agent"),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
     ...timestamps,
   },
@@ -516,7 +525,9 @@ export const vehicleColors = pgEnum("vehicle_colors", [
 ])
 
 export enum VehicleBrandEnum {
+  Bajaj = "Bajaj",
   Ford = "Ford",
+  Hero = "Hero",
   Honda = "Honda",
   Hyundai = "Hyundai",
   Kia = "Kia",
@@ -527,9 +538,13 @@ export enum VehicleBrandEnum {
   Skoda = "Skoda",
   Tata = "Tata",
   Toyota = "Toyota",
+  TVS = "TVS",
+  Other = "Other",
 }
 export const vehicleBrands = pgEnum("vehicle_brands", [
+  VehicleBrandEnum.Bajaj,
   VehicleBrandEnum.Ford,
+  VehicleBrandEnum.Hero,
   VehicleBrandEnum.Honda,
   VehicleBrandEnum.Hyundai,
   VehicleBrandEnum.Kia,
@@ -540,6 +555,8 @@ export const vehicleBrands = pgEnum("vehicle_brands", [
   VehicleBrandEnum.Skoda,
   VehicleBrandEnum.Tata,
   VehicleBrandEnum.Toyota,
+  VehicleBrandEnum.TVS,
+  VehicleBrandEnum.Other,
 ])
 export enum VehicleTypesEnum {
   CAR = "car",
@@ -586,7 +603,8 @@ export const vehicles = pgTable(
       .notNull(),
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "no action" })
-      .notNull(),
+      .notNull()
+      .default("U1000006"), //TODO: Remove default
     vehicleNumber: varchar("vehicle_number", { length: 15 }).notNull(),
     type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
     brand: vehicleBrands().notNull().default(VehicleBrandEnum.Honda),
@@ -596,7 +614,7 @@ export const vehicles = pgTable(
     pucExpiresOn: date("puc_expires_on", { mode: "date" }),
     rcExpiresOn: date("rc_expires_on", { mode: "date" }),
     odometerReading: integer("odometer_reading").notNull().default(0), // in kilometers
-    capacity: integer("capacity").notNull().default(4), //number of seats
+    capacity: integer("capacity").notNull().default(4), //number of passenger seats
     hasAC: boolean("has_ac").notNull().default(true),
     status: vehicleStatus().notNull().default(VehicleStatusEnum.AVAILABLE),
     insurancePhotoUrl: text("insurance_photo_url"),
@@ -688,7 +706,8 @@ export const drivers = pgTable(
       .unique(),
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "no action" })
-      .notNull(),
+      .notNull()
+      .default("U1000006"), // TODO: Remove default
     name: varchar("name", { length: 30 }).notNull(),
     phone: varchar("phone", { length: 10 }).notNull(),
     address: varchar("address", { length: 300 }),
@@ -715,6 +734,10 @@ export const drivers = pgTable(
     check(
       "allowance >=0 and < 10000",
       sql`${t.defaultAllowancePerDay} >=0 AND ${t.defaultAllowancePerDay} < 10000`,
+    ),
+    check(
+      "can_drive_atleast_one_vehicle_type",
+      sql`array_length(${t.canDriveVehicleTypes}, 1) > 0`,
     ),
     index("drivers_agency_idx").on(t.agencyId), // to quickly filter all drivers in an agency
     index("drivers_agency_status_idx").on(t.status, t.agencyId), // to quickly filter drivers by status in an agency

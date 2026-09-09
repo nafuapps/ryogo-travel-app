@@ -28,8 +28,6 @@ export function regexCheckIDByEntityType(type: EntityTypeEnum, value: string) {
       return UserIdRegex.safeParse(value).success
     case EntityTypeEnum.VEHICLE:
       return VehicleIdRegex.safeParse(value).success
-    default:
-      return false
   }
 }
 

@@ -30,7 +30,12 @@ import {
 } from "@/components/form/newFormWrappers"
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "@/lib/uiConfig"
+import {
+  MIN_NAME_LENGTH,
+  MAX_NAME_LENGTH,
+  MAX_VEHICLE_NUMBER_LENGTH,
+  MIN_VEHICLE_NUMBER_LENGTH,
+} from "@/lib/uiConfig"
 
 export function NewVehicleStep1({
   onNext,
@@ -53,8 +58,8 @@ export function NewVehicleStep1({
     vehicleNumber: z
       .string()
       .trim()
-      .min(7, t("Field1.Error1"))
-      .max(15, t("Field1.Error2"))
+      .min(MIN_VEHICLE_NUMBER_LENGTH, t("Field1.Error1"))
+      .max(MAX_VEHICLE_NUMBER_LENGTH, t("Field1.Error2"))
       .refine((value) => {
         //Check that vehicleNumber does not already exist in this agency
         return !existingVehicles.some(

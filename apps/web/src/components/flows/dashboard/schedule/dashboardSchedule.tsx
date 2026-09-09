@@ -122,14 +122,7 @@ export default function DashboardScheduleDayAxis({
             {moment(
               isHistory
                 ? subDays(chartStartDate, selectedDays - index)
-                : // new Date(
-                  //     chartStartDate.getTime() -
-                  //       (selectedDays - index) * 24 * 60 * 60 * 1000,
-                  //   )
-                  addDays(chartStartDate, index),
-              // new Date(
-              //     chartStartDate.getTime() + index * 24 * 60 * 60 * 1000,
-              //   ),
+                : addDays(chartStartDate, index),
             ).format("D MMM")}
           </RyogoCaption>
         </div>

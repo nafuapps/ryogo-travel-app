@@ -50,7 +50,7 @@ export function VerifyAccountStep1({
     } else {
       setTimeout(() => {
         formData.setValue("userEnteredcode", "")
-      }, 1000)
+      }, 1000) //Clear the field after 1s
       formData.setError("userEnteredcode", {
         type: "manual",
         message: t("APIError"),
@@ -62,7 +62,7 @@ export function VerifyAccountStep1({
   const resendCode = async () => {
     setTimeout(() => {
       formData.setValue("userEnteredcode", "")
-    }, 1000)
+    }, 1000) //Clear the field after 1s
     startTransition(async () => {
       if (await resendVerificationCodeAction()) {
         toast.success(t("ResendSuccess"))

@@ -21,7 +21,12 @@ import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from "@/lib/uiConfig"
+import {
+  MAX_NAME_LENGTH,
+  MIN_NAME_LENGTH,
+  MAX_VEHICLE_NUMBER_LENGTH,
+  MIN_VEHICLE_NUMBER_LENGTH,
+} from "@/lib/uiConfig"
 
 export function AddVehicleStep1({
   onNext,
@@ -37,8 +42,8 @@ export function AddVehicleStep1({
     vehicleNumber: z
       .string()
       .trim()
-      .min(7, t("Field1.Error1"))
-      .max(15, t("Field1.Error2")),
+      .min(MIN_VEHICLE_NUMBER_LENGTH, t("Field1.Error1"))
+      .max(MAX_VEHICLE_NUMBER_LENGTH, t("Field1.Error2")),
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field2.Error1")),
     brand: z.enum(VehicleBrandEnum).nonoptional(t("Field3.Error1")),
     color: z.enum(VehicleColorEnum).nonoptional(t("Field4.Error1")),

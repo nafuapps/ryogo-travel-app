@@ -315,7 +315,6 @@ export function getSubscriptionPlanPrice(plan: OrderTypeEnum) {
     case OrderTypeEnum.QUARTERLY:
       return QUARTERLY_SUBSCRIPTION_FINAL_PRICE
     case OrderTypeEnum.MONTHLY:
-    default:
       return MONTHLY_SUBSCRIPTION_FINAL_PRICE
   }
 }

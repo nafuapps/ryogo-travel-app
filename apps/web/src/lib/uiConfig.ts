@@ -2,15 +2,19 @@
 export const HOMEPAGE_URL = "https://ryogo.in"
 export const SLIDESHOW_TIMER_MS = 5000
 
-//Regex
+//Regex constants
 export const MIN_PASSWORD_LENGTH = 8
 export const MIN_NAME_LENGTH = 3
 export const MAX_NAME_LENGTH = 30
 export const PHONE_LENGTH = 10
 export const MAX_EMAIL_LENGTH = 60
-export const MAX_FILE_UPLOAD_SIZE = 1000000 //File must be less than 1MB
+export const MAX_FILE_UPLOAD_SIZE = 500000 //File must be less than 500kB
 export const MIN_AMOUNT_LIMIT = 0 //Minimum amount user can enter (in Rs)
 export const MAX_AMOUNT_LIMIT = 1000000 //Maximum amount user can enter (in Rs)
+export const MIN_LICENSE_LENGTH = 10 //Minimum license number length
+export const MAX_LICENSE_LENGTH = 20 //Maximum license number length
+export const MIN_VEHICLE_NUMBER_LENGTH = 7 //Minimum vehicle number length
+export const MAX_VEHICLE_NUMBER_LENGTH = 15 //Maximum vehicle number length
 export const MIN_VEHICLE_CAPCITY = 0 //Minimum vehicle passenger capacity
 export const MAX_VEHICLE_CAPCITY = 100 //Maximum vehicle passenger capacity
 export const MIN_VEHICLE_RATE = 0 //Minimum vehicle rate user can enter (in Rs/Km)
@@ -25,6 +29,8 @@ export const MIN_FIELD_TITLE_LENGTH = 3
 export const MAX_FIELD_TITLE_LENGTH = 50
 export const MIN_FIELD_DESC_LENGTH = 10
 export const MAX_FIELD_DESC_LENGTH = 300
+export const MIN_ENTITY_ID_LENGTH = 8
+export const MAX_ENTITY_ID_LENGTH = 12
 
 //Onboarding
 export const VERIFY_CODE_TIMEOUT_MINUTES = 3 //Waiting before resending code

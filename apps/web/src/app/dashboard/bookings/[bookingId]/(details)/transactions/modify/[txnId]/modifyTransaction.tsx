@@ -30,6 +30,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import {
   MAX_AMOUNT_LIMIT,
+  MAX_FIELD_DESC_LENGTH,
   MAX_FILE_UPLOAD_SIZE,
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
@@ -54,7 +55,10 @@ export default function ModifyTransactionPageComponent({
       .positive(t("Field2.Error5")),
     mode: z.enum(TransactionModesEnum).nonoptional(t("Field3.Error1")),
     otherParty: z.enum(TransactionsPartiesEnum).nonoptional(t("Field4.Error1")),
-    remarks: z.string().max(300, t("Field5.Error1")).optional(),
+    remarks: z
+      .string()
+      .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
+      .optional(),
     txnPhoto: FileRegex.refine((file) => {
       if (file.length < 1) return true
       return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE

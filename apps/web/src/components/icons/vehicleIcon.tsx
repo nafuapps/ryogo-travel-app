@@ -22,7 +22,7 @@ export default function GetVehicleIcon({
       return <RyogoEnclosedIcon icon={Car} {...props} />
     case VehicleTypesEnum.BIKE:
       return <RyogoEnclosedIcon icon={Motorbike} {...props} />
-    default:
+    case VehicleTypesEnum.OTHER:
       return <RyogoEnclosedIcon icon={Tractor} {...props} />
   }
 }

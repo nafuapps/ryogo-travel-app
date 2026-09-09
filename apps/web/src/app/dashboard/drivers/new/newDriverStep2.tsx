@@ -26,7 +26,11 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import {
+  MAX_FILE_UPLOAD_SIZE,
+  MAX_LICENSE_LENGTH,
+  MIN_LICENSE_LENGTH,
+} from "@/lib/uiConfig"
 
 export function NewDriverStep2({
   onNext,
@@ -44,8 +48,8 @@ export function NewDriverStep2({
     licenseNumber: z
       .string()
       .trim()
-      .min(12, t("Field1.Error1"))
-      .max(20, t("Field1.Error2")),
+      .min(MIN_LICENSE_LENGTH, t("Field1.Error1"))
+      .max(MAX_LICENSE_LENGTH, t("Field1.Error2")),
     licenseExpiresOn: z
       .date(t("Field2.Error1"))
       .min(new Date(), t("Field2.Error2"))

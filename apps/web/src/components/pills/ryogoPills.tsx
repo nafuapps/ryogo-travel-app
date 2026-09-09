@@ -151,7 +151,6 @@ export function AgencyStatusPill(
     case AgencyStatusEnum.SUSPENDED:
       return <RyogoPill {...props} label={label} bgColor={"red"} />
     case AgencyStatusEnum.NEW:
-    default:
       return <RyogoPill {...props} label={label} bgColor={"slate"} />
   }
 }

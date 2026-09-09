@@ -14,7 +14,6 @@ export default function GetTripTypeIcon({
     case BookingTypeEnum.Round:
       return <RyogoIcon {...props} icon={ArrowRightLeft} />
     case BookingTypeEnum.MultiDay:
-    default:
       return <RyogoIcon {...props} icon={Waypoints} />
   }
 }

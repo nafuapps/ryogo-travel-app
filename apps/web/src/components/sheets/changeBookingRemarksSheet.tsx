@@ -22,6 +22,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { changeBookingRemarksAction } from "@/app/actions/bookings/changeBookingRemarksAction"
+import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 
 export default function ChangeBookingRemarksSheet({
   bookingId,
@@ -45,7 +46,7 @@ export default function ChangeBookingRemarksSheet({
   const router = useRouter()
 
   const schema = z.object({
-    remarks: z.string().max(300, t("RemarksError")),
+    remarks: z.string().max(MAX_FIELD_DESC_LENGTH, t("RemarksError")),
   })
 
   type SchemaType = z.infer<typeof schema>

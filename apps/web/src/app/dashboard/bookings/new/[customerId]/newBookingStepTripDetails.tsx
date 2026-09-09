@@ -33,6 +33,7 @@ import {
 } from "@/components/form/newFormWrappers"
 import { useRouter } from "next/navigation"
 import {
+  MAX_FIELD_DESC_LENGTH,
   MAX_VEHICLE_CAPCITY,
   MIN_VEHICLE_CAPCITY,
   NEW_BOOKING_DEFAULT_DISTANCE,
@@ -87,7 +88,10 @@ export default function NewBookingStepTripDetails({
         .nonnegative(t("Field7.Error5")),
       tripType: z.enum(BookingTypeEnum),
       tripNeedsAC: z.boolean(),
-      tripRemarks: z.string().max(300, t("Field10.Error1")).optional(),
+      tripRemarks: z
+        .string()
+        .max(MAX_FIELD_DESC_LENGTH, t("Field10.Error1"))
+        .optional(),
     })
     .superRefine((data, ctx) => {
       //For round and multi day trip, end date must be after start date

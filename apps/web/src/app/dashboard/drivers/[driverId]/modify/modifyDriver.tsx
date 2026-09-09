@@ -27,8 +27,10 @@ import {
 import {
   MAX_FIELD_DESC_LENGTH,
   MAX_FILE_UPLOAD_SIZE,
+  MAX_LICENSE_LENGTH,
   MAX_PER_DAY_CHARGE,
   MIN_FIELD_DESC_LENGTH,
+  MIN_LICENSE_LENGTH,
   MIN_PER_DAY_CHARGE,
 } from "@/lib/uiConfig"
 
@@ -57,8 +59,8 @@ export default function ModifyDriverPageComponent({
     licenseNumber: z
       .string()
       .trim()
-      .min(12, t("Field4.Error1"))
-      .max(20, t("Field4.Error2")),
+      .min(MIN_LICENSE_LENGTH, t("Field4.Error1"))
+      .max(MAX_LICENSE_LENGTH, t("Field4.Error2")),
     licenseExpiresOn: z
       .date(t("Field5.Error1"))
       .min(driver.licenseExpiresOn ?? new Date(), t("Field5.Error2"))

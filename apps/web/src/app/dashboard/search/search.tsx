@@ -248,7 +248,7 @@ export default function SearchPageComponent({
         setSearchResultType(SearchTypeEnum.Customers)
         setCustomerSearchResultSet(getCustomerSearchData(searchTerm))
         break
-      default:
+      case SearchTypeEnum.Bookings:
         setSearchResultType(SearchTypeEnum.Bookings)
         setBookingSearchResultSet(getBookingSearchData(searchTerm))
     }

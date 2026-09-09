@@ -28,6 +28,7 @@ import {
   RyogoOutlineButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import { PHONE_LENGTH } from "@/lib/uiConfig"
 
 export default function NewBookingSearchCustomerPageComponent({
   customers,
@@ -49,7 +50,7 @@ export default function NewBookingSearchCustomerPageComponent({
       .string()
       .trim()
       .min(4, t("Error1"))
-      .max(10, t("Error2"))
+      .max(PHONE_LENGTH, t("Error2"))
       .regex(/^[0-9]+$/, t("Error2")),
   })
 

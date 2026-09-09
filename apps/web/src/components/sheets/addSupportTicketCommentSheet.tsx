@@ -23,6 +23,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 
 export default function AddSupportTicketCommentSheet({
   ticketId,
@@ -40,7 +41,7 @@ export default function AddSupportTicketCommentSheet({
   const [open, setOpen] = useState(false)
 
   const schema = z.object({
-    comment: z.string().max(300, t("FieldError")),
+    comment: z.string().max(MAX_FIELD_DESC_LENGTH, t("FieldError")),
   })
 
   type SchemaType = z.infer<typeof schema>

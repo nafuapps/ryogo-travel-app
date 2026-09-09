@@ -36,6 +36,8 @@ import {
   MAX_FIELD_TITLE_LENGTH,
   MIN_FIELD_DESC_LENGTH,
   MAX_FIELD_DESC_LENGTH,
+  MAX_ENTITY_ID_LENGTH,
+  MIN_ENTITY_ID_LENGTH,
 } from "@/lib/uiConfig"
 
 export default function ModifyCustomMissionPageComponent({
@@ -51,7 +53,11 @@ export default function ModifyCustomMissionPageComponent({
   const modifyCustomMissionSchema = z
     .object({
       entityType: z.enum(EntityTypeEnum).nonoptional(t("Field1.Error1")),
-      entityId: z.string().max(12, t("Field2.Error1")).optional(),
+      entityId: z
+        .string()
+        .min(MIN_ENTITY_ID_LENGTH)
+        .max(MAX_ENTITY_ID_LENGTH, t("Field2.Error1"))
+        .optional(),
       titleKey: z
         .string()
         .min(MIN_FIELD_TITLE_LENGTH, t("Field3.Error1"))

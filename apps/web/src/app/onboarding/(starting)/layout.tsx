@@ -23,10 +23,13 @@ export default async function OnboardingStartingLayout({
     if (!currentUser.isVerified) {
       redirect("/onboarding/verify-account", RedirectType.replace)
     }
-    if (currentUser.status !== UserStatusEnum.NEW) {
-      redirect("/dashboard/home", RedirectType.replace)
+    if (!currentUser.isAdmin) {
+      redirect("/onboarding/change-password", RedirectType.replace)
     }
-    redirect("/onboarding/add-vehicle", RedirectType.replace)
+    if (currentUser.status === UserStatusEnum.NEW) {
+      redirect("/onboarding/add-vehicle", RedirectType.replace)
+    }
+    redirect("/dashboard/home", RedirectType.replace)
   }
 
   return children

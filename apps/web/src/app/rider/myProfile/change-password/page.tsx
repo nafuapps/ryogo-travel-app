@@ -3,7 +3,7 @@
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ChangePasswordMyProfileComponent from "./changePassword"
+import ChangePasswordPageComponent from "@/components/flows/account/changePasswordPage"
 import RiderHeader from "@/components/header/riderHeader"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
@@ -21,9 +21,10 @@ export default async function ChangePasswordMyProfilePage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/change-password"} />
-      <ChangePasswordMyProfileComponent
+      <ChangePasswordPageComponent
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}
+        isRider
       />
     </MainWrapper>
   )

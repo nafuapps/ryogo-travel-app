@@ -30,6 +30,7 @@ export default async function ChangeEmailMyProfilePage() {
         usersWithPhoneRole={usersWithPhoneRole}
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}
+        isRider
       />
     </MainWrapper>
   )

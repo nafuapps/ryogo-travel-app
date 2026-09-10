@@ -1,11 +1,17 @@
-//New agent loggin in for the first time or existing user resetting password
+//New agent/driver/added owner logging in for the first time
 
 import { getCurrentUser } from "@/lib/auth"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ChangePasswordPageComponent from "./changePassword"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import {
+  OnboardingStepHeader,
+  OnboardingStepPage,
+} from "@/components/flows/onboarding/onboardingSteps"
+import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
+import { getTranslations } from "next-intl/server"
+import { ChangePasswordStepComponent } from "./changePasswordStep"
 
 export const metadata: Metadata = {
   title: `Change Password - ${pageTitle}`,
@@ -48,12 +54,25 @@ export default async function ChangePasswordPage() {
     }
   }
 
+  const t = await getTranslations("Onboarding.ChangePasswordPage")
+
   //Only new users can come to change password page
   return (
-    <ChangePasswordPageComponent
-      userId={currentUser.userId}
-      role={currentUser.userRole}
-      agencyId={currentUser.agencyId}
-    />
+    <>
+      <OnboardingStepPage pageId="ChangePassword">
+        <OnboardingStepHeader
+          headerId="ChangePasswordHeader"
+          title={t("Title")}
+          stepLabel={t("Subtitle")}
+        />
+
+        <ChangePasswordStepComponent
+          userId={currentUser.userId}
+          role={currentUser.userRole}
+          agencyId={currentUser.agencyId}
+        />
+      </OnboardingStepPage>
+      <OnboardingSidebar showLogout />
+    </>
   )
 }

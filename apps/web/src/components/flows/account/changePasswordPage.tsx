@@ -20,12 +20,14 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
-export default function ChangePasswordAccountComponent({
+export default function ChangePasswordPageComponent({
   userId,
   agencyId,
+  isRider,
 }: {
   userId: string
   agencyId: string
+  isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.Account.ChangePassword")
   const router = useRouter()
@@ -55,7 +57,7 @@ export default function ChangePasswordAccountComponent({
     })
 
   type SchemaType = z.infer<typeof schema>
-  const form = useForm<SchemaType>({
+  const formData = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
       oldPassword: "",
@@ -75,23 +77,22 @@ export default function ChangePasswordAccountComponent({
     if (result) {
       //If success, redirect
       toast.success(t("Success"))
-
-      router.replace("/dashboard/account")
+      router.replace(isRider ? "/rider/myProfile" : "/dashboard/account")
     } else {
       //If failed, show error
-      form.setError("oldPassword", {
+      formData.setError("oldPassword", {
         type: "manual",
         message: t("APIError"),
       })
-      // formData.reset();
     }
   }
+
   return (
-    <PageWrapper id="ChangePassword">
+    <PageWrapper id="RiderChangePassword">
       <FormWrapper<SchemaType>
+        form={formData}
         id="ChangePasswordForm"
-        onSubmit={form.handleSubmit(onSubmit)}
-        form={form}
+        onSubmit={formData.handleSubmit(onSubmit)}
       >
         <FormContentWrapper>
           <RyogoInput
@@ -119,17 +120,19 @@ export default function ChangePasswordAccountComponent({
         <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
-            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
             type="submit"
-            disabled={form.formState.isSubmitting}
-            showSpinner={form.formState.isSubmitting}
+            disabled={formData.formState.isSubmitting}
+            showSpinner={formData.formState.isSubmitting}
           />
           <RyogoOutlineButton
             size={"lg"}
             label={t("SecondaryCTA")}
             type="button"
             onClick={() => router.back()}
-            disabled={form.formState.isSubmitting}
+            disabled={formData.formState.isSubmitting}
           />
         </StickyActionWrapper>
       </FormWrapper>

@@ -25,10 +25,12 @@ export default function ChangeEmailPageComponent({
   usersWithPhoneRole,
   userId,
   agencyId,
+  isRider,
 }: {
   usersWithPhoneRole: FindUserAccountsByPhoneRoleType
   userId: string
   agencyId: string
+  isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.Account.ChangeEmail")
   const router = useRouter()
@@ -84,7 +86,7 @@ export default function ChangeEmailPageComponent({
       if (result) {
         //If success, redirect
         toast.success(t("Success"))
-        router.replace("/dashboard/account")
+        router.replace(isRider ? "/rider/myProfile" : "/dashboard/account")
       } else {
         //If failed, show error
         form.setError("password", {

@@ -18,7 +18,7 @@ import { newUserSetPasswordAction } from "@/app/actions/users/newUserSetPassword
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
-export function ChangePasswordStep1({
+export function ChangePasswordStepComponent({
   userId,
   agencyId,
   role,

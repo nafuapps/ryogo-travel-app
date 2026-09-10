@@ -4,9 +4,9 @@ import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ChangePasswordAccountComponent from "./changePassword"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import ChangePasswordPageComponent from "@/components/flows/account/changePasswordPage"
 
 export const metadata: Metadata = {
   title: `Change Password - ${pageTitle}`,
@@ -21,7 +21,7 @@ export default async function ChangePasswordAccountPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/change-password"} />
-      <ChangePasswordAccountComponent
+      <ChangePasswordPageComponent
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}
       />

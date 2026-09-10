@@ -5327,63 +5327,6 @@
       "PerDay": "₹{allowance} per day",
       "Rating": "Customer Rating",
       "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
-      "ChangeEmail": {
-        "Title": "Change Email",
-        "Subtitle": "Set your email address to receive important updates",
-        "Field1": {
-          "Title": "Enter your Password",
-          "Placeholder": "********",
-          "Description": "Enter your password to verify identity",
-          "Error1": "Password must be at least 8 characters",
-          "Error2": "Password should not contain spaces"
-        },
-        "Field2": {
-          "Title": "Enter new email",
-          "Placeholder": "raj.sharma@gmail.com",
-          "Description": "Provide your new email address",
-          "Error1": "Invalid email",
-          "Error2": "Email must be less than 60 characters",
-          "Error3": "New email cannot be the same as previous email",
-          "Error4": "Another user already has this email.. try another email address"
-        },
-        "PrimaryCTA": "Update Email",
-        "SecondaryCTA": "Back",
-        "Loading": "Loading",
-        "Success": "Email updated successfully",
-        "APIError": "Password does not match.. please try again"
-      },
-      "ChangePassword": {
-        "Title": "Change Password",
-        "Subtitle": "Manage your password for logging into your account",
-        "Field1": {
-          "Title": "Current Password",
-          "Placeholder": "********",
-          "Description": "Enter your current password",
-          "Error1": "Password must be at least 8 characters",
-          "Error2": "Password should not contain spaces"
-        },
-        "Field2": {
-          "Title": "New Password",
-          "Placeholder": "********",
-          "Description": "Choose a new password",
-          "Error1": "Password must be at least 8 characters",
-          "Error2": "Password should not contain spaces",
-          "Error3": "New password cannot be the same as old password"
-        },
-        "Field3": {
-          "Title": "Confirm New Password",
-          "Placeholder": "********",
-          "Description": "Re-enter your new password",
-          "Error1": "Password must be at least 8 characters",
-          "Error2": "Password should not contain spaces",
-          "Error3": "Confirm Password does not match"
-        },
-        "PrimaryCTA": "Update password",
-        "SecondaryCTA": "Back",
-        "Loading": "Loading",
-        "Success": "Password updated successfully",
-        "APIError": "Password does not match.. please try again"
-      },
       "LastLogin": "Logged in since {loginTime}"
     },
     "MyProfileAgency": {

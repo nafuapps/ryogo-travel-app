@@ -39,6 +39,7 @@ import {
   MAX_FILE_UPLOAD_SIZE,
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
@@ -117,6 +118,7 @@ export default function ModifyTransactionPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="modifyTransactionForm"
       >
+        <RyogoH3>{t("Title")}</RyogoH3>
         <FormContentWrapper>
           <RyogoRadio
             name="type"

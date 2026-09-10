@@ -1,6 +1,4 @@
-import { UserRolePill } from "@/components/pills/ryogoPills"
-import { RyogoH4, RyogoSmall } from "@/components/typography"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoH4 } from "@/components/typography"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import {
   InfoContentWrapper,
@@ -12,20 +10,18 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
 
-export default function UserInfoWrapper({
-  id,
+export default function DriverInfoWrapper({
+  userId,
   photoUrl,
   agencyId,
   name,
-  agencyName,
-  userRole,
+  canChangePhoto,
 }: {
-  id: string
+  userId: string
   photoUrl: string | null
   agencyId: string
   name: string
-  agencyName: string
-  userRole: UserRolesEnum
+  canChangePhoto: boolean
 }) {
   return (
     <InfoWrapper>
@@ -39,12 +35,12 @@ export default function UserInfoWrapper({
         ) : (
           <RyogoEnclosedIcon icon={User} size="xl" />
         )}
-        <ChangeUserPhotoSheet userId={id} agencyId={agencyId} />
+        {canChangePhoto && (
+          <ChangeUserPhotoSheet userId={userId} agencyId={agencyId} />
+        )}
       </SectionColWrapper>
       <InfoContentWrapper>
         <RyogoH4 weight="font-bold">{name}</RyogoH4>
-        <RyogoSmall color="light">{agencyName}</RyogoSmall>
-        <UserRolePill role={userRole} className="self-center lg:self-start" />
       </InfoContentWrapper>
     </InfoWrapper>
   )

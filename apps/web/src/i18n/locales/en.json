@@ -15,8 +15,7 @@
         "Error2": "Phone number must be numeric and without spaces",
         "NotFoundError": "Phone number not registered or suspended",
         "ServerError": "Cannot connect to server.. Try again later!",
-        "BotError": "Bot/Fraud activity detected.",
-        "SecondaryCTA": "I want to create an account"
+        "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Welcome back!",
@@ -54,7 +53,6 @@
         "PrimaryCTA": "Get verification code",
         "CodeSentRecently": "Wait {count} minutes to resend code",
         "Loading": "Loading",
-        "Back": "Back",
         "Error1": "Not a valid email",
         "Error2": "Email must be less than 60 characters",
         "APIError": "Email address does not match our records",
@@ -66,7 +64,6 @@
         "PageTitle": "Reset your password",
         "Field1": {
           "Title": "Enter verification code",
-          "Placeholder": "123456",
           "Description": "Provide the verification code sent to your email address",
           "Error1": "Code must be 6 digits",
           "Error2": "Code does not match our records"
@@ -122,7 +119,6 @@
   },
   "Onboarding": {
     "HomePage": {
-      "Logo": "RyoGo Logo",
       "Header": {
         "Title": "Welcome!",
         "Description": "Let's setup your agency account. It will take just a few minutes."
@@ -312,7 +308,6 @@
       "Step1": {
         "Field1": {
           "Title": "Enter verification code",
-          "Placeholder": "******",
           "Description": "Provide the 6-digit code sent to your email",
           "Error1": "Code must be 6 characters"
         },
@@ -352,15 +347,13 @@
           "Title": "Vehicle brand",
           "Placeholder": "Honda",
           "Description": "Provide vehicle manufacturer brand",
-          "Error1": "Brand name must be atleast 3 characters",
-          "Error2": "Brand name must be less than 15 characters"
+          "Error1": "Brand name must be atleast 3 characters"
         },
         "Field4": {
           "Title": "Vehicle color",
           "Placeholder": "Black",
           "Description": "Provide vehicle color",
-          "Error1": "Vehicle color must be atleast 3 characters",
-          "Error2": "Vehicle color must be less than 15 characters"
+          "Error1": "Vehicle color must be atleast 3 characters"
         },
         "Field5": {
           "Title": "Vehicle model",
@@ -370,8 +363,7 @@
           "Error2": "Vehicle model must be less than 30 characters"
         },
         "PrimaryCTA": "Continue",
-        "Loading": "Loading",
-        "APIError": "Vehicle number is already added to this agency"
+        "Loading": "Loading"
       },
       "Step2": {
         "Field1": {
@@ -611,8 +603,7 @@
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
-        "APIError": "Driver could not be added.. please try again",
-        "Success": "Driver added successfully.. Let's try to add a vehicle now!"
+        "APIError": "Driver could not be added.. please try again"
       },
       "Finish": {
         "Title": "Congratulations!",
@@ -679,7 +670,6 @@
       }
     },
     "ChangePasswordPage": {
-      "Logo": "RyoGo Logo",
       "Title": "Welcome!",
       "Subtitle": "It seems like you are logging in for the first time! Please set a new password to secure your account.",
       "Step1": {
@@ -688,8 +678,7 @@
           "Placeholder": "********",
           "Description": "Choose a new password",
           "Error1": "Password must be at least 8 characters",
-          "Error2": "Password should not contain spaces",
-          "Error3": "New password cannot be the same as old password"
+          "Error2": "Password should not contain spaces"
         },
         "Field2": {
           "Title": "Confirm New Password",
@@ -706,7 +695,6 @@
       }
     },
     "Sidebar": {
-      "Logo": "RyoGo Logo",
       "Heading": "Setting up your account",
       "NumberSteps": "{number, plural, =1 {[1 STEP]} other {[# STEPS]}}",
       "Step1": {
@@ -857,8 +845,6 @@
         "Agents": "AGENTS",
         "Drivers": "DRIVERS",
         "LastSeen": "Last seen {time}",
-        "Away": "Away",
-        "Online": "Online",
         "Offline": "Offline"
       },
       "Revenue": {
@@ -930,14 +916,10 @@
         "7Days": "Last 7 Days"
       },
       "Schedule": {
-        "Title": "BOOKING SCHEDULE",
-        "Photo": "Customer photo"
+        "Title": "BOOKING SCHEDULE"
       },
       "History": {
-        "Title": "BOOKING HISTORY",
-        "Photo": "Customer photo",
-        "14Days": "Last 14 Days",
-        "7Days": "Last 7 Days"
+        "Title": "BOOKING HISTORY"
       },
       "Leads": {
         "Title": "LEADS",
@@ -1057,11 +1039,8 @@
           },
           "Field8": {
             "Title": "Trip type",
-            "OneWay": "One Way",
             "OneWayDesc": "Drop from source to destination",
-            "RoundTrip": "Round Trip",
             "RoundTripDesc": "Travel to a destination and return back",
-            "MultiDay": "Multi Day",
             "MultiDayDesc": "Touring a destination for multiple days"
           },
           "Field9": {
@@ -1085,15 +1064,6 @@
           "BuyCTA": "Buy Premium",
           "TryCTA": "Try Premium",
           "RenewCTA": "Renew Subscription",
-          "Vehicle": {
-            "Score": "RyoGo Score",
-            "Seats": " {count, plural, =1 {seat} other {seats}}",
-            "AC": "AC",
-            "Booked": "Booked",
-            "RepairScheduled": "In Repair",
-            "Available": "Available",
-            "PerKm": "/Km"
-          },
           "Loading": "Loading..",
           "PrimaryCTA": "Continue",
           "WithoutCTA": "Continue without vehicle",
@@ -1108,13 +1078,6 @@
           "BuyCTA": "Buy Premium",
           "TryCTA": "Try Premium",
           "RenewCTA": "Renew Subscription",
-          "Driver": {
-            "Score": "RyoGo Score",
-            "Booked": "Booked",
-            "Leave": "On Leave",
-            "Available": "Available",
-            "PerDay": "/day"
-          },
           "Loading": "Loading..",
           "PrimaryCTA": "Continue",
           "WithoutCTA": "Continue without driver",
@@ -1324,11 +1287,9 @@
       "NoTransactions": "No transactions found for this booking.",
       "AddTransaction": "Add Transaction",
       "Modify": "Modify",
-      "ModifyTitle": "Modify Transaction",
       "Proof": " View Attachment",
       "Approve": "Approve",
       "Approved": "Approved",
-      "ApproveTitle": "Approve Transaction",
       "ApproveSuccess": "Transaction approved successfully!",
       "ApproveError": "Could not approve.. try again later",
       "RejectTitle": "Remove approval",
@@ -1339,7 +1300,6 @@
       "NoExpenses": "No expenses found for this booking.",
       "AddExpense": "Add Expense",
       "Modify": "Modify",
-      "ModifyTitle": "Modify Expense",
       "Proof": " View Attachment",
       "Approve": "Approve",
       "Approved": "Approved",
@@ -1363,6 +1323,7 @@
     },
     "NewTransaction": {
       "Title": "New Transaction",
+      "Subtitle": "Add a money transaction for this booking",
       "Field1": {
         "Title": "Transaction type",
         "Description": "Debit: Money paid out. Credit: Money received.",
@@ -1451,6 +1412,7 @@
     },
     "NewExpense": {
       "Title": "New Expense",
+      "Subtitle": "Add a cost incurred in this booking",
       "Field1": {
         "Title": "Expense type",
         "Description": "Select type of item purchased",
@@ -1547,7 +1509,6 @@
       "RenewCTA": "Renew Subscription",
       "Title": "Select a vehicle (out of {length}) to assign for this booking",
       "Tile": {
-        "Title": "Choose vehicle",
         "Score": "RyoGo Score",
         "CurrentlyAssigned": "Assigned",
         "Seats": " {count, plural, =1 {seat} other {seats}}",
@@ -1628,15 +1589,13 @@
           "Title": "Vehicle brand",
           "Placeholder": "Honda",
           "Description": "Provide vehicle manufacturer brand",
-          "Error1": "Brand name must be atleast 3 characters",
-          "Error2": "Brand name must be less than 15 characters"
+          "Error1": "Brand name must be atleast 3 characters"
         },
         "Field4": {
           "Title": "Vehicle color",
           "Placeholder": "Black",
           "Description": "Provide vehicle color",
-          "Error1": "Vehicle color must be atleast 3 characters",
-          "Error2": "Vehicle color must be less than 15 characters"
+          "Error1": "Vehicle color must be atleast 3 characters"
         },
         "Field5": {
           "Title": "Vehicle model",
@@ -1832,8 +1791,7 @@
       "EditDetails": {
         "Title": "Edit Details",
         "Subtitle": "Change vehicle details like basic details, capacity, odometer, default rate per km"
-      },
-      "Inactivate": "Inactivate Driver"
+      }
     },
     "ModifyVehicle": {
       "Field1": {
@@ -1844,15 +1802,13 @@
         "Title": "Vehicle brand",
         "Placeholder": "Honda",
         "Description": "Provide vehicle manufacturer brand",
-        "Error1": "Brand name must be atleast 3 characters",
-        "Error2": "Brand name must be less than 15 characters"
+        "Error1": "Brand name must be atleast 3 characters"
       },
       "Field3": {
         "Title": "Vehicle color",
         "Placeholder": "Black",
         "Description": "Provide vehicle color",
-        "Error1": "Vehicle color must be atleast 3 characters",
-        "Error2": "Vehicle color must be less than 15 characters"
+        "Error1": "Vehicle color must be atleast 3 characters"
       },
       "Field4": {
         "Title": "Vehicle model",
@@ -1885,14 +1841,12 @@
         "Title": "Registration expiry date",
         "Placeholder": "Select date",
         "Description": "Provide Registration certificate expiry date",
-        "Error1": "Providing RC expiry date is mandatory",
         "Error2": "RC should not be expired"
       },
       "Field8": {
         "Title": "RC Photo",
         "Placeholder": "UPLOAD RC",
         "Description": "Upload photo of vehicle registration certificate",
-        "Error1": "RC photo is required",
         "Error2": "File size should be less than 1MB",
         "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
       },
@@ -1900,14 +1854,12 @@
         "Title": "Insurance expiry date",
         "Placeholder": "Select date",
         "Description": "Provide vehicle insurance policy expiry date",
-        "Error1": "Providing insurance expiry date is mandatory",
         "Error2": "Insurance should not be expired"
       },
       "Field10": {
         "Title": "Insurance policy photo",
         "Placeholder": "UPLOAD",
         "Description": "Upload insurance policy photo",
-        "Error1": "Insurance policy photo is required",
         "Error2": "File size should be less than 1MB",
         "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
       },
@@ -1915,14 +1867,12 @@
         "Title": "PUC expiry date",
         "Placeholder": "Select date",
         "Description": "Provide PUC certificate expiry date",
-        "Error1": "Providing PUC certifacte date is mandatory",
         "Error2": "PUC should not be expired"
       },
       "Field12": {
         "Title": "PUC certificate photo",
         "Placeholder": "UPLOAD",
         "Description": "Upload Pollution Under Control Certificate photo",
-        "Error1": "PUC certificate photo is required",
         "Error2": "File size should be less than 1MB",
         "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
       },
@@ -2179,27 +2129,25 @@
       "Leaves": "Leaves"
     },
     "DriverDetails": {
-      "Photo": "Driver photo",
       "CallDriver": "Call Driver",
-      "ChatDriver": "Chat with Driver",
-      "ChangePhoto": {
-        "Button": "Change Photo",
-        "Header": "Upload driver photo",
-        "Title": "Choose a photo to upload:",
-        "Placeholder": "Browse a new photo",
-        "Error1": "Driver photo is required and size should be less than 1MB",
-        "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
-        "Save": "Save changes",
-        "Close": "Cancel",
-        "Success": "Driver photo updated successfully!",
-        "Error": "Cannot upload photo.. please try again after some time."
+      "ChatDriver": {
+        "Title": "Chat with Driver",
+        "Subtitle": "Start a Whatsapp chat with driver"
       },
-      "NumberRatings": "[{number}]",
+      "DriverId": "Driver ID",
+      "Email": "Email",
+      "Phone": "Phone",
+      "Joined": "Joined",
+      "Address": "Address",
+      "CanDrive": "Can Drive",
+      "Allowance": "Default Allowance",
+      "PerDay": "₹{allowance} per day",
+      "Rating": "Customer Rating",
+      "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
       "LicenseInfo": "License info",
       "LicensePhoto": "License Photo",
       "ValidTill": "Valid till: ",
       "AgencyInfo": "Agency related info",
-      "PerDay": "₹{allowance}/day",
       "EditDetails": {
         "Title": "Edit Details",
         "Subtitle": "Change driver details like address, license, default allowance"
@@ -2244,7 +2192,6 @@
         "Title": "Driver License photo",
         "Placeholder": "UPLOAD",
         "Description": "Upload driver license photo",
-        "Error1": "License photo is required",
         "Error2": "File size should be less than 1MB",
         "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
       },
@@ -2354,9 +2301,8 @@
         "Title": "Upload customer photo (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the customer's photo",
-        "Error1": "Customer photo is required",
-        "Error2": "File size should be less than 1MB",
-        "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+        "Error1": "File size should be less than 1MB",
+        "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
       },
       "Field5": {
         "Title": "Enter customer address",
@@ -2532,7 +2478,6 @@
         "Success": "Email updated successfully",
         "APIError": "Password does not match.. please try again"
       },
-      "Logout": "Logout",
       "LastLogin": "Logged in since {loginTime}"
     },
     "AccountSettings": {
@@ -2802,8 +2747,6 @@
       "Error": "Cannot add ticket.. Try again later!"
     },
     "ViewSupportTicket": {
-      "ID": "TICKET ID",
-      "Status": "STATUS",
       "EntityType": "ENTITY TYPE",
       "EntityId": "ENTITY ID",
       "Created": "CREATED",
@@ -3947,10 +3890,6 @@
           "AllUsers": "You can view all the users in your agency by going to the users page.",
           "CTA": "View all users"
         },
-        "UserDetails": {
-          "Title": "User details",
-          "Description": "A user has various details associated with it like user ID, name, phone, email, photo, etc. You can view all the details by going to the user details page."
-        },
         "StatusList": {
           "Title": "User status",
           "Description": "The user status tells you the current status of the user. You can see the status of the user by going to the user details page.",
@@ -4277,7 +4216,6 @@
     "AccountSubscription": {
       "CurrentPlan": {
         "Header": "CURRENT PLAN",
-        "SubscriptionStatus": "SUBSCRIPTION STATUS",
         "FreeForever": "FREE FOREVER",
         "Trial": "TRIAL",
         "ViewOrders": "View All Orders"
@@ -4555,7 +4493,6 @@
         "Error2": "Enter less than 20 characters for search"
       },
       "ResultsFound": "{count, plural, =0 {No matching {type} found} =1 {1 {type} found} other {# {type}s found}}",
-      "Photo": "View photo",
       "Clear": "Clear",
       "Search": "Search"
     },
@@ -4849,8 +4786,7 @@
         "Success": "Invoice sent to the customer!",
         "Error": "Cannot send invoice.. Try again later!",
         "Loading": "Loading..",
-        "YesCTA": "Yes, Send",
-        "InvoiceSent": "Invoice Sent!"
+        "YesCTA": "Yes, Send"
       },
       "SendQuote": {
         "Label": "Share booking quotation with Customer",
@@ -5029,7 +4965,6 @@
         "YesCTA": "Yes, Reset Password"
       },
       "TryPremium": {
-        "Label": "Start Free Trial",
         "Title": "Are you sure you want to try premium now?",
         "Desc": "This is a {trialDays}-day free Premium trial period after which you will be downgraded to Basic unless you decide to buy Premium again.",
         "NoCTA": "No",
@@ -5161,9 +5096,6 @@
     },
     "MyBooking": {
       "BookingInfo": "BASIC DETAILS",
-      "Created": "Booking Creation Info",
-      "CustomerRating": "Customer Rating",
-      "DriverRating": "Driver Rating",
       "AssignedUserInfo": "ASSIGNED AGENCY USER",
       "CallAssignedUser": "Call User",
       "ChatAssignedUser": {
@@ -5181,10 +5113,6 @@
       "PickupAddress": "Pickup Address",
       "DropAddress": "Drop Address",
       "Remarks": "Remarks",
-      "Km": " Km",
-      "Yes": "Yes",
-      "No": "No",
-      "Passengers": "{pax} pax",
       "Back": "Back",
       "Navigate": "Navigate",
       "StartTrip": {
@@ -5285,6 +5213,7 @@
         "Error": "Cannot mark {type} now.. please try again later"
       },
       "TripLog": {
+        "NoTripLogs": "No trip logs found for this trip.",
         "Km": " Km",
         "Proof": " View Attachment"
       },
@@ -5311,9 +5240,6 @@
       "RCPhoto": "RC Photo",
       "Expired": "Expired: ",
       "ValidTill": "Valid till: ",
-      "AgencyInfo": "Agency related info",
-      "ACCharge": "AC ₹{ac}/day",
-      "RatePerKm": "₹{rate}/Km",
       "NoVehicleAssigned": "No vehicle assigned to you yet."
     },
     "MyProfile": {
@@ -5327,6 +5253,14 @@
       "PerDay": "₹{allowance} per day",
       "Rating": "Customer Rating",
       "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
+      "ChangeEmail": {
+        "Title": "Change Email",
+        "Subtitle": "Set your email address to receive important updates"
+      },
+      "ChangePassword": {
+        "Title": "Change Password",
+        "Subtitle": "Manage your password for logging into your account"
+      },
       "LastLogin": "Logged in since {loginTime}"
     },
     "MyProfileAgency": {
@@ -5477,20 +5411,7 @@
           "Title": "Agency details",
           "Description": "You can view all agency related details like agency name, address, logo, payment QR code, agency ID and more by going to your agency details page.",
           "CTA": "View agency details"
-        },
-        "StatusList": {
-          "Title": "Agency status",
-          "Description": "The agency status tells you the current status of your agency. You can see the status of your agency by going to your agency details page.",
-          "Caption": "A list of status for your agency.",
-          "New": "Your agency is newly created. You must activate your agency by adding drivers and vehicles before you can start using the platform.",
-          "Active": "Your agency is active and all your users can use the platform.",
-          "Inactive": "Your agency is inactive. You can activate it by contacting support team.",
-          "Suspended": "Your agency has been banned by us. None of your users can login to the platform."
         }
-      },
-      "Subscription": {
-        "Title": "SUBSCRIPTION",
-        "Description": "You can view all subscription related details like plan, status, expiry date, and more by going to your subscription details page."
       },
       "FAQs": {
         "Title": "Frequently Asked Questions",
@@ -6815,7 +6736,7 @@
           "Title": "Track customer transactions",
           "Description": "Add transactions like advance payments made by customers in a booking. RyoGo will automatically adjust them in the final invoice."
         },
-        "Disclaimer": "Please note that RyoGo is only an agency workflow management app. We are not a money-transfer booking or payment platform. Any transactions happening between the agency and its customers are their mutual responsibility and are not covered by RyoGo in any capacity."
+        "Disclaimer": "Please note that RyoGo is an agency workflow management app. We are not a money-transfer booking or payment platform. Any transactions happening between the agency and its customers are their mutual responsibility and are not covered by RyoGo in any capacity."
       },
       "Missions": {
         "Title": "Platform built for preparedness",
@@ -7018,11 +6939,6 @@
         "Title": "Blogs & News",
         "Subtitle": "Get latest product updates, news, industry insights and expert guides from RyoGo.",
         "Count": "{count} ARTICLES",
-        "BlogTypes": {
-          "Type1": "News and Updates",
-          "Type2": "Industry Insights",
-          "Type3": "Product Guide"
-        },
         "Blog1": {
           "Title": "How to grow your travel agency business with RyoGo",
           "Type": "News and Updates"

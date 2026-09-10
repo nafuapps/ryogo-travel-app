@@ -13,7 +13,7 @@ export default async function MyBookingTripLogsPageComponent({
   bookingId: string
   bookingTripLogs: FindBookingTripLogsByIdType
 }) {
-  const t = await getTranslations("Rider.MyBookingTripLogs")
+  const t = await getTranslations("Rider.MyBooking.TripLog")
 
   return (
     <PageWrapper id="MyBookingTripLogsPage">

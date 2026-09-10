@@ -19,8 +19,9 @@ export default function SupportSideAccordionWrapper({
   children: React.ReactNode
 }) {
   const isLargeScreen = window.innerWidth >= 1024
-  const labelString = useTranslations("SupportAccordion")(label)
+  const t = useTranslations("SupportAccordion")
   const accordionItemRef = useRef<HTMLDivElement>(null)
+  const labelString = t(label)
 
   return (
     <SectionWrapper id={label}>

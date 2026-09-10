@@ -52,7 +52,7 @@ export default function BookingScheduleChartComponent({
                 <DashboardScheduleItem key={b.bookingId}>
                   <DashboardScheduleItemID
                     icon={<RyogoEnclosedIcon icon={User} size="sm" />}
-                    imageAlt={t("Photo")}
+                    imageAlt={b.customerName}
                     title={b.customerName}
                     photoUrl={b.customerPhotoUrl}
                   />

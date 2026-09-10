@@ -28,6 +28,7 @@ import Link from "next/link"
 import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
+  MAX_FIELD_DESC_LENGTH,
   MAX_FILE_UPLOAD_SIZE,
   MAX_ODOMETER_LIMIT,
   MIN_ODOMETER_LIMIT,
@@ -76,7 +77,10 @@ export default function EndTripSheet({
         return file[0] && SupportedImageFormats.includes(file[0].type)
       }, t("Field2.Error2"))
       .nonoptional(t("Field2.Error3")),
-    remarks: z.string().optional(),
+    remarks: z
+      .string()
+      .max(MAX_FIELD_DESC_LENGTH, t("Field3.Error1"))
+      .optional(),
   })
 
   type SchemaType = z.infer<typeof schema>

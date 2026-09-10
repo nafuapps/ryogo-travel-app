@@ -16,7 +16,7 @@ import {
   QrCode,
   SquareArrowOutUpRight,
 } from "lucide-react"
-import { RyogoH1, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoH1, RyogoP } from "@/components/typography"
 
 export default function HowItWorksCustomersSection() {
   const t = useTranslations("Landing.HowItWorks.Customers")
@@ -68,6 +68,9 @@ export default function HowItWorksCustomersSection() {
           {t("Subtitle")}
         </RyogoP>
         <SlideshowWrapper items={items} />
+        <RyogoCaption color="light" className="text-center max-w-4xl">
+          {t("Disclaimer")}
+        </RyogoCaption>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

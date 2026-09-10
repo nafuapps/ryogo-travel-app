@@ -34,6 +34,7 @@ import {
   MAX_FILE_UPLOAD_SIZE,
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ModifyExpensePageComponent({
   expenseDetails,
@@ -113,6 +114,7 @@ export default function ModifyExpensePageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="modifyExpenseForm"
       >
+        <RyogoH3>{t("Title")}</RyogoH3>
         <FormContentWrapper>
           <RyogoSelect
             name="type"

@@ -77,7 +77,7 @@ export default function ModifyVehiclePageComponent({
       .multipleOf(1, t("Field6.Error4"))
       .nonnegative(t("Field6.Error5")),
     rcExpiresOn: z
-      .date(t("Field7.Error1"))
+      .date()
       .min(vehicle.rcExpiresOn ?? new Date(), t("Field7.Error2"))
       .optional(),
     rcPhotos: FileRegex.refine((file) => {
@@ -90,7 +90,7 @@ export default function ModifyVehiclePageComponent({
       }, t("Field8.Error3"))
       .optional(),
     insuranceExpiresOn: z
-      .date(t("Field9.Error1"))
+      .date()
       .min(vehicle.insuranceExpiresOn ?? new Date(), t("Field9.Error2"))
       .optional(),
     insurancePhotos: FileRegex.refine((file) => {
@@ -103,7 +103,7 @@ export default function ModifyVehiclePageComponent({
       }, t("Field10.Error3"))
       .optional(),
     pucExpiresOn: z
-      .date(t("Field11.Error1"))
+      .date()
       .min(vehicle.pucExpiresOn ?? new Date(), t("Field11.Error2"))
       .optional(),
     pucPhotos: FileRegex.refine((file) => {
@@ -123,7 +123,7 @@ export default function ModifyVehiclePageComponent({
       .multipleOf(1, t("Field13.Error5")),
     hasAC: z.boolean(),
     defaultAcChargePerDay: z.coerce
-      .number<number>()
+      .number<number>(t("Field15.Error1"))
       .min(MIN_PER_DAY_CHARGE, t("Field15.Error2"))
       .max(MAX_PER_DAY_CHARGE, t("Field15.Error3"))
       .nonnegative(t("Field15.Error4"))
@@ -201,16 +201,18 @@ export default function ModifyVehiclePageComponent({
             title={t("Field1.Title")}
             placeholder={t("Field1.Title")}
           />
-          <RyogoCombobox
+          <RyogoSelect
             name={"brand"}
             register={form.register("brand")}
             title={t("Field2.Title")}
+            description={t("Field2.Description")}
             array={getEnumValueDisplayPairs(VehicleBrandEnum)}
             placeholder={t("Field2.Placeholder")}
           />
-          <RyogoCombobox
+          <RyogoSelect
             name={"color"}
             register={form.register("color")}
+            description={t("Field3.Description")}
             array={getEnumValueDisplayPairs(VehicleColorEnum)}
             title={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}

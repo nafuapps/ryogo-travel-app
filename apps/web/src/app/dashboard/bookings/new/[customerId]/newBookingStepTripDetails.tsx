@@ -293,12 +293,12 @@ export default function NewBookingStepTripDetails({
           <RyogoDatePicker
             name="tripStartDate"
             label={t("Field5.Title")}
-            placeholder=""
+            placeholder={t("Field5.Placeholder")}
           />
           <RyogoDatePicker
             name="tripEndDate"
             label={t("Field6.Title")}
-            placeholder=""
+            placeholder={t("Field6.Placeholder")}
             disabled={selectedTripType === BookingTypeEnum.OneWay}
           />
         </FormContentWrapper>

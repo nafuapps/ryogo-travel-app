@@ -10,7 +10,7 @@ import {
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, notInArray, inArray, or, lte, not } from "drizzle-orm"
+import { eq, and, notInArray, inArray, or, lte, not, gte } from "drizzle-orm"
 
 export const vehicleRepository = {
   //Get vehicle by id
@@ -158,7 +158,7 @@ export const vehicleRepository = {
   },
 
   //Get vehicle schedule data
-  async readVehiclesScheduleData(agencyId: string, queryStartDate: Date) {
+  async readVehiclesScheduleData(agencyId: string, queryEndDate: Date) {
     return await db.query.vehicles.findMany({
       columns: {
         id: true,
@@ -215,7 +215,7 @@ export const vehicleRepository = {
             or(
               and(
                 eq(assignedBookings.status, BookingStatusEnum.CONFIRMED),
-                lte(assignedBookings.startDate, queryStartDate),
+                lte(assignedBookings.startDate, queryEndDate),
               ),
               eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
             ),
@@ -242,7 +242,16 @@ export const vehicleRepository = {
           where: (vehicleRepairs) =>
             and(
               eq(vehicleRepairs.isCompleted, false),
-              lte(vehicleRepairs.startDate, queryStartDate),
+              or(
+                and(
+                  lte(vehicleRepairs.startDate, queryEndDate),
+                  gte(vehicleRepairs.startDate, new Date()),
+                ),
+                and(
+                  lte(vehicleRepairs.endDate, queryEndDate),
+                  gte(vehicleRepairs.endDate, new Date()),
+                ),
+              ),
             ),
         },
       },

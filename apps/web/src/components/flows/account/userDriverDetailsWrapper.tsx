@@ -1,21 +1,21 @@
 import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
-import {
-  AccountDetailsBorderWrapper,
-  AccountDetailsContentWrapper,
-  AccountIDWrapper,
-  AccountLineItem,
-  AccountLineWrapper,
-} from "./accountCommon"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionRowWrapper,
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsIDWrapper,
+  DetailsLineItem,
+  DetailsLineWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getAverageRating } from "@/lib/utils"
 import { Star } from "lucide-react"
 
-export default async function DriverDetailsWrapper({
+export default async function UserDriverDetailsWrapper({
   id,
   address,
   canDriveVehicles,
@@ -32,19 +32,19 @@ export default async function DriverDetailsWrapper({
 }) {
   const t = await getTranslations("Rider.MyProfile")
   return (
-    <AccountDetailsBorderWrapper>
-      <AccountIDWrapper id={id} label={t("DriverId")} />
-      <AccountDetailsContentWrapper>
-        {address && <AccountLineItem label={t("Address")} value={address} />}
-        <AccountLineItem
+    <DetailsBorderWrapper>
+      <DetailsIDWrapper id={id} label={t("DriverId")} />
+      <DetailsContentWrapper>
+        {address && <DetailsLineItem label={t("Address")} value={address} />}
+        <DetailsLineItem
           label={t("Allowance")}
           value={t("PerDay", { allowance: allowance })}
         />
-        <AccountLineWrapper label={t("CanDrive")}>
+        <DetailsLineWrapper label={t("CanDrive")}>
           <GetCanDriveIcons canDrive={canDriveVehicles} />
-        </AccountLineWrapper>
+        </DetailsLineWrapper>
         {ratings && (
-          <AccountLineWrapper label={t("Rating")}>
+          <DetailsLineWrapper label={t("Rating")}>
             <SectionRowWrapper justifyEnd center>
               <div className="border rounded-md flex items-center gap-1 lg:gap-1.5 py-0.75 lg:py-1 px-1.5 lg:px-2">
                 <RyogoCaption color="slate">
@@ -56,10 +56,10 @@ export default async function DriverDetailsWrapper({
                 {t("RatingCount", { count: ratings.length })}
               </RyogoCaption>
             </SectionRowWrapper>
-          </AccountLineWrapper>
+          </DetailsLineWrapper>
         )}
         <DriverStatusPill status={status} />
-      </AccountDetailsContentWrapper>
-    </AccountDetailsBorderWrapper>
+      </DetailsContentWrapper>
+    </DetailsBorderWrapper>
   )
 }

@@ -8,7 +8,7 @@ import {
   TripLogTypesEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, notInArray, or, lte, not } from "drizzle-orm"
+import { eq, and, notInArray, or, lte, not, gte } from "drizzle-orm"
 
 export const driverRepository = {
   //Get driver by id
@@ -254,7 +254,16 @@ export const driverRepository = {
           where: (driverLeaves) =>
             and(
               eq(driverLeaves.isCompleted, false),
-              lte(driverLeaves.startDate, queryEndDate),
+              or(
+                and(
+                  lte(driverLeaves.startDate, queryEndDate),
+                  gte(driverLeaves.startDate, new Date()),
+                ),
+                and(
+                  lte(driverLeaves.endDate, queryEndDate),
+                  gte(driverLeaves.endDate, new Date()),
+                ),
+              ),
             ),
         },
       },

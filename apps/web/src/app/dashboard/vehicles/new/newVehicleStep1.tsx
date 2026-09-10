@@ -5,11 +5,7 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Dispatch, SetStateAction } from "react"
-import {
-  RyogoCombobox,
-  RyogoInput,
-  RyogoSelect,
-} from "@/components/form/ryogoFormFields"
+import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import {
@@ -131,16 +127,18 @@ export function NewVehicleStep1({
             title={t("Field2.Title")}
             placeholder={t("Field2.Title")}
           />
-          <RyogoCombobox
+          <RyogoSelect
             name={"brand"}
             register={formData.register("brand")}
             title={t("Field3.Title")}
+            description={t("Field3.Description")}
             array={getEnumValueDisplayPairs(VehicleBrandEnum)}
             placeholder={t("Field3.Placeholder")}
           />
-          <RyogoCombobox
+          <RyogoSelect
             name={"color"}
             register={formData.register("color")}
+            description={t("Field4.Description")}
             array={getEnumValueDisplayPairs(VehicleColorEnum)}
             title={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}

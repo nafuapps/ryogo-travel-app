@@ -55,6 +55,7 @@ export default function CloseSupportTicketSheet({
     )
     if (closedTicket) {
       setOpen(false)
+      toast.success(t("Success"))
     } else {
       toast.error(t("Error"))
     }

@@ -106,6 +106,7 @@ export function AddVehicleStep1({
             name={"brand"}
             register={formData.register("brand")}
             array={getEnumValueDisplayPairs(VehicleBrandEnum)}
+            description={t("Field3.Description")}
             title={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
           />
@@ -113,6 +114,7 @@ export function AddVehicleStep1({
             name={"color"}
             register={formData.register("color")}
             array={getEnumValueDisplayPairs(VehicleColorEnum)}
+            description={t("Field4.Description")}
             title={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
           />

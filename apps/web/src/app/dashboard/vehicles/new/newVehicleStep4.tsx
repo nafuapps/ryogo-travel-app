@@ -49,7 +49,7 @@ export function NewVehicleStep4({
       .optional(),
     hasAC: z.boolean(),
     defaultAcChargePerDay: z.coerce
-      .number<number>()
+      .number<number>(t("Field3.Error1"))
       .min(MIN_PER_DAY_CHARGE, t("Field3.Error2"))
       .max(MAX_PER_DAY_CHARGE, t("Field3.Error3"))
       .nonnegative(t("Field3.Error4"))

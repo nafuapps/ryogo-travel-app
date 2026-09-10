@@ -3,11 +3,11 @@ import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
-  AccountDetailsBorderWrapper,
-  AccountDetailsContentWrapper,
-  AccountIDWrapper,
-  AccountLineItem,
-} from "./accountCommon"
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsIDWrapper,
+  DetailsLineItem,
+} from "@/components/page/pageWrappers"
 
 export default async function AgencyDetailsWrapper({
   id,
@@ -30,21 +30,21 @@ export default async function AgencyDetailsWrapper({
 }) {
   const t = await getTranslations("Dashboard.AccountAgency")
   return (
-    <AccountDetailsBorderWrapper>
-      <AccountIDWrapper id={id} label={t("AgencyId")} />
-      <AccountDetailsContentWrapper>
-        <AccountLineItem label={t("Phone")} value={phone} />
-        <AccountLineItem label={t("Email")} value={email} />
-        <AccountLineItem label={t("Address")} value={address} />
+    <DetailsBorderWrapper>
+      <DetailsIDWrapper id={id} label={t("AgencyId")} />
+      <DetailsContentWrapper>
+        <DetailsLineItem label={t("Phone")} value={phone} />
+        <DetailsLineItem label={t("Email")} value={email} />
+        <DetailsLineItem label={t("Address")} value={address} />
         {!isRider && (
-          <AccountLineItem label={t("Commission")} value={commission + "%"} />
+          <DetailsLineItem label={t("Commission")} value={commission + "%"} />
         )}
-        <AccountLineItem
+        <DetailsLineItem
           label={t("Joined")}
           value={moment(createdAt).format("DD MMM YYYY")}
         />
         <AgencyStatusPill status={status} />
-      </AccountDetailsContentWrapper>
-    </AccountDetailsBorderWrapper>
+      </DetailsContentWrapper>
+    </DetailsBorderWrapper>
   )
 }

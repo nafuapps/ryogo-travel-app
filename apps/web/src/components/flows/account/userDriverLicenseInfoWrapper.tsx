@@ -6,12 +6,12 @@ import { IdCard } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
-  AccountDetailsBorderWrapper,
-  AccountInfoContentWrapper,
-  AccountInfoWrapper,
-} from "./accountCommon"
+  DetailsBorderWrapper,
+  InfoContentWrapper,
+  InfoWrapper,
+} from "@/components/page/pageWrappers"
 
-export default async function LicenseInfoWrapper({
+export default async function UserDriverLicenseInfoWrapper({
   licenseNumber,
   photoUrl,
   expiryDate,
@@ -24,7 +24,7 @@ export default async function LicenseInfoWrapper({
   const t = await getTranslations("Rider.MyProfile")
 
   return (
-    <AccountInfoWrapper>
+    <InfoWrapper>
       {photoUrl ? (
         <RyogoDialogImage
           src={getFileUrl(photoUrl)}
@@ -34,11 +34,11 @@ export default async function LicenseInfoWrapper({
       ) : (
         <RyogoEnclosedIcon icon={IdCard} size="xl" />
       )}
-      <AccountInfoContentWrapper>
+      <InfoContentWrapper>
         <RyogoCaption color="light">{t("License")}</RyogoCaption>
         {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
         {expiryDate && (
-          <AccountDetailsBorderWrapper>
+          <DetailsBorderWrapper>
             <div className="bg-slate-200 dark:bg-slate-800 py-1 lg:py-1.5 px-3 lg:px-4">
               <RyogoCaption color="light" className="text-center">
                 {isExpired ? t("ExpiredOn") : t("ExpiresOn")}
@@ -52,9 +52,9 @@ export default async function LicenseInfoWrapper({
                 {moment(expiryDate).format("DD MMM YYYY")}
               </RyogoCaption>
             </div>
-          </AccountDetailsBorderWrapper>
+          </DetailsBorderWrapper>
         )}
-      </AccountInfoContentWrapper>
-    </AccountInfoWrapper>
+      </InfoContentWrapper>
+    </InfoWrapper>
   )
 }

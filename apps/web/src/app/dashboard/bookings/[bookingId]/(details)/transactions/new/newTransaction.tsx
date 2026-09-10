@@ -37,6 +37,7 @@ import {
   MAX_FILE_UPLOAD_SIZE,
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -112,6 +113,8 @@ export default function NewTransactionPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newTransactionForm"
       >
+        <RyogoH3>{t("Title")}</RyogoH3>
+        <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
         <FormContentWrapper>
           <RyogoRadio
             name="type"

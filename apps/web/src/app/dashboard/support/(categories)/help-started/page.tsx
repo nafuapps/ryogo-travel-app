@@ -380,6 +380,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Home.Title")}>
         <RyogoCaption color="slate">{t("Home.Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Home.Actions")}</RyogoCaption>
         {/* //TODO: Add Home snapshot */}
         <RyogoImage
           alt="Home"

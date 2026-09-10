@@ -78,7 +78,11 @@ export default function AddSupportTicketCommentSheet({
         <Form {...form}>
           <form id="closeSupportTicket" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="p-4 lg:p-5">
-              <RyogoTextarea name="comment" label={t("Title")} placeholder="" />
+              <RyogoTextarea
+                name="comment"
+                label={t("Title")}
+                placeholder={t("Placeholder")}
+              />
             </div>
           </form>
         </Form>

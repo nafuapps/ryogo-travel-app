@@ -49,9 +49,10 @@ export function DashboardScheduleHeader({
   setSelectedTab: Dispatch<SetStateAction<SelectableDays>>
   isHistory?: boolean
 }) {
-  const t = useTranslations(
-    isHistory ? "Dashboard.History.Header" : "Dashboard.Schedule.Header",
-  )
+  const t = isHistory
+    ? useTranslations("Dashboard.History.Header")
+    : useTranslations("Dashboard.Schedule.Header")
+
   return (
     <SectionRowWrapper center>
       <SectionHeaderWrapper>
@@ -222,20 +223,15 @@ function getHistoryStartEndIndex(
   selectedDays: number,
 ) {
   const chartStartDate = subDays(new Date(), selectedDays)
-  // new Date(
-  //   new Date().getTime() - selectedDays * 24 * 60 * 60 * 1000,
-  // ).getTime()
   return {
     startIndex: Math.max(
       differenceInDays(startDate, new Date(chartStartDate)),
       1,
     ),
-    // Math.ceil((startDate.getTime() - chartStartTime) / 86400000) + 1,
     endIndex: Math.min(
       differenceInDays(endDate, new Date(chartStartDate)),
       selectedDays + 1,
     ),
-    // Math.ceil((endDate.getTime() - chartStartTime) / 86400000) + 2,
   }
 }
 
@@ -261,17 +257,16 @@ export function DashboardScheduleItemBar({
     : getScheduleStartEndIndex(startDate, endDate)
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <div
-          className={`flex flex-row p-1 ${className} ${
-            endIndex > selectedDays + 1
-              ? "lg:rounded-bl-xl rounded-b-none lg:rounded-r-none"
-              : "rounded-b-xl lg:rounded-r-xl"
-          } ${
-            startIndex < 1
-              ? "lg:rounded-tr-xl rounded-t-none lg:rounded-l-none"
-              : "rounded-t-xl lg:rounded-l-xl"
-          } justify-center items-center min-w-0
+      <PopoverTrigger
+        className={`flex flex-row p-1 ${className} ${
+          endIndex > selectedDays + 1
+            ? "lg:rounded-bl-xl rounded-b-none lg:rounded-r-none"
+            : "rounded-b-xl lg:rounded-r-xl"
+        } ${
+          startIndex < 1
+            ? "lg:rounded-tr-xl rounded-t-none lg:rounded-l-none"
+            : "rounded-t-xl lg:rounded-l-xl"
+        } justify-center items-center min-w-0
                     col-start-1
                     col-end-2
                     row-start-(--startIndex)
@@ -281,22 +276,21 @@ export function DashboardScheduleItemBar({
                     lg:col-start-(--startIndex)
                     lg:col-end-(--endIndex)
                     `}
-          style={
-            {
-              "--startIndex": startIndex < 1 ? 1 : startIndex,
-              "--endIndex":
-                endIndex < 2
-                  ? isHistory
-                    ? selectedDays + 1
-                    : 2
-                  : endIndex > selectedDays + 1
-                    ? selectedDays + 1
-                    : endIndex,
-            } as React.CSSProperties
-          }
-        >
-          <RyogoCaption color="slate">{id}</RyogoCaption>
-        </div>
+        style={
+          {
+            "--startIndex": startIndex < 1 ? 1 : startIndex,
+            "--endIndex":
+              endIndex < 2
+                ? isHistory
+                  ? selectedDays + 1
+                  : 2
+                : endIndex > selectedDays + 1
+                  ? selectedDays + 1
+                  : endIndex,
+          } as React.CSSProperties
+        }
+      >
+        <RyogoCaption color="slate">{id}</RyogoCaption>
       </PopoverTrigger>
       <PopoverContent className="w-auto">{children}</PopoverContent>
     </Popover>

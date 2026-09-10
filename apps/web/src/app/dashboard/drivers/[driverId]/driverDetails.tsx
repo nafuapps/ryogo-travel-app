@@ -1,20 +1,14 @@
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
-import {
-  RyogoCaption,
-  RyogoH3,
-  RyogoP,
-  RyogoSmall,
-} from "@/components/typography"
+import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { SquarePen, User } from "lucide-react"
+import { SquarePen } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   SectionWrapper,
@@ -23,67 +17,49 @@ import {
   SectionRowWrapper,
   GridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
-import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
-import { Separator } from "@/components/ui/separator"
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import DriverInfoWrapper from "@/components/flows/drivers/details/driverInfoWrapper"
+import DriverDetailsWrapper from "@/components/flows/drivers/details/driverDetailsWrapper"
 
 export default async function DriverDetailsPageComponent({
   driver,
+  userId,
+  isOwner,
 }: {
   driver: NonNullable<FindDriverDetailsByIdType>
+  userId: string
+  isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.DriverDetails")
+
+  const canChangeDetails = driver.addedByUserId === userId || isOwner
 
   return (
     <PageWrapper id="DriverDetailsPage">
       <DriverDetailHeaderTabs selectedTab={"Driver"} id={driver.id} />
-      <SectionWrapper id="BasicInfo">
-        <SectionRowWrapper justifyStart>
-          <RyogoH3 color="brand">{driver.id}</RyogoH3>
-          <CopyClipboardButton label={driver.id} />
-        </SectionRowWrapper>
-        <Separator />
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            {driver.user.photoUrl ? (
-              <RyogoImage
-                src={getFileUrl(driver.user.photoUrl)}
-                alt={t("Photo")}
-                imageSize="lg"
-              />
-            ) : (
-              <RyogoEnclosedIcon icon={User} size="xl" />
-            )}
-            <ChangeUserPhotoSheet
-              userId={driver.userId}
-              agencyId={driver.agencyId}
-            />
-          </SectionColWrapper>
-          <SectionColWrapper end>
-            <RyogoH3>{driver.name}</RyogoH3>
-            <RyogoCaption color="slate">{driver.phone}</RyogoCaption>
-            <RyogoCaption color="slate">{driver.user.email}</RyogoCaption>
-            <RyogoCaption color="slate">
-              {moment(driver.createdAt).format("DD MMM YYYY")}
-            </RyogoCaption>
-            {driver.customerRatings && driver.customerRatings.length > 1 && (
-              <RyogoAverageRatingDisplay
-                label={t("NumberRatings", {
-                  number: driver.customerRatings.length,
-                })}
-                ratings={driver.customerRatings}
-              />
-            )}
-            <DriverStatusPill status={driver.status} />
-          </SectionColWrapper>
-        </SectionRowWrapper>
-      </SectionWrapper>
+      <GridWrapper id="DriverDetails">
+        <DriverInfoWrapper
+          userId={driver.userId}
+          photoUrl={driver.user.photoUrl}
+          agencyId={driver.agencyId}
+          name={driver.name}
+          canChangePhoto={canChangeDetails}
+        />
+        <DriverDetailsWrapper
+          id={driver.id}
+          status={driver.status}
+          email={driver.user.email}
+          phone={driver.phone}
+          createdAt={driver.createdAt}
+          address={driver.address}
+          allowance={driver.defaultAllowancePerDay}
+          canDriveVehicles={driver.canDriveVehicleTypes}
+          ratings={driver.customerRatings}
+        />
+      </GridWrapper>
       <SectionWrapper id="LicenseInfo">
         <RyogoSmall weight="font-bold">{t("LicenseInfo")}</RyogoSmall>
         <SectionRowWrapper>
@@ -120,33 +96,37 @@ export default async function DriverDetailsPageComponent({
           <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
         </SectionColWrapper>
       </SectionWrapper>
-      <SectionWrapper id="DriverCommunication">
+      <GridWrapper id="DriverCommunication">
         <RyogoPhoneButton label={t("CallDriver")} phone={driver.phone} />
-        <RyogoChatButton label={t("ChatDriver")} phone={driver.phone} />
-      </SectionWrapper>
-      <GridWrapper id="DriverActions">
-        <Link href={`/dashboard/drivers/${driver.id}/modify`}>
-          <RyogoDetailedIconButton
-            label={t("EditDetails.Title")}
-            icon={SquarePen}
-            subtitle={t("EditDetails.Subtitle")}
-          />
-        </Link>
-        {driver.status !== DriverStatusEnum.INACTIVE &&
-          driver.status !== DriverStatusEnum.ON_TRIP && (
+        <RyogoChatButton
+          label={t("ChatDriver.Title")}
+          phone={driver.phone}
+          subtitle={t("ChatDriver.Subtitle")}
+        />
+      </GridWrapper>
+      {canChangeDetails && (
+        <GridWrapper id="DriverActions">
+          <Link href={`/dashboard/drivers/${driver.id}/modify`}>
+            <RyogoDetailedIconButton
+              label={t("EditDetails.Title")}
+              icon={SquarePen}
+              subtitle={t("EditDetails.Subtitle")}
+            />
+          </Link>
+          {driver.status !== DriverStatusEnum.INACTIVE ? (
             <InactivateDriverAlertButton
               driverId={driver.id}
               agencyId={driver.agencyId}
             />
+          ) : (
+            <ActivateDriverAlertButton
+              driverId={driver.id}
+              userId={driver.userId}
+              agencyId={driver.agencyId}
+            />
           )}
-        {driver.status === DriverStatusEnum.INACTIVE && (
-          <ActivateDriverAlertButton
-            driverId={driver.id}
-            userId={driver.userId}
-            agencyId={driver.agencyId}
-          />
-        )}
-      </GridWrapper>
+        </GridWrapper>
+      )}
     </PageWrapper>
   )
 }

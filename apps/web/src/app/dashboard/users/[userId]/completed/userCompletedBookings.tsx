@@ -1,18 +1,18 @@
-import { FindDriverCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import { CompletedBookingCard } from "@/components/cards/booking/bookingCards"
+import { FindUserCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/user.services"
 
 export default async function UserCompletedPageComponent({
   bookings,
   id,
 }: {
-  bookings: FindDriverCompletedBookingsByIdType
+  bookings: FindUserCompletedBookingsByIdType
   id: string
 }) {
-  const t = await getTranslations("Dashboard.DriverCompletedBookings")
+  const t = await getTranslations("Dashboard.UserCompletedBookings")
 
   return (
     <PageWrapper id="DriverCompletedBookingsPage">

@@ -7,6 +7,8 @@ import DriverDetailsPageComponent from "./driverDetails"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Driver Details - ${pageTitle}`,
@@ -20,6 +22,11 @@ export default async function DriverDetailsPage({
 }) {
   const { driverId } = await params
 
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const driver = await driverServices.findDriverDetailsById(driverId)
   if (!driver) {
     redirect("/dashboard/drivers", RedirectType.replace)
@@ -27,7 +34,11 @@ export default async function DriverDetailsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers/[id]"} />
-      <DriverDetailsPageComponent driver={driver} />
+      <DriverDetailsPageComponent
+        driver={driver}
+        userId={currentUser.userId}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+      />
     </MainWrapper>
   )
 }

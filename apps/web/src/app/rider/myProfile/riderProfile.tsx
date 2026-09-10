@@ -11,8 +11,8 @@ import { FindUserDetailsWithDriverByIdType } from "@ryogo-travel-app/api/service
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import UserInfoWrapper from "@/components/flows/account/userInfoWrapper"
 import UserDetailsWrapper from "@/components/flows/account/userDetailsWrapper"
-import DriverDetailsWrapper from "@/components/flows/account/driverDetailsWrapper"
-import LicenseInfoWrapper from "@/components/flows/account/licenseInfoWrapper"
+import UserDriverDetailsWrapper from "@/components/flows/account/userDriverDetailsWrapper"
+import UserDriverLicenseInfoWrapper from "@/components/flows/account/userDriverLicenseInfoWrapper"
 
 export default async function RiderProfilePageComponent({
   account,
@@ -43,12 +43,12 @@ export default async function RiderProfilePageComponent({
       </GridWrapper>
       {account.driver && (
         <GridWrapper id="RiderDriverDetails">
-          <LicenseInfoWrapper
+          <UserDriverLicenseInfoWrapper
             licenseNumber={account.driver.licenseNumber}
             photoUrl={account.driver.licensePhotoUrl}
             expiryDate={account.driver.licenseExpiresOn}
           />
-          <DriverDetailsWrapper
+          <UserDriverDetailsWrapper
             id={account.driver.id}
             address={account.driver.address}
             status={account.driver.status}

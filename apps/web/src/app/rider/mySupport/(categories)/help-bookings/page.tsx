@@ -440,6 +440,7 @@ async function ExecutionContent() {
       <SupportContentSectionWrapper title={t("Ended.Title")}>
         <RyogoCaption color="slate">{t("Ended.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Ended.Input")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Ended.Rating")}</RyogoCaption>
         {/* //TODO: Add Ended snapshot */}
         <RyogoImage
           alt="Ended"

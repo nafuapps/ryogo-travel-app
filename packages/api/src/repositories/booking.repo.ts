@@ -11,7 +11,18 @@ import {
   vehicles,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, or, gte, lte, inArray, sql, isNull, not } from "drizzle-orm"
+import {
+  eq,
+  and,
+  or,
+  gte,
+  lte,
+  inArray,
+  sql,
+  isNull,
+  not,
+  lt,
+} from "drizzle-orm"
 import { addDays, subDays } from "date-fns"
 
 export const bookingRepository = {
@@ -1047,9 +1058,12 @@ export const bookingRepository = {
         or(
           and(
             eq(bookings.status, BookingStatusEnum.COMPLETED),
-            gte(bookings.endDate, queryStartDate),
+            gte(bookings.actualEndDate ?? bookings.endDate, queryStartDate),
           ),
-          eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+          and(
+            eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
+            lt(bookings.actualStartDate ?? bookings.startDate, new Date()),
+          ),
         ),
       ),
       columns: {

@@ -38,7 +38,7 @@ export default async function MyBookingExpensesPageComponent({
       <SectionColWrapper>
         {bookingExpenses.length === 0 ? (
           <RyogoSmall color="slate" className="text-center">
-            {t("NoExpenses")}
+            {t("NoExpense")}
           </RyogoSmall>
         ) : (
           bookingExpenses.map((expense) => {

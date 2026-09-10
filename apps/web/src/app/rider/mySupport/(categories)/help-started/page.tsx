@@ -101,6 +101,16 @@ export default async function MySupportHelpStartedPage() {
       icon: ChevronRight,
       label: t("QuickActions.ViewAccount"),
     },
+    {
+      href: `/rider/myBookings`,
+      icon: ChevronRight,
+      label: t("QuickActions.ViewBookings"),
+    },
+    {
+      href: `/rider/myVehicle`,
+      icon: ChevronRight,
+      label: t("QuickActions.ViewVehicle"),
+    },
   ]
 
   const relatedArticles: SupportRelatedArticleType[] = [
@@ -196,6 +206,8 @@ async function AboutContent() {
         <RyogoCaption color="slate">
           {t("WhatIsRyogo.Description")}
         </RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsRyogo.ValueProp")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("WhatIsRyogo.Headline")}</RyogoCaption>
         {/* //TODO: Add what is ryogo video */}
         <RyogoVideo
           src="https://www.youtube.com/embed/1MobY_vR7-g"

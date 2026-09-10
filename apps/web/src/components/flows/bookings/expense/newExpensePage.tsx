@@ -32,6 +32,7 @@ import {
   MAX_FILE_UPLOAD_SIZE,
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
+import { RyogoH3, RyogoCaption } from "@/components/typography"
 
 export default function NewExpensePageComponent({
   bookingId,
@@ -112,6 +113,8 @@ export default function NewExpensePageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newExpenseForm"
       >
+        <RyogoH3>{t("Title")}</RyogoH3>
+        <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
         <FormContentWrapper>
           <RyogoSelect
             name="type"

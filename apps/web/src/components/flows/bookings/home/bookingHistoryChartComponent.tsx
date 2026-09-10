@@ -15,7 +15,7 @@ import DashboardScheduleDayAxis, {
 import { User } from "lucide-react"
 import { BookingSchedulePopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { FindBookingHistoryLastDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
@@ -53,12 +53,12 @@ export default function BookingHistoryChartComponent({
         <DashboardScheduleChart>
           <DashboardScheduleDayAxis selectedDays={selectedDays} isHistory />
           <DashboardScheduleContent>
-            {chartData.map((b, ndex) => {
+            {chartData.map((b) => {
               return (
                 <DashboardScheduleItem key={b.bookingId} isHistory>
                   <DashboardScheduleItemID
-                    icon={<RyogoIcon icon={User} size="md" />}
-                    imageAlt={t("Photo")}
+                    icon={<RyogoEnclosedIcon icon={User} size="md" />}
+                    imageAlt={b.customerName}
                     title={b.customerName}
                     photoUrl={b.customerPhotoUrl}
                   />
@@ -69,10 +69,8 @@ export default function BookingHistoryChartComponent({
                       id={b.bookingId}
                       selectedDays={selectedDays}
                       className={
-                        !b.driver ||
-                        !b.vehicle ||
-                        (b.endDate < new Date() &&
-                          b.status === BookingStatusEnum.IN_PROGRESS)
+                        b.endDate < new Date() &&
+                        b.status === BookingStatusEnum.IN_PROGRESS
                           ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
                           : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
                       }

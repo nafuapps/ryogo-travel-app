@@ -3,13 +3,11 @@ import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import {
   SectionRowWrapper,
   SectionWrapper,
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
-import {
-  AccountDetailsBorderWrapper,
-  AccountDetailsContentWrapper,
-} from "./accountCommon"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -27,13 +25,13 @@ export default async function AgencyAssignedUserWrapper({
   const t = await getTranslations("Rider.MyProfileAgency")
   return (
     <SectionWrapper id="AssignedUserInfo">
-      <AccountDetailsBorderWrapper>
+      <DetailsBorderWrapper>
         <div className="bg-slate-200 dark:bg-slate-800 py-1 lg:py-1.5 px-3 lg:px-4">
           <RyogoCaption color="light" className="text-center">
             {t("AssignedUserInfo")}
           </RyogoCaption>
         </div>
-        <AccountDetailsContentWrapper>
+        <DetailsContentWrapper>
           <SectionRowWrapper justifyStart center>
             {photoUrl ? (
               <RyogoImage
@@ -48,8 +46,8 @@ export default async function AgencyAssignedUserWrapper({
               {name}
             </RyogoCaption>
           </SectionRowWrapper>
-        </AccountDetailsContentWrapper>
-      </AccountDetailsBorderWrapper>
+        </DetailsContentWrapper>
+      </DetailsBorderWrapper>
       <RyogoPhoneButton phone={phone} label={t("CallAgent")} />
       <RyogoChatButton
         phone={phone}

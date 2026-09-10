@@ -9,14 +9,19 @@ import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeMyEmailAction } from "@/app/actions/users/changeMyEmailAction"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 
-export default function ChangeEmailMyProfileComponent({
+export default function ChangeEmailPageComponent({
   usersWithPhoneRole,
   userId,
   agencyId,
@@ -25,7 +30,7 @@ export default function ChangeEmailMyProfileComponent({
   userId: string
   agencyId: string
 }) {
-  const t = useTranslations("Rider.MyProfile.ChangeEmail")
+  const t = useTranslations("Dashboard.Account.ChangeEmail")
   const router = useRouter()
 
   const schema = z.object({
@@ -39,7 +44,7 @@ export default function ChangeEmailMyProfileComponent({
   })
 
   type SchemaType = z.infer<typeof schema>
-  const formData = useForm<SchemaType>({
+  const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
       password: "",
@@ -56,7 +61,7 @@ export default function ChangeEmailMyProfileComponent({
           u.email.toLowerCase() === data.newEmail.toLowerCase(),
       )
     ) {
-      formData.setError("newEmail", {
+      form.setError("newEmail", {
         type: "manual",
         message: t("Field2.Error3"),
       })
@@ -65,7 +70,7 @@ export default function ChangeEmailMyProfileComponent({
         (u) => u.email.toLowerCase() === data.newEmail.toLowerCase(),
       )
     ) {
-      formData.setError("newEmail", {
+      form.setError("newEmail", {
         type: "manual",
         message: t("Field2.Error4"),
       })
@@ -79,10 +84,10 @@ export default function ChangeEmailMyProfileComponent({
       if (result) {
         //If success, redirect
         toast.success(t("Success"))
-        router.replace("/rider/myProfile")
+        router.replace("/dashboard/account")
       } else {
         //If failed, show error
-        formData.setError("password", {
+        form.setError("password", {
           type: "manual",
           message: t("APIError"),
         })
@@ -91,43 +96,44 @@ export default function ChangeEmailMyProfileComponent({
     }
   }
   return (
-    <PageWrapper id="RiderChangePassword">
+    <PageWrapper id="ChangePassword">
       <FormWrapper<SchemaType>
-        form={formData}
         id="ChangePasswordForm"
-        onSubmit={formData.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
+        form={form}
       >
-        <RyogoInput
-          name={"password"}
-          type="password"
-          label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
-          description={t("Field1.Description")}
-        />
-        <RyogoInput
-          name={"newEmail"}
-          type="email"
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-          description={t("Field2.Description")}
-        />
-
-        <RyogoDefaultButton
-          size={"lg"}
-          label={
-            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-          }
-          type="submit"
-          disabled={formData.formState.isSubmitting}
-          showSpinner={formData.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={formData.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoInput
+            name={"password"}
+            type="password"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoInput
+            name={"newEmail"}
+            type="email"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

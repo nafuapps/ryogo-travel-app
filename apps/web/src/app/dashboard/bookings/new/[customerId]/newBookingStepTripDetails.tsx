@@ -21,16 +21,14 @@ import {
   getStringValueDisplayPairs,
 } from "@/lib/utils"
 import { findOrCreateRouteAction } from "@/app/actions/locations/findOrCreateRouteAction"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import {
   MAX_FIELD_DESC_LENGTH,
@@ -210,62 +208,56 @@ export default function NewBookingStepTripDetails({
     t("Field4.Placeholder"),
   ]
   return (
-    <NewStepWrapper id="TripStep">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 1, total: 5 })}
-          </RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"booking"} current={0} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<StepTripDetailsType>
+    <PageWrapper id="TripStep">
+      <FormWrapper<StepTripDetailsType>
         id="StepTripDetailsForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
-          <SectionColWrapper small>
-            <RyogoCombobox
-              name="tripSourceLocationState"
-              title={t("Field1.Title")}
-              array={getArrayValueDisplayPairs(stateCityData)}
-              register={form.register("tripSourceLocationState")}
-              placeholder={t("Field1.Placeholder")}
-              resetField={() => {
-                form.setValue("tripSourceLocationCity", "")
-              }}
-            />
-            <RyogoCombobox
-              name="tripSourceLocationCity"
-              array={getStringValueDisplayPairs(sourceCityOptions)}
-              register={form.register("tripSourceLocationCity")}
-              placeholder={t("Field2.Placeholder")}
-            />
-          </SectionColWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 1, total: 5 })}
+          </RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"booking"} current={0} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
+          <RyogoCombobox
+            name="tripSourceLocationState"
+            title={t("Field1.Title")}
+            array={getArrayValueDisplayPairs(stateCityData)}
+            register={form.register("tripSourceLocationState")}
+            placeholder={t("Field1.Placeholder")}
+            resetField={() => {
+              form.setValue("tripSourceLocationCity", "")
+            }}
+          />
+          <RyogoCombobox
+            name="tripSourceLocationCity"
+            array={getStringValueDisplayPairs(sourceCityOptions)}
+            register={form.register("tripSourceLocationCity")}
+            placeholder={t("Field2.Placeholder")}
+          />
           <Separator />
-          <SectionColWrapper small>
-            <RyogoCombobox
-              name="tripDestinationLocationState"
-              title={t("Field3.Title")}
-              array={getArrayValueDisplayPairs(stateCityData)}
-              register={form.register("tripDestinationLocationState")}
-              placeholder={t("Field3.Placeholder")}
-              resetField={() => {
-                form.setValue("tripDestinationLocationCity", "")
-              }}
-            />
-            <RyogoCombobox
-              name="tripDestinationLocationCity"
-              array={getStringValueDisplayPairs(destinationCityOptions)}
-              register={form.register("tripDestinationLocationCity")}
-              placeholder={t("Field4.Placeholder")}
-            />
-          </SectionColWrapper>
-        </NewFormContentWrapper>
-        <NewFormContentWrapper>
+          <RyogoCombobox
+            name="tripDestinationLocationState"
+            title={t("Field3.Title")}
+            array={getArrayValueDisplayPairs(stateCityData)}
+            register={form.register("tripDestinationLocationState")}
+            placeholder={t("Field3.Placeholder")}
+            resetField={() => {
+              form.setValue("tripDestinationLocationCity", "")
+            }}
+          />
+          <RyogoCombobox
+            name="tripDestinationLocationCity"
+            array={getStringValueDisplayPairs(destinationCityOptions)}
+            register={form.register("tripDestinationLocationCity")}
+            placeholder={t("Field4.Placeholder")}
+          />
+        </FormContentWrapper>
+        <FormContentWrapper>
           <RyogoSmall weight="font-bold">{t("Field8.Title")}</RyogoSmall>
           <div className="flex flex-col lg:flex-row w-full gap-2 lg:gap-3">
             <TripTypeSelectionCard
@@ -296,8 +288,8 @@ export default function NewBookingStepTripDetails({
               desc={t("Field8.MultiDayDesc")}
             />
           </div>
-        </NewFormContentWrapper>
-        <NewFormContentWrapper>
+        </FormContentWrapper>
+        <FormContentWrapper>
           <RyogoDatePicker
             name="tripStartDate"
             label={t("Field5.Title")}
@@ -309,8 +301,8 @@ export default function NewBookingStepTripDetails({
             placeholder=""
             disabled={selectedTripType === BookingTypeEnum.OneWay}
           />
-        </NewFormContentWrapper>
-        <NewFormContentWrapper>
+        </FormContentWrapper>
+        <FormContentWrapper>
           <RyogoInput
             name="tripPassengers"
             label={t("Field7.Title")}
@@ -323,8 +315,8 @@ export default function NewBookingStepTripDetails({
             label={t("Field10.Title")}
             placeholder={t("Field10.Placeholder")}
           />
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
@@ -339,9 +331,9 @@ export default function NewBookingStepTripDetails({
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }
 

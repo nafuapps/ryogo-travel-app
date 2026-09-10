@@ -64,13 +64,11 @@ export default async function NewDriverPageComponent({
   }
 
   return (
-    <PageWrapper id="NewDriverPage">
-      <NewDriverForm
-        agencyId={agencyId}
-        userId={userId}
-        allDrivers={allDriverUsers}
-        agencyName={agency.businessName}
-      />
-    </PageWrapper>
+    <NewDriverForm
+      agencyId={agencyId}
+      userId={userId}
+      allDrivers={allDriverUsers}
+      agencyName={agency.businessName}
+    />
   )
 }

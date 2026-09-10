@@ -2,7 +2,7 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
@@ -29,13 +29,11 @@ export default async function NewBookingPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/new"} />
-      <PageWrapper id="NewBookingPage">
-        <NewBookingPageComponent
-          userId={currentUser.userId}
-          agency={agency}
-          customers={customers}
-        />
-      </PageWrapper>
+      <NewBookingPageComponent
+        userId={currentUser.userId}
+        agency={agency}
+        customers={customers}
+      />
     </MainWrapper>
   )
 }

@@ -15,7 +15,12 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { RyogoH3 } from "@/components/typography"
@@ -125,68 +130,71 @@ export default function ModifyCustomMissionPageComponent({
   }
   return (
     <PageWrapper id="ModifyCustomMissionPage">
-      <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
       <FormWrapper<ModifyCustomMissionType>
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
         id="modifyCustomMissionForm"
       >
-        <RyogoSelect
-          name="entityType"
-          title={t("Field1.Title")}
-          register={form.register("entityType")}
-          array={getEnumValueDisplayPairs(EntityTypeEnum)}
-          placeholder={t("Field1.Placeholder")}
-          description={t("Field1.Description")}
-        />
-        <RyogoInput
-          name="entityId"
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-          description={t("Field2.Description")}
-          type="text"
-        />
-        <RyogoSwitch name={"isCritical"} label={t("Field7.Title")} />
-        <RyogoInput
-          name="titleKey"
-          label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
-          description={t("Field3.Description")}
-          type="text"
-        />
-        <RyogoTextarea
-          name="messageKey"
-          label={t("Field4.Title")}
-          placeholder={t("Field4.Placeholder")}
-        />
-        <RyogoDatePicker
-          name="dueDate"
-          label={t("Field5.Title")}
-          placeholder={t("Field5.Placeholder")}
-          description={t("Field5.Description")}
-        />
-        <RyogoTimePicker name="dueTime" label={t("Field6.Title")} />
-        <Separator />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("CancelCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
-        <DeleteMissionAlertButton
-          missionId={mission.id}
-          userId={mission.userId}
-          agencyId={mission.agencyId}
-          isRider
-        />
+        <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
+        <FormContentWrapper>
+          <RyogoSelect
+            name="entityType"
+            title={t("Field1.Title")}
+            register={form.register("entityType")}
+            array={getEnumValueDisplayPairs(EntityTypeEnum)}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoInput
+            name="entityId"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+            type="text"
+          />
+          <RyogoSwitch name={"isCritical"} label={t("Field7.Title")} />
+          <RyogoInput
+            name="titleKey"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+            type="text"
+          />
+          <RyogoTextarea
+            name="messageKey"
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+          />
+          <RyogoDatePicker
+            name="dueDate"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+            description={t("Field5.Description")}
+          />
+          <RyogoTimePicker name="dueTime" label={t("Field6.Title")} />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("CancelCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+          <DeleteMissionAlertButton
+            missionId={mission.id}
+            userId={mission.userId}
+            agencyId={mission.agencyId}
+            isRider
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

@@ -18,7 +18,12 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { ModifyCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import {
   RyogoDefaultButton,
@@ -111,61 +116,65 @@ export default function ModifyCustomerPageComponent({
         id="ModifyCustomerForm"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <RyogoInput
-          name={"name"}
-          type="text"
-          label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
-          description={t("Field1.Description")}
-        />
-        <RyogoInput
-          name={"email"}
-          type="email"
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-          description={t("Field2.Description")}
-        />
-        <RyogoTextarea
-          name={"address"}
-          label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
-        />
-        <RyogoTextarea
-          name="remarks"
-          label={t("Field4.Title")}
-          placeholder={t("Field4.Placeholder")}
-        />
-        <RyogoCombobox
-          name={"state"}
-          register={form.register("state")}
-          title={t("Field5.Title")}
-          array={getArrayValueDisplayPairs(data)}
-          placeholder={t("Field5.Title")}
-          resetField={() => {
-            form.setValue("city", "")
-          }}
-        />
-        <RyogoCombobox
-          name={"city"}
-          register={form.register("city")}
-          title={t("Field6.Title")}
-          array={getStringValueDisplayPairs(cityOptions)}
-          placeholder={t("Field6.Title")}
-        />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoInput
+            name={"name"}
+            type="text"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoInput
+            name={"email"}
+            type="email"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+          <RyogoTextarea
+            name={"address"}
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+          />
+          <RyogoTextarea
+            name="remarks"
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+          />
+          <RyogoCombobox
+            name={"state"}
+            register={form.register("state")}
+            title={t("Field5.Title")}
+            array={getArrayValueDisplayPairs(data)}
+            placeholder={t("Field5.Title")}
+            resetField={() => {
+              form.setValue("city", "")
+            }}
+          />
+          <RyogoCombobox
+            name={"city"}
+            register={form.register("city")}
+            title={t("Field6.Title")}
+            array={getStringValueDisplayPairs(cityOptions)}
+            placeholder={t("Field6.Title")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

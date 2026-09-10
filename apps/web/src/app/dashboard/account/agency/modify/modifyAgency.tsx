@@ -19,8 +19,12 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { Separator } from "@/components/ui/separator"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -109,57 +113,60 @@ export default function ModifyAgencyPageForm({
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
-        <RyogoInput
-          name={"agencyName"}
-          type="text"
-          label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
-          description={t("Field1.Description")}
-        />
-        <RyogoTextarea
-          name={"agencyAddress"}
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-        />
-        <RyogoInput
-          name={"commissionRate"}
-          type="tel"
-          label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
-          description={t("Field3.Description")}
-        />
-        <RyogoCombobox
-          name={"agencyState"}
-          register={form.register("agencyState")}
-          title={t("Field4.Title")}
-          array={getArrayValueDisplayPairs(data)}
-          placeholder={t("Field4.Title")}
-          resetField={() => {
-            form.setValue("agencyCity", "")
-          }}
-        />
-        <RyogoCombobox
-          name={"agencyCity"}
-          register={form.register("agencyCity")}
-          title={t("Field5.Title")}
-          array={getStringValueDisplayPairs(cityOptions)}
-          placeholder={t("Field5.Title")}
-        />
-        <Separator />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoInput
+            name={"agencyName"}
+            type="text"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoTextarea
+            name={"agencyAddress"}
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+          />
+          <RyogoInput
+            name={"commissionRate"}
+            type="tel"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+          <RyogoCombobox
+            name={"agencyState"}
+            register={form.register("agencyState")}
+            title={t("Field4.Title")}
+            array={getArrayValueDisplayPairs(data)}
+            placeholder={t("Field4.Title")}
+            resetField={() => {
+              form.setValue("agencyCity", "")
+            }}
+          />
+          <RyogoCombobox
+            name={"agencyCity"}
+            register={form.register("agencyCity")}
+            title={t("Field5.Title")}
+            array={getStringValueDisplayPairs(cityOptions)}
+            placeholder={t("Field5.Title")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

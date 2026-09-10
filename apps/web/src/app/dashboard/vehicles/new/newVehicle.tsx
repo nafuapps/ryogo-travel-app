@@ -59,12 +59,10 @@ export default async function NewVehiclePageComponent({
   }
 
   return (
-    <PageWrapper id="NewVehiclePage">
-      <NewVehicleForm
-        agencyId={agencyId}
-        existingVehicles={vehicles}
-        userId={userId}
-      />
-    </PageWrapper>
+    <NewVehicleForm
+      agencyId={agencyId}
+      existingVehicles={vehicles}
+      userId={userId}
+    />
   )
 }

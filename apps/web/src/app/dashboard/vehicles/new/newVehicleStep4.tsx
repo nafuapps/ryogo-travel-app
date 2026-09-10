@@ -10,14 +10,6 @@ import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
-import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
@@ -27,6 +19,13 @@ import {
   MAX_PER_DAY_CHARGE,
   MIN_PER_DAY_CHARGE,
 } from "@/lib/uiConfig"
+import {
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export function NewVehicleStep4({
   onNext,
@@ -87,21 +86,19 @@ export function NewVehicleStep4({
   }
 
   return (
-    <NewStepWrapper id="NewVehicleStep4">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"vehicle"} current={3} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<Step4Type>
+    <PageWrapper id="NewVehicleStep4">
+      <FormWrapper<Step4Type>
         id="Step4Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"vehicle"} current={3} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
           <RyogoInput
             name={"defaultRatePerKm"}
             type="tel"
@@ -118,8 +115,8 @@ export function NewVehicleStep4({
             description={t("Field3.Description")}
             disabled={!acWatch}
           />
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             label={
@@ -136,8 +133,8 @@ export function NewVehicleStep4({
             onClick={onPrev}
             disabled={formData.formState.isSubmitting}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

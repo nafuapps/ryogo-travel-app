@@ -9,15 +9,6 @@ import z from "zod"
 import StepsTracker from "@/components/form/stepsTracker"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
-import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-  NewStepGridWrapper,
-} from "@/components/form/newFormWrappers"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
@@ -28,6 +19,14 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import {
+  SectionRowWrapper,
+  TileGridWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export default function NewBookingStepVehicle({
   onNext,
@@ -94,17 +93,7 @@ export default function NewBookingStepVehicle({
   })
 
   return (
-    <NewStepWrapper id="AssignmentStep">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 2, total: 5 })}
-          </RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"booking"} current={1} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
+    <PageWrapper id="AssignmentStep">
       {limited && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
@@ -117,13 +106,21 @@ export default function NewBookingStepVehicle({
           }
         />
       )}
-      <NewFormWrapper<StepVehicleType>
+      <FormWrapper<StepVehicleType>
         id="StepVehicleForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
-          <NewStepGridWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 2, total: 5 })}
+          </RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"booking"} current={1} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
+          <TileGridWrapper>
             {vehicles
               .sort(
                 (a, b) => a.assignedBookings.length - b.assignedBookings.length,
@@ -144,9 +141,9 @@ export default function NewBookingStepVehicle({
                   bookingNeedsAC={newBookingFormData.tripNeedsAC}
                 />
               ))}
-          </NewStepGridWrapper>
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+          </TileGridWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
@@ -167,8 +164,8 @@ export default function NewBookingStepVehicle({
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

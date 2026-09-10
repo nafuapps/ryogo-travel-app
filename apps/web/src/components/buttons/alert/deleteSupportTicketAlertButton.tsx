@@ -48,13 +48,14 @@ export default function DeleteSupportTicketAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoGhostButton label={t("Label")} />}
+      labelChild={<RyogoGhostButton label={t("Label")} type="button" />}
     >
       <RyogoDestructiveButton
         onClick={deleteCustomMission}
         disabled={isPending}
         showSpinner={isPending}
         label={isPending ? t("Loading") : t("YesCTA")}
+        type="button"
       />
     </RyogoAlertDialog>
   )

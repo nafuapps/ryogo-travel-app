@@ -70,7 +70,7 @@ export function RyogoDialogImage({
   alt: string
   imageSize: RyogoImageSizeType
 }) {
-  let className = `relative flex justify-center items-center ${getImageSizeClassName(imageSize)} rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 hover:border-slate-600 dark:hover:border-slate-300`
+  let className = `relative flex justify-center items-center ${getImageSizeClassName(imageSize)} rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:opacity-70 transition`
   return (
     <Dialog>
       <DialogTrigger className={className}>

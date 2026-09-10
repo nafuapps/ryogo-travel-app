@@ -17,7 +17,12 @@ import DeleteExpenseAlertButton from "@/components/buttons/alert/deleteExpenseAl
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
@@ -108,51 +113,55 @@ export default function ModifyExpensePageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="modifyExpenseForm"
       >
-        <RyogoSelect
-          name="type"
-          title={t("Field1.Title")}
-          register={form.register("type")}
-          array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
-          placeholder={t("Field1.Description")}
-        />
-        <RyogoInput
-          name="amount"
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-          type="tel"
-        />
-        <RyogoTextarea
-          name="remarks"
-          label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
-        />
-        <RyogoFileInput
-          name={"expensePhoto"}
-          register={form.register("expensePhoto")}
-          label={t("Field4.Title")}
-          placeholder={t("Field4.Placeholder")}
-          description={t("Field4.Description")}
-        />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("CancelCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
-        <DeleteExpenseAlertButton
-          bookingId={expenseDetails.bookingId}
-          expenseId={expenseDetails.id}
-          agencyId={expenseDetails.agencyId}
-          bookingAssignedUserId={bookingAssignedUserId}
-        />
+        <FormContentWrapper>
+          <RyogoSelect
+            name="type"
+            title={t("Field1.Title")}
+            register={form.register("type")}
+            array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
+            placeholder={t("Field1.Description")}
+          />
+          <RyogoInput
+            name="amount"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            type="tel"
+          />
+          <RyogoTextarea
+            name="remarks"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+          />
+          <RyogoFileInput
+            name={"expensePhoto"}
+            register={form.register("expensePhoto")}
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+            description={t("Field4.Description")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("CancelCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+          <DeleteExpenseAlertButton
+            bookingId={expenseDetails.bookingId}
+            expenseId={expenseDetails.id}
+            agencyId={expenseDetails.agencyId}
+            bookingAssignedUserId={bookingAssignedUserId}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

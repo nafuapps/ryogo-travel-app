@@ -12,7 +12,12 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import { changeAgencyEmailAction } from "@/app/actions/agencies/changeAgencyEmailAction"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -40,6 +45,9 @@ export default function ChangeAgencyEmailPageComponent({
 
   const form = useForm<ModifyAgencyType>({
     resolver: zodResolver(modifyAgencySchema),
+    defaultValues: {
+      newEmail: agency.businessEmail,
+    },
   })
 
   //Submit actions
@@ -85,27 +93,31 @@ export default function ChangeAgencyEmailPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
-        <RyogoInput
-          name={"newEmail"}
-          type="email"
-          label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
-          description={t("Field1.Description")}
-        />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoInput
+            name={"newEmail"}
+            type="email"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

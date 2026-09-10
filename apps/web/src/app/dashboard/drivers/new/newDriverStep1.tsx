@@ -10,14 +10,6 @@ import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
@@ -28,6 +20,13 @@ import {
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
+import {
+  SectionRowWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export function NewDriverStep1({
   onNext,
@@ -117,21 +116,19 @@ export function NewDriverStep1({
   }
 
   return (
-    <NewStepWrapper id="NewDriverStep1">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"driver"} current={0} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<Step1Type>
+    <PageWrapper id="NewDriverStep1">
+      <FormWrapper<Step1Type>
         id="Step1Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"driver"} current={0} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
           <RyogoInput
             name={"driverName"}
             type="text"
@@ -160,8 +157,8 @@ export function NewDriverStep1({
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
@@ -182,8 +179,8 @@ export function NewDriverStep1({
               !formData.formState.isValid || formData.formState.isSubmitting
             }
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

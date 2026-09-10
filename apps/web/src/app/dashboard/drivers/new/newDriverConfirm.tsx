@@ -10,17 +10,16 @@ import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import ConfirmValues from "@/components/form/confirmValues"
 import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
-import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  SectionRowWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export function NewDriverConfirm({
   onNext,
@@ -76,21 +75,19 @@ export function NewDriverConfirm({
     }
   }
   return (
-    <NewStepWrapper id="NewDriverConfirmStep">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"driver"} current={3} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<AddDriverRequestType>
+    <PageWrapper id="NewDriverConfirmStep">
+      <FormWrapper<AddDriverRequestType>
         id="ConfirmForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"driver"} current={3} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
           <ConfirmValues
             name={t("DriverName")}
             value={newDriverFormData.data.name}
@@ -134,8 +131,8 @@ export function NewDriverConfirm({
               value={`${newDriverFormData.data.defaultAllowancePerDay}`}
             />
           )}
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
@@ -150,8 +147,8 @@ export function NewDriverConfirm({
             onClick={onPrev}
             disabled={form.formState.isSubmitting}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

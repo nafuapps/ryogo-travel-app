@@ -20,15 +20,11 @@ import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import {
   SectionColWrapper,
   SectionRowWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getEstimatedTotalPrice } from "@/lib/utils"
 import {
@@ -98,24 +94,22 @@ export default function NewBookingFinal({
   }
 
   return (
-    <NewStepWrapper id="FinalStep">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 5, total: 5 })}
-          </RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"booking"} current={4} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<NewBookingRequestDataType>
+    <PageWrapper id="FinalStep">
+      <FormWrapper<NewBookingRequestDataType>
         id="FinalForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 5, total: 5 })}
+          </RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"booking"} current={4} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <NewBookingTripCard {...newBookingFormData} />
-        <NewFormContentWrapper>
+        <FormContentWrapper>
           <SectionRowWrapper>
             <IconTextTag icon={Car} text={t("VehicleCharge")} />
             <SectionColWrapper end small>
@@ -171,7 +165,7 @@ export default function NewBookingFinal({
               </RyogoCaption>
             </SectionColWrapper>
           </SectionRowWrapper>
-        </NewFormContentWrapper>
+        </FormContentWrapper>
         <SectionRowWrapper>
           <RyogoH4>{t("TotalAmount")}</RyogoH4>
           <RyogoH3>{"₹" + finalAmount.totalAmount}</RyogoH3>
@@ -180,7 +174,7 @@ export default function NewBookingFinal({
           <RyogoIcon icon={Info} size="sm" />
           <RyogoCaption color="light">{t("CreateInfo")}</RyogoCaption>
         </Alert>
-        <NewFormActionWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
@@ -195,8 +189,8 @@ export default function NewBookingFinal({
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

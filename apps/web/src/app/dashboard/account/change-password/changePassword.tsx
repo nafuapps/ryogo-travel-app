@@ -8,8 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { changeMyPasswordAction } from "@/app/actions/users/changeMyPasswordAction"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { Separator } from "@/components/ui/separator"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -89,42 +93,45 @@ export default function ChangePasswordAccountComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
-        <RyogoInput
-          name={"oldPassword"}
-          type="password"
-          label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
-          description={t("Field1.Description")}
-        />
-        <RyogoInput
-          name={"newPassword"}
-          type="password"
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-          description={t("Field2.Description")}
-        />
-        <RyogoInput
-          name={"confirmPassword"}
-          type="password"
-          label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
-          description={t("Field3.Description")}
-        />
-        <Separator />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoInput
+            name={"oldPassword"}
+            type="password"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoInput
+            name={"newPassword"}
+            type="password"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+          <RyogoInput
+            name={"confirmPassword"}
+            type="password"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

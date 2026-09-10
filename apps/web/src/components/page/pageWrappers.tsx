@@ -1,7 +1,6 @@
 import { SubmitEventHandler, Suspense } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { PageSkeleton } from "./loadingWrappers"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
@@ -70,16 +69,26 @@ export function FormWrapper<T extends FieldValues>({
 }) {
   return (
     <Form {...form}>
-      <ScrollArea>
-        <form
-          id={id}
-          onSubmit={onSubmit}
-          className="flex flex-col gap-4 lg:gap-5 p-4 lg:p-5 bg-white dark:bg-slate-900 rounded-lg shadow w-full"
-        >
-          {children}
-        </form>
-      </ScrollArea>
+      <form
+        id={id}
+        onSubmit={onSubmit}
+        className="flex flex-col gap-3 lg:gap-4 w-full h-full"
+      >
+        {children}
+      </form>
     </Form>
+  )
+}
+
+export function FormContentWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col relative gap-3 lg:gap-4 bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5">
+      {children}
+    </div>
   )
 }
 
@@ -246,6 +255,14 @@ export function StickyActionWrapper({
 }) {
   return (
     <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 dark:bg-slate-950 sticky mt-auto shadow bottom-0">
+      {children}
+    </div>
+  )
+}
+
+export function TileGridWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3">
       {children}
     </div>
   )

@@ -10,17 +10,16 @@ import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import ConfirmValues from "@/components/form/confirmValues"
 import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
-import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  SectionRowWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export function NewVehicleConfirm({
   onPrev,
@@ -72,21 +71,19 @@ export function NewVehicleConfirm({
     }
   }
   return (
-    <NewStepWrapper id="NewVehicleConfirm">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"vehicle"} current={4} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<AddVehicleRequestType>
+    <PageWrapper id="NewVehicleConfirm">
+      <FormWrapper<AddVehicleRequestType>
         id="ConfirmForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"vehicle"} current={4} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
           <ConfirmValues
             name={t("VehicleNumber")}
             value={newVehicleFormData.data.vehicleNumber}
@@ -154,8 +151,8 @@ export function NewVehicleConfirm({
                 value={`${newVehicleFormData.data.defaultAcChargePerDay}`}
               />
             )}
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
@@ -170,8 +167,8 @@ export function NewVehicleConfirm({
             onClick={onPrev}
             disabled={form.formState.isSubmitting}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

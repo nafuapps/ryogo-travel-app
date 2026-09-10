@@ -10,7 +10,11 @@ import { toast } from "sonner"
 import z from "zod"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
-import { FormWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
@@ -114,48 +118,52 @@ export default function NewAgentForm({
       onSubmit={form.handleSubmit(onSubmit)}
       id="newAgentForm"
     >
-      <RyogoInput
-        name={"agentName"}
-        type="text"
-        label={t("Field1.Title")}
-        placeholder={t("Field1.Placeholder")}
-        description={t("Field1.Description")}
-      />
-      <RyogoInput
-        name={"agentPhone"}
-        type="tel"
-        label={t("Field2.Title")}
-        placeholder={t("Field2.Placeholder")}
-        description={t("Field2.Description")}
-      />
-      <RyogoInput
-        name={"agentEmail"}
-        type="email"
-        label={t("Field3.Title")}
-        placeholder={t("Field3.Placeholder")}
-        description={t("Field3.Description")}
-      />
-      <RyogoFileInput
-        name={"agenctPhotos"}
-        register={form.register("agentPhotos")}
-        label={t("Field4.Title")}
-        placeholder={t("Field4.Placeholder")}
-        description={t("Field4.Description")}
-      />
-      <RyogoDefaultButton
-        size={"lg"}
-        label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-        type="submit"
-        disabled={form.formState.isSubmitting}
-        showSpinner={form.formState.isSubmitting}
-      />
-      <RyogoOutlineButton
-        size={"lg"}
-        label={t("SecondaryCTA")}
-        type="button"
-        onClick={() => router.back()}
-        disabled={form.formState.isSubmitting}
-      />
+      <FormContentWrapper>
+        <RyogoInput
+          name={"agentName"}
+          type="text"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name={"agentPhone"}
+          type="tel"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+        <RyogoInput
+          name={"agentEmail"}
+          type="email"
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+          description={t("Field3.Description")}
+        />
+        <RyogoFileInput
+          name={"agenctPhotos"}
+          register={form.register("agentPhotos")}
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+          description={t("Field4.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          size={"lg"}
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          type="submit"
+          disabled={form.formState.isSubmitting}
+          showSpinner={form.formState.isSubmitting}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          label={t("SecondaryCTA")}
+          type="button"
+          onClick={() => router.back()}
+          disabled={form.formState.isSubmitting}
+        />
+      </StickyActionWrapper>
     </FormWrapper>
   )
 }

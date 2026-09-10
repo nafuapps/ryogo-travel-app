@@ -7,16 +7,16 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
-  NewFormActionWrapper,
-  NewFormContentWrapper,
-  NewFormWrapper,
-} from "@/components/form/newFormWrappers"
-import {
   RyogoTextarea,
   RyogoCheckbox,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { MAX_FIELD_DESC_LENGTH, MIN_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -102,15 +102,15 @@ export default function ConfirmBookingPageComponent({
 
   return (
     <PageWrapper id="ConfirmBookingPage">
-      <NewFormWrapper<ConfirmBookingType>
+      <FormWrapper<ConfirmBookingType>
         id="confirmBookingForm"
         onSubmit={form.handleSubmit(submit)}
         form={form}
       >
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        <NewFormContentWrapper>{children}</NewFormContentWrapper>
-        <NewFormContentWrapper>
+        <FormContentWrapper>{children}</FormContentWrapper>
+        <FormContentWrapper>
           <RyogoTimePicker name="startTime" label={t("PickupTime")} />
           <RyogoTextarea
             name="pickupAddress"
@@ -128,8 +128,8 @@ export default function ConfirmBookingPageComponent({
             label={t("DropAddress")}
             placeholder={t("DropAddressPlaceholder")}
           />
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoAlertDialog
             title={t("Confirm.Title")}
             desc={t("Confirm.Desc")}
@@ -159,8 +159,8 @@ export default function ConfirmBookingPageComponent({
             onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
     </PageWrapper>
   )
 }

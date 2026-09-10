@@ -9,15 +9,6 @@ import z from "zod"
 import StepsTracker from "@/components/form/stepsTracker"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import AssignDriverTile from "@/components/flows/bookings/assign/assignDriverTile"
-import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-  NewStepGridWrapper,
-} from "@/components/form/newFormWrappers"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY } from "@/lib/uiConfig"
 import {
@@ -25,6 +16,14 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import {
+  SectionRowWrapper,
+  TileGridWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export default function NewBookingStepDriver({
   onNext,
@@ -88,17 +87,7 @@ export default function NewBookingStepDriver({
   })
 
   return (
-    <NewStepWrapper id="AssignmentStep">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 3, total: 5 })}
-          </RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"booking"} current={2} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
+    <PageWrapper id="AssignmentStep">
       {limited && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
@@ -111,13 +100,21 @@ export default function NewBookingStepDriver({
           }
         />
       )}
-      <NewFormWrapper<StepDriverType>
+      <FormWrapper<StepDriverType>
         id="StepDriverForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
-          <NewStepGridWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 3, total: 5 })}
+          </RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"booking"} current={2} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
+          <TileGridWrapper>
             {drivers.map((driver) => (
               <AssignDriverTile
                 key={driver.id}
@@ -133,9 +130,9 @@ export default function NewBookingStepDriver({
                 }
               />
             ))}
-          </NewStepGridWrapper>
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+          </TileGridWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
@@ -156,8 +153,8 @@ export default function NewBookingStepDriver({
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

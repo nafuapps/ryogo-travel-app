@@ -21,7 +21,6 @@ import { changeAgencyQRCodeAction } from "@/app/actions/agencies/changeAgencyQRC
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
@@ -65,7 +64,7 @@ export default function ChangeQRCodeSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton
+        <RyogoOutlineButton
           label={newPhoto ? t("UploadButton") : t("ChangeButton")}
           labelColor="light"
         />

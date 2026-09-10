@@ -11,9 +11,13 @@ import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.ser
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
-import { Separator } from "@/components/ui/separator"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -67,29 +71,32 @@ export default function AccountSettingsPageComponent({
         id="ChangePreferencesForm"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <RyogoSwitch label={t("Field1.Title")} name="dark" />
-        <RyogoSelect
-          name={"lang"}
-          register={form.register("lang")}
-          array={languages}
-          title={t("Field2.Title")}
-          placeholder={t("Field2.Title")}
-        />
-        <Separator />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting || !form.formState.isDirty}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoSwitch label={t("Field1.Title")} name="dark" />
+          <RyogoSelect
+            name={"lang"}
+            register={form.register("lang")}
+            array={languages}
+            title={t("Field2.Title")}
+            placeholder={t("Field2.Title")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

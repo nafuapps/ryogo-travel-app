@@ -141,17 +141,15 @@ export default async function NewBookingWithCustomerPageComponent({
   }
 
   return (
-    <PageWrapper id="NewBookingWithCustomerPage">
-      <NewBookingForm
-        agency={agency}
-        customerId={customerId}
-        userId={userId}
-        vehicles={vehicles}
-        drivers={drivers}
-        limited={limited}
-        isSubscribed={!isBasic}
-        hasTriedSubscription={agency.hasTriedSubscription}
-      />
-    </PageWrapper>
+    <NewBookingForm
+      agency={agency}
+      customerId={customerId}
+      userId={userId}
+      vehicles={vehicles}
+      drivers={drivers}
+      limited={limited}
+      isSubscribed={!isBasic}
+      hasTriedSubscription={agency.hasTriedSubscription}
+    />
   )
 }

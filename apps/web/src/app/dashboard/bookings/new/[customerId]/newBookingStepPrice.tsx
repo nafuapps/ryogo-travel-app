@@ -10,14 +10,6 @@ import { RyogoInput } from "@/components/form/ryogoFormFields"
 import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
-import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
@@ -29,6 +21,13 @@ import {
   MAX_PER_DAY_CHARGE,
   MIN_PER_DAY_CHARGE,
 } from "@/lib/uiConfig"
+import {
+  SectionRowWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export default function NewBookingStepPrice({
   onNext,
@@ -114,24 +113,22 @@ export default function NewBookingStepPrice({
   }
 
   return (
-    <NewStepWrapper id="CostStep">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 4, total: 5 })}
-          </RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"booking"} current={3} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<StepPriceType>
+    <PageWrapper id="CostStep">
+      <FormWrapper<StepPriceType>
         id="StepPriceForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">
+            {t("Subtitle", { current: 4, total: 5 })}
+          </RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"booking"} current={3} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <NewBookingTripCard {...newBookingFormData} />
-        <NewFormContentWrapper>
+        <FormContentWrapper>
           <RyogoInput
             name="selectedDistance"
             label={t("Field5.Title")}
@@ -169,8 +166,8 @@ export default function NewBookingStepPrice({
             description={t("Field4.Description")}
             type="tel"
           />
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
@@ -185,8 +182,8 @@ export default function NewBookingStepPrice({
             disabled={form.formState.isSubmitting}
             label={t("Back")}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

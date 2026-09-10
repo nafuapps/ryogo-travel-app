@@ -13,14 +13,6 @@ import {
 import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import {
-  NewStepHeaderWrapper,
-  NewStepTitleWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-  NewFormActionWrapper,
-} from "@/components/form/newFormWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
@@ -33,6 +25,13 @@ import {
   MIN_ODOMETER_LIMIT,
   MIN_VEHICLE_CAPCITY,
 } from "@/lib/uiConfig"
+import {
+  SectionRowWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+  FormContentWrapper,
+  FormWrapper,
+} from "@/components/page/pageWrappers"
 
 export function NewVehicleStep2({
   onNext,
@@ -115,21 +114,19 @@ export function NewVehicleStep2({
     onNext()
   }
   return (
-    <NewStepWrapper id="NewVehicleStep2">
-      <NewStepHeaderWrapper>
-        <NewStepTitleWrapper>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </NewStepTitleWrapper>
-        <StepsTracker steps={"vehicle"} current={1} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<Step2Type>
+    <PageWrapper id="NewVehicleStep2">
+      <FormWrapper<Step2Type>
         id="Step2Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
+        <SectionRowWrapper end>
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
+        </SectionRowWrapper>
+        <StepsTracker steps={"vehicle"} current={1} />
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
           <RyogoInput
             name={"capacity"}
             type="tel"
@@ -151,8 +148,8 @@ export function NewVehicleStep2({
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
           />
-        </NewFormContentWrapper>
-        <NewFormContentWrapper>
+        </FormContentWrapper>
+        <FormContentWrapper>
           <RyogoFileInput
             name={"rcPhotos"}
             register={formData.register("rcPhotos")}
@@ -166,8 +163,8 @@ export function NewVehicleStep2({
             placeholder={t("Field5.Placeholder")}
             description={t("Field5.Description")}
           />
-        </NewFormContentWrapper>
-        <NewFormActionWrapper>
+        </FormContentWrapper>
+        <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}
             label={
@@ -184,8 +181,8 @@ export function NewVehicleStep2({
             onClick={onPrev}
             disabled={formData.formState.isSubmitting}
           />
-        </NewFormActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+        </StickyActionWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

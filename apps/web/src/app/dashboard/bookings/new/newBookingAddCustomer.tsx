@@ -12,12 +12,6 @@ import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
 } from "@/lib/utils"
-import {
-  NewStepHeaderWrapper,
-  NewStepWrapper,
-  NewFormWrapper,
-  NewFormContentWrapper,
-} from "@/components/form/newFormWrappers"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { useRouter } from "next/navigation"
@@ -31,7 +25,12 @@ import {
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { StickyActionWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { MAX_NAME_LENGTH, MIN_NAME_LENGTH, PHONE_LENGTH } from "@/lib/uiConfig"
 
 export default function NewBookingAddCustomerPageComponent({
@@ -125,17 +124,15 @@ export default function NewBookingAddCustomerPageComponent({
     : []
 
   return (
-    <NewStepWrapper id="AddCustomerStep">
-      <NewStepHeaderWrapper>
-        <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
-      </NewStepHeaderWrapper>
-      <NewFormWrapper<AddCustomerType>
+    <PageWrapper id="AddCustomerStep">
+      <FormWrapper<AddCustomerType>
         id="AddCustomerForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewFormContentWrapper>
+        <RyogoH3>{t("Title")}</RyogoH3>
+        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
+        <FormContentWrapper>
           <RyogoInput
             name={"newCustomerName"}
             type="text"
@@ -165,9 +162,9 @@ export default function NewBookingAddCustomerPageComponent({
             array={getStringValueDisplayPairs(cityOptions)}
             placeholder={t("Field4.Title")}
           />
-        </NewFormContentWrapper>
+        </FormContentWrapper>
         {existingCustomer && (
-          <NewFormContentWrapper>
+          <FormContentWrapper>
             <RyogoCaption
               className="text-center"
               color="light"
@@ -176,7 +173,7 @@ export default function NewBookingAddCustomerPageComponent({
               {t("Exists")}
             </RyogoCaption>
             <ExistingCutomerCard existingCustomer={existingCustomer} />
-          </NewFormContentWrapper>
+          </FormContentWrapper>
         )}
         <StickyActionWrapper>
           <RyogoDefaultButton
@@ -207,7 +204,7 @@ export default function NewBookingAddCustomerPageComponent({
             <RyogoIcon icon={ChevronLeft} size="sm" color="light" thick />
           </RyogoGhostButton>
         </StickyActionWrapper>
-      </NewFormWrapper>
-    </NewStepWrapper>
+      </FormWrapper>
+    </PageWrapper>
   )
 }

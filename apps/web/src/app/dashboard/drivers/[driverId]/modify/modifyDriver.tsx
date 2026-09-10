@@ -8,7 +8,12 @@ import {
   RyogoDatePicker,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
@@ -117,57 +122,61 @@ export default function ModifyDriverPageComponent({
         id="ModifyDriverForm"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <RyogoTextarea
-          name={"address"}
-          label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
-        />
-        <RyogoMultipleCheckbox
-          array={getEnumValueDisplayPairs(VehicleTypesEnum)}
-          name={"canDriveVehicleTypes"}
-          label={t("Field2.Title")}
-        />
-        <RyogoInput
-          name={"defaultAllowancePerDay"}
-          type="tel"
-          label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
-          description={t("Field3.Description")}
-        />
-        <RyogoInput
-          name={"licenseNumber"}
-          type="text"
-          label={t("Field4.Title")}
-          placeholder={t("Field4.Placeholder")}
-          description={t("Field4.Description")}
-        />
-        <RyogoDatePicker
-          name="licenseExpiresOn"
-          label={t("Field5.Title")}
-          placeholder={t("Field5.Placeholder")}
-          description={t("Field5.Description")}
-        />
-        <RyogoFileInput
-          name={"licensePhotos"}
-          register={form.register("licensePhotos")}
-          label={t("Field6.Title")}
-          placeholder={t("Field6.Placeholder")}
-          description={t("Field6.Description")}
-        />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoTextarea
+            name={"address"}
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+          />
+          <RyogoMultipleCheckbox
+            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+            name={"canDriveVehicleTypes"}
+            label={t("Field2.Title")}
+          />
+          <RyogoInput
+            name={"defaultAllowancePerDay"}
+            type="tel"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+          <RyogoInput
+            name={"licenseNumber"}
+            type="text"
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+            description={t("Field4.Description")}
+          />
+          <RyogoDatePicker
+            name="licenseExpiresOn"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+            description={t("Field5.Description")}
+          />
+          <RyogoFileInput
+            name={"licensePhotos"}
+            register={form.register("licensePhotos")}
+            label={t("Field6.Title")}
+            placeholder={t("Field6.Placeholder")}
+            description={t("Field6.Description")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

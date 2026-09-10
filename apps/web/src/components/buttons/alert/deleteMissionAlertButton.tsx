@@ -43,13 +43,16 @@ export default function DeleteMissionAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoGhostButton label={t("Label")} labelColor="light" />}
+      labelChild={
+        <RyogoGhostButton label={t("Label")} labelColor="light" type="button" />
+      }
     >
       <RyogoDestructiveButton
         onClick={deleteMission}
         disabled={isPending}
         showSpinner={isPending}
         label={isPending ? t("Loading") : t("YesCTA")}
+        type="button"
       />
     </RyogoAlertDialog>
   )

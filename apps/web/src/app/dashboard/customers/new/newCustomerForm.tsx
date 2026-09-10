@@ -17,7 +17,12 @@ import stateCityData from "@/lib/states_cities.json"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { getArrayValueDisplayPairs } from "@/lib/utils"
-import { FormWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
@@ -140,75 +145,79 @@ export default function NewCustomerForm({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newCustomerForm"
       >
-        <RyogoInput
-          name={"name"}
-          type="text"
-          label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
-          description={t("Field1.Description")}
-        />
-        <RyogoInput
-          name={"phone"}
-          type="tel"
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-          description={t("Field2.Description")}
-        />
-        <RyogoInput
-          name={"email"}
-          type="email"
-          label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
-          description={t("Field3.Description")}
-        />
-        <RyogoFileInput
-          name={"photo"}
-          register={form.register("photo")}
-          label={t("Field4.Title")}
-          placeholder={t("Field4.Placeholder")}
-          description={t("Field4.Description")}
-        />
-        <RyogoTextarea
-          name={"address"}
-          label={t("Field5.Title")}
-          placeholder={t("Field5.Placeholder")}
-        />
-        <RyogoTextarea
-          name="remarks"
-          label={t("Field6.Title")}
-          placeholder={t("Field6.Placeholder")}
-        />
-        <RyogoCombobox
-          name={"state"}
-          register={form.register("state")}
-          title={t("Field7.Title")}
-          array={getArrayValueDisplayPairs(data)}
-          placeholder={t("Field7.Title")}
-          resetField={() => {
-            form.setValue("city", "")
-          }}
-        />
-        <RyogoCombobox
-          name={"city"}
-          register={form.register("city")}
-          title={t("Field8.Title")}
-          array={getArrayValueDisplayPairs(cityOptions)}
-          placeholder={t("Field8.Title")}
-        />
-        <RyogoDefaultButton
-          size={"lg"}
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          showSpinner={form.formState.isSubmitting}
-        />
-        <RyogoOutlineButton
-          size={"lg"}
-          label={t("SecondaryCTA")}
-          type="button"
-          onClick={() => router.back()}
-          disabled={form.formState.isSubmitting}
-        />
+        <FormContentWrapper>
+          <RyogoInput
+            name={"name"}
+            type="text"
+            label={t("Field1.Title")}
+            placeholder={t("Field1.Placeholder")}
+            description={t("Field1.Description")}
+          />
+          <RyogoInput
+            name={"phone"}
+            type="tel"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+          <RyogoInput
+            name={"email"}
+            type="email"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+          <RyogoFileInput
+            name={"photo"}
+            register={form.register("photo")}
+            label={t("Field4.Title")}
+            placeholder={t("Field4.Placeholder")}
+            description={t("Field4.Description")}
+          />
+          <RyogoTextarea
+            name={"address"}
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+          />
+          <RyogoTextarea
+            name="remarks"
+            label={t("Field6.Title")}
+            placeholder={t("Field6.Placeholder")}
+          />
+          <RyogoCombobox
+            name={"state"}
+            register={form.register("state")}
+            title={t("Field7.Title")}
+            array={getArrayValueDisplayPairs(data)}
+            placeholder={t("Field7.Title")}
+            resetField={() => {
+              form.setValue("city", "")
+            }}
+          />
+          <RyogoCombobox
+            name={"city"}
+            register={form.register("city")}
+            title={t("Field8.Title")}
+            array={getArrayValueDisplayPairs(cityOptions)}
+            placeholder={t("Field8.Title")}
+          />
+        </FormContentWrapper>
+        <StickyActionWrapper>
+          <RyogoDefaultButton
+            size={"lg"}
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
+          />
+          <RyogoOutlineButton
+            size={"lg"}
+            label={t("SecondaryCTA")}
+            type="button"
+            onClick={() => router.back()}
+            disabled={form.formState.isSubmitting}
+          />
+        </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>
   )

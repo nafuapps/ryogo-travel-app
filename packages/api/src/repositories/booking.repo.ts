@@ -1415,6 +1415,18 @@ export const bookingRepository = {
             createdAt: true,
           },
         },
+        expenses: {
+          columns: {
+            id: true,
+            addedByUserId: true,
+            amount: true,
+            expensePhotoUrl: true,
+            isApproved: true,
+            type: true,
+            remarks: true,
+            createdAt: true,
+          },
+        },
       },
     })
   },

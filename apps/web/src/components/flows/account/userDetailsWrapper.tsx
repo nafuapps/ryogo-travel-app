@@ -33,7 +33,7 @@ export default async function UserDetailsWrapper({
           label={t("Joined")}
           value={moment(createdAt).format("DD MMM YYYY")}
         />
-        <UserStatusPill status={status} />
+        <UserStatusPill status={status} className="mt-auto" />
       </DetailsContentWrapper>
     </DetailsBorderWrapper>
   )

@@ -444,8 +444,14 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   orders: many(orders),
   payments: many(payments),
   addedVehicles: many(vehicles),
-  addedDrivers: many(drivers),
-  driver: one(drivers),
+  addedDrivers: many(drivers, {
+    relationName: "users_added_by_user_fkey",
+  }),
+  driver: one(drivers, {
+    fields: [users.id],
+    references: [drivers.userId],
+    relationName: "users_driver_fkey",
+  }),
   bookingsAssigned: many(bookings, {
     relationName: "bookings_assigned_user_fkey",
   }),
@@ -752,10 +758,15 @@ export const driverRelations = relations(drivers, ({ one, many }) => ({
     fields: [drivers.agencyId],
     references: [agencies.id],
   }),
-  user: one(users, { fields: [drivers.userId], references: [users.id] }),
+  user: one(users, {
+    fields: [drivers.userId],
+    references: [users.id],
+    relationName: "users_driver_fkey",
+  }),
   addedByUser: one(users, {
     fields: [drivers.addedByUserId],
     references: [users.id],
+    relationName: "users_added_by_user_fkey",
   }),
   assignedBookings: many(bookings),
   driverLeaves: many(driverLeaves),

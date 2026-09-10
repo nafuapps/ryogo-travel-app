@@ -72,7 +72,7 @@ function getIconSize(size: RyogoIconSizeType) {
 function getBGIconSize(size: RyogoIconSizeType) {
   switch (size) {
     case "xl":
-      return "size-32 md:size-36"
+      return "size-36 md:size-40"
     case "lg":
       return "size-18 md:size-20"
     case "md":

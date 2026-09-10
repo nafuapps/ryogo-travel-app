@@ -42,12 +42,8 @@ export default async function DriverDetailsWrapper({
     <DetailsBorderWrapper>
       <DetailsIDWrapper id={id} label={t("DriverId")} />
       <DetailsContentWrapper>
-        <DetailsLineItem label={t("Phone")} value={phone} />
         <DetailsLineItem label={t("Email")} value={email} />
-        <DetailsLineItem
-          label={t("Joined")}
-          value={moment(createdAt).format("DD MMM YYYY")}
-        />
+        <DetailsLineItem label={t("Phone")} value={phone} />
         {address && <DetailsLineItem label={t("Address")} value={address} />}
         <DetailsLineItem
           label={t("Allowance")}
@@ -71,7 +67,11 @@ export default async function DriverDetailsWrapper({
             </SectionRowWrapper>
           </DetailsLineWrapper>
         )}
-        <DriverStatusPill status={status} />
+        <DetailsLineItem
+          label={t("Joined")}
+          value={moment(createdAt).format("DD MMM YYYY")}
+        />
+        <DriverStatusPill status={status} className="mt-auto" />
       </DetailsContentWrapper>
     </DetailsBorderWrapper>
   )

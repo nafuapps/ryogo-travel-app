@@ -288,7 +288,9 @@ export function DetailsContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col">{children}</div>
+    <div className="p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col h-full">
+      {children}
+    </div>
   )
 }
 
@@ -336,7 +338,7 @@ export function DetailsLineWrapper({
 
 export function InfoWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center lg:flex-row gap-3 lg:gap-4 p-3 lg:p-4">
+    <div className="flex flex-col items-center justify-center gap-3 lg:gap-4 p-3 lg:p-4">
       {children}
     </div>
   )
@@ -348,7 +350,7 @@ export function InfoContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 items-center lg:items-start my-3">
+    <div className="flex flex-col gap-2 lg:gap-3 items-center my-3">
       {children}
     </div>
   )

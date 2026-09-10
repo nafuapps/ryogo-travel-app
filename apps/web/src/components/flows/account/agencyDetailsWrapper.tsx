@@ -43,7 +43,7 @@ export default async function AgencyDetailsWrapper({
           label={t("Joined")}
           value={moment(createdAt).format("DD MMM YYYY")}
         />
-        <AgencyStatusPill status={status} />
+        <AgencyStatusPill status={status} className="mt-auto" />
       </DetailsContentWrapper>
     </DetailsBorderWrapper>
   )

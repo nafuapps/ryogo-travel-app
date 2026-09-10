@@ -58,7 +58,7 @@ export default async function UserDriverDetailsWrapper({
             </SectionRowWrapper>
           </DetailsLineWrapper>
         )}
-        <DriverStatusPill status={status} />
+        <DriverStatusPill status={status} className="mt-auto" />
       </DetailsContentWrapper>
     </DetailsBorderWrapper>
   )

@@ -44,7 +44,7 @@ export default function UserInfoWrapper({
       <InfoContentWrapper>
         <RyogoH4 weight="font-bold">{name}</RyogoH4>
         <RyogoSmall color="light">{agencyName}</RyogoSmall>
-        <UserRolePill role={userRole} className="self-center lg:self-start" />
+        <UserRolePill role={userRole} className="self-center" />
       </InfoContentWrapper>
     </InfoWrapper>
   )

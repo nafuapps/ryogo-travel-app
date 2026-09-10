@@ -168,11 +168,11 @@ function OnboardingHomeStepItem({
     <div className="flex flex-row gap-3 md:gap-4 items-center">
       <div className="flex flex-col items-center">
         <div
-          className={`w-1 h-2 md:h-3 ${!first && `bg-slate-100 dark:bg-slate-800`}`}
+          className={`w-1 h-2 md:h-3 ${!first && `bg-slate-50 dark:bg-slate-800`}`}
         ></div>
         <RyogoEnclosedIcon icon={icon} size="sm" color="slate" circular />
         <div
-          className={`w-1 h-2 md:h-3 ${!last && `bg-slate-100 dark:bg-slate-800`}`}
+          className={`w-1 h-2 md:h-3 ${!last && `bg-slate-50 dark:bg-slate-800`}`}
         ></div>
       </div>
       <RyogoSmall color="slate">{label}</RyogoSmall>

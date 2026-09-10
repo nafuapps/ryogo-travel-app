@@ -9,7 +9,7 @@ function getImageSizeClassName(size: RyogoImageSizeType) {
     case "xl":
       return "size-72 lg:size-80 rounded-2xl"
     case "lg":
-      return "size-32 lg:size-36 rounded-xl"
+      return "size-36 lg:size-40 rounded-xl"
     case "md":
       return "size-18 lg:size-20 rounded-lg"
     case "sm":
@@ -24,7 +24,7 @@ function getNextImageSizes(size: RyogoImageSizeType) {
     case "xl":
       return "(max-width: 1024px) 288px,320px"
     case "lg":
-      return "(max-width: 1024px) 128px,144px"
+      return "(max-width: 1024px) 144px,160px"
     case "md":
       return "(max-width: 1024px) 72px,80px"
     case "sm":

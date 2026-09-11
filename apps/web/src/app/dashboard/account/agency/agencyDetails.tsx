@@ -8,9 +8,9 @@ import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgency
 import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
 import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import AgencyInfoWrapper from "@/components/flows/account/agencyInfoWrapper"
-import AgencyDetailsWrapper from "@/components/flows/account/agencyDetailsWrapper"
-import AgencyQRCodeWrapper from "@/components/flows/account/agencyQRCodeWrapper"
+import AgencyInfoComponent from "@/components/flows/account/agencyInfoComponent"
+import AgencyDetailsComponent from "@/components/flows/account/agencyDetailsComponent"
+import AgencyQRCodeComponent from "@/components/flows/account/agencyQRCodeComponent"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -25,17 +25,17 @@ export default async function AgencyDetailsPageComponent({
     <PageWrapper id="AccountAgencyPage">
       <AccountDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
-        <AgencyInfoWrapper
+        <AgencyInfoComponent
           id={agency.id}
           logoUrl={agency.logoUrl}
           agencyName={agency.businessName}
           city={agency.location.city}
           state={agency.location.state}
+          status={agency.status}
           isOwner={isOwner}
         />
-        <AgencyDetailsWrapper
+        <AgencyDetailsComponent
           id={agency.id}
-          status={agency.status}
           address={agency.businessAddress}
           email={agency.businessEmail}
           phone={agency.businessPhone}
@@ -44,7 +44,7 @@ export default async function AgencyDetailsPageComponent({
         />
       </GridWrapper>
       {(isOwner || agency.qrCodeUrl) && (
-        <AgencyQRCodeWrapper
+        <AgencyQRCodeComponent
           agencyId={agency.id}
           qrCodeUrl={agency.qrCodeUrl}
           isOwner={isOwner}

@@ -13,7 +13,7 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
 
-export default async function AgencyAssignedUserWrapper({
+export default async function AgencyAssignedUserComponent({
   name,
   phone,
   photoUrl,

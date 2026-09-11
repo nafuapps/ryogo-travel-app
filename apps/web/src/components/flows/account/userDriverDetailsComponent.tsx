@@ -15,7 +15,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { getAverageRating } from "@/lib/utils"
 import { Star } from "lucide-react"
 
-export default async function UserDriverDetailsWrapper({
+export default async function UserDriverDetailsComponent({
   id,
   address,
   canDriveVehicles,

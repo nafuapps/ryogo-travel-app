@@ -2,10 +2,10 @@ import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.servic
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import { FindAssignedUserByDriverIdType } from "@ryogo-travel-app/api/services/user.services"
 import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
-import AgencyDetailsWrapper from "@/components/flows/account/agencyDetailsWrapper"
-import AgencyInfoWrapper from "@/components/flows/account/agencyInfoWrapper"
-import AgencyQRCodeWrapper from "@/components/flows/account/agencyQRCodeWrapper"
-import AgencyAssignedUserWrapper from "@/components/flows/account/agencyAssignedUserWrapper"
+import AgencyDetailsComponent from "@/components/flows/account/agencyDetailsComponent"
+import AgencyInfoComponent from "@/components/flows/account/agencyInfoComponent"
+import AgencyQRCodeComponent from "@/components/flows/account/agencyQRCodeComponent"
+import AgencyAssignedUserComponent from "@/components/flows/account/agencyAssignedUserComponent"
 
 export default function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -18,17 +18,17 @@ export default function MyProfileAgencyDetailsPageComponent({
     <PageWrapper id="RiderMyProfileAgencyPage">
       <MyProfileDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
-        <AgencyInfoWrapper
+        <AgencyInfoComponent
           id={agency.id}
           logoUrl={agency.logoUrl}
           agencyName={agency.businessName}
           city={agency.location.city}
           state={agency.location.state}
+          status={agency.status}
           isOwner={false}
         />
-        <AgencyDetailsWrapper
+        <AgencyDetailsComponent
           id={agency.id}
-          status={agency.status}
           address={agency.businessAddress}
           email={agency.businessEmail}
           phone={agency.businessPhone}
@@ -38,14 +38,14 @@ export default function MyProfileAgencyDetailsPageComponent({
         />
       </GridWrapper>
       {agency.qrCodeUrl && (
-        <AgencyQRCodeWrapper
+        <AgencyQRCodeComponent
           agencyId={agency.id}
           qrCodeUrl={agency.qrCodeUrl}
           isOwner={false}
         />
       )}
       {assignedUser && (
-        <AgencyAssignedUserWrapper
+        <AgencyAssignedUserComponent
           name={assignedUser.name}
           phone={assignedUser.phone}
           photoUrl={assignedUser.photoUrl}

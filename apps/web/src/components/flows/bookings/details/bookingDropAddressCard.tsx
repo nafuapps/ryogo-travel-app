@@ -1,10 +1,7 @@
+import { EditInfoWrapper, AddInfoWrapper } from "@/components/page/pageWrappers"
 import ChangeUserDropAddressSheet from "@/components/sheets/changeDropAddressSheet"
 import { MapPinCheck } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import {
-  BookingAddTripInfoWrapper,
-  BookingEditTripInfoWrapper,
-} from "./bookingDetailsCommon"
 
 export default async function BookingDropAddressCard({
   bookingId,
@@ -29,7 +26,7 @@ export default async function BookingDropAddressCard({
         originalDropAddress={dropAddress}
         canEdit={canEdit}
       >
-        <BookingEditTripInfoWrapper
+        <EditInfoWrapper
           label={t("DropAddress")}
           value={dropAddress}
           canEdit={canEdit}
@@ -47,10 +44,7 @@ export default async function BookingDropAddressCard({
         userId={userId}
         originalDropAddress={dropAddress}
       >
-        <BookingAddTripInfoWrapper
-          label={t("AddDropAddress")}
-          icon={MapPinCheck}
-        />
+        <AddInfoWrapper label={t("AddDropAddress")} icon={MapPinCheck} />
       </ChangeUserDropAddressSheet>
     )
   }

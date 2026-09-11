@@ -1,5 +1,4 @@
-import { DriverStatusPill } from "@/components/pills/ryogoPills"
-import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
@@ -16,7 +15,7 @@ import { getAverageRating } from "@/lib/utils"
 import { Star } from "lucide-react"
 import moment from "moment"
 
-export default async function DriverDetailsWrapper({
+export default async function DriverDetailsComponent({
   id,
   phone,
   email,
@@ -25,7 +24,7 @@ export default async function DriverDetailsWrapper({
   canDriveVehicles,
   allowance,
   ratings,
-  status,
+  userId,
 }: {
   id: string
   phone: string
@@ -35,13 +34,18 @@ export default async function DriverDetailsWrapper({
   canDriveVehicles: VehicleTypesEnum[]
   allowance: number
   ratings: number[] | null
-  status: DriverStatusEnum
+  userId: string
 }) {
   const t = await getTranslations("Dashboard.DriverDetails")
   return (
     <DetailsBorderWrapper>
       <DetailsIDWrapper id={id} label={t("DriverId")} />
       <DetailsContentWrapper>
+        <DetailsLineItem
+          label={t("Joined")}
+          value={moment(createdAt).format("DD MMM YYYY")}
+        />
+        <DetailsLineItem label={t("UserId")} value={userId} />
         <DetailsLineItem label={t("Email")} value={email} />
         <DetailsLineItem label={t("Phone")} value={phone} />
         {address && <DetailsLineItem label={t("Address")} value={address} />}
@@ -67,11 +71,6 @@ export default async function DriverDetailsWrapper({
             </SectionRowWrapper>
           </DetailsLineWrapper>
         )}
-        <DetailsLineItem
-          label={t("Joined")}
-          value={moment(createdAt).format("DD MMM YYYY")}
-        />
-        <DriverStatusPill status={status} className="mt-auto" />
       </DetailsContentWrapper>
     </DetailsBorderWrapper>
   )

@@ -3,7 +3,10 @@ import { FieldValues, UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { PageSkeleton } from "./loadingWrappers"
 import CopyClipboardButton from "../buttons/copy/copyClipboardButton"
-import { RyogoCaption, RyogoSmall } from "../typography"
+import { RyogoCaption, RyogoP, RyogoSmall, RyogoTiny } from "../typography"
+import { format } from "date-fns"
+import { LucideIcon, SquarePen } from "lucide-react"
+import { RyogoEnclosedIcon, RyogoIcon } from "../icons/ryogoIcon"
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -63,18 +66,20 @@ export function FormWrapper<T extends FieldValues>({
   form,
   children,
   onSubmit,
+  hFull = true,
 }: {
   id: string
   form: UseFormReturn<T, any, T>
   children: React.ReactNode
   onSubmit: SubmitEventHandler<HTMLFormElement>
+  hFull?: boolean
 }) {
   return (
     <Form {...form}>
       <form
         id={id}
         onSubmit={onSubmit}
-        className="flex flex-col gap-3 lg:gap-4 w-full h-full"
+        className={`flex flex-col gap-3 lg:gap-4 w-full ${hFull ? "h-full" : ""}`}
       >
         {children}
       </form>
@@ -91,6 +96,16 @@ export function FormContentWrapper({
     <div className="flex flex-col relative gap-3 lg:gap-4 bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5">
       {children}
     </div>
+  )
+}
+
+export function SheetContentWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col relative gap-3 lg:gap-4 p-4">{children}</div>
   )
 }
 
@@ -316,7 +331,9 @@ export function DetailsLineItem({
   return (
     <SectionRowWrapper center>
       <RyogoCaption color="light">{label}</RyogoCaption>
-      <RyogoCaption color="slate">{value}</RyogoCaption>
+      <RyogoCaption color="slate" className="text-end">
+        {value}
+      </RyogoCaption>
     </SectionRowWrapper>
   )
 }
@@ -350,8 +367,66 @@ export function InfoContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 items-center my-3">
+    <div className="flex flex-col gap-1.5 lg:gap-2 items-center my-2">
       {children}
+    </div>
+  )
+}
+
+export function DateWrapper({
+  date,
+  showYear = true,
+}: {
+  date: Date
+  showYear?: boolean
+}) {
+  return (
+    <div className="rounded-md bg-slate-100 dark:bg-slate-800 py-2 lg:py-3 px-5 lg:px-6 flex flex-col items-center justify-center">
+      <RyogoCaption color="slate">{format(date, "MMM")}</RyogoCaption>
+      <RyogoP color="slate" weight="font-bold">
+        {format(date, "dd")}
+      </RyogoP>
+      {showYear && <RyogoTiny color="light">{format(date, "yyyy")}</RyogoTiny>}
+    </div>
+  )
+}
+
+export function AddInfoWrapper({
+  icon,
+  label,
+}: {
+  icon: LucideIcon
+  label: string
+}) {
+  return (
+    <div className="border border-dashed rounded-md flex items-center p-3 lg:p-4 gap-2 lg:gap-3 hover:bg-slate-100 dark:hover:bg-slate-800">
+      <RyogoEnclosedIcon icon={icon} size="sm" color="black" />
+      <RyogoCaption color="light">{label}</RyogoCaption>
+    </div>
+  )
+}
+
+export function EditInfoWrapper({
+  label,
+  value,
+  canEdit,
+  icon,
+}: {
+  label: string
+  value: string
+  canEdit: boolean
+  icon: LucideIcon
+}) {
+  return (
+    <div
+      className={`border flex p-3 lg:p-4 gap-2 lg:gap-3 justify-between items-center rounded-md ${canEdit ? "hover:bg-slate-100 dark:hover:bg-slate-800" : ""}`}
+    >
+      <RyogoEnclosedIcon icon={icon} size="sm" color="black" />
+      <SectionColWrapper wFull small>
+        <RyogoCaption color="light">{label}</RyogoCaption>
+        <RyogoSmall color="slate">{value}</RyogoSmall>
+      </SectionColWrapper>
+      {canEdit && <RyogoIcon icon={SquarePen} size="sm" />}
     </div>
   )
 }

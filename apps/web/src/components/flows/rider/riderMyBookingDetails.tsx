@@ -22,8 +22,8 @@ import BookingCreationInfoCard from "@/components/flows/bookings/details/booking
 import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
 import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
 import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
-import { BookingEditTripInfoWrapper } from "@/components/flows/bookings/details/bookingDetailsCommon"
 import { getDisplayTime } from "@/lib/utils"
+import { EditInfoWrapper } from "@/components/page/pageWrappers"
 
 export default async function RiderMybooking({
   booking,
@@ -61,7 +61,7 @@ export default async function RiderMybooking({
         {canSeeTripDetails && (
           <>
             {booking.startTime && (
-              <BookingEditTripInfoWrapper
+              <EditInfoWrapper
                 icon={ClipboardClock}
                 label={t("StartTime")}
                 value={getDisplayTime(booking.startTime)}
@@ -69,7 +69,7 @@ export default async function RiderMybooking({
               />
             )}
             {booking.pickupAddress && (
-              <BookingEditTripInfoWrapper
+              <EditInfoWrapper
                 label={t("PickupAddress")}
                 value={booking.pickupAddress}
                 icon={MapPinHouse}
@@ -77,7 +77,7 @@ export default async function RiderMybooking({
               />
             )}
             {booking.dropAddress && (
-              <BookingEditTripInfoWrapper
+              <EditInfoWrapper
                 label={t("DropAddress")}
                 value={booking.dropAddress}
                 canEdit={false}
@@ -87,7 +87,7 @@ export default async function RiderMybooking({
           </>
         )}
         {booking.remarks && (
-          <BookingEditTripInfoWrapper
+          <EditInfoWrapper
             label={t("Remarks")}
             value={booking.remarks}
             canEdit={false}

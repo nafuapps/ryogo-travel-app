@@ -1,22 +1,26 @@
-import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
 import {
   InfoContentWrapper,
   InfoWrapper,
   SectionColWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Building } from "lucide-react"
+import { Building, MapPin } from "lucide-react"
 import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
+import { AgencyStatusPill } from "@/components/pills/ryogoPills"
+import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export default function AgencyInfoWrapper({
+export default function AgencyInfoComponent({
   id,
   logoUrl,
   isOwner,
   city,
   state,
   agencyName,
+  status,
 }: {
   id: string
   logoUrl: string | null
@@ -24,6 +28,7 @@ export default function AgencyInfoWrapper({
   city: string
   state: string
   agencyName: string
+  status: AgencyStatusEnum
 }) {
   return (
     <InfoWrapper>
@@ -37,8 +42,11 @@ export default function AgencyInfoWrapper({
       </SectionColWrapper>
       <InfoContentWrapper>
         <RyogoH4 weight="font-bold">{agencyName}</RyogoH4>
-        <RyogoSmall color="slate">{city}</RyogoSmall>
-        <RyogoCaption color="light">{state}</RyogoCaption>
+        <SectionRowWrapper center small>
+          <RyogoIcon icon={MapPin} size="sm" color="light" />
+          <RyogoSmall color="light">{city + ", " + state}</RyogoSmall>
+        </SectionRowWrapper>
+        <AgencyStatusPill status={status} className="mt-auto self-center" />
       </InfoContentWrapper>
     </InfoWrapper>
   )

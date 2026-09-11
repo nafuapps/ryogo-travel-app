@@ -8,7 +8,7 @@ import { RyogoCaption } from "@/components/typography"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 
-export default async function AgencyQRCodeWrapper({
+export default async function AgencyQRCodeComponent({
   agencyId,
   qrCodeUrl,
   isOwner,

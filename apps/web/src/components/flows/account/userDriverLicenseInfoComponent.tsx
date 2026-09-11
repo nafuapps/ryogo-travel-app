@@ -11,7 +11,7 @@ import {
   InfoWrapper,
 } from "@/components/page/pageWrappers"
 
-export default async function UserDriverLicenseInfoWrapper({
+export default async function UserDriverLicenseInfoComponent({
   licenseNumber,
   photoUrl,
   expiryDate,

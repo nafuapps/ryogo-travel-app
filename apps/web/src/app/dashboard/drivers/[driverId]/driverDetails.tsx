@@ -6,12 +6,17 @@ import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  GridWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import DriverInfoWrapper from "@/components/flows/drivers/details/driverInfoWrapper"
-import DriverDetailsWrapper from "@/components/flows/drivers/details/driverDetailsWrapper"
+import DriverInfoComponent from "@/components/flows/drivers/details/driverInfoComponent"
+import DriverDetailsComponent from "@/components/flows/drivers/details/driverDetailsComponent"
+import DriverLicenseInfoComponent from "@/components/flows/drivers/details/driverLicenseInfoComponent"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -30,16 +35,17 @@ export default async function DriverDetailsPageComponent({
     <PageWrapper id="DriverDetailsPage">
       <DriverDetailHeaderTabs selectedTab={"Driver"} id={driver.id} />
       <GridWrapper id="DriverDetails">
-        <DriverInfoWrapper
+        <DriverInfoComponent
           userId={driver.userId}
           photoUrl={driver.user.photoUrl}
           agencyId={driver.agencyId}
           name={driver.name}
+          status={driver.status}
           canChangePhoto={canChangeDetails}
         />
-        <DriverDetailsWrapper
+        <DriverDetailsComponent
           id={driver.id}
-          status={driver.status}
+          userId={driver.userId}
           createdAt={driver.createdAt}
           phone={driver.phone}
           email={driver.user.email}
@@ -49,6 +55,17 @@ export default async function DriverDetailsPageComponent({
           ratings={driver.customerRatings}
         />
       </GridWrapper>
+      <SectionWrapper id="DriverLicenseDetails">
+        <DriverLicenseInfoComponent
+          driverId={driver.id}
+          agencyId={driver.agencyId}
+          addedByUserId={driver.addedByUserId}
+          licenseNumber={driver.licenseNumber}
+          photoUrl={driver.licensePhotoUrl}
+          licenseExpiresOn={driver.licenseExpiresOn}
+          canEdit={canChangeDetails}
+        />
+      </SectionWrapper>
       <GridWrapper id="DriverCommunication">
         <RyogoPhoneButton label={t("CallDriver")} phone={driver.phone} />
         <RyogoChatButton

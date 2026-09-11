@@ -1,6 +1,4 @@
-import { UserRolePill } from "@/components/pills/ryogoPills"
 import { RyogoH4, RyogoSmall } from "@/components/typography"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import {
   InfoContentWrapper,
@@ -11,21 +9,23 @@ import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
+import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
 
-export default function UserInfoWrapper({
+export default function UserInfoComponent({
   id,
   photoUrl,
   agencyId,
   name,
   agencyName,
-  userRole,
+  status,
 }: {
   id: string
   photoUrl: string | null
   agencyId: string
   name: string
   agencyName: string
-  userRole: UserRolesEnum
+  status: UserStatusEnum
 }) {
   return (
     <InfoWrapper>
@@ -44,7 +44,7 @@ export default function UserInfoWrapper({
       <InfoContentWrapper>
         <RyogoH4 weight="font-bold">{name}</RyogoH4>
         <RyogoSmall color="light">{agencyName}</RyogoSmall>
-        <UserRolePill role={userRole} className="self-center" />
+        <UserStatusPill status={status} className="self-center" />
       </InfoContentWrapper>
     </InfoWrapper>
   )

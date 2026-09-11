@@ -1,10 +1,7 @@
 import ChangeUserPickupAddressSheet from "@/components/sheets/changePickupAddressSheet"
 import { MapPinHouse } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import {
-  BookingAddTripInfoWrapper,
-  BookingEditTripInfoWrapper,
-} from "./bookingDetailsCommon"
+import { EditInfoWrapper, AddInfoWrapper } from "@/components/page/pageWrappers"
 
 export default async function BookingPickupAddressCard({
   bookingId,
@@ -32,7 +29,7 @@ export default async function BookingPickupAddressCard({
         customerAddress={customerAddress}
         canEdit={canEdit}
       >
-        <BookingEditTripInfoWrapper
+        <EditInfoWrapper
           label={t("PickupAddress")}
           value={pickupAddress}
           canEdit={canEdit}
@@ -51,10 +48,7 @@ export default async function BookingPickupAddressCard({
         originalPickupAddress={pickupAddress}
         customerAddress={customerAddress}
       >
-        <BookingAddTripInfoWrapper
-          icon={MapPinHouse}
-          label={t("AddPickupAddress")}
-        />
+        <AddInfoWrapper icon={MapPinHouse} label={t("AddPickupAddress")} />
       </ChangeUserPickupAddressSheet>
     )
   }

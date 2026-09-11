@@ -1,10 +1,7 @@
+import { EditInfoWrapper, AddInfoWrapper } from "@/components/page/pageWrappers"
 import ChangeBookingRemarksSheet from "@/components/sheets/changeBookingRemarksSheet"
 import { MessageSquarePlus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import {
-  BookingAddTripInfoWrapper,
-  BookingEditTripInfoWrapper,
-} from "./bookingDetailsCommon"
 
 export default async function BookingRemarksCard({
   bookingId,
@@ -29,7 +26,7 @@ export default async function BookingRemarksCard({
         originalRemarks={remarks}
         canEdit={canEdit}
       >
-        <BookingEditTripInfoWrapper
+        <EditInfoWrapper
           label={t("Remarks")}
           value={remarks}
           canEdit={canEdit}
@@ -47,10 +44,7 @@ export default async function BookingRemarksCard({
         userId={userId}
         originalRemarks={remarks}
       >
-        <BookingAddTripInfoWrapper
-          label={t("AddRemarks")}
-          icon={MessageSquarePlus}
-        />
+        <AddInfoWrapper label={t("AddRemarks")} icon={MessageSquarePlus} />
       </ChangeBookingRemarksSheet>
     )
   }

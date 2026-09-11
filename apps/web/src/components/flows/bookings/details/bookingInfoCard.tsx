@@ -3,13 +3,13 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionRowWrapper,
+  DateWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { ClockPlus, User } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
-import { BookingDateWrapper } from "./bookingDetailsCommon"
 
 export default async function BookingCreationInfoCard({
   name,
@@ -27,7 +27,7 @@ export default async function BookingCreationInfoCard({
         <RyogoCaption color="light">{t("Created")}</RyogoCaption>
       </div>
       <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 items-center justify-center">
-        <BookingDateWrapper date={createdAt} />
+        <DateWrapper date={createdAt} />
         <SectionColWrapper wFull small>
           <SectionRowWrapper center justifyStart>
             <RyogoEnclosedIcon icon={ClockPlus} size="sm" color="slate" />

@@ -10,7 +10,10 @@ import { bookingRepository } from "../repositories/booking.repo"
 import { userRepository } from "../repositories/user.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import { tripLogRepository } from "../repositories/tripLog.repo"
-import { ModifyDriverRequestType } from "../types/driver.types"
+import {
+  ModifyDriverRequestType,
+  ChangeDriverLicenseRequestType,
+} from "../types/driver.types"
 import { addDays } from "date-fns"
 import { ModifyDriverLeaveRequestType } from "../types/driverLeave.types"
 
@@ -152,12 +155,23 @@ export const driverServices = {
   },
 
   //Modify driver details
-  async modifyDriver(data: ModifyDriverRequestType, licensePhotoUrl?: string) {
-    const driver = await driverRepository.updateDriver(
+  async modifyDriver(data: ModifyDriverRequestType) {
+    const driver = await driverRepository.updateDriverDetails(
       data.driverId,
       data.canDriveVehicleTypes,
       data.address,
       data.defaultAllowancePerDay,
+    )
+    return driver[0]
+  },
+
+  //Change driver license details
+  async changeDriverLicense(
+    data: ChangeDriverLicenseRequestType,
+    licensePhotoUrl?: string,
+  ) {
+    const driver = await driverRepository.updateDriverLicenseDetails(
+      data.driverId,
       data.licenseNumber,
       data.licenseExpiresOn,
       licensePhotoUrl,

@@ -1,11 +1,8 @@
+import { EditInfoWrapper, AddInfoWrapper } from "@/components/page/pageWrappers"
 import ChangeStartTimeSheet from "@/components/sheets/changeStartTimeSheet"
 import { getDisplayTime } from "@/lib/utils"
 import { ClipboardClock } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import {
-  BookingAddTripInfoWrapper,
-  BookingEditTripInfoWrapper,
-} from "./bookingDetailsCommon"
 
 export default async function BookingStartTimeCard({
   bookingId,
@@ -30,7 +27,7 @@ export default async function BookingStartTimeCard({
         originalStartTime={startTime}
         canEdit={canEdit}
       >
-        <BookingEditTripInfoWrapper
+        <EditInfoWrapper
           icon={ClipboardClock}
           label={t("StartTime")}
           value={getDisplayTime(startTime)}
@@ -48,10 +45,7 @@ export default async function BookingStartTimeCard({
         userId={userId}
         originalStartTime={startTime}
       >
-        <BookingAddTripInfoWrapper
-          icon={ClipboardClock}
-          label={t("AddStartTime")}
-        />
+        <AddInfoWrapper icon={ClipboardClock} label={t("AddStartTime")} />
       </ChangeStartTimeSheet>
     )
   }

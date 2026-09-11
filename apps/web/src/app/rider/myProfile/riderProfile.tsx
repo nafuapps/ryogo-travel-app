@@ -9,10 +9,10 @@ import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
 import { FindUserDetailsWithDriverByIdType } from "@ryogo-travel-app/api/services/user.services"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import UserInfoWrapper from "@/components/flows/account/userInfoWrapper"
-import UserDetailsWrapper from "@/components/flows/account/userDetailsWrapper"
-import UserDriverDetailsWrapper from "@/components/flows/account/userDriverDetailsWrapper"
-import UserDriverLicenseInfoWrapper from "@/components/flows/account/userDriverLicenseInfoWrapper"
+import UserInfoComponent from "@/components/flows/account/userInfoComponent"
+import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
+import UserDriverDetailsComponent from "@/components/flows/account/userDriverDetailsComponent"
+import UserDriverLicenseInfoComponent from "@/components/flows/account/userDriverLicenseInfoComponent"
 
 export default async function RiderProfilePageComponent({
   account,
@@ -25,17 +25,17 @@ export default async function RiderProfilePageComponent({
     <PageWrapper id="RiderProfilePage">
       <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <GridWrapper id="RiderAccountDetails">
-        <UserInfoWrapper
+        <UserInfoComponent
           id={account.id}
           photoUrl={account.photoUrl}
           agencyId={account.agencyId}
           name={account.name}
           agencyName={account.agency.businessName}
-          userRole={account.userRole}
-        />
-        <UserDetailsWrapper
-          id={account.id}
           status={account.status}
+        />
+        <UserDetailsComponent
+          id={account.id}
+          role={account.userRole}
           phone={account.phone}
           email={account.email}
           createdAt={account.createdAt}
@@ -43,12 +43,12 @@ export default async function RiderProfilePageComponent({
       </GridWrapper>
       {account.driver && (
         <GridWrapper id="RiderDriverDetails">
-          <UserDriverLicenseInfoWrapper
+          <UserDriverLicenseInfoComponent
             licenseNumber={account.driver.licenseNumber}
             photoUrl={account.driver.licensePhotoUrl}
             expiryDate={account.driver.licenseExpiresOn}
           />
-          <UserDriverDetailsWrapper
+          <UserDriverDetailsComponent
             id={account.driver.id}
             address={account.driver.address}
             status={account.driver.status}

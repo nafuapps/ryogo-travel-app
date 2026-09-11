@@ -1,15 +1,14 @@
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import { AirVent, Users } from "lucide-react"
 import {
+  DateWrapper,
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import { getTranslations } from "next-intl/server"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { BookingDateWrapper } from "./bookingDetailsCommon"
 
 export default async function BookingTripCard({
   booking,
@@ -28,12 +27,6 @@ export default async function BookingTripCard({
           state={booking.source.state}
         />
         <SectionColWrapper center small>
-          {/* <GetTripTypeIcon
-            tripType={booking.type}
-            size="sm"
-            color="light"
-            thick
-          /> */}
           <DistanceWrapper label={booking.citydistance + t("Km")} />
         </SectionColWrapper>
         <LocationWrapper
@@ -44,11 +37,11 @@ export default async function BookingTripCard({
       </div>
       <div className="mx-3 lg:mx-4 border-t border-dashed h-0" />
       <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x rounded-t-2xl">
-        <BookingDateWrapper date={startDate} />
+        <DateWrapper date={startDate} />
         <SectionColWrapper center small>
           <RyogoPill bgColor="slate" label={booking.type.toUpperCase()} />
         </SectionColWrapper>
-        <BookingDateWrapper date={endDate} />
+        <DateWrapper date={endDate} />
       </div>
       <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x border-b rounded-b-lg bg-slate-100 dark:bg-slate-800">
         <SectionRowWrapper small center>

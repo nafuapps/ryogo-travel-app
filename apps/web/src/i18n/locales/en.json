@@ -392,7 +392,7 @@
           "Description": "Upload photo of vehicle registration certificate",
           "Error1": "RC photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field4": {
           "Title": "Vehicle photo",
@@ -400,7 +400,7 @@
           "Description": "Upload photos of the vehicle (atleast 1 photo with number plate visible)",
           "Error1": "Vehicle photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field5": {
           "Title": "RC expiry date",
@@ -427,7 +427,7 @@
           "Description": "Upload insurance policy photo",
           "Error1": "Insurance policy photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field3": {
           "Title": "PUC expiry date",
@@ -442,7 +442,7 @@
           "Description": "Upload Pollution Under Control Certificate photo",
           "Error1": "PUC certificate photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png)"
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
@@ -559,7 +559,7 @@
           "Description": "Upload driver license photo",
           "Error1": "License photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
@@ -1358,7 +1358,7 @@
         "Placeholder": "UPLOAD",
         "Description": "Upload the transaction document photo",
         "Error1": "Image file size should be less than 1MB",
-        "Error2": "Only image or pdf files are allowed"
+        "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Create Transaction",
       "Loading": "Loading..",
@@ -1402,7 +1402,7 @@
         "Placeholder": "UPLOAD",
         "Description": "Upload the transaction document photo",
         "Error1": "Image file size should be less than 1MB",
-        "Error2": "Only image or pdf files are allowed"
+        "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Save changes",
       "Loading": "Loading..",
@@ -1437,7 +1437,7 @@
         "Placeholder": "UPLOAD",
         "Description": "Upload the expense document photo",
         "Error1": "Image file size should be less than 1MB",
-        "Error2": "Only image or pdf files are allowed"
+        "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Create Expense",
       "Loading": "Loading..",
@@ -1471,7 +1471,7 @@
         "Placeholder": "UPLOAD",
         "Description": "Upload the expense document photo",
         "Error1": "Image file size should be less than 1MB",
-        "Error2": "Only image or pdf files are allowed"
+        "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Save changes",
       "Loading": "Loading..",
@@ -1638,7 +1638,7 @@
           "Description": "Upload photo of vehicle registration certificate",
           "Error1": "RC photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field4": {
           "Title": "Vehicle photo",
@@ -1646,7 +1646,7 @@
           "Description": "Upload a photo of the vehicle (with number plate visible)",
           "Error1": "Vehicle photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field5": {
           "Title": "RC expiry date",
@@ -1676,7 +1676,7 @@
           "Description": "Upload insurance policy photo",
           "Error1": "Insurance policy photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field3": {
           "Title": "PUC expiry date",
@@ -1691,7 +1691,7 @@
           "Description": "Upload Pollution Under Control Certificate photo",
           "Error1": "PUC certificate photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png)"
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
@@ -1766,7 +1766,7 @@
         "Title": "Choose a photo to upload:",
         "Placeholder": "Browse a new photo",
         "Error1": "Vehicle photo is required and size should be less than 1MB",
-        "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png)",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
         "Save": "Save changes",
         "Close": "Cancel",
         "Success": "Vehicle photo updated successfully!",
@@ -1848,7 +1848,7 @@
         "Placeholder": "UPLOAD RC",
         "Description": "Upload photo of vehicle registration certificate",
         "Error2": "File size should be less than 1MB",
-        "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "Field9": {
         "Title": "Insurance expiry date",
@@ -1861,7 +1861,7 @@
         "Placeholder": "UPLOAD",
         "Description": "Upload insurance policy photo",
         "Error2": "File size should be less than 1MB",
-        "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+        "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "Field11": {
         "Title": "PUC expiry date",
@@ -1874,7 +1874,7 @@
         "Placeholder": "UPLOAD",
         "Description": "Upload Pollution Under Control Certificate photo",
         "Error2": "File size should be less than 1MB",
-        "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+        "Error3": "Only image files are allowed (.jpg, .jpeg, .png)"
       },
       "Field13": {
         "Title": "Vehicle rate per Km (in ₹)",
@@ -2069,7 +2069,7 @@
           "Description": "Upload driver license photo",
           "Error1": "License photo is required",
           "Error2": "File size should be less than 1MB",
-          "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
@@ -2135,6 +2135,7 @@
         "Subtitle": "Start a Whatsapp chat with driver"
       },
       "DriverId": "Driver ID",
+      "UserId": "User ID",
       "Email": "Email",
       "Phone": "Phone",
       "Joined": "Joined",
@@ -2144,16 +2145,42 @@
       "PerDay": "₹{allowance} per day",
       "Rating": "Customer Rating",
       "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
-      "LicenseInfo": "License info",
-      "LicensePhoto": "License Photo",
-      "ValidTill": "Valid till: ",
-      "AgencyInfo": "Agency related info",
       "EditDetails": {
         "Title": "Edit Details",
         "Subtitle": "Change driver details like address, license, default allowance"
+      },
+      "ChangeLicense": {
+        "Field1": {
+          "Title": "Driver license number",
+          "Placeholder": "GJ1220190000001",
+          "Description": "Provide license number of the driver (without space or dash)",
+          "Error1": "License number must be atleast 12 characters",
+          "Error2": "License number must be less than 20 characters"
+        },
+        "Field2": {
+          "Title": "License expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide driver license expiry date",
+          "Error1": "Providing driver license expiry date is mandatory",
+          "Error2": "License should not be expired"
+        },
+        "Field3": {
+          "Title": "Driver License photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload driver license photo",
+          "Error2": "File size should be less than 1MB",
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "Button": "Update Driver License",
+        "Header": "Change driver license details",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Driver license details updated successfully!",
+        "Error": "Cannot update license details.. please try again after some time."
       }
     },
     "ModifyDriver": {
+      "Title": "Edit Driver Details",
       "Field1": {
         "Title": "Driver address",
         "Placeholder": "Address Line 1, Street, City, State, Pincode",
@@ -2173,27 +2200,6 @@
         "Error3": "Driver allowance must be less than ₹10000",
         "Error4": "Driver allowance cannot be in decimals",
         "Error5": "Driver allowance must be a positive number"
-      },
-      "Field4": {
-        "Title": "Driver license number",
-        "Placeholder": "GJ1220190000001",
-        "Description": "Provide license number of the driver (without space or dash)",
-        "Error1": "License number must be atleast 12 characters",
-        "Error2": "License number must be less than 20 characters"
-      },
-      "Field5": {
-        "Title": "License expiry date",
-        "Placeholder": "Select date",
-        "Description": "Provide driver license expiry date",
-        "Error1": "Providing driver license expiry date is mandatory",
-        "Error2": "License should not be expired"
-      },
-      "Field6": {
-        "Title": "Driver License photo",
-        "Placeholder": "UPLOAD",
-        "Description": "Upload driver license photo",
-        "Error2": "File size should be less than 1MB",
-        "Error3": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf )"
       },
       "PrimaryCTA": "Save changes",
       "SecondaryCTA": "Back",
@@ -2302,7 +2308,7 @@
         "Placeholder": "UPLOAD",
         "Description": "Upload the customer's photo",
         "Error1": "File size should be less than 1MB",
-        "Error2": "Only image and pdf files are allowed (.jpg, .jpeg, .png, .pdf)"
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png)"
       },
       "Field5": {
         "Title": "Enter customer address",
@@ -2417,6 +2423,7 @@
       "Email": "Email",
       "Phone": "Phone",
       "Joined": "Joined",
+      "Role": "Role",
       "ChangePhone": {
         "Title": "Change Phone",
         "Subtitle": "Your phone number is crucial for account login and communication"
@@ -4707,6 +4714,7 @@
         "DriverInactivated": "Driver {driverName} has been inactivated by {userName}",
         "DriverAdded": "New driver {driverName} has been added by {userName}",
         "DriverModified": "Driver {driverName} details have been changed by {userName}",
+        "DriverLicenseModified": "Driver {driverName} license details have been changed by {userName}",
         "DriverLeaveAdded": "Driver leave for {driverName} has been added by {userName}",
         "DriverLeaveModified": "Driver leave details changed for {driverName} by {userName}",
         "VehicleActivated": "Vehicle {vehicleNumber} has been activated by {userName}",

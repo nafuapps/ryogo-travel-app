@@ -276,14 +276,11 @@ export const driverRepository = {
   },
 
   //Update driver
-  async updateDriver(
+  async updateDriverDetails(
     id: string,
     canDriveVehicleTypes?: VehicleTypesEnum[],
     address?: string,
     defaultAllowancePerDay?: number,
-    licenseNumber?: string,
-    licenseExpiresOn?: Date,
-    licensePhotoUrl?: string,
   ) {
     return await db
       .update(drivers)
@@ -291,9 +288,6 @@ export const driverRepository = {
         canDriveVehicleTypes,
         address,
         defaultAllowancePerDay,
-        licenseNumber,
-        licenseExpiresOn,
-        licensePhotoUrl,
       })
       .where(eq(drivers.id, id))
       .returning({
@@ -301,6 +295,27 @@ export const driverRepository = {
         address: drivers.address,
         canDriveVehicleTypes: drivers.canDriveVehicleTypes,
         defaultAllowancePerDay: drivers.defaultAllowancePerDay,
+        name: drivers.name,
+        userId: drivers.userId,
+      })
+  },
+
+  async updateDriverLicenseDetails(
+    id: string,
+    licenseNumber?: string,
+    licenseExpiresOn?: Date,
+    licensePhotoUrl?: string,
+  ) {
+    return await db
+      .update(drivers)
+      .set({
+        licenseNumber,
+        licenseExpiresOn,
+        licensePhotoUrl,
+      })
+      .where(eq(drivers.id, id))
+      .returning({
+        id: drivers.id,
         licenseNumber: drivers.licenseNumber,
         licenseExpiresOn: drivers.licenseExpiresOn,
         licensePhotoUrl: drivers.licensePhotoUrl,

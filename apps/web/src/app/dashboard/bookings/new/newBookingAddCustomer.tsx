@@ -103,9 +103,9 @@ export default function NewBookingAddCustomerPageComponent({
     if (newCustomer) {
       //Go to new booking with customer page
       router.replace(`/dashboard/bookings/new/${newCustomer.id}`)
-      toast.success("Success")
+      toast.success(t("Success"))
     } else {
-      toast.error("Error")
+      toast.error(t("Error"))
     }
   }
 

@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import DeleteExpenseAlertButton from "@/components/buttons/alert/deleteExpenseAlertButton"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
 import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 import {
@@ -120,7 +119,7 @@ export default function ModifyExpensePageComponent({
             name="type"
             title={t("Field1.Title")}
             register={form.register("type")}
-            array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
+            array={Object.values(ExpenseTypesEnum)}
             placeholder={t("Field1.Description")}
           />
           <RyogoInput

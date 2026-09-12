@@ -6,7 +6,6 @@ import SupportTicketItem from "@/components/flows/support/supportTicketItem"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoSmall } from "@/components/typography"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { FindSupportTicketsByUserIdType } from "@ryogo-travel-app/api/services/support.services"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Plus } from "lucide-react"
@@ -21,11 +20,9 @@ export default function MySupportTicketsPageComponent({
 }) {
   const t = useTranslations("Rider.MySupportTickets")
 
-  const ticketStatusPairs = getEnumValueDisplayPairs(TicketStatusEnum)
+  const allFilters = Object.values(TicketStatusEnum)
 
-  const [selectedFilters, setSelectedFilters] = useState<TicketStatusEnum[]>(
-    ticketStatusPairs.map((pair) => pair.value),
-  )
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(allFilters)
 
   const filteredTickets = tickets.filter((t) =>
     selectedFilters.includes(t.status),
@@ -41,8 +38,8 @@ export default function MySupportTicketsPageComponent({
           <RyogoIcon icon={Plus} size="sm" color="slate" />
         </RyogoOutlineButton>
       </Link>
-      <FilterCheckboxGroup<TicketStatusEnum>
-        enumValueDisplayPairs={ticketStatusPairs}
+      <FilterCheckboxGroup
+        allFilters={allFilters}
         title={t("TicketStatusFilters")}
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}

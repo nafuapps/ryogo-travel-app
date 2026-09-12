@@ -35,8 +35,8 @@ export default function AddVehiclePageComponent({
     data: {
       vehicleNumber: "",
       type: VehicleTypesEnum.CAR,
-      brand: VehicleBrandEnum.Honda,
-      color: VehicleColorEnum.White,
+      brand: VehicleBrandEnum.HONDA,
+      color: VehicleColorEnum.WHITE,
       model: "",
       capacity: undefined,
       odometerReading: undefined,

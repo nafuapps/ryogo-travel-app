@@ -7,7 +7,6 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { PageWrapper } from "@/components/page/pageWrappers"
 import { RyogoSmall } from "@/components/typography"
 import { Switch } from "@/components/ui/switch"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import {
   FindSupportTicketsByAgencyIdType,
   FindSupportTicketsByUserIdType,
@@ -35,11 +34,9 @@ export default function SupportTicketsPageComponent({
     ? tickets
     : tickets.filter((t) => t.userId === userId)
 
-  const ticketStatusPairs = getEnumValueDisplayPairs(TicketStatusEnum)
+  const allFilters = Object.values(TicketStatusEnum)
 
-  const [selectedFilters, setSelectedFilters] = useState<TicketStatusEnum[]>(
-    ticketStatusPairs.map((pair) => pair.value),
-  )
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(allFilters)
 
   const filteredTickets = allTickets.filter((t) =>
     selectedFilters.includes(t.status),
@@ -55,8 +52,8 @@ export default function SupportTicketsPageComponent({
           <RyogoIcon icon={Plus} size="sm" color="slate" />
         </RyogoOutlineButton>
       </Link>
-      <FilterCheckboxGroup<TicketStatusEnum>
-        enumValueDisplayPairs={ticketStatusPairs}
+      <FilterCheckboxGroup
+        allFilters={allFilters}
         title={t("TicketStatusFilters")}
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}

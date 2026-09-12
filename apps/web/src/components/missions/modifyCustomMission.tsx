@@ -22,7 +22,6 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { RyogoH3 } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { modifyCustomMissionAction } from "@/app/actions/missions/modifyCustomMissionAction"
@@ -141,7 +140,7 @@ export default function ModifyCustomMissionPageComponent({
             name="entityType"
             title={t("Field1.Title")}
             register={form.register("entityType")}
-            array={getEnumValueDisplayPairs(EntityTypeEnum)}
+            array={Object.values(EntityTypeEnum)}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />

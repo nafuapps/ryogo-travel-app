@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { addExpenseAction } from "@/app/actions/expenses/addExpenseAction"
 import { toast } from "sonner"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -120,7 +119,7 @@ export default function NewExpensePageComponent({
             name="type"
             title={t("Field1.Title")}
             register={form.register("type")}
-            array={getEnumValueDisplayPairs(ExpenseTypesEnum)}
+            array={Object.values(ExpenseTypesEnum)}
             placeholder={t("Field1.Description")}
           />
           <RyogoInput

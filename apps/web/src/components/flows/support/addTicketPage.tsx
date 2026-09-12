@@ -15,7 +15,6 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoH3 } from "@/components/typography"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
@@ -133,7 +132,7 @@ export default function AddSupportTicketPageComponent({
             name="entityType"
             title={t("Field1.Title")}
             register={form.register("entityType")}
-            array={getEnumValueDisplayPairs(EntityTypeEnum)}
+            array={Object.values(EntityTypeEnum)}
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />

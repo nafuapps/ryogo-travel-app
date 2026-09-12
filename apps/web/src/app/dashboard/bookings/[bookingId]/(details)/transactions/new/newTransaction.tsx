@@ -19,7 +19,6 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { addTransactionAction } from "@/app/actions/transactions/addTransactionAction"
 import { toast } from "sonner"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -121,7 +120,7 @@ export default function NewTransactionPageComponent({
             title={t("Field1.Title")}
             register={form.register("type")}
             defaultValue={TransactionTypesEnum.CREDIT}
-            array={getEnumValueDisplayPairs(TransactionTypesEnum)}
+            array={Object.values(TransactionTypesEnum)}
             description={t("Field1.Description")}
           />
           <RyogoInput
@@ -134,14 +133,14 @@ export default function NewTransactionPageComponent({
             name="mode"
             register={form.register("mode")}
             title={t("Field3.Title")}
-            array={getEnumValueDisplayPairs(TransactionModesEnum)}
+            array={Object.values(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
           <RyogoSelect
             name="otherParty"
             register={form.register("otherParty")}
             title={t("Field4.Title")}
-            array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
+            array={Object.values(TransactionsPartiesEnum)}
             placeholder={t("Field4.Placeholder")}
           />
           <RyogoTextarea

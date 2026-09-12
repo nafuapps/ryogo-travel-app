@@ -17,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 import {
   RyogoOutlineButton,
@@ -159,13 +158,13 @@ function LanguageSelector({ locale }: { locale: UserLangEnum }) {
         <SelectValue />
       </SelectTrigger>
       <SelectContent align="end" className="bg-white dark:bg-slate-900">
-        {getEnumValueDisplayPairs(UserLangEnum).map((lang) => (
+        {Object.values(UserLangEnum).map((lang) => (
           <SelectItem
-            key={lang.value}
-            value={lang.value}
+            key={lang}
+            value={lang}
             className="focus:bg-gray-50 dark:focus:bg-slate-900 text-gray-700 dark:text-gray-200"
           >
-            <RyogoCaption color="slate">{lang.display}</RyogoCaption>
+            <RyogoCaption color="slate">{lang}</RyogoCaption>
           </SelectItem>
         ))}
       </SelectContent>

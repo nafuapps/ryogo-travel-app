@@ -11,7 +11,6 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import {
   RyogoDefaultButton,
@@ -93,7 +92,7 @@ export function AddDriverStep3({
           placeholder={t("Field1.Placeholder")}
         />
         <RyogoMultipleCheckbox
-          array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+          array={Object.values(VehicleTypesEnum)}
           name={"canDriveVehicleTypes"}
           label={t("Field2.Title")}
         />

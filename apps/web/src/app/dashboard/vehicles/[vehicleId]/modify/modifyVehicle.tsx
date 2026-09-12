@@ -21,7 +21,6 @@ import {
   RyogoSwitch,
   RyogoCombobox,
 } from "@/components/form/ryogoFormFields"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -197,7 +196,7 @@ export default function ModifyVehiclePageComponent({
           <RyogoSelect
             name={"type"}
             register={form.register("type")}
-            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+            array={Object.values(VehicleTypesEnum)}
             title={t("Field1.Title")}
             placeholder={t("Field1.Title")}
           />
@@ -206,14 +205,14 @@ export default function ModifyVehiclePageComponent({
             register={form.register("brand")}
             title={t("Field2.Title")}
             description={t("Field2.Description")}
-            array={getEnumValueDisplayPairs(VehicleBrandEnum)}
+            array={Object.values(VehicleBrandEnum)}
             placeholder={t("Field2.Placeholder")}
           />
           <RyogoSelect
             name={"color"}
             register={form.register("color")}
             description={t("Field3.Description")}
-            array={getEnumValueDisplayPairs(VehicleColorEnum)}
+            array={Object.values(VehicleColorEnum)}
             title={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
           />

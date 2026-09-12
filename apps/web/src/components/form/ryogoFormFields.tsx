@@ -231,7 +231,7 @@ export function RyogoSelect({
 }: {
   name: string
   title?: string
-  array: { value: string; display: string }[]
+  array: string[]
   placeholder: string
   description?: string
   register: UseFormRegisterReturn<string>
@@ -263,8 +263,8 @@ export function RyogoSelect({
             </FormControl>
             <SelectContent>
               {array.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.display}
+                <SelectItem key={item} value={item}>
+                  {item}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -292,7 +292,7 @@ export function RyogoCombobox({
 }: {
   name: string
   title?: string
-  array: { value: string; display: string }[]
+  array: string[]
   placeholder: string
   register: UseFormRegisterReturn<string>
   resetField?: () => void
@@ -311,9 +311,7 @@ export function RyogoCombobox({
           </FormLabel>
           <Combobox
             items={array}
-            itemToStringValue={(item: { value: string; display: string }) =>
-              item.display
-            }
+            itemToStringValue={(item: string) => item}
             {...register}
             onValueChange={(value) => {
               field.onChange(value)
@@ -325,9 +323,9 @@ export function RyogoCombobox({
             <ComboboxContent>
               <ComboboxEmpty />
               <ComboboxList>
-                {(item) => (
-                  <ComboboxItem key={item.value} value={item.value}>
-                    {item.display}
+                {(item: string) => (
+                  <ComboboxItem key={item} value={item}>
+                    {item}
                   </ComboboxItem>
                 )}
               </ComboboxList>
@@ -351,7 +349,7 @@ export function RyogoRadio({
 }: {
   name: string
   title?: string
-  array: { value: string; display: string }[]
+  array: string[]
   register: UseFormRegisterReturn<string>
   defaultValue: string
   description?: string
@@ -373,9 +371,9 @@ export function RyogoRadio({
             defaultValue={defaultValue}
           >
             {array.map((item) => (
-              <div className="flex items-center gap-3" key={item.value}>
-                <RadioGroupItem value={item.value} id={item.value} />
-                <Label htmlFor={item.value}>{item.display}</Label>
+              <div className="flex items-center gap-3" key={item}>
+                <RadioGroupItem value={item} id={item} />
+                <Label htmlFor={item}>{item}</Label>
               </div>
             ))}
           </RadioGroup>
@@ -433,7 +431,7 @@ export function RyogoMultipleCheckbox({
 }: {
   name: string
   label: string
-  array: { value: string; display: string }[]
+  array: string[]
   fadeLabel?: boolean
 }) {
   return (
@@ -448,30 +446,30 @@ export function RyogoMultipleCheckbox({
           </FormLabel>
           {array.map((item) => (
             <FormField
-              key={item.value}
+              key={item}
               name={name}
               render={({ field }) => {
                 return (
                   <FormItem
-                    key={item.value}
+                    key={item}
                     className="flex flex-row items-end gap-2 lg:gap-3 w-full px-2"
                   >
                     <FormControl>
                       <Checkbox
-                        checked={field.value.includes(item.value)}
+                        checked={field.value.includes(item)}
                         onCheckedChange={(checked) => {
                           return checked
-                            ? field.onChange([...field.value, item.value])
+                            ? field.onChange([...field.value, item])
                             : field.onChange(
                                 field.value.filter(
-                                  (value: string) => value !== item.value,
+                                  (value: string) => value !== item,
                                 ),
                               )
                         }}
                       />
                     </FormControl>
                     <FormLabel className="text-sm font-normal">
-                      <RyogoCaption color="slate">{item.display}</RyogoCaption>
+                      <RyogoCaption color="slate">{item}</RyogoCaption>
                     </FormLabel>
                   </FormItem>
                 )

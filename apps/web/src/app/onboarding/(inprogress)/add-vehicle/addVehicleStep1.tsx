@@ -11,7 +11,6 @@ import {
   VehicleBrandEnum,
   VehicleColorEnum,
 } from "@ryogo-travel-app/db/schema"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
@@ -97,14 +96,14 @@ export function AddVehicleStep1({
         <RyogoSelect
           name={"type"}
           register={formData.register("type")}
-          array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+          array={Object.values(VehicleTypesEnum)}
           title={t("Field2.Title")}
           placeholder={t("Field2.Title")}
         />
         <RyogoSelect
           name={"brand"}
           register={formData.register("brand")}
-          array={getEnumValueDisplayPairs(VehicleBrandEnum)}
+          array={Object.values(VehicleBrandEnum)}
           description={t("Field3.Description")}
           title={t("Field3.Title")}
           placeholder={t("Field3.Placeholder")}
@@ -112,7 +111,7 @@ export function AddVehicleStep1({
         <RyogoSelect
           name={"color"}
           register={formData.register("color")}
-          array={getEnumValueDisplayPairs(VehicleColorEnum)}
+          array={Object.values(VehicleColorEnum)}
           description={t("Field4.Description")}
           title={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}

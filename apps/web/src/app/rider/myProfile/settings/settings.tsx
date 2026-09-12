@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
 import {
@@ -62,7 +61,7 @@ export default function MyProfileSettingsPageComponent({
     }
   }
 
-  const languages = getEnumValueDisplayPairs(UserLangEnum)
+  const languages = Object.values(UserLangEnum)
   return (
     <PageWrapper id="RiderAccountSettingsPage">
       <MyProfileDetailHeaderTabs selectedTab="Settings" />

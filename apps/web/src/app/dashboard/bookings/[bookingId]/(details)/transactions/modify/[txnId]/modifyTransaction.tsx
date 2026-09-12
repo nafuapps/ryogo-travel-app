@@ -19,7 +19,6 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 import DeleteTransactionAlertButton from "@/components/buttons/alert/deleteTransactionAlertButton"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
 import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
 import {
@@ -125,7 +124,7 @@ export default function ModifyTransactionPageComponent({
             title={t("Field1.Title")}
             register={form.register("type")}
             defaultValue={TransactionTypesEnum.CREDIT}
-            array={getEnumValueDisplayPairs(TransactionTypesEnum)}
+            array={Object.values(TransactionTypesEnum)}
             description={t("Field1.Description")}
           />
           <RyogoInput
@@ -138,14 +137,14 @@ export default function ModifyTransactionPageComponent({
             name="mode"
             register={form.register("mode")}
             title={t("Field3.Title")}
-            array={getEnumValueDisplayPairs(TransactionModesEnum)}
+            array={Object.values(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
           <RyogoSelect
             name="otherParty"
             register={form.register("otherParty")}
             title={t("Field4.Title")}
-            array={getEnumValueDisplayPairs(TransactionsPartiesEnum)}
+            array={Object.values(TransactionsPartiesEnum)}
             placeholder={t("Field4.Placeholder")}
           />
           <RyogoTextarea

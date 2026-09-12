@@ -67,10 +67,10 @@ const bigSequenceValues = {
 }
 
 export enum AgencyStatusEnum {
-  NEW = "new",
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-  SUSPENDED = "suspended",
+  NEW = "New",
+  ACTIVE = "Active",
+  INACTIVE = "Inactive",
+  SUSPENDED = "Suspended",
 }
 export const agencyStatus = pgEnum("agency_status", [
   AgencyStatusEnum.NEW,
@@ -79,8 +79,8 @@ export const agencyStatus = pgEnum("agency_status", [
   AgencyStatusEnum.SUSPENDED,
 ])
 export enum SubscriptionPlanEnum {
-  BASIC = "basic",
-  PREMIUM = "premium",
+  BASIC = "Basic",
+  PREMIUM = "Premium",
 }
 export const subscriptionPlan = pgEnum("subscription_plan", [
   SubscriptionPlanEnum.BASIC,
@@ -158,9 +158,9 @@ export const agenciesRelations = relations(agencies, ({ many, one }) => ({
 }))
 
 export enum OrderStatusEnum {
-  CREATED = "created",
-  ATTEMPTED = "attempted",
-  PAID = "paid",
+  CREATED = "Created",
+  ATTEMPTED = "Attempted",
+  PAID = "Paid",
 }
 export const orderStatus = pgEnum("order_status", [
   OrderStatusEnum.CREATED,
@@ -168,9 +168,9 @@ export const orderStatus = pgEnum("order_status", [
   OrderStatusEnum.PAID,
 ])
 export enum OrderTypeEnum {
-  MONTHLY = "monthly",
-  QUARTERLY = "quarterly",
-  ANNUAL = "annual",
+  MONTHLY = "Monthly",
+  QUARTERLY = "Quarterly",
+  ANNUAL = "Annual",
 }
 export const orderType = pgEnum("order_type", [
   OrderTypeEnum.MONTHLY,
@@ -231,11 +231,11 @@ export const ordersRelations = relations(orders, ({ one, many }) => ({
 }))
 
 export enum PaymentStatusEnum {
-  CREATED = "created",
-  AUTHORIZED = "authorized",
-  FAILED = "failed",
-  CAPTURED = "captured",
-  REFUNDED = "refunded",
+  CREATED = "Created",
+  AUTHORIZED = "Authorized",
+  FAILED = "Failed",
+  CAPTURED = "Captured",
+  REFUNDED = "Refunded",
 }
 export const paymentStatus = pgEnum("payment_status", [
   PaymentStatusEnum.CREATED,
@@ -327,14 +327,14 @@ export const paymentRelations = relations(payments, ({ one }) => ({
 }))
 
 export enum EntityTypeEnum {
-  BOOKING = "booking",
-  DRIVER = "driver",
-  VEHICLE = "vehicle",
-  USER = "user",
-  AGENCY = "agency",
-  CUSTOMER = "customer",
-  ORDER = "order",
-  EXPENSE = "expense",
+  BOOKING = "Booking",
+  DRIVER = "Driver",
+  VEHICLE = "Vehicle",
+  USER = "User",
+  AGENCY = "Agency",
+  CUSTOMER = "Customer",
+  ORDER = "Order",
+  EXPENSE = "Expense",
 }
 export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.BOOKING, //TE: BookingId
@@ -347,9 +347,9 @@ export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.EXPENSE, //TE: ExpenseId
 ])
 export enum UserLangEnum {
-  ENGLISH = "en",
-  HINDI = "hi",
-  ASSAMESE = "as",
+  ENGLISH = "English",
+  HINDI = "Hindi",
+  ASSAMESE = "Assamese",
 }
 export const userLangs = pgEnum("user_langs", [
   UserLangEnum.ENGLISH,
@@ -357,9 +357,9 @@ export const userLangs = pgEnum("user_langs", [
   UserLangEnum.ASSAMESE,
 ])
 export enum UserRolesEnum {
-  AGENT = "agent",
-  OWNER = "owner",
-  DRIVER = "driver",
+  AGENT = "Agent",
+  OWNER = "Owner",
+  DRIVER = "Driver",
 }
 export const userRoles = pgEnum("user_roles", [
   UserRolesEnum.AGENT,
@@ -367,10 +367,10 @@ export const userRoles = pgEnum("user_roles", [
   UserRolesEnum.DRIVER,
 ])
 export enum UserStatusEnum {
-  NEW = "new",
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-  SUSPENDED = "suspended",
+  NEW = "New",
+  ACTIVE = "Active",
+  INACTIVE = "Inactive",
+  SUSPENDED = "Suspended",
 }
 export const userStatus = pgEnum("user_status", [
   UserStatusEnum.NEW,
@@ -502,74 +502,74 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 }))
 
 export enum VehicleColorEnum {
-  Black = "Black",
-  Blue = "Blue",
-  Brown = "Brown",
-  Gray = "Gray",
-  Green = "Green",
-  Orange = "Orange",
-  Pink = "Pink",
-  Purple = "Purple",
-  Red = "Red",
-  Silver = "Silver",
-  White = "White",
-  Yellow = "Yellow",
+  BLACK = "Black",
+  BLUE = "Blue",
+  BROWN = "Brown",
+  GRAY = "Gray",
+  GREEN = "Green",
+  ORANGE = "Orange",
+  PINK = "Pink",
+  PURPLE = "Purple",
+  RED = "Red",
+  SILVER = "Silver",
+  WHITE = "White",
+  YELLOW = "Yellow",
 }
 export const vehicleColors = pgEnum("vehicle_colors", [
-  VehicleColorEnum.Black,
-  VehicleColorEnum.Blue,
-  VehicleColorEnum.Brown,
-  VehicleColorEnum.Gray,
-  VehicleColorEnum.Green,
-  VehicleColorEnum.Orange,
-  VehicleColorEnum.Pink,
-  VehicleColorEnum.Purple,
-  VehicleColorEnum.Red,
-  VehicleColorEnum.Silver,
-  VehicleColorEnum.White,
-  VehicleColorEnum.Yellow,
+  VehicleColorEnum.BLACK,
+  VehicleColorEnum.BLUE,
+  VehicleColorEnum.BROWN,
+  VehicleColorEnum.GRAY,
+  VehicleColorEnum.GREEN,
+  VehicleColorEnum.ORANGE,
+  VehicleColorEnum.PINK,
+  VehicleColorEnum.PURPLE,
+  VehicleColorEnum.RED,
+  VehicleColorEnum.SILVER,
+  VehicleColorEnum.WHITE,
+  VehicleColorEnum.YELLOW,
 ])
 
 export enum VehicleBrandEnum {
-  Bajaj = "Bajaj",
-  Ford = "Ford",
-  Hero = "Hero",
-  Honda = "Honda",
-  Hyundai = "Hyundai",
-  Kia = "Kia",
-  Maruti = "Maruti",
-  Mahindra = "Mahindra",
+  BAJAJ = "Bajaj",
+  FORD = "Ford",
+  HERO = "Hero",
+  HONDA = "Honda",
+  HYUNDAI = "Hyundai",
+  KIA = "Kia",
+  MARUTISUZUKI = "Maruti Suzuki",
+  MAHINDRA = "Mahindra",
   MG = "MG",
-  Renault = "Renault",
-  Skoda = "Skoda",
-  Tata = "Tata",
-  Toyota = "Toyota",
+  RENAULT = "Renault",
+  SKODA = "Skoda",
+  TATA = "Tata",
+  TOYOTA = "Toyota",
   TVS = "TVS",
-  Other = "Other",
+  OTHER = "Other",
 }
 export const vehicleBrands = pgEnum("vehicle_brands", [
-  VehicleBrandEnum.Bajaj,
-  VehicleBrandEnum.Ford,
-  VehicleBrandEnum.Hero,
-  VehicleBrandEnum.Honda,
-  VehicleBrandEnum.Hyundai,
-  VehicleBrandEnum.Kia,
-  VehicleBrandEnum.Maruti,
-  VehicleBrandEnum.Mahindra,
+  VehicleBrandEnum.BAJAJ,
+  VehicleBrandEnum.FORD,
+  VehicleBrandEnum.HERO,
+  VehicleBrandEnum.HONDA,
+  VehicleBrandEnum.HYUNDAI,
+  VehicleBrandEnum.KIA,
+  VehicleBrandEnum.MARUTISUZUKI,
+  VehicleBrandEnum.MAHINDRA,
   VehicleBrandEnum.MG,
-  VehicleBrandEnum.Renault,
-  VehicleBrandEnum.Skoda,
-  VehicleBrandEnum.Tata,
-  VehicleBrandEnum.Toyota,
+  VehicleBrandEnum.RENAULT,
+  VehicleBrandEnum.SKODA,
+  VehicleBrandEnum.TATA,
+  VehicleBrandEnum.TOYOTA,
   VehicleBrandEnum.TVS,
-  VehicleBrandEnum.Other,
+  VehicleBrandEnum.OTHER,
 ])
 export enum VehicleTypesEnum {
-  CAR = "car",
-  BIKE = "bike",
-  BUS = "bus",
-  TRUCK = "truck",
-  OTHER = "other",
+  CAR = "Car",
+  BIKE = "Bike",
+  BUS = "Bus",
+  TRUCK = "Truck",
+  OTHER = "Other",
 }
 export const vehicleTypes = pgEnum("vehicle_types", [
   VehicleTypesEnum.CAR,
@@ -579,11 +579,11 @@ export const vehicleTypes = pgEnum("vehicle_types", [
   VehicleTypesEnum.TRUCK,
 ])
 export enum VehicleStatusEnum {
-  AVAILABLE = "available",
-  ON_TRIP = "on trip",
-  REPAIR = "repair",
-  INACTIVE = "inactive",
-  SUSPENDED = "suspended",
+  AVAILABLE = "Available",
+  ON_TRIP = "On Trip",
+  REPAIR = "Repair",
+  INACTIVE = "Inactive",
+  SUSPENDED = "Suspended",
 }
 export const vehicleStatus = pgEnum("vehicle_status", [
   VehicleStatusEnum.AVAILABLE,
@@ -613,8 +613,8 @@ export const vehicles = pgTable(
       .default("U1000006"), //TODO: Remove default
     vehicleNumber: varchar("vehicle_number", { length: 15 }).notNull(),
     type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
-    brand: vehicleBrands().notNull().default(VehicleBrandEnum.Honda),
-    color: vehicleColors().notNull().default(VehicleColorEnum.White),
+    brand: vehicleBrands().notNull().default(VehicleBrandEnum.HONDA),
+    color: vehicleColors().notNull().default(VehicleColorEnum.WHITE),
     model: varchar("model", { length: 30 }).notNull(),
     insuranceExpiresOn: date("insurance_expires_on", { mode: "date" }),
     pucExpiresOn: date("puc_expires_on", { mode: "date" }),
@@ -678,11 +678,11 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
 }))
 
 export enum DriverStatusEnum {
-  AVAILABLE = "available",
-  ON_TRIP = "on trip",
-  LEAVE = "leave",
-  INACTIVE = "inactive",
-  SUSPENDED = "suspended",
+  AVAILABLE = "Available",
+  ON_TRIP = "On Trip",
+  LEAVE = "Leave",
+  INACTIVE = "Inactive",
+  SUSPENDED = "Suspended",
 }
 export const driverStatus = pgEnum("driver_status", [
   DriverStatusEnum.AVAILABLE,
@@ -826,9 +826,9 @@ export const routeRelations = relations(routes, ({ one, many }) => ({
 }))
 
 export enum CustomerStatusEnum {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-  SUSPENDED = "suspended",
+  ACTIVE = "Active",
+  INACTIVE = "Inactive",
+  SUSPENDED = "Suspended",
 }
 export const customerStatus = pgEnum("customer_status", [
   CustomerStatusEnum.ACTIVE,
@@ -896,11 +896,11 @@ export const customerRelations = relations(customers, ({ one, many }) => ({
 }))
 
 export enum BookingStatusEnum {
-  LEAD = "lead",
-  CONFIRMED = "confirmed",
-  IN_PROGRESS = "in progress",
-  COMPLETED = "completed",
-  CANCELLED = "cancelled",
+  LEAD = "Lead",
+  CONFIRMED = "Confirmed",
+  IN_PROGRESS = "In Progress",
+  COMPLETED = "Completed",
+  CANCELLED = "Cancelled",
 }
 export const bookingStatus = pgEnum("booking_status", [
   BookingStatusEnum.LEAD,
@@ -910,9 +910,9 @@ export const bookingStatus = pgEnum("booking_status", [
   BookingStatusEnum.CANCELLED,
 ])
 export enum BookingTypeEnum {
-  OneWay = "one way",
-  Round = "round trip",
-  MultiDay = "multi day",
+  OneWay = "One Way",
+  Round = "Round Trip",
+  MultiDay = "Multi Day Trip",
 }
 export const bookingType = pgEnum("booking_type", [
   BookingTypeEnum.OneWay,
@@ -1123,13 +1123,13 @@ export const bookingRelations = relations(bookings, ({ one, many }) => ({
 }))
 
 export enum ExpenseTypesEnum {
-  FUEL = "fuel",
-  TOLL = "toll",
-  PARKING = "parking",
-  MAINTENANCE = "maintenance",
-  AC = "ac",
-  FOOD = "food",
-  OTHER = "other",
+  FUEL = "Fuel",
+  TOLL = "Toll",
+  PARKING = "Parking",
+  MAINTENANCE = "Maintenance",
+  AC = "AC",
+  FOOD = "Food",
+  OTHER = "Other",
 }
 export const expenseTypes = pgEnum("expense_types", [
   ExpenseTypesEnum.FUEL,
@@ -1197,12 +1197,12 @@ export const expenseRelations = relations(expenses, ({ one }) => ({
 }))
 
 export enum TripLogTypesEnum {
-  STARTED = "trip started",
-  ARRIVED = "arrived",
-  PICKED_UP = "picked up",
-  DROPPED = "dropped",
-  ENDED = "trip ended",
-  OTHER = "other",
+  STARTED = "Trip Started",
+  ARRIVED = "Arrived",
+  PICKED_UP = "Picked Up",
+  DROPPED = "Dropped",
+  ENDED = "Trip Ended",
+  OTHER = "Other",
 }
 export const tripLogTypes = pgEnum("trip_log_types", [
   TripLogTypesEnum.STARTED,
@@ -1280,27 +1280,27 @@ export const tripLogsRelations = relations(tripLogs, ({ one }) => ({
 }))
 
 export enum TransactionTypesEnum {
-  DEBIT = "debit",
-  CREDIT = "credit",
+  DEBIT = "Debit",
+  CREDIT = "Credit",
 }
 export const transactionTypes = pgEnum("transaction_types", [
   TransactionTypesEnum.DEBIT,
   TransactionTypesEnum.CREDIT,
 ])
 export enum TransactionsPartiesEnum {
-  DRIVER = "driver",
-  CUSTOMER = "customer",
+  DRIVER = "Driver",
+  CUSTOMER = "Customer",
 }
 export const transactionParties = pgEnum("transaction_parties", [
   TransactionsPartiesEnum.DRIVER,
   TransactionsPartiesEnum.CUSTOMER,
 ])
 export enum TransactionModesEnum {
-  CASH = "cash",
-  CARD = "card",
-  NET_BANKING = "net banking",
-  UPI = "upi",
-  OTHER = "other",
+  CASH = "Cash",
+  CARD = "Card",
+  NET_BANKING = "Net Banking",
+  UPI = "UPI",
+  OTHER = "Other",
 }
 export const transactionModes = pgEnum("transaction_modes", [
   TransactionModesEnum.CASH,
@@ -1624,10 +1624,10 @@ export const supportQueries = pgTable("support_queries", {
 })
 
 export enum TicketStatusEnum {
-  OPEN = "open",
-  IN_PROGRESS = "in progress",
-  RESOLVED = "resolved",
-  CLOSED = "closed",
+  OPEN = "Open",
+  IN_PROGRESS = "In Progress",
+  RESOLVED = "Resolved",
+  CLOSED = "Closed",
 }
 export const ticketStatus = pgEnum("ticket_status", [
   TicketStatusEnum.OPEN,
@@ -1687,12 +1687,16 @@ export const supportTicketRelations = relations(supportTickets, ({ one }) => ({
 }))
 
 export enum ProductFeedbackTypeEnum {
-  ONBOARDING = "onboarding",
-  NEW_BOOKING = "new booking",
-  NEW_CUSTOMER = "new customer",
-  NEW_DRIVER = "new driver",
-  NEW_VEHICLE = "new vehicle",
-  NEW_ORDER = "new order",
+  ONBOARDING = "Onboarding",
+  NEW_BOOKING = "New Booking",
+  NEW_CUSTOMER = "New Customer",
+  NEW_DRIVER = "New Driver",
+  NEW_VEHICLE = "New Vehicle",
+  NEW_ORDER = "New Order",
+  NEW_USER = "New User",
+  SUBSCRIPTION = "Subscription",
+  MISSION = "Mission",
+  ANALYTICS = "Analytics",
 }
 export const productFeedbackType = pgEnum("product_feedback_type", [
   ProductFeedbackTypeEnum.ONBOARDING,
@@ -1701,6 +1705,10 @@ export const productFeedbackType = pgEnum("product_feedback_type", [
   ProductFeedbackTypeEnum.NEW_DRIVER,
   ProductFeedbackTypeEnum.NEW_VEHICLE,
   ProductFeedbackTypeEnum.NEW_ORDER,
+  ProductFeedbackTypeEnum.NEW_USER,
+  ProductFeedbackTypeEnum.SUBSCRIPTION,
+  ProductFeedbackTypeEnum.MISSION,
+  ProductFeedbackTypeEnum.ANALYTICS,
 ])
 //Product Feedback table
 export const productFeedbackIdSequence = pgSequence("product_feedback_id_seq", {

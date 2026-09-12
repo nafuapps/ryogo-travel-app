@@ -32,14 +32,14 @@ export function getOnlineStatus(time?: Date | null) {
   return "Offline"
 }
 
-export function getEnumValueDisplayPairs<T extends object>(
-  enumType: T,
-): { display: string; value: T[keyof T] }[] {
-  return Object.keys(enumType).map((key) => ({
-    value: enumType[key as keyof T],
-    display: key,
-  }))
-}
+// export function getEnumValueDisplayPairs<T extends object>(
+//   enumType: T,
+// ): { display: string; value: T[keyof T] }[] {
+//   return Object.keys(enumType).map((key) => ({
+//     value: enumType[key as keyof T],
+//     display: key,
+//   }))
+// }
 
 export function getArrayValueDisplayPairs<T extends object>(
   arrayType: T,

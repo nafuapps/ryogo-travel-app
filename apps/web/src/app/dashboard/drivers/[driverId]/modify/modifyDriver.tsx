@@ -12,7 +12,6 @@ import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -103,7 +102,7 @@ export default function ModifyDriverPageComponent({
             placeholder={t("Field1.Placeholder")}
           />
           <RyogoMultipleCheckbox
-            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+            array={Object.values(VehicleTypesEnum)}
             name={"canDriveVehicleTypes"}
             label={t("Field2.Title")}
           />

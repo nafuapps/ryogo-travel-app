@@ -9,19 +9,16 @@ import { ChevronUp, ChevronDown } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 
-export default function FilterCheckboxGroup<V extends string>({
+export default function FilterCheckboxGroup({
   title,
   selectedFilters,
   setSelectedFilters,
-  enumValueDisplayPairs,
+  allFilters,
 }: {
   title: string
-  selectedFilters: V[]
-  setSelectedFilters: (filters: V[]) => void
-  enumValueDisplayPairs: {
-    display: string
-    value: V
-  }[]
+  selectedFilters: string[]
+  setSelectedFilters: (filters: string[]) => void
+  allFilters: string[]
 }) {
   const [open, setOpen] = useState(false)
 
@@ -39,24 +36,24 @@ export default function FilterCheckboxGroup<V extends string>({
         <FieldGroup
           className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ${open ? "" : "hidden"}`}
         >
-          {enumValueDisplayPairs.map((pair) => (
+          {allFilters.map((item) => (
             <Field
               orientation="horizontal"
-              key={String(pair.value)}
+              key={String(item)}
               className="gap-1.5"
             >
               <Checkbox
-                id={String(pair.value)}
-                name={String(pair.value)}
-                checked={selectedFilters.includes(pair.value)}
+                id={String(item)}
+                name={String(item)}
+                checked={selectedFilters.includes(item)}
                 onCheckedChange={() => {
-                  const newFilters = selectedFilters.includes(pair.value)
-                    ? selectedFilters.filter((v) => v !== pair.value)
-                    : [...selectedFilters, pair.value]
+                  const newFilters = selectedFilters.includes(item)
+                    ? selectedFilters.filter((v) => v !== item)
+                    : [...selectedFilters, item]
                   setSelectedFilters(newFilters)
                 }}
               />
-              <RyogoCaption>{pair.display}</RyogoCaption>
+              <RyogoCaption>{item}</RyogoCaption>
             </Field>
           ))}
         </FieldGroup>

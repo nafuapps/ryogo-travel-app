@@ -89,17 +89,19 @@ export default function AddDriverPageComponent({
   return (
     <>
       <OnboardingPageWrapper id="AddDriverPage">
-        {currentStepIndex < AddDriverTotalSteps && (
-          <OnboardingStepHeader
-            totalSteps={AddDriverTotalSteps}
-            currentStepIndex={currentStepIndex}
-            title={t("Title")}
-            stepLabel={t("Description", {
-              step: currentStepIndex + 1,
-              total: AddDriverTotalSteps,
-            })}
-          />
-        )}
+        <OnboardingStepHeader
+          totalSteps={AddDriverTotalSteps}
+          currentStepIndex={currentStepIndex}
+          title={t("Title")}
+          stepLabel={
+            currentStepIndex >= AddDriverTotalSteps
+              ? t("Completed")
+              : t("Description", {
+                  step: currentStepIndex + 1,
+                  total: AddDriverTotalSteps,
+                })
+          }
+        />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>
       <OnboardingSidebar

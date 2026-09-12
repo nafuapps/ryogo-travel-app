@@ -9,22 +9,20 @@ import {
   RyogoDatePicker,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import { AddVehicleTotalSteps, MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 import {
-  SectionRowWrapper,
   PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export function NewVehicleStep3({
   onNext,
@@ -98,17 +96,21 @@ export function NewVehicleStep3({
 
   return (
     <PageWrapper id="NewVehicleStep3">
+      <FormStepHeader
+        totalSteps={AddVehicleTotalSteps}
+        currentStepIndex={2}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 3,
+          total: AddVehicleTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<Step3Type>
         id="Step3Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"vehicle"} current={2} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoDatePicker
             name="insuranceExpiresOn"

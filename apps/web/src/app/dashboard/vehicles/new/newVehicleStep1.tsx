@@ -6,8 +6,6 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Dispatch, SetStateAction } from "react"
 import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import {
   VehicleTypesEnum,
   VehicleBrandEnum,
@@ -23,14 +21,15 @@ import {
   MAX_NAME_LENGTH,
   MAX_VEHICLE_NUMBER_LENGTH,
   MIN_VEHICLE_NUMBER_LENGTH,
+  AddVehicleTotalSteps,
 } from "@/lib/uiConfig"
 import {
-  SectionRowWrapper,
   PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export function NewVehicleStep1({
   onNext,
@@ -101,17 +100,21 @@ export function NewVehicleStep1({
 
   return (
     <PageWrapper id="NewVehicleStep1">
+      <FormStepHeader
+        totalSteps={AddVehicleTotalSteps}
+        currentStepIndex={1}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 2,
+          total: AddVehicleTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<Step1Type>
         id="Step1Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"vehicle"} current={0} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoInput
             name={"vehicleNumber"}

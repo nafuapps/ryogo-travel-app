@@ -1,29 +1,30 @@
 "use client"
 
-import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { DriverIdRegex } from "@/lib/regex"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
-import StepsTracker from "@/components/form/stepsTracker"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import AssignDriverTile from "@/components/flows/bookings/assign/assignDriverTile"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
-import { NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY } from "@/lib/uiConfig"
+import {
+  NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
+  NewBookingTotalSteps,
+} from "@/lib/uiConfig"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 import {
-  SectionRowWrapper,
   TileGridWrapper,
   PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export default function NewBookingStepDriver({
   onNext,
@@ -88,6 +89,16 @@ export default function NewBookingStepDriver({
 
   return (
     <PageWrapper id="AssignmentStep">
+      <FormStepHeader
+        totalSteps={NewBookingTotalSteps}
+        currentStepIndex={2}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 3,
+          total: NewBookingTotalSteps,
+        })}
+        description={t("Description")}
+      />
       {limited && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
@@ -105,14 +116,6 @@ export default function NewBookingStepDriver({
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 3, total: 5 })}
-          </RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"booking"} current={2} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <TileGridWrapper>
             {drivers.map((driver) => (

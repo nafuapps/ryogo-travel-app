@@ -7,7 +7,6 @@ import {
   RyogoCaption,
 } from "@/components/typography"
 import { useTranslations } from "next-intl"
-import StepsTracker from "@/components/form/stepsTracker"
 import { useForm } from "react-hook-form"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
@@ -31,6 +30,8 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
+import { NewBookingTotalSteps } from "@/lib/uiConfig"
 
 export default function NewBookingFinal({
   onPrev,
@@ -95,19 +96,21 @@ export default function NewBookingFinal({
 
   return (
     <PageWrapper id="FinalStep">
+      <FormStepHeader
+        totalSteps={NewBookingTotalSteps}
+        currentStepIndex={4}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 5,
+          total: NewBookingTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<NewBookingRequestDataType>
         id="FinalForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 5, total: 5 })}
-          </RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"booking"} current={4} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <NewBookingTripCard {...newBookingFormData} />
         <FormContentWrapper>
           <SectionRowWrapper>

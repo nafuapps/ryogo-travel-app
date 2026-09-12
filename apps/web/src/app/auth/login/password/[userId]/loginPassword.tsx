@@ -17,7 +17,7 @@ import {
 } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import UserCard from "@/components/flows/auth/userCard"
+import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { toast } from "sonner"
 import {
@@ -87,7 +87,7 @@ export default function LoginPasswordPageComponent({
         form={form}
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-        <UserCard user={user} />
+        <AuthAccountCard user={user} />
         <RyogoInput
           name={"password"}
           type="password"

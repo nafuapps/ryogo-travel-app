@@ -2,24 +2,32 @@
 
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
-import ConfirmValues from "@/components/form/confirmValues"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
-  SectionRowWrapper,
   PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsHeaderWrapper,
+  DetailsLineItem,
 } from "@/components/page/pageWrappers"
+import {
+  AddVehicleTotalSteps,
+  NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
+  NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
+} from "@/lib/uiConfig"
+import FormStepHeader from "@/components/form/formStepHeader"
+import { RyogoCaption } from "@/components/typography"
+import moment from "moment"
 
 export function NewVehicleConfirm({
   onPrev,
@@ -72,85 +80,116 @@ export function NewVehicleConfirm({
   }
   return (
     <PageWrapper id="NewVehicleConfirm">
+      <FormStepHeader
+        totalSteps={AddVehicleTotalSteps}
+        currentStepIndex={4}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 5,
+          total: AddVehicleTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<AddVehicleRequestType>
         id="ConfirmForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"vehicle"} current={4} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
-          <ConfirmValues
-            name={t("VehicleNumber")}
-            value={newVehicleFormData.data.vehicleNumber}
-          />
-          <ConfirmValues
-            name={t("Type")}
-            value={newVehicleFormData.data.type}
-          />
-          <ConfirmValues
-            name={t("Brand")}
-            value={newVehicleFormData.data.brand}
-          />
-          <ConfirmValues
-            name={t("Model")}
-            value={newVehicleFormData.data.model}
-          />
-          <ConfirmValues
-            name={t("Color")}
-            value={newVehicleFormData.data.color}
-          />
-          {newVehicleFormData.data.capacity && (
-            <ConfirmValues
-              name={t("Capacity")}
-              value={`${newVehicleFormData.data.capacity}`}
-            />
-          )}
-          {newVehicleFormData.data.odometerReading && (
-            <ConfirmValues
-              name={t("OdometerReading")}
-              value={`${newVehicleFormData.data.odometerReading}`}
-            />
-          )}
-          {newVehicleFormData.data.insuranceExpiresOn && (
-            <ConfirmValues
-              name={t("InsuranceExpiresOn")}
-              value={newVehicleFormData.data.insuranceExpiresOn.toDateString()}
-            />
-          )}
-          {newVehicleFormData.data.pucExpiresOn && (
-            <ConfirmValues
-              name={t("PUCExpiresOn")}
-              value={newVehicleFormData.data.pucExpiresOn.toDateString()}
-            />
-          )}
-          {newVehicleFormData.data.rcExpiresOn && (
-            <ConfirmValues
-              name={t("RCExpiresOn")}
-              value={newVehicleFormData.data.rcExpiresOn.toDateString()}
-            />
-          )}
-          {newVehicleFormData.data.defaultRatePerKm && (
-            <ConfirmValues
-              name={t("RatePerKm")}
-              value={`${newVehicleFormData.data.defaultRatePerKm}`}
-            />
-          )}
-          <ConfirmValues
-            name={t("HasAC")}
-            value={newVehicleFormData.data.hasAC ? "Yes" : "No"}
-          />
-          {newVehicleFormData.data.hasAC &&
-            newVehicleFormData.data.defaultAcChargePerDay && (
-              <ConfirmValues
-                name={t("ACChagePerDay")}
-                value={`${newVehicleFormData.data.defaultAcChargePerDay}`}
+          <DetailsBorderWrapper>
+            <DetailsHeaderWrapper>
+              <RyogoCaption color="light">{t("BasicDetails")}</RyogoCaption>
+            </DetailsHeaderWrapper>
+            <DetailsContentWrapper>
+              <DetailsLineItem
+                label={t("VehicleNumber")}
+                value={newVehicleFormData.data.vehicleNumber.toUpperCase()}
               />
-            )}
+              <DetailsLineItem
+                label={t("Type")}
+                value={newVehicleFormData.data.type.toUpperCase()}
+              />
+              <DetailsLineItem
+                label={t("Brand")}
+                value={newVehicleFormData.data.brand}
+              />
+              <DetailsLineItem
+                label={t("Model")}
+                value={newVehicleFormData.data.model}
+              />
+              <DetailsLineItem
+                label={t("Color")}
+                value={newVehicleFormData.data.color}
+              />
+              {newVehicleFormData.data.capacity && (
+                <DetailsLineItem
+                  label={t("Capacity")}
+                  value={`${newVehicleFormData.data.capacity}`}
+                />
+              )}
+              {newVehicleFormData.data.odometerReading && (
+                <DetailsLineItem
+                  label={t("OdometerReading")}
+                  value={`${newVehicleFormData.data.odometerReading}`}
+                />
+              )}
+              <DetailsLineItem
+                label={t("HasAC")}
+                value={newVehicleFormData.data.hasAC ? "Yes" : "No"}
+              />
+            </DetailsContentWrapper>
+          </DetailsBorderWrapper>
+          <DetailsBorderWrapper>
+            <DetailsHeaderWrapper>
+              <RyogoCaption color="light">{t("PolicyDetails")}</RyogoCaption>
+            </DetailsHeaderWrapper>
+            <DetailsContentWrapper>
+              {newVehicleFormData.data.rcExpiresOn && (
+                <DetailsLineItem
+                  label={t("RCExpiresOn")}
+                  value={moment(newVehicleFormData.data.rcExpiresOn).format(
+                    "DD MMM YYYY",
+                  )}
+                />
+              )}
+              {newVehicleFormData.data.insuranceExpiresOn && (
+                <DetailsLineItem
+                  label={t("InsuranceExpiresOn")}
+                  value={moment(
+                    newVehicleFormData.data.insuranceExpiresOn,
+                  ).format("DD MMM YYYY")}
+                />
+              )}
+              {newVehicleFormData.data.pucExpiresOn && (
+                <DetailsLineItem
+                  label={t("PUCExpiresOn")}
+                  value={moment(newVehicleFormData.data.pucExpiresOn).format(
+                    "DD MMM YYYY",
+                  )}
+                />
+              )}
+            </DetailsContentWrapper>
+          </DetailsBorderWrapper>
+          <DetailsBorderWrapper>
+            <DetailsHeaderWrapper>
+              <RyogoCaption color="light">{t("AgencyDetails")}</RyogoCaption>
+            </DetailsHeaderWrapper>
+            <DetailsContentWrapper>
+              <DetailsLineItem
+                label={t("RatePerKm")}
+                value={(
+                  newVehicleFormData.data.defaultRatePerKm ??
+                  NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM
+                ).toString()}
+              />
+              {newVehicleFormData.data.hasAC && (
+                <DetailsLineItem
+                  label={t("ACChagePerDay")}
+                  value={`${newVehicleFormData.data.defaultAcChargePerDay ?? NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY}`}
+                />
+              )}
+            </DetailsContentWrapper>
+          </DetailsBorderWrapper>
         </FormContentWrapper>
         <StickyActionWrapper>
           <RyogoDefaultButton

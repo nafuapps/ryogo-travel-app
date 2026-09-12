@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 export default async function VerifyAccountPage() {
   const currentUser = await getCurrentUser()
+
   //If not logged in, go to login page
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
@@ -26,22 +27,20 @@ export default async function VerifyAccountPage() {
       //If new, go to change password
       redirect("/onboarding/change-password", RedirectType.replace)
     }
-    //Not new users
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      //If driver, go to rider page
+      //If driver, go to rider home
       redirect("/rider/home", RedirectType.replace)
     }
-    //Else, go to dashboard
+    //Else, go to dashboard home
     redirect("/dashboard/home", RedirectType.replace)
   }
 
-  //Not new Owner
+  //If owner already activated, go to dashboard
   if (currentUser.status !== UserStatusEnum.NEW) {
-    //If already activated, go to dashboard
     redirect("/dashboard/home", RedirectType.replace)
   }
 
-  //If owner already verified
+  //If owner already verified, continue onboarding
   if (currentUser.isVerified) {
     redirect("/onboarding/add-vehicle", RedirectType.replace)
   }

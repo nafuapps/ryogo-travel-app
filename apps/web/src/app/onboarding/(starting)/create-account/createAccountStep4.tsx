@@ -137,9 +137,9 @@ export function CreateAccountStep4({
           desc={t("Field3.BasicDesc")}
         />
       </FormContentWrapper>
-      <StickyActionWrapper>
+      <StickyActionWrapper bgTransparent>
         <RyogoDefaultButton
-          className="w-full"
+          size={"lg"}
           type="submit"
           disabled={formData.formState.isSubmitting}
           showSpinner={formData.formState.isSubmitting}
@@ -148,9 +148,9 @@ export function CreateAccountStep4({
           }
         />
         <RyogoOutlineButton
+          size={"lg"}
           type="button"
           onClick={onPrev}
-          className="w-full"
           disabled={formData.formState.isSubmitting}
           label={t("SecondaryCTA")}
         />

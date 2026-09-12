@@ -102,17 +102,19 @@ export default function AddVehiclePageComponent({
   return (
     <>
       <OnboardingPageWrapper id="AddVehiclePage">
-        {currentStepIndex < AddVehicleTotalSteps && (
-          <OnboardingStepHeader
-            totalSteps={AddVehicleTotalSteps}
-            currentStepIndex={currentStepIndex}
-            title={t("Title")}
-            stepLabel={t("Description", {
-              step: currentStepIndex + 1,
-              total: AddVehicleTotalSteps,
-            })}
-          />
-        )}
+        <OnboardingStepHeader
+          totalSteps={AddVehicleTotalSteps}
+          currentStepIndex={currentStepIndex}
+          title={t("Title")}
+          stepLabel={
+            currentStepIndex >= AddVehicleTotalSteps
+              ? t("Completed")
+              : t("Description", {
+                  step: currentStepIndex + 1,
+                  total: AddVehicleTotalSteps,
+                })
+          }
+        />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>
       <OnboardingSidebar

@@ -2,24 +2,30 @@
 
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import StepsTracker from "@/components/form/stepsTracker"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
-import ConfirmValues from "@/components/form/confirmValues"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
-  SectionRowWrapper,
-  PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
+  PageWrapper,
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsHeaderWrapper,
+  DetailsLineItem,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
+import {
+  AddDriverTotalSteps,
+  NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
+} from "@/lib/uiConfig"
+import { RyogoCaption } from "@/components/typography"
 
 export function NewDriverConfirm({
   onNext,
@@ -76,61 +82,83 @@ export function NewDriverConfirm({
   }
   return (
     <PageWrapper id="NewDriverConfirmStep">
+      <FormStepHeader
+        title={t("Title")}
+        stepLabel={t("Subtitle", { current: 4, total: AddDriverTotalSteps })}
+        description={t("Description")}
+        totalSteps={AddDriverTotalSteps}
+        currentStepIndex={3}
+      />
       <FormWrapper<AddDriverRequestType>
         id="ConfirmForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"driver"} current={3} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
-          <ConfirmValues
-            name={t("DriverName")}
-            value={newDriverFormData.data.name}
-          />
-          <ConfirmValues
-            name={t("DriverPhone")}
-            value={newDriverFormData.data.phone}
-          />
-          <ConfirmValues
-            name={t("DriverEmail")}
-            value={newDriverFormData.data.email}
-          />
-          {newDriverFormData.data.licenseNumber && (
-            <ConfirmValues
-              name={t("LicenseNumber")}
-              value={newDriverFormData.data.licenseNumber}
-            />
-          )}
-          {newDriverFormData.data.licenseExpiresOn && (
-            <ConfirmValues
-              name={t("LicenseExpiresOn")}
-              value={newDriverFormData.data.licenseExpiresOn.toDateString()}
-            />
-          )}
-          {newDriverFormData.data.address && (
-            <ConfirmValues
-              name={t("DriverAddress")}
-              value={newDriverFormData.data.address}
-            />
-          )}
-          {newDriverFormData.data.canDriveVehicleTypes &&
-            newDriverFormData.data.canDriveVehicleTypes.length > 0 && (
-              <ConfirmValues
-                name={t("CanDriveVehicleTypes")}
-                value={newDriverFormData.data.canDriveVehicleTypes.join(", ")}
+          <DetailsBorderWrapper>
+            <DetailsHeaderWrapper>
+              <RyogoCaption color="light">{t("UserDetails")}</RyogoCaption>
+            </DetailsHeaderWrapper>
+            <DetailsContentWrapper>
+              <DetailsLineItem
+                label={t("DriverName")}
+                value={newDriverFormData.data.name}
               />
-            )}
-          {newDriverFormData.data.defaultAllowancePerDay && (
-            <ConfirmValues
-              name={t("DefaultAllowancePerDay")}
-              value={`${newDriverFormData.data.defaultAllowancePerDay}`}
-            />
-          )}
+              <DetailsLineItem
+                label={t("DriverPhone")}
+                value={newDriverFormData.data.phone}
+              />
+              <DetailsLineItem
+                label={t("DriverEmail")}
+                value={newDriverFormData.data.email}
+              />
+              {newDriverFormData.data.address && (
+                <DetailsLineItem
+                  label={t("DriverAddress")}
+                  value={newDriverFormData.data.address}
+                />
+              )}
+            </DetailsContentWrapper>
+          </DetailsBorderWrapper>
+          <DetailsBorderWrapper>
+            <DetailsHeaderWrapper>
+              <RyogoCaption color="light">{t("LicenseDetails")}</RyogoCaption>
+            </DetailsHeaderWrapper>
+            <DetailsContentWrapper>
+              {newDriverFormData.data.licenseNumber && (
+                <DetailsLineItem
+                  label={t("LicenseNumber")}
+                  value={newDriverFormData.data.licenseNumber}
+                />
+              )}
+              {newDriverFormData.data.licenseExpiresOn && (
+                <DetailsLineItem
+                  label={t("LicenseExpiresOn")}
+                  value={newDriverFormData.data.licenseExpiresOn.toDateString()}
+                />
+              )}
+            </DetailsContentWrapper>
+          </DetailsBorderWrapper>
+          <DetailsBorderWrapper>
+            <DetailsHeaderWrapper>
+              <RyogoCaption color="light">{t("AgencyDetails")}</RyogoCaption>
+            </DetailsHeaderWrapper>
+            <DetailsContentWrapper>
+              {newDriverFormData.data.canDriveVehicleTypes &&
+                newDriverFormData.data.canDriveVehicleTypes.length > 0 && (
+                  <DetailsLineItem
+                    label={t("CanDriveVehicleTypes")}
+                    value={newDriverFormData.data.canDriveVehicleTypes.join(
+                      ", ",
+                    )}
+                  />
+                )}
+              <DetailsLineItem
+                label={t("DefaultAllowancePerDay")}
+                value={`${newDriverFormData.data.defaultAllowancePerDay ?? NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY}`}
+              />
+            </DetailsContentWrapper>
+          </DetailsBorderWrapper>
         </FormContentWrapper>
         <StickyActionWrapper>
           <RyogoDefaultButton

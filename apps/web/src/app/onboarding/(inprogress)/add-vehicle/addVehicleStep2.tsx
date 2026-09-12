@@ -152,9 +152,9 @@ export function AddVehicleStep2({
           description={t("Field5.Description")}
         />
       </FormContentWrapper>
-      <StickyActionWrapper>
+      <StickyActionWrapper bgTransparent>
         <RyogoDefaultButton
-          className="w-full"
+          size={"lg"}
           type="submit"
           disabled={formData.formState.isSubmitting}
           showSpinner={formData.formState.isSubmitting}
@@ -166,7 +166,6 @@ export function AddVehicleStep2({
           size={"lg"}
           type="button"
           onClick={onPrev}
-          className="w-full"
           disabled={formData.formState.isSubmitting}
           label={t("SecondaryCTA")}
         />

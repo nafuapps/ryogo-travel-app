@@ -3,32 +3,31 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoH2, RyogoCaption } from "@/components/typography"
-import { SidebarTrigger } from "@/components/ui/sidebar"
+import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 
-export default function OnboardingStepHeader({
+export default function FormStepHeader({
   title,
   stepLabel,
   totalSteps,
   currentStepIndex,
+  description,
 }: {
   title: string
   stepLabel: string
   totalSteps: number
   currentStepIndex: number
+  description?: string
 }) {
   return (
     <SectionColWrapper small>
-      <SectionRowWrapper center>
-        <RyogoH2>{title}</RyogoH2>
-        <SidebarTrigger className="md:hidden" />
-      </SectionRowWrapper>
-      <StepsTracker steps={totalSteps} current={currentStepIndex} />
-      <SectionColWrapper>
+      <SectionRowWrapper center small>
+        <RyogoH3>{title}</RyogoH3>
         <RyogoCaption color="light" weight="font-bold">
           {stepLabel}
         </RyogoCaption>
-      </SectionColWrapper>
+      </SectionRowWrapper>
+      <StepsTracker steps={totalSteps} current={currentStepIndex} />
+      {description && <RyogoSmall color="light">{description}</RyogoSmall>}
     </SectionColWrapper>
   )
 }

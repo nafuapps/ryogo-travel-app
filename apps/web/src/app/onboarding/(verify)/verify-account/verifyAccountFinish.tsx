@@ -1,4 +1,4 @@
-import { RyogoH3, RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
@@ -30,20 +30,30 @@ export function VerifyAccountFinish() {
       onSubmit={form.handleSubmit(onSubmit)}
       justifyCenter
     >
-      <FormContentWrapper asCard={false}>
+      <FormContentWrapper
+        asCard={false}
+        className="grow justify-center items-center"
+      >
         <RyogoEnclosedIcon
           icon={Check}
           size="md"
           color="white"
           bgColor="black"
           circular
+          className="animate-caret-blink"
         />
-        <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoP>{t("Subtitle")}</RyogoP>
+        <RyogoH4 weight="font-bold" className="text-center">
+          {t("Title")}
+        </RyogoH4>
+        <RyogoSmall color="light" className="text-center">
+          {t("Subtitle")}
+        </RyogoSmall>
       </FormContentWrapper>
-      <StickyActionWrapper>
-        <RyogoP>{t("Description1")}</RyogoP>
-        <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
+      <StickyActionWrapper bgTransparent>
+        <RyogoSmall className="text-center">{t("Description1")}</RyogoSmall>
+        <RyogoCaption color="light" className="text-center">
+          {t("Description2")}
+        </RyogoCaption>
         <RyogoDefaultButton
           size={"lg"}
           type="submit"

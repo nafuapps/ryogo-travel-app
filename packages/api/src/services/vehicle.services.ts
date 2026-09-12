@@ -4,6 +4,7 @@ import {
   InsertVehicleRepairType,
   InsertVehicleType,
   VehicleStatusEnum,
+  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import {
   AddVehicleRequestType,
@@ -144,7 +145,7 @@ export const vehicleServices = {
       brand: data.brand,
       color: data.color,
       model: data.model,
-      capacity: data.capacity,
+      capacity: data.capacity ?? getCapacityByVehicleType(data.type),
       odometerReading: data.odometerReading,
       insuranceExpiresOn: data.insuranceExpiresOn,
       pucExpiresOn: data.pucExpiresOn,
@@ -259,6 +260,19 @@ export const vehicleServices = {
     )
     return vehicle[0]
   },
+}
+
+function getCapacityByVehicleType(type: VehicleTypesEnum) {
+  switch (type) {
+    case VehicleTypesEnum.BIKE:
+      return 1
+    case VehicleTypesEnum.CAR:
+      return 4
+    case VehicleTypesEnum.BUS:
+      return 30
+    default:
+      return
+  }
 }
 
 export type FindDashboardVehiclesType = Awaited<

@@ -8,7 +8,7 @@ import {
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import UserCard from "@/components/flows/auth/userCard"
+import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 
 export default async function LoginAccountsPageComponent({
   accounts,
@@ -24,7 +24,7 @@ export default async function LoginAccountsPageComponent({
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((account) => (
           <Link href={`/auth/login/password/${account.id}`} key={account.id}>
-            <UserCard user={account} isLink />
+            <AuthAccountCard user={account} isLink />
           </Link>
         ))}
       </AuthAccountsWrapper>

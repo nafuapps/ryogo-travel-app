@@ -1,9 +1,8 @@
 "use client"
 
-import { RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import ConfirmValues from "@/components/form/confirmValues"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -13,10 +12,19 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsHeaderWrapper,
+  DetailsLineItem,
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import moment from "moment"
+import {
+  NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
+  NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
+} from "@/lib/uiConfig"
 
 export function AddVehicleConfirm({
   onNext,
@@ -73,68 +81,91 @@ export function AddVehicleConfirm({
       onSubmit={formData.handleSubmit(onSubmit)}
     >
       <FormContentWrapper asCard={false}>
-        <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-        <ConfirmValues
-          name={t("VehicleNumber")}
-          value={finalData.data.vehicleNumber}
-        />
-        <ConfirmValues
-          name={t("Type")}
-          value={finalData.data.type.toUpperCase()}
-        />
-        <ConfirmValues name={t("Brand")} value={finalData.data.brand} />
-        <ConfirmValues name={t("Model")} value={finalData.data.model} />
-        <ConfirmValues name={t("Color")} value={finalData.data.color} />
-        {finalData.data.capacity && (
-          <ConfirmValues
-            name={t("Capacity")}
-            value={`${finalData.data.capacity}`}
-          />
-        )}
-        {finalData.data.odometerReading && (
-          <ConfirmValues
-            name={t("OdometerReading")}
-            value={`${finalData.data.odometerReading}`}
-          />
-        )}
-        {finalData.data.insuranceExpiresOn && (
-          <ConfirmValues
-            name={t("InsuranceExpiresOn")}
-            value={finalData.data.insuranceExpiresOn.toDateString()}
-          />
-        )}
-        {finalData.data.pucExpiresOn && (
-          <ConfirmValues
-            name={t("PUCExpiresOn")}
-            value={finalData.data.pucExpiresOn.toDateString()}
-          />
-        )}
-        {finalData.data.rcExpiresOn && (
-          <ConfirmValues
-            name={t("RCExpiresOn")}
-            value={finalData.data.rcExpiresOn.toDateString()}
-          />
-        )}
-        {finalData.data.defaultRatePerKm && (
-          <ConfirmValues
-            name={t("RatePerKm")}
-            value={`${finalData.data.defaultRatePerKm}`}
-          />
-        )}
-        <ConfirmValues
-          name={t("HasAC")}
-          value={finalData.data.hasAC ? "Yes" : "No"}
-        />
-        {finalData.data.hasAC && finalData.data.defaultAcChargePerDay && (
-          <ConfirmValues
-            name={t("ACChagePerDay")}
-            value={`${finalData.data.defaultAcChargePerDay}`}
-          />
-        )}
+        <RyogoP color="slate">{t("Title")}</RyogoP>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("BasicDetails")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            <DetailsLineItem
+              label={t("VehicleNumber")}
+              value={finalData.data.vehicleNumber.toUpperCase()}
+            />
+            <DetailsLineItem
+              label={t("Type")}
+              value={finalData.data.type.toUpperCase()}
+            />
+            <DetailsLineItem label={t("Brand")} value={finalData.data.brand} />
+            <DetailsLineItem label={t("Model")} value={finalData.data.model} />
+            <DetailsLineItem label={t("Color")} value={finalData.data.color} />
+            <DetailsLineItem
+              label={t("HasAC")}
+              value={finalData.data.hasAC ? "Yes" : "No"}
+            />
+            {finalData.data.capacity && (
+              <DetailsLineItem
+                label={t("Capacity")}
+                value={`${finalData.data.capacity}`}
+              />
+            )}
+            {finalData.data.odometerReading && (
+              <DetailsLineItem
+                label={t("OdometerReading")}
+                value={`${finalData.data.odometerReading}`}
+              />
+            )}
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("PolicyDetails")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            {finalData.data.rcExpiresOn && (
+              <DetailsLineItem
+                label={t("RCExpiresOn")}
+                value={moment(finalData.data.rcExpiresOn).format("DD MMM YYYY")}
+              />
+            )}
+            {finalData.data.insuranceExpiresOn && (
+              <DetailsLineItem
+                label={t("InsuranceExpiresOn")}
+                value={moment(finalData.data.insuranceExpiresOn).format(
+                  "DD MMM YYYY",
+                )}
+              />
+            )}
+            {finalData.data.pucExpiresOn && (
+              <DetailsLineItem
+                label={t("PUCExpiresOn")}
+                value={moment(finalData.data.pucExpiresOn).format(
+                  "DD MMM YYYY",
+                )}
+              />
+            )}
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("AgencyDetails")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            <DetailsLineItem
+              label={t("RatePerKm")}
+              value={`${finalData.data.defaultRatePerKm ?? NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM}`}
+            />
+            {finalData.data.hasAC && (
+              <DetailsLineItem
+                label={t("ACChagePerDay")}
+                value={`${finalData.data.defaultAcChargePerDay ?? NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY}`}
+              />
+            )}
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
       </FormContentWrapper>
-      <StickyActionWrapper>
+      <StickyActionWrapper bgTransparent>
         <RyogoDefaultButton
-          className="w-full"
+          size={"lg"}
           type="submit"
           disabled={formData.formState.isSubmitting}
           showSpinner={formData.formState.isSubmitting}
@@ -146,7 +177,6 @@ export function AddVehicleConfirm({
           size={"lg"}
           type="button"
           onClick={onPrev}
-          className="w-full"
           disabled={formData.formState.isSubmitting}
           label={t("SecondaryCTA")}
         />

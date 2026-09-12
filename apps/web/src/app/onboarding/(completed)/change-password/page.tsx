@@ -58,7 +58,12 @@ export default async function ChangePasswordPage() {
   return (
     <>
       <OnboardingPageWrapper id="ChangePassword">
-        <OnboardingStepHeader title={t("Title")} stepLabel={t("Subtitle")} />
+        <OnboardingStepHeader
+          title={t("Title")}
+          stepLabel={t("Subtitle")}
+          totalSteps={1}
+          currentStepIndex={0}
+        />
         <ChangePasswordStepComponent
           userId={currentUser.userId}
           role={currentUser.userRole}

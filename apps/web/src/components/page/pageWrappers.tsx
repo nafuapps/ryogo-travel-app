@@ -114,13 +114,15 @@ export function FormWrapper<T extends FieldValues>({
 export function FormContentWrapper({
   children,
   asCard = true,
+  className,
 }: {
   children: React.ReactNode
   asCard?: boolean
+  className?: string
 }) {
   return (
     <div
-      className={`flex flex-col relative gap-3 lg:gap-4 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}`}
+      className={`flex flex-col relative gap-3 lg:gap-4 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
     >
       {children}
     </div>
@@ -285,11 +287,15 @@ export function GridItemWrapper({ children }: { children: React.ReactNode }) {
 
 export function StickyActionWrapper({
   children,
+  bgTransparent,
 }: {
   children: React.ReactNode
+  bgTransparent?: boolean
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 py-1 lg:py-1.5 sticky mt-auto bottom-0">
+    <div
+      className={`flex flex-col gap-2 lg:gap-3 py-2 lg:py-3 sticky mt-auto bottom-0 ${bgTransparent ? "bg-transparent" : "bg-slate-100 dark:bg-slate-950 border-t"}`}
+    >
       {children}
     </div>
   )

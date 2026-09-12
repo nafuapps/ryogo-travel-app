@@ -1,4 +1,4 @@
-import { RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useRouter } from "next/navigation"
@@ -43,24 +43,29 @@ export function CreateAccountFinish({
       onSubmit={form.handleSubmit(onSubmit)}
       justifyCenter
     >
-      <FormContentWrapper asCard={false}>
+      <FormContentWrapper
+        asCard={false}
+        className="grow justify-center items-center"
+      >
         <RyogoEnclosedIcon
           icon={Check}
           size="md"
           color="white"
           bgColor="black"
           circular
+          className="animate-caret-blink"
         />
-        <RyogoH3>{t("Title")}</RyogoH3>
+        <RyogoH4 className="text-center">{t("Title")}</RyogoH4>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
       </FormContentWrapper>
-      <StickyActionWrapper>
-        <RyogoSmall>{t("Description1")}</RyogoSmall>
+      <StickyActionWrapper bgTransparent>
+        <RyogoSmall className="text-center">{t("Description")}</RyogoSmall>
         <RyogoDefaultButton
-          disabled={form.formState.isSubmitting}
+          size={"lg"}
           onClick={onSubmit}
           type="submit"
           label={t("PrimaryCTA")}
+          disabled={form.formState.isSubmitting}
         />
       </StickyActionWrapper>
     </FormWrapper>

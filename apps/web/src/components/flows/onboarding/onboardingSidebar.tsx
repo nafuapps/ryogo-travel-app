@@ -103,17 +103,21 @@ export default function OnboardingSidebar({
                   <div
                     className={`rounded-lg
                       ${
-                        currentProcess > index ||
-                        (currentProcess === index && isLastStep)
-                          ? "bg-slate-950 dark:bg-white shadow"
+                        currentProcess > index
+                          ? "bg-slate-900 dark:bg-white shadow"
                           : currentProcess === index
-                            ? "bg-white  dark:bg-slate-950 border border-sky-700 dark:border-sky-300 shadow"
+                            ? "bg-white  dark:bg-slate-900 border border-sky-700 dark:border-sky-300 shadow"
                             : "bg-slate-300  dark:bg-slate-700"
                       } flex shrink-0 justify-center items-center size-9 md:size-10`}
                   >
                     {currentProcess > index ||
                     (currentProcess === index && isLastStep) ? (
-                      <RyogoIcon icon={Check} size="sm" color="white" />
+                      <RyogoIcon
+                        icon={Check}
+                        size="sm"
+                        color={currentProcess > index ? "white" : "brand"}
+                        thick
+                      />
                     ) : (
                       <RyogoP
                         weight="font-bold"

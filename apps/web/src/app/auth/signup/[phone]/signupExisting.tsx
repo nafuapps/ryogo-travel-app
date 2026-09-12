@@ -15,7 +15,7 @@ import {
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import UserCard from "@/components/flows/auth/userCard"
+import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { ChevronRight } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
@@ -48,17 +48,13 @@ export default async function SignupExistingPageComponent({
       <AuthAccountsWrapper length={accounts.length}>
         {accounts.map((account) => (
           <Link href={`/auth/login/password/${account.id}`} key={account.id}>
-            <UserCard user={account} isLink />
+            <AuthAccountCard user={account} isLink />
           </Link>
         ))}
       </AuthAccountsWrapper>
       <AuthActionWrapper>
         <Link href={"/auth/signup"}>
-          <RyogoOutlineButton
-            size={"lg"}
-            className="w-full"
-            label={t("BackCTA")}
-          />
+          <RyogoOutlineButton className="w-full" label={t("BackCTA")} />
         </Link>
         <Separator />
         {hasOwnerAccount ? (

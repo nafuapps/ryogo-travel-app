@@ -2,8 +2,7 @@
 
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { RyogoH3 } from "@/components/typography"
-import ConfirmValues from "@/components/form/confirmValues"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -13,6 +12,10 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsHeaderWrapper,
+  DetailsLineItem,
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
@@ -59,14 +62,30 @@ export function AddAgentConfirm({
       onSubmit={formData.handleSubmit(onSubmit)}
     >
       <FormContentWrapper asCard={false}>
-        <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-        <ConfirmValues name={t("AgentName")} value={finalData.data.name} />
-        <ConfirmValues name={t("AgentPhone")} value={finalData.data.phone} />
-        <ConfirmValues name={t("AgentEmail")} value={finalData.data.email} />
+        <RyogoP color="slate">{t("Title")}</RyogoP>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("UserDetails")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            <DetailsLineItem
+              label={t("AgentName")}
+              value={finalData.data.name}
+            />
+            <DetailsLineItem
+              label={t("AgentPhone")}
+              value={finalData.data.phone}
+            />
+            <DetailsLineItem
+              label={t("AgentEmail")}
+              value={finalData.data.email}
+            />
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
       </FormContentWrapper>
-      <StickyActionWrapper>
+      <StickyActionWrapper bgTransparent>
         <RyogoDefaultButton
-          className="w-full"
+          size={"lg"}
           type="submit"
           disabled={formData.formState.isSubmitting}
           showSpinner={formData.formState.isSubmitting}
@@ -78,7 +97,6 @@ export function AddAgentConfirm({
           size={"lg"}
           type="button"
           onClick={onPrev}
-          className="w-full"
           disabled={formData.formState.isSubmitting}
           label={t("SecondaryCTA")}
         />

@@ -2,8 +2,7 @@
 
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import { RyogoH3 } from "@/components/typography"
-import ConfirmValues from "@/components/form/confirmValues"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -13,10 +12,15 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsHeaderWrapper,
+  DetailsLineItem,
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY } from "@/lib/uiConfig"
 
 export function AddDriverConfirm({
   onNext,
@@ -67,45 +71,73 @@ export function AddDriverConfirm({
       onSubmit={formData.handleSubmit(onSubmit)}
     >
       <FormContentWrapper asCard={false}>
-        <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-        <ConfirmValues name={t("DriverName")} value={finalData.data.name} />
-        <ConfirmValues name={t("DriverPhone")} value={finalData.data.phone} />
-        <ConfirmValues name={t("DriverEmail")} value={finalData.data.email} />
-        {finalData.data.licenseNumber && (
-          <ConfirmValues
-            name={t("LicenseNumber")}
-            value={finalData.data.licenseNumber}
-          />
-        )}
-        {finalData.data.licenseExpiresOn && (
-          <ConfirmValues
-            name={t("LicenseExpiresOn")}
-            value={finalData.data.licenseExpiresOn.toDateString()}
-          />
-        )}
-        {finalData.data.address && (
-          <ConfirmValues
-            name={t("DriverAddress")}
-            value={finalData.data.address}
-          />
-        )}
-        {finalData.data.canDriveVehicleTypes &&
-          finalData.data.canDriveVehicleTypes.length > 0 && (
-            <ConfirmValues
-              name={t("CanDriveVehicleTypes")}
-              value={finalData.data.canDriveVehicleTypes.join(", ")}
+        <RyogoP color="slate">{t("Title")}</RyogoP>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("UserDetails")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            <DetailsLineItem
+              label={t("DriverName")}
+              value={finalData.data.name}
             />
-          )}
-        {finalData.data.defaultAllowancePerDay && (
-          <ConfirmValues
-            name={t("DefaultAllowancePerDay")}
-            value={`${finalData.data.defaultAllowancePerDay}`}
-          />
-        )}
+            <DetailsLineItem
+              label={t("DriverPhone")}
+              value={finalData.data.phone}
+            />
+            <DetailsLineItem
+              label={t("DriverEmail")}
+              value={finalData.data.email}
+            />
+            {finalData.data.address && (
+              <DetailsLineItem
+                label={t("DriverAddress")}
+                value={finalData.data.address}
+              />
+            )}
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("LicenseDetails")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            {finalData.data.licenseNumber && (
+              <DetailsLineItem
+                label={t("LicenseNumber")}
+                value={finalData.data.licenseNumber}
+              />
+            )}
+            {finalData.data.licenseExpiresOn && (
+              <DetailsLineItem
+                label={t("LicenseExpiresOn")}
+                value={finalData.data.licenseExpiresOn.toDateString()}
+              />
+            )}
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("AgencyDetails")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            {finalData.data.canDriveVehicleTypes &&
+              finalData.data.canDriveVehicleTypes.length > 0 && (
+                <DetailsLineItem
+                  label={t("CanDriveVehicleTypes")}
+                  value={finalData.data.canDriveVehicleTypes.join(", ")}
+                />
+              )}
+            <DetailsLineItem
+              label={t("DefaultAllowancePerDay")}
+              value={`${finalData.data.defaultAllowancePerDay ?? NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY}`}
+            />
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
       </FormContentWrapper>
-      <StickyActionWrapper>
+      <StickyActionWrapper bgTransparent>
         <RyogoDefaultButton
-          className="w-full"
+          size={"lg"}
           disabled={formData.formState.isSubmitting}
           showSpinner={formData.formState.isSubmitting}
           label={
@@ -115,7 +147,6 @@ export function AddDriverConfirm({
         <RyogoOutlineButton
           size={"lg"}
           onClick={onPrev}
-          className="w-full"
           disabled={formData.formState.isSubmitting}
           label={t("SecondaryCTA")}
         />

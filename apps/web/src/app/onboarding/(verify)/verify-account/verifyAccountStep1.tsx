@@ -6,11 +6,11 @@ import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeAction"
-import { RyogoCaption } from "@/components/typography"
 import { SUPPORT_EMAIL, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import Link from "next/link"
 import {
   RyogoDefaultButton,
+  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
@@ -76,16 +76,16 @@ export function VerifyAccountStep1({
       form={formData}
       onSubmit={formData.handleSubmit(onSubmit)}
     >
-      <FormContentWrapper>
+      <FormContentWrapper asCard={false}>
         <RyogoOTPInput
           name={"userEnteredcode"}
           label={t("Field1.Title")}
           description={t("Field1.Description")}
         />
       </FormContentWrapper>
-      <StickyActionWrapper>
+      <StickyActionWrapper bgTransparent>
         <RyogoDefaultButton
-          className="w-full"
+          size={"lg"}
           type="submit"
           disabled={isPending}
           label={t("PrimaryCTA")}
@@ -94,7 +94,6 @@ export function VerifyAccountStep1({
           size={"lg"}
           type="button"
           onClick={resendCode}
-          className="w-full"
           disabled={isPending || resendDifference < VERIFY_CODE_TIMEOUT_MINUTES}
           label={
             isPending
@@ -106,8 +105,8 @@ export function VerifyAccountStep1({
                   })
           }
         />
-        <Link href={`mailto:${SUPPORT_EMAIL}`}>
-          <RyogoCaption color="light">{t("Help")}</RyogoCaption>
+        <Link href={`mailto:${SUPPORT_EMAIL}`} className="w-full">
+          <RyogoGhostButton label={t("Help")} />
         </Link>
       </StickyActionWrapper>
     </FormWrapper>

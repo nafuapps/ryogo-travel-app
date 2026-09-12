@@ -148,6 +148,7 @@
     "CreateAccountPage": {
       "Title": "Create Account",
       "Description": "STEP {step} OF {total}",
+      "Completed": "COMPLETED",
       "Step1": {
         "Field1": {
           "Title": "Enter agency name",
@@ -300,13 +301,14 @@
       "Finish": {
         "Title": "Congratulations!",
         "Subtitle": "Your account has been created successfully",
-        "Description1": "We have sent a 6-digit verification code to your provided email address",
+        "Description": "We have sent a 6-digit verification code to your provided email address",
         "PrimaryCTA": "Verify Account"
       }
     },
     "VerifyAccountPage": {
       "Title": "Verify Account",
       "Description": "STEP {step} OF {total}",
+      "Completed": "COMPLETED",
       "Step1": {
         "Field1": {
           "Title": "Enter verification code",
@@ -324,7 +326,7 @@
       },
       "Finish": {
         "Title": "Great!",
-        "Subtitle": "Your account has been verified",
+        "Subtitle": "Your account has been verified successfully",
         "Description1": "Next, let's add a vehicle to your account.",
         "Description2": "(For now, we will add just 1 vehicle. You can add more later.)",
         "PrimaryCTA": "Add Vehicle"
@@ -333,6 +335,7 @@
     "AddVehiclePage": {
       "Title": "Add Vehicle",
       "Description": "STEP {step} OF {total}",
+      "Completed": "COMPLETED",
       "Step1": {
         "Field1": {
           "Title": "Enter vehicle number",
@@ -480,6 +483,7 @@
       },
       "Confirm": {
         "Title": "Confirm details to add your vehicle:",
+        "BasicDetails": "Basic Details",
         "VehicleNumber": "Vehicle Number",
         "Type": "Type",
         "Brand": "Brand",
@@ -487,11 +491,13 @@
         "Color": "Color",
         "Capacity": "Capacity",
         "OdometerReading": "Odometer Reading",
+        "HasAC": "Has AC?",
+        "PolicyDetails": "Policy Details",
         "InsuranceExpiresOn": "Insurance Expiry Date",
         "PUCExpiresOn": "PUC Expiry Date",
         "RCExpiresOn": "Registration Expiry Date",
+        "AgencyDetails": "Agency Details",
         "RatePerKm": "Vehicle Charge Per Km",
-        "HasAC": "Has AC?",
         "ACChagePerDay": "AC Charge Per Day",
         "PrimaryCTA": "Confirm and Submit",
         "SecondaryCTA": "Back",
@@ -508,6 +514,7 @@
     "AddDriverPage": {
       "Title": "Add Driver",
       "Description": "STEP {step} OF {total}",
+      "Completed": "COMPLETED",
       "Step1": {
         "Field1": {
           "Title": "Driver name",
@@ -594,12 +601,15 @@
       },
       "Confirm": {
         "Title": "Confirm details to add driver:",
+        "UserDetails": "User Details",
         "DriverName": "Driver Name",
         "DriverPhone": "Driver Phone",
         "DriverEmail": "Driver Email",
+        "DriverAddress": "Address",
+        "LicenseDetails": "License Details",
         "LicenseNumber": "License Number",
         "LicenseExpiresOn": "License Expiry Date",
-        "DriverAddress": "Address",
+        "AgencyDetails": "Agency Details",
         "CanDriveVehicleTypes": "Can Drive",
         "DefaultAllowancePerDay": "Allowance Per Day",
         "PrimaryCTA": "Confirm and Submit",
@@ -621,6 +631,7 @@
     "AddAgentPage": {
       "Title": "Add Agent",
       "Description": "STEP {step} OF {total}",
+      "Completed": "COMPLETED",
       "Step1": {
         "Field1": {
           "Title": "Agent name",
@@ -655,6 +666,7 @@
       },
       "Confirm": {
         "Title": "Confirm details to add agent:",
+        "UserDetails": "User Details",
         "AgentName": "Agent Name",
         "AgentPhone": "Agent Phone Number",
         "AgentEmail": "Agent Email Address",
@@ -947,7 +959,7 @@
       "ClearCTA": "Clear",
       "CreateCTA": "ADD A NEW CUSTOMER",
       "Found": "{count, plural, =1 {# matching customer} other {# matching customers}} found",
-      "NotFound": "No matching customer found.. You may add a new customer to create booking",
+      "NotFound": "No matching customer found.. You may add a new customer to continue with booking creation.",
       "CustomerMustBeActive": "Customer must be active to create a booking",
       "AddCustomer": {
         "Title": "Create Booking",
@@ -998,7 +1010,7 @@
         "Days": " {count, plural, =1 {day} other {days}}",
         "StepTripDetails": {
           "Title": "Trip details",
-          "Subtitle": "Step {current} of {total}",
+          "Subtitle": "STEP {current} OF {total}",
           "Description": "Capture customer's trip preferences",
           "Field1": {
             "Title": "From",
@@ -1059,7 +1071,7 @@
         },
         "StepVehicle": {
           "Title": "Select vehicle",
-          "Subtitle": "Step {current} of {total}",
+          "Subtitle": "STEP {current} OF {total}",
           "Description": "Assign a vehicle for the trip",
           "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to choose from more vehicles!",
           "ExpiredWarning": "You are seeing limited list of vehicles because your subscription plan has expired.",
@@ -1073,7 +1085,7 @@
         },
         "StepDriver": {
           "Title": "Select driver",
-          "Subtitle": "Step {current} of {total}",
+          "Subtitle": "STEP {current} OF {total}",
           "Description": "Assign a driver for the trip",
           "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to choose from more drivers!",
           "ExpiredWarning": "You are seeing limited list of drivers because your subscription plan has expired.",
@@ -1087,7 +1099,7 @@
         },
         "StepPrice": {
           "Title": "Price details",
-          "Subtitle": "Step {current} of {total}",
+          "Subtitle": "STEP {current} OF {total}",
           "Description": "Provide cost details for final price calculation",
           "Field1": {
             "Title": "Vehicle charge (per Km)",
@@ -1145,7 +1157,7 @@
         },
         "Final": {
           "Title": "Final summary",
-          "Subtitle": "Step {current} of {total}",
+          "Subtitle": "STEP {current} OF {total}",
           "Description": "Review booking with total cost estimate",
           "DriverAllowance": "Driver Allowance",
           "DriverSubtitle": "(₹{allowance} for {days} day)",
@@ -1574,7 +1586,7 @@
       "RenewCTA": "Renew Subscription",
       "Step1": {
         "Title": "Adding vehicle",
-        "Subtitle": "Step 1 of 5",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Provide basic details of the vehicle",
         "Field1": {
           "Title": "Enter vehicle number",
@@ -1612,7 +1624,7 @@
       },
       "Step2": {
         "Title": "Adding vehicle",
-        "Subtitle": "Step 2 of 5",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Provide vehicle details and RC document",
         "Field1": {
           "Title": "Enter passenger capacity",
@@ -1663,7 +1675,7 @@
       },
       "Step3": {
         "Title": "Adding vehicle",
-        "Subtitle": "Step 3 of 5",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Provide policy details of the vehicle",
         "Field1": {
           "Title": "Insurance expiry date",
@@ -1701,7 +1713,7 @@
       },
       "Step4": {
         "Title": "Adding vehicle",
-        "Subtitle": "Step 4 of 5",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Provide agency related details of the vehicle",
         "Field1": {
           "Title": "Vehicle charge per Km (in ₹)",
@@ -1732,21 +1744,24 @@
       },
       "Confirm": {
         "Title": "Confirm details",
-        "Subtitle": "Step 5 of 5",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Review details of the vehicle being added",
+        "BasicDetails": "Basic Details",
         "VehicleNumber": "Vehicle Number",
         "Type": "Type",
         "Brand": "Brand",
         "Model": "Model",
         "Color": "Color",
         "Capacity": "Capacity",
-        "OdometerReading": "Odometer Reading",
+        "OdometerReading": "Odometer Reading (Km)",
+        "HasAC": "Has AC",
+        "PolicyDetails": "Policy Details",
         "InsuranceExpiresOn": "Insurance Expiry Date",
         "PUCExpiresOn": "PUC Expiry Date",
         "RCExpiresOn": "Registration Expiry Date",
-        "RatePerKm": "Vehicle Charge Per Km",
-        "HasAC": "Has AC?",
-        "ACChagePerDay": "AC Charge Per Day",
+        "AgencyDetails": "Agency Details",
+        "RatePerKm": "Vehicle Rate (Per Km)",
+        "ACChagePerDay": "AC Charge (Per Day)",
         "PrimaryCTA": "Confirm and Add Vehicle",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
@@ -2013,7 +2028,7 @@
       "RenewCTA": "Renew Subscription",
       "Step1": {
         "Title": "Adding Driver",
-        "Subtitle": "Step 1 of 4",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Provide basic details of the driver",
         "Field1": {
           "Title": "Driver name",
@@ -2049,7 +2064,7 @@
       },
       "Step2": {
         "Title": "Adding Driver",
-        "Subtitle": "Step 2 of 4",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Provide license related details of the driver",
         "Field1": {
           "Title": "Driver license number",
@@ -2079,7 +2094,7 @@
       },
       "Step3": {
         "Title": "Adding Driver",
-        "Subtitle": "Step 3 of 4",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Provide working details of the driver",
         "Field1": {
           "Title": "Driver address",
@@ -2107,14 +2122,17 @@
       },
       "Confirm": {
         "Title": "Confirm details",
-        "Subtitle": "Step 4 of 4",
+        "Subtitle": "STEP {current} OF {total}",
         "Description": "Review driver details being added",
+        "UserDetails": "User Details",
         "DriverName": "Driver Name",
         "DriverPhone": "Driver Phone",
         "DriverEmail": "Driver Email",
+        "DriverAddress": "Address",
+        "LicenseDetails": "License Details",
         "LicenseNumber": "License Number",
         "LicenseExpiresOn": "License Expiry Date",
-        "DriverAddress": "Address",
+        "AgencyDetails": "Agency Details",
         "CanDriveVehicleTypes": "Can Drive",
         "DefaultAllowancePerDay": "Allowance Per Day",
         "PrimaryCTA": "Confirm and Add Driver",

@@ -1,11 +1,9 @@
 "use client"
 
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import StepsTracker from "@/components/form/stepsTracker"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
@@ -20,14 +18,15 @@ import {
   MIN_VEHICLE_RATE,
   MAX_PER_DAY_CHARGE,
   MIN_PER_DAY_CHARGE,
+  NewBookingTotalSteps,
 } from "@/lib/uiConfig"
 import {
-  SectionRowWrapper,
   PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export default function NewBookingStepPrice({
   onNext,
@@ -113,20 +112,22 @@ export default function NewBookingStepPrice({
   }
 
   return (
-    <PageWrapper id="CostStep">
+    <PageWrapper id="PriceStep">
+      <FormStepHeader
+        totalSteps={NewBookingTotalSteps}
+        currentStepIndex={3}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 4,
+          total: NewBookingTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<StepPriceType>
         id="StepPriceForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 4, total: 5 })}
-          </RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"booking"} current={3} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <NewBookingTripCard {...newBookingFormData} />
         <FormContentWrapper>
           <RyogoInput

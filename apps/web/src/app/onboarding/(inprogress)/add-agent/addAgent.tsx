@@ -64,17 +64,19 @@ export default function AddAgentPageComponent({
   return (
     <>
       <OnboardingPageWrapper id="AddAgentPage">
-        {currentStepIndex < AddAgentTotalSteps && (
-          <OnboardingStepHeader
-            totalSteps={AddAgentTotalSteps}
-            currentStepIndex={currentStepIndex}
-            title={t("Title")}
-            stepLabel={t("Description", {
-              step: currentStepIndex + 1,
-              total: AddAgentTotalSteps,
-            })}
-          />
-        )}
+        <OnboardingStepHeader
+          totalSteps={AddAgentTotalSteps}
+          currentStepIndex={currentStepIndex}
+          title={t("Title")}
+          stepLabel={
+            currentStepIndex >= AddAgentTotalSteps
+              ? t("Completed")
+              : t("Description", {
+                  step: currentStepIndex + 1,
+                  total: AddAgentTotalSteps,
+                })
+          }
+        />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>
       <OnboardingSidebar

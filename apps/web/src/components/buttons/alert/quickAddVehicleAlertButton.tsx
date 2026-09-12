@@ -77,7 +77,14 @@ export default function QuickAddVehicleAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoOutlineButton disabled={disabled} label={t("Label")} />}
+      labelChild={
+        <RyogoOutlineButton
+          disabled={disabled}
+          label={t("Label")}
+          labelColor={"brand"}
+          size={"lg"}
+        />
+      }
     >
       <RyogoDefaultButton
         onClick={quickAddVehicle}

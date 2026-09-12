@@ -1,13 +1,12 @@
 "use client"
 
-import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import StepsTracker from "@/components/form/stepsTracker"
 import {
   RyogoCombobox,
   RyogoDatePicker,
@@ -25,7 +24,6 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
-  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
@@ -35,6 +33,7 @@ import {
   MAX_VEHICLE_CAPCITY,
   MIN_VEHICLE_CAPCITY,
   NEW_BOOKING_DEFAULT_DISTANCE,
+  NewBookingTotalSteps,
 } from "@/lib/uiConfig"
 import { Separator } from "@/components/ui/separator"
 import { differenceInDays } from "date-fns"
@@ -43,6 +42,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export default function NewBookingStepTripDetails({
   onNext,
@@ -209,19 +209,21 @@ export default function NewBookingStepTripDetails({
   ]
   return (
     <PageWrapper id="TripStep">
+      <FormStepHeader
+        totalSteps={NewBookingTotalSteps}
+        currentStepIndex={0}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 1,
+          total: NewBookingTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<StepTripDetailsType>
         id="StepTripDetailsForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">
-            {t("Subtitle", { current: 1, total: 5 })}
-          </RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"booking"} current={0} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoCombobox
             name="tripSourceLocationState"

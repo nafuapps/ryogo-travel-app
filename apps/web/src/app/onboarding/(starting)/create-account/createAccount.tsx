@@ -107,17 +107,19 @@ export default function CreateAccountPageComponent({
   return (
     <>
       <OnboardingPageWrapper id="CreateAccountPage">
-        {currentStepIndex < CreateAccountTotalSteps && (
-          <OnboardingStepHeader
-            totalSteps={CreateAccountTotalSteps}
-            currentStepIndex={currentStepIndex}
-            title={t("Title")}
-            stepLabel={t("Description", {
-              step: currentStepIndex + 1,
-              total: CreateAccountTotalSteps,
-            })}
-          />
-        )}
+        <OnboardingStepHeader
+          totalSteps={CreateAccountTotalSteps}
+          currentStepIndex={currentStepIndex}
+          title={t("Title")}
+          stepLabel={
+            currentStepIndex >= CreateAccountTotalSteps
+              ? t("Completed")
+              : t("Description", {
+                  step: currentStepIndex + 1,
+                  total: CreateAccountTotalSteps,
+                })
+          }
+        />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>
       <OnboardingSidebar currentProcess={0} isLastStep={isLastStep} />

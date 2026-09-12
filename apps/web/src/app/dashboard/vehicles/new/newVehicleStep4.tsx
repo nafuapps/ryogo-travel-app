@@ -6,8 +6,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
-import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   RyogoDefaultButton,
@@ -18,14 +16,15 @@ import {
   MAX_VEHICLE_RATE,
   MAX_PER_DAY_CHARGE,
   MIN_PER_DAY_CHARGE,
+  AddVehicleTotalSteps,
 } from "@/lib/uiConfig"
 import {
   PageWrapper,
-  SectionRowWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export function NewVehicleStep4({
   onNext,
@@ -87,17 +86,21 @@ export function NewVehicleStep4({
 
   return (
     <PageWrapper id="NewVehicleStep4">
+      <FormStepHeader
+        totalSteps={AddVehicleTotalSteps}
+        currentStepIndex={3}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 4,
+          total: AddVehicleTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<Step4Type>
         id="Step4Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"vehicle"} current={3} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoInput
             name={"defaultRatePerKm"}

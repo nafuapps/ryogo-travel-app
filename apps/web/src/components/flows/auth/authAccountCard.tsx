@@ -7,7 +7,7 @@ import { ChevronRight, IdCard, User, UserKey } from "lucide-react"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export default function UserCard({
+export default function AuthAccountCard({
   user,
   isLink,
 }: {
@@ -49,7 +49,7 @@ export default function UserCard({
       </SectionColWrapper>
       <SectionColWrapper end small>
         <UserRolePill role={user.userRole} />
-        {isLink && <RyogoIcon icon={ChevronRight} size="sm" />}
+        {isLink && <RyogoIcon icon={ChevronRight} size="sm" color="light" />}
       </SectionColWrapper>
     </div>
   )

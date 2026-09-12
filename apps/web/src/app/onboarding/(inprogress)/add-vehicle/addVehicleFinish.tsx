@@ -1,4 +1,4 @@
-import { RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
@@ -24,14 +24,17 @@ export function AddVehicleFinish() {
           color="white"
           bgColor="black"
           circular
+          className="animate-caret-blink"
         />
-        <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
+        <RyogoH4 className="text-center">{t("Title")}</RyogoH4>
+        <RyogoSmall color="light" className="text-center">
+          {t("Subtitle")}
+        </RyogoSmall>
       </FormContentWrapper>
-      <StickyActionWrapper>
-        <RyogoSmall>{t("Description1")}</RyogoSmall>
-        <Link href="/onboarding/add-driver">
-          <RyogoDefaultButton label={t("PrimaryCTA")} />
+      <StickyActionWrapper bgTransparent>
+        <RyogoSmall className="text-center">{t("Description1")}</RyogoSmall>
+        <Link href="/onboarding/add-driver" className="w-full">
+          <RyogoDefaultButton label={t("PrimaryCTA")} size={"lg"} />
         </Link>
       </StickyActionWrapper>
     </FormWrapper>

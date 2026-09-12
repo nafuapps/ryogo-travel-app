@@ -17,7 +17,7 @@ import {
 } from "@/components/flows/auth/authWrappers"
 import { differenceInMinutes } from "date-fns"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import UserCard from "@/components/flows/auth/userCard"
+import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { X, Info } from "lucide-react"
@@ -86,7 +86,7 @@ export default function ForgotPasswordPageComponent({
         form={form}
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-        <UserCard user={user} />
+        <AuthAccountCard user={user} />
         <RyogoInput
           name={"email"}
           type="email"

@@ -51,17 +51,19 @@ export default function VerifyAccountPageComponent({
   return (
     <>
       <OnboardingPageWrapper id="VerifyAccountPage">
-        {currentStepIndex < VerifyAccountTotalSteps && (
-          <OnboardingStepHeader
-            totalSteps={VerifyAccountTotalSteps}
-            currentStepIndex={currentStepIndex}
-            title={t("Title")}
-            stepLabel={t("Description", {
-              step: currentStepIndex + 1,
-              total: VerifyAccountTotalSteps,
-            })}
-          />
-        )}
+        <OnboardingStepHeader
+          totalSteps={VerifyAccountTotalSteps}
+          currentStepIndex={currentStepIndex}
+          title={t("Title")}
+          stepLabel={
+            currentStepIndex >= VerifyAccountTotalSteps
+              ? t("Completed")
+              : t("Description", {
+                  step: currentStepIndex + 1,
+                  total: VerifyAccountTotalSteps,
+                })
+          }
+        />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>
       <OnboardingSidebar currentProcess={1} isLastStep={isLastStep} />

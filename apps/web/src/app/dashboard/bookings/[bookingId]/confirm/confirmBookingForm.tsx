@@ -153,7 +153,6 @@ export default function ConfirmBookingPageComponent({
             />
           </RyogoAlertDialog>
           <RyogoOutlineButton
-            size={"lg"}
             label={t("Back")}
             type="button"
             onClick={() => router.back()}

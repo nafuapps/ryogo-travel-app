@@ -6,14 +6,13 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { Dispatch, SetStateAction } from "react"
 import { RyogoFileInput, RyogoInput } from "@/components/form/ryogoFormFields"
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import StepsTracker from "@/components/form/stepsTracker"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
+  AddDriverTotalSteps,
   MAX_EMAIL_LENGTH,
   MAX_FILE_UPLOAD_SIZE,
   MAX_NAME_LENGTH,
@@ -21,12 +20,12 @@ import {
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
 import {
-  SectionRowWrapper,
   PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export function NewDriverStep1({
   onNext,
@@ -117,17 +116,21 @@ export function NewDriverStep1({
 
   return (
     <PageWrapper id="NewDriverStep1">
+      <FormStepHeader
+        totalSteps={AddDriverTotalSteps}
+        currentStepIndex={0}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 1,
+          total: AddDriverTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<Step1Type>
         id="Step1Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"driver"} current={0} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoInput
             name={"driverName"}

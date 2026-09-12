@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -57,17 +57,23 @@ export function AddAgentFinish({
       onSubmit={form.handleSubmit(submit)}
       justifyCenter
     >
-      <FormContentWrapper asCard={false}>
+      <FormContentWrapper
+        asCard={false}
+        className="grow justify-center items-center"
+      >
         <RyogoEnclosedIcon
           icon={Check}
           size="md"
           color="white"
           bgColor="black"
           circular
+          className="animate-caret-blink"
         />
-        <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
-        <RyogoSmall color="slate">
+        <RyogoH4 className="text-center">{t("Title")}</RyogoH4>
+        <RyogoSmall color="light" className="text-center">
+          {t("Subtitle")}
+        </RyogoSmall>
+        <RyogoSmall color="slate" className="text-center">
           {t("Email", { email: finalData.data.email })}
         </RyogoSmall>
         <RyogoOutlineButton
@@ -81,7 +87,7 @@ export function AddAgentFinish({
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </RyogoOutlineButton>
       </FormContentWrapper>
-      <StickyActionWrapper>
+      <StickyActionWrapper bgTransparent>
         <RyogoDefaultButton
           size={"lg"}
           disabled={form.formState.isSubmitting}

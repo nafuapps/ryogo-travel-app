@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -58,17 +58,23 @@ export function AddDriverFinish({
       onSubmit={form.handleSubmit(submit)}
       justifyCenter
     >
-      <FormContentWrapper asCard={false}>
+      <FormContentWrapper
+        asCard={false}
+        className="grow justify-center items-center"
+      >
         <RyogoEnclosedIcon
           icon={Check}
           size="md"
           color="white"
           bgColor="black"
           circular
+          className="animate-caret-blink"
         />
-        <RyogoH3>{t("Title")}</RyogoH3>
-        <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
-        <RyogoCaption color="slate">
+        <RyogoH4 className="text-center">{t("Title")}</RyogoH4>
+        <RyogoSmall color="light" className="text-center">
+          {t("Subtitle")}
+        </RyogoSmall>
+        <RyogoCaption color="slate" className="text-center">
           {t("Email", { email: finalData.data.email })}
         </RyogoCaption>
         <RyogoOutlineButton
@@ -81,11 +87,17 @@ export function AddDriverFinish({
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </RyogoOutlineButton>
       </FormContentWrapper>
-      <StickyActionWrapper>
-        <RyogoSmall>{t("Description1")}</RyogoSmall>
-        <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
-        <Link href="/onboarding/add-agent">
-          <RyogoDefaultButton type="button" label={t("PrimaryCTA")} />
+      <StickyActionWrapper bgTransparent>
+        <RyogoSmall className="text-center">{t("Description1")}</RyogoSmall>
+        <RyogoCaption color="light" className="text-center">
+          {t("Description2")}
+        </RyogoCaption>
+        <Link href="/onboarding/add-agent" className="w-full">
+          <RyogoDefaultButton
+            type="button"
+            label={t("PrimaryCTA")}
+            size={"lg"}
+          />
         </Link>
         <RyogoOutlineButton
           size={"lg"}

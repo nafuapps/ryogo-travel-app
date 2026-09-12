@@ -10,9 +10,7 @@ import {
   RyogoMultipleCheckbox,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import StepsTracker from "@/components/form/stepsTracker"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import {
@@ -24,14 +22,15 @@ import {
   MAX_PER_DAY_CHARGE,
   MAX_FIELD_DESC_LENGTH,
   MIN_FIELD_DESC_LENGTH,
+  AddDriverTotalSteps,
 } from "@/lib/uiConfig"
 import {
-  SectionRowWrapper,
   PageWrapper,
   StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
 } from "@/components/page/pageWrappers"
+import FormStepHeader from "@/components/form/formStepHeader"
 
 export function NewDriverStep3({
   onNext,
@@ -86,17 +85,21 @@ export function NewDriverStep3({
 
   return (
     <PageWrapper id="NewDriverStep3">
+      <FormStepHeader
+        totalSteps={AddDriverTotalSteps}
+        currentStepIndex={2}
+        title={t("Title")}
+        stepLabel={t("Subtitle", {
+          current: 3,
+          total: AddDriverTotalSteps,
+        })}
+        description={t("Description")}
+      />
       <FormWrapper<Step3Type>
         id="Step3Form"
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
-        <SectionRowWrapper end>
-          <RyogoH3>{t("Title")}</RyogoH3>
-          <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        </SectionRowWrapper>
-        <StepsTracker steps={"driver"} current={2} />
-        <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoTextarea
             name={"driverAddress"}

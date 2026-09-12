@@ -4,16 +4,14 @@
 import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import {
-  OnboardingStepHeader,
-  OnboardingStepPage,
-  VerifyAccountTotalSteps,
-} from "@/components/flows/onboarding/onboardingSteps"
 import { VerifyAccountStep1 } from "./verifyAccountStep1"
 import { VerifyAccountFinish } from "./verifyAccountFinish"
 import { differenceInMinutes } from "date-fns"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
+import { VerifyAccountTotalSteps } from "@/lib/uiConfig"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function VerifyAccountPageComponent({
   code,
@@ -52,10 +50,9 @@ export default function VerifyAccountPageComponent({
 
   return (
     <>
-      <OnboardingStepPage pageId="VerifyAccountPage">
+      <OnboardingPageWrapper id="VerifyAccountPage">
         {currentStepIndex < VerifyAccountTotalSteps && (
           <OnboardingStepHeader
-            headerId="VerifyAccountHeader"
             totalSteps={VerifyAccountTotalSteps}
             currentStepIndex={currentStepIndex}
             title={t("Title")}
@@ -66,7 +63,7 @@ export default function VerifyAccountPageComponent({
           />
         )}
         {steps[currentStepIndex]}
-      </OnboardingStepPage>
+      </OnboardingPageWrapper>
       <OnboardingSidebar currentProcess={1} isLastStep={isLastStep} />
     </>
   )

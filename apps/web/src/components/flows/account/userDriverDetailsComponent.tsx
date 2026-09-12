@@ -9,6 +9,7 @@ import {
   DetailsIDWrapper,
   DetailsLineItem,
   DetailsLineWrapper,
+  DetailsHeaderWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -33,7 +34,9 @@ export default async function UserDriverDetailsComponent({
   const t = await getTranslations("Rider.MyProfile")
   return (
     <DetailsBorderWrapper>
-      <DetailsIDWrapper id={id} label={t("DriverId")} />
+      <DetailsHeaderWrapper>
+        <DetailsIDWrapper id={id} label={t("DriverId")} />
+      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         {address && <DetailsLineItem label={t("Address")} value={address} />}
         <DetailsLineItem

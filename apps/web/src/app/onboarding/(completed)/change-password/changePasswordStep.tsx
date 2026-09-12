@@ -5,18 +5,17 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { newUserSetPasswordAction } from "@/app/actions/users/newUserSetPasswordAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function ChangePasswordStepComponent({
   userId,
@@ -72,39 +71,38 @@ export function ChangePasswordStepComponent({
   }
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step1Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step4Content">
-          <RyogoInput
-            name={"newPassword"}
-            type="password"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name={"confirmPassword"}
-            type="password"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step1Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step1Type>
+      id="Step1Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoInput
+          name={"newPassword"}
+          type="password"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name={"confirmPassword"}
+          type="password"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

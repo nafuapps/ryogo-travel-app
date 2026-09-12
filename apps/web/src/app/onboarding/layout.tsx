@@ -15,7 +15,7 @@ export default async function OnboardingLayout({
       defaultOpen={defaultOpen}
       style={
         {
-          "--sidebar-width": "50vw",
+          "--sidebar-width": "80vw",
         } as React.CSSProperties
       }
     >

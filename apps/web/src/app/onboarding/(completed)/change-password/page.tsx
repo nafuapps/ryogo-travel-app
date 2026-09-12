@@ -5,13 +5,11 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import {
-  OnboardingStepHeader,
-  OnboardingStepPage,
-} from "@/components/flows/onboarding/onboardingSteps"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { getTranslations } from "next-intl/server"
 import { ChangePasswordStepComponent } from "./changePasswordStep"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export const metadata: Metadata = {
   title: `Change Password - ${pageTitle}`,
@@ -59,19 +57,14 @@ export default async function ChangePasswordPage() {
   //Only new users can come to change password page
   return (
     <>
-      <OnboardingStepPage pageId="ChangePassword">
-        <OnboardingStepHeader
-          headerId="ChangePasswordHeader"
-          title={t("Title")}
-          stepLabel={t("Subtitle")}
-        />
-
+      <OnboardingPageWrapper id="ChangePassword">
+        <OnboardingStepHeader title={t("Title")} stepLabel={t("Subtitle")} />
         <ChangePasswordStepComponent
           userId={currentUser.userId}
           role={currentUser.userRole}
           agencyId={currentUser.agencyId}
         />
-      </OnboardingStepPage>
+      </OnboardingPageWrapper>
       <OnboardingSidebar showLogout />
     </>
   )

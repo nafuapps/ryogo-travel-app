@@ -1,15 +1,8 @@
 "use client"
 
-import { RyogoH3 } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import ConfirmValues from "@/components/form/confirmValues"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -19,6 +12,15 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  DetailsBorderWrapper,
+  DetailsContentWrapper,
+  DetailsHeaderWrapper,
+  DetailsLineItem,
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function CreateAccountConfirm({
   onNext,
@@ -80,63 +82,84 @@ export function CreateAccountConfirm({
     }
   }
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step5Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step5Content">
-          <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-          <ConfirmValues
-            name={t("AgencyName")}
-            value={finalData.agency.businessName}
-          />
-          <ConfirmValues name={t("OwnerName")} value={finalData.owner.name} />
-          <ConfirmValues name={t("OwnerPhone")} value={finalData.owner.phone} />
-          <ConfirmValues name={t("OwnerEmail")} value={finalData.owner.email} />
-          <ConfirmValues
-            name={t("AgencyPhone")}
-            value={finalData.agency.businessPhone}
-          />
-          <ConfirmValues
-            name={t("AgencyEmail")}
-            value={finalData.agency.businessEmail}
-          />
-          <ConfirmValues
-            name={t("AgencyAddress")}
-            value={finalData.agency.businessAddress}
-          />
-          <ConfirmValues
-            name={t("Location")}
-            value={`${finalData.agency.agencyCity}, ${finalData.agency.agencyState}`}
-          />
-          {finalData.agency.commissionRate && (
-            <ConfirmValues
-              name={t("CommissionRate")}
-              value={`${finalData.agency.commissionRate}`}
+    <FormWrapper
+      id="Step5Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoP color="slate">{t("Title")}</RyogoP>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("Agency")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            <DetailsLineItem
+              label={t("AgencyName")}
+              value={finalData.agency.businessName}
             />
-          )}
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step5Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+            <DetailsLineItem
+              label={t("AgencyPhone")}
+              value={finalData.agency.businessPhone}
+            />
+            <DetailsLineItem
+              label={t("AgencyEmail")}
+              value={finalData.agency.businessEmail}
+            />
+            <DetailsLineItem
+              label={t("AgencyAddress")}
+              value={finalData.agency.businessAddress}
+            />
+            <DetailsLineItem
+              label={t("Location")}
+              value={`${finalData.agency.agencyCity}, ${finalData.agency.agencyState}`}
+            />
+            {finalData.agency.commissionRate && (
+              <DetailsLineItem
+                label={t("CommissionRate")}
+                value={`${finalData.agency.commissionRate}`}
+              />
+            )}
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
+        <DetailsBorderWrapper>
+          <DetailsHeaderWrapper>
+            <RyogoCaption color="light">{t("Owner")}</RyogoCaption>
+          </DetailsHeaderWrapper>
+          <DetailsContentWrapper>
+            <DetailsLineItem
+              label={t("OwnerName")}
+              value={finalData.owner.name}
+            />
+            <DetailsLineItem
+              label={t("OwnerPhone")}
+              value={finalData.owner.phone}
+            />
+            <DetailsLineItem
+              label={t("OwnerEmail")}
+              value={finalData.owner.email}
+            />
+          </DetailsContentWrapper>
+        </DetailsBorderWrapper>
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

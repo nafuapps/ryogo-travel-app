@@ -2,11 +2,33 @@ import { SubmitEventHandler, Suspense } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { PageSkeleton } from "./loadingWrappers"
-import CopyClipboardButton from "../buttons/copy/copyClipboardButton"
-import { RyogoCaption, RyogoP, RyogoSmall, RyogoTiny } from "../typography"
+import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
+import {
+  RyogoCaption,
+  RyogoP,
+  RyogoSmall,
+  RyogoTiny,
+} from "@/components/typography"
 import { format } from "date-fns"
 import { LucideIcon, SquarePen } from "lucide-react"
-import { RyogoEnclosedIcon, RyogoIcon } from "../icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+
+export function OnboardingPageWrapper({
+  id,
+  children,
+}: {
+  id: string
+  children: React.ReactNode
+}) {
+  return (
+    <div
+      id={id}
+      className="flex flex-col gap-4 lg:gap-5 w-full h-full overflow-y-scroll no-scrollbar px-6 py-8 md:px-8 md:py-10"
+    >
+      {children}
+    </div>
+  )
+}
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -67,19 +89,21 @@ export function FormWrapper<T extends FieldValues>({
   children,
   onSubmit,
   hFull = true,
+  justifyCenter,
 }: {
   id: string
   form: UseFormReturn<T, any, T>
   children: React.ReactNode
-  onSubmit: SubmitEventHandler<HTMLFormElement>
+  onSubmit?: SubmitEventHandler<HTMLFormElement>
   hFull?: boolean
+  justifyCenter?: boolean
 }) {
   return (
     <Form {...form}>
       <form
         id={id}
         onSubmit={onSubmit}
-        className={`flex flex-col gap-3 lg:gap-4 w-full ${hFull ? "h-full" : ""}`}
+        className={`flex flex-col gap-3 lg:gap-4 w-full ${hFull ? "h-full" : ""} ${justifyCenter ? "justify-center" : ""}`}
       >
         {children}
       </form>
@@ -89,23 +113,17 @@ export function FormWrapper<T extends FieldValues>({
 
 export function FormContentWrapper({
   children,
+  asCard = true,
 }: {
   children: React.ReactNode
+  asCard?: boolean
 }) {
   return (
-    <div className="flex flex-col relative gap-3 lg:gap-4 bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5">
+    <div
+      className={`flex flex-col relative gap-3 lg:gap-4 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}`}
+    >
       {children}
     </div>
-  )
-}
-
-export function SheetContentWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-col relative gap-3 lg:gap-4 p-4">{children}</div>
   )
 }
 
@@ -271,7 +289,7 @@ export function StickyActionWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-3 py-3 bg-slate-100 dark:bg-slate-950 sticky mt-auto shadow bottom-0">
+    <div className="flex flex-col gap-2 lg:gap-3 py-1 lg:py-1.5 sticky mt-auto bottom-0">
       {children}
     </div>
   )
@@ -309,15 +327,27 @@ export function DetailsContentWrapper({
   )
 }
 
-export function DetailsIDWrapper({ id, label }: { id: string; label: string }) {
+export function DetailsHeaderWrapper({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <div className="flex items-center justify-between gap-3 lg:gap-4 px-3 lg:px-4 py-2 lg:py-3 bg-slate-200 dark:bg-slate-800">
+      {children}
+    </div>
+  )
+}
+
+export function DetailsIDWrapper({ id, label }: { id: string; label: string }) {
+  return (
+    <>
       <RyogoCaption color="light">{label}</RyogoCaption>
       <SectionRowWrapper center justifyEnd>
         <RyogoSmall color="slate">{id}</RyogoSmall>
         <CopyClipboardButton label={id} />
       </SectionRowWrapper>
-    </div>
+    </>
   )
 }
 

@@ -4,12 +4,6 @@ import { RyogoH3 } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import ConfirmValues from "@/components/form/confirmValues"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -18,6 +12,11 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddVehicleConfirm({
   onNext,
@@ -68,91 +67,90 @@ export function AddVehicleConfirm({
   }
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step5Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step5Content">
-          <RyogoH3 color="slate">{t("Title")}</RyogoH3>
+    <FormWrapper
+      id="Step5Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoH3 color="slate">{t("Title")}</RyogoH3>
+        <ConfirmValues
+          name={t("VehicleNumber")}
+          value={finalData.data.vehicleNumber}
+        />
+        <ConfirmValues
+          name={t("Type")}
+          value={finalData.data.type.toUpperCase()}
+        />
+        <ConfirmValues name={t("Brand")} value={finalData.data.brand} />
+        <ConfirmValues name={t("Model")} value={finalData.data.model} />
+        <ConfirmValues name={t("Color")} value={finalData.data.color} />
+        {finalData.data.capacity && (
           <ConfirmValues
-            name={t("VehicleNumber")}
-            value={finalData.data.vehicleNumber}
+            name={t("Capacity")}
+            value={`${finalData.data.capacity}`}
           />
+        )}
+        {finalData.data.odometerReading && (
           <ConfirmValues
-            name={t("Type")}
-            value={finalData.data.type.toUpperCase()}
+            name={t("OdometerReading")}
+            value={`${finalData.data.odometerReading}`}
           />
-          <ConfirmValues name={t("Brand")} value={finalData.data.brand} />
-          <ConfirmValues name={t("Model")} value={finalData.data.model} />
-          <ConfirmValues name={t("Color")} value={finalData.data.color} />
-          {finalData.data.capacity && (
-            <ConfirmValues
-              name={t("Capacity")}
-              value={`${finalData.data.capacity}`}
-            />
-          )}
-          {finalData.data.odometerReading && (
-            <ConfirmValues
-              name={t("OdometerReading")}
-              value={`${finalData.data.odometerReading}`}
-            />
-          )}
-          {finalData.data.insuranceExpiresOn && (
-            <ConfirmValues
-              name={t("InsuranceExpiresOn")}
-              value={finalData.data.insuranceExpiresOn.toDateString()}
-            />
-          )}
-          {finalData.data.pucExpiresOn && (
-            <ConfirmValues
-              name={t("PUCExpiresOn")}
-              value={finalData.data.pucExpiresOn.toDateString()}
-            />
-          )}
-          {finalData.data.rcExpiresOn && (
-            <ConfirmValues
-              name={t("RCExpiresOn")}
-              value={finalData.data.rcExpiresOn.toDateString()}
-            />
-          )}
-          {finalData.data.defaultRatePerKm && (
-            <ConfirmValues
-              name={t("RatePerKm")}
-              value={`${finalData.data.defaultRatePerKm}`}
-            />
-          )}
+        )}
+        {finalData.data.insuranceExpiresOn && (
           <ConfirmValues
-            name={t("HasAC")}
-            value={finalData.data.hasAC ? "Yes" : "No"}
+            name={t("InsuranceExpiresOn")}
+            value={finalData.data.insuranceExpiresOn.toDateString()}
           />
-          {finalData.data.hasAC && finalData.data.defaultAcChargePerDay && (
-            <ConfirmValues
-              name={t("ACChagePerDay")}
-              value={`${finalData.data.defaultAcChargePerDay}`}
-            />
-          )}
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step5Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
+        )}
+        {finalData.data.pucExpiresOn && (
+          <ConfirmValues
+            name={t("PUCExpiresOn")}
+            value={finalData.data.pucExpiresOn.toDateString()}
           />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
+        )}
+        {finalData.data.rcExpiresOn && (
+          <ConfirmValues
+            name={t("RCExpiresOn")}
+            value={finalData.data.rcExpiresOn.toDateString()}
           />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+        )}
+        {finalData.data.defaultRatePerKm && (
+          <ConfirmValues
+            name={t("RatePerKm")}
+            value={`${finalData.data.defaultRatePerKm}`}
+          />
+        )}
+        <ConfirmValues
+          name={t("HasAC")}
+          value={finalData.data.hasAC ? "Yes" : "No"}
+        />
+        {finalData.data.hasAC && finalData.data.defaultAcChargePerDay && (
+          <ConfirmValues
+            name={t("ACChagePerDay")}
+            value={`${finalData.data.defaultAcChargePerDay}`}
+          />
+        )}
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

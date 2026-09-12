@@ -3,24 +3,35 @@
 import {
   RyogoH4,
   RyogoP,
-  RyogoCaption,
   RyogoSmall,
+  RyogoCaption,
+  RyogoTiny,
 } from "@/components/typography"
-import { Sidebar, useSidebar } from "@/components/ui/sidebar"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  useSidebar,
+} from "@/components/ui/sidebar"
 import { Check } from "lucide-react"
 import { useTranslations } from "next-intl"
 import RyoGoLogo from "@/components/logo"
-import {
-  AddAgentTotalSteps,
-  AddDriverTotalSteps,
-  AddVehicleTotalSteps,
-  CreateAccountTotalSteps,
-  VerifyAccountTotalSteps,
-} from "./onboardingSteps"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { logoutAction } from "@/app/actions/users/logoutAction"
 import { useTransition } from "react"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import {
+  CreateAccountTotalSteps,
+  VerifyAccountTotalSteps,
+  AddVehicleTotalSteps,
+  AddDriverTotalSteps,
+  AddAgentTotalSteps,
+} from "@/lib/uiConfig"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 
 export default function OnboardingSidebar({
   currentProcess,
@@ -69,31 +80,36 @@ export default function OnboardingSidebar({
     })
   }
   return (
-    <Sidebar side="right" collapsible={isMobile ? "offcanvas" : "none"}>
-      <div
-        id="OnboardingSidebarSection"
-        className="w-full flex px-8 py-10 md:px-10 md:py-12 h-full flex-col gap-8 lg:gap-10 bg-slate-50  dark:bg-slate-950"
-      >
+    <Sidebar
+      side="right"
+      collapsible={isMobile ? "offcanvas" : "none"}
+      mobileWidth="281px"
+      className="h-full bg-slate-50 dark:bg-slate-950"
+    >
+      <SidebarHeader className="px-6 md:px-8 pt-8 md:pt-10">
         <RyogoH4 weight="font-bold" color="light">
           {t("Heading")}
         </RyogoH4>
+      </SidebarHeader>
+      <SidebarContent className="px-6 md:px-8 py-8 md:py-10">
         {currentProcess !== undefined && (
           <div
             id="OnboardingSidebarSteps"
-            className="flex flex-col gap-2 lg:gap-3"
+            className="flex flex-col gap-2 md:gap-3"
           >
             {items.map((item, index) => (
-              <div key={index} className="flex flex-row gap-2 md:gap-3">
-                <div className={`flex flex-col gap-2 md:gap-3 items-center`}>
+              <SectionRowWrapper key={index} justifyStart>
+                <SectionColWrapper center>
                   <div
                     className={`rounded-lg
-          ${
-            currentProcess > index || (currentProcess === index && isLastStep)
-              ? "bg-slate-950 dark:bg-white shadow"
-              : currentProcess === index
-                ? "bg-white  dark:bg-slate-950 border border-sky-700 dark:border-sky-300 shadow"
-                : "bg-slate-300  dark:bg-slate-700"
-          } flex shrink-0 justify-center items-center size-9 lg:size-10`}
+                      ${
+                        currentProcess > index ||
+                        (currentProcess === index && isLastStep)
+                          ? "bg-slate-950 dark:bg-white shadow"
+                          : currentProcess === index
+                            ? "bg-white  dark:bg-slate-950 border border-sky-700 dark:border-sky-300 shadow"
+                            : "bg-slate-300  dark:bg-slate-700"
+                      } flex shrink-0 justify-center items-center size-9 md:size-10`}
                   >
                     {currentProcess > index ||
                     (currentProcess === index && isLastStep) ? (
@@ -109,12 +125,12 @@ export default function OnboardingSidebar({
                   </div>
                   {index < items.length - 1 && (
                     <div
-                      className={`w-0.5 h-14 lg:h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-300" : "bg-slate-300  dark:bg-slate-700"} rounded-full`}
+                      className={`w-0.5 h-14 md:h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-300" : "bg-slate-300  dark:bg-slate-700"} rounded-full`}
                     ></div>
                   )}
-                </div>
-                <div className="flex flex-col gap-1 lg:gap-1.5">
-                  <RyogoP
+                </SectionColWrapper>
+                <SectionColWrapper small>
+                  <RyogoSmall
                     weight={"font-bold"}
                     color={
                       currentProcess > index
@@ -125,33 +141,33 @@ export default function OnboardingSidebar({
                     }
                   >
                     {item.title}
-                  </RyogoP>
-                  <RyogoSmall
+                  </RyogoSmall>
+                  <RyogoCaption
                     color={currentProcess >= index ? "slate" : "light"}
                   >
                     {item.description}
-                  </RyogoSmall>
-                  <RyogoCaption color={"light"} weight="font-bold">
-                    {item.steps}
                   </RyogoCaption>
-                </div>
-              </div>
+                  <RyogoTiny color={"light"} weight="font-bold">
+                    {item.steps}
+                  </RyogoTiny>
+                </SectionColWrapper>
+              </SectionRowWrapper>
             ))}
           </div>
         )}
-        <div className="mt-auto flex flex-col gap-3 md:gap-4">
-          {showLogout && (
-            <RyogoOutlineButton
-              onClick={logoutUser}
-              label={t("Logout")}
-              labelColor="light"
-              disabled={isPending}
-              className="md:self-start"
-            ></RyogoOutlineButton>
-          )}
-          <RyoGoLogo />
-        </div>
-      </div>
+      </SidebarContent>
+      <SidebarFooter className="px-6 md:px-8 pb-8 md:pb-10">
+        {showLogout && (
+          <RyogoOutlineButton
+            onClick={logoutUser}
+            label={t("Logout")}
+            labelColor="light"
+            disabled={isPending}
+            className="md:self-start"
+          ></RyogoOutlineButton>
+        )}
+        <RyoGoLogo />
+      </SidebarFooter>
     </Sidebar>
   )
 }

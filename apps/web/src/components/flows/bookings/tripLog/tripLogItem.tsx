@@ -6,6 +6,8 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoChinImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import getTripLogIcon from "@/components/icons/tripLogIcon"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function TripLogItem({
   tripLog,
@@ -21,7 +23,7 @@ export default async function TripLogItem({
           tripLog.tripLogPhotoUrl ? "rounded-t-lg" : "rounded-lg"
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
-        <div className="flex flex-col gap-1.5 lg:gap-2 justify-end w-full">
+        <SectionColWrapper end small>
           <RyogoSmall>
             {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
           </RyogoSmall>
@@ -31,8 +33,8 @@ export default async function TripLogItem({
             </RyogoCaption>
           )}
           <RyogoCaption color="light">{tripLog.latLong}</RyogoCaption>
-        </div>
-        <div className="flex flex-col gap-1.5 lg:gap-2 w-full">
+        </SectionColWrapper>
+        <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
           <RyogoCaption color="slate">
             {tripLog.vehicle.vehicleNumber}
           </RyogoCaption>
@@ -45,6 +47,12 @@ export default async function TripLogItem({
           <RyogoEnclosedIcon
             icon={getTripLogIcon(tripLog.type)}
             size="sm"
+            color={
+              tripLog.type === TripLogTypesEnum.DROPPED ? "white" : "slate"
+            }
+            bgColor={
+              tripLog.type === TripLogTypesEnum.DROPPED ? "black" : "slate"
+            }
             circular
           />
           <RyogoCaption weight="font-bold">

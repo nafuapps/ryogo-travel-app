@@ -5,11 +5,6 @@ import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { useState } from "react"
-import {
-  AddVehicleTotalSteps,
-  OnboardingStepHeader,
-  OnboardingStepPage,
-} from "@/components/flows/onboarding/onboardingSteps"
 import { AddVehicleStep1 } from "./addVehicleStep1"
 import { AddVehicleFinish } from "./addVehicleFinish"
 import { AddVehicleStep2 } from "./addVehicleStep2"
@@ -22,6 +17,9 @@ import {
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
+import { AddVehicleTotalSteps } from "@/lib/uiConfig"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function AddVehiclePageComponent({
   agencyId,
@@ -103,10 +101,9 @@ export default function AddVehiclePageComponent({
 
   return (
     <>
-      <OnboardingStepPage pageId="AddVehiclePage">
+      <OnboardingPageWrapper id="AddVehiclePage">
         {currentStepIndex < AddVehicleTotalSteps && (
           <OnboardingStepHeader
-            headerId="AddVehicleHeader"
             totalSteps={AddVehicleTotalSteps}
             currentStepIndex={currentStepIndex}
             title={t("Title")}
@@ -117,7 +114,7 @@ export default function AddVehiclePageComponent({
           />
         )}
         {steps[currentStepIndex]}
-      </OnboardingStepPage>
+      </OnboardingPageWrapper>
       <OnboardingSidebar
         currentProcess={2}
         isLastStep={isLastStep}

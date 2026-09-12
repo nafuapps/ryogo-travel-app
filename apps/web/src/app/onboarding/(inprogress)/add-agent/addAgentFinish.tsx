@@ -2,15 +2,9 @@
 
 import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
-import {
-  OnboardingStepContent,
-  OnboardingStepActions,
-  OnboardingStepForm,
-  OnboardingSuccessIcon,
-} from "@/components/flows/onboarding/onboardingSteps"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { MessageSquareShare } from "lucide-react"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { Check, MessageSquareShare } from "lucide-react"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useRouter } from "next/navigation"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
@@ -19,6 +13,11 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { useForm } from "react-hook-form"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddAgentFinish({
   finalData,
@@ -52,9 +51,20 @@ export function AddAgentFinish({
   )
 
   return (
-    <OnboardingStepForm formId="FinishForm" submit={form.handleSubmit(submit)}>
-      <OnboardingStepContent contentId="FinishContent" success>
-        <OnboardingSuccessIcon />
+    <FormWrapper
+      id="AddAgentFinishForm"
+      form={form}
+      onSubmit={form.handleSubmit(submit)}
+      justifyCenter
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoEnclosedIcon
+          icon={Check}
+          size="md"
+          color="white"
+          bgColor="black"
+          circular
+        />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
         <RyogoSmall color="slate">
@@ -70,15 +80,15 @@ export function AddAgentFinish({
         >
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </RyogoOutlineButton>
-      </OnboardingStepContent>
-      <OnboardingStepActions actionsId="FinishActions">
+      </FormContentWrapper>
+      <StickyActionWrapper>
         <RyogoDefaultButton
           size={"lg"}
           disabled={form.formState.isSubmitting}
           type="submit"
           label={t("PrimaryCTA")}
         />
-      </OnboardingStepActions>
-    </OnboardingStepForm>
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

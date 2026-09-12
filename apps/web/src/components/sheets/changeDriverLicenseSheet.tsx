@@ -32,10 +32,7 @@ import {
   MIN_LICENSE_LENGTH,
   MAX_LICENSE_LENGTH,
 } from "@/lib/uiConfig"
-import {
-  FormWrapper,
-  SheetContentWrapper,
-} from "@/components/page/pageWrappers"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeDriverPhotoSheet({
   driverId,
@@ -123,7 +120,7 @@ export default function ChangeDriverPhotoSheet({
           form={form}
           hFull={false}
         >
-          <SheetContentWrapper>
+          <FormContentWrapper asCard={false}>
             <RyogoInput
               name={"licenseNumber"}
               type="text"
@@ -144,7 +141,7 @@ export default function ChangeDriverPhotoSheet({
               placeholder={t("Field3.Placeholder")}
               description={t("Field3.Description")}
             />
-          </SheetContentWrapper>
+          </FormContentWrapper>
         </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton

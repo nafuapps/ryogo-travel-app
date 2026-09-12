@@ -2,23 +2,21 @@
 
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { RyogoH3 } from "@/components/typography"
 import ConfirmValues from "@/components/form/confirmValues"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddDriverConfirm({
   onNext,
@@ -63,66 +61,65 @@ export function AddDriverConfirm({
     }
   }
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step4Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step4Content">
-          <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-          <ConfirmValues name={t("DriverName")} value={finalData.data.name} />
-          <ConfirmValues name={t("DriverPhone")} value={finalData.data.phone} />
-          <ConfirmValues name={t("DriverEmail")} value={finalData.data.email} />
-          {finalData.data.licenseNumber && (
-            <ConfirmValues
-              name={t("LicenseNumber")}
-              value={finalData.data.licenseNumber}
-            />
-          )}
-          {finalData.data.licenseExpiresOn && (
-            <ConfirmValues
-              name={t("LicenseExpiresOn")}
-              value={finalData.data.licenseExpiresOn.toDateString()}
-            />
-          )}
-          {finalData.data.address && (
-            <ConfirmValues
-              name={t("DriverAddress")}
-              value={finalData.data.address}
-            />
-          )}
-          {finalData.data.canDriveVehicleTypes &&
-            finalData.data.canDriveVehicleTypes.length > 0 && (
-              <ConfirmValues
-                name={t("CanDriveVehicleTypes")}
-                value={finalData.data.canDriveVehicleTypes.join(", ")}
-              />
-            )}
-          {finalData.data.defaultAllowancePerDay && (
-            <ConfirmValues
-              name={t("DefaultAllowancePerDay")}
-              value={`${finalData.data.defaultAllowancePerDay}`}
-            />
-          )}
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step4Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
+    <FormWrapper
+      id="Step4Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoH3 color="slate">{t("Title")}</RyogoH3>
+        <ConfirmValues name={t("DriverName")} value={finalData.data.name} />
+        <ConfirmValues name={t("DriverPhone")} value={finalData.data.phone} />
+        <ConfirmValues name={t("DriverEmail")} value={finalData.data.email} />
+        {finalData.data.licenseNumber && (
+          <ConfirmValues
+            name={t("LicenseNumber")}
+            value={finalData.data.licenseNumber}
           />
-          <RyogoOutlineButton
-            size={"lg"}
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
+        )}
+        {finalData.data.licenseExpiresOn && (
+          <ConfirmValues
+            name={t("LicenseExpiresOn")}
+            value={finalData.data.licenseExpiresOn.toDateString()}
           />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+        )}
+        {finalData.data.address && (
+          <ConfirmValues
+            name={t("DriverAddress")}
+            value={finalData.data.address}
+          />
+        )}
+        {finalData.data.canDriveVehicleTypes &&
+          finalData.data.canDriveVehicleTypes.length > 0 && (
+            <ConfirmValues
+              name={t("CanDriveVehicleTypes")}
+              value={finalData.data.canDriveVehicleTypes.join(", ")}
+            />
+          )}
+        {finalData.data.defaultAllowancePerDay && (
+          <ConfirmValues
+            name={t("DefaultAllowancePerDay")}
+            value={`${finalData.data.defaultAllowancePerDay}`}
+          />
+        )}
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

@@ -26,9 +26,9 @@ import {
 
 export const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
-const SIDEBAR_WIDTH = "241px"
-const SIDEBAR_WIDTH_MOBILE = "241px"
-const SIDEBAR_WIDTH_ICON = "48px"
+// const SIDEBAR_WIDTH = "241px"
+// const SIDEBAR_WIDTH_MOBILE = "241px"
+// const SIDEBAR_WIDTH_ICON = "48px"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
 type SidebarContextProps = {
@@ -132,9 +132,9 @@ function SidebarProvider({
           data-slot="sidebar-wrapper"
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH,
-              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-              "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
+              // "--sidebar-width": SIDEBAR_WIDTH,
+              // "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+              // "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
               ...style,
             } as React.CSSProperties
           }
@@ -152,6 +152,7 @@ function SidebarProvider({
 }
 
 function Sidebar({
+  mobileWidth = "201px",
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
@@ -159,6 +160,7 @@ function Sidebar({
   children,
   ...props
 }: React.ComponentProps<"div"> & {
+  mobileWidth?: string
   side?: "left" | "right"
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
@@ -190,7 +192,7 @@ function Sidebar({
           className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              "--sidebar-width": mobileWidth,
             } as React.CSSProperties
           }
           side={side}

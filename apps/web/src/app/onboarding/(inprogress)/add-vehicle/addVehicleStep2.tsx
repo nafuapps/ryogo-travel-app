@@ -10,12 +10,6 @@ import {
   RyogoFileInput,
   RyogoDatePicker,
 } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
@@ -29,6 +23,11 @@ import {
   MIN_ODOMETER_LIMIT,
   MIN_VEHICLE_CAPCITY,
 } from "@/lib/uiConfig"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddVehicleStep2({
   onNext,
@@ -112,67 +111,66 @@ export function AddVehicleStep2({
   }
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step2Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step2Content">
-          <RyogoInput
-            name={"capacity"}
-            type="tel"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name={"odometerReading"}
-            type="tel"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <RyogoFileInput
-            name={"rcPhotos"}
-            register={formData.register("rcPhotos")}
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-          />
-          <RyogoFileInput
-            name={"vehiclePhotos"}
-            register={formData.register("vehiclePhotos")}
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
-          />
-          <RyogoDatePicker
-            name="rcExpiresOn"
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-            description={t("Field5.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step2Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step2Type>
+      id="Step2Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoInput
+          name={"capacity"}
+          type="tel"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name={"odometerReading"}
+          type="tel"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+        <RyogoFileInput
+          name={"rcPhotos"}
+          register={formData.register("rcPhotos")}
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+          description={t("Field3.Description")}
+        />
+        <RyogoFileInput
+          name={"vehiclePhotos"}
+          register={formData.register("vehiclePhotos")}
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+          description={t("Field4.Description")}
+        />
+        <RyogoDatePicker
+          name="rcExpiresOn"
+          label={t("Field5.Title")}
+          placeholder={t("Field5.Placeholder")}
+          description={t("Field5.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

@@ -10,12 +10,6 @@ import {
   RyogoFileInput,
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
@@ -27,6 +21,11 @@ import {
   MAX_LICENSE_LENGTH,
   MIN_LICENSE_LENGTH,
 } from "@/lib/uiConfig"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddDriverStep2({
   onNext,
@@ -87,53 +86,52 @@ export function AddDriverStep2({
   }
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step2Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step2Content">
-          <RyogoInput
-            name={"licenseNumber"}
-            type="text"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoDatePicker
-            name="licenseExpiresOn"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <RyogoFileInput
-            name={"licensePhotos"}
-            register={formData.register("licensePhotos")}
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step2Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step2Type>
+      id="Step2Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoInput
+          name={"licenseNumber"}
+          type="text"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoDatePicker
+          name="licenseExpiresOn"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+        <RyogoFileInput
+          name={"licensePhotos"}
+          register={formData.register("licensePhotos")}
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+          description={t("Field3.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

@@ -5,12 +5,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepActions,
-  OnboardingStepContent,
-  OnboardingStepForm,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { useTranslations } from "next-intl"
 import {
   VehicleTypesEnum,
@@ -27,6 +21,11 @@ import {
   MAX_VEHICLE_NUMBER_LENGTH,
   MIN_VEHICLE_NUMBER_LENGTH,
 } from "@/lib/uiConfig"
+import {
+  FormWrapper,
+  FormContentWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddVehicleStep1({
   onNext,
@@ -82,75 +81,74 @@ export function AddVehicleStep1({
   }
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step1Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step1Content">
-          <RyogoInput
-            name={"vehicleNumber"}
-            type="text"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoSelect
-            name={"type"}
-            register={formData.register("type")}
-            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
-            title={t("Field2.Title")}
-            placeholder={t("Field2.Title")}
-          />
-          <RyogoSelect
-            name={"brand"}
-            register={formData.register("brand")}
-            array={getEnumValueDisplayPairs(VehicleBrandEnum)}
-            description={t("Field3.Description")}
-            title={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-          />
-          <RyogoSelect
-            name={"color"}
-            register={formData.register("color")}
-            array={getEnumValueDisplayPairs(VehicleColorEnum)}
-            description={t("Field4.Description")}
-            title={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-          />
-          <RyogoInput
-            name={"model"}
-            type="text"
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-            description={t("Field5.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step1Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <QuickAddVehicleAlertButton
-            agencyId={finalData.agencyId}
-            addedByUserId={finalData.addedByUserId}
-            vehicleNumber={formData.getValues("vehicleNumber")}
-            type={formData.getValues("type")}
-            brand={formData.getValues("brand")}
-            color={formData.getValues("color")}
-            model={formData.getValues("model")}
-            disabled={
-              !formData.formState.isValid || formData.formState.isSubmitting
-            }
-            isOnboarding
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step1Type>
+      id="Step1Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoInput
+          name={"vehicleNumber"}
+          type="text"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoSelect
+          name={"type"}
+          register={formData.register("type")}
+          array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+          title={t("Field2.Title")}
+          placeholder={t("Field2.Title")}
+        />
+        <RyogoSelect
+          name={"brand"}
+          register={formData.register("brand")}
+          array={getEnumValueDisplayPairs(VehicleBrandEnum)}
+          description={t("Field3.Description")}
+          title={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+        />
+        <RyogoSelect
+          name={"color"}
+          register={formData.register("color")}
+          array={getEnumValueDisplayPairs(VehicleColorEnum)}
+          description={t("Field4.Description")}
+          title={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+        />
+        <RyogoInput
+          name={"model"}
+          type="text"
+          label={t("Field5.Title")}
+          placeholder={t("Field5.Placeholder")}
+          description={t("Field5.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <QuickAddVehicleAlertButton
+          agencyId={finalData.agencyId}
+          addedByUserId={finalData.addedByUserId}
+          vehicleNumber={formData.getValues("vehicleNumber")}
+          type={formData.getValues("type")}
+          brand={formData.getValues("brand")}
+          color={formData.getValues("color")}
+          model={formData.getValues("model")}
+          disabled={
+            !formData.formState.isValid || formData.formState.isSubmitting
+          }
+          isOnboarding
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

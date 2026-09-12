@@ -59,8 +59,8 @@ export default async function DashboardLayout({
       defaultOpen={defaultOpen}
       style={
         {
-          "--sidebar-width": "241px",
-          "--sidebar-width-mobile": "241px",
+          "--sidebar-width": "201px",
+          // "--sidebar-width-mobile": "201px",
           "--sidebar-width-icon": "65px",
         } as React.CSSProperties
       }

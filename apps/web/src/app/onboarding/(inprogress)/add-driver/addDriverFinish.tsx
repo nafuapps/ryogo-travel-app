@@ -2,16 +2,10 @@
 
 import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
-import {
-  OnboardingStepContent,
-  OnboardingStepActions,
-  OnboardingStepForm,
-  OnboardingSuccessIcon,
-} from "@/components/flows/onboarding/onboardingSteps"
 import Link from "next/link"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { MessageSquareShare } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { Check, MessageSquareShare } from "lucide-react"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import { useRouter } from "next/navigation"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
@@ -20,6 +14,11 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { useForm } from "react-hook-form"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddDriverFinish({
   finalData,
@@ -53,9 +52,20 @@ export function AddDriverFinish({
   )
 
   return (
-    <OnboardingStepForm formId="Step6Form" submit={form.handleSubmit(submit)}>
-      <OnboardingStepContent contentId="Step6Content" success>
-        <OnboardingSuccessIcon />
+    <FormWrapper
+      id="Step6Form"
+      form={form}
+      onSubmit={form.handleSubmit(submit)}
+      justifyCenter
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoEnclosedIcon
+          icon={Check}
+          size="md"
+          color="white"
+          bgColor="black"
+          circular
+        />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
         <RyogoCaption color="slate">
@@ -70,8 +80,8 @@ export function AddDriverFinish({
         >
           <RyogoIcon icon={MessageSquareShare} size="sm" />
         </RyogoOutlineButton>
-      </OnboardingStepContent>
-      <OnboardingStepActions actionsId="Step6Actions">
+      </FormContentWrapper>
+      <StickyActionWrapper>
         <RyogoSmall>{t("Description1")}</RyogoSmall>
         <RyogoCaption color="light">{t("Description2")}</RyogoCaption>
         <Link href="/onboarding/add-agent">
@@ -83,7 +93,7 @@ export function AddDriverFinish({
           type="submit"
           label={t("SecondaryCTA")}
         />
-      </OnboardingStepActions>
-    </OnboardingStepForm>
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

@@ -33,6 +33,11 @@ export const MIN_ENTITY_ID_LENGTH = 8
 export const MAX_ENTITY_ID_LENGTH = 12
 
 //Onboarding
+export const CreateAccountTotalSteps = 5
+export const VerifyAccountTotalSteps = 1
+export const AddVehicleTotalSteps = 5
+export const AddDriverTotalSteps = 4
+export const AddAgentTotalSteps = 2
 export const VERIFY_CODE_TIMEOUT_MINUTES = 3 //Waiting before resending code
 
 //Dashboard

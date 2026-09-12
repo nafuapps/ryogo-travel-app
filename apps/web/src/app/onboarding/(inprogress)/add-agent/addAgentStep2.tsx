@@ -2,12 +2,6 @@
 
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { RyogoH3 } from "@/components/typography"
 import ConfirmValues from "@/components/form/confirmValues"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -18,6 +12,11 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddAgentConfirm({
   onNext,
@@ -54,37 +53,36 @@ export function AddAgentConfirm({
     }
   }
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step2Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step2Content">
-          <RyogoH3 color="slate">{t("Title")}</RyogoH3>
-          <ConfirmValues name={t("AgentName")} value={finalData.data.name} />
-          <ConfirmValues name={t("AgentPhone")} value={finalData.data.phone} />
-          <ConfirmValues name={t("AgentEmail")} value={finalData.data.email} />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step2Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper
+      id="Step2Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoH3 color="slate">{t("Title")}</RyogoH3>
+        <ConfirmValues name={t("AgentName")} value={finalData.data.name} />
+        <ConfirmValues name={t("AgentPhone")} value={finalData.data.phone} />
+        <ConfirmValues name={t("AgentEmail")} value={finalData.data.email} />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

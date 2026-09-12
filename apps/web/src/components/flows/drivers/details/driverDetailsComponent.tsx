@@ -4,6 +4,7 @@ import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
+  DetailsHeaderWrapper,
   DetailsIDWrapper,
   DetailsLineItem,
   DetailsLineWrapper,
@@ -39,7 +40,9 @@ export default async function DriverDetailsComponent({
   const t = await getTranslations("Dashboard.DriverDetails")
   return (
     <DetailsBorderWrapper>
-      <DetailsIDWrapper id={id} label={t("DriverId")} />
+      <DetailsHeaderWrapper>
+        <DetailsIDWrapper id={id} label={t("DriverId")} />
+      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         <DetailsLineItem
           label={t("Joined")}

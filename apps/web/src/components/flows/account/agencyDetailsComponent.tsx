@@ -1,10 +1,9 @@
-import { AgencyStatusPill } from "@/components/pills/ryogoPills"
-import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
+  DetailsHeaderWrapper,
   DetailsIDWrapper,
   DetailsLineItem,
 } from "@/components/page/pageWrappers"
@@ -29,7 +28,9 @@ export default async function AgencyDetailsComponent({
   const t = await getTranslations("Dashboard.AccountAgency")
   return (
     <DetailsBorderWrapper>
-      <DetailsIDWrapper id={id} label={t("AgencyId")} />
+      <DetailsHeaderWrapper>
+        <DetailsIDWrapper id={id} label={t("AgencyId")} />
+      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         <DetailsLineItem label={t("Phone")} value={phone} />
         <DetailsLineItem label={t("Email")} value={email} />

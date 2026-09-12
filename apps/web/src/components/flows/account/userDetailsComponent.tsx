@@ -5,6 +5,7 @@ import {
   DetailsIDWrapper,
   DetailsContentWrapper,
   DetailsLineItem,
+  DetailsHeaderWrapper,
 } from "@/components/page/pageWrappers"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
@@ -24,7 +25,9 @@ export default async function UserDetailsComponent({
   const t = await getTranslations("Dashboard.Account")
   return (
     <DetailsBorderWrapper>
-      <DetailsIDWrapper id={id} label={t("UserId")} />
+      <DetailsHeaderWrapper>
+        <DetailsIDWrapper id={id} label={t("UserId")} />
+      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         <DetailsLineItem label={t("Phone")} value={phone} />
         <DetailsLineItem label={t("Email")} value={email} />

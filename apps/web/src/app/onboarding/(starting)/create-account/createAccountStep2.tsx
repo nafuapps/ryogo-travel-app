@@ -11,13 +11,6 @@ import {
   RyogoTextarea,
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
-
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
@@ -32,6 +25,11 @@ import {
   MIN_FIELD_DESC_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
+import {
+  FormWrapper,
+  FormContentWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function CreateAccountStep2({
   onNext,
@@ -147,67 +145,59 @@ export function CreateAccountStep2({
   }
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step2Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step2Content">
-          <RyogoInput
-            name={"agencyPhone"}
-            type="tel"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoCheckbox
-            name={"sameAsOwnerPhone"}
-            label={t("Field1.Checkbox")}
-          />
-          <RyogoInput
-            name={"agencyEmail"}
-            type="email"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <RyogoCheckbox
-            name={"sameAsOwnerEmail"}
-            label={t("Field2.Checkbox")}
-          />
-          <RyogoTextarea
-            name={"agencyAddress"}
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-          />
-          <RyogoFileInput
-            name={"ownerPhoto"}
-            register={formData.register("ownerPhoto")}
-            label={t("Field4.Title")}
-            placeholder={t("Field4.Placeholder")}
-            description={t("Field4.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step2Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step2Type>
+      id="Step2Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoInput
+          name={"agencyPhone"}
+          type="tel"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoCheckbox name={"sameAsOwnerPhone"} label={t("Field1.Checkbox")} />
+        <RyogoInput
+          name={"agencyEmail"}
+          type="email"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+        <RyogoCheckbox name={"sameAsOwnerEmail"} label={t("Field2.Checkbox")} />
+        <RyogoTextarea
+          name={"agencyAddress"}
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+        />
+        <RyogoFileInput
+          name={"ownerPhoto"}
+          register={formData.register("ownerPhoto")}
+          label={t("Field4.Title")}
+          placeholder={t("Field4.Placeholder")}
+          description={t("Field4.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

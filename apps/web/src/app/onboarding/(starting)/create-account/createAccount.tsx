@@ -11,14 +11,12 @@ import { CreateAccountStep3 } from "./createAccountStep3"
 import { CreateAccountStep4 } from "./createAccountStep4"
 import { CreateAccountConfirm } from "./createAccountStep5"
 import { useState } from "react"
-import {
-  CreateAccountTotalSteps,
-  OnboardingStepHeader,
-  OnboardingStepPage,
-} from "@/components/flows/onboarding/onboardingSteps"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
+import { CreateAccountTotalSteps } from "@/lib/uiConfig"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function CreateAccountPageComponent({
   allOwners,
@@ -108,10 +106,9 @@ export default function CreateAccountPageComponent({
 
   return (
     <>
-      <OnboardingStepPage pageId="CreateAccountPage">
+      <OnboardingPageWrapper id="CreateAccountPage">
         {currentStepIndex < CreateAccountTotalSteps && (
           <OnboardingStepHeader
-            headerId="CreateAccountHeader"
             totalSteps={CreateAccountTotalSteps}
             currentStepIndex={currentStepIndex}
             title={t("Title")}
@@ -122,7 +119,7 @@ export default function CreateAccountPageComponent({
           />
         )}
         {steps[currentStepIndex]}
-      </OnboardingStepPage>
+      </OnboardingPageWrapper>
       <OnboardingSidebar currentProcess={0} isLastStep={isLastStep} />
     </>
   )

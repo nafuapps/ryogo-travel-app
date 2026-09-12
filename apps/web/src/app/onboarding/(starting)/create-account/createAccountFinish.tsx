@@ -1,16 +1,17 @@
 import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
-import {
-  OnboardingStepContent,
-  OnboardingStepActions,
-  OnboardingStepForm,
-  OnboardingSuccessIcon,
-} from "@/components/flows/onboarding/onboardingSteps"
 import { loginAction } from "@/app/actions/users/loginAction"
 import { useRouter } from "next/navigation"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { useForm } from "react-hook-form"
 import { PasswordRegex } from "@/lib/regex"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { Check } from "lucide-react"
 
 export function CreateAccountFinish({
   password,
@@ -36,13 +37,24 @@ export function CreateAccountFinish({
   }
 
   return (
-    <OnboardingStepForm formId="Step6Form" submit={form.handleSubmit(onSubmit)}>
-      <OnboardingStepContent contentId="Step6Content" success>
-        <OnboardingSuccessIcon />
+    <FormWrapper
+      id="CreateAccountFinishForm"
+      form={form}
+      onSubmit={form.handleSubmit(onSubmit)}
+      justifyCenter
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoEnclosedIcon
+          icon={Check}
+          size="md"
+          color="white"
+          bgColor="black"
+          circular
+        />
         <RyogoH3>{t("Title")}</RyogoH3>
         <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
-      </OnboardingStepContent>
-      <OnboardingStepActions actionsId="Step6Actions">
+      </FormContentWrapper>
+      <StickyActionWrapper>
         <RyogoSmall>{t("Description1")}</RyogoSmall>
         <RyogoDefaultButton
           disabled={form.formState.isSubmitting}
@@ -50,7 +62,7 @@ export function CreateAccountFinish({
           type="submit"
           label={t("PrimaryCTA")}
         />
-      </OnboardingStepActions>
-    </OnboardingStepForm>
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

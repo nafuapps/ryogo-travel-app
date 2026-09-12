@@ -10,13 +10,7 @@ import {
   RyogoFileInput,
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
 import stateCityData from "@/lib/states_cities.json"
-import { Form } from "@/components/ui/form"
 import {
   getArrayValueDisplayPairs,
   getStringValueDisplayPairs,
@@ -32,6 +26,11 @@ import {
   MAX_FILE_UPLOAD_SIZE,
   MIN_COMMISSION_RATE,
 } from "@/lib/uiConfig"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function CreateAccountStep3({
   onNext,
@@ -111,71 +110,69 @@ export function CreateAccountStep3({
   const cityOptions = data[selectedState] ?? [t("Field4.Title")]
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step3Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step3Content">
-          <RyogoFileInput
-            name={"agencyLogo"}
-            register={formData.register("agencyLogo")}
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name={"commissionRate"}
-            type="tel"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <RyogoCombobox
-            name={"agencyState"}
-            register={formData.register("agencyState")}
-            title={t("Field3.Title")}
-            array={getArrayValueDisplayPairs(data)}
-            placeholder={t("Field3.Title")}
-            resetField={() => {
-              formData.setValue("agencyCity", "")
-            }}
-          />
-          <RyogoCombobox
-            name={"agencyCity"}
-            register={formData.register("agencyCity")}
-            title={t("Field4.Title")}
-            array={getStringValueDisplayPairs(cityOptions)}
-            placeholder={t("Field4.Title")}
-          />
-          <RyogoFileInput
-            name={"qrCode"}
-            register={formData.register("qrCode")}
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-            description={t("Field5.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step3Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step3Type>
+      id="Step3Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoFileInput
+          name={"agencyLogo"}
+          register={formData.register("agencyLogo")}
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoInput
+          name={"commissionRate"}
+          type="tel"
+          label={t("Field2.Title")}
+          placeholder={t("Field2.Placeholder")}
+          description={t("Field2.Description")}
+        />
+        <RyogoCombobox
+          name={"agencyState"}
+          register={formData.register("agencyState")}
+          title={t("Field3.Title")}
+          array={getArrayValueDisplayPairs(data)}
+          placeholder={t("Field3.Title")}
+          resetField={() => {
+            formData.setValue("agencyCity", "")
+          }}
+        />
+        <RyogoCombobox
+          name={"agencyCity"}
+          register={formData.register("agencyCity")}
+          title={t("Field4.Title")}
+          array={getStringValueDisplayPairs(cityOptions)}
+          placeholder={t("Field4.Title")}
+        />
+        <RyogoFileInput
+          name={"qrCode"}
+          register={formData.register("qrCode")}
+          label={t("Field5.Title")}
+          placeholder={t("Field5.Placeholder")}
+          description={t("Field5.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

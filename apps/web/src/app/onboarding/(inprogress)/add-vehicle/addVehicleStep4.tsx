@@ -6,12 +6,6 @@ import { Dispatch, SetStateAction } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   RyogoDefaultButton,
@@ -22,6 +16,11 @@ import {
   MAX_VEHICLE_RATE,
   MIN_VEHICLE_RATE,
 } from "@/lib/uiConfig"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddVehicleStep4({
   onNext,
@@ -81,49 +80,48 @@ export function AddVehicleStep4({
     onNext()
   }
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step4Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step4Content">
-          <RyogoInput
-            name={"defaultRatePerKm"}
-            type="tel"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoSwitch name={"hasAC"} label={t("Field2.Title")} />
-          <RyogoInput
-            name={"defaultAcChargePerDay"}
-            type="tel"
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-            disabled={!acWatch}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step4Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step4Type>
+      id="Step4Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoInput
+          name={"defaultRatePerKm"}
+          type="tel"
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+          description={t("Field1.Description")}
+        />
+        <RyogoSwitch name={"hasAC"} label={t("Field2.Title")} />
+        <RyogoInput
+          name={"defaultAcChargePerDay"}
+          type="tel"
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+          description={t("Field3.Description")}
+          disabled={!acWatch}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

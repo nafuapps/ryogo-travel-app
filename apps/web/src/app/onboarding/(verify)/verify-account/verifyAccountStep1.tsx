@@ -3,12 +3,6 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeAction"
@@ -19,6 +13,11 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function VerifyAccountStep1({
   onNext,
@@ -72,49 +71,45 @@ export function VerifyAccountStep1({
     })
   }
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step1Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step1Content">
-          <RyogoOTPInput
-            name={"userEnteredcode"}
-            label={t("Field1.Title")}
-            description={t("Field1.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step1Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={isPending}
-            label={t("PrimaryCTA")}
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={resendCode}
-            className="w-full"
-            disabled={
-              isPending || resendDifference < VERIFY_CODE_TIMEOUT_MINUTES
-            }
-            label={
-              isPending
-                ? t("Sending")
-                : resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
-                  ? t("SecondaryCTA")
-                  : t("Timeout", {
-                      difference:
-                        VERIFY_CODE_TIMEOUT_MINUTES - resendDifference,
-                    })
-            }
-          />
-          <Link href={`mailto:${SUPPORT_EMAIL}`}>
-            <RyogoCaption color="light">{t("Help")}</RyogoCaption>
-          </Link>
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step1Type>
+      id="Step1Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper>
+        <RyogoOTPInput
+          name={"userEnteredcode"}
+          label={t("Field1.Title")}
+          description={t("Field1.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={isPending}
+          label={t("PrimaryCTA")}
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          type="button"
+          onClick={resendCode}
+          className="w-full"
+          disabled={isPending || resendDifference < VERIFY_CODE_TIMEOUT_MINUTES}
+          label={
+            isPending
+              ? t("Sending")
+              : resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
+                ? t("SecondaryCTA")
+                : t("Timeout", {
+                    difference: VERIFY_CODE_TIMEOUT_MINUTES - resendDifference,
+                  })
+          }
+        />
+        <Link href={`mailto:${SUPPORT_EMAIL}`}>
+          <RyogoCaption color="light">{t("Help")}</RyogoCaption>
+        </Link>
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

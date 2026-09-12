@@ -10,12 +10,6 @@ import {
   RyogoMultipleCheckbox,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import {
-  OnboardingStepForm,
-  OnboardingStepContent,
-  OnboardingStepActions,
-} from "@/components/flows/onboarding/onboardingSteps"
-import { Form } from "@/components/ui/form"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getEnumValueDisplayPairs } from "@/lib/utils"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -29,6 +23,11 @@ import {
   MAX_FIELD_DESC_LENGTH,
   MIN_FIELD_DESC_LENGTH,
 } from "@/lib/uiConfig"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 
 export function AddDriverStep3({
   onNext,
@@ -82,50 +81,49 @@ export function AddDriverStep3({
   }
 
   return (
-    <Form {...formData}>
-      <OnboardingStepForm
-        formId="Step3Form"
-        submit={formData.handleSubmit(onSubmit)}
-      >
-        <OnboardingStepContent contentId="Step3Content">
-          <RyogoTextarea
-            name={"driverAddress"}
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-          />
-          <RyogoMultipleCheckbox
-            array={getEnumValueDisplayPairs(VehicleTypesEnum)}
-            name={"canDriveVehicleTypes"}
-            label={t("Field2.Title")}
-          />
-          <RyogoInput
-            name={"defaultAllowancePerDay"}
-            type="tel"
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-            description={t("Field3.Description")}
-          />
-        </OnboardingStepContent>
-        <OnboardingStepActions actionsId="Step3Actions">
-          <RyogoDefaultButton
-            className="w-full"
-            type="submit"
-            disabled={formData.formState.isSubmitting}
-            showSpinner={formData.formState.isSubmitting}
-            label={
-              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-            }
-          />
-          <RyogoOutlineButton
-            size={"lg"}
-            type="button"
-            onClick={onPrev}
-            className="w-full"
-            disabled={formData.formState.isSubmitting}
-            label={t("SecondaryCTA")}
-          />
-        </OnboardingStepActions>
-      </OnboardingStepForm>
-    </Form>
+    <FormWrapper<Step3Type>
+      id="Step3Form"
+      form={formData}
+      onSubmit={formData.handleSubmit(onSubmit)}
+    >
+      <FormContentWrapper asCard={false}>
+        <RyogoTextarea
+          name={"driverAddress"}
+          label={t("Field1.Title")}
+          placeholder={t("Field1.Placeholder")}
+        />
+        <RyogoMultipleCheckbox
+          array={getEnumValueDisplayPairs(VehicleTypesEnum)}
+          name={"canDriveVehicleTypes"}
+          label={t("Field2.Title")}
+        />
+        <RyogoInput
+          name={"defaultAllowancePerDay"}
+          type="tel"
+          label={t("Field3.Title")}
+          placeholder={t("Field3.Placeholder")}
+          description={t("Field3.Description")}
+        />
+      </FormContentWrapper>
+      <StickyActionWrapper>
+        <RyogoDefaultButton
+          className="w-full"
+          type="submit"
+          disabled={formData.formState.isSubmitting}
+          showSpinner={formData.formState.isSubmitting}
+          label={
+            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+          }
+        />
+        <RyogoOutlineButton
+          size={"lg"}
+          type="button"
+          onClick={onPrev}
+          className="w-full"
+          disabled={formData.formState.isSubmitting}
+          label={t("SecondaryCTA")}
+        />
+      </StickyActionWrapper>
+    </FormWrapper>
   )
 }

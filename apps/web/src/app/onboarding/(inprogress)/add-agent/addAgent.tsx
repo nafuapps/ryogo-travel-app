@@ -5,16 +5,14 @@ import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { useState } from "react"
-import {
-  AddAgentTotalSteps,
-  OnboardingStepHeader,
-  OnboardingStepPage,
-} from "@/components/flows/onboarding/onboardingSteps"
 import { AddAgentStep1 } from "./addAgentStep1"
 import { AddAgentFinish } from "./addAgentFinish"
 import { AddAgentConfirm } from "./addAgentStep2"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
+import { AddAgentTotalSteps } from "@/lib/uiConfig"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function AddAgentPageComponent({
   agencyId,
@@ -65,10 +63,9 @@ export default function AddAgentPageComponent({
 
   return (
     <>
-      <OnboardingStepPage pageId="AddAgentPage">
+      <OnboardingPageWrapper id="AddAgentPage">
         {currentStepIndex < AddAgentTotalSteps && (
           <OnboardingStepHeader
-            headerId="AddAgentHeader"
             totalSteps={AddAgentTotalSteps}
             currentStepIndex={currentStepIndex}
             title={t("Title")}
@@ -79,7 +76,7 @@ export default function AddAgentPageComponent({
           />
         )}
         {steps[currentStepIndex]}
-      </OnboardingStepPage>
+      </OnboardingPageWrapper>
       <OnboardingSidebar
         currentProcess={4}
         isLastStep={isLastStep}

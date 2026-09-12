@@ -5,11 +5,6 @@ import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { useState } from "react"
-import {
-  AddDriverTotalSteps,
-  OnboardingStepHeader,
-  OnboardingStepPage,
-} from "@/components/flows/onboarding/onboardingSteps"
 import { AddDriverStep1 } from "./addDriverStep1"
 import { AddDriverFinish } from "./addDriverFinish"
 import { AddDriverStep2 } from "./addDriverStep2"
@@ -17,6 +12,9 @@ import { AddDriverStep3 } from "./addDriverStep3"
 import { AddDriverConfirm } from "./addDriverStep4"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
+import { AddDriverTotalSteps } from "@/lib/uiConfig"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function AddDriverPageComponent({
   agencyId,
@@ -90,10 +88,9 @@ export default function AddDriverPageComponent({
 
   return (
     <>
-      <OnboardingStepPage pageId="AddDriverPage">
+      <OnboardingPageWrapper id="AddDriverPage">
         {currentStepIndex < AddDriverTotalSteps && (
           <OnboardingStepHeader
-            headerId="AddDriverHeader"
             totalSteps={AddDriverTotalSteps}
             currentStepIndex={currentStepIndex}
             title={t("Title")}
@@ -104,7 +101,7 @@ export default function AddDriverPageComponent({
           />
         )}
         {steps[currentStepIndex]}
-      </OnboardingStepPage>
+      </OnboardingPageWrapper>
       <OnboardingSidebar
         currentProcess={3}
         isLastStep={isLastStep}

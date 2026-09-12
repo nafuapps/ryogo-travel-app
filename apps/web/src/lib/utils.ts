@@ -41,23 +41,23 @@ export function getOnlineStatus(time?: Date | null) {
 //   }))
 // }
 
-export function getArrayValueDisplayPairs<T extends object>(
-  arrayType: T,
-): { display: string; value: string }[] {
-  return Object.keys(arrayType).map((key) => ({
-    value: key,
-    display: key,
-  }))
-}
+// export function getArrayValueDisplayPairs<T extends object>(
+//   arrayType: T,
+// ): { display: string; value: string }[] {
+//   return Object.keys(arrayType).map((key) => ({
+//     value: key,
+//     display: key,
+//   }))
+// }
 
-export function getStringValueDisplayPairs(
-  stringType: string[],
-): { display: string; value: string }[] {
-  return stringType.map((key) => ({
-    value: key,
-    display: key,
-  }))
-}
+// export function getStringValueDisplayPairs(
+//   stringType: string[],
+// ): { display: string; value: string }[] {
+//   return stringType.map((key) => ({
+//     value: key,
+//     display: key,
+//   }))
+// }
 
 export function getDisplayTime(time: string) {
   return moment(time, "hh:mm:ss").format("h:mm a")

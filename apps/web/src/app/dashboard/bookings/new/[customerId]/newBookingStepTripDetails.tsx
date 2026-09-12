@@ -15,10 +15,6 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
-import {
-  getArrayValueDisplayPairs,
-  getStringValueDisplayPairs,
-} from "@/lib/utils"
 import { findOrCreateRouteAction } from "@/app/actions/locations/findOrCreateRouteAction"
 import {
   FormContentWrapper,
@@ -228,7 +224,7 @@ export default function NewBookingStepTripDetails({
           <RyogoCombobox
             name="tripSourceLocationState"
             title={t("Field1.Title")}
-            array={getArrayValueDisplayPairs(stateCityData)}
+            array={Object.keys(stateCityData)}
             register={form.register("tripSourceLocationState")}
             placeholder={t("Field1.Placeholder")}
             resetField={() => {
@@ -237,7 +233,7 @@ export default function NewBookingStepTripDetails({
           />
           <RyogoCombobox
             name="tripSourceLocationCity"
-            array={getStringValueDisplayPairs(sourceCityOptions)}
+            array={sourceCityOptions}
             register={form.register("tripSourceLocationCity")}
             placeholder={t("Field2.Placeholder")}
           />
@@ -245,7 +241,7 @@ export default function NewBookingStepTripDetails({
           <RyogoCombobox
             name="tripDestinationLocationState"
             title={t("Field3.Title")}
-            array={getArrayValueDisplayPairs(stateCityData)}
+            array={Object.keys(stateCityData)}
             register={form.register("tripDestinationLocationState")}
             placeholder={t("Field3.Placeholder")}
             resetField={() => {
@@ -254,7 +250,7 @@ export default function NewBookingStepTripDetails({
           />
           <RyogoCombobox
             name="tripDestinationLocationCity"
-            array={getStringValueDisplayPairs(destinationCityOptions)}
+            array={destinationCityOptions}
             register={form.register("tripDestinationLocationCity")}
             placeholder={t("Field4.Placeholder")}
           />

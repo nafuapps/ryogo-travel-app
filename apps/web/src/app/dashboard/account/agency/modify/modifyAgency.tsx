@@ -11,10 +11,6 @@ import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
-import {
-  getArrayValueDisplayPairs,
-  getStringValueDisplayPairs,
-} from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
@@ -137,7 +133,7 @@ export default function ModifyAgencyPageForm({
             name={"agencyState"}
             register={form.register("agencyState")}
             title={t("Field4.Title")}
-            array={getArrayValueDisplayPairs(data)}
+            array={Object.keys(data)}
             placeholder={t("Field4.Title")}
             resetField={() => {
               form.setValue("agencyCity", "")
@@ -147,7 +143,7 @@ export default function ModifyAgencyPageForm({
             name={"agencyCity"}
             register={form.register("agencyCity")}
             title={t("Field5.Title")}
-            array={getStringValueDisplayPairs(cityOptions)}
+            array={cityOptions}
             placeholder={t("Field5.Title")}
           />
         </FormContentWrapper>

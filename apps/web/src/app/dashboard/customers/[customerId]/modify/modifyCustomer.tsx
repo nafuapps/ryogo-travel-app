@@ -15,10 +15,6 @@ import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
 import {
-  getArrayValueDisplayPairs,
-  getStringValueDisplayPairs,
-} from "@/lib/utils"
-import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
@@ -145,7 +141,7 @@ export default function ModifyCustomerPageComponent({
             name={"state"}
             register={form.register("state")}
             title={t("Field5.Title")}
-            array={getArrayValueDisplayPairs(data)}
+            array={Object.keys(data)}
             placeholder={t("Field5.Title")}
             resetField={() => {
               form.setValue("city", "")
@@ -155,7 +151,7 @@ export default function ModifyCustomerPageComponent({
             name={"city"}
             register={form.register("city")}
             title={t("Field6.Title")}
-            array={getStringValueDisplayPairs(cityOptions)}
+            array={cityOptions}
             placeholder={t("Field6.Title")}
           />
         </FormContentWrapper>

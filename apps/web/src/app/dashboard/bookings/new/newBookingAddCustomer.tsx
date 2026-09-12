@@ -8,10 +8,6 @@ import z from "zod"
 import { RyogoCombobox, RyogoInput } from "@/components/form/ryogoFormFields"
 import stateCityData from "@/lib/states_cities.json"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import {
-  getArrayValueDisplayPairs,
-  getStringValueDisplayPairs,
-} from "@/lib/utils"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { useRouter } from "next/navigation"
@@ -149,7 +145,7 @@ export default function NewBookingAddCustomerPageComponent({
             name={"newCustomerState"}
             register={form.register("newCustomerState")}
             title={t("Field3.Title")}
-            array={getArrayValueDisplayPairs(data)}
+            array={Object.keys(data)}
             placeholder={t("Field3.Title")}
             resetField={() => {
               form.setValue("newCustomerCity", "")
@@ -159,7 +155,7 @@ export default function NewBookingAddCustomerPageComponent({
             name={"newCustomerCity"}
             register={form.register("newCustomerCity")}
             title={t("Field4.Title")}
-            array={getStringValueDisplayPairs(cityOptions)}
+            array={cityOptions}
             placeholder={t("Field4.Title")}
           />
         </FormContentWrapper>

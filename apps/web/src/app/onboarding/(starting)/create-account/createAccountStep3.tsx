@@ -11,10 +11,6 @@ import {
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
 import stateCityData from "@/lib/states_cities.json"
-import {
-  getArrayValueDisplayPairs,
-  getStringValueDisplayPairs,
-} from "@/lib/utils"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
@@ -134,7 +130,7 @@ export function CreateAccountStep3({
           name={"agencyState"}
           register={formData.register("agencyState")}
           title={t("Field3.Title")}
-          array={getArrayValueDisplayPairs(data)}
+          array={Object.keys(data)}
           placeholder={t("Field3.Title")}
           resetField={() => {
             formData.setValue("agencyCity", "")
@@ -144,7 +140,7 @@ export function CreateAccountStep3({
           name={"agencyCity"}
           register={formData.register("agencyCity")}
           title={t("Field4.Title")}
-          array={getStringValueDisplayPairs(cityOptions)}
+          array={cityOptions}
           placeholder={t("Field4.Title")}
         />
         <RyogoFileInput

@@ -16,7 +16,6 @@ import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
-import { getArrayValueDisplayPairs } from "@/lib/utils"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -188,7 +187,7 @@ export default function NewCustomerForm({
             name={"state"}
             register={form.register("state")}
             title={t("Field7.Title")}
-            array={getArrayValueDisplayPairs(data)}
+            array={Object.keys(data)}
             placeholder={t("Field7.Title")}
             resetField={() => {
               form.setValue("city", "")
@@ -198,7 +197,7 @@ export default function NewCustomerForm({
             name={"city"}
             register={form.register("city")}
             title={t("Field8.Title")}
-            array={getArrayValueDisplayPairs(cityOptions)}
+            array={cityOptions}
             placeholder={t("Field8.Title")}
           />
         </FormContentWrapper>

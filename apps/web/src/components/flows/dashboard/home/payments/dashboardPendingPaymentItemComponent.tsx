@@ -37,7 +37,7 @@ export default async function DashboardPendingPaymentComponent({
   return (
     <Link href={`/dashboard/bookings/${trip.id}/transactions`}>
       <DashboardBoxItemWrapper highlight={highlight}>
-        <SectionRowWrapper>
+        <SectionRowWrapper className="justify-between">
           <RyogoCaption color="light" weight="font-bold">
             {trip.id}
           </RyogoCaption>
@@ -53,7 +53,7 @@ export default async function DashboardPendingPaymentComponent({
           <GetTripTypeIcon tripType={trip.type} size="sm" thick />
           <RyogoH4 weight="font-bold">{trip.destination.city}</RyogoH4>
         </SectionRowWrapper> */}
-        <SectionRowWrapper className="items-center">
+        <SectionRowWrapper className="items-center justify-between">
           <SectionRowWrapper>
             <DashboardLabelImageChip label={trip.customer.name}>
               {customerImageUrl ? (

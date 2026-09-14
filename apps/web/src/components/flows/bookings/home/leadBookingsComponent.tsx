@@ -16,6 +16,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Switch } from "@/components/ui/switch"
+import { LeadBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 
 export default function LeadBookingsComponent({
   leadBookings,
@@ -33,7 +34,7 @@ export default function LeadBookingsComponent({
 
   return (
     <SectionWrapper id="leadsBookingsSection">
-      <SectionRowWrapper className="items-center">
+      <SectionRowWrapper className="items-center justify-between">
         <SectionHeaderWrapper>
           <RyogoIcon icon={BookOpenText} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
@@ -50,45 +51,8 @@ export default function LeadBookingsComponent({
         </SectionRowWrapper>
       </SectionRowWrapper>
       {selectedLeadBookings.map((trip) => (
-        <LeadBookingItemComponent key={trip.id} {...trip} />
+        <LeadBookingCard key={trip.id} lead={trip} />
       ))}
     </SectionWrapper>
-  )
-}
-
-function LeadBookingItemComponent(lead: FindLeadBookingsType[number]) {
-  const t = useTranslations("Dashboard.Bookings.Leads")
-  return (
-    <Link href={`/dashboard/bookings/${lead.id}`}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{lead.id}</RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.customer.name}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{lead.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold">
-            {" "}
-            {lead.source.city + " - " + lead.destination.city}
-          </RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {lead.estimatedTotalAmount.toLocaleString("en-IN", {
-              style: "currency",
-              currency: "INR",
-              minimumFractionDigits: 0,
-            })}
-          </RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.assignedUser.name}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {lead.passengers + " " + t("Passengers")}
-          </RyogoCaption>
-          <RyogoP weight="font-bold">{moment(lead.startDate).fromNow()}</RyogoP>
-        </GridItemWrapper>
-      </HoverGridWrapper>
-    </Link>
   )
 }

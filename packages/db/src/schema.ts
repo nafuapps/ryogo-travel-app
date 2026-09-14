@@ -168,7 +168,7 @@ export const orderStatus = pgEnum("order_status", [
   OrderStatusEnum.PAID,
 ])
 export enum OrderTypeEnum {
-  MONTHLY = "Monthly", //TODO:change name properly in migration
+  MONTHLY = "Monthly",
   QUARTERLY = "Quarterly",
   ANNUAL = "Annual",
 }
@@ -609,8 +609,7 @@ export const vehicles = pgTable(
       .notNull(),
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "no action" })
-      .notNull()
-      .default("U1000006"), //TODO: Remove default
+      .notNull(),
     vehicleNumber: varchar("vehicle_number", { length: 15 }).notNull(),
     type: vehicleTypes().notNull().default(VehicleTypesEnum.CAR),
     brand: vehicleBrands().notNull().default(VehicleBrandEnum.HONDA),
@@ -712,8 +711,7 @@ export const drivers = pgTable(
       .unique(),
     addedByUserId: text("added_by_user_id")
       .references(() => users.id, { onDelete: "no action" })
-      .notNull()
-      .default("U1000006"), // TODO: Remove default
+      .notNull(),
     name: varchar("name", { length: 30 }).notNull(),
     phone: varchar("phone", { length: 10 }).notNull(),
     address: varchar("address", { length: 300 }),
@@ -1013,6 +1011,7 @@ export const bookings = pgTable(
     invoiceSentOn: timestamp("invoice_sent_on", { withTimezone: true }),
     invoiceUrl: text("invoice_url"),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
+    startedAt: timestamp("started_at", { withTimezone: true }),
     completedAt: timestamp("completed_at", { withTimezone: true }),
     cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
     reviewCompletedByAgencyAt: timestamp("review_completed_by_agency_at", {

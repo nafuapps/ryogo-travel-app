@@ -21,7 +21,7 @@ export default async function BookingTripCard({
 
   return (
     <div id="tripInfo" className="flex flex-col">
-      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 border-x border-t rounded-t-lg rounded-b-2xl items-center justify-between">
+      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 border-x border-t rounded-t-xl rounded-b-2xl items-center justify-between">
         <LocationWrapper
           city={booking.source.city}
           state={booking.source.state}
@@ -39,7 +39,7 @@ export default async function BookingTripCard({
         <RyogoPill bgColor="slate" label={booking.type.toUpperCase()} />
         <DateWrapper date={endDate} />
       </div>
-      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x border-b rounded-b-lg bg-slate-100 dark:bg-slate-800">
+      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x border-b rounded-b-xl bg-slate-100 dark:bg-slate-800">
         <SectionRowWrapper small className="items-center">
           <RyogoIcon icon={Users} size={"sm"} />
           <RyogoCaption color="light" weight="font-bold">
@@ -67,7 +67,7 @@ function LocationWrapper({
   end?: boolean
 }) {
   return (
-    <SectionColWrapper className={`${end ? "items-end" : ""}`}>
+    <SectionColWrapper small className={`${end ? "items-end" : ""}`}>
       <RyogoP weight="font-bold">{city}</RyogoP>
       <RyogoCaption color="slate">{state}</RyogoCaption>
     </SectionColWrapper>

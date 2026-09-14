@@ -9,7 +9,7 @@ import { PageWrapper } from "@/components/page/pageWrappers"
 import {
   OngoingBookingCard,
   UpcomingBookingCard,
-} from "@/components/cards/booking/bookingCards"
+} from "@/components/flows/bookings/cards/bookingCards"
 
 //TODO: Revamp home page for rider with a floating ongoing booking nudge
 

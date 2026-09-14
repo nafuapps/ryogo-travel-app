@@ -1,10 +1,6 @@
 "use client"
 
-import {
-  PageWrapper,
-  SectionRowWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
+import { PageWrapper, SectionRowWrapper } from "@/components/page/pageWrappers"
 import { PaginationControls } from "@/components/pagination/paginationControls"
 import { RyogoCaption } from "@/components/typography"
 import {
@@ -23,7 +19,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import OrderCard from "@/components/flows/orders/orderCard"
 
-const ORDERS_PER_PAGE = 10
+const ORDERS_PER_PAGE = 5
 
 type OrderFilterType = OrderStatusEnum | "all"
 
@@ -59,9 +55,7 @@ export default function OrdersPageComponent({
         />
       </SectionRowWrapper>
       {currentItems.length === 0 ? (
-        <SectionWrapper id="NoOrders" className="items-center">
-          <RyogoCaption color="light">{t("NoOrders")}</RyogoCaption>
-        </SectionWrapper>
+        <RyogoCaption color="light">{t("NoOrders")}</RyogoCaption>
       ) : (
         currentItems.map((o) => {
           return <OrderCard order={o} key={o.id} agency={agencyDetails} />

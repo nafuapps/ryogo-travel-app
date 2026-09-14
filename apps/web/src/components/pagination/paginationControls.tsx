@@ -8,6 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { RyogoCaption } from "../typography"
 
 interface PaginationControlsProps {
   currentPage: number
@@ -46,7 +47,9 @@ export function PaginationControls({
             }
           />
         </PaginationItem>
-
+        <RyogoCaption color="light">
+          {currentPage} / {totalPages}
+        </RyogoCaption>
         <PaginationItem>
           <PaginationNext
             href="#"

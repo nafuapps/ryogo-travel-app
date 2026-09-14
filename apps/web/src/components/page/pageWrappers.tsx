@@ -5,7 +5,7 @@ import { PageSkeleton } from "./loadingWrappers"
 import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import {
   RyogoCaption,
-  RyogoP,
+  RyogoH4,
   RyogoSmall,
   RyogoTiny,
 } from "@/components/typography"
@@ -281,7 +281,7 @@ export function StickyActionWrapper({
 
 export function TileGridWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-3">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
       {children}
     </div>
   )
@@ -341,7 +341,7 @@ export function DetailsLineItem({
   value: string
 }) {
   return (
-    <SectionRowWrapper className="items-center">
+    <SectionRowWrapper className="items-center justify-between">
       <RyogoCaption color="light">{label}</RyogoCaption>
       <RyogoCaption color="slate" className="text-end">
         {value}
@@ -358,7 +358,7 @@ export function DetailsLineWrapper({
   children: React.ReactNode
 }) {
   return (
-    <SectionRowWrapper className="items-center">
+    <SectionRowWrapper className="items-center justify-between">
       <RyogoCaption color="light">{label}</RyogoCaption>
       {children}
     </SectionRowWrapper>
@@ -374,10 +374,12 @@ export function DateWrapper({
 }) {
   return (
     <div className="rounded-md bg-slate-100 dark:bg-slate-800 py-2 lg:py-3 px-5 lg:px-6 flex flex-col items-center justify-center">
-      <RyogoCaption color="slate">{format(date, "MMM")}</RyogoCaption>
-      <RyogoP color="slate" weight="font-bold">
+      <RyogoCaption color="light" weight="font-bold">
+        {format(date, "MMM")}
+      </RyogoCaption>
+      <RyogoH4 color="slate" weight="font-bold">
         {format(date, "dd")}
-      </RyogoP>
+      </RyogoH4>
       {showYear && <RyogoTiny color="light">{format(date, "yyyy")}</RyogoTiny>}
     </div>
   )

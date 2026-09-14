@@ -32,7 +32,7 @@ export default async function DashboardTripItemComponent({
   return (
     <Link href={`/dashboard/bookings/${trip.id}`}>
       <DashboardBoxItemWrapper highlight={highlight}>
-        <SectionRowWrapper small className="items-center">
+        <SectionRowWrapper small className="items-center justify-between">
           <RyogoCaption color="light" weight="font-bold">
             {trip.id}
           </RyogoCaption>
@@ -42,12 +42,12 @@ export default async function DashboardTripItemComponent({
               : trip.endDate.toLocaleDateString()}
           </RyogoCaption>
         </SectionRowWrapper>
-        <SectionRowWrapper small className="items-center">
+        <SectionRowWrapper small className="items-center justify-between">
           <RyogoP weight="font-bold">{trip.source.city}</RyogoP>
           <GetTripTypeIcon tripType={trip.type} size="sm" color="light" thick />
           <RyogoP weight="font-bold">{trip.destination.city}</RyogoP>
         </SectionRowWrapper>
-        <SectionRowWrapper small className="items-center">
+        <SectionRowWrapper small className="items-center justify-between">
           {trip.assignedVehicle && (
             <DashboardLabelImageChip label={trip.assignedVehicle.vehicleNumber}>
               {vehicleImageUrl ? (

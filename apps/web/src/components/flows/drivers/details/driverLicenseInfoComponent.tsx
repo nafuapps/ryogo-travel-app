@@ -7,6 +7,7 @@ import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
   DetailsBorderWrapper,
+  DetailsHeaderWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 
@@ -20,10 +21,13 @@ export default async function DriverLicenseInfoComponent({
   licenseExpiresOn: Date | null
 }) {
   const isExpired = licenseExpiresOn && licenseExpiresOn < new Date()
-  const t = await getTranslations("Rider.MyProfile")
+  const t = await getTranslations("Dashboard.DriverDetails.License")
 
   return (
     <SectionColWrapper className="items-center justify-center">
+      <RyogoCaption color="light" weight="font-bold">
+        {t("Title")}
+      </RyogoCaption>
       {photoUrl ? (
         <RyogoDialogImage
           src={getFileUrl(photoUrl)}
@@ -37,11 +41,11 @@ export default async function DriverLicenseInfoComponent({
         {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
         {licenseExpiresOn && (
           <DetailsBorderWrapper>
-            <div className="bg-slate-200 dark:bg-slate-800 py-1 lg:py-1.5 px-3 lg:px-4">
+            <DetailsHeaderWrapper>
               <RyogoCaption color="light" className="text-center">
-                {isExpired ? t("ExpiredOn") : t("ExpiresOn")}
+                {t("ValidTill")}
               </RyogoCaption>
-            </div>
+            </DetailsHeaderWrapper>
             <div className="py-1 lg:py-1.5 px-3 lg:px-4">
               <RyogoCaption
                 color={isExpired ? "red" : "slate"}

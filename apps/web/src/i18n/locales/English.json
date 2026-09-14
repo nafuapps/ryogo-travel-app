@@ -2168,6 +2168,10 @@
         "Title": "Edit Details",
         "Subtitle": "Change driver details like address, license, default allowance"
       },
+      "License": {
+        "Title": "Driver license details",
+        "ValidTill": "Valid Till"
+      },
       "ChangeLicense": {
         "Field1": {
           "Title": "Driver license number",

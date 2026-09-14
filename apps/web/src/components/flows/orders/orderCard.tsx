@@ -5,7 +5,12 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { OrderStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
+import {
+  RyogoSmall,
+  RyogoH4,
+  RyogoCaption,
+  RyogoTiny,
+} from "@/components/typography"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -29,7 +34,7 @@ export default function OrderCard({
   const [collapsed, setCollapsed] = useState(true)
   return (
     <SectionWrapper key={order.id} id={"Order#" + order.id}>
-      <SectionRowWrapper className="items-center">
+      <SectionRowWrapper className="items-center justify-between">
         <div
           className={`flex items-center justify-center shrink-0 transition rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 lg:p-2 ${
             collapsed ? "-rotate-90" : ""
@@ -38,50 +43,44 @@ export default function OrderCard({
         >
           <RyogoIcon color="black" size="sm" icon={ChevronDown} thick />
         </div>
-        <SectionRowWrapper className="w-full">
+        <SectionRowWrapper className="w-full justify-between">
           <SectionColWrapper small>
-            <RyogoSmall color="brand" weight="font-bold">
-              {"Order #" + order.id}
-            </RyogoSmall>
-            <OrderStatusPill status={order.status} />
-          </SectionColWrapper>
-          <SectionColWrapper small className="items-end">
+            <RyogoCaption color="light" weight="font-bold">
+              {"ORDER #" + order.id}
+            </RyogoCaption>
             <RyogoH4 color="brand" weight="font-bold">
               {"₹" + order.amount}
             </RyogoH4>
-            <SectionRowWrapper small className="items-center">
-              <RyogoCaption color="light">
-                {moment(order.updatedAt).format("DD MMM YYYY")}
-              </RyogoCaption>
-              <RyogoIcon color="light" size="sm" icon={Dot} thick />
-              <RyogoCaption color="light">{order.orderType}</RyogoCaption>
-            </SectionRowWrapper>
+            <RyogoCaption color="light">{order.orderType}</RyogoCaption>
+          </SectionColWrapper>
+          <SectionColWrapper small className="items-end">
+            <OrderStatusPill status={order.status} />
+            <RyogoSmall color="slate">{order.user.name}</RyogoSmall>
+            <RyogoTiny color="light">
+              {moment(order.updatedAt).format("lll")}
+            </RyogoTiny>
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionRowWrapper>
       {!collapsed && (
         <>
-          <SectionRowWrapper className="items-center">
-            <RyogoCaption color="light" weight="font-bold">
-              {order.user.name}
-            </RyogoCaption>
-            {order.orderInvoiceUrl && (
-              <SectionRowWrapper small className="items-center">
-                <a
-                  href={getFileUrl(order.orderInvoiceUrl) + "?download"}
-                  download
+          {order.orderInvoiceUrl && (
+            <SectionRowWrapper small className="items-center justify-end">
+              <a
+                href={getFileUrl(order.orderInvoiceUrl) + "?download"}
+                download
+              >
+                <RyogoOutlineButton
+                  label={t("DownloadInvoice")}
+                  labelColor="light"
+                  className="w-full"
                 >
-                  <RyogoOutlineButton
-                    label={t("DownloadInvoice")}
-                    labelColor="light"
-                  >
-                    <RyogoIcon size="sm" icon={Download} color="slate" />
-                  </RyogoOutlineButton>
-                </a>
-                <ViewInvoiceDialog order={order} agency={agency} />
-              </SectionRowWrapper>
-            )}
-          </SectionRowWrapper>
+                  <RyogoIcon size="sm" icon={Download} color="slate" />
+                </RyogoOutlineButton>
+              </a>
+              <ViewInvoiceDialog order={order} agency={agency} />
+            </SectionRowWrapper>
+          )}
           {order.payments.length > 0 && (
             <>
               <Separator />

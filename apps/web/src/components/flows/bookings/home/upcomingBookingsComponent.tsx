@@ -11,7 +11,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { UpcomingBookingCard } from "@/components/cards/booking/bookingCards"
+import { UpcomingBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { Switch } from "@/components/ui/switch"
 
 export default function UpcomingBookingsComponent({
@@ -31,7 +31,7 @@ export default function UpcomingBookingsComponent({
 
   return (
     <SectionWrapper id="UpcomingBookingsSection">
-      <SectionRowWrapper className="items-center">
+      <SectionRowWrapper className="items-center justify-between">
         <SectionHeaderWrapper>
           <RyogoIcon icon={Clock} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>

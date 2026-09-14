@@ -1,6 +1,6 @@
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { PaymentStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption, RyogoTiny } from "@/components/typography"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
 import {
   PaymentMethodEnum,
@@ -15,33 +15,30 @@ export default function PaymentCard({
 }) {
   return (
     <div className="flex bg-slate-100 dark:bg-slate-800 p-3 lg:p-4 rounded-lg justify-between gap-2 lg:gap-3">
-      <SectionColWrapper>
-        <RyogoSmall color="brand" weight="font-bold">
+      <SectionColWrapper className="justify-between">
+        <RyogoCaption color="light" weight="font-bold">
           {"Payment #" + payment.id}
-        </RyogoSmall>
-        <PaymentStatusPill status={payment.status} />
-        <RyogoCaption color="slate" weight="font-bold">
-          {payment.method.toUpperCase()}
         </RyogoCaption>
-      </SectionColWrapper>
-      <SectionColWrapper className="items-end">
-        <RyogoCaption color="slate">
-          {moment(payment.updatedAt).format("DD MMM YYYY - hh:mm A")}
-        </RyogoCaption>
+        <RyogoP color="slate">{payment.method}</RyogoP>
         {payment.bankName && (
-          <RyogoSmall>{payment.bankName.toUpperCase()}</RyogoSmall>
+          <RyogoCaption color="light">
+            {payment.bankName.toUpperCase()}
+          </RyogoCaption>
         )}
         {payment.method === PaymentMethodEnum.CARD && payment.cardId && (
-          <RyogoCaption color="slate">{payment.cardId}</RyogoCaption>
+          <RyogoCaption color="light">{payment.cardId}</RyogoCaption>
         )}
         {payment.method === PaymentMethodEnum.UPI && payment.vpa && (
-          <RyogoCaption color="slate">{payment.vpa}</RyogoCaption>
+          <RyogoCaption color="light">{payment.vpa}</RyogoCaption>
         )}
         {payment.method === PaymentMethodEnum.WALLET && payment.wallet && (
-          <RyogoCaption color="slate">
+          <RyogoCaption color="light">
             {payment.wallet.toUpperCase()}
           </RyogoCaption>
         )}
+      </SectionColWrapper>
+      <SectionColWrapper className="items-end justify-between">
+        <PaymentStatusPill status={payment.status} />
         {payment.status === PaymentStatusEnum.FAILED &&
           payment.errorReason &&
           payment.errorSource && (
@@ -49,6 +46,9 @@ export default function PaymentCard({
               {payment.errorReason + " (" + payment.errorSource + ")"}
             </RyogoCaption>
           )}
+        <RyogoTiny color="light">
+          {moment(payment.updatedAt).format("lll")}
+        </RyogoTiny>
       </SectionColWrapper>
     </div>
   )

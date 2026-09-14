@@ -12,7 +12,7 @@ export async function DashboardSectionHeader({
   href?: React.ComponentProps<typeof Link>["href"]
 }) {
   return (
-    <SectionRowWrapper className="items-center">
+    <SectionRowWrapper className="items-center justify-between">
       <RyogoH4 weight="font-bold" color="slate">
         {title}
       </RyogoH4>

@@ -3,7 +3,7 @@ import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverD
 import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
-import { CompletedBookingCard } from "@/components/cards/booking/bookingCards"
+import { CompletedBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 
 export default async function DriverCompletedBookingsPageComponent({
   bookings,

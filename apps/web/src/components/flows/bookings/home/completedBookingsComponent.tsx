@@ -9,9 +9,10 @@ import {
   SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { CompletedBookingCard } from "@/components/cards/booking/bookingCards"
+import { CompletedBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { Switch } from "@/components/ui/switch"
 
 export default function CompletedBookingsComponent({
@@ -30,7 +31,7 @@ export default function CompletedBookingsComponent({
 
   return (
     <SectionWrapper id="CompletedBookingsSection">
-      <SectionRowWrapper className="items-center">
+      <SectionRowWrapper className="items-center justify-between">
         <SectionHeaderWrapper>
           <RyogoIcon icon={CheckCheck} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
@@ -46,9 +47,11 @@ export default function CompletedBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      {trips.map((trip) => (
-        <CompletedBookingCard key={trip.id} booking={trip} />
-      ))}
+      <TileGridWrapper>
+        {trips.map((trip) => (
+          <CompletedBookingCard key={trip.id} booking={trip} />
+        ))}
+      </TileGridWrapper>
     </SectionWrapper>
   )
 }

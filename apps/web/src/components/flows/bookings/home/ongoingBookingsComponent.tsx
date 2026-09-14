@@ -9,7 +9,7 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { OngoingBookingCard } from "@/components/cards/booking/bookingCards"
+import { OngoingBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { useState } from "react"
 import { Switch } from "@/components/ui/switch"
 import { useTranslations } from "next-intl"
@@ -30,7 +30,7 @@ export default function OngoingBookingsComponent({
 
   return (
     <SectionWrapper id="OngoingBookingsSection">
-      <SectionRowWrapper className="items-center">
+      <SectionRowWrapper className="items-center justify-between">
         <SectionHeaderWrapper>
           <RyogoIcon icon={Route} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>

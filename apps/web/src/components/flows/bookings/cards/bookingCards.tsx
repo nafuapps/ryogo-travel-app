@@ -1,8 +1,14 @@
 import {
   GridItemWrapper,
   HoverGridWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoP,
+  RyogoH4,
+  RyogoSmall,
+} from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import { format } from "date-fns"
@@ -22,15 +28,21 @@ import {
   FindUserAssignedBookingsByIdType,
   FindUserCompletedBookingsByIdType,
 } from "@ryogo-travel-app/api/services/user.services"
-import { TripLogStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoPill, TripLogStatusPill } from "@/components/pills/ryogoPills"
 import { getCombinedDateTime } from "@/lib/utils"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronRight } from "lucide-react"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { ChevronRight, IdCard } from "lucide-react"
 import {
+  FindCancelledBookingsPreviousDaysType,
   FindCompletedBookingsPreviousDaysType,
+  FindLeadBookingsType,
   FindOngoingTripsType,
   FindUpcomingBookingsNextDaysType,
 } from "@ryogo-travel-app/api/services/booking.services"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
+import GetVehicleIcon from "@/components/icons/vehicleIcon"
 
 export function CompletedBookingCard({
   booking,
@@ -53,35 +65,70 @@ export function CompletedBookingCard({
       }
       className="w-full"
     >
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.customer.name}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {booking.type.toUpperCase()}
+      <div className="flex flex-col gap-2 lg:gap-3 p-3 lg:p-4 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 border">
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoCaption color="light" weight="font-bold">
+            {booking.id}
           </RyogoCaption>
-          <RyogoP weight="font-bold">
-            {" "}
-            {booking.source.city + " - " + booking.destination.city}
-          </RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {booking.assignedVehicle?.vehicleNumber}
-          </RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.assignedDriver?.name}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {format(booking.completedAt ?? booking.updatedAt, "PP")}
-          </RyogoCaption>
-          <RyogoP weight="font-bold">
-            {moment(booking.completedAt ?? booking.updatedAt).fromNow()}
-          </RyogoP>
-        </GridItemWrapper>
-      </HoverGridWrapper>
+          {/* <SectionRowWrapper small className="items-center justify-end">
+            <RyogoCaption color="light">
+              {format(booking.startDate,"MMM DD")+" - "+format(booking.endDate,"MMM DD")}
+            </RyogoCaption>
+          </SectionRowWrapper> */}
+        </SectionRowWrapper>
+        <SectionRowWrapper small className="items-center justify-between">
+          <RyogoH4 weight="font-bold">{booking.source.city}</RyogoH4>
+          <GetTripTypeIcon
+            tripType={booking.type}
+            size="sm"
+            color="light"
+            thick
+          />
+          <RyogoH4 weight="font-bold">{booking.destination.city}</RyogoH4>
+        </SectionRowWrapper>
+        <SectionRowWrapper small className="items-center justify-between">
+          {booking.assignedVehicle && (
+            <SectionRowWrapper small className="items-center">
+              {booking.assignedVehicle.vehiclePhotoUrl ? (
+                <RyogoImage
+                  src={getFileUrl(booking.assignedVehicle.vehiclePhotoUrl)}
+                  alt={booking.assignedVehicle.vehicleNumber}
+                  imageSize="xs"
+                />
+              ) : (
+                <GetVehicleIcon
+                  vehicleType={booking.assignedVehicle.type}
+                  size="sm"
+                />
+              )}
+              <RyogoCaption color="slate">
+                {booking.assignedVehicle.vehicleNumber}
+              </RyogoCaption>
+            </SectionRowWrapper>
+          )}
+          {booking.assignedDriver && (
+            <SectionRowWrapper small className="items-center justify-end">
+              <RyogoCaption color="slate">
+                {booking.assignedDriver.name}
+              </RyogoCaption>
+
+              {booking.assignedDriver.user.photoUrl ? (
+                <RyogoImage
+                  src={getFileUrl(booking.assignedDriver.user.photoUrl)}
+                  alt={booking.assignedDriver.name}
+                  imageSize="xs"
+                />
+              ) : (
+                <RyogoEnclosedIcon icon={IdCard} size="sm" />
+              )}
+            </SectionRowWrapper>
+          )}
+        </SectionRowWrapper>
+        <RyogoPill
+          label={moment(booking.completedAt).format("lll")}
+          bgColor="light"
+        />
+      </div>
     </Link>
   )
 }
@@ -223,6 +270,86 @@ export function UpcomingBookingCard({
             <RyogoIcon icon={ChevronRight} size="sm" color="black" />
           </div>
         )}
+      </HoverGridWrapper>
+    </Link>
+  )
+}
+
+export function CancelledBookingCard({
+  cancelled,
+}: {
+  cancelled: FindCancelledBookingsPreviousDaysType[number]
+}) {
+  return (
+    <Link href={`/dashboard/bookings/${cancelled.id}`}>
+      <HoverGridWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">{cancelled.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {cancelled.customer.name}</RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">
+            {cancelled.type.toUpperCase()}
+          </RyogoCaption>
+          <RyogoP weight="font-bold">
+            {cancelled.source.city + " - " + cancelled.destination.city}
+          </RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">
+            {cancelled.estimatedTotalAmount.toLocaleString("en-IN", {
+              style: "currency",
+              currency: "INR",
+              minimumFractionDigits: 0,
+            })}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {cancelled.assignedUser.name}</RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          {cancelled.remarks && (
+            <RyogoCaption color="slate">{cancelled.remarks}</RyogoCaption>
+          )}
+          <RyogoP weight="font-bold">
+            {moment(cancelled.updatedAt).fromNow()}
+          </RyogoP>
+        </GridItemWrapper>
+      </HoverGridWrapper>
+    </Link>
+  )
+}
+
+export function LeadBookingCard({
+  lead,
+}: {
+  lead: FindLeadBookingsType[number]
+}) {
+  return (
+    <Link href={`/dashboard/bookings/${lead.id}`}>
+      <HoverGridWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">{lead.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {lead.customer.name}</RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">{lead.type.toUpperCase()}</RyogoCaption>
+          <RyogoP weight="font-bold">
+            {lead.source.city + " - " + lead.destination.city}
+          </RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">
+            {lead.estimatedTotalAmount.toLocaleString("en-IN", {
+              style: "currency",
+              currency: "INR",
+              minimumFractionDigits: 0,
+            })}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {lead.assignedUser.name}</RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">{lead.passengers}</RyogoCaption>
+          <RyogoP weight="font-bold">{moment(lead.startDate).fromNow()}</RyogoP>
+        </GridItemWrapper>
       </HoverGridWrapper>
     </Link>
   )

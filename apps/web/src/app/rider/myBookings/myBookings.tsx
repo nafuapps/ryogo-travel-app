@@ -13,7 +13,7 @@ import {
   CompletedBookingCard,
   OngoingBookingCard,
   UpcomingBookingCard,
-} from "@/components/cards/booking/bookingCards"
+} from "@/components/flows/bookings/cards/bookingCards"
 import { Separator } from "@/components/ui/separator"
 import { PageWrapper } from "@/components/page/pageWrappers"
 

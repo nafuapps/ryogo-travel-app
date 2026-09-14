@@ -6,7 +6,7 @@ import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import {
   OngoingBookingCard,
   UpcomingBookingCard,
-} from "@/components/cards/booking/bookingCards"
+} from "@/components/flows/bookings/cards/bookingCards"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function UserAssignedPageComponent({

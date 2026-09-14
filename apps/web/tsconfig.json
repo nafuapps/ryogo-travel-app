@@ -11,8 +11,6 @@
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noUncheckedSideEffectImports": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
     "target": "ES2017",
     "lib": [
       "dom",

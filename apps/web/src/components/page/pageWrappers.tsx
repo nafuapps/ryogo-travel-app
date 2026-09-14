@@ -387,26 +387,6 @@ export function DetailsLineWrapper({
   )
 }
 
-export function InfoWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col items-center justify-center gap-3 lg:gap-4 p-3 lg:p-4">
-      {children}
-    </div>
-  )
-}
-
-export function InfoContentWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-col gap-1.5 lg:gap-2 items-center my-2">
-      {children}
-    </div>
-  )
-}
-
 export function DateWrapper({
   date,
   showYear = true,

@@ -7,8 +7,7 @@ import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
   DetailsBorderWrapper,
-  InfoContentWrapper,
-  InfoWrapper,
+  SectionColWrapper,
 } from "@/components/page/pageWrappers"
 
 export default async function UserDriverLicenseInfoComponent({
@@ -24,7 +23,7 @@ export default async function UserDriverLicenseInfoComponent({
   const t = await getTranslations("Rider.MyProfile")
 
   return (
-    <InfoWrapper>
+    <SectionColWrapper center>
       {photoUrl ? (
         <RyogoDialogImage
           src={getFileUrl(photoUrl)}
@@ -34,7 +33,7 @@ export default async function UserDriverLicenseInfoComponent({
       ) : (
         <RyogoEnclosedIcon icon={IdCard} size="xl" />
       )}
-      <InfoContentWrapper>
+      <SectionColWrapper center small>
         <RyogoCaption color="light">{t("License")}</RyogoCaption>
         {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
         {expiryDate && (
@@ -54,7 +53,7 @@ export default async function UserDriverLicenseInfoComponent({
             </div>
           </DetailsBorderWrapper>
         )}
-      </InfoContentWrapper>
-    </InfoWrapper>
+      </SectionColWrapper>
+    </SectionColWrapper>
   )
 }

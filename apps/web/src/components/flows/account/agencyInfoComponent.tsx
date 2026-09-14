@@ -1,7 +1,5 @@
 import { RyogoH4, RyogoSmall } from "@/components/typography"
 import {
-  InfoContentWrapper,
-  InfoWrapper,
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
@@ -26,7 +24,7 @@ export default function AgencyInfoComponent({
   status: AgencyStatusEnum
 }) {
   return (
-    <InfoWrapper>
+    <SectionColWrapper center>
       <SectionColWrapper center small>
         {logoUrl ? (
           <RyogoImage src={getFileUrl(logoUrl)} alt={logoUrl} imageSize="lg" />
@@ -34,14 +32,14 @@ export default function AgencyInfoComponent({
           <RyogoEnclosedIcon icon={Building} size="xl" />
         )}
       </SectionColWrapper>
-      <InfoContentWrapper>
+      <SectionColWrapper center small>
         <RyogoH4 weight="font-bold">{agencyName}</RyogoH4>
         <SectionRowWrapper center small>
           <RyogoIcon icon={MapPin} size="sm" color="light" />
           <RyogoSmall color="light">{city + ", " + state}</RyogoSmall>
         </SectionRowWrapper>
         <AgencyStatusPill status={status} className="mt-auto self-center" />
-      </InfoContentWrapper>
-    </InfoWrapper>
+      </SectionColWrapper>
+    </SectionColWrapper>
   )
 }

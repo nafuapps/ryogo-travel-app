@@ -1,9 +1,5 @@
 import { RyogoH4, RyogoSmall } from "@/components/typography"
-import {
-  InfoContentWrapper,
-  InfoWrapper,
-  SectionColWrapper,
-} from "@/components/page/pageWrappers"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -23,7 +19,7 @@ export default function UserInfoComponent({
   status: UserStatusEnum
 }) {
   return (
-    <InfoWrapper>
+    <SectionColWrapper center>
       <SectionColWrapper center small>
         {photoUrl ? (
           <RyogoImage
@@ -35,11 +31,11 @@ export default function UserInfoComponent({
           <RyogoEnclosedIcon icon={User} size="xl" />
         )}
       </SectionColWrapper>
-      <InfoContentWrapper>
+      <SectionColWrapper center small>
         <RyogoH4 weight="font-bold">{name}</RyogoH4>
         <RyogoSmall color="light">{agencyName}</RyogoSmall>
         <UserStatusPill status={status} className="self-center" />
-      </InfoContentWrapper>
-    </InfoWrapper>
+      </SectionColWrapper>
+    </SectionColWrapper>
   )
 }

@@ -51,7 +51,7 @@ export default function OrdersPageComponent({
 
   return (
     <PageWrapper id="AccountSubscriptionOrdersPage">
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <RyogoCaption color="light">{t("History")}</RyogoCaption>
         <OrderFilterSelect
           selectedOrderStatus={selectedOrderStatus}
@@ -59,7 +59,7 @@ export default function OrdersPageComponent({
         />
       </SectionRowWrapper>
       {currentItems.length === 0 ? (
-        <SectionWrapper id="NoOrders" center>
+        <SectionWrapper id="NoOrders" className="items-center">
           <RyogoCaption color="light">{t("NoOrders")}</RyogoCaption>
         </SectionWrapper>
       ) : (

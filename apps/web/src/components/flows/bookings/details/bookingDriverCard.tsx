@@ -26,7 +26,7 @@ export default function BookingDriverCard({
         ) : (
           <RyogoEnclosedIcon icon={User} size="lg" />
         )}
-        <SectionColWrapper wFull small>
+        <SectionColWrapper small className="w-full">
           <RyogoP weight="font-bold">{driver.name}</RyogoP>
           <RyogoCaption color="slate">{driver.phone}</RyogoCaption>
           <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />

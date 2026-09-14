@@ -88,14 +88,12 @@ export function FormWrapper<T extends FieldValues>({
   form,
   children,
   onSubmit,
-  hFull = true,
   justifyCenter,
 }: {
   id: string
   form: UseFormReturn<T, any, T>
   children: React.ReactNode
   onSubmit?: SubmitEventHandler<HTMLFormElement>
-  hFull?: boolean
   justifyCenter?: boolean
 }) {
   return (
@@ -103,7 +101,7 @@ export function FormWrapper<T extends FieldValues>({
       <form
         id={id}
         onSubmit={onSubmit}
-        className={`flex flex-col gap-3 lg:gap-4 w-full ${hFull ? "h-full" : ""} ${justifyCenter ? "justify-center" : ""}`}
+        className={`flex flex-col gap-3 lg:gap-4 w-full h-full ${justifyCenter ? "justify-center" : ""}`}
       >
         {children}
       </form>
@@ -122,7 +120,7 @@ export function FormContentWrapper({
 }) {
   return (
     <div
-      className={`flex flex-col relative gap-3 lg:gap-4 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
+      className={`empty:hidden flex flex-col relative gap-3 lg:gap-4 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
     >
       {children}
     </div>
@@ -145,7 +143,7 @@ export function GridWrapper({
   return (
     <div
       id={id}
-      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-3 lg:gap-4 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
+      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-3 lg:gap-4 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
     >
       {children}
     </div>
@@ -155,18 +153,18 @@ export function GridWrapper({
 export function SectionWrapper({
   id,
   children,
-  center,
   bgColor,
+  className,
 }: {
   id: string
   children: React.ReactNode
-  center?: boolean
   bgColor?: string
+  className?: string
 }) {
   return (
     <div
       id={id}
-      className={`${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow flex flex-col ${center ? "items-center" : ""} w-full gap-4 lg:gap-5 p-4 lg:p-5`}
+      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow flex flex-col w-full gap-4 lg:gap-5 p-4 lg:p-5 ${className ?? ""}`}
     >
       {children}
     </div>
@@ -176,27 +174,17 @@ export function SectionWrapper({
 export function SectionRowWrapper({
   children,
   small,
-  center,
-  end,
-  justifyStart,
-  justifyEnd,
-  wFull,
   onClick,
-  reverse,
+  className,
 }: {
   children: React.ReactNode
   small?: boolean
-  center?: boolean
-  end?: boolean
-  justifyStart?: boolean
-  justifyEnd?: boolean
-  wFull?: boolean
   onClick?: () => void
-  reverse?: boolean
+  className?: string
 }) {
   return (
     <div
-      className={`flex ${reverse ? "flex-row-reverse" : "flex-row"} ${wFull ? "w-full" : ""} ${small ? "gap-1 lg:gap-1.5" : "gap-2.5 lg:gap-3"} ${justifyStart ? "justify-start" : justifyEnd ? "justify-end" : "justify-between"} ${center ? "items-center" : ""} ${end ? "items-end" : ""}  empty:hidden`}
+      className={`empty:hidden flex ${small ? "gap-1 lg:gap-1.5" : "gap-2.5 lg:gap-3"} ${className ?? ""}`}
       onClick={onClick}
     >
       {children}
@@ -207,25 +195,15 @@ export function SectionRowWrapper({
 export function SectionColWrapper({
   children,
   small,
-  end,
-  center,
-  justifyBetween,
-  overflowScroll,
-  wFull,
-  hFull,
+  className,
 }: {
   children: React.ReactNode
   small?: boolean
-  end?: boolean
-  center?: boolean
-  justifyBetween?: boolean
-  overflowScroll?: boolean
-  wFull?: boolean
-  hFull?: boolean
+  className?: string
 }) {
   return (
     <div
-      className={`flex flex-col ${small ? "gap-1.5 lg:gap-2" : "gap-2.5 lg:gap-3"} ${end ? "items-end" : ""} ${center ? "items-center" : ""} ${justifyBetween ? "justify-between" : ""} ${overflowScroll ? "overflow-y-scroll m-1 scrollbar-none" : ""} ${wFull ? "w-full" : ""} ${hFull ? "h-full" : ""}`}
+      className={`empty:hidden flex flex-col ${small ? "gap-1.5 lg:gap-2" : "gap-2.5 lg:gap-3"} ${className ?? ""}`}
     >
       {children}
     </div>
@@ -347,7 +325,7 @@ export function DetailsIDWrapper({ id, label }: { id: string; label: string }) {
   return (
     <>
       <RyogoCaption color="light">{label}</RyogoCaption>
-      <SectionRowWrapper center justifyEnd>
+      <SectionRowWrapper className="items-center justify-end">
         <RyogoSmall color="slate">{id}</RyogoSmall>
         <CopyClipboardButton label={id} />
       </SectionRowWrapper>
@@ -363,7 +341,7 @@ export function DetailsLineItem({
   value: string
 }) {
   return (
-    <SectionRowWrapper center>
+    <SectionRowWrapper className="items-center">
       <RyogoCaption color="light">{label}</RyogoCaption>
       <RyogoCaption color="slate" className="text-end">
         {value}
@@ -380,7 +358,7 @@ export function DetailsLineWrapper({
   children: React.ReactNode
 }) {
   return (
-    <SectionRowWrapper center>
+    <SectionRowWrapper className="items-center">
       <RyogoCaption color="light">{label}</RyogoCaption>
       {children}
     </SectionRowWrapper>
@@ -436,7 +414,7 @@ export function EditInfoWrapper({
       className={`border flex p-3 lg:p-4 gap-2 lg:gap-3 justify-between items-center rounded-md ${canEdit ? "hover:bg-slate-100 dark:hover:bg-slate-800" : ""}`}
     >
       <RyogoEnclosedIcon icon={icon} size="sm" color="black" />
-      <SectionColWrapper wFull small>
+      <SectionColWrapper small className="w-full">
         <RyogoCaption color="light">{label}</RyogoCaption>
         <RyogoSmall color="slate">{value}</RyogoSmall>
       </SectionColWrapper>

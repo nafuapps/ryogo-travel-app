@@ -25,7 +25,10 @@ export default function FilterCheckboxGroup({
   return (
     <SectionWrapper id="Filters">
       <FieldSet className="gap-4">
-        <SectionRowWrapper center onClick={() => setOpen(!open)}>
+        <SectionRowWrapper
+          className="items-center"
+          onClick={() => setOpen(!open)}
+        >
           <RyogoCaption color="light">{title}</RyogoCaption>
           <RyogoIcon
             icon={open ? ChevronUp : ChevronDown}

@@ -33,7 +33,7 @@ export default function CancelledBookingsComponent({
 
   return (
     <SectionWrapper id="cancelledBookingsSection">
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <SectionHeaderWrapper>
           <RyogoIcon icon={BookX} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
@@ -41,7 +41,7 @@ export default function CancelledBookingsComponent({
             {trips.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <SectionRowWrapper center justifyEnd>
+        <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyCancelled")}</RyogoCaption>
           <Switch
             checked={showAgencyBookings}

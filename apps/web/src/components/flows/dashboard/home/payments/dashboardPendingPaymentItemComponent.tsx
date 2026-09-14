@@ -53,7 +53,7 @@ export default async function DashboardPendingPaymentComponent({
           <GetTripTypeIcon tripType={trip.type} size="sm" thick />
           <RyogoH4 weight="font-bold">{trip.destination.city}</RyogoH4>
         </SectionRowWrapper> */}
-        <SectionRowWrapper center>
+        <SectionRowWrapper className="items-center">
           <SectionRowWrapper>
             <DashboardLabelImageChip label={trip.customer.name}>
               {customerImageUrl ? (
@@ -67,7 +67,7 @@ export default async function DashboardPendingPaymentComponent({
               )}
             </DashboardLabelImageChip>
           </SectionRowWrapper>
-          <SectionColWrapper small end>
+          <SectionColWrapper small className="items-end">
             <RyogoP color="dark">{t("Due", { amount: pendingAmount })}</RyogoP>
           </SectionColWrapper>
         </SectionRowWrapper>

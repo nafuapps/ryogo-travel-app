@@ -36,7 +36,7 @@ export default async function VehicleDetailsPageComponent({
     <PageWrapper id="VehicleDetailsPage">
       <VehicleDetailHeaderTabs selectedTab={"Vehicle"} id={vehicle.id} />
       <SectionWrapper id="BasicInfo">
-        <SectionRowWrapper justifyStart>
+        <SectionRowWrapper className="justify-start items-center">
           <RyogoH3 color="brand">{vehicle.id}</RyogoH3>
           <CopyClipboardButton label={vehicle.id} />
         </SectionRowWrapper>
@@ -57,7 +57,7 @@ export default async function VehicleDetailsPageComponent({
               agencyId={vehicle.agencyId}
             />
           </SectionColWrapper>
-          <SectionColWrapper end>
+          <SectionColWrapper className="items-end">
             <RyogoH3>{vehicle.vehicleNumber}</RyogoH3>
             <RyogoCaption color="slate">
               {vehicle.brand + " " + vehicle.model}

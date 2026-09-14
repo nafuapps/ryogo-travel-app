@@ -20,7 +20,7 @@ export default function NotificationCard({
   const t = useTranslations("Dashboard.Feed.Notifications")
   return (
     <SectionWrapper id={notification.id}>
-      <SectionRowWrapper justifyStart center>
+      <SectionRowWrapper className="items-center justify-start">
         <RyogoEnclosedIcon
           icon={getEntityIcon(notification.entityType)}
           size="sm"
@@ -28,7 +28,7 @@ export default function NotificationCard({
           bgColor="brand"
           circular
         />
-        <SectionColWrapper small wFull>
+        <SectionColWrapper small className="w-full">
           <RyogoCaption>
             {t(
               notification.textKey as Parameters<typeof t>[0],

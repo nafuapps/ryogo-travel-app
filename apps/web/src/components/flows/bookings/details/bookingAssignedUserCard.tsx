@@ -23,7 +23,7 @@ export default function BookingAssignedUserCard({
       ) : (
         <RyogoEnclosedIcon icon={User} size="lg" />
       )}
-      <SectionColWrapper wFull small>
+      <SectionColWrapper small className="w-full">
         <RyogoP weight="font-bold">{user.name}</RyogoP>
         <RyogoCaption color="slate">{user.phone}</RyogoCaption>
         <UserRolePill role={user.userRole} className="self-start" />

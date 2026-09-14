@@ -52,13 +52,13 @@ export default async function UserDetailsPageComponent({
       <UserDetailHeaderTabs selectedTab={"User"} id={user.id} />
       <SectionWrapper id="UserDetailsInfo">
         <SectionRowWrapper>
-          <SectionRowWrapper justifyStart center>
+          <SectionRowWrapper className="items-center justify-start">
             <RyogoH3 color="brand">{user.id}</RyogoH3>
             <CopyClipboardButton label={user.id} />
           </SectionRowWrapper>
           <Tooltip disableHoverableContent>
             <TooltipTrigger className="bg-slate-50 dark:bg-slate-800 px-2 py-1.5 lg:px-2.5 lg:py-2 flex items-center justify-center gap-1 lg:gap-1.5 rounded-lg">
-              <SectionRowWrapper justifyEnd small center>
+              <SectionRowWrapper small className="items-center justify-end">
                 <RyogoCaption color="light">{t(onlineStatus)}</RyogoCaption>
                 <RyogoIcon
                   icon={CircleSmall}
@@ -95,7 +95,7 @@ export default async function UserDetailsPageComponent({
             )}
             <ChangeUserPhotoSheet userId={user.id} agencyId={user.agencyId} />
           </SectionColWrapper>
-          <SectionColWrapper end>
+          <SectionColWrapper className="w-full">
             <RyogoH3>{user.name}</RyogoH3>
             <RyogoCaption color="slate">
               {user.userRole.toUpperCase()} {user.isAdmin && t("Admin")}

@@ -16,9 +16,9 @@ export default async function SignupPage() {
   const t = await getTranslations("Auth.SignupPage")
 
   return (
-    <SectionColWrapper wFull hFull justifyBetween>
+    <SectionColWrapper className="w-full h-full justify-between">
       <SignupPageComponent />
-      <SectionColWrapper center>
+      <SectionColWrapper className="items-center">
         <RyogoCaption color="slate">{t("LoginTitle")}</RyogoCaption>
         <Link href={"/auth/login"}>
           <RyogoOutlineButton label={t("LoginCTA")} />

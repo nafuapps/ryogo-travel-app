@@ -31,7 +31,7 @@ export default function UpcomingBookingsComponent({
 
   return (
     <SectionWrapper id="UpcomingBookingsSection">
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <SectionHeaderWrapper>
           <RyogoIcon icon={Clock} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
@@ -39,7 +39,7 @@ export default function UpcomingBookingsComponent({
             {trips.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <SectionRowWrapper center justifyEnd>
+        <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyUpcoming")}</RyogoCaption>
           <Switch
             checked={showAgencyBookings}

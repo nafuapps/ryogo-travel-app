@@ -26,7 +26,7 @@ export default async function UserAssignedPageComponent({
   return (
     <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Assigned"} id={id} />
-      <SectionWrapper center id="UserAssignedBookingsList">
+      <SectionWrapper className="items-center" id="UserAssignedBookingsList">
         {bookings.length === 0 ? (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (

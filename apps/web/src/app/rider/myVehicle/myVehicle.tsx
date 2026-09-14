@@ -35,7 +35,7 @@ export default async function RiderMyVehiclePageComponent({
   return (
     <PageWrapper id="RiderVehicleDetailsPage">
       <SectionWrapper id="BasicInfo">
-        <SectionRowWrapper justifyStart>
+        <SectionRowWrapper className="items-center justify-start">
           <RyogoH3 color="brand">{vehicle.id}</RyogoH3>
           <CopyClipboardButton label={vehicle.id} />
         </SectionRowWrapper>
@@ -52,7 +52,7 @@ export default async function RiderMyVehiclePageComponent({
               <GetVehicleIcon vehicleType={vehicle.type} size="xl" />
             )}
           </SectionColWrapper>
-          <SectionColWrapper end>
+          <SectionColWrapper className="items-end">
             <RyogoH3>{vehicle.vehicleNumber}</RyogoH3>
             <RyogoCaption color="slate">
               {vehicle.brand + " " + vehicle.model}

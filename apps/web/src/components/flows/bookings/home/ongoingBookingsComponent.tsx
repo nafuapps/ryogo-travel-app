@@ -30,7 +30,7 @@ export default function OngoingBookingsComponent({
 
   return (
     <SectionWrapper id="OngoingBookingsSection">
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <SectionHeaderWrapper>
           <RyogoIcon icon={Route} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
@@ -38,7 +38,7 @@ export default function OngoingBookingsComponent({
             {trips.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <SectionRowWrapper center justifyEnd>
+        <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyOngoing")}</RyogoCaption>
           <Switch
             checked={showAgencyBookings}

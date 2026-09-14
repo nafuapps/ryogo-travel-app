@@ -38,8 +38,8 @@ export default async function ExpiryAlertCard({
     <CarouselItem
       className={`flex flex-col gap-2 lg:gap-3 basis-full md:basis-1/2 xl:basis-1/3 p-4 lg:p-5 rounded-lg transition-all delay-200 duration-300 ease-in bg-white dark:bg-slate-800 shadow ${expiryDays < 0 ? "border-l-6 border-red-700 dark:border-red-300" : expiryDays < 0 ? "border-l-6 border-yellow-700 dark:border-yellow-300" : "border-l-6 border-sky-700 dark:border-sky-300"}`}
     >
-      <SectionRowWrapper center>
-        <SectionRowWrapper justifyStart center>
+      <SectionRowWrapper className="items-center">
+        <SectionRowWrapper className="items-center justify-start">
           <RyogoEnclosedIcon
             icon={getExpiryIcon(expiryType)}
             size="sm"

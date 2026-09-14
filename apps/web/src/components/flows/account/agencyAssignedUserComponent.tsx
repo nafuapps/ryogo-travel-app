@@ -32,7 +32,7 @@ export default async function AgencyAssignedUserComponent({
           </RyogoCaption>
         </div>
         <DetailsContentWrapper>
-          <SectionRowWrapper justifyStart center>
+          <SectionRowWrapper className="items-center justify-start">
             {photoUrl ? (
               <RyogoImage
                 src={getFileUrl(photoUrl)}

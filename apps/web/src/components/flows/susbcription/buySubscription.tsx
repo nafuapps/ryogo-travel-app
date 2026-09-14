@@ -40,7 +40,7 @@ export default function BuySubscriptionComponent({
   )
 
   return (
-    <SectionWrapper id="getPremium" center>
+    <SectionWrapper id="getPremium" className="items-center">
       <div className="w-full rounded-lg bg-slate-950 dark:bg-white p-7 lg:p-8 gap-3 lg:gap-4 flex flex-col items-center justify-center text-center">
         <RyogoSmall color="light">{t("ExperiencePremium")}</RyogoSmall>
         <RyogoH2 color="white" weight="font-bold">
@@ -93,7 +93,7 @@ export default function BuySubscriptionComponent({
           })}
         />
       </div>
-      <SectionRowWrapper small center>
+      <SectionRowWrapper small className="items-center">
         <RyogoIcon icon={Lock} size="sm" color="light" />
         <RyogoCaption color="light">{t("Secure")}</RyogoCaption>
       </SectionRowWrapper>
@@ -150,7 +150,7 @@ function PaymentOptionCard({
             </RyogoH2>
           </SectionRowWrapper>
         </SectionColWrapper>
-        <SectionColWrapper end justifyBetween>
+        <SectionColWrapper className="items-end justify-between">
           <RyogoSmall
             color={currentlySelected ? "white" : "brand"}
             weight="font-bold"
@@ -167,7 +167,7 @@ function PaymentOptionCard({
       <div
         className={`h-0.5 w-full ${currentlySelected ? "bg-white dark:bg-slate-900" : "bg-slate-100 dark:bg-slate-800"}`}
       />
-      <SectionRowWrapper center small>
+      <SectionRowWrapper small className="items-center">
         <RyogoCaption
           color={currentlySelected ? "white" : "brand"}
           weight="font-medium"

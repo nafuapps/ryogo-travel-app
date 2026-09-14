@@ -12,7 +12,7 @@ export async function DashboardSectionHeader({
   href?: React.ComponentProps<typeof Link>["href"]
 }) {
   return (
-    <SectionRowWrapper center>
+    <SectionRowWrapper className="items-center">
       <RyogoH4 weight="font-bold" color="slate">
         {title}
       </RyogoH4>
@@ -58,7 +58,10 @@ export function DashboardLabelImageChip({
   end?: boolean
 }) {
   return (
-    <SectionRowWrapper small center justifyEnd={end} reverse={end}>
+    <SectionRowWrapper
+      small
+      className={`items-center ${end ? "flex-row-reverse justify-end" : ""}`}
+    >
       {children}
       <RyogoSmall color="slate">{label}</RyogoSmall>
     </SectionRowWrapper>

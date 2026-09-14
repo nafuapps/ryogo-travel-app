@@ -53,7 +53,7 @@ export default function DashboardScheduleConflictItemComponent({
       : `/dashboard/bookings/${conflict.secondItem.id}`
   return (
     <DashboardBoxItemWrapper highlight={highlight}>
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         {conflict.entity.label && (
           <DashboardLabelImageChip label={conflict.entity.label}>
             {conflict.entity.photoUrl && (

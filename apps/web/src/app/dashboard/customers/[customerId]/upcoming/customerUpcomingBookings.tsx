@@ -26,7 +26,10 @@ export default async function CustomerUpcomingBookingsPageComponent({
   return (
     <PageWrapper id="CustomerUpcomingBookingsPage">
       <CustomerDetailHeaderTabs selectedTab={"Upcoming"} id={id} />
-      <SectionWrapper center id="CustomerUpcomingBookingsList">
+      <SectionWrapper
+        className="items-center"
+        id="CustomerUpcomingBookingsList"
+      >
         {bookings.length === 0 ? (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (

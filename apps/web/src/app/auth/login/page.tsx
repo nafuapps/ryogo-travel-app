@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 export default async function LoginPage() {
   const t = await getTranslations("Auth.LoginPage")
   return (
-    <SectionColWrapper wFull hFull justifyBetween>
+    <SectionColWrapper className="w-full h-full justify-between">
       <LoginPageComponent />
-      <SectionColWrapper center>
+      <SectionColWrapper className="items-center">
         <RyogoCaption color="slate">{t("SignupTitle")}</RyogoCaption>
         <Link href={"/auth/signup"}>
           <RyogoOutlineButton label={t("SignupCTA")} />

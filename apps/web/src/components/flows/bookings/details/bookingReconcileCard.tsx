@@ -19,7 +19,7 @@ export default async function BookingReconcileCard({
     return (
       <div className="flex flex-row gap-2 lg:gap-3 p-2 lg:p-3 items-center justify-center">
         <RyogoEnclosedIcon icon={Scale} size="sm" color="black" />
-        <SectionColWrapper wFull small>
+        <SectionColWrapper small className="w-full">
           <RyogoCaption color="light">{t("ReconciledAt")}</RyogoCaption>
           <RyogoSmall color="slate">
             {moment(reconciledAt).format("DD MMM YYYY - hh:mm a")}

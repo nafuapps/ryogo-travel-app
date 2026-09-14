@@ -30,7 +30,7 @@ export default function CompletedBookingsComponent({
 
   return (
     <SectionWrapper id="CompletedBookingsSection">
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <SectionHeaderWrapper>
           <RyogoIcon icon={CheckCheck} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
@@ -38,7 +38,7 @@ export default function CompletedBookingsComponent({
             {trips.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <SectionRowWrapper center justifyEnd>
+        <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyCompleted")}</RyogoCaption>
           <Switch
             checked={showAgencyBookings}

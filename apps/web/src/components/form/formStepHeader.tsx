@@ -20,7 +20,7 @@ export default function FormStepHeader({
 }) {
   return (
     <SectionColWrapper small>
-      <SectionRowWrapper center small>
+      <SectionRowWrapper small className="items-center">
         <RyogoH3>{title}</RyogoH3>
         <RyogoCaption color="light" weight="font-bold">
           {stepLabel}

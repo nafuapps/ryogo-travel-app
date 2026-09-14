@@ -24,7 +24,7 @@ export default function BookingCustomerCard({
       ) : (
         <RyogoEnclosedIcon icon={User} size="lg" />
       )}
-      <SectionColWrapper wFull small>
+      <SectionColWrapper small className="w-full">
         <RyogoP weight="font-bold">{customer.name}</RyogoP>
         {!hidePhone && (
           <RyogoCaption color="slate">{customer.phone}</RyogoCaption>

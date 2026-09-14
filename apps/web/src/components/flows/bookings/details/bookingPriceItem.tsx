@@ -15,7 +15,7 @@ export default function BookingPriceItem({
 }) {
   return (
     <DetailsLineWrapper label={title}>
-      <SectionColWrapper end small>
+      <SectionColWrapper small className="items-end">
         <RyogoP>{value}</RyogoP>
         {subtitle && <RyogoCaption color="light">{subtitle}</RyogoCaption>}
       </SectionColWrapper>

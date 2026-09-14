@@ -115,7 +115,7 @@ export default function NewBookingFinal({
         <FormContentWrapper>
           <SectionRowWrapper>
             <IconTextTag icon={Car} text={t("VehicleCharge")} />
-            <SectionColWrapper end small>
+            <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalVehiclePrice}
               </RyogoSmall>
@@ -130,7 +130,7 @@ export default function NewBookingFinal({
           {newBookingFormData.tripNeedsAC && (
             <SectionRowWrapper>
               <IconTextTag icon={AirVent} text={t("ACCharge")} />
-              <SectionColWrapper end small>
+              <SectionColWrapper small className="items-end">
                 <RyogoSmall weight="font-bold">
                   {"₹" + finalAmount.totalAcPrice}
                 </RyogoSmall>
@@ -145,7 +145,7 @@ export default function NewBookingFinal({
           )}
           <SectionRowWrapper>
             <IconTextTag icon={IdCard} text={t("DriverAllowance")} />
-            <SectionColWrapper end small>
+            <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalDriverAllowance}
               </RyogoSmall>
@@ -159,7 +159,7 @@ export default function NewBookingFinal({
           </SectionRowWrapper>
           <SectionRowWrapper>
             <IconTextTag icon={CirclePercent} text={t("Commission")} />
-            <SectionColWrapper end small>
+            <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalCommission}
               </RyogoSmall>

@@ -24,14 +24,14 @@ export default function BookingVehicleCard({
         ) : (
           <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
         )}
-        <SectionColWrapper wFull small>
+        <SectionColWrapper small className="w-full">
           <RyogoP weight="font-bold">{vehicle.vehicleNumber}</RyogoP>
           <RyogoCaption color="slate">
             {vehicle.brand + " " + vehicle.model}
           </RyogoCaption>
           <RyogoCaption color="light">{vehicle.color}</RyogoCaption>
         </SectionColWrapper>
-        <SectionColWrapper end small>
+        <SectionColWrapper small className="items-end">
           <RyogoCaption color="light" weight="font-bold">
             {vehicle.type.toUpperCase()}
           </RyogoCaption>

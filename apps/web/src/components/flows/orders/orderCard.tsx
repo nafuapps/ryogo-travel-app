@@ -29,7 +29,7 @@ export default function OrderCard({
   const [collapsed, setCollapsed] = useState(true)
   return (
     <SectionWrapper key={order.id} id={"Order#" + order.id}>
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <div
           className={`flex items-center justify-center shrink-0 transition rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 lg:p-2 ${
             collapsed ? "-rotate-90" : ""
@@ -38,18 +38,18 @@ export default function OrderCard({
         >
           <RyogoIcon color="black" size="sm" icon={ChevronDown} thick />
         </div>
-        <SectionRowWrapper wFull>
+        <SectionRowWrapper className="w-full">
           <SectionColWrapper small>
             <RyogoSmall color="brand" weight="font-bold">
               {"Order #" + order.id}
             </RyogoSmall>
             <OrderStatusPill status={order.status} />
           </SectionColWrapper>
-          <SectionColWrapper end small>
+          <SectionColWrapper small className="items-end">
             <RyogoH4 color="brand" weight="font-bold">
               {"₹" + order.amount}
             </RyogoH4>
-            <SectionRowWrapper center small>
+            <SectionRowWrapper small className="items-center">
               <RyogoCaption color="light">
                 {moment(order.updatedAt).format("DD MMM YYYY")}
               </RyogoCaption>
@@ -61,12 +61,12 @@ export default function OrderCard({
       </SectionRowWrapper>
       {!collapsed && (
         <>
-          <SectionRowWrapper center>
+          <SectionRowWrapper className="items-center">
             <RyogoCaption color="light" weight="font-bold">
               {order.user.name}
             </RyogoCaption>
             {order.orderInvoiceUrl && (
-              <SectionRowWrapper small center>
+              <SectionRowWrapper small className="items-center">
                 <a
                   href={getFileUrl(order.orderInvoiceUrl) + "?download"}
                   download

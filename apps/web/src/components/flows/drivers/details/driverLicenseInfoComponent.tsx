@@ -23,7 +23,7 @@ export default async function DriverLicenseInfoComponent({
   const t = await getTranslations("Rider.MyProfile")
 
   return (
-    <SectionColWrapper center>
+    <SectionColWrapper className="items-center justify-center">
       {photoUrl ? (
         <RyogoDialogImage
           src={getFileUrl(photoUrl)}
@@ -33,7 +33,7 @@ export default async function DriverLicenseInfoComponent({
       ) : (
         <RyogoEnclosedIcon icon={IdCard} size="xl" />
       )}
-      <SectionColWrapper center small>
+      <SectionColWrapper small className="items-center">
         {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
         {licenseExpiresOn && (
           <DetailsBorderWrapper>

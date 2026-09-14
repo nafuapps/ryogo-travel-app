@@ -61,7 +61,7 @@ export default async function DriverDetailsComponent({
         </DetailsLineWrapper>
         {ratings && (
           <DetailsLineWrapper label={t("Rating")}>
-            <SectionRowWrapper justifyEnd center>
+            <SectionRowWrapper className="items-center justify-end">
               <div className="border rounded-md flex items-center gap-1 lg:gap-1.5 py-0.75 lg:py-1 px-1.5 lg:px-2">
                 <RyogoCaption color="slate">
                   {getAverageRating(ratings)}

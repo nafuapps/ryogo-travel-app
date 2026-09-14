@@ -35,7 +35,7 @@ export default async function BookingTransactionsPageComponent({
           </RyogoOutlineButton>
         </Link>
       )}
-      <SectionColWrapper>
+      <SectionColWrapper className="items-center">
         {bookingTransactions.length === 0 ? (
           <RyogoSmall color="slate" className="text-center">
             {t("NoTransactions")}

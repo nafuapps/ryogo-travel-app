@@ -54,7 +54,7 @@ export function DashboardScheduleHeader({
     : useTranslations("Dashboard.Schedule.Header")
 
   return (
-    <SectionRowWrapper center>
+    <SectionRowWrapper className="items-center">
       <SectionHeaderWrapper>
         <RyogoIcon
           icon={isHistory ? CalendarSync : CalendarDays}

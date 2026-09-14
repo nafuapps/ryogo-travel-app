@@ -11,7 +11,7 @@ export function IconTextTag({
   text: string
 }) {
   return (
-    <SectionRowWrapper justifyStart center small>
+    <SectionRowWrapper small className="items-center justify-start">
       <RyogoIcon icon={icon} size={"sm"} />
       <RyogoCaption color="slate">{text}</RyogoCaption>
     </SectionRowWrapper>

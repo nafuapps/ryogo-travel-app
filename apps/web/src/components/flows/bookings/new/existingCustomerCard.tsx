@@ -36,8 +36,8 @@ export default function ExistingCutomerCard({
       href={`/dashboard/bookings/new/${existingCustomer.id}`}
       className={`flex items-center gap-3 lg:gap-4 border ${isNotActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950 opacity-50" : "hover:bg-slate-50 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
     >
-      <SectionColWrapper wFull>
-        <SectionRowWrapper justifyStart center>
+      <SectionColWrapper className="w-full">
+        <SectionRowWrapper className="items-center justify-start">
           {existingCustomer.photoUrl ? (
             <RyogoImage
               src={getFileUrl(existingCustomer.photoUrl)}
@@ -52,7 +52,7 @@ export default function ExistingCutomerCard({
               bgColor={"slate"}
             />
           )}
-          <SectionColWrapper small wFull>
+          <SectionColWrapper small className="w-full">
             <RyogoP weight="font-bold">{existingCustomer.name}</RyogoP>
             <RyogoCaption color="light" weight="font-bold">
               {existingCustomer.phone}
@@ -75,7 +75,7 @@ export default function ExistingCutomerCard({
             />
           )}
       </SectionColWrapper>
-      <SectionColWrapper end hFull justifyBetween>
+      <SectionColWrapper className="items-end h-full justify-between">
         <CustomerStatusPill status={customerStatus} size="sm" />
         <RyogoIcon
           icon={isNotActive ? LockIcon : ChevronRight}

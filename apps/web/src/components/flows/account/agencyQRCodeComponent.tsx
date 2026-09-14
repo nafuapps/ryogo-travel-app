@@ -11,7 +11,7 @@ export default async function AgencyQRCodeComponent({
 }) {
   const t = await getTranslations("Dashboard.AccountAgency")
   return (
-    <SectionWrapper id="QRCodeSection" center>
+    <SectionWrapper id="QRCodeSection" className="items-center">
       <RyogoCaption color="light" weight="font-bold">
         {t("QRCode")}
       </RyogoCaption>

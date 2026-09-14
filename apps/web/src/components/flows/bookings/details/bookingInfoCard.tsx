@@ -28,14 +28,14 @@ export default async function BookingCreationInfoCard({
       </div>
       <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 items-center justify-center">
         <DateWrapper date={createdAt} />
-        <SectionColWrapper wFull small>
-          <SectionRowWrapper center justifyStart>
+        <SectionColWrapper small className="w-full">
+          <SectionRowWrapper className="items-center justify-start">
             <RyogoEnclosedIcon icon={ClockPlus} size="sm" color="slate" />
             <RyogoCaption color="light">
               {moment(createdAt).format("hh:mm a")}
             </RyogoCaption>
           </SectionRowWrapper>
-          <SectionRowWrapper center justifyStart>
+          <SectionRowWrapper className="items-center justify-start">
             {photoUrl ? (
               <RyogoImage
                 src={getFileUrl(photoUrl)}

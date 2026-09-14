@@ -24,17 +24,15 @@ export default function AgencyInfoComponent({
   status: AgencyStatusEnum
 }) {
   return (
-    <SectionColWrapper center>
-      <SectionColWrapper center small>
-        {logoUrl ? (
-          <RyogoImage src={getFileUrl(logoUrl)} alt={logoUrl} imageSize="lg" />
-        ) : (
-          <RyogoEnclosedIcon icon={Building} size="xl" />
-        )}
-      </SectionColWrapper>
-      <SectionColWrapper center small>
+    <SectionColWrapper className="items-center justify-center">
+      {logoUrl ? (
+        <RyogoImage src={getFileUrl(logoUrl)} alt={logoUrl} imageSize="lg" />
+      ) : (
+        <RyogoEnclosedIcon icon={Building} size="xl" />
+      )}
+      <SectionColWrapper small className="items-center">
         <RyogoH4 weight="font-bold">{agencyName}</RyogoH4>
-        <SectionRowWrapper center small>
+        <SectionRowWrapper small className="items-center">
           <RyogoIcon icon={MapPin} size="sm" color="light" />
           <RyogoSmall color="light">{city + ", " + state}</RyogoSmall>
         </SectionRowWrapper>

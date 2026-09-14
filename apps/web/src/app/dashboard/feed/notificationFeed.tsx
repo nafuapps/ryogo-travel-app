@@ -28,7 +28,7 @@ export default function NotificationFeedPageComponent({
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}
       />
-      <SectionColWrapper overflowScroll>
+      <SectionColWrapper className="overflow-y-scroll no-scrollbar">
         {filteredNotifications.length === 0 ? (
           <RyogoSmall color="slate">{t("NoFeed")}</RyogoSmall>
         ) : (

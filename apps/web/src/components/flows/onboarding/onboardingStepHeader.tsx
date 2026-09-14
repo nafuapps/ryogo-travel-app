@@ -19,7 +19,7 @@ export default function OnboardingStepHeader({
 }) {
   return (
     <SectionColWrapper small>
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <RyogoH2>{title}</RyogoH2>
         <SidebarTrigger className="md:hidden" />
       </SectionRowWrapper>

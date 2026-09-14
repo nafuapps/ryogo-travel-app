@@ -23,7 +23,7 @@ export default async function TripLogItem({
           tripLog.tripLogPhotoUrl ? "rounded-t-lg" : "rounded-lg"
         } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
       >
-        <SectionColWrapper end small>
+        <SectionColWrapper small className="items-end">
           <RyogoSmall>
             {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
           </RyogoSmall>

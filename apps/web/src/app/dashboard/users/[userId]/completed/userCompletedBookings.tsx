@@ -17,7 +17,7 @@ export default async function UserCompletedPageComponent({
   return (
     <PageWrapper id="DriverCompletedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Completed"} id={id} />
-      <SectionWrapper center id="DriverCompletedBookingsList">
+      <SectionWrapper className="items-center" id="DriverCompletedBookingsList">
         {bookings.length > 0 ? (
           bookings.map((trip) => (
             <CompletedBookingCard key={trip.id} booking={trip} />

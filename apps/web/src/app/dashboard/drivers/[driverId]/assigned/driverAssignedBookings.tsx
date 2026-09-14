@@ -26,7 +26,7 @@ export default async function DriverAssignedBookingsPageComponent({
   return (
     <PageWrapper id="DriverAssignedBookingsPage">
       <DriverDetailHeaderTabs selectedTab={"Assigned"} id={id} />
-      <SectionWrapper center id="DriverAssignedBookingsList">
+      <SectionWrapper className="items-center" id="DriverAssignedBookingsList">
         {bookings.length === 0 ? (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (

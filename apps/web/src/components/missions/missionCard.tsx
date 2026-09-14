@@ -70,8 +70,8 @@ export default function MissionCard({
     <CarouselItem
       className={`flex flex-col gap-2 lg:gap-3 p-4 lg:p-5 basis-full md:basis-1/2 xl:basis-1/3 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-50 dark:bg-slate-900 shadow-sm" : "bg-white dark:bg-slate-800 shadow"} ${!isRead ? (mission.isCritical ? "border-l-6 border-red-700 dark:border-red-300" : "border-l-6 border-sky-700 dark:border-sky-300") : ""}`}
     >
-      <SectionRowWrapper center>
-        <SectionRowWrapper justifyStart center>
+      <SectionRowWrapper className="items-center">
+        <SectionRowWrapper className="items-center justify-start">
           <RyogoEnclosedIcon
             icon={getEntityIcon(mission.entityType)}
             size="sm"

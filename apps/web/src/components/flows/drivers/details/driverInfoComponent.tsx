@@ -17,19 +17,13 @@ export default function DriverInfoComponent({
   status: DriverStatusEnum
 }) {
   return (
-    <SectionColWrapper center>
-      <SectionColWrapper center small>
-        {photoUrl ? (
-          <RyogoImage
-            src={getFileUrl(photoUrl)}
-            alt={photoUrl}
-            imageSize="lg"
-          />
-        ) : (
-          <RyogoEnclosedIcon icon={User} size="xl" />
-        )}
-      </SectionColWrapper>
-      <SectionColWrapper center small>
+    <SectionColWrapper className="items-center justify-center">
+      {photoUrl ? (
+        <RyogoImage src={getFileUrl(photoUrl)} alt={photoUrl} imageSize="lg" />
+      ) : (
+        <RyogoEnclosedIcon icon={User} size="xl" />
+      )}
+      <SectionColWrapper small className="items-center">
         <RyogoH4 weight="font-bold">{name}</RyogoH4>
         <DriverStatusPill status={status} className="mt-auto self-center" />
       </SectionColWrapper>

@@ -24,7 +24,7 @@ export default function PaymentCard({
           {payment.method.toUpperCase()}
         </RyogoCaption>
       </SectionColWrapper>
-      <SectionColWrapper end>
+      <SectionColWrapper className="items-end">
         <RyogoCaption color="slate">
           {moment(payment.updatedAt).format("DD MMM YYYY - hh:mm A")}
         </RyogoCaption>

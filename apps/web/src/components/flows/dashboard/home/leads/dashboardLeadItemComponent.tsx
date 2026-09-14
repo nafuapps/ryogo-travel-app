@@ -28,7 +28,7 @@ export default async function DashboardLeadItemComponent({
   return (
     <Link href={`/dashboard/bookings/${trip.id}`}>
       <DashboardBoxItemWrapper highlight={highlight}>
-        <SectionRowWrapper small center>
+        <SectionRowWrapper small className="items-center">
           <RyogoCaption color="light" weight="font-bold">
             {trip.id}
           </RyogoCaption>
@@ -36,12 +36,12 @@ export default async function DashboardLeadItemComponent({
             {trip.startDate.toLocaleDateString()}
           </RyogoCaption>
         </SectionRowWrapper>
-        <SectionRowWrapper small center>
+        <SectionRowWrapper small className="items-center">
           <RyogoP weight="font-bold">{trip.source.city}</RyogoP>
           <GetTripTypeIcon tripType={trip.type} size="sm" color="light" thick />
           <RyogoP weight="font-bold">{trip.destination.city}</RyogoP>
         </SectionRowWrapper>
-        <SectionRowWrapper small center>
+        <SectionRowWrapper small className="items-center">
           <SectionRowWrapper>
             <DashboardLabelImageChip label={trip.customer.name}>
               {customerImageUrl ? (

@@ -35,7 +35,7 @@ export function BookingSchedulePopoverCard(
           </RyogoCaption>
           <RyogoH4>{booking.route}</RyogoH4>
         </SectionColWrapper>
-        <SectionColWrapper small end>
+        <SectionColWrapper small className="items-end">
           <RyogoCaption color={isDelayed ? "red" : "slate"}>
             {moment(booking.startDate).format("DD MMM") +
               " - " +
@@ -43,12 +43,12 @@ export function BookingSchedulePopoverCard(
           </RyogoCaption>
         </SectionColWrapper>
       </SectionRowWrapper>
-      <SectionRowWrapper end>
+      <SectionRowWrapper className="justify-between">
         <SectionColWrapper small>
           <RyogoSmall>{booking.customerName}</RyogoSmall>
           <RyogoCaption weight="font-bold">{booking.bookingId}</RyogoCaption>
         </SectionColWrapper>
-        <SectionColWrapper small end>
+        <SectionColWrapper small className="items-end">
           {booking.vehicle ? (
             <RyogoSmall>{booking.vehicle}</RyogoSmall>
           ) : (
@@ -99,7 +99,7 @@ export function AssignedBookingPopoverCard(
             {booking.source.city + " - " + booking.destination.city}
           </RyogoH4>
         </SectionColWrapper>
-        <SectionColWrapper small end>
+        <SectionColWrapper small className="items-end">
           <RyogoCaption color={isDelayed ? "red" : "slate"}>
             {moment(booking.startDate).format("DD MMM") +
               " - " +
@@ -107,12 +107,12 @@ export function AssignedBookingPopoverCard(
           </RyogoCaption>
         </SectionColWrapper>
       </SectionRowWrapper>
-      <SectionRowWrapper end>
+      <SectionRowWrapper className="justify-between">
         <SectionColWrapper small>
           <RyogoSmall>{booking.customer.name}</RyogoSmall>
           <RyogoCaption weight="font-bold">{booking.id}</RyogoCaption>
         </SectionColWrapper>
-        <SectionColWrapper small end>
+        <SectionColWrapper small className="items-end">
           <RyogoSmall>{booking.assignedVehicle?.vehicleNumber}</RyogoSmall>
           <RyogoCaption weight="font-bold">
             {booking.assignedDriver?.name}

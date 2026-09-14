@@ -59,7 +59,7 @@ export default function SupportTicketsPageComponent({
         setSelectedFilters={setSelectedFilters}
       />
       {isOwner && (
-        <SectionRowWrapper center justifyEnd>
+        <SectionRowWrapper className="items-center justify-end">
           <RyogoSmall color="light">{t("ShowAgencyTickets")}</RyogoSmall>
           <Switch
             id="agencyTickets"

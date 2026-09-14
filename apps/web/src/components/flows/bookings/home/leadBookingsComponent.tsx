@@ -33,7 +33,7 @@ export default function LeadBookingsComponent({
 
   return (
     <SectionWrapper id="leadsBookingsSection">
-      <SectionRowWrapper center>
+      <SectionRowWrapper className="items-center">
         <SectionHeaderWrapper>
           <RyogoIcon icon={BookOpenText} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
@@ -41,7 +41,7 @@ export default function LeadBookingsComponent({
             {selectedLeadBookings.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <SectionRowWrapper center justifyEnd>
+        <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyLeads")}</RyogoCaption>
           <Switch
             checked={showAgencyLeads}

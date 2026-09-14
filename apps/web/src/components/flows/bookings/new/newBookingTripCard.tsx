@@ -69,7 +69,7 @@ export default function NewBookingTripCard(
         className="bg-slate-300 dark:bg-slate-700 flex flex-row justify-between gap-2 lg:gap-3 items-end p-2 lg:p-3 rounded-b-lg"
       >
         <TripTagWrapper>
-          <SectionRowWrapper small center>
+          <SectionRowWrapper small className="items-center">
             <GetTripTypeIcon tripType={newBooking.tripType} size={"sm"} />
             <RyogoCaption color="slate">
               {newBooking.tripType.toUpperCase()}

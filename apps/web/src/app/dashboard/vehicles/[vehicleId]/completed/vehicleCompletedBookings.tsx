@@ -17,7 +17,10 @@ export default async function VehicleCompletedBookingsPageComponent({
   return (
     <PageWrapper id="VehicleCompletedBookingsPage">
       <VehicleDetailHeaderTabs selectedTab={"Completed"} id={id} />
-      <SectionWrapper center id="VehicleCompletedBookingsList">
+      <SectionWrapper
+        className="items-center"
+        id="VehicleCompletedBookingsList"
+      >
         {bookings.length > 0 ? (
           bookings.map((trip) => (
             <CompletedBookingCard key={trip.id} booking={trip} />

@@ -12,8 +12,8 @@ export default function BookingIDWrapper({
   status: BookingStatusEnum
 }) {
   return (
-    <SectionRowWrapper center wFull>
-      <SectionRowWrapper center justifyStart>
+    <SectionRowWrapper className="items-center w-full">
+      <SectionRowWrapper className="items-center justify-start">
         <CopyClipboardButton label={id} />
         <RyogoP color="brand" weight="font-bold">
           {id}

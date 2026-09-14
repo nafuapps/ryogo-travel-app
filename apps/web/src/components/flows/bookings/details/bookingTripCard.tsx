@@ -26,9 +26,7 @@ export default async function BookingTripCard({
           city={booking.source.city}
           state={booking.source.state}
         />
-        <SectionColWrapper center small>
-          <DistanceWrapper label={booking.citydistance + t("Km")} />
-        </SectionColWrapper>
+        <DistanceWrapper label={booking.citydistance + t("Km")} />
         <LocationWrapper
           end
           city={booking.destination.city}
@@ -38,19 +36,17 @@ export default async function BookingTripCard({
       <div className="mx-3 lg:mx-4 border-t border-dashed h-0" />
       <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x rounded-t-2xl">
         <DateWrapper date={startDate} />
-        <SectionColWrapper center small>
-          <RyogoPill bgColor="slate" label={booking.type.toUpperCase()} />
-        </SectionColWrapper>
+        <RyogoPill bgColor="slate" label={booking.type.toUpperCase()} />
         <DateWrapper date={endDate} />
       </div>
       <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x border-b rounded-b-lg bg-slate-100 dark:bg-slate-800">
-        <SectionRowWrapper small center>
+        <SectionRowWrapper small className="items-center">
           <RyogoIcon icon={Users} size={"sm"} />
           <RyogoCaption color="light" weight="font-bold">
             {t("Passengers", { pax: booking.passengers })}
           </RyogoCaption>
         </SectionRowWrapper>
-        <SectionRowWrapper small center end>
+        <SectionRowWrapper small className="items-center justify-end">
           <RyogoCaption color="light" weight="font-bold">
             {booking.needsAc ? t("Yes") : t("No")}
           </RyogoCaption>
@@ -71,7 +67,7 @@ function LocationWrapper({
   end?: boolean
 }) {
   return (
-    <SectionColWrapper end={end}>
+    <SectionColWrapper className={`${end ? "items-end" : ""}`}>
       <RyogoP weight="font-bold">{city}</RyogoP>
       <RyogoCaption color="slate">{state}</RyogoCaption>
     </SectionColWrapper>

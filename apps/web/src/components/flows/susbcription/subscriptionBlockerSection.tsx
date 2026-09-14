@@ -17,7 +17,7 @@ export default function SubscriptionBlockerSection({
   isOwner?: boolean
 }) {
   return (
-    <SectionWrapper id="SubscriptionBlockerSection" center>
+    <SectionWrapper id="SubscriptionBlockerSection" className="items-center">
       <RyogoEnclosedIcon
         icon={Hourglass}
         size="md"

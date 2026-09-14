@@ -41,8 +41,8 @@ export default async function ViewSupportTicketPageComponent({
   return (
     <PageWrapper id="ViewSupportTicketPage">
       <SectionWrapper id="TicketDataSection">
-        <SectionRowWrapper center>
-          <SectionRowWrapper justifyStart center>
+        <SectionRowWrapper className="items-center">
+          <SectionRowWrapper className="items-center justify-start">
             <RyogoH3 color="brand">{ticket.id}</RyogoH3>
             <CopyClipboardButton label={ticket.id} />
           </SectionRowWrapper>
@@ -76,7 +76,7 @@ export default async function ViewSupportTicketPageComponent({
         )}
       </SectionWrapper>
       <SectionWrapper id="TicketPhotoSection">
-        <SectionColWrapper center>
+        <SectionColWrapper className="items-center">
           {ticket.photoUrl && (
             <RyogoDialogImage
               src={getFileUrl(ticket.photoUrl)}
@@ -102,7 +102,7 @@ export default async function ViewSupportTicketPageComponent({
           </RyogoCaption>
           {ticket.commentsByUser?.map((comment, index) => (
             <SectionColWrapper key={index}>
-              <SectionRowWrapper justifyStart>
+              <SectionRowWrapper className="justify-start">
                 <RyogoIcon icon={MessageSquare} size="sm" />
                 <RyogoSmall>{comment}</RyogoSmall>
               </SectionRowWrapper>
@@ -116,7 +116,7 @@ export default async function ViewSupportTicketPageComponent({
           <RyogoCaption weight="font-bold" color="light">
             {t("CommentBySupport")}
           </RyogoCaption>
-          <SectionRowWrapper justifyStart>
+          <SectionRowWrapper className="justify-start">
             <RyogoIcon icon={MessageSquareReply} size="sm" />
             <RyogoSmall>{ticket.commentBySupport}</RyogoSmall>
           </SectionRowWrapper>
@@ -171,7 +171,7 @@ function TicketRow({
   children: React.ReactNode
 }) {
   return (
-    <SectionRowWrapper center>
+    <SectionRowWrapper className="items-center">
       <RyogoCaption weight="font-bold" color="light">
         {label}
       </RyogoCaption>

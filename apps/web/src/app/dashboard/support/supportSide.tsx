@@ -29,12 +29,12 @@ export default async function SupportSideComponent({
 
   return (
     <SideWrapper>
-      <SectionWrapper id="Contact" center>
+      <SectionWrapper id="Contact" className="items-center">
         <RyogoP weight="font-bold">{t("Contact.Title")}</RyogoP>
         <RyogoCaption color="light" className="text-center">
           {t("Contact.Description")}
         </RyogoCaption>
-        <SectionColWrapper wFull>
+        <SectionColWrapper className="w-full">
           <RyogoPhoneButton
             label={t("Contact.CallCTA")}
             phone={SUPPORT_HELPLINE_NUMBER}
@@ -52,7 +52,11 @@ export default async function SupportSideComponent({
           />
         </SectionColWrapper>
       </SectionWrapper>
-      <SectionWrapper id="Tickets" center bgColor="bg-slate-900 dark:bg-white">
+      <SectionWrapper
+        id="Tickets"
+        className="items-center"
+        bgColor="bg-slate-900 dark:bg-white"
+      >
         {isPremium ? (
           <>
             <RyogoP weight="font-bold" color="white">

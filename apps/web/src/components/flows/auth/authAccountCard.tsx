@@ -23,7 +23,7 @@ export default function AuthAccountCard({
 }) {
   return (
     <div
-      className={`flex gap-2 lg:gap-3 w-full justify-between items-center border border-slate-100 dark:border-slate-800 rounded-lg p-3 lg:p-4 ${isLink ? "hover:bg-slate-50 dark:hover:bg-slate-800" : ""}`}
+      className={`flex gap-2 lg:gap-3 w-full justify-between items-center border  rounded-lg p-3 lg:p-4 ${isLink ? "hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700" : "border-slate-100 dark:border-slate-800"}`}
     >
       {user.photoUrl ? (
         <RyogoImage
@@ -43,13 +43,13 @@ export default function AuthAccountCard({
           size="md"
         />
       )}
-      <SectionColWrapper small wFull>
+      <SectionColWrapper small className="grow">
         <RyogoSmall weight="font-bold">{user.name}</RyogoSmall>
         <RyogoCaption color="light">{user.agency.businessName}</RyogoCaption>
       </SectionColWrapper>
-      <SectionColWrapper end small>
+      <SectionColWrapper small className="items-end">
         <UserRolePill role={user.userRole} />
-        {isLink && <RyogoIcon icon={ChevronRight} size="sm" color="light" />}
+        {isLink && <RyogoIcon icon={ChevronRight} size="xs" color="light" />}
       </SectionColWrapper>
     </div>
   )

@@ -35,9 +35,9 @@ export default async function ConfirmEmailPage({
   const t = await getTranslations("Auth.ForgotPassword")
 
   return (
-    <SectionColWrapper wFull hFull justifyBetween>
+    <SectionColWrapper className="w-full h-full justify-between">
       <ForgotPasswordPageComponent user={user} />
-      <SectionColWrapper center>
+      <SectionColWrapper className="items-center">
         <RyogoCaption color="slate">{t("RememberTitle")}</RyogoCaption>
         <Link href={`/auth/login/password/${userId}`}>
           <RyogoOutlineButton label={t("RememberCTA")} />

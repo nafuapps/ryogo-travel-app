@@ -29,7 +29,7 @@ export default async function CurrentPlanDetails({
   return (
     <SectionColWrapper>
       <RyogoCaption color="light">{t("Header")}</RyogoCaption>
-      <SectionRowWrapper justifyStart center>
+      <SectionRowWrapper className="items-center justify-start">
         <RyogoH2 color={isBasic ? "slate" : "brand"} weight="font-bold">
           {subscriptionPlan}
         </RyogoH2>

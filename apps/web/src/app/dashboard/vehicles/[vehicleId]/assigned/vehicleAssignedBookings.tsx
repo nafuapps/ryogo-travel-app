@@ -27,7 +27,7 @@ export default async function VehicleAssignedBookingsPageComponent({
   return (
     <PageWrapper id="VehicleAssignedBookingsPage">
       <VehicleDetailHeaderTabs selectedTab={"Assigned"} id={id} />
-      <SectionWrapper center id="VehicleAssignedBookingsList">
+      <SectionWrapper className="items-center" id="VehicleAssignedBookingsList">
         {bookings.length === 0 ? (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
         ) : (

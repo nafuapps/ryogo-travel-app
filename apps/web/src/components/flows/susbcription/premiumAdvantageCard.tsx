@@ -14,7 +14,7 @@ export default function PremiumAdvantageCard({
 }) {
   return (
     <div className="flex flex-col gap-2 lg:gap-3 border-2 border-slate-50 dark:border-slate-800 p-3 lg:p-4 rounded-lg w-full">
-      <SectionRowWrapper center justifyStart>
+      <SectionRowWrapper className="items-center justify-start">
         <RyogoEnclosedIcon
           icon={icon}
           color="brand"

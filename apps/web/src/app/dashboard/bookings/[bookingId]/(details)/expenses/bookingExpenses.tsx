@@ -35,7 +35,7 @@ export default async function BookingExpensesPageComponent({
           </RyogoOutlineButton>
         </Link>
       )}
-      <SectionColWrapper>
+      <SectionColWrapper className="items-center">
         {bookingExpenses.length === 0 ? (
           <RyogoSmall color="slate" className="text-center">
             {t("NoExpenses")}

@@ -125,7 +125,7 @@ export default async function MySupportPageComponent({
         </SupportFAQWrapper>
       </PageWrapper>
       <SideWrapper>
-        <SectionWrapper id="Contact" center>
+        <SectionWrapper id="Contact" className="items-center">
           <RyogoP weight="font-bold">{t("Contact.Title")}</RyogoP>
           <RyogoCaption color="light" className="text-center">
             {t("Contact.Description")}
@@ -147,7 +147,7 @@ export default async function MySupportPageComponent({
         </SectionWrapper>
         <SectionWrapper
           id="Tickets"
-          center
+          className="items-center"
           bgColor="bg-slate-950 dark:bg-white"
         >
           {isPremium ? (

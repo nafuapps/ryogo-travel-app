@@ -98,8 +98,8 @@ export default function OnboardingSidebar({
             className="flex flex-col gap-2 md:gap-3"
           >
             {items.map((item, index) => (
-              <SectionRowWrapper key={index} justifyStart>
-                <SectionColWrapper center>
+              <SectionRowWrapper key={index} className="justify-start">
+                <SectionColWrapper className="items-center">
                   <div
                     className={`rounded-lg
                       ${

@@ -41,7 +41,7 @@ export default async function CustomerDetailsPageComponent({
     <PageWrapper id="CustomerDetailsPage">
       <CustomerDetailHeaderTabs selectedTab={"Customer"} id={customer.id} />
       <SectionWrapper id="CustomerDetailsInfo">
-        <SectionRowWrapper justifyStart>
+        <SectionRowWrapper className="justify-start items-center">
           <RyogoH3 color="brand">{customer.id}</RyogoH3>
           <CopyClipboardButton label={customer.id} />
         </SectionRowWrapper>
@@ -62,7 +62,7 @@ export default async function CustomerDetailsPageComponent({
               agencyId={customer.agencyId}
             />
           </SectionColWrapper>
-          <SectionColWrapper end>
+          <SectionColWrapper className="items-end">
             <RyogoH3>{customer.name}</RyogoH3>
             <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
             {customer.email && (

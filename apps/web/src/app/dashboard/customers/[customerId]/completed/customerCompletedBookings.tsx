@@ -17,7 +17,10 @@ export default async function CustomerCompletedBookingsPageComponent({
   return (
     <PageWrapper id="CustomerCompletedBookingsPage">
       <CustomerDetailHeaderTabs selectedTab={"Completed"} id={id} />
-      <SectionWrapper id="CustomerCompletedBookingsList" center>
+      <SectionWrapper
+        id="CustomerCompletedBookingsList"
+        className="items-center"
+      >
         {bookings.length > 0 ? (
           bookings.map((trip) => (
             <CompletedBookingCard key={trip.id} booking={trip} />

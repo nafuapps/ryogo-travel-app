@@ -35,15 +35,15 @@ export default function SupportTicketItem({
       }
     >
       <SectionWrapper id={ticket.id}>
-        <SectionRowWrapper center>
+        <SectionRowWrapper className="items-center">
           <RyogoSmall weight="font-bold" color="light">
             {"# " + ticket.id}
           </RyogoSmall>
           <SupportTicketStatusPill status={ticket.status} />
         </SectionRowWrapper>
         <RyogoP weight="font-bold">{ticket.issue}</RyogoP>
-        <SectionRowWrapper center>
-          <SectionRowWrapper justifyStart center>
+        <SectionRowWrapper className="items-center">
+          <SectionRowWrapper className="items-center justify-start">
             <RyogoEnclosedIcon
               icon={getEntityIcon(ticket.entityType)}
               size="sm"
@@ -67,7 +67,7 @@ export default function SupportTicketItem({
           </RyogoCaption>
         </SectionRowWrapper>
         {"user" in ticket && (
-          <SectionRowWrapper justifyStart center>
+          <SectionRowWrapper className="items-center justify-start">
             {ticket.user.photoUrl ? (
               <RyogoImage
                 src={getFileUrl(ticket.user.photoUrl)}

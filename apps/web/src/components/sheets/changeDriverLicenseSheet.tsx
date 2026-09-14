@@ -119,7 +119,6 @@ export default function ChangeDriverPhotoSheet({
           id="changeLicense"
           onSubmit={form.handleSubmit(onSubmit)}
           form={form}
-          hFull={false}
         >
           <FormContentWrapper asCard={false} className="px-4 lg:px-5">
             <RyogoInput

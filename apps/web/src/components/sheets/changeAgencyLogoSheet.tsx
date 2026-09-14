@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -21,10 +20,12 @@ import { changeAgencyLogoAction } from "@/app/actions/agencies/changeAgencyLogoA
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import { AtSign } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeAgencyLogoSheet({
   agencyId,
@@ -63,29 +64,35 @@ export default function ChangeAgencyLogoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton label={t("Button")} labelColor="light" />
+        <RyogoDetailedIconButton
+          label={t("Button")}
+          icon={AtSign}
+          subtitle={t("Subtitle")}
+        />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changePhoto" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoFileInput
-                name={"logo"}
-                register={form.register("logo")}
-                label={t("Title")}
-                placeholder={t("Placeholder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper<SchemaType>
+          form={form}
+          id="changeLogo"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoFileInput
+              name={"logo"}
+              register={form.register("logo")}
+              label={t("Title")}
+              placeholder={t("Placeholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
             disabled={form.formState.isSubmitting}
-            form="changePhoto"
+            form="changeLogo"
             label={t("Save")}
           />
           <RyogoOutlineButton

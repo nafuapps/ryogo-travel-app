@@ -10,24 +10,15 @@ import {
   InfoContentWrapper,
   InfoWrapper,
 } from "@/components/page/pageWrappers"
-import ChangeDriverLicenseSheet from "@/components/sheets/changeDriverLicenseSheet"
 
 export default async function DriverLicenseInfoComponent({
-  driverId,
-  agencyId,
-  addedByUserId,
   licenseNumber,
   photoUrl,
   licenseExpiresOn,
-  canEdit,
 }: {
-  driverId: string
-  agencyId: string
-  addedByUserId: string
   licenseNumber: string | null
   photoUrl: string | null
   licenseExpiresOn: Date | null
-  canEdit: boolean
 }) {
   const isExpired = licenseExpiresOn && licenseExpiresOn < new Date()
   const t = await getTranslations("Rider.MyProfile")
@@ -61,15 +52,6 @@ export default async function DriverLicenseInfoComponent({
               </RyogoCaption>
             </div>
           </DetailsBorderWrapper>
-        )}
-        {canEdit && (
-          <ChangeDriverLicenseSheet
-            driverId={driverId}
-            agencyId={agencyId}
-            addedByUserId={addedByUserId}
-            lNumber={licenseNumber}
-            lExpiresOn={licenseExpiresOn}
-          />
         )}
       </InfoContentWrapper>
     </InfoWrapper>

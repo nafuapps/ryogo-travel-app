@@ -1,8 +1,6 @@
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
-import { RyogoCaption } from "@/components/typography"
-import moment from "moment"
 import Link from "next/link"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
@@ -13,6 +11,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import UserInfoComponent from "@/components/flows/account/userInfoComponent"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 
 export default async function AccountPageComponent({
   account,
@@ -26,9 +25,7 @@ export default async function AccountPageComponent({
       <AccountDetailHeaderTabs selectedTab="Account" />
       <GridWrapper id="AccountDetails">
         <UserInfoComponent
-          id={account.id}
           photoUrl={account.photoUrl}
-          agencyId={account.agencyId}
           name={account.name}
           agencyName={account.agency.businessName}
           status={account.status}
@@ -42,6 +39,7 @@ export default async function AccountPageComponent({
         />
       </GridWrapper>
       <GridWrapper id="AccountActions">
+        <ChangeUserPhotoSheet userId={account.id} agencyId={account.agencyId} />
         <ChangeUserNameSheet
           userId={account.id}
           userName={account.name}

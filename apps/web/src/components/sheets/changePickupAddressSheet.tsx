@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoCheckbox, RyogoTextarea } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -23,6 +22,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { changePickupAddressAction } from "@/app/actions/bookings/changePickupAddressAction"
 import { MIN_FIELD_DESC_LENGTH, MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangePickupAddressSheet({
   bookingId,
@@ -104,23 +104,25 @@ export default function ChangePickupAddressSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changePickupAddress" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5 gap-2 lg:gap-3 flex flex-col">
-              <RyogoTextarea
-                name="pickupAddress"
-                label={t("PickupAddress")}
-                placeholder={t("PickupAddressPlaceholder")}
+        <FormWrapper
+          form={form}
+          id="changePickupAddress"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoTextarea
+              name="pickupAddress"
+              label={t("PickupAddress")}
+              placeholder={t("PickupAddressPlaceholder")}
+            />
+            {customerAddress && (
+              <RyogoCheckbox
+                name={"sameAsCustomerAddress"}
+                label={t("SameAsCustomerAddress")}
               />
-              {customerAddress && (
-                <RyogoCheckbox
-                  name={"sameAsCustomerAddress"}
-                  label={t("SameAsCustomerAddress")}
-                />
-              )}
-            </div>
-          </form>
-        </Form>
+            )}
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

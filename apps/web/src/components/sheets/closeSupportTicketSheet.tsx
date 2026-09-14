@@ -17,10 +17,10 @@ import { useRouter } from "next/navigation"
 import { closeSupportTicketAction } from "@/app/actions/support/closeSupportTicketAction"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 import { useForm } from "react-hook-form"
-import { Form } from "@/components/ui/form"
 import { RyogoCaption } from "@/components/typography"
 import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function CloseSupportTicketSheet({
   ticketId,
@@ -74,19 +74,21 @@ export default function CloseSupportTicketSheet({
             <RyogoCaption color="light">{t("Warning")}</RyogoCaption>
           </SheetDescription>
         </SheetHeader>
-        <Form {...form}>
-          <form id="closeSupportTicket" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoRatingInput
-                name="resolutionRating"
-                label={t("RatingLabel")}
-                selectedStars={resolutionRating}
-                setSelectedStars={setResolutionRating}
-                totalStars={TOTAL_RATING_STARS}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="closeSupportTicket"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoRatingInput
+              name="resolutionRating"
+              label={t("RatingLabel")}
+              selectedStars={resolutionRating}
+              setSelectedStars={setResolutionRating}
+              totalStars={TOTAL_RATING_STARS}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

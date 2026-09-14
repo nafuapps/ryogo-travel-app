@@ -20,7 +20,7 @@ export default async function VehicleCompletedBookingsPageComponent({
       <SectionWrapper center id="VehicleCompletedBookingsList">
         {bookings.length > 0 ? (
           bookings.map((trip) => (
-            <CompletedBookingCard key={trip.bookingId} booking={trip} />
+            <CompletedBookingCard key={trip.id} booking={trip} />
           ))
         ) : (
           <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>

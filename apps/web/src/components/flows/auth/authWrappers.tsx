@@ -1,6 +1,3 @@
-import { SubmitEventHandler } from "react"
-import { FieldValues, UseFormReturn } from "react-hook-form"
-import { Form } from "@/components/ui/form"
 import Image from "next/image"
 import Link from "next/link"
 import RyoGoLogo from "@/components/logo"
@@ -34,19 +31,7 @@ export function AuthMainWrapper({
 }
 
 export function AuthSideWrapper({ children }: { children: React.ReactNode }) {
-  return <div className="md:flex md:w-1/2 relative hidden">{children}</div>
-}
-
-export function AuthSectionWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-col gap-6 md:gap-8 w-full h-full items-center justify-between">
-      {children}
-    </div>
-  )
+  return <div className="relative hidden md:flex md:w-1/2">{children}</div>
 }
 
 export function AuthPageWrapper({ children }: { children: React.ReactNode }) {
@@ -55,16 +40,6 @@ export function AuthPageWrapper({ children }: { children: React.ReactNode }) {
       {children}
     </div>
   )
-}
-
-export function AuthFooterWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col items-center gap-2 md:gap-3">{children}</div>
-  )
-}
-
-export function AuthActionWrapper({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-4 w-full">{children}</div>
 }
 
 export function AuthAccountsWrapper({
@@ -80,30 +55,6 @@ export function AuthAccountsWrapper({
     >
       {children}
     </div>
-  )
-}
-
-export function AuthFormWrapper<T extends FieldValues>({
-  id,
-  form,
-  children,
-  onSubmit,
-}: {
-  id: string
-  form: UseFormReturn<T, any, T>
-  children: React.ReactNode
-  onSubmit: SubmitEventHandler<HTMLFormElement>
-}) {
-  return (
-    <Form {...form}>
-      <form
-        id={id}
-        onSubmit={onSubmit}
-        className="flex flex-col gap-4 md:gap-5"
-      >
-        {children}
-      </form>
-    </Form>
   )
 }
 

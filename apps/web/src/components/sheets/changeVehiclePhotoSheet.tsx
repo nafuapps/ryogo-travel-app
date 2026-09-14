@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -25,6 +24,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeVehiclePhotoSheet({
   vehicleId,
@@ -33,7 +33,7 @@ export default function ChangeVehiclePhotoSheet({
   vehicleId: string
   agencyId: string
 }) {
-  const t = useTranslations("Dashboard.VehicleDetails.ChangePhoto")
+  const t = useTranslations("Dashboard.VehicleDetails.ChangeVehiclePhoto")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -75,23 +75,25 @@ export default function ChangeVehiclePhotoSheet({
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changePhoto" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoFileInput
-                name={"vehiclePhotos"}
-                register={form.register("vehiclePhotos")}
-                label={t("Title")}
-                placeholder={t("Placeholder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="changeVehiclePhoto"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoFileInput
+              name={"vehiclePhotos"}
+              register={form.register("vehiclePhotos")}
+              label={t("Title")}
+              placeholder={t("Placeholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
             disabled={form.formState.isSubmitting}
-            form="changePhoto"
+            form="changeVehiclePhoto"
             label={t("Save")}
           />
           <RyogoOutlineButton

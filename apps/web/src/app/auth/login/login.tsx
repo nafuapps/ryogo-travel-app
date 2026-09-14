@@ -7,16 +7,13 @@ import { useTranslations } from "next-intl"
 import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
-import {
-  AuthActionWrapper,
-  AuthFormWrapper,
-  AuthPageWrapper,
-} from "@/components/flows/auth/authWrappers"
+import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { PHONE_LENGTH } from "@/lib/uiConfig"
+import { FormWrapper } from "@/components/page/pageWrappers"
 
 /*
 1. Find user by phone number
@@ -70,7 +67,7 @@ export default function LoginPageComponent() {
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<SchemaType>
+      <FormWrapper<SchemaType>
         id="LoginForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
@@ -82,15 +79,13 @@ export default function LoginPageComponent() {
           label={t("Input.Title")}
           placeholder={t("Input.Placeholder")}
         />
-        <AuthActionWrapper>
-          <RyogoDefaultButton
-            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            size="lg"
-            type="submit"
-            disabled={form.formState.isSubmitting || isBot}
-          />
-        </AuthActionWrapper>
-      </AuthFormWrapper>
+        <RyogoDefaultButton
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          size="lg"
+          type="submit"
+          disabled={form.formState.isSubmitting || isBot}
+        />
+      </FormWrapper>
     </AuthPageWrapper>
   )
 }

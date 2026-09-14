@@ -11,6 +11,8 @@ import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButto
 import AgencyInfoComponent from "@/components/flows/account/agencyInfoComponent"
 import AgencyDetailsComponent from "@/components/flows/account/agencyDetailsComponent"
 import AgencyQRCodeComponent from "@/components/flows/account/agencyQRCodeComponent"
+import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
+import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -26,13 +28,11 @@ export default async function AgencyDetailsPageComponent({
       <AccountDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
         <AgencyInfoComponent
-          id={agency.id}
           logoUrl={agency.logoUrl}
           agencyName={agency.businessName}
           city={agency.location.city}
           state={agency.location.state}
           status={agency.status}
-          isOwner={isOwner}
         />
         <AgencyDetailsComponent
           id={agency.id}
@@ -43,22 +43,16 @@ export default async function AgencyDetailsPageComponent({
           createdAt={agency.createdAt}
         />
       </GridWrapper>
-      {(isOwner || agency.qrCodeUrl) && (
-        <AgencyQRCodeComponent
-          agencyId={agency.id}
-          qrCodeUrl={agency.qrCodeUrl}
-          isOwner={isOwner}
-        />
+      {agency.qrCodeUrl && (
+        <AgencyQRCodeComponent qrCodeUrl={agency.qrCodeUrl} />
       )}
       {isOwner && (
         <GridWrapper id="AgencyActions">
-          <Link href="/dashboard/account/agency/modify">
-            <RyogoDetailedIconButton
-              label={t("Edit.Title")}
-              icon={Building2}
-              subtitle={t("Edit.Subtitle")}
-            />
-          </Link>
+          <ChangeAgencyLogoSheet agencyId={agency.id} />
+          <ChangeQRCodeSheet
+            agencyId={agency.id}
+            isNewPhoto={agency.qrCodeUrl === null}
+          />
           <Link href={`/dashboard/account/agency/change-email`}>
             <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}
@@ -71,6 +65,13 @@ export default async function AgencyDetailsPageComponent({
               label={t("ChangePhone.Title")}
               icon={Phone}
               subtitle={t("ChangePhone.Subtitle")}
+            />
+          </Link>
+          <Link href="/dashboard/account/agency/modify">
+            <RyogoDetailedIconButton
+              label={t("Edit.Title")}
+              icon={Building2}
+              subtitle={t("Edit.Subtitle")}
             />
           </Link>
           {agency.status === AgencyStatusEnum.INACTIVE && (

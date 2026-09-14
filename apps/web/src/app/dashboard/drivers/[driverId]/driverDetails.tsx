@@ -17,6 +17,8 @@ import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButto
 import DriverInfoComponent from "@/components/flows/drivers/details/driverInfoComponent"
 import DriverDetailsComponent from "@/components/flows/drivers/details/driverDetailsComponent"
 import DriverLicenseInfoComponent from "@/components/flows/drivers/details/driverLicenseInfoComponent"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
+import ChangeDriverLicenseSheet from "@/components/sheets/changeDriverLicenseSheet"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -36,12 +38,9 @@ export default async function DriverDetailsPageComponent({
       <DriverDetailHeaderTabs selectedTab={"Driver"} id={driver.id} />
       <GridWrapper id="DriverDetails">
         <DriverInfoComponent
-          userId={driver.userId}
           photoUrl={driver.user.photoUrl}
-          agencyId={driver.agencyId}
           name={driver.name}
           status={driver.status}
-          canChangePhoto={canChangeDetails}
         />
         <DriverDetailsComponent
           id={driver.id}
@@ -57,13 +56,9 @@ export default async function DriverDetailsPageComponent({
       </GridWrapper>
       <SectionWrapper id="DriverLicenseDetails">
         <DriverLicenseInfoComponent
-          driverId={driver.id}
-          agencyId={driver.agencyId}
-          addedByUserId={driver.addedByUserId}
           licenseNumber={driver.licenseNumber}
           photoUrl={driver.licensePhotoUrl}
           licenseExpiresOn={driver.licenseExpiresOn}
-          canEdit={canChangeDetails}
         />
       </SectionWrapper>
       <GridWrapper id="DriverCommunication">
@@ -76,6 +71,17 @@ export default async function DriverDetailsPageComponent({
       </GridWrapper>
       {canChangeDetails && (
         <GridWrapper id="DriverActions">
+          <ChangeUserPhotoSheet
+            userId={driver.addedByUserId}
+            agencyId={driver.agencyId}
+          />
+          <ChangeDriverLicenseSheet
+            driverId={driver.id}
+            agencyId={driver.agencyId}
+            addedByUserId={driver.addedByUserId}
+            lNumber={driver.licenseNumber}
+            lExpiresOn={driver.licenseExpiresOn}
+          />
           <Link href={`/dashboard/drivers/${driver.id}/modify`}>
             <RyogoDetailedIconButton
               label={t("EditDetails.Title")}

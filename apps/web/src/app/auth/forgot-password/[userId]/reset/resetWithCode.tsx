@@ -8,11 +8,7 @@ import { useTranslations } from "next-intl"
 import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import {
-  AuthActionWrapper,
-  AuthFormWrapper,
-  AuthPageWrapper,
-} from "@/components/flows/auth/authWrappers"
+import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { setNewPasswordAction } from "@/app/actions/users/setNewPasswordAction"
 import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { Separator } from "@/components/ui/separator"
@@ -24,6 +20,7 @@ import {
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
+import { FormWrapper } from "@/components/page/pageWrappers"
 
 export default function ResetWithCodePageComponent({
   user,
@@ -84,7 +81,7 @@ export default function ResetWithCodePageComponent({
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<SchemaType>
+      <FormWrapper<SchemaType>
         id="ForgorPasswordForm"
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
@@ -111,24 +108,23 @@ export default function ResetWithCodePageComponent({
           placeholder={t("Field3.Placeholder")}
           description={t("Field3.Description")}
         />
-        <AuthActionWrapper>
-          <RyogoDefaultButton
-            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            size="lg"
-            type="submit"
-            disabled={form.formState.isSubmitting || isBot}
-          />
-          <RyogoGhostButton
-            label={t("DidnotReceiveCode")}
-            size="lg"
-            type="button"
-            disabled={form.formState.isSubmitting}
-            onClick={() => {
-              router.push(`/auth/forgot-password/${user.id}`)
-            }}
-          />
-        </AuthActionWrapper>
-      </AuthFormWrapper>
+        <RyogoDefaultButton
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          size="lg"
+          type="submit"
+          disabled={form.formState.isSubmitting || isBot}
+        />
+        <RyogoGhostButton
+          label={t("DidnotReceiveCode")}
+          labelColor="light"
+          size="lg"
+          type="button"
+          disabled={form.formState.isSubmitting}
+          onClick={() => {
+            router.push(`/auth/forgot-password/${user.id}`)
+          }}
+        />
+      </FormWrapper>
     </AuthPageWrapper>
   )
 }

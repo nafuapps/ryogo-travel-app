@@ -1,5 +1,4 @@
 import { RyogoH4, RyogoSmall } from "@/components/typography"
-import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import {
   InfoContentWrapper,
   InfoWrapper,
@@ -13,16 +12,12 @@ import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 
 export default function UserInfoComponent({
-  id,
   photoUrl,
-  agencyId,
   name,
   agencyName,
   status,
 }: {
-  id: string
   photoUrl: string | null
-  agencyId: string
   name: string
   agencyName: string
   status: UserStatusEnum
@@ -39,7 +34,6 @@ export default function UserInfoComponent({
         ) : (
           <RyogoEnclosedIcon icon={User} size="xl" />
         )}
-        <ChangeUserPhotoSheet userId={id} agencyId={agencyId} />
       </SectionColWrapper>
       <InfoContentWrapper>
         <RyogoH4 weight="font-bold">{name}</RyogoH4>

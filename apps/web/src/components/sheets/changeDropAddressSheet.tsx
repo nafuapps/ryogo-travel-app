@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoTextarea } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -23,6 +22,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { changeDropAddressAction } from "@/app/actions/bookings/changeDropAddressAction"
 import { MIN_FIELD_DESC_LENGTH, MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeDropAddressSheet({
   bookingId,
@@ -84,17 +84,19 @@ export default function ChangeDropAddressSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changeDropAddress" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoTextarea
-                name="dropAddress"
-                label={t("DropAddress")}
-                placeholder={t("DropAddressPlaceholder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="changeDropAddress"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoTextarea
+              name="dropAddress"
+              label={t("DropAddress")}
+              placeholder={t("DropAddressPlaceholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

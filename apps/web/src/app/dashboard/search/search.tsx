@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { History, Search, User } from "lucide-react"
 import {
   InputGroup,
@@ -41,6 +41,7 @@ import {
   GridItemWrapper,
   HoverGridWrapper,
   PageWrapper,
+  FormWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -297,49 +298,47 @@ export default function SearchPageComponent({
             setSelectedSearchType={setSelectedSearchType}
           />
         </div>
-        <Form {...formData}>
-          <form
-            id="SearchForm"
-            onSubmit={formData.handleSubmit(onSubmit)}
-            className="w-full"
-          >
-            <FormField
-              name={"searchTerm"}
-              render={({ field }) => (
-                <FormItem>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <RyogoIcon icon={Search} size="sm" />
-                    </InputGroupAddon>
-                    <InputGroupInput
-                      placeholder={t("Field1.Placeholder")}
-                      {...field}
-                    />
-                    <RyogoGhostButton
-                      type="button"
-                      aria-label="Clear"
-                      onClick={() => formData.setValue("searchTerm", "")}
-                      disabled={formData.getValues("searchTerm") === ""}
-                      labelColor={
-                        formData.getValues("searchTerm") === ""
-                          ? "light"
-                          : "slate"
-                      }
-                      label={t("Clear")}
-                    />
-                    <RyogoDefaultButton
-                      type="submit"
-                      aria-label="Search"
-                      disabled={formData.getValues("searchTerm").length < 3}
-                      label={t("Search")}
-                    />
-                  </InputGroup>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
+        <FormWrapper
+          form={formData}
+          id="SearchForm"
+          onSubmit={formData.handleSubmit(onSubmit)}
+        >
+          <FormField
+            name={"searchTerm"}
+            render={({ field }) => (
+              <FormItem>
+                <InputGroup>
+                  <InputGroupAddon>
+                    <RyogoIcon icon={Search} size="sm" />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    placeholder={t("Field1.Placeholder")}
+                    {...field}
+                  />
+                  <RyogoGhostButton
+                    type="button"
+                    aria-label="Clear"
+                    onClick={() => formData.setValue("searchTerm", "")}
+                    disabled={formData.getValues("searchTerm") === ""}
+                    labelColor={
+                      formData.getValues("searchTerm") === ""
+                        ? "light"
+                        : "slate"
+                    }
+                    label={t("Clear")}
+                  />
+                  <RyogoDefaultButton
+                    type="submit"
+                    aria-label="Search"
+                    disabled={formData.getValues("searchTerm").length < 3}
+                    label={t("Search")}
+                  />
+                </InputGroup>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </FormWrapper>
         {recentSearches && recentSearches.length > 0 && (
           <div
             id="recentSearches"

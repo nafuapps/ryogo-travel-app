@@ -51,7 +51,7 @@ export function GetCanDriveIcons({
   }
 
   return (
-    <SectionRowWrapper center small>
+    <SectionRowWrapper center small justifyStart>
       {icons.map((icon, index) => {
         return <RyogoIcon key={index} icon={icon} size="sm" color="light" />
       })}

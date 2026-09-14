@@ -208,7 +208,7 @@
           "Title": "Owner photo (optional)",
           "Placeholder": "UPLOAD",
           "Description": "Upload the owner's photo",
-          "Error1": "Image file size should be less than 1MB",
+          "Error1": "Image file size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
@@ -221,7 +221,7 @@
           "Title": "Agency logo (optional)",
           "Placeholder": "UPLOAD IMAGE",
           "Description": "Upload a logo associated with your business",
-          "Error1": "Image file size should be less than 1MB",
+          "Error1": "Image file size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field2": {
@@ -246,7 +246,7 @@
           "Title": "Agency Payment QR Code (optional)",
           "Placeholder": "UPLOAD IMAGE",
           "Description": "Upload your QR code that will be used on invoices for receiving payments from customer",
-          "Error1": "Image file size should be less than 1MB",
+          "Error1": "Image file size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
@@ -396,7 +396,7 @@
           "Placeholder": "UPLOAD RC",
           "Description": "Upload photo of vehicle registration certificate",
           "Error1": "RC photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field4": {
@@ -404,7 +404,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload photos of the vehicle (atleast 1 photo with number plate visible)",
           "Error1": "Vehicle photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field5": {
@@ -431,7 +431,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload insurance policy photo",
           "Error1": "Insurance policy photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field3": {
@@ -446,7 +446,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload Pollution Under Control Certificate photo",
           "Error1": "PUC certificate photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png)"
         },
         "PrimaryCTA": "Continue",
@@ -540,7 +540,7 @@
           "Title": "Driver photo (optional)",
           "Placeholder": "UPLOAD",
           "Description": "Upload the driver's photo",
-          "Error1": "Image file size should be less than 1MB",
+          "Error1": "Image file size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
@@ -567,7 +567,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload driver license photo",
           "Error1": "License photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
@@ -657,7 +657,7 @@
           "Title": "Agent photo (optional)",
           "Placeholder": "UPLOAD",
           "Description": "Upload the agent's photo",
-          "Error1": "Image file size should be less than 1MB",
+          "Error1": "Image file size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
@@ -1179,6 +1179,7 @@
       "PickupAddress": "Pickup Address",
       "AddressError1": "Address should be atleast 10 characters",
       "AddressError2": "Address should be less than 300 characters",
+      "AddressError3": "Picup address is required",
       "PickupAddressPlaceholder": "Provide source address for pickup",
       "SameAsCustomerAddress": "Same as customer address",
       "DropAddress": "Drop address",
@@ -1368,7 +1369,7 @@
         "Title": "Upload proof (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the transaction document photo",
-        "Error1": "Image file size should be less than 1MB",
+        "Error1": "Image file size should be less than 500kb",
         "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Create Transaction",
@@ -1412,7 +1413,7 @@
         "Title": "Upload proof (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the transaction document photo",
-        "Error1": "Image file size should be less than 1MB",
+        "Error1": "Image file size should be less than 500kb",
         "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Save changes",
@@ -1447,7 +1448,7 @@
         "Title": "Upload proof (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the expense document photo",
-        "Error1": "Image file size should be less than 1MB",
+        "Error1": "Image file size should be less than 500kb",
         "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Create Expense",
@@ -1481,7 +1482,7 @@
         "Title": "Upload proof (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the expense document photo",
-        "Error1": "Image file size should be less than 1MB",
+        "Error1": "Image file size should be less than 500kb",
         "Error2": "Only image files are allowed"
       },
       "PrimaryCTA": "Save changes",
@@ -1648,7 +1649,7 @@
           "Placeholder": "UPLOAD RC",
           "Description": "Upload photo of vehicle registration certificate",
           "Error1": "RC photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field4": {
@@ -1656,7 +1657,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload a photo of the vehicle (with number plate visible)",
           "Error1": "Vehicle photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field5": {
@@ -1686,7 +1687,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload insurance policy photo",
           "Error1": "Insurance policy photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field3": {
@@ -1701,7 +1702,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload Pollution Under Control Certificate photo",
           "Error1": "PUC certificate photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png)"
         },
         "PrimaryCTA": "Continue",
@@ -1774,12 +1775,13 @@
     },
     "VehicleDetails": {
       "Photo": "Vehicle photo",
-      "ChangePhoto": {
+      "ChangeVehiclePhoto": {
         "Button": "Change Photo",
+        "Subtitle": "Upload a vehicle display picture",
         "Header": "Upload vehicle photo",
         "Title": "Choose a photo to upload:",
         "Placeholder": "Browse a new photo",
-        "Error1": "Vehicle photo is required and size should be less than 1MB",
+        "Error1": "Vehicle photo is required and size should be less than 500kb",
         "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
         "Save": "Save changes",
         "Close": "Cancel",
@@ -1861,7 +1863,7 @@
         "Title": "RC Photo",
         "Placeholder": "UPLOAD RC",
         "Description": "Upload photo of vehicle registration certificate",
-        "Error2": "File size should be less than 1MB",
+        "Error2": "File size should be less than 500kb",
         "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "Field9": {
@@ -1874,7 +1876,7 @@
         "Title": "Insurance policy photo",
         "Placeholder": "UPLOAD",
         "Description": "Upload insurance policy photo",
-        "Error2": "File size should be less than 1MB",
+        "Error2": "File size should be less than 500kb",
         "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "Field11": {
@@ -1887,7 +1889,7 @@
         "Title": "PUC certificate photo",
         "Placeholder": "UPLOAD",
         "Description": "Upload Pollution Under Control Certificate photo",
-        "Error2": "File size should be less than 1MB",
+        "Error2": "File size should be less than 500kb",
         "Error3": "Only image files are allowed (.jpg, .jpeg, .png)"
       },
       "Field13": {
@@ -2051,7 +2053,7 @@
           "Title": "Driver photo (optional)",
           "Placeholder": "UPLOAD",
           "Description": "Upload the driver's photo",
-          "Error1": "Image file size should be less than 1MB",
+          "Error1": "Image file size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
@@ -2082,7 +2084,7 @@
           "Placeholder": "UPLOAD",
           "Description": "Upload driver license photo",
           "Error1": "License photo is required",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "PrimaryCTA": "Continue",
@@ -2185,10 +2187,11 @@
           "Title": "Driver License photo",
           "Placeholder": "UPLOAD",
           "Description": "Upload driver license photo",
-          "Error2": "File size should be less than 1MB",
+          "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
-        "Button": "Update Driver License",
+        "Button": "Update License",
+        "Subtitle": "Change driver license details",
         "Header": "Change driver license details",
         "Save": "Save changes",
         "Close": "Cancel",
@@ -2324,7 +2327,7 @@
         "Title": "Upload customer photo (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the customer's photo",
-        "Error1": "File size should be less than 1MB",
+        "Error1": "File size should be less than 500kb",
         "Error2": "Only image files are allowed (.jpg, .jpeg, .png)"
       },
       "Field5": {
@@ -2395,12 +2398,13 @@
     },
     "CustomerDetails": {
       "Photo": "View customer photo",
-      "ChangePhoto": {
+      "ChangeCustomerPhoto": {
         "Button": "Change Photo",
+        "Subtitle": "Upload a customer display picture",
         "Header": "Upload customer photo",
         "Title": "Choose a photo to upload:",
         "Placeholder": "Browse a new photo",
-        "Error1": "Customer photo is required and size should be less than 1MB",
+        "Error1": "Customer photo is required and size should be less than 500kb",
         "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
         "Save": "Save changes",
         "Close": "Cancel",
@@ -2761,7 +2765,7 @@
         "Title": "Photo/Screenshot (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload a photo proof of the issue that will help us resolve it better",
-        "Error1": "Image file size should be less than 1MB",
+        "Error1": "Image file size should be less than 500kb",
         "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "PrimaryCTA": "Create Ticket",
@@ -4426,7 +4430,7 @@
         "Title": "Photo (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the user's photo",
-        "Error1": "Image file size should be less than 1MB",
+        "Error1": "Image file size should be less than 500kb",
         "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "PrimaryCTA": "Confirm and Add Owner",
@@ -4469,7 +4473,7 @@
         "Title": "Agent photo (optional)",
         "Placeholder": "UPLOAD",
         "Description": "Upload the agent's photo",
-        "Error1": "Image file size should be less than 1MB",
+        "Error1": "Image file size should be less than 500kb",
         "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
       },
       "PrimaryCTA": "Confirm and Add Agent",
@@ -5156,7 +5160,7 @@
           "Title": "Upload Odometer photo",
           "Placeholder": "UPLOAD",
           "Description": "Upload trip start photo",
-          "Error1": "File size should be less than 1MB",
+          "Error1": "File size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
           "Error3": "Trip start photo is required"
         },
@@ -5187,7 +5191,7 @@
           "Title": "Upload Odometer photo",
           "Placeholder": "UPLOAD",
           "Description": "Upload trip end photo",
-          "Error1": "File size should be less than 1MB",
+          "Error1": "File size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
           "Error3": "Trip end photo is required"
         },
@@ -5224,7 +5228,7 @@
           "Title": "Upload Trip photo (optional)",
           "Placeholder": "UPLOAD",
           "Description": "Upload trip {type} photo",
-          "Error1": "File size should be less than 1MB",
+          "Error1": "File size should be less than 500kb",
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png)"
         },
         "Field3": {
@@ -6030,7 +6034,7 @@
   "Sheets": {
     "ChangeName": {
       "Title": "Change Name",
-      "Subtitle": "Set your display name",
+      "Subtitle": "Update display name",
       "InputTitle": "Enter User Name",
       "Placeholder": "Raj Sharma",
       "Error1": "Name must be atleast 3 characters",
@@ -6082,12 +6086,13 @@
       "Success": "Drop address changed successfully!",
       "Error": "Cannot change drop address.. please try again after some time."
     },
-    "ChangePhoto": {
+    "ChangeUserPhoto": {
       "Button": "Change Photo",
+      "Subtitle": "Upload a user display picture",
       "Title": "Choose a Photo",
       "Header": "Upload photo",
       "Placeholder": "Browse a new photo",
-      "Error1": "Photo is required and size should be less than 1MB",
+      "Error1": "Photo is required and size should be less than 500kb",
       "Error2": "Photo must be in .jpg, .jpeg or .png format",
       "Save": "Save changes",
       "Close": "Cancel",
@@ -6096,10 +6101,11 @@
     },
     "ChangeLogo": {
       "Button": "Change Logo",
+      "Subtitle": "Upload your company logo",
       "Title": "Choose a Logo",
       "Header": "Upload agency logo",
       "Placeholder": "Browse a new logo",
-      "Error1": "Logo is required and size should be less than 1MB",
+      "Error1": "Logo is required and size should be less than 500kb",
       "Error2": "Logo photo must be in .jpg, .jpeg or .png format",
       "Save": "Save changes",
       "Close": "Cancel",
@@ -6112,7 +6118,7 @@
       "Title": "Choose a Photo",
       "Header": "Upload photo/screenshot",
       "Placeholder": "Browse a new photo",
-      "Error1": "Photo is required and size should be less than 1MB",
+      "Error1": "Photo is required and size should be less than 500kb",
       "Error2": "Photo must be in .jpg, .jpeg or .png format",
       "Save": "Save changes",
       "Close": "Cancel",
@@ -6122,10 +6128,11 @@
     "ChangeQRCode": {
       "ChangeButton": "Change QR Code",
       "UploadButton": "Upload QR Code",
+      "Subtitle": "Upload QR code for receiving payments from customers",
       "Title": "Choose a Photo",
       "Header": "Upload photo/screenshot",
       "Placeholder": "Browse a new photo",
-      "Error1": "QRCode Photo is required and size should be less than 1MB",
+      "Error1": "QRCode Photo is required and size should be less than 500kb",
       "Error2": "QRCode Photo must be in .jpg, .jpeg or .png format",
       "Save": "Save changes",
       "Close": "Cancel",

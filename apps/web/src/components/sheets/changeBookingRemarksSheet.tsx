@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoTextarea } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -23,6 +22,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { changeBookingRemarksAction } from "@/app/actions/bookings/changeBookingRemarksAction"
 import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeBookingRemarksSheet({
   bookingId,
@@ -81,17 +81,19 @@ export default function ChangeBookingRemarksSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changeRemarks" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoTextarea
-                name="remarks"
-                label={t("Remarks")}
-                placeholder={t("RemarksPlaceHolder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="changeRemarks"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoTextarea
+              name="remarks"
+              label={t("Remarks")}
+              placeholder={t("RemarksPlaceHolder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

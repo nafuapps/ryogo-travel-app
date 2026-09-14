@@ -7,6 +7,7 @@ import {
   OngoingBookingCard,
   UpcomingBookingCard,
 } from "@/components/cards/booking/bookingCards"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function VehicleAssignedBookingsPageComponent({
   bookings,
@@ -16,8 +17,12 @@ export default async function VehicleAssignedBookingsPageComponent({
   id: string
 }) {
   const t = await getTranslations("Dashboard.VehicleAssignedBookings")
-  const inProgressBookings = bookings.filter((b) => b.status)
-  const upcomingBookings = bookings.filter((b) => !b.status)
+  const inProgressBookings = bookings.filter(
+    (b) => b.status === BookingStatusEnum.IN_PROGRESS,
+  )
+  const upcomingBookings = bookings.filter(
+    (b) => b.status === BookingStatusEnum.CONFIRMED,
+  )
 
   return (
     <PageWrapper id="VehicleAssignedBookingsPage">
@@ -28,10 +33,10 @@ export default async function VehicleAssignedBookingsPageComponent({
         ) : (
           <>
             {inProgressBookings.map((trip) => (
-              <OngoingBookingCard key={trip.bookingId} booking={trip} />
+              <OngoingBookingCard key={trip.id} booking={trip} />
             ))}
             {upcomingBookings.map((trip) => (
-              <UpcomingBookingCard key={trip.bookingId} booking={trip} />
+              <UpcomingBookingCard key={trip.id} booking={trip} />
             ))}
           </>
         )}

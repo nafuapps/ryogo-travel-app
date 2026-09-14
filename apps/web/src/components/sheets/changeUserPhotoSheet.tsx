@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -21,10 +20,12 @@ import { changeUserPhotoAction } from "@/app/actions/users/changeUserPhotoAction
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { Camera } from "lucide-react"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeUserPhotoSheet({
   userId,
@@ -33,7 +34,7 @@ export default function ChangeUserPhotoSheet({
   userId: string
   agencyId: string
 }) {
-  const t = useTranslations("Sheets.ChangePhoto")
+  const t = useTranslations("Sheets.ChangeUserPhoto")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -69,29 +70,35 @@ export default function ChangeUserPhotoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton label={t("Button")} labelColor="light" />
+        <RyogoDetailedIconButton
+          label={t("Button")}
+          icon={Camera}
+          subtitle={t("Subtitle")}
+        />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changePhoto" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoFileInput
-                name={"accountPhotos"}
-                register={form.register("accountPhotos")}
-                label={t("Title")}
-                placeholder={t("Placeholder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="changeUserPhoto"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoFileInput
+              name={"accountPhotos"}
+              register={form.register("accountPhotos")}
+              label={t("Title")}
+              placeholder={t("Placeholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"
             disabled={form.formState.isSubmitting}
-            form="changePhoto"
+            form="changeUserPhoto"
             label={t("Save")}
           />
           <RyogoOutlineButton

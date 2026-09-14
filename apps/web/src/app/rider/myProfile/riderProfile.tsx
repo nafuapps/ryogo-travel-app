@@ -1,7 +1,5 @@
 import { getTranslations } from "next-intl/server"
 import { KeyRound, MailPen } from "lucide-react"
-import { RyogoCaption } from "@/components/typography"
-import moment from "moment"
 import Link from "next/link"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
@@ -14,6 +12,7 @@ import UserDetailsComponent from "@/components/flows/account/userDetailsComponen
 import UserDriverDetailsComponent from "@/components/flows/account/userDriverDetailsComponent"
 import UserDriverLicenseInfoComponent from "@/components/flows/account/userDriverLicenseInfoComponent"
 import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 
 export default async function RiderProfilePageComponent({
   account,
@@ -27,9 +26,7 @@ export default async function RiderProfilePageComponent({
       <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <GridWrapper id="RiderAccountDetails">
         <UserInfoComponent
-          id={account.id}
           photoUrl={account.photoUrl}
-          agencyId={account.agencyId}
           name={account.name}
           agencyName={account.agency.businessName}
           status={account.status}
@@ -60,6 +57,7 @@ export default async function RiderProfilePageComponent({
         </GridWrapper>
       )}
       <GridWrapper id="RiderAccountActions">
+        <ChangeUserPhotoSheet userId={account.id} agencyId={account.agencyId} />
         <ChangeUserNameSheet
           userId={account.id}
           userName={account.name}

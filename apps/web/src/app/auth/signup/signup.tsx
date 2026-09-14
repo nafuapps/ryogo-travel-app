@@ -6,17 +6,14 @@ import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import {
-  AuthActionWrapper,
-  AuthFormWrapper,
-  AuthPageWrapper,
-} from "@/components/flows/auth/authWrappers"
+import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { PHONE_LENGTH } from "@/lib/uiConfig"
+import { FormWrapper } from "@/components/page/pageWrappers"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -56,7 +53,7 @@ export default function SignupPageComponent() {
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<SchemaType>
+      <FormWrapper<SchemaType>
         id="SignupForm"
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
@@ -68,16 +65,14 @@ export default function SignupPageComponent() {
           label={t("Input.Title")}
           placeholder={t("Input.Placeholder")}
         />
-        <AuthActionWrapper>
-          <RyogoDefaultButton
-            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting || isBot}
-            showSpinner={form.formState.isSubmitting}
-          />
-        </AuthActionWrapper>
-      </AuthFormWrapper>
+        <RyogoDefaultButton
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          size={"lg"}
+          type="submit"
+          disabled={form.formState.isSubmitting || isBot}
+          showSpinner={form.formState.isSubmitting}
+        />
+      </FormWrapper>
     </AuthPageWrapper>
   )
 }

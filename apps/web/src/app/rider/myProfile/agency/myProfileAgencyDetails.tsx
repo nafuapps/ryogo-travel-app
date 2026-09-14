@@ -19,13 +19,11 @@ export default function MyProfileAgencyDetailsPageComponent({
       <MyProfileDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
         <AgencyInfoComponent
-          id={agency.id}
           logoUrl={agency.logoUrl}
           agencyName={agency.businessName}
           city={agency.location.city}
           state={agency.location.state}
           status={agency.status}
-          isOwner={false}
         />
         <AgencyDetailsComponent
           id={agency.id}
@@ -38,11 +36,7 @@ export default function MyProfileAgencyDetailsPageComponent({
         />
       </GridWrapper>
       {agency.qrCodeUrl && (
-        <AgencyQRCodeComponent
-          agencyId={agency.id}
-          qrCodeUrl={agency.qrCodeUrl}
-          isOwner={false}
-        />
+        <AgencyQRCodeComponent qrCodeUrl={agency.qrCodeUrl} />
       )}
       {assignedUser && (
         <AgencyAssignedUserComponent

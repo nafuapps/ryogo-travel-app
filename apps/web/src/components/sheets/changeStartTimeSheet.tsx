@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoTimePicker } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -22,6 +21,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { changeStartTimeAction } from "@/app/actions/bookings/changeStartTimeAction"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeStartTimeSheet({
   bookingId,
@@ -80,13 +80,15 @@ export default function ChangeStartTimeSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changeStartTime" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoTimePicker name="startTime" label={t("PickupTime")} />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="changeStartTime"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoTimePicker name="startTime" label={t("PickupTime")} />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

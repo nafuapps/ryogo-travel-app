@@ -6,7 +6,6 @@ import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
   AuthAccountsWrapper,
-  AuthActionWrapper,
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
@@ -52,38 +51,36 @@ export default async function SignupExistingPageComponent({
           </Link>
         ))}
       </AuthAccountsWrapper>
-      <AuthActionWrapper>
-        <Link href={"/auth/signup"}>
-          <RyogoOutlineButton className="w-full" label={t("BackCTA")} />
-        </Link>
-        <Separator />
-        {hasOwnerAccount ? (
-          <>
-            <RyogoCaption color="light" className="text-center">
-              {t("Description")}
-            </RyogoCaption>
-            <Link href={`mailto:${SUPPORT_EMAIL}`}>
-              <RyogoGhostButton
-                className="w-full"
-                label={t("SecondaryCTAYes")}
-                labelColor="light"
-              >
-                <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
-              </RyogoGhostButton>
-            </Link>
-          </>
-        ) : (
-          <Link href={`/onboarding?phone=${phone}`}>
+      <Link href={"/auth/signup"}>
+        <RyogoOutlineButton className="w-full" label={t("BackCTA")} />
+      </Link>
+      <Separator />
+      {hasOwnerAccount ? (
+        <>
+          <RyogoCaption color="light" className="text-center">
+            {t("Description")}
+          </RyogoCaption>
+          <Link href={`mailto:${SUPPORT_EMAIL}`}>
             <RyogoGhostButton
               className="w-full"
-              label={t("SecondaryCTANo")}
+              label={t("SecondaryCTAYes")}
               labelColor="light"
             >
               <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
             </RyogoGhostButton>
           </Link>
-        )}
-      </AuthActionWrapper>
+        </>
+      ) : (
+        <Link href={`/onboarding?phone=${phone}`}>
+          <RyogoGhostButton
+            className="w-full"
+            label={t("SecondaryCTANo")}
+            labelColor="light"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
+          </RyogoGhostButton>
+        </Link>
+      )}
     </AuthPageWrapper>
   )
 }

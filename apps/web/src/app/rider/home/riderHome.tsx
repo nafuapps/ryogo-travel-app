@@ -53,7 +53,7 @@ export default async function RiderHomePageComponent({
               {upcomingBookings.map((b, i) => {
                 return (
                   <UpcomingBookingCard
-                    key={b.bookingId}
+                    key={b.id}
                     booking={b}
                     rider
                     canStart={

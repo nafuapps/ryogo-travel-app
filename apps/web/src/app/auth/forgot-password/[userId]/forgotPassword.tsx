@@ -10,11 +10,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useState } from "react"
 import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
-import {
-  AuthActionWrapper,
-  AuthFormWrapper,
-  AuthPageWrapper,
-} from "@/components/flows/auth/authWrappers"
+import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { differenceInMinutes } from "date-fns"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
@@ -24,6 +20,7 @@ import { X, Info } from "lucide-react"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { MAX_EMAIL_LENGTH, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { FormWrapper } from "@/components/page/pageWrappers"
 
 export default function ForgotPasswordPageComponent({
   user,
@@ -80,7 +77,7 @@ export default function ForgotPasswordPageComponent({
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<SchemaType>
+      <FormWrapper<SchemaType>
         id="ForgorPasswordForm"
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
@@ -108,25 +105,23 @@ export default function ForgotPasswordPageComponent({
             />
           </div>
         )}
-        <AuthActionWrapper>
-          {/* Disable CTA if code was sent recently */}
-          <RyogoDefaultButton
-            label={
-              form.formState.isSubmitting
-                ? t("Loading")
-                : codeSentRecently
-                  ? t("CodeSentRecently", {
-                      count: VERIFY_CODE_TIMEOUT_MINUTES,
-                    })
-                  : t("PrimaryCTA")
-            }
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting || codeSentRecently || isBot}
-            showSpinner={form.formState.isSubmitting}
-          />
-        </AuthActionWrapper>
-      </AuthFormWrapper>
+        {/* Disable CTA if code was sent recently */}
+        <RyogoDefaultButton
+          label={
+            form.formState.isSubmitting
+              ? t("Loading")
+              : codeSentRecently
+                ? t("CodeSentRecently", {
+                    count: VERIFY_CODE_TIMEOUT_MINUTES,
+                  })
+                : t("PrimaryCTA")
+          }
+          size={"lg"}
+          type="submit"
+          disabled={form.formState.isSubmitting || codeSentRecently || isBot}
+          showSpinner={form.formState.isSubmitting}
+        />
+      </FormWrapper>
     </AuthPageWrapper>
   )
 }

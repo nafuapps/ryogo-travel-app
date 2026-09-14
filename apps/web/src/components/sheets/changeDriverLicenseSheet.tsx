@@ -24,7 +24,6 @@ import { useRouter } from "next/navigation"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
@@ -33,6 +32,8 @@ import {
   MAX_LICENSE_LENGTH,
 } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import { IdCard } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function ChangeDriverPhotoSheet({
   driverId,
@@ -104,10 +105,10 @@ export default function ChangeDriverPhotoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton
-          className="w-full"
+        <RyogoDetailedIconButton
           label={t("Button")}
-          labelColor="light"
+          icon={IdCard}
+          subtitle={t("Subtitle")}
         />
       </SheetTrigger>
       <SheetContent side="bottom">
@@ -120,7 +121,7 @@ export default function ChangeDriverPhotoSheet({
           form={form}
           hFull={false}
         >
-          <FormContentWrapper asCard={false}>
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
             <RyogoInput
               name={"licenseNumber"}
               type="text"

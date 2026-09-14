@@ -5,7 +5,10 @@ import {
   FindDriverCompletedBookingsByIdType,
 } from "@ryogo-travel-app/api/services/driver.services"
 import { getTranslations } from "next-intl/server"
-import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  DriverStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import {
   CompletedBookingCard,
   OngoingBookingCard,
@@ -25,10 +28,12 @@ export default async function RiderMyBookingsPageComponent({
 }) {
   const t = await getTranslations("Rider.MyBookings")
   //Get in progress booking (if any)
-  const currentBooking = assignedBookings.find((booking) => booking.status)
+  const currentBooking = assignedBookings.find(
+    (booking) => booking.status === BookingStatusEnum.IN_PROGRESS,
+  )
   //Get atmost 3 upcoming bookings (which have no trip log yet)
   const upcomingBookings = assignedBookings
-    .filter((booking) => !booking.status)
+    .filter((booking) => booking.status === BookingStatusEnum.CONFIRMED)
     .sort(
       (a, b) =>
         new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
@@ -54,7 +59,7 @@ export default async function RiderMyBookingsPageComponent({
           {upcomingBookings.map((b, i) => {
             return (
               <UpcomingBookingCard
-                key={b.bookingId}
+                key={b.id}
                 booking={b}
                 rider
                 canStart={
@@ -74,7 +79,7 @@ export default async function RiderMyBookingsPageComponent({
           <Separator />
           <RyogoCaption color="light">{t("Completed")}</RyogoCaption>
           {completedBookings.map((b) => {
-            return <CompletedBookingCard key={b.bookingId} booking={b} rider />
+            return <CompletedBookingCard key={b.id} booking={b} rider />
           })}
         </>
       )}

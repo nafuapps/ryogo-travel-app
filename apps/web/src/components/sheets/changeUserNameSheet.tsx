@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -26,6 +25,7 @@ import {
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { Type } from "lucide-react"
 import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "@/lib/uiConfig"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeUserNameSheet({
   userId,
@@ -87,18 +87,20 @@ export default function ChangeUserNameSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changeName" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoInput
-                name={"name"}
-                type="text"
-                label={t("InputTitle")}
-                placeholder={t("Placeholder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="changeName"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoInput
+              name={"name"}
+              type="text"
+              label={t("InputTitle")}
+              placeholder={t("Placeholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

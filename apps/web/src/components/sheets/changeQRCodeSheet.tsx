@@ -1,7 +1,6 @@
 "use client"
 
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
-import { Form } from "@/components/ui/form"
 import {
   Sheet,
   SheetContent,
@@ -24,13 +23,16 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import { QrCode } from "lucide-react"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeQRCodeSheet({
   agencyId,
-  newPhoto,
+  isNewPhoto,
 }: {
   agencyId: string
-  newPhoto: boolean
+  isNewPhoto: boolean
 }) {
   const t = useTranslations("Sheets.ChangeQRCode")
   const [open, setOpen] = useState(false)
@@ -64,27 +66,30 @@ export default function ChangeQRCodeSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoOutlineButton
-          label={newPhoto ? t("UploadButton") : t("ChangeButton")}
-          labelColor="light"
+        <RyogoDetailedIconButton
+          icon={QrCode}
+          label={isNewPhoto ? t("UploadButton") : t("ChangeButton")}
+          subtitle={t("Subtitle")}
         />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="changeQRCode" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoFileInput
-                name={"qrCode"}
-                register={form.register("qrCode")}
-                label={t("Title")}
-                placeholder={t("Placeholder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper
+          form={form}
+          id="changeQRCode"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoFileInput
+              name={"qrCode"}
+              register={form.register("qrCode")}
+              label={t("Title")}
+              placeholder={t("Placeholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

@@ -23,7 +23,6 @@ import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 import { startTripAction } from "@/app/actions/bookings/startTripAction"
-import TripSheetFormWrapper from "./tripSheetFormWrapper"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
@@ -36,6 +35,7 @@ import {
   MAX_ODOMETER_LIMIT,
   MIN_ODOMETER_LIMIT,
 } from "@/lib/uiConfig"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function StartTripSheet({
   booking,
@@ -120,31 +120,33 @@ export default function StartTripSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <TripSheetFormWrapper<SchemaType>
+        <FormWrapper<SchemaType>
           id="startTrip"
           onSubmit={form.handleSubmit(onSubmit)}
           form={form}
         >
-          <RyogoInput
-            name={"odometerReading"}
-            type="tel"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoFileInput
-            name={"tripLogPhoto"}
-            register={form.register("tripLogPhoto")}
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-          />
-          <RyogoTextarea
-            name="remarks"
-            label={t("Field3.Title")}
-            placeholder={t("Field3.Placeholder")}
-          />
-        </TripSheetFormWrapper>
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoInput
+              name={"odometerReading"}
+              type="tel"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              description={t("Field1.Description")}
+            />
+            <RyogoFileInput
+              name={"tripLogPhoto"}
+              register={form.register("tripLogPhoto")}
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              description={t("Field2.Description")}
+            />
+            <RyogoTextarea
+              name="remarks"
+              label={t("Field3.Title")}
+              placeholder={t("Field3.Placeholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

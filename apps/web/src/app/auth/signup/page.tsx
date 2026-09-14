@@ -4,11 +4,8 @@ import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import {
-  AuthFooterWrapper,
-  AuthSectionWrapper,
-} from "@/components/flows/auth/authWrappers"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Signup - ${pageTitle}`,
@@ -19,14 +16,14 @@ export default async function SignupPage() {
   const t = await getTranslations("Auth.SignupPage")
 
   return (
-    <AuthSectionWrapper>
+    <SectionColWrapper wFull hFull justifyBetween>
       <SignupPageComponent />
-      <AuthFooterWrapper>
+      <SectionColWrapper center>
         <RyogoCaption color="slate">{t("LoginTitle")}</RyogoCaption>
         <Link href={"/auth/login"}>
           <RyogoOutlineButton label={t("LoginCTA")} />
         </Link>
-      </AuthFooterWrapper>
-    </AuthSectionWrapper>
+      </SectionColWrapper>
+    </SectionColWrapper>
   )
 }

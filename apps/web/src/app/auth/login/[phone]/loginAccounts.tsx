@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
   AuthAccountsWrapper,
-  AuthActionWrapper,
   AuthPageWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
@@ -28,15 +27,13 @@ export default async function LoginAccountsPageComponent({
           </Link>
         ))}
       </AuthAccountsWrapper>
-      <AuthActionWrapper>
-        <Link href={"/auth/login"}>
-          <RyogoOutlineButton
-            label={t("SecondaryCTA")}
-            size="lg"
-            className="w-full"
-          />
-        </Link>
-      </AuthActionWrapper>
+      <Link href={"/auth/login"}>
+        <RyogoOutlineButton
+          label={t("SecondaryCTA")}
+          size="lg"
+          className="w-full"
+        />
+      </Link>
     </AuthPageWrapper>
   )
 }

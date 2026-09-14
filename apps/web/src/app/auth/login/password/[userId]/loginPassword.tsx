@@ -10,11 +10,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
-import {
-  AuthActionWrapper,
-  AuthFormWrapper,
-  AuthPageWrapper,
-} from "@/components/flows/auth/authWrappers"
+import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
@@ -26,6 +22,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { FormWrapper } from "@/components/page/pageWrappers"
 
 export default function LoginPasswordPageComponent({
   user,
@@ -81,7 +78,7 @@ export default function LoginPasswordPageComponent({
 
   return (
     <AuthPageWrapper>
-      <AuthFormWrapper<SchemaType>
+      <FormWrapper<SchemaType>
         id="LoginPasswordForm"
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
@@ -95,32 +92,30 @@ export default function LoginPasswordPageComponent({
           placeholder={t("Input.Placeholder")}
           description={t("Input.Description")}
         />
-        <AuthActionWrapper>
-          <RyogoDefaultButton
-            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting || isBot}
-            showSpinner={form.formState.isSubmitting}
-          />
-          <RyogoOutlineButton
-            label={t("Back")}
-            size="lg"
+        <RyogoDefaultButton
+          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+          size={"lg"}
+          type="submit"
+          disabled={form.formState.isSubmitting || isBot}
+          showSpinner={form.formState.isSubmitting}
+        />
+        <RyogoOutlineButton
+          label={t("Back")}
+          size="lg"
+          type="button"
+          onClick={() => {
+            router.back()
+          }}
+        />
+        <Link href={`/auth/forgot-password/${user.id}`}>
+          <RyogoGhostButton
+            label={t("ForgotCTA")}
             type="button"
-            onClick={() => {
-              router.back()
-            }}
+            className="w-full"
+            labelColor="light"
           />
-          <Link href={`/auth/forgot-password/${user.id}`}>
-            <RyogoGhostButton
-              label={t("ForgotCTA")}
-              type="button"
-              className="w-full"
-              labelColor="light"
-            />
-          </Link>
-        </AuthActionWrapper>
-      </AuthFormWrapper>
+        </Link>
+      </FormWrapper>
     </AuthPageWrapper>
   )
 }

@@ -42,7 +42,8 @@ export default function ConfirmBookingPageComponent({
     pickupAddress: z
       .string()
       .min(MIN_FIELD_DESC_LENGTH, t("AddressError1"))
-      .max(MAX_FIELD_DESC_LENGTH, t("AddressError2")),
+      .max(MAX_FIELD_DESC_LENGTH, t("AddressError2"))
+      .nonoptional(t("AddressError3")),
     sameAsCustomerAddress: z.boolean(),
     dropAddress: z
       .string()

@@ -4,8 +4,8 @@ import { sendSupportQueryAction } from "@/app/actions/support/sendSupportQueryAc
 import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 import { RyogoInput, RyogoTextarea } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { FormWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoH4 } from "@/components/typography"
-import { Form } from "@/components/ui/form"
 import { Separator } from "@/components/ui/separator"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import {
@@ -83,11 +83,11 @@ export default function QueryForm() {
   }
 
   return (
-    <Form {...form}>
-      <form
+    <div className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 md:gap-5 w-full shadow-md bg-white dark:bg-sky-950/70">
+      <FormWrapper
+        form={form}
         id={"queryForm"}
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 md:gap-5 w-full shadow-md bg-white dark:bg-sky-950/70"
       >
         <RyogoH4 color="brand" weight="font-bold">
           {t("Title")}
@@ -152,7 +152,7 @@ export default function QueryForm() {
         <RyogoCaption color="light" className="text-center">
           {t("Disclaimer")}
         </RyogoCaption>
-      </form>
-    </Form>
+      </FormWrapper>
+    </div>
   )
 }

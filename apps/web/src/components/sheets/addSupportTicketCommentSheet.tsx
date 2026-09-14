@@ -14,7 +14,6 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 import { useForm } from "react-hook-form"
-import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import z from "zod"
@@ -24,6 +23,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
+import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function AddSupportTicketCommentSheet({
   ticketId,
@@ -75,17 +75,19 @@ export default function AddSupportTicketCommentSheet({
         <SheetHeader>
           <SheetTitle>{t("Title")}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form id="closeSupportTicket" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-4 lg:p-5">
-              <RyogoTextarea
-                name="comment"
-                label={t("Title")}
-                placeholder={t("Placeholder")}
-              />
-            </div>
-          </form>
-        </Form>
+        <FormWrapper<SchemaType>
+          form={form}
+          id="closeSupportTicket"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormContentWrapper asCard={false} className="px-4 lg:px-5">
+            <RyogoTextarea
+              name="comment"
+              label={t("Title")}
+              placeholder={t("Placeholder")}
+            />
+          </FormContentWrapper>
+        </FormWrapper>
         <SheetFooter>
           <RyogoDefaultButton
             type="submit"

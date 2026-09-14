@@ -22,12 +22,14 @@ import {
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 
 export default function ResetWithCodePageComponent({
-  userId,
+  user,
   verificationCode,
 }: {
-  userId: string
+  user: NonNullable<FindUserDetailsByIdType>
   verificationCode: string
 }) {
   const t = useTranslations("Auth.ForgotPassword.Step2")
@@ -72,7 +74,7 @@ export default function ResetWithCodePageComponent({
       toast.error(t("BotError"))
       return
     }
-    const updatedUser = await setNewPasswordAction(userId, data.password)
+    const updatedUser = await setNewPasswordAction(user.id, data.password)
     if (updatedUser) {
       toast.success(t("Success"))
     } else {
@@ -88,6 +90,7 @@ export default function ResetWithCodePageComponent({
         form={form}
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+        <AuthAccountCard user={user} />
         <RyogoOTPInput
           name={"code"}
           label={t("Field1.Title")}
@@ -121,7 +124,7 @@ export default function ResetWithCodePageComponent({
             type="button"
             disabled={form.formState.isSubmitting}
             onClick={() => {
-              router.push(`/auth/forgot-password/${userId}`)
+              router.push(`/auth/forgot-password/${user.id}`)
             }}
           />
         </AuthActionWrapper>

@@ -46,30 +46,39 @@ export function CompletedBookingCard({
 }) {
   return (
     <Link
-      href={`${rider ? `/rider/myBookings/` : `/dashboard/bookings/`}${booking.bookingId}`}
+      href={
+        rider
+          ? `/rider/myBookings/${booking.id}`
+          : `/dashboard/bookings/${booking.id}`
+      }
       className="w-full"
     >
       <HoverGridWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.customerName}</RyogoP>
+          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.customer.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
             {booking.type.toUpperCase()}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.route}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.vehicle}</RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.driver}</RyogoP>
+          <RyogoP weight="font-bold">
+            {" "}
+            {booking.source.city + " - " + booking.destination.city}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
-            {format(booking.updatedAt, "PP")}
+            {booking.assignedVehicle?.vehicleNumber}
+          </RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.assignedDriver?.name}</RyogoP>
+        </GridItemWrapper>
+        <GridItemWrapper>
+          <RyogoCaption color="slate">
+            {format(booking.completedAt ?? booking.updatedAt, "PP")}
           </RyogoCaption>
           <RyogoP weight="font-bold">
-            {moment(booking.updatedAt).fromNow()}
+            {moment(booking.completedAt ?? booking.updatedAt).fromNow()}
           </RyogoP>
         </GridItemWrapper>
       </HoverGridWrapper>
@@ -93,16 +102,20 @@ export function OngoingBookingCard({
 }) {
   return (
     <Link
-      href={`${rider ? `/rider/myBookings/` : `/dashboard/bookings/`}${booking.bookingId}`}
+      href={
+        rider
+          ? `/rider/myBookings/${booking.id}`
+          : `/dashboard/bookings/${booking.id}`
+      }
       className="w-full"
     >
       <HoverGridWrapper highlight={rider} hasChin={rider}>
         <GridItemWrapper>
           <RyogoCaption color={rider ? "white" : "slate"}>
-            {booking.bookingId}
+            {booking.id}
           </RyogoCaption>
           <RyogoP color={rider ? "white" : "dark"} weight="font-bold">
-            {booking.customerName}
+            {booking.customer.name}
           </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
@@ -110,20 +123,20 @@ export function OngoingBookingCard({
             {booking.type.toUpperCase()}
           </RyogoCaption>
           <RyogoP color={rider ? "white" : "dark"} weight="font-bold">
-            {booking.route}
+            {booking.source.city + " - " + booking.destination.city}
           </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color={rider ? "white" : "slate"}>
-            {booking.vehicle}
+            {booking.assignedVehicle?.vehicleNumber}
           </RyogoCaption>
           <RyogoP color={rider ? "white" : "dark"} weight="font-bold">
-            {booking.driver}
+            {booking.assignedDriver?.name}
           </RyogoP>
         </GridItemWrapper>
-        {booking.status && (
+        {booking.tripLogs[0] && (
           <GridItemWrapper>
-            <TripLogStatusPill status={booking.status} />
+            <TripLogStatusPill status={booking.tripLogs[0].type} />
           </GridItemWrapper>
         )}
       </HoverGridWrapper>
@@ -160,26 +173,36 @@ export function UpcomingBookingCard({
 
   return (
     <Link
-      href={`${rider ? `/rider/myBookings/` : `/dashboard/bookings/`}${booking.bookingId}`}
+      href={
+        rider
+          ? `/rider/myBookings/${booking.id}`
+          : `/dashboard/bookings/${booking.id}`
+      }
       className="w-full"
     >
       <HoverGridWrapper hasChin={rider && canStart}>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.customerName}</RyogoP>
+          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {booking.customer.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
             {booking.type.toUpperCase()}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {booking.route}</RyogoP>
+          <RyogoP weight="font-bold">
+            {" "}
+            {booking.source.city + " - " + booking.destination.city}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
-          <RyogoCaption color={booking.vehicle ? "slate" : "red"}>
-            {booking.vehicle ?? "-"}
+          <RyogoCaption color={booking.assignedVehicle ? "slate" : "red"}>
+            {booking.assignedVehicle?.vehicleNumber ?? "-"}
           </RyogoCaption>
-          <RyogoP weight="font-bold" color={booking.driver ? "dark" : "red"}>
-            {booking.driver ?? "-"}
+          <RyogoP
+            weight="font-bold"
+            color={booking.assignedDriver ? "dark" : "red"}
+          >
+            {booking.assignedDriver?.name ?? "-"}
           </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>

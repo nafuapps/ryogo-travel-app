@@ -395,12 +395,14 @@ export const bookingRepository = {
     queryEndDate: Date,
   ) {
     return await db.query.bookings.findMany({
-      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
+      orderBy: (bookings, { desc }) => [
+        desc(bookings.completedAt ?? bookings.updatedAt),
+      ],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
-        gte(bookings.completedAt, queryStartDate),
-        lte(bookings.completedAt, queryEndDate),
+        gte(bookings.completedAt ?? bookings.updatedAt, queryStartDate),
+        lte(bookings.completedAt ?? bookings.updatedAt, queryEndDate),
       ),
       columns: {
         status: true,
@@ -410,14 +412,29 @@ export const bookingRepository = {
         id: true,
       },
       with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
         assignedDriver: {
           columns: {
             name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
           },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
           },
         },
         customer: {
@@ -445,17 +462,20 @@ export const bookingRepository = {
     queryEndDate: Date,
   ) {
     return await db.query.bookings.findMany({
-      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
+      orderBy: (bookings, { desc }) => [
+        desc(bookings.cancelledAt ?? bookings.updatedAt),
+      ],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CANCELLED),
-        gte(bookings.completedAt, queryStartDate),
-        lte(bookings.completedAt, queryEndDate),
+        gte(bookings.cancelledAt ?? bookings.updatedAt, queryStartDate),
+        lte(bookings.cancelledAt ?? bookings.updatedAt, queryEndDate),
       ),
       columns: {
         id: true,
         type: true,
         status: true,
+        cancelledAt: true,
         updatedAt: true,
         remarks: true,
         estimatedTotalAmount: true,
@@ -478,7 +498,9 @@ export const bookingRepository = {
         },
         assignedUser: {
           columns: {
+            id: true,
             name: true,
+            photoUrl: true,
           },
         },
       },
@@ -697,13 +719,18 @@ export const bookingRepository = {
     })
   },
 
-  async readUpcomingBookingsData(agencyId: string, queryStartDate: Date) {
+  async readUpcomingBookingsData(
+    agencyId: string,
+    queryStartDate: Date,
+    queryEndDate: Date,
+  ) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
-        lte(bookings.startDate, queryStartDate),
+        gte(bookings.startDate, queryStartDate),
+        lte(bookings.startDate, queryEndDate),
       ),
       columns: {
         startDate: true,
@@ -714,14 +741,29 @@ export const bookingRepository = {
         id: true,
       },
       with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
         assignedDriver: {
           columns: {
             name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
           },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
           },
         },
         customer: {
@@ -1130,7 +1172,9 @@ export const bookingRepository = {
       with: {
         customer: {
           columns: {
+            id: true,
             name: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -1145,7 +1189,27 @@ export const bookingRepository = {
         },
         assignedUser: {
           columns: {
+            id: true,
             name: true,
+            photoUrl: true,
+          },
+        },
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+            vehiclePhotoUrl: true,
           },
         },
       },
@@ -1561,6 +1625,7 @@ export const bookingRepository = {
       .update(bookings)
       .set({
         status: BookingStatusEnum.CANCELLED,
+        cancelledAt: new Date(),
         assignedDriverId: null,
         assignedVehicleId: null,
       })
@@ -1568,6 +1633,7 @@ export const bookingRepository = {
       .returning({
         id: bookings.id,
         status: bookings.status,
+        cancelledAt: bookings.cancelledAt,
         assignedDriverId: bookings.assignedDriverId,
         assignedVehicleId: bookings.assignedVehicleId,
       })

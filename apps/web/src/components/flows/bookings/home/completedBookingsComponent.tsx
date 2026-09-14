@@ -1,14 +1,6 @@
 "use client"
 
-import { RyogoSmall } from "@/components/typography"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { CheckCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -20,25 +12,21 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { CompletedBookingCard } from "@/components/cards/booking/bookingCards"
-import { differenceInDays } from "date-fns"
-
-type CompletedBookingsSelectType = "7Days" | "14Days"
+import { Switch } from "@/components/ui/switch"
 
 export default function CompletedBookingsComponent({
-  completedBookings14Days,
+  completedBookings,
+  userId,
 }: {
-  completedBookings14Days: FindCompletedBookingsPreviousDaysType
+  userId: string
+  completedBookings: FindCompletedBookingsPreviousDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Completed")
-  const [selectedTab, setSelectedTab] =
-    useState<CompletedBookingsSelectType>("7Days")
+  const [showAgencyBookings, setShowAgencyBookings] = useState(false)
 
-  const completedBookings7Days = completedBookings14Days.filter(
-    (b) => differenceInDays(new Date(), b.updatedAt) < 7,
-  )
-
-  const trips =
-    selectedTab === "7Days" ? completedBookings7Days : completedBookings14Days
+  const trips = showAgencyBookings
+    ? completedBookings
+    : completedBookings.filter((b) => b.assignedUser.id === userId)
 
   return (
     <SectionWrapper id="CompletedBookingsSection">
@@ -50,25 +38,16 @@ export default function CompletedBookingsComponent({
             {trips.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <Select
-          value={selectedTab}
-          onValueChange={(value: CompletedBookingsSelectType) =>
-            setSelectedTab(value)
-          }
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="7Days">{t("7Days")}</SelectItem>
-              <SelectItem value="14Days">{t("14Days")}</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <SectionRowWrapper center justifyEnd>
+          <RyogoCaption color="light">{t("ShowAgencyCompleted")}</RyogoCaption>
+          <Switch
+            checked={showAgencyBookings}
+            onCheckedChange={setShowAgencyBookings}
+          />
+        </SectionRowWrapper>
       </SectionRowWrapper>
       {trips.map((trip) => (
-        <CompletedBookingCard key={trip.bookingId} booking={trip} />
+        <CompletedBookingCard key={trip.id} booking={trip} />
       ))}
     </SectionWrapper>
   )

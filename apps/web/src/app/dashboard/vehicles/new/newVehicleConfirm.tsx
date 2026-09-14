@@ -85,8 +85,8 @@ export function NewVehicleConfirm({
         currentStepIndex={4}
         title={t("Title")}
         stepLabel={t("Subtitle", {
-          current: 5,
-          total: AddVehicleTotalSteps,
+          current: "5",
+          total: AddVehicleTotalSteps.toString(),
         })}
         description={t("Description")}
       />

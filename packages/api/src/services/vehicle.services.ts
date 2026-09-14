@@ -61,20 +61,7 @@ export const vehicleServices = {
     const bookings =
       await bookingRepository.readAllAssignedBookingsByVehicleId(vehicleId)
 
-    return bookings.map((booking) => {
-      return {
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-        startDate: booking.startDate,
-        startTime: booking.startTime,
-        endDate: booking.endDate,
-        status: booking.tripLogs[0]?.type,
-      }
-    })
+    return bookings
   },
 
   //Get vehicle's completed bookings
@@ -82,18 +69,7 @@ export const vehicleServices = {
     const bookings =
       await bookingRepository.readCompletedBookingsByVehicleId(vehicleId)
 
-    return bookings.map((booking) => {
-      return {
-        status: booking.status.toString(),
-        updatedAt: booking.completedAt ?? booking.updatedAt,
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-      }
-    })
+    return bookings
   },
 
   //Get assigned vehicle for a booking by driverId

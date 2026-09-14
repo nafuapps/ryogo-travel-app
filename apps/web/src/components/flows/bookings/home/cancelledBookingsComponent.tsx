@@ -1,15 +1,7 @@
 "use client"
 
 import { RyogoSmall, RyogoP, RyogoCaption } from "@/components/typography"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { BookOpenText } from "lucide-react"
+import { BookX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
@@ -23,55 +15,42 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { differenceInDays } from "date-fns"
-
-type CancelledBookingsSelectType = "14Days" | "7Days"
+import { Switch } from "@/components/ui/switch"
 
 export default function CancelledBookingsComponent({
-  cancelledBookings14Days,
+  cancelledBookings,
+  userId,
 }: {
-  cancelledBookings14Days: FindCancelledBookingsPreviousDaysType
+  userId: string
+  cancelledBookings: FindCancelledBookingsPreviousDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Cancelled")
-  const [selectedTab, setSelectedTab] =
-    useState<CancelledBookingsSelectType>("7Days")
+  const [showAgencyBookings, setShowAgencyBookings] = useState(false)
 
-  const cancelledBookings7Days = cancelledBookings14Days.filter(
-    (b) => differenceInDays(new Date(), b.updatedAt) < 7,
-  )
-
-  const trips =
-    selectedTab === "14Days" ? cancelledBookings14Days : cancelledBookings7Days
+  const trips = showAgencyBookings
+    ? cancelledBookings
+    : cancelledBookings.filter((b) => b.assignedUser.id === userId)
 
   return (
     <SectionWrapper id="cancelledBookingsSection">
       <SectionRowWrapper center>
         <SectionHeaderWrapper>
-          <RyogoIcon icon={BookOpenText} size="sm" color="light" />
+          <RyogoIcon icon={BookX} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {trips.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <Select
-          value={selectedTab}
-          onValueChange={(value: CancelledBookingsSelectType) =>
-            setSelectedTab(value)
-          }
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="7Days">{t("7Days")}</SelectItem>
-              <SelectItem value="14Days">{t("14Days")}</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <SectionRowWrapper center justifyEnd>
+          <RyogoCaption color="light">{t("ShowAgencyCancelled")}</RyogoCaption>
+          <Switch
+            checked={showAgencyBookings}
+            onCheckedChange={setShowAgencyBookings}
+          />
+        </SectionRowWrapper>
       </SectionRowWrapper>
       {trips.map((trip) => (
-        <CancelledBookingItemComponent key={trip.bookingId} {...trip} />
+        <CancelledBookingItemComponent key={trip.id} {...trip} />
       ))}
     </SectionWrapper>
   )
@@ -82,27 +61,30 @@ function CancelledBookingItemComponent(
 ) {
   const t = useTranslations("Dashboard.Bookings.Cancelled")
   return (
-    <Link href={`/dashboard/bookings/${cancelled.bookingId}`}>
+    <Link href={`/dashboard/bookings/${cancelled.id}`}>
       <HoverGridWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{cancelled.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {cancelled.customerName}</RyogoP>
+          <RyogoCaption color="slate">{cancelled.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {cancelled.customer.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
             {cancelled.type.toUpperCase()}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {cancelled.route}</RyogoP>
+          <RyogoP weight="font-bold">
+            {" "}
+            {cancelled.source.city + " - " + cancelled.destination.city}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
-            {cancelled.amount.toLocaleString("en-IN", {
+            {cancelled.estimatedTotalAmount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {cancelled.assignedUser}</RyogoP>
+          <RyogoP weight="font-bold"> {cancelled.assignedUser.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           {cancelled.remarks && (

@@ -20,10 +20,10 @@ export default async function CompletedBookingsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const completedBookings14Days =
+  const completedBookings =
     await bookingServices.findCompletedBookingsPreviousDays(
       currentUser.agencyId,
-      14,
+      30,
     )
 
   return (
@@ -32,7 +32,8 @@ export default async function CompletedBookingsPage() {
       <PageWrapper id="CompletedBookingsPage">
         <AllBookingsHeaderTabs selectedTab={"Completed"} />
         <CompletedBookingsComponent
-          completedBookings14Days={completedBookings14Days}
+          completedBookings={completedBookings}
+          userId={currentUser.userId}
         />
       </PageWrapper>
     </MainWrapper>

@@ -1,20 +1,12 @@
 "use client"
 
 import { RyogoSmall, RyogoP, RyogoCaption } from "@/components/typography"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { BookOpenText } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 import moment from "moment"
-import { FindLeadBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import { FindLeadBookingsType } from "@ryogo-travel-app/api/services/booking.services"
 import {
   GridItemWrapper,
   HoverGridWrapper,
@@ -23,25 +15,21 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { differenceInDays } from "date-fns"
-
-type LeadBookingsSelectType = "14Days" | "7Days"
+import { Switch } from "@/components/ui/switch"
 
 export default function LeadBookingsComponent({
-  leadBookings14Days,
+  leadBookings,
+  userId,
 }: {
-  leadBookings14Days: FindLeadBookingsNextDaysType
+  leadBookings: FindLeadBookingsType
+  userId: string
 }) {
   const t = useTranslations("Dashboard.Bookings.Leads")
-  const [selectedTab, setSelectedTab] =
-    useState<LeadBookingsSelectType>("7Days")
+  const [showAgencyLeads, setShowAgencyLeads] = useState(false)
 
-  const leadBookings7Days = leadBookings14Days.filter(
-    (b) => differenceInDays(b.startDate, new Date()) < 7,
-  )
-
-  const trips =
-    selectedTab === "14Days" ? leadBookings14Days : leadBookings7Days
+  const selectedLeadBookings = showAgencyLeads
+    ? leadBookings
+    : leadBookings.filter((b) => b.assignedUser.id === userId)
 
   return (
     <SectionWrapper id="leadsBookingsSection">
@@ -50,55 +38,49 @@ export default function LeadBookingsComponent({
           <RyogoIcon icon={BookOpenText} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
-            {trips.length}
+            {selectedLeadBookings.length}
           </RyogoSmall>
         </SectionHeaderWrapper>
-        <Select
-          value={selectedTab}
-          onValueChange={(value: LeadBookingsSelectType) =>
-            setSelectedTab(value)
-          }
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="7Days">{t("7Days")}</SelectItem>
-              <SelectItem value="14Days">{t("14Days")}</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <SectionRowWrapper center justifyEnd>
+          <RyogoCaption color="light">{t("ShowAgencyLeads")}</RyogoCaption>
+          <Switch
+            checked={showAgencyLeads}
+            onCheckedChange={setShowAgencyLeads}
+          />
+        </SectionRowWrapper>
       </SectionRowWrapper>
-      {trips.map((trip) => (
-        <LeadBookingItemComponent key={trip.bookingId} {...trip} />
+      {selectedLeadBookings.map((trip) => (
+        <LeadBookingItemComponent key={trip.id} {...trip} />
       ))}
     </SectionWrapper>
   )
 }
 
-function LeadBookingItemComponent(lead: FindLeadBookingsNextDaysType[number]) {
+function LeadBookingItemComponent(lead: FindLeadBookingsType[number]) {
   const t = useTranslations("Dashboard.Bookings.Leads")
   return (
-    <Link href={`/dashboard/bookings/${lead.bookingId}`}>
+    <Link href={`/dashboard/bookings/${lead.id}`}>
       <HoverGridWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">{lead.bookingId}</RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.customerName}</RyogoP>
+          <RyogoCaption color="slate">{lead.id}</RyogoCaption>
+          <RyogoP weight="font-bold"> {lead.customer.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{lead.type.toUpperCase()}</RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.route}</RyogoP>
+          <RyogoP weight="font-bold">
+            {" "}
+            {lead.source.city + " - " + lead.destination.city}
+          </RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">
-            {lead.amount.toLocaleString("en-IN", {
+            {lead.estimatedTotalAmount.toLocaleString("en-IN", {
               style: "currency",
               currency: "INR",
               minimumFractionDigits: 0,
             })}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {lead.assignedUser}</RyogoP>
+          <RyogoP weight="font-bold"> {lead.assignedUser.name}</RyogoP>
         </GridItemWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">

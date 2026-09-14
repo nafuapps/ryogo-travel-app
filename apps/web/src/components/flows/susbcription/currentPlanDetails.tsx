@@ -31,7 +31,7 @@ export default async function CurrentPlanDetails({
       <RyogoCaption color="light">{t("Header")}</RyogoCaption>
       <SectionRowWrapper justifyStart center>
         <RyogoH2 color={isBasic ? "slate" : "brand"} weight="font-bold">
-          {subscriptionPlan.toUpperCase()}
+          {subscriptionPlan}
         </RyogoH2>
         <RyogoEnclosedIcon
           icon={isBasic ? Disc : BadgeCheck}

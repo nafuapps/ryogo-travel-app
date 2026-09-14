@@ -912,22 +912,12 @@
     },
     "Bookings": {
       "Ongoing": {
-        "Title": "ONGOING TRIPS"
+        "Title": "ONGOING TRIPS",
+        "ShowAgencyOngoing": "Show Agencywide"
       },
       "Upcoming": {
         "Title": "UPCOMING",
-        "14Days": "Next 14 Days",
-        "7Days": "Next 7 Days"
-      },
-      "Completed": {
-        "Title": "COMPLETED",
-        "14Days": "Last 14 Days",
-        "7Days": "Last 7 Days"
-      },
-      "Cancelled": {
-        "Title": "CANCELLED",
-        "14Days": "Last 14 Days",
-        "7Days": "Last 7 Days"
+        "ShowAgencyUpcoming": "Show Agencywide"
       },
       "Schedule": {
         "Title": "BOOKING SCHEDULE"
@@ -935,15 +925,22 @@
       "History": {
         "Title": "BOOKING HISTORY"
       },
+      "Completed": {
+        "Title": "COMPLETED",
+        "ShowAgencyCompleted": "Show Agencywide"
+      },
+      "Cancelled": {
+        "Title": "CANCELLED",
+        "ShowAgencyCancelled": "Show Agencywide"
+      },
       "Leads": {
         "Title": "LEADS",
-        "7Days": "Next 7 Days",
-        "14Days": "Next 14 Days",
+        "ShowAgencyLeads": "Show Agencywide",
         "Passengers": "pax"
       }
     },
     "AllBookingsHeaderTabs": {
-      "Bookings": "Bookings",
+      "Upcoming": "Upcoming",
       "Leads": "Leads",
       "Completed": "Completed",
       "Cancelled": "Cancelled"
@@ -6513,9 +6510,9 @@
           "Price": "Free Forever",
           "F1": "Onboard limited vehicles, drivers and agents",
           "F2": "Create and manage limited bookings",
-          "F3": "Standard support via email",
+          "F3": "Standard support via email and phone",
           "F4": "Driver web app access",
-          "F5": "Reconcile transactions and expenses",
+          "F5": "Get expiry alerts and notifications",
           "F6": "Communicate with customers via WhatsApp",
           "CTA": "Get Started"
         },
@@ -6523,11 +6520,12 @@
           "Title": "PREMIUM",
           "Description": "For large and growing agencies",
           "Price": "Starting at ₹{price}/month",
-          "F1": "Everything in Basic, and",
-          "F2": "Unlimited bookings",
-          "F3": "Unlimited vehicles, drivers and agents",
-          "F4": "Priority 24x7 support over phone and tickets",
-          "F5": "Advanced analytics and AI suggestions",
+          "Everything": "Everything in Basic, and",
+          "F1": "Unlimited bookings",
+          "F2": "Unlimited vehicles, drivers and agents",
+          "F3": "Priority 24x7 support over phone and tickets",
+          "F4": "Advanced analytics and AI suggestions",
+          "F5": "Reconcile transactions and expenses",
           "F6": "Full and unrestricted app access",
           "F7": "Priority access to new features",
           "CTA": "Try {days} Days For Free"

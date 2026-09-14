@@ -168,7 +168,7 @@ export const orderStatus = pgEnum("order_status", [
   OrderStatusEnum.PAID,
 ])
 export enum OrderTypeEnum {
-  MONTHLY = "Monthly",
+  MONTHLY = "Monthly", //TODO:change name properly in migration
   QUARTERLY = "Quarterly",
   ANNUAL = "Annual",
 }
@@ -245,11 +245,11 @@ export const paymentStatus = pgEnum("payment_status", [
   PaymentStatusEnum.REFUNDED,
 ])
 export enum PaymentMethodEnum {
-  UPI = "upi",
-  CARD = "card",
-  NET_BANKING = "net banking",
-  WALLET = "wallet",
-  OTHER = "other",
+  UPI = "UPI",
+  CARD = "Card",
+  NET_BANKING = "Net Banking",
+  WALLET = "Wallet",
+  OTHER = "Other",
 }
 export const paymentMethod = pgEnum("payment_method", [
   PaymentMethodEnum.UPI,
@@ -1014,6 +1014,7 @@ export const bookings = pgTable(
     invoiceUrl: text("invoice_url"),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
     completedAt: timestamp("completed_at", { withTimezone: true }),
+    cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
     reviewCompletedByAgencyAt: timestamp("review_completed_by_agency_at", {
       withTimezone: true,
     }),

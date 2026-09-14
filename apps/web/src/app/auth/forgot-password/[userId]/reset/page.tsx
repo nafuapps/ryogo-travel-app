@@ -30,7 +30,7 @@ export default async function VerifyCodePage({
 
   return (
     <ResetWithCodePageComponent
-      userId={userId}
+      user={user}
       verificationCode={user.verificationCode}
     />
   )

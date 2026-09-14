@@ -74,7 +74,7 @@ export default async function CustomerDetailsPageComponent({
             {customer.driverRatings && customer.driverRatings.length > 1 && (
               <RyogoAverageRatingDisplay
                 label={t("NumberRatings", {
-                  number: customer.driverRatings.length,
+                  number: customer.driverRatings.length.toString(),
                 })}
                 ratings={customer.driverRatings}
               />

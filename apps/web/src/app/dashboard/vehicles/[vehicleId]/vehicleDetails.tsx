@@ -67,10 +67,10 @@ export default async function VehicleDetailsPageComponent({
               {vehicle.hasAC ? t("AC") : t("NonAC")}
             </RyogoCaption>
             <RyogoCaption color="slate">
-              {t("Capacity", { capacity: vehicle.capacity })}
+              {t("Capacity", { capacity: vehicle.capacity.toString() })}
             </RyogoCaption>
             <RyogoCaption color="slate">
-              {t("Odometer", { odometer: vehicle.odometerReading })}
+              {t("Odometer", { odometer: vehicle.odometerReading.toString() })}
             </RyogoCaption>
             <RyogoCaption color="slate">
               {moment(vehicle.createdAt).format("DD MMM YYYY")}
@@ -78,7 +78,7 @@ export default async function VehicleDetailsPageComponent({
             {vehicle.customerRatings && vehicle.customerRatings.length > 1 && (
               <RyogoAverageRatingDisplay
                 label={t("NumberRatings", {
-                  number: vehicle.customerRatings.length,
+                  number: vehicle.customerRatings.length.toString(),
                 })}
                 ratings={vehicle.customerRatings}
               />
@@ -165,11 +165,11 @@ export default async function VehicleDetailsPageComponent({
         <SectionColWrapper>
           {vehicle.hasAC && (
             <RyogoCaption color="slate">
-              {t("ACCharge", { ac: vehicle.defaultAcChargePerDay })}
+              {t("ACCharge", { ac: vehicle.defaultAcChargePerDay.toString() })}
             </RyogoCaption>
           )}
           <RyogoSmall>
-            {t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
+            {t("RatePerKm", { rate: vehicle.defaultRatePerKm.toString() })}
           </RyogoSmall>
         </SectionColWrapper>
       </SectionWrapper>

@@ -251,10 +251,14 @@ export const userRepository = {
   },
 
   //Update password
-  async updatePassword(userId: string, passwordHash: string) {
+  async updatePassword(
+    userId: string,
+    passwordHash: string,
+    status?: UserStatusEnum,
+  ) {
     return await db
       .update(users)
-      .set({ password: passwordHash })
+      .set({ password: passwordHash, isVerified: true, status: status })
       .where(eq(users.id, userId))
       .returning({ id: users.id, email: users.email, name: users.email })
   },

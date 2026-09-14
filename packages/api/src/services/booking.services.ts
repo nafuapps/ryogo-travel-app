@@ -65,14 +65,14 @@ export const bookingServices = {
     agencyId: string,
     days: number = 1,
   ) {
-    const endDate = new Date()
-    const startDate = subDays(endDate, days)
+    const queryEndDate = new Date()
+    const queryStartDate = subDays(queryEndDate, days)
 
     const bookings =
       await bookingRepository.readCreatedBookingsByStatusDateRange(
         agencyId,
-        startDate,
-        endDate,
+        queryStartDate,
+        queryEndDate,
         [
           BookingStatusEnum.CONFIRMED,
           BookingStatusEnum.IN_PROGRESS,
@@ -154,90 +154,43 @@ export const bookingServices = {
 
   async findOngoingTrips(agencyId: string) {
     const bookings = await bookingRepository.readOngoingBookingsData(agencyId)
-    return bookings.map((booking) => {
-      return {
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-        status: booking.tripLogs[0]?.type,
-        assignedUserId: booking.assignedUser.id,
-        assignedUserName: booking.assignedUser.name,
-        startDate: booking.startDate,
-        endDate: booking.endDate,
-      }
-    })
+    return bookings
   },
 
-  async findCompletedBookingsPreviousDays(agencyId: string, days: number = 1) {
-    const endDate = new Date()
-    const startDate = subDays(endDate, days)
+  async findCompletedBookingsPreviousDays(agencyId: string, days: number = 30) {
+    const queryEndDate = new Date()
+    const queryStartDate = subDays(queryEndDate, days)
 
     const bookings = await bookingRepository.readCompletedBookingsData(
       agencyId,
-      startDate,
-      endDate,
+      queryStartDate,
+      queryEndDate,
     )
-    return bookings.map((booking) => {
-      return {
-        status: booking.status.toString(),
-        updatedAt: booking.completedAt ?? booking.updatedAt,
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
-        bookingId: booking.id,
-      }
-    })
+    return bookings
   },
 
-  async findCancelledBookingsPreviousDays(agencyId: string, days: number = 1) {
-    const endDate = new Date()
-    const startDate = subDays(endDate, days)
+  async findCancelledBookingsPreviousDays(agencyId: string, days: number = 30) {
+    const queryEndDate = new Date()
+    const queryStartDate = subDays(queryEndDate, days)
 
     const bookings = await bookingRepository.readCancelledBookingsData(
       agencyId,
-      startDate,
-      endDate,
+      queryStartDate,
+      queryEndDate,
     )
-    return bookings.map((booking) => {
-      return {
-        status: booking.status.toString(),
-        updatedAt: booking.updatedAt,
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        customerName: booking.customer?.name,
-        bookingId: booking.id,
-        amount: booking.estimatedTotalAmount,
-        assignedUser: booking.assignedUser.name,
-        remarks: booking.remarks,
-      }
-    })
+    return bookings
   },
 
-  async findUpcomingBookingsNextDays(agencyId: string, days: number = 1) {
-    const queryDate = addDays(new Date(), days)
+  async findUpcomingBookingsNextDays(agencyId: string, days: number = 30) {
+    const queryStartDate = new Date()
+    const queryEndDate = addDays(queryStartDate, days)
 
     const bookings = await bookingRepository.readUpcomingBookingsData(
       agencyId,
-      queryDate,
+      queryStartDate,
+      queryEndDate,
     )
-    return bookings.map((booking) => {
-      return {
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer?.name,
-        bookingId: booking.id,
-        startDate: booking.startDate,
-        startTime: booking.startTime,
-        endDate: booking.endDate,
-      }
-    })
+    return bookings
   },
 
   async findBookingsScheduleNextDays(agencyId: string, days: number = 7) {
@@ -264,11 +217,11 @@ export const bookingServices = {
   },
 
   async findBookingsHistoryLastDays(agencyId: string, days: number = 7) {
-    const startDate = subDays(new Date(), days)
+    const queryStartDate = subDays(new Date(), days)
 
     const bookings = await bookingRepository.readBookingsHistoryData(
       agencyId,
-      startDate,
+      queryStartDate,
     )
     return bookings.map((booking) => {
       return {
@@ -286,27 +239,16 @@ export const bookingServices = {
     })
   },
 
-  async findLeadBookingsNextDays(agencyId: string, days: number = 1) {
-    const startDate = new Date()
-    //Day today
-    const endDate = addDays(startDate, days)
+  async findLeadBookingsNextDays(agencyId: string, days: number = 30) {
+    const queryStartDate = new Date()
+    const queryEndDate = addDays(queryStartDate, days)
+
     const bookings = await bookingRepository.readLeadBookingsData(
       agencyId,
-      startDate,
-      endDate,
+      queryStartDate,
+      queryEndDate,
     )
-    return bookings.map((booking) => {
-      return {
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-        startDate: booking.startDate,
-        assignedUser: booking.assignedUser.name,
-        passengers: booking.passengers,
-        amount: booking.estimatedTotalAmount,
-      }
-    })
+    return bookings
   },
 
   //Get assigned user id by booking id
@@ -782,7 +724,7 @@ export type FindBookingHistoryLastDaysType = Awaited<
   ReturnType<typeof bookingServices.findBookingsHistoryLastDays>
 >
 
-export type FindLeadBookingsNextDaysType = Awaited<
+export type FindLeadBookingsType = Awaited<
   ReturnType<typeof bookingServices.findLeadBookingsNextDays>
 >
 

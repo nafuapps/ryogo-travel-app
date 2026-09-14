@@ -20,9 +20,9 @@ export default async function LeadBookingsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const leadBookings14Days = await bookingServices.findLeadBookingsNextDays(
+  const leadBookings = await bookingServices.findLeadBookingsNextDays(
     currentUser.agencyId,
-    14,
+    30,
   )
 
   return (
@@ -30,7 +30,10 @@ export default async function LeadBookingsPage() {
       <DashboardHeader pathName={"/dashboard/bookings/leads"} />
       <PageWrapper id="LeadBookingsPage">
         <AllBookingsHeaderTabs selectedTab={"Leads"} />
-        <LeadBookingsComponent leadBookings14Days={leadBookings14Days} />
+        <LeadBookingsComponent
+          leadBookings={leadBookings}
+          userId={currentUser.userId}
+        />
       </PageWrapper>
     </MainWrapper>
   )

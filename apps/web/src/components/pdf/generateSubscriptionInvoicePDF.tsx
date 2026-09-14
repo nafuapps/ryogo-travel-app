@@ -22,8 +22,8 @@ export function SubscriptionInvoiceDocument({
   order: NonNullable<FindOrderByRPIdType>
   agency: NonNullable<FindAgencyByIdType>
 }) {
-  const priceBeforeTax = (order.amount / (100 + GST_PERCENTAGE)) * 100
-  const taxAmount = order.amount - priceBeforeTax
+  // const priceBeforeTax = (order.amount / (100 + GST_PERCENTAGE)) * 100
+  // const taxAmount = order.amount - priceBeforeTax
 
   return (
     <Document>
@@ -77,12 +77,13 @@ export function SubscriptionInvoiceDocument({
             <Text style={styles.p}>
               RyoGo Travel App - Subscription ({order.orderType.toUpperCase()})
             </Text>
-            <Text style={styles.p}>{priceBeforeTax.toFixed(2)}</Text>
+            {/* <Text style={styles.p}>{priceBeforeTax.toFixed(2)}</Text> */}
+            <Text style={styles.p}>{order.amount.toFixed(2)}</Text>
           </View>
-          <View id="taxRow" style={styles.tableRow}>
+          {/* <View id="taxRow" style={styles.tableRow}>
             <Text style={styles.p}>Tax ({GST_PERCENTAGE}%)</Text>
             <Text style={styles.p}>{taxAmount.toFixed(2)}</Text>
-          </View>
+          </View> */}
           <View id="tableFooter" style={styles.tableFooter}>
             <Text style={styles.pBold}>Final Amount</Text>
             <Text style={styles.pBold}>{order.amount.toFixed(2)}</Text>

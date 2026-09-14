@@ -4,7 +4,7 @@ import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import FilterCheckboxGroup from "@/components/filter/filterCheckboxGroup"
 import SupportTicketItem from "@/components/flows/support/supportTicketItem"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { PageWrapper, SectionRowWrapper } from "@/components/page/pageWrappers"
 import { RyogoSmall } from "@/components/typography"
 import { Switch } from "@/components/ui/switch"
 import {
@@ -59,14 +59,14 @@ export default function SupportTicketsPageComponent({
         setSelectedFilters={setSelectedFilters}
       />
       {isOwner && (
-        <div className="flex items-center gap-2 lg:gap-3 justify-end">
+        <SectionRowWrapper center justifyEnd>
           <RyogoSmall color="light">{t("ShowAgencyTickets")}</RyogoSmall>
           <Switch
             id="agencyTickets"
             checked={showAgencyTickets}
             onCheckedChange={setShowAgencyTickets}
           />
-        </div>
+        </SectionRowWrapper>
       )}
       {filteredTickets.length === 0 ? (
         <RyogoSmall color="light" className="mx-auto">

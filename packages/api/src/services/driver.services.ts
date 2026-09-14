@@ -60,20 +60,7 @@ export const driverServices = {
     const bookings =
       await bookingRepository.readAllAssignedBookingsByDriverId(driverId)
 
-    return bookings.map((booking) => {
-      return {
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-        startDate: booking.startDate,
-        startTime: booking.startTime,
-        endDate: booking.endDate,
-        status: booking.tripLogs[0]?.type,
-      }
-    })
+    return bookings
   },
 
   //Get driver's completed bookings
@@ -81,18 +68,7 @@ export const driverServices = {
     const bookings =
       await bookingRepository.readCompletedBookingsByDriverId(driverId)
 
-    return bookings.map((booking) => {
-      return {
-        status: booking.status.toString(),
-        updatedAt: booking.completedAt ?? booking.updatedAt,
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-      }
-    })
+    return bookings
   },
 
   //Get driver by user id

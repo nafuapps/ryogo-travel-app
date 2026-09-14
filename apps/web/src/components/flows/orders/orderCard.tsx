@@ -54,9 +54,7 @@ export default function OrderCard({
                 {moment(order.updatedAt).format("DD MMM YYYY")}
               </RyogoCaption>
               <RyogoIcon color="light" size="sm" icon={Dot} thick />
-              <RyogoCaption color="light">
-                {order.orderType.toUpperCase()}
-              </RyogoCaption>
+              <RyogoCaption color="light">{order.orderType}</RyogoCaption>
             </SectionRowWrapper>
           </SectionColWrapper>
         </SectionRowWrapper>
@@ -73,7 +71,10 @@ export default function OrderCard({
                   href={getFileUrl(order.orderInvoiceUrl) + "?download"}
                   download
                 >
-                  <RyogoOutlineButton label={t("DownloadInvoice")}>
+                  <RyogoOutlineButton
+                    label={t("DownloadInvoice")}
+                    labelColor="light"
+                  >
                     <RyogoIcon size="sm" icon={Download} color="slate" />
                   </RyogoOutlineButton>
                 </a>

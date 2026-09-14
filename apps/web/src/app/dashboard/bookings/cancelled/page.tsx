@@ -20,10 +20,10 @@ export default async function CancelledBookingsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const cancelledBookings14Days =
+  const cancelledBookings =
     await bookingServices.findCancelledBookingsPreviousDays(
       currentUser.agencyId,
-      14,
+      30,
     )
 
   return (
@@ -32,7 +32,8 @@ export default async function CancelledBookingsPage() {
       <PageWrapper id="CancelledBookingsPage">
         <AllBookingsHeaderTabs selectedTab={"Cancelled"} />
         <CancelledBookingsComponent
-          cancelledBookings14Days={cancelledBookings14Days}
+          cancelledBookings={cancelledBookings}
+          userId={currentUser.userId}
         />
       </PageWrapper>
     </MainWrapper>

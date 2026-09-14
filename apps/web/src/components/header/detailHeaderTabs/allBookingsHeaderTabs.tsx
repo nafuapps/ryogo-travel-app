@@ -5,7 +5,7 @@ import {
   DetailsHeaderTabWrapper,
 } from "@/components/header/headerWrappers"
 
-type AllBookingsHeaderTab = "Bookings" | "Leads" | "Completed" | "Cancelled"
+type AllBookingsHeaderTab = "Upcoming" | "Leads" | "Completed" | "Cancelled"
 
 export default async function AllBookingsHeaderTabs({
   selectedTab,
@@ -14,7 +14,7 @@ export default async function AllBookingsHeaderTabs({
 }) {
   const t = await getTranslations("Dashboard.AllBookingsHeaderTabs")
   const links = {
-    Bookings: `/dashboard/bookings`,
+    Upcoming: `/dashboard/bookings`,
     Leads: `/dashboard/bookings/leads`,
     Completed: `/dashboard/bookings/completed`,
     Cancelled: `/dashboard/bookings/cancelled`,

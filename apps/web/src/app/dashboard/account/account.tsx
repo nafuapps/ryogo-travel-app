@@ -12,6 +12,7 @@ import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButto
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import UserInfoComponent from "@/components/flows/account/userInfoComponent"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
+import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
 
 export default async function AccountPageComponent({
   account,
@@ -78,13 +79,9 @@ export default async function AccountPageComponent({
         </Link>
         <LogoutAlertButton />
       </GridWrapper>
-      <RyogoCaption color="light" className="text-center">
-        {t("LastLogin", {
-          loginTime: moment(account.lastLogin).format(
-            "MMMM Do YYYY, h:mm:ss a",
-          ),
-        })}
-      </RyogoCaption>
+      {account.lastLogin && (
+        <UserLoginTimeComponent lastLoginTime={account.lastLogin} />
+      )}
     </PageWrapper>
   )
 }

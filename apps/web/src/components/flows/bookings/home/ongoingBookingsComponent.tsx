@@ -1,33 +1,53 @@
-import { RyogoSmall } from "@/components/typography"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+"use client"
+
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
-import { getTranslations } from "next-intl/server"
 import {
   SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { OngoingBookingCard } from "@/components/cards/booking/bookingCards"
+import { useState } from "react"
+import { Switch } from "@/components/ui/switch"
+import { useTranslations } from "next-intl"
 
-export default async function OngoingBookingsComponent({
-  agencyId,
+export default function OngoingBookingsComponent({
+  ongoingTrips,
+  userId,
 }: {
-  agencyId: string
+  userId: string
+  ongoingTrips: FindOngoingTripsType
 }) {
-  const t = await getTranslations("Dashboard.Bookings.Ongoing")
-  const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
+  const t = useTranslations("Dashboard.Bookings.Ongoing")
+  const [showAgencyBookings, setShowAgencyBookings] = useState(false)
+
+  const trips = showAgencyBookings
+    ? ongoingTrips
+    : ongoingTrips.filter((b) => b.assignedUser.id === userId)
 
   return (
     <SectionWrapper id="OngoingBookingsSection">
-      <SectionHeaderWrapper>
-        <RyogoIcon icon={Route} size="sm" color="light" />
-        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
-        <RyogoSmall color="light" weight="font-bold">
-          {ongoingTrips.length}
-        </RyogoSmall>
-      </SectionHeaderWrapper>
-      {ongoingTrips.map((trip) => (
-        <OngoingBookingCard key={trip.bookingId} booking={trip} />
+      <SectionRowWrapper center>
+        <SectionHeaderWrapper>
+          <RyogoIcon icon={Route} size="sm" color="light" />
+          <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+          <RyogoSmall color="light" weight="font-bold">
+            {trips.length}
+          </RyogoSmall>
+        </SectionHeaderWrapper>
+        <SectionRowWrapper center justifyEnd>
+          <RyogoCaption color="light">{t("ShowAgencyOngoing")}</RyogoCaption>
+          <Switch
+            checked={showAgencyBookings}
+            onCheckedChange={setShowAgencyBookings}
+          />
+        </SectionRowWrapper>
+      </SectionRowWrapper>
+      {trips.map((trip) => (
+        <OngoingBookingCard key={trip.id} booking={trip} />
       ))}
     </SectionWrapper>
   )

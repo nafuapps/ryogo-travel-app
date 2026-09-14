@@ -27,20 +27,7 @@ export const customerServices = {
     const bookings =
       await bookingRepository.readUpcomingBookingsByCustomerId(customerId)
 
-    return bookings.map((booking) => {
-      return {
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-        startDate: booking.startDate,
-        startTime: booking.startTime,
-        endDate: booking.endDate,
-        status: booking.tripLogs[0]?.type,
-      }
-    })
+    return bookings
   },
 
   //Get customer's completed bookings
@@ -48,18 +35,7 @@ export const customerServices = {
     const bookings =
       await bookingRepository.readCompletedBookingsByCustomerId(customerId)
 
-    return bookings.map((booking) => {
-      return {
-        status: booking.status.toString(),
-        updatedAt: booking.completedAt ?? booking.updatedAt,
-        type: booking.type.toString(),
-        route: booking.source.city + " - " + booking.destination.city,
-        vehicle: booking.assignedVehicle?.vehicleNumber,
-        driver: booking.assignedDriver?.name,
-        customerName: booking.customer.name,
-        bookingId: booking.id,
-      }
-    })
+    return bookings
   },
 
   async addNewCustomer(data: NewCustomerRequestType) {

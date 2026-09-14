@@ -20,19 +20,21 @@ import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { differenceInDays } from "date-fns"
 
 export default function BookingScheduleChartComponent({
-  bookings14Days,
+  bookingsSchedule14Days,
 }: {
-  bookings14Days: FindBookingScheduleNextDaysType
+  bookingsSchedule14Days: FindBookingScheduleNextDaysType
 }) {
   const t = useTranslations("Dashboard.Bookings.Schedule")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
-  const bookings7Days = bookings14Days.filter(
+  const bookings7Days = bookingsSchedule14Days.filter(
     (b) => differenceInDays(b.startDate, new Date()) < 7,
   )
 
   const chartData =
-    selectedTab === SelectableDays.SEVEN ? bookings7Days : bookings14Days
+    selectedTab === SelectableDays.SEVEN
+      ? bookings7Days
+      : bookingsSchedule14Days
   const selectedDays: number = selectedTab === SelectableDays.SEVEN ? 7 : 14
 
   return (

@@ -75,9 +75,11 @@ export function DashboardScheduleHeader({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value={SelectableDays.SEVEN}>{t("7Days")}</SelectItem>
+            <SelectItem value={SelectableDays.SEVEN}>
+              <RyogoCaption color="light">{t("7Days")}</RyogoCaption>
+            </SelectItem>
             <SelectItem value={SelectableDays.FOURTEEN}>
-              {t("14Days")}
+              <RyogoCaption color="light">{t("14Days")}</RyogoCaption>
             </SelectItem>
           </SelectGroup>
         </SelectContent>

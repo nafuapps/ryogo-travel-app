@@ -88,7 +88,7 @@ type RyogoPillType = Omit<PillType, "label" | "bgColor">
 export function BookingStatusPill(
   props: { status: BookingStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case BookingStatusEnum.IN_PROGRESS:
       return <RyogoPill {...props} label={label} bgColor={"brand"} />
@@ -106,7 +106,7 @@ export function BookingStatusPill(
 export function VehicleStatusPill(
   props: { status: VehicleStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case VehicleStatusEnum.AVAILABLE:
       return <RyogoPill {...props} label={label} bgColor={"green"} />
@@ -124,7 +124,7 @@ export function VehicleStatusPill(
 export function DriverStatusPill(
   props: { status: DriverStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case DriverStatusEnum.AVAILABLE:
       return <RyogoPill {...props} label={label} bgColor={"green"} />
@@ -142,7 +142,7 @@ export function DriverStatusPill(
 export function AgencyStatusPill(
   props: { status: AgencyStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case AgencyStatusEnum.ACTIVE:
       return <RyogoPill {...props} label={label} bgColor={"brand"} />
@@ -158,7 +158,7 @@ export function AgencyStatusPill(
 export function UserStatusPill(
   props: { status: UserStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case UserStatusEnum.ACTIVE:
       return <RyogoPill {...props} label={label} bgColor={"brand"} />
@@ -174,7 +174,7 @@ export function UserStatusPill(
 export function CustomerStatusPill(
   props: { status: CustomerStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case CustomerStatusEnum.ACTIVE:
       return <RyogoPill {...props} label={label} bgColor={"brand"} />
@@ -188,7 +188,7 @@ export function CustomerStatusPill(
 export function OrderStatusPill(
   props: { status: OrderStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case OrderStatusEnum.PAID:
       return <RyogoPill {...props} label={label} bgColor={"green"} />
@@ -202,7 +202,7 @@ export function OrderStatusPill(
 export function PaymentStatusPill(
   props: { status: PaymentStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case PaymentStatusEnum.CAPTURED:
       return <RyogoPill {...props} label={label} bgColor={"green"} />
@@ -220,7 +220,7 @@ export function PaymentStatusPill(
 export function TripLogStatusPill(
   props: { status: TripLogTypesEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case TripLogTypesEnum.ENDED:
       return <RyogoPill {...props} label={label} bgColor={"green"} />
@@ -265,7 +265,7 @@ export function RepairStatusPill(
 export function SupportTicketStatusPill(
   props: { status: TicketStatusEnum } & RyogoPillType,
 ) {
-  const label = props.status.toUpperCase()
+  const label = props.status
   switch (props.status) {
     case TicketStatusEnum.CLOSED:
       return <RyogoPill {...props} label={label} bgColor={"brand"} />
@@ -281,7 +281,7 @@ export function SupportTicketStatusPill(
 export function SubscriptionPlanPill(
   props: { plan: SubscriptionPlanEnum } & RyogoPillType,
 ) {
-  const label = props.plan.toUpperCase()
+  const label = props.plan
   switch (props.plan) {
     case SubscriptionPlanEnum.BASIC:
       return <RyogoPill {...props} label={label} bgColor={"slate"} />
@@ -291,7 +291,7 @@ export function SubscriptionPlanPill(
 }
 
 export function UserRolePill(props: { role: UserRolesEnum } & RyogoPillType) {
-  const label = props.role.toUpperCase()
+  const label = props.role
   switch (props.role) {
     case UserRolesEnum.OWNER:
       return <RyogoPill {...props} label={label} bgColor={"black"} />

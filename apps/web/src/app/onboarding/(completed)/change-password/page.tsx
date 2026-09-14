@@ -40,8 +40,8 @@ export default async function ChangePasswordPage() {
       redirect("/dashboard/home", RedirectType.replace)
     }
   } else {
-    // Active non-owner
-    if (currentUser.status !== UserStatusEnum.NEW) {
+    // Verified user
+    if (currentUser.isVerified) {
       if (currentUser.userRole === UserRolesEnum.DRIVER) {
         //If driver, go to rider
         redirect("/rider/home", RedirectType.replace)

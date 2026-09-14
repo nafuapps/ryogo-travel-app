@@ -13,6 +13,7 @@ import UserInfoComponent from "@/components/flows/account/userInfoComponent"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserDriverDetailsComponent from "@/components/flows/account/userDriverDetailsComponent"
 import UserDriverLicenseInfoComponent from "@/components/flows/account/userDriverLicenseInfoComponent"
+import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
 
 export default async function RiderProfilePageComponent({
   account,
@@ -81,13 +82,9 @@ export default async function RiderProfilePageComponent({
         </Link>
         <LogoutAlertButton />
       </GridWrapper>
-      <RyogoCaption color="light">
-        {t("LastLogin", {
-          loginTime: moment(account.lastLogin).format(
-            "MMMM Do YYYY, h:mm:ss a",
-          ),
-        })}
-      </RyogoCaption>
+      {account.lastLogin && (
+        <UserLoginTimeComponent lastLoginTime={account.lastLogin} />
+      )}
     </PageWrapper>
   )
 }

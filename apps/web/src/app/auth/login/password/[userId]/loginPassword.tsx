@@ -55,7 +55,7 @@ export default function LoginPasswordPageComponent({
       return
     }
     const loginResponse = await loginAction(user.id, data.password)
-    if (loginResponse.error === "passwordNotMatching") {
+    if (loginResponse.error === "invalidPassword") {
       // Show password match error
       form.setError("password", {
         type: "manual",

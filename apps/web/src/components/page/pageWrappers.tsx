@@ -315,7 +315,7 @@ export function DetailsBorderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="border flex flex-col rounded-md overflow-hidden">
+    <div className="border flex flex-col rounded-md overflow-hidden self-center">
       {children}
     </div>
   )
@@ -327,9 +327,7 @@ export function DetailsContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col h-full">
-      {children}
-    </div>
+    <div className="p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col">{children}</div>
   )
 }
 

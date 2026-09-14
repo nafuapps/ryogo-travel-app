@@ -1,4 +1,10 @@
-import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoH1,
+  RyogoH4,
+  RyogoP,
+  RyogoSmall,
+} from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
@@ -68,6 +74,7 @@ export default async function PricingPlansSection() {
               t("Premium.F6"),
               t("Premium.F7"),
             ]}
+            everything={t("Premium.Everything")}
           >
             <Link href="/onboarding" className="w-full">
               <RyogoBrandButton
@@ -99,12 +106,14 @@ function PricingPlanCard({
   description,
   price,
   features,
+  everything,
   children,
 }: {
   title: string
   description: string
   price: string
   features: string[]
+  everything?: string
   children: React.ReactNode
 }) {
   return (
@@ -116,6 +125,7 @@ function PricingPlanCard({
       <RyogoH4 weight="font-bold">{price}</RyogoH4>
       {children}
       <div className="flex flex-col gap-2 lg:gap-3 mb-2">
+        {everything && <RyogoSmall>{everything}</RyogoSmall>}
         {features.map((feature) => (
           <li key={feature} className="flex gap-3">
             <RyogoIcon icon={Check} size="sm" color="brand" thick />

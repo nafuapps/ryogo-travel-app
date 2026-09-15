@@ -32,7 +32,7 @@ export default async function TransactionItem({
   const isDebit = transaction.type === TransactionTypesEnum.DEBIT
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <div
         className={`flex flex-row ${
           transaction.transactionPhotoUrl ? "rounded-t-lg" : "rounded-lg"

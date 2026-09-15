@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindCompletedBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
-  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
@@ -32,13 +31,13 @@ export default function CompletedBookingsComponent({
   return (
     <SectionWrapper id="CompletedBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={CheckCheck} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {trips.length}
           </RyogoSmall>
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyCompleted")}</RyogoCaption>
           <Switch

@@ -17,10 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import {
-  SectionHeaderWrapper,
-  SectionRowWrapper,
-} from "@/components/page/pageWrappers"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { addDays, differenceInDays, subDays } from "date-fns"
@@ -55,7 +52,7 @@ export function DashboardScheduleHeader({
 
   return (
     <SectionRowWrapper className="items-center justify-between">
-      <SectionHeaderWrapper>
+      <SectionRowWrapper className="items-center">
         <RyogoIcon
           icon={isHistory ? CalendarSync : CalendarDays}
           size="sm"
@@ -65,7 +62,7 @@ export function DashboardScheduleHeader({
         <RyogoSmall color="light" weight="font-bold">
           {length}
         </RyogoSmall>
-      </SectionHeaderWrapper>
+      </SectionRowWrapper>
       <Select
         value={selectedTab}
         onValueChange={(value: SelectableDays) => setSelectedTab(value)}

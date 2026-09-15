@@ -17,7 +17,7 @@ import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
   HoverGridWrapper,
-  SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
@@ -70,7 +70,7 @@ export default function AllCustomersListComponent({
 
   return (
     <SectionWrapper id="AllCustomersSection">
-      <SectionHeaderWrapper>
+      <SectionRowWrapper className="items-center">
         <RyogoIcon icon={Rows3} size="sm" color="light" />
         <RyogoSmall color="light">{t("Title")}</RyogoSmall>
         <RyogoSmall color="light" weight="font-bold">
@@ -81,7 +81,7 @@ export default function AllCustomersListComponent({
             <RyogoIcon icon={Plus} size="sm" color="slate" />
           </RyogoOutlineButton>
         </Link>
-      </SectionHeaderWrapper>
+      </SectionRowWrapper>
       <Field>
         <ButtonGroup>
           <Input

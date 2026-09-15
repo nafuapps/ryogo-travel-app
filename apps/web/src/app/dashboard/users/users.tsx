@@ -11,7 +11,7 @@ import {
   GridItemWrapper,
   HoverGridWrapper,
   PageWrapper,
-  SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
@@ -34,7 +34,7 @@ export default async function UsersPageComponent({
   return (
     <PageWrapper id="UsersPage">
       <SectionWrapper id="OwnersSection">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={UserKey} size="sm" color="light" />
           <RyogoSmall color="light">{t("Owners.Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
@@ -47,13 +47,13 @@ export default async function UsersPageComponent({
               </RyogoOutlineButton>
             </Link>
           )}
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         {owners.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}
       </SectionWrapper>
       <SectionWrapper id="AgentsSection">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={UserCog} size="sm" color="light" />
           <RyogoSmall color="light">{t("Agents.Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
@@ -64,13 +64,13 @@ export default async function UsersPageComponent({
               <RyogoIcon icon={Plus} size="sm" />
             </RyogoOutlineButton>
           </Link>
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         {agents.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}
       </SectionWrapper>
       <SectionWrapper id="DriversSection">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={IdCard} size="sm" color="light" />
           <RyogoSmall color="light">{t("Drivers.Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
@@ -81,7 +81,7 @@ export default async function UsersPageComponent({
               <RyogoIcon icon={Plus} size="sm" />
             </RyogoOutlineButton>
           </Link>
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         {drivers.map((user) => (
           <AllUsersItemComponent key={user.id} user={user} />
         ))}

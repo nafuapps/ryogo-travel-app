@@ -350,10 +350,19 @@ export const bookingRepository = {
           columns: {
             name: true,
           },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         assignedUser: {
@@ -365,6 +374,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -405,6 +415,10 @@ export const bookingRepository = {
         lte(bookings.completedAt ?? bookings.updatedAt, queryEndDate),
       ),
       columns: {
+        actualStartDate: true,
+        actualEndDate: true,
+        startDate: true,
+        endDate: true,
         status: true,
         completedAt: true,
         updatedAt: true,
@@ -477,12 +491,33 @@ export const bookingRepository = {
         id: true,
         type: true,
         status: true,
+        startDate: true,
+        endDate: true,
         cancelledAt: true,
         updatedAt: true,
         remarks: true,
         estimatedTotalAmount: true,
       },
       with: {
+        assignedDriver: {
+          columns: {
+            name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
+        },
+        assignedVehicle: {
+          columns: {
+            vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
+          },
+        },
         customer: {
           columns: {
             name: true,
@@ -519,6 +554,10 @@ export const bookingRepository = {
         eq(bookings.status, BookingStatusEnum.COMPLETED),
       ),
       columns: {
+        actualStartDate: true,
+        actualEndDate: true,
+        startDate: true,
+        endDate: true,
         status: true,
         completedAt: true,
         updatedAt: true,
@@ -582,6 +621,10 @@ export const bookingRepository = {
         eq(bookings.status, BookingStatusEnum.COMPLETED),
       ),
       columns: {
+        actualStartDate: true,
+        actualEndDate: true,
+        startDate: true,
+        endDate: true,
         status: true,
         completedAt: true,
         updatedAt: true,
@@ -645,6 +688,10 @@ export const bookingRepository = {
         eq(bookings.status, BookingStatusEnum.COMPLETED),
       ),
       columns: {
+        actualStartDate: true,
+        actualEndDate: true,
+        startDate: true,
+        endDate: true,
         status: true,
         completedAt: true,
         updatedAt: true,
@@ -708,6 +755,10 @@ export const bookingRepository = {
         eq(bookings.status, BookingStatusEnum.COMPLETED),
       ),
       columns: {
+        actualStartDate: true,
+        actualEndDate: true,
+        startDate: true,
+        endDate: true,
         status: true,
         completedAt: true,
         updatedAt: true,
@@ -775,6 +826,7 @@ export const bookingRepository = {
         lte(bookings.startDate, queryEndDate),
       ),
       columns: {
+        pickupAddress: true,
         startDate: true,
         startTime: true,
         endDate: true,
@@ -806,11 +858,13 @@ export const bookingRepository = {
           columns: {
             vehicleNumber: true,
             vehiclePhotoUrl: true,
+            type: true,
           },
         },
         customer: {
           columns: {
             name: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -839,6 +893,7 @@ export const bookingRepository = {
         ]),
       ),
       columns: {
+        pickupAddress: true,
         startDate: true,
         actualStartDate: true,
         startTime: true,
@@ -853,15 +908,25 @@ export const bookingRepository = {
           columns: {
             name: true,
           },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         customer: {
           columns: {
             name: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -898,6 +963,7 @@ export const bookingRepository = {
         ]),
       ),
       columns: {
+        pickupAddress: true,
         startDate: true,
         actualStartDate: true,
         startTime: true,
@@ -912,15 +978,25 @@ export const bookingRepository = {
           columns: {
             name: true,
           },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         customer: {
           columns: {
             name: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -979,6 +1055,7 @@ export const bookingRepository = {
         ]),
       ),
       columns: {
+        pickupAddress: true,
         startDate: true,
         actualStartDate: true,
         startTime: true,
@@ -993,15 +1070,25 @@ export const bookingRepository = {
           columns: {
             name: true,
           },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         customer: {
           columns: {
             name: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -1038,6 +1125,7 @@ export const bookingRepository = {
         ]),
       ),
       columns: {
+        pickupAddress: true,
         startDate: true,
         actualStartDate: true,
         startTime: true,
@@ -1052,15 +1140,25 @@ export const bookingRepository = {
           columns: {
             name: true,
           },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         customer: {
           columns: {
             name: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -1212,6 +1310,8 @@ export const bookingRepository = {
         estimatedTotalAmount: true,
         passengers: true,
         startDate: true,
+        endDate: true,
+        createdAt: true,
         type: true,
         id: true,
       },
@@ -1256,6 +1356,7 @@ export const bookingRepository = {
           columns: {
             vehicleNumber: true,
             vehiclePhotoUrl: true,
+            type: true,
           },
         },
       },

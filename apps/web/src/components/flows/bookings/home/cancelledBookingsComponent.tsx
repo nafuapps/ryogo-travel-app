@@ -6,9 +6,9 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindCancelledBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
-  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Switch } from "@/components/ui/switch"
@@ -31,13 +31,13 @@ export default function CancelledBookingsComponent({
   return (
     <SectionWrapper id="cancelledBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={BookX} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {trips.length}
           </RyogoSmall>
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyCancelled")}</RyogoCaption>
           <Switch
@@ -46,9 +46,11 @@ export default function CancelledBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      {trips.map((trip) => (
-        <CancelledBookingCard key={trip.id} cancelled={trip} />
-      ))}
+      <TileGridWrapper>
+        {trips.map((trip) => (
+          <CancelledBookingCard key={trip.id} booking={trip} />
+        ))}
+      </TileGridWrapper>
     </SectionWrapper>
   )
 }

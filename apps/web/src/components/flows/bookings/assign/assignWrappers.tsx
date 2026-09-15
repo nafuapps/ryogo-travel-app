@@ -81,7 +81,7 @@ export function AssignTileStatusWrapper({
   )
 }
 
-const BestTotalScore = 100
+const BestTotalScore = 98
 const GoodTotalScore = 80
 const MediumTotalScore = 60
 const BadTotalScore = 30

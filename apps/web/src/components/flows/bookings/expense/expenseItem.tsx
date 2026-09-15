@@ -23,7 +23,7 @@ export default async function ExpenseItem({
   const t = await getTranslations("Dashboard.BookingExpenses")
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <div
         className={`flex flex-row ${
           expense.expensePhotoUrl ? "rounded-t-lg" : "rounded-lg"

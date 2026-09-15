@@ -22,7 +22,7 @@ export default async function RiderExpenseItem({
   const t = await getTranslations("Rider.MyBooking.Expense")
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <div
         className={`flex flex-row border border-slate-100 dark:border-slate-800 ${
           expense.expensePhotoUrl ? "rounded-t-lg" : "rounded-lg"

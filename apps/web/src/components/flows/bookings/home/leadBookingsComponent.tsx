@@ -1,18 +1,14 @@
 "use client"
 
-import { RyogoSmall, RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { BookOpenText } from "lucide-react"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import { useState } from "react"
-import moment from "moment"
 import { FindLeadBookingsType } from "@ryogo-travel-app/api/services/booking.services"
 import {
-  GridItemWrapper,
-  HoverGridWrapper,
-  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Switch } from "@/components/ui/switch"
@@ -35,13 +31,13 @@ export default function LeadBookingsComponent({
   return (
     <SectionWrapper id="leadsBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={BookOpenText} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {selectedLeadBookings.length}
           </RyogoSmall>
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyLeads")}</RyogoCaption>
           <Switch
@@ -50,9 +46,11 @@ export default function LeadBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      {selectedLeadBookings.map((trip) => (
-        <LeadBookingCard key={trip.id} lead={trip} />
-      ))}
+      <TileGridWrapper>
+        {selectedLeadBookings.map((trip) => (
+          <LeadBookingCard key={trip.id} booking={trip} />
+        ))}
+      </TileGridWrapper>
     </SectionWrapper>
   )
 }

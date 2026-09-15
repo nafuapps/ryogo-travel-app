@@ -11,7 +11,7 @@ import { TripLogStatusPill } from "@/components/pills/ryogoPills"
 import {
   GridItemWrapper,
   HoverGridWrapper,
-  SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -26,13 +26,13 @@ export default async function OnTripVehiclesComponent({
 
   return (
     <SectionWrapper id="OnTripVehiclesSection">
-      <SectionHeaderWrapper>
+      <SectionRowWrapper className="items-center">
         <RyogoIcon icon={Route} size="sm" color="light" />
         <RyogoSmall color="light">{t("Title")}</RyogoSmall>
         <RyogoSmall color="light" weight="font-bold">
           {onTripVehicles.length}
         </RyogoSmall>
-      </SectionHeaderWrapper>
+      </SectionRowWrapper>
       {onTripVehicles.map((vehicle) => (
         <OnTripVehicleComponent key={vehicle.id} {...vehicle} />
       ))}

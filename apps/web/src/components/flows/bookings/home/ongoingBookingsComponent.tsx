@@ -4,9 +4,9 @@ import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
 import {
-  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { OngoingBookingCard } from "@/components/flows/bookings/cards/bookingCards"
@@ -31,13 +31,13 @@ export default function OngoingBookingsComponent({
   return (
     <SectionWrapper id="OngoingBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={Route} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {trips.length}
           </RyogoSmall>
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyOngoing")}</RyogoCaption>
           <Switch
@@ -46,9 +46,11 @@ export default function OngoingBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      {trips.map((trip) => (
-        <OngoingBookingCard key={trip.id} booking={trip} />
-      ))}
+      <TileGridWrapper>
+        {trips.map((trip) => (
+          <OngoingBookingCard key={trip.id} booking={trip} />
+        ))}
+      </TileGridWrapper>
     </SectionWrapper>
   )
 }

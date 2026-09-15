@@ -210,18 +210,6 @@ export function SectionColWrapper({
   )
 }
 
-export function SectionHeaderWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-row items-center my-0.5 lg:my-1 gap-2 lg:gap-3">
-      {children}
-    </div>
-  )
-}
-
 export function HoverGridWrapper({
   children,
   hasChin,
@@ -233,7 +221,7 @@ export function HoverGridWrapper({
 }) {
   return (
     <div
-      className={`grid ${highlight ? "bg-slate-900 dark:bg-slate-50 hover:bg-slate-800 dark:hover:bg-slate-100" : "border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
+      className={`empty:hidden grid ${highlight ? "bg-slate-900 dark:bg-slate-50 hover:bg-slate-800 dark:hover:bg-slate-100" : "border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
     >
       {children}
     </div>
@@ -248,7 +236,7 @@ export function PlainGridWrapper({
 }) {
   return (
     <div
-      className={`grid border border-slate-100 dark:border-slate-800  ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
+      className={`empty:hidden grid border border-slate-100 dark:border-slate-800  ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
     >
       {children}
     </div>
@@ -257,7 +245,7 @@ export function PlainGridWrapper({
 
 export function GridItemWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-0.5 lg:gap-1 items-start justify-start sm:items-center sm:justify-center">
+    <div className="empty:hidden flex flex-col gap-0.5 lg:gap-1 items-start justify-start sm:items-center sm:justify-center">
       {children}
     </div>
   )
@@ -272,7 +260,7 @@ export function StickyActionWrapper({
 }) {
   return (
     <div
-      className={`flex flex-col gap-2 lg:gap-3 py-2 lg:py-3 sticky mt-auto bottom-0 ${bgTransparent ? "bg-transparent" : "bg-slate-100 dark:bg-slate-950 border-t"}`}
+      className={`empty:hidden flex flex-col gap-2 lg:gap-3 py-2 lg:py-3 sticky mt-auto bottom-0 ${bgTransparent ? "bg-transparent" : "bg-slate-100 dark:bg-slate-950 border-t"}`}
     >
       {children}
     </div>
@@ -281,7 +269,7 @@ export function StickyActionWrapper({
 
 export function TileGridWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+    <div className="empty:hidden grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
       {children}
     </div>
   )
@@ -293,7 +281,7 @@ export function DetailsBorderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="border flex flex-col rounded-md overflow-hidden self-center">
+    <div className="empty:hidden border flex flex-col rounded-md overflow-hidden self-center">
       {children}
     </div>
   )
@@ -305,7 +293,9 @@ export function DetailsContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col">{children}</div>
+    <div className="empty:hidden p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col">
+      {children}
+    </div>
   )
 }
 
@@ -315,7 +305,7 @@ export function DetailsHeaderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 lg:gap-4 px-3 lg:px-4 py-2 lg:py-3 bg-slate-200 dark:bg-slate-800">
+    <div className="empty:hidden flex items-center justify-between gap-3 lg:gap-4 px-3 lg:px-4 py-2 lg:py-3 bg-slate-200 dark:bg-slate-800">
       {children}
     </div>
   )

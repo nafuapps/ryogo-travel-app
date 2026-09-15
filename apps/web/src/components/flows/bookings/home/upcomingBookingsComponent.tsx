@@ -6,9 +6,9 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindUpcomingBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
-  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { UpcomingBookingCard } from "@/components/flows/bookings/cards/bookingCards"
@@ -32,13 +32,13 @@ export default function UpcomingBookingsComponent({
   return (
     <SectionWrapper id="UpcomingBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={Clock} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {trips.length}
           </RyogoSmall>
-        </SectionHeaderWrapper>
+        </SectionRowWrapper>
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyUpcoming")}</RyogoCaption>
           <Switch
@@ -47,9 +47,11 @@ export default function UpcomingBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      {trips.map((trip) => (
-        <UpcomingBookingCard key={trip.id} booking={trip} />
-      ))}
+      <TileGridWrapper>
+        {trips.map((trip) => (
+          <UpcomingBookingCard key={trip.id} booking={trip} />
+        ))}
+      </TileGridWrapper>
     </SectionWrapper>
   )
 }

@@ -113,7 +113,7 @@ export default function NewBookingFinal({
       >
         <NewBookingTripCard {...newBookingFormData} />
         <FormContentWrapper>
-          <SectionRowWrapper>
+          <SectionRowWrapper className="items-center justify-between">
             <IconTextTag icon={Car} text={t("VehicleCharge")} />
             <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
@@ -128,7 +128,7 @@ export default function NewBookingFinal({
             </SectionColWrapper>
           </SectionRowWrapper>
           {newBookingFormData.tripNeedsAC && (
-            <SectionRowWrapper>
+            <SectionRowWrapper className="items-center justify-between">
               <IconTextTag icon={AirVent} text={t("ACCharge")} />
               <SectionColWrapper small className="items-end">
                 <RyogoSmall weight="font-bold">
@@ -143,7 +143,7 @@ export default function NewBookingFinal({
               </SectionColWrapper>
             </SectionRowWrapper>
           )}
-          <SectionRowWrapper>
+          <SectionRowWrapper className="items-center justify-between">
             <IconTextTag icon={IdCard} text={t("DriverAllowance")} />
             <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
@@ -157,7 +157,7 @@ export default function NewBookingFinal({
               </RyogoCaption>
             </SectionColWrapper>
           </SectionRowWrapper>
-          <SectionRowWrapper>
+          <SectionRowWrapper className="items-center justify-between">
             <IconTextTag icon={CirclePercent} text={t("Commission")} />
             <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
@@ -169,7 +169,7 @@ export default function NewBookingFinal({
             </SectionColWrapper>
           </SectionRowWrapper>
         </FormContentWrapper>
-        <SectionRowWrapper>
+        <SectionRowWrapper className="items-center justify-between">
           <RyogoH4>{t("TotalAmount")}</RyogoH4>
           <RyogoH3>{"₹" + finalAmount.totalAmount}</RyogoH3>
         </SectionRowWrapper>

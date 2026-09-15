@@ -12,7 +12,7 @@ import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
   GridItemWrapper,
   HoverGridWrapper,
-  SectionHeaderWrapper,
+  SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
@@ -29,7 +29,7 @@ export default async function AllVehiclesListComponent({
 
   return (
     <SectionWrapper id="AllVehiclesSection">
-      <SectionHeaderWrapper>
+      <SectionRowWrapper className="items-center">
         <RyogoIcon icon={Rows3} size="sm" color="light" />
         <RyogoSmall color="light">{t("Title")}</RyogoSmall>
         <RyogoSmall color="light" weight="font-bold">
@@ -40,7 +40,7 @@ export default async function AllVehiclesListComponent({
             <RyogoIcon icon={Plus} size="sm" color="slate" />
           </RyogoOutlineButton>
         </Link>
-      </SectionHeaderWrapper>
+      </SectionRowWrapper>
       {allVehicles.map((vehicle) => (
         <AllVehiclesItemComponent key={vehicle.id} vehicle={vehicle} />
       ))}

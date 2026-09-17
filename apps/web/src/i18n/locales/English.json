@@ -1767,7 +1767,6 @@
       "Repairs": "Repairs"
     },
     "VehicleDetails": {
-      "Photo": "Vehicle photo",
       "ChangeVehiclePhoto": {
         "Button": "Change Photo",
         "Subtitle": "Upload a vehicle display picture",
@@ -1781,21 +1780,56 @@
         "Success": "Vehicle photo updated successfully!",
         "Error": "Cannot upload photo.. please try again after some time."
       },
+      "ChangeDocument": {
+        "Field1": {
+          "Title": "Document expiry date",
+          "Placeholder": "Select date",
+          "Description": "Provide document expiry date",
+          "Error1": "Providing expiry date is mandatory",
+          "Error2": "Document should not be expired"
+        },
+        "Field2": {
+          "Title": "Document photo",
+          "Placeholder": "UPLOAD",
+          "Description": "Upload document photo",
+          "Error2": "File size should be less than 500kb",
+          "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
+        },
+        "ButtonRC": "Update RC",
+        "ButtonPUC": "Update PUC",
+        "ButtonInsurance": "Update Insurance",
+        "SubtitleRC": "Change vehicle registration details",
+        "SubtitlePUC": "Change vehicle pollution certificate details",
+        "SubtitleInsurance": "Change vehicle insurance details",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Vehicle document updated successfully!",
+        "Error": "Cannot update vehicle document.. please try again after some time."
+      },
+      "VehicleId": "Vehicle ID",
+      "Added": "Added",
+      "Type": "Type",
+      "Brand": "Brand",
+      "Model": "Model",
+      "Color": "Color",
       "AC": "AC",
-      "NonAC": "Non AC",
-      "Capacity": "{capacity} seater",
-      "Odometer": "{odometer} Km",
-      "NumberRatings": "[{number}]",
+      "Yes": "Yes",
+      "No": "No",
+      "Capacity": "Capacity",
+      "Seater": "{capacity} seater",
+      "Odometer": "Odometer",
+      "Reading": "{odometer} Km",
+      "Rating": "Customer Rating",
+      "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
       "PolicyInfo": "Policy info",
       "Insurance": "Insurance",
-      "InsurancePhoto": "Insurance Photo",
       "PUC": "PUC",
-      "PUCPhoto": "PUC Photo",
       "RC": "Registration",
-      "RCPhoto": "RC Photo",
-      "ValidTill": "Valid till: ",
+      "ValidTill": "Valid till",
       "AgencyInfo": "Agency related info",
-      "ACCharge": "AC ₹{ac}/day",
+      "ACCharge": "Default AC Charge",
+      "ChargePerDay": "₹{charge}/day",
+      "Rate": "Default vehicle rate",
       "RatePerKm": "₹{rate}/Km",
       "EditDetails": {
         "Title": "Edit Details",
@@ -1847,45 +1881,6 @@
         "Error5": "Odometer must be a positive number"
       },
       "Field7": {
-        "Title": "Registration expiry date",
-        "Placeholder": "Select date",
-        "Description": "Provide Registration certificate expiry date",
-        "Error2": "RC should not be expired"
-      },
-      "Field8": {
-        "Title": "RC Photo",
-        "Placeholder": "UPLOAD RC",
-        "Description": "Upload photo of vehicle registration certificate",
-        "Error2": "File size should be less than 500kb",
-        "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
-      },
-      "Field9": {
-        "Title": "Insurance expiry date",
-        "Placeholder": "Select date",
-        "Description": "Provide vehicle insurance policy expiry date",
-        "Error2": "Insurance should not be expired"
-      },
-      "Field10": {
-        "Title": "Insurance policy photo",
-        "Placeholder": "UPLOAD",
-        "Description": "Upload insurance policy photo",
-        "Error2": "File size should be less than 500kb",
-        "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
-      },
-      "Field11": {
-        "Title": "PUC expiry date",
-        "Placeholder": "Select date",
-        "Description": "Provide PUC certificate expiry date",
-        "Error2": "PUC should not be expired"
-      },
-      "Field12": {
-        "Title": "PUC certificate photo",
-        "Placeholder": "UPLOAD",
-        "Description": "Upload Pollution Under Control Certificate photo",
-        "Error2": "File size should be less than 500kb",
-        "Error3": "Only image files are allowed (.jpg, .jpeg, .png)"
-      },
-      "Field13": {
         "Title": "Vehicle rate per Km (in ₹)",
         "Placeholder": "18",
         "Description": "How much do you charge for the vehicle per Km? This will be used to calculate the booking quote for the customer.",
@@ -1895,10 +1890,10 @@
         "Error4": "Vehicle rate cannot be in decimals",
         "Error5": "Vehicle rate must be a positive number"
       },
-      "Field14": {
+      "Field8": {
         "Title": "Vehicle has AC?"
       },
-      "Field15": {
+      "Field9": {
         "Title": "AC charge per day (in ₹)",
         "Placeholder": "1000",
         "Description": "Based on customer's AC preference, this per day charge will be added to the booking quote.",
@@ -1997,7 +1992,6 @@
     "Drivers": {
       "All": {
         "Title": "ALL DRIVERS",
-        "Photo": "Driver photo",
         "AllowancePerDay": "₹{allowance}/day",
         "AddDriver": "Add Driver"
       },
@@ -2286,7 +2280,6 @@
       "All": {
         "Title": "ALL CUSTOMERS",
         "AddCustomer": "Add customer",
-        "Photo": "View customer photo",
         "Search": "Search",
         "Clear": "Clear",
         "Type": "Type to search"
@@ -2388,7 +2381,6 @@
       "SecondaryCTA": "Back"
     },
     "CustomerDetails": {
-      "Photo": "View customer photo",
       "ChangeCustomerPhoto": {
         "Button": "Change Photo",
         "Subtitle": "Upload a customer display picture",
@@ -2436,6 +2428,7 @@
       "Phone": "Phone",
       "Joined": "Joined",
       "Role": "Role",
+      "Admin": "AGENCY ADMIN",
       "ChangePhone": {
         "Title": "Change Phone",
         "Subtitle": "Your phone number is crucial for account login and communication"
@@ -4327,7 +4320,6 @@
       "Activity": "Activity"
     },
     "Users": {
-      "Photo": "User photo",
       "Owners": {
         "Title": "OWNERS",
         "AddOwner": "Add Owner"
@@ -4342,11 +4334,12 @@
       }
     },
     "UserDetails": {
-      "LastSeen": "Last seen {time}",
-      "Away": "Away",
-      "Online": "Online",
-      "Offline": "Offline",
-      "Photo": "User photo",
+      "UserOnlineStatus": {
+        "LastSeen": "Last seen {time}",
+        "Away": "Away",
+        "Online": "Online",
+        "Offline": "Offline"
+      },
       "Admin": " (Admin)",
       "CallUser": "Call User",
       "ChatUser": {
@@ -5229,7 +5222,6 @@
       }
     },
     "MyVehicle": {
-      "Photo": "Vehicle photo",
       "AC": "AC",
       "NonAC": "Non AC",
       "Capacity": "{capacity} seater",

@@ -430,6 +430,9 @@ export const users = pgTable(
       t.userRole,
     ), // to quickly find unique user with phone number & role in an agency
     uniqueIndex("users_phone_email_role_idx").on(t.phone, t.email, t.userRole),
+    uniqueIndex("idx_only_one_admin")
+      .on(t.isAdmin, t.agencyId)
+      .where(sql`${t.isAdmin} = true`), // to ensure only 1 admin per agency (can be 0)
     index("users_agency_idx").on(t.agencyId), // to quickly filter all users in an agency
     index("users_agency_phone_idx").on(t.phone, t.agencyId), // to quickly filter users by phone number in an agency
     index("users_agency_role_idx").on(t.userRole, t.agencyId), // to quickly filter users by role in an agency

@@ -1,7 +1,7 @@
 import { RyogoH4 } from "@/components/typography"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -19,7 +19,11 @@ export default function DriverInfoComponent({
   return (
     <SectionColWrapper className="items-center justify-center">
       {photoUrl ? (
-        <RyogoImage src={getFileUrl(photoUrl)} alt={photoUrl} imageSize="lg" />
+        <RyogoDialogImage
+          src={getFileUrl(photoUrl)}
+          alt={photoUrl}
+          imageSize="lg"
+        />
       ) : (
         <RyogoEnclosedIcon icon={User} size="xl" />
       )}

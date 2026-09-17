@@ -33,6 +33,7 @@ export type SessionPayloadType = {
   status: UserStatusEnum
   updatedAt: Date
   expiresAt: Date
+  locatedAt: Date | null
 }
 
 //Encrypt session data into a JWT
@@ -105,6 +106,7 @@ export async function createWebSession(user: SelectUserType) {
     name: user.name,
     phone: user.phone,
     status: user.status,
+    locatedAt: user.locatedAt,
     updatedAt: new Date(),
     expiresAt,
   }
@@ -159,6 +161,7 @@ export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
     name: user.name,
     phone: user.phone,
     status: user.status,
+    locatedAt: user.locatedAt,
     updatedAt: user.lastSeen ?? new Date(), //Updated now
   }
   return await encrypt(updatedPayload)

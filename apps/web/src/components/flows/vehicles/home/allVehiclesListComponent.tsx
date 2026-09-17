@@ -82,7 +82,6 @@ async function VehicleItemComponent({
         </SectionColWrapper>
         <SectionColWrapper className="items-end">
           <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
-
           <RyogoCaption color="light">
             {t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
           </RyogoCaption>

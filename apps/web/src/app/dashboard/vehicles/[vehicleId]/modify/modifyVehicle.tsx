@@ -16,8 +16,6 @@ import { modifyVehicleAction } from "@/app/actions/vehicles/modifyVehicleAction"
 import {
   RyogoSelect,
   RyogoInput,
-  RyogoDatePicker,
-  RyogoFileInput,
   RyogoSwitch,
 } from "@/components/form/ryogoFormFields"
 import {
@@ -27,13 +25,11 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
-  MAX_FILE_UPLOAD_SIZE,
   MAX_NAME_LENGTH,
   MAX_ODOMETER_LIMIT,
   MAX_PER_DAY_CHARGE,
@@ -74,58 +70,19 @@ export default function ModifyVehiclePageComponent({
       .max(MAX_ODOMETER_LIMIT, t("Field6.Error3"))
       .multipleOf(1, t("Field6.Error4"))
       .nonnegative(t("Field6.Error5")),
-    rcExpiresOn: z
-      .date()
-      .min(vehicle.rcExpiresOn ?? new Date(), t("Field7.Error2"))
-      .optional(),
-    rcPhotos: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
-    }, t("Field8.Error2"))
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
-      }, t("Field8.Error3"))
-      .optional(),
-    insuranceExpiresOn: z
-      .date()
-      .min(vehicle.insuranceExpiresOn ?? new Date(), t("Field9.Error2"))
-      .optional(),
-    insurancePhotos: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
-    }, t("Field10.Error2"))
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
-      }, t("Field10.Error3"))
-      .optional(),
-    pucExpiresOn: z
-      .date()
-      .min(vehicle.pucExpiresOn ?? new Date(), t("Field11.Error2"))
-      .optional(),
-    pucPhotos: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
-    }, t("Field12.Error2"))
-      .refine((file) => {
-        if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
-      }, t("Field12.Error3"))
-      .optional(),
     defaultRatePerKm: z.coerce
-      .number<number>(t("Field13.Error1"))
-      .min(MIN_VEHICLE_RATE, t("Field13.Error2"))
-      .max(MAX_VEHICLE_RATE, t("Field13.Error3"))
-      .nonnegative(t("Field13.Error4"))
-      .multipleOf(1, t("Field13.Error5")),
+      .number<number>(t("Field7.Error1"))
+      .min(MIN_VEHICLE_RATE, t("Field7.Error2"))
+      .max(MAX_VEHICLE_RATE, t("Field7.Error3"))
+      .nonnegative(t("Field7.Error4"))
+      .multipleOf(1, t("Field7.Error5")),
     hasAC: z.boolean(),
     defaultAcChargePerDay: z.coerce
-      .number<number>(t("Field15.Error1"))
-      .min(MIN_PER_DAY_CHARGE, t("Field15.Error2"))
-      .max(MAX_PER_DAY_CHARGE, t("Field15.Error3"))
-      .nonnegative(t("Field15.Error4"))
-      .multipleOf(1, t("Field15.Error5")),
+      .number<number>(t("Field9.Error1"))
+      .min(MIN_PER_DAY_CHARGE, t("Field9.Error2"))
+      .max(MAX_PER_DAY_CHARGE, t("Field9.Error3"))
+      .nonnegative(t("Field9.Error4"))
+      .multipleOf(1, t("Field9.Error5")),
   })
 
   type ModifyVehicleType = z.infer<typeof modifyVehicleSchema>
@@ -139,9 +96,6 @@ export default function ModifyVehiclePageComponent({
       model: vehicle.model,
       capacity: vehicle.capacity,
       odometerReading: vehicle.odometerReading,
-      rcExpiresOn: vehicle.rcExpiresOn ?? undefined,
-      insuranceExpiresOn: vehicle.insuranceExpiresOn ?? undefined,
-      pucExpiresOn: vehicle.pucExpiresOn ?? undefined,
       defaultRatePerKm: vehicle.defaultRatePerKm,
       hasAC: vehicle.hasAC,
       defaultAcChargePerDay: vehicle.defaultAcChargePerDay,
@@ -167,12 +121,6 @@ export default function ModifyVehiclePageComponent({
       defaultRatePerKm: data.defaultRatePerKm,
       hasAC: data.hasAC,
       defaultAcChargePerDay: data.defaultAcChargePerDay,
-      rcExpiresOn: data.rcExpiresOn,
-      pucExpiresOn: data.pucExpiresOn,
-      insuranceExpiresOn: data.insuranceExpiresOn,
-      rcPhotos: data.rcPhotos,
-      pucPhotos: data.pucPhotos,
-      insurancePhotos: data.insurancePhotos,
     }
     const modifiedVehicle = await modifyVehicleAction(modifyVehicleData)
     if (modifiedVehicle) {
@@ -238,61 +186,20 @@ export default function ModifyVehiclePageComponent({
           />
         </FormContentWrapper>
         <FormContentWrapper>
-          <RyogoDatePicker
-            name="rcExpiresOn"
+          <RyogoInput
+            name={"defaultRatePerKm"}
+            type="tel"
             label={t("Field7.Title")}
             placeholder={t("Field7.Placeholder")}
             description={t("Field7.Description")}
           />
-          <RyogoFileInput
-            name={"rcPhotos"}
-            register={form.register("rcPhotos")}
-            label={t("Field8.Title")}
-            placeholder={t("Field8.Placeholder")}
-            description={t("Field8.Description")}
-          />
-          <RyogoDatePicker
-            name="insuranceExpiresOn"
-            label={t("Field9.Title")}
-            placeholder={t("Field9.Placeholder")}
-            description={t("Field9.Description")}
-          />
-          <RyogoFileInput
-            name={"insurancePhotos"}
-            register={form.register("insurancePhotos")}
-            label={t("Field10.Title")}
-            placeholder={t("Field10.Placeholder")}
-            description={t("Field10.Description")}
-          />
-          <RyogoDatePicker
-            name="pucExpiresOn"
-            label={t("Field11.Title")}
-            placeholder={t("Field11.Placeholder")}
-            description={t("Field11.Description")}
-          />
-          <RyogoFileInput
-            name={"pucPhotos"}
-            register={form.register("pucPhotos")}
-            label={t("Field12.Title")}
-            placeholder={t("Field12.Placeholder")}
-            description={t("Field12.Description")}
-          />
-        </FormContentWrapper>
-        <FormContentWrapper>
-          <RyogoInput
-            name={"defaultRatePerKm"}
-            type="tel"
-            label={t("Field13.Title")}
-            placeholder={t("Field13.Placeholder")}
-            description={t("Field13.Description")}
-          />
-          <RyogoSwitch name={"hasAC"} label={t("Field14.Title")} />
+          <RyogoSwitch name={"hasAC"} label={t("Field8.Title")} />
           <RyogoInput
             name={"defaultAcChargePerDay"}
             type="tel"
-            label={t("Field15.Title")}
-            placeholder={t("Field15.Placeholder")}
-            description={t("Field15.Description")}
+            label={t("Field9.Title")}
+            placeholder={t("Field9.Placeholder")}
+            description={t("Field9.Description")}
             disabled={!acWatch}
           />
         </FormContentWrapper>

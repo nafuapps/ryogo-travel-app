@@ -4,7 +4,7 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Building, MapPin } from "lucide-react"
 import { AgencyStatusPill } from "@/components/pills/ryogoPills"
@@ -26,7 +26,11 @@ export default function AgencyInfoComponent({
   return (
     <SectionColWrapper className="items-center justify-center">
       {logoUrl ? (
-        <RyogoImage src={getFileUrl(logoUrl)} alt={logoUrl} imageSize="lg" />
+        <RyogoDialogImage
+          src={getFileUrl(logoUrl)}
+          alt={logoUrl}
+          imageSize="lg"
+        />
       ) : (
         <RyogoEnclosedIcon icon={Building} size="xl" />
       )}

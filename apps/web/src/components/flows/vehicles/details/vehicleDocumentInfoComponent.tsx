@@ -1,8 +1,8 @@
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { IdCard } from "lucide-react"
+import { WalletCards } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
@@ -11,22 +11,22 @@ import {
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 
-export default async function DriverLicenseInfoComponent({
-  licenseNumber,
+export default async function VehiclDocumentInfoComponent({
+  label,
   photoUrl,
-  licenseExpiresOn,
+  expiresOn,
 }: {
-  licenseNumber: string | null
+  label: string
   photoUrl: string | null
-  licenseExpiresOn: Date | null
+  expiresOn: Date | null
 }) {
-  const isExpired = licenseExpiresOn && licenseExpiresOn < new Date()
-  const t = await getTranslations("Dashboard.DriverDetails.License")
+  const isExpired = expiresOn && expiresOn < new Date()
+  const t = await getTranslations("Dashboard.VehicleDetails")
 
   return (
     <SectionColWrapper className="items-center justify-center">
       <RyogoCaption color="light" weight="font-bold">
-        {t("Title")}
+        {label}
       </RyogoCaption>
       {photoUrl ? (
         <RyogoDialogImage
@@ -35,11 +35,10 @@ export default async function DriverLicenseInfoComponent({
           imageSize="lg"
         />
       ) : (
-        <RyogoEnclosedIcon icon={IdCard} size="lg" />
+        <RyogoEnclosedIcon icon={WalletCards} size="lg" />
       )}
       <SectionColWrapper small className="items-center">
-        {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
-        {licenseExpiresOn && (
+        {expiresOn && (
           <DetailsBorderWrapper>
             <DetailsHeaderWrapper>
               <RyogoCaption color="light" className="text-center grow">
@@ -51,7 +50,7 @@ export default async function DriverLicenseInfoComponent({
                 color={isExpired ? "red" : "slate"}
                 className="text-center"
               >
-                {moment(licenseExpiresOn).format("DD MMM YYYY")}
+                {moment(expiresOn).format("DD MMM YYYY")}
               </RyogoCaption>
             </div>
           </DetailsBorderWrapper>

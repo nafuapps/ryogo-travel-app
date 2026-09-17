@@ -117,7 +117,7 @@ export function VehicleStatusPill(
     case VehicleStatusEnum.SUSPENDED:
       return <RyogoPill {...props} label={label} bgColor={"red"} />
     case VehicleStatusEnum.INACTIVE:
-      return <RyogoPill {...props} label={label} bgColor={"slate"} />
+      return <RyogoPill {...props} label={label} bgColor={"light"} />
   }
 }
 
@@ -135,7 +135,7 @@ export function DriverStatusPill(
     case DriverStatusEnum.SUSPENDED:
       return <RyogoPill {...props} label={label} bgColor={"red"} />
     case DriverStatusEnum.INACTIVE:
-      return <RyogoPill {...props} label={label} bgColor={"slate"} />
+      return <RyogoPill {...props} label={label} bgColor={"light"} />
   }
 }
 
@@ -151,7 +151,7 @@ export function AgencyStatusPill(
     case AgencyStatusEnum.SUSPENDED:
       return <RyogoPill {...props} label={label} bgColor={"red"} />
     case AgencyStatusEnum.NEW:
-      return <RyogoPill {...props} label={label} bgColor={"slate"} />
+      return <RyogoPill {...props} label={label} bgColor={"light"} />
   }
 }
 
@@ -167,7 +167,7 @@ export function UserStatusPill(
     case UserStatusEnum.SUSPENDED:
       return <RyogoPill {...props} label={label} bgColor={"red"} />
     case UserStatusEnum.NEW:
-      return <RyogoPill {...props} label={label} bgColor={"slate"} />
+      return <RyogoPill {...props} label={label} bgColor={"light"} />
   }
 }
 

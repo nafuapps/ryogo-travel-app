@@ -20,11 +20,12 @@ import { useRouter } from "next/navigation"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { Camera } from "lucide-react"
 
 export default function ChangeVehiclePhotoSheet({
   vehicleId,
@@ -69,7 +70,11 @@ export default function ChangeVehiclePhotoSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <RyogoGhostButton className="w-full" label={t("Button")} />
+        <RyogoDetailedIconButton
+          label={t("Button")}
+          icon={Camera}
+          subtitle={t("Subtitle")}
+        />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

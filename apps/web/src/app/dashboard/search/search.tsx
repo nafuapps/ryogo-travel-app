@@ -512,7 +512,7 @@ function DriverSearchResultItem({
           {driver.user.photoUrl ? (
             <RyogoImage
               src={getFileUrl(driver.user.photoUrl)}
-              alt={t("Photo") + " " + driver.id}
+              alt={driver.name}
               imageSize="sm"
             />
           ) : (
@@ -551,7 +551,7 @@ function CustomerSearchResultItem({
           {customer.photoUrl ? (
             <RyogoImage
               src={getFileUrl(customer.photoUrl)}
-              alt={t("Photo") + " " + customer.id}
+              alt={customer.name}
               imageSize="sm"
             />
           ) : (
@@ -592,7 +592,7 @@ function VehicleSearchResultItem({
           {vehicle.vehiclePhotoUrl ? (
             <RyogoImage
               src={getFileUrl(vehicle.vehiclePhotoUrl)}
-              alt={t("Photo") + " " + vehicle.vehicleNumber}
+              alt={vehicle.vehicleNumber}
               imageSize="sm"
             />
           ) : (

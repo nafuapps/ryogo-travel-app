@@ -8,7 +8,7 @@ import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
 import { MailPen, KeyRound, Phone } from "lucide-react"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import UserInfoComponent from "@/components/flows/account/userInfoComponent"
+import AccountInfoComponent from "@/components/flows/account/accountInfoComponent"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
@@ -24,7 +24,7 @@ export default async function AccountPageComponent({
     <PageWrapper id="AccountPage">
       <AccountDetailHeaderTabs selectedTab="Account" />
       <GridWrapper id="AccountDetails">
-        <UserInfoComponent
+        <AccountInfoComponent
           photoUrl={account.photoUrl}
           name={account.name}
           agencyName={account.agency.businessName}
@@ -36,6 +36,7 @@ export default async function AccountPageComponent({
           phone={account.phone}
           email={account.email}
           createdAt={account.createdAt}
+          isAdmin={account.isAdmin}
         />
       </GridWrapper>
       <GridWrapper id="AccountActions">

@@ -45,7 +45,7 @@ export default async function RiderMyVehiclePageComponent({
             {vehicle.vehiclePhotoUrl ? (
               <RyogoImage
                 src={getFileUrl(vehicle.vehiclePhotoUrl)}
-                alt={t("Photo")}
+                alt={vehicle.vehicleNumber}
                 imageSize="lg"
               />
             ) : (

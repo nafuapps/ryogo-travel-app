@@ -15,7 +15,9 @@ export async function changeUserPhotoAction(
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
+    (![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
+      currentUser.userRole,
+    ) &&
       currentUser.userId !== userId) ||
     currentUser.agencyId !== agencyId ||
     !photo[0]

@@ -251,15 +251,9 @@ export const vehicleRepository = {
     model?: string,
     capacity?: number,
     odometerReading?: number,
-    rcExpiresOn?: Date,
-    pucExpiresOn?: Date,
-    insuranceExpiresOn?: Date,
     hasAC?: boolean,
     defaultRatePerKm?: number,
     defaultAcChargePerDay?: number,
-    rcPhotoUrl?: string,
-    pucPhotoUrl?: string,
-    insurancePhotoUrl?: string,
   ) {
     return await db
       .update(vehicles)
@@ -270,15 +264,9 @@ export const vehicleRepository = {
         model,
         capacity,
         odometerReading,
-        rcExpiresOn,
-        pucExpiresOn,
-        insuranceExpiresOn,
-        defaultRatePerKm,
         hasAC,
+        defaultRatePerKm,
         defaultAcChargePerDay,
-        rcPhotoUrl,
-        pucPhotoUrl,
-        insurancePhotoUrl,
       })
       .where(eq(vehicles.id, id))
       .returning()
@@ -295,12 +283,72 @@ export const vehicleRepository = {
     return await db
       .update(vehicles)
       .set({
-        rcPhotoUrl: rcPhotoUrl,
-        pucPhotoUrl: pucPhotoUrl,
-        insurancePhotoUrl: insurancePhotoUrl,
-        vehiclePhotoUrl: vehiclePhotoUrl,
+        rcPhotoUrl,
+        pucPhotoUrl,
+        insurancePhotoUrl,
+        vehiclePhotoUrl,
       })
       .where(eq(vehicles.id, vehicleId))
+  },
+
+  async updateRCDetails(
+    vehicleId: string,
+    rcExpiresOn?: Date,
+    rcPhotoUrl?: string,
+  ) {
+    return await db
+      .update(vehicles)
+      .set({
+        rcExpiresOn,
+        rcPhotoUrl,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({
+        id: vehicles.id,
+        vehicleNumber: vehicles.vehicleNumber,
+        rcExpiresOn: vehicles.rcExpiresOn,
+        rcPhotoUrl: vehicles.rcPhotoUrl,
+      })
+  },
+
+  async updatePUCDetails(
+    vehicleId: string,
+    pucExpiresOn?: Date,
+    pucPhotoUrl?: string,
+  ) {
+    return await db
+      .update(vehicles)
+      .set({
+        pucExpiresOn,
+        pucPhotoUrl,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({
+        id: vehicles.id,
+        vehicleNumber: vehicles.vehicleNumber,
+        pucExpiresOn: vehicles.pucExpiresOn,
+        pucPhotoUrl: vehicles.pucPhotoUrl,
+      })
+  },
+
+  async updateInsuranceDetails(
+    vehicleId: string,
+    insuranceExpiresOn?: Date,
+    insurancePhotoUrl?: string,
+  ) {
+    return await db
+      .update(vehicles)
+      .set({
+        insuranceExpiresOn,
+        insurancePhotoUrl,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({
+        id: vehicles.id,
+        vehicleNumber: vehicles.vehicleNumber,
+        insuranceExpiresOn: vehicles.insuranceExpiresOn,
+        insurancePhotoUrl: vehicles.insurancePhotoUrl,
+      })
   },
 
   //Update vehicle photo Url

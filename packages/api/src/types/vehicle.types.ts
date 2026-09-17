@@ -37,13 +37,16 @@ export type ModifyVehicleRequestType = {
   model?: string
   capacity?: number
   odometerReading?: number
-  rcExpiresOn?: Date
-  insuranceExpiresOn?: Date
-  pucExpiresOn?: Date
   defaultRatePerKm?: number
   hasAC?: boolean
   defaultAcChargePerDay?: number
-  rcPhotos?: FileList
-  pucPhotos?: FileList
-  insurancePhotos?: FileList
+}
+
+export type ChangeVehicleDocumentRequestType = {
+  vehicleId: string
+  agencyId: string
+  addedByUserId: string
+  type: "rc" | "insurance" | "puc"
+  expiresOn?: Date
+  photo?: FileList
 }

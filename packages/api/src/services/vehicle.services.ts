@@ -8,6 +8,7 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import {
   AddVehicleRequestType,
+  ChangeVehicleDocumentRequestType,
   ModifyVehicleRequestType,
 } from "../types/vehicle.types"
 import { bookingRepository } from "../repositories/booking.repo"
@@ -159,12 +160,7 @@ export const vehicleServices = {
   },
 
   //Modify vehicle details
-  async modifyVehicle(
-    data: ModifyVehicleRequestType,
-    rcPhotoUrl?: string,
-    pucPhotoUrl?: string,
-    insurancePhotoUrl?: string,
-  ) {
+  async modifyVehicle(data: ModifyVehicleRequestType) {
     const vehicle = await vehicleRepository.updateVehicle(
       data.vehicleId,
       data.type,
@@ -173,15 +169,9 @@ export const vehicleServices = {
       data.model,
       data.capacity,
       data.odometerReading,
-      data.rcExpiresOn,
-      data.pucExpiresOn,
-      data.insuranceExpiresOn,
       data.hasAC,
       data.defaultRatePerKm,
       data.defaultAcChargePerDay,
-      rcPhotoUrl,
-      pucPhotoUrl,
-      insurancePhotoUrl,
     )
     return vehicle[0]
   },
@@ -201,6 +191,34 @@ export const vehicleServices = {
       insuranceURL,
       vehiclePhotoUrl,
     )
+  },
+
+  async changeVehicleDocument(
+    data: ChangeVehicleDocumentRequestType,
+    photoUrl?: string,
+  ) {
+    if (data.type === "rc") {
+      const updatedVehicle = await vehicleRepository.updateRCDetails(
+        data.vehicleId,
+        data.expiresOn,
+        photoUrl,
+      )
+      return updatedVehicle[0]
+    }
+    if (data.type === "puc") {
+      const updatedVehicle = await vehicleRepository.updatePUCDetails(
+        data.vehicleId,
+        data.expiresOn,
+        photoUrl,
+      )
+      return updatedVehicle[0]
+    }
+    const updatedVehicle = await vehicleRepository.updateInsuranceDetails(
+      data.vehicleId,
+      data.expiresOn,
+      photoUrl,
+    )
+    return updatedVehicle[0]
   },
 
   //Update Vehicle photo URL

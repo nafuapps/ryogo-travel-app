@@ -1,22 +1,28 @@
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { User, Plus, IdCard, UserKey, UserCog } from "lucide-react"
+import {
+  User,
+  Plus,
+  IdCard,
+  UserKey,
+  UserCog,
+  ChevronRight,
+} from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import moment from "moment"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 import {
-  GridItemWrapper,
-  HoverGridWrapper,
+  AddInfoWrapper,
   PageWrapper,
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function UsersPageComponent({
   allUsers,
@@ -40,17 +46,21 @@ export default async function UsersPageComponent({
           <RyogoSmall color="light" weight="font-bold">
             {owners.length}
           </RyogoSmall>
+        </SectionRowWrapper>
+        <TileGridWrapper>
+          {owners.map((user) => (
+            <UserItemComponent key={user.id} user={user} />
+          ))}
           {isPremium && (
-            <Link href={`/dashboard/users/add-owner`} className="ml-auto">
-              <RyogoOutlineButton label={t("Owners.AddOwner")}>
-                <RyogoIcon icon={Plus} size="sm" />
-              </RyogoOutlineButton>
+            <Link href={`/dashboard/users/add-owner`} className="w-full">
+              <AddInfoWrapper
+                icon={Plus}
+                label={t("Owners.AddOwner")}
+                className="h-full justify-center"
+              />
             </Link>
           )}
-        </SectionRowWrapper>
-        {owners.map((user) => (
-          <AllUsersItemComponent key={user.id} user={user} />
-        ))}
+        </TileGridWrapper>
       </SectionWrapper>
       <SectionWrapper id="AgentsSection">
         <SectionRowWrapper className="items-center">
@@ -59,15 +69,19 @@ export default async function UsersPageComponent({
           <RyogoSmall color="light" weight="font-bold">
             {agents.length}
           </RyogoSmall>
-          <Link href={`/dashboard/users/new`} className="ml-auto">
-            <RyogoOutlineButton label={t("Agents.AddAgent")}>
-              <RyogoIcon icon={Plus} size="sm" />
-            </RyogoOutlineButton>
-          </Link>
         </SectionRowWrapper>
-        {agents.map((user) => (
-          <AllUsersItemComponent key={user.id} user={user} />
-        ))}
+        <TileGridWrapper>
+          {agents.map((user) => (
+            <UserItemComponent key={user.id} user={user} />
+          ))}
+          <Link href={`/dashboard/users/new`} className="w-full">
+            <AddInfoWrapper
+              icon={Plus}
+              label={t("Agents.AddAgent")}
+              className="h-full justify-center"
+            />
+          </Link>
+        </TileGridWrapper>
       </SectionWrapper>
       <SectionWrapper id="DriversSection">
         <SectionRowWrapper className="items-center">
@@ -76,55 +90,52 @@ export default async function UsersPageComponent({
           <RyogoSmall color="light" weight="font-bold">
             {drivers.length}
           </RyogoSmall>
-          <Link href={`/dashboard/drivers/new`} className="ml-auto">
-            <RyogoOutlineButton label={t("Drivers.AddDriver")}>
-              <RyogoIcon icon={Plus} size="sm" />
-            </RyogoOutlineButton>
-          </Link>
         </SectionRowWrapper>
-        {drivers.map((user) => (
-          <AllUsersItemComponent key={user.id} user={user} />
-        ))}
+        <TileGridWrapper>
+          {drivers.map((user) => (
+            <UserItemComponent key={user.id} user={user} />
+          ))}
+          <Link href={`/dashboard/drivers/new`} className="w-full">
+            <AddInfoWrapper
+              icon={Plus}
+              label={t("Drivers.AddDriver")}
+              className="h-full justify-center"
+            />
+          </Link>
+        </TileGridWrapper>
       </SectionWrapper>
     </PageWrapper>
   )
 }
 
-async function AllUsersItemComponent({
+async function UserItemComponent({
   user,
 }: {
   user: FindAllUsersInAgencyType[number]
 }) {
-  const t = await getTranslations("Dashboard.Users")
-
   return (
     <Link href={`/dashboard/users/${user.id}`}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          {user.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(user.photoUrl)}
-              alt={t("Photo") + " " + user.id}
-              imageSize="sm"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={User} size="md" />
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{user.phone}</RyogoCaption>
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+        {user.photoUrl ? (
+          <RyogoImage
+            src={getFileUrl(user.photoUrl)}
+            alt={user.name}
+            imageSize="md"
+          />
+        ) : (
+          <RyogoEnclosedIcon icon={User} size="lg" />
+        )}
+        <SectionColWrapper small className="w-full">
           <RyogoP weight="font-bold"> {user.name}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{user.email}</RyogoCaption>
-          <RyogoP weight="font-bold">
-            {moment(user.createdAt).format("DD MMM YYYY")}
-          </RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
+          <RyogoCaption color="light" weight="font-bold">
+            {user.phone}
+          </RyogoCaption>
+        </SectionColWrapper>
+        <SectionColWrapper className="items-end">
+          <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
           <UserStatusPill status={user.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
+        </SectionColWrapper>
+      </SectionRowWrapper>
     </Link>
   )
 }

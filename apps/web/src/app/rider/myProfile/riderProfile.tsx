@@ -7,7 +7,7 @@ import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
 import { FindUserDetailsWithDriverByIdType } from "@ryogo-travel-app/api/services/user.services"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import UserInfoComponent from "@/components/flows/account/userInfoComponent"
+import AccountInfoComponent from "@/components/flows/account/accountInfoComponent"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserDriverDetailsComponent from "@/components/flows/account/userDriverDetailsComponent"
 import UserDriverLicenseInfoComponent from "@/components/flows/account/userDriverLicenseInfoComponent"
@@ -25,7 +25,7 @@ export default async function RiderProfilePageComponent({
     <PageWrapper id="RiderProfilePage">
       <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <GridWrapper id="RiderAccountDetails">
-        <UserInfoComponent
+        <AccountInfoComponent
           photoUrl={account.photoUrl}
           name={account.name}
           agencyName={account.agency.businessName}

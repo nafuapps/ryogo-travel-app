@@ -8,6 +8,7 @@ import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
+import UserLocationTracker from "@/components/flows/account/userLocationTracker"
 
 export default async function RiderLayout({
   children,
@@ -52,6 +53,11 @@ export default async function RiderLayout({
         <LayoutSectionWrapper id="RiderMainSection">
           {children}
         </LayoutSectionWrapper>
+        <UserLocationTracker
+          userId={currentUser.userId}
+          agencyId={currentUser.agencyId}
+          locatedAt={currentUser.locatedAt}
+        />
       </LayoutWrapper>
     </SidebarProvider>
   )

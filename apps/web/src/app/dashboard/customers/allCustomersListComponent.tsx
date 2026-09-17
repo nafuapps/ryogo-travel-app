@@ -141,7 +141,7 @@ function AllCustomersItemComponent({
           {customer.photoUrl ? (
             <RyogoImage
               src={getFileUrl(customer.photoUrl)}
-              alt={t("Photo") + " " + customer.id}
+              alt={customer.name}
               imageSize="sm"
             />
           ) : (

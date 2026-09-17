@@ -51,7 +51,7 @@ export default async function CustomerDetailsPageComponent({
             {customer.photoUrl ? (
               <RyogoImage
                 src={getFileUrl(customer.photoUrl)}
-                alt={t("Photo")}
+                alt={customer.name}
                 imageSize="lg"
               />
             ) : (

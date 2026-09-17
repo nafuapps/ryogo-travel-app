@@ -1,23 +1,24 @@
 import { RyogoH4 } from "@/components/typography"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import { UserStatusPill } from "@/components/pills/ryogoPills"
-import UserOnlineStatusComponent from "./userOnlineStatusComponent"
+import {
+  VehicleStatusEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
+import { VehicleStatusPill } from "@/components/pills/ryogoPills"
+import GetVehicleIcon from "@/components/icons/vehicleIcon"
 
-export default function UserInfoComponent({
+export default function VehicleInfoComponent({
   photoUrl,
-  name,
+  vehicleNumber,
   status,
-  lastSeen,
+  type,
 }: {
   photoUrl: string | null
-  name: string
-  status: UserStatusEnum
-  lastSeen: Date | null
+  vehicleNumber: string
+  status: VehicleStatusEnum
+  type: VehicleTypesEnum
 }) {
   return (
     <SectionColWrapper className="items-center justify-center">
@@ -28,12 +29,11 @@ export default function UserInfoComponent({
           imageSize="lg"
         />
       ) : (
-        <RyogoEnclosedIcon icon={User} size="xl" />
+        <GetVehicleIcon vehicleType={type} size="xl" />
       )}
       <SectionColWrapper small className="items-center">
-        <RyogoH4 weight="font-bold">{name}</RyogoH4>
-        <UserOnlineStatusComponent lastSeen={lastSeen} />
-        <UserStatusPill status={status} className="self-center" />
+        <RyogoH4 weight="font-bold">{vehicleNumber}</RyogoH4>
+        <VehicleStatusPill status={status} className="mt-auto self-center" />
       </SectionColWrapper>
     </SectionColWrapper>
   )

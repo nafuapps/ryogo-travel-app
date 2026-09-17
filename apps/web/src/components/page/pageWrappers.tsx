@@ -155,7 +155,7 @@ export function GridWrapper({
   return (
     <div
       id={id}
-      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-3 lg:gap-4 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
+      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-4 lg:gap-5 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
     >
       {children}
     </div>

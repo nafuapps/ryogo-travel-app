@@ -5,6 +5,8 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { getCurrentUser } from "@/lib/auth"
 
 export const metadata: Metadata = {
   title: `Vehicle Details - ${pageTitle}`,
@@ -18,6 +20,11 @@ export default async function VehicleDetailsPage({
 }) {
   const { vehicleId } = await params
 
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const vehicle = await vehicleServices.findVehicleDetailsById(vehicleId)
 
   if (!vehicle) {
@@ -27,7 +34,11 @@ export default async function VehicleDetailsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]"} />
-      <VehicleDetailsPageComponent vehicle={vehicle} />
+      <VehicleDetailsPageComponent
+        vehicle={vehicle}
+        userId={currentUser.userId}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+      />
     </MainWrapper>
   )
 }

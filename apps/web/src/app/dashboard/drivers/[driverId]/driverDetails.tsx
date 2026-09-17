@@ -72,7 +72,7 @@ export default async function DriverDetailsPageComponent({
       {canChangeDetails && (
         <GridWrapper id="DriverActions">
           <ChangeUserPhotoSheet
-            userId={driver.addedByUserId}
+            userId={driver.userId}
             agencyId={driver.agencyId}
           />
           <ChangeDriverLicenseSheet

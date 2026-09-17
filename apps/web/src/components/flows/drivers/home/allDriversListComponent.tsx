@@ -61,7 +61,7 @@ async function DriverItemComponent({
         {driver.user.photoUrl ? (
           <RyogoImage
             src={getFileUrl(driver.user.photoUrl)}
-            alt={t("Photo") + " " + driver.id}
+            alt={driver.name}
             imageSize="md"
           />
         ) : (

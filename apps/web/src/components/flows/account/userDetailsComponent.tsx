@@ -6,21 +6,25 @@ import {
   DetailsContentWrapper,
   DetailsLineItem,
   DetailsHeaderWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoCaption } from "@/components/typography"
 
 export default async function UserDetailsComponent({
+  id,
   phone,
   email,
   createdAt,
   role,
-  id,
+  isAdmin,
 }: {
+  id: string
   phone: string
   email: string
   createdAt: Date
   role: UserRolesEnum
-  id: string
+  isAdmin?: boolean
 }) {
   const t = await getTranslations("Dashboard.Account")
   return (
@@ -36,6 +40,11 @@ export default async function UserDetailsComponent({
           value={moment(createdAt).format("DD MMM YYYY")}
         />
         <DetailsLineItem label={t("Role")} value={role.toUpperCase()} />
+        {isAdmin && (
+          <SectionRowWrapper className="rounded bg-slate-200 dark:bg-slate-800 p-1.5 lg:p-2 items-center justify-center">
+            <RyogoCaption color="light">{t("Admin")}</RyogoCaption>
+          </SectionRowWrapper>
+        )}
       </DetailsContentWrapper>
     </DetailsBorderWrapper>
   )

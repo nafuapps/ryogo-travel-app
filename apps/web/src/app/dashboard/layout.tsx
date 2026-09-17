@@ -9,6 +9,7 @@ import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
+import UserLocationTracker from "@/components/flows/account/userLocationTracker"
 
 export default async function DashboardLayout({
   children,
@@ -71,6 +72,11 @@ export default async function DashboardLayout({
           {children}
           {/* //TODO <CommandCenter /> */}
         </LayoutSectionWrapper>
+        <UserLocationTracker
+          userId={currentUser.userId}
+          agencyId={currentUser.agencyId}
+          locatedAt={currentUser.locatedAt}
+        />
       </LayoutWrapper>
     </SidebarProvider>
   )

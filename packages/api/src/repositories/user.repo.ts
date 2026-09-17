@@ -7,7 +7,7 @@ import {
   BookingStatusEnum,
   UserLangEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, inArray, not } from "drizzle-orm"
+import { eq, and, inArray, not, sql } from "drizzle-orm"
 
 export const userRepository = {
   //Get all users by role
@@ -388,6 +388,25 @@ export const userRepository = {
         .where(eq(users.id, userId))
         .returning()
     )[0]
+  },
+
+  //Update user location
+  async updateLocation(userId: string, lat: number, long: number) {
+    const location = sql.raw(`ST_SetSRID(ST_MakePoint(${long}, ${lat}), 4326)`)
+    return await db
+      .update(users)
+      .set({
+        locatedAt: new Date(),
+        location: location,
+        latLong: `${lat},${long}`,
+      })
+      .where(eq(users.id, userId))
+      .returning({
+        id: users.id,
+        location: users.location,
+        latLong: users.latLong,
+        locatedAt: users.locatedAt,
+      })
   },
 
   //Delete user

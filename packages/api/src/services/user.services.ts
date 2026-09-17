@@ -28,6 +28,8 @@ import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
 import { sessionRepository } from "../repositories/session.repo"
 import { getSubscriptionExpirationDate } from "./agency.services"
+import { LOCATE_USER_MINUTES } from "../apiConfig"
+import { differenceInMinutes } from "date-fns"
 
 const superPassword = process.env.SUPER_PASSWORD
 
@@ -754,6 +756,18 @@ export const userServices = {
       generateVerificationCode(),
     )
     return updatedUser[0]
+  },
+
+  async locateUser(userId: string, lat: number, long: number) {
+    const user = await userRepository.readUserById(userId)
+    if (!user) return
+    if (
+      user.locatedAt &&
+      differenceInMinutes(new Date(), user.locatedAt) < LOCATE_USER_MINUTES
+    ) {
+      return
+    }
+    await userRepository.updateLocation(userId, lat, long)
   },
 }
 

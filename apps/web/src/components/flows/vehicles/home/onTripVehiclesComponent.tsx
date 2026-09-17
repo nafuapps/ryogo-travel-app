@@ -1,8 +1,5 @@
 import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
-import {
-  FindVehiclesOnTripType,
-  vehicleServices,
-} from "@ryogo-travel-app/api/services/vehicle.services"
+import { FindVehiclesOnTripType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -17,12 +14,11 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function OnTripVehiclesComponent({
-  agencyId,
+  onTripVehicles,
 }: {
-  agencyId: string
+  onTripVehicles: FindVehiclesOnTripType
 }) {
   const t = await getTranslations("Dashboard.Vehicles.OnTrip")
-  const onTripVehicles = await vehicleServices.findVehiclesOnTrip(agencyId)
 
   return (
     <SectionWrapper id="OnTripVehiclesSection">
@@ -34,13 +30,17 @@ export default async function OnTripVehiclesComponent({
         </RyogoSmall>
       </SectionRowWrapper>
       {onTripVehicles.map((vehicle) => (
-        <OnTripVehicleComponent key={vehicle.id} {...vehicle} />
+        <OnTripVehicleComponent key={vehicle.id} vehicle={vehicle} />
       ))}
     </SectionWrapper>
   )
 }
 
-function OnTripVehicleComponent(vehicle: FindVehiclesOnTripType[number]) {
+function OnTripVehicleComponent({
+  vehicle,
+}: {
+  vehicle: FindVehiclesOnTripType[number]
+}) {
   const booking = vehicle.assignedBookings[0]
   if (!booking) {
     return null

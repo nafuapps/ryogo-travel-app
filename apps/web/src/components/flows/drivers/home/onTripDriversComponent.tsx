@@ -1,8 +1,5 @@
 import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
-import {
-  FindDriversOnTripType,
-  driverServices,
-} from "@ryogo-travel-app/api/services/driver.services"
+import { FindDriversOnTripType } from "@ryogo-travel-app/api/services/driver.services"
 import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -17,12 +14,11 @@ import {
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default async function OnTripDriversComponent({
-  agencyId,
+  onTripDrivers,
 }: {
-  agencyId: string
+  onTripDrivers: FindDriversOnTripType
 }) {
   const t = await getTranslations("Dashboard.Drivers.OnTrip")
-  const onTripDrivers = await driverServices.findDriversOnTrip(agencyId)
 
   return (
     <SectionWrapper id="OnTripDriversSection">
@@ -34,13 +30,17 @@ export default async function OnTripDriversComponent({
         </RyogoSmall>
       </SectionRowWrapper>
       {onTripDrivers.map((driver) => (
-        <OnTripDriverComponent key={driver.id} {...driver} />
+        <OnTripDriverComponent key={driver.id} driver={driver} />
       ))}
     </SectionWrapper>
   )
 }
 
-function OnTripDriverComponent(driver: FindDriversOnTripType[number]) {
+function OnTripDriverComponent({
+  driver,
+}: {
+  driver: FindDriversOnTripType[number]
+}) {
   const booking = driver.assignedBookings[0]
   if (!booking) {
     return null

@@ -1,8 +1,5 @@
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
-import {
-  FindDriversByAgencyType,
-  driverServices,
-} from "@ryogo-travel-app/api/services/driver.services"
+import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { Rows3, User, Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -20,12 +17,11 @@ import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllDriversListComponent({
-  agencyId,
+  allDrivers,
 }: {
-  agencyId: string
+  allDrivers: FindDriversByAgencyType
 }) {
   const t = await getTranslations("Dashboard.Drivers.All")
-  const allDrivers = await driverServices.findDriversByAgency(agencyId)
 
   return (
     <SectionWrapper id="AllDriversSection">

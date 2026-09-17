@@ -1,7 +1,7 @@
 "use client"
 
 import { RyogoSmall, RyogoCaption } from "@/components/typography"
-import { BookX } from "lucide-react"
+import { Ban } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindCancelledBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
@@ -32,7 +32,7 @@ export default function CancelledBookingsComponent({
     <SectionWrapper id="cancelledBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
         <SectionRowWrapper className="items-center">
-          <RyogoIcon icon={BookX} size="sm" color="light" />
+          <RyogoIcon icon={Ban} size="sm" color="light" />
           <RyogoSmall color="light">{t("Title")}</RyogoSmall>
           <RyogoSmall color="light" weight="font-bold">
             {trips.length}

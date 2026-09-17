@@ -14,29 +14,35 @@ import DashboardScheduleDayAxis, {
   SelectableDays,
   DashboardScheduleItemGrid,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
-import {
-  AssignedBookingPopoverCard,
-  RepairPopoverCard,
-} from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
+import { RepairPopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
-import { addDays } from "date-fns"
+import { differenceInDays } from "date-fns"
+import {
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
 
 export default function VehiclesScheduleChartComponent({
   vehicleSchedule14Days,
+  isOwner,
+  userId,
 }: {
   vehicleSchedule14Days: FindVehiclesScheduleNextDaysType
+  isOwner: boolean
+  userId: string
 }) {
   const t = useTranslations("Dashboard.Vehicles.Schedule")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
   const vehicleSchedule7Days = vehicleSchedule14Days.filter((v) => {
-    const filterDate = addDays(new Date(), 7)
-    const bookings = v.assignedBookings.filter((b) => {
-      b.startDate <= filterDate
+    const assignedBookings = v.assignedBookings.filter((b) => {
+      differenceInDays(b.actualStartDate ?? b.startDate, new Date()) < 7
     })
-    const repairs = v.vehicleRepairs.filter((r) => r.startDate <= filterDate)
-    return { ...v, bookings, repairs }
+    const vehicleRepairs = v.vehicleRepairs.filter(
+      (r) => differenceInDays(r.startDate, new Date()) < 7,
+    )
+    return { ...v, assignedBookings, vehicleRepairs }
   })
 
   const chartData =
@@ -86,7 +92,16 @@ export default function VehiclesScheduleChartComponent({
                               : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
                           }
                         >
-                          <AssignedBookingPopoverCard {...b} />
+                          {b.status === BookingStatusEnum.CONFIRMED ? (
+                            <UpcomingBookingCard
+                              booking={b}
+                              canAssign={
+                                isOwner || b.assignedUser.id === userId
+                              }
+                            />
+                          ) : (
+                            <OngoingBookingCard booking={b} />
+                          )}
                         </DashboardScheduleItemBar>
                       )
                     })}

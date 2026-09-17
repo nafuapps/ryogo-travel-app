@@ -1,10 +1,14 @@
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import DriversPageComponent from "./drivers"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import OnTripDriversComponent from "@/components/flows/drivers/home/onTripDriversComponent"
+import AllDriversListComponent from "@/components/flows/drivers/home/allDriversListComponent"
+import DriversScheduleChartComponent from "@/components/flows/drivers/home/driversScheduleChartComponent"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Drivers - ${pageTitle}`,
@@ -18,10 +22,27 @@ export default async function AllDriversPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const agencyId = currentUser.agencyId
+
+  const onTripDrivers = await driverServices.findDriversOnTrip(agencyId)
+  const allDrivers = await driverServices.findDriversByAgency(agencyId)
+
+  const driverSchedule14Days = await driverServices.findDriversScheduleNextDays(
+    agencyId,
+    14,
+  )
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers"} />
-      <DriversPageComponent agencyId={currentUser.agencyId} />
+      <PageWrapper id="AllDriversPage">
+        <OnTripDriversComponent onTripDrivers={onTripDrivers} />
+        <AllDriversListComponent allDrivers={allDrivers} />
+        <DriversScheduleChartComponent
+          driverSchedule14Days={driverSchedule14Days}
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+          userId={currentUser.userId}
+        />
+      </PageWrapper>
     </MainWrapper>
   )
 }

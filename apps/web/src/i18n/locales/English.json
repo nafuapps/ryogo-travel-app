@@ -940,7 +940,7 @@
       }
     },
     "AllBookingsHeaderTabs": {
-      "Upcoming": "Upcoming",
+      "Home": "Home",
       "Leads": "Leads",
       "Completed": "Completed",
       "Cancelled": "Cancelled"
@@ -5047,22 +5047,6 @@
         "14Days": "Last 14 Days"
       }
     },
-    "PopoverCards": {
-      "Booking": {
-        "NotAssigned": "Not Assigned",
-        "ViewDetails": "View Details",
-        "Assign": "Assign"
-      },
-      "AssignedBooking": {
-        "ViewDetails": "View Details"
-      },
-      "Repair": {
-        "ViewDetails": "View Details"
-      },
-      "Leave": {
-        "ViewDetails": "View Details"
-      }
-    },
     "Whatsapp": {
       "Cancellation": "Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* for *{startDate}* has been cancelled. For any queries, contact us at *{agencyPhone}*.",
       "Confirmation": "Hello *{customerName}*, your booking *#{bookingId}* from *{source}* to *{destination}* has been confirmed for *{startDate}* at *{startTime}*. Your driver is *{driverName}* and vehicle is *{vehicleNumber}*. For any queries, contact us at *{agencyPhone}*. You can download and view the booking confirmation here: {confirmationLink}",
@@ -6160,6 +6144,11 @@
       "Save": "Add Comment",
       "Loading": "Loading.."
     }
+  },
+  "BookingCards": {
+    "ViewDetails": "View Details",
+    "AssignVehicle": "Assign Vehicle",
+    "AssignDriver": "Assign Driver"
   },
   "Landing": {
     "Navbar": {

@@ -13,12 +13,15 @@ import DashboardScheduleDayAxis, {
   DashboardScheduleItemGrid,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
 import { User } from "lucide-react"
-import { BookingSchedulePopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { FindBookingHistoryLastDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
+import {
+  CompletedBookingCard,
+  OngoingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
 
 export default function BookingHistoryChartComponent({
   bookingsHistory14Days,
@@ -31,7 +34,7 @@ export default function BookingHistoryChartComponent({
   )
 
   const bookingsHistory7Days = bookingsHistory14Days.filter(
-    (b) => differenceInDays(new Date(), b.startDate) < 7,
+    (b) => differenceInDays(new Date(), b.actualEndDate ?? b.endDate) < 7,
   )
 
   const chartData =
@@ -55,18 +58,18 @@ export default function BookingHistoryChartComponent({
           <DashboardScheduleContent>
             {chartData.map((b) => {
               return (
-                <DashboardScheduleItem key={b.bookingId} isHistory>
+                <DashboardScheduleItem key={b.id} isHistory>
                   <DashboardScheduleItemID
-                    icon={<RyogoEnclosedIcon icon={User} size="md" />}
-                    imageAlt={b.customerName}
-                    title={b.customerName}
-                    photoUrl={b.customerPhotoUrl}
+                    icon={<RyogoEnclosedIcon icon={User} size="sm" />}
+                    imageAlt={b.customer.name}
+                    title={b.customer.name}
+                    photoUrl={b.customer.photoUrl}
                   />
                   <DashboardScheduleItemGrid numberGrids={selectedDays}>
                     <DashboardScheduleItemBar
-                      startDate={b.startDate}
-                      endDate={b.endDate}
-                      id={b.bookingId}
+                      startDate={b.actualStartDate ?? b.startDate}
+                      endDate={b.actualEndDate ?? b.endDate}
+                      id={b.id}
                       selectedDays={selectedDays}
                       className={
                         b.endDate < new Date() &&
@@ -76,7 +79,11 @@ export default function BookingHistoryChartComponent({
                       }
                       isHistory
                     >
-                      <BookingSchedulePopoverCard {...b} />
+                      {b.status === BookingStatusEnum.COMPLETED ? (
+                        <CompletedBookingCard booking={b} />
+                      ) : (
+                        <OngoingBookingCard booking={b} />
+                      )}
                     </DashboardScheduleItemBar>
                   </DashboardScheduleItemGrid>
                 </DashboardScheduleItem>

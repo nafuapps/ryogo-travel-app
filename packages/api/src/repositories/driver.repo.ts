@@ -195,16 +195,33 @@ export const driverRepository = {
             endDate: true,
             type: true,
             updatedAt: true,
+            startTime: true,
+            pickupAddress: true,
           },
           with: {
+            assignedUser: {
+              columns: {
+                id: true,
+                name: true,
+              },
+            },
             assignedDriver: {
               columns: {
                 name: true,
+              },
+              with: {
+                user: {
+                  columns: {
+                    photoUrl: true,
+                  },
+                },
               },
             },
             assignedVehicle: {
               columns: {
                 vehicleNumber: true,
+                vehiclePhotoUrl: true,
+                type: true,
               },
             },
             customer: {
@@ -221,6 +238,14 @@ export const driverRepository = {
               columns: {
                 city: true,
               },
+            },
+            tripLogs: {
+              orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+              columns: {
+                type: true,
+              },
+              where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
+              limit: 1,
             },
           },
           where: (assignedBookings) =>

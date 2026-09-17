@@ -4,6 +4,9 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import CustomerUpcomingBookingsPageComponent from "./customerUpcomingBookings"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import { redirect, RedirectType } from "next/navigation"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Customer Upcoming Bookings - ${pageTitle}`,
@@ -17,6 +20,11 @@ export default async function CustomerUpcomingBookingsPage({
 }) {
   const { customerId } = await params
 
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   const bookings =
     await customerServices.findCustomerUpcomingBookingsById(customerId)
 
@@ -26,6 +34,8 @@ export default async function CustomerUpcomingBookingsPage({
       <CustomerUpcomingBookingsPageComponent
         bookings={bookings}
         id={customerId}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+        userId={currentUser.userId}
       />
     </MainWrapper>
   )

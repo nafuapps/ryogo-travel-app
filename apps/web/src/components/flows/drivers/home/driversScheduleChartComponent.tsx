@@ -16,29 +16,35 @@ import DashboardScheduleDayAxis, {
   getSelectedDays,
   DashboardScheduleItemGrid,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
-import {
-  AssignedBookingPopoverCard,
-  LeavePopoverCard,
-} from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
+import { LeavePopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { addDays } from "date-fns"
+import { differenceInDays } from "date-fns"
+import {
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
 
 export default function DriversScheduleChartComponent({
   driverSchedule14Days,
+  isOwner,
+  userId,
 }: {
   driverSchedule14Days: FindDriversScheduleNextDaysType
+  isOwner: boolean
+  userId: string
 }) {
   const t = useTranslations("Dashboard.Drivers.Schedule")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
   const driverSchedule7Days = driverSchedule14Days.filter((d) => {
-    const filterDate = addDays(new Date(), 7)
-    const bookings = d.assignedBookings.filter((b) => {
-      b.startDate <= filterDate
+    const assignedBookings = d.assignedBookings.filter((b) => {
+      differenceInDays(b.actualStartDate ?? b.startDate, new Date()) < 7
     })
-    const leaves = d.driverLeaves.filter((l) => l.startDate <= filterDate)
-    return { ...d, bookings, leaves }
+    const driverLeaves = d.driverLeaves.filter(
+      (l) => differenceInDays(l.startDate, new Date()) < 7,
+    )
+    return { ...d, assignedBookings, driverLeaves }
   })
 
   const chartData =
@@ -82,11 +88,20 @@ export default function DriversScheduleChartComponent({
                               b.startDate < new Date()) ||
                             (b.status === BookingStatusEnum.IN_PROGRESS &&
                               b.endDate < new Date())
-                              ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600 opacity-50"
-                              : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600 opacity-50"
+                              ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
+                              : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
                           }
                         >
-                          <AssignedBookingPopoverCard {...b} />
+                          {b.status === BookingStatusEnum.CONFIRMED ? (
+                            <UpcomingBookingCard
+                              booking={b}
+                              canAssign={
+                                isOwner || b.assignedUser.id === userId
+                              }
+                            />
+                          ) : (
+                            <OngoingBookingCard booking={b} />
+                          )}
                         </DashboardScheduleItemBar>
                       )
                     })}

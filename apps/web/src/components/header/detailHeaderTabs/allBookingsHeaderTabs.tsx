@@ -3,9 +3,9 @@ import Link from "next/link"
 import {
   DetailsHeaderTabItem,
   DetailsHeaderTabWrapper,
-} from "@/components/header/headerWrappers"
+} from "@/components/header/detailHeaderTabs/detailHeaderWrappers"
 
-type AllBookingsHeaderTab = "Upcoming" | "Leads" | "Completed" | "Cancelled"
+type AllBookingsHeaderTab = "Home" | "Leads" | "Completed" | "Cancelled"
 
 export default async function AllBookingsHeaderTabs({
   selectedTab,
@@ -14,7 +14,7 @@ export default async function AllBookingsHeaderTabs({
 }) {
   const t = await getTranslations("Dashboard.AllBookingsHeaderTabs")
   const links = {
-    Upcoming: `/dashboard/bookings`,
+    Home: `/dashboard/bookings`,
     Leads: `/dashboard/bookings/leads`,
     Completed: `/dashboard/bookings/completed`,
     Cancelled: `/dashboard/bookings/cancelled`,

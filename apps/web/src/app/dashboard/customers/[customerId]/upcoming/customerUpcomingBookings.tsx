@@ -12,9 +12,13 @@ import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 export default async function CustomerUpcomingBookingsPageComponent({
   bookings,
   id,
+  isOwner,
+  userId,
 }: {
   bookings: FindCustomerUpcomingBookingsByIdType
   id: string
+  isOwner: boolean
+  userId: string
 }) {
   const t = await getTranslations("Dashboard.CustomerUpcomingBookings")
   const inProgressBookings = bookings.filter(
@@ -38,7 +42,11 @@ export default async function CustomerUpcomingBookingsPageComponent({
               <OngoingBookingCard key={trip.id} booking={trip} />
             ))}
             {upcomingBookings.map((trip) => (
-              <UpcomingBookingCard key={trip.id} booking={trip} />
+              <UpcomingBookingCard
+                key={trip.id}
+                booking={trip}
+                canAssign={isOwner || trip.assignedUser.id === userId}
+              />
             ))}
           </>
         )}

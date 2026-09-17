@@ -14,15 +14,23 @@ import DashboardScheduleDayAxis, {
   DashboardScheduleItemGrid,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
 import { User } from "lucide-react"
-import { BookingSchedulePopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { differenceInDays } from "date-fns"
+import {
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default function BookingScheduleChartComponent({
   bookingsSchedule14Days,
+  userId,
+  isOwner,
 }: {
   bookingsSchedule14Days: FindBookingScheduleNextDaysType
+  userId: string
+  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.Bookings.Schedule")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
@@ -51,26 +59,35 @@ export default function BookingScheduleChartComponent({
           <DashboardScheduleContent>
             {chartData.map((b) => {
               return (
-                <DashboardScheduleItem key={b.bookingId}>
+                <DashboardScheduleItem key={b.id}>
                   <DashboardScheduleItemID
                     icon={<RyogoEnclosedIcon icon={User} size="sm" />}
-                    imageAlt={b.customerName}
-                    title={b.customerName}
-                    photoUrl={b.customerPhotoUrl}
+                    imageAlt={b.customer.name}
+                    title={b.customer.name}
+                    photoUrl={b.customer.photoUrl}
                   />
                   <DashboardScheduleItemGrid numberGrids={selectedDays}>
                     <DashboardScheduleItemBar
-                      startDate={b.startDate}
+                      startDate={b.actualStartDate ?? b.startDate}
                       endDate={b.endDate}
-                      id={b.bookingId}
+                      id={b.id}
                       selectedDays={selectedDays}
                       className={
-                        !b.driver || !b.vehicle || b.endDate < new Date()
+                        !b.assignedDriver ||
+                        !b.assignedVehicle ||
+                        b.endDate < new Date()
                           ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
                           : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
                       }
                     >
-                      <BookingSchedulePopoverCard {...b} />
+                      {b.status === BookingStatusEnum.CONFIRMED ? (
+                        <UpcomingBookingCard
+                          booking={b}
+                          canAssign={isOwner || b.assignedUser.id === userId}
+                        />
+                      ) : (
+                        <OngoingBookingCard booking={b} />
+                      )}
                     </DashboardScheduleItemBar>
                   </DashboardScheduleItemGrid>
                 </DashboardScheduleItem>

@@ -1,8 +1,5 @@
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
-import {
-  FindVehiclesByAgencyType,
-  vehicleServices,
-} from "@ryogo-travel-app/api/services/vehicle.services"
+import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Rows3, Plus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -20,12 +17,11 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllVehiclesListComponent({
-  agencyId,
+  allVehicles,
 }: {
-  agencyId: string
+  allVehicles: FindVehiclesByAgencyType
 }) {
   const t = await getTranslations("Dashboard.Vehicles.All")
-  const allVehicles = await vehicleServices.findVehiclesByAgency(agencyId)
 
   return (
     <SectionWrapper id="AllVehiclesSection">

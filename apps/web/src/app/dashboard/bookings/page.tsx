@@ -10,6 +10,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import UpcomingBookingsComponent from "@/components/flows/bookings/home/upcomingBookingsComponent"
 import BookingScheduleChartComponent from "@/components/flows/bookings/home/bookingScheduleChartComponent"
 import BookingHistoryChartComponent from "@/components/flows/bookings/home/bookingHistoryChartComponent"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Bookings - ${pageTitle}`,
@@ -41,7 +42,7 @@ export default async function BookingsPage() {
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings"} />
       <PageWrapper id="BookingsPage">
-        <AllBookingsHeaderTabs selectedTab={"Upcoming"} />
+        <AllBookingsHeaderTabs selectedTab={"Home"} />
         <OngoingBookingsComponent
           ongoingTrips={ongoingTrips}
           userId={currentUser.userId}
@@ -52,6 +53,8 @@ export default async function BookingsPage() {
         />
         <BookingScheduleChartComponent
           bookingsSchedule14Days={bookingsSchedule14Days}
+          userId={currentUser.userId}
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         />
         <BookingHistoryChartComponent
           bookingsHistory14Days={bookingsHistory14Days}

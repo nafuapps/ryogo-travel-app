@@ -2,7 +2,7 @@ import Link from "next/link"
 import {
   DetailsHeaderTabItem,
   DetailsHeaderTabWrapper,
-} from "@/components/header/headerWrappers"
+} from "@/components/header/detailHeaderTabs/detailHeaderWrappers"
 import { useTranslations } from "next-intl"
 
 type MyProfileDetailHeaderTab = "Account" | "Settings" | "Agency"

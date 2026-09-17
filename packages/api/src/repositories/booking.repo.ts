@@ -411,8 +411,8 @@ export const bookingRepository = {
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
-        gte(bookings.completedAt ?? bookings.updatedAt, queryStartDate),
-        lte(bookings.completedAt ?? bookings.updatedAt, queryEndDate),
+        gte(bookings.completedAt ?? bookings.endDate, queryStartDate),
+        lte(bookings.completedAt ?? bookings.endDate, queryEndDate),
       ),
       columns: {
         actualStartDate: true,
@@ -812,17 +812,12 @@ export const bookingRepository = {
     })
   },
 
-  async readUpcomingBookingsData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readUpcomingBookingsData(agencyId: string, queryEndDate: Date) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.CONFIRMED),
-        gte(bookings.startDate, queryStartDate),
         lte(bookings.startDate, queryEndDate),
       ),
       columns: {
@@ -1136,6 +1131,12 @@ export const bookingRepository = {
         id: true,
       },
       with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
         assignedDriver: {
           columns: {
             name: true,
@@ -1197,23 +1198,40 @@ export const bookingRepository = {
         ),
       ),
       columns: {
+        pickupAddress: true,
         startDate: true,
         actualStartDate: true,
         endDate: true,
+        startTime: true,
         updatedAt: true,
         type: true,
         id: true,
         status: true,
       },
       with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
         assignedDriver: {
           columns: {
             name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
           },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         customer: {
@@ -1231,6 +1249,14 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
+        },
+        tripLogs: {
+          orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+          columns: {
+            type: true,
+          },
+          where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
+          limit: 1,
         },
       },
     })
@@ -1253,6 +1279,7 @@ export const bookingRepository = {
         ),
       ),
       columns: {
+        completedAt: true,
         startDate: true,
         actualStartDate: true,
         endDate: true,
@@ -1263,14 +1290,29 @@ export const bookingRepository = {
         status: true,
       },
       with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+          },
+        },
         assignedDriver: {
           columns: {
             name: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
           },
         },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         customer: {
@@ -1288,6 +1330,14 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
+        },
+        tripLogs: {
+          orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
+          columns: {
+            type: true,
+          },
+          where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
+          limit: 1,
         },
       },
     })

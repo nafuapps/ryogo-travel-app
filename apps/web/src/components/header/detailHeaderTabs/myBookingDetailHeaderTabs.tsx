@@ -3,7 +3,7 @@ import Link from "next/link"
 import {
   DetailsHeaderTabItem,
   DetailsHeaderTabWrapper,
-} from "@/components/header/headerWrappers"
+} from "@/components/header/detailHeaderTabs/detailHeaderWrappers"
 
 type BookingDetailHeaderTab = "Booking" | "Expenses" | "TripLogs"
 

@@ -1,39 +1,5 @@
 import { RyogoSmall } from "@/components/typography"
 
-export function HeaderWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className={
-        "flex flex-row gap-3 lg:gap-4 pb-3 lg:pb-4 justify-between items-center border-b border-slate-300 dark:border-slate-700"
-      }
-    >
-      {children}
-    </div>
-  )
-}
-
-export function HeaderLeftWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className={"flex flex-row gap-1 lg:gap-1.5 items-center justify-start"}
-    >
-      {children}
-    </div>
-  )
-}
-
-export function HeaderRightWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <div className={"flex flex-row gap-2 lg:gap-3 justify-end items-center"}>
-      {children}
-    </div>
-  )
-}
-
 export function DetailsHeaderTabWrapper({
   children,
 }: {

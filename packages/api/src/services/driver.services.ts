@@ -30,13 +30,6 @@ export const driverServices = {
     return drivers
   },
 
-  //Get onTrip drivers data
-  async findDriversOnTrip(agencyId: string) {
-    const drivers =
-      await driverRepository.readOnTripDriversDataByAgencyId(agencyId)
-    return drivers
-  },
-
   //Get drivers schedule
   async findDriversScheduleNextDays(agencyId: string, days: number = 7) {
     const endDate = addDays(new Date(), days)
@@ -218,10 +211,6 @@ export type FindDriversByAgencyType = Awaited<
 
 export type FindDashboardDriversType = Awaited<
   ReturnType<typeof driverServices.findDashboardDrivers>
->
-
-export type FindDriversOnTripType = Awaited<
-  ReturnType<typeof driverServices.findDriversOnTrip>
 >
 
 export type FindDriversScheduleNextDaysType = Awaited<

@@ -1560,19 +1560,12 @@
     "Vehicles": {
       "All": {
         "Title": "ALL VEHICLES",
-        "Photo": "Vehicle photo",
         "Km": " Km",
         "RatePerKm": "₹{rate}/Km",
         "AddVehicle": "Add Vehicle"
       },
-      "OnTrip": {
-        "Title": "ON TRIP VEHICLES"
-      },
-      "Schedule": {
-        "Title": "VEHICLE SCHEDULE",
-        "Photo": "Vehicle photo"
-      },
-      "History": {}
+      "OngoingTrips": "ONGOING TRIPS",
+      "Schedule": "VEHICLE SCHEDULE"
     },
     "NewVehicle": {
       "TrialWarning": "You have reached the limit for basic plan.",
@@ -2008,14 +2001,8 @@
         "AllowancePerDay": "₹{allowance}/day",
         "AddDriver": "Add Driver"
       },
-      "OnTrip": {
-        "Title": "ON TRIP DRIVERS"
-      },
-      "Schedule": {
-        "Title": "DRIVER SCHEDULE",
-        "Photo": "Driver photo"
-      },
-      "History": {}
+      "OngoingTrips": "ONGOING TRIPS",
+      "Schedule": "DRIVER SCHEDULE"
     },
     "NewDriver": {
       "TrialWarning": "You have reached the limit for basic plan.",

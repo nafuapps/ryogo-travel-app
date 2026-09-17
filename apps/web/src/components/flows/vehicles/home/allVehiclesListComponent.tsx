@@ -1,20 +1,21 @@
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { Rows3, Plus } from "lucide-react"
+import { Rows3, Plus, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
-  GridItemWrapper,
-  HoverGridWrapper,
+  AddInfoWrapper,
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
 
 export default async function AllVehiclesListComponent({
   allVehicles,
@@ -31,20 +32,24 @@ export default async function AllVehiclesListComponent({
         <RyogoSmall color="light" weight="font-bold">
           {allVehicles.length}
         </RyogoSmall>
-        <Link href={`/dashboard/vehicles/new`} className="ml-auto">
-          <RyogoOutlineButton label={t("AddVehicle")}>
-            <RyogoIcon icon={Plus} size="sm" color="slate" />
-          </RyogoOutlineButton>
-        </Link>
       </SectionRowWrapper>
-      {allVehicles.map((vehicle) => (
-        <AllVehiclesItemComponent key={vehicle.id} vehicle={vehicle} />
-      ))}
+      <TileGridWrapper>
+        {allVehicles.map((vehicle) => (
+          <VehicleItemComponent key={vehicle.id} vehicle={vehicle} />
+        ))}
+        <Link href={`/dashboard/vehicles/new`} className="w-full">
+          <AddInfoWrapper
+            icon={Plus}
+            label={t("AddVehicle")}
+            className="h-full justify-center"
+          />
+        </Link>
+      </TileGridWrapper>
     </SectionWrapper>
   )
 }
 
-async function AllVehiclesItemComponent({
+async function VehicleItemComponent({
   vehicle,
 }: {
   vehicle: FindVehiclesByAgencyType[number]
@@ -53,36 +58,37 @@ async function AllVehiclesItemComponent({
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          {vehicle.vehiclePhotoUrl ? (
-            <RyogoImage
-              src={getFileUrl(vehicle.vehiclePhotoUrl)}
-              alt={t("Photo") + " " + vehicle.vehicleNumber}
-              imageSize="sm"
-            />
-          ) : (
-            <GetVehicleIcon vehicleType={vehicle.type} size="md" />
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+        {vehicle.vehiclePhotoUrl ? (
+          <RyogoImage
+            src={getFileUrl(vehicle.vehiclePhotoUrl)}
+            alt={vehicle.vehicleNumber}
+            imageSize="md"
+          />
+        ) : (
+          <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
+        )}
+        <SectionColWrapper small className="w-full">
+          <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>
+          <RyogoCaption color="light" weight="font-bold">
             {vehicle.brand + " " + vehicle.model}
           </RyogoCaption>
-          <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {vehicle.odometerReading + t("Km")}
-          </RyogoCaption>
-          <RyogoP weight="font-bold">
+          <SectionRowWrapper className="items-center">
+            <VehicleColorBox color={vehicle.color} />
+            <RyogoCaption color="light">
+              {vehicle.odometerReading + t("Km")}
+            </RyogoCaption>
+          </SectionRowWrapper>
+        </SectionColWrapper>
+        <SectionColWrapper className="items-end">
+          <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
+
+          <RyogoCaption color="light">
             {t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
-          </RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
+          </RyogoCaption>
           <VehicleStatusPill status={vehicle.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
+        </SectionColWrapper>
+      </SectionRowWrapper>
     </Link>
   )
 }

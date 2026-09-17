@@ -84,53 +84,6 @@ export const vehicleRepository = {
     })
   },
 
-  //Get all vehicles data for ongoing bookings in an agency
-  async readOnTripVehiclesDataByAgencyId(agencyId: string) {
-    return await db.query.vehicles.findMany({
-      where: and(
-        eq(vehicles.agencyId, agencyId),
-        eq(vehicles.status, VehicleStatusEnum.ON_TRIP),
-      ),
-      with: {
-        assignedBookings: {
-          columns: {
-            id: true,
-            startDate: true,
-            actualStartDate: true,
-            endDate: true,
-          },
-          where: (assignedBookings, { eq }) =>
-            eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
-          with: {
-            assignedDriver: {
-              columns: {
-                name: true,
-              },
-            },
-            source: {
-              columns: {
-                city: true,
-              },
-            },
-            destination: {
-              columns: {
-                city: true,
-              },
-            },
-            tripLogs: {
-              orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
-              columns: {
-                type: true,
-              },
-              where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
-              limit: 1,
-            },
-          },
-        },
-      },
-    })
-  },
-
   //Get vehicle by number in an agency
   async readVehicleByNumberInAgency(agencyId: string, vehicleNumber: string) {
     return await db.query.vehicles.findFirst({

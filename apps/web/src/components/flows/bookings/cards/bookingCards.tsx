@@ -80,20 +80,25 @@ function BookingCardWrapper({
       className={`rounded-sm overflow-hidden bg-white dark:bg-slate-900 border ${className ?? ""}`}
     >
       {children}
-      <Link
-        href={
-          isRider
-            ? `/rider/myBookings/${bookingId}`
-            : `/dashboard/bookings/${bookingId}`
-        }
-        className="px-3 lg:px-4 pb-2 lg:pb-3"
-      >
-        {cta ?? (
-          <RyogoOutlineButton label={t("ViewDetails")} className="w-full">
-            <RyogoIcon icon={ChevronRight} size="xs" thick color="slate" />
-          </RyogoOutlineButton>
-        )}
-      </Link>
+      <div className="px-3 lg:px-4 pb-2 lg:pb-3">
+        <Link
+          href={
+            isRider
+              ? `/rider/myBookings/${bookingId}`
+              : `/dashboard/bookings/${bookingId}`
+          }
+        >
+          {cta ?? (
+            <RyogoOutlineButton
+              label={t("ViewDetails")}
+              labelColor="light"
+              className="w-full"
+            >
+              <RyogoIcon icon={ChevronRight} size="xs" thick color="light" />
+            </RyogoOutlineButton>
+          )}
+        </Link>
+      </div>
     </SectionColWrapper>
   )
 }

@@ -1,20 +1,20 @@
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { Rows3, User, Plus } from "lucide-react"
+import { Rows3, User, Plus, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
-  GridItemWrapper,
-  HoverGridWrapper,
+  AddInfoWrapper,
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllDriversListComponent({
   allDrivers,
@@ -31,20 +31,24 @@ export default async function AllDriversListComponent({
         <RyogoSmall color="light" weight="font-bold">
           {allDrivers.length}
         </RyogoSmall>
-        <Link href={`/dashboard/drivers/new`} className="ml-auto">
-          <RyogoOutlineButton label={t("AddDriver")} className="w-full">
-            <RyogoIcon icon={Plus} size="sm" color="slate" />
-          </RyogoOutlineButton>
-        </Link>
       </SectionRowWrapper>
-      {allDrivers.map((driver) => (
-        <AllDriversItemComponent key={driver.id} driver={driver} />
-      ))}
+      <TileGridWrapper>
+        {allDrivers.map((driver) => (
+          <DriverItemComponent key={driver.id} driver={driver} />
+        ))}
+        <Link href={`/dashboard/drivers/new`} className="w-full">
+          <AddInfoWrapper
+            icon={Plus}
+            label={t("AddDriver")}
+            className="h-full justify-center"
+          />
+        </Link>
+      </TileGridWrapper>
     </SectionWrapper>
   )
 }
 
-async function AllDriversItemComponent({
+async function DriverItemComponent({
   driver,
 }: {
   driver: FindDriversByAgencyType[number]
@@ -53,32 +57,31 @@ async function AllDriversItemComponent({
 
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          {driver.user.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(driver.user.photoUrl)}
-              alt={t("Photo") + " " + driver.id}
-              imageSize="sm"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={User} size="md" />
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{driver.phone}</RyogoCaption>
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+        {driver.user.photoUrl ? (
+          <RyogoImage
+            src={getFileUrl(driver.user.photoUrl)}
+            alt={t("Photo") + " " + driver.id}
+            imageSize="md"
+          />
+        ) : (
+          <RyogoEnclosedIcon icon={User} size="lg" />
+        )}
+        <SectionColWrapper small className="w-full">
           <RyogoP weight="font-bold"> {driver.name}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
+          <RyogoCaption color="light" weight="font-bold">
+            {driver.phone}
+          </RyogoCaption>
           <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
-          <RyogoP weight="font-bold">
+        </SectionColWrapper>
+        <SectionColWrapper className="items-end">
+          <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
+          <RyogoCaption color="light">
             {t("AllowancePerDay", { allowance: driver.defaultAllowancePerDay })}
-          </RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
+          </RyogoCaption>
           <DriverStatusPill status={driver.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
+        </SectionColWrapper>
+      </SectionRowWrapper>
     </Link>
   )
 }

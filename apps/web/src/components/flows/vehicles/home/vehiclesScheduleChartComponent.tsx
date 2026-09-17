@@ -32,7 +32,7 @@ export default function VehiclesScheduleChartComponent({
   isOwner: boolean
   userId: string
 }) {
-  const t = useTranslations("Dashboard.Vehicles.Schedule")
+  const t = useTranslations("Dashboard.Vehicles")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
   const vehicleSchedule7Days = vehicleSchedule14Days.filter((v) => {
@@ -55,7 +55,7 @@ export default function VehiclesScheduleChartComponent({
     <SectionWrapper id="VehiclesScheduleChartSection">
       <DashboardScheduleHeader
         length={chartData.length.toString()}
-        title={t("Title")}
+        title={t("Schedule")}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
@@ -70,7 +70,7 @@ export default function VehiclesScheduleChartComponent({
                     icon={
                       <GetVehicleIcon vehicleType={vehicle.type} size="sm" />
                     }
-                    imageAlt={t("Photo")}
+                    imageAlt={vehicle.vehicleNumber}
                     title={vehicle.vehicleNumber}
                     photoUrl={vehicle.vehiclePhotoUrl}
                   />

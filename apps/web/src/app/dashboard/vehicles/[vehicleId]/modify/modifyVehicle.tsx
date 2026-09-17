@@ -19,7 +19,6 @@ import {
   RyogoDatePicker,
   RyogoFileInput,
   RyogoSwitch,
-  RyogoCombobox,
 } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
@@ -237,6 +236,8 @@ export default function ModifyVehiclePageComponent({
             placeholder={t("Field6.Placeholder")}
             description={t("Field6.Description")}
           />
+        </FormContentWrapper>
+        <FormContentWrapper>
           <RyogoDatePicker
             name="rcExpiresOn"
             label={t("Field7.Title")}
@@ -276,6 +277,8 @@ export default function ModifyVehiclePageComponent({
             placeholder={t("Field12.Placeholder")}
             description={t("Field12.Description")}
           />
+        </FormContentWrapper>
+        <FormContentWrapper>
           <RyogoInput
             name={"defaultRatePerKm"}
             type="tel"

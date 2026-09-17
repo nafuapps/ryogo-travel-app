@@ -4,6 +4,8 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
   DateWrapper,
+  DetailsBorderWrapper,
+  DetailsHeaderWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -22,10 +24,10 @@ export default async function BookingCreationInfoCard({
 }) {
   const t = await getTranslations("Dashboard.BookingDetails")
   return (
-    <div className="flex flex-col border rounded-md">
-      <div className="rounded-t-md p-2 lg:p-3 bg-slate-100 dark:bg-slate-800 flex justify-center items-center">
+    <DetailsBorderWrapper>
+      <DetailsHeaderWrapper>
         <RyogoCaption color="light">{t("Created")}</RyogoCaption>
-      </div>
+      </DetailsHeaderWrapper>
       <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 items-center justify-center">
         <DateWrapper date={createdAt} />
         <SectionColWrapper small className="w-full">
@@ -49,6 +51,6 @@ export default async function BookingCreationInfoCard({
           </SectionRowWrapper>
         </SectionColWrapper>
       </div>
-    </div>
+    </DetailsBorderWrapper>
   )
 }

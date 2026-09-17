@@ -1,6 +1,9 @@
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 import { UserRolePill } from "@/components/pills/ryogoPills"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
@@ -13,7 +16,7 @@ export default function BookingAssignedUserCard({
   user: NonNullable<NonNullable<FindBookingDetailsByIdType>["assignedUser"]>
 }) {
   return (
-    <div className="flex gap-2 lg:gap-3 p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
+    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
       {user.photoUrl ? (
         <RyogoImage
           src={getFileUrl(user.photoUrl)}
@@ -28,6 +31,6 @@ export default function BookingAssignedUserCard({
         <RyogoCaption color="slate">{user.phone}</RyogoCaption>
         <UserRolePill role={user.userRole} className="self-start" />
       </SectionColWrapper>
-    </div>
+    </SectionRowWrapper>
   )
 }

@@ -9,6 +9,7 @@ import OnTripDriversComponent from "@/components/flows/drivers/home/onTripDriver
 import AllDriversListComponent from "@/components/flows/drivers/home/allDriversListComponent"
 import DriversScheduleChartComponent from "@/components/flows/drivers/home/driversScheduleChartComponent"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 
 export const metadata: Metadata = {
   title: `Drivers - ${pageTitle}`,
@@ -24,7 +25,7 @@ export default async function AllDriversPage() {
 
   const agencyId = currentUser.agencyId
 
-  const onTripDrivers = await driverServices.findDriversOnTrip(agencyId)
+  const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
   const allDrivers = await driverServices.findDriversByAgency(agencyId)
 
   const driverSchedule14Days = await driverServices.findDriversScheduleNextDays(
@@ -35,7 +36,7 @@ export default async function AllDriversPage() {
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers"} />
       <PageWrapper id="AllDriversPage">
-        <OnTripDriversComponent onTripDrivers={onTripDrivers} />
+        <OnTripDriversComponent ongoingTrips={ongoingTrips} />
         <AllDriversListComponent allDrivers={allDrivers} />
         <DriversScheduleChartComponent
           driverSchedule14Days={driverSchedule14Days}

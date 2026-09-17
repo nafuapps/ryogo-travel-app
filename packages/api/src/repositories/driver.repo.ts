@@ -95,55 +95,6 @@ export const driverRepository = {
     })
   },
 
-  //Get all drivers data for a new booking in an agency
-  async readOnTripDriversDataByAgencyId(agencyId: string) {
-    return await db.query.drivers.findMany({
-      where: and(
-        eq(drivers.agencyId, agencyId),
-        eq(drivers.status, DriverStatusEnum.ON_TRIP),
-      ),
-      with: {
-        assignedBookings: {
-          columns: {
-            id: true,
-            startDate: true,
-            endDate: true,
-            actualStartDate: true,
-          },
-          where: (assignedBookings, { eq }) =>
-            eq(assignedBookings.status, BookingStatusEnum.IN_PROGRESS),
-          with: {
-            assignedVehicle: {
-              columns: {
-                vehicleNumber: true,
-                brand: true,
-                model: true,
-              },
-            },
-            source: {
-              columns: {
-                city: true,
-              },
-            },
-            destination: {
-              columns: {
-                city: true,
-              },
-            },
-            tripLogs: {
-              orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
-              columns: {
-                type: true,
-              },
-              where: not(eq(tripLogs.type, TripLogTypesEnum.OTHER)),
-              limit: 1,
-            },
-          },
-        },
-      },
-    })
-  },
-
   //Get driver by userId
   async readDriverByUserId(userId: string) {
     return await db.query.drivers.findFirst({

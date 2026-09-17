@@ -1,81 +1,36 @@
-import { RyogoP, RyogoSmall, RyogoCaption } from "@/components/typography"
-import { FindVehiclesOnTripType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { RyogoSmall } from "@/components/typography"
 import { Route } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import moment from "moment"
-import { TripLogStatusPill } from "@/components/pills/ryogoPills"
 import {
-  GridItemWrapper,
-  HoverGridWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { OngoingBookingCard } from "../../bookings/cards/bookingCards"
+import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 
 export default async function OnTripVehiclesComponent({
-  onTripVehicles,
+  ongoingTrips,
 }: {
-  onTripVehicles: FindVehiclesOnTripType
+  ongoingTrips: FindOngoingTripsType
 }) {
-  const t = await getTranslations("Dashboard.Vehicles.OnTrip")
+  const t = await getTranslations("Dashboard.Vehicles")
 
   return (
     <SectionWrapper id="OnTripVehiclesSection">
       <SectionRowWrapper className="items-center">
         <RyogoIcon icon={Route} size="sm" color="light" />
-        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
+        <RyogoSmall color="light">{t("OngoingTrips")}</RyogoSmall>
         <RyogoSmall color="light" weight="font-bold">
-          {onTripVehicles.length}
+          {ongoingTrips.length}
         </RyogoSmall>
       </SectionRowWrapper>
-      {onTripVehicles.map((vehicle) => (
-        <OnTripVehicleComponent key={vehicle.id} vehicle={vehicle} />
-      ))}
+      <TileGridWrapper>
+        {ongoingTrips.map((booking) => (
+          <OngoingBookingCard key={booking.id} booking={booking} />
+        ))}
+      </TileGridWrapper>
     </SectionWrapper>
-  )
-}
-
-function OnTripVehicleComponent({
-  vehicle,
-}: {
-  vehicle: FindVehiclesOnTripType[number]
-}) {
-  const booking = vehicle.assignedBookings[0]
-  if (!booking) {
-    return null
-  }
-  return (
-    <Link href={`/dashboard/bookings/${booking.id}`}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {vehicle.brand + " " + vehicle.model}
-          </RyogoCaption>
-          <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
-          {booking.assignedDriver && (
-            <RyogoP weight="font-bold"> {booking.assignedDriver.name}</RyogoP>
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {moment(booking.startDate).format("DD MMM") +
-              " - " +
-              moment(booking.endDate).format("DD MMM")}
-          </RyogoCaption>
-          <RyogoP weight="font-bold">
-            {booking.source.city + " - " + booking.destination.city}
-          </RyogoP>
-        </GridItemWrapper>
-        {booking.tripLogs[0] && (
-          <GridItemWrapper>
-            <TripLogStatusPill status={booking.tripLogs[0].type} />
-          </GridItemWrapper>
-        )}
-      </HoverGridWrapper>
-    </Link>
   )
 }

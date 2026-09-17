@@ -1,6 +1,9 @@
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { Scale } from "lucide-react"
 import moment from "moment"
@@ -17,7 +20,7 @@ export default async function BookingReconcileCard({
   const t = await getTranslations("Dashboard.BookingDetails")
   if (reconciledAt) {
     return (
-      <div className="flex flex-row gap-2 lg:gap-3 p-2 lg:p-3 items-center justify-center">
+      <SectionRowWrapper className="p-2 lg:p-3 items-center justify-center">
         <RyogoEnclosedIcon icon={Scale} size="sm" color="black" />
         <SectionColWrapper small className="w-full">
           <RyogoCaption color="light">{t("ReconciledAt")}</RyogoCaption>
@@ -25,7 +28,7 @@ export default async function BookingReconcileCard({
             {moment(reconciledAt).format("DD MMM YYYY - hh:mm a")}
           </RyogoSmall>
         </SectionColWrapper>
-      </div>
+      </SectionRowWrapper>
     )
   }
 

@@ -34,7 +34,7 @@ export default function DriversScheduleChartComponent({
   isOwner: boolean
   userId: string
 }) {
-  const t = useTranslations("Dashboard.Drivers.Schedule")
+  const t = useTranslations("Dashboard.Drivers")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
   const driverSchedule7Days = driverSchedule14Days.filter((d) => {
@@ -57,7 +57,7 @@ export default function DriversScheduleChartComponent({
     <SectionWrapper id="DriversScheduleChartSection">
       <DashboardScheduleHeader
         length={chartData.length.toString()}
-        title={t("Title")}
+        title={t("Schedule")}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
@@ -70,7 +70,7 @@ export default function DriversScheduleChartComponent({
                 <DashboardScheduleItem key={driver.id}>
                   <DashboardScheduleItemID
                     icon={<RyogoEnclosedIcon icon={User} size="sm" />}
-                    imageAlt={t("Photo")}
+                    imageAlt={driver.name}
                     title={driver.name}
                     photoUrl={driver.user.photoUrl}
                   />

@@ -293,7 +293,7 @@ export function DetailsBorderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="empty:hidden border flex flex-col rounded-md overflow-hidden self-center">
+    <div className="empty:hidden border flex flex-col rounded-md overflow-hidden grow">
       {children}
     </div>
   )
@@ -390,12 +390,16 @@ export function DateWrapper({
 export function AddInfoWrapper({
   icon,
   label,
+  className,
 }: {
   icon: LucideIcon
   label: string
+  className?: string
 }) {
   return (
-    <div className="border border-dashed rounded-md flex items-center p-3 lg:p-4 gap-2 lg:gap-3 hover:bg-slate-100 dark:hover:bg-slate-800">
+    <div
+      className={`empty:hidden border border-dashed rounded-md flex items-center p-3 lg:p-4 gap-2 lg:gap-3 transition hover:bg-slate-100 dark:hover:bg-slate-800 ${className ?? ""}`}
+    >
       <RyogoEnclosedIcon icon={icon} size="sm" color="black" />
       <RyogoCaption color="light">{label}</RyogoCaption>
     </div>

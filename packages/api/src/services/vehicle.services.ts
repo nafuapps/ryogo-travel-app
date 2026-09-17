@@ -33,13 +33,6 @@ export const vehicleServices = {
     return vehicles
   },
 
-  //Get onTrip vehicles data
-  async findVehiclesOnTrip(agencyId: string) {
-    const vehicles =
-      await vehicleRepository.readOnTripVehiclesDataByAgencyId(agencyId)
-    return vehicles
-  },
-
   //Get vehicles schedule
   async findVehiclesScheduleNextDays(agencyId: string, days: number = 7) {
     const queryDate = addDays(new Date(), days)
@@ -261,10 +254,6 @@ export type FindVehiclesByAgencyType = Awaited<
 
 export type FindExistingVehiclesInAgencyType = Awaited<
   ReturnType<typeof vehicleServices.findExistingVehiclesInAgency>
->
-
-export type FindVehiclesOnTripType = Awaited<
-  ReturnType<typeof vehicleServices.findVehiclesOnTrip>
 >
 
 export type FindVehiclesScheduleNextDaysType = Awaited<

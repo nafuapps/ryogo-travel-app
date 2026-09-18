@@ -1,6 +1,6 @@
 import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import moment from "moment"
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { FindDriverActivityByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
@@ -8,8 +8,11 @@ import {
   GridItemWrapper,
   HoverGridWrapper,
   PageWrapper,
+  SectionHeaderWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
+import { BanknoteArrowDown, MapPin } from "lucide-react"
 
 export default async function DriverActivityPageComponent({
   activities,
@@ -28,26 +31,46 @@ export default async function DriverActivityPageComponent({
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {expenses.length > 0 && (
         <SectionWrapper id="ExpensesActivityList">
-          <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
-          {expenses.map((expense) => {
-            return <ExpenseActivityComponent key={expense.id} {...expense} />
-          })}
+          <SectionHeaderWrapper
+            icon={BanknoteArrowDown}
+            label={t("Expenses")}
+            count={expenses.length}
+          />
+          <TileGridWrapper>
+            {expenses.map((expense) => {
+              return (
+                <ExpenseActivityComponent key={expense.id} expense={expense} />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
       {tripLogs.length > 0 && (
         <SectionWrapper id="TripLogsActivityList">
-          <RyogoSmall weight="font-bold">{t("TripLogs")}</RyogoSmall>
-          {tripLogs.map((tripLog) => {
-            return <TripLogActivityComponent key={tripLog.id} {...tripLog} />
-          })}
+          <SectionHeaderWrapper
+            icon={MapPin}
+            label={t("TripLogs")}
+            count={tripLogs.length}
+          />
+          <TileGridWrapper>
+            {tripLogs.map((tripLog) => {
+              return (
+                <TripLogActivityComponent key={tripLog.id} tripLog={tripLog} />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
     </PageWrapper>
   )
 }
-function ExpenseActivityComponent(
-  expense: FindDriverActivityByUserIdType["expenses"][number],
-) {
+
+//TODO:Revamp UI
+function ExpenseActivityComponent({
+  expense,
+}: {
+  expense: FindDriverActivityByUserIdType["expenses"][number]
+}) {
   return (
     <Link
       href={`/dashboard/bookings/${expense.bookingId}/expenses`}
@@ -75,9 +98,11 @@ function ExpenseActivityComponent(
   )
 }
 
-function TripLogActivityComponent(
-  tripLog: FindDriverActivityByUserIdType["tripLogs"][number],
-) {
+function TripLogActivityComponent({
+  tripLog,
+}: {
+  tripLog: FindDriverActivityByUserIdType["tripLogs"][number]
+}) {
   return (
     <Link
       href={`/dashboard/bookings/${tripLog.bookingId}/trip-logs`}

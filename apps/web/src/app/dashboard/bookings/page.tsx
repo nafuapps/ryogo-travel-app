@@ -43,10 +43,12 @@ export default async function BookingsPage() {
       <DashboardHeader pathName={"/dashboard/bookings"} />
       <PageWrapper id="BookingsPage">
         <AllBookingsHeaderTabs selectedTab={"Home"} />
-        <OngoingBookingsComponent
-          ongoingTrips={ongoingTrips}
-          userId={currentUser.userId}
-        />
+        {ongoingTrips.length > 0 && (
+          <OngoingBookingsComponent
+            ongoingTrips={ongoingTrips}
+            userId={currentUser.userId}
+          />
+        )}
         <UpcomingBookingsComponent
           upcomingBookings={upcomingBookings}
           userId={currentUser.userId}

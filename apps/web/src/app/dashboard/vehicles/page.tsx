@@ -35,7 +35,9 @@ export default async function AllVehiclesPage() {
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles"} />
       <PageWrapper id="AllVehiclesPage">
-        <OnTripVehiclesComponent ongoingTrips={ongoingTrips} />
+        {ongoingTrips.length > 0 && (
+          <OnTripVehiclesComponent ongoingTrips={ongoingTrips} />
+        )}
         <AllVehiclesListComponent allVehicles={allVehicles} />
         <VehiclesScheduleChartComponent
           vehicleSchedule14Days={vehicleSchedule14Days}

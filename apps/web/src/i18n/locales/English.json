@@ -1928,12 +1928,14 @@
       "Error": "Cannot change vehicle details.. please try again later."
     },
     "VehicleAssignedBookings": {
-      "NoBookings": "No bookings assigned to this vehicle."
+      "Ongoing": "VEHICLE ONGOING BOOKING",
+      "Assigned": "VEHICLE ASSIGNED BOOKINGS"
     },
     "VehicleCompletedBookings": {
-      "NoBookings": "This vehicle has not completed any bookings yet."
+      "Title": "VEHICLE COMPLETED BOOKINGS"
     },
     "VehicleRepairs": {
+      "Title": "VEHICLE REPAIRS",
       "AddRepair": "Add Repair",
       "Completed": "COMPLETED",
       "Pending": "PENDING",
@@ -2235,12 +2237,14 @@
       "Error": "Cannot change driver details.. please try again later."
     },
     "DriverAssignedBookings": {
-      "NoBookings": "No bookings assigned to this driver."
+      "Ongoing": "DRIVER ONGOING BOOKING",
+      "Assigned": "DRIVER ASSIGNED BOOKINGS"
     },
     "DriverCompletedBookings": {
-      "NoBookings": "This driver has not completed any bookings yet."
+      "Title": "DRIVER COMPLETED BOOKINGS"
     },
     "DriverLeaves": {
+      "Title": "DRIVER LEAVES",
       "AddLeave": "Add Leave",
       "Completed": "COMPLETED",
       "Pending": "PENDING",
@@ -2407,8 +2411,12 @@
         "Title": "Change Photo",
         "Subtitle": "Upload a customer display picture"
       },
-      "NumberRatings": "[{number}]",
-      "AgencyInfo": "Agency related info",
+      "Added": "Added",
+      "Email": "Email",
+      "Phone": "Phone",
+      "Address": "Address",
+      "Remarks": "Remarks",
+      "Rating": "Driver Rating",
       "EditDetails": {
         "Title": "Edit Details",
         "Subtitle": "Change customer details like name, email, address, etc."
@@ -2424,10 +2432,11 @@
       "Completed": "Completed"
     },
     "CustomerCompletedBookings": {
-      "NoBookings": "This customer has not completed any bookings yet."
+      "Title": "CUSTOMER COMPLETED BOOKING"
     },
     "CustomerUpcomingBookings": {
-      "NoBookings": "No upcoming bookings for this customer."
+      "Ongoing": "CUSTOMER ONGOING BOOKING",
+      "Upcoming": "CUSTOMER UPCOMING BOOKINGS"
     },
     "AccountDetailsHeaderTabs": {
       "Account": "Account",
@@ -4495,10 +4504,11 @@
       "Error": "Cannot add agent.. Try again later!"
     },
     "UserAssignedBookings": {
-      "NoBookings": "No bookings assigned to this user."
+      "Ongoing": "USER ONGOING BOOKINGS",
+      "Assigned": "USER UPCOMING BOOKINGS"
     },
     "UserCompletedBookings": {
-      "NoBookings": "This user has not completed any bookings yet."
+      "Title": "USER COMPLETED BOOKINGS"
     },
     "UserActivity": {
       "Bookings": "Bookings",

@@ -1,16 +1,16 @@
 "use client"
 
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { CheckCheck } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindCompletedBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import {
+  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { CompletedBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { Switch } from "@/components/ui/switch"
 
@@ -31,13 +31,11 @@ export default function CompletedBookingsComponent({
   return (
     <SectionWrapper id="CompletedBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionRowWrapper className="items-center">
-          <RyogoIcon icon={CheckCheck} size="sm" color="light" />
-          <RyogoSmall color="light">{t("Title")}</RyogoSmall>
-          <RyogoSmall color="light" weight="font-bold">
-            {trips.length}
-          </RyogoSmall>
-        </SectionRowWrapper>
+        <SectionHeaderWrapper
+          icon={CheckCheck}
+          label={t("Title")}
+          count={trips.length}
+        />
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyCompleted")}</RyogoCaption>
           <Switch

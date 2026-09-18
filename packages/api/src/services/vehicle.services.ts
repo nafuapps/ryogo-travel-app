@@ -12,8 +12,9 @@ import {
   ModifyVehicleRequestType,
 } from "../types/vehicle.types"
 import { bookingRepository } from "../repositories/booking.repo"
-import { addDays } from "date-fns"
+import { addDays, subDays } from "date-fns"
 import { ModifyVehicleRepairRequestType } from "../types/vehicleRepair.types"
+import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 
 export const vehicleServices = {
   async findDashboardVehicles(agencyId: string) {
@@ -51,17 +52,29 @@ export const vehicleServices = {
   },
 
   //Get vehicle's assigned bookings
-  async findVehicleAssignedBookingsById(vehicleId: string) {
-    const bookings =
-      await bookingRepository.readAllAssignedBookingsByVehicleId(vehicleId)
+  async findVehicleAssignedBookingsById(
+    vehicleId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryEndDate = addDays(new Date(), days)
+    const bookings = await bookingRepository.readAllAssignedBookingsByVehicleId(
+      vehicleId,
+      queryEndDate,
+    )
 
     return bookings
   },
 
   //Get vehicle's completed bookings
-  async findVehicleCompletedBookingsById(vehicleId: string) {
-    const bookings =
-      await bookingRepository.readCompletedBookingsByVehicleId(vehicleId)
+  async findVehicleCompletedBookingsById(
+    vehicleId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryStartDate = subDays(new Date(), days)
+    const bookings = await bookingRepository.readCompletedBookingsByVehicleId(
+      vehicleId,
+      queryStartDate,
+    )
 
     return bookings
   },
@@ -84,9 +97,15 @@ export const vehicleServices = {
   },
 
   //Get all vehicle repairs by vehicleId
-  async findAllVehicleRepairsByVehicleId(vehicleId: string) {
-    const repairs =
-      await vehicleRepairRepository.readVehicleRepairsByVehicleId(vehicleId)
+  async findAllVehicleRepairsByVehicleId(
+    vehicleId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryStartDate = subDays(new Date(), days)
+    const repairs = await vehicleRepairRepository.readVehicleRepairsByVehicleId(
+      vehicleId,
+      queryStartDate,
+    )
     return repairs
   },
 

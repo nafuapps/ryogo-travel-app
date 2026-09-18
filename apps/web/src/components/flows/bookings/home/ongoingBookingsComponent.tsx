@@ -1,14 +1,14 @@
 "use client"
 
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 import { Route } from "lucide-react"
 import {
+  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { OngoingBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { useState } from "react"
 import { Switch } from "@/components/ui/switch"
@@ -31,13 +31,11 @@ export default function OngoingBookingsComponent({
   return (
     <SectionWrapper id="OngoingBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionRowWrapper className="items-center">
-          <RyogoIcon icon={Route} size="sm" color="light" />
-          <RyogoSmall color="light">{t("Title")}</RyogoSmall>
-          <RyogoSmall color="light" weight="font-bold">
-            {trips.length}
-          </RyogoSmall>
-        </SectionRowWrapper>
+        <SectionHeaderWrapper
+          icon={Route}
+          label={t("Title")}
+          count={trips.length}
+        />
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyOngoing")}</RyogoCaption>
           <Switch

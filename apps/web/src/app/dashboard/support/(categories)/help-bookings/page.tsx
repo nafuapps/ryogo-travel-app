@@ -37,7 +37,6 @@ import {
   Logs,
   PhoneCall,
   StickyNotes,
-  BadgeInfo,
   CalendarX,
   ListTodo,
 } from "lucide-react"

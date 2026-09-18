@@ -1,16 +1,16 @@
 "use client"
 
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { BookOpenText } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindLeadBookingsType } from "@ryogo-travel-app/api/services/booking.services"
 import {
+  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Switch } from "@/components/ui/switch"
 import { LeadBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 
@@ -24,20 +24,18 @@ export default function LeadBookingsComponent({
   const t = useTranslations("Dashboard.Bookings.Leads")
   const [showAgencyLeads, setShowAgencyLeads] = useState(false)
 
-  const selectedLeadBookings = showAgencyLeads
+  const trips = showAgencyLeads
     ? leadBookings
     : leadBookings.filter((b) => b.assignedUser.id === userId)
 
   return (
     <SectionWrapper id="leadsBookingsSection">
       <SectionRowWrapper className="items-center justify-between">
-        <SectionRowWrapper className="items-center">
-          <RyogoIcon icon={BookOpenText} size="sm" color="light" />
-          <RyogoSmall color="light">{t("Title")}</RyogoSmall>
-          <RyogoSmall color="light" weight="font-bold">
-            {selectedLeadBookings.length}
-          </RyogoSmall>
-        </SectionRowWrapper>
+        <SectionHeaderWrapper
+          icon={BookOpenText}
+          label={t("Title")}
+          count={trips.length}
+        />
         <SectionRowWrapper className="items-center justify-end">
           <RyogoCaption color="light">{t("ShowAgencyLeads")}</RyogoCaption>
           <Switch
@@ -47,7 +45,7 @@ export default function LeadBookingsComponent({
         </SectionRowWrapper>
       </SectionRowWrapper>
       <TileGridWrapper>
-        {selectedLeadBookings.map((trip) => (
+        {trips.map((trip) => (
           <LeadBookingCard key={trip.id} booking={trip} />
         ))}
       </TileGridWrapper>

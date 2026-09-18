@@ -47,7 +47,7 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import {
-  BASIC_BOOKINGS_SEARCH_DAYS,
+  BASIC_SEARCH_LIMIT_DAYS,
   PREMIUM_BOOKINGS_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 import {
@@ -260,7 +260,7 @@ export default function SearchPageComponent({
       {!isSubscribed && (
         <SubscriptionReminderButton
           warningText={t("BasicWarning", {
-            basicDays: BASIC_BOOKINGS_SEARCH_DAYS,
+            basicDays: BASIC_SEARCH_LIMIT_DAYS,
             premiumDays: PREMIUM_BOOKINGS_SEARCH_DAYS,
           })}
           ctaText={

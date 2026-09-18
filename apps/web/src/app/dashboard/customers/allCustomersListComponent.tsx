@@ -1,8 +1,8 @@
 "use client"
 
-import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { User, Plus, Rows3 } from "lucide-react"
+import { User, Plus, Rows3, ChevronRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -15,10 +15,12 @@ import { PaginationControls } from "@/components/pagination/paginationControls"
 import { usePagination } from "@/hooks/usePagination"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import {
-  GridItemWrapper,
-  HoverGridWrapper,
+  AddInfoWrapper,
+  SectionColWrapper,
+  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -27,7 +29,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
-const CUSTOMERS_PER_PAGE = 20
+const CUSTOMERS_PER_PAGE = 10
 
 export default function AllCustomersListComponent({
   allCustomers,
@@ -70,18 +72,14 @@ export default function AllCustomersListComponent({
 
   return (
     <SectionWrapper id="AllCustomersSection">
-      <SectionRowWrapper className="items-center">
-        <RyogoIcon icon={Rows3} size="sm" color="light" />
-        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
-        <RyogoSmall color="light" weight="font-bold">
-          {allCustomers.length}
-        </RyogoSmall>
-        <Link href={`/dashboard/customers/new`} className="ml-auto">
-          <RyogoOutlineButton label={t("AddCustomer")}>
-            <RyogoIcon icon={Plus} size="sm" color="slate" />
-          </RyogoOutlineButton>
-        </Link>
-      </SectionRowWrapper>
+      <SectionHeaderWrapper
+        icon={Rows3}
+        label={t("Title")}
+        count={allCustomers.length}
+      />
+      <Link href={`/dashboard/customers/new`}>
+        <AddInfoWrapper icon={Plus} label={t("AddCustomer")} />
+      </Link>
       <Field>
         <ButtonGroup>
           <Input
@@ -113,9 +111,11 @@ export default function AllCustomersListComponent({
           />
         </ButtonGroup>
       </Field>
-      {currentItems.map((customer) => (
-        <AllCustomersItemComponent key={customer.id} customer={customer} />
-      ))}
+      <TileGridWrapper>
+        {currentItems.map((customer) => (
+          <CustomerItemComponent key={customer.id} customer={customer} />
+        ))}
+      </TileGridWrapper>
       <div className="mt-4">
         <PaginationControls
           currentPage={currentPage}
@@ -127,7 +127,7 @@ export default function AllCustomersListComponent({
   )
 }
 
-function AllCustomersItemComponent({
+function CustomerItemComponent({
   customer,
 }: {
   customer: FindCustomersInAgencyType[number]
@@ -136,30 +136,30 @@ function AllCustomersItemComponent({
 
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          {customer.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(customer.photoUrl)}
-              alt={customer.name}
-              imageSize="sm"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={User} size="md" />
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+        {customer.photoUrl ? (
+          <RyogoImage
+            src={getFileUrl(customer.photoUrl)}
+            alt={customer.name}
+            imageSize="md"
+          />
+        ) : (
+          <RyogoEnclosedIcon icon={User} size="lg" />
+        )}
+        <SectionColWrapper className="w-full">
           <RyogoP weight="font-bold"> {customer.name}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{customer.location.state}</RyogoCaption>
-          <RyogoP weight="font-bold"> {customer.location.city}</RyogoP>
-        </GridItemWrapper>
-        <GridItemWrapper>
+          <RyogoCaption color="light" weight="font-bold">
+            {customer.phone}
+          </RyogoCaption>
+          <RyogoCaption color="slate">
+            {customer.location.city + ", " + customer.location.state}
+          </RyogoCaption>
+        </SectionColWrapper>
+        <SectionColWrapper className="items-end">
+          <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
           <CustomerStatusPill status={customer.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
+        </SectionColWrapper>
+      </SectionRowWrapper>
     </Link>
   )
 }

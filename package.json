@@ -18,7 +18,8 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "dev-secure": "turbo run dev-secure",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "check-types": "turbo run check-types"
   },
   "workspaces": [
     "apps/*",

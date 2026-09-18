@@ -1,15 +1,25 @@
 import { FindUserActivityByIdType } from "@ryogo-travel-app/api/services/user.services"
 import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import moment from "moment"
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import {
   GridItemWrapper,
   HoverGridWrapper,
   PageWrapper,
+  SectionHeaderWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  ArrowLeftRight,
+  BadgeIndianRupee,
+  BanknoteArrowDown,
+  Tickets,
+  TreePalm,
+  Wrench,
+} from "lucide-react"
 
 export default async function UserActivityPageComponent({
   activities,
@@ -32,74 +42,122 @@ export default async function UserActivityPageComponent({
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {bookings.length > 0 && (
         <SectionWrapper id="BookingActivityList">
-          <RyogoSmall weight="font-bold">{t("Bookings")}</RyogoSmall>
-          {bookings.map((booking) => {
-            return <BookingActivityComponent key={booking.id} {...booking} />
-          })}
+          <SectionHeaderWrapper
+            icon={Tickets}
+            label={t("Bookings")}
+            count={expenses.length}
+          />
+          <TileGridWrapper>
+            {bookings.map((booking) => {
+              return (
+                <BookingActivityComponent key={booking.id} booking={booking} />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
       {transactions.length > 0 && (
         <SectionWrapper id="TransactionsActivityList">
-          <RyogoSmall weight="font-bold">{t("Transactions")}</RyogoSmall>
-          {transactions.map((transaction) => {
-            return (
-              <TransactionActivityComponent
-                key={transaction.id}
-                {...transaction}
-              />
-            )
-          })}
+          <SectionHeaderWrapper
+            icon={ArrowLeftRight}
+            label={t("Transactions")}
+            count={expenses.length}
+          />
+          <TileGridWrapper>
+            {transactions.map((transaction) => {
+              return (
+                <TransactionActivityComponent
+                  key={transaction.id}
+                  transaction={transaction}
+                />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
       {expenses.length > 0 && (
         <SectionWrapper id="ExpensesActivityList">
-          <RyogoSmall weight="font-bold">{t("Expenses")}</RyogoSmall>
-          {expenses.map((expense) => {
-            return <ExpenseActivityComponent key={expense.id} {...expense} />
-          })}
+          <SectionHeaderWrapper
+            icon={BanknoteArrowDown}
+            label={t("Expenses")}
+            count={expenses.length}
+          />
+          <TileGridWrapper>
+            {expenses.map((expense) => {
+              return (
+                <ExpenseActivityComponent key={expense.id} expense={expense} />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
       {customers.length > 0 && (
         <SectionWrapper id="CustomersActivityList">
-          <RyogoSmall weight="font-bold">{t("Customers")}</RyogoSmall>
-          {customers.map((customer) => {
-            return <CustomerActivityComponent key={customer.id} {...customer} />
-          })}
+          <SectionHeaderWrapper
+            icon={BadgeIndianRupee}
+            label={t("Customers")}
+            count={customers.length}
+          />
+          <TileGridWrapper>
+            {customers.map((customer) => {
+              return (
+                <CustomerActivityComponent
+                  key={customer.id}
+                  customer={customer}
+                />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
       {driverLeaves.length > 0 && (
         <SectionWrapper id="DriverLeavesActivityList">
-          <RyogoSmall weight="font-bold">{t("DriverLeaves")}</RyogoSmall>
-          {driverLeaves.map((driverLeave) => {
-            return (
-              <DriverLeaveActivityComponent
-                key={driverLeave.id}
-                {...driverLeave}
-              />
-            )
-          })}
+          <SectionHeaderWrapper
+            icon={TreePalm}
+            label={t("DriverLeaves")}
+            count={driverLeaves.length}
+          />
+          <TileGridWrapper>
+            {driverLeaves.map((driverLeave) => {
+              return (
+                <DriverLeaveActivityComponent
+                  key={driverLeave.id}
+                  driverLeave={driverLeave}
+                />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
       {vehicleRepairs.length > 0 && (
         <SectionWrapper id="VehicleRepairsActivityList">
-          <RyogoSmall weight="font-bold">{t("VehicleRepairs")}</RyogoSmall>
-          {vehicleRepairs.map((vehicleRepair) => {
-            return (
-              <VehicleRepairActivityComponent
-                key={vehicleRepair.id}
-                {...vehicleRepair}
-              />
-            )
-          })}
+          <SectionHeaderWrapper
+            icon={Wrench}
+            label={t("VehicleRepairs")}
+            count={vehicleRepairs.length}
+          />
+          <TileGridWrapper>
+            {vehicleRepairs.map((vehicleRepair) => {
+              return (
+                <VehicleRepairActivityComponent
+                  key={vehicleRepair.id}
+                  vehicleRepair={vehicleRepair}
+                />
+              )
+            })}
+          </TileGridWrapper>
         </SectionWrapper>
       )}
     </PageWrapper>
   )
 }
 
-function BookingActivityComponent(
-  booking: FindUserActivityByIdType["bookings"][number],
-) {
+//TODO:Revamp UI
+function BookingActivityComponent({
+  booking,
+}: {
+  booking: FindUserActivityByIdType["bookings"][number]
+}) {
   return (
     <Link href={`/dashboard/bookings/${booking.id}`} className="w-full">
       <HoverGridWrapper>
@@ -136,9 +194,11 @@ function BookingActivityComponent(
   )
 }
 
-function TransactionActivityComponent(
-  transaction: FindUserActivityByIdType["transactions"][number],
-) {
+function TransactionActivityComponent({
+  transaction,
+}: {
+  transaction: FindUserActivityByIdType["transactions"][number]
+}) {
   return (
     <Link
       href={`/dashboard/bookings/${transaction.bookingId}/transactions`}
@@ -170,9 +230,11 @@ function TransactionActivityComponent(
   )
 }
 
-function ExpenseActivityComponent(
-  expense: FindUserActivityByIdType["expenses"][number],
-) {
+function ExpenseActivityComponent({
+  expense,
+}: {
+  expense: FindUserActivityByIdType["expenses"][number]
+}) {
   return (
     <Link
       href={`/dashboard/bookings/${expense.bookingId}/expenses`}
@@ -200,9 +262,11 @@ function ExpenseActivityComponent(
   )
 }
 
-function CustomerActivityComponent(
-  customer: FindUserActivityByIdType["customers"][number],
-) {
+function CustomerActivityComponent({
+  customer,
+}: {
+  customer: FindUserActivityByIdType["customers"][number]
+}) {
   return (
     <Link href={`/dashboard/customers/${customer.id}`} className="w-full">
       <HoverGridWrapper>
@@ -229,9 +293,11 @@ function CustomerActivityComponent(
   )
 }
 
-async function DriverLeaveActivityComponent(
-  driverLeave: FindUserActivityByIdType["driverLeaves"][number],
-) {
+async function DriverLeaveActivityComponent({
+  driverLeave,
+}: {
+  driverLeave: FindUserActivityByIdType["driverLeaves"][number]
+}) {
   const t = await getTranslations("Dashboard.UserActivity")
   return (
     <Link
@@ -266,9 +332,11 @@ async function DriverLeaveActivityComponent(
   )
 }
 
-async function VehicleRepairActivityComponent(
-  vehicleRepair: FindUserActivityByIdType["vehicleRepairs"][number],
-) {
+async function VehicleRepairActivityComponent({
+  vehicleRepair,
+}: {
+  vehicleRepair: FindUserActivityByIdType["vehicleRepairs"][number]
+}) {
   const t = await getTranslations("Dashboard.UserActivity")
   return (
     <Link

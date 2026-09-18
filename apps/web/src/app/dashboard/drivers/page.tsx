@@ -36,7 +36,9 @@ export default async function AllDriversPage() {
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/drivers"} />
       <PageWrapper id="AllDriversPage">
-        <OnTripDriversComponent ongoingTrips={ongoingTrips} />
+        {ongoingTrips.length > 0 && (
+          <OnTripDriversComponent ongoingTrips={ongoingTrips} />
+        )}
         <AllDriversListComponent allDrivers={allDrivers} />
         <DriversScheduleChartComponent
           driverSchedule14Days={driverSchedule14Days}

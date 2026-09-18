@@ -1,4 +1,4 @@
-import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { Rows3, User, Plus, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -9,6 +9,7 @@ import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   AddInfoWrapper,
   SectionColWrapper,
+  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
@@ -25,13 +26,11 @@ export default async function AllDriversListComponent({
 
   return (
     <SectionWrapper id="AllDriversSection">
-      <SectionRowWrapper className="items-center">
-        <RyogoIcon icon={Rows3} size="sm" color="light" />
-        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
-        <RyogoSmall color="light" weight="font-bold">
-          {allDrivers.length}
-        </RyogoSmall>
-      </SectionRowWrapper>
+      <SectionHeaderWrapper
+        icon={Rows3}
+        label={t("Title")}
+        count={allDrivers.length}
+      />
       <TileGridWrapper>
         {allDrivers.map((driver) => (
           <DriverItemComponent key={driver.id} driver={driver} />
@@ -67,7 +66,7 @@ async function DriverItemComponent({
         ) : (
           <RyogoEnclosedIcon icon={User} size="lg" />
         )}
-        <SectionColWrapper small className="w-full">
+        <SectionColWrapper className="w-full">
           <RyogoP weight="font-bold"> {driver.name}</RyogoP>
           <RyogoCaption color="light" weight="font-bold">
             {driver.phone}

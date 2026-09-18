@@ -9,13 +9,9 @@ import {
   DetailsContentWrapper,
   DetailsLineItem,
   DetailsLineWrapper,
-  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { getAverageRating } from "@/lib/utils"
-import { Star } from "lucide-react"
 import moment from "moment"
+import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 
 export default async function VehicleDetailsComponent({
   createdAt,
@@ -75,17 +71,7 @@ export default async function VehicleDetailsComponent({
         )}
         {ratings && (
           <DetailsLineWrapper label={t("Rating")}>
-            <SectionRowWrapper className="items-center justify-end">
-              <div className="border rounded-md flex items-center gap-1 lg:gap-1.5 py-0.75 lg:py-1 px-1.5 lg:px-2">
-                <RyogoCaption color="slate">
-                  {getAverageRating(ratings)}
-                </RyogoCaption>
-                <RyogoIcon icon={Star} size={"xs"} />
-              </div>
-              <RyogoCaption color="slate">
-                {t("RatingCount", { count: ratings.length })}
-              </RyogoCaption>
-            </SectionRowWrapper>
+            <RyogoAverageRatingDisplay ratings={ratings} />
           </DetailsLineWrapper>
         )}
       </DetailsContentWrapper>

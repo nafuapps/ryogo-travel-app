@@ -1,13 +1,18 @@
 import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
-import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { FindUserAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
 import {
   OngoingBookingCard,
   UpcomingBookingCard,
 } from "@/components/flows/bookings/cards/bookingCards"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Route, Clock } from "lucide-react"
 
 export default async function UserAssignedPageComponent({
   bookings,
@@ -26,19 +31,31 @@ export default async function UserAssignedPageComponent({
   return (
     <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Assigned"} id={id} />
-      <SectionWrapper className="items-center" id="UserAssignedBookingsList">
-        {bookings.length === 0 ? (
-          <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
-        ) : (
-          <>
+      {inProgressBookings.length > 0 && (
+        <SectionWrapper id="UserOngoingBookingsList">
+          <SectionHeaderWrapper
+            icon={Route}
+            label={t("Ongoing")}
+            count={inProgressBookings.length}
+          />
+          <TileGridWrapper>
             {inProgressBookings.map((trip) => (
               <OngoingBookingCard key={trip.id} booking={trip} />
             ))}
-            {assignedBookings.map((trip) => (
-              <UpcomingBookingCard key={trip.id} booking={trip} />
-            ))}
-          </>
-        )}
+          </TileGridWrapper>
+        </SectionWrapper>
+      )}
+      <SectionWrapper id="UserAssignedBookingsList">
+        <SectionHeaderWrapper
+          icon={Clock}
+          label={t("Assigned")}
+          count={assignedBookings.length}
+        />
+        <TileGridWrapper>
+          {assignedBookings.map((trip) => (
+            <UpcomingBookingCard key={trip.id} booking={trip} canAssign />
+          ))}
+        </TileGridWrapper>
       </SectionWrapper>
     </PageWrapper>
   )

@@ -1,13 +1,18 @@
 import { FindCustomerUpcomingBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
-import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
-import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
 import {
   OngoingBookingCard,
   UpcomingBookingCard,
 } from "@/components/flows/bookings/cards/bookingCards"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Route, Clock } from "lucide-react"
 
 export default async function CustomerUpcomingBookingsPageComponent({
   bookings,
@@ -30,26 +35,35 @@ export default async function CustomerUpcomingBookingsPageComponent({
   return (
     <PageWrapper id="CustomerUpcomingBookingsPage">
       <CustomerDetailHeaderTabs selectedTab={"Upcoming"} id={id} />
-      <SectionWrapper
-        className="items-center"
-        id="CustomerUpcomingBookingsList"
-      >
-        {bookings.length === 0 ? (
-          <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
-        ) : (
-          <>
+      {inProgressBookings.length > 0 && (
+        <SectionWrapper id="CustomerOngoingBooking">
+          <SectionHeaderWrapper
+            icon={Route}
+            label={t("Ongoing")}
+            count={inProgressBookings.length}
+          />
+          <TileGridWrapper>
             {inProgressBookings.map((trip) => (
               <OngoingBookingCard key={trip.id} booking={trip} />
             ))}
-            {upcomingBookings.map((trip) => (
-              <UpcomingBookingCard
-                key={trip.id}
-                booking={trip}
-                canAssign={isOwner || trip.assignedUser.id === userId}
-              />
-            ))}
-          </>
-        )}
+          </TileGridWrapper>
+        </SectionWrapper>
+      )}
+      <SectionWrapper id="CustomerUpcomingBookingsList">
+        <SectionHeaderWrapper
+          icon={Clock}
+          label={t("Upcoming")}
+          count={upcomingBookings.length}
+        />
+        <TileGridWrapper>
+          {upcomingBookings.map((trip) => (
+            <UpcomingBookingCard
+              key={trip.id}
+              booking={trip}
+              canAssign={isOwner || trip.assignedUser.id === userId}
+            />
+          ))}
+        </TileGridWrapper>
       </SectionWrapper>
     </PageWrapper>
   )

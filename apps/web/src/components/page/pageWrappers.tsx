@@ -182,6 +182,28 @@ export function SectionWrapper({
   )
 }
 
+export function SectionHeaderWrapper({
+  icon,
+  label,
+  count,
+}: {
+  icon: LucideIcon
+  label: string
+  count?: number
+}) {
+  return (
+    <SectionRowWrapper className="items-center">
+      <RyogoIcon icon={icon} size="sm" color="light" />
+      <RyogoSmall color="light">{label}</RyogoSmall>
+      {count !== undefined && (
+        <RyogoSmall color="light" weight="font-bold">
+          {count}
+        </RyogoSmall>
+      )}
+    </SectionRowWrapper>
+  )
+}
+
 export function SectionRowWrapper({
   children,
   small,

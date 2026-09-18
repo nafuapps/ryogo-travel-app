@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: pageDescription,
 }
 
-export default async function ModifyVehiclePage({
+export default async function ChangeVehicleNumberPage({
   params,
 }: {
   params: Promise<{ vehicleId: string }>
@@ -39,7 +39,7 @@ export default async function ModifyVehiclePage({
     vehicle.addedByUserId !== currentUser.userId &&
     currentUser.userRole !== UserRolesEnum.OWNER
   ) {
-    redirect("/dashboard/vehicles", RedirectType.replace)
+    redirect(`/dashboard/vehicles/${vehicleId}`, RedirectType.replace)
   }
 
   const currentAgencyVehicles =

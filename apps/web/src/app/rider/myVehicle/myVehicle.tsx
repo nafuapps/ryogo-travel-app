@@ -54,21 +54,33 @@ export default async function RiderMyVehiclePageComponent({
       </GridWrapper>
       <SectionWrapper id="VehicleRCDetails">
         <VehicleDocumentInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
+          addedByUserId={vehicle.addedByUserId}
           label={t("RC")}
+          type="rc"
           photoUrl={vehicle.rcPhotoUrl}
           expiresOn={vehicle.rcExpiresOn}
         />
       </SectionWrapper>
       <SectionWrapper id="VehiclePUCDetails">
         <VehicleDocumentInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
+          addedByUserId={vehicle.addedByUserId}
           label={t("PUC")}
+          type="puc"
           photoUrl={vehicle.pucPhotoUrl}
           expiresOn={vehicle.pucExpiresOn}
         />
       </SectionWrapper>
       <SectionWrapper id="VehicleInsuranceDetails">
         <VehicleDocumentInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
+          addedByUserId={vehicle.addedByUserId}
           label={t("Insurance")}
+          type="insurance"
           photoUrl={vehicle.insurancePhotoUrl}
           expiresOn={vehicle.insuranceExpiresOn}
         />

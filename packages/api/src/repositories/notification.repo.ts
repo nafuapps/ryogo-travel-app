@@ -4,21 +4,18 @@ import {
   InsertNotificationType,
   notifications,
 } from "@ryogo-travel-app/db/schema"
-import { subDays } from "date-fns"
 
 export const notificationRepository = {
   async readFeedNotificationsByAgencyId(
     agencyId: string,
-    limit: number = 100,
-    days: number = 30,
+    queryStartDate: Date,
   ) {
     return await db.query.notifications.findMany({
       orderBy: (notifications, { desc }) => [desc(notifications.createdAt)],
-      limit: limit,
       where: and(
         eq(notifications.agencyId, agencyId),
         eq(notifications.isFeed, true),
-        gte(notifications.createdAt, subDays(new Date(), days)),
+        gte(notifications.createdAt, queryStartDate),
       ),
     })
   },

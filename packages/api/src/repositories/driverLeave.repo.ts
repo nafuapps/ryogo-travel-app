@@ -7,9 +7,18 @@ import { and, eq, gte, lte, or } from "drizzle-orm"
 
 export const driverLeaveRepository = {
   //Read all driver leaves by driver id
-  async readDriverLeavesByDriverId(driverId: string) {
+  async readDriverLeavesByDriverId(driverId: string, queryStartDate: Date) {
     return await db.query.driverLeaves.findMany({
-      where: eq(driverLeaves.driverId, driverId),
+      where: and(
+        eq(driverLeaves.driverId, driverId),
+        or(
+          eq(driverLeaves.isCompleted, false),
+          and(
+            eq(driverLeaves.isCompleted, true),
+            gte(driverLeaves.startDate, queryStartDate),
+          ),
+        ),
+      ),
       with: {
         addedByUser: {
           columns: {

@@ -1,4 +1,4 @@
-import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { Rows3, Plus, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -9,6 +9,7 @@ import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
   AddInfoWrapper,
   SectionColWrapper,
+  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
@@ -26,13 +27,11 @@ export default async function AllVehiclesListComponent({
 
   return (
     <SectionWrapper id="AllVehiclesSection">
-      <SectionRowWrapper className="items-center">
-        <RyogoIcon icon={Rows3} size="sm" color="light" />
-        <RyogoSmall color="light">{t("Title")}</RyogoSmall>
-        <RyogoSmall color="light" weight="font-bold">
-          {allVehicles.length}
-        </RyogoSmall>
-      </SectionRowWrapper>
+      <SectionHeaderWrapper
+        icon={Rows3}
+        label={t("Title")}
+        count={allVehicles.length}
+      />
       <TileGridWrapper>
         {allVehicles.map((vehicle) => (
           <VehicleItemComponent key={vehicle.id} vehicle={vehicle} />
@@ -68,7 +67,7 @@ async function VehicleItemComponent({
         ) : (
           <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
         )}
-        <SectionColWrapper small className="w-full">
+        <SectionColWrapper className="w-full">
           <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>
           <RyogoCaption color="light" weight="font-bold">
             {vehicle.brand + " " + vehicle.model}

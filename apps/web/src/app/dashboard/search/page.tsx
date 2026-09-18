@@ -8,7 +8,7 @@ import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import {
-  BASIC_BOOKINGS_SEARCH_DAYS,
+  BASIC_SEARCH_LIMIT_DAYS,
   PREMIUM_BOOKINGS_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 
@@ -34,7 +34,7 @@ export default async function SearchPage() {
 
   const searchData = await agencyServices.findAgencySearchData(
     currentUser.agencyId,
-    isSubscribed ? PREMIUM_BOOKINGS_SEARCH_DAYS : BASIC_BOOKINGS_SEARCH_DAYS,
+    isSubscribed ? PREMIUM_BOOKINGS_SEARCH_DAYS : BASIC_SEARCH_LIMIT_DAYS,
   )
 
   return (

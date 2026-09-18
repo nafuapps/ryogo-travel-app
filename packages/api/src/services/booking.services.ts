@@ -18,7 +18,10 @@ import { tripLogRepository } from "../repositories/tripLog.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
-import { UPDATE_PRICE_DISTANCE_FACTOR } from "../apiConfig"
+import {
+  BASIC_SEARCH_LIMIT_DAYS,
+  UPDATE_PRICE_DISTANCE_FACTOR,
+} from "../apiConfig"
 import { getEstimatedTotalPrice, getActualTotalPrice } from "@/lib/utils"
 import { userRepository } from "../repositories/user.repo"
 import { addDays, subDays } from "date-fns"
@@ -157,7 +160,10 @@ export const bookingServices = {
     return bookings
   },
 
-  async findCompletedBookingsPreviousDays(agencyId: string, days: number = 30) {
+  async findCompletedBookingsPreviousDays(
+    agencyId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
     const queryEndDate = new Date()
     const queryStartDate = subDays(queryEndDate, days)
 
@@ -169,7 +175,10 @@ export const bookingServices = {
     return bookings
   },
 
-  async findCancelledBookingsPreviousDays(agencyId: string, days: number = 30) {
+  async findCancelledBookingsPreviousDays(
+    agencyId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
     const queryEndDate = new Date()
     const queryStartDate = subDays(queryEndDate, days)
 
@@ -181,7 +190,10 @@ export const bookingServices = {
     return bookings
   },
 
-  async findUpcomingBookingsNextDays(agencyId: string, days: number = 30) {
+  async findUpcomingBookingsNextDays(
+    agencyId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
     const queryEndDate = addDays(new Date(), days)
 
     const bookings = await bookingRepository.readUpcomingBookingsData(
@@ -211,7 +223,10 @@ export const bookingServices = {
     return bookings
   },
 
-  async findLeadBookingsNextDays(agencyId: string, days: number = 30) {
+  async findLeadBookingsNextDays(
+    agencyId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
     const queryStartDate = new Date()
     const queryEndDate = addDays(queryStartDate, days)
 

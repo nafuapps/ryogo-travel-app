@@ -7,9 +7,18 @@ import { and, eq, gte, lte, or } from "drizzle-orm"
 
 export const vehicleRepairRepository = {
   //Read all vehicle repairs by vehicle id
-  async readVehicleRepairsByVehicleId(vehicleId: string) {
+  async readVehicleRepairsByVehicleId(vehicleId: string, queryStartDate: Date) {
     return await db.query.vehicleRepairs.findMany({
-      where: eq(vehicleRepairs.vehicleId, vehicleId),
+      where: and(
+        eq(vehicleRepairs.vehicleId, vehicleId),
+        or(
+          eq(vehicleRepairs.isCompleted, false),
+          and(
+            eq(vehicleRepairs.isCompleted, true),
+            gte(vehicleRepairs.startDate, queryStartDate),
+          ),
+        ),
+      ),
       with: {
         addedByUser: {
           columns: {

@@ -3,13 +3,16 @@ import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicl
 import { getTranslations } from "next-intl/server"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import Link from "next/link"
-import { ChevronRight, Plus } from "lucide-react"
+import { ChevronRight, Plus, Wrench } from "lucide-react"
 import moment from "moment"
 import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
   PlainGridWrapper,
+  AddInfoWrapper,
+  TileGridWrapper,
+  SectionHeaderWrapper,
 } from "@/components/page/pageWrappers"
 import { RepairStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
@@ -32,27 +35,33 @@ export default async function AllVehicleRepairsPageComponent({
     <PageWrapper id="VehicleRepairsPage">
       <VehicleDetailHeaderTabs selectedTab={"Repairs"} id={vehicleId} />
       <SectionWrapper id="VehicleRepairsList">
+        <SectionHeaderWrapper
+          icon={Wrench}
+          label={t("Title")}
+          count={repairs.length}
+        />
         <Link
           href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
-          className="w-full md:w-1/2 self-center"
+          className="w-full"
         >
-          <RyogoOutlineButton label={t("AddRepair")} className="w-full">
-            <RyogoIcon icon={Plus} size="sm" />
-          </RyogoOutlineButton>
+          <AddInfoWrapper icon={Plus} label={t("AddRepair")} />
         </Link>
-        {repairs.map((repair) => (
-          <VehicleRepairComponent
-            key={repair.id}
-            repair={repair}
-            isOwner={isOwner}
-            userId={userId}
-          />
-        ))}
+        <TileGridWrapper>
+          {repairs.map((repair) => (
+            <VehicleRepairComponent
+              key={repair.id}
+              repair={repair}
+              isOwner={isOwner}
+              userId={userId}
+            />
+          ))}
+        </TileGridWrapper>
       </SectionWrapper>
     </PageWrapper>
   )
 }
 
+//TODO:Revamp UI
 async function VehicleRepairComponent({
   repair,
   userId,

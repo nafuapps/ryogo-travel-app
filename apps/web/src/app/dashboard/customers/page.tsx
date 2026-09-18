@@ -3,8 +3,9 @@ import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import CustomersPageComponent from "./customers"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
+import AllCustomersListComponent from "./allCustomersListComponent"
 
 export const metadata: Metadata = {
   title: `Customers - ${pageTitle}`,
@@ -18,10 +19,16 @@ export default async function AllCustomersPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const allCustomers = await customerServices.findCustomersInAgency(
+    currentUser.agencyId,
+  )
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers"} />
-      <CustomersPageComponent agencyId={currentUser.agencyId} />
+      <PageWrapper id="CustomersPage">
+        <AllCustomersListComponent allCustomers={allCustomers} />
+      </PageWrapper>
     </MainWrapper>
   )
 }

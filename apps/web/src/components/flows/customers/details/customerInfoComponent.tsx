@@ -3,53 +3,59 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Building, MapPin } from "lucide-react"
-import { AgencyStatusPill } from "@/components/pills/ryogoPills"
-import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
+import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
+import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import IdCopyPill from "@/components/pills/idCopyPill"
-import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
+import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { MapPin, User } from "lucide-react"
 
-export default function AgencyInfoComponent({
+export default function CustomerInfoComponent({
   id,
-  logoUrl,
+  agencyId,
+  photoUrl,
+  name,
+  status,
   city,
   state,
-  agencyName,
-  status,
   canChange,
 }: {
   id: string
-  logoUrl: string | null
+  agencyId: string
+  photoUrl: string | null
+  name: string
   city: string
   state: string
-  agencyName: string
-  status: AgencyStatusEnum
+  status: CustomerStatusEnum
   canChange?: boolean
 }) {
   return (
     <SectionColWrapper className="items-center justify-center">
-      {logoUrl ? (
+      {photoUrl ? (
         <RyogoDialogImage
-          src={getFileUrl(logoUrl)}
-          alt={logoUrl}
+          src={getFileUrl(photoUrl)}
+          alt={name}
           imageSize="lg"
         />
       ) : (
-        <ChangeAgencyLogoSheet agencyId={id} canChange={canChange}>
-          <RyogoEnclosedIcon icon={Building} size="xl" />
-        </ChangeAgencyLogoSheet>
+        <ChangeCustomerPhotoSheet
+          customerId={id}
+          agencyId={agencyId}
+          canChange={canChange}
+        >
+          <RyogoEnclosedIcon icon={User} size="xl" />
+        </ChangeCustomerPhotoSheet>
       )}
       <SectionColWrapper className="items-center">
-        <RyogoH4 weight="font-bold">{agencyName}</RyogoH4>
+        <RyogoH4 weight="font-bold">{name}</RyogoH4>
         <SectionRowWrapper small className="items-center">
           <RyogoIcon icon={MapPin} size="sm" color="light" />
           <RyogoSmall color="light">{city + ", " + state}</RyogoSmall>
         </SectionRowWrapper>
         <SectionRowWrapper className="items-center">
-          <AgencyStatusPill status={status} size="lg" />
+          <CustomerStatusPill status={status} size="lg" />
           <IdCopyPill id={id} />
         </SectionRowWrapper>
       </SectionColWrapper>

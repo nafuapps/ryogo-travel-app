@@ -48,7 +48,6 @@ export default function BookingScheduleChartComponent({
   return (
     <SectionWrapper id="BookingScheduleSection">
       <DashboardScheduleHeader
-        // length={chartData.length.toString()}
         title={t("Title")}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}

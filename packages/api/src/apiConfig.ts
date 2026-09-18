@@ -8,7 +8,7 @@ export const SESSION_COOKIE_EXPIRATION_DAYS = 7
 export const SESSION_COOKIE_REFRESH_MINUTES = 15
 
 //Bookings
-export const BASIC_BOOKINGS_SEARCH_DAYS = 30
+export const BASIC_SEARCH_LIMIT_DAYS = 30
 export const PREMIUM_BOOKINGS_SEARCH_DAYS = 365
 
 export const UPDATE_PRICE_DISTANCE_FACTOR = 1.1 //Actual distance = 1.1x estimated distance
@@ -48,10 +48,6 @@ export const MAX_USER_DISTANCE_RATIO = 1.2
 //Missions
 export const READ_MISSION_WINDOW_DAYS = 3
 export const EXPIRATION_ALERT_WINDOW_DAYS = 15
-
-//Notifications
-export const NOTIFICATION_FEED_WINDOW_DAYS = 30
-export const NOTIFICATION_FEED_LIMIT = 100
 
 //Users
 export const LOCATE_USER_MINUTES = 15

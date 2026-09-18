@@ -28,8 +28,8 @@ import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
 import { sessionRepository } from "../repositories/session.repo"
 import { getSubscriptionExpirationDate } from "./agency.services"
-import { LOCATE_USER_MINUTES } from "../apiConfig"
-import { differenceInMinutes } from "date-fns"
+import { BASIC_SEARCH_LIMIT_DAYS, LOCATE_USER_MINUTES } from "../apiConfig"
+import { addDays, differenceInMinutes, subDays } from "date-fns"
 
 const superPassword = process.env.SUPER_PASSWORD
 
@@ -109,17 +109,29 @@ export const userServices = {
   },
 
   //Get user's assigned bookings
-  async findUserAssignedBookingsById(userId: string) {
-    const bookings =
-      await bookingRepository.readAssignedBookingsByUserId(userId)
+  async findUserAssignedBookingsById(
+    userId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryEndDate = addDays(new Date(), days)
+    const bookings = await bookingRepository.readAssignedBookingsByUserId(
+      userId,
+      queryEndDate,
+    )
 
     return bookings
   },
 
   //Get user's completed bookings
-  async findUserCompletedBookingsById(userId: string) {
-    const bookings =
-      await bookingRepository.readCompletedBookingsByUserId(userId)
+  async findUserCompletedBookingsById(
+    userId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryStartDate = subDays(new Date(), days)
+    const bookings = await bookingRepository.readCompletedBookingsByUserId(
+      userId,
+      queryStartDate,
+    )
 
     return bookings
   },

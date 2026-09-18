@@ -1,9 +1,14 @@
 import { FindCustomerCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
-import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
-import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
 import { CompletedBookingCard } from "@/components/flows/bookings/cards/bookingCards"
+import { CheckCheck } from "lucide-react"
 
 export default async function CustomerCompletedBookingsPageComponent({
   bookings,
@@ -17,17 +22,17 @@ export default async function CustomerCompletedBookingsPageComponent({
   return (
     <PageWrapper id="CustomerCompletedBookingsPage">
       <CustomerDetailHeaderTabs selectedTab={"Completed"} id={id} />
-      <SectionWrapper
-        id="CustomerCompletedBookingsList"
-        className="items-center"
-      >
-        {bookings.length > 0 ? (
-          bookings.map((trip) => (
+      <SectionWrapper id="CustomerCompletedBookingsList">
+        <SectionHeaderWrapper
+          icon={CheckCheck}
+          label={t("Title")}
+          count={bookings.length}
+        />
+        <TileGridWrapper>
+          {bookings.map((trip) => (
             <CompletedBookingCard key={trip.id} booking={trip} />
-          ))
-        ) : (
-          <RyogoCaption color="light">{t("NoBookings")}</RyogoCaption>
-        )}
+          ))}
+        </TileGridWrapper>
       </SectionWrapper>
     </PageWrapper>
   )

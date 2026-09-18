@@ -29,6 +29,11 @@
     "check-types": {
       "dependsOn": [
         "^check-types"
+      ],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "tsconfig.json"
       ]
     },
     "dev": {

@@ -1,131 +1,95 @@
 import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
 import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
-import {
-  RyogoCaption,
-  RyogoH3,
-  RyogoP,
-  RyogoSmall,
-} from "@/components/typography"
 import { getTranslations } from "next-intl/server"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { CalendarPlus, Camera, SquarePen, User } from "lucide-react"
-import moment from "moment"
+import { CalendarPlus, Camera, SquarePen } from "lucide-react"
 import Link from "next/link"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateCustomerAlertButton from "@/components/buttons/alert/inactivateCustomerAlertButton"
 import ActivateCustomerAlertButton from "@/components/buttons/alert/activateCustomerAlertButton"
 import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
-import { CustomerStatusPill } from "@/components/pills/ryogoPills"
-import {
-  SectionWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  SectionColWrapper,
-  GridWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
-import { Separator } from "@/components/ui/separator"
+import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import IdCopyPill from "@/components/pills/idCopyPill"
+import CustomerInfoComponent from "@/components/flows/customers/details/customerInfoComponent"
+import CustomerDetailsComponent from "@/components/flows/customers/details/customerDetailsComponent"
 
 export default async function CustomerDetailsPageComponent({
   customer,
+  userId,
+  isOwner,
 }: {
   customer: NonNullable<FindCustomerDetailsByIdType>
+  userId: string
+  isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.CustomerDetails")
+
+  const canChangeDetails = customer.addedByUserId === userId || isOwner
 
   return (
     <PageWrapper id="CustomerDetailsPage">
       <CustomerDetailHeaderTabs selectedTab={"Customer"} id={customer.id} />
-      <SectionWrapper id="CustomerDetailsInfo">
-        <IdCopyPill id={customer.id} />
-        <Separator />
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            {customer.photoUrl ? (
-              <RyogoImage
-                src={getFileUrl(customer.photoUrl)}
-                alt={customer.name}
-                imageSize="lg"
+      <GridWrapper id="CustomerDetails">
+        <CustomerInfoComponent
+          id={customer.id}
+          agencyId={customer.agencyId}
+          photoUrl={customer.photoUrl}
+          name={customer.name}
+          status={customer.status}
+          city={customer.location.city}
+          state={customer.location.state}
+          canChange={canChangeDetails}
+        />
+        <CustomerDetailsComponent
+          createdAt={customer.createdAt}
+          phone={customer.phone}
+          email={customer.email}
+          address={customer.address}
+          remarks={customer.remarks}
+          ratings={customer.driverRatings}
+        />
+      </GridWrapper>
+      {canChangeDetails && (
+        <GridWrapper id={"CustomerActions"}>
+          {customer.status === CustomerStatusEnum.ACTIVE && (
+            <Link href={`/dashboard/bookings/new/${customer.id}`}>
+              <RyogoDetailedIconButton
+                label={t("CreateBooking.Title")}
+                icon={CalendarPlus}
+                subtitle={t("CreateBooking.Subtitle")}
               />
-            ) : (
-              <RyogoEnclosedIcon icon={User} size="xl" />
-            )}
-          </SectionColWrapper>
-          <SectionColWrapper className="items-end">
-            <RyogoH3>{customer.name}</RyogoH3>
-            <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
-            {customer.email && (
-              <RyogoCaption color="slate">{customer.email}</RyogoCaption>
-            )}
-            <RyogoCaption color="slate">
-              {moment(customer.createdAt).format("DD MMM YYYY")}
-            </RyogoCaption>
-            {customer.driverRatings && customer.driverRatings.length > 1 && (
-              <RyogoAverageRatingDisplay
-                label={t("NumberRatings", {
-                  number: customer.driverRatings.length.toString(),
-                })}
-                ratings={customer.driverRatings}
-              />
-            )}
-            <CustomerStatusPill status={customer.status} />
-          </SectionColWrapper>
-        </SectionRowWrapper>
-      </SectionWrapper>
-      <SectionWrapper id={"CustomerAgencyInfo"}>
-        <RyogoSmall weight="font-bold">{t("AgencyInfo")}</RyogoSmall>
-        <SectionColWrapper>
-          <RyogoCaption color="slate">{customer.address}</RyogoCaption>
-          <RyogoP weight="font-bold">
-            {customer.location.city + ", " + customer.location.state}
-          </RyogoP>
-          <RyogoCaption color="slate">{customer.addedByUser.name}</RyogoCaption>
-          <RyogoCaption color="light">{customer.remarks}</RyogoCaption>
-        </SectionColWrapper>
-      </SectionWrapper>
-      <GridWrapper id={"CustomerActions"}>
-        {customer.status === CustomerStatusEnum.ACTIVE && (
-          <Link href={`/dashboard/bookings/new/${customer.id}`}>
+            </Link>
+          )}
+          <ChangeCustomerPhotoSheet
+            customerId={customer.id}
+            agencyId={customer.agencyId}
+            canChange
+          >
             <RyogoDetailedIconButton
-              label={t("CreateBooking.Title")}
-              icon={CalendarPlus}
-              subtitle={t("CreateBooking.Subtitle")}
+              icon={Camera}
+              label={t("ChangeCustomerPhoto.Title")}
+              subtitle={t("ChangeCustomerPhoto.Subtitle")}
+            />
+          </ChangeCustomerPhotoSheet>
+          <Link href={`/dashboard/customers/${customer.id}/modify`}>
+            <RyogoDetailedIconButton
+              label={t("EditDetails.Title")}
+              icon={SquarePen}
+              subtitle={t("EditDetails.Subtitle")}
             />
           </Link>
-        )}
-        <ChangeCustomerPhotoSheet
-          customerId={customer.id}
-          agencyId={customer.agencyId}
-        >
-          <RyogoDetailedIconButton
-            icon={Camera}
-            label={t("ChangeCustomerPhoto.Title")}
-            subtitle={t("ChangeCustomerPhoto.Subtitle")}
-          />
-        </ChangeCustomerPhotoSheet>
-        <Link href={`/dashboard/customers/${customer.id}/modify`}>
-          <RyogoDetailedIconButton
-            label={t("EditDetails.Title")}
-            icon={SquarePen}
-            subtitle={t("EditDetails.Subtitle")}
-          />
-        </Link>
-        {customer.status !== CustomerStatusEnum.INACTIVE ? (
-          <InactivateCustomerAlertButton
-            customerId={customer.id}
-            agencyId={customer.agencyId}
-          />
-        ) : (
-          <ActivateCustomerAlertButton
-            customerId={customer.id}
-            agencyId={customer.agencyId}
-          />
-        )}
-      </GridWrapper>
+          {customer.status !== CustomerStatusEnum.INACTIVE ? (
+            <InactivateCustomerAlertButton
+              customerId={customer.id}
+              agencyId={customer.agencyId}
+            />
+          ) : (
+            <ActivateCustomerAlertButton
+              customerId={customer.id}
+              agencyId={customer.agencyId}
+            />
+          )}
+        </GridWrapper>
+      )}
     </PageWrapper>
   )
 }

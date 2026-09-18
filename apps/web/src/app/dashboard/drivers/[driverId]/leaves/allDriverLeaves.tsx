@@ -9,11 +9,14 @@ import {
   GridItemWrapper,
   PageWrapper,
   PlainGridWrapper,
+  AddInfoWrapper,
+  TileGridWrapper,
+  SectionHeaderWrapper,
 } from "@/components/page/pageWrappers"
 import { LeaveStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronRight, Plus } from "lucide-react"
+import { ChevronRight, Plus, TreePalm } from "lucide-react"
 
 export default async function AllDriverLeavesPageComponent({
   leaves,
@@ -31,27 +34,33 @@ export default async function AllDriverLeavesPageComponent({
     <PageWrapper id="DriverLeavesPage">
       <DriverDetailHeaderTabs selectedTab={"Leaves"} id={driverId} />
       <SectionWrapper id="DriverLeavesList">
+        <SectionHeaderWrapper
+          icon={TreePalm}
+          label={t("Title")}
+          count={leaves.length}
+        />
         <Link
           href={`/dashboard/drivers/${driverId}/leaves/new`}
-          className="md:w-1/2 w-full self-center"
+          className="w-full"
         >
-          <RyogoOutlineButton className="w-full" label={t("AddLeave")}>
-            <RyogoIcon icon={Plus} size="sm" />
-          </RyogoOutlineButton>
+          <AddInfoWrapper icon={Plus} label={t("AddLeave")} />
         </Link>
-        {leaves.map((leave) => (
-          <DriverLeaveComponent
-            key={leave.id}
-            leave={leave}
-            isOwner={isOwner}
-            userId={userId}
-          />
-        ))}
+        <TileGridWrapper>
+          {leaves.map((leave) => (
+            <DriverLeaveComponent
+              key={leave.id}
+              leave={leave}
+              isOwner={isOwner}
+              userId={userId}
+            />
+          ))}
+        </TileGridWrapper>
       </SectionWrapper>
     </PageWrapper>
   )
 }
 
+//TODO:Revamp UI
 async function DriverLeaveComponent({
   leave,
   userId,

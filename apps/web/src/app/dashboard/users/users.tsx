@@ -1,4 +1,4 @@
-import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -17,6 +17,7 @@ import {
   AddInfoWrapper,
   PageWrapper,
   SectionColWrapper,
+  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
@@ -41,13 +42,11 @@ export default async function UsersPageComponent({
   return (
     <PageWrapper id="UsersPage">
       <SectionWrapper id="OwnersSection">
-        <SectionRowWrapper className="items-center">
-          <RyogoIcon icon={UserKey} size="sm" color="light" />
-          <RyogoSmall color="light">{t("Owners.Title")}</RyogoSmall>
-          <RyogoSmall color="light" weight="font-bold">
-            {owners.length}
-          </RyogoSmall>
-        </SectionRowWrapper>
+        <SectionHeaderWrapper
+          icon={UserKey}
+          label={t("Owners.Title")}
+          count={owners.length}
+        />
         <TileGridWrapper>
           {owners.map((user) => (
             <UserItemComponent key={user.id} user={user} />
@@ -64,13 +63,11 @@ export default async function UsersPageComponent({
         </TileGridWrapper>
       </SectionWrapper>
       <SectionWrapper id="AgentsSection">
-        <SectionRowWrapper className="items-center">
-          <RyogoIcon icon={UserCog} size="sm" color="light" />
-          <RyogoSmall color="light">{t("Agents.Title")}</RyogoSmall>
-          <RyogoSmall color="light" weight="font-bold">
-            {agents.length}
-          </RyogoSmall>
-        </SectionRowWrapper>
+        <SectionHeaderWrapper
+          icon={UserCog}
+          label={t("Agents.Title")}
+          count={agents.length}
+        />
         <TileGridWrapper>
           {agents.map((user) => (
             <UserItemComponent key={user.id} user={user} />
@@ -85,13 +82,11 @@ export default async function UsersPageComponent({
         </TileGridWrapper>
       </SectionWrapper>
       <SectionWrapper id="DriversSection">
-        <SectionRowWrapper className="items-center">
-          <RyogoIcon icon={IdCard} size="sm" color="light" />
-          <RyogoSmall color="light">{t("Drivers.Title")}</RyogoSmall>
-          <RyogoSmall color="light" weight="font-bold">
-            {drivers.length}
-          </RyogoSmall>
-        </SectionRowWrapper>
+        <SectionHeaderWrapper
+          icon={IdCard}
+          label={t("Drivers.Title")}
+          count={drivers.length}
+        />
         <TileGridWrapper>
           {drivers.map((user) => (
             <UserItemComponent key={user.id} user={user} />
@@ -126,14 +121,14 @@ async function UserItemComponent({
         ) : (
           <RyogoEnclosedIcon icon={User} size="lg" />
         )}
-        <SectionColWrapper small className="w-full">
+        <SectionColWrapper className="w-full">
           <RyogoP weight="font-bold"> {user.name}</RyogoP>
           <RyogoCaption color="light" weight="font-bold">
             {user.phone}
           </RyogoCaption>
           <SectionRowWrapper small className="items-center">
             <RyogoCaption color="light">{user.userRole}</RyogoCaption>
-            <UserOnlineStatusComponent lastSeen={user.lastSeen} small />
+            <UserOnlineStatusComponent lastSeen={user.lastSeen} onlyIcon />
           </SectionRowWrapper>
         </SectionColWrapper>
         <SectionColWrapper className="items-end">

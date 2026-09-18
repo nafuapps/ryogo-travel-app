@@ -266,7 +266,7 @@ export function CompletedBookingCard({
         <BookingCardTagWrapper className="w-full">
           <RyogoIcon size="xs" icon={CheckCheck} color="light" thick />
           <RyogoTiny color="light">
-            {moment(booking.completedAt).format("lll")}
+            {moment(booking.completedAt ?? booking.updatedAt).format("lll")}
           </RyogoTiny>
         </BookingCardTagWrapper>
       </BookingCardLineWrapper>

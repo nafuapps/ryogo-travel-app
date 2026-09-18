@@ -15,7 +15,7 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import {
-  BASIC_BOOKINGS_SEARCH_DAYS,
+  BASIC_SEARCH_LIMIT_DAYS,
   PREMIUM_BOOKINGS_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
@@ -176,7 +176,7 @@ export default async function PricingComparisionSection() {
             title={<RyogoSmall>{t("Search")}</RyogoSmall>}
             basicItem={
               <RyogoSmall weight="font-bold">
-                {BASIC_BOOKINGS_SEARCH_DAYS}
+                {BASIC_SEARCH_LIMIT_DAYS}
               </RyogoSmall>
             }
             premiumItem={

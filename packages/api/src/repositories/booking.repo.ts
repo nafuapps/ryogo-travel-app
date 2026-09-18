@@ -545,13 +545,16 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by driver id
-  async readCompletedBookingsByDriverId(driverId: string) {
+  async readCompletedBookingsByDriverId(driverId: string, queryEndDate: Date) {
     return await db.query.bookings.findMany({
-      limit: 100,
       orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.assignedDriverId, driverId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
+        gte(
+          bookings.completedAt ?? bookings.actualEndDate ?? bookings.endDate,
+          queryEndDate,
+        ),
       ),
       columns: {
         actualStartDate: true,
@@ -612,13 +615,16 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by user id
-  async readCompletedBookingsByUserId(userId: string) {
+  async readCompletedBookingsByUserId(userId: string, queryStartDate: Date) {
     return await db.query.bookings.findMany({
-      limit: 100,
       orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.assignedUserId, userId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
+        gte(
+          bookings.completedAt ?? bookings.actualEndDate ?? bookings.endDate,
+          queryStartDate,
+        ),
       ),
       columns: {
         actualStartDate: true,
@@ -679,13 +685,19 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by vehicle id
-  async readCompletedBookingsByVehicleId(vehicleId: string) {
+  async readCompletedBookingsByVehicleId(
+    vehicleId: string,
+    queryStartDate: Date,
+  ) {
     return await db.query.bookings.findMany({
-      limit: 100,
-      orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
+      orderBy: (bookings, { desc }) => [desc(bookings.completedAt)],
       where: and(
         eq(bookings.assignedVehicleId, vehicleId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
+        gte(
+          bookings.completedAt ?? bookings.actualEndDate ?? bookings.endDate,
+          queryStartDate,
+        ),
       ),
       columns: {
         actualStartDate: true,
@@ -746,13 +758,19 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by customer id
-  async readCompletedBookingsByCustomerId(customerId: string) {
+  async readCompletedBookingsByCustomerId(
+    customerId: string,
+    queryStartDate: Date,
+  ) {
     return await db.query.bookings.findMany({
-      limit: 100,
       orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
         eq(bookings.customerId, customerId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
+        gte(
+          bookings.completedAt ?? bookings.actualEndDate ?? bookings.endDate,
+          queryStartDate,
+        ),
       ),
       columns: {
         actualStartDate: true,
@@ -877,7 +895,10 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by vehicle id
-  async readAllAssignedBookingsByVehicleId(vehicleId: string) {
+  async readAllAssignedBookingsByVehicleId(
+    vehicleId: string,
+    queryEndDate: Date,
+  ) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -886,6 +907,7 @@ export const bookingRepository = {
           BookingStatusEnum.CONFIRMED,
           BookingStatusEnum.IN_PROGRESS,
         ]),
+        lte(bookings.startDate, queryEndDate),
       ),
       columns: {
         pickupAddress: true,
@@ -899,6 +921,13 @@ export const bookingRepository = {
         id: true,
       },
       with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
         assignedDriver: {
           columns: {
             name: true,
@@ -947,7 +976,10 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by driver id
-  async readAllAssignedBookingsByDriverId(driverId: string) {
+  async readAllAssignedBookingsByDriverId(
+    driverId: string,
+    queryEndDate: Date,
+  ) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -956,6 +988,7 @@ export const bookingRepository = {
           BookingStatusEnum.CONFIRMED,
           BookingStatusEnum.IN_PROGRESS,
         ]),
+        lte(bookings.startDate, queryEndDate),
       ),
       columns: {
         pickupAddress: true,
@@ -969,6 +1002,13 @@ export const bookingRepository = {
         id: true,
       },
       with: {
+        assignedUser: {
+          columns: {
+            id: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
         assignedDriver: {
           columns: {
             name: true,
@@ -1039,7 +1079,7 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by user id
-  async readAssignedBookingsByUserId(userId: string) {
+  async readAssignedBookingsByUserId(userId: string, queryEndDate: Date) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1048,6 +1088,7 @@ export const bookingRepository = {
           BookingStatusEnum.CONFIRMED,
           BookingStatusEnum.IN_PROGRESS,
         ]),
+        lte(bookings.startDate, queryEndDate),
       ),
       columns: {
         pickupAddress: true,
@@ -1109,7 +1150,10 @@ export const bookingRepository = {
   },
 
   //Read Upcoming bookings by customer id
-  async readUpcomingBookingsByCustomerId(customerId: string) {
+  async readUpcomingBookingsByCustomerId(
+    customerId: string,
+    queryEndDate: Date,
+  ) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1118,6 +1162,7 @@ export const bookingRepository = {
           BookingStatusEnum.CONFIRMED,
           BookingStatusEnum.IN_PROGRESS,
         ]),
+        lte(bookings.startDate, queryEndDate),
       ),
       columns: {
         pickupAddress: true,

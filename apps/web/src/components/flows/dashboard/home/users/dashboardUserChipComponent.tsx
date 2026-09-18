@@ -22,7 +22,7 @@ export default function DashboardUserChipComponent({
     <Link href={`/dashboard/users/${user.id}`}>
       <DashboardChipItemWrapper>
         <DashboardLabelImageChip label={user.name}>
-          <UserOnlineStatusComponent lastSeen={user.lastSeen} small />
+          <UserOnlineStatusComponent lastSeen={user.lastSeen} onlyIcon />
           {userImageUrl ? (
             <RyogoImage
               src={getFileUrl(userImageUrl)}

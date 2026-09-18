@@ -9,6 +9,8 @@ import {
   ModifyCustomerRequestType,
   NewCustomerRequestType,
 } from "../types/customer.types"
+import { addDays, subDays } from "date-fns"
+import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 
 export const customerServices = {
   async findCustomersInAgency(agencyId: string) {
@@ -23,17 +25,29 @@ export const customerServices = {
   },
 
   //Get customer's upcoming bookings
-  async findCustomerUpcomingBookingsById(customerId: string) {
-    const bookings =
-      await bookingRepository.readUpcomingBookingsByCustomerId(customerId)
+  async findCustomerUpcomingBookingsById(
+    customerId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryEndDate = addDays(new Date(), days)
+    const bookings = await bookingRepository.readUpcomingBookingsByCustomerId(
+      customerId,
+      queryEndDate,
+    )
 
     return bookings
   },
 
   //Get customer's completed bookings
-  async findCustomerCompletedBookingsById(customerId: string) {
-    const bookings =
-      await bookingRepository.readCompletedBookingsByCustomerId(customerId)
+  async findCustomerCompletedBookingsById(
+    customerId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryStartDate = subDays(new Date(), days)
+    const bookings = await bookingRepository.readCompletedBookingsByCustomerId(
+      customerId,
+      queryStartDate,
+    )
 
     return bookings
   },

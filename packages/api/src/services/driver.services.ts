@@ -14,8 +14,9 @@ import {
   ModifyDriverRequestType,
   ChangeDriverLicenseRequestType,
 } from "../types/driver.types"
-import { addDays } from "date-fns"
+import { addDays, subDays } from "date-fns"
 import { ModifyDriverLeaveRequestType } from "../types/driverLeave.types"
+import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 
 export const driverServices = {
   async findDashboardDrivers(agencyId: string) {
@@ -49,17 +50,29 @@ export const driverServices = {
   },
 
   //Get driver's assigned bookings
-  async findDriverAssignedBookingsById(driverId: string) {
-    const bookings =
-      await bookingRepository.readAllAssignedBookingsByDriverId(driverId)
+  async findDriverAssignedBookingsById(
+    driverId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryEndDate = addDays(new Date(), days)
+    const bookings = await bookingRepository.readAllAssignedBookingsByDriverId(
+      driverId,
+      queryEndDate,
+    )
 
     return bookings
   },
 
   //Get driver's completed bookings
-  async findDriverCompletedBookingsById(driverId: string) {
-    const bookings =
-      await bookingRepository.readCompletedBookingsByDriverId(driverId)
+  async findDriverCompletedBookingsById(
+    driverId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryStartDate = subDays(new Date(), days)
+    const bookings = await bookingRepository.readCompletedBookingsByDriverId(
+      driverId,
+      queryStartDate,
+    )
 
     return bookings
   },
@@ -85,9 +98,15 @@ export const driverServices = {
   },
 
   //Get all driver leaves by driverId
-  async findAllDriverLeavesByDriverId(driverId: string) {
-    const leaves =
-      await driverLeaveRepository.readDriverLeavesByDriverId(driverId)
+  async findAllDriverLeavesByDriverId(
+    driverId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryStartDate = subDays(new Date(), days)
+    const leaves = await driverLeaveRepository.readDriverLeavesByDriverId(
+      driverId,
+      queryStartDate,
+    )
     return leaves
   },
 

@@ -11,7 +11,14 @@ import {
   GridWrapper,
 } from "@/components/page/pageWrappers"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import { Camera, Hash, SquarePen } from "lucide-react"
+import {
+  Camera,
+  FileDigit,
+  Hash,
+  SquarePen,
+  Umbrella,
+  WavesVertical,
+} from "lucide-react"
 import VehicleInfoComponent from "@/components/flows/vehicles/details/vehicleInfoComponent"
 import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicleDetailsComponent"
 import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
@@ -60,21 +67,36 @@ export default async function VehicleDetailsPageComponent({
       </GridWrapper>
       <SectionWrapper id="VehicleRCDetails">
         <VehicleDocumentInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
+          addedByUserId={vehicle.addedByUserId}
+          canChange={canChangeDetails}
           label={t("RC")}
+          type="rc"
           photoUrl={vehicle.rcPhotoUrl}
           expiresOn={vehicle.rcExpiresOn}
         />
       </SectionWrapper>
       <SectionWrapper id="VehiclePUCDetails">
         <VehicleDocumentInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
+          addedByUserId={vehicle.addedByUserId}
+          canChange={canChangeDetails}
           label={t("PUC")}
+          type="puc"
           photoUrl={vehicle.pucPhotoUrl}
           expiresOn={vehicle.pucExpiresOn}
         />
       </SectionWrapper>
       <SectionWrapper id="VehicleInsuranceDetails">
         <VehicleDocumentInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
+          addedByUserId={vehicle.addedByUserId}
+          canChange={canChangeDetails}
           label={t("Insurance")}
+          type="insurance"
           photoUrl={vehicle.insurancePhotoUrl}
           expiresOn={vehicle.insuranceExpiresOn}
         />
@@ -105,21 +127,42 @@ export default async function VehicleDetailsPageComponent({
             addedByUserId={vehicle.addedByUserId}
             documentType="rc"
             expiresOn={vehicle.rcExpiresOn}
-          />
+            canChange
+          >
+            <RyogoDetailedIconButton
+              label={t("ChangeDocument.TitleRC")}
+              icon={FileDigit}
+              subtitle={t("ChangeDocument.SubtitleRC")}
+            />
+          </ChangeVehicleDocumentSheet>
           <ChangeVehicleDocumentSheet
             vehicleId={vehicle.id}
             agencyId={vehicle.agencyId}
             addedByUserId={vehicle.addedByUserId}
             documentType="puc"
             expiresOn={vehicle.pucExpiresOn}
-          />
+            canChange
+          >
+            <RyogoDetailedIconButton
+              label={t("ChangeDocument.TitlePUC")}
+              icon={WavesVertical}
+              subtitle={t("ChangeDocument.SubtitlePUC")}
+            />
+          </ChangeVehicleDocumentSheet>
           <ChangeVehicleDocumentSheet
             vehicleId={vehicle.id}
             agencyId={vehicle.agencyId}
             addedByUserId={vehicle.addedByUserId}
             documentType="insurance"
             expiresOn={vehicle.insuranceExpiresOn}
-          />
+            canChange
+          >
+            <RyogoDetailedIconButton
+              label={t("ChangeDocument.TitleInsurance")}
+              icon={Umbrella}
+              subtitle={t("ChangeDocument.SubtitleInsurance")}
+            />
+          </ChangeVehicleDocumentSheet>
           <Link href={`/dashboard/vehicles/${vehicle.id}/modify`}>
             <RyogoDetailedIconButton
               label={t("EditDetails.Title")}

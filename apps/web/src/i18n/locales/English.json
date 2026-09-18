@@ -1813,9 +1813,9 @@
           "Error2": "File size should be less than 500kb",
           "Error3": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
-        "ButtonRC": "Update RC",
-        "ButtonPUC": "Update PUC",
-        "ButtonInsurance": "Update Insurance",
+        "TitleRC": "Update RC",
+        "TitlePUC": "Update PUC",
+        "TitleInsurance": "Update Insurance",
         "SubtitleRC": "Change vehicle registration details",
         "SubtitlePUC": "Change vehicle pollution certificate details",
         "SubtitleInsurance": "Change vehicle insurance details",

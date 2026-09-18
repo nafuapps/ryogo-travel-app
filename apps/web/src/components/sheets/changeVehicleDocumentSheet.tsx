@@ -26,8 +26,6 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
-import { IdCard } from "lucide-react"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { changeVehicleDocumentAction } from "@/app/actions/vehicles/changeVehicleDocumentAction"
 
 export default function ChangeVehiclePhotoSheet({
@@ -36,13 +34,19 @@ export default function ChangeVehiclePhotoSheet({
   addedByUserId,
   expiresOn,
   documentType,
+  children,
+  canChange,
 }: {
   vehicleId: string
   agencyId: string
   addedByUserId: string
   expiresOn: Date | null
   documentType: "rc" | "insurance" | "puc"
+  children: React.ReactNode
+  canChange?: boolean
 }) {
+  if (!canChange) return children
+
   const t = useTranslations("Dashboard.VehicleDetails.ChangeDocument")
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -92,25 +96,7 @@ export default function ChangeVehiclePhotoSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <RyogoDetailedIconButton
-          label={
-            documentType === "rc"
-              ? t("ButtonRC")
-              : documentType === "puc"
-                ? t("ButtonPUC")
-                : t("ButtonInsurance")
-          }
-          icon={IdCard}
-          subtitle={
-            documentType === "rc"
-              ? t("SubtitleRC")
-              : documentType === "puc"
-                ? t("SubtitlePUC")
-                : t("SubtitleInsurance")
-          }
-        />
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>

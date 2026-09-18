@@ -23,6 +23,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStatusComponent"
 
 export default async function UsersPageComponent({
   allUsers,
@@ -130,6 +131,10 @@ async function UserItemComponent({
           <RyogoCaption color="light" weight="font-bold">
             {user.phone}
           </RyogoCaption>
+          <SectionRowWrapper small className="items-center">
+            <RyogoCaption color="light">{user.userRole}</RyogoCaption>
+            <UserOnlineStatusComponent lastSeen={user.lastSeen} small />
+          </SectionRowWrapper>
         </SectionColWrapper>
         <SectionColWrapper className="items-end">
           <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />

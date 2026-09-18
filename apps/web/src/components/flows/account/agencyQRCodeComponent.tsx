@@ -29,7 +29,7 @@ export default async function AgencyQRCodeComponent({
           imageSize="lg"
         />
       ) : (
-        <ChangeQRCodeSheet canChange={canChange} agencyId={agencyId} isNewPhoto>
+        <ChangeQRCodeSheet canChange={canChange} agencyId={agencyId}>
           <RyogoEnclosedIcon icon={QrCode} size="lg" />
         </ChangeQRCodeSheet>
       )}

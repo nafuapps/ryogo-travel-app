@@ -2165,7 +2165,7 @@
       "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
       "EditDetails": {
         "Title": "Edit Details",
-        "Subtitle": "Change driver details like address, license, default allowance"
+        "Subtitle": "Change driver details like address, default allowance"
       },
       "License": {
         "Title": "Driver license details",
@@ -2404,17 +2404,8 @@
     },
     "CustomerDetails": {
       "ChangeCustomerPhoto": {
-        "Button": "Change Photo",
-        "Subtitle": "Upload a customer display picture",
-        "Header": "Upload customer photo",
-        "Title": "Choose a photo to upload:",
-        "Placeholder": "Browse a new photo",
-        "Error1": "Customer photo is required and size should be less than 500kb",
-        "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
-        "Save": "Save changes",
-        "Close": "Cancel",
-        "Success": "Customer photo updated successfully!",
-        "Error": "Cannot upload photo.. please try again after some time."
+        "Title": "Change Photo",
+        "Subtitle": "Upload a customer display picture"
       },
       "NumberRatings": "[{number}]",
       "AgencyInfo": "Agency related info",
@@ -6096,6 +6087,7 @@
     },
     "ChangeUserPhoto": {
       "Header": "Upload photo",
+      "Title": "Choose a photo to upload",
       "Placeholder": "Browse a new photo",
       "Error1": "Photo is required and size should be less than 500kb",
       "Error2": "Photo must be in .jpg, .jpeg or .png format",
@@ -6106,6 +6098,7 @@
     },
     "ChangeLogo": {
       "Header": "Upload agency logo",
+      "Title": "Choose a photo to upload",
       "Placeholder": "Browse a new logo",
       "Error1": "Logo is required and size should be less than 500kb",
       "Error2": "Logo photo must be in .jpg, .jpeg or .png format",
@@ -6129,6 +6122,7 @@
     },
     "ChangeQRCode": {
       "Header": "Upload QR Code photo/screenshot",
+      "Title": "Choose a photo to upload",
       "Placeholder": "Browse a new photo",
       "Error1": "QRCode Photo is required and size should be less than 500kb",
       "Error2": "QRCode Photo must be in .jpg, .jpeg or .png format",
@@ -6136,6 +6130,17 @@
       "Close": "Cancel",
       "Success": "QR Code updated successfully!",
       "Error": "Cannot upload QR Code.. please try again after some time."
+    },
+    "ChangeCustomerPhoto": {
+      "Header": "Upload customer photo",
+      "Title": "Choose a photo to upload",
+      "Placeholder": "Browse a new photo",
+      "Error1": "Customer photo is required and size should be less than 500kb",
+      "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
+      "Save": "Save changes",
+      "Close": "Cancel",
+      "Success": "Customer photo updated successfully!",
+      "Error": "Cannot upload photo.. please try again after some time."
     },
     "CloseSupportTicket": {
       "Title": "Close resolved ticket",

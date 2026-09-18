@@ -58,11 +58,7 @@ export default async function AgencyDetailsPageComponent({
               subtitle={t("ChangeLogo.Subtitle")}
             />
           </ChangeAgencyLogoSheet>
-          <ChangeQRCodeSheet
-            agencyId={agency.id}
-            isNewPhoto={agency.qrCodeUrl === null}
-            canChange
-          >
+          <ChangeQRCodeSheet agencyId={agency.id} canChange>
             <RyogoDetailedIconButton
               icon={QrCode}
               label={

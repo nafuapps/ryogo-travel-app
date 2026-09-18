@@ -5,7 +5,7 @@ import { Camera, SquarePen } from "lucide-react"
 import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
-import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
+import { DriverStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
   PageWrapper,
   GridWrapper,
@@ -19,6 +19,7 @@ import DriverDetailsComponent from "@/components/flows/drivers/details/driverDet
 import DriverLicenseInfoComponent from "@/components/flows/drivers/details/driverLicenseInfoComponent"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import ChangeDriverLicenseSheet from "@/components/sheets/changeDriverLicenseSheet"
+import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -85,6 +86,12 @@ export default async function DriverDetailsPageComponent({
               subtitle={t("ChangeDriverPhoto.Subtitle")}
             />
           </ChangeUserPhotoSheet>
+          <ChangeUserNameSheet
+            userId={driver.userId}
+            userName={driver.name}
+            userRole={UserRolesEnum.DRIVER}
+            agencyId={driver.agencyId}
+          />
           <ChangeDriverLicenseSheet
             driverId={driver.id}
             agencyId={driver.agencyId}

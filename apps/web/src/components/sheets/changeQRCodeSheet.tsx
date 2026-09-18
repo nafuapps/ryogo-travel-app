@@ -23,18 +23,14 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
-import { QrCode } from "lucide-react"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeQRCodeSheet({
   agencyId,
-  isNewPhoto,
   children,
   canChange,
 }: {
   agencyId: string
-  isNewPhoto: boolean
   children: React.ReactNode
   canChange?: boolean
 }) {
@@ -71,13 +67,7 @@ export default function ChangeQRCodeSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <RyogoDetailedIconButton
-          icon={QrCode}
-          label={isNewPhoto ? t("UploadButton") : t("ChangeButton")}
-          subtitle={t("Subtitle")}
-        />
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>

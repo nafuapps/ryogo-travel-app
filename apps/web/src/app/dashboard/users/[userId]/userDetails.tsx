@@ -36,13 +36,13 @@ export default async function UserDetailsPageComponent({
       <UserDetailHeaderTabs selectedTab={"User"} id={user.id} />
       <GridWrapper id="AccountDetails">
         <UserInfoComponent
+          id={user.id}
           photoUrl={user.photoUrl}
           name={user.name}
           status={user.status}
           lastSeen={user.lastSeen}
         />
         <UserDetailsComponent
-          id={user.id}
           role={user.userRole}
           phone={user.phone}
           email={user.email}

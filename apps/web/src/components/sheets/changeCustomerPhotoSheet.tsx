@@ -20,7 +20,6 @@ import { useRouter } from "next/navigation"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
@@ -29,11 +28,17 @@ import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 export default function ChangeCustomerPhotoSheet({
   customerId,
   agencyId,
+  children,
+  canChange,
 }: {
   customerId: string
   agencyId: string
+  children: React.ReactNode
+  canChange?: boolean
 }) {
-  const t = useTranslations("Dashboard.CustomerDetails.ChangeCustomerPhoto")
+  if (!canChange) return children
+
+  const t = useTranslations("Sheets.ChangeCustomerPhoto")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -68,9 +73,7 @@ export default function ChangeCustomerPhotoSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <RyogoGhostButton label={t("Button")} />
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>

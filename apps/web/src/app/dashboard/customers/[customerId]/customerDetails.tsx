@@ -8,7 +8,7 @@ import {
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { CalendarPlus, SquarePen, User } from "lucide-react"
+import { CalendarPlus, Camera, SquarePen, User } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -54,10 +54,6 @@ export default async function CustomerDetailsPageComponent({
             ) : (
               <RyogoEnclosedIcon icon={User} size="xl" />
             )}
-            <ChangeCustomerPhotoSheet
-              customerId={customer.id}
-              agencyId={customer.agencyId}
-            />
           </SectionColWrapper>
           <SectionColWrapper className="items-end">
             <RyogoH3>{customer.name}</RyogoH3>
@@ -101,6 +97,16 @@ export default async function CustomerDetailsPageComponent({
             />
           </Link>
         )}
+        <ChangeCustomerPhotoSheet
+          customerId={customer.id}
+          agencyId={customer.agencyId}
+        >
+          <RyogoDetailedIconButton
+            icon={Camera}
+            label={t("ChangeCustomerPhoto.Title")}
+            subtitle={t("ChangeCustomerPhoto.Subtitle")}
+          />
+        </ChangeCustomerPhotoSheet>
         <Link href={`/dashboard/customers/${customer.id}/modify`}>
           <RyogoDetailedIconButton
             label={t("EditDetails.Title")}

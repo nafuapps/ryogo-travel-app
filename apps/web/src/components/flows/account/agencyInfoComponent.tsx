@@ -9,19 +9,25 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { Building, MapPin } from "lucide-react"
 import { AgencyStatusPill } from "@/components/pills/ryogoPills"
 import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
+import IdCopyPill from "@/components/pills/idCopyPill"
+import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
 
 export default function AgencyInfoComponent({
+  id,
   logoUrl,
   city,
   state,
   agencyName,
   status,
+  canChange,
 }: {
+  id: string
   logoUrl: string | null
   city: string
   state: string
   agencyName: string
   status: AgencyStatusEnum
+  canChange?: boolean
 }) {
   return (
     <SectionColWrapper className="items-center justify-center">
@@ -32,15 +38,20 @@ export default function AgencyInfoComponent({
           imageSize="lg"
         />
       ) : (
-        <RyogoEnclosedIcon icon={Building} size="xl" />
+        <ChangeAgencyLogoSheet agencyId={id} canChange={canChange}>
+          <RyogoEnclosedIcon icon={Building} size="xl" />
+        </ChangeAgencyLogoSheet>
       )}
-      <SectionColWrapper small className="items-center">
+      <SectionColWrapper className="items-center">
         <RyogoH4 weight="font-bold">{agencyName}</RyogoH4>
-        <SectionRowWrapper small className="items-center">
+        <SectionRowWrapper className="items-center">
           <RyogoIcon icon={MapPin} size="sm" color="light" />
           <RyogoSmall color="light">{city + ", " + state}</RyogoSmall>
         </SectionRowWrapper>
-        <AgencyStatusPill status={status} className="mt-auto self-center" />
+        <SectionRowWrapper className="items-center">
+          <AgencyStatusPill status={status} size="lg" />
+          <IdCopyPill id={id} />
+        </SectionRowWrapper>
       </SectionColWrapper>
     </SectionColWrapper>
   )

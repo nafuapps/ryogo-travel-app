@@ -242,8 +242,22 @@ export const vehicleRepository = {
     return await db.insert(vehicles).values(vehicle).returning()
   },
 
+  //Update vehicle number
+  async updateVehicleNumber(id: string, vehicleNumber: string) {
+    return await db
+      .update(vehicles)
+      .set({
+        vehicleNumber,
+      })
+      .where(eq(vehicles.id, id))
+      .returning({
+        id: vehicles.id,
+        vehicleNumber: vehicles.vehicleNumber,
+      })
+  },
+
   //Update vehicle details
-  async updateVehicle(
+  async updateVehicleDetails(
     id: string,
     type?: VehicleTypesEnum,
     brand?: VehicleBrandEnum,

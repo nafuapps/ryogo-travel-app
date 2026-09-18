@@ -1,18 +1,13 @@
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
-import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
+import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicleDetailsComponent"
+import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
+import VehicleInfoComponent from "@/components/flows/vehicles/details/vehicleInfoComponent"
 import {
   SectionWrapper,
   PageWrapper,
-  SectionRowWrapper,
-  SectionColWrapper,
+  GridWrapper,
 } from "@/components/page/pageWrappers"
-import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
-import { RyogoH3, RyogoSmall, RyogoCaption } from "@/components/typography"
-import { Separator } from "@/components/ui/separator"
+import { RyogoCaption } from "@/components/typography"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import moment from "moment"
 import { getTranslations } from "next-intl/server"
 
 export default async function RiderMyVehiclePageComponent({
@@ -34,125 +29,49 @@ export default async function RiderMyVehiclePageComponent({
 
   return (
     <PageWrapper id="RiderVehicleDetailsPage">
-      <SectionWrapper id="BasicInfo">
-        <SectionRowWrapper className="items-center justify-start">
-          <RyogoH3 color="brand">{vehicle.id}</RyogoH3>
-          <CopyClipboardButton label={vehicle.id} />
-        </SectionRowWrapper>
-        <Separator />
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            {vehicle.vehiclePhotoUrl ? (
-              <RyogoImage
-                src={getFileUrl(vehicle.vehiclePhotoUrl)}
-                alt={vehicle.vehicleNumber}
-                imageSize="lg"
-              />
-            ) : (
-              <GetVehicleIcon vehicleType={vehicle.type} size="xl" />
-            )}
-          </SectionColWrapper>
-          <SectionColWrapper className="items-end">
-            <RyogoH3>{vehicle.vehicleNumber}</RyogoH3>
-            <RyogoCaption color="slate">
-              {vehicle.brand + " " + vehicle.model}
-            </RyogoCaption>
-            <RyogoCaption color="slate">{vehicle.color}</RyogoCaption>
-            <RyogoCaption color="slate">
-              {vehicle.hasAC ? t("AC") : t("NonAC")}
-            </RyogoCaption>
-            <RyogoCaption color="slate">
-              {t("Capacity", { capacity: vehicle.capacity })}
-            </RyogoCaption>
-            <RyogoCaption color="slate">
-              {t("Odometer", { odometer: vehicle.odometerReading })}
-            </RyogoCaption>
-            <RyogoCaption color="slate">
-              {moment(vehicle.createdAt).format("DD MMM YYYY")}
-            </RyogoCaption>
-            {vehicle.customerRatings && vehicle.customerRatings.length > 1 && (
-              <RyogoAverageRatingDisplay
-                label={t("NumberRatings", {
-                  number: vehicle.customerRatings.length,
-                })}
-                ratings={vehicle.customerRatings}
-              />
-            )}
-          </SectionColWrapper>
-        </SectionRowWrapper>
+      <GridWrapper id="VehicleDetails">
+        <VehicleInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
+          photoUrl={vehicle.vehiclePhotoUrl}
+          vehicleNumber={vehicle.vehicleNumber}
+          status={vehicle.status}
+          type={vehicle.type}
+        />
+        <VehicleDetailsComponent
+          createdAt={vehicle.createdAt}
+          type={vehicle.type}
+          brand={vehicle.brand}
+          color={vehicle.color}
+          model={vehicle.model}
+          odometer={vehicle.odometerReading}
+          capacity={vehicle.capacity}
+          hasAC={vehicle.hasAC}
+          rate={vehicle.defaultRatePerKm}
+          acCharge={vehicle.defaultAcChargePerDay}
+          ratings={vehicle.customerRatings}
+        />
+      </GridWrapper>
+      <SectionWrapper id="VehicleRCDetails">
+        <VehicleDocumentInfoComponent
+          label={t("RC")}
+          photoUrl={vehicle.rcPhotoUrl}
+          expiresOn={vehicle.rcExpiresOn}
+        />
       </SectionWrapper>
-      <SectionWrapper id="PolicyInfo">
-        <RyogoSmall weight="font-bold">{t("PolicyInfo")}</RyogoSmall>
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            <RyogoSmall color="slate">{t("Insurance")}</RyogoSmall>
-            {vehicle.insuranceExpiresOn &&
-            vehicle.insuranceExpiresOn < new Date() ? (
-              <RyogoCaption color="red">
-                {t("Expired") +
-                  moment(vehicle.insuranceExpiresOn).format("DD MMM YYYY")}
-              </RyogoCaption>
-            ) : (
-              <RyogoCaption color="slate">
-                {t("ValidTill") +
-                  moment(vehicle.insuranceExpiresOn).format("DD MMM YYYY")}
-              </RyogoCaption>
-            )}
-          </SectionColWrapper>
-          {vehicle.insurancePhotoUrl && (
-            <RyogoDialogImage
-              src={getFileUrl(vehicle.insurancePhotoUrl)}
-              alt={t("InsurancePhoto")}
-              imageSize="md"
-            />
-          )}
-        </SectionRowWrapper>
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            <RyogoSmall color="slate">{t("PUC")}</RyogoSmall>
-            {vehicle.pucExpiresOn && vehicle.pucExpiresOn < new Date() ? (
-              <RyogoCaption color="red">
-                {t("Expired") +
-                  moment(vehicle.pucExpiresOn).format("DD MMM YYYY")}
-              </RyogoCaption>
-            ) : (
-              <RyogoCaption color="slate">
-                {t("ValidTill") +
-                  moment(vehicle.pucExpiresOn).format("DD MMM YYYY")}
-              </RyogoCaption>
-            )}
-          </SectionColWrapper>
-          {vehicle.pucPhotoUrl && (
-            <RyogoDialogImage
-              src={getFileUrl(vehicle.pucPhotoUrl)}
-              alt={t("PUCPhoto")}
-              imageSize="md"
-            />
-          )}
-        </SectionRowWrapper>
-        <SectionRowWrapper>
-          <SectionColWrapper>
-            <RyogoSmall color="slate">{t("RC")}</RyogoSmall>
-            {vehicle.rcExpiresOn && vehicle.rcExpiresOn < new Date() ? (
-              <RyogoCaption color="red">
-                {t("Expired") +
-                  moment(vehicle.rcExpiresOn).format("DD MMM YYYY")}
-              </RyogoCaption>
-            ) : (
-              <RyogoCaption color="slate">
-                {t("ValidTill") +
-                  moment(vehicle.rcExpiresOn).format("DD MMM YYYY")}
-              </RyogoCaption>
-            )}
-          </SectionColWrapper>
-          {vehicle.rcPhotoUrl && (
-            <RyogoDialogImage
-              src={getFileUrl(vehicle.rcPhotoUrl)}
-              alt={t("RCPhoto")}
-              imageSize="md"
-            />
-          )}
-        </SectionRowWrapper>
+      <SectionWrapper id="VehiclePUCDetails">
+        <VehicleDocumentInfoComponent
+          label={t("PUC")}
+          photoUrl={vehicle.pucPhotoUrl}
+          expiresOn={vehicle.pucExpiresOn}
+        />
+      </SectionWrapper>
+      <SectionWrapper id="VehicleInsuranceDetails">
+        <VehicleDocumentInfoComponent
+          label={t("Insurance")}
+          photoUrl={vehicle.insurancePhotoUrl}
+          expiresOn={vehicle.insuranceExpiresOn}
+        />
       </SectionWrapper>
     </PageWrapper>
   )

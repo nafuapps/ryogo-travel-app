@@ -159,9 +159,18 @@ export const vehicleServices = {
     return { ...repair[0], vehicleNumber: vehicle.vehicleNumber }
   },
 
+  //Change vehicle number
+  async changeVehicleNumber(vehicleId: string, vehicleNumber: string) {
+    const vehicle = await vehicleRepository.updateVehicleNumber(
+      vehicleId,
+      vehicleNumber,
+    )
+    return vehicle[0]
+  },
+
   //Modify vehicle details
   async modifyVehicle(data: ModifyVehicleRequestType) {
-    const vehicle = await vehicleRepository.updateVehicle(
+    const vehicle = await vehicleRepository.updateVehicleDetails(
       data.vehicleId,
       data.type,
       data.brand,

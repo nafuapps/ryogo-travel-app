@@ -11,7 +11,7 @@ import {
   GridWrapper,
 } from "@/components/page/pageWrappers"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import { SquarePen } from "lucide-react"
+import { Camera, Hash, SquarePen } from "lucide-react"
 import VehicleInfoComponent from "@/components/flows/vehicles/details/vehicleInfoComponent"
 import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicleDetailsComponent"
 import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
@@ -36,13 +36,15 @@ export default async function VehicleDetailsPageComponent({
       <VehicleDetailHeaderTabs selectedTab={"Vehicle"} id={vehicle.id} />
       <GridWrapper id="VehicleDetails">
         <VehicleInfoComponent
+          id={vehicle.id}
+          agencyId={vehicle.agencyId}
           photoUrl={vehicle.vehiclePhotoUrl}
           vehicleNumber={vehicle.vehicleNumber}
           status={vehicle.status}
           type={vehicle.type}
+          canChange={canChangeDetails}
         />
         <VehicleDetailsComponent
-          id={vehicle.id}
           createdAt={vehicle.createdAt}
           type={vehicle.type}
           brand={vehicle.brand}
@@ -82,7 +84,21 @@ export default async function VehicleDetailsPageComponent({
           <ChangeVehiclePhotoSheet
             vehicleId={vehicle.id}
             agencyId={vehicle.agencyId}
-          />
+            canChange
+          >
+            <RyogoDetailedIconButton
+              label={t("ChangeVehiclePhoto.Button")}
+              icon={Camera}
+              subtitle={t("ChangeVehiclePhoto.Subtitle")}
+            />
+          </ChangeVehiclePhotoSheet>
+          <Link href={`/dashboard/vehicles/${vehicle.id}/change-number`}>
+            <RyogoDetailedIconButton
+              label={t("ChangeVehicleNumber.Title")}
+              icon={Hash}
+              subtitle={t("ChangeVehicleNumber.Subtitle")}
+            />
+          </Link>
           <ChangeVehicleDocumentSheet
             vehicleId={vehicle.id}
             agencyId={vehicle.agencyId}

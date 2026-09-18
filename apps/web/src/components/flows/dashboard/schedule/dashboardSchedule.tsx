@@ -35,13 +35,11 @@ export function getSelectedDays(selectedTab: SelectableDays) {
 
 export function DashboardScheduleHeader({
   title,
-  length,
   selectedTab,
   setSelectedTab,
   isHistory,
 }: {
   title: string
-  length: string
   selectedTab: SelectableDays
   setSelectedTab: Dispatch<SetStateAction<SelectableDays>>
   isHistory?: boolean
@@ -59,9 +57,6 @@ export function DashboardScheduleHeader({
           color="light"
         />
         <RyogoSmall color="light">{title}</RyogoSmall>
-        <RyogoSmall color="light" weight="font-bold">
-          {length}
-        </RyogoSmall>
       </SectionRowWrapper>
       <Select
         value={selectedTab}

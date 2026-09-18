@@ -2,24 +2,20 @@ import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
   DetailsBorderWrapper,
-  DetailsIDWrapper,
   DetailsContentWrapper,
   DetailsLineItem,
-  DetailsHeaderWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption } from "@/components/typography"
 
 export default async function UserDetailsComponent({
-  id,
   phone,
   email,
   createdAt,
   role,
   isAdmin,
 }: {
-  id: string
   phone: string
   email: string
   createdAt: Date
@@ -29,9 +25,6 @@ export default async function UserDetailsComponent({
   const t = await getTranslations("Dashboard.Account")
   return (
     <DetailsBorderWrapper>
-      <DetailsHeaderWrapper>
-        <DetailsIDWrapper id={id} label={t("UserId")} />
-      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         <DetailsLineItem label={t("Phone")} value={phone} />
         <DetailsLineItem label={t("Email")} value={email} />
@@ -41,7 +34,7 @@ export default async function UserDetailsComponent({
         />
         <DetailsLineItem label={t("Role")} value={role.toUpperCase()} />
         {isAdmin && (
-          <SectionRowWrapper className="rounded bg-slate-200 dark:bg-slate-800 p-1.5 lg:p-2 items-center justify-center">
+          <SectionRowWrapper className="mt-auto rounded-sm bg-slate-200 dark:bg-slate-800 p-1.5 lg:p-2 items-center justify-center">
             <RyogoCaption color="light">{t("Admin")}</RyogoCaption>
           </SectionRowWrapper>
         )}

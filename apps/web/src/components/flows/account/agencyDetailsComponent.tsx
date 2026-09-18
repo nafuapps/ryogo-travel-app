@@ -3,13 +3,10 @@ import { getTranslations } from "next-intl/server"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
-  DetailsHeaderWrapper,
-  DetailsIDWrapper,
   DetailsLineItem,
 } from "@/components/page/pageWrappers"
 
 export default async function AgencyDetailsComponent({
-  id,
   phone,
   email,
   address,
@@ -17,7 +14,6 @@ export default async function AgencyDetailsComponent({
   createdAt,
   isRider,
 }: {
-  id: string
   phone: string
   email: string
   address: string
@@ -28,9 +24,6 @@ export default async function AgencyDetailsComponent({
   const t = await getTranslations("Dashboard.AccountAgency")
   return (
     <DetailsBorderWrapper>
-      <DetailsHeaderWrapper>
-        <DetailsIDWrapper id={id} label={t("AgencyId")} />
-      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         <DetailsLineItem label={t("Phone")} value={phone} />
         <DetailsLineItem label={t("Email")} value={email} />

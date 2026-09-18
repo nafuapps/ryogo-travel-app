@@ -22,7 +22,7 @@ export default function RyogoHeader({
           {title}
         </RyogoP>
       </SectionRowWrapper>
-      <SectionRowWrapper small className="items-center justify-end">
+      <SectionRowWrapper className="items-center justify-end">
         {children}
       </SectionRowWrapper>
     </HeaderWrapper>

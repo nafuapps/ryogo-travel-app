@@ -1,7 +1,6 @@
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import IdCopyPill from "@/components/pills/idCopyPill"
 import { BookingStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoP } from "@/components/typography"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default function BookingIDWrapper({
@@ -13,13 +12,8 @@ export default function BookingIDWrapper({
 }) {
   return (
     <SectionRowWrapper className="items-center w-full justify-between">
-      <SectionRowWrapper className="items-center justify-start">
-        <CopyClipboardButton label={id} />
-        <RyogoP color="light" weight="font-bold">
-          {id}
-        </RyogoP>
-      </SectionRowWrapper>
-      <BookingStatusPill status={status} />
+      <BookingStatusPill status={status} size="lg" />
+      <IdCopyPill id={id} />
     </SectionRowWrapper>
   )
 }

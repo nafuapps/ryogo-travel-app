@@ -2,7 +2,6 @@ import { SubmitEventHandler, Suspense } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
 import { Form } from "@/components/ui/form"
 import { PageSkeleton } from "./loadingWrappers"
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import {
   RyogoCaption,
   RyogoH4,
@@ -305,7 +304,7 @@ export function DetailsContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="empty:hidden p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col">
+    <div className="empty:hidden p-3 lg:p-4 gap-4 lg:gap-5 flex flex-col h-full">
       {children}
     </div>
   )
@@ -320,18 +319,6 @@ export function DetailsHeaderWrapper({
     <div className="empty:hidden flex items-center justify-between gap-3 lg:gap-4 px-3 lg:px-4 py-2 lg:py-3 bg-slate-200 dark:bg-slate-800">
       {children}
     </div>
-  )
-}
-
-export function DetailsIDWrapper({ id, label }: { id: string; label: string }) {
-  return (
-    <>
-      <RyogoCaption color="light">{label}</RyogoCaption>
-      <SectionRowWrapper className="items-center justify-end">
-        <RyogoSmall color="slate">{id}</RyogoSmall>
-        <CopyClipboardButton label={id} />
-      </SectionRowWrapper>
-    </>
   )
 }
 
@@ -398,9 +385,9 @@ export function AddInfoWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden border border-dashed rounded-md flex items-center p-3 lg:p-4 gap-2 lg:gap-3 transition hover:bg-slate-100 dark:hover:bg-slate-800 ${className ?? ""}`}
+      className={`empty:hidden border border-dashed rounded-md flex items-center justify-center p-3 lg:p-4 gap-2 lg:gap-3 transition hover:bg-slate-100 dark:hover:bg-slate-800 ${className ?? ""}`}
     >
-      <RyogoEnclosedIcon icon={icon} size="sm" color="black" />
+      <RyogoIcon icon={icon} size="sm" color="slate" />
       <RyogoCaption color="light">{label}</RyogoCaption>
     </div>
   )

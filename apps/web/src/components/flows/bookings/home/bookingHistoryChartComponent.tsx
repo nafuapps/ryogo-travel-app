@@ -46,7 +46,6 @@ export default function BookingHistoryChartComponent({
   return (
     <SectionWrapper id="BookingHistorySection">
       <DashboardScheduleHeader
-        length={chartData.length.toString()}
         title={t("Title")}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}

@@ -4,8 +4,6 @@ import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
-  DetailsHeaderWrapper,
-  DetailsIDWrapper,
   DetailsLineItem,
   DetailsLineWrapper,
   SectionRowWrapper,
@@ -17,7 +15,6 @@ import { Star } from "lucide-react"
 import moment from "moment"
 
 export default async function DriverDetailsComponent({
-  id,
   phone,
   email,
   createdAt,
@@ -27,7 +24,6 @@ export default async function DriverDetailsComponent({
   ratings,
   userId,
 }: {
-  id: string
   phone: string
   email: string
   createdAt: Date
@@ -40,9 +36,6 @@ export default async function DriverDetailsComponent({
   const t = await getTranslations("Dashboard.DriverDetails")
   return (
     <DetailsBorderWrapper>
-      <DetailsHeaderWrapper>
-        <DetailsIDWrapper id={id} label={t("DriverId")} />
-      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         <DetailsLineItem
           label={t("Joined")}

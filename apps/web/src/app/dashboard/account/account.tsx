@@ -5,7 +5,7 @@ import Link from "next/link"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
-import { MailPen, KeyRound, Phone } from "lucide-react"
+import { MailPen, KeyRound, Phone, Camera } from "lucide-react"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import AccountInfoComponent from "@/components/flows/account/accountInfoComponent"
@@ -25,13 +25,14 @@ export default async function AccountPageComponent({
       <AccountDetailHeaderTabs selectedTab="Account" />
       <GridWrapper id="AccountDetails">
         <AccountInfoComponent
+          id={account.id}
+          agencyId={account.agencyId}
           photoUrl={account.photoUrl}
           name={account.name}
           agencyName={account.agency.businessName}
           status={account.status}
         />
         <UserDetailsComponent
-          id={account.id}
           role={account.userRole}
           phone={account.phone}
           email={account.email}
@@ -40,7 +41,17 @@ export default async function AccountPageComponent({
         />
       </GridWrapper>
       <GridWrapper id="AccountActions">
-        <ChangeUserPhotoSheet userId={account.id} agencyId={account.agencyId} />
+        <ChangeUserPhotoSheet
+          userId={account.id}
+          agencyId={account.agencyId}
+          canChange
+        >
+          <RyogoDetailedIconButton
+            label={t("ChangeUserPhoto.Title")}
+            icon={Camera}
+            subtitle={t("ChangeUserPhoto.Subtitle")}
+          />
+        </ChangeUserPhotoSheet>
         <ChangeUserNameSheet
           userId={account.id}
           userName={account.name}

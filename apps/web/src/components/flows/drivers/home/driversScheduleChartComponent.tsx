@@ -56,7 +56,6 @@ export default function DriversScheduleChartComponent({
   return (
     <SectionWrapper id="DriversScheduleChartSection">
       <DashboardScheduleHeader
-        length={chartData.length.toString()}
         title={t("Schedule")}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}

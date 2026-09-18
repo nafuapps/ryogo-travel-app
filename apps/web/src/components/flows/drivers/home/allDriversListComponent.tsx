@@ -40,7 +40,7 @@ export default async function AllDriversListComponent({
           <AddInfoWrapper
             icon={Plus}
             label={t("AddDriver")}
-            className="h-full justify-center"
+            className="h-full"
           />
         </Link>
       </TileGridWrapper>

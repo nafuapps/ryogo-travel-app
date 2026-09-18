@@ -1,7 +1,7 @@
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
-import { SquarePen } from "lucide-react"
+import { Camera, SquarePen } from "lucide-react"
 import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
@@ -38,12 +38,15 @@ export default async function DriverDetailsPageComponent({
       <DriverDetailHeaderTabs selectedTab={"Driver"} id={driver.id} />
       <GridWrapper id="DriverDetails">
         <DriverInfoComponent
+          id={driver.id}
           photoUrl={driver.user.photoUrl}
           name={driver.name}
           status={driver.status}
+          userId={driver.userId}
+          agencyId={driver.agencyId}
+          canChange={canChangeDetails}
         />
         <DriverDetailsComponent
-          id={driver.id}
           userId={driver.userId}
           createdAt={driver.createdAt}
           phone={driver.phone}
@@ -74,7 +77,14 @@ export default async function DriverDetailsPageComponent({
           <ChangeUserPhotoSheet
             userId={driver.userId}
             agencyId={driver.agencyId}
-          />
+            canChange
+          >
+            <RyogoDetailedIconButton
+              label={t("ChangeDriverPhoto.Title")}
+              icon={Camera}
+              subtitle={t("ChangeDriverPhoto.Subtitle")}
+            />
+          </ChangeUserPhotoSheet>
           <ChangeDriverLicenseSheet
             driverId={driver.id}
             agencyId={driver.agencyId}

@@ -41,7 +41,7 @@ export default async function AllVehiclesListComponent({
           <AddInfoWrapper
             icon={Plus}
             label={t("AddVehicle")}
-            className="h-full justify-center"
+            className="h-full"
           />
         </Link>
       </TileGridWrapper>
@@ -74,10 +74,10 @@ async function VehicleItemComponent({
             {vehicle.brand + " " + vehicle.model}
           </RyogoCaption>
           <SectionRowWrapper className="items-center">
-            <VehicleColorBox color={vehicle.color} />
             <RyogoCaption color="light">
               {vehicle.odometerReading + t("Km")}
             </RyogoCaption>
+            <VehicleColorBox color={vehicle.color} />
           </SectionRowWrapper>
         </SectionColWrapper>
         <SectionColWrapper className="items-end">

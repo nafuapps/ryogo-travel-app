@@ -26,9 +26,9 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { Separator } from "@/components/ui/separator"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import IdCopyPill from "@/components/pills/idCopyPill"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -41,10 +41,7 @@ export default async function CustomerDetailsPageComponent({
     <PageWrapper id="CustomerDetailsPage">
       <CustomerDetailHeaderTabs selectedTab={"Customer"} id={customer.id} />
       <SectionWrapper id="CustomerDetailsInfo">
-        <SectionRowWrapper className="justify-start items-center">
-          <RyogoH3 color="brand">{customer.id}</RyogoH3>
-          <CopyClipboardButton label={customer.id} />
-        </SectionRowWrapper>
+        <IdCopyPill id={customer.id} />
         <Separator />
         <SectionRowWrapper>
           <SectionColWrapper>

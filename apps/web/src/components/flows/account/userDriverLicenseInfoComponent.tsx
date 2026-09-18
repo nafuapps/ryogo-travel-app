@@ -33,7 +33,7 @@ export default async function UserDriverLicenseInfoComponent({
       ) : (
         <RyogoEnclosedIcon icon={IdCard} size="xl" />
       )}
-      <SectionColWrapper small className="items-center">
+      <SectionColWrapper className="items-center">
         <RyogoCaption color="light">{t("License")}</RyogoCaption>
         {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
         {expiryDate && (

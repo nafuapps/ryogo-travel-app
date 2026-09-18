@@ -53,6 +53,7 @@ export async function changeVehicleDocumentAction(
     textKey: "VehicleDocumentModified",
     textObject: {
       vehicleNumber: vehicle.vehicleNumber,
+      type: data.type.toUpperCase(),
       userName: currentUser.name,
     },
     link: `/dashboard/vehicles/${vehicle.id}`,

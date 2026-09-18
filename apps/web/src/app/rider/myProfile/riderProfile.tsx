@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server"
-import { KeyRound, MailPen } from "lucide-react"
+import { Camera, KeyRound, MailPen } from "lucide-react"
 import Link from "next/link"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
@@ -26,13 +26,14 @@ export default async function RiderProfilePageComponent({
       <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <GridWrapper id="RiderAccountDetails">
         <AccountInfoComponent
+          id={account.id}
+          agencyId={account.agencyId}
           photoUrl={account.photoUrl}
           name={account.name}
           agencyName={account.agency.businessName}
           status={account.status}
         />
         <UserDetailsComponent
-          id={account.id}
           role={account.userRole}
           phone={account.phone}
           email={account.email}
@@ -47,7 +48,6 @@ export default async function RiderProfilePageComponent({
             expiryDate={account.driver.licenseExpiresOn}
           />
           <UserDriverDetailsComponent
-            id={account.driver.id}
             address={account.driver.address}
             status={account.driver.status}
             canDriveVehicles={account.driver.canDriveVehicleTypes}
@@ -57,7 +57,17 @@ export default async function RiderProfilePageComponent({
         </GridWrapper>
       )}
       <GridWrapper id="RiderAccountActions">
-        <ChangeUserPhotoSheet userId={account.id} agencyId={account.agencyId} />
+        <ChangeUserPhotoSheet
+          userId={account.id}
+          agencyId={account.agencyId}
+          canChange
+        >
+          <RyogoDetailedIconButton
+            label={t("ChangeUserPhoto.Title")}
+            icon={Camera}
+            subtitle={t("ChangeUserPhoto.Subtitle")}
+          />
+        </ChangeUserPhotoSheet>
         <ChangeUserNameSheet
           userId={account.id}
           userName={account.name}

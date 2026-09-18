@@ -832,6 +832,7 @@
         "/dashboard/vehicles/[id]": "Vehicle Details",
         "/dashboard/vehicles/[id]/assigned": "Vehicle Assigned Bookings",
         "/dashboard/vehicles/[id]/completed": "Vehicle Completed Bookings",
+        "/dashboard/vehicles/[id]/change-number": "Change Vehicle Number",
         "/dashboard/vehicles/[id]/modify": "Modify Vehicle",
         "/dashboard/vehicles/[id]/repairs": "Vehicle Repairs",
         "/dashboard/vehicles/[id]/repairs/new": "New Repair",
@@ -1767,6 +1768,23 @@
       "Repairs": "Repairs"
     },
     "VehicleDetails": {
+      "ChangeVehicleNumber": {
+        "Title": "Change vehicle number",
+        "Subtitle": "Update the registration number of the vehicle",
+        "Field1": {
+          "Title": "Vehicle number",
+          "Placeholder": "KA01AB1234",
+          "Description": "Provide new vehicle number",
+          "Error1": "Vehicle number is required and must be atleast 7 characters",
+          "Error2": "Vehicle number must be less than 15 characters"
+        },
+        "APIError": "Vehicle number is already added to this agency",
+        "PrimaryCTA": "Save changes",
+        "Close": "Cancel",
+        "Loading": "Loading",
+        "Success": "Vehicle number updated successfully!",
+        "Error": "Cannot update vehicle number.. please try again after some time."
+      },
       "ChangeVehiclePhoto": {
         "Button": "Change Photo",
         "Subtitle": "Upload a vehicle display picture",
@@ -2153,6 +2171,10 @@
         "Title": "Driver license details",
         "ValidTill": "Valid Till"
       },
+      "ChangeDriverPhoto": {
+        "Title": "Change Driver Photo",
+        "Subtitle": "Upload a profile picture of the driver"
+      },
       "ChangeLicense": {
         "Field1": {
           "Title": "Driver license number",
@@ -2429,6 +2451,10 @@
       "Joined": "Joined",
       "Role": "Role",
       "Admin": "AGENCY ADMIN",
+      "ChangeUserPhoto": {
+        "Title": "Change Photo",
+        "Subtitle": "Upload your profile picture"
+      },
       "ChangePhone": {
         "Title": "Change Phone",
         "Subtitle": "Your phone number is crucial for account login and communication"
@@ -2518,6 +2544,15 @@
         "Subtitle": "Update agency details like name, address, default commission rate, etc."
       },
       "QRCode": "Agency Payment QR Code",
+      "ChangeQRCode": {
+        "UploadTitle": "Upload QR Code",
+        "ChangeTitle": "Change QR Code",
+        "Subtitle": "Provide your QR Code for easy payments from customers via online invoice"
+      },
+      "ChangeLogo": {
+        "Title": "Change Logo",
+        "Subtitle": "Upload your agency/business logo"
+      },
       "ChangeEmail": {
         "Title": "Change Agency Email",
         "Subtitle": "Set email address to receive agency related updates and communication",
@@ -4727,6 +4762,8 @@
         "VehicleAdded": "New vehicle {vehicleNumber} has been added by {userName}",
         "VehiclePhotoChanged": "Vehicle {vehicleNumber} photo has been changed by {userName}",
         "VehicleModified": "Vehicle {vehicleNumber} details have been changed by {userName}",
+        "VehicleDocumentModified": "Vehicle {vehicleNumber} document {type} details have been updated by {userName}",
+        "VehicleNumberModified": "Vehicle number {oldVehicleNumber} has been changed to {newVehicleNumber} by {userName}",
         "VehicleRepairAdded": "Vehicle repair added for {vehicleNumber} by {userName}",
         "VehicleRepairModified": "Vehicle repair details changed for {vehicleNumber} by {userName}",
         "SubscriptionPurchased": "Premium subscription plan ({plan}) has been activated by {userName}",
@@ -5249,6 +5286,10 @@
       "PerDay": "₹{allowance} per day",
       "Rating": "Customer Rating",
       "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
+      "ChangeUserPhoto": {
+        "Title": "Change Photo",
+        "Subtitle": "Upload your profile picture"
+      },
       "ChangeEmail": {
         "Title": "Change Email",
         "Subtitle": "Set your email address to receive important updates"
@@ -6054,9 +6095,6 @@
       "Error": "Cannot change drop address.. please try again after some time."
     },
     "ChangeUserPhoto": {
-      "Button": "Change Photo",
-      "Subtitle": "Upload a user display picture",
-      "Title": "Choose a Photo",
       "Header": "Upload photo",
       "Placeholder": "Browse a new photo",
       "Error1": "Photo is required and size should be less than 500kb",
@@ -6067,9 +6105,6 @@
       "Error": "Cannot upload photo.. please try again after some time."
     },
     "ChangeLogo": {
-      "Button": "Change Logo",
-      "Subtitle": "Upload your company logo",
-      "Title": "Choose a Logo",
       "Header": "Upload agency logo",
       "Placeholder": "Browse a new logo",
       "Error1": "Logo is required and size should be less than 500kb",
@@ -6093,11 +6128,7 @@
       "Error": "Cannot upload photo.. please try again after some time."
     },
     "ChangeQRCode": {
-      "ChangeButton": "Change QR Code",
-      "UploadButton": "Upload QR Code",
-      "Subtitle": "Upload QR code for receiving payments from customers",
-      "Title": "Choose a Photo",
-      "Header": "Upload photo/screenshot",
+      "Header": "Upload QR Code photo/screenshot",
       "Placeholder": "Browse a new photo",
       "Error1": "QRCode Photo is required and size should be less than 500kb",
       "Error2": "QRCode Photo must be in .jpg, .jpeg or .png format",
@@ -6128,6 +6159,9 @@
     "ViewDetails": "View Details",
     "AssignVehicle": "Assign Vehicle",
     "AssignDriver": "Assign Driver"
+  },
+  "IdCopyPill": {
+    "Copied": "Copied!"
   },
   "Landing": {
     "Navbar": {

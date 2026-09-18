@@ -56,7 +56,7 @@ export default async function UsersPageComponent({
               <AddInfoWrapper
                 icon={Plus}
                 label={t("Owners.AddOwner")}
-                className="h-full justify-center"
+                className="h-full"
               />
             </Link>
           )}
@@ -78,7 +78,7 @@ export default async function UsersPageComponent({
             <AddInfoWrapper
               icon={Plus}
               label={t("Agents.AddAgent")}
-              className="h-full justify-center"
+              className="h-full"
             />
           </Link>
         </TileGridWrapper>
@@ -99,7 +99,7 @@ export default async function UsersPageComponent({
             <AddInfoWrapper
               icon={Plus}
               label={t("Drivers.AddDriver")}
-              className="h-full justify-center"
+              className="h-full"
             />
           </Link>
         </TileGridWrapper>

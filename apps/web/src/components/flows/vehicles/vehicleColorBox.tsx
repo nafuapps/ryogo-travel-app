@@ -10,7 +10,7 @@ export default function VehicleColorBox({
   let colorClassName
   switch (color) {
     case VehicleColorEnum.BLACK:
-      colorClassName = "bg-black border"
+      colorClassName = "bg-black"
       break
     case VehicleColorEnum.BLUE:
       colorClassName = "bg-blue-500"
@@ -22,7 +22,7 @@ export default function VehicleColorBox({
       colorClassName = "bg-red-500"
       break
     case VehicleColorEnum.WHITE:
-      colorClassName = "bg-white border"
+      colorClassName = "bg-white"
       break
     case VehicleColorEnum.YELLOW:
       colorClassName = "bg-yellow-500"
@@ -48,7 +48,7 @@ export default function VehicleColorBox({
   }
   return (
     <div
-      className={`${colorClassName} size-4 lg:size-5 rounded ${className ?? ""}`}
+      className={`${colorClassName} size-4 lg:size-5 border-2 rounded ${className ?? ""}`}
     />
   )
 }

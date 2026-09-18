@@ -3,17 +3,22 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function modifyVehicleAction(data: ModifyVehicleRequestType) {
+export async function changeVehicleNumberAction(
+  vehicleId: string,
+  agencyId: string,
+  addedByUserId: string,
+  newVehicleNumber: string,
+  oldVehicleNumber: string,
+) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== data.agencyId
+    (currentUser.userRole !== UserRolesEnum.OWNER &&
+      currentUser.userId !== addedByUserId) ||
+    currentUser.agencyId !== agencyId ||
+    oldVehicleNumber === newVehicleNumber
   ) {
     return
   }
@@ -22,17 +27,21 @@ export async function modifyVehicleAction(data: ModifyVehicleRequestType) {
     return
   }
 
-  const vehicle = await vehicleServices.modifyVehicle(data)
+  const vehicle = await vehicleServices.changeVehicleNumber(
+    vehicleId,
+    newVehicleNumber,
+  )
   if (!vehicle) return
 
   await notificationServices.addNotification({
-    agencyId: data.agencyId,
+    agencyId: agencyId,
     entityType: EntityTypeEnum.VEHICLE,
     entityId: vehicle.id,
     isFeed: true,
-    textKey: "VehicleModified",
+    textKey: "VehicleNumberModified",
     textObject: {
-      vehicleNumber: vehicle.vehicleNumber,
+      oldVehicleNumber: oldVehicleNumber,
+      newVehicleNumber: vehicle.vehicleNumber,
       userName: currentUser.name,
     },
     link: `/dashboard/vehicles/${vehicle.id}`,

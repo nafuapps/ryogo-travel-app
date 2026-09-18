@@ -4,12 +4,9 @@ import {
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
-import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
-  DetailsHeaderWrapper,
-  DetailsIDWrapper,
   DetailsLineItem,
   DetailsLineWrapper,
   SectionRowWrapper,
@@ -21,7 +18,6 @@ import { Star } from "lucide-react"
 import moment from "moment"
 
 export default async function VehicleDetailsComponent({
-  id,
   createdAt,
   type,
   brand,
@@ -34,7 +30,6 @@ export default async function VehicleDetailsComponent({
   acCharge,
   ratings,
 }: {
-  id: string
   createdAt: Date
   type: VehicleTypesEnum
   brand: VehicleBrandEnum
@@ -50,9 +45,6 @@ export default async function VehicleDetailsComponent({
   const t = await getTranslations("Dashboard.VehicleDetails")
   return (
     <DetailsBorderWrapper>
-      <DetailsHeaderWrapper>
-        <DetailsIDWrapper id={id} label={t("VehicleId")} />
-      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         <DetailsLineItem
           label={t("Added")}

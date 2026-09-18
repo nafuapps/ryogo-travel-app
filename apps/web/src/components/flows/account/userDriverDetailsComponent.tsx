@@ -6,10 +6,8 @@ import {
   SectionRowWrapper,
   DetailsBorderWrapper,
   DetailsContentWrapper,
-  DetailsIDWrapper,
   DetailsLineItem,
   DetailsLineWrapper,
-  DetailsHeaderWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -17,14 +15,12 @@ import { getAverageRating } from "@/lib/utils"
 import { Star } from "lucide-react"
 
 export default async function UserDriverDetailsComponent({
-  id,
   address,
   canDriveVehicles,
   allowance,
   ratings,
   status,
 }: {
-  id: string
   address: string | null
   canDriveVehicles: VehicleTypesEnum[]
   allowance: number
@@ -34,9 +30,6 @@ export default async function UserDriverDetailsComponent({
   const t = await getTranslations("Rider.MyProfile")
   return (
     <DetailsBorderWrapper>
-      <DetailsHeaderWrapper>
-        <DetailsIDWrapper id={id} label={t("DriverId")} />
-      </DetailsHeaderWrapper>
       <DetailsContentWrapper>
         {address && <DetailsLineItem label={t("Address")} value={address} />}
         <DetailsLineItem

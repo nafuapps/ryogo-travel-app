@@ -24,16 +24,20 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import { Camera } from "lucide-react"
 
 export default function ChangeVehiclePhotoSheet({
   vehicleId,
   agencyId,
+  children,
+  canChange,
 }: {
   vehicleId: string
   agencyId: string
+  children: React.ReactNode
+  canChange?: boolean
 }) {
+  if (!canChange) return children
+
   const t = useTranslations("Dashboard.VehicleDetails.ChangeVehiclePhoto")
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -69,13 +73,7 @@ export default function ChangeVehiclePhotoSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <RyogoDetailedIconButton
-          label={t("Button")}
-          icon={Camera}
-          subtitle={t("Subtitle")}
-        />
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>

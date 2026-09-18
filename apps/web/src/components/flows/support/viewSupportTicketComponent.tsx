@@ -1,5 +1,4 @@
 import DeleteSupportTicketAlertButton from "@/components/buttons/alert/deleteSupportTicketAlertButton"
-import CopyClipboardButton from "@/components/buttons/copy/copyClipboardButton"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import {
@@ -8,17 +7,13 @@ import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import IdCopyPill from "@/components/pills/idCopyPill"
 import { SupportTicketStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoSingleRatingDisplay } from "@/components/ratings/ryogoRatingDisplay"
 import AddSupportTicketCommentSheet from "@/components/sheets/addSupportTicketCommentSheet"
 import ChangeTicketPhotoSheet from "@/components/sheets/changeTicketPhotoSheet"
 import CloseSupportTicketSheet from "@/components/sheets/closeSupportTicketSheet"
-import {
-  RyogoCaption,
-  RyogoH3,
-  RyogoP,
-  RyogoSmall,
-} from "@/components/typography"
+import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { MAX_USER_COMMENTS_PER_TICKET } from "@/lib/uiConfig"
 import { FindSupportTicketByIdType } from "@ryogo-travel-app/api/services/support.services"
@@ -42,11 +37,8 @@ export default async function ViewSupportTicketPageComponent({
     <PageWrapper id="ViewSupportTicketPage">
       <SectionWrapper id="TicketDataSection">
         <SectionRowWrapper className="items-center">
-          <SectionRowWrapper className="items-center justify-start">
-            <RyogoH3 color="brand">{ticket.id}</RyogoH3>
-            <CopyClipboardButton label={ticket.id} />
-          </SectionRowWrapper>
-          <SupportTicketStatusPill status={ticket.status} />
+          <SupportTicketStatusPill status={ticket.status} size="lg" />
+          <IdCopyPill id={ticket.id} />
         </SectionRowWrapper>
         <Separator />
         <TicketRow label={t("Created")}>

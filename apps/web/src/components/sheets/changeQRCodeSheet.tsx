@@ -30,10 +30,16 @@ import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 export default function ChangeQRCodeSheet({
   agencyId,
   isNewPhoto,
+  children,
+  canChange,
 }: {
   agencyId: string
   isNewPhoto: boolean
+  children: React.ReactNode
+  canChange?: boolean
 }) {
+  if (!canChange) return children
+
   const t = useTranslations("Sheets.ChangeQRCode")
   const [open, setOpen] = useState(false)
   const router = useRouter()

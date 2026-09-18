@@ -19,6 +19,7 @@ export default function MyProfileAgencyDetailsPageComponent({
       <MyProfileDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
         <AgencyInfoComponent
+          id={agency.id}
           logoUrl={agency.logoUrl}
           agencyName={agency.businessName}
           city={agency.location.city}
@@ -26,7 +27,6 @@ export default function MyProfileAgencyDetailsPageComponent({
           status={agency.status}
         />
         <AgencyDetailsComponent
-          id={agency.id}
           address={agency.businessAddress}
           email={agency.businessEmail}
           phone={agency.businessPhone}
@@ -35,9 +35,10 @@ export default function MyProfileAgencyDetailsPageComponent({
           createdAt={agency.createdAt}
         />
       </GridWrapper>
-      {agency.qrCodeUrl && (
-        <AgencyQRCodeComponent qrCodeUrl={agency.qrCodeUrl} />
-      )}
+      <AgencyQRCodeComponent
+        qrCodeUrl={agency.qrCodeUrl}
+        agencyId={agency.id}
+      />
       {assignedUser && (
         <AgencyAssignedUserComponent
           name={assignedUser.name}

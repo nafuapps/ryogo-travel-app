@@ -23,15 +23,19 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
-import { AtSign } from "lucide-react"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeAgencyLogoSheet({
   agencyId,
+  children,
+  canChange,
 }: {
   agencyId: string
+  children: React.ReactNode
+  canChange?: boolean
 }) {
+  if (!canChange) return children
+
   const t = useTranslations("Sheets.ChangeLogo")
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -63,13 +67,7 @@ export default function ChangeAgencyLogoSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <RyogoDetailedIconButton
-          label={t("Button")}
-          icon={AtSign}
-          subtitle={t("Subtitle")}
-        />
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>

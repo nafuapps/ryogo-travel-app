@@ -1,6 +1,6 @@
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { Building2, MailPen, Phone } from "lucide-react"
+import { AtSign, Building2, MailPen, Phone, QrCode } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
@@ -28,14 +28,15 @@ export default async function AgencyDetailsPageComponent({
       <AccountDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
         <AgencyInfoComponent
+          id={agency.id}
           logoUrl={agency.logoUrl}
           agencyName={agency.businessName}
           city={agency.location.city}
           state={agency.location.state}
           status={agency.status}
+          canChange={isOwner}
         />
         <AgencyDetailsComponent
-          id={agency.id}
           address={agency.businessAddress}
           email={agency.businessEmail}
           phone={agency.businessPhone}
@@ -43,16 +44,35 @@ export default async function AgencyDetailsPageComponent({
           createdAt={agency.createdAt}
         />
       </GridWrapper>
-      {agency.qrCodeUrl && (
-        <AgencyQRCodeComponent qrCodeUrl={agency.qrCodeUrl} />
-      )}
+      <AgencyQRCodeComponent
+        agencyId={agency.id}
+        qrCodeUrl={agency.qrCodeUrl}
+        canChange={isOwner}
+      />
       {isOwner && (
         <GridWrapper id="AgencyActions">
-          <ChangeAgencyLogoSheet agencyId={agency.id} />
+          <ChangeAgencyLogoSheet agencyId={agency.id} canChange>
+            <RyogoDetailedIconButton
+              label={t("ChangeLogo.Title")}
+              icon={AtSign}
+              subtitle={t("ChangeLogo.Subtitle")}
+            />
+          </ChangeAgencyLogoSheet>
           <ChangeQRCodeSheet
             agencyId={agency.id}
             isNewPhoto={agency.qrCodeUrl === null}
-          />
+            canChange
+          >
+            <RyogoDetailedIconButton
+              icon={QrCode}
+              label={
+                agency.qrCodeUrl === null
+                  ? t("ChangeQRCode.UploadTitle")
+                  : t("ChangeQRCode.ChangeTitle")
+              }
+              subtitle={t("ChangeQRCode.Subtitle")}
+            />
+          </ChangeQRCodeSheet>
           <Link href={`/dashboard/account/agency/change-email`}>
             <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}

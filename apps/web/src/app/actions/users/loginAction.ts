@@ -13,19 +13,23 @@ export async function loginAction(userId: string, password: string) {
     redirect("/dashboard/home", RedirectType.replace)
   }
   const loginResult = await login(userId, password)
+  if (loginResult.error) {
+    return loginResult
+  }
 
-  if ("id" in loginResult) {
+  if (loginResult.data) {
     await notificationServices.addNotification({
-      agencyId: loginResult.agencyId,
+      agencyId: loginResult.data.agencyId,
       userId: userId,
       entityType: EntityTypeEnum.USER,
       entityId: userId,
       textKey: "UserLoggedIn",
       textObject: {
-        userName: loginResult.name,
+        userName: loginResult.data.name,
       },
       link: `/dashboard/users/${userId}`,
     })
+    return loginResult
   }
 
   return loginResult

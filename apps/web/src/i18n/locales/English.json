@@ -36,6 +36,8 @@
         "Error1": "Password must be at least 8 characters",
         "APIError1": "Password does not match",
         "APIError2": "User does not exist.. Try logging in with a different phone number",
+        "APIError3": "User has been suspended.. Please contact support",
+        "APIError4": "Something went wrong.. Please try again after some time",
         "BotError": "Bot/Fraud activity detected."
       }
     },

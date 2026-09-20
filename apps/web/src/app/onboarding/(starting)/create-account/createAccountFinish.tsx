@@ -31,8 +31,10 @@ export function CreateAccountFinish({
     }
     //Login the user and take to verification step
     const loginResult = await loginAction(id, password)
-    if (loginResult.id) {
+    if (loginResult.data?.id) {
       router.replace("/onboarding/verify-account")
+    } else {
+      router.replace("/auth/login")
     }
   }
 

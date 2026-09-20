@@ -25,7 +25,7 @@ export async function login(userId: string, password: string) {
   //1. Check user credentials in DB
   const userData = await userServices.checkUserCredentialsInDB(userId, password)
   if (userData.error) {
-    return { error: userData.error }
+    return userData
   }
 
   //Credentials are valid
@@ -35,9 +35,9 @@ export async function login(userId: string, password: string) {
     if (!token) return { error: "sessionNotCreated" }
 
     //3. Return login success if token created
-    return userData.data
+    return userData
   }
-  return { error: "unknown" }
+  return { ...userData, error: "unknown" }
 }
 
 // Logout user - Delete session and log last logout time in DB

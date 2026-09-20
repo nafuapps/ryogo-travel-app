@@ -53,20 +53,29 @@ export default function LoginPasswordPageComponent({
     }
     const loginResponse = await loginAction(user.id, data.password)
     if (loginResponse.error === "invalidPassword") {
-      // Show password match error
+      // Show password mismatch error
       form.setError("password", {
         type: "manual",
         message: t("APIError1"),
       })
-    } else if (loginResponse.error) {
+    } else if (loginResponse.error === "userNotFound") {
       // Show user not found error
       form.setError("password", {
         type: "manual",
         message: t("APIError2"),
       })
+    } else if (loginResponse.error === "userSuspended") {
+      // Show user suspended error
+      form.setError("password", {
+        type: "manual",
+        message: t("APIError3"),
+      })
+    } else if (!loginResponse.data) {
+      //unknown error
+      toast.error(t("APIError4"))
     } else {
-      //Login user
-      if (loginResponse.userRole === UserRolesEnum.DRIVER) {
+      //SUCCESS: Login user
+      if (loginResponse.data.userRole === UserRolesEnum.DRIVER) {
         //Redirect to Rider page
         router.replace("/rider/home")
       } else {

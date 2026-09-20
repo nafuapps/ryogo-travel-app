@@ -20,7 +20,8 @@ export async function setNewPasswordAction(userId: string, password: string) {
   const user = await userServices.changeNewPassword(userId, password)
   if (!user) return
 
-  await login(user.id, password)
+  const loginResult = await login(user.id, password)
+  if (!loginResult.data) return
 
   await notificationServices.addNotification({
     agencyId: user.agencyId,

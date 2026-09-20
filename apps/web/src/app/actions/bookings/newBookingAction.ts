@@ -96,6 +96,7 @@ export async function newBookingAction({
   //Add notification
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,
     isFeed: true,

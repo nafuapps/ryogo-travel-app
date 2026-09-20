@@ -14,12 +14,10 @@ export default function CancelBookingAlertButton({
   bookingId,
   agencyId,
   assignedUserId,
-  isConfirmedBooking,
 }: {
   bookingId: string
   agencyId: string
   assignedUserId: string
-  isConfirmedBooking?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.CancelBooking")
@@ -33,11 +31,11 @@ export default function CancelBookingAlertButton({
         bookingId,
         agencyId,
         assignedUserId,
-        isConfirmedBooking,
+        true,
       )
       if (cancelMessage) {
         toast.success(t("Success"))
-        if (typeof cancelMessage === "string" && isConfirmedBooking) {
+        if (typeof cancelMessage === "string") {
           //Confirmed booking being cancelled
           window.open(cancelMessage, "_blank", "noopener,noreferrer")
           router.refresh()

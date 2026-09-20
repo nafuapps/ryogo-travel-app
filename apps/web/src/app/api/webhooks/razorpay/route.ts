@@ -140,6 +140,7 @@ export async function POST(req: NextRequest) {
       const userName = event.payload.order.entity.notes.userName
       await notificationServices.addNotification({
         agencyId: updatedOrder.agencyId,
+        userId: updatedOrder.userId,
         entityType: EntityTypeEnum.ORDER,
         entityId: updatedOrder.id,
         isFeed: true,

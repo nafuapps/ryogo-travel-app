@@ -79,6 +79,7 @@ export async function endTripAction(
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingChanged.id,
     isFeed: true,

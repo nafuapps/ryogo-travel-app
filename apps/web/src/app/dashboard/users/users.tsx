@@ -25,6 +25,7 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStatusComponent"
+import { BASIC_PLAN_AGENT_LIMIT, BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
 
 export default async function UsersPageComponent({
   allUsers,
@@ -51,16 +52,12 @@ export default async function UsersPageComponent({
           {owners.map((user) => (
             <UserItemComponent key={user.id} user={user} />
           ))}
-          {isPremium && (
-            <Link href={`/dashboard/users/add-owner`} className="w-full">
-              <AddInfoWrapper
-                icon={Plus}
-                label={t("Owners.AddOwner")}
-                className="h-full"
-              />
-            </Link>
-          )}
         </TileGridWrapper>
+        {isPremium && (
+          <Link href={`/dashboard/users/add-owner`} className="w-full">
+            <AddInfoWrapper icon={Plus} label={t("Owners.AddOwner")} />
+          </Link>
+        )}
       </SectionWrapper>
       <SectionWrapper id="AgentsSection">
         <SectionHeaderWrapper
@@ -72,14 +69,12 @@ export default async function UsersPageComponent({
           {agents.map((user) => (
             <UserItemComponent key={user.id} user={user} />
           ))}
-          <Link href={`/dashboard/users/new`} className="w-full">
-            <AddInfoWrapper
-              icon={Plus}
-              label={t("Agents.AddAgent")}
-              className="h-full"
-            />
-          </Link>
         </TileGridWrapper>
+        {(isPremium || agents.length < BASIC_PLAN_AGENT_LIMIT) && (
+          <Link href={`/dashboard/users/new`} className="w-full">
+            <AddInfoWrapper icon={Plus} label={t("Agents.AddAgent")} />
+          </Link>
+        )}
       </SectionWrapper>
       <SectionWrapper id="DriversSection">
         <SectionHeaderWrapper
@@ -91,14 +86,12 @@ export default async function UsersPageComponent({
           {drivers.map((user) => (
             <UserItemComponent key={user.id} user={user} />
           ))}
-          <Link href={`/dashboard/drivers/new`} className="w-full">
-            <AddInfoWrapper
-              icon={Plus}
-              label={t("Drivers.AddDriver")}
-              className="h-full"
-            />
-          </Link>
         </TileGridWrapper>
+        {(isPremium || drivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
+          <Link href={`/dashboard/drivers/new`} className="w-full">
+            <AddInfoWrapper icon={Plus} label={t("Drivers.AddDriver")} />
+          </Link>
+        )}
       </SectionWrapper>
     </PageWrapper>
   )

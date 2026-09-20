@@ -25,6 +25,7 @@ export async function tryPremiumAction(agencyId: string, userId: string) {
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.AGENCY,
     entityId: agencyId,
     isFeed: true,

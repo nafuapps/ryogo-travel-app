@@ -18,6 +18,7 @@ import {
   Replace,
   Route,
   UserKey,
+  Map as MapIcon,
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
 import { PageWrapper } from "@/components/page/pageWrappers"
@@ -45,6 +46,7 @@ import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRat
 import BookingViewInvoiceButton from "@/components/flows/bookings/details/bookingViewInvoiceButton"
 import BookingViewQuoteButton from "@/components/flows/bookings/details/bookingViewQuoteButton"
 import BookingViewConfirmationButton from "@/components/flows/bookings/details/bookingViewConfirmationButton"
+import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -155,7 +157,6 @@ export default async function BookingDetailsPageComponent({
                 bookingId={bookingDetails.id}
                 agencyId={bookingDetails.agencyId}
                 assignedUserId={bookingDetails.assignedUserId}
-                isConfirmedBooking
               />
             )}
             {isCancelled && (
@@ -267,6 +268,17 @@ export default async function BookingDetailsPageComponent({
             canEdit={isOwner || isAssignedUser}
           />
         </BookingSection>
+        {bookingDetails.source.latLong &&
+          bookingDetails.destination.latLong && (
+            <BookingSection sectionTitle={t("MapInfo")} icon={MapIcon}>
+              <BookingRouteMapCard
+                source={bookingDetails.source.latLong}
+                destination={bookingDetails.destination.latLong}
+                updatedAt={bookingDetails.updatedAt}
+                tripLogs={bookingDetails.tripLogs}
+              />
+            </BookingSection>
+          )}
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>
           <BookingPriceItem
             title={t("VehicleCharge")}

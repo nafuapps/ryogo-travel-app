@@ -61,6 +61,7 @@ export async function verifyOrderAction({
   //Add feed for subscription purchase
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.ORDER,
     entityId: updatedRecord.id,
     isFeed: true,

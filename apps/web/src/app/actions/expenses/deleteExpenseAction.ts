@@ -3,6 +3,7 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function deleteExpenseAction(
@@ -28,6 +29,20 @@ export async function deleteExpenseAction(
 
   const deletedExpense = await expenseServices.removeExpense(id)
   if (!deletedExpense) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.EXPENSE,
+    entityId: deletedExpense.id,
+    textKey: "ExpenseRemoved",
+    textObject: {
+      expenseId: deletedExpense.id,
+      bookingId: deletedExpense.bookingId,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/bookings/${deletedExpense.bookingId}/expenses`,
+  })
 
   if (byDriver) {
     await missionServices.removePreviousMissionsByEntityKey(

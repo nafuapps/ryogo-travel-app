@@ -27,6 +27,7 @@ export async function modifyVehicleAction(data: ModifyVehicleRequestType) {
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
     entityId: vehicle.id,
     isFeed: true,

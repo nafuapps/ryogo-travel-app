@@ -44,6 +44,7 @@ export async function changeCustomerPhotoAction(
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.CUSTOMER,
     entityId: customer.id,
     isFeed: true,

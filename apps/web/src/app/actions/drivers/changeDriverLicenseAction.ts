@@ -42,6 +42,7 @@ export async function changeDriverLicenseAction(
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
     entityId: driver.id,
     isFeed: true,

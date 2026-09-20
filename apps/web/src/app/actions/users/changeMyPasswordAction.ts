@@ -1,7 +1,9 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeMyPasswordAction(
   userId: string,
@@ -28,5 +30,18 @@ export async function changeMyPasswordAction(
     newPassword,
   )
   if (!user) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.USER,
+    entityId: userId,
+    textKey: "ChangedPassword",
+    textObject: {
+      userName: currentUser.name,
+    },
+    link: `/dashboard/users/${userId}`,
+  })
+
   return user
 }

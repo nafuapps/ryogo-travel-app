@@ -100,6 +100,7 @@ export default async function DriverDetailsPageComponent({
             userName={driver.name}
             userRole={UserRolesEnum.DRIVER}
             agencyId={driver.agencyId}
+            addedByUserId={driver.addedByUserId}
           />
           <ChangeDriverLicenseSheet
             driverId={driver.id}

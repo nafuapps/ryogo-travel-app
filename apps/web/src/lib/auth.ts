@@ -6,7 +6,6 @@ import {
 } from "./session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cache } from "react"
-import { redirect, RedirectType } from "next/navigation"
 
 //Get current user session from cookie - for optimistic checks before DB reads
 export const getCurrentUser = cache(async () => {
@@ -36,16 +35,13 @@ export async function login(userId: string, password: string) {
     if (!token) return { error: "sessionNotCreated" }
 
     //3. Return login success if token created
-    return {
-      id: userData.data.id,
-      userRole: userData.data.userRole,
-    }
+    return userData.data
   }
   return { error: "unknown" }
 }
 
 // Logout user - Delete session and log last logout time in DB
 export async function logout() {
-  await deleteWebSession()
-  redirect("/auth/login", RedirectType.replace)
+  const result = await deleteWebSession()
+  return result
 }

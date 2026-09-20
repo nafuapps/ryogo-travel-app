@@ -17,11 +17,14 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
+import { BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
 
 export default async function AllVehiclesListComponent({
   allVehicles,
+  isPremium,
 }: {
   allVehicles: FindVehiclesByAgencyType
+  isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.Vehicles.All")
 
@@ -36,14 +39,12 @@ export default async function AllVehiclesListComponent({
         {allVehicles.map((vehicle) => (
           <VehicleItemComponent key={vehicle.id} vehicle={vehicle} />
         ))}
-        <Link href={`/dashboard/vehicles/new`} className="w-full">
-          <AddInfoWrapper
-            icon={Plus}
-            label={t("AddVehicle")}
-            className="h-full"
-          />
-        </Link>
       </TileGridWrapper>
+      {(isPremium || allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
+        <Link href={`/dashboard/vehicles/new`} className="w-full">
+          <AddInfoWrapper icon={Plus} label={t("AddVehicle")} />
+        </Link>
+      )}
     </SectionWrapper>
   )
 }

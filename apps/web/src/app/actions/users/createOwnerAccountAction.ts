@@ -68,6 +68,7 @@ export async function createOwnerAccountAction(
 
   await notificationServices.addNotification({
     agencyId: user.agencyId,
+    userId: user.userId,
     entityType: EntityTypeEnum.USER,
     entityId: user.userId,
     isFeed: true,
@@ -79,6 +80,7 @@ export async function createOwnerAccountAction(
 
   await notificationServices.addNotification({
     agencyId: user.agencyId,
+    userId: user.userId,
     entityType: EntityTypeEnum.AGENCY,
     entityId: user.agencyId,
     isFeed: true,

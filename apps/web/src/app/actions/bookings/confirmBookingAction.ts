@@ -1,6 +1,6 @@
 "use server"
 
-import { ConfirmBookingEmailTemplate } from "@/components/email/confirmBookingEmailTemplate copy"
+import { ConfirmBookingEmailTemplate } from "@/components/email/confirmBookingEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
@@ -56,6 +56,7 @@ export async function confirmBookingAction(
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingDetails.id,
     isFeed: true,

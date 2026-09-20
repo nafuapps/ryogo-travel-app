@@ -4,6 +4,7 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateExpensePhotoPathName } from "@/lib/utils"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { AddExpenseRequestType } from "@ryogo-travel-app/api/types/expense.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
@@ -42,6 +43,20 @@ export async function addExpenseAction(
       uploadResult.path,
     )
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.EXPENSE,
+    entityId: addedExpense.id,
+    textKey: "ExpenseAdded",
+    textObject: {
+      expenseId: addedExpense.id,
+      bookingId: data.bookingId,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/bookings/${data.bookingId}/expenses`,
+  })
 
   if (isRider) {
     await missionServices.addMission({

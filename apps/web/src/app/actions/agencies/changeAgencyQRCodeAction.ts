@@ -39,6 +39,7 @@ export async function changeAgencyQRCodeAction(
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.AGENCY,
     entityId: agencyId,
     isFeed: true,

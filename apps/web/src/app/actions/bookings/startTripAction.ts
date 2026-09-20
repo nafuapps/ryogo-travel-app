@@ -67,6 +67,7 @@ export async function startTripAction(data: AddTripLogRequestType) {
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingChanged.id,
     isFeed: true,

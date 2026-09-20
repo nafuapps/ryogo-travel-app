@@ -1,9 +1,10 @@
 "use server"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
 import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function midTripAction(data: AddTripLogRequestType) {
@@ -49,6 +50,20 @@ export async function midTripAction(data: AddTripLogRequestType) {
       uploadedFile.path,
     )
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: data.bookingId,
+    textKey: "MidTrip",
+    textObject: {
+      type: data.type,
+      bookingId: data.bookingId,
+      driverName: currentUser.name,
+    },
+    link: `/dashboard/bookings/${data.bookingId}/trip-logs`,
+  })
 
   return newTripLog
 }

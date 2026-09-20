@@ -15,6 +15,17 @@ export const notificationServices = {
     )
   },
 
+  async findNotificationsByUserId(
+    userId: string,
+    days: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
+    const queryStartDate = subDays(new Date(), days)
+    return await notificationRepository.readNotificationsByUserId(
+      userId,
+      queryStartDate,
+    )
+  },
+
   //Show 5 most recent feed notifications
   // async findDashboardActivity(agencyId: string, days:) {
   //   return await notificationRepository.readFeedNotificationsByAgencyId(
@@ -32,4 +43,8 @@ export const notificationServices = {
 
 export type FindFeedNotificationsByAgencyIdType = Awaited<
   ReturnType<typeof notificationServices.findFeedNotificationsByAgencyId>
+>
+
+export type FindNotificationsByUserIdType = Awaited<
+  ReturnType<typeof notificationServices.findNotificationsByUserId>
 >

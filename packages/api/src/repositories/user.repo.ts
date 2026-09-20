@@ -247,7 +247,7 @@ export const userRepository = {
       .update(users)
       .set({ lastLogout: lastLogout })
       .where(eq(users.id, userId))
-      .returning({ id: users.id })
+      .returning()
   },
 
   //Update password
@@ -260,7 +260,12 @@ export const userRepository = {
       .update(users)
       .set({ password: passwordHash, isVerified: true, status: status })
       .where(eq(users.id, userId))
-      .returning({ id: users.id, email: users.email, name: users.email })
+      .returning({
+        id: users.id,
+        email: users.email,
+        name: users.email,
+        agencyId: users.agencyId,
+      })
   },
 
   //Update user photo url
@@ -304,7 +309,7 @@ export const userRepository = {
       .update(users)
       .set({ email })
       .where(eq(users.id, userId))
-      .returning({ id: users.id, email: users.email })
+      .returning({ id: users.id, email: users.email, name: users.name })
   },
 
   //Update user phone
@@ -313,7 +318,7 @@ export const userRepository = {
       .update(users)
       .set({ phone })
       .where(eq(users.id, userId))
-      .returning({ id: users.id, status: users.status })
+      .returning({ id: users.id, status: users.status, name: users.name })
   },
 
   //Update user status
@@ -322,7 +327,7 @@ export const userRepository = {
       .update(users)
       .set({ status: status })
       .where(eq(users.id, userId))
-      .returning({ id: users.id, status: users.status })
+      .returning({ id: users.id, status: users.status, name: users.name })
   },
 
   //Update user verification status

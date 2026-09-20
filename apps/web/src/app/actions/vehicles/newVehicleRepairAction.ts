@@ -30,6 +30,7 @@ export async function newVehicleRepairAction(data: InsertVehicleRepairType) {
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
     entityId: repair.vehicleId,
     isFeed: true,

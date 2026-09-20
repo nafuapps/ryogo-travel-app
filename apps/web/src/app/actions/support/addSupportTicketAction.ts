@@ -8,6 +8,7 @@ import sendEmail from "@/components/email/sendEmail"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { generateUserSupportTicketPhotoPathName } from "@/lib/utils"
 import { AddSupportTicketEmailTemplate } from "@/components/email/addSupportTicketEmailTemplate"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 
 export async function addSupportTicketAction(
   userId: string,
@@ -73,6 +74,19 @@ export async function addSupportTicketAction(
       issue: supportTicket.issue,
       details: supportTicket.details,
     }),
+  })
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.SUPPORT,
+    entityId: supportTicket.id,
+    textKey: "TicketAdded",
+    textObject: {
+      ticketId: supportTicket.id,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/support/tickets/${supportTicket.id}`,
   })
 
   return supportTicket

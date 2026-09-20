@@ -1,12 +1,13 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeUserPhoneAction(
   userId: string,
-  email: string,
+  phone: string,
   agencyId: string,
   role?: UserRolesEnum,
 ) {
@@ -23,6 +24,20 @@ export async function changeUserPhoneAction(
     return
   }
 
-  const user = await userServices.changeUserPhone(userId, email, role)
+  const user = await userServices.changeUserPhone(userId, phone, role)
+  if (!user) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.USER,
+    entityId: userId,
+    textKey: "UserPhoneChanged",
+    textObject: {
+      userName: user.name,
+      phone: phone,
+      adminName: currentUser.name,
+    },
+  })
   return user
 }

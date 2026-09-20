@@ -8,8 +8,12 @@ import VehiclesScheduleChartComponent from "@/components/flows/vehicles/home/veh
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import OnTripVehiclesComponent from "@/components/flows/vehicles/home/onTripVehiclesComponent"
 import AllVehiclesListComponent from "@/components/flows/vehicles/home/allVehiclesListComponent"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  SubscriptionPlanEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: `Vehicles - ${pageTitle}`,
@@ -23,6 +27,10 @@ export default async function AllVehiclesPage() {
     redirect("/auth/login", RedirectType.replace)
   }
   const agencyId = currentUser.agencyId
+  const agency = await agencyServices.findAgencyById(agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
   const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
 
@@ -38,7 +46,10 @@ export default async function AllVehiclesPage() {
         {ongoingTrips.length > 0 && (
           <OnTripVehiclesComponent ongoingTrips={ongoingTrips} />
         )}
-        <AllVehiclesListComponent allVehicles={allVehicles} />
+        <AllVehiclesListComponent
+          allVehicles={allVehicles}
+          isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        />
         <VehiclesScheduleChartComponent
           vehicleSchedule14Days={vehicleSchedule14Days}
           userId={currentUser.userId}

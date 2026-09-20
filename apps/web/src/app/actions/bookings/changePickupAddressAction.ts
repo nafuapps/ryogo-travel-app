@@ -33,6 +33,7 @@ export async function changePickupAddressAction(
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingId,
     isFeed: true,

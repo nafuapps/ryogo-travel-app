@@ -27,6 +27,7 @@ export async function modifyCustomerAction(data: ModifyCustomerRequestType) {
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.CUSTOMER,
     entityId: customer.id,
     isFeed: true,

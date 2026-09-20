@@ -36,6 +36,7 @@ export async function changeAgencyLogoAction(agencyId: string, logo: FileList) {
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.AGENCY,
     entityId: agencyId,
     isFeed: true,

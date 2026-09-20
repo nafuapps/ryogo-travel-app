@@ -16,11 +16,14 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
 
 export default async function AllDriversListComponent({
   allDrivers,
+  isPremium,
 }: {
   allDrivers: FindDriversByAgencyType
+  isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.Drivers.All")
 
@@ -35,14 +38,12 @@ export default async function AllDriversListComponent({
         {allDrivers.map((driver) => (
           <DriverItemComponent key={driver.id} driver={driver} />
         ))}
-        <Link href={`/dashboard/drivers/new`} className="w-full">
-          <AddInfoWrapper
-            icon={Plus}
-            label={t("AddDriver")}
-            className="h-full"
-          />
-        </Link>
       </TileGridWrapper>
+      {(isPremium || allDrivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
+        <Link href={`/dashboard/drivers/new`} className="w-full">
+          <AddInfoWrapper icon={Plus} label={t("AddDriver")} />
+        </Link>
+      )}
     </SectionWrapper>
   )
 }

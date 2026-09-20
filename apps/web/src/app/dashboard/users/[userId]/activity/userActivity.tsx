@@ -20,136 +20,155 @@ import {
   TreePalm,
   Wrench,
 } from "lucide-react"
+import { FindNotificationsByUserIdType } from "@ryogo-travel-app/api/services/notification.services"
+import NotificationCard from "@/components/notifications/notificationCard"
 
 export default async function UserActivityPageComponent({
   activities,
   id,
 }: {
-  activities: FindUserActivityByIdType
+  // activities: FindUserActivityByIdType
+  activities: FindNotificationsByUserIdType
   id: string
 }) {
   const t = await getTranslations("Dashboard.UserActivity")
 
-  const bookings = activities.bookings
-  const transactions = activities.transactions
-  const expenses = activities.expenses
-  const customers = activities.customers
-  const driverLeaves = activities.driverLeaves
-  const vehicleRepairs = activities.vehicleRepairs
-
   return (
     <PageWrapper id="UserAssignedBookingsPage">
       <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
-      {bookings.length > 0 && (
-        <SectionWrapper id="BookingActivityList">
-          <SectionHeaderWrapper
-            icon={Tickets}
-            label={t("Bookings")}
-            count={expenses.length}
-          />
-          <TileGridWrapper>
-            {bookings.map((booking) => {
-              return (
-                <BookingActivityComponent key={booking.id} booking={booking} />
-              )
-            })}
-          </TileGridWrapper>
-        </SectionWrapper>
-      )}
-      {transactions.length > 0 && (
-        <SectionWrapper id="TransactionsActivityList">
-          <SectionHeaderWrapper
-            icon={ArrowLeftRight}
-            label={t("Transactions")}
-            count={expenses.length}
-          />
-          <TileGridWrapper>
-            {transactions.map((transaction) => {
-              return (
-                <TransactionActivityComponent
-                  key={transaction.id}
-                  transaction={transaction}
-                />
-              )
-            })}
-          </TileGridWrapper>
-        </SectionWrapper>
-      )}
-      {expenses.length > 0 && (
-        <SectionWrapper id="ExpensesActivityList">
-          <SectionHeaderWrapper
-            icon={BanknoteArrowDown}
-            label={t("Expenses")}
-            count={expenses.length}
-          />
-          <TileGridWrapper>
-            {expenses.map((expense) => {
-              return (
-                <ExpenseActivityComponent key={expense.id} expense={expense} />
-              )
-            })}
-          </TileGridWrapper>
-        </SectionWrapper>
-      )}
-      {customers.length > 0 && (
-        <SectionWrapper id="CustomersActivityList">
-          <SectionHeaderWrapper
-            icon={BadgeIndianRupee}
-            label={t("Customers")}
-            count={customers.length}
-          />
-          <TileGridWrapper>
-            {customers.map((customer) => {
-              return (
-                <CustomerActivityComponent
-                  key={customer.id}
-                  customer={customer}
-                />
-              )
-            })}
-          </TileGridWrapper>
-        </SectionWrapper>
-      )}
-      {driverLeaves.length > 0 && (
-        <SectionWrapper id="DriverLeavesActivityList">
-          <SectionHeaderWrapper
-            icon={TreePalm}
-            label={t("DriverLeaves")}
-            count={driverLeaves.length}
-          />
-          <TileGridWrapper>
-            {driverLeaves.map((driverLeave) => {
-              return (
-                <DriverLeaveActivityComponent
-                  key={driverLeave.id}
-                  driverLeave={driverLeave}
-                />
-              )
-            })}
-          </TileGridWrapper>
-        </SectionWrapper>
-      )}
-      {vehicleRepairs.length > 0 && (
-        <SectionWrapper id="VehicleRepairsActivityList">
-          <SectionHeaderWrapper
-            icon={Wrench}
-            label={t("VehicleRepairs")}
-            count={vehicleRepairs.length}
-          />
-          <TileGridWrapper>
-            {vehicleRepairs.map((vehicleRepair) => {
-              return (
-                <VehicleRepairActivityComponent
-                  key={vehicleRepair.id}
-                  vehicleRepair={vehicleRepair}
-                />
-              )
-            })}
-          </TileGridWrapper>
-        </SectionWrapper>
-      )}
+      <SectionWrapper id="NotificationActivityList">
+        {activities.map((notification) => {
+          return (
+            <NotificationCard
+              key={notification.id}
+              notification={notification}
+            />
+          )
+        })}
+      </SectionWrapper>
     </PageWrapper>
   )
+
+  // const bookings = activities.bookings
+  // const transactions = activities.transactions
+  // const expenses = activities.expenses
+  // const customers = activities.customers
+  // const driverLeaves = activities.driverLeaves
+  // const vehicleRepairs = activities.vehicleRepairs
+
+  // return (
+  //   <PageWrapper id="UserAssignedBookingsPage">
+  //     <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
+  //     {bookings.length > 0 && (
+  //       <SectionWrapper id="BookingActivityList">
+  //         <SectionHeaderWrapper
+  //           icon={Tickets}
+  //           label={t("Bookings")}
+  //           count={expenses.length}
+  //         />
+  //         <TileGridWrapper>
+  //           {bookings.map((booking) => {
+  //             return (
+  //               <BookingActivityComponent key={booking.id} booking={booking} />
+  //             )
+  //           })}
+  //         </TileGridWrapper>
+  //       </SectionWrapper>
+  //     )}
+  //     {transactions.length > 0 && (
+  //       <SectionWrapper id="TransactionsActivityList">
+  //         <SectionHeaderWrapper
+  //           icon={ArrowLeftRight}
+  //           label={t("Transactions")}
+  //           count={expenses.length}
+  //         />
+  //         <TileGridWrapper>
+  //           {transactions.map((transaction) => {
+  //             return (
+  //               <TransactionActivityComponent
+  //                 key={transaction.id}
+  //                 transaction={transaction}
+  //               />
+  //             )
+  //           })}
+  //         </TileGridWrapper>
+  //       </SectionWrapper>
+  //     )}
+  //     {expenses.length > 0 && (
+  //       <SectionWrapper id="ExpensesActivityList">
+  //         <SectionHeaderWrapper
+  //           icon={BanknoteArrowDown}
+  //           label={t("Expenses")}
+  //           count={expenses.length}
+  //         />
+  //         <TileGridWrapper>
+  //           {expenses.map((expense) => {
+  //             return (
+  //               <ExpenseActivityComponent key={expense.id} expense={expense} />
+  //             )
+  //           })}
+  //         </TileGridWrapper>
+  //       </SectionWrapper>
+  //     )}
+  //     {customers.length > 0 && (
+  //       <SectionWrapper id="CustomersActivityList">
+  //         <SectionHeaderWrapper
+  //           icon={BadgeIndianRupee}
+  //           label={t("Customers")}
+  //           count={customers.length}
+  //         />
+  //         <TileGridWrapper>
+  //           {customers.map((customer) => {
+  //             return (
+  //               <CustomerActivityComponent
+  //                 key={customer.id}
+  //                 customer={customer}
+  //               />
+  //             )
+  //           })}
+  //         </TileGridWrapper>
+  //       </SectionWrapper>
+  //     )}
+  //     {driverLeaves.length > 0 && (
+  //       <SectionWrapper id="DriverLeavesActivityList">
+  //         <SectionHeaderWrapper
+  //           icon={TreePalm}
+  //           label={t("DriverLeaves")}
+  //           count={driverLeaves.length}
+  //         />
+  //         <TileGridWrapper>
+  //           {driverLeaves.map((driverLeave) => {
+  //             return (
+  //               <DriverLeaveActivityComponent
+  //                 key={driverLeave.id}
+  //                 driverLeave={driverLeave}
+  //               />
+  //             )
+  //           })}
+  //         </TileGridWrapper>
+  //       </SectionWrapper>
+  //     )}
+  //     {vehicleRepairs.length > 0 && (
+  //       <SectionWrapper id="VehicleRepairsActivityList">
+  //         <SectionHeaderWrapper
+  //           icon={Wrench}
+  //           label={t("VehicleRepairs")}
+  //           count={vehicleRepairs.length}
+  //         />
+  //         <TileGridWrapper>
+  //           {vehicleRepairs.map((vehicleRepair) => {
+  //             return (
+  //               <VehicleRepairActivityComponent
+  //                 key={vehicleRepair.id}
+  //                 vehicleRepair={vehicleRepair}
+  //               />
+  //             )
+  //           })}
+  //         </TileGridWrapper>
+  //       </SectionWrapper>
+  //     )}
+  //   </PageWrapper>
+  // )
 }
 
 //TODO:Revamp UI

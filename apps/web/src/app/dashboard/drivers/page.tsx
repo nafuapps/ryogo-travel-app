@@ -8,8 +8,12 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import OnTripDriversComponent from "@/components/flows/drivers/home/onTripDriversComponent"
 import AllDriversListComponent from "@/components/flows/drivers/home/allDriversListComponent"
 import DriversScheduleChartComponent from "@/components/flows/drivers/home/driversScheduleChartComponent"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  SubscriptionPlanEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: `Drivers - ${pageTitle}`,
@@ -24,6 +28,10 @@ export default async function AllDriversPage() {
   }
 
   const agencyId = currentUser.agencyId
+  const agency = await agencyServices.findAgencyById(agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
 
   const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
   const allDrivers = await driverServices.findDriversByAgency(agencyId)
@@ -39,7 +47,10 @@ export default async function AllDriversPage() {
         {ongoingTrips.length > 0 && (
           <OnTripDriversComponent ongoingTrips={ongoingTrips} />
         )}
-        <AllDriversListComponent allDrivers={allDrivers} />
+        <AllDriversListComponent
+          allDrivers={allDrivers}
+          isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        />
         <DriversScheduleChartComponent
           driverSchedule14Days={driverSchedule14Days}
           isOwner={currentUser.userRole === UserRolesEnum.OWNER}

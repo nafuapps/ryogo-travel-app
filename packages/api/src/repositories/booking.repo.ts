@@ -1461,8 +1461,7 @@ export const bookingRepository = {
   async readBookingsByBookedUserId(userId: string) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [desc(bookings.createdAt)],
-      limit: 20,
-      where: eq(bookings.bookedByUserId, userId),
+      where: and(eq(bookings.bookedByUserId, userId)),
       with: {
         assignedDriver: {
           columns: {
@@ -1670,12 +1669,14 @@ export const bookingRepository = {
           columns: {
             city: true,
             state: true,
+            latLong: true,
           },
         },
         destination: {
           columns: {
             city: true,
             state: true,
+            latLong: true,
           },
         },
         customer: {

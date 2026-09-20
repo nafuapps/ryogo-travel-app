@@ -4,6 +4,7 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateExpensePhotoPathName } from "@/lib/utils"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { UpdateExpenseRequestType } from "@ryogo-travel-app/api/types/expense.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
@@ -44,6 +45,20 @@ export async function modifyExpenseAction(
 
   const updatedExpense = await expenseServices.modifyExpense(data)
   if (!updatedExpense) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.EXPENSE,
+    entityId: updatedExpense.id,
+    textKey: "ExpenseModified",
+    textObject: {
+      expenseId: updatedExpense.id,
+      bookingId: updatedExpense.bookingId,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/bookings/${updatedExpense.bookingId}/expenses`,
+  })
 
   if (isRider) {
     await missionServices.removePreviousMissionsByEntityKey(

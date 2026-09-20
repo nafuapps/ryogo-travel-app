@@ -83,6 +83,7 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
     entityId: vehicle.id,
     isFeed: true,

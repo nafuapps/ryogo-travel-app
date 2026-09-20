@@ -32,11 +32,13 @@ export default function ChangeUserNameSheet({
   agencyId,
   userName,
   userRole,
+  addedByUserId,
 }: {
   userId: string
   agencyId: string
   userName: string
   userRole: UserRolesEnum
+  addedByUserId?: string
 }) {
   const t = useTranslations("Sheets.ChangeName")
   const [open, setOpen] = useState(false)
@@ -65,6 +67,7 @@ export default function ChangeUserNameSheet({
       agencyId,
       data.name,
       userRole,
+      addedByUserId,
     )
     if (updatedUser) {
       toast.success(t("Success"))

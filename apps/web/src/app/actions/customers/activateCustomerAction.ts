@@ -26,6 +26,7 @@ export async function activateCustomerAction(id: string, agencyId: string) {
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.CUSTOMER,
     entityId: customer.id,
     isFeed: true,

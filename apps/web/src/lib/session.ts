@@ -256,6 +256,8 @@ export async function deleteWebSession() {
   // 3. Delete session from cookie
   const cookieStore = await cookies()
   cookieStore.delete(SESSION_COOKIE_NAME)
+
+  return user
 }
 
 async function updateSessionExpiryInDB(sessionId: string) {

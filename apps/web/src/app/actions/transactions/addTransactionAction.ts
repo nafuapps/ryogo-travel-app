@@ -2,9 +2,10 @@
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateTransactionPhotoPathName } from "@/lib/utils"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { AddTransactionRequestType } from "@ryogo-travel-app/api/types/transaction.types"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addTransactionAction(data: AddTransactionRequestType) {
@@ -41,5 +42,20 @@ export async function addTransactionAction(data: AddTransactionRequestType) {
       uploadResult.path,
     )
   }
+
+  await notificationServices.addNotification({
+    agencyId: data.agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.TRANSACTION,
+    entityId: addedTransaction.id,
+    textKey: "TransactionAdded",
+    textObject: {
+      txnId: addedTransaction.id,
+      bookingId: data.bookingId,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/bookings/${data.bookingId}/transactions`,
+  })
+
   return addedTransaction
 }

@@ -11,6 +11,7 @@ import {
   MessageSquarePlus,
   Route,
   UserKey,
+  Map as MapIcon,
 } from "lucide-react"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
@@ -26,6 +27,7 @@ import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehic
 import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 import { getDisplayTime } from "@/lib/utils"
 import { EditInfoWrapper } from "@/components/page/pageWrappers"
+import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
 
 export default async function RiderMybooking({
   booking,
@@ -97,6 +99,16 @@ export default async function RiderMybooking({
           />
         )}
       </BookingSection>
+      {booking.source.latLong && booking.destination.latLong && (
+        <BookingSection sectionTitle={t("MapInfo")} icon={MapIcon}>
+          <BookingRouteMapCard
+            source={booking.source.latLong}
+            destination={booking.destination.latLong}
+            updatedAt={booking.updatedAt}
+            tripLogs={booking.tripLogs}
+          />
+        </BookingSection>
+      )}
       <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
         <BookingAssignedUserCard user={booking.assignedUser} />
         <BookingActionWrapper>

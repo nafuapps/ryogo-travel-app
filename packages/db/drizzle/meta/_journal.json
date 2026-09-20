@@ -372,6 +372,13 @@
       "when": 1789879621181,
       "tag": "0052_dark_captain_marvel",
       "breakpoints": true
+    },
+    {
+      "idx": 53,
+      "version": "7",
+      "when": 1789898239518,
+      "tag": "0053_amazing_blue_shield",
+      "breakpoints": true
     }
   ]
 }

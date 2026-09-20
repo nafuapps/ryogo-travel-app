@@ -1,8 +1,9 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function activateUserAction(
   id: string,
@@ -23,5 +24,20 @@ export async function activateUserAction(
   }
 
   const user = await userServices.activateUser(id, role)
+  if (!user) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.USER,
+    entityId: id,
+    textKey: "UserActivated",
+    textObject: {
+      userName: user.name,
+      adminName: currentUser.name,
+    },
+    link: `/dashboard/users/${id}`,
+  })
+
   return user
 }

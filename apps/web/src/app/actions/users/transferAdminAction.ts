@@ -42,6 +42,7 @@ export async function transferAdminAction(
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.AGENCY,
     entityId: agencyId,
     isFeed: true,

@@ -31,6 +31,7 @@ export async function newDriverLeaveAction(data: InsertDriverLeaveType) {
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
     entityId: leave.driverId,
     isFeed: true,

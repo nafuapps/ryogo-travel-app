@@ -31,6 +31,7 @@ export async function activateDriverAction(
 
   await notificationServices.addNotification({
     agencyId: agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
     entityId: driver.id,
     isFeed: true,

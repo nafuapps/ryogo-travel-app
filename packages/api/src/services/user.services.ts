@@ -536,7 +536,11 @@ export const userServices = {
     if (!sessionDeleted) {
       return
     }
-    return await userRepository.updateLastLogout(userId, new Date())
+    const updatedUser = await userRepository.updateLastLogout(
+      userId,
+      new Date(),
+    )
+    return updatedUser[0]
   },
 
   //Reset user password (by owner - user details flow)

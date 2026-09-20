@@ -26,6 +26,7 @@ export async function modifyDriverAction(data: ModifyDriverRequestType) {
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
     entityId: driver.id,
     isFeed: true,

@@ -335,6 +335,8 @@ export enum EntityTypeEnum {
   CUSTOMER = "Customer",
   ORDER = "Order",
   EXPENSE = "Expense",
+  TRANSACTION = "Transaction",
+  SUPPORT = "Support",
 }
 export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.BOOKING, //TE: BookingId
@@ -345,6 +347,8 @@ export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.CUSTOMER, //TE: CustomerId
   EntityTypeEnum.ORDER, //TE: OrderId
   EntityTypeEnum.EXPENSE, //TE: ExpenseId
+  EntityTypeEnum.TRANSACTION, //TE: TransactionId
+  EntityTypeEnum.SUPPORT, //TE: SupportTicketId
 ])
 export enum UserLangEnum {
   ENGLISH = "English",
@@ -412,7 +416,7 @@ export const users = pgTable(
     lastSeen: timestamp("last_seen", { withTimezone: true }),
     lastLogin: timestamp("last_login", { withTimezone: true }),
     lastLogout: timestamp("last_logout", { withTimezone: true }),
-    latLong: varchar("lat_long", { length: 50 }), // TODO: last known user location
+    latLong: varchar("lat_long", { length: 50 }), // last known user location
     locatedAt: timestamp("located_at", { withTimezone: true }), // Timestamp of last location update
     geolocation: geometry("geolocation", {
       type: "point",
@@ -469,6 +473,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   customersAdded: many(customers),
   sessions: many(sessions),
   missions: many(missions),
+  notifications: many(notifications),
   supportTickets: many(supportTickets),
   productFeedbacks: many(productFeedbacks),
 }))
@@ -635,7 +640,7 @@ export const vehicles = pgTable(
     defaultAcChargePerDay: integer("extra_ac_charge_per_day")
       .notNull()
       .default(0), // in currency units
-    latLong: varchar("lat_long", { length: 50 }), // TODO: last known vehicle location
+    latLong: varchar("lat_long", { length: 50 }), // last known vehicle location
     locatedAt: timestamp("located_at", { withTimezone: true }), // Timestamp of last location update
     geolocation: geometry("geolocation", {
       type: "point",
@@ -739,7 +744,7 @@ export const drivers = pgTable(
     defaultAllowancePerDay: integer("default_allowance_per_day")
       .notNull()
       .default(500), // in currency units
-    latLong: varchar("lat_long", { length: 50 }), // TODO: last known driver location
+    latLong: varchar("lat_long", { length: 50 }), // last known driver location
     locatedAt: timestamp("located_at", { withTimezone: true }), // Timestamp of last location update
     geolocation: geometry("geolocation", {
       type: "point",
@@ -1603,6 +1608,9 @@ export const notifications = pgTable(
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
+    userId: text("user_id").references(() => users.id, {
+      onDelete: "no action",
+    }),
     entityId: text("entity_id").notNull(),
     entityType: entityType("entity_type").notNull(),
     textKey: text("text_key").notNull(),
@@ -1621,6 +1629,10 @@ export const notificationRelations = relations(notifications, ({ one }) => ({
   agency: one(agencies, {
     fields: [notifications.agencyId],
     references: [agencies.id],
+  }),
+  user: one(users, {
+    fields: [notifications.userId],
+    references: [users.id],
   }),
 }))
 

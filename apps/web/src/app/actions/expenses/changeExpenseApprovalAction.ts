@@ -2,7 +2,8 @@
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeExpenseApprovalAction(
   expId: string,
@@ -26,5 +27,21 @@ export async function changeExpenseApprovalAction(
     expId,
     status,
   )
+  if (!updatedExpense) return
+
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.EXPENSE,
+    entityId: updatedExpense.id,
+    textKey: status ? "ExpenseApproved" : "ExpenseRejected",
+    textObject: {
+      expenseId: updatedExpense.id,
+      bookingId: updatedExpense.bookingId,
+      userName: currentUser.name,
+    },
+    link: `/dashboard/bookings/${updatedExpense.bookingId}/expenses`,
+  })
+
   return updatedExpense
 }

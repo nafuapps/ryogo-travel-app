@@ -29,6 +29,7 @@ export async function modifyDriverLeaveAction(
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
+    userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
     entityId: leave.driverId,
     isFeed: true,

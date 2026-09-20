@@ -360,4 +360,31 @@ export const driverRepository = {
         phone: drivers.phone,
       })
   },
+
+  //Update driver location
+  async updateLocation(
+    driverId: string,
+    latLong: string,
+    geolocation:
+      | {
+          x: number
+          y: number
+        }
+      | undefined,
+  ) {
+    return await db
+      .update(drivers)
+      .set({
+        locatedAt: new Date(),
+        latLong: latLong,
+        geolocation: geolocation,
+      })
+      .where(eq(drivers.id, driverId))
+      .returning({
+        id: drivers.id,
+        geolocation: drivers.geolocation,
+        latLong: drivers.latLong,
+        locatedAt: drivers.locatedAt,
+      })
+  },
 }

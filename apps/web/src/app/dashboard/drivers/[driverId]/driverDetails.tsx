@@ -20,6 +20,7 @@ import DriverLicenseInfoComponent from "@/components/flows/drivers/details/drive
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import ChangeDriverLicenseSheet from "@/components/sheets/changeDriverLicenseSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
+import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -58,6 +59,14 @@ export default async function DriverDetailsPageComponent({
           ratings={driver.customerRatings}
         />
       </GridWrapper>
+      {driver.latLong && (
+        <SectionWrapper id="DriverLocationDetails">
+          <GoogleMapsEmbedPlaceComponent
+            latLong={driver.latLong}
+            time={driver.locatedAt}
+          />
+        </SectionWrapper>
+      )}
       <SectionWrapper id="DriverLicenseDetails">
         <DriverLicenseInfoComponent
           licenseNumber={driver.licenseNumber}

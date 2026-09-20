@@ -392,18 +392,20 @@ export const userRepository = {
 
   //Update user location
   async updateLocation(userId: string, lat: number, long: number) {
-    const location = sql.raw(`ST_SetSRID(ST_MakePoint(${long}, ${lat}), 4326)`)
+    const geolocation = sql.raw(
+      `ST_SetSRID(ST_MakePoint(${long}, ${lat}), 4326)`,
+    )
     return await db
       .update(users)
       .set({
         locatedAt: new Date(),
-        location: location,
+        geolocation: geolocation,
         latLong: `${lat},${long}`,
       })
       .where(eq(users.id, userId))
       .returning({
         id: users.id,
-        location: users.location,
+        geolocation: users.geolocation,
         latLong: users.latLong,
         locatedAt: users.locatedAt,
       })

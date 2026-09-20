@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server"
 import BookingSection from "@/components/flows/bookings/details/bookingSection"
 import {
   BriefcaseBusiness,
+  Car,
   ClipboardClock,
   Contact,
   MapPinCheck,
@@ -21,6 +22,7 @@ import BookingIDWrapper from "@/components/flows/bookings/details/BookingIDWrapp
 import BookingCreationInfoCard from "@/components/flows/bookings/details/bookingInfoCard"
 import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
 import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
+import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
 import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 import { getDisplayTime } from "@/lib/utils"
 import { EditInfoWrapper } from "@/components/page/pageWrappers"
@@ -127,6 +129,9 @@ export default async function RiderMybooking({
             />
           </BookingActionWrapper>
         )}
+      </BookingSection>
+      <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>
+        <BookingVehicleCard vehicle={booking.assignedVehicle} />
       </BookingSection>
     </BookingGrid>
   )

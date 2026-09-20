@@ -19,6 +19,7 @@ import TransferAdminAlertButton from "@/components/buttons/alert/transferAdminAl
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserInfoComponent from "@/components/flows/account/userInfoComponent"
+import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -50,6 +51,14 @@ export default async function UserDetailsPageComponent({
           isAdmin={user.isAdmin}
         />
       </GridWrapper>
+      {user.latLong && (
+        <SectionWrapper id="UserLocationDetails">
+          <GoogleMapsEmbedPlaceComponent
+            latLong={user.latLong}
+            time={user.locatedAt}
+          />
+        </SectionWrapper>
+      )}
       {currentUserId !== user.id && (
         <SectionWrapper id="UserCommunication">
           <RyogoPhoneButton label={t("CallUser")} phone={user.phone} />

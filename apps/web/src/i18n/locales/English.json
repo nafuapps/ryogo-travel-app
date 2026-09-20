@@ -5137,6 +5137,7 @@
         "Title": "Chat with User",
         "Subtitle": "Start a Whatsapp chat with user"
       },
+      "VehicleInfo": "ASSIGNED VEHICLE",
       "CustomerInfo": "CUSTOMER",
       "CallCustomer": "Call Customer",
       "ChatCustomer": {

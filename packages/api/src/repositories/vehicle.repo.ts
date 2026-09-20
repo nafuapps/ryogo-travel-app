@@ -401,4 +401,31 @@ export const vehicleRepository = {
       .where(eq(vehicles.id, vehicleId))
       .returning({ id: vehicles.id, odometerReading: vehicles.odometerReading })
   },
+
+  //Update vehicle location
+  async updateLocation(
+    vehicleId: string,
+    latLong: string,
+    geolocation:
+      | {
+          x: number
+          y: number
+        }
+      | undefined,
+  ) {
+    return await db
+      .update(vehicles)
+      .set({
+        locatedAt: new Date(),
+        latLong: latLong,
+        geolocation: geolocation,
+      })
+      .where(eq(vehicles.id, vehicleId))
+      .returning({
+        id: vehicles.id,
+        geolocation: vehicles.geolocation,
+        latLong: vehicles.latLong,
+        locatedAt: vehicles.locatedAt,
+      })
+  },
 }

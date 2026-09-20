@@ -19,6 +19,7 @@
         "VAPID_PRIVATE_KEY",
         "VAPID_PUBLIC_KEY",
         "RESEND_API_KEY",
+        "GOOGLE_MAPS_API_KEY",
         "SUPER_PASSWORD",
         "RAZORPAY_TEST_KEY_SECRET",
         "RAZORPAY_LIVE_KEY_SECRET",

@@ -414,7 +414,7 @@ export const users = pgTable(
     lastLogout: timestamp("last_logout", { withTimezone: true }),
     latLong: varchar("lat_long", { length: 50 }), // TODO: last known user location
     locatedAt: timestamp("located_at", { withTimezone: true }), // Timestamp of last location update
-    location: geometry("location", {
+    geolocation: geometry("geolocation", {
       type: "point",
       mode: "xy",
       srid: 4326,
@@ -437,6 +437,7 @@ export const users = pgTable(
     index("users_agency_phone_idx").on(t.phone, t.agencyId), // to quickly filter users by phone number in an agency
     index("users_agency_role_idx").on(t.userRole, t.agencyId), // to quickly filter users by role in an agency
     index("users_agency_status_idx").on(t.status, t.agencyId), // to quickly filter users by status in an agency
+    index("users_spatial_idx").using("gist", t.geolocation), // to quickly filter locations by spatial queries
   ],
 )
 export const usersRelations = relations(users, ({ one, many }) => ({
@@ -634,6 +635,13 @@ export const vehicles = pgTable(
     defaultAcChargePerDay: integer("extra_ac_charge_per_day")
       .notNull()
       .default(0), // in currency units
+    latLong: varchar("lat_long", { length: 50 }), // TODO: last known vehicle location
+    locatedAt: timestamp("located_at", { withTimezone: true }), // Timestamp of last location update
+    geolocation: geometry("geolocation", {
+      type: "point",
+      mode: "xy",
+      srid: 4326,
+    }),
     ...timestamps,
   },
   (t) => [
@@ -663,6 +671,7 @@ export const vehicles = pgTable(
     index("vehicles_agency_type_idx").on(t.type, t.agencyId), // to quickly filter vehicles by type in an agency
     index("vehicles_agency_capacity_idx").on(t.capacity, t.agencyId), // to quickly filter vehicles by capacity in an agency
     index("vehicles_agency_ac_idx").on(t.hasAC, t.agencyId), // to quickly filter vehicles by ac in an agency
+    index("vehicles_spatial_idx").using("gist", t.geolocation), // to quickly filter locations by spatial queries
   ],
 )
 export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
@@ -730,6 +739,13 @@ export const drivers = pgTable(
     defaultAllowancePerDay: integer("default_allowance_per_day")
       .notNull()
       .default(500), // in currency units
+    latLong: varchar("lat_long", { length: 50 }), // TODO: last known driver location
+    locatedAt: timestamp("located_at", { withTimezone: true }), // Timestamp of last location update
+    geolocation: geometry("geolocation", {
+      type: "point",
+      mode: "xy",
+      srid: 4326,
+    }),
     ...timestamps,
   },
   (t) => [
@@ -752,6 +768,7 @@ export const drivers = pgTable(
       t.canDriveVehicleTypes,
       t.agencyId,
     ), // to quickly filter drivers by vehicle types in an agency
+    index("drivers_spatial_idx").using("gist", t.geolocation), // to quickly filter locations by spatial queries
   ],
 )
 export const driverRelations = relations(drivers, ({ one, many }) => ({
@@ -1244,7 +1261,7 @@ export const tripLogs = pgTable(
     remarks: text("remarks"),
     tripLogPhotoUrl: text("trip_log_photo_url"),
     latLong: varchar("lat_long", { length: 50 }), // "lat,long"
-    location: geometry("location", {
+    geolocation: geometry("geolocation", {
       type: "point",
       mode: "xy",
       srid: 4326,
@@ -1260,7 +1277,7 @@ export const tripLogs = pgTable(
     index("trip_logs_booking_type_idx").on(t.type, t.bookingId), // to quickly filter trip logs by type in a booking
     index("trip_logs_agency_vehicle_idx").on(t.vehicleId, t.agencyId), // to quickly filter trip logs by vehicle in an agency
     index("trip_logs_agency_driver_idx").on(t.driverId, t.agencyId), // to quickly filter trip logs by driver in an agency
-    index("trip_logs_spatial_index").using("gist", t.location), // A GIST index is crucial for fast spatial queries
+    index("trip_logs_spatial_index").using("gist", t.geolocation), // A GIST index is crucial for fast spatial queries
   ],
 )
 export const tripLogsRelations = relations(tripLogs, ({ one }) => ({
@@ -1390,7 +1407,7 @@ export const locations = pgTable(
     city: varchar("city", { length: 30 }).notNull(),
     state: varchar("state", { length: 30 }).notNull(),
     latLong: varchar("lat_long", { length: 50 }), // "lat,long"
-    location: geometry("location", {
+    geolocation: geometry("geolocation", {
       type: "point",
       mode: "xy",
       srid: 4326,
@@ -1401,7 +1418,7 @@ export const locations = pgTable(
   (t) => [
     unique().on(t.city, t.state), //same location cannot be added twice
     index("locations_active_idx").on(t.isActive), // to quickly filter active/inactive locations
-    index("locations_spatial_idx").using("gist", t.location), // to quickly filter locations by spatial queries
+    index("locations_spatial_idx").using("gist", t.geolocation), // to quickly filter locations by spatial queries
   ],
 )
 export const locationRelations = relations(locations, ({ many }) => ({

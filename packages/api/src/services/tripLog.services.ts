@@ -1,12 +1,27 @@
 import { InsertTripLogType } from "@ryogo-travel-app/db/schema"
 import { tripLogRepository } from "../repositories/tripLog.repo"
-import { vehicleRepository } from "../repositories/vehicle.repo"
 import { sql } from "drizzle-orm"
 import { AddTripLogRequestType } from "../types/tripLog.types"
+import { vehicleRepository } from "../repositories/vehicle.repo"
+import { driverRepository } from "../repositories/driver.repo"
 
 export const tripLogServices = {
   //Add a trip log
   async addTripLog(data: AddTripLogRequestType) {
+    const latLong =
+      data.lat && data.long
+        ? `${data.lat.toFixed(4)},${data.long.toFixed(4)}`
+        : null
+    const geolocation =
+      data.lat && data.long
+        ? (sql.raw(
+            `ST_SetSRID(ST_MakePoint(${data.long}, ${data.lat}), 4326)`,
+          ) as unknown as {
+            x: number
+            y: number
+          })
+        : undefined
+
     const startTripLog: InsertTripLogType = {
       bookingId: data.bookingId,
       agencyId: data.agencyId,
@@ -15,19 +30,8 @@ export const tripLogServices = {
       odometerReading: data.odometerReading, // in kilometers
       type: data.type,
       remarks: data.remarks,
-      latLong:
-        data.lat && data.long
-          ? `${data.lat.toFixed(4)},${data.long.toFixed(4)}`
-          : null,
-      location:
-        data.lat && data.long
-          ? (sql.raw(
-              `ST_SetSRID(ST_MakePoint(${data.long}, ${data.lat}), 4326)`,
-            ) as unknown as {
-              x: number
-              y: number
-            })
-          : undefined,
+      latLong: latLong,
+      geolocation: geolocation,
     }
     const tripLog = await tripLogRepository.createTripLog(startTripLog)
 
@@ -37,6 +41,14 @@ export const tripLogServices = {
         data.vehicleId,
         data.odometerReading,
       )
+    }
+    if (latLong) {
+      await vehicleRepository.updateLocation(
+        data.vehicleId,
+        latLong,
+        geolocation,
+      )
+      await driverRepository.updateLocation(data.driverId, latLong, geolocation)
     }
     return tripLog[0]
   },

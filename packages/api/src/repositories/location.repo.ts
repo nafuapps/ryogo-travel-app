@@ -13,8 +13,8 @@ export const locationRepository = {
   async readDistanceBetweenLocations(sourceId: string, destinationId: string) {
     const result = await db.execute(sql`
         SELECT ST_Distance(
-          s.location::geography,
-          d.location::geography
+          s.geolocation::geography,
+          d.geolocation::geography
         ) / 800 AS distance_km
         FROM locations s, locations d
         WHERE s.id = ${sourceId} AND d.id = ${destinationId};
@@ -34,8 +34,8 @@ export const locationRepository = {
   ) {
     const result = await db.execute(sql`
         SELECT ST_Distance(
-          l.location::geography,
-          t.location::geography
+          l.geolocation::geography,
+          t.geolocation::geography
         ) / 800 AS distance_km
         FROM locations l, tripLogs t
         WHERE l.id = ${locationId} AND t.id = ${tripLogId};

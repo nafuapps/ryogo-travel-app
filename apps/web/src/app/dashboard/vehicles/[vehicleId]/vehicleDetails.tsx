@@ -24,6 +24,7 @@ import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicle
 import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
 import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
 import ChangeVehicleDocumentSheet from "@/components/sheets/changeVehicleDocumentSheet"
+import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
 
 export default async function VehicleDetailsPageComponent({
   vehicle,
@@ -65,6 +66,14 @@ export default async function VehicleDetailsPageComponent({
           ratings={vehicle.customerRatings}
         />
       </GridWrapper>
+      {vehicle.latLong && (
+        <SectionWrapper id="VehicleLocationDetails">
+          <GoogleMapsEmbedPlaceComponent
+            latLong={vehicle.latLong}
+            time={vehicle.locatedAt}
+          />
+        </SectionWrapper>
+      )}
       <SectionWrapper id="VehicleRCDetails">
         <VehicleDocumentInfoComponent
           id={vehicle.id}

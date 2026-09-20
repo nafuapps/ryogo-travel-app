@@ -6,7 +6,11 @@ import {
   QUARTERLY_SUBSCRIPTION_FINAL_PRICE,
 } from "@ryogo-travel-app/api/apiConfig"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
-import { BookingTypeEnum, OrderTypeEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingTypeEnum,
+  OrderTypeEnum,
+  UserLangEnum,
+} from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
 import { differenceInDays, differenceInMinutes } from "date-fns"
 import { twMerge } from "tailwind-merge"
@@ -18,6 +22,17 @@ import moment from "moment"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function getLang(locale: UserLangEnum) {
+  switch (locale) {
+    case UserLangEnum.HINDI:
+      return "hi"
+    case UserLangEnum.ASSAMESE:
+      return "as"
+    case UserLangEnum.ENGLISH:
+      return "en-IN"
+  }
 }
 
 export function getOnlineStatus(time?: Date | null) {

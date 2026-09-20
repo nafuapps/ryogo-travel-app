@@ -1,10 +1,9 @@
-import { RyogoSmall, RyogoH1, RyogoP } from "@/components/typography"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { RyogoVideo } from "@/components/video/ryogoVideo"
 import Link from "next/link"
 import { ChevronDown } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -13,6 +12,8 @@ import {
   RyogoOutlineButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+// import { YTVideo } from "@/components/video/ytVideoEmbed"
+import { RyogoVideo } from "@/components/video/ryogoVideo"
 
 export default async function ResourcesHeroSection() {
   const t = await getTranslations("Landing.Resources.Hero")
@@ -54,12 +55,13 @@ export default async function ResourcesHeroSection() {
           </div>
         </div>
         <div className="flex flex-col max-w-xl mt-8 lg:mt-0 gap-4 lg:gap-5 items-center justify-center w-full">
+          {/* //TODO: Add video source */}
           <RyogoVideo
-            //TODO: Add video source
             src="https://www.youtube.com/embed/1MobY_vR7-g"
             title="Ryogo Demo video"
             className="w-full aspect-video"
           />
+          {/* <YTVideo id="1MobY_vR7-g" /> */}
           <Link href="#videos">
             <RyogoGhostButton
               size="lg"

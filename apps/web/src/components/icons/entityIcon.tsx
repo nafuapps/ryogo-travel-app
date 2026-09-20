@@ -8,6 +8,8 @@ import {
   HandCoins,
   IdCard,
   User,
+  BanknoteArrowUp,
+  BadgeQuestionMark,
 } from "lucide-react"
 
 export default function getEntityIcon(entityType: EntityTypeEnum) {
@@ -28,5 +30,9 @@ export default function getEntityIcon(entityType: EntityTypeEnum) {
       return HandCoins
     case EntityTypeEnum.USER:
       return User
+    case EntityTypeEnum.TRANSACTION:
+      return BanknoteArrowUp
+    case EntityTypeEnum.SUPPORT:
+      return BadgeQuestionMark
   }
 }

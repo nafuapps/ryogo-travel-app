@@ -5,6 +5,8 @@ import {
   DriverIdRegex,
   ExpenseIdRegex,
   OrderIdRegex,
+  SupportTicketIdRegex,
+  TransactionIdRegex,
   UserIdRegex,
   VehicleIdRegex,
 } from "@/lib/regex"
@@ -28,6 +30,10 @@ export function regexCheckIDByEntityType(type: EntityTypeEnum, value: string) {
       return UserIdRegex.safeParse(value).success
     case EntityTypeEnum.VEHICLE:
       return VehicleIdRegex.safeParse(value).success
+    case EntityTypeEnum.TRANSACTION:
+      return TransactionIdRegex.safeParse(value).success
+    case EntityTypeEnum.SUPPORT:
+      return SupportTicketIdRegex.safeParse(value).success
   }
 }
 

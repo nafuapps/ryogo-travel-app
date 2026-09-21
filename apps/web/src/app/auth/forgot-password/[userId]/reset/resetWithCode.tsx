@@ -5,7 +5,7 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
@@ -115,61 +115,70 @@ export default function ResetWithCodePageComponent({
       >
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <AuthAccountCard user={user} />
-        {codeSuccess !== true ? (
-          <FormContentWrapper asCard={false}>
-            <RyogoOTPInput
-              name={"code"}
-              label={t("Field1.Title")}
-              description={t("Field1.Description")}
-            />
-            <RyogoDefaultButton
-              label={isPending ? t("Loading") : t("VerifyCTA")}
-              size="lg"
-              type="button"
-              onClick={() => verifyCode(form.getValues("code"))}
-              disabled={isPending || isBot}
-            />
-            <RyogoGhostButton
-              label={t("DidnotReceiveCode")}
-              labelColor="light"
-              size="lg"
-              type="button"
-              disabled={isPending}
-              onClick={() => {
-                router.push(`/auth/forgot-password/${user.id}`)
-              }}
-            />
-          </FormContentWrapper>
-        ) : (
-          <FormContentWrapper asCard={false}>
-            <SectionRowWrapper className="border border-green-500 flex items-center p-2 lg:p-3 rounded-md">
-              <RyogoIcon icon={CheckCircle} size="xs" color="green" thick />
-              <RyogoCaption color="green">{t("CodeVerified")}</RyogoCaption>
-            </SectionRowWrapper>
-            <RyogoInput
-              name={"password"}
-              type="password"
-              label={t("Field2.Title")}
-              placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description")}
-            />
-            <RyogoInput
-              name={"confirmPassword"}
-              type="password"
-              label={t("Field3.Title")}
-              placeholder={t("Field3.Placeholder")}
-              description={t("Field3.Description")}
-            />
-            <RyogoDefaultButton
-              label={
-                form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-              }
-              size="lg"
-              type="submit"
-              disabled={form.formState.isSubmitting || isBot}
-            />
-          </FormContentWrapper>
-        )}
+        <FormContentWrapper
+          asCard={false}
+          className={`px-1 overflow-hidden transition-transform duration-500 ease-in-out ${
+            codeSuccess !== true
+              ? "translate-x-0"
+              : "-translate-x-full absolute top-0 left-0 size-0"
+          }`}
+        >
+          <RyogoOTPInput
+            name={"code"}
+            label={t("Field1.Title")}
+            description={t("Field1.Description")}
+          />
+          <RyogoDefaultButton
+            label={isPending ? t("Loading") : t("VerifyCTA")}
+            size="lg"
+            type="button"
+            onClick={() => verifyCode(form.getValues("code"))}
+            disabled={isPending || isBot}
+          />
+          <RyogoGhostButton
+            label={t("DidnotReceiveCode")}
+            labelColor="light"
+            size="lg"
+            type="button"
+            disabled={isPending}
+            onClick={() => {
+              router.push(`/auth/forgot-password/${user.id}`)
+            }}
+          />
+        </FormContentWrapper>
+        <FormContentWrapper
+          asCard={false}
+          className={`px-1 overflow-hidden transition-transform duration-500 ease-in-out ${
+            codeSuccess === true
+              ? "translate-x-0"
+              : "translate-x-full absolute top-0 left-0 size-0"
+          }`}
+        >
+          <SectionRowWrapper className="border border-green-500 dark:border-green-500 flex items-center justify-center p-3 lg:p-4 rounded-md">
+            <RyogoIcon icon={CheckCircle} size="sm" color="green" thick />
+            <RyogoSmall color="green">{t("CodeVerified")}</RyogoSmall>
+          </SectionRowWrapper>
+          <RyogoInput
+            name={"password"}
+            type="password"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+          />
+          <RyogoInput
+            name={"confirmPassword"}
+            type="password"
+            label={t("Field3.Title")}
+            placeholder={t("Field3.Placeholder")}
+            description={t("Field3.Description")}
+          />
+          <RyogoDefaultButton
+            label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
+            size="lg"
+            type="submit"
+            disabled={form.formState.isSubmitting || isBot}
+          />
+        </FormContentWrapper>
       </FormWrapper>
     </AuthPageWrapper>
   )

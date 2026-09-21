@@ -59,7 +59,7 @@ export default async function ResourcesHeroSection() {
           <RyogoVideo
             src="https://www.youtube.com/embed/1MobY_vR7-g"
             title="Ryogo Demo video"
-            className="w-full aspect-video"
+            className="w-full aspect-video rounded-md"
           />
           {/* <YTVideo id="1MobY_vR7-g" /> */}
           <Link href="#videos">

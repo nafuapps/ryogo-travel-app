@@ -1,8 +1,6 @@
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
-// import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-// import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import UserActivityPageComponent from "./userActivity"
 import { Metadata } from "next"
@@ -25,24 +23,6 @@ export default async function UserActivityPage({
   if (!user) {
     redirect("/dashboard/users", RedirectType.replace)
   }
-
-  // if (user.userRole === UserRolesEnum.DRIVER) {
-  //   const driver = await driverServices.findDriverByUserId(user.id)
-  //   if (!driver) {
-  //     redirect("/dashboard/users", RedirectType.replace)
-  //   }
-  //   const activities = await driverServices.findDriverActivityByUserId(
-  //     user.id,
-  //     driver.id,
-  //   )
-  //   return (
-  //     <MainWrapper>
-  //       <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />
-  //       <DriverActivityPageComponent activities={activities} id={userId} />
-  //     </MainWrapper>
-  //   )
-  // }
-  // const activities = await userServices.findUserActivityById(userId)
 
   const activities =
     await notificationServices.findNotificationsByUserId(userId)

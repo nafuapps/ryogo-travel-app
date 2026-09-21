@@ -234,10 +234,10 @@ export const userRepository = {
   },
 
   // Update user's last login time
-  async updateLastLogin(userId: string, lastLogin: Date) {
+  async updateLastLoginAndSeen(userId: string) {
     return await db
       .update(users)
-      .set({ lastLogin: lastLogin })
+      .set({ lastLogin: new Date(), lastSeen: new Date() })
       .where(eq(users.id, userId))
   },
 

@@ -72,7 +72,7 @@ export function NewVehicleConfirm({
 
     if (addedVehicle) {
       toast.success(t("APISuccess"))
-      router.replace(`/dashboard/vehicles/${addedVehicle.id}`)
+      router.replace(`/dashboard/vehicles/${addedVehicle.id}?feedback=true`)
     } else {
       toast.error(t("APIError"))
       router.replace("/dashboard/vehicles")

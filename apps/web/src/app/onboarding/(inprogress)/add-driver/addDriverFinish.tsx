@@ -34,7 +34,7 @@ export function AddDriverFinish({
   const submit = async () => {
     //Activate user and take to dashboard
     await onboardingCompleteAction()
-    router.push("/dashboard/home")
+    router.replace("/dashboard/home?feedback=true")
   }
 
   const u = useTranslations("Dashboard.Whatsapp")

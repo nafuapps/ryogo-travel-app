@@ -86,7 +86,7 @@ export default function NewBookingFinal({
       data: newBookingData,
     })
     if (createdBooking) {
-      router.replace(`/dashboard/bookings/${createdBooking.id}`)
+      router.replace(`/dashboard/bookings/${createdBooking.id}?feedback=true`)
       toast.success(t("Success"))
     } else {
       router.replace(`/dashboard/bookings`)

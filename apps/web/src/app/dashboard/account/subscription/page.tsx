@@ -10,14 +10,26 @@ import SubscriptionPageComponent from "./subscription"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS } from "@/lib/uiConfig"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
+import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
+import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import { OrderIdRegex } from "@/lib/regex"
 
 export const metadata: Metadata = {
   title: `Subscription - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function SubscriptionPage() {
+export default async function SubscriptionPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    feedback?: string | undefined
+    orderId?: string | undefined
+  }>
+}) {
   const currentUser = await getCurrentUser()
+
+  const { feedback, orderId } = await searchParams
 
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
@@ -48,6 +60,16 @@ export default async function SubscriptionPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/subscription"} />
+      {feedback === "true" &&
+        orderId &&
+        OrderIdRegex.safeParse(orderId).success && (
+          <NewFeedbackComponent
+            entityId={orderId}
+            feedbackType={ProductFeedbackTypeEnum.NEW_ORDER}
+            userId={currentUser.userId}
+            agencyId={currentUser.agencyId}
+          />
+        )}
       <SubscriptionPageComponent
         userDetails={userDetails}
         agencyDetails={agencyDetails}

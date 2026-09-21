@@ -16,24 +16,31 @@ import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
+  ProductFeedbackTypeEnum,
   SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { downgradeAgencyToBasicAction } from "@/app/actions/agencies/downgradeAgencyToBasicAction"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
 
 export const metadata: Metadata = {
   title: `Dashboard - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function DashboardHomePage() {
+export default async function DashboardHomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ feedback?: string | undefined }>
+}) {
+  const { feedback } = await searchParams
+
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   //Get agency Data
@@ -74,6 +81,14 @@ export default async function DashboardHomePage() {
       {showTrialStrip && <SubscriptionTrialStrip isOwner={isOwner} />}
       <MainWrapper>
         <DashboardHeader pathName={"/dashboard/home"} />
+        {feedback === "true" && (
+          <NewFeedbackComponent
+            entityId={currentUser.agencyId}
+            feedbackType={ProductFeedbackTypeEnum.ONBOARDING}
+            userId={currentUser.userId}
+            agencyId={currentUser.agencyId}
+          />
+        )}
         <DashboardHomePageComponent
           agencyId={currentUser.agencyId}
           userId={currentUser.userId}

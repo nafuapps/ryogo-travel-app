@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover"
-import { CalendarIcon, Star } from "lucide-react"
+import { CalendarIcon, Star, ThumbsDown, ThumbsUp } from "lucide-react"
 import React, { Dispatch, SetStateAction } from "react"
 import { UseFormRegisterReturn } from "react-hook-form"
 import { cn } from "@/lib/utils"
@@ -666,9 +666,63 @@ export function RyogoRatingInput({
                       ? () => setSelectedStars(index + 1)
                       : () => setSelectedStars(0)
                   }
+                  thick={selectedStars > index}
                 />
               )
             })}
+          </div>
+        </FormItem>
+      )}
+    />
+  )
+}
+
+export function RyogoThumbsInput({
+  name,
+  label,
+  isLiked,
+  setIsLiked,
+  disabled,
+  fadeLabel,
+}: {
+  name: string
+  label: string
+  isLiked: boolean | null
+  setIsLiked: Dispatch<SetStateAction<boolean | null>>
+  disabled?: boolean
+  fadeLabel?: boolean
+}) {
+  return (
+    <FormField
+      name={name}
+      disabled={disabled}
+      render={({}) => (
+        <FormItem className="flex flex-col justify-between items-center gap-2 lg:gap-3 w-full my-3 lg:my-4">
+          <FormLabel>
+            <RyogoSmall
+              weight="font-bold"
+              color={disabled || fadeLabel ? "light" : "dark"}
+              className="text-center"
+            >
+              {label}
+            </RyogoSmall>
+          </FormLabel>
+          <div className="flex flex-row gap-2 lg:gap-3 items-center justify-center">
+            <RyogoIcon
+              icon={ThumbsDown}
+              size="md"
+              color={`${isLiked === false ? "red" : "slate"}`}
+              onClick={() => setIsLiked(isLiked === false ? null : false)}
+              thick={isLiked === false}
+              className="mt-1"
+            />
+            <RyogoIcon
+              icon={ThumbsUp}
+              size="md"
+              color={`${isLiked === true ? "green" : "slate"}`}
+              onClick={() => setIsLiked(isLiked === true ? null : true)}
+              thick={isLiked === true}
+            />
           </div>
         </FormItem>
       )}

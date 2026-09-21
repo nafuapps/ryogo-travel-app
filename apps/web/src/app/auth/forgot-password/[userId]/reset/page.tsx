@@ -1,7 +1,6 @@
 //Confirm Email page
 
 import { redirect, RedirectType } from "next/navigation"
-import { UserIdRegex } from "@/lib/regex"
 import { Metadata } from "next"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
@@ -17,21 +16,12 @@ export default async function VerifyCodePage({
 }: {
   params: Promise<{ userId: string }>
 }) {
-  const userId = (await params).userId
-
-  if (!UserIdRegex.safeParse(userId).success) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { userId } = await params
 
   const user = await userServices.findUserDetailsById(userId)
   if (!user) {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  return (
-    <ResetWithCodePageComponent
-      user={user}
-      verificationCode={user.verificationCode}
-    />
-  )
+  return <ResetWithCodePageComponent user={user} />
 }

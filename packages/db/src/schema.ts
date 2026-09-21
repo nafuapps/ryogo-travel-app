@@ -1728,6 +1728,7 @@ export enum ProductFeedbackTypeEnum {
   NEW_USER = "New User",
   SUBSCRIPTION = "Subscription",
   MISSION = "Mission",
+  SUPPORT = "Support",
   ANALYTICS = "Analytics",
 }
 export const productFeedbackType = pgEnum("product_feedback_type", [
@@ -1740,6 +1741,7 @@ export const productFeedbackType = pgEnum("product_feedback_type", [
   ProductFeedbackTypeEnum.NEW_USER,
   ProductFeedbackTypeEnum.SUBSCRIPTION,
   ProductFeedbackTypeEnum.MISSION,
+  ProductFeedbackTypeEnum.SUPPORT,
   ProductFeedbackTypeEnum.ANALYTICS,
 ])
 //Product Feedback table
@@ -1757,14 +1759,16 @@ export const productFeedbacks = pgTable(
     agencyId: text("agency_id")
       .references(() => agencies.id, { onDelete: "cascade" })
       .notNull(),
-    userId: text("user_id").references(() => users.id, {
-      onDelete: "cascade",
-    }),
+    userId: text("user_id")
+      .references(() => users.id, {
+        onDelete: "cascade",
+      })
+      .notNull(),
     entityId: text("entity_id"),
     feedbackType: productFeedbackType("feedback_type").notNull(),
-    rating: integer("rating"),
-    review: boolean("review"),
-    comment: varchar("comment", { length: 300 }),
+    rating: integer("rating"), //Rating from 1 to 5
+    liked: boolean("liked"), //Thumbs up (true) or down (false).. null for no response
+    remarks: varchar("remarks", { length: 300 }),
     ...timestamps,
   },
   (t) => [
@@ -1851,3 +1855,6 @@ export type InsertSupportQueryType = typeof supportQueries.$inferInsert
 
 export type SelectSupportTicketType = typeof supportTickets.$inferSelect
 export type InsertSupportTicketType = typeof supportTickets.$inferInsert
+
+export type SelectProductFeedbackType = typeof productFeedbacks.$inferSelect
+export type InsertProductFeedbackType = typeof productFeedbacks.$inferInsert

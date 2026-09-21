@@ -73,7 +73,7 @@ export function NewDriverConfirm({
         "_blank",
         "noopener,noreferrer",
       )
-      router.replace(`/dashboard/drivers/${addedDriver.id}`)
+      router.replace(`/dashboard/drivers/${addedDriver.id}?feedback=true`)
     } else {
       //If failed, Take back to driver page and show error
       toast.error(t("APIError"))

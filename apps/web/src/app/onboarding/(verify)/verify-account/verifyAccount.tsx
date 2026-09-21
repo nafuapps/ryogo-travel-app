@@ -14,10 +14,8 @@ import { VerifyAccountTotalSteps } from "@/lib/uiConfig"
 import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function VerifyAccountPageComponent({
-  code,
   codeSentAt,
 }: {
-  code: string
   codeSentAt?: Date | null
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage")
@@ -43,7 +41,6 @@ export default function VerifyAccountPageComponent({
       resendDifference={
         codeSentAt ? differenceInMinutes(new Date(), codeSentAt) : 999
       }
-      code={code}
     />,
     <VerifyAccountFinish key={1} />,
   ])

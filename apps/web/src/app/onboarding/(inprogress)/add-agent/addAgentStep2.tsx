@@ -20,6 +20,7 @@ import {
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 
 export function AddAgentConfirm({
   onNext,
@@ -49,6 +50,7 @@ export function AddAgentConfirm({
     const addAgent = await addAgentAction(newAgentData)
     if (addAgent) {
       onNext()
+      await onboardingCompleteAction()
     } else {
       //Take to dashboard page and show error
       toast.error(t("APIError"))

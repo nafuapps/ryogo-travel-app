@@ -7,11 +7,15 @@ import {
   AuthSideWrapper,
 } from "@/components/flows/auth/authWrappers"
 import { LayoutWrapper } from "@/components/layout/layoutWrappers"
+import { UserIdRegex } from "@/lib/regex"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export default async function LoginLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params: Promise<{ userId: string }>
 }) {
   const currentUser = await getCurrentUser()
 
@@ -21,6 +25,17 @@ export default async function LoginLayout({
       redirect("/rider/home", RedirectType.replace)
     }
     redirect("/dashboard/home", RedirectType.replace)
+  }
+
+  const { userId } = await params
+
+  if (!UserIdRegex.safeParse(userId).success) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
+  const user = await userServices.findUserDetailsById(userId)
+  if (!user) {
+    redirect("/auth/login", RedirectType.replace)
   }
 
   return (

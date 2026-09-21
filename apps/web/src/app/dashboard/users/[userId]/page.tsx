@@ -8,6 +8,8 @@ import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
+import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `User Details - ${pageTitle}`,
@@ -16,10 +18,14 @@ export const metadata: Metadata = {
 
 export default async function UserDetailsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ userId: string }>
+  searchParams: Promise<{ feedback?: string | undefined }>
 }) {
   const { userId } = await params
+
+  const feedback = (await searchParams).feedback
 
   const currentUser = await getCurrentUser()
   if (!currentUser) {
@@ -34,6 +40,14 @@ export default async function UserDetailsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]"} />
+      {feedback === "true" && (
+        <NewFeedbackComponent
+          entityId={userId}
+          feedbackType={ProductFeedbackTypeEnum.NEW_USER}
+          userId={currentUser.userId}
+          agencyId={currentUser.agencyId}
+        />
+      )}
       <UserDetailsPageComponent
         user={user}
         currentUserId={currentUser.userId}

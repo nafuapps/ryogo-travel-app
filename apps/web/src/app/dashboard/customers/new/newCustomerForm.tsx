@@ -123,7 +123,9 @@ export default function NewCustomerForm({
       const createdCustomer = await newCustomerAction(newCustomerData)
       if (createdCustomer) {
         toast.success(t("Success"))
-        router.replace(`/dashboard/customers/${createdCustomer.id}`)
+        router.replace(
+          `/dashboard/customers/${createdCustomer.id}?feedback=true`,
+        )
       } else {
         toast.error(t("Error"))
       }

@@ -18,15 +18,14 @@ import {
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
 
 export function VerifyAccountStep1({
   onNext,
   resendDifference,
-  code,
 }: {
   onNext: () => void
   resendDifference: number
-  code: string
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage.Step1")
   const [isPending, startTransition] = useTransition()
@@ -43,17 +42,19 @@ export function VerifyAccountStep1({
   })
 
   //Submit action
-  const onSubmit = (data: Step1Type) => {
-    if (data.userEnteredcode === code) {
+  const onSubmit = async (data: Step1Type) => {
+    const result = await checkVerificationCodeAction(data.userEnteredcode)
+    if (result) {
       onNext()
     } else {
-      setTimeout(() => {
-        formData.setValue("userEnteredcode", "")
-      }, 1000) //Clear the field after 1s
       formData.setError("userEnteredcode", {
         type: "manual",
         message: t("APIError"),
       })
+      setTimeout(() => {
+        formData.setValue("userEnteredcode", "")
+        formData.clearErrors("userEnteredcode")
+      }, 3000) //Clear the field after 3s
     }
   }
 
@@ -106,7 +107,11 @@ export function VerifyAccountStep1({
           }
         />
         <Link href={`mailto:${SUPPORT_EMAIL}`} className="w-full">
-          <RyogoGhostButton label={t("Help")} />
+          <RyogoGhostButton
+            label={t("Help")}
+            labelColor="light"
+            className="w-full text-center"
+          />
         </Link>
       </StickyActionWrapper>
     </FormWrapper>

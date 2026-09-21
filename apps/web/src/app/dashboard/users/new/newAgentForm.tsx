@@ -104,7 +104,7 @@ export default function NewAgentForm({
           "_blank",
           "noopener,noreferrer",
         )
-        router.replace(`/dashboard/users/${createdAgent.id}`)
+        router.replace(`/dashboard/users/${createdAgent.id}?feedback=true`)
       } else {
         toast.error(t("Error"))
         router.replace(`/dashboard/users`)

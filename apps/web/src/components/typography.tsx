@@ -6,6 +6,7 @@ export type RyogoTextColorType =
   | "brand"
   | "dark"
   | "yellow"
+  | "green"
 
 type RyogoTextWeightType = "font-normal" | "font-medium" | "font-bold"
 
@@ -21,6 +22,8 @@ const getTextColor = (color?: RyogoTextColorType) => {
       return "text-red-700 dark:text-red-300"
     case "yellow":
       return "text-yellow-700 dark:text-yellow-300"
+    case "green":
+      return "text-green-700 dark:text-green-300"
     case "brand":
       return "text-sky-700 dark:text-sky-300"
     case "dark":

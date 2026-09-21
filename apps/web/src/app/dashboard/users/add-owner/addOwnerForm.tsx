@@ -104,7 +104,7 @@ export default function AddOwnerForm({
           "_blank",
           "noopener,noreferrer",
         )
-        router.replace(`/dashboard/users/${createdOwner.id}`)
+        router.replace(`/dashboard/users/${createdOwner.id}?feedback=true`)
       } else {
         toast.error(t("Error"))
         router.replace(`/dashboard/users`)

@@ -85,6 +85,8 @@
           "Error2": "Password should not contain spaces",
           "Error3": "Both passwords do not match"
         },
+        "VerifyCTA": "Verify Code",
+        "CodeVerified": "Code verified!",
         "PrimaryCTA": "Reset Password and Login",
         "Loading": "Loading",
         "DidnotReceiveCode": "Did not receive a code?",
@@ -6209,6 +6211,26 @@
   },
   "IdCopyPill": {
     "Copied": "Copied!"
+  },
+  "Feedback": {
+    "Title": "Please provide feedback",
+    "Description": "Your feedback will help us improve our product and experience.",
+    "Field1": {
+      "Title": "Did you like the {type} flow?"
+    },
+    "Field2": {
+      "Title": "Rate the experience"
+    },
+    "Field3": {
+      "Title": "Remarks (optional)",
+      "Placeholder": "Enter your comment/feedback regarding the product",
+      "Error1": "Remarks must be atleast 10 characters",
+      "Error2": "Remarks must be less than 300 characters"
+    },
+    "Submit": "Submit Feedback",
+    "Loading": "Loading..",
+    "Skip": "Skip",
+    "Success": "Feedback submitted successfully!"
   },
   "Landing": {
     "Navbar": {

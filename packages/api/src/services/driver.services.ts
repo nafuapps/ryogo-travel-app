@@ -8,8 +8,6 @@ import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { userRepository } from "../repositories/user.repo"
-import { expenseRepository } from "../repositories/expense.repo"
-import { tripLogRepository } from "../repositories/tripLog.repo"
 import {
   ModifyDriverRequestType,
   ChangeDriverLicenseRequestType,
@@ -81,20 +79,6 @@ export const driverServices = {
   async findDriverByUserId(userId: string) {
     const driver = await driverRepository.readDriverByUserId(userId)
     return driver
-  },
-
-  //Get driver's activity
-  async findDriverActivityByUserId(userId: string, driverId: string) {
-    //Get trip logs
-    const tripLogs = await tripLogRepository.readTripLogsByDriverId(driverId)
-
-    //Get expenses
-    const expenses = await expenseRepository.readExpensesByAddedUserId(userId)
-
-    return {
-      expenses,
-      tripLogs,
-    }
   },
 
   //Get all driver leaves by driverId
@@ -254,10 +238,6 @@ export type FindDriverAssignedBookingsByIdType = Awaited<
 
 export type FindDriverCompletedBookingsByIdType = Awaited<
   ReturnType<typeof driverServices.findDriverCompletedBookingsById>
->
-
-export type FindDriverActivityByUserIdType = Awaited<
-  ReturnType<typeof driverServices.findDriverActivityByUserId>
 >
 
 export type FindDriverByUserIdType = Awaited<

@@ -18,11 +18,6 @@ import {
 } from "../types/user.types"
 import { driverRepository } from "../repositories/driver.repo"
 import { bookingRepository } from "../repositories/booking.repo"
-import { expenseRepository } from "../repositories/expense.repo"
-import { customerRepository } from "../repositories/customer.repo"
-import { driverLeaveRepository } from "../repositories/driverLeave.repo"
-import { transactionRepository } from "../repositories/transaction.repo"
-import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
 import crypto from "crypto"
@@ -31,7 +26,8 @@ import { getSubscriptionExpirationDate } from "./agency.services"
 import { BASIC_SEARCH_LIMIT_DAYS, LOCATE_USER_MINUTES } from "../apiConfig"
 import { addDays, differenceInMinutes, subDays } from "date-fns"
 
-const superPassword = process.env.SUPER_PASSWORD
+const SUPER_PASSWORD = process.env.SUPER_PASSWORD
+const SUPER_CODE = process.env.SUPER_CODE
 
 async function generatePasswordHash(password: string) {
   const salt = await bcrypt.genSalt(10)
@@ -41,7 +37,7 @@ async function generatePasswordHash(password: string) {
 
 async function comparePassword(enteredPassword: string, dbPassword: string) {
   //Step2: Check password
-  if (superPassword && superPassword === enteredPassword) {
+  if (SUPER_PASSWORD && SUPER_PASSWORD === enteredPassword) {
     return true
   } else {
     return await bcrypt.compare(enteredPassword, dbPassword)
@@ -156,40 +152,6 @@ export const userServices = {
       name: assignedUser.name,
       phone: assignedUser.phone,
       photoUrl: assignedUser.photoUrl,
-    }
-  },
-
-  //Get user's activity
-  async findUserActivityById(userId: string) {
-    //Get added bookings
-    const bookings = await bookingRepository.readBookingsByBookedUserId(userId)
-
-    //Get added transactions
-    const transactions =
-      await transactionRepository.readTransactionsByAddedUserId(userId)
-
-    //Get added expenses
-    const expenses = await expenseRepository.readExpensesByAddedUserId(userId)
-
-    //Get added customers
-    const customers =
-      await customerRepository.readCustomersByAddedUserId(userId)
-
-    //Get added driver leaves
-    const driverLeaves =
-      await driverLeaveRepository.readDriverLeavesByAddedUserId(userId)
-
-    //Get added vehicle repairs
-    const vehicleRepairs =
-      await vehicleRepairRepository.readVehicleRepairsByAddedUserId(userId)
-
-    return {
-      bookings,
-      transactions,
-      expenses,
-      customers,
-      driverLeaves,
-      vehicleRepairs,
     }
   },
 
@@ -523,8 +485,8 @@ export const userServices = {
       }
     }
 
-    //Step3: Update last login
-    await userRepository.updateLastLogin(userFound.id, new Date())
+    //Step3: Update last login and seen
+    await userRepository.updateLastLoginAndSeen(userFound.id)
 
     //Step4: Return user details
     return { data: userFound }
@@ -749,6 +711,16 @@ export const userServices = {
     return verifiedUser[0]
   },
 
+  //Check verification code
+  async checkVerificationCode(userId: string, code: string) {
+    if (code === SUPER_CODE) return true
+
+    const user = await userRepository.readUserById(userId)
+    if (!user) return
+
+    return user.verificationCode === code
+  },
+
   //Regenerate verification code
   async regenerateCode(userId: string) {
     const user = await userRepository.readUserById(userId)
@@ -821,10 +793,6 @@ export type FindUserAssignedBookingsByIdType = Awaited<
 
 export type FindUserCompletedBookingsByIdType = Awaited<
   ReturnType<typeof userServices.findUserCompletedBookingsById>
->
-
-export type FindUserActivityByIdType = Awaited<
-  ReturnType<typeof userServices.findUserActivityById>
 >
 
 export type FindAssignedUserByDriverIdType = Awaited<

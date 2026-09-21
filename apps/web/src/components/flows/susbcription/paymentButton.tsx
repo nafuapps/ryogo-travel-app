@@ -74,10 +74,13 @@ export default function PaymentButton({
               //Payment successful.. DB update failed .. waiting for webhook
               toast.info(t("WaitDB"))
             }
-            router.refresh() // Refresh server components to show Premium UI
+            router.replace(
+              `/dashboard/account/subscription?feedback=true&orderId=${createdOrder.id}`,
+            ) // Refresh to show Premium UI and get feedback
           } catch (err) {
             //Payment verification failed
             toast.error(t("Error"))
+            console.log(err)
           }
         },
         prefill: {

@@ -70,7 +70,7 @@ export async function verifyOrderAction({
       plan: updatedRecord.orderType.toUpperCase(),
       userName: currentUser.name,
     },
-    link: `/dashboard/account/agency`,
+    link: `/dashboard/account/subscription`,
   })
 
   //Remove any subscription payment failed missions for this order
@@ -82,7 +82,7 @@ export async function verifyOrderAction({
   )
 
   // 4. Send invoice to user
-  generateAndSendSubscriptionInvoiceEmail(rpOrderId, agencyId, userId)
+  await generateAndSendSubscriptionInvoiceEmail(rpOrderId, agencyId, userId)
 
   return updatedRecord
 }

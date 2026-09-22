@@ -10,7 +10,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
@@ -94,10 +94,7 @@ export async function confirmBookingAction(
 
   //Upload file and get storage url
   const confirmationUrl = (
-    await uploadPDFBlob(
-      confirmationFile,
-      generateBookingConfirmationPathName(id),
-    )
+    await uploadFile(confirmationFile, generateBookingConfirmationPathName(id))
   ).path
 
   //Update confirmation url in DB

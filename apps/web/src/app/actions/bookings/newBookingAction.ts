@@ -10,7 +10,7 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function newBookingAction({
   agencyId,
@@ -55,10 +55,7 @@ export async function newBookingAction({
     const quoteFile = await getLeadQuotePDF(leadBooking)
 
     const quoteUrl = (
-      await uploadPDFBlob(
-        quoteFile,
-        generateBookingQuotePathName(leadBooking.id),
-      )
+      await uploadFile(quoteFile, generateBookingQuotePathName(leadBooking.id))
     ).path
     if (!quoteUrl) return
 

@@ -6,7 +6,7 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 
 export async function sendConfirmationAction(
@@ -39,7 +39,7 @@ export async function sendConfirmationAction(
 
     //Upload file and get storage url
     confirmationUrl = (
-      await uploadPDFBlob(
+      await uploadFile(
         confirmationFile,
         generateBookingConfirmationPathName(id),
       )

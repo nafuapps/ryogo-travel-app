@@ -9,7 +9,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { getFileUrl, uploadPDFBlob } from "@ryogo-travel-app/db/storage"
+import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function reviewCompletedBookingAction(
   bookingId: string,
@@ -44,7 +44,7 @@ export async function reviewCompletedBookingAction(
 
   //Upload file and get storage url
   const invoiceUrl = (
-    await uploadPDFBlob(invoiceFile, generateBookingInvoicePathName(bookingId))
+    await uploadFile(invoiceFile, generateBookingInvoicePathName(bookingId))
   ).path
   if (!invoiceUrl) return
 

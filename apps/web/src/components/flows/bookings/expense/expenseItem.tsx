@@ -1,4 +1,9 @@
-import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
+import {
+  RyogoH3,
+  RyogoCaption,
+  RyogoP,
+  RyogoTiny,
+} from "@/components/typography"
 import { format } from "date-fns"
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
@@ -6,75 +11,96 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import ExpenseIcon from "@/components/icons/expenseIcon"
 import { ExpenseApprovalButton } from "./expenseApprovalButton"
-import { RyogoChinImage } from "@/components/images/ryogoImage"
+import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { ChevronRight } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { ChevronRight, MessageSquareQuote, User } from "lucide-react"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function ExpenseItem({
   expense,
-  canModifyExpense,
-  canApproveExpense,
+  canEditExpense,
+  isRider,
 }: {
-  expense: NonNullable<FindBookingExpensesByIdType>[0]
-  canModifyExpense: boolean
-  canApproveExpense: boolean
+  expense: NonNullable<FindBookingExpensesByIdType>[number]
+  canEditExpense: boolean
+  isRider?: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingExpenses")
 
   return (
-    <div className="flex flex-col w-full">
-      <div
-        className={`flex flex-row ${
-          expense.expensePhotoUrl ? "rounded-t-lg" : "rounded-lg"
-        } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
-      >
-        <div className="flex flex-col gap-1.5 lg:gap-2 min-w-1/5">
+    <SectionColWrapper className="h-full p-4 lg:p-5 border rounded-md">
+      <SectionRowWrapper className="justify-between item-center">
+        <RyogoTiny color="light">{expense.id}</RyogoTiny>
+        <RyogoTiny color="light">
+          {format(expense.createdAt, "dd MMM - hh:mm aaa")}
+        </RyogoTiny>
+      </SectionRowWrapper>
+      <SectionRowWrapper className="justify-between items-center">
+        <SectionRowWrapper className="items-center">
           <ExpenseIcon type={expense.type} />
-          <RyogoCaption color="light">{expense.id}</RyogoCaption>
-        </div>
-        <div className="flex flex-col gap-2 lg:gap-3 w-full">
-          <RyogoSmall weight="font-bold">
-            {expense.type.toUpperCase()}
-          </RyogoSmall>
+          <RyogoP color="slate" weight="font-bold">
+            {expense.type}
+          </RyogoP>
+        </SectionRowWrapper>
+        <RyogoH3>{expense.amount}</RyogoH3>
+      </SectionRowWrapper>
+      <SectionRowWrapper className="items-center justify-between">
+        <SectionColWrapper>
           {expense.remarks && (
-            <RyogoCaption color="slate">{expense.remarks}</RyogoCaption>
+            <SectionRowWrapper
+              small
+              className="items-center rounded bg-slate-100 dark:bg-slate-800 px-2 lg:px-3 py-1 lg:py-1.5"
+            >
+              <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
+              <RyogoTiny color="light">{expense.remarks}</RyogoTiny>
+            </SectionRowWrapper>
           )}
-          <RyogoCaption color="light">
-            {format(expense.createdAt, "dd MMM hh:mm aaa")}
-          </RyogoCaption>
-          <RyogoCaption color="light">{expense.addedByUser.name}</RyogoCaption>
-        </div>
-        <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
-          <div className="flex gap-2 lg:gap-3 justify-end lg:items-center">
-            <RyogoH3>{expense.amount}</RyogoH3>
-          </div>
-          <div className="flex flex-row gap-2 lg:gap-3">
-            {canApproveExpense && (
-              <ExpenseApprovalButton
-                expId={expense.id}
-                isApproved={expense.isApproved}
-                agencyId={expense.agencyId}
+          <SectionRowWrapper className="items-center">
+            {expense.addedByUser.photoUrl ? (
+              <RyogoImage
+                src={getFileUrl(expense.addedByUser.photoUrl)}
+                alt={expense.addedByUser.name}
+                imageSize="xs"
               />
+            ) : (
+              <RyogoEnclosedIcon icon={User} size="sm" />
             )}
-            {canModifyExpense && (
-              <Link
-                href={`/dashboard/bookings/${expense.bookingId}/expenses/modify/${expense.id}`}
-              >
-                <RyogoOutlineButton label={t("Modify")}>
-                  <RyogoIcon icon={ChevronRight} size="sm" />
-                </RyogoOutlineButton>
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
-      {expense.expensePhotoUrl && (
-        <RyogoChinImage
-          src={getFileUrl(expense.expensePhotoUrl)}
-          alt={t("Proof")}
-        />
+            <RyogoCaption color="light">
+              {expense.addedByUser.name}
+            </RyogoCaption>
+          </SectionRowWrapper>
+        </SectionColWrapper>
+        {expense.expensePhotoUrl && (
+          <RyogoDialogImage
+            src={getFileUrl(expense.expensePhotoUrl)}
+            alt={expense.type + " " + expense.amount}
+            imageSize="md"
+          />
+        )}
+      </SectionRowWrapper>
+      {canEditExpense && (
+        <SectionRowWrapper className="items-center mt-auto">
+          {!isRider && (
+            <ExpenseApprovalButton
+              expId={expense.id}
+              isApproved={expense.isApproved}
+              agencyId={expense.agencyId}
+            />
+          )}
+          <Link
+            href={`/dashboard/bookings/${expense.bookingId}/expenses/modify/${expense.id}`}
+            className="grow"
+          >
+            <RyogoOutlineButton label={t("Modify")} className="w-full">
+              <RyogoIcon icon={ChevronRight} size="xs" color="slate" />
+            </RyogoOutlineButton>
+          </Link>
+        </SectionRowWrapper>
       )}
-    </div>
+    </SectionColWrapper>
   )
 }

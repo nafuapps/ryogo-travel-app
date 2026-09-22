@@ -1,5 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 
 export function FAQWrapper({ children }: { children: React.ReactNode }) {

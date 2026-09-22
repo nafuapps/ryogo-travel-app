@@ -603,13 +603,6 @@ export const bookingRepository = {
             city: true,
           },
         },
-        tripLogs: {
-          where: eq(tripLogs.type, TripLogTypesEnum.ENDED),
-          columns: {
-            createdAt: true,
-          },
-          limit: 1,
-        },
       },
     })
   },
@@ -672,13 +665,6 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
-        },
-        tripLogs: {
-          where: eq(tripLogs.type, TripLogTypesEnum.ENDED),
-          columns: {
-            createdAt: true,
-          },
-          limit: 1,
         },
       },
     })
@@ -746,13 +732,6 @@ export const bookingRepository = {
             city: true,
           },
         },
-        tripLogs: {
-          where: eq(tripLogs.type, TripLogTypesEnum.ENDED),
-          columns: {
-            createdAt: true,
-          },
-          limit: 1,
-        },
       },
     })
   },
@@ -818,13 +797,6 @@ export const bookingRepository = {
           columns: {
             city: true,
           },
-        },
-        tripLogs: {
-          where: eq(tripLogs.type, TripLogTypesEnum.ENDED),
-          columns: {
-            createdAt: true,
-          },
-          limit: 1,
         },
       },
     })

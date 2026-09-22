@@ -11,20 +11,28 @@ import {
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 
 export default function ExpenseIcon({ type }: { type: ExpenseTypesEnum }) {
+  let icon
   switch (type) {
     case ExpenseTypesEnum.FOOD:
-      return <RyogoEnclosedIcon icon={Pizza} size="sm" circular />
+      icon = Pizza
+      break
     case ExpenseTypesEnum.FUEL:
-      return <RyogoEnclosedIcon icon={Fuel} size="sm" circular />
+      icon = Fuel
+      break
     case ExpenseTypesEnum.PARKING:
-      return <RyogoEnclosedIcon icon={ParkingSquare} size="sm" circular />
+      icon = ParkingSquare
+      break
     case ExpenseTypesEnum.MAINTENANCE:
-      return <RyogoEnclosedIcon icon={Wrench} size="sm" circular />
+      icon = Wrench
+      break
     case ExpenseTypesEnum.AC:
-      return <RyogoEnclosedIcon icon={AirVent} size="sm" circular />
+      icon = AirVent
+      break
     case ExpenseTypesEnum.TOLL:
-      return <RyogoEnclosedIcon icon={Ticket} size="sm" circular />
+      icon = Ticket
+      break
     case ExpenseTypesEnum.OTHER:
-      return <RyogoEnclosedIcon icon={Banknote} size="sm" circular />
+      icon = Banknote
   }
+  return <RyogoEnclosedIcon icon={icon} size="sm" />
 }

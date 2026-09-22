@@ -83,7 +83,6 @@ export const driverLeaveRepository = {
   async readDriverLeavesByAddedUserId(userId: string) {
     return await db.query.driverLeaves.findMany({
       orderBy: (driverLeaves, { desc }) => [desc(driverLeaves.createdAt)],
-      limit: 20,
       where: eq(driverLeaves.addedByUserId, userId),
       with: {
         driver: {

@@ -203,7 +203,6 @@ function BookingCardAssignedWrapper({
       {assignedDriver ? (
         <SectionRowWrapper small className="items-center justify-end">
           <RyogoCaption color="slate">{assignedDriver.name}</RyogoCaption>
-
           {assignedDriver.user.photoUrl ? (
             <RyogoImage
               src={getFileUrl(assignedDriver.user.photoUrl)}

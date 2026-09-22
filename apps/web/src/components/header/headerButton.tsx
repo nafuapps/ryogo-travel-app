@@ -37,7 +37,7 @@ export default function HeaderButton({
         <RyogoOutlineButton
           label={label}
           labelClassName="hidden lg:flex"
-          className="flex-row-reverse"
+          className="flex-row-reverse px-2 lg:px-3"
         >
           <RyogoIcon icon={getHeaderButtonIcon(type)} size="sm" />
         </RyogoOutlineButton>
@@ -50,10 +50,7 @@ export default function HeaderButton({
 export function HeaderBackButton() {
   const router = useRouter()
   return (
-    <RyogoGhostButton
-      onClick={() => router.back()}
-      className="has-[>svg]:px-1 has-[>svg]:lg:px-1"
-    >
+    <RyogoGhostButton onClick={() => router.back()} className="px-1">
       <RyogoIcon icon={ChevronLeft} size="md" />
     </RyogoGhostButton>
   )

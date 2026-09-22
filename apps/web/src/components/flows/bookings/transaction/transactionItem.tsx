@@ -1,96 +1,130 @@
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoH3,
+  RyogoSmall,
+  RyogoTiny,
+} from "@/components/typography"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
-import { ChevronRight, Maximize2, Minimize2 } from "lucide-react"
+import {
+  ChevronRight,
+  CreditCardMinus,
+  CreditCardPlus,
+  MessageSquareQuote,
+  User,
+} from "lucide-react"
 import { format } from "date-fns"
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
-import { RyogoChinImage } from "@/components/images/ryogoImage"
+import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 
 export default async function TransactionItem({
   transaction,
   canModifyTransaction,
   isOwner,
 }: {
-  transaction: NonNullable<FindBookingTransactionsByIdType>[0]
+  transaction: NonNullable<FindBookingTransactionsByIdType>[number]
   canModifyTransaction: boolean
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingTransactions")
-  const id = transaction.bookingId
-  const txnId = transaction.id
-
-  let fileUrl = ""
-  if (transaction.transactionPhotoUrl) {
-    fileUrl = getFileUrl(transaction.transactionPhotoUrl)
-  }
 
   const isDebit = transaction.type === TransactionTypesEnum.DEBIT
 
   return (
-    <div className="flex flex-col w-full">
-      <div
-        className={`flex flex-row ${
-          transaction.transactionPhotoUrl ? "rounded-t-lg" : "rounded-lg"
-        } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
-      >
-        <div className="flex flex-col gap-1.5 lg:gap-2 min-w-1/5">
+    <SectionColWrapper className="h-full p-4 lg:p-5 border rounded-md">
+      <SectionRowWrapper className="justify-between item-center">
+        <RyogoTiny color="light">{transaction.id}</RyogoTiny>
+        <RyogoTiny color="light">
+          {format(transaction.createdAt, "dd MMM - hh:mm aaa")}
+        </RyogoTiny>
+      </SectionRowWrapper>
+      <SectionRowWrapper className="justify-between items-center">
+        <SectionRowWrapper className="items-center">
           <RyogoEnclosedIcon
-            icon={isDebit ? Maximize2 : Minimize2}
+            icon={isDebit ? CreditCardMinus : CreditCardPlus}
             size="sm"
-            color={isDebit ? "red" : "green"}
-            bgColor={isDebit ? "red" : "green"}
+            color={"slate"}
+            bgColor={"slate"}
           />
-          <RyogoSmall color={isDebit ? "red" : "slate"}>
-            {transaction.otherParty.toUpperCase()}
-          </RyogoSmall>
-          <RyogoCaption color="light">{transaction.id}</RyogoCaption>
-        </div>
-        <div className="flex flex-col gap-2 lg:gap-3 w-full">
-          <RyogoSmall weight="font-bold">
-            {transaction.mode.toUpperCase()}
-          </RyogoSmall>
+          <SectionColWrapper small>
+            <RyogoCaption weight="font-bold">{transaction.mode}</RyogoCaption>
+            <RyogoCaption color={"light"}>
+              {(isDebit ? t("To") : t("From")) + transaction.otherParty}
+            </RyogoCaption>
+          </SectionColWrapper>
+        </SectionRowWrapper>
+        <RyogoH3 color={isDebit ? "slate" : "green"}>
+          {transaction.amount}
+        </RyogoH3>
+      </SectionRowWrapper>
+      <SectionRowWrapper className="items-center justify-between">
+        <SectionColWrapper>
           {transaction.remarks && (
-            <RyogoCaption color="slate">{transaction.remarks}</RyogoCaption>
+            <SectionRowWrapper
+              small
+              className="items-center rounded bg-slate-100 dark:bg-slate-800 px-2 lg:px-3 py-1 lg:py-1.5"
+            >
+              <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
+              <RyogoTiny color="light">{transaction.remarks}</RyogoTiny>
+            </SectionRowWrapper>
           )}
-          <RyogoCaption color="light">
-            {format(transaction.createdAt, "dd MMM hh:mm aaa")}
-          </RyogoCaption>
-          <RyogoCaption color="light">
-            {transaction.addedByUser.name}
-          </RyogoCaption>
-        </div>
-        <div className="flex flex-col gap-3 lg:gap-4 lg:flex-row items-end justify-between lg:items-center lg:justify-end">
-          <div className="flex gap-2 lg:gap-3 justify-end lg:items-center">
-            <RyogoH3>{transaction.amount}</RyogoH3>
-          </div>
-          <div className="flex flex-row gap-2 lg:gap-3">
-            {isOwner && (
-              <TransactionApprovalButton
-                txnId={txnId}
-                isApproved={transaction.isApproved}
-                agencyId={transaction.agencyId}
+          <SectionRowWrapper className="items-center">
+            {transaction.addedByUser.photoUrl ? (
+              <RyogoImage
+                src={getFileUrl(transaction.addedByUser.photoUrl)}
+                alt={transaction.addedByUser.name}
+                imageSize="xs"
               />
+            ) : (
+              <RyogoEnclosedIcon icon={User} size="sm" />
             )}
-            {canModifyTransaction && (
-              <Link
-                href={`/dashboard/bookings/${id}/transactions/modify/${txnId}`}
-              >
-                <RyogoOutlineButton label={t("Modify")}>
-                  <RyogoIcon icon={ChevronRight} size="sm" />
-                </RyogoOutlineButton>
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
-      {transaction.transactionPhotoUrl && (
-        <RyogoChinImage src={fileUrl} alt={t("Proof")} />
+            <RyogoCaption color="light">
+              {transaction.addedByUser.name}
+            </RyogoCaption>
+          </SectionRowWrapper>
+        </SectionColWrapper>
+        {transaction.transactionPhotoUrl && (
+          <RyogoDialogImage
+            src={getFileUrl(transaction.transactionPhotoUrl)}
+            alt={
+              transaction.type +
+              " " +
+              transaction.amount +
+              " " +
+              transaction.mode
+            }
+            imageSize="md"
+          />
+        )}
+      </SectionRowWrapper>
+      {canModifyTransaction && (
+        <SectionRowWrapper className="items-center mt-auto">
+          {isOwner && (
+            <TransactionApprovalButton
+              txnId={transaction.id}
+              isApproved={transaction.isApproved}
+              agencyId={transaction.agencyId}
+            />
+          )}
+          <Link
+            href={`/dashboard/bookings/${transaction.bookingId}/transactions/modify/${transaction.id}`}
+            className="grow"
+          >
+            <RyogoOutlineButton label={t("Modify")} className="w-full">
+              <RyogoIcon icon={ChevronRight} size="xs" color="slate" />
+            </RyogoOutlineButton>
+          </Link>
+        </SectionRowWrapper>
       )}
-    </div>
+    </SectionColWrapper>
   )
 }

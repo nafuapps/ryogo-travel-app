@@ -16,19 +16,11 @@ export const expenseRepository = {
           columns: {
             id: true,
             name: true,
+            photoUrl: true,
             userRole: true,
           },
         },
       },
-    })
-  },
-
-  //Get expenses by user id
-  async readExpensesByAddedUserId(userId: string) {
-    return await db.query.expenses.findMany({
-      orderBy: (expenses, { desc }) => [desc(expenses.createdAt)],
-      limit: 20,
-      where: eq(expenses.addedByUserId, userId),
     })
   },
 

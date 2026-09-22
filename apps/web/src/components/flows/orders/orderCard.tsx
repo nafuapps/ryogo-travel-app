@@ -1,3 +1,5 @@
+"use client"
+
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionWrapper,
@@ -14,7 +16,7 @@ import {
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ChevronDown, Dot, Download } from "lucide-react"
+import { ChevronDown, Download } from "lucide-react"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import { useState } from "react"

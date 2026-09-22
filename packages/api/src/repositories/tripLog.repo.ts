@@ -6,29 +6,8 @@ export const tripLogRepository = {
   //Get tripLogs by booking id
   async readTripLogsByBookingId(bookingId: string) {
     return await db.query.tripLogs.findMany({
-      orderBy: (tripLogs, { asc }) => [asc(tripLogs.createdAt)],
+      orderBy: (tripLogs, { desc }) => [desc(tripLogs.createdAt)],
       where: eq(tripLogs.bookingId, bookingId),
-      with: {
-        driver: {
-          columns: {
-            name: true,
-          },
-        },
-        vehicle: {
-          columns: {
-            vehicleNumber: true,
-          },
-        },
-      },
-    })
-  },
-
-  //Get tripLogs by driver id
-  async readTripLogsByDriverId(driverId: string) {
-    return await db.query.tripLogs.findMany({
-      orderBy: (tripLogs, { asc }) => [asc(tripLogs.createdAt)],
-      limit: 20,
-      where: eq(tripLogs.driverId, driverId),
       with: {
         driver: {
           columns: {

@@ -28,13 +28,13 @@ export const transactionRepository = {
   async readTransactionsByBookingId(bookingId: string) {
     return await db.query.transactions.findMany({
       orderBy: (transactions, { desc }) => [desc(transactions.createdAt)],
-      limit: 20,
       where: eq(transactions.bookingId, bookingId),
       with: {
         addedByUser: {
           columns: {
             id: true,
             name: true,
+            photoUrl: true,
             userRole: true,
           },
         },

@@ -77,7 +77,6 @@ export const vehicleRepairRepository = {
   async readVehicleRepairsByAddedUserId(userId: string) {
     return await db.query.vehicleRepairs.findMany({
       orderBy: (vehicleRepairs, { desc }) => [desc(vehicleRepairs.createdAt)],
-      limit: 20,
       where: eq(vehicleRepairs.addedByUserId, userId),
       with: {
         vehicle: {

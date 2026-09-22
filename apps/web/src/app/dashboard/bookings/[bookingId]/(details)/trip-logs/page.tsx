@@ -3,7 +3,8 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingTripLogsPageComponent from "./bookingTripLogs"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Booking Trip Logs - ${pageTitle}`,
@@ -23,10 +24,10 @@ export default async function BookingDetailsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/trip-logs"} />
-      <BookingTripLogsPageComponent
-        bookingId={bookingId}
-        bookingTripLogs={bookingTripLogs}
-      />
+      <PageWrapper id="BookingTripLogsPage">
+        <BookingDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
+        <BookingTripLogsPageComponent bookingTripLogs={bookingTripLogs} />
+      </PageWrapper>
     </MainWrapper>
   )
 }

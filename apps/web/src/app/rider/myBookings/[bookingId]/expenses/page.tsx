@@ -30,8 +30,8 @@ export default async function MyBookingExpensesPage({
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
-  //Expense can be created for in-progress bookings only by driver
-  const canCreateExpense = BookingStatusEnum.IN_PROGRESS === booking.status
+  //Expense can be added for in-progress bookings only by driver
+  const canAddExpense = BookingStatusEnum.IN_PROGRESS === booking.status
 
   const bookingExpenses =
     await bookingServices.findBookingExpensesById(bookingId)
@@ -43,7 +43,7 @@ export default async function MyBookingExpensesPage({
         userId={currentUser.userId}
         bookingId={bookingId}
         bookingExpenses={bookingExpenses}
-        canCreateExpense={canCreateExpense}
+        canAddExpense={canAddExpense}
       />
     </MainWrapper>
   )

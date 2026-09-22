@@ -3,56 +3,59 @@ import { getTranslations } from "next-intl/server"
 import BookindDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import Link from "next/link"
 import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
-import { RyogoSmall } from "@/components/typography"
-import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
-import { Plus } from "lucide-react"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import {
+  PageWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+  StickyActionWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
+import { BanknoteArrowDown } from "lucide-react"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function BookingExpensesPageComponent({
   bookingId,
   bookingExpenses,
-  canCreateExpense,
-  canApproveExpense,
+  canEditExpense,
 }: {
   bookingId: string
   bookingExpenses: FindBookingExpensesByIdType
-  canCreateExpense: boolean
-  canApproveExpense: boolean
+  canEditExpense: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingExpenses")
 
   return (
     <PageWrapper id="BookingExpensesPage">
       <BookindDetailHeaderTabs id={bookingId} selectedTab="Expenses" />
-      {canCreateExpense && (
-        <Link
-          href={`/dashboard/bookings/${bookingId}/expenses/new`}
-          className="w-full md:w-1/2 self-center"
-        >
-          <RyogoOutlineButton label={t("AddExpense")} className="w-full">
-            <RyogoIcon icon={Plus} size="sm" />
-          </RyogoOutlineButton>
-        </Link>
-      )}
-      <SectionColWrapper className="items-center">
-        {bookingExpenses.length === 0 ? (
-          <RyogoSmall color="slate" className="text-center">
-            {t("NoExpenses")}
-          </RyogoSmall>
-        ) : (
-          bookingExpenses.map((expense) => {
+      <SectionWrapper id="BookingExpensesList">
+        <SectionHeaderWrapper
+          label={t("Title")}
+          icon={BanknoteArrowDown}
+          count={bookingExpenses.length}
+        />
+        <TileGridWrapper>
+          {bookingExpenses.map((expense) => {
             return (
               <ExpenseItem
                 key={expense.id}
                 expense={expense}
-                canModifyExpense={canCreateExpense}
-                canApproveExpense={canApproveExpense}
+                canEditExpense={canEditExpense}
               />
             )
-          })
-        )}
-      </SectionColWrapper>
+          })}
+        </TileGridWrapper>
+      </SectionWrapper>
+      {canEditExpense && (
+        <StickyActionWrapper>
+          <Link href={`/dashboard/bookings/${bookingId}/expenses/new`}>
+            <RyogoDefaultButton
+              label={t("AddExpense")}
+              size={"lg"}
+              className="w-full"
+            />
+          </Link>
+        </StickyActionWrapper>
+      )}
     </PageWrapper>
   )
 }

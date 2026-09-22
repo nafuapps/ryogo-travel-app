@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import { RyogoCaption } from "../typography"
+import { RyogoCaption } from "@/components/typography"
 
 interface PaginationControlsProps {
   currentPage: number

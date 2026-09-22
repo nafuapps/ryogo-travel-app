@@ -1,58 +1,64 @@
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { RyogoSmall } from "@/components/typography"
-import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
-import { Plus } from "lucide-react"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import RiderExpenseItem from "@/components/flows/rider/riderExpenseItem"
+import {
+  PageWrapper,
+  SectionHeaderWrapper,
+  SectionWrapper,
+  TileGridWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { BanknoteArrowDown } from "lucide-react"
 import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
+import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function MyBookingExpensesPageComponent({
   userId,
   bookingId,
   bookingExpenses,
-  canCreateExpense,
+  canAddExpense,
 }: {
   userId: string
   bookingId: string
   bookingExpenses: FindBookingExpensesByIdType
-  canCreateExpense: boolean
+  canAddExpense: boolean
 }) {
-  const t = await getTranslations("Rider.MyBooking.Expense")
+  const t = await getTranslations("Rider.MyBookingExpenses")
 
   return (
-    <PageWrapper id="BookingExpensesPage">
+    <PageWrapper id="RiderBookingExpensesPage">
       <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"Expenses"} />
-      {canCreateExpense && (
-        <Link
-          href={`/rider/myBookings/${bookingId}/expenses/add`}
-          className="w-full md:w-1/2 self-center"
-        >
-          <RyogoOutlineButton label={t("AddExpense")} className="w-full">
-            <RyogoIcon icon={Plus} size="sm" />
-          </RyogoOutlineButton>
-        </Link>
-      )}
-      <SectionColWrapper>
-        {bookingExpenses.length === 0 ? (
-          <RyogoSmall color="slate" className="text-center">
-            {t("NoExpense")}
-          </RyogoSmall>
-        ) : (
-          bookingExpenses.map((expense) => {
+      <SectionWrapper id="BookingExpensesList">
+        <SectionHeaderWrapper
+          label={t("Title")}
+          icon={BanknoteArrowDown}
+          count={bookingExpenses.length}
+        />
+        <TileGridWrapper>
+          {bookingExpenses.map((expense) => {
             return (
-              <RiderExpenseItem
+              <ExpenseItem
                 key={expense.id}
-                bookingId={bookingId}
                 expense={expense}
-                canModifyExpense={userId === expense.addedByUserId}
+                canEditExpense={userId === expense.addedByUserId}
+                isRider
               />
             )
-          })
-        )}
-      </SectionColWrapper>
+          })}
+        </TileGridWrapper>
+      </SectionWrapper>
+      {canAddExpense && (
+        <StickyActionWrapper>
+          <Link href={`/rider/myBookings/${bookingId}/expenses/add`}>
+            <RyogoDefaultButton
+              label={t("AddExpense")}
+              size={"lg"}
+              className="w-full"
+            />
+          </Link>
+        </StickyActionWrapper>
+      )}
     </PageWrapper>
   )
 }

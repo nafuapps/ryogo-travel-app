@@ -19,7 +19,7 @@ import {
   getExpiryScore,
   getOverlapScore,
   NoOverlapScore,
-} from "@/components/flows/bookings/getBookingScore"
+} from "@/components/flows/bookings/assign/getBookingScore"
 import {
   AssignTileWrapper,
   AssignTileContentWrapper,

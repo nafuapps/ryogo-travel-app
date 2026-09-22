@@ -32,7 +32,7 @@ export default async function BookingExpensesPage({
 
   //Expense can be created for in-progress or completed bookings only
   //Only owner or assigned user can create expenses
-  const canCreateExpense =
+  const canEditExpense =
     (currentUser.userRole === UserRolesEnum.OWNER ||
       currentUser.userId === booking.assignedUserId) &&
     [BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
@@ -48,8 +48,7 @@ export default async function BookingExpensesPage({
       <BookingExpensesPageComponent
         bookingId={bookingId}
         bookingExpenses={bookingExpenses}
-        canCreateExpense={canCreateExpense}
-        canApproveExpense={canCreateExpense}
+        canEditExpense={canEditExpense}
       />
     </MainWrapper>
   )

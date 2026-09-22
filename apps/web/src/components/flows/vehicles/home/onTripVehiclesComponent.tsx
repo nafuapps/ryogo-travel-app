@@ -5,7 +5,7 @@ import {
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { OngoingBookingCard } from "../../bookings/cards/bookingCards"
+import { OngoingBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
 
 export default async function OnTripVehiclesComponent({

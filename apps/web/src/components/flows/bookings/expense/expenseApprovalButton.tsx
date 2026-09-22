@@ -5,7 +5,12 @@ import { changeExpenseApprovalAction } from "@/app/actions/expenses/changeExpens
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTransition } from "react"
-import RyogoApprovalTooltip from "@/components/buttons/tooltip/ryogoApprovalTooltip"
+import {
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { Check, CheckCheck } from "lucide-react"
 
 export function ExpenseApprovalButton({
   expId,
@@ -42,13 +47,29 @@ export function ExpenseApprovalButton({
     })
   }
 
+  if (isApproved) {
+    return (
+      <RyogoGhostButton
+        label={t("Approved")}
+        labelColor={"green"}
+        onClick={rejectExpense}
+        disabled={isPending}
+        className="grow border"
+      >
+        <RyogoIcon icon={CheckCheck} size="xs" color={"green"} thick />
+      </RyogoGhostButton>
+    )
+  }
+
   return (
-    <RyogoApprovalTooltip
-      label={isApproved ? t("Approved") : t("Approve")}
-      tooltipText={isApproved ? t("RejectTitle") : t("ApproveTitle")}
-      isApproved={isApproved}
-      onClick={isApproved ? rejectExpense : approveExpense}
+    <RyogoOutlineButton
+      label={t("Approve")}
+      labelColor={"slate"}
+      onClick={approveExpense}
       disabled={isPending}
-    />
+      className="grow"
+    >
+      <RyogoIcon icon={Check} size="xs" color={"slate"} thick />
+    </RyogoOutlineButton>
   )
 }

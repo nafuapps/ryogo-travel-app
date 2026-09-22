@@ -1,71 +1,94 @@
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+"use client"
+
+import { RyogoSmall, RyogoTiny } from "@/components/typography"
 import { format } from "date-fns"
 import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { RyogoChinImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import getTripLogIcon from "@/components/icons/tripLogIcon"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
+import { ChevronDown, ChevronUp, MessageSquareQuote } from "lucide-react"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
+import { useState } from "react"
 
-export default async function TripLogItem({
+export default function TripLogItem({
   tripLog,
 }: {
   tripLog: NonNullable<FindBookingTripLogsByIdType>[0]
 }) {
-  const t = await getTranslations("Dashboard.BookingTripLogs")
+  const t = useTranslations("Dashboard.BookingTripLogs")
+  const [open, setOpen] = useState(false)
+
+  const isEnded = tripLog.type === TripLogTypesEnum.ENDED
 
   return (
-    <div className="flex flex-col w-full">
-      <div
-        className={`flex flex-row ${
-          tripLog.tripLogPhotoUrl ? "rounded-t-lg" : "rounded-lg"
-        } justify-between gap-3 lg:gap-4 items-center w-full bg-white dark:bg-slate-900 p-3 lg:p-4 overflow-hidden lg:flex-row lg:items-center`}
-      >
-        <SectionColWrapper small className="items-end">
-          <RyogoSmall>
-            {format(tripLog.createdAt, "dd MMM hh:mm aaa")}
-          </RyogoSmall>
-          {tripLog.odometerReading && (
-            <RyogoCaption color="slate">
-              {tripLog.odometerReading + t("Km")}
-            </RyogoCaption>
-          )}
-          <RyogoCaption color="light">{tripLog.latLong}</RyogoCaption>
-        </SectionColWrapper>
-        <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
-          <RyogoCaption color="slate">
-            {tripLog.vehicle.vehicleNumber}
-          </RyogoCaption>
-          <RyogoCaption color="slate">{tripLog.driver.name}</RyogoCaption>
-          {tripLog.remarks && (
-            <RyogoCaption color="slate">{tripLog.remarks}</RyogoCaption>
-          )}
-        </div>
-        <div className="flex flex-col gap-1.5 lg:gap-2 items-end min-w-1/4">
-          <RyogoEnclosedIcon
-            icon={getTripLogIcon(tripLog.type)}
-            size="sm"
-            color={
-              tripLog.type === TripLogTypesEnum.DROPPED ? "white" : "slate"
-            }
-            bgColor={
-              tripLog.type === TripLogTypesEnum.DROPPED ? "black" : "slate"
-            }
-            circular
+    <SectionWrapper id={tripLog.id}>
+      <SectionRowWrapper className="items-center">
+        <RyogoEnclosedIcon
+          icon={getTripLogIcon(tripLog.type)}
+          size="md"
+          color={isEnded ? "white" : "slate"}
+          bgColor={isEnded ? "black" : "slate"}
+        />
+        <SectionRowWrapper className="items-center w-full justify-between">
+          <SectionColWrapper small>
+            <RyogoSmall color="slate" weight="font-bold">
+              {tripLog.type}
+            </RyogoSmall>
+            <RyogoTiny color="light">
+              {format(tripLog.createdAt, "dd MMM - hh:mm aaa")}
+            </RyogoTiny>
+          </SectionColWrapper>
+          <SectionColWrapper small className="items-end">
+            {tripLog.remarks && (
+              <SectionRowWrapper
+                small
+                className="items-center rounded bg-slate-100 dark:bg-slate-800 px-2 lg:px-3 py-1 lg:py-1.5"
+              >
+                <RyogoTiny color="light">{tripLog.remarks}</RyogoTiny>
+                <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
+              </SectionRowWrapper>
+            )}
+            {tripLog.odometerReading && (
+              <RyogoSmall color="slate">
+                {tripLog.odometerReading + t("Km")}
+              </RyogoSmall>
+            )}
+          </SectionColWrapper>
+        </SectionRowWrapper>
+        {tripLog.tripLogPhotoUrl && (
+          <RyogoDialogImage
+            src={getFileUrl(tripLog.tripLogPhotoUrl)}
+            alt={tripLog.type}
+            imageSize="md"
           />
-          <RyogoCaption weight="font-bold">
-            {tripLog.type.toUpperCase()}
-          </RyogoCaption>
-        </div>
-      </div>
-      {tripLog.tripLogPhotoUrl && (
-        <RyogoChinImage
-          src={getFileUrl(tripLog.tripLogPhotoUrl)}
-          alt={t("Proof")}
+        )}
+        {tripLog.latLong ? (
+          <RyogoIcon
+            onClick={() => setOpen(!open)}
+            size="sm"
+            icon={open ? ChevronUp : ChevronDown}
+            color="light"
+            thick
+          />
+        ) : (
+          <></>
+        )}
+      </SectionRowWrapper>
+      {tripLog.latLong && (
+        <GoogleMapsEmbedPlaceComponent
+          latLong={tripLog.latLong}
+          time={tripLog.createdAt}
+          className={open ? "" : "hidden"}
         />
       )}
-    </div>
+    </SectionWrapper>
   )
 }

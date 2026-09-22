@@ -59,6 +59,7 @@ export default function ConfirmBookingPageComponent({
     defaultValues: {
       pickupAddress: "",
       sameAsCustomerAddress: false,
+      startTime: "",
     },
   })
 
@@ -139,7 +140,6 @@ export default function ConfirmBookingPageComponent({
               <RyogoDefaultButton
                 label={t("Confirm.Label")}
                 className="w-full"
-                disabled={!form.formState.isValid}
               />
             }
           >

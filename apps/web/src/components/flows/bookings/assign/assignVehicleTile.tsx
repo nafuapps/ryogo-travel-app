@@ -29,7 +29,7 @@ import {
   NoOverlapScore,
   getExpiryScore,
   getCustomerRatingScore,
-} from "@/components/flows/bookings/getBookingScore"
+} from "@/components/flows/bookings/assign/getBookingScore"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getAverageRating } from "@/lib/utils"

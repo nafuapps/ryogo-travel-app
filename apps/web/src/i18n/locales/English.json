@@ -1302,36 +1302,35 @@
       }
     },
     "BookingTransactions": {
-      "NoTransactions": "No transactions found for this booking.",
+      "Title": "Booking Transactions",
       "AddTransaction": "Add Transaction",
-      "Modify": "Modify",
-      "Proof": " View Attachment",
+      "To": "To ",
+      "From": "From ",
+      "Modify": "Edit",
       "Approve": "Approve",
       "Approved": "Approved",
       "ApproveSuccess": "Transaction approved successfully!",
       "ApproveError": "Could not approve.. try again later",
-      "RejectTitle": "Remove approval",
       "RejectSuccess": "Transaction approval removed!",
       "RejectError": "Could not remove approval.. try again later"
     },
     "BookingExpenses": {
-      "NoExpenses": "No expenses found for this booking.",
+      "Title": "Booking Expenses",
       "AddExpense": "Add Expense",
-      "Modify": "Modify",
-      "Proof": " View Attachment",
+      "Modify": "Edit",
       "Approve": "Approve",
       "Approved": "Approved",
-      "ApproveTitle": "Approve Expense",
       "ApproveSuccess": "Expense approved successfully!",
       "ApproveError": "Could not approve.. try again later",
-      "RejectTitle": "Remove approval",
       "RejectSuccess": "Expense approval removed!",
       "RejectError": "Could not remove approval.. try again later"
     },
     "BookingTripLogs": {
+      "ShowOther": "Show other system logs",
       "NoTripLogs": "No trip logs found for this booking.",
       "Km": " Km",
-      "Proof": " View Attachment"
+      "ShowMap": "Show Map",
+      "HideMap": "Hide Map"
     },
     "BookingDetailsHeaderTabs": {
       "Booking": "Booking",
@@ -5285,13 +5284,11 @@
         "NoTripLogs": "No trip logs found for this trip.",
         "Km": " Km",
         "Proof": " View Attachment"
-      },
-      "Expense": {
-        "AddExpense": "Add Expense",
-        "NoExpense": "No expenses found for this trip.",
-        "Modify": "Modify",
-        "Proof": " View Attachment"
       }
+    },
+    "MyBookingExpenses": {
+      "Title": "Trip Expenses",
+      "AddExpense": "Add Expense"
     },
     "MyVehicle": {
       "AC": "AC",

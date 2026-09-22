@@ -1,31 +1,44 @@
-import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
-import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
-import { RyogoSmall } from "@/components/typography"
-import TripLogItem from "@/components/flows/bookings/tripLog/tripLogItem"
-import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
+"use client"
 
-export default async function BookingTripLogsPageComponent({
-  bookingId,
+import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import TripLogItem from "@/components/flows/bookings/tripLog/tripLogItem"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { Switch } from "@/components/ui/switch"
+
+export default function BookingTripLogsPageComponent({
   bookingTripLogs,
 }: {
-  bookingId: string
   bookingTripLogs: FindBookingTripLogsByIdType
 }) {
-  const t = await getTranslations("Dashboard.BookingTripLogs")
+  const t = useTranslations("Dashboard.BookingTripLogs")
+  const [showOther, setShowOther] = useState(false)
+
+  const logs = showOther
+    ? bookingTripLogs
+    : bookingTripLogs.filter((t) => t.type !== TripLogTypesEnum.OTHER)
 
   return (
-    <PageWrapper id="BookingTripLogsPage">
-      <BookingDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
-      <SectionColWrapper className="items-center">
-        {bookingTripLogs.length === 0 ? (
+    <SectionColWrapper className="items-center">
+      <SectionRowWrapper className="items-center">
+        <RyogoCaption color="light">{t("ShowOther")}</RyogoCaption>
+        <Switch checked={showOther} onCheckedChange={setShowOther} />
+      </SectionRowWrapper>
+      <SectionColWrapper className="w-full lg:max-w-3xl">
+        {logs.length === 0 ? (
           <RyogoSmall color="slate">{t("NoTripLogs")}</RyogoSmall>
         ) : (
-          bookingTripLogs.map((tripLog) => (
+          logs.map((tripLog) => (
             <TripLogItem key={tripLog.id} tripLog={tripLog} />
           ))
         )}
       </SectionColWrapper>
-    </PageWrapper>
+    </SectionColWrapper>
   )
 }

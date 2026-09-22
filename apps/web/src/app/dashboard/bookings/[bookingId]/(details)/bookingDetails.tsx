@@ -21,7 +21,10 @@ import {
   Map as MapIcon,
 } from "lucide-react"
 import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
@@ -47,6 +50,7 @@ import BookingViewInvoiceButton from "@/components/flows/bookings/details/bookin
 import BookingViewQuoteButton from "@/components/flows/bookings/details/bookingViewQuoteButton"
 import BookingViewConfirmationButton from "@/components/flows/bookings/details/bookingViewConfirmationButton"
 import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -65,25 +69,23 @@ export default async function BookingDetailsPageComponent({
   const isCompleted = bookingDetails.status === BookingStatusEnum.COMPLETED
   const isCancelled = bookingDetails.status === BookingStatusEnum.CANCELLED
 
-  const canCancelBooking =
-    (isOwner || isAssignedUser) && (isLead || isConfirmed)
+  const canEditBooking = isOwner || isAssignedUser
 
-  const canAssignVehicle =
-    (isOwner || isAssignedUser) && (isLead || isConfirmed)
-  const canAssignDriver = (isOwner || isAssignedUser) && (isLead || isConfirmed)
+  const canCancelBooking = canEditBooking && (isLead || isConfirmed)
+
+  const canAssignVehicle = canEditBooking && (isLead || isConfirmed)
+  const canAssignDriver = canEditBooking && (isLead || isConfirmed)
 
   const canAssignUser = isOwner && !isCompleted
 
-  const canCommunicateWithCustomer = (isOwner || isAssignedUser) && !isCancelled
+  const canCommunicateWithCustomer = canEditBooking && !isCancelled
 
   const canSeeTripDetails = isConfirmed || isInProgress
-  const canEditTripDetails = (isOwner || isAssignedUser) && isConfirmed
+  const canEditTripDetails = canEditBooking && isConfirmed
 
-  const canConfirmBooking = (isOwner || isAssignedUser) && isLead
-
-  const canViewQuote = (isOwner || isAssignedUser) && isCompleted
-  const canViewConfirmation = (isOwner || isAssignedUser) && isConfirmed
-  const canViewInvoice = (isOwner || isAssignedUser) && isCompleted
+  const canViewQuote = canEditBooking && isCompleted
+  const canViewConfirmation = canEditBooking && isConfirmed
+  const canViewInvoice = canEditBooking && isCompleted
 
   const canReconcileBooking =
     isOwner && isCompleted && bookingDetails.reviewCompletedByAgencyAt
@@ -137,15 +139,6 @@ export default async function BookingDetailsPageComponent({
             />
           )}
           <BookingActionWrapper>
-            {canConfirmBooking && (
-              <Link href={`/dashboard/bookings/${bookingDetails.id}/confirm`}>
-                <RyogoDetailedIconButton
-                  label={t("ConfirmBooking.Title")}
-                  icon={CalendarPlus}
-                  subtitle={t("ConfirmBooking.Subtitle")}
-                />
-              </Link>
-            )}
             {canReconcileBooking && (
               <BookingReconcileCard
                 id={bookingDetails.id}
@@ -265,7 +258,7 @@ export default async function BookingDetailsPageComponent({
             agencyId={bookingDetails.agencyId}
             userId={bookingDetails.assignedUserId}
             remarks={bookingDetails.remarks}
-            canEdit={isOwner || isAssignedUser}
+            canEdit={canEditBooking}
           />
         </BookingSection>
         {bookingDetails.source.latLong &&
@@ -324,7 +317,7 @@ export default async function BookingDetailsPageComponent({
           {canViewInvoice && bookingDetails.invoiceUrl && (
             <BookingViewInvoiceButton bookingDetails={bookingDetails} />
           )}
-          {(isOwner || isAssignedUser) && (
+          {canEditBooking && (
             <BookingActionWrapper>
               {isCompleted && (
                 <>
@@ -425,6 +418,38 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
       </BookingGrid>
+      {canEditBooking && (
+        <StickyActionWrapper>
+          {isLead && (
+            <Link href={`/dashboard/bookings/${bookingDetails.id}/confirm`}>
+              <RyogoDefaultButton
+                label={t("ConfirmBooking.Title")}
+                className="w-full"
+              />
+            </Link>
+          )}
+          {isConfirmed &&
+            (!bookingDetails.assignedVehicle ? (
+              <Link
+                href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
+              >
+                <RyogoDefaultButton
+                  label={t("AssignVehicle.Title")}
+                  className="w-full"
+                />
+              </Link>
+            ) : !bookingDetails.assignedDriver ? (
+              <Link
+                href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
+              >
+                <RyogoDefaultButton
+                  label={t("AssignDriver.Title")}
+                  className="w-full"
+                />
+              </Link>
+            ) : null)}
+        </StickyActionWrapper>
+      )}
     </PageWrapper>
   )
 }

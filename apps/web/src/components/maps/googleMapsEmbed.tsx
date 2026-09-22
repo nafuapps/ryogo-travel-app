@@ -1,22 +1,25 @@
+"use client"
+
 import { getLang } from "@/lib/utils"
-import { getLocale } from "next-intl/server"
+import { useLocale } from "next-intl"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import moment from "moment"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!
 
-export async function GoogleMapsEmbedPlaceComponent({
+export function GoogleMapsEmbedPlaceComponent({
   latLong,
   time,
+  className,
 }: {
   latLong: string
   time: Date | null
+  className?: string
 }) {
-  const locale = await getLocale()
+  const locale = useLocale()
 
   return (
-    <SectionColWrapper className="relative">
+    <div className={`flex relative ${className ?? ""}`}>
       <iframe
         src={`https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${latLong}&zoom=12&language=${getLang(locale)}`}
         className="w-full aspect-video relative rounded-md"
@@ -25,14 +28,14 @@ export async function GoogleMapsEmbedPlaceComponent({
         <RyogoPill
           label={moment(time).fromNow()}
           bgColor={"white"}
-          className="top-2 lg:top-3 right-2 lg:right-3 z-10 absolute"
+          className="top-2 lg:top-3 right-2 lg:right-3 absolute"
         />
       )}
-    </SectionColWrapper>
+    </div>
   )
 }
 
-export async function GoogleMapsEmbedDirectionsComponent({
+export function GoogleMapsEmbedDirectionsComponent({
   source,
   destination,
   center,
@@ -43,9 +46,9 @@ export async function GoogleMapsEmbedDirectionsComponent({
   center?: string | null
   time: Date | null
 }) {
-  const locale = await getLocale()
+  const locale = useLocale()
   return (
-    <SectionColWrapper className="relative">
+    <div className="flex relative">
       <iframe
         src={`https://www.google.com/maps/embed/v1/directions?key=${API_KEY}&mode=driving&origin=${source}&destination=${destination}${center ? `&center=${center}` : ""}&zoom=6&language=${getLang(locale)}`}
         className="w-full aspect-video relative rounded-md"
@@ -54,9 +57,9 @@ export async function GoogleMapsEmbedDirectionsComponent({
         <RyogoPill
           label={moment(time).fromNow()}
           bgColor={"white"}
-          className="top-2 lg:top-3 right-2 lg:right-3 z-10 absolute"
+          className="top-2 lg:top-3 right-2 lg:right-3 absolute"
         />
       )}
-    </SectionColWrapper>
+    </div>
   )
 }

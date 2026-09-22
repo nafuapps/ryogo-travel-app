@@ -16,7 +16,7 @@ import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   getOverlapScore,
   NoOverlapScore,
-} from "@/components/flows/bookings/getBookingScore"
+} from "@/components/flows/bookings/assign/getBookingScore"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"

@@ -11,13 +11,16 @@ import {
   SUPPORT_EMAIL,
   SUPPORT_HELPLINE_NUMBER,
 } from "@/lib/uiConfig"
-import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
+import {
+  FindAllOrdersByAgencyIdType,
+  FindOrderByRPIdType,
+} from "@ryogo-travel-app/api/services/order.services"
 // import { GST_PERCENTAGE } from "@ryogo-travel-app/api/apiConfig"
 
 export function SubscriptionInvoiceDocument({
   order,
 }: {
-  order: FindAllOrdersByAgencyIdType[number]
+  order: FindAllOrdersByAgencyIdType[number] | NonNullable<FindOrderByRPIdType>
 }) {
   // const priceBeforeTax = (order.amount / (100 + GST_PERCENTAGE)) * 100
   // const taxAmount = order.amount - priceBeforeTax
@@ -106,7 +109,7 @@ export function SubscriptionInvoiceDocument({
 }
 
 export default async function getSubscriptionInvoicePDF(
-  order: FindAllOrdersByAgencyIdType[number],
+  order: FindAllOrdersByAgencyIdType[number] | NonNullable<FindOrderByRPIdType>,
 ) {
   return await ReactPDF.pdf(
     <SubscriptionInvoiceDocument order={order} />,

@@ -19,10 +19,7 @@ export default async function generateAndSendSubscriptionInvoiceEmail(
   if (!userDetails || !agencyDetails || !orderDetails) return
 
   // Generate subscription invoice pdf
-  const invoiceFile = await getSubscriptionInvoicePDF(
-    orderDetails,
-    agencyDetails,
-  )
+  const invoiceFile = await getSubscriptionInvoicePDF(orderDetails)
   const invoiceName = generateSubscriptionInvoicePathName(
     agencyId,
     orderDetails.id,

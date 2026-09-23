@@ -41,6 +41,16 @@ export const orderRepository = {
   async readOrderByRPId(rpOrderId: string) {
     return await db.query.orders.findFirst({
       where: eq(orders.rpOrderId, rpOrderId),
+      with: {
+        agency: {
+          columns: {
+            businessName: true,
+            businessPhone: true,
+            businessEmail: true,
+            businessAddress: true,
+          },
+        },
+      },
     })
   },
 

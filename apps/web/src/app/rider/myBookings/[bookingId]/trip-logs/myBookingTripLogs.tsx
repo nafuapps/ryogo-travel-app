@@ -1,34 +1,55 @@
-import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
-import { RyogoSmall } from "@/components/typography"
-import TripLogItem from "@/components/flows/bookings/tripLog/tripLogItem"
-import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
-import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+"use client"
 
-export default async function MyBookingTripLogsPageComponent({
-  bookingId,
+import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { useTranslations } from "next-intl"
+import TripLogItem from "@/components/flows/bookings/tripLog/tripLogItem"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import { usePagination } from "@/hooks/usePagination"
+import { RyogoCaption } from "@/components/typography"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { MapPinOff } from "lucide-react"
+import { PaginationControls } from "@/components/pagination/paginationControls"
+
+const TRIPLOGS_PER_PAGE = 10
+
+export default function MyBookingTripLogsPageComponent({
   bookingTripLogs,
 }: {
-  bookingId: string
   bookingTripLogs: FindBookingTripLogsByIdType
 }) {
-  const t = await getTranslations("Rider.MyBooking.TripLog")
+  const t = useTranslations("Rider.MyBooking.TripLog")
+
+  //Pagination of tripLogs
+  const { currentItems, currentPage, totalPages, handlePageChange } =
+    usePagination(bookingTripLogs, TRIPLOGS_PER_PAGE)
 
   return (
-    <PageWrapper id="MyBookingTripLogsPage">
-      <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"TripLogs"} />
-      <SectionColWrapper className="w-full lg:max-w-3xl lg:mx-auto">
-        {bookingTripLogs.length === 0 ? (
-          <RyogoSmall color="slate">{t("NoTripLogs")}</RyogoSmall>
-        ) : (
-          bookingTripLogs
-            .filter((tripLog) => tripLog.type !== TripLogTypesEnum.OTHER)
-            .map((tripLog) => (
-              <TripLogItem key={tripLog.id} tripLog={tripLog} />
-            ))
-        )}
-      </SectionColWrapper>
-    </PageWrapper>
+    <>
+      {bookingTripLogs.length > 0 ? (
+        <SectionColWrapper className="self-center items-center w-full lg:max-w-3xl">
+          <SectionRowWrapper className="w-full items-center justify-between">
+            <RyogoCaption color="light">
+              {t("TripLogs") + " (" + bookingTripLogs.length + ")"}
+            </RyogoCaption>
+          </SectionRowWrapper>
+          {currentItems.map((tripLog) => (
+            <TripLogItem key={tripLog.id} tripLog={tripLog} />
+          ))}
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </SectionColWrapper>
+      ) : (
+        <SectionColWrapper className="self-center my-auto items-center">
+          <RyogoIcon icon={MapPinOff} size="lg" color="light" />
+          <RyogoCaption color="light">{t("NoTriplogs")}</RyogoCaption>
+        </SectionColWrapper>
+      )}
+    </>
   )
 }

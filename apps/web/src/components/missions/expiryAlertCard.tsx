@@ -44,7 +44,6 @@ export default async function ExpiryAlertCard({
             icon={getExpiryIcon(expiryType)}
             size="sm"
             color="slate"
-            bgColor="slate"
             circular
           />
           <div className="flex flex-col gap-0.5">

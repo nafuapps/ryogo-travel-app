@@ -76,7 +76,6 @@ export default function MissionCard({
             icon={getEntityIcon(mission.entityType)}
             size="sm"
             color={isRead ? "light" : "slate"}
-            bgColor={"slate"}
             circular
           />
           <div className="flex flex-col gap-0.5">

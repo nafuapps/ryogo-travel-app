@@ -2,7 +2,7 @@ import {
   BookingStatusEnum,
   DriverStatusEnum,
   InsertBookingType,
-  TransactionsPartiesEnum,
+  TransactionPartiesEnum,
   TransactionTypesEnum,
   TripLogTypesEnum,
   UserStatusEnum,
@@ -50,7 +50,7 @@ export const bookingServices = {
       return {
         ...booking,
         customerPaidAmount: booking.transactions.reduce((acc, curr) => {
-          if (curr.otherParty === TransactionsPartiesEnum.CUSTOMER) {
+          if (curr.otherParty === TransactionPartiesEnum.CUSTOMER) {
             if (curr.type === TransactionTypesEnum.CREDIT) {
               return acc + curr.amount
             } else {

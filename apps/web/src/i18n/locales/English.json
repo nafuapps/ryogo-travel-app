@@ -1291,6 +1291,8 @@
       "Commission": "Commission",
       "CommissionRate": "({rate}%)",
       "TotalAmount": "Total Amount",
+      "ReceivedAmount": "Received Amount",
+      "PendingAmount": "Pending Amount",
       "ReconciledAt": "Reconciled at",
       "Reconcile": {
         "Title": "Reconcile Booking",
@@ -1302,10 +1304,18 @@
       }
     },
     "BookingTransactions": {
-      "Title": "Booking Transactions",
+      "TotalTxnAmount": "Total Transactions",
+      "ApprovedTxnAmount": "Approved Transactions",
+      "TypeFilter": "Type Filter",
+      "ModeFilter": "Mode Filter",
+      "ApprovalFilter": "Approval Filter",
+      "PartyFilter": "Other Party Filter",
+      "ClearFilters": "Clear Filters",
+      "FilteredTransactions": "Filtered Transactions",
+      "To": " to ",
+      "From": " from ",
       "AddTransaction": "Add Transaction",
-      "To": "To ",
-      "From": "From ",
+      "NoTransactions": "No transactions found",
       "Modify": "Edit",
       "Approve": "Approve",
       "Approved": "Approved",
@@ -1315,8 +1325,15 @@
       "RejectError": "Could not remove approval.. try again later"
     },
     "BookingExpenses": {
-      "Title": "Booking Expenses",
+      "TotalAmount": "Total Expenses",
+      "ApprovedAmount": "Approved Expenses",
+      "TypeFilter": "Type Filter",
+      "RoleFilter": "Role Filter",
+      "ApprovalFilter": "Approval Filter",
+      "ClearFilters": "Clear Filters",
+      "FilteredExpenses": "Filtered Expenses",
       "AddExpense": "Add Expense",
+      "NoExpenses": "No expenses found",
       "Modify": "Edit",
       "Approve": "Approve",
       "Approved": "Approved",
@@ -1326,9 +1343,10 @@
       "RejectError": "Could not remove approval.. try again later"
     },
     "BookingTripLogs": {
-      "ShowOther": "Show other system logs",
-      "NoTripLogs": "No trip logs found for this booking.",
-      "Km": " Km",
+      "FilteredLogs": "Filtered Trip Logs",
+      "ShowOther": "Show system logs",
+      "NoTriplogs": "No trip logs found",
+      "Km": "- {km} Km",
       "ShowMap": "Show Map",
       "HideMap": "Hide Map"
     },
@@ -4344,12 +4362,8 @@
       }
     },
     "AccountSubscriptionOrders": {
-      "History": "ORDER HISTORY",
-      "NoOrders": "No orders found",
-      "All": "All",
-      "Paid": "Paid",
-      "Attempted": "Attempted",
-      "Created": "Created",
+      "History": "PAST ORDERS",
+      "StatusFilter": "Status Filter",
       "DownloadInvoice": "Download Invoice"
     },
     "UserDetailsHeaderTabs": {
@@ -5281,14 +5295,15 @@
         "Error": "Cannot mark {type} now.. please try again later"
       },
       "TripLog": {
-        "NoTripLogs": "No trip logs found for this trip.",
-        "Km": " Km",
-        "Proof": " View Attachment"
+        "TripLogs": "Trip Logs",
+        "NoTriplogs": "No trip logs found"
       }
     },
     "MyBookingExpenses": {
-      "Title": "Trip Expenses",
-      "AddExpense": "Add Expense"
+      "ClearFilters": "Clear Filters",
+      "FilteredExpenses": "Filtered Expenses",
+      "AddExpense": "Add Expense",
+      "NoExpenses": "No expenses found"
     },
     "MyVehicle": {
       "AC": "AC",

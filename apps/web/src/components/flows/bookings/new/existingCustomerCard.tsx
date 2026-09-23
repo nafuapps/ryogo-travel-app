@@ -49,7 +49,6 @@ export default function ExistingCutomerCard({
               icon={User}
               size="lg"
               color={"slate"}
-              bgColor={"slate"}
             />
           )}
           <SectionColWrapper small className="w-full">

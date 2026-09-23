@@ -9,16 +9,13 @@ import {
 } from "@/components/ui/dialog"
 import { Eye } from "lucide-react"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
-import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function ViewInvoiceDialog({
   order,
-  agency,
 }: {
   order: FindAllOrdersByAgencyIdType[number]
-  agency: NonNullable<FindAgencyByIdType>
 }) {
   return (
     <Dialog>
@@ -32,7 +29,7 @@ export default function ViewInvoiceDialog({
           <DialogTitle></DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <SubscriptionInvoicePDFViewer order={order} agency={agency} />
+        <SubscriptionInvoicePDFViewer order={order} />
       </DialogContent>
     </Dialog>
   )

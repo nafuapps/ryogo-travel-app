@@ -1,7 +1,7 @@
 import {
   TransactionModesEnum,
   TransactionTypesEnum,
-  TransactionsPartiesEnum,
+  TransactionPartiesEnum,
 } from "@ryogo-travel-app/db/schema"
 
 export type AddTransactionRequestType = {
@@ -12,7 +12,7 @@ export type AddTransactionRequestType = {
   type: TransactionTypesEnum
   amount: number
   mode: TransactionModesEnum
-  otherParty: TransactionsPartiesEnum
+  otherParty: TransactionPartiesEnum
   remarks?: string | undefined
   txnPhoto?: FileList | undefined
 }
@@ -23,7 +23,7 @@ export type UpdateTransactionRequestType = {
   type: TransactionTypesEnum
   amount: number
   mode: TransactionModesEnum
-  otherParty: TransactionsPartiesEnum
+  otherParty: TransactionPartiesEnum
   remarks?: string | undefined
   txnPhoto?: FileList | undefined
 }

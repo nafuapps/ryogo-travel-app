@@ -378,13 +378,11 @@ export default function SearchPageComponent({
                   {currentItems.map((b) => {
                     return <BookingSearchResultItem key={b.id} booking={b} />
                   })}
-                  <div className="mt-4">
-                    <PaginationControls
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      onPageChange={handlePageChange}
-                    />
-                  </div>
+                  <PaginationControls
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
                 </>
               )}
             </>

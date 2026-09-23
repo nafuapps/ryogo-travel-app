@@ -35,13 +35,20 @@ export default function TripLogItem({
           icon={getTripLogIcon(tripLog.type)}
           size="md"
           color={isEnded ? "white" : "slate"}
-          bgColor={isEnded ? "black" : "slate"}
+          bgColor={isEnded ? "black" : "light"}
         />
         <SectionRowWrapper className="items-center w-full justify-between">
           <SectionColWrapper small>
-            <RyogoSmall color="slate" weight="font-bold">
-              {tripLog.type}
-            </RyogoSmall>
+            <SectionRowWrapper small className="items-center">
+              <RyogoSmall color="slate" weight="font-bold">
+                {tripLog.type}
+              </RyogoSmall>
+              {tripLog.odometerReading && (
+                <RyogoSmall color="light">
+                  {t("Km", { km: tripLog.odometerReading })}
+                </RyogoSmall>
+              )}
+            </SectionRowWrapper>
             <RyogoTiny color="light">
               {format(tripLog.createdAt, "dd MMM - hh:mm aaa")}
             </RyogoTiny>
@@ -56,21 +63,16 @@ export default function TripLogItem({
                 <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
               </SectionRowWrapper>
             )}
-            {tripLog.odometerReading && (
-              <RyogoSmall color="slate">
-                {tripLog.odometerReading + t("Km")}
-              </RyogoSmall>
-            )}
           </SectionColWrapper>
         </SectionRowWrapper>
         {tripLog.tripLogPhotoUrl && (
           <RyogoDialogImage
             src={getFileUrl(tripLog.tripLogPhotoUrl)}
             alt={tripLog.type}
-            imageSize="md"
+            imageSize="sm"
           />
         )}
-        {tripLog.latLong ? (
+        {tripLog.latLong && (
           <RyogoIcon
             onClick={() => setOpen(!open)}
             size="sm"
@@ -78,8 +80,6 @@ export default function TripLogItem({
             color="light"
             thick
           />
-        ) : (
-          <></>
         )}
       </SectionRowWrapper>
       {tripLog.latLong && (

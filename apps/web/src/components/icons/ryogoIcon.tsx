@@ -49,6 +49,8 @@ function getBGColor(bgColor?: RyogoIconColorType) {
     case "white":
       return "bg-white dark:bg-slate-950"
     case "slate":
+      return "bg-slate-300 dark:bg-slate-700"
+    case "light":
     default:
       return "bg-slate-100 dark:bg-slate-800"
   }

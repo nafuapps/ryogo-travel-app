@@ -1312,13 +1312,13 @@ export const transactionTypes = pgEnum("transaction_types", [
   TransactionTypesEnum.DEBIT,
   TransactionTypesEnum.CREDIT,
 ])
-export enum TransactionsPartiesEnum {
+export enum TransactionPartiesEnum {
   DRIVER = "Driver",
   CUSTOMER = "Customer",
 }
 export const transactionParties = pgEnum("transaction_parties", [
-  TransactionsPartiesEnum.DRIVER,
-  TransactionsPartiesEnum.CUSTOMER,
+  TransactionPartiesEnum.DRIVER,
+  TransactionPartiesEnum.CUSTOMER,
 ])
 export enum TransactionModesEnum {
   CASH = "Cash",
@@ -1362,7 +1362,7 @@ export const transactions = pgTable(
     amount: integer("amount").notNull(), // in currency units
     otherParty: transactionParties()
       .notNull()
-      .default(TransactionsPartiesEnum.CUSTOMER),
+      .default(TransactionPartiesEnum.CUSTOMER),
     type: transactionTypes().notNull().default(TransactionTypesEnum.CREDIT),
     mode: transactionModes().notNull().default(TransactionModesEnum.CASH),
     remarks: text("remarks"),

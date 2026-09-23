@@ -3,10 +3,17 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingTransactionsPageComponent from "./bookingTransactions"
 import { getCurrentUser } from "@/lib/auth"
-import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  TransactionTypesEnum,
+  UserRolesEnum,
+  TransactionPartiesEnum,
+  TransactionModesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Booking Transactions - ${pageTitle}`,
@@ -44,12 +51,15 @@ export default async function BookingTransactionsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/transactions"} />
-      <BookingTransactionsPageComponent
-        bookingId={bookingId}
-        bookingTransactions={bookingTransactions}
-        canCreateTransaction={canCreateTransaction}
-        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-      />
+      <PageWrapper id="BookingTransactionsPage">
+        <BookingDetailHeaderTabs id={bookingId} selectedTab="Transactions" />
+        <BookingTransactionsPageComponent
+          bookingId={bookingId}
+          bookingTransactions={bookingTransactions}
+          canCreateTransaction={canCreateTransaction}
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+        />
+      </PageWrapper>
     </MainWrapper>
   )
 }

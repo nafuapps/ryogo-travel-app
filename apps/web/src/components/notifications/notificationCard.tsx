@@ -49,7 +49,6 @@ export default function NotificationCard({
               icon={ChevronRight}
               size="sm"
               color="slate"
-              bgColor="slate"
             />
           </Link>
         )}

@@ -3,7 +3,7 @@ import {
   InsertTransactionType,
   TransactionModesEnum,
   transactions,
-  TransactionsPartiesEnum,
+  TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, gte, lte } from "drizzle-orm"
@@ -76,7 +76,7 @@ export const transactionRepository = {
     amount: number,
     type: TransactionTypesEnum,
     mode: TransactionModesEnum,
-    otherParty: TransactionsPartiesEnum,
+    otherParty: TransactionPartiesEnum,
     remarks?: string,
     transactionPhotoUrl?: string,
   ) {

@@ -21,6 +21,14 @@ export const orderRepository = {
             name: true,
           },
         },
+        agency: {
+          columns: {
+            businessName: true,
+            businessPhone: true,
+            businessEmail: true,
+            businessAddress: true,
+          },
+        },
       },
     })
   },

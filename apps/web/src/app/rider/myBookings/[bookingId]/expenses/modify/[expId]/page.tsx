@@ -34,14 +34,21 @@ export default async function RiderModifyExpensePage({
 
   const expenseDetails = await expenseServices.findExpenseDetailsById(expId)
 
-  //If no expense found, or booking/user/agency ID mismatch
+  //If no expense found, or booking/agency ID mismatch
   if (
     !expenseDetails ||
     expenseDetails.bookingId !== bookingId ||
-    expenseDetails.addedByUserId !== currentUser.userId ||
     expenseDetails.agencyId !== currentUser.agencyId
   ) {
     redirect(`/rider/myBookings/${bookingId}`, RedirectType.replace)
+  }
+
+  //If driver did not create this expense or expense already approved
+  if (
+    expenseDetails.addedByUserId !== currentUser.userId ||
+    expenseDetails.isApproved
+  ) {
+    redirect(`/rider/myBookings/${bookingId}/expenses`, RedirectType.replace)
   }
 
   const booking = await bookingServices.findBookingStatusById(bookingId)

@@ -1,26 +1,36 @@
+"use client"
+
 import {
   RyogoH3,
   RyogoCaption,
-  RyogoP,
+  RyogoSmall,
   RyogoTiny,
 } from "@/components/typography"
 import { format } from "date-fns"
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
+import { useTranslations } from "next-intl"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import ExpenseIcon from "@/components/icons/expenseIcon"
 import { ExpenseApprovalButton } from "./expenseApprovalButton"
 import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { ChevronRight, MessageSquareQuote, User } from "lucide-react"
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  MessageSquareQuote,
+  User,
+} from "lucide-react"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
-export default async function ExpenseItem({
+export default function ExpenseItem({
   expense,
   canEditExpense,
   isRider,
@@ -29,27 +39,66 @@ export default async function ExpenseItem({
   canEditExpense: boolean
   isRider?: boolean
 }) {
-  const t = await getTranslations("Dashboard.BookingExpenses")
+  const t = useTranslations("Dashboard.BookingExpenses")
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
 
   return (
-    <SectionColWrapper className="h-full p-4 lg:p-5 border rounded-md">
-      <SectionRowWrapper className="justify-between item-center">
-        <RyogoTiny color="light">{expense.id}</RyogoTiny>
-        <RyogoTiny color="light">
-          {format(expense.createdAt, "dd MMM - hh:mm aaa")}
-        </RyogoTiny>
-      </SectionRowWrapper>
-      <SectionRowWrapper className="justify-between items-center">
-        <SectionRowWrapper className="items-center">
-          <ExpenseIcon type={expense.type} />
-          <RyogoP color="slate" weight="font-bold">
+    <SectionWrapper id={expense.id}>
+      <SectionRowWrapper className="items-center">
+        <ExpenseIcon type={expense.type} size="md" />
+        <SectionColWrapper small className="w-full">
+          <RyogoSmall color="slate" weight="font-bold">
             {expense.type}
-          </RyogoP>
-        </SectionRowWrapper>
-        <RyogoH3>{expense.amount}</RyogoH3>
+          </RyogoSmall>
+          <RyogoTiny color="light">
+            {format(expense.createdAt, "dd MMM - hh:mm aaa")}
+          </RyogoTiny>
+        </SectionColWrapper>
+        <RyogoH3 color={expense.isApproved ? "green" : "slate"}>
+          {expense.amount}
+        </RyogoH3>
+        <RyogoIcon
+          onClick={() => setOpen(!open)}
+          size="sm"
+          icon={open ? ChevronUp : ChevronDown}
+          color="light"
+          thick
+        />
       </SectionRowWrapper>
-      <SectionRowWrapper className="items-center justify-between">
-        <SectionColWrapper>
+      {open && (
+        <SectionColWrapper className="border rounded-md p-3 lg:p-4">
+          <SectionRowWrapper className="items-center justify-between">
+            <SectionColWrapper>
+              <RyogoTiny color="light">{"#" + expense.id}</RyogoTiny>
+              <SectionRowWrapper className="items-center">
+                {expense.addedByUser.photoUrl ? (
+                  <RyogoImage
+                    src={getFileUrl(expense.addedByUser.photoUrl)}
+                    alt={expense.addedByUser.name}
+                    imageSize="xs"
+                  />
+                ) : (
+                  <RyogoEnclosedIcon icon={User} size="sm" />
+                )}
+                <SectionColWrapper small>
+                  <RyogoCaption color="slate">
+                    {expense.addedByUser.name}
+                  </RyogoCaption>
+                  <RyogoTiny color="light">
+                    {expense.addedByUser.userRole}
+                  </RyogoTiny>
+                </SectionColWrapper>
+              </SectionRowWrapper>
+            </SectionColWrapper>
+            {expense.expensePhotoUrl && (
+              <RyogoDialogImage
+                src={getFileUrl(expense.expensePhotoUrl)}
+                alt={expense.type + " " + expense.amount}
+                imageSize="md"
+              />
+            )}
+          </SectionRowWrapper>
           {expense.remarks && (
             <SectionRowWrapper
               small
@@ -59,48 +108,32 @@ export default async function ExpenseItem({
               <RyogoTiny color="light">{expense.remarks}</RyogoTiny>
             </SectionRowWrapper>
           )}
-          <SectionRowWrapper className="items-center">
-            {expense.addedByUser.photoUrl ? (
-              <RyogoImage
-                src={getFileUrl(expense.addedByUser.photoUrl)}
-                alt={expense.addedByUser.name}
-                imageSize="xs"
-              />
-            ) : (
-              <RyogoEnclosedIcon icon={User} size="sm" />
-            )}
-            <RyogoCaption color="light">
-              {expense.addedByUser.name}
-            </RyogoCaption>
-          </SectionRowWrapper>
-        </SectionColWrapper>
-        {expense.expensePhotoUrl && (
-          <RyogoDialogImage
-            src={getFileUrl(expense.expensePhotoUrl)}
-            alt={expense.type + " " + expense.amount}
-            imageSize="md"
-          />
-        )}
-      </SectionRowWrapper>
-      {canEditExpense && (
-        <SectionRowWrapper className="items-center mt-auto">
-          {!isRider && (
+          <SectionRowWrapper className="items-center mt-auto">
             <ExpenseApprovalButton
               expId={expense.id}
               isApproved={expense.isApproved}
               agencyId={expense.agencyId}
+              isRider={isRider}
             />
-          )}
-          <Link
-            href={`/dashboard/bookings/${expense.bookingId}/expenses/modify/${expense.id}`}
-            className="grow"
-          >
-            <RyogoOutlineButton label={t("Modify")} className="w-full">
-              <RyogoIcon icon={ChevronRight} size="xs" color="slate" />
-            </RyogoOutlineButton>
-          </Link>
-        </SectionRowWrapper>
+            {canEditExpense && (
+              <RyogoOutlineButton
+                label={t("Modify")}
+                className="grow"
+                onClick={() =>
+                  router.push(
+                    isRider
+                      ? `/rider/myBookings/${expense.bookingId}/expenses/modify/${expense.id}`
+                      : `/dashboard/bookings/${expense.bookingId}/expenses/modify/${expense.id}`,
+                  )
+                }
+                disabled={isRider && expense.isApproved}
+              >
+                <RyogoIcon icon={ChevronRight} size="xs" color="slate" />
+              </RyogoOutlineButton>
+            )}
+          </SectionRowWrapper>
+        </SectionColWrapper>
       )}
-    </SectionColWrapper>
+    </SectionWrapper>
   )
 }

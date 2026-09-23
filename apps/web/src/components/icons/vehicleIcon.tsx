@@ -13,18 +13,25 @@ export default function GetVehicleIcon({
 }: Omit<RyogoIconType, "icon"> & {
   vehicleType: VehicleTypesEnum
 }) {
+  let icon
   switch (vehicleType) {
     case VehicleTypesEnum.TRUCK:
-      return <RyogoEnclosedIcon icon={Truck} {...props} />
+      icon = Truck
+      break
     case VehicleTypesEnum.BUS:
-      return <RyogoEnclosedIcon icon={Bus} {...props} />
+      icon = Bus
+      break
     case VehicleTypesEnum.CAR:
-      return <RyogoEnclosedIcon icon={Car} {...props} />
+      icon = Car
+      break
     case VehicleTypesEnum.BIKE:
-      return <RyogoEnclosedIcon icon={Motorbike} {...props} />
+      icon = Motorbike
+      break
     case VehicleTypesEnum.OTHER:
-      return <RyogoEnclosedIcon icon={Tractor} {...props} />
+      icon = Tractor
+      break
   }
+  return <RyogoEnclosedIcon icon={icon} {...props} />
 }
 
 export function GetCanDriveIcons({

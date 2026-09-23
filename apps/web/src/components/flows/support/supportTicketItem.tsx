@@ -48,7 +48,6 @@ export default function SupportTicketItem({
               icon={getEntityIcon(ticket.entityType)}
               size="sm"
               color={"slate"}
-              bgColor={"slate"}
               circular
             />
             <SectionColWrapper small>

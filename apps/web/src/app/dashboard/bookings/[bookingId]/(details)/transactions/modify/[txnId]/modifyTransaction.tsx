@@ -10,7 +10,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   TransactionModesEnum,
-  TransactionsPartiesEnum,
+  TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
@@ -59,7 +59,7 @@ export default function ModifyTransactionPageComponent({
       .multipleOf(1, t("Field2.Error4"))
       .positive(t("Field2.Error5")),
     mode: z.enum(TransactionModesEnum).nonoptional(t("Field3.Error1")),
-    otherParty: z.enum(TransactionsPartiesEnum).nonoptional(t("Field4.Error1")),
+    otherParty: z.enum(TransactionPartiesEnum).nonoptional(t("Field4.Error1")),
     remarks: z
       .string()
       .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
@@ -144,7 +144,7 @@ export default function ModifyTransactionPageComponent({
             name="otherParty"
             register={form.register("otherParty")}
             title={t("Field4.Title")}
-            array={Object.values(TransactionsPartiesEnum)}
+            array={Object.values(TransactionPartiesEnum)}
             placeholder={t("Field4.Placeholder")}
           />
           <RyogoTextarea

@@ -29,7 +29,6 @@ export function SupportFAQItem({
           size="sm"
           icon={ChevronRight}
           color="slate"
-          bgColor="slate"
           className="transition group-open:rotate-90"
           thick
         />

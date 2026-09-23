@@ -16,10 +16,12 @@ export function ExpenseApprovalButton({
   expId,
   isApproved,
   agencyId,
+  isRider,
 }: {
   expId: string
   isApproved: boolean
   agencyId: string
+  isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.BookingExpenses")
   const router = useRouter()
@@ -47,29 +49,30 @@ export function ExpenseApprovalButton({
     })
   }
 
-  if (isApproved) {
+  if (!isApproved) {
+    if (isRider) return null
     return (
-      <RyogoGhostButton
-        label={t("Approved")}
-        labelColor={"green"}
-        onClick={rejectExpense}
+      <RyogoOutlineButton
+        label={t("Approve")}
+        labelColor={"slate"}
+        onClick={approveExpense}
         disabled={isPending}
-        className="grow border"
+        className="grow"
       >
-        <RyogoIcon icon={CheckCheck} size="xs" color={"green"} thick />
-      </RyogoGhostButton>
+        <RyogoIcon icon={Check} size="xs" color={"slate"} thick />
+      </RyogoOutlineButton>
     )
   }
 
   return (
-    <RyogoOutlineButton
-      label={t("Approve")}
-      labelColor={"slate"}
-      onClick={approveExpense}
-      disabled={isPending}
-      className="grow"
+    <RyogoGhostButton
+      label={t("Approved")}
+      labelColor={"green"}
+      onClick={rejectExpense}
+      disabled={isPending || isRider}
+      className="grow border"
     >
-      <RyogoIcon icon={Check} size="xs" color={"slate"} thick />
-    </RyogoOutlineButton>
+      <RyogoIcon icon={CheckCheck} size="xs" color={"green"} thick />
+    </RyogoGhostButton>
   )
 }

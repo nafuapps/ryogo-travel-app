@@ -1,9 +1,11 @@
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
 import MyBookingTripLogsPageComponent from "./myBookingTripLogs"
+import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `My Booking Trip Logs - ${pageTitle}`,
@@ -23,10 +25,14 @@ export default async function MyBookingTripLogsPage({
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]/trip-logs"} />
-      <MyBookingTripLogsPageComponent
-        bookingId={bookingId}
-        bookingTripLogs={bookingTripLogs}
-      />
+      <PageWrapper id="MyBookingTripLogsPage">
+        <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"TripLogs"} />
+        <MyBookingTripLogsPageComponent
+          bookingTripLogs={bookingTripLogs.filter(
+            (t) => t.type !== TripLogTypesEnum.OTHER,
+          )}
+        />
+      </PageWrapper>
     </MainWrapper>
   )
 }

@@ -13,7 +13,6 @@ import {
   RyogoCaption,
   RyogoTiny,
 } from "@/components/typography"
-import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { ChevronDown, Download } from "lucide-react"
@@ -27,10 +26,8 @@ import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function OrderCard({
   order,
-  agency,
 }: {
   order: FindAllOrdersByAgencyIdType[number]
-  agency: NonNullable<FindAgencyByIdType>
 }) {
   const t = useTranslations("Dashboard.AccountSubscriptionOrders")
   const [collapsed, setCollapsed] = useState(true)
@@ -80,7 +77,7 @@ export default function OrderCard({
                   <RyogoIcon size="sm" icon={Download} color="slate" />
                 </RyogoOutlineButton>
               </a>
-              <ViewInvoiceDialog order={order} agency={agency} />
+              <ViewInvoiceDialog order={order} />
             </SectionRowWrapper>
           )}
           {order.payments.length > 0 && (

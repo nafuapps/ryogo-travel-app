@@ -1706,6 +1706,14 @@ export const bookingRepository = {
             createdAt: true,
           },
         },
+        transactions: {
+          columns: {
+            id: true,
+            type: true,
+            otherParty: true,
+            amount: true,
+          },
+        },
       },
     })
   },

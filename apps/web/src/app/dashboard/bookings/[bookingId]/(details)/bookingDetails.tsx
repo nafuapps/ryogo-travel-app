@@ -2,7 +2,11 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { getTranslations } from "next-intl/server"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import Link from "next/link"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  TransactionPartiesEnum,
+  TransactionTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import CancelBookingAlertButton from "@/components/buttons/alert/cancelBookingAlertButton"
 import SendInvoiceAlertButton from "@/components/buttons/alert/sendInvoiceAlertButton"
 import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
@@ -23,6 +27,7 @@ import {
 import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
 import {
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
@@ -51,6 +56,8 @@ import BookingViewQuoteButton from "@/components/flows/bookings/details/bookingV
 import BookingViewConfirmationButton from "@/components/flows/bookings/details/bookingViewConfirmationButton"
 import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { Separator } from "@/components/ui/separator"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -114,6 +121,17 @@ export default async function BookingDetailsPageComponent({
     isCompleted && bookingDetails.actualTotalAmount
       ? bookingDetails.actualTotalAmount
       : bookingDetails.estimatedTotalAmount
+
+  const receivedAmount = bookingDetails.transactions
+    .filter((txn) => txn.otherParty === TransactionPartiesEnum.CUSTOMER)
+    .reduce((total, txn) => {
+      if (txn.type === TransactionTypesEnum.CREDIT) {
+        return total + txn.amount
+      } else {
+        return total - txn.amount
+      }
+    }, 0)
+  const pendingAmount = totalAmount - receivedAmount
 
   return (
     <PageWrapper id="BookingDetailsPage">
@@ -304,10 +322,26 @@ export default async function BookingDetailsPageComponent({
               rate: bookingDetails.commissionRate,
             })}
           />
+          <Separator />
           <BookingPriceItem
             title={t("TotalAmount")}
             value={"₹" + totalAmount}
           />
+          <SectionRowWrapper
+            small
+            className="w-full items-center justify-between"
+          >
+            <RyogoCaption color="light">{t("ReceivedAmount")}</RyogoCaption>
+            <RyogoP color="brand">{"₹" + receivedAmount}</RyogoP>
+          </SectionRowWrapper>
+          <SectionRowWrapper
+            small
+            className="w-full items-center justify-between"
+          >
+            <RyogoCaption color="light">{t("PendingAmount")}</RyogoCaption>
+            <RyogoP color="yellow">{"₹" + pendingAmount}</RyogoP>
+          </SectionRowWrapper>
+
           {canViewQuote && bookingDetails.quoteUrl && (
             <BookingViewQuoteButton bookingDetails={bookingDetails} />
           )}

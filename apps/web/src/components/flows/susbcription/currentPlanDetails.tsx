@@ -37,7 +37,6 @@ export default async function CurrentPlanDetails({
           icon={isBasic ? Disc : BadgeCheck}
           size="sm"
           color="black"
-          bgColor="slate"
         />
       </SectionRowWrapper>
       <RyogoPill

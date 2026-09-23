@@ -6,7 +6,8 @@ import { getCurrentUser } from "@/lib/auth"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Booking Expenses - ${pageTitle}`,
@@ -45,11 +46,14 @@ export default async function BookingExpensesPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses"} />
-      <BookingExpensesPageComponent
-        bookingId={bookingId}
-        bookingExpenses={bookingExpenses}
-        canEditExpense={canEditExpense}
-      />
+      <PageWrapper id="BookingExpensesPage">
+        <BookingDetailHeaderTabs id={bookingId} selectedTab="Expenses" />
+        <BookingExpensesPageComponent
+          bookingId={bookingId}
+          bookingExpenses={bookingExpenses}
+          canEditExpense={canEditExpense}
+        />
+      </PageWrapper>
     </MainWrapper>
   )
 }

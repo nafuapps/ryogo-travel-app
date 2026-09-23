@@ -34,7 +34,7 @@ export function PaginationControls({
   }
   return (
     <Pagination>
-      <PaginationContent>
+      <PaginationContent className="mt-3 lg:mt-4">
         <PaginationItem>
           <PaginationPrevious
             href="#"
@@ -47,7 +47,7 @@ export function PaginationControls({
             }
           />
         </PaginationItem>
-        <RyogoCaption color="light">
+        <RyogoCaption color="light" className="mx-3 lg:mx-4">
           {currentPage} / {totalPages}
         </RyogoCaption>
         <PaginationItem>

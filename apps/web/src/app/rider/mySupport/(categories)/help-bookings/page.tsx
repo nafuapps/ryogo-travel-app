@@ -521,25 +521,25 @@ async function ExpensesContent() {
         </RyogoCaption>
         <SupportListWrapper>
           <SupportListItem label={t("ExpenseTypes.Fuel")}>
-            <ExpenseIcon type={ExpenseTypesEnum.FUEL} />
+            <ExpenseIcon type={ExpenseTypesEnum.FUEL} size="sm" />
           </SupportListItem>
           <SupportListItem label={t("ExpenseTypes.Toll")}>
-            <ExpenseIcon type={ExpenseTypesEnum.TOLL} />
+            <ExpenseIcon type={ExpenseTypesEnum.TOLL} size="sm" />
           </SupportListItem>
           <SupportListItem label={t("ExpenseTypes.Parking")}>
-            <ExpenseIcon type={ExpenseTypesEnum.PARKING} />
+            <ExpenseIcon type={ExpenseTypesEnum.PARKING} size="sm" />
           </SupportListItem>
           <SupportListItem label={t("ExpenseTypes.Maintenance")}>
-            <ExpenseIcon type={ExpenseTypesEnum.MAINTENANCE} />
+            <ExpenseIcon type={ExpenseTypesEnum.MAINTENANCE} size="sm" />
           </SupportListItem>
           <SupportListItem label={t("ExpenseTypes.AC")}>
-            <ExpenseIcon type={ExpenseTypesEnum.AC} />
+            <ExpenseIcon type={ExpenseTypesEnum.AC} size="sm" />
           </SupportListItem>
           <SupportListItem label={t("ExpenseTypes.Food")}>
-            <ExpenseIcon type={ExpenseTypesEnum.FOOD} />
+            <ExpenseIcon type={ExpenseTypesEnum.FOOD} size="sm" />
           </SupportListItem>
           <SupportListItem label={t("ExpenseTypes.Other")}>
-            <ExpenseIcon type={ExpenseTypesEnum.OTHER} />
+            <ExpenseIcon type={ExpenseTypesEnum.OTHER} size="sm" />
           </SupportListItem>
         </SupportListWrapper>
       </SupportContentSectionWrapper>

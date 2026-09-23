@@ -11,16 +11,13 @@ import {
   SUPPORT_EMAIL,
   SUPPORT_HELPLINE_NUMBER,
 } from "@/lib/uiConfig"
-import { FindOrderByRPIdType } from "@ryogo-travel-app/api/services/order.services"
-import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { GST_PERCENTAGE } from "@ryogo-travel-app/api/apiConfig"
+import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
+// import { GST_PERCENTAGE } from "@ryogo-travel-app/api/apiConfig"
 
 export function SubscriptionInvoiceDocument({
   order,
-  agency,
 }: {
-  order: NonNullable<FindOrderByRPIdType>
-  agency: NonNullable<FindAgencyByIdType>
+  order: FindAllOrdersByAgencyIdType[number]
 }) {
   // const priceBeforeTax = (order.amount / (100 + GST_PERCENTAGE)) * 100
   // const taxAmount = order.amount - priceBeforeTax
@@ -57,15 +54,15 @@ export function SubscriptionInvoiceDocument({
           </View>
           <View id="CustomerName" style={styles.detailsSection}>
             <Text style={styles.pBold}>Customer Name: </Text>
-            <Text style={styles.p}>{agency.businessName}</Text>
+            <Text style={styles.p}>{order.agency.businessName}</Text>
           </View>
           <View id="CustomerPhone" style={styles.detailsSection}>
             <Text style={styles.pBold}>Phone: </Text>
-            <Text style={styles.p}>{agency.businessPhone}</Text>
+            <Text style={styles.p}>{order.agency.businessPhone}</Text>
           </View>
           <View id="CustomerAddress" style={styles.detailsSection}>
             <Text style={styles.pBold}>Address: </Text>
-            <Text style={styles.p}>{agency.businessAddress}</Text>
+            <Text style={styles.p}>{order.agency.businessAddress}</Text>
           </View>
         </View>
         <View id="pricingTable" style={styles.pricingTable}>
@@ -109,10 +106,9 @@ export function SubscriptionInvoiceDocument({
 }
 
 export default async function getSubscriptionInvoicePDF(
-  order: NonNullable<FindOrderByRPIdType>,
-  agency: NonNullable<FindAgencyByIdType>,
+  order: FindAllOrdersByAgencyIdType[number],
 ) {
   return await ReactPDF.pdf(
-    <SubscriptionInvoiceDocument order={order} agency={agency} />,
+    <SubscriptionInvoiceDocument order={order} />,
   ).toBlob()
 }

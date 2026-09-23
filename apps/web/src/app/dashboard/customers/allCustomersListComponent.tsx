@@ -116,13 +116,11 @@ export default function AllCustomersListComponent({
           <CustomerItemComponent key={customer.id} customer={customer} />
         ))}
       </TileGridWrapper>
-      <div className="mt-4">
-        <PaginationControls
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </SectionWrapper>
   )
 }

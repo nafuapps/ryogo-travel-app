@@ -4,7 +4,7 @@
   "dependencies": {
     "@base-ui/react": "1.8.0",
     "@hookform/resolvers": "5.9.1",
-    "@next/third-parties": "^16.3.5",
+    "@next/third-parties": "^16.3.6",
     "@opentelemetry/api-logs": "0.222.0",
     "@opentelemetry/instrumentation": "0.222.0",
     "@opentelemetry/sdk-logs": "0.222.0",
@@ -42,7 +42,7 @@
     "jose": "6.2.12",
     "lucide-react": "1.47.0",
     "moment": "2.31.0",
-    "next": "16.3.5",
+    "next": "16.3.6",
     "next-intl": "4.14.6",
     "next-themes": "0.4.6",
     "radix-ui": "1.6.7",
@@ -59,7 +59,7 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
-    "@eloqnt/cli": "0.6.30",
+    "@eloqnt/cli": "0.6.31",
     "@eslint/eslintrc": "3.3.7",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "26.6.2",
@@ -68,7 +68,7 @@
     "@types/web-push": "3.6.4",
     "drizzle-kit": "0.31.11",
     "eslint": "10.11.0",
-    "eslint-config-next": "16.3.5",
+    "eslint-config-next": "16.3.6",
     "tailwindcss": "4.3.3",
     "ts-node": "10.9.2",
     "tsx": "4.23.15",

@@ -1,13 +1,13 @@
 "use client"
 
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption, RyogoTiny } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { createOwnerAccountAction } from "@/app/actions/users/createOwnerAccountAction"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -21,6 +21,7 @@ import {
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import CreateAccountTCDialog from "@/components/flows/onboarding/createAccountTCDialog"
 
 export function CreateAccountConfirm({
   onNext,
@@ -35,6 +36,7 @@ export function CreateAccountConfirm({
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Confirm")
   const router = useRouter()
+  const [acceptedTC, setAcceptedTC] = useState(false)
 
   const formData = useForm<CreateOwnerAccountRequestType>()
 
@@ -143,15 +145,26 @@ export function CreateAccountConfirm({
         </DetailsBorderWrapper>
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>
-        <RyogoDefaultButton
-          size={"lg"}
-          type="submit"
-          disabled={formData.formState.isSubmitting}
-          showSpinner={formData.formState.isSubmitting}
-          label={
-            formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
-          }
+        {!acceptedTC && (
+          <RyogoTiny color="light" className="text-center">
+            {t("Warning")}
+          </RyogoTiny>
+        )}
+        <CreateAccountTCDialog
+          acceptedTC={acceptedTC}
+          setAcceptedTC={setAcceptedTC}
         />
+        {acceptedTC && (
+          <RyogoDefaultButton
+            size={"lg"}
+            type="submit"
+            disabled={formData.formState.isSubmitting || !acceptedTC}
+            showSpinner={formData.formState.isSubmitting}
+            label={
+              formData.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")
+            }
+          />
+        )}
         <RyogoOutlineButton
           size={"lg"}
           type="button"

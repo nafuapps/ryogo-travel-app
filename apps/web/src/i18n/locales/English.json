@@ -297,7 +297,8 @@
         "OwnerName": "Owner Name",
         "OwnerPhone": "Owner Phone",
         "OwnerEmail": "Owner Email",
-        "PrimaryCTA": "Confirm and Submit",
+        "Warning": "You must agree to the terms and conditions to create an account with RyoGo.",
+        "PrimaryCTA": "Confirm and Create Account",
         "SecondaryCTA": "Back",
         "Loading": "Loading",
         "APIError": "Account could not be created.. Please try again"
@@ -6243,6 +6244,111 @@
     "Loading": "Loading..",
     "Skip": "Skip",
     "Success": "Feedback submitted successfully!"
+  },
+  "TermsAndConditions": {
+    "CreateAccount": {
+      "TriggerLabel": "Read Terms and Conditions",
+      "AgreedLabel": "Agreed to the Terms and Conditions",
+      "Title": "Terms and Conditions",
+      "Subtitle": "Please read the following document carefully.",
+      "Accept": "I accept the terms and conditions",
+      "Accepted": "Accepted",
+      "Reject": "Reject terms and conditions",
+      "Close": "Close",
+      "Content": {
+        "LastUpdated": "Last Updated: September 24, 2026",
+        "Welcome1": "Welcome to RyoGo Travel App (`Company`, `we`, `us`, or `our`). These Terms of Service (`Terms`) govern your access to and use of our web application, mobile applications, software, database services, and related operations management tools (collectively, the `Platform`). By creating an account, clicking `I Agree`, or accessing the Platform, you (`Agency`, `Client`, `User`, or `you`) agree to be bound by these Terms.",
+        "Welcome2": "If you are accepting these Terms on behalf of a travel agency, fleet operator, corporate entity, or organization, you represent and warrant that you have the legal authority to bind that entity to these Terms.",
+        "DescriptionService": {
+          "Title": "1. Description of Service",
+          "Body1": "The Platform provides cloud-based Software-as-a-Service (SaaS) tools designed for travel agencies, fleet operators, and transport managers. Features include booking and fleet management, dispatch scheduling, driver mobile tools, automated customer notifications, location tracking, and internal analytics.",
+          "Body2": "Important: The Service is an operations management tool only. We are not a travel booking platform, a reservation system, a payment gateway, or a financial accounting/ledger service. We do not sell, resell, or facilitate the sale of travel tickets, hotel bookings, or tour packages. All bookings, pricing, and customer relationships are solely between you and your customers."
+        },
+        "Account": {
+          "Title": "2. Account Registration & Organization Roles",
+          "Body1": "Account Creation: You must provide accurate, current, and complete business information during registration (including legal entity name, business address, and primary contact details).",
+          "Body2": "Account Security: You are responsible for maintaining the confidentiality of your account credentials. You are fully responsible for all activities that occur under your organization account, including actions taken by your assigned Agents, and Drivers.",
+          "Body3": "Account Owners & Admins: hold full administrative authority over the workspace, including billing configuration, user permissions, and data overrides.",
+          "Body4": "Agents & Dispatchers: are granted operational access to create, edit, and dispatch bookings alongwith adding and managing drivers and vehicles on the plarform.",
+          "Body5": "Drivers: are granted limited, non-transferable access via web/PWA interfaces strictly to view assigned duties and input operational trip metrics (e.g., odometer readings, toll receipts).",
+          "Body6": "Unauthorized Access: You must notify us immediately at {supportEmail} upon suspecting any breach of security or unauthorized access to your agency workspace."
+        },
+        "Subscription": {
+          "Title": "3. Subscriptions, Billing & Payment Terms",
+          "Body1": "Subscription Plans: Premium Access to the Platform is provided on a recurring subscription basis (monthly, quarterly or annually) based on your selected plan tier. All subscription fees are in Indian Rupees (INR).",
+          "Body2": "Billing & Renewal: Subscriptions can be renewed at the end of each billing cycle. Payments are charged to your designated payment method (Wallet, Net banking, Credit/Debit Card, or UPI).",
+          "Body3": "Fee Adjustments: We reserve the right to modify subscription pricing or tier thresholds upon providing at least thirty (30) days advance notice to your Owner Account email.",
+          "Body4": "When a subscription expires, your agency account will enter a {gracePeriod} day Grace Period, during which operational access to the Premium Platform will remain uninterrupted. After the Grace Period, your account will be automatically downgraded to the Free tier Basic plan and you will be required to renew your subscription to further continue Premium plan.",
+          "Body5": "If payment is not successfully processed at the time of subscription purchase, we reserve the right to restrict access to your Premium account until all outstanding balances are settled.",
+          "Body6": "No Refunds: All subscription fees are non-refundable except as explicitly required by applicable law."
+        },
+        "Use": {
+          "Title": "4. User Responsibilities & Acceptable Use",
+          "Subtitle": "You agree that you and your authorized staff/drivers will not:",
+          "Body1": "a. Use the Platform for any illegal, fraudulent, or unauthorized purpose, or in violation of local commercial transport, traffic, or regional licensing laws.",
+          "Body2": "b. Violate any applicable laws, regulations, or policies, including but not limited to intellectual property rights, privacy, or data protection laws.",
+          "Body3": "c. Input false, fabricated, or deceptive data (e.g., fraudulent odometer numbers, forged vehicle compliance documents, or fake toll receipts).",
+          "Body4": "d. Attempt to reverse engineer, decompile, hack, probe, or disrupt the integrity, security, or performance of the Platform or its underlying infrastructure.",
+          "Body5": "e. Resell, lease, sublicense, or redistribute access to the Platform to unauthorized third parties outside your registered agency operations or approved sub-operator vendor networks.",
+          "Body6": "f. Store, upload or transmit viruses, malware, malicious code or unlawful, harmful, defamatory, obscene content or infringe on any third party's rights through the Platform.",
+          "Body7": "g. Attempt to impersonate or misrepresent your organization or its employees, agents, or drivers.",
+          "Body8": "h. Use the Platform to engage in any form of discrimination, harassment, or bullying."
+        },
+        "Compliance": {
+          "Title": "5. Fleet Compliance, Drivers & Operational Disclaimer",
+          "Body1": "Independent Transport Operations: The Platform is a technology management tool. Company is not a transportation carrier, passenger broker, or fleet operator. You remain solely responsible for the physical operation, safety, and legal compliance of your transport fleet.",
+          "Body2": "Vehicle Compliance & Licenses: You are solely responsible for ensuring that all vehicles registered on the Platform possess valid commercial road permits, state tax permits, fitness certificates, pollution compliance (PUC), and adequate commercial vehicle insurance.",
+          "Body3": "Driver Qualification: You are solely responsible for verifying that your drivers possess valid commercial driver's licenses, clean driving records, and required local background verifications.",
+          "Body4": "Third-Party Integrations: The Platform may integrate with third-party APIs (such as WhatsApp Messaging, Razorpay Payment Gateway, and Live Location Tracking services). Company is not responsible for service interruptions, delivery delays, or errors caused by third-party providers."
+        },
+        "Data": {
+          "Title": "6. Data Ownership, Privacy & Internationalization",
+          "Body1": "Your Data: As between you and Company, you retain all ownership rights in the business data, customer details, booking records, and driver logs uploaded to your agency workspace (`Customer Data`).",
+          "Body2": "Data Usage License: You grant Company a limited, non-exclusive, worldwide license to host, copy, process, and display Customer Data solely to the extent necessary to provide, maintain, and support the Platform.",
+          "Body3": "Anonymized Aggregated Data: Company may collect and compile anonymized, non-identifiable system usage metrics and industry benchmarks to optimize server performance and improve software features.",
+          "Body4": "Passenger Data Privacy: You warrant that you have obtained all necessary customer and passenger consents required under applicable data protection laws to input their personal information (such as names, phone numbers, and flight details) into the Platform for booking dispatch and WhatsApp messaging notifications.",
+          "Body5": "Internationalization: The Platform is intended for use in India and may be subject to limitations or restrictions in other jurisdictions.",
+          "Body6": "No Sale of Data: We will never sell, rent, or trade Your Data or your customers data to any third party for marketing or advertising purposes."
+        },
+        "IP": {
+          "Title": "7. Intellectual Property Rights",
+          "Body": "All rights, titles, and interests in and to the Platform—including software code, user interface designs, databases, logos, trade secrets, documentation, and internationalization localization assets—are and will remain the exclusive property of Company and its licensors."
+        },
+        "Support": {
+          "Title": "8. Service Availability & Support",
+          "Body1": "Uptime Commitment: We strive to maintain high service availability (targeting 99% uptime). However, access may be temporarily interrupted for scheduled maintenance, emergency security updates, or network failures beyond our control.",
+          "Body2": "Technical Support: Standard technical support is provided via email and phone and in-app ticketing (for Premium subscibers) during regular business hours as outlined in our Help & Support documentation."
+        },
+        "Liability": {
+          "Title": "9. Limitation of Liability",
+          "Body1": "No Consequential Damages: To the maximum extent permitted by applicable law, Company shall not be liable for any indirect, incidental, special, consequential, or punitive damages—including loss of profits, lost booking revenue, operational downtime, business disruption, or loss of business data—arising out of or related to your use of the Platform.",
+          "Body2": "Liability Cap: In no event shall Company's aggregate total liability arising out of or related to these Terms exceed the total amount paid by you to Company in the three (3) months immediately preceding the event giving rise to the claim.",
+          "Body3": "Transport Incidents: Company shall have zero liability for traffic accidents, vehicle breakdowns, passenger injury, delays, RTO/check-post fines, or driver misconduct occurring during physical transport services dispatched through the Platform."
+        },
+        "Termination": {
+          "Title": "10. Termination & Suspension",
+          "Body1": "Termination by You: You may choose to terminate your account at any time by notifying us in writing. Any active subscription will continue to take effect till the end of your current paid billing period or until the termination date, whichever is earlier.",
+          "Body2": "Termination by Us: We reserve the right to suspend or terminate your account immediately, without prior notice, if you commit a material breach of these Terms, fail to resolve overdue billing balances following the Grace Period, or engage in fraudulent activities or any other viable reason.",
+          "Body3": "Data Retrieval Upon Termination: Upon account termination, you will be granted fourteen (14) days to export your core booking data and driver/vehicle history files. Following this retrieval window, we reserve the right to permanently delete all Customer Data associated with your workspace."
+        },
+        "Modification": {
+          "Title": "11. Modifications to Terms",
+          "Body": "We reserve the right to modify these Terms from time to time. When material changes are made, we will notify you via an in-app Action Center notification, dashboard banner, or email sent to your Account Owner address. Continued use of the Platform following such notice constitutes your acceptance of the revised Terms."
+        },
+        "Law": {
+          "Title": "12. Governing Law & Dispute Resolution",
+          "Body": "These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law principles. Any dispute, controversy, or claim arising out of or relating to these Terms shall be subject to the exclusive jurisdiction of the courts located in Guwahati, Assam."
+        },
+        "Contact": {
+          "Title": "13. Contact Information",
+          "Subtitle": "If you have any questions or concerns regarding these Terms of Service, please contact our legal team at:",
+          "Body1": "Company Name: NafuApps (sole proprietorship of Nitin Gautam)",
+          "Body2": "Email: {contactEmail}",
+          "Body3": "Address: {contactAddress}",
+          "Body4": "Phone: {contactPhone}"
+        }
+      }
+    }
   },
   "Landing": {
     "Navbar": {

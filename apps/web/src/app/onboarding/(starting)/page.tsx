@@ -26,6 +26,7 @@ import RyoGoLogo from "@/components/logo"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { PhoneRegex } from "@/lib/regex"
 import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
@@ -124,14 +125,11 @@ export default async function OnboardingHomePage({
             label={t("BodyChecklist.Item5")}
             icon={User}
           />
-          <div className="border rounded-md p-2 lg:p-3 flex flex-col gap-1 lg:gap-1.5">
-            <RyogoCaption color="light">
-              {t("BodyChecklist.Optional")}
-            </RyogoCaption>
-            <RyogoCaption color="light">
-              {t("BodyChecklist.Format")}
-            </RyogoCaption>
-          </div>
+          <Separator />
+          <RyogoCaption color="light">
+            {t("BodyChecklist.Optional")}
+          </RyogoCaption>
+          <RyogoCaption color="light">{t("BodyChecklist.Format")}</RyogoCaption>
         </div>
       </div>
     </div>

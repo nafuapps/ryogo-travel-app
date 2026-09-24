@@ -57,8 +57,16 @@ export function CreateAccountStep3({
       .positive(t("Field2.Error4"))
       .multipleOf(1, t("Field2.Error5"))
       .optional(),
-    agencyState: z.string().nonoptional(t("Field3.Error1")),
-    agencyCity: z.string().nonoptional(t("Field4.Error1")),
+    agencyState: z
+      .string()
+      .trim()
+      .min(1, t("Field3.Error1"))
+      .nonoptional(t("Field3.Error1")),
+    agencyCity: z
+      .string()
+      .trim()
+      .min(1, t("Field4.Error1"))
+      .nonoptional(t("Field4.Error1")),
     qrCode: FileRegex.refine((file) => {
       if (file.length < 1) return true
       return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE

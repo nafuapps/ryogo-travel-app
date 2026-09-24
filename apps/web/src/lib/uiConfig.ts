@@ -74,6 +74,10 @@ export const MAX_USER_COMMENTS_PER_TICKET = 5
 export const SUPPORT_HELPLINE_NUMBER = "9840774089"
 export const SUPPORT_CHAT_NUMBER = "9840774089"
 export const SUPPORT_EMAIL = "ryogo.in@gmail.com"
+export const LEGAL_EMAIL = "nafuapps@gmail.com"
+export const LEGAL_ADDRESS =
+  "NafuApps, 451, Sector 9, Avas vikas colony, Sikandra, Agra, 282007"
+export const LEGAL_PHONE = "9840774089"
 //RyoGo logo in email and pdf footer
 export const RyogoLogoSrc =
   "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png"

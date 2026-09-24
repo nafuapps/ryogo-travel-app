@@ -98,6 +98,7 @@ export default function NewBookingStepDriver({
           total: NewBookingTotalSteps,
         })}
         description={t("Description")}
+        href={"/dashboard/support/help-bookings#creation"}
       />
       {limited && (
         <SubscriptionReminderButton

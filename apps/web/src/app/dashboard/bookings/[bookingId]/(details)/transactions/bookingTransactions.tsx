@@ -1,18 +1,13 @@
 "use client"
 
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import Link from "next/link"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
-  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import TransactionItem from "@/components/flows/bookings/transaction/transactionItem"
-import {
-  RyogoDefaultButton,
-  RyogoGhostButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import {
   TransactionModesEnum,
@@ -26,18 +21,16 @@ import { useMemo, useTransition } from "react"
 import SelectFilter from "@/components/filter/selectFilter"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { PackageOpen } from "lucide-react"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 const TRANSACTIONS_PER_PAGE = 5
 
 export default function BookingTransactionsPageComponent({
-  bookingId,
   bookingTransactions,
   canCreateTransaction,
   isOwner,
 }: {
-  bookingId: string
   bookingTransactions: FindBookingTransactionsByIdType
   canCreateTransaction: boolean
   isOwner: boolean
@@ -140,21 +133,7 @@ export default function BookingTransactionsPageComponent({
           />
         </SectionColWrapper>
       ) : (
-        <SectionColWrapper className="self-center my-auto items-center">
-          <RyogoIcon icon={PackageOpen} size="lg" color="light" />
-          <RyogoCaption color="light">{t("NoTransactions")}</RyogoCaption>
-        </SectionColWrapper>
-      )}
-      {canCreateTransaction && (
-        <StickyActionWrapper>
-          <Link href={`/dashboard/bookings/${bookingId}/transactions/new`}>
-            <RyogoDefaultButton
-              label={t("AddTransaction")}
-              size={"lg"}
-              className="w-full"
-            />
-          </Link>
-        </StickyActionWrapper>
+        <EmptyStateIcon icon={PackageOpen} label={t("NoTransactions")} />
       )}
     </>
   )

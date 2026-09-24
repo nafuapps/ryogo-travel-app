@@ -3,7 +3,11 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import OngoingBookingsComponent from "@/components/flows/bookings/home/ongoingBookingsComponent"
 import AllBookingsHeaderTabs from "@/components/header/detailHeaderTabs/allBookingsHeaderTabs"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -11,6 +15,7 @@ import UpcomingBookingsComponent from "@/components/flows/bookings/home/upcoming
 import BookingScheduleChartComponent from "@/components/flows/bookings/home/bookingScheduleChartComponent"
 import BookingHistoryChartComponent from "@/components/flows/bookings/home/bookingHistoryChartComponent"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export const metadata: Metadata = {
   title: `Bookings - ${pageTitle}`,
@@ -61,6 +66,12 @@ export default async function BookingsPage() {
         <BookingHistoryChartComponent
           bookingsHistory14Days={bookingsHistory14Days}
         />
+        <StickyActionWrapper>
+          <HelpIconButton
+            href={"/dashboard/support/help-bookings"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
       </PageWrapper>
     </MainWrapper>
   )

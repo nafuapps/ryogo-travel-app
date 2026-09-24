@@ -1,7 +1,7 @@
 "use client"
 
 import { RyogoCaption } from "@/components/typography"
-import { Ban } from "lucide-react"
+import { Ban, TicketX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindCancelledBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
@@ -13,6 +13,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { Switch } from "@/components/ui/switch"
 import { CancelledBookingCard } from "@/components/flows/bookings/cards/bookingCards"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default function CancelledBookingsComponent({
   cancelledBookings,
@@ -44,11 +45,15 @@ export default function CancelledBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      <TileGridWrapper>
-        {trips.map((trip) => (
-          <CancelledBookingCard key={trip.id} booking={trip} />
-        ))}
-      </TileGridWrapper>
+      {trips.length > 0 ? (
+        <TileGridWrapper>
+          {trips.map((trip) => (
+            <CancelledBookingCard key={trip.id} booking={trip} />
+          ))}
+        </TileGridWrapper>
+      ) : (
+        <EmptyStateIcon icon={TicketX} label={t("NoTrips")} />
+      )}
     </SectionWrapper>
   )
 }

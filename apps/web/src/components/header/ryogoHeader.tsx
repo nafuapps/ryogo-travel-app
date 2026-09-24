@@ -1,4 +1,4 @@
-import { RyogoP } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { HeaderBackButton } from "./headerButton"
 import {
@@ -18,9 +18,9 @@ export default function RyogoHeader({
       <SectionRowWrapper small className="items-center justify-start">
         <SidebarTrigger />
         <HeaderBackButton />
-        <RyogoP weight="font-bold" color="slate">
+        <RyogoSmall weight="font-bold" color="slate">
           {title}
-        </RyogoP>
+        </RyogoSmall>
       </SectionRowWrapper>
       <SectionRowWrapper className="items-center justify-end">
         {children}

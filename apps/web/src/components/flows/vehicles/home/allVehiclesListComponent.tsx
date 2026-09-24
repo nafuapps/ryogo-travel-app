@@ -7,7 +7,6 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import GetVehicleIcon from "@/components/icons/vehicleIcon"
 import {
-  AddInfoWrapper,
   SectionColWrapper,
   SectionHeaderWrapper,
   SectionRowWrapper,
@@ -18,6 +17,7 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
 import { BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllVehiclesListComponent({
   allVehicles,
@@ -41,8 +41,15 @@ export default async function AllVehiclesListComponent({
         ))}
       </TileGridWrapper>
       {(isPremium || allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
-        <Link href={`/dashboard/vehicles/new`} className="w-full">
-          <AddInfoWrapper icon={Plus} label={t("AddVehicle")} />
+        <Link href={`/dashboard/vehicles/new`}>
+          <RyogoOutlineButton
+            size="lg"
+            label={t("AddVehicle")}
+            labelColor="light"
+            className="w-full"
+          >
+            <RyogoIcon icon={Plus} size="sm" color="slate" />
+          </RyogoOutlineButton>
         </Link>
       )}
     </SectionWrapper>

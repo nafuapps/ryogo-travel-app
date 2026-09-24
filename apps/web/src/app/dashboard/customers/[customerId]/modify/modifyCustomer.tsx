@@ -18,6 +18,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { ModifyCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
@@ -32,6 +33,8 @@ import {
   MIN_FIELD_DESC_LENGTH,
   MIN_NAME_LENGTH,
 } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ModifyCustomerPageComponent({
   customer,
@@ -112,6 +115,10 @@ export default function ModifyCustomerPageComponent({
         id="ModifyCustomerForm"
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-customers#editing" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoInput
             name={"name"}

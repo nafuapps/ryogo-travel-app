@@ -17,6 +17,7 @@ import {
   FormWrapper,
   GridWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
@@ -25,6 +26,7 @@ import {
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
 import { PHONE_LENGTH } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function NewBookingSearchCustomerPageComponent({
   customers,
@@ -45,7 +47,7 @@ export default function NewBookingSearchCustomerPageComponent({
     enteredPhone: z
       .string()
       .trim()
-      .min(4, t("Error1"))
+      .min(3, t("Error1"))
       .max(PHONE_LENGTH, t("Error2"))
       .regex(/^[0-9]+$/, t("Error2")),
   })
@@ -86,7 +88,10 @@ export default function NewBookingSearchCustomerPageComponent({
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <RyogoH3>{t("Title")}</RyogoH3>
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-bookings#creation" />
+        </SectionRowWrapper>
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoInput
@@ -94,6 +99,13 @@ export default function NewBookingSearchCustomerPageComponent({
             label={t("Phone")}
             placeholder={t("Placeholder")}
             type="tel"
+          />
+          <RyogoDefaultButton
+            size={"lg"}
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            showSpinner={form.formState.isSubmitting}
+            label={t("SearchCTA")}
           />
         </FormContentWrapper>
         {foundCustomers.length > 0 && (
@@ -122,19 +134,12 @@ export default function NewBookingSearchCustomerPageComponent({
           </RyogoSmall>
         )}
         <StickyActionWrapper>
-          <RyogoDefaultButton
-            size={"lg"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
-            showSpinner={form.formState.isSubmitting}
-            label={t("SearchCTA")}
-          />
           <RyogoOutlineButton
-            size={"lg"}
             type="button"
             onClick={reset}
             disabled={!phone || phone.length < 1 || form.formState.isSubmitting}
             label={t("ClearCTA")}
+            labelColor="light"
           />
           <RyogoGhostButton
             type="button"

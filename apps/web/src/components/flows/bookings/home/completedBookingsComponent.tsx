@@ -1,7 +1,7 @@
 "use client"
 
 import { RyogoCaption } from "@/components/typography"
-import { CheckCheck } from "lucide-react"
+import { CheckCheck, TicketX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindCompletedBookingsPreviousDaysType } from "@ryogo-travel-app/api/services/booking.services"
@@ -13,6 +13,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { CompletedBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { Switch } from "@/components/ui/switch"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default function CompletedBookingsComponent({
   completedBookings,
@@ -44,11 +45,15 @@ export default function CompletedBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      <TileGridWrapper>
-        {trips.map((trip) => (
-          <CompletedBookingCard key={trip.id} booking={trip} />
-        ))}
-      </TileGridWrapper>
+      {trips.length > 0 ? (
+        <TileGridWrapper>
+          {trips.map((trip) => (
+            <CompletedBookingCard key={trip.id} booking={trip} />
+          ))}
+        </TileGridWrapper>
+      ) : (
+        <EmptyStateIcon icon={TicketX} label={t("NoTrips")} />
+      )}
     </SectionWrapper>
   )
 }

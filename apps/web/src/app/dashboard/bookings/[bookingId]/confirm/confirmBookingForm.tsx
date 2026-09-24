@@ -6,6 +6,7 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
   RyogoTextarea,
   RyogoCheckbox,
@@ -15,6 +16,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
@@ -109,7 +111,12 @@ export default function ConfirmBookingPageComponent({
         onSubmit={form.handleSubmit(submit)}
         form={form}
       >
-        <RyogoH3>{t("Title")}</RyogoH3>
+        <SectionRowWrapper small className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton
+            href={"/dashboard/support/help-bookings#confirmation"}
+          />
+        </SectionRowWrapper>
         <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
         <FormContentWrapper>{children}</FormContentWrapper>
         <FormContentWrapper>

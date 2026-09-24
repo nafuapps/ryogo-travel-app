@@ -3,10 +3,15 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import LeadBookingsComponent from "@/components/flows/bookings/home/leadBookingsComponent"
 import AllBookingsHeaderTabs from "@/components/header/detailHeaderTabs/allBookingsHeaderTabs"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export const metadata: Metadata = {
   title: `Booking Leads - ${pageTitle}`,
@@ -34,6 +39,12 @@ export default async function LeadBookingsPage() {
           leadBookings={leadBookings}
           userId={currentUser.userId}
         />
+        <StickyActionWrapper>
+          <HelpIconButton
+            href={"/dashboard/support/help-bookings"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
       </PageWrapper>
     </MainWrapper>
   )

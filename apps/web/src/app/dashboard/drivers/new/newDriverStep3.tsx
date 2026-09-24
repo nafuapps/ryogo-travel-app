@@ -93,6 +93,7 @@ export function NewDriverStep3({
           total: AddDriverTotalSteps,
         })}
         description={t("Description")}
+        href={"/dashboard/support/help-drivers#adding"}
       />
       <FormWrapper<Step3Type>
         id="Step3Form"

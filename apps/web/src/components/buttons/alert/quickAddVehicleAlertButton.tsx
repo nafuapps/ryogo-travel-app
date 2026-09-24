@@ -63,7 +63,7 @@ export default function QuickAddVehicleAlertButton({
         router.replace(
           isOnboarding
             ? `/onboarding/add-driver`
-            : `/dashboard/vehicles/${addedVehicle.id}`,
+            : `/dashboard/vehicles/${addedVehicle.id}?feedback=true`,
         )
       } else {
         //If failed, show error

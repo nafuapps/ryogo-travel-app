@@ -6,8 +6,16 @@ import { getCurrentUser } from "@/lib/auth"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import Link from "next/link"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { getTranslations } from "next-intl/server"
 
 export const metadata: Metadata = {
   title: `Booking Expenses - ${pageTitle}`,
@@ -31,6 +39,7 @@ export default async function BookingExpensesPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
+  const t = await getTranslations("Dashboard.BookingExpenses")
   //Expense can be created for in-progress or completed bookings only
   //Only owner or assigned user can create expenses
   const canEditExpense =
@@ -49,10 +58,24 @@ export default async function BookingExpensesPage({
       <PageWrapper id="BookingExpensesPage">
         <BookingDetailHeaderTabs id={bookingId} selectedTab="Expenses" />
         <BookingExpensesPageComponent
-          bookingId={bookingId}
           bookingExpenses={bookingExpenses}
           canEditExpense={canEditExpense}
         />
+        <StickyActionWrapper>
+          {canEditExpense && (
+            <Link href={`/dashboard/bookings/${bookingId}/expenses/new`}>
+              <RyogoDefaultButton
+                label={t("AddExpense")}
+                size={"lg"}
+                className="w-full"
+              />
+            </Link>
+          )}
+          <HelpIconButton
+            href={"/dashboard/support/help-bookings#expenses"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
       </PageWrapper>
     </MainWrapper>
   )

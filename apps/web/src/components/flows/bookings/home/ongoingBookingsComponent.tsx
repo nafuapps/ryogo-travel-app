@@ -2,7 +2,7 @@
 
 import { RyogoCaption } from "@/components/typography"
 import { FindOngoingTripsType } from "@ryogo-travel-app/api/services/booking.services"
-import { Route } from "lucide-react"
+import { Route, TicketX } from "lucide-react"
 import {
   SectionHeaderWrapper,
   SectionRowWrapper,
@@ -13,6 +13,7 @@ import { OngoingBookingCard } from "@/components/flows/bookings/cards/bookingCar
 import { useState } from "react"
 import { Switch } from "@/components/ui/switch"
 import { useTranslations } from "next-intl"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default function OngoingBookingsComponent({
   ongoingTrips,
@@ -44,11 +45,15 @@ export default function OngoingBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      <TileGridWrapper>
-        {trips.map((trip) => (
-          <OngoingBookingCard key={trip.id} booking={trip} />
-        ))}
-      </TileGridWrapper>
+      {trips.length > 0 ? (
+        <TileGridWrapper>
+          {trips.map((trip) => (
+            <OngoingBookingCard key={trip.id} booking={trip} />
+          ))}
+        </TileGridWrapper>
+      ) : (
+        <EmptyStateIcon icon={TicketX} label={t("NoTrips")} />
+      )}
     </SectionWrapper>
   )
 }

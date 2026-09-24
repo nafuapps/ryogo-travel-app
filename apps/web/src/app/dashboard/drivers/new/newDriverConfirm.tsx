@@ -88,6 +88,7 @@ export function NewDriverConfirm({
         description={t("Description")}
         totalSteps={AddDriverTotalSteps}
         currentStepIndex={3}
+        href={"/dashboard/support/help-drivers#adding"}
       />
       <FormWrapper<AddDriverRequestType>
         id="ConfirmForm"

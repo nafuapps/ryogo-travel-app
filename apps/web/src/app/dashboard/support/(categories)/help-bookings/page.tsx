@@ -107,6 +107,7 @@ export default async function SupportHelpBookingsPage() {
       icon: Tickets,
       content: <OverviewContent />,
     },
+    //TODO: List of all bookings (leads,  ongoing, completed, cancelled, etc)
     {
       id: "creation",
       title: t("Creation.Title"),

@@ -214,6 +214,7 @@ export default function NewBookingStepTripDetails({
           total: NewBookingTotalSteps,
         })}
         description={t("Description")}
+        href={"/dashboard/support/help-bookings#creation"}
       />
       <FormWrapper<StepTripDetailsType>
         id="StepTripDetailsForm"

@@ -20,6 +20,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
@@ -36,6 +37,8 @@ import {
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
+import { RyogoH3 } from "@/components/typography"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function NewCustomerForm({
   agencyId,
@@ -146,6 +149,10 @@ export default function NewCustomerForm({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newCustomerForm"
       >
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-customers#adding" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoInput
             name={"name"}

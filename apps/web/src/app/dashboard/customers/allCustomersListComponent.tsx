@@ -2,7 +2,7 @@
 
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { User, Plus, Rows3, ChevronRight } from "lucide-react"
+import { User, Plus, Rows3, ChevronRight, TagX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -15,7 +15,6 @@ import { PaginationControls } from "@/components/pagination/paginationControls"
 import { usePagination } from "@/hooks/usePagination"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import {
-  AddInfoWrapper,
   SectionColWrapper,
   SectionHeaderWrapper,
   SectionRowWrapper,
@@ -28,8 +27,9 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
-const CUSTOMERS_PER_PAGE = 10
+const CUSTOMERS_PER_PAGE = 4
 
 export default function AllCustomersListComponent({
   allCustomers,
@@ -78,7 +78,14 @@ export default function AllCustomersListComponent({
         count={allCustomers.length}
       />
       <Link href={`/dashboard/customers/new`}>
-        <AddInfoWrapper icon={Plus} label={t("AddCustomer")} />
+        <RyogoOutlineButton
+          size="lg"
+          label={t("AddCustomer")}
+          labelColor="light"
+          className="w-full"
+        >
+          <RyogoIcon icon={Plus} size="sm" color="slate" />
+        </RyogoOutlineButton>{" "}
       </Link>
       <Field>
         <ButtonGroup>
@@ -111,11 +118,15 @@ export default function AllCustomersListComponent({
           />
         </ButtonGroup>
       </Field>
-      <TileGridWrapper>
-        {currentItems.map((customer) => (
-          <CustomerItemComponent key={customer.id} customer={customer} />
-        ))}
-      </TileGridWrapper>
+      {currentItems.length > 0 ? (
+        <TileGridWrapper>
+          {currentItems.map((customer) => (
+            <CustomerItemComponent key={customer.id} customer={customer} />
+          ))}
+        </TileGridWrapper>
+      ) : (
+        <EmptyStateIcon icon={TagX} label={t("NoCustomers")} />
+      )}
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}
@@ -153,9 +164,9 @@ function CustomerItemComponent({
             {customer.location.city + ", " + customer.location.state}
           </RyogoCaption>
         </SectionColWrapper>
-        <SectionColWrapper className="items-end">
-          <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
+        <SectionColWrapper className="h-full items-end justify-around">
           <CustomerStatusPill status={customer.status} />
+          <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
         </SectionColWrapper>
       </SectionRowWrapper>
     </Link>

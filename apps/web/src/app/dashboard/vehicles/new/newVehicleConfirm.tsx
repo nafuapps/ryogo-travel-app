@@ -89,6 +89,7 @@ export function NewVehicleConfirm({
           total: AddVehicleTotalSteps.toString(),
         })}
         description={t("Description")}
+        href={"/dashboard/support/help-vehicles#adding"}
       />
       <FormWrapper<AddVehicleRequestType>
         id="ConfirmForm"

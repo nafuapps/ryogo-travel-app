@@ -59,7 +59,9 @@ export default function DeleteExpenseAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoGhostButton label={t("Label")} type="button" />}
+      labelChild={
+        <RyogoGhostButton label={t("Label")} labelColor="light" type="button" />
+      }
     >
       <RyogoDestructiveButton
         onClick={deleteExpense}

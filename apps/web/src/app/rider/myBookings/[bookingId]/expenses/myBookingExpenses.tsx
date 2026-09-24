@@ -2,38 +2,29 @@
 
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import {
   SectionColWrapper,
   SectionRowWrapper,
-  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
-import {
-  RyogoDefaultButton,
-  RyogoGhostButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ExpenseTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { usePagination } from "@/hooks/usePagination"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 import { BanknoteX } from "lucide-react"
 import { Route } from "next"
 import ExpensesFiltersCard from "@/components/filter/expensesFiltersCard"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 const EXPENSES_PER_PAGE = 5
 
 export default function MyBookingExpensesPageComponent({
   userId,
-  bookingId,
   bookingExpenses,
-  canAddExpense,
 }: {
   userId: string
-  bookingId: string
   bookingExpenses: FindBookingExpensesByIdType
-  canAddExpense: boolean
 }) {
   const t = useTranslations("Rider.MyBookingExpenses")
   const router = useRouter()
@@ -86,21 +77,7 @@ export default function MyBookingExpensesPageComponent({
           })}
         </SectionColWrapper>
       ) : (
-        <SectionColWrapper className="self-center my-auto items-center">
-          <RyogoIcon icon={BanknoteX} size="lg" color="light" />
-          <RyogoCaption color="light">{t("NoExpenses")}</RyogoCaption>
-        </SectionColWrapper>
-      )}
-      {canAddExpense && (
-        <StickyActionWrapper>
-          <Link href={`/rider/myBookings/${bookingId}/expenses/add`}>
-            <RyogoDefaultButton
-              label={t("AddExpense")}
-              size={"lg"}
-              className="w-full"
-            />
-          </Link>
-        </StickyActionWrapper>
+        <EmptyStateIcon icon={BanknoteX} label={t("NoExpenses")} />
       )}
     </>
   )

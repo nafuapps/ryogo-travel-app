@@ -3,8 +3,13 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingTripLogsPageComponent from "./bookingTripLogs"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export const metadata: Metadata = {
   title: `Booking Trip Logs - ${pageTitle}`,
@@ -27,6 +32,12 @@ export default async function BookingDetailsPage({
       <PageWrapper id="BookingTripLogsPage">
         <BookingDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
         <BookingTripLogsPageComponent bookingTripLogs={bookingTripLogs} />
+        <StickyActionWrapper>
+          <HelpIconButton
+            href={"/dashboard/support/help-bookings#trip-logs"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
       </PageWrapper>
     </MainWrapper>
   )

@@ -919,11 +919,13 @@
     "Bookings": {
       "Ongoing": {
         "Title": "ONGOING TRIPS",
-        "ShowAgencyOngoing": "Show Agencywide"
+        "ShowAgencyOngoing": "Show Agencywide",
+        "NoTrips": "No ongoing trips"
       },
       "Upcoming": {
         "Title": "UPCOMING",
-        "ShowAgencyUpcoming": "Show Agencywide"
+        "ShowAgencyUpcoming": "Show Agencywide",
+        "NoTrips": "No upcoming trips"
       },
       "Schedule": {
         "Title": "BOOKING SCHEDULE"
@@ -933,15 +935,18 @@
       },
       "Completed": {
         "Title": "COMPLETED",
-        "ShowAgencyCompleted": "Show Agencywide"
+        "ShowAgencyCompleted": "Show Agencywide",
+        "NoTrips": "No completed trips"
       },
       "Cancelled": {
         "Title": "CANCELLED",
-        "ShowAgencyCancelled": "Show Agencywide"
+        "ShowAgencyCancelled": "Show Agencywide",
+        "NoTrips": "No cancelled trips"
       },
       "Leads": {
         "Title": "LEADS",
         "ShowAgencyLeads": "Show Agencywide",
+        "NoTrips": "No lead bookings",
         "Passengers": "pax"
       }
     },
@@ -953,7 +958,7 @@
     },
     "NewBooking": {
       "Title": "Create Booking",
-      "Description": "Find customer by phone number to create a booking",
+      "Description": "Finding customer by phone number",
       "Phone": "Enter customer phone number to search",
       "Placeholder": "9876543210",
       "Error1": "Enter atleast 4 digits to search customer",
@@ -2088,7 +2093,7 @@
       "Step2": {
         "Title": "Adding Driver",
         "Subtitle": "STEP {current} OF {total}",
-        "Description": "Provide license related details of the driver",
+        "Description": "Provide driver license related details",
         "Field1": {
           "Title": "Driver license number",
           "Placeholder": "GJ1220190000001",
@@ -2329,12 +2334,14 @@
       "All": {
         "Title": "ALL CUSTOMERS",
         "AddCustomer": "Add customer",
+        "NoCustomers": "No customers found",
         "Search": "Search",
         "Clear": "Clear",
         "Type": "Type to search"
       }
     },
     "NewCustomer": {
+      "Title": "Adding new customer",
       "Field1": {
         "Title": "Enter customer name",
         "Placeholder": "Raj Sharma",
@@ -2390,6 +2397,7 @@
       "SecondaryCTA": "Back"
     },
     "ModifyCustomer": {
+      "Title": "Edit customer details",
       "Field1": {
         "Title": "Enter customer name",
         "Placeholder": "Raj Sharma",
@@ -4910,7 +4918,7 @@
         "YesCTA": "Yes, Send"
       },
       "DeleteTransaction": {
-        "Label": "Delete Transaction",
+        "Label": "DELETE TRANSACTION",
         "Title": "Are you sure you want to delete this transaction?",
         "Desc": "When deleted, this transaction cannot be recovered later.",
         "NoCTA": "No",
@@ -4920,7 +4928,7 @@
         "YesCTA": "Yes, Delete"
       },
       "DeleteExpense": {
-        "Label": "Delete Expense",
+        "Label": "DELETE EXPENSE",
         "Title": "Are you sure you want to delete this expense?",
         "Desc": "When deleted, this expense cannot be recovered later.",
         "NoCTA": "No",
@@ -6229,7 +6237,7 @@
     "Title": "Please provide feedback",
     "Description": "Your feedback will help us improve our product and experience.",
     "Field1": {
-      "Title": "Did you like the {type} flow?"
+      "Title": "Did you like the {type} process?"
     },
     "Field2": {
       "Title": "Rate the experience"
@@ -6349,6 +6357,13 @@
         }
       }
     }
+  },
+  "Pagination": {
+    "Previous": "Previous",
+    "Next": "Next"
+  },
+  "Help": {
+    "Title": "Need Help"
   },
   "Landing": {
     "Navbar": {

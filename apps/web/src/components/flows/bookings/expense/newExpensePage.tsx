@@ -18,6 +18,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
@@ -32,6 +33,7 @@ import {
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function NewExpensePageComponent({
   bookingId,
@@ -112,7 +114,16 @@ export default function NewExpensePageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newExpenseForm"
       >
-        <RyogoH3>{t("Title")}</RyogoH3>
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton
+            href={
+              isRider
+                ? "/rider/mySupport/help-bookings#expenses"
+                : "/dashboard/support/help-bookings#expenses"
+            }
+          />
+        </SectionRowWrapper>
         <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
         <FormContentWrapper>
           <RyogoSelect

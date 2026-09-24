@@ -15,7 +15,7 @@ import {
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoH4 } from "@/components/typography"
+import { RyogoSmall, RyogoH3 } from "@/components/typography"
 import {
   Dialog,
   DialogContent,
@@ -98,10 +98,10 @@ export default function NewFeedbackComponent({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <RyogoH4>{t("Title")}</RyogoH4>
+            <RyogoH3>{t("Title")}</RyogoH3>
           </DialogTitle>
           <DialogDescription>
-            <RyogoCaption color="light">{t("Description")}</RyogoCaption>
+            <RyogoSmall color="light">{t("Description")}</RyogoSmall>
           </DialogDescription>
         </DialogHeader>
         <FormWrapper<SchemaType>

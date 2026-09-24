@@ -55,7 +55,7 @@ export default function QuickAddDriverAlertButton({
         router.replace(
           isOnboarding
             ? `/onboarding/add-agent`
-            : `/dashboard/drivers/${addedDriver.id}`,
+            : `/dashboard/drivers/${addedDriver.id}?feedback=true`,
         )
       } else {
         //If failed, show error

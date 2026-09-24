@@ -1,4 +1,3 @@
-// components/pagination-controls.tsx
 "use client"
 
 import {
@@ -9,6 +8,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import { RyogoCaption } from "@/components/typography"
+import { useTranslations } from "next-intl"
 
 interface PaginationControlsProps {
   currentPage: number
@@ -21,6 +21,8 @@ export function PaginationControls({
   totalPages,
   onPageChange,
 }: PaginationControlsProps) {
+  const t = useTranslations("Pagination")
+
   const handlePrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1)
@@ -45,7 +47,9 @@ export function PaginationControls({
             className={
               currentPage === 1 ? "pointer-events-none opacity-50" : ""
             }
-          />
+          >
+            <RyogoCaption>{t("Previous")}</RyogoCaption>
+          </PaginationPrevious>
         </PaginationItem>
         <RyogoCaption color="light" className="mx-3 lg:mx-4">
           {currentPage} / {totalPages}
@@ -60,7 +64,9 @@ export function PaginationControls({
             className={
               currentPage === totalPages ? "pointer-events-none opacity-50" : ""
             }
-          />
+          >
+            <RyogoCaption>{t("Next")}</RyogoCaption>
+          </PaginationNext>
         </PaginationItem>
       </PaginationContent>
     </Pagination>

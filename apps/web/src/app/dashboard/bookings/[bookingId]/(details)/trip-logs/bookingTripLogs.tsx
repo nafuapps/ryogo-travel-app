@@ -13,8 +13,8 @@ import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { Switch } from "@/components/ui/switch"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { MapPinOff } from "lucide-react"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 const TRIPLOGS_PER_PAGE = 10
 
@@ -57,10 +57,7 @@ export default function BookingTripLogsPageComponent({
           />
         </SectionColWrapper>
       ) : (
-        <SectionColWrapper className="self-center my-auto items-center">
-          <RyogoIcon icon={MapPinOff} size="lg" color="light" />
-          <RyogoCaption color="light">{t("NoTriplogs")}</RyogoCaption>
-        </SectionColWrapper>
+        <EmptyStateIcon icon={MapPinOff} label={t("NoTriplogs")} />
       )}
     </>
   )

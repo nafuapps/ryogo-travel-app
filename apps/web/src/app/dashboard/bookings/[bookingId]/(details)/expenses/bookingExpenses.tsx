@@ -2,18 +2,13 @@
 
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
-  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoGhostButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo } from "react"
@@ -21,18 +16,16 @@ import { Route } from "next"
 import { ExpenseTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { BanknoteX } from "lucide-react"
 import ExpensesFiltersCard from "@/components/filter/expensesFiltersCard"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 const EXPENSES_PER_PAGE = 5
 
 export default function BookingExpensesPageComponent({
-  bookingId,
   bookingExpenses,
   canEditExpense,
 }: {
-  bookingId: string
   bookingExpenses: FindBookingExpensesByIdType
   canEditExpense: boolean
 }) {
@@ -124,21 +117,7 @@ export default function BookingExpensesPageComponent({
           />
         </SectionColWrapper>
       ) : (
-        <SectionColWrapper className="self-center my-auto items-center">
-          <RyogoIcon icon={BanknoteX} size="lg" color="light" />
-          <RyogoCaption color="light">{t("NoExpenses")}</RyogoCaption>
-        </SectionColWrapper>
-      )}
-      {canEditExpense && (
-        <StickyActionWrapper>
-          <Link href={`/dashboard/bookings/${bookingId}/expenses/new`}>
-            <RyogoDefaultButton
-              label={t("AddExpense")}
-              size={"lg"}
-              className="w-full"
-            />
-          </Link>
-        </StickyActionWrapper>
+        <EmptyStateIcon icon={BanknoteX} label={t("NoExpenses")} />
       )}
     </>
   )

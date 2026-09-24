@@ -9,9 +9,9 @@ import {
 } from "@/components/page/pageWrappers"
 import { usePagination } from "@/hooks/usePagination"
 import { RyogoCaption } from "@/components/typography"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { MapPinOff } from "lucide-react"
 import { PaginationControls } from "@/components/pagination/paginationControls"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 const TRIPLOGS_PER_PAGE = 10
 
@@ -45,10 +45,7 @@ export default function MyBookingTripLogsPageComponent({
           />
         </SectionColWrapper>
       ) : (
-        <SectionColWrapper className="self-center my-auto items-center">
-          <RyogoIcon icon={MapPinOff} size="lg" color="light" />
-          <RyogoCaption color="light">{t("NoTriplogs")}</RyogoCaption>
-        </SectionColWrapper>
+        <EmptyStateIcon icon={MapPinOff} label={t("NoTriplogs")} />
       )}
     </>
   )

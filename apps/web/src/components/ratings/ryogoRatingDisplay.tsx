@@ -2,7 +2,6 @@ import { Star } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 import { getAverageRating } from "@/lib/utils"
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
 export default function RyogoAverageRatingDisplay({
   ratings,
@@ -10,13 +9,10 @@ export default function RyogoAverageRatingDisplay({
   ratings: number[]
 }) {
   return (
-    <SectionRowWrapper className="items-center justify-center">
-      <div className="border rounded-md flex items-center gap-1 lg:gap-1.5 py-0.75 lg:py-1 px-1.5 lg:px-2">
-        <RyogoCaption color="slate">{getAverageRating(ratings)}</RyogoCaption>
-        <RyogoIcon icon={Star} size={"xs"} />
-      </div>
-      <RyogoCaption color="slate">{"[" + ratings.length + "]"}</RyogoCaption>
-    </SectionRowWrapper>
+    <div className="border rounded-md flex items-center gap-1 lg:gap-1.5 py-0.75 lg:py-1 px-1.5 lg:px-2">
+      <RyogoCaption color="slate">{getAverageRating(ratings)}</RyogoCaption>
+      <RyogoIcon icon={Star} size={"xs"} />
+    </div>
   )
 }
 

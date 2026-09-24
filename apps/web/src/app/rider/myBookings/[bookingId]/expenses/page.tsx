@@ -4,10 +4,18 @@ import { getCurrentUser } from "@/lib/auth"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import MyBookingExpensesPageComponent from "./myBookingExpenses"
 import RiderHeader from "@/components/header/riderHeader"
 import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
+import Link from "next/link"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { getTranslations } from "next-intl/server"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export const metadata: Metadata = {
   title: `My Booking Expenses - ${pageTitle}`,
@@ -30,6 +38,7 @@ export default async function MyBookingExpensesPage({
   if (!booking) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
+  const t = await getTranslations("Rider.MyBookingExpenses")
 
   //Expense can be added for in-progress bookings only by driver
   const canAddExpense = BookingStatusEnum.IN_PROGRESS === booking.status
@@ -44,10 +53,23 @@ export default async function MyBookingExpensesPage({
         <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"Expenses"} />
         <MyBookingExpensesPageComponent
           userId={currentUser.userId}
-          bookingId={bookingId}
           bookingExpenses={bookingExpenses}
-          canAddExpense={canAddExpense}
         />
+        <StickyActionWrapper>
+          {canAddExpense && (
+            <Link href={`/rider/myBookings/${bookingId}/expenses/add`}>
+              <RyogoDefaultButton
+                label={t("AddExpense")}
+                size={"lg"}
+                className="w-full"
+              />
+            </Link>
+          )}
+          <HelpIconButton
+            href={"/rider/mySupport/help-bookings#expenses"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
       </PageWrapper>
     </MainWrapper>
   )

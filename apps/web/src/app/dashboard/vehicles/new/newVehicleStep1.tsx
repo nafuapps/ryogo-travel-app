@@ -108,6 +108,7 @@ export function NewVehicleStep1({
           total: AddVehicleTotalSteps,
         })}
         description={t("Description")}
+        href={"/dashboard/support/help-vehicles#adding"}
       />
       <FormWrapper<Step1Type>
         id="Step1Form"

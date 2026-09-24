@@ -23,6 +23,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
@@ -37,6 +38,7 @@ import {
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -112,7 +114,10 @@ export default function NewTransactionPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newTransactionForm"
       >
-        <RyogoH3>{t("Title")}</RyogoH3>
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-bookings#transactions" />
+        </SectionRowWrapper>
         <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
         <FormContentWrapper>
           <RyogoRadio

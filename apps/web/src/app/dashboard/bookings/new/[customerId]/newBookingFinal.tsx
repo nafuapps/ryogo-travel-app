@@ -105,6 +105,7 @@ export default function NewBookingFinal({
           total: NewBookingTotalSteps,
         })}
         description={t("Description")}
+        href={"/dashboard/support/help-bookings#creation"}
       />
       <FormWrapper<NewBookingRequestDataType>
         id="FinalForm"

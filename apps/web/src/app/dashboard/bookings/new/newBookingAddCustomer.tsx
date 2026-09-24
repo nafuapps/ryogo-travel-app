@@ -25,9 +25,11 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { MAX_NAME_LENGTH, MIN_NAME_LENGTH, PHONE_LENGTH } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function NewBookingAddCustomerPageComponent({
   agency,
@@ -126,7 +128,10 @@ export default function NewBookingAddCustomerPageComponent({
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <RyogoH3>{t("Title")}</RyogoH3>
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-bookings#creation" />
+        </SectionRowWrapper>
         <RyogoSmall color="slate">{t("Description")}</RyogoSmall>
         <FormContentWrapper>
           <RyogoInput

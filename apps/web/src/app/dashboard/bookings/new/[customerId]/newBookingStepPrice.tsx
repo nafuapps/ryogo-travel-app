@@ -122,6 +122,7 @@ export default function NewBookingStepPrice({
           total: NewBookingTotalSteps,
         })}
         description={t("Description")}
+        href={"/dashboard/support/help-bookings#creation"}
       />
       <FormWrapper<StepPriceType>
         id="StepPriceForm"

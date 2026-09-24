@@ -1,7 +1,7 @@
 "use client"
 
 import { RyogoCaption } from "@/components/typography"
-import { Clock } from "lucide-react"
+import { Clock, TicketX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { FindUpcomingBookingsNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
@@ -13,6 +13,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { UpcomingBookingCard } from "@/components/flows/bookings/cards/bookingCards"
 import { Switch } from "@/components/ui/switch"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default function UpcomingBookingsComponent({
   upcomingBookings,
@@ -45,11 +46,15 @@ export default function UpcomingBookingsComponent({
           />
         </SectionRowWrapper>
       </SectionRowWrapper>
-      <TileGridWrapper>
-        {trips.map((trip) => (
-          <UpcomingBookingCard key={trip.id} booking={trip} />
-        ))}
-      </TileGridWrapper>
+      {trips.length > 0 ? (
+        <TileGridWrapper>
+          {trips.map((trip) => (
+            <UpcomingBookingCard key={trip.id} booking={trip} />
+          ))}
+        </TileGridWrapper>
+      ) : (
+        <EmptyStateIcon icon={TicketX} label={t("NoTrips")} />
+      )}
     </SectionWrapper>
   )
 }

@@ -7,7 +7,6 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import {
-  AddInfoWrapper,
   SectionColWrapper,
   SectionHeaderWrapper,
   SectionRowWrapper,
@@ -17,6 +16,7 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllDriversListComponent({
   allDrivers,
@@ -41,7 +41,14 @@ export default async function AllDriversListComponent({
       </TileGridWrapper>
       {(isPremium || allDrivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
         <Link href={`/dashboard/drivers/new`} className="w-full">
-          <AddInfoWrapper icon={Plus} label={t("AddDriver")} />
+          <RyogoOutlineButton
+            size="lg"
+            label={t("AddDriver")}
+            labelColor="light"
+            className="w-full"
+          >
+            <RyogoIcon icon={Plus} size="sm" color="slate" />
+          </RyogoOutlineButton>{" "}
         </Link>
       )}
     </SectionWrapper>

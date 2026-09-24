@@ -58,6 +58,7 @@ import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRout
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { Separator } from "@/components/ui/separator"
 import { RyogoCaption, RyogoP } from "@/components/typography"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -78,10 +79,11 @@ export default async function BookingDetailsPageComponent({
 
   const canEditBooking = isOwner || isAssignedUser
 
+  const canConfirmBooking = canEditBooking && isLead
+
   const canCancelBooking = canEditBooking && (isLead || isConfirmed)
 
-  const canAssignVehicle = canEditBooking && (isLead || isConfirmed)
-  const canAssignDriver = canEditBooking && (isLead || isConfirmed)
+  const canAssignVehicleDriver = canEditBooking && (isLead || isConfirmed)
 
   const canAssignUser = isOwner && !isCompleted
 
@@ -392,7 +394,7 @@ export default async function BookingDetailsPageComponent({
         </BookingSection>
         <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>
           <BookingVehicleCard vehicle={bookingDetails.assignedVehicle} />
-          {canAssignVehicle && (
+          {canAssignVehicleDriver && (
             <BookingActionWrapper>
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
@@ -416,7 +418,7 @@ export default async function BookingDetailsPageComponent({
         </BookingSection>
         <BookingSection sectionTitle={t("DriverInfo")} icon={IdCard}>
           <BookingDriverCard driver={bookingDetails.assignedDriver} />
-          {canAssignDriver && (
+          {canAssignVehicleDriver && (
             <BookingActionWrapper>
               {bookingDetails.assignedDriver && (
                 <>
@@ -452,38 +454,41 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
       </BookingGrid>
-      {canEditBooking && (
-        <StickyActionWrapper>
-          {isLead && (
-            <Link href={`/dashboard/bookings/${bookingDetails.id}/confirm`}>
+      <StickyActionWrapper>
+        {canConfirmBooking && (
+          <Link href={`/dashboard/bookings/${bookingDetails.id}/confirm`}>
+            <RyogoDefaultButton
+              label={t("ConfirmBooking.Title")}
+              className="w-full"
+            />
+          </Link>
+        )}
+        {canAssignVehicleDriver &&
+          isConfirmed &&
+          (!bookingDetails.assignedVehicle ? (
+            <Link
+              href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
+            >
               <RyogoDefaultButton
-                label={t("ConfirmBooking.Title")}
+                label={t("AssignVehicle.Title")}
                 className="w-full"
               />
             </Link>
-          )}
-          {isConfirmed &&
-            (!bookingDetails.assignedVehicle ? (
-              <Link
-                href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
-              >
-                <RyogoDefaultButton
-                  label={t("AssignVehicle.Title")}
-                  className="w-full"
-                />
-              </Link>
-            ) : !bookingDetails.assignedDriver ? (
-              <Link
-                href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
-              >
-                <RyogoDefaultButton
-                  label={t("AssignDriver.Title")}
-                  className="w-full"
-                />
-              </Link>
-            ) : null)}
-        </StickyActionWrapper>
-      )}
+          ) : !bookingDetails.assignedDriver ? (
+            <Link
+              href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
+            >
+              <RyogoDefaultButton
+                label={t("AssignDriver.Title")}
+                className="w-full"
+              />
+            </Link>
+          ) : null)}
+        <HelpIconButton
+          href={"/dashboard/support/help-bookings"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

@@ -3,7 +3,8 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoH3, RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoH3, RyogoSmall, RyogoTiny } from "@/components/typography"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function FormStepHeader({
   title,
@@ -11,23 +12,28 @@ export default function FormStepHeader({
   totalSteps,
   currentStepIndex,
   description,
+  href,
 }: {
   title: string
   stepLabel: string
   totalSteps: number
   currentStepIndex: number
-  description?: string
+  description: string
+  href: React.ComponentProps<typeof HelpIconButton>["href"]
 }) {
   return (
     <SectionColWrapper small>
-      <SectionRowWrapper small className="items-end justify-between">
+      <SectionRowWrapper small className="items-center justify-between">
         <RyogoH3>{title}</RyogoH3>
-        <RyogoCaption color="light" weight="font-bold">
-          {stepLabel}
-        </RyogoCaption>
+        <HelpIconButton href={href} />
       </SectionRowWrapper>
       <StepsTracker steps={totalSteps} current={currentStepIndex} />
-      {description && <RyogoSmall color="light">{description}</RyogoSmall>}
+      <SectionRowWrapper small className="items-start justify-between">
+        <RyogoSmall color="light">{description}</RyogoSmall>
+        <RyogoTiny color="light" weight="font-bold">
+          {stepLabel}
+        </RyogoTiny>
+      </SectionRowWrapper>
     </SectionColWrapper>
   )
 }

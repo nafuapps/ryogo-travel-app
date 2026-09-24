@@ -119,7 +119,7 @@ export function FormContentWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden flex flex-col relative gap-3 lg:gap-4 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
+      className={`empty:hidden flex flex-col relative gap-4 lg:gap-5 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
     >
       {children}
     </div>

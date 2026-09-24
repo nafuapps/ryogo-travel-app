@@ -3,17 +3,19 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingTransactionsPageComponent from "./bookingTransactions"
 import { getCurrentUser } from "@/lib/auth"
-import {
-  BookingStatusEnum,
-  TransactionTypesEnum,
-  UserRolesEnum,
-  TransactionPartiesEnum,
-  TransactionModesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: `Booking Transactions - ${pageTitle}`,
@@ -36,6 +38,8 @@ export default async function BookingTransactionsPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
+  const t = await getTranslations("Dashboard.BookingTransactions")
+
   //Txn can be created for in-progress or completed bookings only
   //Only owner or assigned user can create transactions
   const canCreateTransaction =
@@ -54,11 +58,25 @@ export default async function BookingTransactionsPage({
       <PageWrapper id="BookingTransactionsPage">
         <BookingDetailHeaderTabs id={bookingId} selectedTab="Transactions" />
         <BookingTransactionsPageComponent
-          bookingId={bookingId}
           bookingTransactions={bookingTransactions}
           canCreateTransaction={canCreateTransaction}
           isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         />
+        <StickyActionWrapper>
+          {canCreateTransaction && (
+            <Link href={`/dashboard/bookings/${bookingId}/transactions/new`}>
+              <RyogoDefaultButton
+                label={t("AddTransaction")}
+                size={"lg"}
+                className="w-full"
+              />
+            </Link>
+          )}
+          <HelpIconButton
+            href={"/dashboard/support/help-bookings#transactions"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
       </PageWrapper>
     </MainWrapper>
   )

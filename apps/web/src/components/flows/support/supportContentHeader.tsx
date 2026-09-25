@@ -35,7 +35,7 @@ export function SupportContentSectionWrapper({
 }) {
   return (
     <>
-      <RyogoP color="dark" weight="font-bold" className="mt-2 lg:mt-3">
+      <RyogoP color="dark" weight="font-bold" className="mt-1 lg:mt-2">
         {title}
       </RyogoP>
       {children}

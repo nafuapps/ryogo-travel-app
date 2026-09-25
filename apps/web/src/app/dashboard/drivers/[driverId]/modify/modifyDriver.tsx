@@ -10,6 +10,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -32,6 +33,7 @@ import {
   MIN_PER_DAY_CHARGE,
 } from "@/lib/uiConfig"
 import { RyogoH3 } from "@/components/typography"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function ModifyDriverPageComponent({
   driver,
@@ -94,7 +96,10 @@ export default function ModifyDriverPageComponent({
         id="ModifyDriverForm"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-drivers#editing" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoTextarea
             name={"address"}

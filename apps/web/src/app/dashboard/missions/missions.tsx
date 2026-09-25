@@ -1,12 +1,14 @@
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
 import MissionCard from "@/components/missions/missionCard"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { FindAgencyExpiryAlertsType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
-import { CalendarPlus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -33,13 +35,6 @@ export default async function MissionsPageComponent({
 
   return (
     <PageWrapper id="MissionsPage">
-      {isPremium && (
-        <Link href={`/dashboard/missions/add`} className="self-center">
-          <RyogoOutlineButton className="w-full" label={t("AddCustomMission")}>
-            <RyogoIcon icon={CalendarPlus} color="slate" size="sm" />
-          </RyogoOutlineButton>
-        </Link>
-      )}
       {criticalMissions.length > 0 && (
         <RyogoCarouselWrapper
           count={t("CriticalMissions", { count: criticalMissions.length })}
@@ -130,6 +125,21 @@ export default async function MissionsPageComponent({
           ))}
         </RyogoCarouselWrapper>
       )}
+      <StickyActionWrapper>
+        {isPremium && (
+          <Link href={`/dashboard/missions/add`} className="w-full">
+            <RyogoDefaultButton
+              size="lg"
+              label={t("AddCustomMission")}
+              className="w-full"
+            />
+          </Link>
+        )}
+        <HelpIconButton
+          href={"/dashboard/support/help-missions"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

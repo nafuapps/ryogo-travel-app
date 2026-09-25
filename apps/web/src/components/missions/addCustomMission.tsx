@@ -18,6 +18,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
@@ -39,7 +40,9 @@ import {
   MIN_FIELD_DESC_LENGTH,
   MIN_FIELD_TITLE_LENGTH,
 } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
+//TODO: Entity ID user friendly selection
 export default function AddCustomMissionPageComponent({
   userId,
   agencyId,
@@ -129,7 +132,10 @@ export default function AddCustomMissionPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="addCustomMissionForm"
       >
-        <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
+        <SectionRowWrapper className="items-start justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-missions#custom" />
+        </SectionRowWrapper>{" "}
         <FormContentWrapper>
           <RyogoSelect
             name="entityType"

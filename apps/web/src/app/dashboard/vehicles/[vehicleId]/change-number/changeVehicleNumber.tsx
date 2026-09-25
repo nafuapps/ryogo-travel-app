@@ -20,9 +20,12 @@ import {
   FormContentWrapper,
   PageWrapper,
   StickyActionWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { FindExistingVehiclesInAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { changeVehicleNumberAction } from "@/app/actions/vehicles/changeVehicleNumberAction"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ChangeVehicleNumberPageComponent({
   vehicleId,
@@ -86,6 +89,10 @@ export default function ChangeVehicleNumberPageComponent({
         form={formData}
         onSubmit={formData.handleSubmit(onSubmit)}
       >
+        <SectionRowWrapper className="items-start justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-vehicles" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoInput
             name={"vNumber"}

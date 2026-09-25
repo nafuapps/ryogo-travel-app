@@ -13,6 +13,7 @@ import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import {
   FormContentWrapper,
   FormWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { FileRegex, SupportedImageFormats } from "@/lib/regex"
@@ -27,6 +28,8 @@ import {
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function NewAgentForm({
   agencyId,
@@ -118,6 +121,11 @@ export default function NewAgentForm({
       onSubmit={form.handleSubmit(onSubmit)}
       id="newAgentForm"
     >
+      <SectionRowWrapper className="items-center justify-between">
+        <RyogoH3>{t("Title")}</RyogoH3>
+        <HelpIconButton href="/dashboard/support/help-users#managing" />
+      </SectionRowWrapper>
+
       <FormContentWrapper>
         <RyogoInput
           name={"agentName"}

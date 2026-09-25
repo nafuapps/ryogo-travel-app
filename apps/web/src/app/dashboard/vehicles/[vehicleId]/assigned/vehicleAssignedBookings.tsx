@@ -5,6 +5,7 @@ import {
   PageWrapper,
   SectionHeaderWrapper,
   SectionWrapper,
+  StickyActionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import {
@@ -12,7 +13,9 @@ import {
   UpcomingBookingCard,
 } from "@/components/flows/bookings/cards/bookingCards"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import { Clock, Route } from "lucide-react"
+import { Clock, Route, TicketX } from "lucide-react"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default async function VehicleAssignedBookingsPageComponent({
   bookings,
@@ -56,16 +59,26 @@ export default async function VehicleAssignedBookingsPageComponent({
           label={t("Assigned")}
           count={upcomingBookings.length}
         />
-        <TileGridWrapper>
-          {upcomingBookings.map((trip) => (
-            <UpcomingBookingCard
-              key={trip.id}
-              booking={trip}
-              canAssign={isOwner || trip.assignedUser.id === userId}
-            />
-          ))}
-        </TileGridWrapper>
+        {upcomingBookings.length > 0 ? (
+          <TileGridWrapper>
+            {upcomingBookings.map((trip) => (
+              <UpcomingBookingCard
+                key={trip.id}
+                booking={trip}
+                canAssign={isOwner || trip.assignedUser.id === userId}
+              />
+            ))}
+          </TileGridWrapper>
+        ) : (
+          <EmptyStateIcon icon={TicketX} label={t("NoTrips")} />
+        )}
       </SectionWrapper>
+      <StickyActionWrapper>
+        <HelpIconButton
+          href={"/dashboard/support/help-vehicles#bookings"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

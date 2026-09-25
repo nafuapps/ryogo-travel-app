@@ -18,6 +18,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { ModifyVehicleRepairRequestType } from "@ryogo-travel-app/api/types/vehicleRepair.types"
@@ -26,6 +27,8 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_AMOUNT_LIMIT, MIN_AMOUNT_LIMIT } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ModifyVehicleRepairPageComponent({
   repair,
@@ -99,6 +102,10 @@ export default function ModifyVehicleRepairPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="modifyVehicleRepairForm"
       >
+        <SectionRowWrapper className="items-start justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-vehicles#repairs" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoDatePicker
             name="startDate"

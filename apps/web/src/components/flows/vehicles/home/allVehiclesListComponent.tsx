@@ -1,6 +1,6 @@
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { Rows3, Plus, ChevronRight } from "lucide-react"
+import { Rows3, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -16,15 +16,11 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
-import { BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllVehiclesListComponent({
   allVehicles,
-  isPremium,
 }: {
   allVehicles: FindVehiclesByAgencyType
-  isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.Vehicles.All")
 
@@ -40,18 +36,6 @@ export default async function AllVehiclesListComponent({
           <VehicleItemComponent key={vehicle.id} vehicle={vehicle} />
         ))}
       </TileGridWrapper>
-      {(isPremium || allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
-        <Link href={`/dashboard/vehicles/new`}>
-          <RyogoOutlineButton
-            size="lg"
-            label={t("AddVehicle")}
-            labelColor="light"
-            className="w-full"
-          >
-            <RyogoIcon icon={Plus} size="sm" color="slate" />
-          </RyogoOutlineButton>
-        </Link>
-      )}
     </SectionWrapper>
   )
 }

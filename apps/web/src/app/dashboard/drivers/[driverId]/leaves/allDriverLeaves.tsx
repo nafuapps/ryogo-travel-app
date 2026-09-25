@@ -12,11 +12,17 @@ import {
   AddInfoWrapper,
   TileGridWrapper,
   SectionHeaderWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { LeaveStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronRight, Plus, TreePalm } from "lucide-react"
+import { ChevronRight, CalendarX, Plus, TreePalm } from "lucide-react"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default async function AllDriverLeavesPageComponent({
   leaves,
@@ -39,23 +45,37 @@ export default async function AllDriverLeavesPageComponent({
           label={t("Title")}
           count={leaves.length}
         />
+        {leaves.length > 0 ? (
+          <TileGridWrapper>
+            {leaves.map((leave) => (
+              <DriverLeaveComponent
+                key={leave.id}
+                leave={leave}
+                isOwner={isOwner}
+                userId={userId}
+              />
+            ))}
+          </TileGridWrapper>
+        ) : (
+          <EmptyStateIcon icon={CalendarX} label={t("NoLeaves")} />
+        )}
+      </SectionWrapper>
+      <StickyActionWrapper>
         <Link
           href={`/dashboard/drivers/${driverId}/leaves/new`}
           className="w-full"
         >
-          <AddInfoWrapper icon={Plus} label={t("AddLeave")} />
+          <RyogoDefaultButton
+            label={t("AddLeave")}
+            size="lg"
+            className="w-full"
+          />
         </Link>
-        <TileGridWrapper>
-          {leaves.map((leave) => (
-            <DriverLeaveComponent
-              key={leave.id}
-              leave={leave}
-              isOwner={isOwner}
-              userId={userId}
-            />
-          ))}
-        </TileGridWrapper>
-      </SectionWrapper>
+        <HelpIconButton
+          href={"/dashboard/support/help-drivers#leaves"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

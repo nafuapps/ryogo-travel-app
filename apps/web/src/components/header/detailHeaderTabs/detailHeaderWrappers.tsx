@@ -41,7 +41,7 @@ function DetailsHeaderTabItem({
       <div
         className={`flex w-full items-center rounded transition justify-center px-2 py-1.5 lg:px-2.5 lg:py-2 ${
           selected
-            ? "bg-slate-950 dark:bg-slate-50 shadow"
+            ? "bg-slate-900 dark:bg-slate-50 shadow"
             : "hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-xs"
         }`}
       >

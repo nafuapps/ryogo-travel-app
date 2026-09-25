@@ -16,6 +16,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
@@ -23,6 +24,8 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { PHONE_LENGTH } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ChangeUserPhonePageComponent({
   user,
@@ -83,6 +86,10 @@ export default function ChangeUserPhonePageComponent({
         id="ChangeUserPhoneForm"
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-users#managing" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoInput
             name={"newPhone"}

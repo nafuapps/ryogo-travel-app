@@ -22,6 +22,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
@@ -41,6 +42,8 @@ import {
   MIN_VEHICLE_CAPCITY,
   MIN_VEHICLE_RATE,
 } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -139,6 +142,10 @@ export default function ModifyVehiclePageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-vehicles#editing" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoSelect
             name={"type"}

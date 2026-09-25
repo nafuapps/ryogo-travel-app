@@ -20,6 +20,7 @@ import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButto
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserInfoComponent from "@/components/flows/account/userInfoComponent"
 import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function UserDetailsPageComponent({
   user,
@@ -124,6 +125,7 @@ export default async function UserDetailsPageComponent({
             )}
         </GridWrapper>
       )}
+      <HelpIconButton href={"/dashboard/support/help-users"} showLabelSmall />
     </PageWrapper>
   )
 }

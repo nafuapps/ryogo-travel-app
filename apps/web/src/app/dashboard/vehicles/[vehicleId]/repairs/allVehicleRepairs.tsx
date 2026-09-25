@@ -3,20 +3,24 @@ import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicl
 import { getTranslations } from "next-intl/server"
 import { RyogoP, RyogoCaption } from "@/components/typography"
 import Link from "next/link"
-import { ChevronRight, Plus, Wrench } from "lucide-react"
+import { ChevronRight, Wrench } from "lucide-react"
 import moment from "moment"
 import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
   PlainGridWrapper,
-  AddInfoWrapper,
   TileGridWrapper,
   SectionHeaderWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RepairStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function AllVehicleRepairsPageComponent({
   repairs,
@@ -40,12 +44,6 @@ export default async function AllVehicleRepairsPageComponent({
           label={t("Title")}
           count={repairs.length}
         />
-        <Link
-          href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
-          className="w-full"
-        >
-          <AddInfoWrapper icon={Plus} label={t("AddRepair")} />
-        </Link>
         <TileGridWrapper>
           {repairs.map((repair) => (
             <VehicleRepairComponent
@@ -57,6 +55,22 @@ export default async function AllVehicleRepairsPageComponent({
           ))}
         </TileGridWrapper>
       </SectionWrapper>
+      <StickyActionWrapper>
+        <Link
+          href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
+          className="w-full"
+        >
+          <RyogoDefaultButton
+            label={t("AddRepair")}
+            size="lg"
+            className="w-full"
+          />
+        </Link>
+        <HelpIconButton
+          href={"/dashboard/support/help-vehicles#repairs"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

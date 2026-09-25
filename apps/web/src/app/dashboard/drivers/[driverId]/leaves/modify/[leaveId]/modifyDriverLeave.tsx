@@ -17,6 +17,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driverLeave.types"
@@ -24,6 +25,8 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -88,6 +91,10 @@ export default function ModifyDriverLeavePageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newDriverLeaveForm"
       >
+        <SectionRowWrapper className="items-start justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-drivers#leaves" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoDatePicker
             name="startDate"

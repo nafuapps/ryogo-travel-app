@@ -20,12 +20,15 @@ import {
   SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
+  StickyActionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStatusComponent"
 import { BASIC_PLAN_AGENT_LIMIT, BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function UsersPageComponent({
   allUsers,
@@ -55,7 +58,13 @@ export default async function UsersPageComponent({
         </TileGridWrapper>
         {isPremium && (
           <Link href={`/dashboard/users/add-owner`} className="w-full">
-            <AddInfoWrapper icon={Plus} label={t("Owners.AddOwner")} />
+            <RyogoOutlineButton
+              label={t("Owners.AddOwner")}
+              labelColor="light"
+              className="w-full"
+            >
+              <RyogoIcon icon={Plus} size="sm" color="slate" />
+            </RyogoOutlineButton>
           </Link>
         )}
       </SectionWrapper>
@@ -72,7 +81,13 @@ export default async function UsersPageComponent({
         </TileGridWrapper>
         {(isPremium || agents.length < BASIC_PLAN_AGENT_LIMIT) && (
           <Link href={`/dashboard/users/new`} className="w-full">
-            <AddInfoWrapper icon={Plus} label={t("Agents.AddAgent")} />
+            <RyogoOutlineButton
+              label={t("Agents.AddAgent")}
+              labelColor="light"
+              className="w-full"
+            >
+              <RyogoIcon icon={Plus} size="sm" color="slate" />
+            </RyogoOutlineButton>
           </Link>
         )}
       </SectionWrapper>
@@ -89,10 +104,19 @@ export default async function UsersPageComponent({
         </TileGridWrapper>
         {(isPremium || drivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
           <Link href={`/dashboard/drivers/new`} className="w-full">
-            <AddInfoWrapper icon={Plus} label={t("Drivers.AddDriver")} />
+            <RyogoOutlineButton
+              label={t("Drivers.AddDriver")}
+              labelColor="light"
+              className="w-full"
+            >
+              <RyogoIcon icon={Plus} size="sm" color="slate" />
+            </RyogoOutlineButton>
           </Link>
         )}
       </SectionWrapper>
+      <StickyActionWrapper>
+        <HelpIconButton href={"/dashboard/support/help-users"} showLabelSmall />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

@@ -1883,6 +1883,7 @@
       }
     },
     "ModifyVehicle": {
+      "Title": "Edit Vehicle Details",
       "Field1": {
         "Title": "Select vehicle type",
         "Error1": "Providing vehicle type is mandatory"
@@ -1957,19 +1958,24 @@
     },
     "VehicleAssignedBookings": {
       "Ongoing": "VEHICLE ONGOING BOOKING",
-      "Assigned": "VEHICLE ASSIGNED BOOKINGS"
+      "Assigned": "VEHICLE ASSIGNED BOOKINGS",
+      "NoTrips": "No assigned trips"
     },
     "VehicleCompletedBookings": {
-      "Title": "VEHICLE COMPLETED BOOKINGS"
+      "Title": "VEHICLE COMPLETED BOOKINGS",
+      "NoTrips": "No completed trips"
     },
     "VehicleRepairs": {
       "Title": "VEHICLE REPAIRS",
       "AddRepair": "Add Repair",
       "Completed": "COMPLETED",
       "Pending": "PENDING",
-      "Edit": "Edit"
+      "Edit": "Edit",
+      "NoRepairs": "No vehicle repairs"
     },
     "NewVehicleRepair": {
+      "Title": "Add Vehicle Repair",
+      "Description": "Adding a vehicle repair ensures that it is not assigned a booking during maintenance.",
       "Field1": {
         "Error1": "Repair start date is required",
         "Title": "Repair Start Date",
@@ -2004,6 +2010,7 @@
       "Error": "Cannot add repair.. please try again later."
     },
     "ModifyVehicleRepair": {
+      "Title": "Edit Vehicle Repair",
       "Field1": {
         "Error1": "Repair start date is required",
         "Title": "Repair Start Date",
@@ -2266,17 +2273,20 @@
     },
     "DriverAssignedBookings": {
       "Ongoing": "DRIVER ONGOING BOOKING",
-      "Assigned": "DRIVER ASSIGNED BOOKINGS"
+      "Assigned": "DRIVER ASSIGNED BOOKINGS",
+      "NoTrips": "No assigned trips"
     },
     "DriverCompletedBookings": {
-      "Title": "DRIVER COMPLETED BOOKINGS"
+      "Title": "DRIVER COMPLETED BOOKINGS",
+      "NoTrips": "No completed trips"
     },
     "DriverLeaves": {
       "Title": "DRIVER LEAVES",
       "AddLeave": "Add Leave",
       "Completed": "COMPLETED",
       "Pending": "PENDING",
-      "Edit": "Edit"
+      "Edit": "Edit",
+      "NoLeaves": "No driver leaves"
     },
     "NewDriverLeave": {
       "Title": "Add Driver Leave",
@@ -2306,6 +2316,7 @@
       "Error": "Cannot add leave.. please try again later."
     },
     "ModifyDriverLeave": {
+      "Title": "Edit Driver Leave",
       "Field1": {
         "Error1": "Leave start date is required",
         "Title": "Leave Start Date",
@@ -2463,11 +2474,13 @@
       "Completed": "Completed"
     },
     "CustomerCompletedBookings": {
-      "Title": "CUSTOMER COMPLETED BOOKING"
+      "Title": "CUSTOMER COMPLETED BOOKING",
+      "NoTrips": "No completed trips"
     },
     "CustomerUpcomingBookings": {
       "Ongoing": "CUSTOMER ONGOING BOOKING",
-      "Upcoming": "CUSTOMER UPCOMING BOOKINGS"
+      "Upcoming": "CUSTOMER UPCOMING BOOKINGS",
+      "NoTrips": "No upcoming trips"
     },
     "AccountDetailsHeaderTabs": {
       "Account": "Account",
@@ -4449,6 +4462,7 @@
       }
     },
     "AddOwner": {
+      "Title": "Add another owner",
       "TrialWarning": "You cannot add more owners in basic plan.",
       "ExpiredWarning": "Your subscription plan has expired.",
       "TrialAction": "Please upgrade your subscription plan to add more owners!",
@@ -4492,6 +4506,7 @@
       "Error": "Cannot add owner.. Try again later!"
     },
     "NewAgent": {
+      "Title": "Add Agent",
       "TrialWarning": "You have reached the limit for basic plan.",
       "ExpiredWarning": "Your subscription plan has expired.",
       "TrialAction": "Please upgrade your subscription plan to add more agents!",
@@ -4535,22 +4550,16 @@
       "Error": "Cannot add agent.. Try again later!"
     },
     "UserAssignedBookings": {
-      "Ongoing": "USER ONGOING BOOKINGS",
-      "Assigned": "USER UPCOMING BOOKINGS"
+      "Ongoing": "ONGOING BOOKINGS",
+      "Assigned": "ASSIGNED BOOKINGS",
+      "NoTrips": "No assigned trips"
     },
     "UserCompletedBookings": {
-      "Title": "USER COMPLETED BOOKINGS"
+      "Title": "COMPLETED BOOKINGS",
+      "NoTrips": "No completed trips"
     },
     "UserActivity": {
-      "Bookings": "Bookings",
-      "Transactions": "Transactions",
-      "Expenses": "Expenses",
-      "Customers": "Customers",
-      "VehicleRepairs": "Vehicle Repairs",
-      "DriverLeaves": "Driver Leaves",
-      "TripLogs": "Trip Logs",
-      "Completed": "COMPLETED",
-      "Pending": "PENDING"
+      "NoActivities": "No activities found"
     },
     "Analytics": {
       "AnalyticsTrialWarning": "You cannot access analytics with basic plan.",
@@ -4713,7 +4722,7 @@
       "Error": "Cannot add reminder.. Try again later!"
     },
     "ModifyCustomMission": {
-      "Title": "Modify custom reminder",
+      "Title": "Edit custom reminder",
       "Field1": {
         "Title": "Entity Type",
         "Placeholder": "Select Entity Type",
@@ -4754,7 +4763,7 @@
       "Field7": {
         "Title": "Is it a critical alert?"
       },
-      "PrimaryCTA": "Modify and Save",
+      "PrimaryCTA": "Save changes",
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
       "Success": "Reminder modified successfully!",

@@ -25,6 +25,7 @@ import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/ve
 import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
 import ChangeVehicleDocumentSheet from "@/components/sheets/changeVehicleDocumentSheet"
 import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function VehicleDetailsPageComponent({
   vehicle,
@@ -192,6 +193,10 @@ export default async function VehicleDetailsPageComponent({
           )}
         </GridWrapper>
       )}
+      <HelpIconButton
+        href={"/dashboard/support/help-vehicles"}
+        showLabelSmall
+      />
     </PageWrapper>
   )
 }

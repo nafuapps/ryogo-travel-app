@@ -1,6 +1,6 @@
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { Rows3, User, Plus, ChevronRight } from "lucide-react"
+import { Rows3, User, ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -15,15 +15,11 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function AllDriversListComponent({
   allDrivers,
-  isPremium,
 }: {
   allDrivers: FindDriversByAgencyType
-  isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.Drivers.All")
 
@@ -39,18 +35,6 @@ export default async function AllDriversListComponent({
           <DriverItemComponent key={driver.id} driver={driver} />
         ))}
       </TileGridWrapper>
-      {(isPremium || allDrivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
-        <Link href={`/dashboard/drivers/new`} className="w-full">
-          <RyogoOutlineButton
-            size="lg"
-            label={t("AddDriver")}
-            labelColor="light"
-            className="w-full"
-          >
-            <RyogoIcon icon={Plus} size="sm" color="slate" />
-          </RyogoOutlineButton>{" "}
-        </Link>
-      )}
     </SectionWrapper>
   )
 }

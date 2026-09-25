@@ -18,6 +18,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
@@ -25,6 +26,8 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_AMOUNT_LIMIT, MIN_AMOUNT_LIMIT } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3, RyogoCaption } from "@/components/typography"
 
 export default function NewVehicleRepairPageComponent({
   userId,
@@ -99,6 +102,11 @@ export default function NewVehicleRepairPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         id="newVehicleRepairForm"
       >
+        <SectionRowWrapper className="items-start justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-vehicles#repairs" />
+        </SectionRowWrapper>
+        <RyogoCaption color="light">{t("Description")}</RyogoCaption>
         <FormContentWrapper>
           <RyogoDatePicker
             name="startDate"

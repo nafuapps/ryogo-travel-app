@@ -21,6 +21,7 @@ import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import ChangeDriverLicenseSheet from "@/components/sheets/changeDriverLicenseSheet"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function DriverDetailsPageComponent({
   driver,
@@ -130,6 +131,7 @@ export default async function DriverDetailsPageComponent({
           )}
         </GridWrapper>
       )}
+      <HelpIconButton href={"/dashboard/support/help-drivers"} showLabelSmall />
     </PageWrapper>
   )
 }

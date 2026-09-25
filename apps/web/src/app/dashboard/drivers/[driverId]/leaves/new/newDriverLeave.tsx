@@ -17,13 +17,16 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionColWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoH4 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function NewDriverLeavePageComponent({
   userId,
@@ -86,13 +89,16 @@ export default function NewDriverLeavePageComponent({
 
   return (
     <PageWrapper id="NewDriverLeavePage">
-      <RyogoH4 weight="font-bold">{t("Title")}</RyogoH4>
-      <RyogoCaption color="light">{t("Description")}</RyogoCaption>
       <FormWrapper<NewDriverLeaveType>
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
         id="newDriverLeaveForm"
       >
+        <SectionRowWrapper className="items-start justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-drivers#leaves" />
+        </SectionRowWrapper>
+        <RyogoCaption color="light">{t("Description")}</RyogoCaption>
         <FormContentWrapper>
           <RyogoDatePicker
             name="startDate"

@@ -504,7 +504,7 @@ export function RyogoDatePicker({
     <FormField
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
+        <FormItem className="flex flex-col gap-1.5 lg:gap-2 w-full">
           <FormLabel>
             <RyogoSmall
               weight="font-bold"

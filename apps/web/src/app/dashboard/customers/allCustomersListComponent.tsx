@@ -2,7 +2,7 @@
 
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { User, Plus, Rows3, ChevronRight, TagX } from "lucide-react"
+import { User, Rows3, ChevronRight, TagX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -77,16 +77,6 @@ export default function AllCustomersListComponent({
         label={t("Title")}
         count={allCustomers.length}
       />
-      <Link href={`/dashboard/customers/new`}>
-        <RyogoOutlineButton
-          size="lg"
-          label={t("AddCustomer")}
-          labelColor="light"
-          className="w-full"
-        >
-          <RyogoIcon icon={Plus} size="sm" color="slate" />
-        </RyogoOutlineButton>{" "}
-      </Link>
       <Field>
         <ButtonGroup>
           <Input
@@ -141,8 +131,6 @@ function CustomerItemComponent({
 }: {
   customer: FindCustomersInAgencyType[number]
 }) {
-  const t = useTranslations("Dashboard.Customers.All")
-
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
       <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">

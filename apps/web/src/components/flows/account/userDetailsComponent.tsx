@@ -34,7 +34,7 @@ export default async function UserDetailsComponent({
         />
         <DetailsLineItem label={t("Role")} value={role.toUpperCase()} />
         {isAdmin && (
-          <SectionRowWrapper className="mt-auto rounded-sm bg-slate-200 dark:bg-slate-800 p-1.5 lg:p-2 items-center justify-center">
+          <SectionRowWrapper className="mt-auto rounded-sm bg-slate-100 dark:bg-slate-700 p-1.5 lg:p-2 items-center justify-center">
             <RyogoCaption color="light">{t("Admin")}</RyogoCaption>
           </SectionRowWrapper>
         )}

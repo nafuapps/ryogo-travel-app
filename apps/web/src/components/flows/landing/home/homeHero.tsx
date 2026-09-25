@@ -64,7 +64,7 @@ export default async function HomeHeroSection() {
           </RyogoDialogVideo>
         </div>
         <div className="flex items-end mt-auto gap-8 justify-center w-full">
-          <div className="bg-white dark:bg-slate-900 w-full max-w-44 hidden lg:block relative aspect-9/16 rounded-t-2xl overflow-hidden">
+          <div className="bg-white dark:bg-slate-800 w-full max-w-44 hidden lg:block relative aspect-9/16 rounded-t-2xl overflow-hidden">
             <Image
               className="object-cover"
               loading="eager"
@@ -74,7 +74,7 @@ export default async function HomeHeroSection() {
               sizes="176px"
             />
           </div>
-          <div className="bg-white dark:bg-slate-900 max-w-md sm:max-w-2xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
+          <div className="bg-white dark:bg-slate-800 max-w-md sm:max-w-2xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
             <Image
               className="object-cover"
               loading="eager"
@@ -84,7 +84,7 @@ export default async function HomeHeroSection() {
               sizes="(max-width: 640px) 448px,672px"
             />
           </div>
-          <div className="bg-white dark:bg-slate-900 w-full max-w-44 hidden lg:block relative aspect-9/16 rounded-t-2xl overflow-hidden">
+          <div className="bg-white dark:bg-slate-800 w-full max-w-44 hidden lg:block relative aspect-9/16 rounded-t-2xl overflow-hidden">
             <Image
               className="object-cover"
               loading="eager"

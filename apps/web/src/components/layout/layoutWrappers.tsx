@@ -8,7 +8,7 @@ export function LayoutWrapper({
   return (
     <main
       id={id}
-      className="flex flex-row w-screen h-dvh bg-white dark:bg-slate-900"
+      className="flex flex-row w-screen h-dvh bg-white dark:bg-slate-800"
     >
       {children}
     </main>

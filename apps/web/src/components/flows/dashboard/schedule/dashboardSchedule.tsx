@@ -85,14 +85,14 @@ export function DashboardScheduleChart({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-row lg:flex-col gap-0.5 w-full bg-slate-50 dark:bg-slate-950">
+    <div className="flex flex-row lg:flex-col gap-0.5 w-full bg-slate-50 dark:bg-slate-900">
       {children}
     </div>
   )
 }
 function DayAxisEmptyBlock() {
   return (
-    <div className="flex justify-center bg-white dark:bg-slate-900 items-center p-1 w-16 lg:min-w-24 h-16"></div>
+    <div className="flex justify-center bg-white dark:bg-slate-800 items-center p-1 w-16 lg:min-w-24 h-16"></div>
   )
 }
 
@@ -110,7 +110,7 @@ export default function DashboardScheduleDayAxis({
       {Array.from({ length: selectedDays }, (_, index) => (
         <div
           key={index}
-          className="flex justify-center bg-white dark:bg-slate-900 items-center p-1 w-16 lg:w-full min-h-16 lg:h-16"
+          className="flex justify-center bg-white dark:bg-slate-800 items-center p-1 w-16 lg:w-full min-h-16 lg:h-16"
         >
           <RyogoCaption color="light">
             {moment(
@@ -166,7 +166,7 @@ export function DashboardScheduleItemID({
   photoUrl: string | null
 }) {
   return (
-    <div className="flex flex-col p-1 gap-0.5 bg-white dark:bg-slate-900 justify-center items-center shrink-0 min-w-20 h-16 lg:w-24 text-ellipsis whitespace-nowrap">
+    <div className="flex flex-col p-1 gap-0.5 bg-white dark:bg-slate-800 justify-center items-center shrink-0 min-w-20 h-16 lg:w-24 text-ellipsis whitespace-nowrap">
       {photoUrl ? (
         <RyogoImage src={getFileUrl(photoUrl)} alt={imageAlt} imageSize="xs" />
       ) : (

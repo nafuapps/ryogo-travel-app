@@ -25,7 +25,7 @@ export default async function PricingComparisionSection() {
   return (
     <LandingSectionWrapper
       id="comparision"
-      className="bg-white dark:bg-slate-900"
+      className="bg-white dark:bg-slate-800"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
@@ -271,10 +271,10 @@ function ComparisionRow({
 }) {
   return (
     <div className="w-full grid grid-cols-4 md:grid-cols-5 gap-2">
-      <div className="col-span-2 md:col-span-3 px-1 lg:px-2 py-3 lg:py-4 bg-white dark:bg-slate-900 flex items-center">
+      <div className="col-span-2 md:col-span-3 px-1 lg:px-2 py-3 lg:py-4 bg-white dark:bg-slate-800 flex items-center">
         {title}
       </div>
-      <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+      <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
         {basicItem}
       </div>
       <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-sky-100 dark:bg-sky-900 flex items-center justify-center">

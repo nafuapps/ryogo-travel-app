@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import { PageWrapper, TileGridWrapper } from "@/components/page/pageWrappers"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
 import {
   Play,
@@ -76,7 +76,7 @@ export default async function SupportPageComponent({
   return (
     <PageWrapper id="DashboardSupportPage" disableScrollInMobile>
       <SupportSectionHeader title={t("Title")} description={t("Description")} />
-      <div className="grid gap-5 lg:gap-6 grid-cols-1 md:grid-cols-2 2xl:grid-cols-3">
+      <TileGridWrapper>
         <SupportCategoryCard
           title={t("Started.Title")}
           description={t("Started.Description")}
@@ -150,7 +150,7 @@ export default async function SupportPageComponent({
           icon={Newspaper}
           link={"/dashboard/support/help-blogs"}
         />
-      </div>
+      </TileGridWrapper>
       <Separator />
       <SupportSectionHeader
         title={t("FAQs.Title")}

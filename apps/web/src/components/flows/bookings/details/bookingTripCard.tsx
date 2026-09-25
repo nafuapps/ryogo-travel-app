@@ -39,7 +39,7 @@ export default async function BookingTripCard({
         <RyogoPill bgColor="slate" label={booking.type.toUpperCase()} />
         <DateWrapper date={endDate} />
       </div>
-      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x border-b rounded-b-xl bg-slate-100 dark:bg-slate-800">
+      <div className="flex gap-2 lg:gap-3 px-3 lg:px-4 py-2 lg:py-3 items-center justify-between border-x border-b rounded-b-xl bg-slate-100 dark:bg-slate-700">
         <SectionRowWrapper small className="items-center">
           <RyogoIcon icon={Users} size={"sm"} />
           <RyogoCaption color="light" weight="font-bold">
@@ -77,13 +77,13 @@ function LocationWrapper({
 function DistanceWrapper({ label }: { label: string }) {
   return (
     <div id="distance" className="flex items-center">
-      <div className="w-2 lg:w-3 h-px bg-slate-100 dark:bg-slate-800" />
+      <div className="w-2 lg:w-3 h-px bg-slate-100 dark:bg-slate-700" />
       <div className="flex items-center justify-center rounded-full py-0.75 lg:py-1 px-2 lg:px-3 border">
         <RyogoCaption color="light" className="text-nowrap">
           {label}{" "}
         </RyogoCaption>
       </div>
-      <div className="w-2 lg:w-3 h-px bg-slate-100 dark:bg-slate-800" />
+      <div className="w-2 lg:w-3 h-px bg-slate-100 dark:bg-slate-700" />
     </div>
   )
 }

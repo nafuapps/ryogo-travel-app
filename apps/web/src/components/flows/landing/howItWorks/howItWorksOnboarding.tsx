@@ -72,7 +72,7 @@ export default function HowItWorksOnboardingSection() {
   return (
     <LandingSectionWrapper
       id="onboarding"
-      className=" bg-white dark:bg-slate-950"
+      className=" bg-white dark:bg-slate-800"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">

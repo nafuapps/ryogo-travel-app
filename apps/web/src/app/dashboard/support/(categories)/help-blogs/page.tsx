@@ -40,7 +40,7 @@ export default async function SupportHelpBlogsPage() {
           title={t("Title")}
           description={t("Description")}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
           {blogItems.map((item) => (
             <SupportBlogItem key={item.blogId} {...item} />
           ))}

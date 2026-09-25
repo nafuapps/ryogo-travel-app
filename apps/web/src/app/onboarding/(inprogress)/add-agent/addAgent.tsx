@@ -76,6 +76,7 @@ export default function AddAgentPageComponent({
                   total: AddAgentTotalSteps,
                 })
           }
+          href={""} //TODO: update onboarding video link
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

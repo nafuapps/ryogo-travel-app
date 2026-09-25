@@ -52,7 +52,7 @@ export default function MyBookingExpensesPageComponent({
   return (
     <>
       {bookingExpenses.length > 0 ? (
-        <SectionColWrapper className="self-center items-center w-full lg:max-w-3xl">
+        <SectionColWrapper className="self-center items-center w-full">
           <ExpensesFiltersCard />
           <SectionRowWrapper className="w-full items-center justify-between">
             <RyogoCaption color="light">

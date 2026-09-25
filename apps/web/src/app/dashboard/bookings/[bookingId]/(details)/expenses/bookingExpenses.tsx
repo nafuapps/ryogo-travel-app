@@ -72,7 +72,7 @@ export default function BookingExpensesPageComponent({
   return (
     <>
       {bookingExpenses.length > 0 ? (
-        <SectionColWrapper className="self-center items-center w-full lg:max-w-3xl">
+        <SectionColWrapper className="self-center items-center w-full">
           <SectionWrapper id="ExpensesAmountCard">
             <SectionRowWrapper className="items-center divide-x justify-between">
               <SectionColWrapper small className="w-full items-center">

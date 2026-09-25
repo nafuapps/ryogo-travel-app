@@ -100,9 +100,11 @@ export async function endTripAction(
     titleKey: "TripEnded.Title",
     titleObject: {
       bookingId: bookingChanged.id,
-      driverName: bookingChanged.driverName,
     },
     messageKey: "TripEnded.Message",
+    messageObject: {
+      driverName: bookingChanged.driverName,
+    },
     isCritical: true,
     link: `/rider/myBookings/${bookingChanged.id}`,
   })

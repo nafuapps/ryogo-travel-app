@@ -23,7 +23,7 @@ export default async function HomeTestimonialsSection() {
   return (
     <LandingSectionWrapper
       id="testimonials"
-      className="bg-white dark:bg-slate-950"
+      className="bg-white dark:bg-slate-800"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">

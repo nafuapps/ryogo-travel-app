@@ -3,7 +3,6 @@
 import {
   RyogoH4,
   RyogoP,
-  RyogoSmall,
   RyogoCaption,
   RyogoTiny,
 } from "@/components/typography"
@@ -79,34 +78,32 @@ export default function OnboardingSidebar({
       await logoutAction()
     })
   }
+
   return (
     <Sidebar
       side="right"
       collapsible={isMobile ? "offcanvas" : "none"}
       mobileWidth="281px"
-      className="h-full bg-slate-50 dark:bg-slate-950"
+      className="bg-slate-50 dark:bg-slate-900"
     >
       <SidebarHeader className="px-6 md:px-8 pt-8 md:pt-10">
         <RyogoH4 weight="font-bold" color="light">
           {t("Heading")}
         </RyogoH4>
       </SidebarHeader>
-      <SidebarContent className="px-6 md:px-8 py-8 md:py-10">
+      <SidebarContent className="px-6 md:px-8 py-4 md:py-5">
         {currentProcess !== undefined && (
-          <div
-            id="OnboardingSidebarSteps"
-            className="flex flex-col gap-2 md:gap-3"
-          >
+          <SectionColWrapper>
             {items.map((item, index) => (
               <SectionRowWrapper key={index} className="justify-start">
-                <SectionColWrapper className="items-center">
+                <SectionColWrapper small className="items-center">
                   <div
                     className={`rounded-lg
                       ${
                         currentProcess > index
-                          ? "bg-slate-900 dark:bg-white shadow"
+                          ? "bg-slate-900 dark:bg-slate-50"
                           : currentProcess === index
-                            ? "bg-white  dark:bg-slate-900 border border-sky-700 dark:border-sky-300 shadow"
+                            ? "bg-white  dark:bg-slate-900 border border-sky-700 dark:border-sky-300"
                             : "bg-slate-300  dark:bg-slate-700"
                       } flex shrink-0 justify-center items-center size-9 md:size-10`}
                   >
@@ -129,12 +126,12 @@ export default function OnboardingSidebar({
                   </div>
                   {index < items.length - 1 && (
                     <div
-                      className={`w-0.5 h-14 md:h-12 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-300" : "bg-slate-300  dark:bg-slate-700"} rounded-full`}
+                      className={`w-0.5 h-12 md:h-10 ${currentProcess > index ? "bg-sky-700 dark:bg-sky-300" : "bg-slate-300  dark:bg-slate-700"} rounded-full`}
                     ></div>
                   )}
                 </SectionColWrapper>
                 <SectionColWrapper small>
-                  <RyogoSmall
+                  <RyogoP
                     weight={"font-bold"}
                     color={
                       currentProcess > index
@@ -145,7 +142,7 @@ export default function OnboardingSidebar({
                     }
                   >
                     {item.title}
-                  </RyogoSmall>
+                  </RyogoP>
                   <RyogoCaption
                     color={currentProcess >= index ? "slate" : "light"}
                   >
@@ -157,20 +154,22 @@ export default function OnboardingSidebar({
                 </SectionColWrapper>
               </SectionRowWrapper>
             ))}
-          </div>
+          </SectionColWrapper>
         )}
       </SidebarContent>
       <SidebarFooter className="px-6 md:px-8 pb-8 md:pb-10">
-        {showLogout && (
-          <RyogoOutlineButton
-            onClick={logoutUser}
-            label={t("Logout")}
-            labelColor="light"
-            disabled={isPending}
-            className="md:self-start"
-          ></RyogoOutlineButton>
-        )}
-        <RyoGoLogo />
+        <SectionColWrapper small>
+          {showLogout && (
+            <RyogoOutlineButton
+              onClick={logoutUser}
+              label={t("Logout")}
+              labelColor="light"
+              disabled={isPending}
+              className="md:self-start"
+            />
+          )}
+          <RyoGoLogo />
+        </SectionColWrapper>
       </SidebarFooter>
     </Sidebar>
   )

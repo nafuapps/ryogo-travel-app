@@ -4,6 +4,7 @@ import {
   PageWrapper,
   SectionWrapper,
   SideWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
@@ -68,7 +69,7 @@ export default async function MySupportPageComponent({
           title={t("Title")}
           description={t("Description")}
         />
-        <div className="grid gap-5 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <TileGridWrapper>
           <SupportCategoryCard
             title={t("Started.Title")}
             description={t("Started.Description")}
@@ -108,7 +109,7 @@ export default async function MySupportPageComponent({
             link={"/rider/mySupport/help-videos"}
             highlight
           />
-        </div>
+        </TileGridWrapper>
         <Separator />
         <SupportSectionHeader
           title={t("FAQs.Title")}
@@ -148,7 +149,7 @@ export default async function MySupportPageComponent({
         <SectionWrapper
           id="Tickets"
           className="items-center"
-          bgColor="bg-slate-950 dark:bg-white"
+          bgColor="bg-slate-900 dark:bg-slate-50"
         >
           {isPremium ? (
             <>

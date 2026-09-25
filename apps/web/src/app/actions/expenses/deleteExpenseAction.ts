@@ -64,11 +64,13 @@ export async function deleteExpenseAction(
       entityId: deletedExpense.id,
       titleKey: "ExpenseDeletedByDriver.Title",
       titleObject: {
-        expenseId: deletedExpense.id,
-        type: deletedExpense.type.toUpperCase(),
         bookingId: deletedExpense.bookingId,
       },
       messageKey: "ExpenseDeletedByDriver.Message",
+      messageObject: {
+        expenseId: deletedExpense.id,
+        type: deletedExpense.type,
+      },
       link: `/dashboard/bookings/${deletedExpense.bookingId}/expenses`,
     })
   }

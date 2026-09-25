@@ -7,6 +7,7 @@ import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import {
   DetailsBorderWrapper,
+  DetailsHeaderWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
 
@@ -38,11 +39,11 @@ export default async function UserDriverLicenseInfoComponent({
         {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
         {expiryDate && (
           <DetailsBorderWrapper>
-            <div className="bg-slate-200 dark:bg-slate-800 py-1 lg:py-1.5 px-3 lg:px-4">
+            <DetailsHeaderWrapper>
               <RyogoCaption color="light" className="text-center">
                 {isExpired ? t("ExpiredOn") : t("ExpiresOn")}
               </RyogoCaption>
-            </div>
+            </DetailsHeaderWrapper>
             <div className="py-1 lg:py-1.5 px-3 lg:px-4">
               <RyogoCaption
                 color={isExpired ? "red" : "slate"}

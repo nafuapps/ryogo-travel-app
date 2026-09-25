@@ -114,6 +114,7 @@ export default function AddVehiclePageComponent({
                   total: AddVehicleTotalSteps,
                 })
           }
+          href={""} //TODO: update onboarding video link
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

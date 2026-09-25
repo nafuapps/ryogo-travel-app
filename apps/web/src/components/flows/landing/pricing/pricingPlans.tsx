@@ -117,7 +117,7 @@ function PricingPlanCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white dark:bg-slate-900 shadow-lg rounded-lg">
+    <div className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white dark:bg-slate-800 shadow-lg rounded-lg">
       <RyogoP weight="font-bold" color="slate">
         {title}
       </RyogoP>

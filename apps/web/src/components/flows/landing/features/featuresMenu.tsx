@@ -8,6 +8,7 @@ import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import Image from "next/image"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronDown } from "lucide-react"
+import { TileGridWrapper } from "@/components/page/pageWrappers"
 
 export default async function FeaturesMenuSection() {
   const t = await getTranslations("Landing.Features.Menu")
@@ -15,7 +16,7 @@ export default async function FeaturesMenuSection() {
     <LandingSectionWrapper id="menu" shrink>
       <LandingContentWrapper justifyStart>
         <RyogoH1 weight="font-bold">{t("Title")}</RyogoH1>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+        <TileGridWrapper>
           <FeaturesMenuItem
             title={t("M1")}
             href="#management"
@@ -46,7 +47,7 @@ export default async function FeaturesMenuSection() {
             href="#security"
             imageSrc="/featureMenu6.png"
           />
-        </div>
+        </TileGridWrapper>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )
@@ -64,7 +65,7 @@ async function FeaturesMenuItem({
   const t = await getTranslations("Landing.Features.Menu")
   return (
     <Link
-      className="group relative flex flex-col bg-slate-50 dark:bg-slate-900 shadow rounded-lg overflow-hidden"
+      className="group relative flex flex-col w-full bg-slate-50 dark:bg-slate-900 shadow rounded-lg overflow-hidden"
       href={href}
     >
       <RyogoP

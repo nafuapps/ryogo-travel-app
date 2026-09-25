@@ -1,8 +1,4 @@
-import Link from "next/link"
-import {
-  DetailsHeaderTabItem,
-  DetailsHeaderTabWrapper,
-} from "@/components/header/detailHeaderTabs/detailHeaderWrappers"
+import { DetailsHeaderTabWrapper } from "@/components/header/detailHeaderTabs/detailHeaderWrappers"
 import { useTranslations } from "next-intl"
 
 type AccountDetailHeaderTab = "Account" | "Settings" | "Agency" | "Subscription"
@@ -21,12 +17,10 @@ export default function AccountDetailHeaderTabs({
   } as const
 
   return (
-    <DetailsHeaderTabWrapper>
-      {(Object.keys(links) as AccountDetailHeaderTab[]).map((tab) => (
-        <Link href={links[tab]} key={tab}>
-          <DetailsHeaderTabItem label={t(tab)} selected={selectedTab === tab} />
-        </Link>
-      ))}
-    </DetailsHeaderTabWrapper>
+    <DetailsHeaderTabWrapper
+      links={links}
+      selectedTab={selectedTab}
+      getLabel={(tab) => t(tab)}
+    />
   )
 }

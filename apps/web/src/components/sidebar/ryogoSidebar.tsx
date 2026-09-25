@@ -44,7 +44,7 @@ export default function RyogoSidebar({
     <Sidebar
       side="left"
       collapsible={isMobile ? "offcanvas" : "icon"}
-      className="h-full bg-slate-50 dark:bg-slate-800"
+      className="bg-white dark:bg-slate-800"
     >
       <SidebarHeader className="mb-3">
         <RyoGoSidebarLogo open={sidebarOpen} />

@@ -39,9 +39,9 @@ function getPillColor(color: RyogoPillColorType = "slate") {
     case "slate":
       return "bg-slate-700 dark:bg-slate-300"
     case "black":
-      return "bg-slate-950 dark:bg-white"
+      return "bg-slate-900 dark:bg-slate-50"
     case "white":
-      return "bg-white dark:bg-slate-950"
+      return "bg-white dark:bg-slate-800"
   }
 }
 

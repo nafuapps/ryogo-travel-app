@@ -9,7 +9,7 @@ export type SupportFAQItemType = {
 
 export function SupportFAQWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col justify-center divide-y items-center w-full bg-white dark:bg-slate-900 p-4 lg:p-5 rounded-lg shadow-xs">
+    <div className="flex flex-col justify-center divide-y items-center w-full bg-white dark:bg-slate-800 p-4 lg:p-5 rounded-lg shadow-xs">
       {children}
     </div>
   )
@@ -32,7 +32,9 @@ export function SupportFAQItem({
           className="transition group-open:rotate-90"
           thick
         />
-        <RyogoSmall weight="font-bold">{question}</RyogoSmall>
+        <RyogoSmall color="slate" weight="font-bold">
+          {question}
+        </RyogoSmall>
       </summary>
       <RyogoCaption color="slate">{answer}</RyogoCaption>
     </details>

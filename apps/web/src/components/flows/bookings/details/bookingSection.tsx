@@ -15,7 +15,7 @@ export default function BookingSection({
   return (
     <div
       id={sectionTitle}
-      className="flex flex-col gap-4 lg:gap-5 p-4 lg:p-5 w-full mb-4 break-inside-avoid rounded-lg bg-white dark:bg-slate-900 empty:hidden"
+      className="flex flex-col gap-4 lg:gap-5 p-4 lg:p-5 w-full mb-4 break-inside-avoid rounded-lg bg-white dark:bg-slate-800 empty:hidden"
     >
       <SectionRowWrapper className="items-center justify-start">
         <RyogoIcon icon={icon} size="sm" />

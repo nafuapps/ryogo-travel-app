@@ -55,7 +55,7 @@ export default async function SupportSideComponent({
       <SectionWrapper
         id="Tickets"
         className="items-center"
-        bgColor="bg-slate-900 dark:bg-white"
+        bgColor="bg-slate-900 dark:bg-slate-50"
       >
         {isPremium ? (
           <>

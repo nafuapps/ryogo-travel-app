@@ -8,17 +8,16 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 
 export function HelpIconButton({
-  href,
   label,
   showLabelSmall,
-}: {
-  href: React.ComponentProps<typeof Link>["href"]
+  ...props
+}: React.ComponentProps<typeof Link> & {
   label?: string
   showLabelSmall?: boolean
 }) {
   const t = useTranslations("Help")
   return (
-    <Link href={href} className="mt-auto">
+    <Link {...props} className="mt-auto">
       <RyogoOutlineButton
         label={label ?? t("Title")}
         labelColor="light"

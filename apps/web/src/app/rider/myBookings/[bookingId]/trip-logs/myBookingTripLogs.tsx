@@ -29,7 +29,7 @@ export default function MyBookingTripLogsPageComponent({
   return (
     <>
       {bookingTripLogs.length > 0 ? (
-        <SectionColWrapper className="self-center items-center w-full lg:max-w-3xl">
+        <SectionColWrapper className="self-center items-center w-full">
           <SectionRowWrapper className="w-full items-center justify-between">
             <RyogoCaption color="light">
               {t("TripLogs") + " (" + bookingTripLogs.length + ")"}

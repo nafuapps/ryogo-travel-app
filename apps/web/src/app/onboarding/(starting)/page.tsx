@@ -27,6 +27,12 @@ import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { PhoneRegex } from "@/lib/regex"
 import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 import { Separator } from "@/components/ui/separator"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+  SectionWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
@@ -44,16 +50,13 @@ export default async function OnboardingHomePage({
   return (
     <div
       id="OnboardingHomePage"
-      className="bg-slate-50 dark:bg-slate-950 w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 lg:p-16 py-8 md:py-12 gap-6 lg:gap-8"
+      className="bg-slate-50 dark:bg-slate-900 w-full h-full overflow-y-scroll no-scrollbar flex flex-col justify-between items-center px-6 md:px-10 py-8 md:py-12 gap-6 md:gap-8"
     >
-      <div
-        id="OnboardingHomeHeader"
-        className="flex flex-col w-full items-center text-center gap-3"
-      >
-        <RyoGoLogo />
+      <RyoGoLogo />
+      <SectionColWrapper className="items-center text-center my-3 md:my-4">
         <RyogoH1 weight="font-bold">{t("Header.Title")}</RyogoH1>
         <RyogoSmall color="light">{t("Header.Description")}</RyogoSmall>
-      </div>
+      </SectionColWrapper>
       <div id="OnboardingHomeCTA" className="w-full md:w-1/2">
         <Link
           href={
@@ -69,14 +72,8 @@ export default async function OnboardingHomePage({
           />
         </Link>
       </div>
-      <div
-        id="OnboardingHomeBody"
-        className="flex flex-col md:flex-row w-full h-full gap-6 md:gap-8"
-      >
-        <div
-          id="OnboardingHomeSteps"
-          className="bg-white dark:bg-slate-900 shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-2 md:gap-3"
-        >
+      <TileGridWrapper>
+        <SectionWrapper id="OnboardingHomeSteps">
           <RyogoP weight="font-bold"> {t("BodySteps.Title")}</RyogoP>
           <div className="flex flex-col">
             <OnboardingHomeStepItem
@@ -99,11 +96,8 @@ export default async function OnboardingHomePage({
               last
             />
           </div>
-        </div>
-        <div
-          id="OnboardingHomeChecklist"
-          className="bg-white dark:bg-slate-900 shadow rounded-lg p-6 md:p-8 w-full md:w-1/2 flex flex-col gap-3 md:gap-4"
-        >
+        </SectionWrapper>
+        <SectionWrapper id="OnboardingHomeChecklist">
           <RyogoP weight="font-bold"> {t("BodyChecklist.Title")}</RyogoP>
           <OnboardingHomeDocumentItem
             label={t("BodyChecklist.Item1")}
@@ -130,8 +124,8 @@ export default async function OnboardingHomePage({
             {t("BodyChecklist.Optional")}
           </RyogoCaption>
           <RyogoCaption color="light">{t("BodyChecklist.Format")}</RyogoCaption>
-        </div>
-      </div>
+        </SectionWrapper>
+      </TileGridWrapper>
     </div>
   )
 }
@@ -144,10 +138,10 @@ function OnboardingHomeDocumentItem({
   label: string
 }) {
   return (
-    <div className="flex flex-row gap-3 md:gap-4 items-center">
+    <SectionRowWrapper className="items-center">
       <RyogoEnclosedIcon icon={icon} color="brand" bgColor="brand" size="sm" />
       <RyogoSmall color="slate">{label}</RyogoSmall>
-    </div>
+    </SectionRowWrapper>
   )
 }
 
@@ -163,17 +157,17 @@ function OnboardingHomeStepItem({
   last?: boolean
 }) {
   return (
-    <div className="flex flex-row gap-3 md:gap-4 items-center">
+    <SectionRowWrapper className="items-center">
       <div className="flex flex-col items-center">
         <div
-          className={`w-1 h-2 md:h-3 ${!first && `bg-slate-50 dark:bg-slate-800`}`}
+          className={`w-1 h-2 md:h-3 ${!first && `bg-slate-50 dark:bg-slate-900`}`}
         ></div>
-        <RyogoEnclosedIcon icon={icon} size="sm" color="slate" circular />
+        <RyogoEnclosedIcon icon={icon} size="md" color="light" circular />
         <div
-          className={`w-1 h-2 md:h-3 ${!last && `bg-slate-50 dark:bg-slate-800`}`}
+          className={`w-1 h-2 md:h-3 ${!last && `bg-slate-50 dark:bg-slate-900`}`}
         ></div>
       </div>
       <RyogoSmall color="slate">{label}</RyogoSmall>
-    </div>
+    </SectionRowWrapper>
   )
 }

@@ -5,6 +5,7 @@ import {
   SectionWrapper,
   DetailsBorderWrapper,
   DetailsContentWrapper,
+  DetailsHeaderWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
@@ -26,11 +27,11 @@ export default async function AgencyAssignedUserComponent({
   return (
     <SectionWrapper id="AssignedUserInfo">
       <DetailsBorderWrapper>
-        <div className="bg-slate-200 dark:bg-slate-800 py-1 lg:py-1.5 px-3 lg:px-4">
+        <DetailsHeaderWrapper>
           <RyogoCaption color="light" className="text-center">
             {t("AssignedUserInfo")}
           </RyogoCaption>
-        </div>
+        </DetailsHeaderWrapper>
         <DetailsContentWrapper>
           <SectionRowWrapper className="items-center justify-start">
             {photoUrl ? (

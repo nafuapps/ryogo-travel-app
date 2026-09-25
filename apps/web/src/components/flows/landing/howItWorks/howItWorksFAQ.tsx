@@ -13,7 +13,7 @@ import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 export default async function HowItWorksFAQSection() {
   const t = await getTranslations("Landing.HowItWorks.FAQ")
   return (
-    <LandingSectionWrapper id="faq" className="bg-white dark:bg-slate-950">
+    <LandingSectionWrapper id="faq" className="bg-white dark:bg-slate-800">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

@@ -26,7 +26,7 @@ export default async function UserOnlineStatusComponent({
       <TooltipTrigger>
         <SectionRowWrapper
           small
-          className={`items-center justify-center ${onlyIcon ? "" : "rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1.5 lg:px-3 lg:py-2"}`}
+          className={`items-center justify-center ${onlyIcon ? "" : "rounded-lg bg-slate-50 dark:bg-slate-900 px-2 py-1.5 lg:px-3 lg:py-2"}`}
         >
           {!onlyIcon && (
             <RyogoCaption color="light">{t(onlineStatus)}</RyogoCaption>

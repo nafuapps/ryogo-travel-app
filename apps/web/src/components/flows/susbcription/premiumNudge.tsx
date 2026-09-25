@@ -13,22 +13,24 @@ import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 export default async function PremiumNudge({
   userDetails,
   agencyDetails,
+  lastPlan,
 }: {
   userDetails: NonNullable<FindUserDetailsByIdType>
   agencyDetails: NonNullable<FindAgencyByIdType>
+  lastPlan: OrderTypeEnum | undefined
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.PremiumNudge")
   return (
     <div
       id="PremiumNudge"
-      className={`flex flex-col bg-slate-100  dark:bg-slate-800 p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center`}
+      className={`flex flex-col bg-slate-100 dark:bg-slate-700 p-5 lg:p-6 gap-3 lg:gap-4 rounded-lg items-center justify-center text-center`}
     >
       {agencyDetails.hasTriedSubscription ? (
         <>
           <PaymentButton
             agencyId={agencyDetails.id}
             userId={userDetails.id}
-            plan={OrderTypeEnum.MONTHLY}
+            plan={lastPlan ?? OrderTypeEnum.MONTHLY}
             ownerName={userDetails.name}
             ownerEmail={userDetails.email}
             ownerPhone={userDetails.phone}

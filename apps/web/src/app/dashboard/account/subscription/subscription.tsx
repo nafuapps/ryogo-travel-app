@@ -2,7 +2,9 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   GridWrapper,
   PageWrapper,
+  SectionColWrapper,
   SectionRowWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
@@ -65,7 +67,7 @@ export default async function SubscriptionPageComponent({
   return (
     <PageWrapper id="AccountSubscriptionPage">
       <AccountDetailHeaderTabs selectedTab="Subscription" />
-      <GridWrapper id="AccountSubscriptionInfo">
+      <SectionWrapper id="AccountSubscriptionInfo">
         <CurrentPlanDetails
           isBasic={isBasic}
           isOwner={isOwner}
@@ -77,6 +79,7 @@ export default async function SubscriptionPageComponent({
             <PremiumNudge
               userDetails={userDetails}
               agencyDetails={agencyDetails}
+              lastPlan={lastPaidPlan}
             />
           ) : null
         ) : (
@@ -86,7 +89,7 @@ export default async function SubscriptionPageComponent({
             lastPaidOrderType={lastPaidPlan}
           />
         )}
-      </GridWrapper>
+      </SectionWrapper>
       {(isBasic || daysToExpiry < 0) && (
         <PlanUsageCard
           agencyData={agencyData}
@@ -108,7 +111,7 @@ export default async function SubscriptionPageComponent({
         ))}
       <div
         id="PremiumAdvantageInfo"
-        className="w-full shrink-0 shadow rounded-lg overflow-hidden bg-white dark:bg-slate-900 relative flex flex-col gap-4 md:gap-6 items-center px-6 md:px-8 py-12 md:py-16"
+        className="w-full shrink-0 shadow rounded-lg overflow-hidden bg-white dark:bg-slate-800 relative flex flex-col gap-4 md:gap-6 items-center px-6 md:px-8 py-12 md:py-16"
       >
         <div className="bg-linear-to-b from-sky-900 dark:from-sky-100 to-sky-700 dark:to-sky-300 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -top-10 md:-left-14 md:-top-14 lg:-left-16 lg:-top-16"></div>
         <div className="bg-linear-to-b from-sky-900 dark:from-sky-100 to-sky-700 dark:to-sky-300 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -top-10 md:-right-14 md:-top-14 lg:-right-16 lg:-top-16"></div>

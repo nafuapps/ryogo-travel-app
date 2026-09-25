@@ -15,7 +15,7 @@ export default async function FeaturesManagementSection() {
   return (
     <LandingSectionWrapper
       id="management"
-      className="bg-white dark:bg-slate-900"
+      className="bg-white dark:bg-slate-800"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">

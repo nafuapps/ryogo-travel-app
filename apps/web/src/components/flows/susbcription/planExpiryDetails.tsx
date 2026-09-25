@@ -35,7 +35,7 @@ export default async function PlanExpiryDetails({
   return (
     <div
       id="PlanExpiry"
-      className="flex flex-col border p-4 lg:p-5 gap-2 lg:gap-3 rounded-lg items-center justify-center text-center"
+      className="flex flex-col border p-5 lg:p-6 gap-3 lg:gap-4 rounded-lg items-center justify-center text-center"
     >
       {needExpiryReminder ? (
         <>
@@ -63,7 +63,7 @@ export default async function PlanExpiryDetails({
                 <RyogoIcon icon={CalendarSync} size="sm" color="white" thick />
               }
               renewLabel={t("RenewCTA", {
-                plan: planToRenew.toUpperCase(),
+                plan: planToRenew,
                 price: getSubscriptionPlanPrice(planToRenew),
               })}
             />

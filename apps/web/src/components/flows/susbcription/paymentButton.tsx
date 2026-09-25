@@ -8,7 +8,11 @@ import { useTranslations } from "next-intl"
 import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { useTransition } from "react"
 import { toast } from "sonner"
-import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoBrandButton,
+  RyogoDefaultButton,
+} from "@/components/buttons/ryogoButtons"
+import RyogoAlertDialog from "@/components/buttons/alert/ryogoAlertDialog"
 
 export default function PaymentButton({
   agencyId,
@@ -99,14 +103,23 @@ export default function PaymentButton({
   return (
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      <RyogoBrandButton
-        label={renewLabel}
-        onClick={handlePayment}
-        showSpinner={isPending}
-        disabled={isPending}
+      <RyogoAlertDialog
+        title={t("Title")}
+        desc={t("Desc", { plan: plan })}
+        noCTA={t("NoCTA")}
+        labelChild={
+          <RyogoBrandButton size="lg" label={renewLabel} disabled={isPending}>
+            {icon}
+          </RyogoBrandButton>
+        }
       >
-        {icon}
-      </RyogoBrandButton>
+        <RyogoDefaultButton
+          label={t("YesCTA")}
+          onClick={handlePayment}
+          showSpinner={isPending}
+          disabled={isPending}
+        />
+      </RyogoAlertDialog>
     </>
   )
 }

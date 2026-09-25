@@ -101,6 +101,7 @@ export default function AddDriverPageComponent({
                   total: AddDriverTotalSteps,
                 })
           }
+          href={""} //TODO: update onboarding video link
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

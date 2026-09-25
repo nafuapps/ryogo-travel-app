@@ -355,8 +355,8 @@ function TripTypeSelectionCard({
       onClick={onClick}
       className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-2 lg:gap-3 w-full transition-all ${
         selected
-          ? "bg-slate-950 dark:bg-white"
-          : "border hover:bg-slate-50 dark:hover:bg-slate-800 "
+          ? "bg-slate-900 dark:bg-slate-50"
+          : "border hover:bg-slate-50 dark:hover:bg-slate-900"
       }`}
     >
       <RyogoSmall weight="font-bold" color={selected ? "white" : "slate"}>

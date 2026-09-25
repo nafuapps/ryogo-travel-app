@@ -1,4 +1,10 @@
-import { RyogoP, RyogoH1, RyogoSmall, RyogoH4 } from "@/components/typography"
+import {
+  RyogoP,
+  RyogoH1,
+  RyogoSmall,
+  RyogoH4,
+  RyogoCaption,
+} from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
@@ -6,6 +12,8 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import Image from "next/image"
 import RyoGoLogo from "@/components/logo"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export default async function ResourcesAboutSection() {
   const t = await getTranslations("Landing.Resources.About")
@@ -49,7 +57,7 @@ export default async function ResourcesAboutSection() {
             <RyogoSmall color="slate" className="text-center md:text-end">
               {t("Founder.Description")}
             </RyogoSmall>
-            <div className="flex justify-center gap-2.5 md:gap-3 lg:gap-4">
+            <SectionRowWrapper className="justify-center">
               <CompanyLogo
                 name={t("Founder.Company1")}
                 src={"/ola.png"}
@@ -65,7 +73,7 @@ export default async function ResourcesAboutSection() {
                 src={"/parkplus.jpg"}
                 alt={t("Founder.Company3")}
               />
-            </div>
+            </SectionRowWrapper>
           </div>
           <div className="mx-auto w-full max-w-md relative rounded-xl aspect-square overflow-hidden">
             {/* //TODO: Add founder image */}
@@ -112,13 +120,12 @@ function CompanyLogo({
   alt: string
 }) {
   return (
-    <div className="flex items-center justify-center gap-1 md:gap-2">
-      <div className="size-8 md:size-9 lg:size-10 shrink-0 relative rounded overflow-hidden">
-        <Image src={src} alt={alt} fill className="object-cover" sizes="64px" />
-      </div>
-      <RyogoSmall weight="font-bold" color="light">
-        {name}
-      </RyogoSmall>
-    </div>
+    <SectionRowWrapper
+      small
+      className="items-center justify-center border p-1.5 md:p-2 rounded"
+    >
+      <RyogoImage src={src} alt={alt} imageSize="xs" />
+      <RyogoCaption color="light">{name}</RyogoCaption>
+    </SectionRowWrapper>
   )
 }

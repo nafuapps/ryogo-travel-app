@@ -58,7 +58,7 @@ export default function HowItWorksCustomersSection() {
   return (
     <LandingSectionWrapper
       id="customers"
-      className=" bg-white dark:bg-slate-950"
+      className=" bg-white dark:bg-slate-800"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">

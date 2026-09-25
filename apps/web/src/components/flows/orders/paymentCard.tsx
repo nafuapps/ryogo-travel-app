@@ -14,7 +14,7 @@ export default function PaymentCard({
   payment: FindAllOrdersByAgencyIdType[number]["payments"][number]
 }) {
   return (
-    <div className="flex bg-slate-100 dark:bg-slate-800 p-3 lg:p-4 rounded-lg justify-between gap-2 lg:gap-3">
+    <div className="flex bg-slate-100 dark:bg-slate-700 p-3 lg:p-4 rounded-lg justify-between gap-2 lg:gap-3">
       <SectionColWrapper className="justify-between">
         <RyogoCaption color="light" weight="font-bold">
           {"Payment #" + payment.id}

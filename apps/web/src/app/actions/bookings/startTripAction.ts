@@ -88,9 +88,11 @@ export async function startTripAction(data: AddTripLogRequestType) {
     titleKey: "TripStarted.Title",
     titleObject: {
       bookingId: bookingChanged.id,
-      driverName: bookingChanged.driverName,
     },
     messageKey: "TripStarted.Message",
+    messageObject: {
+      driverName: bookingChanged.driverName,
+    },
     isCritical: true,
     link: `/rider/myBookings/${bookingChanged.id}`,
   })

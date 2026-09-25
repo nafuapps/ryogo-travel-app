@@ -1,9 +1,5 @@
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import {
-  DetailsHeaderTabItem,
-  DetailsHeaderTabWrapper,
-} from "@/components/header/detailHeaderTabs/detailHeaderWrappers"
+import { DetailsHeaderTabWrapper } from "@/components/header/detailHeaderTabs/detailHeaderWrappers"
 
 type DriverDetailHeaderTab = "Driver" | "Assigned" | "Completed" | "Leaves"
 
@@ -24,12 +20,10 @@ export default async function DriverDetailHeaderTabs({
   } as const
 
   return (
-    <DetailsHeaderTabWrapper>
-      {(Object.keys(links) as DriverDetailHeaderTab[]).map((tab) => (
-        <Link href={links[tab]} key={tab}>
-          <DetailsHeaderTabItem label={t(tab)} selected={selectedTab === tab} />
-        </Link>
-      ))}
-    </DetailsHeaderTabWrapper>
+    <DetailsHeaderTabWrapper
+      links={links}
+      selectedTab={selectedTab}
+      getLabel={(tab) => t(tab)}
+    />
   )
 }

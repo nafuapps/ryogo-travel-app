@@ -105,7 +105,7 @@ function SlideshowCard({
         </div>
       )}
       {active ? (
-        <div className="rounded w-full h-0.5 lg:h-1 bg-white dark:bg-slate-900">
+        <div className="rounded w-full h-0.5 lg:h-1 bg-white dark:bg-slate-800">
           <div
             className="h-full rounded bg-sky-700 dark:bg-sky-300"
             style={{ width: `${(timeLeft / SLIDESHOW_TIMER_MS) * 100}%` }}

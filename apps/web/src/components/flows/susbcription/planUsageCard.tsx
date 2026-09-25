@@ -1,5 +1,6 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -44,7 +45,6 @@ export default async function PlanUsageCard({
 
   return (
     <SectionWrapper id="UsageSection">
-      <RyogoCaption color={"light"}>{t("Header")}</RyogoCaption>
       {(isBasic ||
         daysToExpiry +
           BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS <
@@ -106,10 +106,14 @@ function UsageElement({
     bgColor += " from-sky-800 to-sky-500"
   }
   return (
-    <div className="flex flex-col gap-1 lg:gap-1.5">
-      <SectionRowWrapper small>
-        <RyogoSmall weight="font-bold">{label}</RyogoSmall>
-        <RyogoSmall weight="font-bold">{usageNumber}</RyogoSmall>
+    <SectionColWrapper small>
+      <SectionRowWrapper small className="items-center justify-between">
+        <RyogoSmall color="slate" weight="font-bold">
+          {label}
+        </RyogoSmall>
+        <RyogoSmall color="light" weight="font-bold">
+          {usageNumber}
+        </RyogoSmall>
       </SectionRowWrapper>
       <div className="rounded-full overflow-hidden h-2 lg:h-2.5 bg-slate-300 dark:bg-slate-700">
         <div
@@ -117,6 +121,6 @@ function UsageElement({
           style={{ width: Math.min(1, ratio) * 100 + "%" }}
         />
       </div>
-    </div>
+    </SectionColWrapper>
   )
 }

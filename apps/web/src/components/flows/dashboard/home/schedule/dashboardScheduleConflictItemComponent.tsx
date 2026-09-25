@@ -99,7 +99,7 @@ function ConflictItemRow({
   return (
     <Link
       href={href as Route}
-      className={`flex items-center justify-between p-1.5 lg:p-2 rounded-md ${highlight ? "bg-yellow-200 dark:bg-yellow-800 hover:bg-yellow-300 dark:hover:bg-yellow-700" : "bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700"}`}
+      className={`flex items-center justify-between p-1.5 lg:p-2 rounded-md ${highlight ? "bg-yellow-100 dark:bg-yellow-800 hover:bg-yellow-200 dark:hover:bg-yellow-700" : "bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600"}`}
     >
       <RyogoCaption color="slate">{format(startDate, "dd MMM")}</RyogoCaption>
       <RyogoCaption color="slate" weight="font-bold">

@@ -21,7 +21,7 @@ export function FAQItem({
     <details className="group flex flex-col gap-3 lg:gap-4 w-full py-5 lg:py-6">
       <summary className="flex items-center gap-2.5 lg:gap-3">
         <div
-          className="flex items-center justify-center shrink-0 transition rounded-lg bg-slate-100 dark:bg-slate-800 p-1.5 lg:p-2 ${
+          className="flex items-center justify-center shrink-0 transition rounded-lg bg-slate-100 dark:bg-slate-700 p-1.5 lg:p-2 ${
           group-open:rotate-90"
         >
           <RyogoIcon color="black" size="sm" icon={ChevronRight} thick />

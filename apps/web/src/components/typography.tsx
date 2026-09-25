@@ -10,14 +10,14 @@ export type RyogoTextColorType =
 
 type RyogoTextWeightType = "font-normal" | "font-medium" | "font-bold"
 
-const getTextColor = (color?: RyogoTextColorType) => {
+const getTextColor = (color: RyogoTextColorType = "dark") => {
   switch (color) {
     case "white":
       return "text-white dark:text-slate-950"
     case "light":
-      return "text-slate-500 dark:text-slate-500"
+      return "text-slate-500 dark:text-slate-400"
     case "slate":
-      return "text-slate-700 dark:text-slate-300"
+      return "text-slate-700 dark:text-slate-200"
     case "red":
       return "text-red-700 dark:text-red-300"
     case "yellow":
@@ -27,9 +27,8 @@ const getTextColor = (color?: RyogoTextColorType) => {
     case "brand":
       return "text-sky-700 dark:text-sky-300"
     case "dark":
-    //default is dark
-    default:
-      return "text-slate-950 dark:text-white"
+      //default is dark
+      return "text-slate-950 dark:text-slate-50"
   }
 }
 

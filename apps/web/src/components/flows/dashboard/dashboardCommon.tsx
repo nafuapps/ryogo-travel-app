@@ -18,7 +18,12 @@ export async function DashboardSectionHeader({
       </RyogoH4>
       {href && (
         <Link href={href}>
-          <RyogoEnclosedIcon icon={ChevronRight} size="sm" color="slate" />
+          <RyogoEnclosedIcon
+            icon={ChevronRight}
+            size="sm"
+            color="slate"
+            bgColor="slate"
+          />
         </Link>
       )}
     </SectionRowWrapper>
@@ -27,7 +32,7 @@ export async function DashboardSectionHeader({
 
 export function DashboardRow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full divide-y divide-slate-100 dark:divide-slate-800 border border-slate-100 dark:border-slate-800 rounded-md overflow-hidden">
+    <div className="flex flex-col w-full divide-y divide-slate-50 dark:divide-slate-700 border  rounded-md overflow-hidden">
       {children}
     </div>
   )
@@ -41,7 +46,7 @@ export function DashboardRowHeader({
   count: number
 }) {
   return (
-    <div className="flex flex-row p-2 lg:p-3 bg-slate-100 dark:bg-slate-800 justify-between items-center">
+    <div className="flex flex-row p-2 lg:p-3 bg-slate-50 dark:bg-slate-700 justify-between items-center">
       <RyogoCaption color="light">{title}</RyogoCaption>
       <RyogoCaption color="light">{count}</RyogoCaption>
     </div>
@@ -75,7 +80,7 @@ export function DashboardChipItemWrapper({
 }) {
   return (
     <div
-      className={`flex flex-row items-center justify-between gap-1 lg:gap-1.5 w-full hover:bg-slate-50 dark:hover:bg-slate-800 p-2 lg:p-3`}
+      className={`flex flex-row items-center justify-between gap-1 lg:gap-1.5 w-full hover:bg-slate-50 dark:hover:bg-slate-700 p-2 lg:p-3`}
     >
       {children}
     </div>
@@ -91,7 +96,7 @@ export function DashboardBoxItemWrapper({
 }) {
   return (
     <div
-      className={`flex flex-col gap-1 lg:gap-1.5 w-full ${highlight ? "border-l-2 border-sky-700 dark:border-sky-300 hover:bg-sky-50 dark:hover:bg-sky-950" : "hover:bg-slate-50 dark:hover:bg-slate-950"} px-2 py-3 lg:px-3 lg:py-4`}
+      className={`flex flex-col gap-1 lg:gap-1.5 w-full ${highlight ? "border-l-2 border-sky-700 dark:border-sky-300" : ""} hover:bg-slate-50 dark:hover:bg-slate-700 px-2 py-3 lg:px-3 lg:py-4`}
     >
       {children}
     </div>

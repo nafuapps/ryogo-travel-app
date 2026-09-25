@@ -17,7 +17,7 @@ import Link from "next/link"
 export default async function Footer() {
   const t = await getTranslations("Landing.Footer")
   return (
-    <footer className="bg-sky-950 dark:bg-white">
+    <footer className="bg-sky-950 dark:bg-slate-50">
       <div className="max-w-6xl mx-auto px-5 md:px-6 lg:px-8 py-8 md:py-12">
         {/* Main footer content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">

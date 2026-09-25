@@ -23,7 +23,7 @@ export default function AuthAccountCard({
 }) {
   return (
     <div
-      className={`flex gap-2 lg:gap-3 w-full justify-between items-center border  rounded-lg p-3 lg:p-4 ${isLink ? "hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700" : "border-slate-100 dark:border-slate-800"}`}
+      className={`flex gap-2 lg:gap-3 w-full justify-between items-center border rounded-lg p-3 lg:p-4 ${isLink ? "hover:bg-slate-100 dark:hover:bg-slate-700" : ""}`}
     >
       {user.photoUrl ? (
         <RyogoImage

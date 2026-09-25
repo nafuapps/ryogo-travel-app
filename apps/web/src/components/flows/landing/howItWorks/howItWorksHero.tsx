@@ -46,7 +46,7 @@ export default async function HowItWorksHeroSection() {
             />
           </Link>
         </div>
-        <div className="bg-white dark:bg-slate-900 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
+        <div className="bg-white dark:bg-slate-800 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
           <Image
             className="object-cover"
             loading="eager"

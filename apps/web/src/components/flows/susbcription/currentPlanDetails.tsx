@@ -27,7 +27,7 @@ export default async function CurrentPlanDetails({
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.CurrentPlan")
   return (
-    <SectionColWrapper>
+    <SectionColWrapper className="items-center w-full">
       <RyogoCaption color="light">{t("Header")}</RyogoCaption>
       <SectionRowWrapper className="items-center justify-start">
         <RyogoH2 color={isBasic ? "slate" : "brand"} weight="font-bold">
@@ -48,12 +48,15 @@ export default async function CurrentPlanDetails({
               : t("Trial")
         }
         bgColor={isBasic ? "light" : "black"}
-        className="self-start"
       />
       {isOwner && lastPaidPlan && (
         <Link href="/dashboard/account/subscription/orders">
-          <RyogoOutlineButton label={t("ViewOrders")} className="w-full">
-            <RyogoIcon icon={ChevronRight} size="sm" />
+          <RyogoOutlineButton
+            label={t("ViewOrders")}
+            labelColor="light"
+            className="w-full"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="light" />
           </RyogoOutlineButton>
         </Link>
       )}

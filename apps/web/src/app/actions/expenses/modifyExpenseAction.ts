@@ -74,11 +74,13 @@ export async function modifyExpenseAction(
       entityId: updatedExpense.id,
       titleKey: "ExpenseModifiedByDriver.Title",
       titleObject: {
-        expenseId: updatedExpense.id,
-        type: updatedExpense.type.toUpperCase(),
         bookingId: updatedExpense.bookingId,
       },
       messageKey: "ExpenseModifiedByDriver.Message",
+      messageObject: {
+        expenseId: updatedExpense.id,
+        type: updatedExpense.type,
+      },
       link: `/dashboard/bookings/${updatedExpense.bookingId}/expenses`,
     })
   }

@@ -15,7 +15,7 @@ export default async function FeaturesSchedulingSection() {
   return (
     <LandingSectionWrapper
       id="scheduling"
-      className="bg-slate-100 dark:bg-slate-950"
+      className="bg-slate-50 dark:bg-slate-900"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">

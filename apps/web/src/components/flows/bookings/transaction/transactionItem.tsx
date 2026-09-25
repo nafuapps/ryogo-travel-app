@@ -112,7 +112,7 @@ export default function TransactionItem({
           {transaction.remarks && (
             <SectionRowWrapper
               small
-              className="items-center rounded bg-slate-100 dark:bg-slate-800 px-2 lg:px-3 py-1 lg:py-1.5"
+              className="items-center rounded bg-slate-100 dark:bg-slate-700 px-2 lg:px-3 py-1 lg:py-1.5"
             >
               <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
               <RyogoTiny color="light">{transaction.remarks}</RyogoTiny>

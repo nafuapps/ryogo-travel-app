@@ -31,7 +31,7 @@ export default async function LandingLayout({
   return (
     <main
       id="LandingLayout"
-      className="flex flex-col bg-white dark:bg-slate-950"
+      className="flex flex-col bg-white dark:bg-slate-800"
     >
       <div className="flex flex-col h-full">
         <Navbar isDarkMode={isDarkMode} locale={locale} />

@@ -24,7 +24,7 @@ export default function NewBookingTripCard(
     <div id="tripInfo" className="flex flex-col">
       <div
         id="tripHeader"
-        className="flex flex-row bg-white dark:bg-slate-900 justify-between items-center p-3 lg:p-4 rounded-t-lg"
+        className="flex flex-row bg-white dark:bg-slate-800 justify-between items-center p-3 lg:p-4 rounded-t-lg"
       >
         <div className="flex flex-col gap-1 lg:gap-1.5">
           <RyogoP weight="font-bold">

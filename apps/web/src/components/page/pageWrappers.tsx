@@ -31,7 +31,7 @@ export function OnboardingPageWrapper({
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-dvh min-h-0 bg-slate-100 dark:bg-slate-950 px-5 lg:px-6 pt-3 lg:pt-4 pb-6 lg:pb-7">
+    <div className="flex flex-col w-full h-dvh min-h-0 bg-slate-50 dark:bg-slate-900 px-5 lg:px-6 pt-3 lg:pt-4 pb-6 lg:pb-7">
       {children}
     </div>
   )
@@ -50,7 +50,7 @@ export function PageWrapper({
     <Suspense fallback={<PageSkeleton />}>
       <div
         id={id}
-        className={`w-full flex flex-col gap-3 lg:gap-4 ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll mt-3 lg:mt-4"} no-scrollbar`}
+        className={`w-full flex flex-col gap-3 lg:gap-4 lg:max-w-5xl ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll mt-3 lg:mt-4 self-center"} no-scrollbar`}
       >
         {children}
       </div>
@@ -75,7 +75,7 @@ export function DoubleContentWrapper({
 }) {
   return (
     <div
-      className={`flex flex-col ${sideOnTop ? "[&>*:first-child]:order-2 [&>*:last-child]:order-1 lg:[&>*:first-child]:order-0 lg:[&>*:last-child]:order-0" : ""} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 w-full overflow-y-scroll no-scrollbar`}
+      className={`flex flex-col ${sideOnTop ? "[&>*:first-child]:order-2 [&>*:last-child]:order-1 lg:[&>*:first-child]:order-0 lg:[&>*:last-child]:order-0" : ""} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 w-full self-center lg:justify-center overflow-y-scroll no-scrollbar`}
     >
       {children}
     </div>
@@ -119,7 +119,7 @@ export function FormContentWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden flex flex-col relative gap-4 lg:gap-5 ${asCard ? "bg-white dark:bg-slate-900 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
+      className={`empty:hidden flex flex-col relative gap-4 lg:gap-5 ${asCard ? "bg-white dark:bg-slate-800 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
     >
       {children}
     </div>
@@ -154,7 +154,7 @@ export function GridWrapper({
   return (
     <div
       id={id}
-      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-4 lg:gap-5 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
+      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-800"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-4 lg:gap-5 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
     >
       {children}
     </div>
@@ -175,7 +175,7 @@ export function SectionWrapper({
   return (
     <div
       id={id}
-      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-900"} rounded-lg shadow flex flex-col w-full gap-4 lg:gap-5 p-4 lg:p-5 ${className ?? ""}`}
+      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-800"} rounded-lg shadow flex flex-col w-full gap-4 lg:gap-5 p-5 lg:p-6 ${className ?? ""}`}
     >
       {children}
     </div>
@@ -254,7 +254,7 @@ export function HoverGridWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden grid ${highlight ? "bg-slate-900 dark:bg-slate-50 hover:bg-slate-800 dark:hover:bg-slate-100" : "border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800"} ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
+      className={`empty:hidden grid ${highlight ? "bg-slate-900 dark:bg-slate-50 hover:bg-slate-800 dark:hover:bg-slate-100" : "border hover:bg-slate-100 dark:hover:bg-slate-700"} ${hasChin ? "rounded-t-lg" : "rounded-lg"} grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 gap-3 lg:gap-4 p-3 lg:p-4`}
     >
       {children}
     </div>
@@ -293,7 +293,7 @@ export function StickyActionWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden flex flex-col gap-2 lg:gap-3 py-2 lg:py-3 sticky mt-auto bottom-0 ${bgTransparent ? "bg-transparent" : "bg-slate-100 dark:bg-slate-950 border-t"}`}
+      className={`empty:hidden flex flex-col gap-2 lg:gap-3 py-2 lg:py-3 sticky mt-auto bottom-0 ${bgTransparent ? "bg-transparent" : "bg-slate-50 dark:bg-slate-900 border-t"}`}
     >
       {children}
     </div>
@@ -302,7 +302,7 @@ export function StickyActionWrapper({
 
 export function TileGridWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="empty:hidden grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+    <div className="empty:hidden grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 w-full">
       {children}
     </div>
   )
@@ -338,7 +338,7 @@ export function DetailsHeaderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="empty:hidden flex items-center justify-between gap-3 lg:gap-4 px-3 lg:px-4 py-2 lg:py-3 bg-slate-200 dark:bg-slate-800">
+    <div className="empty:hidden flex items-center justify-between gap-3 lg:gap-4 px-3 lg:px-4 py-2 lg:py-3 bg-slate-100 dark:bg-slate-700">
       {children}
     </div>
   )
@@ -384,7 +384,7 @@ export function DateWrapper({
   showYear?: boolean
 }) {
   return (
-    <div className="rounded-md bg-slate-100 dark:bg-slate-800 py-2 lg:py-3 px-5 lg:px-6 flex flex-col items-center justify-center">
+    <div className="rounded-md bg-slate-100 dark:bg-slate-700 py-2 lg:py-3 px-5 lg:px-6 flex flex-col items-center justify-center">
       <RyogoCaption color="light" weight="font-bold">
         {format(date, "MMM")}
       </RyogoCaption>
@@ -407,7 +407,7 @@ export function AddInfoWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden border border-dashed rounded-md flex items-center justify-center p-3 lg:p-4 gap-2 lg:gap-3 transition hover:bg-slate-100 dark:hover:bg-slate-800 ${className ?? ""}`}
+      className={`empty:hidden border border-dashed rounded-md flex items-center justify-center p-3 lg:p-4 gap-2 lg:gap-3 transition hover:bg-slate-100 dark:hover:bg-slate-700 ${className ?? ""}`}
     >
       <RyogoIcon icon={icon} size="sm" color="slate" />
       <RyogoCaption color="light">{label}</RyogoCaption>
@@ -428,7 +428,7 @@ export function EditInfoWrapper({
 }) {
   return (
     <div
-      className={`border flex p-3 lg:p-4 gap-2 lg:gap-3 justify-between items-center rounded-md ${canEdit ? "hover:bg-slate-100 dark:hover:bg-slate-800" : ""}`}
+      className={`border flex p-3 lg:p-4 gap-2 lg:gap-3 justify-between items-center rounded-md ${canEdit ? "hover:bg-slate-100 dark:hover:bg-slate-700" : ""}`}
     >
       <RyogoEnclosedIcon icon={icon} size="sm" color="black" />
       <SectionColWrapper small className="w-full">

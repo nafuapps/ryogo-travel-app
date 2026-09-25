@@ -63,6 +63,7 @@ export default async function ChangePasswordPage() {
           stepLabel={t("Subtitle")}
           totalSteps={1}
           currentStepIndex={0}
+          href={""} //TODO: update onboarding video link
         />
         <ChangePasswordStepComponent
           userId={currentUser.userId}

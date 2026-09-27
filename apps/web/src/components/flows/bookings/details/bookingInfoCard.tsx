@@ -1,5 +1,4 @@
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -7,9 +6,9 @@ import {
   DetailsBorderWrapper,
   DetailsHeaderWrapper,
 } from "@/components/page/pageWrappers"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import { RyogoCaption } from "@/components/typography"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ClockPlus, User } from "lucide-react"
+import { ClockPlus } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 
@@ -37,18 +36,7 @@ export default async function BookingCreationInfoCard({
               {moment(createdAt).format("hh:mm a")}
             </RyogoCaption>
           </SectionRowWrapper>
-          <SectionRowWrapper className="items-center justify-start">
-            {photoUrl ? (
-              <RyogoImage
-                src={getFileUrl(photoUrl)}
-                alt={name}
-                imageSize="xs"
-              />
-            ) : (
-              <RyogoEnclosedIcon icon={User} size="sm" />
-            )}
-            <RyogoCaption color="light">{name}</RyogoCaption>
-          </SectionRowWrapper>
+          <RyogoImageIconTag url={photoUrl} label={name} />
         </SectionColWrapper>
       </div>
     </DetailsBorderWrapper>

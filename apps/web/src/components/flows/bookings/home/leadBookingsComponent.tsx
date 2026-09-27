@@ -18,12 +18,14 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 export default function LeadBookingsComponent({
   leadBookings,
   userId,
+  isOwner,
 }: {
   leadBookings: FindLeadBookingsType
   userId: string
+  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.Bookings.Leads")
-  const [showAgencyLeads, setShowAgencyLeads] = useState(false)
+  const [showAgencyLeads, setShowAgencyLeads] = useState(isOwner)
 
   const trips = showAgencyLeads
     ? leadBookings

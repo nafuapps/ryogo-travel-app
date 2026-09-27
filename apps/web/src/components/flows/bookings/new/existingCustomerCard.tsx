@@ -3,7 +3,6 @@ import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/custom
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import {
   ChevronRight,
-  Star,
   User,
   Lock as LockIcon,
   MessageSquareQuote,
@@ -20,6 +19,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 import { useTranslations } from "next-intl"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import RyogoTag from "@/components/tags/ryogoTag"
 
 export default function ExistingCutomerCard({
   existingCustomer,
@@ -39,7 +39,7 @@ export default function ExistingCutomerCard({
         }
       }}
       href={`/dashboard/bookings/new/${existingCustomer.id}`}
-      className={`flex items-center gap-3 lg:gap-4 border ${!isActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950 opacity-50 cursor-not-allowed" : "hover:bg-slate-100 dark:hover:bg-slate-800"} rounded-lg p-3 lg:p-4`}
+      className={`flex items-center gap-3 lg:gap-4 border ${!isActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950 opacity-50 cursor-not-allowed" : "hover:bg-slate-100 dark:hover:bg-slate-700"} rounded-lg p-3 lg:p-4`}
     >
       <SectionColWrapper className="w-full">
         <SectionRowWrapper className="items-center justify-start">
@@ -65,13 +65,10 @@ export default function ExistingCutomerCard({
           </SectionColWrapper>
         </SectionRowWrapper>
         {existingCustomer.remarks && (
-          <SectionRowWrapper
-            small
-            className="items-center rounded bg-slate-100 dark:bg-slate-700 px-2 lg:px-3 py-1 lg:py-1.5"
-          >
-            <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
-            <RyogoTiny color="light">{existingCustomer.remarks}</RyogoTiny>
-          </SectionRowWrapper>
+          <RyogoTag
+            label={existingCustomer.remarks}
+            icon={MessageSquareQuote}
+          />
         )}
       </SectionColWrapper>
       <SectionColWrapper className="items-end h-full justify-around">

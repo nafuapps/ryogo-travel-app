@@ -1,17 +1,12 @@
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardTripsType } from "@ryogo-travel-app/api/services/booking.services"
-import {
-  DashboardBoxItemWrapper,
-  DashboardLabelImageChip,
-} from "@/components/flows/dashboard/dashboardCommon"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
+import { getVehicleIcon } from "@/components/icons/vehicleIcon"
 import { IdCard } from "lucide-react"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import Link from "next/link"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default async function DashboardTripItemComponent({
   trip,
@@ -49,33 +44,18 @@ export default async function DashboardTripItemComponent({
         </SectionRowWrapper>
         <SectionRowWrapper small className="items-center justify-between">
           {trip.assignedVehicle && (
-            <DashboardLabelImageChip label={trip.assignedVehicle.vehicleNumber}>
-              {vehicleImageUrl ? (
-                <RyogoImage
-                  src={getFileUrl(vehicleImageUrl)}
-                  alt={trip.assignedVehicle.vehicleNumber}
-                  imageSize="xs"
-                />
-              ) : (
-                <GetVehicleIcon
-                  vehicleType={trip.assignedVehicle.type}
-                  size="sm"
-                />
-              )}
-            </DashboardLabelImageChip>
+            <RyogoImageIconTag
+              url={vehicleImageUrl}
+              label={trip.assignedVehicle.vehicleNumber}
+              icon={getVehicleIcon(trip.assignedVehicle.type)}
+            />
           )}
           {trip.assignedDriver && (
-            <DashboardLabelImageChip label={trip.assignedDriver.name} end>
-              {driverImageUrl ? (
-                <RyogoImage
-                  src={getFileUrl(driverImageUrl)}
-                  alt={trip.assignedDriver.name}
-                  imageSize="xs"
-                />
-              ) : (
-                <RyogoEnclosedIcon icon={IdCard} size="sm" />
-              )}
-            </DashboardLabelImageChip>
+            <RyogoImageIconTag
+              url={driverImageUrl}
+              label={trip.assignedDriver.name}
+              icon={IdCard}
+            />
           )}
         </SectionRowWrapper>
       </DashboardBoxItemWrapper>

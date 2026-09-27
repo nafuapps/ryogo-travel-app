@@ -91,10 +91,7 @@ export function AddVehicleConfirm({
               label={t("VehicleNumber")}
               value={finalData.data.vehicleNumber.toUpperCase()}
             />
-            <DetailsLineItem
-              label={t("Type")}
-              value={finalData.data.type.toUpperCase()}
-            />
+            <DetailsLineItem label={t("Type")} value={finalData.data.type} />
             <DetailsLineItem label={t("Brand")} value={finalData.data.brand} />
             <DetailsLineItem label={t("Model")} value={finalData.data.model} />
             <DetailsLineItem label={t("Color")} value={finalData.data.color} />

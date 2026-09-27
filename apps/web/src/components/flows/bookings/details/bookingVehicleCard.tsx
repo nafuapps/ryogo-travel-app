@@ -1,4 +1,4 @@
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
@@ -15,7 +15,7 @@ export default function BookingVehicleCard({
 }) {
   if (!vehicle) return null
   return (
-    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
+    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg items-center">
       {vehicle.vehiclePhotoUrl ? (
         <RyogoImage
           src={getFileUrl(vehicle.vehiclePhotoUrl)}
@@ -23,7 +23,7 @@ export default function BookingVehicleCard({
           imageSize="md"
         />
       ) : (
-        <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
+        <GetVehicleEnclosedIcon vehicleType={vehicle.type} size="lg" />
       )}
       <SectionColWrapper small className="w-full">
         <RyogoP weight="font-bold">{vehicle.vehicleNumber}</RyogoP>
@@ -34,7 +34,7 @@ export default function BookingVehicleCard({
       </SectionColWrapper>
       <SectionColWrapper small className="items-end">
         <RyogoCaption color="light" weight="font-bold">
-          {vehicle.type.toUpperCase()}
+          {vehicle.type}
         </RyogoCaption>
         <RyogoSmall weight="font-bold">{vehicle.capacity}</RyogoSmall>
         <RyogoSmall weight="font-bold">{vehicle.hasAC}</RyogoSmall>

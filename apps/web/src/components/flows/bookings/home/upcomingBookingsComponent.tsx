@@ -18,13 +18,15 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 export default function UpcomingBookingsComponent({
   upcomingBookings,
   userId,
+  isOwner,
 }: {
   userId: string
   upcomingBookings: FindUpcomingBookingsNextDaysType
+  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.Bookings.Upcoming")
 
-  const [showAgencyBookings, setShowAgencyBookings] = useState(false)
+  const [showAgencyBookings, setShowAgencyBookings] = useState(isOwner)
 
   const trips = showAgencyBookings
     ? upcomingBookings

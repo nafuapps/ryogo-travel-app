@@ -22,7 +22,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "../support/helpButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function ChangeEmailPageComponent({
   usersWithPhoneRole,

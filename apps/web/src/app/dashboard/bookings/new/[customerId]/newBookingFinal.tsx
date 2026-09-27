@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { IconTextTag } from "@/components/tags/IconTextTag"
 import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
 import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
@@ -32,6 +31,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import FormStepHeader from "@/components/form/formStepHeader"
 import { NewBookingTotalSteps } from "@/lib/uiConfig"
+import RyogoTag from "@/components/tags/ryogoTag"
 
 export default function NewBookingFinal({
   onPrev,
@@ -115,7 +115,7 @@ export default function NewBookingFinal({
         <NewBookingTripCard {...newBookingFormData} />
         <FormContentWrapper>
           <SectionRowWrapper className="items-center justify-between">
-            <IconTextTag icon={Car} text={t("VehicleCharge")} />
+            <RyogoTag icon={Car} label={t("VehicleCharge")} />
             <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalVehiclePrice}
@@ -130,7 +130,7 @@ export default function NewBookingFinal({
           </SectionRowWrapper>
           {newBookingFormData.tripNeedsAC && (
             <SectionRowWrapper className="items-center justify-between">
-              <IconTextTag icon={AirVent} text={t("ACCharge")} />
+              <RyogoTag icon={AirVent} label={t("ACCharge")} />
               <SectionColWrapper small className="items-end">
                 <RyogoSmall weight="font-bold">
                   {"₹" + finalAmount.totalAcPrice}
@@ -145,7 +145,7 @@ export default function NewBookingFinal({
             </SectionRowWrapper>
           )}
           <SectionRowWrapper className="items-center justify-between">
-            <IconTextTag icon={IdCard} text={t("DriverAllowance")} />
+            <RyogoTag icon={IdCard} label={t("DriverAllowance")} />
             <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalDriverAllowance}
@@ -159,7 +159,7 @@ export default function NewBookingFinal({
             </SectionColWrapper>
           </SectionRowWrapper>
           <SectionRowWrapper className="items-center justify-between">
-            <IconTextTag icon={CirclePercent} text={t("Commission")} />
+            <RyogoTag icon={CirclePercent} label={t("Commission")} />
             <SectionColWrapper small className="items-end">
               <RyogoSmall weight="font-bold">
                 {"₹" + finalAmount.totalCommission}

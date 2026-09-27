@@ -1,27 +1,21 @@
 "use client"
 
-import {
-  RyogoH3,
-  RyogoCaption,
-  RyogoSmall,
-  RyogoTiny,
-} from "@/components/typography"
+import { RyogoH3, RyogoSmall, RyogoTiny } from "@/components/typography"
 import { format } from "date-fns"
 import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import ExpenseIcon from "@/components/icons/expenseIcon"
 import { ExpenseApprovalButton } from "./expenseApprovalButton"
-import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import {
   ChevronDown,
   ChevronRight,
   ChevronUp,
   MessageSquareQuote,
-  User,
 } from "lucide-react"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -29,6 +23,8 @@ import {
 } from "@/components/page/pageWrappers"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import RyogoTag from "@/components/tags/ryogoTag"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default function ExpenseItem({
   expense,
@@ -71,25 +67,11 @@ export default function ExpenseItem({
           <SectionRowWrapper className="items-center justify-between">
             <SectionColWrapper>
               <RyogoTiny color="light">{"#" + expense.id}</RyogoTiny>
-              <SectionRowWrapper className="items-center">
-                {expense.addedByUser.photoUrl ? (
-                  <RyogoImage
-                    src={getFileUrl(expense.addedByUser.photoUrl)}
-                    alt={expense.addedByUser.name}
-                    imageSize="xs"
-                  />
-                ) : (
-                  <RyogoEnclosedIcon icon={User} size="sm" />
-                )}
-                <SectionColWrapper small>
-                  <RyogoCaption color="slate">
-                    {expense.addedByUser.name}
-                  </RyogoCaption>
-                  <RyogoTiny color="light">
-                    {expense.addedByUser.userRole}
-                  </RyogoTiny>
-                </SectionColWrapper>
-              </SectionRowWrapper>
+              <RyogoImageIconTag
+                url={expense.addedByUser.photoUrl}
+                label={expense.addedByUser.name}
+                subtitle={expense.addedByUser.userRole}
+              />
             </SectionColWrapper>
             {expense.expensePhotoUrl && (
               <RyogoDialogImage
@@ -100,13 +82,7 @@ export default function ExpenseItem({
             )}
           </SectionRowWrapper>
           {expense.remarks && (
-            <SectionRowWrapper
-              small
-              className="items-center rounded bg-slate-100 dark:bg-slate-700 px-2 lg:px-3 py-1 lg:py-1.5"
-            >
-              <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
-              <RyogoTiny color="light">{expense.remarks}</RyogoTiny>
-            </SectionRowWrapper>
+            <RyogoTag label={expense.remarks} icon={MessageSquareQuote} />
           )}
           <SectionRowWrapper className="items-center mt-auto">
             <ExpenseApprovalButton

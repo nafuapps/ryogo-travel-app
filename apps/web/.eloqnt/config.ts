@@ -4,8 +4,8 @@ export default defineConfig({
   srcPath: "./src",
   messages: {
     path: "./src/i18n/locales",
-    locales: ["en"],
-    sourceLocale: "en",
+    locales: ["English"],
+    sourceLocale: "English",
     format: "json",
   },
 })

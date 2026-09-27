@@ -1,15 +1,11 @@
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { IdCard } from "lucide-react"
-import {
-  DashboardChipItemWrapper,
-  DashboardLabelImageChip,
-} from "@/components/flows/dashboard/dashboardCommon"
+import { DashboardChipItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import Link from "next/link"
 import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStatusComponent"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { UserKey, UserCog, IdCard } from "lucide-react"
 
 export default function DashboardUserChipComponent({
   user,
@@ -21,24 +17,30 @@ export default function DashboardUserChipComponent({
   return (
     <Link href={`/dashboard/users/${user.id}`}>
       <DashboardChipItemWrapper>
-        <DashboardLabelImageChip label={user.name}>
-          <UserOnlineStatusComponent lastSeen={user.lastSeen} onlyIcon />
-          {userImageUrl ? (
-            <RyogoImage
-              src={getFileUrl(userImageUrl)}
-              alt={user.name}
-              imageSize="xs"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={IdCard} size="sm" />
-          )}
-        </DashboardLabelImageChip>
+        <RyogoImageIconTag
+          url={userImageUrl}
+          label={user.name}
+          icon={getUserIcon(user.userRole)}
+          className="w-full"
+        />
         <UserStatusPill
           status={user.status}
           size="sm"
           className="self-center"
         />
+        <UserOnlineStatusComponent lastSeen={user.lastSeen} onlyIcon />
       </DashboardChipItemWrapper>
     </Link>
   )
+}
+
+function getUserIcon(userRole: UserRolesEnum) {
+  switch (userRole) {
+    case UserRolesEnum.OWNER:
+      return UserKey
+    case UserRolesEnum.AGENT:
+      return UserCog
+    case UserRolesEnum.DRIVER:
+      return IdCard
+  }
 }

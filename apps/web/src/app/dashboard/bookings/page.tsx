@@ -30,6 +30,8 @@ export default async function BookingsPage() {
   }
   const agencyId = currentUser.agencyId
 
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
+
   const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
 
   const upcomingBookings = await bookingServices.findUpcomingBookingsNextDays(
@@ -52,16 +54,18 @@ export default async function BookingsPage() {
           <OngoingBookingsComponent
             ongoingTrips={ongoingTrips}
             userId={currentUser.userId}
+            isOwner={isOwner}
           />
         )}
         <UpcomingBookingsComponent
           upcomingBookings={upcomingBookings}
           userId={currentUser.userId}
+          isOwner={isOwner}
         />
         <BookingScheduleChartComponent
           bookingsSchedule14Days={bookingsSchedule14Days}
           userId={currentUser.userId}
-          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+          isOwner={isOwner}
         />
         <BookingHistoryChartComponent
           bookingsHistory14Days={bookingsHistory14Days}

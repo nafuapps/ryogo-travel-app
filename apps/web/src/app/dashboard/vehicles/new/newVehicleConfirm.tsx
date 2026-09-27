@@ -104,11 +104,11 @@ export function NewVehicleConfirm({
             <DetailsContentWrapper>
               <DetailsLineItem
                 label={t("VehicleNumber")}
-                value={newVehicleFormData.data.vehicleNumber.toUpperCase()}
+                value={newVehicleFormData.data.vehicleNumber}
               />
               <DetailsLineItem
                 label={t("Type")}
-                value={newVehicleFormData.data.type.toUpperCase()}
+                value={newVehicleFormData.data.type}
               />
               <DetailsLineItem
                 label={t("Brand")}

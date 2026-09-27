@@ -21,7 +21,7 @@ export default function RyogoDetailedIconButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`p-2 lg:p-3 gap-2 lg:gap-3 items-center flex hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition w-full ${className ?? ""} ${
+      className={`p-2 lg:p-3 gap-2 lg:gap-3 items-center flex hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition w-full ${className ?? ""} ${
         disabled ? "opacity-50 cursor-not-allowed" : ""
       }`}
     >

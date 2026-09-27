@@ -75,7 +75,7 @@ export function SubscriptionInvoiceDocument({
           </View>
           <View id="planRow" style={styles.tableRow}>
             <Text style={styles.p}>
-              RyoGo Travel App - Subscription ({order.orderType.toUpperCase()})
+              RyoGo Travel App - Subscription ({order.orderType})
             </Text>
             {/* <Text style={styles.p}>{priceBeforeTax.toFixed(2)}</Text> */}
             <Text style={styles.p}>{order.amount.toFixed(2)}</Text>

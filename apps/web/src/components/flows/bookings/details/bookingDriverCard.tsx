@@ -19,7 +19,7 @@ export default function BookingDriverCard({
   if (!driver) return null
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
+      <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg items-center">
         {driver.user.photoUrl ? (
           <RyogoImage
             src={getFileUrl(driver.user.photoUrl)}

@@ -40,13 +40,7 @@ export default async function CurrentPlanDetails({
         />
       </SectionRowWrapper>
       <RyogoPill
-        label={
-          isBasic
-            ? t("FreeForever")
-            : lastPaidPlan
-              ? lastPaidPlan.toUpperCase()
-              : t("Trial")
-        }
+        label={isBasic ? t("FreeForever") : (lastPaidPlan ?? t("Trial"))}
         bgColor={isBasic ? "light" : "black"}
       />
       {isOwner && lastPaidPlan && (

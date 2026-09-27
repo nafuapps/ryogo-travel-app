@@ -1,17 +1,23 @@
 import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoSmall } from "@/components/typography"
 import Link from "next/link"
-import { ChevronRight, Wrench } from "lucide-react"
-import moment from "moment"
+import {
+  ChevronRight,
+  MessageSquareQuote,
+  Wrench,
+  WrenchOff,
+} from "lucide-react"
 import {
   SectionWrapper,
-  GridItemWrapper,
   PageWrapper,
   TileGridWrapper,
   SectionHeaderWrapper,
   StickyActionWrapper,
+  SectionRowWrapper,
+  DateWrapper,
+  SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { RepairStatusPill } from "@/components/pills/ryogoPills"
 import {
@@ -20,6 +26,11 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import { differenceInDays } from "date-fns"
+import RyogoTag from "@/components/tags/ryogoTag"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
 
 export default async function AllVehicleRepairsPageComponent({
   repairs,
@@ -43,17 +54,24 @@ export default async function AllVehicleRepairsPageComponent({
           label={t("Title")}
           count={repairs.length}
         />
-        <TileGridWrapper>
-          {repairs.map((repair) => (
-            <VehicleRepairComponent
-              key={repair.id}
-              repair={repair}
-              isOwner={isOwner}
-              userId={userId}
-            />
-          ))}
-        </TileGridWrapper>
+        {repairs.length > 0 ? (
+          <TileGridWrapper>
+            {repairs.map((repair) => (
+              <VehicleRepairComponent
+                key={repair.id}
+                repair={repair}
+                isOwner={isOwner}
+                userId={userId}
+              />
+            ))}
+          </TileGridWrapper>
+        ) : (
+          <EmptyStateIcon icon={WrenchOff} label={t("NoRepairs")} />
+        )}
       </SectionWrapper>
+      {/* <SectionWrapper  id="RepairSchedule">
+        //TODO: Add repair schedule chart
+      </SectionWrapper> */}
       <StickyActionWrapper>
         <Link
           href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
@@ -74,7 +92,6 @@ export default async function AllVehicleRepairsPageComponent({
   )
 }
 
-//TODO:Revamp UI
 async function VehicleRepairComponent({
   repair,
   userId,
@@ -87,29 +104,38 @@ async function VehicleRepairComponent({
   const t = await getTranslations("Dashboard.VehicleRepairs")
 
   const canModify = isOwner || userId === repair.addedByUserId
+
   return (
-    <TileGridWrapper>
-      <GridItemWrapper>
-        <RyogoP weight="font-bold">
-          {moment(repair.startDate).format("DD MMM") +
-            " - " +
-            moment(repair.endDate).format("DD MMM")}
-        </RyogoP>
-        {repair.cost && (
-          <RyogoCaption color="light">{"₹" + repair.cost}</RyogoCaption>
-        )}
-      </GridItemWrapper>
-      <GridItemWrapper>
-        <RyogoCaption color="slate">{repair.addedByUser.name}</RyogoCaption>
-        <RyogoCaption color="light">{repair.remarks}</RyogoCaption>
-      </GridItemWrapper>
-      <GridItemWrapper>
-        <RepairStatusPill
-          status={repair.isCompleted ? t("Completed") : t("Pending")}
-          completed={repair.isCompleted}
+    <SectionColWrapper className="w-full p-4 lg:p-5 border rounded-md">
+      <SectionRowWrapper className="items-center justify-between">
+        <DateWrapper date={repair.startDate} hideYear />
+        <SectionColWrapper small className="w-full items-center">
+          {repair.cost !== null && repair.cost > 0 && (
+            <RyogoSmall color="slate">
+              {t("Cost", { cost: repair.cost })}
+            </RyogoSmall>
+          )}
+          <RyogoRoundedDashedTag
+            label={t("Days", {
+              days: differenceInDays(repair.endDate, repair.startDate) + 1,
+            })}
+          />
+        </SectionColWrapper>
+        <DateWrapper date={repair.endDate} hideYear />
+      </SectionRowWrapper>
+      {repair.remarks && (
+        <RyogoTag label={repair.remarks} icon={MessageSquareQuote} />
+      )}
+      <RepairStatusPill
+        status={repair.isCompleted ? t("Completed") : t("Pending")}
+        completed={repair.isCompleted}
+      />
+      <SectionRowWrapper className="items-center justify-between">
+        <RyogoImageIconTag
+          url={repair.addedByUser.photoUrl}
+          label={repair.addedByUser.name}
+          subtitle={repair.addedByUser.userRole}
         />
-      </GridItemWrapper>
-      <GridItemWrapper>
         {canModify && (
           <Link
             href={`/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}`}
@@ -119,7 +145,7 @@ async function VehicleRepairComponent({
             </RyogoOutlineButton>
           </Link>
         )}
-      </GridItemWrapper>
-    </TileGridWrapper>
+      </SectionRowWrapper>
+    </SectionColWrapper>
   )
 }

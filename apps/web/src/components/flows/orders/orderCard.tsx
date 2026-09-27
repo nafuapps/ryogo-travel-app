@@ -35,7 +35,7 @@ export default function OrderCard({
     <SectionWrapper key={order.id} id={"Order#" + order.id}>
       <SectionRowWrapper className="items-center justify-between">
         <div
-          className={`flex items-center justify-center shrink-0 transition rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 lg:p-2 ${
+          className={`flex items-center justify-center shrink-0 transition rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 p-1.5 lg:p-2 ${
             collapsed ? "-rotate-90" : ""
           }`}
           onClick={() => setCollapsed(!collapsed)}

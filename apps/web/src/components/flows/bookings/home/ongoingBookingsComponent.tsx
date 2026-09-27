@@ -18,12 +18,14 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 export default function OngoingBookingsComponent({
   ongoingTrips,
   userId,
+  isOwner,
 }: {
   userId: string
   ongoingTrips: FindOngoingTripsType
+  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.Bookings.Ongoing")
-  const [showAgencyBookings, setShowAgencyBookings] = useState(false)
+  const [showAgencyBookings, setShowAgencyBookings] = useState(isOwner)
 
   const trips = showAgencyBookings
     ? ongoingTrips

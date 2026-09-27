@@ -125,7 +125,7 @@ export function BookingConfirmationDocument({
             <Text style={styles.p}>
               {booking.startDate.toLocaleDateString()}
             </Text>
-            <Text style={styles.caption}>{booking.type.toUpperCase()}</Text>
+            <Text style={styles.caption}>{booking.type}</Text>
             <Text style={styles.caption}>
               {booking.passengers.toString() + " pax"}
             </Text>
@@ -181,9 +181,7 @@ export function BookingConfirmationDocument({
           <View id="BookedBy" style={styles.booked}>
             <Text style={styles.pBold}>{booking.assignedUser.name}</Text>
             <Text style={styles.p}>{booking.assignedUser.phone}</Text>
-            <Text style={styles.caption}>
-              {booking.assignedUser.userRole.toUpperCase()}
-            </Text>
+            <Text style={styles.caption}>{booking.assignedUser.userRole}</Text>
           </View>
         </View>
         <View style={styles.divider} />

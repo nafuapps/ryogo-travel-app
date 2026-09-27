@@ -16,7 +16,7 @@ export default function BookingAssignedUserCard({
   user: NonNullable<NonNullable<FindBookingDetailsByIdType>["assignedUser"]>
 }) {
   return (
-    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
+    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg items-center">
       {user.photoUrl ? (
         <RyogoImage
           src={getFileUrl(user.photoUrl)}

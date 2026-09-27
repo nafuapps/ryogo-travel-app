@@ -12,6 +12,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import CancelledBookingsComponent from "@/components/flows/bookings/home/cancelledBookingsComponent"
 import AllBookingsHeaderTabs from "@/components/header/detailHeaderTabs/allBookingsHeaderTabs"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Cancelled Bookings - ${pageTitle}`,
@@ -39,6 +40,7 @@ export default async function CancelledBookingsPage() {
         <CancelledBookingsComponent
           cancelledBookings={cancelledBookings}
           userId={currentUser.userId}
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         />
         <StickyActionWrapper>
           <HelpIconButton

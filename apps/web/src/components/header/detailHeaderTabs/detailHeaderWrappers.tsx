@@ -39,7 +39,7 @@ function DetailsHeaderTabItem({
   return (
     <Link href={href as Route} className="w-full">
       <div
-        className={`flex w-full items-center rounded transition justify-center px-2 py-1.5 lg:px-2.5 lg:py-2 ${
+        className={`flex w-full items-center rounded transition justify-center p-2 lg:p-2.5 ${
           selected
             ? "bg-slate-900 dark:bg-slate-50 shadow"
             : "hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-xs"

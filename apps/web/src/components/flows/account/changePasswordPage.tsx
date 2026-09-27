@@ -21,7 +21,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "../support/helpButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function ChangePasswordPageComponent({
   userId,

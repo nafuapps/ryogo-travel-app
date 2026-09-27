@@ -1,16 +1,16 @@
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
 import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
-import { RyogoP, RyogoCaption } from "@/components/typography"
-import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
   SectionWrapper,
-  GridItemWrapper,
   PageWrapper,
   TileGridWrapper,
   SectionHeaderWrapper,
   StickyActionWrapper,
+  DateWrapper,
+  SectionColWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { LeaveStatusPill } from "@/components/pills/ryogoPills"
 import {
@@ -18,9 +18,18 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronRight, CalendarX, TreePalm } from "lucide-react"
+import {
+  ChevronRight,
+  CalendarX,
+  TreePalm,
+  MessageSquareQuote,
+} from "lucide-react"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import RyogoTag from "@/components/tags/ryogoTag"
+import { differenceInDays } from "date-fns"
+import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
 
 export default async function AllDriverLeavesPageComponent({
   leaves,
@@ -58,6 +67,9 @@ export default async function AllDriverLeavesPageComponent({
           <EmptyStateIcon icon={CalendarX} label={t("NoLeaves")} />
         )}
       </SectionWrapper>
+      {/* <SectionWrapper  id="LeaveSchedule">
+        //TODO: Add leave schedule chart
+      </SectionWrapper> */}
       <StickyActionWrapper>
         <Link
           href={`/dashboard/drivers/${driverId}/leaves/new`}
@@ -78,7 +90,6 @@ export default async function AllDriverLeavesPageComponent({
   )
 }
 
-//TODO:Revamp UI
 async function DriverLeaveComponent({
   leave,
   userId,
@@ -92,25 +103,31 @@ async function DriverLeaveComponent({
 
   const canModify = isOwner || userId === leave.addedByUserId
   return (
-    <TileGridWrapper>
-      <GridItemWrapper>
-        <RyogoP weight="font-bold">
-          {moment(leave.startDate).format("DD MMM") +
-            " - " +
-            moment(leave.endDate).format("DD MMM")}
-        </RyogoP>
-      </GridItemWrapper>
-      <GridItemWrapper>
-        <RyogoCaption color="slate">{leave.addedByUser.name}</RyogoCaption>
-        <RyogoCaption color="light">{leave.remarks}</RyogoCaption>
-      </GridItemWrapper>
-      <GridItemWrapper>
-        <LeaveStatusPill
-          status={leave.isCompleted ? t("Completed") : t("Pending")}
-          completed={leave.isCompleted}
+    <SectionColWrapper className="w-full p-4 lg:p-5 border rounded-md">
+      <SectionRowWrapper className="items-center justify-between">
+        <DateWrapper date={leave.startDate} hideYear />
+        <SectionColWrapper small className="w-full items-center">
+          <RyogoRoundedDashedTag
+            label={t("Days", {
+              days: differenceInDays(leave.endDate, leave.startDate) + 1,
+            })}
+          />
+        </SectionColWrapper>
+        <DateWrapper date={leave.endDate} hideYear />
+      </SectionRowWrapper>
+      {leave.remarks && (
+        <RyogoTag label={leave.remarks} icon={MessageSquareQuote} />
+      )}
+      <LeaveStatusPill
+        status={leave.isCompleted ? t("Completed") : t("Pending")}
+        completed={leave.isCompleted}
+      />
+      <SectionRowWrapper className="items-center justify-between">
+        <RyogoImageIconTag
+          url={leave.addedByUser.photoUrl}
+          label={leave.addedByUser.name}
+          subtitle={leave.addedByUser.userRole}
         />
-      </GridItemWrapper>
-      <GridItemWrapper>
         {canModify && (
           <Link
             href={`/dashboard/drivers/${leave.driverId}/leaves/modify/${leave.id}`}
@@ -120,7 +137,7 @@ async function DriverLeaveComponent({
             </RyogoOutlineButton>
           </Link>
         )}
-      </GridItemWrapper>
-    </TileGridWrapper>
+      </SectionRowWrapper>
+    </SectionColWrapper>
   )
 }

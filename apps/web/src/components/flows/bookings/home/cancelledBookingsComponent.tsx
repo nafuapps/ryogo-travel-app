@@ -18,12 +18,14 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 export default function CancelledBookingsComponent({
   cancelledBookings,
   userId,
+  isOwner,
 }: {
   userId: string
   cancelledBookings: FindCancelledBookingsPreviousDaysType
+  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.Bookings.Cancelled")
-  const [showAgencyBookings, setShowAgencyBookings] = useState(false)
+  const [showAgencyBookings, setShowAgencyBookings] = useState(isOwner)
 
   const trips = showAgencyBookings
     ? cancelledBookings

@@ -1,4 +1,4 @@
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import {
   SelectTrigger,
   SelectValue,
@@ -22,7 +22,6 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { addDays, differenceInDays, subDays } from "date-fns"
 
 export enum SelectableDays {
@@ -47,9 +46,7 @@ export function DashboardScheduleHeader({
   setSelectedTab: Dispatch<SetStateAction<SelectableDays>>
   isHistory?: boolean
 }) {
-  const t = isHistory
-    ? useTranslations("Dashboard.History.Header")
-    : useTranslations("Dashboard.Schedule.Header")
+  const t = useTranslations("Dashboard.Schedule")
 
   return (
     <SectionRowWrapper className="items-center justify-between">
@@ -67,10 +64,14 @@ export function DashboardScheduleHeader({
         <SelectContent>
           <SelectGroup>
             <SelectItem value={SelectableDays.SEVEN}>
-              <RyogoCaption color="light">{t("7Days")}</RyogoCaption>
+              <RyogoCaption color="light">
+                {isHistory ? t("Last7Days") : t("Next7Days")}
+              </RyogoCaption>
             </SelectItem>
             <SelectItem value={SelectableDays.FOURTEEN}>
-              <RyogoCaption color="light">{t("14Days")}</RyogoCaption>
+              <RyogoCaption color="light">
+                {isHistory ? t("Last14Days") : t("Next14Days")}
+              </RyogoCaption>
             </SelectItem>
           </SelectGroup>
         </SelectContent>

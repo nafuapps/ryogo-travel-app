@@ -11,18 +11,14 @@ export const driverLeaveRepository = {
     return await db.query.driverLeaves.findMany({
       where: and(
         eq(driverLeaves.driverId, driverId),
-        or(
-          eq(driverLeaves.isCompleted, false),
-          and(
-            eq(driverLeaves.isCompleted, true),
-            gte(driverLeaves.startDate, queryStartDate),
-          ),
-        ),
+        gte(driverLeaves.startDate, queryStartDate),
       ),
       with: {
         addedByUser: {
           columns: {
             name: true,
+            photoUrl: true,
+            userRole: true,
           },
         },
       },

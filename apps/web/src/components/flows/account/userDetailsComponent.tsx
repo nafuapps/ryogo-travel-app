@@ -32,7 +32,7 @@ export default async function UserDetailsComponent({
           label={t("Joined")}
           value={moment(createdAt).format("DD MMM YYYY")}
         />
-        <DetailsLineItem label={t("Role")} value={role.toUpperCase()} />
+        <DetailsLineItem label={t("Role")} value={role} />
         {isAdmin && (
           <SectionRowWrapper className="mt-auto rounded-sm bg-slate-100 dark:bg-slate-700 p-1.5 lg:p-2 items-center justify-center">
             <RyogoCaption color="light">{t("Admin")}</RyogoCaption>

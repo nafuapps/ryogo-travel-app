@@ -1,19 +1,17 @@
 import getEntityIcon from "@/components/icons/entityIcon"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { SupportTicketStatusPill } from "@/components/pills/ryogoPills"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import {
   FindSupportTicketsByAgencyIdType,
   FindSupportTicketsByUserIdType,
 } from "@ryogo-travel-app/api/services/support.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 
@@ -52,7 +50,7 @@ export default function SupportTicketItem({
             />
             <SectionColWrapper small>
               <RyogoCaption color={"slate"} weight="font-bold">
-                {ticket.entityType.toUpperCase()}
+                {ticket.entityType}
               </RyogoCaption>
               {ticket.entityId && (
                 <RyogoCaption color={"slate"}>
@@ -66,20 +64,10 @@ export default function SupportTicketItem({
           </RyogoCaption>
         </SectionRowWrapper>
         {"user" in ticket && (
-          <SectionRowWrapper className="items-center justify-start">
-            {ticket.user.photoUrl ? (
-              <RyogoImage
-                src={getFileUrl(ticket.user.photoUrl)}
-                alt={ticket.user.name}
-                imageSize="xs"
-              />
-            ) : (
-              <RyogoEnclosedIcon icon={User} size="sm" />
-            )}
-            <RyogoCaption color={"slate"} className="text-center">
-              {ticket.user.name}
-            </RyogoCaption>
-          </SectionRowWrapper>
+          <RyogoImageIconTag
+            url={ticket.user.photoUrl}
+            label={ticket.user.name}
+          />
         )}
       </SectionWrapper>
     </Link>

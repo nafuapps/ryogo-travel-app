@@ -2,12 +2,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoCaption,
-  RyogoH4,
-  RyogoSmall,
-  RyogoTiny,
-} from "@/components/typography"
+import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import {
@@ -53,13 +48,17 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleEnclosedIcon, {
+  getVehicleIcon,
+} from "@/components/icons/vehicleIcon"
 import { BookingTypeEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { useTranslations } from "next-intl"
+import RyogoTag from "@/components/tags/ryogoTag"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 function BookingCardWrapper({
   bookingId,
@@ -128,22 +127,6 @@ function BookingCardLineWrapper({ children }: { children: React.ReactNode }) {
   )
 }
 
-function BookingCardTagWrapper({
-  children,
-  className,
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <SectionRowWrapper
-      className={`items-center justify-center rounded bg-slate-100 dark:bg-slate-700 px-2 lg:px-3 py-1 lg:py-1.5 ${className ?? ""}`}
-    >
-      {children}
-    </SectionRowWrapper>
-  )
-}
-
 function BookingCardRouteWrapper({
   source,
   destination,
@@ -183,36 +166,20 @@ function BookingCardAssignedWrapper({
   return (
     <SectionRowWrapper className="items-center justify-between px-3 lg:px-4">
       {assignedVehicle ? (
-        <SectionRowWrapper small className="items-center">
-          {assignedVehicle.vehiclePhotoUrl ? (
-            <RyogoImage
-              src={getFileUrl(assignedVehicle.vehiclePhotoUrl)}
-              alt={assignedVehicle.vehicleNumber}
-              imageSize="xs"
-            />
-          ) : (
-            <GetVehicleIcon vehicleType={assignedVehicle.type} size="sm" />
-          )}
-          <RyogoCaption color="slate">
-            {assignedVehicle.vehicleNumber}
-          </RyogoCaption>
-        </SectionRowWrapper>
+        <RyogoImageIconTag
+          label={assignedVehicle.vehicleNumber}
+          url={assignedVehicle.vehiclePhotoUrl}
+          icon={getVehicleIcon(assignedVehicle.type)}
+        />
       ) : showReminder ? (
         <RyogoEnclosedIcon icon={Car} size="sm" color="red" bgColor="red" />
       ) : null}
       {assignedDriver ? (
-        <SectionRowWrapper small className="items-center justify-end">
-          <RyogoCaption color="slate">{assignedDriver.name}</RyogoCaption>
-          {assignedDriver.user.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(assignedDriver.user.photoUrl)}
-              alt={assignedDriver.name}
-              imageSize="xs"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={IdCard} size="sm" />
-          )}
-        </SectionRowWrapper>
+        <RyogoImageIconTag
+          label={assignedDriver.name}
+          url={assignedDriver.user.photoUrl}
+          icon={IdCard}
+        />
       ) : showReminder ? (
         <RyogoEnclosedIcon icon={IdCard} size="sm" color="red" bgColor="red" />
       ) : null}
@@ -262,12 +229,10 @@ export function CompletedBookingCard({
         assignedVehicle={booking.assignedVehicle}
       />
       <BookingCardLineWrapper>
-        <BookingCardTagWrapper className="w-full">
-          <RyogoIcon size="xs" icon={CheckCheck} color="light" thick />
-          <RyogoTiny color="light">
-            {moment(booking.completedAt ?? booking.updatedAt).format("lll")}
-          </RyogoTiny>
-        </BookingCardTagWrapper>
+        <RyogoTag
+          label={moment(booking.completedAt ?? booking.updatedAt).format("lll")}
+          icon={CheckCheck}
+        />
       </BookingCardLineWrapper>
     </BookingCardWrapper>
   )
@@ -384,18 +349,14 @@ export function UpcomingBookingCard({
       />
       <BookingCardLineWrapper>
         {booking.pickupAddress && (
-          <BookingCardTagWrapper className="justify-start">
-            <RyogoIcon size="xs" icon={MapPin} color="light" />
-            <RyogoTiny color="light">{booking.pickupAddress}</RyogoTiny>
-          </BookingCardTagWrapper>
+          <RyogoTag label={booking.pickupAddress} icon={MapPin} />
         )}
         {booking.startTime && (
-          <BookingCardTagWrapper className="justify-end">
-            <RyogoTiny color="light">
-              {moment(combinedDateTime).format("LT")}
-            </RyogoTiny>
-            <RyogoIcon size="xs" icon={Clock} color="light" />
-          </BookingCardTagWrapper>
+          <RyogoTag
+            label={moment(combinedDateTime).format("LT")}
+            icon={Clock}
+            className="flex-row-reverse"
+          />
         )}
       </BookingCardLineWrapper>
       {canAssign && (!booking.assignedDriver || !booking.assignedVehicle) && (
@@ -436,12 +397,10 @@ export function CancelledBookingCard({
         assignedVehicle={booking.assignedVehicle}
       />
       <BookingCardLineWrapper>
-        <BookingCardTagWrapper className="w-full">
-          <RyogoIcon size="xs" icon={Ban} color="light" thick />
-          <RyogoTiny color="light">
-            {moment(booking.cancelledAt).format("lll")}
-          </RyogoTiny>
-        </BookingCardTagWrapper>
+        <RyogoTag
+          label={moment(booking.cancelledAt).format("lll")}
+          icon={Ban}
+        />
       </BookingCardLineWrapper>
     </BookingCardWrapper>
   )
@@ -472,12 +431,10 @@ export function LeadBookingCard({
         showReminder={booking.startDate < new Date()}
       />
       <BookingCardLineWrapper>
-        <BookingCardTagWrapper className="justify-start">
-          <RyogoIcon size="xs" icon={ClockPlus} color="light" thick />
-          <RyogoTiny color="light">
-            {moment(booking.createdAt).format("lll")}
-          </RyogoTiny>
-        </BookingCardTagWrapper>
+        <RyogoTag
+          label={moment(booking.createdAt).format("lll")}
+          icon={ClockPlus}
+        />
         <RyogoSmall color="slate">
           {"₹" + booking.estimatedTotalAmount}
         </RyogoSmall>

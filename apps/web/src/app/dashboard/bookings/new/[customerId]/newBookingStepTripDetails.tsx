@@ -266,7 +266,7 @@ export default function NewBookingStepTripDetails({
                 form.setValue("tripEndDate", form.getValues("tripStartDate"))
               }}
               selected={selectedTripType === BookingTypeEnum.OneWay}
-              title={BookingTypeEnum.OneWay.toUpperCase()}
+              title={BookingTypeEnum.OneWay}
               desc={t("Field8.OneWayDesc")}
             />
             <TripTypeSelectionCard
@@ -275,7 +275,7 @@ export default function NewBookingStepTripDetails({
                 setSelectedTripType(BookingTypeEnum.Round)
               }}
               selected={selectedTripType === BookingTypeEnum.Round}
-              title={BookingTypeEnum.Round.toUpperCase()}
+              title={BookingTypeEnum.Round}
               desc={t("Field8.RoundTripDesc")}
             />
 
@@ -283,7 +283,7 @@ export default function NewBookingStepTripDetails({
               type={BookingTypeEnum.MultiDay}
               onClick={() => setSelectedTripType(BookingTypeEnum.MultiDay)}
               selected={selectedTripType === BookingTypeEnum.MultiDay}
-              title={BookingTypeEnum.MultiDay.toUpperCase()}
+              title={BookingTypeEnum.MultiDay}
               desc={t("Field8.MultiDayDesc")}
             />
           </div>

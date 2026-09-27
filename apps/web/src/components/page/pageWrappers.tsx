@@ -4,7 +4,7 @@ import { Form } from "@/components/ui/form"
 import { PageSkeleton } from "./loadingWrappers"
 import {
   RyogoCaption,
-  RyogoH4,
+  RyogoH3,
   RyogoSmall,
   RyogoTiny,
 } from "@/components/typography"
@@ -193,12 +193,12 @@ export function SectionHeaderWrapper({
 }) {
   return (
     <SectionRowWrapper className="items-center">
-      <RyogoIcon icon={icon} size="sm" color="light" />
-      <RyogoSmall color="light">{label}</RyogoSmall>
+      <RyogoIcon icon={icon} size="xs" color="light" thick />
+      <RyogoCaption color="light">{label}</RyogoCaption>
       {count !== undefined && (
-        <RyogoSmall color="light" weight="font-bold">
+        <RyogoCaption color="light" weight="font-bold">
           {count}
-        </RyogoSmall>
+        </RyogoCaption>
       )}
     </SectionRowWrapper>
   )
@@ -287,7 +287,7 @@ export function StickyActionWrapper({
 
 export function TileGridWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="empty:hidden grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 w-full">
+    <div className="empty:hidden grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 w-full">
       {children}
     </div>
   )
@@ -363,20 +363,20 @@ export function DetailsLineWrapper({
 
 export function DateWrapper({
   date,
-  showYear = true,
+  hideYear,
 }: {
   date: Date
-  showYear?: boolean
+  hideYear?: boolean
 }) {
   return (
     <div className="rounded-md bg-slate-100 dark:bg-slate-700 py-2 lg:py-3 px-5 lg:px-6 flex flex-col items-center justify-center">
       <RyogoCaption color="light" weight="font-bold">
         {format(date, "MMM")}
       </RyogoCaption>
-      <RyogoH4 color="slate" weight="font-bold">
+      <RyogoH3 color="slate" weight="font-bold">
         {format(date, "dd")}
-      </RyogoH4>
-      {showYear && <RyogoTiny color="light">{format(date, "yyyy")}</RyogoTiny>}
+      </RyogoH3>
+      {!hideYear && <RyogoTiny color="light">{format(date, "yyyy")}</RyogoTiny>}
     </div>
   )
 }

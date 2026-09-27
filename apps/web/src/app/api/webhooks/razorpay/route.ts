@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
         isFeed: true,
         textKey: "SubscriptionPurchased",
         textObject: {
-          plan: updatedOrder.orderType.toUpperCase(),
+          plan: updatedOrder.orderType,
           userName: userName ?? "Owner",
         },
         link: `/dashboard/account/agency`,
@@ -181,7 +181,7 @@ export async function POST(req: NextRequest) {
         dueDate: addDays(new Date(), 3),
         titleKey: "SubscriptionPaymentFailed.Title",
         titleObject: {
-          plan: orderInDB.orderType.toUpperCase(),
+          plan: orderInDB.orderType,
           orderId: orderInDB.id,
         },
         messageKey: "SubscriptionPaymentFailed.Message",

@@ -80,7 +80,7 @@ export default function MissionCard({
           />
           <div className="flex flex-col gap-0.5">
             <RyogoCaption color={isRead ? "light" : "slate"} weight="font-bold">
-              {mission.entityType.toUpperCase()}
+              {mission.entityType}
             </RyogoCaption>
             <RyogoCaption color={"light"}>
               {"(" + mission.entityId + ")"}
@@ -161,7 +161,7 @@ export default function MissionCard({
                   ? router.push(`/rider/myMissions/${mission.id}/modify`)
                   : router.push(`/dashboard/missions/${mission.id}/modify`)
               }
-              className="hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="hover:bg-slate-100 dark:hover:bg-slate-700"
               label={t("Card.EditMission")}
             >
               <RyogoIcon icon={ChevronRight} size="sm" color="slate" />

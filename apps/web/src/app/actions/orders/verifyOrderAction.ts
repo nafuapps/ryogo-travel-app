@@ -67,7 +67,7 @@ export async function verifyOrderAction({
     isFeed: true,
     textKey: "SubscriptionPurchased",
     textObject: {
-      plan: updatedRecord.orderType.toUpperCase(),
+      plan: updatedRecord.orderType,
       userName: currentUser.name,
     },
     link: `/dashboard/account/subscription`,

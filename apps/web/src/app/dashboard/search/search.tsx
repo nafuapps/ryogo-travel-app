@@ -33,7 +33,7 @@ import {
   DriverStatusPill,
   VehicleStatusPill,
 } from "@/components/pills/ryogoPills"
-import GetVehicleIcon, {
+import GetVehicleEnclosedIcon, {
   GetCanDriveIcons,
 } from "@/components/icons/vehicleIcon"
 import {
@@ -476,9 +476,7 @@ function BookingSearchResultItem({
           <RyogoSmall>{booking.customer.name}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {booking.type.toUpperCase()}
-          </RyogoCaption>
+          <RyogoCaption color="slate">{booking.type}</RyogoCaption>
           <RyogoSmall>
             {booking.source.city + " - " + booking.destination.city}
           </RyogoSmall>
@@ -594,7 +592,7 @@ function VehicleSearchResultItem({
               imageSize="sm"
             />
           ) : (
-            <GetVehicleIcon vehicleType={vehicle.type} size="md" />
+            <GetVehicleEnclosedIcon vehicleType={vehicle.type} size="md" />
           )}
         </GridItemWrapper>
         <GridItemWrapper>
@@ -606,7 +604,7 @@ function VehicleSearchResultItem({
           <RyogoCaption color="slate">
             {vehicle.brand + " " + vehicle.model}
           </RyogoCaption>
-          <RyogoSmall>{vehicle.type.toUpperCase()}</RyogoSmall>
+          <RyogoSmall>{vehicle.type}</RyogoSmall>
         </GridItemWrapper>
         <GridItemWrapper>
           <VehicleStatusPill status={vehicle.status} />

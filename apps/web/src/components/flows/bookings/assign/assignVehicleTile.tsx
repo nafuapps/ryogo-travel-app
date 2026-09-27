@@ -7,21 +7,18 @@ import {
   Wrench,
   Check,
   TicketX,
-  Star,
+  CircleGauge,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { IconTextTag } from "@/components/tags/IconTextTag"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import {
   AssignTileWrapper,
   AssignTileContentWrapper,
-  AssignTileHeaderWrapper,
-  AssignTileFooterWrapper,
   AssignTileScoreWrapper,
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -32,7 +29,12 @@ import {
 } from "@/components/flows/bookings/assign/getBookingScore"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { getAverageRating } from "@/lib/utils"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
+import RyogoTag from "@/components/tags/ryogoTag"
 
 export default function AssignVehicleTile({
   vehicleData,
@@ -135,54 +137,48 @@ export default function AssignVehicleTile({
   return (
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
-        <AssignTileHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           {vehicleData.vehiclePhotoUrl ? (
             <RyogoImage
               src={getFileUrl(vehicleData.vehiclePhotoUrl)}
               alt={vehicleData.vehicleNumber}
-              imageSize="sm"
+              imageSize="md"
             />
           ) : (
-            <GetVehicleIcon vehicleType={vehicleData.type} size="md" />
+            <GetVehicleEnclosedIcon vehicleType={vehicleData.type} size="lg" />
           )}
-          <RyogoP weight="font-bold"> {vehicleData.vehicleNumber}</RyogoP>
-          <RyogoCaption>
-            {vehicleData.brand + " " + vehicleData.model}
-          </RyogoCaption>
-          <RyogoCaption color="slate">{vehicleData.color}</RyogoCaption>
-          {vehicleData.customerRatings &&
-            vehicleData.customerRatings.length > 0 && (
-              <IconTextTag
-                icon={Star}
-                text={getAverageRating(vehicleData.customerRatings)}
-              />
-            )}
-        </AssignTileHeaderWrapper>
-        <AssignTileFooterWrapper>
-          <IconTextTag
+          <SectionColWrapper small className="w-full">
+            <RyogoP weight="font-bold"> {vehicleData.vehicleNumber}</RyogoP>
+            <RyogoCaption color="light" weight="font-bold">
+              {vehicleData.brand + " " + vehicleData.model}
+            </RyogoCaption>
+            <VehicleColorBox color={vehicleData.color} />
+          </SectionColWrapper>
+        </SectionRowWrapper>
+        <SectionRowWrapper small className="items-center">
+          <RyogoTag
+            label={vehicleData.defaultRatePerKm.toString() + t("PerKm")}
             icon={BadgeIndianRupee}
-            text={vehicleData.defaultRatePerKm.toString() + t("PerKm")}
           />
-          <IconTextTag
-            icon={Armchair}
-            text={
-              vehicleData.capacity + t("Seats", { count: vehicleData.capacity })
-            }
+          <RyogoTag
+            icon={CircleGauge}
+            label={vehicleData.odometerReading.toString()}
           />
-          {vehicleData.hasAC && <IconTextTag icon={AirVent} text={t("AC")} />}
-        </AssignTileFooterWrapper>
+          <RyogoTag icon={Armchair} label={vehicleData.capacity.toString()} />
+          {vehicleData.hasAC && <RyogoTag icon={AirVent} label={t("AC")} />}
+        </SectionRowWrapper>
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper selected={selected}>
           {isCurrentlyAssigned ? (
-            <RyogoIcon color="brand" icon={CheckCheck} size="sm" thick />
+            <RyogoIcon color="brand" icon={CheckCheck} size="xs" thick />
           ) : isBooked ? (
-            <RyogoIcon color="red" icon={TicketX} size="sm" thick />
+            <RyogoIcon color="red" icon={TicketX} size="xs" thick />
           ) : isRepairScheduled ? (
-            <RyogoIcon color="yellow" icon={Wrench} size="sm" thick />
+            <RyogoIcon color="yellow" icon={Wrench} size="xs" thick />
           ) : (
-            <RyogoIcon color="green" icon={Check} size="sm" thick />
+            <RyogoIcon color="green" icon={Check} size="xs" thick />
           )}
           <RyogoCaption color="slate">
             {isCurrentlyAssigned

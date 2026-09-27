@@ -1,13 +1,9 @@
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
+import { getVehicleIcon } from "@/components/icons/vehicleIcon"
 import { RyogoCaption } from "@/components/typography"
 import { FindDashboardVehiclesType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import {
-  DashboardChipItemWrapper,
-  DashboardLabelImageChip,
-} from "@/components/flows/dashboard/dashboardCommon"
+import { DashboardChipItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import Link from "next/link"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default function DashboardVehicleChipComponent({
   vehicle,
@@ -21,17 +17,11 @@ export default function DashboardVehicleChipComponent({
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
       <DashboardChipItemWrapper>
-        <DashboardLabelImageChip label={vehicle.vehicleNumber}>
-          {vehicleImageUrl ? (
-            <RyogoImage
-              src={getFileUrl(vehicleImageUrl)}
-              alt={vehicle.vehicleNumber}
-              imageSize="xs"
-            />
-          ) : (
-            <GetVehicleIcon vehicleType={vehicle.type} size="sm" />
-          )}
-        </DashboardLabelImageChip>
+        <RyogoImageIconTag
+          url={vehicleImageUrl}
+          label={vehicle.vehicleNumber}
+          icon={getVehicleIcon(vehicle.type)}
+        />
         <RyogoCaption color="light">
           {vehicle.brand + " " + vehicle.model}
         </RyogoCaption>

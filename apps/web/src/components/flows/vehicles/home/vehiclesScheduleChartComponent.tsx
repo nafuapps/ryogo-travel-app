@@ -16,7 +16,7 @@ import DashboardScheduleDayAxis, {
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
 import { RepairPopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import { SectionWrapper } from "@/components/page/pageWrappers"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import { differenceInDays } from "date-fns"
 import {
   OngoingBookingCard,
@@ -67,7 +67,10 @@ export default function VehiclesScheduleChartComponent({
                 <DashboardScheduleItem key={vehicle.id}>
                   <DashboardScheduleItemID
                     icon={
-                      <GetVehicleIcon vehicleType={vehicle.type} size="sm" />
+                      <GetVehicleEnclosedIcon
+                        vehicleType={vehicle.type}
+                        size="sm"
+                      />
                     }
                     imageAlt={vehicle.vehicleNumber}
                     title={vehicle.vehicleNumber}

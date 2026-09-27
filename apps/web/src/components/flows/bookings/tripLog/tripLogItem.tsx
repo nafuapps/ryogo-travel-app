@@ -17,6 +17,7 @@ import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed
 import { ChevronDown, ChevronUp, MessageSquareQuote } from "lucide-react"
 import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { useState } from "react"
+import RyogoTag from "@/components/tags/ryogoTag"
 
 export default function TripLogItem({
   tripLog,
@@ -55,13 +56,7 @@ export default function TripLogItem({
           </SectionColWrapper>
           <SectionColWrapper small className="items-end">
             {tripLog.remarks && (
-              <SectionRowWrapper
-                small
-                className="items-center rounded bg-slate-100 dark:bg-slate-700 px-2 lg:px-3 py-1 lg:py-1.5"
-              >
-                <RyogoTiny color="light">{tripLog.remarks}</RyogoTiny>
-                <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
-              </SectionRowWrapper>
+              <RyogoTag label={tripLog.remarks} icon={MessageSquareQuote} />
             )}
           </SectionColWrapper>
         </SectionRowWrapper>

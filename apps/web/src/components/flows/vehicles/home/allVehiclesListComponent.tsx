@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import {
   SectionColWrapper,
   SectionHeaderWrapper,
@@ -49,7 +49,7 @@ async function VehicleItemComponent({
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
         {vehicle.vehiclePhotoUrl ? (
           <RyogoImage
             src={getFileUrl(vehicle.vehiclePhotoUrl)}
@@ -57,7 +57,7 @@ async function VehicleItemComponent({
             imageSize="md"
           />
         ) : (
-          <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
+          <GetVehicleEnclosedIcon vehicleType={vehicle.type} size="lg" />
         )}
         <SectionColWrapper className="w-full">
           <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>

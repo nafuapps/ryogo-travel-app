@@ -1,4 +1,8 @@
-import { RyogoCaption, RyogoH2 } from "@/components/typography"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoTiny, RyogoH2 } from "@/components/typography"
 
 export function AssignTileWrapper({
   selected,
@@ -10,16 +14,16 @@ export function AssignTileWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div
-      className={`flex flex-row justify-between gap-2 lg:gap-3 rounded-lg p-3 lg:p-4 border ${
+    <SectionRowWrapper
+      className={`justify-between rounded-lg p-3 lg:p-4 border ${
         selected
-          ? "border-sky-700 dark:border-sky-300 bg-sky-50 dark:bg-sky-950"
-          : "border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
+          ? "border-sky-700 dark:border-sky-300 bg-sky-100 dark:bg-sky-950"
+          : "border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700"
       }`}
       onClick={onClick}
     >
       {children}
-    </div>
+    </SectionRowWrapper>
   )
 }
 
@@ -29,18 +33,10 @@ export function AssignTileContentWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-3 lg:gap-4 justify-between h-full overflow-hidden">
+    <SectionColWrapper className="justify-between h-full overflow-hidden">
       {children}
-    </div>
+    </SectionColWrapper>
   )
-}
-
-export function AssignTileHeaderWrapper({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return <div className="flex flex-col gap-1 lg:gap-1.5">{children}</div>
 }
 
 export function AssignTileFooterWrapper({
@@ -48,9 +44,7 @@ export function AssignTileFooterWrapper({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <div className="flex flex-row flex-wrap gap-3 lg:gap-4">{children}</div>
-  )
+  return <SectionRowWrapper className="flex-wrap">{children}</SectionRowWrapper>
 }
 
 export function AssignTileScoreWrapper({
@@ -59,9 +53,9 @@ export function AssignTileScoreWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col items-end justify-between gap-3 lg:gap-4 h-full">
+    <SectionColWrapper className="items-end justify-between h-full shrink-0">
       {children}
-    </div>
+    </SectionColWrapper>
   )
 }
 
@@ -73,11 +67,12 @@ export function AssignTileStatusWrapper({
   selected: boolean
 }) {
   return (
-    <div
-      className={`flex flex-row gap-1 lg:gap-1.5 items-center justify-center text-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-lg border ${selected ? "border-slate-700 dark:border-slate-300" : "border-slate-300 dark:border-slate-700"}`}
+    <SectionRowWrapper
+      small
+      className={`w-full items-center justify-center px-2 py-1 lg:px-3 lg:py-1.5 rounded-md border ${selected ? "border-slate-700 dark:border-slate-300" : "border-slate-300 dark:border-slate-700"}`}
     >
       {children}
-    </div>
+    </SectionRowWrapper>
   )
 }
 
@@ -94,8 +89,9 @@ export function RyoGoScoreWrapper({
   label: string
 }) {
   return (
-    <div
-      className={`flex flex-col rounded-lg items-center justify-center text-center gap-1 lg:gap-1.5 p-3 lg:p-4 ${
+    <SectionColWrapper
+      small
+      className={`rounded-md items-center justify-center text-center px-2 lg:px-3 py-3 lg:py-4 shrink-0 opacity-80 ${
         totalScore < BadTotalScore
           ? "bg-red-300 dark:bg-red-700"
           : totalScore < MediumTotalScore
@@ -107,8 +103,8 @@ export function RyoGoScoreWrapper({
                 : "bg-sky-300 dark:bg-sky-700"
       }`}
     >
-      <RyogoCaption color="slate">{label}</RyogoCaption>
+      <RyogoTiny color="slate">{label}</RyogoTiny>
       <RyogoH2 weight="font-bold">{totalScore.toFixed(0)}</RyogoH2>
-    </div>
+    </SectionColWrapper>
   )
 }

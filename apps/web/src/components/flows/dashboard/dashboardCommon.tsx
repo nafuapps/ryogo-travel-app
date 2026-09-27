@@ -1,6 +1,6 @@
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoH4, RyogoCaption } from "@/components/typography"
+import { RyogoH4, RyogoCaption } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 
@@ -50,26 +50,6 @@ export function DashboardRowHeader({
       <RyogoCaption color="light">{title}</RyogoCaption>
       <RyogoCaption color="light">{count}</RyogoCaption>
     </div>
-  )
-}
-
-export function DashboardLabelImageChip({
-  label,
-  children,
-  end,
-}: {
-  label: string
-  children: React.ReactNode
-  end?: boolean
-}) {
-  return (
-    <SectionRowWrapper
-      small
-      className={`items-center ${end ? "flex-row-reverse justify-end" : ""}`}
-    >
-      {children}
-      <RyogoSmall color="slate">{label}</RyogoSmall>
-    </SectionRowWrapper>
   )
 }
 

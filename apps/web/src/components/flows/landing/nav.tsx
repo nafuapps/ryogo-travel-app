@@ -69,7 +69,7 @@ export default function Navbar({
               <Link
                 key={link.navId}
                 href={link.href}
-                className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-800" : "bg-sky-100 dark:bg-sky-950"} py-2 px-3 rounded-lg transition-all duration-300`}
+                className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-700" : "bg-sky-100 dark:bg-sky-950"} py-2 px-3 rounded-lg transition-all duration-300`}
               >
                 <RyogoSmall
                   color={path !== link.href ? "slate" : "brand"}

@@ -11,18 +11,14 @@ export const vehicleRepairRepository = {
     return await db.query.vehicleRepairs.findMany({
       where: and(
         eq(vehicleRepairs.vehicleId, vehicleId),
-        or(
-          eq(vehicleRepairs.isCompleted, false),
-          and(
-            eq(vehicleRepairs.isCompleted, true),
-            gte(vehicleRepairs.startDate, queryStartDate),
-          ),
-        ),
+        gte(vehicleRepairs.startDate, queryStartDate),
       ),
       with: {
         addedByUser: {
           columns: {
             name: true,
+            photoUrl: true,
+            userRole: true,
           },
         },
       },

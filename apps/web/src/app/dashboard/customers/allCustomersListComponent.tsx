@@ -133,7 +133,7 @@ function CustomerItemComponent({
 }) {
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
-      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
         {customer.photoUrl ? (
           <RyogoImage
             src={getFileUrl(customer.photoUrl)}

@@ -1,16 +1,10 @@
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardLeadsType } from "@ryogo-travel-app/api/services/booking.services"
-import { User } from "lucide-react"
-import {
-  DashboardBoxItemWrapper,
-  DashboardLabelImageChip,
-} from "@/components/flows/dashboard/dashboardCommon"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import Link from "next/link"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default async function DashboardLeadItemComponent({
   trip,
@@ -43,17 +37,10 @@ export default async function DashboardLeadItemComponent({
         </SectionRowWrapper>
         <SectionRowWrapper small className="items-center justify-between">
           <SectionRowWrapper>
-            <DashboardLabelImageChip label={trip.customer.name}>
-              {customerImageUrl ? (
-                <RyogoImage
-                  src={getFileUrl(customerImageUrl)}
-                  alt={trip.customer.name}
-                  imageSize="xs"
-                />
-              ) : (
-                <RyogoEnclosedIcon icon={User} size="sm" />
-              )}
-            </DashboardLabelImageChip>
+            <RyogoImageIconTag
+              url={customerImageUrl}
+              label={trip.customer.name}
+            />
           </SectionRowWrapper>
           <RyogoP color="slate" weight="font-medium">
             {"₹" + trip.estimatedTotalAmount}

@@ -7,31 +7,28 @@ import {
 } from "@/components/icons/ryogoIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
-export default function GetVehicleIcon({
+export function getVehicleIcon(vehicleType: VehicleTypesEnum) {
+  switch (vehicleType) {
+    case VehicleTypesEnum.TRUCK:
+      return Truck
+    case VehicleTypesEnum.BUS:
+      return Bus
+    case VehicleTypesEnum.CAR:
+      return Car
+    case VehicleTypesEnum.BIKE:
+      return Motorbike
+    case VehicleTypesEnum.OTHER:
+      return Tractor
+  }
+}
+
+export default function GetVehicleEnclosedIcon({
   vehicleType,
   ...props
 }: Omit<RyogoIconType, "icon"> & {
   vehicleType: VehicleTypesEnum
 }) {
-  let icon
-  switch (vehicleType) {
-    case VehicleTypesEnum.TRUCK:
-      icon = Truck
-      break
-    case VehicleTypesEnum.BUS:
-      icon = Bus
-      break
-    case VehicleTypesEnum.CAR:
-      icon = Car
-      break
-    case VehicleTypesEnum.BIKE:
-      icon = Motorbike
-      break
-    case VehicleTypesEnum.OTHER:
-      icon = Tractor
-      break
-  }
-  return <RyogoEnclosedIcon icon={icon} {...props} />
+  return <RyogoEnclosedIcon icon={getVehicleIcon(vehicleType)} {...props} />
 }
 
 export function GetCanDriveIcons({

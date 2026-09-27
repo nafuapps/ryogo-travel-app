@@ -19,9 +19,9 @@ export default function RyogoAverageRatingDisplay({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div className="border rounded-md flex items-center gap-1 lg:gap-1.5 py-0.75 lg:py-1 px-1.5 lg:px-2">
+        <div className="border rounded-md flex items-center gap-1 lg:gap-1.5 py-1 lg:py-1.5 px-2 lg:px-3">
           <RyogoCaption color="slate">{getAverageRating(ratings)}</RyogoCaption>
-          <RyogoIcon icon={Star} size={"xs"} />
+          <RyogoIcon icon={Star} size={"xs"} thick />
         </div>
       </TooltipTrigger>
       <TooltipContent>{t("Ratings", { count: ratings.length })}</TooltipContent>

@@ -94,7 +94,7 @@ export default function HowItWorksOnboardingSection() {
             size="lg"
             label={t("ContinueCTA")}
             labelColor="light"
-            className="gap-1 lg:gap-1.5 hover:bg-slate-100/80 dark:hover:bg-slate-800/80"
+            className="gap-1 lg:gap-1.5 hover:bg-slate-100/80 dark:hover:bg-slate-700/80"
           >
             <RyogoIcon icon={ChevronDown} size="sm" color="light" thick />
           </RyogoGhostButton>

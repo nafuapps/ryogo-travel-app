@@ -1,6 +1,5 @@
 import { RyogoP, RyogoCaption, RyogoSmall } from "@/components/typography"
 import { CalendarDays, Users } from "lucide-react"
-import { IconTextTag } from "@/components/tags/IconTextTag"
 import { useTranslations } from "next-intl"
 import { format } from "date-fns"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
@@ -8,6 +7,7 @@ import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getTripDuration } from "@/lib/utils"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
+import RyogoTag from "@/components/tags/ryogoTag"
 
 export default function NewBookingTripCard(
   newBooking: NewBookingRequestDataType,
@@ -71,21 +71,16 @@ export default function NewBookingTripCard(
         <TripTagWrapper>
           <SectionRowWrapper small className="items-center">
             <GetTripTypeIcon tripType={newBooking.tripType} size={"sm"} />
-            <RyogoCaption color="slate">
-              {newBooking.tripType.toUpperCase()}
-            </RyogoCaption>
+            <RyogoCaption color="slate">{newBooking.tripType}</RyogoCaption>
           </SectionRowWrapper>
         </TripTagWrapper>
         <TripTagWrapper>
-          <IconTextTag
-            icon={Users}
-            text={newBooking.tripPassengers.toString()}
-          />
+          <RyogoTag icon={Users} label={newBooking.tripPassengers.toString()} />
         </TripTagWrapper>
         <TripTagWrapper>
-          <IconTextTag
+          <RyogoTag
             icon={CalendarDays}
-            text={duration.toString() + t("Days", { count: duration })}
+            label={duration.toString() + t("Days", { count: duration })}
           />
         </TripTagWrapper>
       </div>

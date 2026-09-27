@@ -1,21 +1,14 @@
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoH4, RyogoP } from "@/components/typography"
 import { FindDashboardPendingPaymentsType } from "@ryogo-travel-app/api/services/booking.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
-import {
-  DashboardBoxItemWrapper,
-  DashboardLabelImageChip,
-} from "@/components/flows/dashboard/dashboardCommon"
+import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default async function DashboardPendingPaymentComponent({
   trip,
@@ -54,19 +47,10 @@ export default async function DashboardPendingPaymentComponent({
           <RyogoH4 weight="font-bold">{trip.destination.city}</RyogoH4>
         </SectionRowWrapper> */}
         <SectionRowWrapper className="items-center justify-between">
-          <SectionRowWrapper>
-            <DashboardLabelImageChip label={trip.customer.name}>
-              {customerImageUrl ? (
-                <RyogoImage
-                  src={getFileUrl(customerImageUrl)}
-                  alt={trip.customer.name}
-                  imageSize="xs"
-                />
-              ) : (
-                <RyogoEnclosedIcon icon={User} size="sm" />
-              )}
-            </DashboardLabelImageChip>
-          </SectionRowWrapper>
+          <RyogoImageIconTag
+            url={customerImageUrl}
+            label={trip.customer.name}
+          />
           <SectionColWrapper small className="items-end">
             <RyogoP color="dark">{t("Due", { amount: pendingAmount })}</RyogoP>
           </SectionColWrapper>

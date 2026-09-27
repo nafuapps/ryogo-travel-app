@@ -12,6 +12,7 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import LeadBookingsComponent from "@/components/flows/bookings/home/leadBookingsComponent"
 import AllBookingsHeaderTabs from "@/components/header/detailHeaderTabs/allBookingsHeaderTabs"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Booking Leads - ${pageTitle}`,
@@ -38,6 +39,7 @@ export default async function LeadBookingsPage() {
         <LeadBookingsComponent
           leadBookings={leadBookings}
           userId={currentUser.userId}
+          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         />
         <StickyActionWrapper>
           <HelpIconButton

@@ -2,14 +2,16 @@ import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicleDetailsComponent"
 import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
 import VehicleInfoComponent from "@/components/flows/vehicles/details/vehicleInfoComponent"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
 import {
   SectionWrapper,
   PageWrapper,
   GridWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption } from "@/components/typography"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { ClipboardX } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 export default async function RiderMyVehiclePageComponent({
@@ -22,8 +24,8 @@ export default async function RiderMyVehiclePageComponent({
   if (!vehicle) {
     return (
       <PageWrapper id="VehicleDetailsPage">
-        <SectionWrapper id="VehicleDetailsInfo">
-          <RyogoCaption color="slate">{t("NoVehicleAssigned")}</RyogoCaption>
+        <SectionWrapper id="NoVehicleAssigned">
+          <EmptyStateIcon icon={ClipboardX} label={t("NoVehicleAssigned")} />
         </SectionWrapper>
       </PageWrapper>
     )
@@ -54,6 +56,14 @@ export default async function RiderMyVehiclePageComponent({
           ratings={vehicle.customerRatings}
         />
       </GridWrapper>
+      {vehicle.latLong && (
+        <SectionWrapper id="VehicleLocationDetails">
+          <GoogleMapsEmbedPlaceComponent
+            latLong={vehicle.latLong}
+            time={vehicle.locatedAt}
+          />
+        </SectionWrapper>
+      )}
       <SectionWrapper id="VehicleRCDetails">
         <VehicleDocumentInfoComponent
           id={vehicle.id}

@@ -9,7 +9,6 @@ import {
   CreditCardMinus,
   CreditCardPlus,
   MessageSquareQuote,
-  User,
 } from "lucide-react"
 import { format } from "date-fns"
 import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
@@ -17,7 +16,7 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { TransactionApprovalButton } from "./transactionApprovalButton"
-import { RyogoDialogImage, RyogoImage } from "@/components/images/ryogoImage"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import {
@@ -26,6 +25,8 @@ import {
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { useState } from "react"
+import RyogoTag from "@/components/tags/ryogoTag"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default function TransactionItem({
   transaction,
@@ -75,25 +76,11 @@ export default function TransactionItem({
           <SectionRowWrapper className="items-center justify-between">
             <SectionColWrapper>
               <RyogoTiny color="light">{"#" + transaction.id}</RyogoTiny>
-              <SectionRowWrapper className="items-center">
-                {transaction.addedByUser.photoUrl ? (
-                  <RyogoImage
-                    src={getFileUrl(transaction.addedByUser.photoUrl)}
-                    alt={transaction.addedByUser.name}
-                    imageSize="xs"
-                  />
-                ) : (
-                  <RyogoEnclosedIcon icon={User} size="sm" />
-                )}
-                <SectionColWrapper small>
-                  <RyogoCaption color="slate">
-                    {transaction.addedByUser.name}
-                  </RyogoCaption>
-                  <RyogoTiny color="light">
-                    {transaction.addedByUser.userRole}
-                  </RyogoTiny>
-                </SectionColWrapper>
-              </SectionRowWrapper>
+              <RyogoImageIconTag
+                url={transaction.addedByUser.photoUrl}
+                label={transaction.addedByUser.name}
+                subtitle={transaction.addedByUser.userRole}
+              />
             </SectionColWrapper>
             {transaction.transactionPhotoUrl && (
               <RyogoDialogImage
@@ -110,13 +97,7 @@ export default function TransactionItem({
             )}
           </SectionRowWrapper>
           {transaction.remarks && (
-            <SectionRowWrapper
-              small
-              className="items-center rounded bg-slate-100 dark:bg-slate-700 px-2 lg:px-3 py-1 lg:py-1.5"
-            >
-              <RyogoIcon size="xs" icon={MessageSquareQuote} color="light" />
-              <RyogoTiny color="light">{transaction.remarks}</RyogoTiny>
-            </SectionRowWrapper>
+            <RyogoTag label={transaction.remarks} icon={MessageSquareQuote} />
           )}
           {canModifyTransaction && (
             <SectionRowWrapper className="items-center mt-auto">

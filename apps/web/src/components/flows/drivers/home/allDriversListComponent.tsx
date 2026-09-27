@@ -48,7 +48,7 @@ async function DriverItemComponent({
 
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
         {driver.user.photoUrl ? (
           <RyogoImage
             src={getFileUrl(driver.user.photoUrl)}

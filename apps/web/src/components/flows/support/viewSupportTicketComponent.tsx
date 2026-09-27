@@ -45,7 +45,7 @@ export default async function ViewSupportTicketPageComponent({
           <RyogoSmall>{moment(ticket.createdAt).fromNow()}</RyogoSmall>
         </TicketRow>
         <TicketRow label={t("EntityType")}>
-          <RyogoSmall>{ticket.entityType.toUpperCase()}</RyogoSmall>
+          <RyogoSmall>{ticket.entityType}</RyogoSmall>
         </TicketRow>
         {ticket.entityId && (
           <TicketRow label={t("EntityId")}>

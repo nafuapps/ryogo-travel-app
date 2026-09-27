@@ -1,15 +1,11 @@
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import {
-  DashboardBoxItemWrapper,
-  DashboardLabelImageChip,
-} from "@/components/flows/dashboard/dashboardCommon"
+import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import Link from "next/link"
 import { RyogoCaption } from "@/components/typography"
 import { format } from "date-fns"
 import { DriverLeaveIdRegex, VehicleRepairIdRegex } from "@/lib/regex"
 import { Route } from "next"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export type DashboardScheduleConflictItemType = {
   entity: {
@@ -55,15 +51,10 @@ export default function DashboardScheduleConflictItemComponent({
     <DashboardBoxItemWrapper highlight={highlight}>
       <SectionRowWrapper className="items-center">
         {conflict.entity.label && (
-          <DashboardLabelImageChip label={conflict.entity.label}>
-            {conflict.entity.photoUrl && (
-              <RyogoImage
-                src={getFileUrl(conflict.entity.photoUrl)}
-                alt={conflict.entity.label}
-                imageSize="xs"
-              />
-            )}
-          </DashboardLabelImageChip>
+          <RyogoImageIconTag
+            url={conflict.entity.photoUrl}
+            label={conflict.entity.label}
+          />
         )}
       </SectionRowWrapper>
       <ConflictItemRow

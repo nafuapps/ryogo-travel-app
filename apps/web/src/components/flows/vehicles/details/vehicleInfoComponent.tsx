@@ -11,7 +11,7 @@ import {
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
-import GetVehicleIcon from "@/components/icons/vehicleIcon"
+import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import IdCopyPill from "@/components/pills/idCopyPill"
 import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
 
@@ -50,7 +50,7 @@ export default function VehicleInfoComponent({
           agencyId={agencyId}
           canChange={canChange}
         >
-          <GetVehicleIcon vehicleType={type} size="xl" />
+          <GetVehicleEnclosedIcon vehicleType={type} size="xl" />
         </ChangeVehiclePhotoSheet>
       )}
       <SectionColWrapper className="items-center">

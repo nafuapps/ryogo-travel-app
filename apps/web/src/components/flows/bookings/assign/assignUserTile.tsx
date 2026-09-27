@@ -6,7 +6,6 @@ import { Check, CheckCheck, TriangleAlertIcon, User } from "lucide-react"
 import {
   AssignTileWrapper,
   AssignTileContentWrapper,
-  AssignTileHeaderWrapper,
   AssignTileScoreWrapper,
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
@@ -17,9 +16,13 @@ import {
   getOverlapScore,
   NoOverlapScore,
 } from "@/components/flows/bookings/assign/getBookingScore"
-import { RyogoPill } from "@/components/pills/ryogoPills"
+import { UserRolePill } from "@/components/pills/ryogoPills"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 
 export default function AssignUserTile({
   userData,
@@ -72,35 +75,37 @@ export default function AssignUserTile({
   return (
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
-        <AssignTileHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           {userData.photoUrl ? (
             <RyogoImage
               src={getFileUrl(userData.photoUrl)}
               alt={userData.name}
-              imageSize="sm"
+              imageSize="md"
             />
           ) : (
-            <RyogoEnclosedIcon icon={User} size="md" />
+            <RyogoEnclosedIcon icon={User} size="lg" />
           )}
-          <RyogoP weight="font-bold"> {userData.name}</RyogoP>
-          <RyogoCaption color="slate">{userData.phone}</RyogoCaption>
-        </AssignTileHeaderWrapper>
-        <RyogoPill bgColor="light" label={userData.userRole.toUpperCase()} />
+          <SectionColWrapper small className="w-full">
+            <RyogoP weight="font-bold"> {userData.name}</RyogoP>
+            <RyogoCaption color="slate">{userData.phone}</RyogoCaption>
+          </SectionColWrapper>
+        </SectionRowWrapper>
+        <UserRolePill role={userData.userRole} className="self-start" />
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper selected={selected}>
           {isCurrentlyAssigned ? (
-            <RyogoIcon color="brand" icon={CheckCheck} size="sm" thick />
+            <RyogoIcon color="brand" icon={CheckCheck} size="xs" thick />
           ) : isBooked ? (
             <RyogoIcon
               color="yellow"
               icon={TriangleAlertIcon}
-              size="sm"
+              size="xs"
               thick
             />
           ) : (
-            <RyogoIcon color="green" icon={Check} size="sm" thick />
+            <RyogoIcon color="green" icon={Check} size="xs" thick />
           )}
           <RyogoCaption color="slate">
             {isCurrentlyAssigned

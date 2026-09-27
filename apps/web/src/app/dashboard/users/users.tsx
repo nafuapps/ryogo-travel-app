@@ -14,7 +14,6 @@ import Link from "next/link"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 import {
-  AddInfoWrapper,
   PageWrapper,
   SectionColWrapper,
   SectionHeaderWrapper,
@@ -128,7 +127,7 @@ async function UserItemComponent({
 }) {
   return (
     <Link href={`/dashboard/users/${user.id}`}>
-      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md">
+      <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
         {user.photoUrl ? (
           <RyogoImage
             src={getFileUrl(user.photoUrl)}

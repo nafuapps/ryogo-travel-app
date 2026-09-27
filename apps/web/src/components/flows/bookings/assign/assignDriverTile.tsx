@@ -1,6 +1,6 @@
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoP, RyogoCaption, RyogoTiny } from "@/components/typography"
 import {
   BadgeIndianRupee,
   TicketX,
@@ -10,7 +10,6 @@ import {
   User,
   Star,
 } from "lucide-react"
-import { IconTextTag } from "@/components/tags/IconTextTag"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -23,8 +22,6 @@ import {
 import {
   AssignTileWrapper,
   AssignTileContentWrapper,
-  AssignTileHeaderWrapper,
-  AssignTileFooterWrapper,
   AssignTileScoreWrapper,
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
@@ -32,6 +29,11 @@ import {
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { getAverageRating } from "@/lib/utils"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import RyogoTag from "@/components/tags/ryogoTag"
 
 export default function AssignDriverTile({
   driverData,
@@ -121,46 +123,49 @@ export default function AssignDriverTile({
   return (
     <AssignTileWrapper selected={selected} onClick={onClick}>
       <AssignTileContentWrapper>
-        <AssignTileHeaderWrapper>
+        <SectionRowWrapper className="items-center">
           {driverData.user.photoUrl ? (
             <RyogoImage
               src={getFileUrl(driverData.user.photoUrl)}
               alt={driverData.name}
-              imageSize="sm"
+              imageSize="md"
             />
           ) : (
-            <RyogoEnclosedIcon icon={User} size="md" />
+            <RyogoEnclosedIcon icon={User} size="lg" />
           )}
-          <RyogoP weight="font-bold"> {driverData.name}</RyogoP>
-          <RyogoCaption color="slate">{driverData.phone}</RyogoCaption>
-          <RyogoCaption color="light">{driverData.address}</RyogoCaption>
+          <SectionColWrapper small className="w-full">
+            <RyogoP weight="font-bold"> {driverData.name}</RyogoP>
+            <RyogoCaption color="light" weight="font-bold">
+              {driverData.phone}
+            </RyogoCaption>
+            <GetCanDriveIcons canDrive={driverData.canDriveVehicleTypes} />
+          </SectionColWrapper>
+        </SectionRowWrapper>
+        <SectionRowWrapper small className="items-center">
+          <RyogoTag
+            icon={BadgeIndianRupee}
+            label={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
+          />
           {driverData.customerRatings &&
             driverData.customerRatings.length > 0 && (
-              <IconTextTag
+              <RyogoTag
                 icon={Star}
-                text={getAverageRating(driverData.customerRatings)}
+                label={getAverageRating(driverData.customerRatings)}
               />
             )}
-        </AssignTileHeaderWrapper>
-        <AssignTileFooterWrapper>
-          <IconTextTag
-            icon={BadgeIndianRupee}
-            text={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
-          />
-          <GetCanDriveIcons canDrive={driverData.canDriveVehicleTypes} />
-        </AssignTileFooterWrapper>
+        </SectionRowWrapper>
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
         <AssignTileStatusWrapper selected={selected}>
           {isCurrentlyAssigned ? (
-            <RyogoIcon icon={CheckCheck} size="sm" color="brand" thick />
+            <RyogoIcon icon={CheckCheck} size="xs" color="brand" thick />
           ) : isBooked ? (
-            <RyogoIcon icon={TicketX} size="sm" color="red" thick />
+            <RyogoIcon icon={TicketX} size="xs" color="red" thick />
           ) : isOnLeave ? (
-            <RyogoIcon icon={CalendarX} size="sm" color="yellow" thick />
+            <RyogoIcon icon={CalendarX} size="xs" color="yellow" thick />
           ) : (
-            <RyogoIcon icon={Check} size="sm" color="green" thick />
+            <RyogoIcon icon={Check} size="xs" color="green" thick />
           )}
           <RyogoCaption color="slate">
             {isCurrentlyAssigned

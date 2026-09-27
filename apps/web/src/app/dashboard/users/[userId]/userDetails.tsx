@@ -12,6 +12,7 @@ import {
   SectionWrapper,
   PageWrapper,
   GridWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
@@ -125,7 +126,9 @@ export default async function UserDetailsPageComponent({
             )}
         </GridWrapper>
       )}
-      <HelpIconButton href={"/dashboard/support/help-users"} showLabelSmall />
+      <StickyActionWrapper>
+        <HelpIconButton href={"/dashboard/support/help-users"} showLabelSmall />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

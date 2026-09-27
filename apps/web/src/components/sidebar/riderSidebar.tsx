@@ -1,7 +1,14 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { House, Tickets, Car, CircleQuestionMark, UserCog } from "lucide-react"
+import {
+  House,
+  Tickets,
+  Car,
+  CircleQuestionMark,
+  UserCog,
+  TreePalm,
+} from "lucide-react"
 import RyogoSidebar, { MenuItemType } from "./ryogoSidebar"
 
 export default function RiderSidebar() {
@@ -23,6 +30,11 @@ export default function RiderSidebar() {
       title: t("Vehicle"),
       url: "/rider/myVehicle",
       icon: Car,
+    },
+    {
+      title: t("Leaves"),
+      url: "/rider/myLeaves",
+      icon: TreePalm,
     },
   ]
 

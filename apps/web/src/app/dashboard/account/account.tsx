@@ -4,7 +4,11 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
-import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  GridWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { MailPen, KeyRound, Phone, Camera } from "lucide-react"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -12,6 +16,7 @@ import AccountInfoComponent from "@/components/flows/account/accountInfoComponen
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function AccountPageComponent({
   account,
@@ -92,6 +97,12 @@ export default async function AccountPageComponent({
       {account.lastLogin && (
         <UserLoginTimeComponent lastLoginTime={account.lastLogin} />
       )}
+      <StickyActionWrapper>
+        <HelpIconButton
+          href={"/dashboard/support/help-account"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

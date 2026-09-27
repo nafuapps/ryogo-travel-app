@@ -35,7 +35,7 @@ export default function ChangeTicketPhotoSheet({
   userId: string
   newPhoto: boolean
 }) {
-  const t = useTranslations("Sheets.ChangeTicketPhoto")
+  const t = useTranslations("Components.Sheets.ChangeTicketPhoto")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

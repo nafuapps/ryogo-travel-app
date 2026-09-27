@@ -7,7 +7,6 @@ import {
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import Link from "next/link"
 
 export default function BookingVehicleCard({
   vehicle,
@@ -16,32 +15,30 @@ export default function BookingVehicleCard({
 }) {
   if (!vehicle) return null
   return (
-    <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
-        {vehicle.vehiclePhotoUrl ? (
-          <RyogoImage
-            src={getFileUrl(vehicle.vehiclePhotoUrl)}
-            alt={vehicle.vehicleNumber}
-            imageSize="md"
-          />
-        ) : (
-          <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
-        )}
-        <SectionColWrapper small className="w-full">
-          <RyogoP weight="font-bold">{vehicle.vehicleNumber}</RyogoP>
-          <RyogoCaption color="slate">
-            {vehicle.brand + " " + vehicle.model}
-          </RyogoCaption>
-          <RyogoCaption color="light">{vehicle.color}</RyogoCaption>
-        </SectionColWrapper>
-        <SectionColWrapper small className="items-end">
-          <RyogoCaption color="light" weight="font-bold">
-            {vehicle.type.toUpperCase()}
-          </RyogoCaption>
-          <RyogoSmall weight="font-bold">{vehicle.capacity}</RyogoSmall>
-          <RyogoSmall weight="font-bold">{vehicle.hasAC}</RyogoSmall>
-        </SectionColWrapper>
-      </SectionRowWrapper>
-    </Link>
+    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg items-center">
+      {vehicle.vehiclePhotoUrl ? (
+        <RyogoImage
+          src={getFileUrl(vehicle.vehiclePhotoUrl)}
+          alt={vehicle.vehicleNumber}
+          imageSize="md"
+        />
+      ) : (
+        <GetVehicleIcon vehicleType={vehicle.type} size="lg" />
+      )}
+      <SectionColWrapper small className="w-full">
+        <RyogoP weight="font-bold">{vehicle.vehicleNumber}</RyogoP>
+        <RyogoCaption color="slate">
+          {vehicle.brand + " " + vehicle.model}
+        </RyogoCaption>
+        <RyogoCaption color="light">{vehicle.color}</RyogoCaption>
+      </SectionColWrapper>
+      <SectionColWrapper small className="items-end">
+        <RyogoCaption color="light" weight="font-bold">
+          {vehicle.type.toUpperCase()}
+        </RyogoCaption>
+        <RyogoSmall weight="font-bold">{vehicle.capacity}</RyogoSmall>
+        <RyogoSmall weight="font-bold">{vehicle.hasAC}</RyogoSmall>
+      </SectionColWrapper>
+    </SectionRowWrapper>
   )
 }

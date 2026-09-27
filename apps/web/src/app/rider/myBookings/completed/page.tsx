@@ -11,15 +11,14 @@ import {
 } from "@/components/page/pageWrappers"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import MyBookingsHeaderTabs from "@/components/header/detailHeaderTabs/myBookingsHeaderTabs"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import MyUpcomingBookingsComponent from "@/components/flows/rider/bookings/myUpcomingBookingsComponent"
+import MyCompletedBookingsComponent from "@/components/flows/rider/bookings/myCompletedBookingsComponent"
 
 export const metadata: Metadata = {
-  title: `My Bookings - ${pageTitle}`,
+  title: `My Completed Bookings - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function MyBookingsPage() {
+export default async function MyCompletedBookingsPage() {
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
@@ -30,22 +29,18 @@ export default async function MyBookingsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const upcomingBookings = (
-    await driverServices.findDriverAssignedBookingsById(driver.id)
-  ).filter((booking) => booking.status === BookingStatusEnum.CONFIRMED)
+  const completedBookings =
+    await driverServices.findDriverCompletedBookingsById(driver.id)
 
   return (
     <MainWrapper>
-      <RiderHeader pathName={"/rider/myBookings"} />
-      <PageWrapper id="RiderMyBookingsPage">
-        <MyBookingsHeaderTabs selectedTab={"Upcoming"} />
-        <MyUpcomingBookingsComponent
-          upcomingBookings={upcomingBookings}
-          driverStatus={driver.status}
-        />
+      <RiderHeader pathName={"/rider/myBookings/completed"} />
+      <PageWrapper id="MyCompletedBookingsPage">
+        <MyBookingsHeaderTabs selectedTab={"Completed"} />
+        <MyCompletedBookingsComponent completedBookings={completedBookings} />
         <StickyActionWrapper>
           <HelpIconButton
-            href={"/rider/mySupport/help-bookings"}
+            href={"/rider/mySupport/help-bookings#completed"}
             showLabelSmall
           />
         </StickyActionWrapper>

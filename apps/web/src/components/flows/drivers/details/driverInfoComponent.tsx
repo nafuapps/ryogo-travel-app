@@ -1,12 +1,12 @@
-import { RyogoH4 } from "@/components/typography"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { User } from "lucide-react"
+import { Phone, User } from "lucide-react"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import IdCopyPill from "@/components/pills/idCopyPill"
@@ -18,6 +18,7 @@ export default function DriverInfoComponent({
   name,
   status,
   userId,
+  phone,
   agencyId,
   canChange,
 }: {
@@ -26,6 +27,7 @@ export default function DriverInfoComponent({
   name: string
   status: DriverStatusEnum
   userId: string
+  phone: string
   agencyId: string
   canChange?: boolean
 }) {
@@ -48,6 +50,10 @@ export default function DriverInfoComponent({
       )}
       <SectionColWrapper className="items-center">
         <RyogoH4 weight="font-bold">{name}</RyogoH4>
+        <SectionRowWrapper small className="items-center">
+          <RyogoIcon icon={Phone} size="xs" color="light" thick />
+          <RyogoSmall color="light">{phone}</RyogoSmall>
+        </SectionRowWrapper>
         <SectionRowWrapper className="items-center">
           <DriverStatusPill status={status} size="lg" />
           <IdCopyPill id={id} />

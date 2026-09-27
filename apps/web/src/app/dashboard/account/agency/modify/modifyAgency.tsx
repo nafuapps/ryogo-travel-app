@@ -19,6 +19,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
@@ -33,6 +34,8 @@ import {
   MIN_FIELD_DESC_LENGTH,
   MAX_FIELD_DESC_LENGTH,
 } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ModifyAgencyPageForm({
   agency,
@@ -109,6 +112,10 @@ export default function ModifyAgencyPageForm({
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-account#agency" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoInput
             name={"agencyName"}

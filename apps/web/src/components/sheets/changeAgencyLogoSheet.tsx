@@ -36,7 +36,7 @@ export default function ChangeAgencyLogoSheet({
 }) {
   if (!canChange) return children
 
-  const t = useTranslations("Sheets.ChangeLogo")
+  const t = useTranslations("Components.Sheets.ChangeLogo")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

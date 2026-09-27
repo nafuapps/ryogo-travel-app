@@ -11,7 +11,6 @@ import moment from "moment"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 
 export default async function DriverDetailsComponent({
-  phone,
   email,
   createdAt,
   address,
@@ -20,7 +19,6 @@ export default async function DriverDetailsComponent({
   ratings,
   userId,
 }: {
-  phone: string
   email: string
   createdAt: Date
   address: string | null
@@ -39,7 +37,6 @@ export default async function DriverDetailsComponent({
         />
         <DetailsLineItem label={t("UserId")} value={userId} />
         <DetailsLineItem label={t("Email")} value={email} />
-        <DetailsLineItem label={t("Phone")} value={phone} />
         {address && <DetailsLineItem label={t("Address")} value={address} />}
         <DetailsLineItem
           label={t("Allowance")}

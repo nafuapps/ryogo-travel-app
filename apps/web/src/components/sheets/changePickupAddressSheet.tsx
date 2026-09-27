@@ -43,7 +43,7 @@ export default function ChangePickupAddressSheet({
 }) {
   if (!canEdit) return children
 
-  const t = useTranslations("Sheets.ChangePickupAddress")
+  const t = useTranslations("Components.Sheets.ChangePickupAddress")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

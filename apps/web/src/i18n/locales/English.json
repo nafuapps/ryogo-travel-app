@@ -2634,6 +2634,7 @@
       }
     },
     "ModifyAgency": {
+      "Title": "Edit Agency Details",
       "Field1": {
         "Title": "Enter business name",
         "Placeholder": "Raj Tour & Travels",
@@ -5149,6 +5150,7 @@
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicle": "Vehicle",
+      "Leaves": "Leaves",
       "Profile": "Profile",
       "Support": "Support"
     },
@@ -5160,6 +5162,7 @@
         "/rider/myMissions/add": "Add Custom Mission",
         "/rider/myMissions/modify": "Modify Custom Mission",
         "/rider/myBookings": "Bookings",
+        "/rider/myBookings/completed": "Completed Bookings",
         "/rider/myBookings/[id]": "Booking Details",
         "/rider/myBookings/[id]/expenses": "Booking Expenses",
         "/rider/myBookings/[id]/expenses/add": "Add Expense",
@@ -5190,11 +5193,21 @@
       "NoBooking": "No bookings assigned at the moment."
     },
     "MyBookings": {
-      "Ongoing": "ONGOING BOOKING",
-      "Upcoming": "UPCOMING BOOKINGS",
-      "Completed": "COMPLETED BOOKINGS",
+      "Upcoming": {
+        "Title": "UPCOMING BOOKINGS",
+        "NoTrips": "No upcoming trips",
+        "Start": "Start Trip"
+      },
+      "Completed": {
+        "Title": "COMPLETED BOOKINGS",
+        "NoTrips": "No completed trips"
+      },
       "Continue": "Continue",
       "Start": "Start Trip"
+    },
+    "MyBookingsHeaderTabs": {
+      "Upcoming": "Upcoming",
+      "Completed": "Completed"
     },
     "MyBooking": {
       "BookingInfo": "BASIC DETAILS",
@@ -6102,169 +6115,182 @@
       "NoTickets": "No support tickets found. Try changing the filter options"
     }
   },
-  "SupportAccordion": {
-    "TableOfContent": "TABLE OF CONTENT",
-    "QuickActions": "QUICK ACTIONS",
-    "RelatedArticles": "RELATED ARTICLES",
-    "SocialMedia": "SOCIAL MEDIA"
-  },
-  "Sheets": {
-    "ChangeName": {
-      "Title": "Change Name",
-      "Subtitle": "Update display name",
-      "InputTitle": "Enter User Name",
-      "Placeholder": "Raj Sharma",
-      "Error1": "Name must be atleast 3 characters",
-      "Error2": "Name must be less than 30 characters",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Name changed successfully!",
-      "Error": "Cannot change name.. please try again after some time."
+  "Components": {
+    "Rating": {
+      "Ratings": "{count, plural, =1 {(1 rating)} other {(# ratings)}}"
     },
-    "ChangeStartTime": {
-      "Title": "Change Start Time",
-      "PickupTime": "Enter Customer Pickup Time",
-      "PickupTimeError": "Pickup Time is required",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Trip start time changed successfully!",
-      "Error": "Cannot change pickup time.. please try again after some time."
+    "Sheets": {
+      "ChangeName": {
+        "Title": "Change Name",
+        "Subtitle": "Update display name",
+        "InputTitle": "Enter User Name",
+        "Placeholder": "Raj Sharma",
+        "Error1": "Name must be atleast 3 characters",
+        "Error2": "Name must be less than 30 characters",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Name changed successfully!",
+        "Error": "Cannot change name.. please try again after some time."
+      },
+      "ChangeStartTime": {
+        "Title": "Change Start Time",
+        "PickupTime": "Enter Customer Pickup Time",
+        "PickupTimeError": "Pickup Time is required",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Trip start time changed successfully!",
+        "Error": "Cannot change pickup time.. please try again after some time."
+      },
+      "ChangeBookingRemarks": {
+        "Title": "Change Booking Remarks",
+        "Remarks": "Enter remarks for this booking",
+        "RemarksPlaceHolder": "Any special request from customer or any notes for this booking",
+        "RemarksError": "Remarks should be less than 300 characters",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Trip start time changed successfully!",
+        "Error": "Cannot change pickup time.. please try again after some time."
+      },
+      "ChangePickupAddress": {
+        "Title": "Change Pickup Address",
+        "PickupAddress": "Enter Customer Pickup Address",
+        "AddressError1": "Address should be atleast 10 characters",
+        "AddressError2": "Address should be less than 300 characters",
+        "SameAsCustomerAddress": "Same as customer address",
+        "PickupAddressPlaceholder": "House number, Street, City",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Pickup address changed successfully!",
+        "Error": "Cannot change pickup address.. please try again after some time."
+      },
+      "ChangeDropAddress": {
+        "Title": "Change Drop Address",
+        "DropAddress": "Enter Customer Drop Address",
+        "AddressError1": "Address should be atleast 10 characters",
+        "AddressError2": "Address should be less than 300 characters",
+        "DropAddressPlaceholder": "House number, Street, City",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Drop address changed successfully!",
+        "Error": "Cannot change drop address.. please try again after some time."
+      },
+      "ChangeUserPhoto": {
+        "Header": "Upload photo",
+        "Title": "Choose a photo to upload",
+        "Placeholder": "Browse a new photo",
+        "Error1": "Photo is required and size should be less than 500kb",
+        "Error2": "Photo must be in .jpg, .jpeg or .png format",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Photo updated successfully!",
+        "Error": "Cannot upload photo.. please try again after some time."
+      },
+      "ChangeLogo": {
+        "Header": "Upload agency logo",
+        "Title": "Choose a photo to upload",
+        "Placeholder": "Browse a new logo",
+        "Error1": "Logo is required and size should be less than 500kb",
+        "Error2": "Logo photo must be in .jpg, .jpeg or .png format",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Logo updated successfully!",
+        "Error": "Cannot upload logo.. please try again after some time."
+      },
+      "ChangeTicketPhoto": {
+        "ChangeButton": "Change Photo",
+        "UploadButton": "Upload Photo",
+        "Title": "Choose a Photo",
+        "Header": "Upload photo/screenshot",
+        "Placeholder": "Browse a new photo",
+        "Error1": "Photo is required and size should be less than 500kb",
+        "Error2": "Photo must be in .jpg, .jpeg or .png format",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Photo updated successfully!",
+        "Error": "Cannot upload photo.. please try again after some time."
+      },
+      "ChangeQRCode": {
+        "Header": "Upload QR Code photo/screenshot",
+        "Title": "Choose a photo to upload",
+        "Placeholder": "Browse a new photo",
+        "Error1": "QRCode Photo is required and size should be less than 500kb",
+        "Error2": "QRCode Photo must be in .jpg, .jpeg or .png format",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "QR Code updated successfully!",
+        "Error": "Cannot upload QR Code.. please try again after some time."
+      },
+      "ChangeCustomerPhoto": {
+        "Header": "Upload customer photo",
+        "Title": "Choose a photo to upload",
+        "Placeholder": "Browse a new photo",
+        "Error1": "Customer photo is required and size should be less than 500kb",
+        "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
+        "Save": "Save changes",
+        "Close": "Cancel",
+        "Success": "Customer photo updated successfully!",
+        "Error": "Cannot upload photo.. please try again after some time."
+      },
+      "CloseSupportTicket": {
+        "Title": "Close resolved ticket",
+        "Warning": "You can rate your satisfaction level from 1 to 5, to give feedback for the resolution given by support team.",
+        "CloseTicket": "Close Ticket",
+        "Loading": "Loading..",
+        "RatingLabel": "Resolution rating",
+        "Success": "Ticket closed successfully!",
+        "Error": "Cannot close ticket.. please try again after some time."
+      },
+      "AddSupportTicketComment": {
+        "Title": "Add Comment",
+        "Placeholder": "Enter comment",
+        "FieldError": "Comment is required and must be less than 300 characters",
+        "Error": "Cannot add comment.. please try again after some time.",
+        "Save": "Add Comment",
+        "Loading": "Loading.."
+      }
     },
-    "ChangeBookingRemarks": {
-      "Title": "Change Booking Remarks",
-      "Remarks": "Enter remarks for this booking",
-      "RemarksPlaceHolder": "Any special request from customer or any notes for this booking",
-      "RemarksError": "Remarks should be less than 300 characters",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Trip start time changed successfully!",
-      "Error": "Cannot change pickup time.. please try again after some time."
+    "SupportAccordion": {
+      "TableOfContent": "TABLE OF CONTENT",
+      "QuickActions": "QUICK ACTIONS",
+      "RelatedArticles": "RELATED ARTICLES",
+      "SocialMedia": "SOCIAL MEDIA"
     },
-    "ChangePickupAddress": {
-      "Title": "Change Pickup Address",
-      "PickupAddress": "Enter Customer Pickup Address",
-      "AddressError1": "Address should be atleast 10 characters",
-      "AddressError2": "Address should be less than 300 characters",
-      "SameAsCustomerAddress": "Same as customer address",
-      "PickupAddressPlaceholder": "House number, Street, City",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Pickup address changed successfully!",
-      "Error": "Cannot change pickup address.. please try again after some time."
+    "BookingCards": {
+      "ViewDetails": "View Details",
+      "AssignVehicle": "Assign Vehicle",
+      "AssignDriver": "Assign Driver"
     },
-    "ChangeDropAddress": {
-      "Title": "Change Drop Address",
-      "DropAddress": "Enter Customer Drop Address",
-      "AddressError1": "Address should be atleast 10 characters",
-      "AddressError2": "Address should be less than 300 characters",
-      "DropAddressPlaceholder": "House number, Street, City",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Drop address changed successfully!",
-      "Error": "Cannot change drop address.. please try again after some time."
+    "IdCopyPill": {
+      "CopyID": "Copy ID",
+      "Copied": "Copied!"
     },
-    "ChangeUserPhoto": {
-      "Header": "Upload photo",
-      "Title": "Choose a photo to upload",
-      "Placeholder": "Browse a new photo",
-      "Error1": "Photo is required and size should be less than 500kb",
-      "Error2": "Photo must be in .jpg, .jpeg or .png format",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Photo updated successfully!",
-      "Error": "Cannot upload photo.. please try again after some time."
-    },
-    "ChangeLogo": {
-      "Header": "Upload agency logo",
-      "Title": "Choose a photo to upload",
-      "Placeholder": "Browse a new logo",
-      "Error1": "Logo is required and size should be less than 500kb",
-      "Error2": "Logo photo must be in .jpg, .jpeg or .png format",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Logo updated successfully!",
-      "Error": "Cannot upload logo.. please try again after some time."
-    },
-    "ChangeTicketPhoto": {
-      "ChangeButton": "Change Photo",
-      "UploadButton": "Upload Photo",
-      "Title": "Choose a Photo",
-      "Header": "Upload photo/screenshot",
-      "Placeholder": "Browse a new photo",
-      "Error1": "Photo is required and size should be less than 500kb",
-      "Error2": "Photo must be in .jpg, .jpeg or .png format",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Photo updated successfully!",
-      "Error": "Cannot upload photo.. please try again after some time."
-    },
-    "ChangeQRCode": {
-      "Header": "Upload QR Code photo/screenshot",
-      "Title": "Choose a photo to upload",
-      "Placeholder": "Browse a new photo",
-      "Error1": "QRCode Photo is required and size should be less than 500kb",
-      "Error2": "QRCode Photo must be in .jpg, .jpeg or .png format",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "QR Code updated successfully!",
-      "Error": "Cannot upload QR Code.. please try again after some time."
-    },
-    "ChangeCustomerPhoto": {
-      "Header": "Upload customer photo",
-      "Title": "Choose a photo to upload",
-      "Placeholder": "Browse a new photo",
-      "Error1": "Customer photo is required and size should be less than 500kb",
-      "Error2": "Only image files are allowed (.jpg, .jpeg, .png)",
-      "Save": "Save changes",
-      "Close": "Cancel",
-      "Success": "Customer photo updated successfully!",
-      "Error": "Cannot upload photo.. please try again after some time."
-    },
-    "CloseSupportTicket": {
-      "Title": "Close resolved ticket",
-      "Warning": "You can rate your satisfaction level from 1 to 5, to give feedback for the resolution given by support team.",
-      "CloseTicket": "Close Ticket",
+    "Feedback": {
+      "Title": "Please provide feedback",
+      "Description": "Your feedback will help us improve our product and experience.",
+      "Field1": {
+        "Title": "Did you like the {type} process?"
+      },
+      "Field2": {
+        "Title": "Rate the experience"
+      },
+      "Field3": {
+        "Title": "Remarks (optional)",
+        "Placeholder": "Enter your comment/feedback regarding the product",
+        "Error1": "Remarks must be atleast 10 characters",
+        "Error2": "Remarks must be less than 300 characters"
+      },
+      "Submit": "Submit Feedback",
       "Loading": "Loading..",
-      "RatingLabel": "Resolution rating",
-      "Success": "Ticket closed successfully!",
-      "Error": "Cannot close ticket.. please try again after some time."
+      "Skip": "Skip",
+      "Success": "Feedback submitted successfully!"
     },
-    "AddSupportTicketComment": {
-      "Title": "Add Comment",
-      "Placeholder": "Enter comment",
-      "FieldError": "Comment is required and must be less than 300 characters",
-      "Error": "Cannot add comment.. please try again after some time.",
-      "Save": "Add Comment",
-      "Loading": "Loading.."
+    "Pagination": {
+      "Previous": "Previous",
+      "Next": "Next"
+    },
+    "Help": {
+      "Title": "Need Help"
     }
-  },
-  "BookingCards": {
-    "ViewDetails": "View Details",
-    "AssignVehicle": "Assign Vehicle",
-    "AssignDriver": "Assign Driver"
-  },
-  "IdCopyPill": {
-    "Copied": "Copied!"
-  },
-  "Feedback": {
-    "Title": "Please provide feedback",
-    "Description": "Your feedback will help us improve our product and experience.",
-    "Field1": {
-      "Title": "Did you like the {type} process?"
-    },
-    "Field2": {
-      "Title": "Rate the experience"
-    },
-    "Field3": {
-      "Title": "Remarks (optional)",
-      "Placeholder": "Enter your comment/feedback regarding the product",
-      "Error1": "Remarks must be atleast 10 characters",
-      "Error2": "Remarks must be less than 300 characters"
-    },
-    "Submit": "Submit Feedback",
-    "Loading": "Loading..",
-    "Skip": "Skip",
-    "Success": "Feedback submitted successfully!"
   },
   "TermsAndConditions": {
     "CreateAccount": {
@@ -6370,13 +6396,6 @@
         }
       }
     }
-  },
-  "Pagination": {
-    "Previous": "Previous",
-    "Next": "Next"
-  },
-  "Help": {
-    "Title": "Need Help"
   },
   "Landing": {
     "Navbar": {

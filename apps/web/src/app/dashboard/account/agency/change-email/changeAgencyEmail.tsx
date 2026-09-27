@@ -16,6 +16,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
@@ -23,6 +24,8 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_EMAIL_LENGTH } from "@/lib/uiConfig"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoH3 } from "@/components/typography"
 
 export default function ChangeAgencyEmailPageComponent({
   agency,
@@ -93,6 +96,10 @@ export default function ChangeAgencyEmailPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton href="/dashboard/support/help-account#agency" />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoInput
             name={"newEmail"}

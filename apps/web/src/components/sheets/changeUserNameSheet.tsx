@@ -40,7 +40,7 @@ export default function ChangeUserNameSheet({
   userRole: UserRolesEnum
   addedByUserId?: string
 }) {
-  const t = useTranslations("Sheets.ChangeName")
+  const t = useTranslations("Components.Sheets.ChangeName")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

@@ -7,7 +7,11 @@ import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import InactivateCustomerAlertButton from "@/components/buttons/alert/inactivateCustomerAlertButton"
 import ActivateCustomerAlertButton from "@/components/buttons/alert/activateCustomerAlertButton"
 import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
-import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  GridWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import CustomerInfoComponent from "@/components/flows/customers/details/customerInfoComponent"
 import CustomerDetailsComponent from "@/components/flows/customers/details/customerDetailsComponent"
@@ -91,10 +95,12 @@ export default async function CustomerDetailsPageComponent({
           )}
         </GridWrapper>
       )}
-      <HelpIconButton
-        href={"/dashboard/support/help-customers"}
-        showLabelSmall
-      />
+      <StickyActionWrapper>
+        <HelpIconButton
+          href={"/dashboard/support/help-customers"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

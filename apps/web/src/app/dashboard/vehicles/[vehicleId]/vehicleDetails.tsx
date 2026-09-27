@@ -9,6 +9,7 @@ import {
   SectionWrapper,
   PageWrapper,
   GridWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import {
@@ -51,14 +52,14 @@ export default async function VehicleDetailsPageComponent({
           vehicleNumber={vehicle.vehicleNumber}
           status={vehicle.status}
           type={vehicle.type}
+          brand={vehicle.brand}
+          model={vehicle.model}
           canChange={canChangeDetails}
         />
         <VehicleDetailsComponent
           createdAt={vehicle.createdAt}
           type={vehicle.type}
-          brand={vehicle.brand}
           color={vehicle.color}
-          model={vehicle.model}
           odometer={vehicle.odometerReading}
           capacity={vehicle.capacity}
           hasAC={vehicle.hasAC}
@@ -193,10 +194,12 @@ export default async function VehicleDetailsPageComponent({
           )}
         </GridWrapper>
       )}
-      <HelpIconButton
-        href={"/dashboard/support/help-vehicles"}
-        showLabelSmall
-      />
+      <StickyActionWrapper>
+        <HelpIconButton
+          href={"/dashboard/support/help-vehicles"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

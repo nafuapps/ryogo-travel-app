@@ -18,8 +18,8 @@ export default function SupportSideAccordionWrapper({
   label: "TableOfContent" | "QuickActions" | "RelatedArticles" | "SocialMedia"
   children: React.ReactNode
 }) {
+  const t = useTranslations("Components.SupportAccordion")
   const isLargeScreen = window.innerWidth >= 1024
-  const t = useTranslations("SupportAccordion")
   const accordionItemRef = useRef<HTMLDivElement>(null)
   const labelString = t(label)
 

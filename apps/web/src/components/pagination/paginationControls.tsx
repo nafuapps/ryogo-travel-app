@@ -21,7 +21,7 @@ export function PaginationControls({
   totalPages,
   onPageChange,
 }: PaginationControlsProps) {
-  const t = useTranslations("Pagination")
+  const t = useTranslations("Components.Pagination")
 
   const handlePrevious = () => {
     if (currentPage > 1) {

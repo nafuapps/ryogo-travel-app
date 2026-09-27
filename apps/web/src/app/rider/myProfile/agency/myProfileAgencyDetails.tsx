@@ -1,11 +1,16 @@
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import { FindAssignedUserByDriverIdType } from "@ryogo-travel-app/api/services/user.services"
-import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  GridWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import AgencyDetailsComponent from "@/components/flows/account/agencyDetailsComponent"
 import AgencyInfoComponent from "@/components/flows/account/agencyInfoComponent"
 import AgencyQRCodeComponent from "@/components/flows/account/agencyQRCodeComponent"
 import AgencyAssignedUserComponent from "@/components/flows/account/agencyAssignedUserComponent"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function MyProfileAgencyDetailsPageComponent({
   agency,
@@ -46,6 +51,12 @@ export default function MyProfileAgencyDetailsPageComponent({
           photoUrl={assignedUser.photoUrl}
         />
       )}
+      <StickyActionWrapper>
+        <HelpIconButton
+          href={"/rider/mySupport/help-account#agency"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

@@ -1,4 +1,4 @@
-import { RyogoSmall } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { Route } from "next"
 import Link from "next/link"
 
@@ -45,7 +45,9 @@ function DetailsHeaderTabItem({
             : "hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-xs"
         }`}
       >
-        <RyogoSmall color={selected ? "white" : "slate"}>{label}</RyogoSmall>
+        <RyogoCaption color={selected ? "white" : "slate"}>
+          {label}
+        </RyogoCaption>
       </div>
     </Link>
   )

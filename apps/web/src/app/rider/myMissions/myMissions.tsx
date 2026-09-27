@@ -1,17 +1,19 @@
 import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
 import MissionCard from "@/components/missions/missionCard"
-import { PageWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { differenceInDays } from "date-fns"
-import { CalendarPlus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function MyMissionsPageComponent({
   missions,
@@ -46,13 +48,6 @@ export default async function MyMissionsPageComponent({
 
   return (
     <PageWrapper id="MyMissionsPage">
-      {isPremium && (
-        <Link href={`/rider/myMissions/add`} className="self-center">
-          <RyogoOutlineButton className="w-full" label={t("AddCustomMission")}>
-            <RyogoIcon icon={CalendarPlus} color="slate" size="sm" />
-          </RyogoOutlineButton>
-        </Link>
-      )}
       {criticalMissions.length > 0 && (
         <RyogoCarouselWrapper
           count={t("CriticalMissions", { count: criticalMissions.length })}
@@ -113,6 +108,21 @@ export default async function MyMissionsPageComponent({
           ))}
         </RyogoCarouselWrapper>
       )}
+      <StickyActionWrapper>
+        {isPremium && (
+          <Link href={`/rider/myMissions/add`} className="w-full">
+            <RyogoDefaultButton
+              size="lg"
+              label={t("AddCustomMission")}
+              className="w-full"
+            />
+          </Link>
+        )}
+        <HelpIconButton
+          href={"/rider/mySupport/help-missions"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

@@ -10,6 +10,7 @@ import {
   PageWrapper,
   GridWrapper,
   SectionWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
@@ -46,13 +47,13 @@ export default async function DriverDetailsPageComponent({
           name={driver.name}
           status={driver.status}
           userId={driver.userId}
+          phone={driver.phone}
           agencyId={driver.agencyId}
           canChange={canChangeDetails}
         />
         <DriverDetailsComponent
           userId={driver.userId}
           createdAt={driver.createdAt}
-          phone={driver.phone}
           email={driver.user.email}
           address={driver.address}
           allowance={driver.defaultAllowancePerDay}
@@ -131,7 +132,12 @@ export default async function DriverDetailsPageComponent({
           )}
         </GridWrapper>
       )}
-      <HelpIconButton href={"/dashboard/support/help-drivers"} showLabelSmall />
+      <StickyActionWrapper>
+        <HelpIconButton
+          href={"/dashboard/support/help-drivers"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

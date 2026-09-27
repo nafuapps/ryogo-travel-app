@@ -137,7 +137,13 @@ export default function ModifyCustomMissionPageComponent({
       >
         <SectionRowWrapper className="items-start justify-between">
           <RyogoH3>{t("Title")}</RyogoH3>
-          <HelpIconButton href="/dashboard/support/help-missions#custom" />
+          <HelpIconButton
+            href={
+              isRider
+                ? "/rider/mySupport/help-missions#custom"
+                : "/dashboard/support/help-missions#custom"
+            }
+          />
         </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoSelect

@@ -1,3 +1,4 @@
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicleDetailsComponent"
 import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
 import VehicleInfoComponent from "@/components/flows/vehicles/details/vehicleInfoComponent"
@@ -5,6 +6,7 @@ import {
   SectionWrapper,
   PageWrapper,
   GridWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -36,14 +38,14 @@ export default async function RiderMyVehiclePageComponent({
           photoUrl={vehicle.vehiclePhotoUrl}
           vehicleNumber={vehicle.vehicleNumber}
           status={vehicle.status}
+          brand={vehicle.brand}
+          model={vehicle.model}
           type={vehicle.type}
         />
         <VehicleDetailsComponent
           createdAt={vehicle.createdAt}
           type={vehicle.type}
-          brand={vehicle.brand}
           color={vehicle.color}
-          model={vehicle.model}
           odometer={vehicle.odometerReading}
           capacity={vehicle.capacity}
           hasAC={vehicle.hasAC}
@@ -85,6 +87,9 @@ export default async function RiderMyVehiclePageComponent({
           expiresOn={vehicle.insuranceExpiresOn}
         />
       </SectionWrapper>
+      <StickyActionWrapper>
+        <HelpIconButton href={"/rider/mySupport/help-vehicle"} showLabelSmall />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

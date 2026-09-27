@@ -41,7 +41,7 @@ export default function ChangeDropAddressSheet({
 }) {
   if (!canEdit) return children
 
-  const t = useTranslations("Sheets.ChangeDropAddress")
+  const t = useTranslations("Components.Sheets.ChangeDropAddress")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

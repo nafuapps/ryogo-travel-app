@@ -36,7 +36,7 @@ export default function ChangeQRCodeSheet({
 }) {
   if (!canChange) return children
 
-  const t = useTranslations("Sheets.ChangeQRCode")
+  const t = useTranslations("Components.Sheets.ChangeQRCode")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

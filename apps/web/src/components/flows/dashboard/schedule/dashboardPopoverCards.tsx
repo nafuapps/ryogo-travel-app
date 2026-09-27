@@ -10,7 +10,7 @@ import Link from "next/link"
 export function RepairPopoverCard(
   repair: FindVehiclesScheduleNextDaysType[number]["vehicleRepairs"][number],
 ) {
-  const t = useTranslations("BookingCards")
+  const t = useTranslations("Components.BookingCards")
   const isDelayed = repair.endDate < new Date()
   return (
     <SectionColWrapper>
@@ -38,7 +38,7 @@ export function RepairPopoverCard(
 export function LeavePopoverCard(
   leave: FindDriversScheduleNextDaysType[number]["driverLeaves"][number],
 ) {
-  const t = useTranslations("BookingCards")
+  const t = useTranslations("Components.BookingCards")
   const isDelayed = leave.endDate < new Date()
   return (
     <SectionColWrapper>

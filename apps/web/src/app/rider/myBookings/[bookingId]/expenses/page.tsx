@@ -1,9 +1,9 @@
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { Metadata } from "next"
 import { getCurrentUser } from "@/lib/auth"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import {
   MainWrapper,
   PageWrapper,

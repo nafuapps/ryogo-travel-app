@@ -6,9 +6,7 @@ import {
   BookingStatusEnum,
   DriverStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import RiderMyCompletedBookingPageComponent from "./completedBooking"
 import RiderMyOngoingBookingPageComponent from "./currentBooking"
-import RiderMyUpcomingBookingPageComponent from "./upcomingBooking"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
 import {
@@ -18,6 +16,11 @@ import {
 } from "@/components/page/pageWrappers"
 import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
 import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
+import Link from "next/link"
+import { getTranslations } from "next-intl/server"
+import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export const metadata: Metadata = {
   title: `My Booking Details - ${pageTitle}`,
@@ -43,12 +46,15 @@ export default async function MyBookingPage({
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
+  const t = await getTranslations("Rider.MyBooking")
+
   const canStartTrip =
+    bookingDetails.status === BookingStatusEnum.CONFIRMED &&
     bookingDetails.startDate <= new Date() &&
     bookingDetails.assignedVehicleId !== null &&
     driver.status === DriverStatusEnum.AVAILABLE
 
-  //Render based on booking status
+  //Render action based on booking status
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]"} />
@@ -68,13 +74,18 @@ export default async function MyBookingPage({
           {bookingDetails.status === BookingStatusEnum.IN_PROGRESS ? (
             <RiderMyOngoingBookingPageComponent booking={bookingDetails} />
           ) : bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
-            <RiderMyUpcomingBookingPageComponent
-              booking={bookingDetails}
-              canStartTrip={canStartTrip}
-            />
+            canStartTrip ? (
+              <StartTripSheet booking={bookingDetails} />
+            ) : null
           ) : (
-            <RiderMyCompletedBookingPageComponent />
+            <Link href="/rider/myBookings">
+              <RyogoDefaultButton label={t("Back")} className="w-full" />
+            </Link>
           )}
+          <HelpIconButton
+            href={"/rider/mySupport/help-bookings"}
+            showLabelSmall
+          />
         </StickyActionWrapper>
       </PageWrapper>
     </MainWrapper>

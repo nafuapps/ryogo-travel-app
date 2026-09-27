@@ -1,4 +1,4 @@
-import { RyogoH4 } from "@/components/typography"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -6,6 +6,7 @@ import {
 import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import {
+  VehicleBrandEnum,
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -21,6 +22,8 @@ export default function VehicleInfoComponent({
   vehicleNumber,
   status,
   type,
+  brand,
+  model,
   canChange,
 }: {
   id: string
@@ -29,6 +32,8 @@ export default function VehicleInfoComponent({
   vehicleNumber: string
   status: VehicleStatusEnum
   type: VehicleTypesEnum
+  brand: VehicleBrandEnum
+  model: string
   canChange?: boolean
 }) {
   return (
@@ -50,6 +55,7 @@ export default function VehicleInfoComponent({
       )}
       <SectionColWrapper className="items-center">
         <RyogoH4 weight="font-bold">{vehicleNumber}</RyogoH4>
+        <RyogoSmall color="light">{brand + " " + model}</RyogoSmall>
         <SectionRowWrapper className="items-center">
           <VehicleStatusPill status={status} size="lg" />
           <IdCopyPill id={id} />

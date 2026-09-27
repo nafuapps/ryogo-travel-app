@@ -52,7 +52,7 @@ export default function NewFeedbackComponent({
   userId: string
   agencyId: string
 }) {
-  const t = useTranslations("Feedback")
+  const t = useTranslations("Components.Feedback")
   const router = useRouter()
   const pathname = usePathname()
 

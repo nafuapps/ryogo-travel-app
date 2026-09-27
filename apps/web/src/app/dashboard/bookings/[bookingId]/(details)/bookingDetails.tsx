@@ -393,7 +393,13 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>
-          <BookingVehicleCard vehicle={bookingDetails.assignedVehicle} />
+          {bookingDetails.assignedVehicle && (
+            <Link
+              href={`/dashboard/vehicles/${bookingDetails.assignedVehicle.id}`}
+            >
+              <BookingVehicleCard vehicle={bookingDetails.assignedVehicle} />
+            </Link>
+          )}
           {canAssignVehicleDriver && (
             <BookingActionWrapper>
               <Link

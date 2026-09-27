@@ -92,7 +92,7 @@ export function RyogoP(props: RyogoTextType) {
 export function RyogoSmall(props: RyogoTextType) {
   return (
     <small
-      className={`text-[13px] lg:text-sm ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
+      className={`text-sm ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </small>

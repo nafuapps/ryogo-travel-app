@@ -1,4 +1,4 @@
-import { RyogoCaption } from "@/components/typography"
+import { RyogoTiny } from "@/components/typography"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 
@@ -9,10 +9,10 @@ export default async function UserLoginTimeComponent({
 }) {
   const t = await getTranslations("Dashboard.Account")
   return (
-    <RyogoCaption color="light" className="text-center">
+    <RyogoTiny color="light" className="text-center">
       {t("LastLogin", {
         loginTime: moment(lastLoginTime).format("MMMM Do YYYY, h:mm:ss a"),
       })}
-    </RyogoCaption>
+    </RyogoTiny>
   )
 }

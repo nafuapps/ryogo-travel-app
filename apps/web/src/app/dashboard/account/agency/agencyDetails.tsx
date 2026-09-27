@@ -3,7 +3,11 @@ import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.servic
 import { AtSign, Building2, MailPen, Phone, QrCode } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  GridWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgencyAlertButton"
 import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
 import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -13,6 +17,7 @@ import AgencyDetailsComponent from "@/components/flows/account/agencyDetailsComp
 import AgencyQRCodeComponent from "@/components/flows/account/agencyQRCodeComponent"
 import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
 import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -98,6 +103,12 @@ export default async function AgencyDetailsPageComponent({
           )}
         </GridWrapper>
       )}
+      <StickyActionWrapper>
+        <HelpIconButton
+          href={"/dashboard/support/help-account#agency"}
+          showLabelSmall
+        />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

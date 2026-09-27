@@ -9,7 +9,6 @@ import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
-  PlainGridWrapper,
   TileGridWrapper,
   SectionHeaderWrapper,
   StickyActionWrapper,
@@ -89,7 +88,7 @@ async function VehicleRepairComponent({
 
   const canModify = isOwner || userId === repair.addedByUserId
   return (
-    <PlainGridWrapper>
+    <TileGridWrapper>
       <GridItemWrapper>
         <RyogoP weight="font-bold">
           {moment(repair.startDate).format("DD MMM") +
@@ -121,6 +120,6 @@ async function VehicleRepairComponent({
           </Link>
         )}
       </GridItemWrapper>
-    </PlainGridWrapper>
+    </TileGridWrapper>
   )
 }

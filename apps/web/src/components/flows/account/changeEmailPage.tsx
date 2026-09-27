@@ -13,6 +13,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
@@ -20,6 +21,8 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { RyogoH3 } from "@/components/typography"
+import { HelpIconButton } from "../support/helpButtons"
 
 export default function ChangeEmailPageComponent({
   usersWithPhoneRole,
@@ -104,6 +107,16 @@ export default function ChangeEmailPageComponent({
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoH3>{t("Title")}</RyogoH3>
+          <HelpIconButton
+            href={
+              isRider
+                ? "/rider/mySupport/help-account"
+                : "/dashboard/support/help-account"
+            }
+          />
+        </SectionRowWrapper>
         <FormContentWrapper>
           <RyogoInput
             name={"password"}

@@ -33,7 +33,7 @@ export default function CloseSupportTicketSheet({
   agencyId: string
   status: TicketStatusEnum
 }) {
-  const t = useTranslations("Sheets.CloseSupportTicket")
+  const t = useTranslations("Components.Sheets.CloseSupportTicket")
   const router = useRouter()
   const form = useForm()
 

@@ -38,7 +38,7 @@ export default function ChangeUserPhotoSheet({
 }) {
   if (!canChange) return children
 
-  const t = useTranslations("Sheets.ChangeUserPhoto")
+  const t = useTranslations("Components.Sheets.ChangeUserPhoto")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

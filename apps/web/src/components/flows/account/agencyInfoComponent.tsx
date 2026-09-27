@@ -45,7 +45,7 @@ export default function AgencyInfoComponent({
       <SectionColWrapper className="items-center">
         <RyogoH4 weight="font-bold">{agencyName}</RyogoH4>
         <SectionRowWrapper small className="items-center">
-          <RyogoIcon icon={MapPin} size="sm" color="light" />
+          <RyogoIcon icon={MapPin} size="xs" color="light" thick />
           <RyogoSmall color="light">{city + ", " + state}</RyogoSmall>
         </SectionRowWrapper>
         <SectionRowWrapper className="items-center">

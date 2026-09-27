@@ -40,7 +40,7 @@ export default function ChangeStartTimeSheet({
 }) {
   if (!canEdit) return children
 
-  const t = useTranslations("Sheets.ChangeStartTime")
+  const t = useTranslations("Components.Sheets.ChangeStartTime")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

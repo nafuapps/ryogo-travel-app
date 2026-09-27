@@ -1,8 +1,4 @@
-import {
-  VehicleBrandEnum,
-  VehicleColorEnum,
-  VehicleTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { VehicleColorEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
 import {
   DetailsBorderWrapper,
@@ -16,9 +12,7 @@ import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 export default async function VehicleDetailsComponent({
   createdAt,
   type,
-  brand,
   color,
-  model,
   odometer,
   capacity,
   hasAC,
@@ -28,9 +22,7 @@ export default async function VehicleDetailsComponent({
 }: {
   createdAt: Date
   type: VehicleTypesEnum
-  brand: VehicleBrandEnum
   color: VehicleColorEnum
-  model: string
   odometer: number
   capacity: number
   hasAC: boolean
@@ -47,8 +39,6 @@ export default async function VehicleDetailsComponent({
           value={moment(createdAt).format("DD MMM YYYY")}
         />
         <DetailsLineItem label={t("Type")} value={type} />
-        <DetailsLineItem label={t("Brand")} value={brand} />
-        <DetailsLineItem label={t("Model")} value={model} />
         <DetailsLineItem label={t("Color")} value={color} />
         <DetailsLineItem
           label={t("Odometer")}

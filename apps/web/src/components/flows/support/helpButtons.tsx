@@ -15,7 +15,7 @@ export function HelpIconButton({
   label?: string
   showLabelSmall?: boolean
 }) {
-  const t = useTranslations("Help")
+  const t = useTranslations("Components.Help")
   return (
     <Link {...props} className="mt-auto">
       <RyogoOutlineButton

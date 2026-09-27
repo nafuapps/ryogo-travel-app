@@ -16,7 +16,7 @@ export default function SupportContentHeader({
         icon={icon}
         size="sm"
         color="slate"
-        bgColor="light"
+        bgColor="slate"
         thick
       />
       <RyogoP color="slate" weight="font-bold">

@@ -74,7 +74,7 @@ function BookingCardWrapper({
   children: React.ReactNode
   className?: string
 }) {
-  const t = useTranslations("BookingCards")
+  const t = useTranslations("Components.BookingCards")
   return (
     <SectionColWrapper
       className={`rounded-sm overflow-hidden bg-white dark:bg-slate-800 border ${className ?? ""}`}
@@ -295,8 +295,9 @@ export function OngoingBookingCard({
     <BookingCardWrapper
       isRider={rider}
       bookingId={booking.id}
-      className={`${rider ? "" : ""}`}
-      cta={rider && startLabel && <BookingStartButton label={startLabel} />}
+      cta={
+        rider && startLabel ? <BookingStartButton label={startLabel} /> : null
+      }
     >
       <BookingCardHeaderWrapper bookingId={booking.id}>
         <RyogoCaption color={booking.endDate < new Date() ? "red" : "light"}>
@@ -348,7 +349,7 @@ export function UpcomingBookingCard({
   canStart?: boolean
   startLabel?: string
 }) {
-  const t = useTranslations("BookingCards")
+  const t = useTranslations("Components.BookingCards")
   const combinedDateTime = getCombinedDateTime(
     booking.startDate,
     booking.startTime,
@@ -358,11 +359,10 @@ export function UpcomingBookingCard({
     <BookingCardWrapper
       isRider={rider}
       bookingId={booking.id}
-      className={`${canStart && rider ? "" : ""}`}
       cta={
-        rider &&
-        canStart &&
-        startLabel && <BookingStartButton label={startLabel} />
+        rider && canStart && startLabel ? (
+          <BookingStartButton label={startLabel} />
+        ) : null
       }
     >
       <BookingCardHeaderWrapper bookingId={booking.id}>

@@ -1,6 +1,6 @@
 import {
   SESSION_COOKIE_NAME,
-  SESSION_COOKIE_REFRESH_MINUTES,
+  SESSION_COOKIE_REFRESH_INTERVAL_MINUTES,
 } from "@ryogo-travel-app/api/apiConfig"
 import { NextRequest, NextResponse } from "next/server"
 import {
@@ -29,7 +29,7 @@ export default async function proxy(request: NextRequest) {
   //Update session cookie every X minutes
   if (
     differenceInMinutes(new Date(), payload.updatedAt) >=
-    SESSION_COOKIE_REFRESH_MINUTES
+    SESSION_COOKIE_REFRESH_INTERVAL_MINUTES
   ) {
     //Check for session expiry or suspended user
     if (

@@ -4,7 +4,11 @@ import Link from "next/link"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
-import { PageWrapper, GridWrapper } from "@/components/page/pageWrappers"
+import {
+  PageWrapper,
+  GridWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { FindUserDetailsWithDriverByIdType } from "@ryogo-travel-app/api/services/user.services"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import AccountInfoComponent from "@/components/flows/account/accountInfoComponent"
@@ -13,6 +17,7 @@ import UserDriverDetailsComponent from "@/components/flows/account/userDriverDet
 import UserDriverLicenseInfoComponent from "@/components/flows/account/userDriverLicenseInfoComponent"
 import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
 import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function RiderProfilePageComponent({
   account,
@@ -93,6 +98,9 @@ export default async function RiderProfilePageComponent({
       {account.lastLogin && (
         <UserLoginTimeComponent lastLoginTime={account.lastLogin} />
       )}
+      <StickyActionWrapper>
+        <HelpIconButton href={"/rider/mySupport/help-account"} showLabelSmall />
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

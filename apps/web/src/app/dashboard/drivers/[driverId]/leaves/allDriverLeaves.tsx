@@ -8,8 +8,6 @@ import {
   SectionWrapper,
   GridItemWrapper,
   PageWrapper,
-  PlainGridWrapper,
-  AddInfoWrapper,
   TileGridWrapper,
   SectionHeaderWrapper,
   StickyActionWrapper,
@@ -20,7 +18,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronRight, CalendarX, Plus, TreePalm } from "lucide-react"
+import { ChevronRight, CalendarX, TreePalm } from "lucide-react"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
@@ -94,7 +92,7 @@ async function DriverLeaveComponent({
 
   const canModify = isOwner || userId === leave.addedByUserId
   return (
-    <PlainGridWrapper>
+    <TileGridWrapper>
       <GridItemWrapper>
         <RyogoP weight="font-bold">
           {moment(leave.startDate).format("DD MMM") +
@@ -123,6 +121,6 @@ async function DriverLeaveComponent({
           </Link>
         )}
       </GridItemWrapper>
-    </PlainGridWrapper>
+    </TileGridWrapper>
   )
 }

@@ -36,7 +36,7 @@ export default function AddSupportTicketCommentSheet({
   agencyId: string
   status: TicketStatusEnum
 }) {
-  const t = useTranslations("Sheets.AddSupportTicketComment")
+  const t = useTranslations("Components.Sheets.AddSupportTicketComment")
   const router = useRouter()
   const [open, setOpen] = useState(false)
 

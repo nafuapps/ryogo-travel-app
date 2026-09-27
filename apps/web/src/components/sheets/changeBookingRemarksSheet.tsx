@@ -41,7 +41,7 @@ export default function ChangeBookingRemarksSheet({
 }) {
   if (!canEdit) return children
 
-  const t = useTranslations("Sheets.ChangeBookingRemarks")
+  const t = useTranslations("Components.Sheets.ChangeBookingRemarks")
   const [open, setOpen] = useState(false)
   const router = useRouter()
 

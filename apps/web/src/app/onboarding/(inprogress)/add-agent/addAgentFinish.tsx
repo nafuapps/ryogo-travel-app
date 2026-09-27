@@ -6,7 +6,7 @@ import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Check, MessageSquareShare } from "lucide-react"
 // import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import {
   RyogoDefaultButton,
@@ -28,7 +28,7 @@ export function AddAgentFinish({
   agencyName: string
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Finish")
-  const router = useRouter()
+  // const router = useRouter()
   const form = useForm()
 
   // const submit = async () => {

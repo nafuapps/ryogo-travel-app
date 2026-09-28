@@ -179,6 +179,36 @@ export const driverServices = {
     return { ...leave[0], driverName: driver?.name }
   },
 
+  //Start driver leave
+  async startDriverLeave(leaveId: string, driverId: string) {
+    const driver = await driverRepository.readDriverById(driverId)
+    if (!driver || driver.status !== DriverStatusEnum.AVAILABLE) return
+
+    const updatedDriver = await driverRepository.updateStatus(
+      driverId,
+      DriverStatusEnum.LEAVE,
+    )
+    if (!updatedDriver) return
+
+    const leave = await driverLeaveRepository.updateLeaveToStarted(leaveId)
+    return leave[0]
+  },
+
+  //End driver leave
+  async endDriverLeave(leaveId: string, driverId: string) {
+    const driver = await driverRepository.readDriverById(driverId)
+    if (!driver || driver.status !== DriverStatusEnum.LEAVE) return
+
+    const updatedDriver = await driverRepository.updateStatus(
+      driverId,
+      DriverStatusEnum.AVAILABLE,
+    )
+    if (!updatedDriver) return
+
+    const leave = await driverLeaveRepository.updateLeaveToEnded(leaveId)
+    return leave[0]
+  },
+
   //Upload driver license photo
   async updateDriverLicensePhoto(driverId: string, licenseUrl: string) {
     await driverRepository.updateDriverLicenseUrl(driverId, licenseUrl)

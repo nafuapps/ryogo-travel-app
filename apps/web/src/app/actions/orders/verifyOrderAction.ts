@@ -73,11 +73,9 @@ export async function verifyOrderAction({
     link: `/dashboard/account/subscription`,
   })
 
-  //Remove any subscription payment failed missions for this order
-  await missionServices.removePreviousMissionsByEntityKey(
+  //Remove any subscription payment failed missions for this agency
+  await missionServices.removePreviousMissionsByTitleKey(
     agencyId,
-    EntityTypeEnum.ORDER,
-    updatedRecord.id,
     "SubscriptionPaymentFailed.Title",
   )
 

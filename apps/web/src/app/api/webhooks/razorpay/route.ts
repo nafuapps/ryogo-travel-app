@@ -55,14 +55,14 @@ export async function POST(req: NextRequest) {
       //If webhook is already confirmed, leave - nothing to do here
       return NextResponse.json({ received: true })
     }
-    //Else, update order webhook status
+    //Else, confirm order webhook in DB
     await orderServices.confirmOrderWebhookStatus(orderInDB.id)
   }
 
   //Find payment in DB
   const paymentInDB = await paymentServices.findPaymentByRPId(paymentEntity.id)
 
-  //If payment is already captured in DB, leave - nothing to do here
+  //If PAID payment is already captured in DB, leave - nothing to do here
   if (
     orderInDB.status === OrderStatusEnum.PAID &&
     paymentInDB?.status === PaymentStatusEnum.CAPTURED
@@ -152,7 +152,13 @@ export async function POST(req: NextRequest) {
         link: `/dashboard/account/agency`,
       })
 
-      generateAndSendSubscriptionInvoiceEmail(
+      //Remove any subscription payment failed missions for this agency
+      await missionServices.removePreviousMissionsByTitleKey(
+        updatedOrder.agencyId,
+        "SubscriptionPaymentFailed.Title",
+      )
+
+      await generateAndSendSubscriptionInvoiceEmail(
         paymentEntity.order_id,
         updatedOrder.agencyId,
         updatedOrder.userId,

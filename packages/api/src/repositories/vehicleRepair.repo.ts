@@ -9,6 +9,7 @@ export const vehicleRepairRepository = {
   //Read all vehicle repairs by vehicle id
   async readVehicleRepairsByVehicleId(vehicleId: string, queryStartDate: Date) {
     return await db.query.vehicleRepairs.findMany({
+      orderBy: (vehicleRepairs, { desc }) => [desc(vehicleRepairs.startDate)],
       where: and(
         eq(vehicleRepairs.vehicleId, vehicleId),
         gte(vehicleRepairs.startDate, queryStartDate),

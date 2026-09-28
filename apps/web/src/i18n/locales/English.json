@@ -2275,6 +2275,7 @@
       "Completed": "COMPLETED",
       "Pending": "PENDING",
       "Edit": "Edit",
+      "OnTrip": "Let driver complete ongoing trip before taking leave",
       "NoLeaves": "No driver leaves"
     },
     "NewDriverLeave": {
@@ -4633,13 +4634,13 @@
         "Title": "Trip started for booking #{bookingId}",
         "Message": "{driverName} has started the trip for this booking."
       },
-      "DriverActivated": {
+      "UserActivated": {
         "Title": "Account activated by {userName}",
-        "Message": "You account has been activated. You can now start taking booking assignments"
+        "Message": "You account has been activated. You can now start using the app features"
       },
-      "DriverInactivated": {
+      "UserInactivated": {
         "Title": "Account deactivated by {userName}",
-        "Message": "You account has been deactivated. You cannot take booking assignments"
+        "Message": "You account has been deactivated. You cannot use app features."
       },
       "ExpenseAddedByDriver": {
         "Title": "New expense added for booking #{bookingId}",
@@ -4659,7 +4660,7 @@
       },
       "AdminTransferred": {
         "Title": "Admin rights received",
-        "Message": "You are the admin for the agency now. You can manage other owners and all the users."
+        "Message": "You are the superuser for the agency now. You can manage other owners and users."
       }
     },
     "AddCustomMission": {
@@ -4939,6 +4940,26 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Delete"
       },
+      "TakeDriverLeave": {
+        "Label": "Start Leave",
+        "Title": "Are you sure you want to start taking leave?",
+        "Desc": "Your status will be updated that you are on Leave. During this period, you will not be assigned any bookings.",
+        "NoCTA": "No",
+        "Success": "Leave status updated!",
+        "Error": "Cannot take leave now.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Take Leave"
+      },
+      "FinishDriverLeave": {
+        "Label": "Finish Leave",
+        "Title": "Are you sure you want to end taking leave?",
+        "Desc": "Your status will be updated that you are available again and not on Leave. You will start getting assigned bookings.",
+        "NoCTA": "No",
+        "Success": "Available status updated!",
+        "Error": "Cannot finish leave now.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, End Leave"
+      },
       "InactivateDriver": {
         "Label": "Inactivate Driver",
         "Subtitle": "Set driver to inactive to stop them from receiving bookings",
@@ -5151,6 +5172,7 @@
         "/rider/myBookings/[id]/expenses/add": "Add Expense",
         "/rider/myBookings/[id]/expenses/modify": "Modify Expense",
         "/rider/myBookings/[id]/trip-logs": "Booking Trip Logs",
+        "/rider/myLeaves": "Leaves",
         "/rider/myProfile": "Profile",
         "/rider/myProfile/change-email": "Change Email",
         "/rider/myProfile/change-password": "Change Password",
@@ -5326,10 +5348,16 @@
       "RC": "Registration",
       "NoVehicleAssigned": "No vehicle assigned."
     },
+    "MyLeaves": {
+      "Title": "Driver Leaves",
+      "OnTrip": "Complete your trip before taking leave",
+      "NoLeaves": "No leaves found"
+    },
     "MyProfile": {
       "License": "Driver's License",
       "ExpiresOn": "Expires on",
       "ExpiredOn": "Expired on",
+      "DriverId": "Driver ID",
       "Address": "Address",
       "CanDrive": "Can Drive",
       "Allowance": "Default Allowance",

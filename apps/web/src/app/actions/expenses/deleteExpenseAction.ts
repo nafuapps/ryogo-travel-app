@@ -45,17 +45,9 @@ export async function deleteExpenseAction(
   })
 
   if (byDriver) {
-    await missionServices.removePreviousMissionsByEntityKey(
+    await missionServices.removePreviousMissionsByEntityId(
       agencyId,
-      EntityTypeEnum.EXPENSE,
       deletedExpense.id,
-      "ExpenseAddedByDriver.Title",
-    )
-    await missionServices.removePreviousMissionsByEntityKey(
-      agencyId,
-      EntityTypeEnum.EXPENSE,
-      deletedExpense.id,
-      "ExpenseModifiedByDriver.Title",
     )
     await missionServices.addMission({
       agencyId: agencyId,

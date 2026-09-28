@@ -1,42 +1,33 @@
+import FinishDriverLeaveAlertButton from "@/components/buttons/alert/finishDriverLeaveAlertButton"
+import TakeDriverLeaveAlertButton from "@/components/buttons/alert/takeDriverLeaveAlertButton"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import DriverLeaveComponent from "@/components/flows/drivers/leaves/driverLeaveComponent"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import {
-  FindAllDriverLeavesByDriverIdType,
-  FindDriverDetailsByIdType,
-} from "@ryogo-travel-app/api/services/driver.services"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import {
-  SectionWrapper,
   PageWrapper,
-  TileGridWrapper,
+  SectionWrapper,
   SectionHeaderWrapper,
+  TileGridWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { CalendarX, TreePalm } from "lucide-react"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import EmptyStateIcon from "@/components/icons/emptyStateIcon"
-import DriverLeaveComponent from "@/components/flows/drivers/leaves/driverLeaveComponent"
-import { differenceInDays } from "date-fns"
+  FindAllDriverLeavesByDriverIdType,
+  FindDriverByUserIdType,
+} from "@ryogo-travel-app/api/services/driver.services"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import TakeDriverLeaveAlertButton from "@/components/buttons/alert/takeDriverLeaveAlertButton"
-import FinishDriverLeaveAlertButton from "@/components/buttons/alert/finishDriverLeaveAlertButton"
+import { differenceInDays } from "date-fns"
+import { TreePalm, CalendarX } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
-export default async function AllDriverLeavesPageComponent({
+export default async function MyLeavesPageComponent({
   leaves,
   driver,
-  currentUserId,
-  isOwner,
 }: {
   leaves: FindAllDriverLeavesByDriverIdType
-  driver: NonNullable<FindDriverDetailsByIdType>
-  currentUserId: string
-  isOwner: boolean
+  driver: NonNullable<FindDriverByUserIdType>
 }) {
-  const t = await getTranslations("Dashboard.DriverLeaves")
-
+  const t = await getTranslations("Rider.MyLeaves")
   const today = new Date()
 
   const isOnLeave = driver.status === DriverStatusEnum.LEAVE
@@ -61,11 +52,7 @@ export default async function AllDriverLeavesPageComponent({
         {leaves.length > 0 ? (
           <TileGridWrapper>
             {leaves.map((leave) => (
-              <DriverLeaveComponent
-                key={leave.id}
-                leave={leave}
-                canModify={isOwner || currentUserId === leave.addedByUserId}
-              />
+              <DriverLeaveComponent key={leave.id} leave={leave} />
             ))}
           </TileGridWrapper>
         ) : (
@@ -78,7 +65,7 @@ export default async function AllDriverLeavesPageComponent({
         )}
         {currentLeave && isAvailable && (
           <TakeDriverLeaveAlertButton
-            userId={currentLeave.addedByUserId}
+            userId={driver.userId}
             driverId={driver.id}
             leaveId={currentLeave.id}
             agencyId={driver.agencyId}
@@ -86,22 +73,13 @@ export default async function AllDriverLeavesPageComponent({
         )}
         {currentLeave && isOnLeave && (
           <FinishDriverLeaveAlertButton
-            userId={currentLeave.addedByUserId}
+            userId={driver.userId}
             driverId={driver.id}
             leaveId={currentLeave.id}
             agencyId={driver.agencyId}
           />
         )}
-        <Link
-          href={`/dashboard/drivers/${driver.id}/leaves/new`}
-          className="w-full"
-        >
-          <RyogoDefaultButton label={t("AddLeave")} className="w-full" />
-        </Link>
-        <HelpIconButton
-          href={"/dashboard/support/help-drivers#leaves"}
-          showLabelSmall
-        />
+        <HelpIconButton href={"/rider/mySupport/help-leaves"} showLabelSmall />
       </StickyActionWrapper>
     </PageWrapper>
   )

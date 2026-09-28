@@ -9,6 +9,7 @@ export const driverLeaveRepository = {
   //Read all driver leaves by driver id
   async readDriverLeavesByDriverId(driverId: string, queryStartDate: Date) {
     return await db.query.driverLeaves.findMany({
+      orderBy: (driverLeaves, { desc }) => [desc(driverLeaves.startDate)],
       where: and(
         eq(driverLeaves.driverId, driverId),
         gte(driverLeaves.startDate, queryStartDate),
@@ -110,6 +111,30 @@ export const driverLeaveRepository = {
         remarks,
         startDate,
         endDate,
+      })
+      .where(eq(driverLeaves.id, id))
+      .returning()
+  },
+
+  //Update a driver leave to started
+  async updateLeaveToStarted(id: string) {
+    return await db
+      .update(driverLeaves)
+      .set({
+        isCompleted: false,
+        startDate: new Date(),
+      })
+      .where(eq(driverLeaves.id, id))
+      .returning()
+  },
+
+  //Update a driver leave to ended
+  async updateLeaveToEnded(id: string) {
+    return await db
+      .update(driverLeaves)
+      .set({
+        isCompleted: true,
+        endDate: new Date(),
       })
       .where(eq(driverLeaves.id, id))
       .returning()

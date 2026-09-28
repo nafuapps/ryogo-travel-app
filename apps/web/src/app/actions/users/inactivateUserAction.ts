@@ -1,6 +1,7 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -38,5 +39,27 @@ export async function inactivateUserAction(
     },
     link: `/dashboard/users/${id}`,
   })
+
+  await missionServices.removePreviousMissionsByEntityTitleKey(
+    agencyId,
+    EntityTypeEnum.USER,
+    user.id,
+    "UserActivated.Title",
+  )
+  await missionServices.addMission({
+    agencyId: agencyId,
+    userId: user.id,
+    entityType: EntityTypeEnum.USER,
+    entityId: user.id,
+    titleKey: "UserInactivated.Title",
+    titleObject: {
+      userName: currentUser.name,
+    },
+    messageKey: "UserInactivated.Message",
+    isCritical: true,
+    link:
+      role === UserRolesEnum.DRIVER ? `/rider/myProfile` : `/dashboard/account`,
+  })
+
   return user
 }

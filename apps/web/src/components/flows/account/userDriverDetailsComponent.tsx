@@ -11,12 +11,14 @@ import {
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 
 export default async function UserDriverDetailsComponent({
+  driverId,
   address,
   canDriveVehicles,
   allowance,
   ratings,
   status,
 }: {
+  driverId: string
   address: string | null
   canDriveVehicles: VehicleTypesEnum[]
   allowance: number
@@ -27,6 +29,7 @@ export default async function UserDriverDetailsComponent({
   return (
     <DetailsBorderWrapper>
       <DetailsContentWrapper>
+        <DetailsLineItem label={t("DriverId")} value={driverId} />
         {address && <DetailsLineItem label={t("Address")} value={address} />}
         <DetailsLineItem
           label={t("Allowance")}

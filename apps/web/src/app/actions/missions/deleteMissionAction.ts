@@ -21,7 +21,7 @@ export async function deleteMissionAction(
     return
   }
 
-  const mission = await missionServices.removeMission(missionId)
+  const mission = await missionServices.removeMissionById(missionId)
 
   return mission
 }

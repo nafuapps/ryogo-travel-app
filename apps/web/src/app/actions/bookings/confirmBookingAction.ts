@@ -68,6 +68,14 @@ export async function confirmBookingAction(
     link: `/dashboard/bookings/${bookingDetails.id}`,
   })
 
+  //Remove lead mission for this booking
+  await missionServices.removePreviousMissionsByEntityTitleKey(
+    agencyId,
+    EntityTypeEnum.BOOKING,
+    bookingDetails.id,
+    "LeadBooking.Title",
+  )
+
   if (bookingDetails.assignedDriver) {
     await missionServices.addMission({
       agencyId: agencyId,
@@ -80,14 +88,6 @@ export async function confirmBookingAction(
       link: `/rider/myBookings/${bookingDetails.id}`,
     })
   }
-
-  //Remove any lead mission for this booking
-  await missionServices.removePreviousMissionsByEntityKey(
-    agencyId,
-    EntityTypeEnum.BOOKING,
-    bookingDetails.id,
-    "LeadBooking.Title",
-  )
 
   //Generate confirmation pdf file
   const confirmationFile = await getBookingConfirmationPDF(bookingDetails)

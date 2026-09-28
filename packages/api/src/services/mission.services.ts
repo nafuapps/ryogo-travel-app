@@ -28,7 +28,7 @@ export const missionServices = {
     deletePreviousMissions: boolean = true,
   ) {
     if (deletePreviousMissions) {
-      await missionRepository.deleteMissionsByEntityKey(
+      await missionRepository.deleteMissionsByEntityTitleKey(
         mission.agencyId,
         mission.entityType,
         mission.entityId,
@@ -52,23 +52,31 @@ export const missionServices = {
     return updatedMission[0]
   },
 
-  async removeMission(missionId: string) {
+  async removeMissionById(missionId: string) {
     const mission = await missionRepository.deleteMissionById(missionId)
     return mission[0]
   },
 
-  async removePreviousMissionsByEntityKey(
+  async removePreviousMissionsByEntityTitleKey(
     agencyId: string,
     entityType: EntityTypeEnum,
     entityId: string,
     titleKey: string,
   ) {
-    await missionRepository.deleteMissionsByEntityKey(
+    await missionRepository.deleteMissionsByEntityTitleKey(
       agencyId,
       entityType,
       entityId,
       titleKey,
     )
+  },
+
+  async removePreviousMissionsByTitleKey(agencyId: string, titleKey: string) {
+    await missionRepository.deleteMissionsByTitleKey(agencyId, titleKey)
+  },
+
+  async removePreviousMissionsByEntityId(agencyId: string, entityId: string) {
+    await missionRepository.deleteMissionsByEntityId(agencyId, entityId)
   },
 
   async markReadMission(missionId: string) {

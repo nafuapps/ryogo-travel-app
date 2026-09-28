@@ -81,7 +81,7 @@ export async function reviewCompletedBookingAction(
   })
 
   //Remove trip ended mission
-  await missionServices.removePreviousMissionsByEntityKey(
+  await missionServices.removePreviousMissionsByEntityTitleKey(
     agencyId,
     EntityTypeEnum.BOOKING,
     updatedBooking.id,

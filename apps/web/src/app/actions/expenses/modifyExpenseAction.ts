@@ -61,11 +61,9 @@ export async function modifyExpenseAction(
   })
 
   if (isRider) {
-    await missionServices.removePreviousMissionsByEntityKey(
+    await missionServices.removePreviousMissionsByEntityId(
       agencyId,
-      EntityTypeEnum.EXPENSE,
       updatedExpense.id,
-      "ExpenseAddedByDriver.Title",
     )
     await missionServices.addMission({
       agencyId: agencyId,

@@ -51,6 +51,7 @@ export default async function RiderProfilePageComponent({
             expiryDate={account.driver.licenseExpiresOn}
           />
           <UserDriverDetailsComponent
+            driverId={account.driver.id}
             address={account.driver.address}
             status={account.driver.status}
             canDriveVehicles={account.driver.canDriveVehicleTypes}

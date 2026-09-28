@@ -39,22 +39,22 @@ export async function inactivateDriverAction(id: string, agencyId: string) {
     link: `/dashboard/drivers/${driver.id}`,
   })
 
-  await missionServices.removePreviousMissionsByEntityKey(
+  await missionServices.removePreviousMissionsByEntityTitleKey(
     agencyId,
-    EntityTypeEnum.DRIVER,
-    driver.id,
-    "DriverActivated.Title",
+    EntityTypeEnum.USER,
+    driver.userId,
+    "UserActivated.Title",
   )
   await missionServices.addMission({
     agencyId: agencyId,
     userId: driver.userId,
-    entityType: EntityTypeEnum.DRIVER,
-    entityId: driver.id,
-    titleKey: "DriverInactivated.Title",
+    entityType: EntityTypeEnum.USER,
+    entityId: driver.userId,
+    titleKey: "UserInactivated.Title",
     titleObject: {
       userName: currentUser.name,
     },
-    messageKey: "DriverInactivated.Message",
+    messageKey: "UserInactivated.Message",
     isCritical: true,
     link: `/rider/myProfile`,
   })

@@ -1615,7 +1615,7 @@ export const notifications = pgTable(
     entityType: entityType("entity_type").notNull(),
     textKey: text("text_key").notNull(),
     textObject: jsonb("text_object"),
-    isFeed: boolean("is_feed").notNull().default(true), //Non-feed are basically logs; feed can be shown to users
+    isFeed: boolean("is_feed").notNull().default(false), //Non-feed are basically logs; feed can be shown to users
     link: text("link"), // e.g., "/bookings" or "/drivers/D123/leaves" to route them instantly
     ...timestamps,
   },

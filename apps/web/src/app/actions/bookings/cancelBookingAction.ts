@@ -5,6 +5,7 @@ import sendEmail from "@/components/email/sendEmail"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import {
   BookingStatusEnum,
@@ -15,7 +16,7 @@ import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 
 export async function cancelBookingAction(
-  id: string,
+  bookingId: string,
   agencyId: string,
   assignedUserId: string,
   isCancelledByUser?: boolean,
@@ -35,11 +36,14 @@ export async function cancelBookingAction(
     return
   }
 
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
+  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
   if (!bookingDetails) return
 
-  const canceledBooking = await bookingServices.cancelBooking(id)
+  const canceledBooking = await bookingServices.cancelBooking(bookingId)
   if (!canceledBooking) return
+
+  //Remove any missions for this booking
+  await missionServices.removePreviousMissionsByEntityId(agencyId, bookingId)
 
   if (isCancelledByUser) {
     //Add a notification feed
@@ -47,14 +51,14 @@ export async function cancelBookingAction(
       agencyId: agencyId,
       userId: currentUser.userId,
       entityType: EntityTypeEnum.BOOKING,
-      entityId: id,
+      entityId: bookingId,
       isFeed: true,
       textKey: "CancelBooking",
       textObject: {
-        bookingId: id,
+        bookingId: bookingId,
         userName: currentUser.name,
       },
-      link: `/dashboard/bookings/${id}`,
+      link: `/dashboard/bookings/${bookingId}`,
     })
 
     if (bookingDetails.status === BookingStatusEnum.CONFIRMED) {
@@ -91,5 +95,5 @@ export async function cancelBookingAction(
     return canceledBooking
   }
 
-  redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
+  redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
 }

@@ -26,6 +26,12 @@ export default async function AllDriverLeavesPage({
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+
+  const driver = await driverServices.findDriverDetailsById(driverId)
+  if (!driver) {
+    redirect("/dashboard/drivers", RedirectType.replace)
+  }
+
   const driverLeaves =
     await driverServices.findAllDriverLeavesByDriverId(driverId)
 
@@ -35,8 +41,8 @@ export default async function AllDriverLeavesPage({
       <DriverDetailHeaderTabs selectedTab={"Leaves"} id={driverId} />
       <AllDriverLeavesPageComponent
         leaves={driverLeaves}
-        driverId={driverId}
-        userId={currentUser.userId}
+        driver={driver}
+        currentUserId={currentUser.userId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </MainWrapper>

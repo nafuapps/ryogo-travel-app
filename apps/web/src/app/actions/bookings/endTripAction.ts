@@ -110,7 +110,7 @@ export async function endTripAction(
   })
 
   //Remove trip started mission
-  await missionServices.removePreviousMissionsByEntityKey(
+  await missionServices.removePreviousMissionsByEntityTitleKey(
     data.agencyId,
     EntityTypeEnum.BOOKING,
     bookingChanged.id,

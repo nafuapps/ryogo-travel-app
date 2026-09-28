@@ -82,7 +82,7 @@ export const missionRepository = {
       .returning({ id: missions.id })
   },
 
-  async deleteMissionsByEntityKey(
+  async deleteMissionsByEntityTitleKey(
     agencyId: string,
     entityType: EntityTypeEnum,
     entityId: string,
@@ -97,6 +97,22 @@ export const missionRepository = {
           eq(missions.entityId, entityId),
           eq(missions.titleKey, titleKey),
         ),
+      )
+  },
+
+  async deleteMissionsByTitleKey(agencyId: string, titleKey: string) {
+    return await db
+      .delete(missions)
+      .where(
+        and(eq(missions.agencyId, agencyId), eq(missions.titleKey, titleKey)),
+      )
+  },
+
+  async deleteMissionsByEntityId(agencyId: string, entityId: string) {
+    return await db
+      .delete(missions)
+      .where(
+        and(eq(missions.agencyId, agencyId), eq(missions.entityId, entityId)),
       )
   },
 }

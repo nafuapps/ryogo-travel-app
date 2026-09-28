@@ -1,4 +1,3 @@
-import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { FindUserAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import {
@@ -19,10 +18,8 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default async function UserAssignedPageComponent({
   bookings,
-  id,
 }: {
   bookings: FindUserAssignedBookingsByIdType
-  id: string
 }) {
   const t = await getTranslations("Dashboard.UserAssignedBookings")
   const inProgressBookings = bookings.filter(
@@ -33,7 +30,6 @@ export default async function UserAssignedPageComponent({
   )
   return (
     <PageWrapper id="UserAssignedBookingsPage">
-      <UserDetailHeaderTabs selectedTab={"Assigned"} id={id} />
       {inProgressBookings.length > 0 && (
         <SectionWrapper id="UserOngoingBookingsList">
           <SectionHeaderWrapper

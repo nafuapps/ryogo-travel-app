@@ -13,6 +13,7 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Driver Details - ${pageTitle}`,
@@ -50,6 +51,7 @@ export default async function DriverDetailsPage({
           agencyId={currentUser.agencyId}
         />
       )}
+      <DriverDetailHeaderTabs selectedTab={"Driver"} id={driverId} />
       <DriverDetailsPageComponent
         driver={driver}
         userId={currentUser.userId}

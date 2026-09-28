@@ -8,6 +8,7 @@ import RiderProfilePageComponent from "./riderProfile"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 
 export const metadata: Metadata = {
   title: `My Profile - ${pageTitle}`,
@@ -32,6 +33,7 @@ export default async function MyProfilePage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile"} />
+      <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <RiderProfilePageComponent account={userDetails} />
     </MainWrapper>
   )

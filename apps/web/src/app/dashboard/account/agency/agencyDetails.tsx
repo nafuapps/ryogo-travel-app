@@ -1,4 +1,3 @@
-import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { AtSign, Building2, MailPen, Phone, QrCode } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -30,7 +29,6 @@ export default async function AgencyDetailsPageComponent({
 
   return (
     <PageWrapper id="AccountAgencyPage">
-      <AccountDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
         <AgencyInfoComponent
           id={agency.id}

@@ -242,6 +242,44 @@ export async function updateUserAdminInWebSession(isAdmin: boolean) {
   })
 }
 
+//Update user name in session
+export async function updateUserNameInWebSession(name: string) {
+  const payload = await getSessionPayloadFromCookie()
+  if (!payload) return
+
+  const newSession = await encrypt({
+    ...payload,
+    name: name,
+  })
+
+  const cookieStore = await cookies()
+  cookieStore.set(SESSION_COOKIE_NAME, newSession, {
+    httpOnly: true,
+    secure: true,
+    expires: payload.expiresAt,
+    sameSite: "lax",
+  })
+}
+
+//Update user locatedAt timestamp in session
+export async function updateUserLocatedAtInWebSession(locatedAt: Date) {
+  const payload = await getSessionPayloadFromCookie()
+  if (!payload) return
+
+  const newSession = await encrypt({
+    ...payload,
+    locatedAt: locatedAt,
+  })
+
+  const cookieStore = await cookies()
+  cookieStore.set(SESSION_COOKIE_NAME, newSession, {
+    httpOnly: true,
+    secure: true,
+    expires: payload.expiresAt,
+    sameSite: "lax",
+  })
+}
+
 //Delete session both from db and cookie
 export async function deleteWebSession() {
   // 1. Get session payload from cookie

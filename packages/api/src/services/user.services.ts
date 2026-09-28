@@ -755,7 +755,8 @@ export const userServices = {
     ) {
       return
     }
-    await userRepository.updateLocation(userId, lat, long)
+    const updatedUser = await userRepository.updateLocation(userId, lat, long)
+    return updatedUser[0]
   },
 }
 

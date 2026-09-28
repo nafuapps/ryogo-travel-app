@@ -34,6 +34,7 @@ export async function changeUserEmailAction(
     textKey: "UserEmailChanged",
     textObject: {
       userName: user.name,
+      email: email,
       adminName: currentUser.name,
     },
   })

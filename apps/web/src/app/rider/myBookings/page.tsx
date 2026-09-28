@@ -37,8 +37,8 @@ export default async function MyBookingsPage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings"} />
+      <MyBookingsHeaderTabs selectedTab={"Upcoming"} />
       <PageWrapper id="RiderMyBookingsPage">
-        <MyBookingsHeaderTabs selectedTab={"Upcoming"} />
         <MyUpcomingBookingsComponent
           upcomingBookings={upcomingBookings}
           driverStatus={driver.status}

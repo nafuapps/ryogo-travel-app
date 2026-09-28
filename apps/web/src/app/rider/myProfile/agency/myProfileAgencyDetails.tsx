@@ -1,5 +1,4 @@
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import { FindAssignedUserByDriverIdType } from "@ryogo-travel-app/api/services/user.services"
 import {
   PageWrapper,
@@ -21,7 +20,6 @@ export default function MyProfileAgencyDetailsPageComponent({
 }) {
   return (
     <PageWrapper id="RiderMyProfileAgencyPage">
-      <MyProfileDetailHeaderTabs selectedTab="Agency" />
       <GridWrapper id="AgencyDetails">
         <AgencyInfoComponent
           id={agency.id}

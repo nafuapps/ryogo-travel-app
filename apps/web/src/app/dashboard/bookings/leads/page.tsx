@@ -34,8 +34,8 @@ export default async function LeadBookingsPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/leads"} />
+      <AllBookingsHeaderTabs selectedTab={"Leads"} />
       <PageWrapper id="LeadBookingsPage">
-        <AllBookingsHeaderTabs selectedTab={"Leads"} />
         <LeadBookingsComponent
           leadBookings={leadBookings}
           userId={currentUser.userId}

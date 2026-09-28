@@ -39,6 +39,7 @@ export default async function TryPremiumComponent({
           <TryPremiumAlertButton
             agencyId={agencyId}
             userId={userId}
+            days={PREMIUM_TRIAL_DAYS}
             displayButton={
               <RyogoWhiteButton
                 labelColor="brand"

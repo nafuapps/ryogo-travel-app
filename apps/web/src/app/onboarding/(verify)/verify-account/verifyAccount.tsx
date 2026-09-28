@@ -29,7 +29,7 @@ export default function VerifyAccountPageComponent({
   useEffect(() => {
     const interval = setInterval(() => {
       router.refresh()
-    }, 60000) // 60,000ms = 1 minute
+    }, 60000) // Refresh every 1 minute
 
     return () => clearInterval(interval) // Cleanup on unmount
   }, [router])

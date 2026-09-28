@@ -18,6 +18,7 @@ import {
   PageWrapper,
   SectionRowWrapper,
   StickyActionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { MAX_FIELD_DESC_LENGTH, MIN_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
@@ -86,23 +87,19 @@ export default function ConfirmBookingPageComponent({
     }
   }
 
-  const setValue = form.setValue
   const pickupAddressCopySelection = useWatch({
     name: "sameAsCustomerAddress",
     control: form.control,
   })
-  const pickupAddressSourceValue = booking.customer.address
 
+  //Copy customer address in pickupAddress field if checked
   useEffect(() => {
-    if (!pickupAddressSourceValue) return
-    if (pickupAddressCopySelection) {
-      // If the checkbox is checked, set the target input's value
-      setValue("pickupAddress", pickupAddressSourceValue)
-    } else {
-      // Clear the target input if unchecked
-      setValue("pickupAddress", "")
-    }
-  }, [pickupAddressCopySelection, pickupAddressSourceValue, setValue])
+    if (!booking.customer.address) return
+    form.setValue(
+      "pickupAddress",
+      pickupAddressCopySelection ? booking.customer.address : "",
+    )
+  }, [pickupAddressCopySelection])
 
   return (
     <PageWrapper id="ConfirmBookingPage">
@@ -118,26 +115,28 @@ export default function ConfirmBookingPageComponent({
           />
         </SectionRowWrapper>
         <RyogoCaption color="light">{t("Subtitle")}</RyogoCaption>
-        <FormContentWrapper>{children}</FormContentWrapper>
-        <FormContentWrapper>
-          <RyogoTimePicker name="startTime" label={t("PickupTime")} />
-          <RyogoTextarea
-            name="pickupAddress"
-            label={t("PickupAddress")}
-            placeholder={t("PickupAddressPlaceholder")}
-          />
-          {pickupAddressSourceValue && (
-            <RyogoCheckbox
-              name={"sameAsCustomerAddress"}
-              label={t("SameAsCustomerAddress")}
+        <TileGridWrapper>
+          <FormContentWrapper>{children}</FormContentWrapper>
+          <FormContentWrapper>
+            <RyogoTimePicker name="startTime" label={t("PickupTime")} />
+            <RyogoTextarea
+              name="pickupAddress"
+              label={t("PickupAddress")}
+              placeholder={t("PickupAddressPlaceholder")}
             />
-          )}
-          <RyogoTextarea
-            name="dropAddress"
-            label={t("DropAddress")}
-            placeholder={t("DropAddressPlaceholder")}
-          />
-        </FormContentWrapper>
+            {booking.customer.address && (
+              <RyogoCheckbox
+                name={"sameAsCustomerAddress"}
+                label={t("SameAsCustomerAddress")}
+              />
+            )}
+            <RyogoTextarea
+              name="dropAddress"
+              label={t("DropAddress")}
+              placeholder={t("DropAddressPlaceholder")}
+            />
+          </FormContentWrapper>
+        </TileGridWrapper>
         <StickyActionWrapper>
           <RyogoAlertDialog
             title={t("Confirm.Title")}

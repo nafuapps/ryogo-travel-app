@@ -35,8 +35,8 @@ export default async function MyCompletedBookingsPage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/completed"} />
+      <MyBookingsHeaderTabs selectedTab={"Completed"} />
       <PageWrapper id="MyCompletedBookingsPage">
-        <MyBookingsHeaderTabs selectedTab={"Completed"} />
         <MyCompletedBookingsComponent completedBookings={completedBookings} />
         <StickyActionWrapper>
           <HelpIconButton

@@ -1,5 +1,4 @@
 import { FindDriverCompletedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import {
   PageWrapper,
@@ -15,16 +14,13 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default async function DriverCompletedBookingsPageComponent({
   bookings,
-  id,
 }: {
   bookings: FindDriverCompletedBookingsByIdType
-  id: string
 }) {
   const t = await getTranslations("Dashboard.DriverCompletedBookings")
 
   return (
     <PageWrapper id="DriverCompletedBookingsPage">
-      <DriverDetailHeaderTabs selectedTab={"Completed"} id={id} />
       <SectionWrapper id="DriverCompletedBookingsList">
         <SectionHeaderWrapper
           icon={CheckCheck}

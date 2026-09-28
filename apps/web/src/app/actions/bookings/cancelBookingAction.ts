@@ -12,6 +12,7 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
+import { redirect, RedirectType } from "next/navigation"
 
 export async function cancelBookingAction(
   id: string,
@@ -22,9 +23,10 @@ export async function cancelBookingAction(
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== agencyId
+    currentUser.agencyId !== agencyId ||
+    (isCancelledByUser &&
+      currentUser.userRole !== UserRolesEnum.OWNER &&
+      assignedUserId !== currentUser.userId)
   ) {
     return
   }
@@ -40,6 +42,7 @@ export async function cancelBookingAction(
   if (!canceledBooking) return
 
   if (isCancelledByUser) {
+    //Add a notification feed
     await notificationServices.addNotification({
       agencyId: agencyId,
       userId: currentUser.userId,
@@ -55,8 +58,8 @@ export async function cancelBookingAction(
     })
 
     if (bookingDetails.status === BookingStatusEnum.CONFIRMED) {
+      //Send booking cancellation email to customer
       if (bookingDetails.customer.email) {
-        //Send booking cancellation email to customer
         sendEmail({
           receipientEmail: [bookingDetails.customer.email],
           subject: "Booking Cancellation | RyoGo",
@@ -69,7 +72,7 @@ export async function cancelBookingAction(
         })
       }
 
-      //Send booking cancellation message to customer over whatsapp
+      //Prepare booking cancellation message for sending to customer over whatsapp
       const t = await getTranslations("Dashboard.Whatsapp")
       const message = t("Cancellation", {
         customerName: bookingDetails.customer.name,
@@ -85,7 +88,8 @@ export async function cancelBookingAction(
       )
       return cancelMessage
     }
+    return canceledBooking
   }
 
-  return canceledBooking
+  redirect(`/dashboard/bookings/${id}`, RedirectType.replace)
 }

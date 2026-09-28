@@ -1,5 +1,4 @@
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { MailPen, Phone } from "lucide-react"
 import Link from "next/link"
@@ -36,7 +35,6 @@ export default async function UserDetailsPageComponent({
 
   return (
     <PageWrapper id="UserDetailsPage">
-      <UserDetailHeaderTabs selectedTab={"User"} id={user.id} />
       <GridWrapper id="AccountDetails">
         <UserInfoComponent
           id={user.id}

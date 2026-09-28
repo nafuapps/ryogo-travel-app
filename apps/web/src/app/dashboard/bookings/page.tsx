@@ -48,8 +48,8 @@ export default async function BookingsPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings"} />
+      <AllBookingsHeaderTabs selectedTab={"Home"} />
       <PageWrapper id="BookingsPage">
-        <AllBookingsHeaderTabs selectedTab={"Home"} />
         {ongoingTrips.length > 0 && (
           <OngoingBookingsComponent
             ongoingTrips={ongoingTrips}

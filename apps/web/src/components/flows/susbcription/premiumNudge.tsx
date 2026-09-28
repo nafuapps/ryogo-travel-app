@@ -50,6 +50,7 @@ export default async function PremiumNudge({
           <TryPremiumAlertButton
             agencyId={agencyDetails.id}
             userId={userDetails.id}
+            days={PREMIUM_TRIAL_DAYS}
             displayButton={<RyogoBrandButton label={t("TryPremiumCTA")} />}
           />
           <RyogoCaption

@@ -1,5 +1,4 @@
 import { FindDriverAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import {
   PageWrapper,
@@ -19,12 +18,10 @@ import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function DriverAssignedBookingsPageComponent({
   bookings,
-  id,
   isOwner,
   userId,
 }: {
   bookings: FindDriverAssignedBookingsByIdType
-  id: string
   isOwner: boolean
   userId: string
 }) {
@@ -37,7 +34,6 @@ export default async function DriverAssignedBookingsPageComponent({
   )
   return (
     <PageWrapper id="DriverAssignedBookingsPage">
-      <DriverDetailHeaderTabs selectedTab={"Assigned"} id={id} />
       {inProgressBookings.length > 0 && (
         <SectionWrapper id="DriverOngoingBooking">
           <SectionHeaderWrapper

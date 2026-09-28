@@ -1,4 +1,4 @@
-import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
+// import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -27,7 +27,6 @@ export default async function AccountPageComponent({
 
   return (
     <PageWrapper id="AccountPage">
-      <AccountDetailHeaderTabs selectedTab="Account" />
       <GridWrapper id="AccountDetails">
         <AccountInfoComponent
           id={account.id}

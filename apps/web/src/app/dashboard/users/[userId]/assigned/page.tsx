@@ -7,6 +7,7 @@ import UserAssignedPageComponent from "./userAssignedBookings"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `User Assigned Bookings - ${pageTitle}`,
@@ -33,7 +34,8 @@ export default async function UserDetailsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/assigned"} />
-      <UserAssignedPageComponent bookings={bookings} id={userId} />
+      <UserDetailHeaderTabs selectedTab={"Assigned"} id={userId} />
+      <UserAssignedPageComponent bookings={bookings} />
     </MainWrapper>
   )
 }

@@ -7,6 +7,7 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Customer Upcoming Bookings - ${pageTitle}`,
@@ -31,9 +32,9 @@ export default async function CustomerUpcomingBookingsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers/[id]/upcoming"} />
+      <CustomerDetailHeaderTabs selectedTab={"Upcoming"} id={customerId} />
       <CustomerUpcomingBookingsPageComponent
         bookings={bookings}
-        id={customerId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         userId={currentUser.userId}
       />

@@ -4,6 +4,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import CustomerCompletedBookingsPageComponent from "./customerCompletedBookings"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Customer Completed Bookings - ${pageTitle}`,
@@ -23,10 +24,8 @@ export default async function CustomerCompletedBookingsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers/[id]/completed"} />
-      <CustomerCompletedBookingsPageComponent
-        bookings={bookings}
-        id={customerId}
-      />
+      <CustomerDetailHeaderTabs selectedTab={"Completed"} id={customerId} />
+      <CustomerCompletedBookingsPageComponent bookings={bookings} />
     </MainWrapper>
   )
 }

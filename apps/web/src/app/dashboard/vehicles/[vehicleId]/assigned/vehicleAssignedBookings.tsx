@@ -1,5 +1,4 @@
 import { FindVehicleAssignedBookingsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import {
   PageWrapper,
@@ -19,12 +18,10 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default async function VehicleAssignedBookingsPageComponent({
   bookings,
-  id,
   isOwner,
   userId,
 }: {
   bookings: FindVehicleAssignedBookingsByIdType
-  id: string
   isOwner: boolean
   userId: string
 }) {
@@ -38,7 +35,6 @@ export default async function VehicleAssignedBookingsPageComponent({
 
   return (
     <PageWrapper id="VehicleAssignedBookingsPage">
-      <VehicleDetailHeaderTabs selectedTab={"Assigned"} id={id} />
       {inProgressBookings.length > 0 && (
         <SectionWrapper id="VehicleOngoingBooking">
           <SectionHeaderWrapper

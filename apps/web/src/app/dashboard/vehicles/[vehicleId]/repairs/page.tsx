@@ -9,6 +9,7 @@ import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Vehicle Repairs - ${pageTitle}`,
@@ -31,6 +32,7 @@ export default async function AllVehicleRepairsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles/[id]/repairs"} />
+      <VehicleDetailHeaderTabs selectedTab={"Repairs"} id={vehicleId} />
       <AllVehicleRepairsPageComponent
         repairs={vehicleRepairs}
         vehicleId={vehicleId}

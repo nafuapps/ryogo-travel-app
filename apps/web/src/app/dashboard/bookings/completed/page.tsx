@@ -35,8 +35,8 @@ export default async function CompletedBookingsPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/completed"} />
+      <AllBookingsHeaderTabs selectedTab={"Completed"} />
       <PageWrapper id="CompletedBookingsPage">
-        <AllBookingsHeaderTabs selectedTab={"Completed"} />
         <CompletedBookingsComponent
           completedBookings={completedBookings}
           userId={currentUser.userId}

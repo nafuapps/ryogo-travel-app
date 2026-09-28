@@ -1,4 +1,3 @@
-import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import {
   PageWrapper,
   SectionWrapper,
@@ -13,15 +12,12 @@ import { TagX } from "lucide-react"
 
 export default async function UserActivityPageComponent({
   activities,
-  id,
 }: {
   activities: FindNotificationsByUserIdType
-  id: string
 }) {
   const t = await getTranslations("Dashboard.UserActivity")
   return (
     <PageWrapper id="UserActivityPage">
-      <UserDetailHeaderTabs selectedTab={"Activity"} id={id} />
       {activities.length > 0 ? (
         <SectionWrapper id="NotificationActivityList">
           {activities.map((notification) => {

@@ -1,8 +1,6 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
-  GridWrapper,
   PageWrapper,
-  SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
@@ -31,7 +29,6 @@ import {
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import BuySubscriptionComponent from "@/components/flows/susbcription/buySubscription"
-import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 import TryPremiumComponent from "@/components/flows/susbcription/tryPremium"
 import PlanExpiryDetails from "@/components/flows/susbcription/planExpiryDetails"
 import PremiumNudge from "@/components/flows/susbcription/premiumNudge"
@@ -66,7 +63,6 @@ export default async function SubscriptionPageComponent({
 
   return (
     <PageWrapper id="AccountSubscriptionPage">
-      <AccountDetailHeaderTabs selectedTab="Subscription" />
       <SectionWrapper id="AccountSubscriptionInfo">
         <CurrentPlanDetails
           isBasic={isBasic}

@@ -10,6 +10,7 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
 import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `User Details - ${pageTitle}`,
@@ -48,6 +49,7 @@ export default async function UserDetailsPage({
           agencyId={currentUser.agencyId}
         />
       )}
+      <UserDetailHeaderTabs selectedTab={"User"} id={userId} />
       <UserDetailsPageComponent
         user={user}
         currentUserId={currentUser.userId}

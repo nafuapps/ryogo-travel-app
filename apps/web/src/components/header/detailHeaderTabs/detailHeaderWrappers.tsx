@@ -14,7 +14,7 @@ export function DetailsHeaderTabWrapper<T extends string>({
   const tabs = Object.keys(links) as T[]
 
   return (
-    <div className="flex items-center w-full rounded-lg transition border bg-white dark:bg-slate-800 flex-row gap-1.5 lg:gap-2 p-1.5 lg:p-2 self-center my-2 lg:my-3">
+    <div className="flex items-center w-full rounded-lg transition border bg-white dark:bg-slate-800 flex-row gap-1.5 lg:gap-2 p-1.5 lg:p-2 self-center mt-2 lg:mt-3">
       {tabs.map((tab) => (
         <DetailsHeaderTabItem
           key={tab}

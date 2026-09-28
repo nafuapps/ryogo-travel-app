@@ -35,11 +35,11 @@ export default async function BookingTripCard({
         />
       </div>
       <div className="mx-3 lg:mx-4 border-t border-dashed h-0" />
-      <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 items-center justify-between border-x rounded-t-2xl">
+      <SectionRowWrapper className="p-3 lg:p-4 items-center justify-between border-x rounded-t-2xl">
         <DateWrapper date={startDate} />
         <RyogoPill bgColor="slate" label={booking.type} />
         <DateWrapper date={endDate} />
-      </div>
+      </SectionRowWrapper>
       <div className="flex gap-2 lg:gap-3 px-3 lg:px-4 py-2 lg:py-3 items-center justify-between border-x border-b rounded-b-xl bg-slate-100 dark:bg-slate-700">
         <SectionRowWrapper small className="items-center">
           <RyogoIcon icon={Users} size={"sm"} />

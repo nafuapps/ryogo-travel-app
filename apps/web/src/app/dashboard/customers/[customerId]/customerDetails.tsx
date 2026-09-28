@@ -1,5 +1,4 @@
 import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
-import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { CalendarPlus, Camera, SquarePen } from "lucide-react"
 import Link from "next/link"
@@ -32,7 +31,6 @@ export default async function CustomerDetailsPageComponent({
 
   return (
     <PageWrapper id="CustomerDetailsPage">
-      <CustomerDetailHeaderTabs selectedTab={"Customer"} id={customer.id} />
       <GridWrapper id="CustomerDetails">
         <CustomerInfoComponent
           id={customer.id}

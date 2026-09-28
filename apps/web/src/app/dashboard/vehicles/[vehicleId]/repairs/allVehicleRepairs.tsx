@@ -1,5 +1,4 @@
 import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { RyogoSmall } from "@/components/typography"
 import Link from "next/link"
@@ -47,7 +46,6 @@ export default async function AllVehicleRepairsPageComponent({
 
   return (
     <PageWrapper id="VehicleRepairsPage">
-      <VehicleDetailHeaderTabs selectedTab={"Repairs"} id={vehicleId} />
       <SectionWrapper id="VehicleRepairsList">
         <SectionHeaderWrapper
           icon={Wrench}

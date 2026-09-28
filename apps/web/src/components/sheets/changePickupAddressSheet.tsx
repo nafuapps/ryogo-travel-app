@@ -80,22 +80,19 @@ export default function ChangePickupAddressSheet({
     }
   }
 
-  const setValue = form.setValue
   const pickupAddressCopySelection = useWatch({
     name: "sameAsCustomerAddress",
     control: form.control,
   })
 
+  // set pickupAddress to customerAddress when sameAsCustomerAddress is checked
   useEffect(() => {
     if (!customerAddress) return
-    if (pickupAddressCopySelection) {
-      // If the checkbox is checked, set the target input's value
-      setValue("pickupAddress", customerAddress)
-    } else {
-      // Clear the target input if unchecked
-      setValue("pickupAddress", originalPickupAddress ?? "")
-    }
-  }, [pickupAddressCopySelection, customerAddress, setValue])
+    form.setValue(
+      "pickupAddress",
+      pickupAddressCopySelection ? customerAddress : "",
+    )
+  }, [pickupAddressCopySelection])
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

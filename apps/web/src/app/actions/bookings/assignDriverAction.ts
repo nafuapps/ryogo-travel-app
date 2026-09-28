@@ -45,6 +45,7 @@ export async function assignDriverAction(
     textObject: {
       driverName: assignedDriverBooking.driverName,
       bookingId: bookingId,
+      userName: currentUser.name,
     },
     link: `/dashboard/bookings/${bookingId}`,
   })

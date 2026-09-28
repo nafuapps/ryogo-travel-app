@@ -1,6 +1,7 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { updateUserNameInWebSession } from "@/lib/session"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -41,6 +42,11 @@ export async function changeUserNameAction(
       userName: currentUser.name,
     },
   })
+
+  if (currentUser.userId === userId) {
+    //Change name in cookie
+    await updateUserNameInWebSession(name)
+  }
 
   return user
 }

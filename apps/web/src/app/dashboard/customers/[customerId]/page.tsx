@@ -11,6 +11,7 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Cusomer Details - ${pageTitle}`,
@@ -49,6 +50,7 @@ export default async function CustomerDetailsPage({
           agencyId={currentUser.agencyId}
         />
       )}
+      <CustomerDetailHeaderTabs selectedTab={"Customer"} id={customer.id} />
       <CustomerDetailsPageComponent
         customer={customer}
         userId={currentUser.userId}

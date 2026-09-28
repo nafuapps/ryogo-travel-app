@@ -42,8 +42,9 @@ export async function assignUserAction(
     isFeed: true,
     textKey: "AssignedUser",
     textObject: {
-      userName: assignedUserBooking.assignedUserName,
+      agentName: assignedUserBooking.assignedUserName,
       bookingId: bookingId,
+      userName: currentUser.name,
     },
     link: `/dashboard/bookings/${bookingId}`,
   })

@@ -29,8 +29,8 @@ export default async function BookingDetailsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/trip-logs"} />
+      <BookingDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
       <PageWrapper id="BookingTripLogsPage">
-        <BookingDetailHeaderTabs id={bookingId} selectedTab="TripLogs" />
         <BookingTripLogsPageComponent bookingTripLogs={bookingTripLogs} />
         <StickyActionWrapper>
           <HelpIconButton

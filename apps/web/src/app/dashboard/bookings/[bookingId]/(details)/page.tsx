@@ -12,6 +12,7 @@ import {
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Booking Details - ${pageTitle}`,
@@ -51,6 +52,7 @@ export default async function BookingDetailsPage({
             agencyId={currentUser.agencyId}
           />
         )}
+      <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Booking" />
       <BookingDetailsPageComponent
         bookingDetails={bookingDetails}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}

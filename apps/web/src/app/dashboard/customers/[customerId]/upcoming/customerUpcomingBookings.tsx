@@ -1,5 +1,4 @@
 import { FindCustomerUpcomingBookingsByIdType } from "@ryogo-travel-app/api/services/customer.services"
-import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import {
   PageWrapper,
@@ -19,12 +18,10 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default async function CustomerUpcomingBookingsPageComponent({
   bookings,
-  id,
   isOwner,
   userId,
 }: {
   bookings: FindCustomerUpcomingBookingsByIdType
-  id: string
   isOwner: boolean
   userId: string
 }) {
@@ -37,7 +34,6 @@ export default async function CustomerUpcomingBookingsPageComponent({
   )
   return (
     <PageWrapper id="CustomerUpcomingBookingsPage">
-      <CustomerDetailHeaderTabs selectedTab={"Upcoming"} id={id} />
       {inProgressBookings.length > 0 && (
         <SectionWrapper id="CustomerOngoingBooking">
           <SectionHeaderWrapper

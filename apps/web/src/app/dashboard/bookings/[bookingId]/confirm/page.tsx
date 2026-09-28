@@ -47,17 +47,11 @@ export default async function ConfirmBookingPage({
   if (
     differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
-    if (
-      await cancelBookingAction(
-        booking.id,
-        booking.agencyId,
-        booking.assignedUserId,
-      )
-    ) {
-      redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
-    } else {
-      redirect(`/dashboard/bookings`, RedirectType.replace)
-    }
+    await cancelBookingAction(
+      booking.id,
+      booking.agencyId,
+      booking.assignedUserId,
+    )
   }
 
   //Only owner or assigned user can confirm a booking

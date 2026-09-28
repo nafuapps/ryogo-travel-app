@@ -5,7 +5,11 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function tryPremiumAction(agencyId: string, userId: string) {
+export async function tryPremiumAction(
+  agencyId: string,
+  userId: string,
+  days: number,
+) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -32,6 +36,7 @@ export async function tryPremiumAction(agencyId: string, userId: string) {
     textKey: "TryPremium",
     textObject: {
       userName: currentUser.name,
+      days: days,
     },
     link: "/dashboard/account/subscription",
   })

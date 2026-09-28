@@ -11,6 +11,7 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { getCurrentUser } from "@/lib/auth"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Vehicle Details - ${pageTitle}`,
@@ -50,6 +51,7 @@ export default async function VehicleDetailsPage({
           agencyId={currentUser.agencyId}
         />
       )}
+      <VehicleDetailHeaderTabs selectedTab={"Vehicle"} id={vehicleId} />
       <VehicleDetailsPageComponent
         vehicle={vehicle}
         userId={currentUser.userId}

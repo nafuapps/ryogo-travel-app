@@ -4,41 +4,32 @@ import { getCurrentUser } from "@/lib/auth"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
-import MissionsPageComponent from "./missions"
-import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import ExpiryAlertsPageComponent from "./expiryAlerts"
 import MissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/missionDetailHeaderTabs"
 
 export const metadata: Metadata = {
-  title: `Missions - ${pageTitle}`,
+  title: `Expiry Alerts - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function MissionsPage() {
+export default async function ExpiryAlertsPage() {
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  const missions = await missionServices.findMissionsByUserId(
+  const expiryAlerts = await agencyServices.findAgencyExpiryAlerts(
+    currentUser.agencyId,
     currentUser.userId,
   )
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/missions"} />
-      <MissionDetailHeaderTabs selectedTab={"Missions"} />
-      <MissionsPageComponent
-        missions={missions}
-        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
-      />
+      <DashboardHeader pathName={"/dashboard/missions/expiry-alerts"} />
+      <MissionDetailHeaderTabs selectedTab={"ExpiryAlerts"} />
+      <ExpiryAlertsPageComponent expiryAlerts={expiryAlerts} />
     </MainWrapper>
   )
 }

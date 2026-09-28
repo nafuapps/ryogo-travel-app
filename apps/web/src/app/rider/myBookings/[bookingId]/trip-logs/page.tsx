@@ -25,8 +25,8 @@ export default async function MyBookingTripLogsPage({
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]/trip-logs"} />
+      <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"TripLogs"} />
       <PageWrapper id="MyBookingTripLogsPage">
-        <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"TripLogs"} />
         <MyBookingTripLogsPageComponent
           bookingTripLogs={bookingTripLogs.filter(
             (t) => t.type !== TripLogTypesEnum.OTHER,

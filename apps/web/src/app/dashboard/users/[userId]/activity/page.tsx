@@ -6,6 +6,7 @@ import UserActivityPageComponent from "./userActivity"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `User Activity - ${pageTitle}`,
@@ -29,7 +30,8 @@ export default async function UserActivityPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />
-      <UserActivityPageComponent activities={activities} id={userId} />
+      <UserDetailHeaderTabs selectedTab={"Activity"} id={userId} />
+      <UserActivityPageComponent activities={activities} />
     </MainWrapper>
   )
 }

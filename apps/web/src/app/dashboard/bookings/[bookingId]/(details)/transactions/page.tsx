@@ -55,8 +55,8 @@ export default async function BookingTransactionsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/transactions"} />
+      <BookingDetailHeaderTabs id={bookingId} selectedTab="Transactions" />
       <PageWrapper id="BookingTransactionsPage">
-        <BookingDetailHeaderTabs id={bookingId} selectedTab="Transactions" />
         <BookingTransactionsPageComponent
           bookingTransactions={bookingTransactions}
           canCreateTransaction={canCreateTransaction}

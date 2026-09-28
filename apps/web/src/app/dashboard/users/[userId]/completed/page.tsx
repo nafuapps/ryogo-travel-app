@@ -7,6 +7,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `User Completed Bookings - ${pageTitle}`,
@@ -34,7 +35,8 @@ export default async function UserCompletedBookingsPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/completed"} />
-      <UserCompletedPageComponent bookings={bookings} id={userId} />
+      <UserDetailHeaderTabs selectedTab={"Completed"} id={userId} />
+      <UserCompletedPageComponent bookings={bookings} />
     </MainWrapper>
   )
 }

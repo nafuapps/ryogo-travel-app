@@ -58,8 +58,8 @@ export default async function MyBookingPage({
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]"} />
+      <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"Booking"} />
       <PageWrapper id="MyBookingPage">
-        <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"Booking"} />
         <RiderMyBookingDetails
           booking={bookingDetails}
           canCommunicateWithCustomer={

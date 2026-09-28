@@ -55,8 +55,8 @@ export default async function BookingExpensesPage({
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/expenses"} />
+      <BookingDetailHeaderTabs id={bookingId} selectedTab="Expenses" />
       <PageWrapper id="BookingExpensesPage">
-        <BookingDetailHeaderTabs id={bookingId} selectedTab="Expenses" />
         <BookingExpensesPageComponent
           bookingExpenses={bookingExpenses}
           canEditExpense={canEditExpense}

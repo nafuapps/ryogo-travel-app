@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server"
-import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import {
   PageWrapper,
   SectionHeaderWrapper,
@@ -15,16 +14,13 @@ import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 
 export default async function UserCompletedPageComponent({
   bookings,
-  id,
 }: {
   bookings: FindUserCompletedBookingsByIdType
-  id: string
 }) {
   const t = await getTranslations("Dashboard.UserCompletedBookings")
 
   return (
     <PageWrapper id="UserCompletedBookingsPage">
-      <UserDetailHeaderTabs selectedTab={"Completed"} id={id} />
       <SectionWrapper id="UserCompletedBookingsList">
         <SectionHeaderWrapper
           icon={CheckCheck}

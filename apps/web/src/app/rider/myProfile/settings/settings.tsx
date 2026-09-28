@@ -16,7 +16,6 @@ import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -64,7 +63,6 @@ export default function MyProfileSettingsPageComponent({
   const languages = Object.values(UserLangEnum)
   return (
     <PageWrapper id="RiderAccountSettingsPage">
-      <MyProfileDetailHeaderTabs selectedTab="Settings" />
       <FormWrapper<SchemaType>
         form={formData}
         id="ChangePreferencesForm"

@@ -80,39 +80,32 @@ export function CreateAccountStep2({
     },
   })
 
-  const setValue = formData.setValue
   // Watch the checkbox and the source input field
   const phoneCopySelection = useWatch({
     name: "sameAsOwnerPhone",
     control: formData.control,
   })
-  const phoneSourceValue = finalData.owner.phone
 
   const emailCopySelection = useWatch({
     name: "sameAsOwnerEmail",
     control: formData.control,
   })
-  const emailSourceValue = finalData.owner.email
 
+  //Set agencyPhone field based on checkbox selection
   useEffect(() => {
-    if (phoneCopySelection) {
-      // If the checkbox is checked, set the target input's value
-      setValue("agencyPhone", phoneSourceValue)
-    } else {
-      // Optionally, clear the target input if unchecked
-      setValue("agencyPhone", "")
-    }
-  }, [phoneCopySelection, phoneSourceValue, setValue])
+    formData.setValue(
+      "agencyPhone",
+      phoneCopySelection ? finalData.owner.phone : "",
+    )
+  }, [phoneCopySelection])
 
+  //Set agencyEmail field based on checkbox selection
   useEffect(() => {
-    if (emailCopySelection) {
-      // If the checkbox is checked, set the target input's value
-      setValue("agencyEmail", emailSourceValue) // Name of the input to copy to
-    } else {
-      // Optionally, clear the target input if unchecked
-      setValue("agencyEmail", "")
-    }
-  }, [emailCopySelection, emailSourceValue, setValue])
+    formData.setValue(
+      "agencyEmail",
+      emailCopySelection ? finalData.owner.email : "",
+    )
+  }, [emailCopySelection])
 
   //Submit actions
   const onSubmit = async (data: Step2Type) => {

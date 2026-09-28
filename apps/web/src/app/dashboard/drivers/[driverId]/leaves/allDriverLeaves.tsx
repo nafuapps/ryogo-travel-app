@@ -1,5 +1,4 @@
 import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
@@ -45,7 +44,6 @@ export default async function AllDriverLeavesPageComponent({
   const t = await getTranslations("Dashboard.DriverLeaves")
   return (
     <PageWrapper id="DriverLeavesPage">
-      <DriverDetailHeaderTabs selectedTab={"Leaves"} id={driverId} />
       <SectionWrapper id="DriverLeavesList">
         <SectionHeaderWrapper
           icon={TreePalm}

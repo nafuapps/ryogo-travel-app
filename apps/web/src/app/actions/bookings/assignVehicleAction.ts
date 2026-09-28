@@ -50,6 +50,7 @@ export async function assignVehicleAction(
     textObject: {
       vehicleNumber: assignedVehicleBooking.vehicleNumber,
       bookingId: bookingId,
+      userName: currentUser.name,
     },
     link: `/dashboard/bookings/${bookingId}`,
   })

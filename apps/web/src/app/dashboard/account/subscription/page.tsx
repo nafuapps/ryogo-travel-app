@@ -13,6 +13,7 @@ import { orderServices } from "@ryogo-travel-app/api/services/order.services"
 import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
 import { OrderIdRegex } from "@/lib/regex"
+import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `Subscription - ${pageTitle}`,
@@ -70,6 +71,7 @@ export default async function SubscriptionPage({
             agencyId={currentUser.agencyId}
           />
         )}
+      <AccountDetailHeaderTabs selectedTab="Subscription" />
       <SubscriptionPageComponent
         userDetails={userDetails}
         agencyDetails={agencyDetails}

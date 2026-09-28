@@ -1,5 +1,4 @@
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { Camera, SquarePen } from "lucide-react"
 import Link from "next/link"
@@ -39,7 +38,6 @@ export default async function DriverDetailsPageComponent({
 
   return (
     <PageWrapper id="DriverDetailsPage">
-      <DriverDetailHeaderTabs selectedTab={"Driver"} id={driver.id} />
       <GridWrapper id="DriverDetails">
         <DriverInfoComponent
           id={driver.id}

@@ -15,12 +15,12 @@ export async function changeUserPhotoAction(
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
+    currentUser.agencyId !== agencyId ||
+    !photo[0] ||
     (![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) &&
-      currentUser.userId !== userId) ||
-    currentUser.agencyId !== agencyId ||
-    !photo[0]
+      currentUser.userId !== userId)
   ) {
     return
   }

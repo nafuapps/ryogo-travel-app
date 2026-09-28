@@ -1,6 +1,7 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { updateUserLocatedAtInWebSession } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export async function locateUserAction(
@@ -18,5 +19,8 @@ export async function locateUserAction(
     return
   }
 
-  await userServices.locateUser(userId, lat, long)
+  const result = await userServices.locateUser(userId, lat, long)
+  if (!result || result.locatedAt === null) return
+
+  await updateUserLocatedAtInWebSession(result.locatedAt)
 }

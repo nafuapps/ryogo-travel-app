@@ -35,8 +35,8 @@ export default async function CancelledBookingsPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/cancelled"} />
+      <AllBookingsHeaderTabs selectedTab={"Cancelled"} />
       <PageWrapper id="CancelledBookingsPage">
-        <AllBookingsHeaderTabs selectedTab={"Cancelled"} />
         <CancelledBookingsComponent
           cancelledBookings={cancelledBookings}
           userId={currentUser.userId}

@@ -1,6 +1,5 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getTranslations } from "next-intl/server"
-import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import Link from "next/link"
 import {
   BookingStatusEnum,
@@ -137,7 +136,6 @@ export default async function BookingDetailsPageComponent({
 
   return (
     <PageWrapper id="BookingDetailsPage">
-      <BookingDetailHeaderTabs id={bookingDetails.id} selectedTab="Booking" />
       <BookingGrid>
         <BookingSection
           sectionTitle={t("BookingInfo")}

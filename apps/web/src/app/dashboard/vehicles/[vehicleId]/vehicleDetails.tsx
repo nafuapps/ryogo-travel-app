@@ -1,5 +1,4 @@
 import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { getTranslations } from "next-intl/server"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import ActivateVehicleAlertButton from "@/components/buttons/alert/activateVehicleAlertButton"
@@ -43,7 +42,6 @@ export default async function VehicleDetailsPageComponent({
 
   return (
     <PageWrapper id="VehicleDetailsPage">
-      <VehicleDetailHeaderTabs selectedTab={"Vehicle"} id={vehicle.id} />
       <GridWrapper id="VehicleDetails">
         <VehicleInfoComponent
           id={vehicle.id}

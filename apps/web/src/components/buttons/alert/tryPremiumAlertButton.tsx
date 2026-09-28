@@ -12,10 +12,12 @@ import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 export default function TryPremiumAlertButton({
   agencyId,
   userId,
+  days,
   displayButton,
 }: {
   agencyId: string
   userId: string
+  days: number
   displayButton: React.ReactNode
 }) {
   const [isPending, startTransition] = useTransition()
@@ -24,7 +26,7 @@ export default function TryPremiumAlertButton({
 
   async function tryPremium() {
     startTransition(async () => {
-      if (await tryPremiumAction(agencyId, userId)) {
+      if (await tryPremiumAction(agencyId, userId, days)) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -6,6 +6,7 @@ import RiderHeader from "@/components/header/riderHeader"
 import MyProfileSettingsPageComponent from "./settings"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 
 export const metadata: Metadata = {
   title: `My Settings - ${pageTitle}`,
@@ -26,6 +27,7 @@ export default async function MyProfileSettingsPage() {
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/settings"} />
+      <MyProfileDetailHeaderTabs selectedTab="Settings" />
       <MyProfileSettingsPageComponent userDetails={userDetails} />
     </MainWrapper>
   )

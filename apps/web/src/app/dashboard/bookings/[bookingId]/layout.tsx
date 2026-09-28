@@ -42,7 +42,6 @@ export default async function BookingIdLayout({
       booking.agencyId,
       booking.assignedUserId,
     )
-    redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
   }
 
   return children

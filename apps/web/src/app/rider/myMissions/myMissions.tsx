@@ -1,13 +1,10 @@
 import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
-import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
 import MissionCard from "@/components/missions/missionCard"
 import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
-import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { differenceInDays } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -18,33 +15,13 @@ import { HelpIconButton } from "@/components/flows/support/helpButtons"
 export default async function MyMissionsPageComponent({
   missions,
   isPremium,
-  driver,
-  assignedVehicle,
 }: {
   missions: FindMissionsByUserIdType
   isPremium: boolean
-  driver: NonNullable<FindDriverByUserIdType>
-  assignedVehicle: FindAssignedVehicleByDriverIdType
 }) {
   const t = await getTranslations("Dashboard.Missions")
   const criticalMissions = missions.filter((mission) => mission.isCritical)
   const otherMissions = missions.filter((mission) => !mission.isCritical)
-
-  const showLicenseAlert = showAlert(driver.licenseExpiresOn)
-  let alertCount = showLicenseAlert ? 1 : 0
-
-  let showVehicleRCAlert = false
-  let showVehiclePUCAlert = false
-  let showVehicleInsuranceAlert = false
-
-  if (assignedVehicle) {
-    showVehicleRCAlert = showAlert(assignedVehicle.rcExpiresOn)
-    if (showVehicleRCAlert) alertCount += 1
-    showVehiclePUCAlert = showAlert(assignedVehicle.pucExpiresOn)
-    if (showVehiclePUCAlert) alertCount += 1
-    showVehicleInsuranceAlert = showAlert(assignedVehicle.insuranceExpiresOn)
-    if (showVehicleInsuranceAlert) alertCount += 1
-  }
 
   return (
     <PageWrapper id="MyMissionsPage">
@@ -57,48 +34,7 @@ export default async function MyMissionsPageComponent({
           ))}
         </RyogoCarouselWrapper>
       )}
-      {alertCount > 0 && (
-        <RyogoCarouselWrapper
-          count={t("ExpiryAlerts.Header", { count: alertCount })}
-        >
-          {showLicenseAlert && driver.licenseExpiresOn && (
-            <ExpiryAlertCard
-              dueDate={driver.licenseExpiresOn}
-              entityId={driver.id}
-              entityName={driver.name}
-              expiryType="License"
-              isDriver
-            />
-          )}
-          {showVehicleRCAlert && assignedVehicle?.rcExpiresOn && (
-            <ExpiryAlertCard
-              dueDate={assignedVehicle.rcExpiresOn}
-              entityId={assignedVehicle.id}
-              entityName={assignedVehicle.vehicleNumber}
-              expiryType="RC"
-              isDriver
-            />
-          )}
-          {showVehiclePUCAlert && assignedVehicle?.pucExpiresOn && (
-            <ExpiryAlertCard
-              dueDate={assignedVehicle.pucExpiresOn}
-              entityId={assignedVehicle.id}
-              entityName={assignedVehicle.vehicleNumber}
-              expiryType="PUC"
-              isDriver
-            />
-          )}
-          {showVehicleInsuranceAlert && assignedVehicle?.insuranceExpiresOn && (
-            <ExpiryAlertCard
-              dueDate={assignedVehicle.insuranceExpiresOn}
-              entityId={assignedVehicle.id}
-              entityName={assignedVehicle.vehicleNumber}
-              expiryType="Insurance"
-              isDriver
-            />
-          )}
-        </RyogoCarouselWrapper>
-      )}
+
       {otherMissions.length > 0 && (
         <RyogoCarouselWrapper
           count={t("OtherMissions", { count: otherMissions.length })}
@@ -125,9 +61,4 @@ export default async function MyMissionsPageComponent({
       </StickyActionWrapper>
     </PageWrapper>
   )
-}
-
-function showAlert(date: Date | null) {
-  if (!date) return false
-  return differenceInDays(date, new Date()) < EXPIRATION_ALERT_WINDOW_DAYS
 }

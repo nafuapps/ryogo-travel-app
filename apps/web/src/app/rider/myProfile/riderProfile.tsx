@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import { Camera, KeyRound, MailPen } from "lucide-react"
 import Link from "next/link"
-import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
 import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
 import {
@@ -28,7 +27,6 @@ export default async function RiderProfilePageComponent({
 
   return (
     <PageWrapper id="RiderProfilePage">
-      <MyProfileDetailHeaderTabs selectedTab={"Account"} />
       <GridWrapper id="RiderAccountDetails">
         <AccountInfoComponent
           id={account.id}

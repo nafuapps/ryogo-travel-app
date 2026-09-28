@@ -49,8 +49,8 @@ export default async function MyBookingExpensesPage({
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myBookings/[id]/expenses"} />
+      <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"Expenses"} />
       <PageWrapper id="RiderBookingExpensesPage">
-        <MyBookingDetailHeaderTabs id={bookingId} selectedTab={"Expenses"} />
         <MyBookingExpensesPageComponent
           userId={currentUser.userId}
           bookingExpenses={bookingExpenses}

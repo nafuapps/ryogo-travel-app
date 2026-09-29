@@ -1,6 +1,7 @@
 import { db } from "@ryogo-travel-app/db"
 import {
   driverLeaves,
+  DriverLeaveStatusEnum,
   InsertDriverLeaveType,
 } from "@ryogo-travel-app/db/schema"
 import { and, eq, gte, lte, or } from "drizzle-orm"
@@ -101,16 +102,14 @@ export const driverLeaveRepository = {
     id: string,
     startDate?: Date,
     endDate?: Date,
-    isCompleted?: boolean,
     remarks?: string,
   ) {
     return await db
       .update(driverLeaves)
       .set({
-        isCompleted,
-        remarks,
         startDate,
         endDate,
+        remarks,
       })
       .where(eq(driverLeaves.id, id))
       .returning()
@@ -121,7 +120,7 @@ export const driverLeaveRepository = {
     return await db
       .update(driverLeaves)
       .set({
-        isCompleted: false,
+        status: DriverLeaveStatusEnum.ONGOING,
         startDate: new Date(),
       })
       .where(eq(driverLeaves.id, id))
@@ -133,9 +132,17 @@ export const driverLeaveRepository = {
     return await db
       .update(driverLeaves)
       .set({
-        isCompleted: true,
+        status: DriverLeaveStatusEnum.COMPLETED,
         endDate: new Date(),
       })
+      .where(eq(driverLeaves.id, id))
+      .returning()
+  },
+
+  //Delete a driver leave
+  async deleteLeave(id: string) {
+    return await db
+      .delete(driverLeaves)
       .where(eq(driverLeaves.id, id))
       .returning()
   },

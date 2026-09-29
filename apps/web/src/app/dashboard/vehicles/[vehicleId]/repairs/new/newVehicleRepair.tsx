@@ -8,7 +8,10 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { InsertVehicleRepairType } from "@ryogo-travel-app/db/schema"
+import {
+  InsertVehicleRepairType,
+  VehicleRepairStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -45,7 +48,7 @@ export default function NewVehicleRepairPageComponent({
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
-      isCompleted: z.boolean(),
+      status: z.boolean(),
       remarks: z.string().optional(),
       cost: z.coerce
         .number<number>(t("Field5.Error1"))
@@ -71,7 +74,7 @@ export default function NewVehicleRepairPageComponent({
   const form = useForm<NewVehicleRepairType>({
     resolver: zodResolver(newDriverleaveSchema),
     defaultValues: {
-      isCompleted: false,
+      status: false,
     },
   })
 
@@ -82,7 +85,9 @@ export default function NewVehicleRepairPageComponent({
       addedByUserId: userId,
       startDate: values.startDate,
       endDate: values.endDate,
-      isCompleted: values.isCompleted,
+      status: values.status
+        ? VehicleRepairStatusEnum.COMPLETED
+        : VehicleRepairStatusEnum.PENDING,
       remarks: values.remarks,
       cost: values.cost,
     }
@@ -120,7 +125,7 @@ export default function NewVehicleRepairPageComponent({
             placeholder={t("Field2.Placeholder")}
             pastAllowed
           />
-          <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
+          <RyogoSwitch label={t("Field3.Title")} name="status" />
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}

@@ -5,35 +5,38 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { deleteMissionAction } from "@/app/actions/missions/deleteMissionAction"
 import {
   RyogoGhostButton,
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
+import { deleteDriverLeaveAction } from "@/app/actions/drivers/deleteDriverLeaveAction"
 
-export default function DeleteMissionAlertButton({
-  missionId,
+export default function DeleteDriverLeaveAlertButton({
+  leaveId,
   userId,
   agencyId,
   disabled,
-  isRider,
 }: {
-  missionId: string
+  leaveId: string
   userId: string
   agencyId: string
   disabled: boolean
-  isRider?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.DeleteMission")
+  const t = useTranslations("Dashboard.Buttons.DeleteDriverLeave")
 
   const router = useRouter()
 
-  async function deleteMission() {
+  async function deleteLeave() {
     startCancelTransition(async () => {
-      if (await deleteMissionAction(missionId, userId, agencyId)) {
+      const leave = await await deleteDriverLeaveAction(
+        leaveId,
+        userId,
+        agencyId,
+      )
+      if (leave) {
         toast.success(t("Success"))
-        router.replace(isRider ? `/rider/myMissions` : `/dashboard/missions`)
+        router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)
       } else {
         toast.error(t("Error"))
       }
@@ -55,7 +58,7 @@ export default function DeleteMissionAlertButton({
       }
     >
       <RyogoDestructiveButton
-        onClick={deleteMission}
+        onClick={deleteLeave}
         disabled={isPending}
         showSpinner={isPending}
         label={isPending ? t("Loading") : t("YesCTA")}

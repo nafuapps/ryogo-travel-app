@@ -10,7 +10,6 @@ import z from "zod"
 import { modifyDriverLeaveAction } from "@/app/actions/drivers/modifyDriverLeaveAction"
 import {
   RyogoDatePicker,
-  RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import {
@@ -27,6 +26,8 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { RyogoH3 } from "@/components/typography"
+import DeleteDriverLeaveAlertButton from "@/components/buttons/alert/deleteDriverLeaveAlertButton"
+import { DriverLeaveStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -40,7 +41,6 @@ export default function ModifyDriverLeavePageComponent({
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
-      isCompleted: z.boolean(),
       remarks: z.string().optional(),
     })
     .superRefine((data, ctx) => {
@@ -61,7 +61,6 @@ export default function ModifyDriverLeavePageComponent({
     defaultValues: {
       startDate: leave.startDate,
       endDate: leave.endDate,
-      isCompleted: leave.isCompleted,
       remarks: leave.remarks ?? undefined,
     },
   })
@@ -72,7 +71,6 @@ export default function ModifyDriverLeavePageComponent({
       agencyId: leave.agencyId,
       startDate: values.startDate,
       endDate: values.endDate,
-      isCompleted: values.isCompleted,
       remarks: values.remarks,
     }
     const modifiedLeave = await modifyDriverLeaveAction(modifyLeave)
@@ -108,7 +106,6 @@ export default function ModifyDriverLeavePageComponent({
             placeholder={t("Field2.Placeholder")}
             pastAllowed
           />
-          <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}
@@ -130,6 +127,14 @@ export default function ModifyDriverLeavePageComponent({
             onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
           />
+          {leave.status !== DriverLeaveStatusEnum.ONGOING && (
+            <DeleteDriverLeaveAlertButton
+              leaveId={leave.id}
+              userId={leave.addedByUserId}
+              agencyId={leave.agencyId}
+              disabled={form.formState.isSubmitting}
+            />
+          )}
         </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>

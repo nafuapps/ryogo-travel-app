@@ -1,13 +1,13 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function takeDriverLeaveAction(
+export async function startVehicleRepairAction(
   userId: string,
-  driverId: string,
-  leaveId: string,
+  vehicleId: string,
+  repairId: string,
   agencyId: string,
 ) {
   const currentUser = await getCurrentUser()
@@ -24,8 +24,8 @@ export async function takeDriverLeaveAction(
     return
   }
 
-  const leave = await driverServices.startDriverLeave(leaveId, driverId)
-  if (!leave) return
+  const repair = await vehicleServices.startVehicleRepair(repairId, vehicleId)
+  if (!repair) return
 
-  return leave
+  return repair
 }

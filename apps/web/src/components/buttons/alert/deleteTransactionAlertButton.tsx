@@ -16,11 +16,13 @@ export default function DeleteTransactionAlertButton({
   transactionId,
   agencyId,
   assignedUserId,
+  disabled,
 }: {
   bookingId: string
   transactionId: string
   agencyId: string
   assignedUserId: string
+  disabled: boolean
 }) {
   const [isPending, startTransition] = useTransition()
   const t = useTranslations("Dashboard.Buttons.DeleteTransaction")
@@ -48,7 +50,12 @@ export default function DeleteTransactionAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoGhostButton label={t("Label")} labelColor="light" type="button" />
+        <RyogoGhostButton
+          label={t("Label")}
+          labelColor="light"
+          type="button"
+          disabled={disabled}
+        />
       }
     >
       <RyogoDestructiveButton

@@ -1,7 +1,9 @@
 "use client"
 
+import FinishVehicleRepairAlertButton from "@/components/buttons/alert/finishVehicleRepairAlertButton"
+import StartVehicleRepairAlertButton from "@/components/buttons/alert/startVehicleRepairAlertButton"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -12,7 +14,14 @@ import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
 import RyogoTag from "@/components/tags/ryogoTag"
 import { RyogoSmall } from "@/components/typography"
-import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
+import {
+  FindAllVehicleRepairsByVehicleIdType,
+  FindVehicleDetailsByIdType,
+} from "@ryogo-travel-app/api/services/vehicle.services"
+import {
+  VehicleRepairStatusEnum,
+  VehicleStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import {
   MessageSquareQuote,
@@ -27,12 +36,25 @@ import { useState } from "react"
 export default function VehicleRepairComponent({
   repair,
   canModify,
+  vehicle,
 }: {
   repair: FindAllVehicleRepairsByVehicleIdType[number]
   canModify: boolean
+  vehicle: NonNullable<FindVehicleDetailsByIdType>
 }) {
   const t = useTranslations("Dashboard.VehicleRepairs")
-  const [open, setOpen] = useState(canModify)
+  const [open, setOpen] = useState(false)
+  const today = new Date()
+
+  const canStart =
+    canModify &&
+    repair.status === VehicleRepairStatusEnum.PENDING &&
+    differenceInDays(today, repair.startDate) >= 0
+
+  const canEnd =
+    canModify &&
+    repair.status === VehicleRepairStatusEnum.ONGOING &&
+    vehicle.status === VehicleStatusEnum.REPAIR
 
   return (
     <SectionColWrapper className="w-full p-4 lg:p-5 border rounded-md">
@@ -53,11 +75,8 @@ export default function VehicleRepairComponent({
         <DateWrapper date={repair.endDate} hideYear />
       </SectionRowWrapper>
       <SectionRowWrapper className="items-center justify-between">
-        <RepairStatusPill
-          status={repair.isCompleted ? t("Completed") : t("Pending")}
-          completed={repair.isCompleted}
-        />
-        <RyogoIcon
+        <RepairStatusPill status={repair.status} />
+        <RyogoEnclosedIcon
           onClick={() => setOpen(!open)}
           size="sm"
           icon={open ? ChevronUp : ChevronDown}
@@ -65,6 +84,30 @@ export default function VehicleRepairComponent({
           thick
         />
       </SectionRowWrapper>
+      {canStart &&
+        (vehicle.status !== VehicleStatusEnum.ON_TRIP ? (
+          <StartVehicleRepairAlertButton
+            userId={repair.addedByUserId}
+            vehicleId={vehicle.id}
+            repairId={repair.id}
+            agencyId={vehicle.agencyId}
+          />
+        ) : (
+          <RyogoOutlineButton
+            label={t("OnTrip")}
+            labelColor="light"
+            className="grow"
+            disabled
+          />
+        ))}
+      {canEnd && (
+        <FinishVehicleRepairAlertButton
+          userId={repair.addedByUserId}
+          vehicleId={vehicle.id}
+          repairId={repair.id}
+          agencyId={vehicle.agencyId}
+        />
+      )}
       {open && (
         <>
           {repair.remarks && (
@@ -80,7 +123,7 @@ export default function VehicleRepairComponent({
               <Link
                 href={`/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}`}
               >
-                <RyogoOutlineButton label={t("Edit")}>
+                <RyogoOutlineButton label={t("Edit")} className="w-full">
                   <RyogoIcon icon={ChevronRight} size="sm" />
                 </RyogoOutlineButton>
               </Link>

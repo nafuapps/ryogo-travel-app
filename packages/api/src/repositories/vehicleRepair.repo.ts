@@ -2,6 +2,7 @@ import { db } from "@ryogo-travel-app/db"
 import {
   InsertVehicleRepairType,
   vehicleRepairs,
+  VehicleRepairStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { and, eq, gte, lte, or } from "drizzle-orm"
 
@@ -95,7 +96,6 @@ export const vehicleRepairRepository = {
     id: string,
     startDate?: Date,
     endDate?: Date,
-    isCompleted?: boolean,
     remarks?: string,
     cost?: number,
   ) {
@@ -104,10 +104,41 @@ export const vehicleRepairRepository = {
       .set({
         startDate,
         endDate,
-        isCompleted,
         remarks,
         cost,
       })
+      .where(eq(vehicleRepairs.id, id))
+      .returning()
+  },
+
+  //Update a vehicle repair to started
+  async updateRepairToStarted(id: string) {
+    return await db
+      .update(vehicleRepairs)
+      .set({
+        status: VehicleRepairStatusEnum.ONGOING,
+        startDate: new Date(),
+      })
+      .where(eq(vehicleRepairs.id, id))
+      .returning()
+  },
+
+  //Update a vehicle repair to ended
+  async updateRepairToEnded(id: string) {
+    return await db
+      .update(vehicleRepairs)
+      .set({
+        status: VehicleRepairStatusEnum.COMPLETED,
+        endDate: new Date(),
+      })
+      .where(eq(vehicleRepairs.id, id))
+      .returning()
+  },
+
+  //Delete a vehicle repair
+  async deleteRepair(id: string) {
+    return await db
+      .delete(vehicleRepairs)
       .where(eq(vehicleRepairs.id, id))
       .returning()
   },

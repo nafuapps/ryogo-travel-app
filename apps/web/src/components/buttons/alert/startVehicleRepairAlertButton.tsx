@@ -5,29 +5,34 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { takeDriverLeaveAction } from "@/app/actions/drivers/takeDriverLeaveAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { startVehicleRepairAction } from "@/app/actions/vehicles/startVehicleRepairAction"
 
-export default function TakeDriverLeaveAlertButton({
+export default function StartVehicleRepairAlertButton({
   userId,
-  driverId,
-  leaveId,
+  vehicleId,
+  repairId,
   agencyId,
 }: {
   userId: string
-  driverId: string
-  leaveId: string
+  vehicleId: string
+  repairId: string
   agencyId: string
 }) {
   const [isPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.TakeDriverLeave")
+  const t = useTranslations("Dashboard.Buttons.StartVehicleRepair")
 
   const router = useRouter()
 
-  //Take Driver Leave
-  async function takeLeave() {
+  //Start Vehicle Repair
+  async function startRepair() {
     startCancelTransition(async () => {
-      if (await takeDriverLeaveAction(userId, driverId, leaveId, agencyId)) {
+      if (
+        await startVehicleRepairAction(userId, vehicleId, repairId, agencyId)
+      ) {
         toast.success(t("Success"))
         router.refresh()
       } else {
@@ -41,10 +46,12 @@ export default function TakeDriverLeaveAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoDefaultButton label={t("Label")} type="button" />}
+      labelChild={
+        <RyogoOutlineButton label={t("Label")} type="button" className="grow" />
+      }
     >
       <RyogoDefaultButton
-        onClick={takeLeave}
+        onClick={startRepair}
         disabled={isPending}
         showSpinner={isPending}
         label={isPending ? t("Loading") : t("YesCTA")}

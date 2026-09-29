@@ -6,7 +6,10 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { InsertDriverLeaveType } from "@ryogo-travel-app/db/schema"
+import {
+  DriverLeaveStatusEnum,
+  InsertDriverLeaveType,
+} from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -17,7 +20,6 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
-  SectionColWrapper,
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
@@ -44,7 +46,7 @@ export default function NewDriverLeavePageComponent({
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
-      isCompleted: z.boolean(),
+      status: z.boolean(),
       remarks: z.string().optional(),
     })
     .superRefine((data, ctx) => {
@@ -63,7 +65,7 @@ export default function NewDriverLeavePageComponent({
   const form = useForm<NewDriverLeaveType>({
     resolver: zodResolver(newDriverleaveSchema),
     defaultValues: {
-      isCompleted: false,
+      status: false,
     },
   })
 
@@ -74,7 +76,9 @@ export default function NewDriverLeavePageComponent({
       addedByUserId: userId,
       startDate: values.startDate,
       endDate: values.endDate,
-      isCompleted: values.isCompleted,
+      status: values.status
+        ? DriverLeaveStatusEnum.COMPLETED
+        : DriverLeaveStatusEnum.PENDING,
       remarks: values.remarks,
     }
     const createdLeave = await newDriverLeaveAction(newLeave)
@@ -112,7 +116,7 @@ export default function NewDriverLeavePageComponent({
             placeholder={t("Field2.Placeholder")}
             pastAllowed
           />
-          <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
+          <RyogoSwitch label={t("Field3.Title")} name="status" />
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}

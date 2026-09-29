@@ -5,35 +5,38 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { deleteMissionAction } from "@/app/actions/missions/deleteMissionAction"
 import {
   RyogoGhostButton,
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
+import { deleteVehicleRepairAction } from "@/app/actions/vehicles/deleteVehicleRepairAction"
 
-export default function DeleteMissionAlertButton({
-  missionId,
+export default function DeleteVehicleRepairAlertButton({
+  repairId,
   userId,
   agencyId,
   disabled,
-  isRider,
 }: {
-  missionId: string
+  repairId: string
   userId: string
   agencyId: string
   disabled: boolean
-  isRider?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.DeleteMission")
+  const t = useTranslations("Dashboard.Buttons.DeleteVehicleRepair")
 
   const router = useRouter()
 
-  async function deleteMission() {
+  async function deleteRepair() {
     startCancelTransition(async () => {
-      if (await deleteMissionAction(missionId, userId, agencyId)) {
+      const repair = await await deleteVehicleRepairAction(
+        repairId,
+        userId,
+        agencyId,
+      )
+      if (repair) {
         toast.success(t("Success"))
-        router.replace(isRider ? `/rider/myMissions` : `/dashboard/missions`)
+        router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
       } else {
         toast.error(t("Error"))
       }
@@ -55,7 +58,7 @@ export default function DeleteMissionAlertButton({
       }
     >
       <RyogoDestructiveButton
-        onClick={deleteMission}
+        onClick={deleteRepair}
         disabled={isPending}
         showSpinner={isPending}
         label={isPending ? t("Loading") : t("YesCTA")}

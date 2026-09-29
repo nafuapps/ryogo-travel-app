@@ -3,6 +3,5 @@ export type ModifyDriverLeaveRequestType = {
   agencyId: string
   startDate: Date
   endDate: Date
-  isCompleted: boolean
   remarks?: string
 }

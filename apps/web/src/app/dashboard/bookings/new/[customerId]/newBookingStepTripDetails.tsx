@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoTiny } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -20,6 +20,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
@@ -353,21 +354,24 @@ function TripTypeSelectionCard({
     <div
       id={type}
       onClick={onClick}
-      className={`flex border rounded-lg flex-col p-2 lg:p-3 gap-2 lg:gap-3 w-full transition-all ${
+      className={`flex border rounded-lg flex-col p-3 lg:p-4 gap-2 lg:gap-3 w-full transition-all ${
         selected
-          ? "bg-slate-900 dark:bg-slate-50"
-          : "border hover:bg-slate-50 dark:hover:bg-slate-900"
+          ? "bg-slate-700 dark:bg-slate-100"
+          : "border hover:bg-slate-100 dark:hover:bg-slate-700"
       }`}
     >
-      <RyogoSmall weight="font-bold" color={selected ? "white" : "slate"}>
-        {title}
-      </RyogoSmall>
-      <GetTripTypeIcon
-        tripType={type}
-        size="sm"
-        color={selected ? "white" : "slate"}
-      />
-      <RyogoCaption color={selected ? "white" : "slate"}>{desc}</RyogoCaption>
+      <SectionRowWrapper className="items-center justify-between">
+        <RyogoSmall weight="font-bold" color={selected ? "white" : "slate"}>
+          {title}
+        </RyogoSmall>
+        <GetTripTypeIcon
+          tripType={type}
+          size="sm"
+          color={selected ? "white" : "slate"}
+          thick
+        />
+      </SectionRowWrapper>
+      <RyogoTiny color={selected ? "white" : "slate"}>{desc}</RyogoTiny>
     </div>
   )
 }

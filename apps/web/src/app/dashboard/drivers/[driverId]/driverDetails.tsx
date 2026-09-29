@@ -57,6 +57,7 @@ export default async function DriverDetailsPageComponent({
           allowance={driver.defaultAllowancePerDay}
           canDriveVehicles={driver.canDriveVehicleTypes}
           ratings={driver.customerRatings}
+          visitingLocation={driver.visitingLocation}
         />
       </GridWrapper>
       {driver.latLong && (

@@ -1,7 +1,9 @@
 import {
   AgencyStatusEnum,
+  DriverLeaveStatusEnum,
   SubscriptionPlanEnum,
   UserRolesEnum,
+  VehicleRepairStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
@@ -110,7 +112,7 @@ export const agencyServices = {
       await vehicleRepairRepository.readVehicleRepairsByAddedUserId(userId)
     const vehicleRepairAlerts = vehicleRepairs.filter(
       (vehicleRepair) =>
-        vehicleRepair.isCompleted === false &&
+        vehicleRepair.status !== VehicleRepairStatusEnum.COMPLETED &&
         differenceInDays(vehicleRepair.endDate, new Date()) <= 0,
     )
 
@@ -125,7 +127,7 @@ export const agencyServices = {
       await driverLeaveRepository.readDriverLeavesByAddedUserId(userId)
     const driverLeaveAlerts = driverLeaves.filter(
       (driverLeave) =>
-        driverLeave.isCompleted === false &&
+        driverLeave.status !== DriverLeaveStatusEnum.COMPLETED &&
         differenceInDays(driverLeave.endDate, new Date()) <= 0,
     )
 

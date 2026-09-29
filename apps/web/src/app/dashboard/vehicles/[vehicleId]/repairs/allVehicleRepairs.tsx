@@ -1,4 +1,7 @@
-import { FindAllVehicleRepairsByVehicleIdType } from "@ryogo-travel-app/api/services/vehicle.services"
+import {
+  FindAllVehicleRepairsByVehicleIdType,
+  FindVehicleDetailsByIdType,
+} from "@ryogo-travel-app/api/services/vehicle.services"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { Wrench, WrenchOff } from "lucide-react"
@@ -16,13 +19,13 @@ import VehicleRepairComponent from "@/components/flows/vehicles/repairs/vehicleR
 
 export default async function AllVehicleRepairsPageComponent({
   repairs,
-  vehicleId,
-  userId,
+  vehicle,
+  curentUserId,
   isOwner,
 }: {
   repairs: FindAllVehicleRepairsByVehicleIdType
-  vehicleId: string
-  userId: string
+  vehicle: NonNullable<FindVehicleDetailsByIdType>
+  curentUserId: string
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.VehicleRepairs")
@@ -41,7 +44,8 @@ export default async function AllVehicleRepairsPageComponent({
               <VehicleRepairComponent
                 key={repair.id}
                 repair={repair}
-                canModify={isOwner || userId === repair.addedByUserId}
+                canModify={isOwner || curentUserId === repair.addedByUserId}
+                vehicle={vehicle}
               />
             ))}
           </TileGridWrapper>
@@ -51,7 +55,7 @@ export default async function AllVehicleRepairsPageComponent({
       </SectionWrapper>
       <StickyActionWrapper>
         <Link
-          href={`/dashboard/vehicles/${vehicleId}/repairs/new`}
+          href={`/dashboard/vehicles/${vehicle.id}/repairs/new`}
           className="w-full"
         >
           <RyogoDefaultButton label={t("AddRepair")} className="w-full" />

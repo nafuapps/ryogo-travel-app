@@ -185,6 +185,7 @@ export default function ModifyTransactionPageComponent({
             transactionId={transactionDetails.id}
             agencyId={transactionDetails.agencyId}
             assignedUserId={assignedUserId}
+            disabled={form.formState.isSubmitting}
           />
         </StickyActionWrapper>
       </FormWrapper>

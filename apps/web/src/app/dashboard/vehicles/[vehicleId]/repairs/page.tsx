@@ -26,6 +26,13 @@ export default async function AllVehicleRepairsPage({
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+
+  const vehicle = await vehicleServices.findVehicleDetailsById(vehicleId)
+
+  if (!vehicle) {
+    redirect("/dashboard/vehicles", RedirectType.replace)
+  }
+
   const vehicleRepairs =
     await vehicleServices.findAllVehicleRepairsByVehicleId(vehicleId)
 
@@ -35,8 +42,8 @@ export default async function AllVehicleRepairsPage({
       <VehicleDetailHeaderTabs selectedTab={"Repairs"} id={vehicleId} />
       <AllVehicleRepairsPageComponent
         repairs={vehicleRepairs}
-        vehicleId={vehicleId}
-        userId={currentUser.userId}
+        vehicle={vehicle}
+        curentUserId={currentUser.userId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </MainWrapper>

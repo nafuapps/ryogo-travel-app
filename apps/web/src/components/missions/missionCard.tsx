@@ -145,6 +145,7 @@ export default function MissionCard({
         missionId={mission.id}
         userId={mission.userId}
         agencyId={mission.agencyId}
+        disabled={isPending}
       />
       {mission.isCustom && (
         <>

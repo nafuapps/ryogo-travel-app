@@ -6,6 +6,7 @@ import {
   TripLogTypesEnum,
   VehicleBrandEnum,
   VehicleColorEnum,
+  VehicleRepairStatusEnum,
   vehicles,
   VehicleStatusEnum,
   VehicleTypesEnum,
@@ -17,6 +18,14 @@ export const vehicleRepository = {
   async readVehicleById(id: string) {
     return await db.query.vehicles.findFirst({
       where: eq(vehicles.id, id),
+      with: {
+        visitingLocation: {
+          columns: {
+            city: true,
+            state: true,
+          },
+        },
+      },
     })
   },
 
@@ -78,7 +87,8 @@ export const vehicleRepository = {
             startDate: true,
             endDate: true,
           },
-          where: (vehicleRepairs) => eq(vehicleRepairs.isCompleted, false),
+          where: (vehicleRepairs) =>
+            not(eq(vehicleRepairs.status, VehicleRepairStatusEnum.COMPLETED)),
         },
       },
     })
@@ -220,7 +230,7 @@ export const vehicleRepository = {
           },
           where: (vehicleRepairs) =>
             and(
-              eq(vehicleRepairs.isCompleted, false),
+              not(eq(vehicleRepairs.status, VehicleRepairStatusEnum.COMPLETED)),
               or(
                 and(
                   lte(vehicleRepairs.startDate, queryEndDate),

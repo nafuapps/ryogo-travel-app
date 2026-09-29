@@ -647,6 +647,10 @@ export const vehicles = pgTable(
       mode: "xy",
       srid: 4326,
     }),
+    visitingLocationId: text("visiting_location_id").references(
+      () => locations.id,
+      { onDelete: "no action" },
+    ),
     ...timestamps,
   },
   (t) => [
@@ -691,6 +695,10 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
   assignedBookings: many(bookings),
   vehicleRepairs: many(vehicleRepairs),
   tripLogs: many(tripLogs),
+  visitingLocation: one(locations, {
+    fields: [vehicles.visitingLocationId],
+    references: [locations.id],
+  }),
 }))
 
 export enum DriverStatusEnum {
@@ -751,6 +759,10 @@ export const drivers = pgTable(
       mode: "xy",
       srid: 4326,
     }),
+    visitingLocationId: text("visiting_location_id").references(
+      () => locations.id,
+      { onDelete: "no action" },
+    ),
     ...timestamps,
   },
   (t) => [
@@ -794,6 +806,10 @@ export const driverRelations = relations(drivers, ({ one, many }) => ({
   assignedBookings: many(bookings),
   driverLeaves: many(driverLeaves),
   tripLogs: many(tripLogs),
+  visitingLocation: one(locations, {
+    fields: [drivers.visitingLocationId],
+    references: [locations.id],
+  }),
 }))
 
 //Routes table
@@ -1435,8 +1451,20 @@ export const locationRelations = relations(locations, ({ many }) => ({
   }),
   routeSources: many(routes, { relationName: "route_source_fkey" }),
   routeDestinations: many(routes, { relationName: "route_destination_fkey" }),
+  visitingDrivers: many(drivers),
+  visitingVehicles: many(vehicles),
 }))
 
+export enum VehicleRepairStatusEnum {
+  PENDING = "Pending",
+  ONGOING = "Ongoing",
+  COMPLETED = "Completed",
+}
+export const vehicleRepairStatus = pgEnum("vehicle_repair_status", [
+  VehicleRepairStatusEnum.PENDING,
+  VehicleRepairStatusEnum.ONGOING,
+  VehicleRepairStatusEnum.COMPLETED,
+])
 //Vehicle Repairs table
 export const vehicleRepairsIdSequence = pgSequence("vehicle_repair_id_seq", {
   ...sequenceValues,
@@ -1461,7 +1489,9 @@ export const vehicleRepairs = pgTable(
     startDate: date("start_date", { mode: "date" }).notNull(),
     endDate: date("end_date", { mode: "date" }).notNull(),
     cost: integer("cost"),
-    isCompleted: boolean("is_completed").notNull().default(false),
+    status: vehicleRepairStatus("status")
+      .notNull()
+      .default(VehicleRepairStatusEnum.PENDING),
     remarks: text("remarks"),
     ...timestamps,
   },
@@ -1492,6 +1522,16 @@ export const vehicleRepairsRelations = relations(vehicleRepairs, ({ one }) => ({
   }),
 }))
 
+export enum DriverLeaveStatusEnum {
+  PENDING = "Pending",
+  ONGOING = "Ongoing",
+  COMPLETED = "Completed",
+}
+export const driverLeaveStatus = pgEnum("driver_leave_status", [
+  DriverLeaveStatusEnum.PENDING,
+  DriverLeaveStatusEnum.ONGOING,
+  DriverLeaveStatusEnum.COMPLETED,
+])
 //Driver Leaves table
 export const driverLeaveIdSequence = pgSequence("driver_leave_id_seq", {
   ...sequenceValues,
@@ -1515,7 +1555,9 @@ export const driverLeaves = pgTable(
       .notNull(),
     startDate: date("start_date", { mode: "date" }).notNull(),
     endDate: date("end_date", { mode: "date" }).notNull(),
-    isCompleted: boolean("is_completed").notNull().default(false),
+    status: driverLeaveStatus("status")
+      .notNull()
+      .default(DriverLeaveStatusEnum.PENDING),
     remarks: text("remarks"),
     ...timestamps,
   },

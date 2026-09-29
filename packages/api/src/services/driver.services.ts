@@ -170,13 +170,18 @@ export const driverServices = {
       data.leaveId,
       data.startDate,
       data.endDate,
-      data.isCompleted,
       data.remarks ?? undefined,
     )
     if (!leave[0]) return
     const driver = await driverRepository.readDriverById(leave[0].driverId)
     if (!driver) return
     return { ...leave[0], driverName: driver?.name }
+  },
+
+  //Remove driver leave
+  async removeDriverLeave(leaveId: string) {
+    const deletedLeave = await driverLeaveRepository.deleteLeave(leaveId)
+    return deletedLeave[0]
   },
 
   //Start driver leave

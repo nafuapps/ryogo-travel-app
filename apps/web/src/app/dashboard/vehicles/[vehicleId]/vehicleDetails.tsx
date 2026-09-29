@@ -64,6 +64,7 @@ export default async function VehicleDetailsPageComponent({
           rate={vehicle.defaultRatePerKm}
           acCharge={vehicle.defaultAcChargePerDay}
           ratings={vehicle.customerRatings}
+          visitingLocation={vehicle.visitingLocation}
         />
       </GridWrapper>
       {vehicle.latLong && (

@@ -8,6 +8,7 @@ import {
 } from "@/components/page/pageWrappers"
 import moment from "moment"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 
 export default async function VehicleDetailsComponent({
   createdAt,
@@ -19,6 +20,7 @@ export default async function VehicleDetailsComponent({
   rate,
   acCharge,
   ratings,
+  visitingLocation,
 }: {
   createdAt: Date
   type: VehicleTypesEnum
@@ -29,6 +31,7 @@ export default async function VehicleDetailsComponent({
   rate: number
   acCharge: number
   ratings: number[] | null
+  visitingLocation: NonNullable<FindVehicleDetailsByIdType>["visitingLocation"]
 }) {
   const t = await getTranslations("Dashboard.VehicleDetails")
   return (
@@ -63,6 +66,12 @@ export default async function VehicleDetailsComponent({
           <DetailsLineWrapper label={t("Rating")}>
             <RyogoAverageRatingDisplay ratings={ratings} />
           </DetailsLineWrapper>
+        )}
+        {visitingLocation && (
+          <DetailsLineItem
+            label={t("VisitingLocation")}
+            value={visitingLocation.city + ", " + visitingLocation.state}
+          />
         )}
       </DetailsContentWrapper>
     </DetailsBorderWrapper>

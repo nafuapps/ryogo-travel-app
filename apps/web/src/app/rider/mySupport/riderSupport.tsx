@@ -8,7 +8,15 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
-import { Car, ChevronRight, Play, Target, Tickets, User } from "lucide-react"
+import {
+  Car,
+  ChevronRight,
+  Play,
+  Target,
+  Tickets,
+  TreePalm,
+  User,
+} from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import {
@@ -60,6 +68,10 @@ export default async function MySupportPageComponent({
       question: t("FAQs.Vehicle.Question"),
       answer: t("FAQs.Vehicle.Answer"),
     },
+    {
+      question: t("FAQs.Leaves.Question"),
+      answer: t("FAQs.Leaves.Answer"),
+    },
   ]
 
   return (
@@ -95,6 +107,12 @@ export default async function MySupportPageComponent({
             description={t("Vehicle.Description")}
             icon={Car}
             link={"/rider/mySupport/help-vehicle"}
+          />
+          <SupportCategoryCard
+            title={t("Leaves.Title")}
+            description={t("Leaves.Description")}
+            icon={TreePalm}
+            link={"/rider/mySupport/help-leaves"}
           />
           <SupportCategoryCard
             title={t("Missions.Title")}

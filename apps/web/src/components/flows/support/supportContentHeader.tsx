@@ -12,13 +12,7 @@ export default function SupportContentHeader({
 }) {
   return (
     <SectionRowWrapper className="items-center justify-start">
-      <RyogoEnclosedIcon
-        icon={icon}
-        size="sm"
-        color="slate"
-        bgColor="slate"
-        thick
-      />
+      <RyogoEnclosedIcon icon={icon} size="sm" color="slate" thick />
       <RyogoP color="slate" weight="font-bold">
         {title}
       </RyogoP>

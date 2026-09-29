@@ -1571,6 +1571,9 @@ export const bookingRepository = {
         actualStartDate: true,
         endDate: true,
         actualEndDate: true,
+        type: true,
+        sourceId: true,
+        destinationId: true,
       },
     })
     return booking
@@ -1746,7 +1749,7 @@ export const bookingRepository = {
       })
   },
 
-  async startBookingTransaction(
+  async startBookingAtomicTransaction(
     bookingId: string,
     driverId: string,
     vehicleId: string,
@@ -1783,11 +1786,12 @@ export const bookingRepository = {
     })
   },
 
-  async completeBookingTransaction(
+  async completeBookingAtomicTransaction(
     bookingId: string,
     driverId: string,
     vehicleId: string,
     customerId: string,
+    visitingLocationId: string,
     customerRating?: number,
     bookingRating?: number,
   ) {
@@ -1805,12 +1809,14 @@ export const bookingRepository = {
         .update(drivers)
         .set({
           status: DriverStatusEnum.AVAILABLE,
+          visitingLocationId,
         })
         .where(eq(drivers.id, driverId))
       await tx
         .update(vehicles)
         .set({
           status: VehicleStatusEnum.AVAILABLE,
+          visitingLocationId,
         })
         .where(eq(vehicles.id, vehicleId))
       if (customerRating) {

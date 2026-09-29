@@ -172,6 +172,8 @@ export default function ModifyExpensePageComponent({
             expenseId={expenseDetails.id}
             agencyId={expenseDetails.agencyId}
             bookingAssignedUserId={bookingAssignedUserId}
+            disabled={form.formState.isSubmitting}
+            isRider={isRider}
           />
         </StickyActionWrapper>
       </FormWrapper>

@@ -166,7 +166,6 @@ export const vehicleServices = {
       data.repairId,
       data.startDate,
       data.endDate,
-      data.isCompleted,
       data.remarks ?? undefined,
       data.cost ?? undefined,
     )
@@ -176,6 +175,42 @@ export const vehicleServices = {
     if (!vehicle) return
 
     return { ...repair[0], vehicleNumber: vehicle.vehicleNumber }
+  },
+
+  //Remove vehicle repair
+  async removeVehicleRepair(repairId: string) {
+    const deletedRepair = await vehicleRepairRepository.deleteRepair(repairId)
+    return deletedRepair[0]
+  },
+
+  //Start vehicle repair
+  async startVehicleRepair(repairId: string, vehicleId: string) {
+    const vehicle = await vehicleRepository.readVehicleById(vehicleId)
+    if (!vehicle || vehicle.status !== VehicleStatusEnum.AVAILABLE) return
+
+    const updatedVehicle = await vehicleRepository.updateStatus(
+      vehicleId,
+      VehicleStatusEnum.REPAIR,
+    )
+    if (!updatedVehicle) return
+
+    const repair = await vehicleRepairRepository.updateRepairToStarted(repairId)
+    return repair[0]
+  },
+
+  //End vehicle repair
+  async endVehicleRepair(repairId: string, vehicleId: string) {
+    const vehicle = await vehicleRepository.readVehicleById(vehicleId)
+    if (!vehicle || vehicle.status !== VehicleStatusEnum.REPAIR) return
+
+    const updatedVehicle = await vehicleRepository.updateStatus(
+      vehicleId,
+      VehicleStatusEnum.AVAILABLE,
+    )
+    if (!updatedVehicle) return
+
+    const repair = await vehicleRepairRepository.updateRepairToEnded(repairId)
+    return repair[0]
   },
 
   //Change vehicle number

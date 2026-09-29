@@ -1858,6 +1858,7 @@
       "Odometer": "Odometer",
       "Reading": "{odometer} Km",
       "Rating": "Customer Rating",
+      "VisitingLocation": "Current Location",
       "Insurance": "Insurance",
       "PUC": "PUC",
       "RC": "Registration",
@@ -1962,6 +1963,7 @@
       "Completed": "COMPLETED",
       "Pending": "PENDING",
       "Edit": "Edit",
+      "OnTrip": "Cannot start repair during ongoing trip",
       "NoRepairs": "No vehicle repairs"
     },
     "NewVehicleRepair": {
@@ -2012,9 +2014,6 @@
         "Error2": "Start date cannot be after end date",
         "Title": "Repair End Date",
         "Placeholder": "Select a date"
-      },
-      "Field3": {
-        "Title": "Repair already completed?"
       },
       "Field4": {
         "Title": "Remarks (optional)",
@@ -2188,6 +2187,7 @@
       "Allowance": "Default Allowance",
       "PerDay": "₹{allowance} per day",
       "Rating": "Customer Rating",
+      "VisitingLocation": "Current Location",
       "EditDetails": {
         "Title": "Edit Details",
         "Subtitle": "Change driver details like address, default allowance"
@@ -2275,7 +2275,7 @@
       "Completed": "COMPLETED",
       "Pending": "PENDING",
       "Edit": "Edit",
-      "OnTrip": "Let driver complete ongoing trip before taking leave",
+      "OnTrip": "Cannot start leave during ongoing trip",
       "NoLeaves": "No driver leaves"
     },
     "NewDriverLeave": {
@@ -2293,7 +2293,8 @@
         "Placeholder": "Select a date"
       },
       "Field3": {
-        "Title": "Leave already taken?"
+        "Title": "Leave status",
+        "Error1": "Leave status is required"
       },
       "Field4": {
         "Title": "Remarks (optional)",
@@ -2319,7 +2320,8 @@
         "Placeholder": "Select a date"
       },
       "Field3": {
-        "Title": "Leave already taken?"
+        "Title": "Leave status",
+        "Error1": "Leave status is required"
       },
       "Field4": {
         "Title": "Remarks (optional)",
@@ -4940,25 +4942,45 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Delete"
       },
-      "TakeDriverLeave": {
+      "StartDriverLeave": {
         "Label": "Start Leave",
-        "Title": "Are you sure you want to start taking leave?",
-        "Desc": "Your status will be updated that you are on Leave. During this period, you will not be assigned any bookings.",
+        "Title": "Are you sure you want to start driver leave?",
+        "Desc": "Driver status will be updated to 'On Leave'. During this period, any assigned bookings cannot be started.",
         "NoCTA": "No",
-        "Success": "Leave status updated!",
-        "Error": "Cannot take leave now.. Try again later!",
+        "Success": "Status updated to Leave!",
+        "Error": "Cannot start leave now.. Try again later!",
         "Loading": "Loading..",
-        "YesCTA": "Yes, Take Leave"
+        "YesCTA": "Yes, Start Driver Leave"
       },
       "FinishDriverLeave": {
         "Label": "Finish Leave",
-        "Title": "Are you sure you want to end taking leave?",
-        "Desc": "Your status will be updated that you are available again and not on Leave. You will start getting assigned bookings.",
+        "Title": "Are you sure you want to finish driver leave?",
+        "Desc": "Driver status will be updated to 'Available' again. Any assigned bookings can be started now.",
         "NoCTA": "No",
-        "Success": "Available status updated!",
+        "Success": "Status updated to Available!",
         "Error": "Cannot finish leave now.. Try again later!",
         "Loading": "Loading..",
-        "YesCTA": "Yes, End Leave"
+        "YesCTA": "Yes, Finish Driver Leave"
+      },
+      "StartVehicleRepair": {
+        "Label": "Start Repair",
+        "Title": "Are you sure you want to start vehicle repair?",
+        "Desc": "Vehicle status will be updated to 'On Repair'. During this period, any assigned bookings for this vehicle cannot be started.",
+        "NoCTA": "No",
+        "Success": "Status updated to Repair!",
+        "Error": "Cannot start repair now.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Start Vehicle Repair"
+      },
+      "FinishVehicleRepair": {
+        "Label": "Finish Repair",
+        "Title": "Are you sure you want to finish vehicle repair?",
+        "Desc": "Vehicle status will be updated to 'Available' again. Any assigned bookings can be started now.",
+        "NoCTA": "No",
+        "Success": "Status updated to Available!",
+        "Error": "Cannot finish repair now.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Finish Vehicle Repair"
       },
       "InactivateDriver": {
         "Label": "Inactivate Driver",
@@ -5101,6 +5123,26 @@
         "Loading": "Loading..",
         "YesCTA": "Agree & Start Free Trial"
       },
+      "DeleteDriverLeave": {
+        "Label": "DELETE LEAVE",
+        "Title": "Are you sure you want to delete this driver leave?",
+        "Desc": "When deleted, this leave schedule cannot be recovered later.",
+        "NoCTA": "No",
+        "Success": "Driver leave deleted!",
+        "Error": "Cannot delete driver leave.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Delete"
+      },
+      "DeleteVehicleRepair": {
+        "Label": "DELETE REPAIR",
+        "Title": "Are you sure you want to delete this vehicle repair?",
+        "Desc": "When deleted, this repair schedule cannot be recovered later.",
+        "NoCTA": "No",
+        "Success": "Vehicle repair deleted!",
+        "Error": "Cannot delete vehicle repair.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Delete"
+      },
       "DeleteMission": {
         "Label": "DELETE",
         "Title": "Are you sure you want to delete this mission?",
@@ -5182,6 +5224,7 @@
         "/rider/mySupport/help-started": "Get Started Help",
         "/rider/mySupport/help-account": "Account Help",
         "/rider/mySupport/help-bookings": "Bookings Help",
+        "/rider/mySupport/help-leaves": "Leaves Help",
         "/rider/mySupport/help-vehicle": "Vehicle Help",
         "/rider/mySupport/help-missions": "Missions Help",
         "/rider/mySupport/help-videos": "Videos Help",
@@ -5350,7 +5393,6 @@
     },
     "MyLeaves": {
       "Title": "Driver Leaves",
-      "OnTrip": "Complete your trip before taking leave",
       "NoLeaves": "No leaves found"
     },
     "MyProfile": {
@@ -5418,6 +5460,10 @@
         "Title": "VEHICLE",
         "Description": "Know more about your assigned vehicle"
       },
+      "Leaves": {
+        "Title": "LEAVES",
+        "Description": "Know about your leave schedule and how to start taking a leave"
+      },
       "Missions": {
         "Title": "MISSIONS AND ALERTS",
         "Description": "Managing your alert notifications and missions"
@@ -5452,6 +5498,10 @@
         "Vehicle": {
           "Question": "How do I know more about the assigned vehicle?",
           "Answer": "When you are assigned a booking, a vehicle will also be mapped to it and you can view its details from 'My Vehicle' in sidebar. You can learn more about the vehicle in the 'Vehicle' help page."
+        },
+        "Leaves": {
+          "Question": "How do I know more about my leaves?",
+          "Answer": "You can visit 'Leaves' page in the sidebar to learn about how Leaves work in RyoGo. You can also learn more about Leaves in the 'Leaves' help page."
         }
       },
       "Contact": {
@@ -5823,6 +5873,65 @@
       "RelatedArticles": {
         "Account": "Learn how to manage your account",
         "Bookings": "Learn more about assigned bookings",
+        "Videos": "Watch video tutorials"
+      }
+    },
+    "MySupportLeavesHelp": {
+      "Title": "Leaves",
+      "Description": "Get help related to your day-off leaves",
+      "Overview": {
+        "Title": "LEAVES OVERVIEW",
+        "KnowLeave": {
+          "Title": "Understanding driver leaves",
+          "Description": "If you are taking a leave, the agency can keep track of that. This ensures that you are not assigned a booking during your leave days.",
+          "AllLeaves": "You can view all your leaves schedule (in future and past) by going to Leaves page.",
+          "CTA": "View all leaves"
+        },
+        "LeaveDetails": {
+          "Title": "Leave details",
+          "Description": "You can view all the details for a leave by clicking on the leave card. The key details are leave start date, end date, whether the leave has already been taken and remarks, if any."
+        },
+        "LeaveCreation": {
+          "Title": "Adding a driver leave",
+          "Description": "Only the agency users (owners, agents) can create a driver leave. So as a driver, you must request them to create an upcoming leave for you."
+        }
+      },
+      "Marking": {
+        "Title": "MARKING LEAVE",
+        "GoingOnLeave": {
+          "Title": "Going on leave",
+          "Description": "You can take a leave by going to the leaves page and clicking on 'Start Leave'. You will only see this option if you have a leave scheduled.",
+          "Process": "When you start a leave, your status will change to 'On Leave' and you will not be able to start any assigned booking.",
+          "Warning": "You must complete any ongoing trip before you can start a leave."
+        },
+        "BackFromLeave": {
+          "Title": "Returning from leave",
+          "Description": "You can return from a leave by going to the leaves page and clicking on 'End Leave'. You will only see this option if you are currently on a leave.",
+          "Process": "When you end a leave, your status will change to 'Available' and you will be able to start assigned bookings.",
+          "Warning": "If you do not see the option to End leave, you must ask your agency for help immediately."
+        }
+      },
+      "FAQs": {
+        "Title": "Frequently Asked Questions",
+        "Description": "Get answers to common questions related to your leaves",
+        "Creating": {
+          "Question": "How to create a leave?",
+          "Answer": "Leaves can be created by agency users (owners, agents) only. As a driver, you must request them to create an upcoming leave for you."
+        },
+        "GoingOnLeave": {
+          "Question": "How do I mark that I am going on leave?",
+          "Answer": "Go to the leaves page and click on 'Start Leave'. You will only see this option if you have a leave scheduled."
+        },
+        "BackFromLeave": {
+          "Question": "How do I mark that I have returned from leave?",
+          "Answer": "Go to the leaves page and click on 'End Leave'. You will only see this option if you are currently on a leave."
+        }
+      },
+      "QuickActions": {
+        "ViewLeaves": "View Leaves"
+      },
+      "RelatedArticles": {
+        "Account": "Learn how to manage your account",
         "Videos": "Watch video tutorials"
       }
     },

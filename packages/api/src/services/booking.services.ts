@@ -1,5 +1,6 @@
 import {
   BookingStatusEnum,
+  BookingTypeEnum,
   DriverStatusEnum,
   InsertBookingType,
   TransactionPartiesEnum,
@@ -407,7 +408,7 @@ export const bookingServices = {
     }
 
     //Atomic transaction to change booking to in progress and driver, vehicle to on trip
-    const booking = await bookingRepository.startBookingTransaction(
+    const booking = await bookingRepository.startBookingAtomicTransaction(
       bookingId,
       driverId,
       vehicleId,
@@ -505,15 +506,22 @@ export const bookingServices = {
       return
     }
 
+    const visitingLocationId =
+      bookingStatus.type === BookingTypeEnum.OneWay
+        ? bookingStatus.destinationId
+        : bookingStatus.sourceId
+
     //Atomic transaction to change booking to completed and driver, vehicle to available
-    const completedBooking = await bookingRepository.completeBookingTransaction(
-      bookingId,
-      driverId,
-      vehicleId,
-      customerId,
-      customerRating,
-      bookingRating,
-    )
+    const completedBooking =
+      await bookingRepository.completeBookingAtomicTransaction(
+        bookingId,
+        driverId,
+        vehicleId,
+        customerId,
+        visitingLocationId,
+        customerRating,
+        bookingRating,
+      )
     if (
       !completedBooking ||
       completedBooking.status !== BookingStatusEnum.COMPLETED

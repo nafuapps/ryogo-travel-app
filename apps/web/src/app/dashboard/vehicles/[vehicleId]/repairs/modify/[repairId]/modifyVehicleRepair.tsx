@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl"
 import {
   RyogoDatePicker,
   RyogoInput,
-  RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -29,6 +28,8 @@ import {
 import { MAX_AMOUNT_LIMIT, MIN_AMOUNT_LIMIT } from "@/lib/uiConfig"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { RyogoH3 } from "@/components/typography"
+import DeleteVehicleRepairAlertButton from "@/components/buttons/alert/deleteVehicleRepairAlertButton"
+import { VehicleRepairStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default function ModifyVehicleRepairPageComponent({
   repair,
@@ -42,7 +43,6 @@ export default function ModifyVehicleRepairPageComponent({
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
-      isCompleted: z.boolean(),
       remarks: z.string().optional(),
       cost: z.coerce
         .number<number>(t("Field5.Error1"))
@@ -70,7 +70,6 @@ export default function ModifyVehicleRepairPageComponent({
     defaultValues: {
       startDate: repair.startDate,
       endDate: repair.endDate,
-      isCompleted: repair.isCompleted,
       remarks: repair.remarks ?? undefined,
       cost: repair.cost ?? undefined,
     },
@@ -82,7 +81,6 @@ export default function ModifyVehicleRepairPageComponent({
       agencyId: repair.agencyId,
       startDate: values.startDate,
       endDate: values.endDate,
-      isCompleted: values.isCompleted,
       remarks: values.remarks,
       cost: values.cost,
     }
@@ -119,7 +117,6 @@ export default function ModifyVehicleRepairPageComponent({
             placeholder={t("Field2.Placeholder")}
             pastAllowed
           />
-          <RyogoSwitch label={t("Field3.Title")} name="isCompleted" />
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}
@@ -147,6 +144,14 @@ export default function ModifyVehicleRepairPageComponent({
             onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
           />
+          {repair.status !== VehicleRepairStatusEnum.ONGOING && (
+            <DeleteVehicleRepairAlertButton
+              repairId={repair.id}
+              userId={repair.addedByUserId}
+              agencyId={repair.agencyId}
+              disabled={form.formState.isSubmitting}
+            />
+          )}
         </StickyActionWrapper>
       </FormWrapper>
     </PageWrapper>

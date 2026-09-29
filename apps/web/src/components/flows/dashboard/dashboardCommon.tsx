@@ -18,12 +18,7 @@ export async function DashboardSectionHeader({
       </RyogoH4>
       {href && (
         <Link href={href}>
-          <RyogoEnclosedIcon
-            icon={ChevronRight}
-            size="sm"
-            color="slate"
-            bgColor="slate"
-          />
+          <RyogoEnclosedIcon icon={ChevronRight} size="sm" />
         </Link>
       )}
     </SectionRowWrapper>

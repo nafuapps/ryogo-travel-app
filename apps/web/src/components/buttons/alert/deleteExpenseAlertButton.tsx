@@ -16,12 +16,14 @@ export default function DeleteExpenseAlertButton({
   expenseId,
   agencyId,
   bookingAssignedUserId,
+  disabled,
   isRider,
 }: {
   bookingId: string
   expenseId: string
   agencyId: string
   bookingAssignedUserId: string
+  disabled: boolean
   isRider?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
@@ -60,7 +62,12 @@ export default function DeleteExpenseAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoGhostButton label={t("Label")} labelColor="light" type="button" />
+        <RyogoGhostButton
+          label={t("Label")}
+          labelColor="light"
+          type="button"
+          disabled={disabled}
+        />
       }
     >
       <RyogoDestructiveButton

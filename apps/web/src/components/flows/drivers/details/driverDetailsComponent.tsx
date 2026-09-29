@@ -9,6 +9,7 @@ import {
 } from "@/components/page/pageWrappers"
 import moment from "moment"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
+import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 
 export default async function DriverDetailsComponent({
   email,
@@ -18,6 +19,7 @@ export default async function DriverDetailsComponent({
   allowance,
   ratings,
   userId,
+  visitingLocation,
 }: {
   email: string
   createdAt: Date
@@ -26,6 +28,7 @@ export default async function DriverDetailsComponent({
   allowance: number
   ratings: number[] | null
   userId: string
+  visitingLocation: NonNullable<FindDriverDetailsByIdType>["visitingLocation"]
 }) {
   const t = await getTranslations("Dashboard.DriverDetails")
   return (
@@ -49,6 +52,12 @@ export default async function DriverDetailsComponent({
           <DetailsLineWrapper label={t("Rating")}>
             <RyogoAverageRatingDisplay ratings={ratings} />
           </DetailsLineWrapper>
+        )}
+        {visitingLocation && (
+          <DetailsLineItem
+            label={t("VisitingLocation")}
+            value={visitingLocation.city + ", " + visitingLocation.state}
+          />
         )}
       </DetailsContentWrapper>
     </DetailsBorderWrapper>

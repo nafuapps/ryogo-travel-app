@@ -201,6 +201,7 @@ export default function ModifyCustomMissionPageComponent({
             missionId={mission.id}
             userId={mission.userId}
             agencyId={mission.agencyId}
+            disabled={form.formState.isSubmitting}
             isRider
           />
         </StickyActionWrapper>

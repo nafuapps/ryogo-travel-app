@@ -11,18 +11,11 @@ import {
   SectionHeaderWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { CalendarX, TreePalm } from "lucide-react"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import DriverLeaveComponent from "@/components/flows/drivers/leaves/driverLeaveComponent"
-import { differenceInDays } from "date-fns"
-import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import TakeDriverLeaveAlertButton from "@/components/buttons/alert/takeDriverLeaveAlertButton"
-import FinishDriverLeaveAlertButton from "@/components/buttons/alert/finishDriverLeaveAlertButton"
 
 export default async function AllDriverLeavesPageComponent({
   leaves,
@@ -36,19 +29,6 @@ export default async function AllDriverLeavesPageComponent({
   isOwner: boolean
 }) {
   const t = await getTranslations("Dashboard.DriverLeaves")
-
-  const today = new Date()
-
-  const isOnLeave = driver.status === DriverStatusEnum.LEAVE
-  const isAvailable = driver.status === DriverStatusEnum.AVAILABLE
-  const isOnTrip = driver.status === DriverStatusEnum.ON_TRIP
-
-  const currentLeave = leaves.find(
-    (leave) =>
-      differenceInDays(today, leave.startDate) >= 0 &&
-      differenceInDays(today, leave.endDate) <= 0 &&
-      !leave.isCompleted,
-  )
 
   return (
     <PageWrapper id="DriverLeavesPage">
@@ -65,6 +45,7 @@ export default async function AllDriverLeavesPageComponent({
                 key={leave.id}
                 leave={leave}
                 canModify={isOwner || currentUserId === leave.addedByUserId}
+                driver={driver}
               />
             ))}
           </TileGridWrapper>
@@ -73,25 +54,6 @@ export default async function AllDriverLeavesPageComponent({
         )}
       </SectionWrapper>
       <StickyActionWrapper>
-        {currentLeave && isOnTrip && (
-          <RyogoOutlineButton label={t("OnTrip")} disabled />
-        )}
-        {currentLeave && isAvailable && (
-          <TakeDriverLeaveAlertButton
-            userId={currentLeave.addedByUserId}
-            driverId={driver.id}
-            leaveId={currentLeave.id}
-            agencyId={driver.agencyId}
-          />
-        )}
-        {currentLeave && isOnLeave && (
-          <FinishDriverLeaveAlertButton
-            userId={currentLeave.addedByUserId}
-            driverId={driver.id}
-            leaveId={currentLeave.id}
-            agencyId={driver.agencyId}
-          />
-        )}
         <Link
           href={`/dashboard/drivers/${driver.id}/leaves/new`}
           className="w-full"

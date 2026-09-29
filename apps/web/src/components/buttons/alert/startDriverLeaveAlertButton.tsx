@@ -5,35 +5,31 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { deleteMissionAction } from "@/app/actions/missions/deleteMissionAction"
-import {
-  RyogoGhostButton,
-  RyogoDestructiveButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { startDriverLeaveAction } from "@/app/actions/drivers/startDriverLeaveAction"
 
-export default function DeleteMissionAlertButton({
-  missionId,
+export default function StartDriverLeaveAlertButton({
   userId,
+  driverId,
+  leaveId,
   agencyId,
-  disabled,
-  isRider,
 }: {
-  missionId: string
   userId: string
+  driverId: string
+  leaveId: string
   agencyId: string
-  disabled: boolean
-  isRider?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.DeleteMission")
+  const t = useTranslations("Dashboard.Buttons.StartDriverLeave")
 
   const router = useRouter()
 
-  async function deleteMission() {
+  //Start Driver Leave
+  async function startLeave() {
     startCancelTransition(async () => {
-      if (await deleteMissionAction(missionId, userId, agencyId)) {
+      if (await startDriverLeaveAction(userId, driverId, leaveId, agencyId)) {
         toast.success(t("Success"))
-        router.replace(isRider ? `/rider/myMissions` : `/dashboard/missions`)
+        router.refresh()
       } else {
         toast.error(t("Error"))
       }
@@ -45,17 +41,10 @@ export default function DeleteMissionAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={
-        <RyogoGhostButton
-          label={t("Label")}
-          labelColor="light"
-          type="button"
-          disabled={disabled}
-        />
-      }
+      labelChild={<RyogoDefaultButton label={t("Label")} type="button" />}
     >
-      <RyogoDestructiveButton
-        onClick={deleteMission}
+      <RyogoDefaultButton
+        onClick={startLeave}
         disabled={isPending}
         showSpinner={isPending}
         label={isPending ? t("Loading") : t("YesCTA")}

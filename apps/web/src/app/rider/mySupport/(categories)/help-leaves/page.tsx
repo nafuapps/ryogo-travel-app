@@ -6,7 +6,7 @@ import {
   SideWrapper,
 } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
-import { ChevronRight, StickyNotes, Telescope } from "lucide-react"
+import { ChevronRight, TreePalm, Telescope } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportQuickActionLinkButton, {
@@ -28,17 +28,13 @@ import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-} from "@/components/flows/support/supportTableWrapper"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import SupportRelatedArticleLinkButton, {
   SupportRelatedArticleType,
 } from "@/components/flows/support/supportRelatedArticleType"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 
-/* //TODO: Leave support page
+/*
   - Overview
   - Marking Leave
 */
@@ -49,7 +45,7 @@ export const metadata: Metadata = {
 }
 
 export default async function MySupportHelpLeavePage() {
-  const t = await getTranslations("Rider.MySupportLeaveHelp")
+  const t = await getTranslations("Rider.MySupportLeavesHelp")
 
   const contentItems: SupportContentItemType[] = [
     {
@@ -61,7 +57,7 @@ export default async function MySupportHelpLeavePage() {
     {
       id: "marking",
       title: t("Marking.Title"),
-      icon: StickyNotes,
+      icon: TreePalm,
       content: <MarkingContent />,
     },
   ]
@@ -167,86 +163,65 @@ export default async function MySupportHelpLeavePage() {
 }
 
 async function OverviewContent() {
-  const t = await getTranslations("Rider.MySupportLeaveHelp.Overview")
+  const t = await getTranslations("Rider.MySupportLeavesHelp.Overview")
   return (
     <>
       <SupportContentSectionWrapper title={t("KnowLeave.Title")}>
         <RyogoCaption color="slate">{t("KnowLeave.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("KnowLeave.AllLeaves")}</RyogoCaption>
-        {/* //TODO: Add my leaves page snapshot */}
+        {/* //TODO: All leaves page snapshot */}
         <RyogoImage
           alt="Leaves"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
         />
-        <SupportContentCTALinkButton
-          href={"/rider/myLeave"}
-          label={t("KnowLeave.CTA")}
-        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("LeaveDetails.Title")}>
         <RyogoCaption color="slate">
           {t("LeaveDetails.Description")}
         </RyogoCaption>
-        {/* //TODO: Add LeaveDetails page snapshot */}
-        <RyogoImage
-          alt="LeaveDetails"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
-        <SupportTableWrapper label={t("LeaveDetails.Caption")}>
-          <SupportTableTextRow
-            label={t("LeaveDetails.Basic")}
-            desc={t("LeaveDetails.BasicDesc")}
-          />
-          <SupportTableTextRow
-            label={t("LeaveDetails.Specific")}
-            desc={t("LeaveDetails.SpecificDesc")}
-          />
-          <SupportTableTextRow
-            label={t("LeaveDetails.Documents")}
-            desc={t("LeaveDetails.DocumentsDesc")}
-          />
-          <SupportTableTextRow
-            label={t("LeaveDetails.Type")}
-            desc={t("LeaveDetails.TypeDesc")}
-          />
-          <SupportTableTextRow
-            label={t("LeaveDetails.Rate")}
-            desc={t("LeaveDetails.RateDesc")}
-          />
-          <SupportTableTextRow
-            label={t("LeaveDetails.Rating")}
-            desc={t("LeaveDetails.RatingDesc")}
-          />
-        </SupportTableWrapper>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("LeaveCreation.Title")}>
+        <RyogoCaption color="slate">
+          {t("LeaveCreation.Description")}
+        </RyogoCaption>
       </SupportContentSectionWrapper>
     </>
   )
 }
-async function DocumentsContent() {
-  const t = await getTranslations("Rider.MySupportLeaveHelp.Documents")
+async function MarkingContent() {
+  const t = await getTranslations("Rider.MySupportLeavesHelp.Marking")
   return (
-    <SupportContentSectionWrapper title={t("WhatIsDocument.Title")}>
-      <RyogoCaption color="slate">
-        {t("WhatIsDocument.Description")}
-      </RyogoCaption>
-      <RyogoCaption color="slate">
-        {t("WhatIsDocument.ExpiryAlerts")}
-      </RyogoCaption>
-      {/* //TODO: Add expiry alert snapshot */}
-      <RyogoImage
-        alt="ExpiryAlert"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
-      <SupportContentCTALinkButton
-        href={"/rider/myMissions"}
-        label={t("WhatIsDocument.CTA")}
-      />
-    </SupportContentSectionWrapper>
+    <>
+      <SupportContentSectionWrapper title={t("GoingOnLeave.Title")}>
+        <RyogoCaption color="slate">
+          {t("GoingOnLeave.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("GoingOnLeave.Process")}</RyogoCaption>
+        {/* //TODO: Add start leave snapshot */}
+        <RyogoImage
+          alt="GoingOnLeave"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportWarningWrapper text={t("GoingOnLeave.Warning")} />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("BackFromLeave.Title")}>
+        <RyogoCaption color="slate">
+          {t("BackFromLeave.Description")}
+        </RyogoCaption>
+        <RyogoCaption color="slate">{t("BackFromLeave.Process")}</RyogoCaption>
+        {/* //TODO: Add end leave snapshot */}
+        <RyogoImage
+          alt="BackFromLeave"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportWarningWrapper text={t("BackFromLeave.Warning")} />
+      </SupportContentSectionWrapper>
+    </>
   )
 }

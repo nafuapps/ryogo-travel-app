@@ -1,7 +1,9 @@
 "use client"
 
+import FinishDriverLeaveAlertButton from "@/components/buttons/alert/finishDriverLeaveAlertButton"
+import StartDriverLeaveAlertButton from "@/components/buttons/alert/startDriverLeaveAlertButton"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -11,7 +13,14 @@ import { LeaveStatusPill } from "@/components/pills/ryogoPills"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
 import RyogoTag from "@/components/tags/ryogoTag"
-import { FindAllDriverLeavesByDriverIdType } from "@ryogo-travel-app/api/services/driver.services"
+import {
+  FindAllDriverLeavesByDriverIdType,
+  FindDriverDetailsByIdType,
+} from "@ryogo-travel-app/api/services/driver.services"
+import {
+  DriverStatusEnum,
+  DriverLeaveStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import {
   MessageSquareQuote,
@@ -25,13 +34,30 @@ import { useState } from "react"
 
 export default function DriverLeaveComponent({
   leave,
+  driver,
   canModify,
+  isRider,
 }: {
   leave: FindAllDriverLeavesByDriverIdType[number]
+  driver: NonNullable<FindDriverDetailsByIdType>
+
   canModify?: boolean
+  isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.DriverLeaves")
   const [open, setOpen] = useState(canModify)
+
+  const today = new Date()
+
+  const canStart =
+    (canModify || isRider) &&
+    leave.status === DriverLeaveStatusEnum.PENDING &&
+    differenceInDays(today, leave.startDate) >= 0
+
+  const canEnd =
+    (canModify || isRider) &&
+    leave.status === DriverLeaveStatusEnum.ONGOING &&
+    driver.status === DriverStatusEnum.LEAVE
 
   return (
     <SectionColWrapper className="w-full p-4 lg:p-5 border rounded-md">
@@ -47,12 +73,8 @@ export default function DriverLeaveComponent({
         <DateWrapper date={leave.endDate} hideYear />
       </SectionRowWrapper>
       <SectionRowWrapper className="items-center justify-between">
-        <LeaveStatusPill
-          status={leave.isCompleted ? t("Completed") : t("Pending")}
-          completed={leave.isCompleted}
-          className="w-full"
-        />
-        <RyogoIcon
+        <LeaveStatusPill status={leave.status} />
+        <RyogoEnclosedIcon
           onClick={() => setOpen(!open)}
           size="sm"
           icon={open ? ChevronUp : ChevronDown}
@@ -60,6 +82,30 @@ export default function DriverLeaveComponent({
           thick
         />
       </SectionRowWrapper>
+      {canStart &&
+        (driver.status !== DriverStatusEnum.ON_TRIP ? (
+          <StartDriverLeaveAlertButton
+            userId={isRider ? driver.userId : leave.addedByUserId}
+            driverId={driver.id}
+            leaveId={leave.id}
+            agencyId={driver.agencyId}
+          />
+        ) : (
+          <RyogoOutlineButton
+            label={t("OnTrip")}
+            labelColor="light"
+            className="grow"
+            disabled
+          />
+        ))}
+      {canEnd && (
+        <FinishDriverLeaveAlertButton
+          userId={isRider ? driver.userId : leave.addedByUserId}
+          driverId={driver.id}
+          leaveId={leave.id}
+          agencyId={driver.agencyId}
+        />
+      )}
       {open && (
         <>
           {leave.remarks && (

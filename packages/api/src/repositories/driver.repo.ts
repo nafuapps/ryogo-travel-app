@@ -1,6 +1,7 @@
 import { db } from "@ryogo-travel-app/db"
 import {
   BookingStatusEnum,
+  DriverLeaveStatusEnum,
   drivers,
   DriverStatusEnum,
   InsertDriverType,
@@ -20,6 +21,12 @@ export const driverRepository = {
           columns: {
             photoUrl: true,
             email: true,
+          },
+        },
+        visitingLocation: {
+          columns: {
+            city: true,
+            state: true,
           },
         },
       },
@@ -89,7 +96,8 @@ export const driverRepository = {
             startDate: true,
             endDate: true,
           },
-          where: (driverLeaves, { eq }) => eq(driverLeaves.isCompleted, false),
+          where: (driverLeaves) =>
+            not(eq(driverLeaves.status, DriverLeaveStatusEnum.COMPLETED)),
         },
       },
     })
@@ -229,7 +237,7 @@ export const driverRepository = {
           },
           where: (driverLeaves) =>
             and(
-              eq(driverLeaves.isCompleted, false),
+              not(eq(driverLeaves.status, DriverLeaveStatusEnum.COMPLETED)),
               or(
                 and(
                   lte(driverLeaves.startDate, queryEndDate),

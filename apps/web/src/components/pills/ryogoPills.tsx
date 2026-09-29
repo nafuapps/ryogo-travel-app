@@ -2,6 +2,7 @@ import {
   AgencyStatusEnum,
   BookingStatusEnum,
   CustomerStatusEnum,
+  DriverLeaveStatusEnum,
   DriverStatusEnum,
   OrderStatusEnum,
   PaymentStatusEnum,
@@ -10,6 +11,7 @@ import {
   TripLogTypesEnum,
   UserRolesEnum,
   UserStatusEnum,
+  VehicleRepairStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { RyogoCaption, RyogoTiny } from "@/components/typography"
@@ -238,28 +240,31 @@ export function TripLogStatusPill(
 }
 
 export function LeaveStatusPill(
-  props: { status: string; completed: boolean } & RyogoPillType,
+  props: { status: DriverLeaveStatusEnum } & RyogoPillType,
 ) {
-  return (
-    <RyogoPill
-      label={props.status}
-      bgColor={props.completed ? "green" : "yellow"}
-    />
-  )
+  switch (props.status) {
+    case DriverLeaveStatusEnum.COMPLETED:
+      return <RyogoPill label={props.status} bgColor={"green"} />
+    case DriverLeaveStatusEnum.ONGOING:
+      return <RyogoPill label={props.status} bgColor={"yellow"} />
+    case DriverLeaveStatusEnum.PENDING:
+      return <RyogoPill label={props.status} bgColor={"slate"} />
+  }
 }
 
 export function RepairStatusPill(
   props: {
-    status: string
-    completed: boolean
+    status: VehicleRepairStatusEnum
   } & RyogoPillType,
 ) {
-  return (
-    <RyogoPill
-      label={props.status}
-      bgColor={props.completed ? "green" : "yellow"}
-    />
-  )
+  switch (props.status) {
+    case VehicleRepairStatusEnum.COMPLETED:
+      return <RyogoPill label={props.status} bgColor={"green"} />
+    case VehicleRepairStatusEnum.ONGOING:
+      return <RyogoPill label={props.status} bgColor={"yellow"} />
+    case VehicleRepairStatusEnum.PENDING:
+      return <RyogoPill label={props.status} bgColor={"slate"} />
+  }
 }
 
 export function SupportTicketStatusPill(

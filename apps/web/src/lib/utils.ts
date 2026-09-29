@@ -12,7 +12,7 @@ import {
   UserLangEnum,
 } from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
-import { differenceInDays, differenceInMinutes } from "date-fns"
+import { addDays, differenceInDays, differenceInMinutes } from "date-fns"
 import { twMerge } from "tailwind-merge"
 import {
   DASHBOARD_USER_AWAY_MINUTES,
@@ -78,30 +78,47 @@ export function getDisplayTime(time: string) {
   return moment(time, "hh:mm:ss").format("h:mm a")
 }
 
-export function getCombinedDateTime(date: Date, time: string | null) {
-  if (!time) {
-    return date
+export function getDisplayEndDate(
+  startDate: Date,
+  endDate: Date,
+  actualStartDate: Date | null,
+  actualEndDate: Date | null,
+) {
+  if (actualEndDate) {
+    return actualEndDate
   }
-  // 1. Ensure dateObj is a Date object (make a copy to avoid mutation)
-  const combinedDateTime = new Date(date.getTime())
-
-  // 2. Parse the time string (assuming "HH:MM" or "HH:MM:SS" format)
-  const timeParts = time.split(":")
-  if (!timeParts[0] || !timeParts[1]) {
-    return date
+  if (actualStartDate) {
+    if (differenceInDays(actualStartDate, endDate) > 0) {
+      return addDays(actualStartDate, differenceInDays(endDate, startDate))
+    }
   }
-  const hours = parseInt(timeParts[0], 10)
-  const minutes = parseInt(timeParts[1], 10)
-  const seconds = parseInt(timeParts[2] || "0", 10) // Default to 0 seconds if not provided
-
-  // 3. Set the time components on the combined date object (local time)
-  combinedDateTime.setHours(hours)
-  combinedDateTime.setMinutes(minutes)
-  combinedDateTime.setSeconds(seconds)
-  combinedDateTime.setMilliseconds(0) // Optional: reset milliseconds
-
-  return combinedDateTime
+  return endDate
 }
+
+// export function getCombinedDateTime(date: Date, time: string | null) {
+//   if (!time) {
+//     return date
+//   }
+//   // 1. Ensure dateObj is a Date object (make a copy to avoid mutation)
+//   const combinedDateTime = new Date(date.getTime())
+
+//   // 2. Parse the time string (assuming "HH:MM" or "HH:MM:SS" format)
+//   const timeParts = time.split(":")
+//   if (!timeParts[0] || !timeParts[1]) {
+//     return date
+//   }
+//   const hours = parseInt(timeParts[0], 10)
+//   const minutes = parseInt(timeParts[1], 10)
+//   const seconds = parseInt(timeParts[2] || "0", 10) // Default to 0 seconds if not provided
+
+//   // 3. Set the time components on the combined date object (local time)
+//   combinedDateTime.setHours(hours)
+//   combinedDateTime.setMinutes(minutes)
+//   combinedDateTime.setSeconds(seconds)
+//   combinedDateTime.setMilliseconds(0) // Optional: reset milliseconds
+
+//   return combinedDateTime
+// }
 
 //Generating file upload path names
 export function generateAgencyLogoPathName(agencyId: string, logo: File) {

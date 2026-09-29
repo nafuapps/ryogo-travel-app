@@ -23,7 +23,7 @@ export default function OrdersPageComponent({
   const t = useTranslations("Dashboard.AccountSubscriptionOrders")
 
   const searchParams = useSearchParams()
-  const status = searchParams.get("status")
+  const status = searchParams.get("status") as OrderStatusEnum
 
   //Filter orders by status searchParam in URL
   const filteredOrders = status

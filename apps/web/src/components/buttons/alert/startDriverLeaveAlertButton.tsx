@@ -5,7 +5,10 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { startDriverLeaveAction } from "@/app/actions/drivers/startDriverLeaveAction"
 
 export default function StartDriverLeaveAlertButton({
@@ -41,7 +44,13 @@ export default function StartDriverLeaveAlertButton({
       title={t("Title")}
       desc={t("Desc")}
       noCTA={t("NoCTA")}
-      labelChild={<RyogoDefaultButton label={t("Label")} type="button" />}
+      labelChild={
+        <RyogoOutlineButton
+          label={t("Label")}
+          type="button"
+          className="w-full"
+        />
+      }
     >
       <RyogoDefaultButton
         onClick={startLeave}

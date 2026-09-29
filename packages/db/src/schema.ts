@@ -1488,6 +1488,8 @@ export const vehicleRepairs = pgTable(
       .notNull(),
     startDate: date("start_date", { mode: "date" }).notNull(),
     endDate: date("end_date", { mode: "date" }).notNull(),
+    actualStartDate: date("actual_start_date", { mode: "date" }),
+    actualEndDate: date("actual_end_date", { mode: "date" }),
     cost: integer("cost"),
     status: vehicleRepairStatus("status")
       .notNull()
@@ -1497,6 +1499,10 @@ export const vehicleRepairs = pgTable(
   },
   (t) => [
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
+    check(
+      "actual_end_date >= actual_start_date",
+      sql`${t.actualEndDate} >= ${t.actualStartDate}`,
+    ),
     check(
       "cost >= 0 and < 1000000",
       sql`${t.cost} >= 0 AND ${t.cost} < 1000000`,
@@ -1555,6 +1561,8 @@ export const driverLeaves = pgTable(
       .notNull(),
     startDate: date("start_date", { mode: "date" }).notNull(),
     endDate: date("end_date", { mode: "date" }).notNull(),
+    actualStartDate: date("actual_start_date", { mode: "date" }),
+    actualEndDate: date("actual_end_date", { mode: "date" }),
     status: driverLeaveStatus("status")
       .notNull()
       .default(DriverLeaveStatusEnum.PENDING),
@@ -1563,6 +1571,10 @@ export const driverLeaves = pgTable(
   },
   (t) => [
     check("end_date >= start_date", sql`${t.endDate} >= ${t.startDate}`),
+    check(
+      "actual_end_date >= actual_start_date",
+      sql`${t.actualEndDate} >= ${t.actualStartDate}`,
+    ),
     index("driver_leaves_agency_driver_idx").on(t.driverId, t.agencyId), // to quickly filter driver leaves by driver in an agency
     index("driver_leaves_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter driver leaves added by a user in an agency
     index("driver_leaves_agency_start_date_idx").on(t.startDate, t.agencyId), // to quickly filter driver leaves by start date in an agency

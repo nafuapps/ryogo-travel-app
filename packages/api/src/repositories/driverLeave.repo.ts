@@ -121,7 +121,7 @@ export const driverLeaveRepository = {
       .update(driverLeaves)
       .set({
         status: DriverLeaveStatusEnum.ONGOING,
-        startDate: new Date(),
+        actualStartDate: new Date(),
       })
       .where(eq(driverLeaves.id, id))
       .returning()
@@ -133,7 +133,7 @@ export const driverLeaveRepository = {
       .update(driverLeaves)
       .set({
         status: DriverLeaveStatusEnum.COMPLETED,
-        endDate: new Date(),
+        actualEndDate: new Date(),
       })
       .where(eq(driverLeaves.id, id))
       .returning()

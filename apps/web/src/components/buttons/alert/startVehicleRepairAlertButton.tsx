@@ -47,7 +47,11 @@ export default function StartVehicleRepairAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoOutlineButton label={t("Label")} type="button" className="grow" />
+        <RyogoOutlineButton
+          label={t("Label")}
+          type="button"
+          className="w-full"
+        />
       }
     >
       <RyogoDefaultButton

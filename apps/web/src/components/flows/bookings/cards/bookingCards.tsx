@@ -24,7 +24,7 @@ import {
   FindUserCompletedBookingsByIdType,
 } from "@ryogo-travel-app/api/services/user.services"
 import { TripLogStatusPill } from "@/components/pills/ryogoPills"
-import { getCombinedDateTime } from "@/lib/utils"
+import { getDisplayTime } from "@/lib/utils"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   Ban,
@@ -45,12 +45,8 @@ import {
   FindOngoingTripsType,
   FindUpcomingBookingsNextDaysType,
 } from "@ryogo-travel-app/api/services/booking.services"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
-import GetVehicleEnclosedIcon, {
-  getVehicleIcon,
-} from "@/components/icons/vehicleIcon"
+import { getVehicleIcon } from "@/components/icons/vehicleIcon"
 import { BookingTypeEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   RyogoDefaultButton,
@@ -315,10 +311,6 @@ export function UpcomingBookingCard({
   startLabel?: string
 }) {
   const t = useTranslations("Components.BookingCards")
-  const combinedDateTime = getCombinedDateTime(
-    booking.startDate,
-    booking.startTime,
-  )
 
   return (
     <BookingCardWrapper
@@ -353,7 +345,11 @@ export function UpcomingBookingCard({
         )}
         {booking.startTime && (
           <RyogoTag
-            label={moment(combinedDateTime).format("LT")}
+            label={
+              moment(booking.startDate).format("DD MMM") +
+              " - " +
+              getDisplayTime(booking.startTime)
+            }
             icon={Clock}
             className="flex-row-reverse"
           />

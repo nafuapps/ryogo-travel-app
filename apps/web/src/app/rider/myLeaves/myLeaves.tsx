@@ -1,4 +1,7 @@
+"use client"
+
 import DriverLeaveComponent from "@/components/flows/drivers/leaves/driverLeaveComponent"
+import DriverLeavesFilterSelect from "@/components/flows/drivers/leaves/driverLeavesFilter"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import {
@@ -7,34 +10,47 @@ import {
   SectionHeaderWrapper,
   TileGridWrapper,
   StickyActionWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import {
   FindAllDriverLeavesByDriverIdType,
   FindDriverByUserIdType,
 } from "@ryogo-travel-app/api/services/driver.services"
+import { DriverLeaveStatusEnum } from "@ryogo-travel-app/db/schema"
 import { TreePalm, CalendarX } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
+import { useSearchParams } from "next/navigation"
 
-export default async function MyLeavesPageComponent({
+export default function MyLeavesPageComponent({
   leaves,
   driver,
 }: {
   leaves: FindAllDriverLeavesByDriverIdType
   driver: NonNullable<FindDriverByUserIdType>
 }) {
-  const t = await getTranslations("Rider.MyLeaves")
+  const t = useTranslations("Dashboard.DriverLeaves")
+
+  const searchParams = useSearchParams()
+  const status = searchParams.get("status") as DriverLeaveStatusEnum
+
+  const filteredLeaves = status
+    ? leaves.filter((leave) => leave.status === status)
+    : leaves
 
   return (
     <PageWrapper id="DriverLeavesPage">
       <SectionWrapper id="DriverLeavesList">
-        <SectionHeaderWrapper
-          icon={TreePalm}
-          label={t("Title")}
-          count={leaves.length}
-        />
-        {leaves.length > 0 ? (
+        <SectionRowWrapper className="items-center justify-between">
+          <SectionHeaderWrapper
+            icon={TreePalm}
+            label={t("Title")}
+            count={filteredLeaves.length}
+          />
+          <DriverLeavesFilterSelect />
+        </SectionRowWrapper>
+        {filteredLeaves.length > 0 ? (
           <TileGridWrapper>
-            {leaves.map((leave) => (
+            {filteredLeaves.map((leave) => (
               <DriverLeaveComponent
                 key={leave.id}
                 leave={leave}

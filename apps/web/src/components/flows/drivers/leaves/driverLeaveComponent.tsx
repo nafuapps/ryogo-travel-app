@@ -13,8 +13,10 @@ import { LeaveStatusPill } from "@/components/pills/ryogoPills"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
 import RyogoTag from "@/components/tags/ryogoTag"
+import { getDisplayEndDate } from "@/lib/utils"
 import {
   FindAllDriverLeavesByDriverIdType,
+  FindDriverByUserIdType,
   FindDriverDetailsByIdType,
 } from "@ryogo-travel-app/api/services/driver.services"
 import {
@@ -39,38 +41,51 @@ export default function DriverLeaveComponent({
   isRider,
 }: {
   leave: FindAllDriverLeavesByDriverIdType[number]
-  driver: NonNullable<FindDriverDetailsByIdType>
-
+  driver:
+    | NonNullable<FindDriverByUserIdType>
+    | NonNullable<FindDriverDetailsByIdType>
   canModify?: boolean
   isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.DriverLeaves")
-  const [open, setOpen] = useState(canModify)
+  const [open, setOpen] = useState(false)
 
   const today = new Date()
 
-  const canStart =
+  const mayStart =
     (canModify || isRider) &&
     leave.status === DriverLeaveStatusEnum.PENDING &&
     differenceInDays(today, leave.startDate) >= 0
+
+  const canStart = mayStart && driver.status === DriverStatusEnum.AVAILABLE
+  const onTrip = mayStart && driver.status === DriverStatusEnum.ON_TRIP
+  const alreadyOnLeave = mayStart && driver.status === DriverStatusEnum.LEAVE
 
   const canEnd =
     (canModify || isRider) &&
     leave.status === DriverLeaveStatusEnum.ONGOING &&
     driver.status === DriverStatusEnum.LEAVE
 
+  const displayStartDate = leave.actualStartDate ?? leave.startDate
+  const displayEndDate = getDisplayEndDate(
+    leave.startDate,
+    leave.endDate,
+    leave.actualStartDate,
+    leave.actualEndDate,
+  )
+
   return (
     <SectionColWrapper className="w-full p-4 lg:p-5 border rounded-md">
       <SectionRowWrapper className="items-center justify-between">
-        <DateWrapper date={leave.startDate} hideYear />
+        <DateWrapper date={displayStartDate} hideYear />
         <SectionColWrapper small className="w-full items-center">
           <RyogoRoundedDashedTag
             label={t("Days", {
-              days: differenceInDays(leave.endDate, leave.startDate) + 1,
+              days: differenceInDays(displayEndDate, displayStartDate) + 1,
             })}
           />
         </SectionColWrapper>
-        <DateWrapper date={leave.endDate} hideYear />
+        <DateWrapper date={displayEndDate} hideYear />
       </SectionRowWrapper>
       <SectionRowWrapper className="items-center justify-between">
         <LeaveStatusPill status={leave.status} />
@@ -82,22 +97,30 @@ export default function DriverLeaveComponent({
           thick
         />
       </SectionRowWrapper>
-      {canStart &&
-        (driver.status !== DriverStatusEnum.ON_TRIP ? (
-          <StartDriverLeaveAlertButton
-            userId={isRider ? driver.userId : leave.addedByUserId}
-            driverId={driver.id}
-            leaveId={leave.id}
-            agencyId={driver.agencyId}
-          />
-        ) : (
-          <RyogoOutlineButton
-            label={t("OnTrip")}
-            labelColor="light"
-            className="grow"
-            disabled
-          />
-        ))}
+      {canStart && (
+        <StartDriverLeaveAlertButton
+          userId={isRider ? driver.userId : leave.addedByUserId}
+          driverId={driver.id}
+          leaveId={leave.id}
+          agencyId={driver.agencyId}
+        />
+      )}
+      {onTrip && (
+        <RyogoOutlineButton
+          label={t("OnTrip")}
+          labelColor="light"
+          className="grow"
+          disabled
+        />
+      )}
+      {alreadyOnLeave && (
+        <RyogoOutlineButton
+          label={t("AlreadyOnLeave")}
+          labelColor="yellow"
+          className="grow"
+          disabled
+        />
+      )}
       {canEnd && (
         <FinishDriverLeaveAlertButton
           userId={isRider ? driver.userId : leave.addedByUserId}

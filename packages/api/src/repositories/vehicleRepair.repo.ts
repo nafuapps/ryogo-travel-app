@@ -117,7 +117,7 @@ export const vehicleRepairRepository = {
       .update(vehicleRepairs)
       .set({
         status: VehicleRepairStatusEnum.ONGOING,
-        startDate: new Date(),
+        actualStartDate: new Date(),
       })
       .where(eq(vehicleRepairs.id, id))
       .returning()
@@ -129,7 +129,7 @@ export const vehicleRepairRepository = {
       .update(vehicleRepairs)
       .set({
         status: VehicleRepairStatusEnum.COMPLETED,
-        endDate: new Date(),
+        actualEndDate: new Date(),
       })
       .where(eq(vehicleRepairs.id, id))
       .returning()

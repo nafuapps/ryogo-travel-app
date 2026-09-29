@@ -14,6 +14,7 @@ import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
 import RyogoTag from "@/components/tags/ryogoTag"
 import { RyogoSmall } from "@/components/typography"
+import { getDisplayEndDate } from "@/lib/utils"
 import {
   FindAllVehicleRepairsByVehicleIdType,
   FindVehicleDetailsByIdType,
@@ -46,20 +47,33 @@ export default function VehicleRepairComponent({
   const [open, setOpen] = useState(false)
   const today = new Date()
 
-  const canStart =
+  const mayStart =
     canModify &&
     repair.status === VehicleRepairStatusEnum.PENDING &&
     differenceInDays(today, repair.startDate) >= 0
+
+  const canStart = mayStart && vehicle.status === VehicleStatusEnum.AVAILABLE
+  const onTrip = mayStart && vehicle.status === VehicleStatusEnum.ON_TRIP
+  const alreadyInRepair =
+    mayStart && vehicle.status === VehicleStatusEnum.REPAIR
 
   const canEnd =
     canModify &&
     repair.status === VehicleRepairStatusEnum.ONGOING &&
     vehicle.status === VehicleStatusEnum.REPAIR
 
+  const displayStartDate = repair.actualStartDate ?? repair.startDate
+  const displayEndDate = getDisplayEndDate(
+    repair.startDate,
+    repair.endDate,
+    repair.actualStartDate,
+    repair.actualEndDate,
+  )
+
   return (
     <SectionColWrapper className="w-full p-4 lg:p-5 border rounded-md">
       <SectionRowWrapper className="items-center justify-between">
-        <DateWrapper date={repair.startDate} hideYear />
+        <DateWrapper date={displayStartDate} hideYear />
         <SectionColWrapper small className="w-full items-center">
           {repair.cost !== null && repair.cost > 0 && (
             <RyogoSmall color="slate">
@@ -68,11 +82,11 @@ export default function VehicleRepairComponent({
           )}
           <RyogoRoundedDashedTag
             label={t("Days", {
-              days: differenceInDays(repair.endDate, repair.startDate) + 1,
+              days: differenceInDays(displayEndDate, displayStartDate) + 1,
             })}
           />
         </SectionColWrapper>
-        <DateWrapper date={repair.endDate} hideYear />
+        <DateWrapper date={displayEndDate} hideYear />
       </SectionRowWrapper>
       <SectionRowWrapper className="items-center justify-between">
         <RepairStatusPill status={repair.status} />
@@ -84,22 +98,30 @@ export default function VehicleRepairComponent({
           thick
         />
       </SectionRowWrapper>
-      {canStart &&
-        (vehicle.status !== VehicleStatusEnum.ON_TRIP ? (
-          <StartVehicleRepairAlertButton
-            userId={repair.addedByUserId}
-            vehicleId={vehicle.id}
-            repairId={repair.id}
-            agencyId={vehicle.agencyId}
-          />
-        ) : (
-          <RyogoOutlineButton
-            label={t("OnTrip")}
-            labelColor="light"
-            className="grow"
-            disabled
-          />
-        ))}
+      {canStart && (
+        <StartVehicleRepairAlertButton
+          userId={repair.addedByUserId}
+          vehicleId={vehicle.id}
+          repairId={repair.id}
+          agencyId={vehicle.agencyId}
+        />
+      )}
+      {onTrip && (
+        <RyogoOutlineButton
+          label={t("OnTrip")}
+          labelColor="light"
+          className="grow"
+          disabled
+        />
+      )}
+      {alreadyInRepair && (
+        <RyogoOutlineButton
+          label={t("AlreadyInRepair")}
+          labelColor="yellow"
+          className="grow"
+          disabled
+        />
+      )}
       {canEnd && (
         <FinishVehicleRepairAlertButton
           userId={repair.addedByUserId}

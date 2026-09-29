@@ -1963,8 +1963,9 @@
       "Completed": "COMPLETED",
       "Pending": "PENDING",
       "Edit": "Edit",
-      "OnTrip": "Cannot start repair during ongoing trip",
-      "NoRepairs": "No vehicle repairs"
+      "OnTrip": "Cannot start repair during ongoing trip!",
+      "AlreadyInRepair": "Vehicle is already in repair!",
+      "NoRepairs": "No vehicle repairs found.. try changing the filter"
     },
     "NewVehicleRepair": {
       "Title": "Add Vehicle Repair",
@@ -2275,8 +2276,10 @@
       "Completed": "COMPLETED",
       "Pending": "PENDING",
       "Edit": "Edit",
-      "OnTrip": "Cannot start leave during ongoing trip",
-      "NoLeaves": "No driver leaves"
+      "OnTrip": "Cannot start leave during ongoing trip!",
+      "AlreadyOnLeave": "Driver is already on leave!",
+      "StatusFilter": "Status Filter",
+      "NoLeaves": "No driver leaves found.. try changing the filter"
     },
     "NewDriverLeave": {
       "Title": "Add Driver Leave",
@@ -5390,10 +5393,6 @@
       "PUC": "PUC",
       "RC": "Registration",
       "NoVehicleAssigned": "No vehicle assigned."
-    },
-    "MyLeaves": {
-      "Title": "Driver Leaves",
-      "NoLeaves": "No leaves found"
     },
     "MyProfile": {
       "License": "Driver's License",

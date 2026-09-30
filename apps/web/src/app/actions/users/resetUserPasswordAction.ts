@@ -29,7 +29,7 @@ export async function resetUserPasswordAction(
   if (!user) return
 
   //Send password reset email to the user
-  sendEmail({
+  await sendEmail({
     receipientEmail: [user.email],
     subject: "Password Reset successful",
     element: ResetPasswordEmailTemplate({

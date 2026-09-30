@@ -7,7 +7,10 @@ import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  UserRolesEnum,
+  VehicleRepairStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Modify Vehicle Repair - ${pageTitle}`,
@@ -32,11 +35,12 @@ export default async function ModifyVehicleRepairPage({
 
   const repair = await vehicleServices.findVehicleRepairById(repairId)
 
-  //If no such repair found or vehicle mismatch or agency mismatch, redirect
+  //If no such repair found or vehicle mismatch or agency mismatch, or ongoing repair redirect
   if (
     !repair ||
     repair.vehicleId !== vehicleId ||
-    repair.agencyId !== currentUser.agencyId
+    repair.agencyId !== currentUser.agencyId ||
+    repair.status === VehicleRepairStatusEnum.ONGOING
   ) {
     redirect(`/dashboard/vehicles/${vehicleId}/repairs`, RedirectType.replace)
   }

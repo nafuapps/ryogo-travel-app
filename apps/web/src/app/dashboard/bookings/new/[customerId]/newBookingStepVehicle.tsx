@@ -137,10 +137,10 @@ export default function NewBookingStepVehicle({
                       assignedVehicleId === vehicle.id ? undefined : vehicle.id,
                     )
                   }
-                  bookingStartDate={newBookingFormData.tripStartDate}
-                  bookingEndDate={newBookingFormData.tripEndDate}
-                  bookingPassengers={newBookingFormData.tripPassengers}
-                  bookingNeedsAC={newBookingFormData.tripNeedsAC}
+                  bookingStartDate={newBookingFormData.startDate}
+                  bookingEndDate={newBookingFormData.endDate}
+                  bookingPassengers={newBookingFormData.passengers}
+                  bookingNeedsAC={newBookingFormData.needsAc}
                 />
               ))}
           </TileGridWrapper>

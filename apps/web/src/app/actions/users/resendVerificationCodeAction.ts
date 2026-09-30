@@ -21,7 +21,7 @@ export async function resendVerificationCodeAction() {
   if (!user) return
 
   //Send new code to the user
-  sendEmail({
+  await sendEmail({
     receipientEmail: [user.email],
     subject: "RyoGo Account Verification Code",
     element: resendCodeEmailTemplate({ name: user.name, code: user.code }),

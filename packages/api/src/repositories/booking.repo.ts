@@ -1792,8 +1792,9 @@ export const bookingRepository = {
     vehicleId: string,
     customerId: string,
     visitingLocationId: string,
-    customerRating?: number,
-    bookingRating?: number,
+    secretCode: string,
+    customerRatingByDriver?: number,
+    bookingRatingByDriver?: number,
   ) {
     return await db.transaction(async (tx) => {
       await tx
@@ -1802,7 +1803,8 @@ export const bookingRepository = {
           status: BookingStatusEnum.COMPLETED,
           actualEndDate: new Date(),
           completedAt: new Date(),
-          ratingByDriver: bookingRating,
+          secretCode,
+          ratingByDriver: bookingRatingByDriver,
         })
         .where(eq(bookings.id, bookingId))
       await tx
@@ -1819,11 +1821,11 @@ export const bookingRepository = {
           visitingLocationId,
         })
         .where(eq(vehicles.id, vehicleId))
-      if (customerRating) {
+      if (customerRatingByDriver) {
         await tx
           .update(customers)
           .set({
-            driverRatings: sql`array_append(${customers.driverRatings}, ${customerRating})`,
+            driverRatings: sql`array_append(${customers.driverRatings}, ${customerRatingByDriver})`,
           })
           .where(eq(customers.id, customerId))
       }
@@ -1831,10 +1833,55 @@ export const bookingRepository = {
         columns: {
           id: true,
           status: true,
+          secretCode: true,
         },
         where: eq(bookings.id, bookingId),
       })
     })
+  },
+
+  async updateBookingRatingByCustomer(
+    bookingId: string,
+    driverId: string,
+    bookingRatingByCustomer: number,
+    driverRatingByCustomer?: number,
+  ) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(bookings)
+        .set({
+          ratingByCustomer: bookingRatingByCustomer,
+        })
+        .where(eq(bookings.id, bookingId))
+      if (driverRatingByCustomer) {
+        await tx
+          .update(drivers)
+          .set({
+            customerRatings: sql`array_append(${drivers.customerRatings}, ${driverRatingByCustomer})`,
+          })
+          .where(eq(drivers.id, driverId))
+      }
+      return await tx.query.bookings.findFirst({
+        columns: {
+          id: true,
+          ratingByCustomer: true,
+        },
+        where: eq(bookings.id, bookingId),
+      })
+    })
+  },
+
+  async updateSecretCodeSentOn(id: string) {
+    return await db
+      .update(bookings)
+      .set({
+        codeSentOn: new Date(),
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        codeSentOn: bookings.codeSentOn,
+      })
   },
 
   async updateStatus(id: string, status: BookingStatusEnum) {

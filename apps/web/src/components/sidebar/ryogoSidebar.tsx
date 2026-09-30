@@ -105,14 +105,17 @@ function MenuButton({
               color={active ? "white" : "black"}
               size="sm"
             />
-            {open && (
-              <RyogoSmall color={active ? "white" : "slate"}>
-                {title}
-              </RyogoSmall>
-            )}
+            <RyogoSmall
+              color={active ? "white" : "slate"}
+              className={`transition ${open ? "" : "hidden"}`}
+            >
+              {title}
+            </RyogoSmall>
           </div>
         </TooltipTrigger>
-        {!open && <TooltipContent>{title}</TooltipContent>}
+        <TooltipContent className={`${open ? "hidden" : ""}`}>
+          {title}
+        </TooltipContent>
       </Tooltip>
     </Link>
   )

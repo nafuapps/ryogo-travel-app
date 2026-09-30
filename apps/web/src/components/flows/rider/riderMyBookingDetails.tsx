@@ -28,7 +28,6 @@ import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard
 import { getDisplayTime } from "@/lib/utils"
 import { EditInfoWrapper } from "@/components/page/pageWrappers"
 import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
-import Link from "next/link"
 
 export default async function RiderMybooking({
   booking,
@@ -62,7 +61,7 @@ export default async function RiderMybooking({
         )}
       </BookingSection>
       <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
-        <BookingTripCard booking={booking} />
+        <BookingTripCard {...booking} />
         {canSeeTripDetails && (
           <>
             {booking.startTime && (
@@ -145,13 +144,11 @@ export default async function RiderMybooking({
       </BookingSection>
       {booking.assignedVehicle && (
         <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>
-          {canCommunicateWithCustomer ? (
-            <Link href={`/rider/myVehicle`}>
-              <BookingVehicleCard vehicle={booking.assignedVehicle} />
-            </Link>
-          ) : (
-            <BookingVehicleCard vehicle={booking.assignedVehicle} />
-          )}
+          <BookingVehicleCard
+            vehicle={booking.assignedVehicle}
+            withLink={canCommunicateWithCustomer}
+            isRider
+          />
         </BookingSection>
       )}
     </BookingGrid>

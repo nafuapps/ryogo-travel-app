@@ -5,51 +5,79 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { getTranslations } from "next-intl/server"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
+import { getDisplayEndDate } from "@/lib/utils"
+import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
 
-export default async function BookingTripCard({
-  booking,
+export default function BookingTripCard({
+  startDate,
+  endDate,
+  actualStartDate,
+  actualEndDate,
+  source,
+  destination,
+  type,
+  passengers,
+  citydistance,
+  needsAc,
 }: {
-  booking: NonNullable<FindBookingDetailsByIdType>
+  startDate: Date
+  endDate: Date
+  actualStartDate?: Date | null
+  actualEndDate?: Date | null
+  source: {
+    city: string
+    state: string
+  }
+  destination: {
+    city: string
+    state: string
+  }
+  type: BookingTypeEnum
+  citydistance: number
+  passengers: number
+  needsAc: boolean
 }) {
-  const t = await getTranslations("Dashboard.BookingDetails")
-  const startDate = booking.actualStartDate ?? booking.startDate
-  const endDate = booking.actualEndDate ?? booking.endDate
+  const t = useTranslations("Dashboard.BookingDetails")
+
+  const displayStartDate = actualStartDate ?? startDate
+  const displayEndDate = getDisplayEndDate(
+    startDate,
+    endDate,
+    actualStartDate,
+    actualEndDate,
+  )
 
   return (
     <div id="tripInfo" className="flex flex-col">
       <div className="flex gap-2 lg:gap-3 p-3 lg:p-4 border-x border-t rounded-t-xl rounded-b-2xl items-center justify-between">
-        <LocationWrapper
-          city={booking.source.city}
-          state={booking.source.state}
-        />
-        <RyogoRoundedDashedTag label={booking.citydistance + t("Km")} />
+        <LocationWrapper city={source.city} state={source.state} />
+        <RyogoRoundedDashedTag label={citydistance + t("Km")} />
         <LocationWrapper
           end
-          city={booking.destination.city}
-          state={booking.destination.state}
+          city={destination.city}
+          state={destination.state}
         />
       </div>
       <div className="mx-3 lg:mx-4 border-t border-dashed h-0" />
       <SectionRowWrapper className="p-3 lg:p-4 items-center justify-between border-x rounded-t-2xl">
-        <DateWrapper date={startDate} />
-        <RyogoPill bgColor="slate" label={booking.type} />
-        <DateWrapper date={endDate} />
+        <DateWrapper date={displayStartDate} />
+        <RyogoPill bgColor="slate" label={type} />
+        <DateWrapper date={displayEndDate} />
       </SectionRowWrapper>
       <div className="flex gap-2 lg:gap-3 px-3 lg:px-4 py-2 lg:py-3 items-center justify-between border-x border-b rounded-b-xl bg-slate-100 dark:bg-slate-700">
         <SectionRowWrapper small className="items-center">
           <RyogoIcon icon={Users} size={"sm"} />
           <RyogoCaption color="light" weight="font-bold">
-            {t("Passengers", { pax: booking.passengers })}
+            {t("Passengers", { pax: passengers })}
           </RyogoCaption>
         </SectionRowWrapper>
         <SectionRowWrapper small className="items-center justify-end">
           <RyogoCaption color="light" weight="font-bold">
-            {booking.needsAc ? t("Yes") : t("No")}
+            {needsAc ? t("Yes") : t("No")}
           </RyogoCaption>
           <RyogoIcon icon={AirVent} size={"sm"} />
         </SectionRowWrapper>

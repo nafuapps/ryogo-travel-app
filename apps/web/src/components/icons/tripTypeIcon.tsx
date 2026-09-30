@@ -3,12 +3,12 @@ import { RyogoIcon, RyogoIconType } from "./ryogoIcon"
 import { ArrowRight, ArrowRightLeft, Waypoints } from "lucide-react"
 
 export default function GetTripTypeIcon({
-  tripType,
+  type,
   ...props
 }: Omit<RyogoIconType, "icon"> & {
-  tripType: BookingTypeEnum
+  type: BookingTypeEnum
 }) {
-  switch (tripType) {
+  switch (type) {
     case BookingTypeEnum.OneWay:
       return <RyogoIcon {...props} icon={ArrowRight} />
     case BookingTypeEnum.Round:

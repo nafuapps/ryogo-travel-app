@@ -66,7 +66,7 @@ export default async function ConfirmBookingPage({
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]/confirm"} />
       <ConfirmBookingPageComponent booking={booking}>
-        <BookingTripCard booking={booking} />
+        <BookingTripCard {...booking} />
       </ConfirmBookingPageComponent>
     </MainWrapper>
   )

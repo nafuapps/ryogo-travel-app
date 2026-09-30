@@ -5,7 +5,7 @@ import z from "zod"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { useTransition } from "react"
 import { toast } from "sonner"
-import { resendVerificationCodeAction } from "@/app/actions/users/resendCodeAction"
+import { resendVerificationCodeAction } from "@/app/actions/users/resendVerificationCodeAction"
 import { SUPPORT_EMAIL, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import Link from "next/link"
 import {
@@ -19,16 +19,23 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
+import { useRefreshPage } from "@/hooks/useRefreshPage"
 
 export function VerifyAccountStep1({
   onNext,
-  resendDifference,
+  codeSentAt,
 }: {
   onNext: () => void
-  resendDifference: number
+  codeSentAt: Date | null
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage.Step1")
   const [isPending, startTransition] = useTransition()
+
+  //Can resend code if either not sent before or sent more than X minutes ago
+  const { canSend, refreshMinutes } = useRefreshPage(
+    codeSentAt,
+    VERIFY_CODE_TIMEOUT_MINUTES,
+  )
 
   const step1Schema = z.object({
     userEnteredcode: z.string().length(6, t("Field1.Error1")),
@@ -95,14 +102,14 @@ export function VerifyAccountStep1({
           size={"lg"}
           type="button"
           onClick={resendCode}
-          disabled={isPending || resendDifference < VERIFY_CODE_TIMEOUT_MINUTES}
+          disabled={isPending || !canSend}
           label={
             isPending
               ? t("Sending")
-              : resendDifference >= VERIFY_CODE_TIMEOUT_MINUTES
+              : canSend
                 ? t("SecondaryCTA")
                 : t("Timeout", {
-                    difference: VERIFY_CODE_TIMEOUT_MINUTES - resendDifference,
+                    difference: refreshMinutes,
                   })
           }
         />

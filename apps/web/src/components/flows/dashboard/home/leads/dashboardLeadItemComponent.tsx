@@ -32,7 +32,7 @@ export default async function DashboardLeadItemComponent({
         </SectionRowWrapper>
         <SectionRowWrapper small className="items-center justify-between">
           <RyogoP weight="font-bold">{trip.source.city}</RyogoP>
-          <GetTripTypeIcon tripType={trip.type} size="sm" color="light" thick />
+          <GetTripTypeIcon type={trip.type} size="sm" color="light" thick />
           <RyogoP weight="font-bold">{trip.destination.city}</RyogoP>
         </SectionRowWrapper>
         <SectionRowWrapper small className="items-center justify-between">

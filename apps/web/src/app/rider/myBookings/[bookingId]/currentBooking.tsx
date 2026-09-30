@@ -201,7 +201,7 @@ function getNextStep(
 
 function showNavigation(
   nextStep: TripLogTypesEnum,
-  tripType: BookingTypeEnum,
+  type: BookingTypeEnum,
   tripLogCounts: TripLogCountsType,
   sourceAddress: string | null,
   destinationAddress: string | null,
@@ -213,7 +213,7 @@ function showNavigation(
     }
     if (
       tripLogCounts.droppedCount > 0 &&
-      tripType === BookingTypeEnum.Round &&
+      type === BookingTypeEnum.Round &&
       sourceAddress
     ) {
       //Returning back to source address
@@ -228,7 +228,7 @@ function showNavigation(
     }
     if (
       tripLogCounts.arrivedCount > 0 &&
-      tripType === BookingTypeEnum.Round &&
+      type === BookingTypeEnum.Round &&
       destinationAddress
     ) {
       if (destinationAddress) {

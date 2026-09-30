@@ -63,7 +63,7 @@ export async function addOwnerAction(
   const absoluteUrl = `${protocol}://${host}/auth/login/password/${addedOwner.id}`
 
   //Send password in email to the agent
-  sendEmail({
+  await sendEmail({
     receipientEmail: [addedOwner.email],
     bcc: [SUPPORT_EMAIL],
     subject: "Welcome to RyoGo",

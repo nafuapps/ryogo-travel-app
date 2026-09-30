@@ -9,14 +9,16 @@ import {
 export default function RyogoHeader({
   title,
   children,
+  withoutSidebar,
 }: {
   title: string
-  children: React.ReactNode
+  children?: React.ReactNode
+  withoutSidebar?: boolean
 }) {
   return (
     <HeaderWrapper>
       <SectionRowWrapper small className="items-center justify-start">
-        <SidebarTrigger />
+        {!withoutSidebar && <SidebarTrigger />}
         <HeaderBackButton />
         <RyogoSmall weight="font-bold" color="slate">
           {title}

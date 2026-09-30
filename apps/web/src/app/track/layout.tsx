@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
@@ -16,5 +17,5 @@ export default async function TrackingLayout({
     redirect("/dashboard/home", RedirectType.replace)
   }
 
-  return children
+  return <TooltipProvider>{children}</TooltipProvider>
 }

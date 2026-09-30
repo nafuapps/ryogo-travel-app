@@ -9,14 +9,35 @@ import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
+import Link from "next/link"
 
 export default function BookingAssignedUserCard({
+  user,
+  withLink,
+}: {
+  user: NonNullable<NonNullable<FindBookingDetailsByIdType>["assignedUser"]>
+  withLink?: boolean
+}) {
+  if (withLink) {
+    return (
+      <Link
+        href={`/dashboard/users/${user.id}`}
+        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
+      >
+        <AssignedUserCard user={user} />
+      </Link>
+    )
+  }
+  return <AssignedUserCard user={user} />
+}
+
+function AssignedUserCard({
   user,
 }: {
   user: NonNullable<NonNullable<FindBookingDetailsByIdType>["assignedUser"]>
 }) {
   return (
-    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg items-center">
+    <SectionRowWrapper className="p-2 lg:p-3 items-center">
       {user.photoUrl ? (
         <RyogoImage
           src={getFileUrl(user.photoUrl)}

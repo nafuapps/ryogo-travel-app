@@ -3,11 +3,12 @@
 import FinishVehicleRepairAlertButton from "@/components/buttons/alert/finishVehicleRepairAlertButton"
 import StartVehicleRepairAlertButton from "@/components/buttons/alert/startVehicleRepairAlertButton"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   DateWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RepairStatusPill } from "@/components/pills/ryogoPills"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
@@ -71,7 +72,7 @@ export default function VehicleRepairComponent({
   )
 
   return (
-    <SectionColWrapper className="w-full p-4 lg:p-5 border rounded-md">
+    <SectionWrapper id={repair.id}>
       <SectionRowWrapper className="items-center justify-between">
         <DateWrapper date={displayStartDate} hideYear />
         <SectionColWrapper small className="w-full items-center">
@@ -90,7 +91,7 @@ export default function VehicleRepairComponent({
       </SectionRowWrapper>
       <SectionRowWrapper className="items-center justify-between">
         <RepairStatusPill status={repair.status} />
-        <RyogoEnclosedIcon
+        <RyogoIcon
           onClick={() => setOpen(!open)}
           size="sm"
           icon={open ? ChevronUp : ChevronDown}
@@ -110,7 +111,7 @@ export default function VehicleRepairComponent({
         <RyogoOutlineButton
           label={t("OnTrip")}
           labelColor="light"
-          className="grow"
+          className="w-full cursor-not-allowed"
           disabled
         />
       )}
@@ -118,7 +119,7 @@ export default function VehicleRepairComponent({
         <RyogoOutlineButton
           label={t("AlreadyInRepair")}
           labelColor="yellow"
-          className="grow"
+          className="w-full cursor-not-allowed"
           disabled
         />
       )}
@@ -130,29 +131,27 @@ export default function VehicleRepairComponent({
           agencyId={vehicle.agencyId}
         />
       )}
-      {open && (
-        <>
-          {repair.remarks && (
-            <RyogoTag label={repair.remarks} icon={MessageSquareQuote} />
+      <SectionColWrapper className={`${open ? "" : "hidden"}`}>
+        {repair.remarks && (
+          <RyogoTag label={repair.remarks} icon={MessageSquareQuote} />
+        )}
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoImageIconTag
+            url={repair.addedByUser.photoUrl}
+            label={repair.addedByUser.name}
+            subtitle={repair.addedByUser.userRole}
+          />
+          {canModify && repair.status !== VehicleRepairStatusEnum.ONGOING && (
+            <Link
+              href={`/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}`}
+            >
+              <RyogoOutlineButton label={t("Edit")} className="w-full">
+                <RyogoIcon icon={ChevronRight} size="sm" />
+              </RyogoOutlineButton>
+            </Link>
           )}
-          <SectionRowWrapper className="items-center justify-between">
-            <RyogoImageIconTag
-              url={repair.addedByUser.photoUrl}
-              label={repair.addedByUser.name}
-              subtitle={repair.addedByUser.userRole}
-            />
-            {canModify && (
-              <Link
-                href={`/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}`}
-              >
-                <RyogoOutlineButton label={t("Edit")} className="w-full">
-                  <RyogoIcon icon={ChevronRight} size="sm" />
-                </RyogoOutlineButton>
-              </Link>
-            )}
-          </SectionRowWrapper>
-        </>
-      )}
-    </SectionColWrapper>
+        </SectionRowWrapper>
+      </SectionColWrapper>
+    </SectionWrapper>
   )
 }

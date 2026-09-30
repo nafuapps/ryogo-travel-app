@@ -107,7 +107,7 @@ export async function confirmBookingAction(
     const protocol = headerList.get("x-forwarded-proto") || "http"
     const trackingUrl = `${protocol}://${host}/track/booking/${bookingDetails.id}`
 
-    sendEmail({
+    await sendEmail({
       receipientEmail: [bookingDetails.customer.email],
       subject: "Booking Confirmation | RyoGo",
       element: ConfirmBookingEmailTemplate({

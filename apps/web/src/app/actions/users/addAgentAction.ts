@@ -62,7 +62,7 @@ export async function addAgentAction(
   const absoluteUrl = `${protocol}://${host}/auth/login/password/${agent.id}`
 
   //Send password in email to the agent
-  sendEmail({
+  await sendEmail({
     receipientEmail: [agent.email],
     bcc: [SUPPORT_EMAIL],
     subject: "Welcome to RyoGo",

@@ -16,9 +16,9 @@ export function AddDriverEmailTemplate({
         You have been added as a driver on RyoGo. We are excited to have you on
         board!
       </p>
-      <p>
-        Your password is: <b>{password}</b>
-      </p>
+      <p>Your password is:</p>
+      <h3>{password}</h3>
+      <br />
       <p>Your can login to RyoGo here: {link}</p>
       <EmailFooter />
     </div>

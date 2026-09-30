@@ -82,7 +82,7 @@ export async function addDriverAction(
   const absoluteUrl = `${protocol}://${host}/auth/login/password/${driver.userId}`
 
   //Send password in email to the driver
-  sendEmail({
+  await sendEmail({
     receipientEmail: [driver.email],
     bcc: [SUPPORT_EMAIL],
     subject: "Welcome to RyoGo",

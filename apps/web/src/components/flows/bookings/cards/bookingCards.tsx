@@ -135,7 +135,7 @@ function BookingCardRouteWrapper({
   return (
     <SectionRowWrapper className="items-center justify-between px-3 lg:px-4">
       <RyogoH4 weight="font-bold">{source}</RyogoH4>
-      <GetTripTypeIcon tripType={type} size="xs" color="slate" thick />
+      <GetTripTypeIcon type={type} size="xs" color="slate" thick />
       <RyogoH4 weight="font-bold">{destination}</RyogoH4>
     </SectionRowWrapper>
   )

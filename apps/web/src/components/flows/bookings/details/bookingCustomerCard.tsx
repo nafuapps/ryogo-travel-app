@@ -8,8 +8,31 @@ import { RyogoP, RyogoCaption } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User } from "lucide-react"
+import Link from "next/link"
 
 export default function BookingCustomerCard({
+  customer,
+  withLink,
+  hidePhone,
+}: {
+  customer: NonNullable<NonNullable<FindBookingDetailsByIdType>["customer"]>
+  withLink?: boolean
+  hidePhone?: boolean
+}) {
+  if (withLink) {
+    return (
+      <Link
+        href={`/dashboard/customers/${customer.id}`}
+        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
+      >
+        <CustomerCard customer={customer} />
+      </Link>
+    )
+  }
+  return <CustomerCard customer={customer} hidePhone={hidePhone} />
+}
+
+function CustomerCard({
   customer,
   hidePhone,
 }: {

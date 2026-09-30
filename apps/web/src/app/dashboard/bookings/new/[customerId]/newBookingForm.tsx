@@ -46,17 +46,18 @@ export default function NewBookingForm({
 
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingRequestDataType>({
-      tripStartDate: today,
-      tripEndDate: today,
-      tripSourceLocationState: agency.location.state,
-      tripSourceLocationCity: agency.location.city,
-      tripDestinationLocationState: agency.location.state,
-      tripDestinationLocationCity: "",
-      tripNeedsAC: true,
-      tripPassengers: 1,
-      tripType: BookingTypeEnum.OneWay,
+      startDate: today,
+      endDate: today,
+      source: agency.location,
+      destination: {
+        state: agency.location.state,
+        city: "",
+      },
+      needsAc: true,
+      passengers: 1,
+      type: BookingTypeEnum.OneWay,
       selectedCommissionRate: agency.defaultCommissionRate,
-      selectedDistance: NEW_BOOKING_DEFAULT_DISTANCE,
+      citydistance: NEW_BOOKING_DEFAULT_DISTANCE,
       selectedRatePerKm: NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
       selectedAllowancePerDay: NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
       selectedAcChargePerDay: NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,

@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
-import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   RyogoDefaultButton,
@@ -27,6 +26,7 @@ import {
   FormWrapper,
 } from "@/components/page/pageWrappers"
 import FormStepHeader from "@/components/form/formStepHeader"
+import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 
 export default function NewBookingStepPrice({
   onNext,
@@ -73,7 +73,7 @@ export default function NewBookingStepPrice({
       .nonnegative(t("Field4.Error4"))
       .multipleOf(1, t("Field4.Error5"))
       .nonoptional(),
-    selectedDistance: z.coerce
+    citydistance: z.coerce
       .number<number>(t("Field5.Error1"))
       .min(1, t("Field5.Error2"))
       .max(5000, t("Field5.Error3"))
@@ -92,7 +92,7 @@ export default function NewBookingStepPrice({
       selectedAllowancePerDay: newBookingFormData.selectedAllowancePerDay,
       selectedAcChargePerDay: newBookingFormData.selectedAcChargePerDay,
       selectedCommissionRate: newBookingFormData.selectedCommissionRate,
-      selectedDistance: newBookingFormData.selectedDistance,
+      citydistance: newBookingFormData.citydistance,
     },
   })
 
@@ -106,7 +106,7 @@ export default function NewBookingStepPrice({
         values.selectedAcChargePerDay ??
         newBookingFormData.selectedAcChargePerDay,
       selectedCommissionRate: values.selectedCommissionRate,
-      selectedDistance: values.selectedDistance,
+      citydistance: values.citydistance,
     })
     onNext()
   }
@@ -129,10 +129,12 @@ export default function NewBookingStepPrice({
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewBookingTripCard {...newBookingFormData} />
+        <FormContentWrapper>
+          <BookingTripCard {...newBookingFormData} />
+        </FormContentWrapper>
         <FormContentWrapper>
           <RyogoInput
-            name="selectedDistance"
+            name="citydistance"
             label={t("Field5.Title")}
             placeholder={t("Field5.Placeholder")}
             description={t("Field5.Description")}
@@ -159,7 +161,7 @@ export default function NewBookingStepPrice({
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
             type="tel"
-            disabled={newBookingFormData.tripNeedsAC === false}
+            disabled={newBookingFormData.needsAc === false}
           />
           <RyogoInput
             name="selectedCommissionRate"

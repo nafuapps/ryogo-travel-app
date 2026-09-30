@@ -64,7 +64,7 @@ export async function cancelBookingAction(
     if (bookingDetails.status === BookingStatusEnum.CONFIRMED) {
       //Send booking cancellation email to customer
       if (bookingDetails.customer.email) {
-        sendEmail({
+        await sendEmail({
           receipientEmail: [bookingDetails.customer.email],
           subject: "Booking Cancellation | RyoGo",
           element: CancelBookingEmailTemplate({

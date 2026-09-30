@@ -7,9 +7,7 @@ import {
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import {
-  SectionWrapper,
   PageWrapper,
-  TileGridWrapper,
   SectionHeaderWrapper,
   StickyActionWrapper,
   SectionRowWrapper,
@@ -45,30 +43,26 @@ export default function AllDriverLeavesPageComponent({
 
   return (
     <PageWrapper id="DriverLeavesPage">
-      <SectionWrapper id="DriverLeavesList">
-        <SectionRowWrapper className="items-center justify-between">
-          <SectionHeaderWrapper
-            icon={TreePalm}
-            label={t("Title")}
-            count={filteredLeaves.length}
+      <SectionRowWrapper className="items-center justify-between">
+        <SectionHeaderWrapper
+          icon={TreePalm}
+          label={t("Title")}
+          count={filteredLeaves.length}
+        />
+        <DriverLeavesFilterSelect />
+      </SectionRowWrapper>
+      {filteredLeaves.length > 0 ? (
+        filteredLeaves.map((leave) => (
+          <DriverLeaveComponent
+            key={leave.id}
+            leave={leave}
+            canModify={isOwner || currentUserId === leave.addedByUserId}
+            driver={driver}
           />
-          <DriverLeavesFilterSelect />
-        </SectionRowWrapper>
-        {filteredLeaves.length > 0 ? (
-          <TileGridWrapper>
-            {filteredLeaves.map((leave) => (
-              <DriverLeaveComponent
-                key={leave.id}
-                leave={leave}
-                canModify={isOwner || currentUserId === leave.addedByUserId}
-                driver={driver}
-              />
-            ))}
-          </TileGridWrapper>
-        ) : (
-          <EmptyStateIcon icon={CalendarX} label={t("NoLeaves")} />
-        )}
-      </SectionWrapper>
+        ))
+      ) : (
+        <EmptyStateIcon icon={CalendarX} label={t("NoLeaves")} />
+      )}
       <StickyActionWrapper>
         <Link
           href={`/dashboard/drivers/${driver.id}/leaves/new`}

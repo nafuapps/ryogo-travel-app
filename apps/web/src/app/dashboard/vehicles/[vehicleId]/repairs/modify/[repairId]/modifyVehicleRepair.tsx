@@ -39,6 +39,9 @@ export default function ModifyVehicleRepairPageComponent({
   const t = useTranslations("Dashboard.ModifyVehicleRepair")
   const router = useRouter()
 
+  //Only pending repairs dates can be modified
+  const isPending = repair.status === VehicleRepairStatusEnum.PENDING
+
   const modifyVehicleRepairSchema = z
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
@@ -68,8 +71,8 @@ export default function ModifyVehicleRepairPageComponent({
   const form = useForm<ModifyVehicleRepairType>({
     resolver: zodResolver(modifyVehicleRepairSchema),
     defaultValues: {
-      startDate: repair.startDate,
-      endDate: repair.endDate,
+      startDate: repair.actualStartDate ?? repair.startDate,
+      endDate: repair.actualEndDate ?? repair.endDate,
       remarks: repair.remarks ?? undefined,
       cost: repair.cost ?? undefined,
     },
@@ -105,18 +108,22 @@ export default function ModifyVehicleRepairPageComponent({
           <HelpIconButton href="/dashboard/support/help-vehicles#repairs" />
         </SectionRowWrapper>
         <FormContentWrapper>
-          <RyogoDatePicker
-            name="startDate"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            pastAllowed
-          />
-          <RyogoDatePicker
-            name="endDate"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            pastAllowed
-          />
+          {isPending && (
+            <RyogoDatePicker
+              name="startDate"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              pastAllowed
+            />
+          )}
+          {isPending && (
+            <RyogoDatePicker
+              name="endDate"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              pastAllowed
+            />
+          )}
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}
@@ -144,7 +151,7 @@ export default function ModifyVehicleRepairPageComponent({
             onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
           />
-          {repair.status !== VehicleRepairStatusEnum.ONGOING && (
+          {isPending && (
             <DeleteVehicleRepairAlertButton
               repairId={repair.id}
               userId={repair.addedByUserId}

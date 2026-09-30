@@ -40,7 +40,6 @@ import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
 
 /*
-  TODO
   - Overview
   - Bookings
   - Vehicles

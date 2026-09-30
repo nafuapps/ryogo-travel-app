@@ -64,7 +64,7 @@ export async function addSupportTicketAction(
   }
 
   //Send ticket creation email to support only
-  sendEmail({
+  await sendEmail({
     receipientEmail: [SUPPORT_EMAIL],
     subject: "RyoGo Support Ticket Received",
     element: AddSupportTicketEmailTemplate({

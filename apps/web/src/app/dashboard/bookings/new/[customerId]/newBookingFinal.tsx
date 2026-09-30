@@ -1,22 +1,15 @@
 "use client"
 
-import {
-  RyogoH3,
-  RyogoH4,
-  RyogoSmall,
-  RyogoCaption,
-} from "@/components/typography"
+import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { Info, AirVent, Car, CirclePercent, IdCard } from "lucide-react"
+import { Info } from "lucide-react"
 import { Alert } from "@/components/ui/alert"
-import NewBookingTripCard from "@/components/flows/bookings/new/newBookingTripCard"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
 import {
-  SectionColWrapper,
   SectionRowWrapper,
   PageWrapper,
   StickyActionWrapper,
@@ -31,7 +24,9 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import FormStepHeader from "@/components/form/formStepHeader"
 import { NewBookingTotalSteps } from "@/lib/uiConfig"
-import RyogoTag from "@/components/tags/ryogoTag"
+import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
+import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
+import { Separator } from "@/components/ui/separator"
 
 export default function NewBookingFinal({
   onPrev,
@@ -57,24 +52,20 @@ export default function NewBookingFinal({
   //Final form submit to create a new booking
   const onSubmit = async () => {
     const newBookingData: NewBookingRequestDataType = {
-      tripSourceLocationState: newBookingFormData.tripSourceLocationState,
-      tripSourceLocationCity: newBookingFormData.tripSourceLocationCity,
-      tripDestinationLocationState:
-        newBookingFormData.tripDestinationLocationState,
-      tripDestinationLocationCity:
-        newBookingFormData.tripDestinationLocationCity!,
+      source: newBookingFormData.source,
+      destination: newBookingFormData.destination,
       routeId: newBookingFormData.routeId,
       sourceId: newBookingFormData.sourceId,
       destinationId: newBookingFormData.destinationId,
-      tripType: newBookingFormData.tripType,
-      tripStartDate: newBookingFormData.tripStartDate,
-      tripEndDate: newBookingFormData.tripEndDate,
-      tripPassengers: newBookingFormData.tripPassengers,
-      tripNeedsAC: newBookingFormData.tripNeedsAC,
+      type: newBookingFormData.type,
+      startDate: newBookingFormData.startDate,
+      endDate: newBookingFormData.endDate,
+      passengers: newBookingFormData.passengers,
+      needsAc: newBookingFormData.needsAc,
       assignedDriverId: newBookingFormData.assignedDriverId,
       assignedVehicleId: newBookingFormData.assignedVehicleId,
       selectedRatePerKm: newBookingFormData.selectedRatePerKm,
-      selectedDistance: newBookingFormData.selectedDistance,
+      citydistance: newBookingFormData.citydistance,
       selectedAcChargePerDay: newBookingFormData.selectedAcChargePerDay,
       selectedAllowancePerDay: newBookingFormData.selectedAllowancePerDay,
       selectedCommissionRate: newBookingFormData.selectedCommissionRate,
@@ -112,68 +103,49 @@ export default function NewBookingFinal({
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <NewBookingTripCard {...newBookingFormData} />
         <FormContentWrapper>
-          <SectionRowWrapper className="items-center justify-between">
-            <RyogoTag icon={Car} label={t("VehicleCharge")} />
-            <SectionColWrapper small className="items-end">
-              <RyogoSmall weight="font-bold">
-                {"₹" + finalAmount.totalVehiclePrice}
-              </RyogoSmall>
-              <RyogoCaption color="light">
-                {t("VehicleSubtitle", {
-                  charge: newBookingFormData.selectedRatePerKm,
-                  distance: finalAmount.totalDistance,
-                })}
-              </RyogoCaption>
-            </SectionColWrapper>
-          </SectionRowWrapper>
-          {newBookingFormData.tripNeedsAC && (
-            <SectionRowWrapper className="items-center justify-between">
-              <RyogoTag icon={AirVent} label={t("ACCharge")} />
-              <SectionColWrapper small className="items-end">
-                <RyogoSmall weight="font-bold">
-                  {"₹" + finalAmount.totalAcPrice}
-                </RyogoSmall>
-                <RyogoCaption color="light">
-                  {t("ACSubtitle", {
-                    ac: newBookingFormData.selectedAcChargePerDay,
-                    days: finalAmount.totalAllowanceDays,
-                  })}
-                </RyogoCaption>
-              </SectionColWrapper>
-            </SectionRowWrapper>
+          <BookingTripCard {...newBookingFormData} />
+        </FormContentWrapper>
+        <FormContentWrapper>
+          <BookingPriceItem
+            title={t("VehicleCharge")}
+            value={"₹" + finalAmount.totalVehiclePrice}
+            subtitle={t("VehicleSubtitle", {
+              charge: newBookingFormData.selectedRatePerKm,
+              distance: finalAmount.totalDistance,
+            })}
+          />
+          {newBookingFormData.needsAc && (
+            <BookingPriceItem
+              title={t("ACCharge")}
+              value={"₹" + finalAmount.totalAcPrice}
+              subtitle={t("ACSubtitle", {
+                ac: newBookingFormData.selectedAcChargePerDay,
+                days: finalAmount.totalAllowanceDays,
+              })}
+            />
           )}
+          <BookingPriceItem
+            title={t("DriverAllowance")}
+            value={"₹" + finalAmount.totalDriverAllowance}
+            subtitle={t("DriverSubtitle", {
+              allowance: newBookingFormData.selectedAllowancePerDay,
+              days: finalAmount.totalAllowanceDays,
+            })}
+          />
+          <BookingPriceItem
+            title={t("Commission")}
+            value={"₹" + finalAmount.totalCommission}
+            subtitle={"(" + newBookingFormData.selectedCommissionRate + "%) "}
+          />
+          <Separator />
           <SectionRowWrapper className="items-center justify-between">
-            <RyogoTag icon={IdCard} label={t("DriverAllowance")} />
-            <SectionColWrapper small className="items-end">
-              <RyogoSmall weight="font-bold">
-                {"₹" + finalAmount.totalDriverAllowance}
-              </RyogoSmall>
-              <RyogoCaption color="light">
-                {t("DriverSubtitle", {
-                  allowance: newBookingFormData.selectedAllowancePerDay,
-                  days: finalAmount.totalAllowanceDays,
-                })}
-              </RyogoCaption>
-            </SectionColWrapper>
-          </SectionRowWrapper>
-          <SectionRowWrapper className="items-center justify-between">
-            <RyogoTag icon={CirclePercent} label={t("Commission")} />
-            <SectionColWrapper small className="items-end">
-              <RyogoSmall weight="font-bold">
-                {"₹" + finalAmount.totalCommission}
-              </RyogoSmall>
-              <RyogoCaption color="light">
-                {newBookingFormData.selectedCommissionRate + "%"}
-              </RyogoCaption>
-            </SectionColWrapper>
+            <RyogoH3 color="light">{t("TotalAmount")}</RyogoH3>
+            <RyogoH3 weight="font-bold">
+              {"₹" + finalAmount.totalAmount}
+            </RyogoH3>
           </SectionRowWrapper>
         </FormContentWrapper>
-        <SectionRowWrapper className="items-center justify-between">
-          <RyogoH4>{t("TotalAmount")}</RyogoH4>
-          <RyogoH3>{"₹" + finalAmount.totalAmount}</RyogoH3>
-        </SectionRowWrapper>
         <Alert>
           <RyogoIcon icon={Info} size="sm" />
           <RyogoCaption color="light">{t("CreateInfo")}</RyogoCaption>

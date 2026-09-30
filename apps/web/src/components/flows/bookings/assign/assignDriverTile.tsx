@@ -1,6 +1,6 @@
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
-import { RyogoP, RyogoCaption, RyogoTiny } from "@/components/typography"
+import { RyogoP, RyogoCaption } from "@/components/typography"
 import {
   BadgeIndianRupee,
   TicketX,
@@ -33,7 +33,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import RyogoTag from "@/components/tags/ryogoTag"
+import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
 
 export default function AssignDriverTile({
   driverData,
@@ -141,14 +141,14 @@ export default function AssignDriverTile({
             <GetCanDriveIcons canDrive={driverData.canDriveVehicleTypes} />
           </SectionColWrapper>
         </SectionRowWrapper>
-        <SectionRowWrapper small className="items-center">
-          <RyogoTag
+        <SectionRowWrapper className="items-center">
+          <RyogoTagWithoutBG
             icon={BadgeIndianRupee}
             label={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
           />
           {driverData.customerRatings &&
             driverData.customerRatings.length > 0 && (
-              <RyogoTag
+              <RyogoTagWithoutBG
                 icon={Star}
                 label={getAverageRating(driverData.customerRatings)}
               />

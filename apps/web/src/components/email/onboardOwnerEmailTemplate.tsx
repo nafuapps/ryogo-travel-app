@@ -13,9 +13,9 @@ export function OnboardOwnerEmailTemplate({
     <div>
       <h1>Welcome, {name}!</h1>
       <p>Thanks for joining RyoGo. Your account has been created.</p>
-      <p>
-        Your verification code is: <b>{code}</b>
-      </p>
+      <p>Your verification code is:</p>
+      <h3>{code}</h3>
+      <br />
       <p>Use this code to verify your account here: {link}</p>
       <p>
         You can continue with the onboarding process to add vehicles, drivers

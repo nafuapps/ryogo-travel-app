@@ -43,7 +43,7 @@ export default async function DashboardPendingPaymentComponent({
         </SectionRowWrapper>
         {/* <SectionRowWrapper>
           <RyogoH4 weight="font-bold">{trip.source.city}</RyogoH4>
-          <GetTripTypeIcon tripType={trip.type} size="sm" thick />
+          <GetTripTypeIcon type={trip.type} size="sm" thick />
           <RyogoH4 weight="font-bold">{trip.destination.city}</RyogoH4>
         </SectionRowWrapper> */}
         <SectionRowWrapper className="items-center justify-between">

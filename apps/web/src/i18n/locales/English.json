@@ -1079,8 +1079,8 @@
           "Title": "Select vehicle",
           "Subtitle": "STEP {current} OF {total}",
           "Description": "Assign a vehicle for the trip",
-          "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to choose from more vehicles!",
-          "ExpiredWarning": "You are seeing limited list of vehicles because your subscription plan has expired.",
+          "TrialWarning": "You can see limited vehicles in basic plan. Subscribe to see more vehicles!",
+          "ExpiredWarning": "You can see limited vehicles because your subscription has expired.",
           "BuyCTA": "Buy Premium",
           "TryCTA": "Try Premium",
           "RenewCTA": "Renew Subscription",
@@ -1093,8 +1093,8 @@
           "Title": "Select driver",
           "Subtitle": "STEP {current} OF {total}",
           "Description": "Assign a driver for the trip",
-          "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to choose from more drivers!",
-          "ExpiredWarning": "You are seeing limited list of drivers because your subscription plan has expired.",
+          "TrialWarning": "You can see limited drivers in basic plan. Subscribe to see more drivers!",
+          "ExpiredWarning": "You can see limited drivers because your subscription has expired.",
           "BuyCTA": "Buy Premium",
           "TryCTA": "Try Premium",
           "RenewCTA": "Renew Subscription",
@@ -1106,7 +1106,7 @@
         "StepPrice": {
           "Title": "Price details",
           "Subtitle": "STEP {current} OF {total}",
-          "Description": "Provide cost details for final price calculation",
+          "Description": "Provide cost for final price calculation",
           "Field1": {
             "Title": "Vehicle charge (per Km)",
             "Placeholder": "₹18",
@@ -1140,7 +1140,7 @@
           "Field4": {
             "Title": "Commission rate (in %)",
             "Placeholder": "15%",
-            "Description": "How much is the agency's commission for this trip? (Too high and you might lose customer.. Too low and your profits might be less)",
+            "Description": "How much is the agency's commission for this trip?",
             "Error1": "Commission rate must be a number",
             "Error2": "Commission rate must be atleast 0%",
             "Error3": "Commission rate must be less than 100%",
@@ -1267,6 +1267,8 @@
         "Title": "Assign Vehicle",
         "Subtitle": "Allot a vehicle for this booking"
       },
+      "NoVehicleAssigned": "No vehicle assigned.",
+      "NoDriverAssigned": "No driver assigned.",
       "DriverInfo": "ASSIGNED DRIVER",
       "ChangeDriver": {
         "Title": "Change Driver",
@@ -1516,8 +1518,8 @@
       "Error": "Cannot modify expense.. Try again later!"
     },
     "AssignDriver": {
-      "TrialWarning": "You are seeing limited list of drivers in basic plan. Subscribe to choose from more drivers.",
-      "ExpiredWarning": "You are seeing limited list of drivers because your subscription plan has expired.",
+      "TrialWarning": "You can see limited drivers in basic plan. Subscribe to see more drivers.",
+      "ExpiredWarning": "You can see limited drivers because your subscription has expired.",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
@@ -1538,8 +1540,8 @@
       "SelectWarning": "Select a driver to assign!"
     },
     "AssignVehicle": {
-      "TrialWarning": "You are seeing limited list of vehicles in basic plan. Subscribe to choose from more vehicles!",
-      "ExpiredWarning": "You are seeing limited list of vehicles because your subscription plan has expired.",
+      "TrialWarning": "You can see limited vehicles in basic plan. Subscribe to see more vehicles!",
+      "ExpiredWarning": "You can see limited vehicles because your subscription has expired.",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
@@ -1562,8 +1564,8 @@
       "SelectWarning": "Select a vehicle to assign!"
     },
     "AssignUser": {
-      "TrialWarning": "You are seeing limited list of users in basic plan. Subscribe to choose from more users!",
-      "ExpiredWarning": "You are seeing limited list of users because your subscription plan has expired.",
+      "TrialWarning": "You can see limited users in basic plan. Subscribe to see more users!",
+      "ExpiredWarning": "You can see limited users because your subscription has expired.",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
@@ -7363,6 +7365,39 @@
         "PrimaryCTA": "Create Free Account Now",
         "SecondaryCTA": "Explore All Features"
       }
+    }
+  },
+  "Track": {
+    "Header": {
+      "Title": {
+        "/track/booking/[id]": "Track Booking Details"
+      }
+    },
+    "RateBookingByCustomer": {
+      "Title": "Rate Booking",
+      "Subtitle": "Provide your valuable feedback about the recently completed booking",
+      "Field1": {
+        "Title": "Rate booking experience"
+      },
+      "Field2": {
+        "Title": "Rate driver (optional)"
+      },
+      "Field3": {
+        "Title": "Enter booking secret code",
+        "Description": "Provide the secret code sent to your email",
+        "Error1": "Secret code must be 6 digits long"
+      },
+      "APIError": "Secret code does not match",
+      "Loading": "Loading",
+      "PrimaryCTA": "Confirm and Submit",
+      "SecondaryCTA": "Resend Code",
+      "Back": "Cancel",
+      "Timeout": "Wait {difference} minutes to resend code",
+      "Sending": "Sending code..",
+      "ResendError": "Cannot resend code.. try again later",
+      "ResendSuccess": "New verification code has been sent to your email",
+      "Success": "Thank you for your feedback!",
+      "Error": "Cannot submit feedback now.. Try again later!"
     }
   }
 }

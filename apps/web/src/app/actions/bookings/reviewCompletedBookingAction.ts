@@ -10,6 +10,7 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
+import { headers } from "next/headers"
 
 export async function reviewCompletedBookingAction(
   bookingId: string,
@@ -52,8 +53,13 @@ export async function reviewCompletedBookingAction(
   await bookingServices.addInvoiceUrl(bookingId, invoiceUrl)
 
   if (customerEmail) {
+    const headerList = await headers()
+    const host = headerList.get("host")
+    const protocol = headerList.get("x-forwarded-proto") || "http"
+    const trackingUrl = `${protocol}://${host}/track/booking/${bookingDetails.id}`
+
     //Send invoice over email to the customer
-    sendEmail({
+    const result = await sendEmail({
       receipientEmail: [customerEmail],
       subject: "Booking Completed - Invoice | RyoGo",
       element: BookingCompletedInvoiceEmailTemplate({
@@ -61,8 +67,13 @@ export async function reviewCompletedBookingAction(
         bookingId: bookingDetails.id,
         downloadUrl: getFileUrl(invoiceUrl),
         route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
+        trackUrl: trackingUrl,
+        code: bookingDetails.secretCode,
       }),
     })
+    if (result.data) {
+      await bookingServices.changeSecretCodeSentOn(bookingId)
+    }
   }
 
   //Add notification

@@ -1058,6 +1058,8 @@ export const bookings = pgTable(
     reviewCompletedByAgencyAt: timestamp("review_completed_by_agency_at", {
       withTimezone: true,
     }),
+    secretCode: varchar("secret_code", { length: 6 }),
+    codeSentOn: timestamp("code_sent_at", { withTimezone: true }),
     ...timestamps,
   },
   (t) => [

@@ -7,7 +7,6 @@ import {
   Wrench,
   Check,
   TicketX,
-  CircleGauge,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -34,7 +33,7 @@ import {
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
-import RyogoTag from "@/components/tags/ryogoTag"
+import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
 
 export default function AssignVehicleTile({
   vehicleData,
@@ -152,20 +151,27 @@ export default function AssignVehicleTile({
             <RyogoCaption color="light" weight="font-bold">
               {vehicleData.brand + " " + vehicleData.model}
             </RyogoCaption>
-            <VehicleColorBox color={vehicleData.color} />
+            <SectionRowWrapper small className="items-center">
+              <RyogoCaption color="light">
+                {vehicleData.odometerReading + " Km"}
+              </RyogoCaption>
+              <VehicleColorBox color={vehicleData.color} />
+            </SectionRowWrapper>
           </SectionColWrapper>
         </SectionRowWrapper>
-        <SectionRowWrapper small className="items-center">
-          <RyogoTag
+        <SectionRowWrapper className="items-center">
+          <RyogoTagWithoutBG
             label={vehicleData.defaultRatePerKm.toString() + t("PerKm")}
             icon={BadgeIndianRupee}
           />
-          <RyogoTag
-            icon={CircleGauge}
-            label={vehicleData.odometerReading.toString()}
+
+          <RyogoTagWithoutBG
+            icon={Armchair}
+            label={vehicleData.capacity.toString()}
           />
-          <RyogoTag icon={Armchair} label={vehicleData.capacity.toString()} />
-          {vehicleData.hasAC && <RyogoTag icon={AirVent} label={t("AC")} />}
+          {vehicleData.hasAC && (
+            <RyogoTagWithoutBG icon={AirVent} label={t("AC")} />
+          )}
         </SectionRowWrapper>
       </AssignTileContentWrapper>
       <AssignTileScoreWrapper>

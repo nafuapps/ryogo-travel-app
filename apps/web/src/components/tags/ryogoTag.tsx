@@ -22,3 +22,18 @@ export default function RyogoTag({
     </SectionRowWrapper>
   )
 }
+
+export function RyogoTagWithoutBG({
+  label,
+  icon,
+}: {
+  label: string
+  icon: LucideIcon
+}) {
+  return (
+    <SectionRowWrapper small className="items-center">
+      <RyogoIcon size="xs" icon={icon} color="light" />
+      <RyogoTiny color="light">{label}</RyogoTiny>
+    </SectionRowWrapper>
+  )
+}

@@ -65,7 +65,7 @@ function getIconSize(size: RyogoIconSizeType) {
     case "sm":
       return "size-5 md:size-6"
     case "xs":
-      return "size-3.5 md:size-4"
+      return "size-4"
   }
 }
 
@@ -80,7 +80,7 @@ function getBGIconSize(size: RyogoIconSizeType) {
     case "sm":
       return "size-8 md:size-9"
     case "xs":
-      return "size-5.5 md:size-6"
+      return "size-6"
   }
 }
 

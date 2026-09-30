@@ -5,11 +5,15 @@ export function BookingCompletedInvoiceEmailTemplate({
   bookingId,
   route,
   downloadUrl,
+  trackUrl,
+  code,
 }: {
   name: string
   bookingId: string
   route: string
   downloadUrl: string
+  trackUrl: string
+  code: string | null
 }) {
   return (
     <div>
@@ -27,6 +31,15 @@ export function BookingCompletedInvoiceEmailTemplate({
         </li>
       </ul>
       <p>You may download your booking invoice here: {downloadUrl}:</p>
+      <div className={`${code ? "" : "hidden"}`}>
+        <p>
+          You can provide your feedback rating for this booking here:
+          {trackUrl}
+        </p>
+        <p>Your secret code is:</p>
+        <h3>{code}</h3>
+      </div>
+      <br />
       <EmailFooter />
     </div>
   )

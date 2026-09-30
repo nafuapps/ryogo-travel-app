@@ -40,7 +40,6 @@ import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 export default function MidTripSheet({
   booking,
   latLong,
-
   tripType,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>

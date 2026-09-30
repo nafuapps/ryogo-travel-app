@@ -74,11 +74,13 @@ export function DoubleContentWrapper({
   sideOnTop?: boolean
 }) {
   return (
-    <div
-      className={`flex flex-col ${sideOnTop ? "[&>*:first-child]:order-2 [&>*:last-child]:order-1 lg:[&>*:first-child]:order-0 lg:[&>*:last-child]:order-0" : ""} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 mb-1 w-full self-center lg:justify-center overflow-y-scroll no-scrollbar`}
-    >
-      {children}
-    </div>
+    <Suspense fallback={<PageSkeleton />}>
+      <div
+        className={`flex flex-col ${sideOnTop ? "[&>*:first-child]:order-2 [&>*:last-child]:order-1 lg:[&>*:first-child]:order-0 lg:[&>*:last-child]:order-0" : ""} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 mb-1 w-full self-center lg:justify-center overflow-y-scroll no-scrollbar`}
+      >
+        {children}
+      </div>
+    </Suspense>
   )
 }
 

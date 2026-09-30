@@ -71,55 +71,55 @@ export default function TransactionItem({
           thick
         />
       </SectionRowWrapper>
-      {open && (
-        <SectionColWrapper className="border rounded-md p-3 lg:p-4">
-          <SectionRowWrapper className="items-center justify-between">
-            <SectionColWrapper>
-              <RyogoTiny color="light">{"#" + transaction.id}</RyogoTiny>
-              <RyogoImageIconTag
-                url={transaction.addedByUser.photoUrl}
-                label={transaction.addedByUser.name}
-                subtitle={transaction.addedByUser.userRole}
-              />
-            </SectionColWrapper>
-            {transaction.transactionPhotoUrl && (
-              <RyogoDialogImage
-                src={getFileUrl(transaction.transactionPhotoUrl)}
-                alt={
-                  transaction.type +
-                  " " +
-                  transaction.amount +
-                  " " +
-                  transaction.mode
-                }
-                imageSize="md"
+      <SectionColWrapper
+        className={`border rounded-md p-3 lg:p-4 ${open ? "" : "hidden"}`}
+      >
+        <SectionRowWrapper className="items-center justify-between">
+          <SectionColWrapper>
+            <RyogoTiny color="light">{"#" + transaction.id}</RyogoTiny>
+            <RyogoImageIconTag
+              url={transaction.addedByUser.photoUrl}
+              label={transaction.addedByUser.name}
+              subtitle={transaction.addedByUser.userRole}
+            />
+          </SectionColWrapper>
+          {transaction.transactionPhotoUrl && (
+            <RyogoDialogImage
+              src={getFileUrl(transaction.transactionPhotoUrl)}
+              alt={
+                transaction.type +
+                " " +
+                transaction.amount +
+                " " +
+                transaction.mode
+              }
+              imageSize="md"
+            />
+          )}
+        </SectionRowWrapper>
+        {transaction.remarks && (
+          <RyogoTag label={transaction.remarks} icon={MessageSquareQuote} />
+        )}
+        {canModifyTransaction && (
+          <SectionRowWrapper className="items-center mt-auto">
+            {isOwner && (
+              <TransactionApprovalButton
+                txnId={transaction.id}
+                isApproved={transaction.isApproved}
+                agencyId={transaction.agencyId}
               />
             )}
+            <Link
+              href={`/dashboard/bookings/${transaction.bookingId}/transactions/modify/${transaction.id}`}
+              className="grow"
+            >
+              <RyogoOutlineButton label={t("Modify")} className="w-full">
+                <RyogoIcon icon={ChevronRight} size="xs" color="slate" />
+              </RyogoOutlineButton>
+            </Link>
           </SectionRowWrapper>
-          {transaction.remarks && (
-            <RyogoTag label={transaction.remarks} icon={MessageSquareQuote} />
-          )}
-          {canModifyTransaction && (
-            <SectionRowWrapper className="items-center mt-auto">
-              {isOwner && (
-                <TransactionApprovalButton
-                  txnId={transaction.id}
-                  isApproved={transaction.isApproved}
-                  agencyId={transaction.agencyId}
-                />
-              )}
-              <Link
-                href={`/dashboard/bookings/${transaction.bookingId}/transactions/modify/${transaction.id}`}
-                className="grow"
-              >
-                <RyogoOutlineButton label={t("Modify")} className="w-full">
-                  <RyogoIcon icon={ChevronRight} size="xs" color="slate" />
-                </RyogoOutlineButton>
-              </Link>
-            </SectionRowWrapper>
-          )}
-        </SectionColWrapper>
-      )}
+        )}
+      </SectionColWrapper>
     </SectionWrapper>
   )
 }

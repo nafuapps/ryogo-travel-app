@@ -6,9 +6,7 @@ import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import {
   PageWrapper,
-  SectionWrapper,
   SectionHeaderWrapper,
-  TileGridWrapper,
   StickyActionWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
@@ -39,30 +37,26 @@ export default function MyLeavesPageComponent({
 
   return (
     <PageWrapper id="DriverLeavesPage">
-      <SectionWrapper id="DriverLeavesList">
-        <SectionRowWrapper className="items-center justify-between">
-          <SectionHeaderWrapper
-            icon={TreePalm}
-            label={t("Title")}
-            count={filteredLeaves.length}
+      <SectionRowWrapper className="items-center justify-between">
+        <SectionHeaderWrapper
+          icon={TreePalm}
+          label={t("Title")}
+          count={filteredLeaves.length}
+        />
+        <DriverLeavesFilterSelect />
+      </SectionRowWrapper>
+      {filteredLeaves.length > 0 ? (
+        filteredLeaves.map((leave) => (
+          <DriverLeaveComponent
+            key={leave.id}
+            leave={leave}
+            driver={driver}
+            isRider
           />
-          <DriverLeavesFilterSelect />
-        </SectionRowWrapper>
-        {filteredLeaves.length > 0 ? (
-          <TileGridWrapper>
-            {filteredLeaves.map((leave) => (
-              <DriverLeaveComponent
-                key={leave.id}
-                leave={leave}
-                driver={driver}
-                isRider
-              />
-            ))}
-          </TileGridWrapper>
-        ) : (
-          <EmptyStateIcon icon={CalendarX} label={t("NoLeaves")} />
-        )}
-      </SectionWrapper>
+        ))
+      ) : (
+        <EmptyStateIcon icon={CalendarX} label={t("NoLeaves")} />
+      )}
       <StickyActionWrapper>
         <HelpIconButton href={"/rider/mySupport/help-leaves"} showLabelSmall />
       </StickyActionWrapper>

@@ -111,32 +111,32 @@ export default function Navbar({
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="lg:hidden top-12 pb-4 border-t">
-            <div className="flex flex-col gap-6 pt-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.navId}
-                  href={link.href}
-                  className="px-2 font-semibold transition"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <RyogoSmall color={path !== link.href ? "slate" : "brand"}>
-                    {link.label}
-                  </RyogoSmall>
-                </Link>
-              ))}
-              <div className="flex flex-col gap-2 pt-4 border-t">
-                <Link href="/auth/login">
-                  <RyogoOutlineButton label={t("Login")} className="w-full" />
-                </Link>
-                <Link href="/auth/signup">
-                  <RyogoBrandButton label={t("Signup")} className="w-full" />
-                </Link>
-              </div>
+        <div
+          className={`${isOpen ? "" : "hidden"} lg:hidden top-12 pb-4 border-t`}
+        >
+          <div className="flex flex-col gap-6 pt-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.navId}
+                href={link.href}
+                className="px-2 font-semibold transition"
+                onClick={() => setIsOpen(false)}
+              >
+                <RyogoSmall color={path !== link.href ? "slate" : "brand"}>
+                  {link.label}
+                </RyogoSmall>
+              </Link>
+            ))}
+            <div className="flex flex-col gap-2 pt-4 border-t">
+              <Link href="/auth/login">
+                <RyogoOutlineButton label={t("Login")} className="w-full" />
+              </Link>
+              <Link href="/auth/signup">
+                <RyogoBrandButton label={t("Signup")} className="w-full" />
+              </Link>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   )

@@ -123,9 +123,9 @@ export default function NewBookingStepDriver({
               <AssignDriverTile
                 key={driver.id}
                 driverData={driver}
-                bookingStartDate={newBookingFormData.tripStartDate}
-                bookingEndDate={newBookingFormData.tripEndDate}
-                bookingPassengers={newBookingFormData.tripPassengers}
+                bookingStartDate={newBookingFormData.startDate}
+                bookingEndDate={newBookingFormData.endDate}
+                bookingPassengers={newBookingFormData.passengers}
                 selected={assignedDriverId === driver.id}
                 onClick={() =>
                   onSelectDriver(

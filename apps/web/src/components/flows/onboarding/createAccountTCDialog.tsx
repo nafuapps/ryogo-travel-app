@@ -10,9 +10,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Eye, CheckCheck } from "lucide-react"
@@ -78,12 +76,8 @@ export default function CreateAccountTCDialog({
       </DialogTrigger>
       <DialogContent className="size-5/6 overflow-hidden">
         <DialogHeader>
-          <DialogTitle>
-            <RyogoH3>{t("Title")}</RyogoH3>
-          </DialogTitle>
-          <DialogDescription>
-            <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
-          </DialogDescription>
+          <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
+          <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
         </DialogHeader>
         <CreateAccountTCContent ref={scrollRef} onScroll={handleScroll} />
         <StickyActionWrapper bgTransparent>

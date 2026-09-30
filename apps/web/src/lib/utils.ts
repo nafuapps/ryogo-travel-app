@@ -81,8 +81,8 @@ export function getDisplayTime(time: string) {
 export function getDisplayEndDate(
   startDate: Date,
   endDate: Date,
-  actualStartDate: Date | null,
-  actualEndDate: Date | null,
+  actualStartDate?: Date | null,
+  actualEndDate?: Date | null,
 ) {
   if (actualEndDate) {
     return actualEndDate
@@ -228,8 +228,8 @@ export function getTripDuration(startDate: Date, endDate: Date) {
 }
 
 //Calculate driver allowance days
-function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
-  if (tripType === BookingTypeEnum.Round) {
+function getTripAllowanceDays(type: BookingTypeEnum, days: number) {
+  if (type === BookingTypeEnum.Round) {
     if (days > 1) {
       //For round trip, double the driver allowance if not returning same day
       return 2
@@ -237,7 +237,7 @@ function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
     //If returning same day, give 1 day allowance
     return 1
   }
-  if (tripType === BookingTypeEnum.MultiDay) {
+  if (type === BookingTypeEnum.MultiDay) {
     //For multi day trip, driver allowance is for each day
     return days
   }
@@ -247,14 +247,14 @@ function getTripAllowanceDays(tripType: BookingTypeEnum, days: number) {
 
 //Calculate estimated trip distance
 function getEstimatedTripDistance(
-  tripType: BookingTypeEnum,
+  type: BookingTypeEnum,
   days: number,
   distance: number,
 ) {
-  if (tripType === BookingTypeEnum.Round) {
+  if (type === BookingTypeEnum.Round) {
     //For round trip, double the distance
     return distance * 2
-  } else if (tripType === BookingTypeEnum.MultiDay) {
+  } else if (type === BookingTypeEnum.MultiDay) {
     if (days < 3) {
       //Treat like round trip
       return distance * 2
@@ -268,20 +268,18 @@ function getEstimatedTripDistance(
 
 //Calculate estimated total price
 export function getEstimatedTotalPrice(data: NewBookingRequestDataType) {
-  console.log(data)
-  const days = getTripDuration(data.tripStartDate, data.tripEndDate)
-  console.log(days)
+  const days = getTripDuration(data.startDate, data.endDate)
   const commissionRate = data.selectedCommissionRate ?? 0
 
-  const totalAllowanceDays = getTripAllowanceDays(data.tripType, days)
+  const totalAllowanceDays = getTripAllowanceDays(data.type, days)
   const totalDistance = getEstimatedTripDistance(
-    data.tripType,
+    data.type,
     days,
-    data.selectedDistance,
+    data.citydistance,
   )
 
   const totalAcPrice =
-    data.tripNeedsAC && data.selectedAcChargePerDay
+    data.needsAc && data.selectedAcChargePerDay
       ? Math.round(data.selectedAcChargePerDay * totalAllowanceDays)
       : 0
 
@@ -309,7 +307,7 @@ export function getEstimatedTotalPrice(data: NewBookingRequestDataType) {
 
 //Calculate actual total price
 export function getActualTotalPrice(
-  tripType: BookingTypeEnum,
+  type: BookingTypeEnum,
   startDate: Date,
   endDate: Date,
   ratePerKm: number,
@@ -319,7 +317,7 @@ export function getActualTotalPrice(
   actualDistance: number,
 ) {
   const tripAllowanceDays = getTripAllowanceDays(
-    tripType,
+    type,
     getTripDuration(startDate, endDate),
   )
 

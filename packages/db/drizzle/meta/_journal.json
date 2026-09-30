@@ -407,6 +407,20 @@
       "when": 1790668571704,
       "tag": "0057_faulty_goliath",
       "breakpoints": true
+    },
+    {
+      "idx": 58,
+      "version": "7",
+      "when": 1790749120976,
+      "tag": "0058_short_wrecker",
+      "breakpoints": true
+    },
+    {
+      "idx": 59,
+      "version": "7",
+      "when": 1790757540360,
+      "tag": "0059_true_captain_flint",
+      "breakpoints": true
     }
   ]
 }

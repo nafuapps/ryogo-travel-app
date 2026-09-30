@@ -1,23 +1,27 @@
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export type NewBookingRequestDataType = {
-  tripSourceLocationState: string
-  tripSourceLocationCity: string
-  tripDestinationLocationState: string
-  tripDestinationLocationCity: string
+  source: {
+    city: string
+    state: string
+  }
+  destination: {
+    city: string
+    state: string
+  }
   routeId?: string
   sourceId?: string
   destinationId?: string
-  tripType: BookingTypeEnum
-  tripStartDate: Date
-  tripEndDate: Date
-  tripPassengers: number
-  tripNeedsAC: boolean
-  tripRemarks?: string
+  type: BookingTypeEnum
+  startDate: Date
+  endDate: Date
+  passengers: number
+  needsAc: boolean
+  remarks?: string
   assignedVehicleId?: string
   assignedDriverId?: string
+  citydistance: number
   selectedRatePerKm: number
-  selectedDistance: number
   selectedAcChargePerDay: number
   selectedAllowancePerDay: number
   selectedCommissionRate: number

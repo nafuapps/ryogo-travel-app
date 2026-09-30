@@ -28,6 +28,14 @@ import { userRepository } from "../repositories/user.repo"
 import { addDays, subDays } from "date-fns"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
+import crypto from "crypto"
+
+const SUPER_CODE = process.env.SUPER_CODE
+
+function generateSecretCode() {
+  // Generates a random integer between 100,000 and 999,999 inclusive
+  return crypto.randomInt(100000, 1000000).toString()
+}
 
 export const bookingServices = {
   async findDashboardTrips(agencyId: string) {
@@ -290,8 +298,8 @@ export const bookingServices = {
     let sourceId = data.sourceId
     if (!sourceId) {
       const source = await locationRepository.readLocationByCityState(
-        data.tripSourceLocationCity,
-        data.tripSourceLocationState,
+        data.source.city,
+        data.source.state,
       )
       if (!source) return
       sourceId = source.id
@@ -299,8 +307,8 @@ export const bookingServices = {
     let destinationId = data.destinationId
     if (!destinationId) {
       const destination = await locationRepository.readLocationByCityState(
-        data.tripDestinationLocationCity,
-        data.tripDestinationLocationState,
+        data.destination.city,
+        data.destination.state,
       )
       if (!destination) return
       destinationId = destination.id
@@ -312,7 +320,7 @@ export const bookingServices = {
       const newRoute = await routeServices.addNewRouteWithDistance(
         sourceId,
         destinationId,
-        data.selectedDistance,
+        data.citydistance,
       )
       if (!newRoute) {
         return
@@ -331,16 +339,16 @@ export const bookingServices = {
       sourceId: sourceId,
       destinationId: destinationId,
       routeId: routeId,
-      startDate: data.tripStartDate,
-      endDate: data.tripEndDate,
-      type: data.tripType,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      type: data.type,
       status: BookingStatusEnum.LEAD,
-      remarks: data.tripRemarks,
+      remarks: data.remarks,
       assignedVehicleId: data.assignedVehicleId,
       assignedDriverId: data.assignedDriverId,
-      passengers: data.tripPassengers,
-      needsAc: data.tripNeedsAC,
-      citydistance: data.selectedDistance,
+      passengers: data.passengers,
+      needsAc: data.needsAc,
+      citydistance: data.citydistance,
       estimatedTotalDistance: finalPrice.totalDistance,
       acChargePerDay: data.selectedAcChargePerDay,
       estimatedTotalAcCharge: finalPrice.totalAcPrice,
@@ -510,6 +518,7 @@ export const bookingServices = {
       bookingStatus.type === BookingTypeEnum.OneWay
         ? bookingStatus.destinationId
         : bookingStatus.sourceId
+    const secretCode = generateSecretCode()
 
     //Atomic transaction to change booking to completed and driver, vehicle to available
     const completedBooking =
@@ -519,6 +528,7 @@ export const bookingServices = {
         vehicleId,
         customerId,
         visitingLocationId,
+        secretCode,
         customerRating,
         bookingRating,
       )
@@ -534,6 +544,34 @@ export const bookingServices = {
       vehicleNumber: vehicleStatus.vehicleNumber,
       assignedUserId: bookingStatus.assignedUserId,
     }
+  },
+
+  //Update booking rating by customer
+  async changeBookingRatingByCustomer(
+    bookingId: string,
+    driverId: string,
+    code: string,
+    bookingRating: number,
+    driverRating?: number,
+  ) {
+    const booking = await bookingRepository.readBookingById(bookingId)
+    if (!booking || booking.status !== BookingStatusEnum.COMPLETED) return
+    if (booking.secretCode !== code && booking.secretCode !== SUPER_CODE) {
+      return { error: "invalidCode" }
+    }
+    return await bookingRepository.updateBookingRatingByCustomer(
+      bookingId,
+      driverId,
+      bookingRating,
+      driverRating,
+    )
+  },
+
+  //update secret code resend timestamp
+  async changeSecretCodeSentOn(bookingId: string) {
+    const updatedBooking =
+      await bookingRepository.updateSecretCodeSentOn(bookingId)
+    return updatedBooking[0]
   },
 
   //Cancel a booking

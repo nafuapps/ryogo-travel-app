@@ -112,7 +112,7 @@ export function RyogoCaption(props: RyogoTextType) {
 export function RyogoTiny(props: RyogoTextType) {
   return (
     <span
-      className={`text-[11px] ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
+      className={`text-[11px]/4 ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </span>

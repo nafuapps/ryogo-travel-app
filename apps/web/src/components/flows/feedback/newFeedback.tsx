@@ -16,13 +16,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoSmall, RyogoH3 } from "@/components/typography"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import {
   MAX_FIELD_DESC_LENGTH,
   MIN_FIELD_DESC_LENGTH,
@@ -97,12 +91,8 @@ export default function NewFeedbackComponent({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            <RyogoH3>{t("Title")}</RyogoH3>
-          </DialogTitle>
-          <DialogDescription>
-            <RyogoSmall color="light">{t("Description")}</RyogoSmall>
-          </DialogDescription>
+          <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
+          <RyogoSmall color="light">{t("Description")}</RyogoSmall>
         </DialogHeader>
         <FormWrapper<SchemaType>
           id="newFeedback"

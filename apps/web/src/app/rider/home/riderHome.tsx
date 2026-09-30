@@ -18,7 +18,6 @@ import {
 } from "@/components/flows/bookings/cards/bookingCards"
 
 //TODO: Revamp home page for rider with a floating ongoing booking nudge
-//TODO: Get leaves and let driver start/end leave
 
 export default async function RiderHomePageComponent({
   assignedBookings,

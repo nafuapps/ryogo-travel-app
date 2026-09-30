@@ -59,31 +59,29 @@ export default function NewBookingStepTripDetails({
   const router = useRouter()
 
   const [selectedTripType, setSelectedTripType] = useState<BookingTypeEnum>(
-    newBookingFormData.tripType,
+    newBookingFormData.type,
   )
 
   const stepTripDetailsSchema = z
     .object({
       //Trip
-      tripSourceLocationState: z.string().nonoptional(t("Field1.Error1")),
-      tripSourceLocationCity: z
-        .string(t("Field2.Error1"))
-        .nonoptional(t("Field2.Error1")),
-      tripDestinationLocationState: z.string().nonoptional(t("Field3.Error1")),
-      tripDestinationLocationCity: z
+      sourceState: z.string().nonoptional(t("Field1.Error1")),
+      sourceCity: z.string(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
+      destinationState: z.string().nonoptional(t("Field3.Error1")),
+      destinationCity: z
         .string(t("Field4.Error1"))
         .nonoptional(t("Field4.Error1")),
-      tripStartDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
-      tripEndDate: z.date(t("Field6.Error1")),
-      tripPassengers: z.coerce
+      startDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
+      endDate: z.date(t("Field6.Error1")),
+      passengers: z.coerce
         .number<number>(t("Field7.Error1"))
         .min(MIN_VEHICLE_CAPCITY, t("Field7.Error2"))
         .max(MAX_VEHICLE_CAPCITY, t("Field7.Error3"))
         .multipleOf(1, t("Field7.Error4"))
         .nonnegative(t("Field7.Error5")),
-      tripType: z.enum(BookingTypeEnum),
-      tripNeedsAC: z.boolean(),
-      tripRemarks: z
+      type: z.enum(BookingTypeEnum),
+      needsAc: z.boolean(),
+      remarks: z
         .string()
         .max(MAX_FIELD_DESC_LENGTH, t("Field10.Error1"))
         .optional(),
@@ -92,25 +90,25 @@ export default function NewBookingStepTripDetails({
       //For round and multi day trip, end date must be after start date
       if (
         (selectedTripType === BookingTypeEnum.Round &&
-          differenceInDays(data.tripEndDate, data.tripStartDate) < 0) ||
+          differenceInDays(data.endDate, data.startDate) < 0) ||
         (selectedTripType === BookingTypeEnum.MultiDay &&
-          differenceInDays(data.tripEndDate, data.tripStartDate) < 1)
+          differenceInDays(data.endDate, data.startDate) < 1)
       ) {
         ctx.addIssue({
           code: "custom",
           message: t("Field6.Error2"),
-          path: ["tripEndDate"],
+          path: ["endDate"],
         })
       }
       //Source and destination cannot be the same
       if (
-        data.tripSourceLocationState === data.tripDestinationLocationState &&
-        data.tripSourceLocationCity === data.tripDestinationLocationCity
+        data.sourceState === data.destinationState &&
+        data.sourceCity === data.destinationCity
       ) {
         ctx.addIssue({
           code: "custom",
           message: t("Field4.Error2"),
-          path: ["tripDestinationLocationCity"],
+          path: ["destinationCity"],
         })
       }
     })
@@ -121,18 +119,16 @@ export default function NewBookingStepTripDetails({
   const form = useForm<StepTripDetailsType>({
     resolver: zodResolver(stepTripDetailsSchema),
     defaultValues: {
-      tripSourceLocationState: newBookingFormData.tripSourceLocationState,
-      tripSourceLocationCity: newBookingFormData.tripSourceLocationCity,
-      tripDestinationLocationState:
-        newBookingFormData.tripDestinationLocationState,
-      tripDestinationLocationCity:
-        newBookingFormData.tripDestinationLocationCity,
-      tripType: newBookingFormData.tripType,
-      tripStartDate: newBookingFormData.tripStartDate,
-      tripEndDate: newBookingFormData.tripEndDate,
-      tripPassengers: newBookingFormData.tripPassengers,
-      tripNeedsAC: newBookingFormData.tripNeedsAC,
-      tripRemarks: newBookingFormData.tripRemarks,
+      sourceCity: newBookingFormData.source.city,
+      sourceState: newBookingFormData.source.state,
+      destinationCity: newBookingFormData.destination.city,
+      destinationState: newBookingFormData.destination.state,
+      type: newBookingFormData.type,
+      startDate: newBookingFormData.startDate,
+      endDate: newBookingFormData.endDate,
+      passengers: newBookingFormData.passengers,
+      needsAc: newBookingFormData.needsAc,
+      remarks: newBookingFormData.remarks,
     },
   })
 
@@ -141,14 +137,10 @@ export default function NewBookingStepTripDetails({
     //Check if the route has changed
     const routeInputsUnchanged =
       newBookingFormData.routeId !== undefined &&
-      newBookingFormData.tripSourceLocationCity ===
-        values.tripSourceLocationCity &&
-      newBookingFormData.tripSourceLocationState ===
-        values.tripSourceLocationState &&
-      newBookingFormData.tripDestinationLocationCity ===
-        values.tripDestinationLocationCity &&
-      newBookingFormData.tripDestinationLocationState ===
-        values.tripDestinationLocationState
+      newBookingFormData.source.city === values.sourceCity &&
+      newBookingFormData.source.state === values.sourceState &&
+      newBookingFormData.destination.city === values.destinationCity &&
+      newBookingFormData.destination.state === values.destinationState
 
     //If route has changed, fetch new route data from DB, otherwise save previous data
     const newRoute = routeInputsUnchanged
@@ -156,33 +148,37 @@ export default function NewBookingStepTripDetails({
           id: newBookingFormData.routeId,
           sourceId: newBookingFormData.sourceId,
           destinationId: newBookingFormData.destinationId,
-          distance: newBookingFormData.selectedDistance,
+          distance: newBookingFormData.citydistance,
         }
       : await findOrCreateRouteAction(
-          values.tripSourceLocationCity,
-          values.tripSourceLocationState,
-          values.tripDestinationLocationCity,
-          values.tripDestinationLocationState,
+          values.sourceCity,
+          values.sourceState,
+          values.destinationCity,
+          values.destinationState,
         )
 
     setNewBookingFormData({
       ...newBookingFormData,
-      tripSourceLocationState: values.tripSourceLocationState,
-      tripSourceLocationCity: values.tripSourceLocationCity,
-      tripDestinationLocationState: values.tripDestinationLocationState,
-      tripDestinationLocationCity: values.tripDestinationLocationCity,
-      tripType: selectedTripType,
-      tripStartDate: values.tripStartDate,
-      tripEndDate:
+      source: {
+        state: values.sourceState,
+        city: values.sourceCity,
+      },
+      destination: {
+        state: values.destinationState,
+        city: values.destinationCity,
+      },
+      type: selectedTripType,
+      startDate: values.startDate,
+      endDate:
         selectedTripType === BookingTypeEnum.OneWay
-          ? values.tripStartDate
-          : values.tripEndDate,
-      tripPassengers: values.tripPassengers,
-      tripNeedsAC: values.tripNeedsAC,
+          ? values.startDate
+          : values.endDate,
+      passengers: values.passengers,
+      needsAc: values.needsAc,
       routeId: newRoute?.id,
       sourceId: newRoute?.sourceId,
       destinationId: newRoute?.destinationId,
-      selectedDistance: newRoute?.distance ?? NEW_BOOKING_DEFAULT_DISTANCE,
+      citydistance: newRoute?.distance ?? NEW_BOOKING_DEFAULT_DISTANCE,
     })
     onNext()
   }
@@ -190,7 +186,7 @@ export default function NewBookingStepTripDetails({
   const data: Record<string, string[]> = stateCityData
 
   const selectedSourceState = useWatch({
-    name: "tripSourceLocationState",
+    name: "sourceState",
     control: form.control,
   })
   const sourceCityOptions = data[selectedSourceState] ?? [
@@ -198,7 +194,7 @@ export default function NewBookingStepTripDetails({
   ]
 
   const selectedDestinationState = useWatch({
-    name: "tripDestinationLocationState",
+    name: "destinationState",
     control: form.control,
   })
   const destinationCityOptions = data[selectedDestinationState] ?? [
@@ -224,36 +220,36 @@ export default function NewBookingStepTripDetails({
       >
         <FormContentWrapper>
           <RyogoCombobox
-            name="tripSourceLocationState"
+            name="sourceState"
             title={t("Field1.Title")}
             array={Object.keys(stateCityData)}
-            register={form.register("tripSourceLocationState")}
+            register={form.register("sourceState")}
             placeholder={t("Field1.Placeholder")}
             resetField={() => {
-              form.setValue("tripSourceLocationCity", "")
+              form.setValue("sourceCity", "")
             }}
           />
           <RyogoCombobox
-            name="tripSourceLocationCity"
+            name="sourceCity"
             array={sourceCityOptions}
-            register={form.register("tripSourceLocationCity")}
+            register={form.register("sourceCity")}
             placeholder={t("Field2.Placeholder")}
           />
           <Separator />
           <RyogoCombobox
-            name="tripDestinationLocationState"
+            name="destinationState"
             title={t("Field3.Title")}
             array={Object.keys(stateCityData)}
-            register={form.register("tripDestinationLocationState")}
+            register={form.register("destinationState")}
             placeholder={t("Field3.Placeholder")}
             resetField={() => {
-              form.setValue("tripDestinationLocationCity", "")
+              form.setValue("destinationCity", "")
             }}
           />
           <RyogoCombobox
-            name="tripDestinationLocationCity"
+            name="destinationCity"
             array={destinationCityOptions}
-            register={form.register("tripDestinationLocationCity")}
+            register={form.register("destinationCity")}
             placeholder={t("Field4.Placeholder")}
           />
         </FormContentWrapper>
@@ -264,7 +260,7 @@ export default function NewBookingStepTripDetails({
               type={BookingTypeEnum.OneWay}
               onClick={() => {
                 setSelectedTripType(BookingTypeEnum.OneWay)
-                form.setValue("tripEndDate", form.getValues("tripStartDate"))
+                form.setValue("endDate", form.getValues("startDate"))
               }}
               selected={selectedTripType === BookingTypeEnum.OneWay}
               title={BookingTypeEnum.OneWay}
@@ -291,12 +287,12 @@ export default function NewBookingStepTripDetails({
         </FormContentWrapper>
         <FormContentWrapper>
           <RyogoDatePicker
-            name="tripStartDate"
+            name="startDate"
             label={t("Field5.Title")}
             placeholder={t("Field5.Placeholder")}
           />
           <RyogoDatePicker
-            name="tripEndDate"
+            name="endDate"
             label={t("Field6.Title")}
             placeholder={t("Field6.Placeholder")}
             disabled={selectedTripType === BookingTypeEnum.OneWay}
@@ -304,14 +300,14 @@ export default function NewBookingStepTripDetails({
         </FormContentWrapper>
         <FormContentWrapper>
           <RyogoInput
-            name="tripPassengers"
+            name="passengers"
             label={t("Field7.Title")}
             placeholder={t("Field7.Placeholder")}
             type="tel"
           />
-          <RyogoSwitch label={t("Field9.Title")} name="tripNeedsAC" />
+          <RyogoSwitch label={t("Field9.Title")} name="needsAc" />
           <RyogoTextarea
-            name="tripRemarks"
+            name="remarks"
             label={t("Field10.Title")}
             placeholder={t("Field10.Placeholder")}
           />
@@ -365,7 +361,7 @@ function TripTypeSelectionCard({
           {title}
         </RyogoSmall>
         <GetTripTypeIcon
-          tripType={type}
+          type={type}
           size="sm"
           color={selected ? "white" : "slate"}
           thick

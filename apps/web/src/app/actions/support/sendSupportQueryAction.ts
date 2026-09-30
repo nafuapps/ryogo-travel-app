@@ -33,7 +33,7 @@ export async function sendSupportQueryAction(data: {
   }
 
   //Send query creation email
-  sendEmail({
+  await sendEmail({
     receipientEmail: [data.email],
     cc: [SUPPORT_EMAIL],
     subject: "RyoGo Support Query",

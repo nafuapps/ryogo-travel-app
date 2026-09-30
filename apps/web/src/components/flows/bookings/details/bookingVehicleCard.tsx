@@ -1,3 +1,4 @@
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import {
@@ -7,15 +8,49 @@ import {
 import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { ClipboardX } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 export default function BookingVehicleCard({
   vehicle,
+  withLink,
+  isRider,
 }: {
   vehicle: NonNullable<FindBookingDetailsByIdType>["assignedVehicle"]
+  withLink?: boolean
+  isRider?: boolean
 }) {
-  if (!vehicle) return null
+  const t = useTranslations("Dashboard.BookingDetails")
+
+  if (!vehicle) {
+    return <EmptyStateIcon icon={ClipboardX} label={t("NoVehicleAssigned")} />
+  }
+
+  if (withLink) {
+    return (
+      <Link
+        href={
+          isRider ? `/rider/myVehicle` : `/dashboard/vehicles/${vehicle.id}`
+        }
+        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
+      >
+        <VehicleCard vehicle={vehicle} />
+      </Link>
+    )
+  }
+  return <VehicleCard vehicle={vehicle} />
+}
+
+function VehicleCard({
+  vehicle,
+}: {
+  vehicle: NonNullable<
+    NonNullable<FindBookingDetailsByIdType>["assignedVehicle"]
+  >
+}) {
   return (
-    <SectionRowWrapper className="p-2 lg:p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg items-center">
+    <SectionRowWrapper className="p-2 lg:p-3 items-center">
       {vehicle.vehiclePhotoUrl ? (
         <RyogoImage
           src={getFileUrl(vehicle.vehiclePhotoUrl)}

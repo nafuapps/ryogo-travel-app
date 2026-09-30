@@ -7,7 +7,10 @@ import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  DriverLeaveStatusEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 
 export const metadata: Metadata = {
   title: `Modify Driver Leave - ${pageTitle}`,
@@ -33,11 +36,12 @@ export default async function ModifyDriverLeavePage({
 
   const leave = await driverServices.findDriverLeaveById(leaveId)
 
-  //If no such leave found or driver mismatch or agency mismatch, redirect
+  //If no such leave found or driver mismatch or agency mismatch or ongoing leave, redirect
   if (
     !leave ||
     leave.driverId !== driverId ||
-    leave.agencyId !== currentUser.agencyId
+    leave.agencyId !== currentUser.agencyId ||
+    leave.status === DriverLeaveStatusEnum.ONGOING
   ) {
     redirect(`/dashboard/drivers/${driverId}/leaves`, RedirectType.replace)
   }

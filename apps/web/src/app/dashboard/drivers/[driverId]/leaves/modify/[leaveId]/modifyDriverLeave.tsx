@@ -37,6 +37,9 @@ export default function ModifyDriverLeavePageComponent({
   const t = useTranslations("Dashboard.ModifyDriverLeave")
   const router = useRouter()
 
+  //Only pending leaves dates can be modified
+  const isPending = leave.status === DriverLeaveStatusEnum.PENDING
+
   const modifyDriverleaveSchema = z
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
@@ -59,8 +62,8 @@ export default function ModifyDriverLeavePageComponent({
   const form = useForm<ModifyDriverLeaveFormType>({
     resolver: zodResolver(modifyDriverleaveSchema),
     defaultValues: {
-      startDate: leave.startDate,
-      endDate: leave.endDate,
+      startDate: leave.actualStartDate ?? leave.startDate,
+      endDate: leave.actualEndDate ?? leave.endDate,
       remarks: leave.remarks ?? undefined,
     },
   })
@@ -94,18 +97,22 @@ export default function ModifyDriverLeavePageComponent({
           <HelpIconButton href="/dashboard/support/help-drivers#leaves" />
         </SectionRowWrapper>
         <FormContentWrapper>
-          <RyogoDatePicker
-            name="startDate"
-            label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
-            pastAllowed
-          />
-          <RyogoDatePicker
-            name="endDate"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            pastAllowed
-          />
+          {isPending && (
+            <RyogoDatePicker
+              name="startDate"
+              label={t("Field1.Title")}
+              placeholder={t("Field1.Placeholder")}
+              pastAllowed
+            />
+          )}
+          {isPending && (
+            <RyogoDatePicker
+              name="endDate"
+              label={t("Field2.Title")}
+              placeholder={t("Field2.Placeholder")}
+              pastAllowed
+            />
+          )}
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}
@@ -127,7 +134,7 @@ export default function ModifyDriverLeavePageComponent({
             onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
           />
-          {leave.status !== DriverLeaveStatusEnum.ONGOING && (
+          {isPending && (
             <DeleteDriverLeaveAlertButton
               leaveId={leave.id}
               userId={leave.addedByUserId}

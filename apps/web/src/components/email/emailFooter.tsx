@@ -7,6 +7,8 @@ import {
 export default function EmailFooter() {
   return (
     <>
+      <br />
+      <br />
       <p>
         For any issues, contact our support team at {SUPPORT_EMAIL} or call us
         at {SUPPORT_HELPLINE_NUMBER}

@@ -6,9 +6,6 @@ import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
 import { VerifyAccountStep1 } from "./verifyAccountStep1"
 import { VerifyAccountFinish } from "./verifyAccountFinish"
-import { differenceInMinutes } from "date-fns"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
 import { VerifyAccountTotalSteps } from "@/lib/uiConfig"
 import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
@@ -16,31 +13,19 @@ import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHe
 export default function VerifyAccountPageComponent({
   codeSentAt,
 }: {
-  codeSentAt?: Date | null
+  codeSentAt: Date | null
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage")
-  const router = useRouter()
 
   const nextStepHandler = () => {
     nextStep()
   }
 
-  //Refresh page to check if the resend timer is up
-  useEffect(() => {
-    const interval = setInterval(() => {
-      router.refresh()
-    }, 60000) // Refresh every 1 minute
-
-    return () => clearInterval(interval) // Cleanup on unmount
-  }, [router])
-
   const { currentStepIndex, isLastStep, nextStep, steps } = useMultiStepForm([
     <VerifyAccountStep1
       key={0}
       onNext={nextStepHandler}
-      resendDifference={
-        codeSentAt ? differenceInMinutes(new Date(), codeSentAt) : 999
-      }
+      codeSentAt={codeSentAt}
     />,
     <VerifyAccountFinish key={1} />,
   ])

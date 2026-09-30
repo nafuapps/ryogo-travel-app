@@ -184,14 +184,10 @@ export default async function BookingDetailsPageComponent({
           </BookingActionWrapper>
         </BookingSection>
         <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
-          {isOwner ? (
-            //Only owner can click and see assigned user details page
-            <Link href={`/dashboard/users/${bookingDetails.assignedUserId}`}>
-              <BookingAssignedUserCard user={bookingDetails.assignedUser} />
-            </Link>
-          ) : (
-            <BookingAssignedUserCard user={bookingDetails.assignedUser} />
-          )}
+          <BookingAssignedUserCard
+            user={bookingDetails.assignedUser}
+            withLink={isOwner}
+          />
           {canAssignUser && (
             <BookingActionWrapper>
               {!isAssignedUser && (
@@ -220,9 +216,7 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
-          <Link href={`/dashboard/customers/${bookingDetails.customer.id}`}>
-            <BookingCustomerCard customer={bookingDetails.customer} />
-          </Link>
+          <BookingCustomerCard customer={bookingDetails.customer} withLink />
           {canCommunicateWithCustomer && (
             <BookingActionWrapper>
               <RyogoPhoneButton
@@ -244,7 +238,7 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
-          <BookingTripCard booking={bookingDetails} />
+          <BookingTripCard {...bookingDetails} />
           {canSeeTripDetails && (
             <>
               <BookingStartTimeCard
@@ -391,13 +385,10 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>
-          {bookingDetails.assignedVehicle && (
-            <Link
-              href={`/dashboard/vehicles/${bookingDetails.assignedVehicle.id}`}
-            >
-              <BookingVehicleCard vehicle={bookingDetails.assignedVehicle} />
-            </Link>
-          )}
+          <BookingVehicleCard
+            vehicle={bookingDetails.assignedVehicle}
+            withLink
+          />
           {canAssignVehicleDriver && (
             <BookingActionWrapper>
               <Link
@@ -421,7 +412,7 @@ export default async function BookingDetailsPageComponent({
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("DriverInfo")} icon={IdCard}>
-          <BookingDriverCard driver={bookingDetails.assignedDriver} />
+          <BookingDriverCard driver={bookingDetails.assignedDriver} withLink />
           {canAssignVehicleDriver && (
             <BookingActionWrapper>
               {bookingDetails.assignedDriver && (

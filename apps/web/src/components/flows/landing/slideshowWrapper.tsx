@@ -96,14 +96,14 @@ function SlideshowCard({
           </RyogoP>
         )}
       </div>
-      {active && (
-        <div className="flex flex-col gap-3 lg:gap-4 transition duration-500">
-          <RyogoSmall color="slate">{item.description}</RyogoSmall>
-          <div className="flex md:hidden aspect-4/5 rounded-lg overflow-hidden relative">
-            <SlideshowImage imageSrc={item.src} />
-          </div>
+      <div
+        className={`flex flex-col gap-3 lg:gap-4 transition duration-500 ${active ? "" : "hidden"}`}
+      >
+        <RyogoSmall color="slate">{item.description}</RyogoSmall>
+        <div className="flex md:hidden aspect-4/5 rounded-lg overflow-hidden relative">
+          <SlideshowImage imageSrc={item.src} />
         </div>
-      )}
+      </div>
       {active ? (
         <div className="rounded w-full h-0.5 lg:h-1 bg-white dark:bg-slate-800">
           <div

@@ -63,7 +63,7 @@ export async function newBookingAction({
     await bookingServices.addQuoteUrl(leadBooking.id, quoteUrl)
 
     // Share quote over email to customer
-    sendEmail({
+    await sendEmail({
       receipientEmail: [leadBooking.customer.email],
       subject: "Booking Quotation | RyoGo",
       element: LeadBookingEmailTemplate({
@@ -82,7 +82,7 @@ export async function newBookingAction({
     userId: booking.assignedUserId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,
-    dueDate: data.tripStartDate,
+    dueDate: data.startDate,
     isCritical: true,
     titleKey: "LeadBooking.Title",
     titleObject: { bookingId: booking.id },

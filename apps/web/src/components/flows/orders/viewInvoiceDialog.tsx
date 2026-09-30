@@ -1,12 +1,5 @@
 import SubscriptionInvoicePDFViewer from "@/components/pdf/subscriptionInvoicePDFViewer"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Eye } from "lucide-react"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
@@ -25,10 +18,6 @@ export default function ViewInvoiceDialog({
         </RyogoOutlineButton>
       </DialogTrigger>
       <DialogContent className="size-5/6 overflow-scroll">
-        <DialogHeader>
-          <DialogTitle></DialogTitle>
-          <DialogDescription></DialogDescription>
-        </DialogHeader>
         <SubscriptionInvoicePDFViewer order={order} />
       </DialogContent>
     </Dialog>

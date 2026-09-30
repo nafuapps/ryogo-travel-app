@@ -8,9 +8,7 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { Wrench, WrenchOff } from "lucide-react"
 import {
-  SectionWrapper,
   PageWrapper,
-  TileGridWrapper,
   SectionHeaderWrapper,
   StickyActionWrapper,
   SectionRowWrapper,
@@ -45,30 +43,26 @@ export default function AllVehicleRepairsPageComponent({
 
   return (
     <PageWrapper id="VehicleRepairsPage">
-      <SectionWrapper id="VehicleRepairsList">
-        <SectionRowWrapper className="items-center justify-between">
-          <SectionHeaderWrapper
-            icon={Wrench}
-            label={t("Title")}
-            count={filteredRepairs.length}
+      <SectionRowWrapper className="items-center justify-between">
+        <SectionHeaderWrapper
+          icon={Wrench}
+          label={t("Title")}
+          count={filteredRepairs.length}
+        />
+        <VehicleRepairsFilterSelect />
+      </SectionRowWrapper>
+      {filteredRepairs.length > 0 ? (
+        filteredRepairs.map((repair) => (
+          <VehicleRepairComponent
+            key={repair.id}
+            repair={repair}
+            canModify={isOwner || curentUserId === repair.addedByUserId}
+            vehicle={vehicle}
           />
-          <VehicleRepairsFilterSelect />
-        </SectionRowWrapper>
-        {filteredRepairs.length > 0 ? (
-          <TileGridWrapper>
-            {filteredRepairs.map((repair) => (
-              <VehicleRepairComponent
-                key={repair.id}
-                repair={repair}
-                canModify={isOwner || curentUserId === repair.addedByUserId}
-                vehicle={vehicle}
-              />
-            ))}
-          </TileGridWrapper>
-        ) : (
-          <EmptyStateIcon icon={WrenchOff} label={t("NoRepairs")} />
-        )}
-      </SectionWrapper>
+        ))
+      ) : (
+        <EmptyStateIcon icon={WrenchOff} label={t("NoRepairs")} />
+      )}
       <StickyActionWrapper>
         <Link
           href={`/dashboard/vehicles/${vehicle.id}/repairs/new`}
